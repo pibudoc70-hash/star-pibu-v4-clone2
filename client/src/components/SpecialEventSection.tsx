@@ -132,8 +132,11 @@ export default function SpecialEventSection() {
                 className={`mt-auto px-6 py-3 font-semibold rounded-full transition-colors ${
                   expandedEventId === event.id
                     ? 'bg-gray-300 hover:bg-gray-400 text-gray-700'
-                    : 'bg-yellow-400 hover:bg-yellow-500 text-navy'
+                    : 'text-navy hover:opacity-80'
                 }`}
+                style={{
+                  backgroundColor: expandedEventId === event.id ? undefined : '#f7f4ee',
+                }}
               >
                 {expandedEventId === event.id ? '접기' : event.cta}
               </button>

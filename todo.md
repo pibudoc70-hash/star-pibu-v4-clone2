@@ -113,4 +113,4 @@
 - [ ] SpecialEventSection에서 자세히 보기 클릭 시 실제 상세페이지로 네비게이션
 - [ ] EventDetailPage.tsx 생성 (App.tsx에 라우팅 추가)
 - [ ] 상세페이지에서 priceRows 안전하게 파싱 및 표시
-- [ ] 레퍼런스 사이트 기준 버튼 스타일 정확히 맞추기
+- [x] 자세히 보기 버튼 색상을 기존 사이트 상색(#f7f4ee)으로 변경

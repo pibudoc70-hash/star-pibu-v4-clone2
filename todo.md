@@ -158,3 +158,10 @@
 - [x] Google Search Console 메타 태그 추가 (a7QxxU_tlMvQCrJLQ9oCwuoQwmoaWr64mF2t5b40EdU)
 - [ ] Google Search Console 메타 태그 인증 (사용자 직접 진행)
 - [ ] Google Search Console 사이트맵 제출 (인증 완료 후)
+
+
+## Phase 25: 최종 단계 - 사이트맵 도메인 오류 수정
+- [x] sitemap.xml 도메인 star-pibu.com으로 수정
+- [x] 배포 완료
+- [x] 네이버 웹마스터도구 인증 및 사이트맵 제출 완료
+- [ ] Google Search Console 인증 및 사이트맵 제출 (사용자 직접 진행)

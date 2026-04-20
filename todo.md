@@ -61,7 +61,7 @@
 - [x] 기존 사이트 SPECIAL EVENT 섹션 구조 분석
 - [x] events 테이블 스키마 확장 (가격, 할인율, 이미지 URL 등)
 - [x] DB 마이그레이션 실행
-- [ ] 관리자 대시보드 SPECIAL EVENT 관리 UI 추가
+- [x] 관리자 대시보드 SPECIAL EVENT 관리 UI 추가 (이미지 업로드 기능 완성)
 - [x] SpecialEventSection 컴포넌트 구현 (PC: 이미지 카드 포함, 모바일: 이미지 미포함)
 - [x] 홈페이지에 SPECIAL EVENT 섹션 추가
 - [x] 샘플 데이터 추가 (6개 스페셔 이벤트 데이터 삽입)
@@ -81,3 +81,10 @@
 - [x] AdminDashboard.tsx에서 imageUrl이 null인 경우 제거하도록 수정
 - [x] 이벤트 업데이트 성공 테스트 완료
 - [x] 12개 vitest 테스트 모두 통과
+
+
+## Phase 14: SPECIAL EVENT 6개 모두 표시 문제 해결
+- [x] DB에서 SPECIAL EVENT 데이터 확인 (isSpecialEvent 값 확인)
+- [x] 모든 활성 이벤트를 isSpecialEvent = "1"로 업데이트 (6개 행 업데이트)
+- [x] 웹페이지에서 6개 이벤트 모두 표시 확인 (완벽하게 작동)
+- [x] 최종 테스트 및 체크포인트 저장

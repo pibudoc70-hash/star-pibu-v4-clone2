@@ -1,39 +1,63 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { LangProvider } from "./contexts/LangContext";
+import { lazy, Suspense } from "react";
 import Home from "./pages/Home";
 
-function Router() {
-  // make sure to consider if you need authentication for certain routes
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const Events = lazy(() => import("@/pages/Events"));
+const EventDetail = lazy(() => import("@/pages/EventDetail"));
+const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
+const AdminDashboard = lazy(() => import("@/pages/AdminDashboard"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const NonCoveredGuide = lazy(() => import("@/pages/NonCoveredGuide"));
+const Directions = lazy(() => import("@/pages/Directions"));
+const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
+
+function PageLoader() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <div className="flex items-center justify-center min-h-screen bg-[#0d1b2a]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 border-2 border-[#c9a96e] border-t-transparent rounded-full animate-spin" />
+        <p className="text-white/50 text-sm">Loading...</p>
+      </div>
+    </div>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+function Router() {
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/events" component={Events} />
+        <Route path="/events/:id" component={EventDetail} />
+        <Route path="/treatment/:name" component={TreatmentDetail} />
+        <Route path="/directions" component={Directions} />
+        <Route path="/foreign-guide" component={ForeignGuide} />
+        <Route path="/admin" component={AdminDashboard} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/non-covered" component={NonCoveredGuide} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
+  );
+}
 
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="light">
+        <LangProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LangProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

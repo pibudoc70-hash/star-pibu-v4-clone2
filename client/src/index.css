@@ -43,6 +43,16 @@
 }
 
 :root {
+  /* Star 피부과 브랜드 컬러 */
+  --star-navy: #1a2744;
+  --star-navy-light: #243560;
+  --star-gold: #c9a96e;
+  --star-gold-light: #e8d5b0;
+  --star-mint: #4ecdc4;
+  --star-mint-light: #a8e6e2;
+  --star-bg-dark: #0d1b2a;
+  --star-bg-section: #f8f9fc;
+
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-blue-50);
   --sidebar-primary: var(--color-blue-600);
@@ -119,6 +129,11 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Noto Sans KR", -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -132,6 +147,53 @@
     @apply cursor-pointer;
   }
 }
+
+/* 히어로 섹션 배경 */
+.hero-gradient {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2744 50%, #1e3a5f 100%);
+}
+
+/* 섹션 레이블 */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--star-gold);
+}
+
+/* 골드 언더라인 */
+.gold-underline::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: var(--star-gold);
+  margin-top: 0.5rem;
+}
+
+/* 카드 호버 */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* 페이드인 */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: var(--star-navy); border-radius: 3px; }
 
 @layer components {
   /**

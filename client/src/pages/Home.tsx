@@ -28,6 +28,11 @@ export default function Home() {
   const { user } = useAuth();
   void user; // auth state available for future use
 
+  // 페이지 제목 설정 (SEO 최적화)
+  useEffect(() => {
+    document.title = "스타피부과 | 부산 피부과 전문의 울쎼라 써마지 리프팅 시술";
+  }, []);
+
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
   useEffect(() => {
     const hash = window.location.hash;

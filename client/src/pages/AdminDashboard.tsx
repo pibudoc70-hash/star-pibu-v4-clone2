@@ -967,7 +967,14 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex gap-2">
                             <button
-                              onClick={() => { setEventForm(event); setEditingEventId(event.id); }}
+                              onClick={() => {
+                                const formData = {
+                                  ...event,
+                                  priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || [])
+                                };
+                                setEventForm(formData);
+                                setEditingEventId(event.id);
+                              }}
                               className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
                             >
                               <Pencil size={16} className="text-[#6B7280]" />

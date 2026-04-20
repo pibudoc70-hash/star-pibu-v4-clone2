@@ -36,6 +36,20 @@
       "when": 1776670173382,
       "tag": "0004_robust_sleeper",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1776679898584,
+      "tag": "0005_loving_micromacro",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1776682808550,
+      "tag": "0006_worried_frightful_four",
+      "breakpoints": true
     }
   ]
 }

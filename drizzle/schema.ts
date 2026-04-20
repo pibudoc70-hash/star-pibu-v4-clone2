@@ -96,6 +96,7 @@ export const events = mysqlTable("events", {
   normalPrice: int("normalPrice").default(0),
   discountPrice: int("discountPrice").default(0),
   priceRows: text("priceRows").notNull(), // JSON 형식으로 여러 가격 행 저장
+  anesthesiaFee: varchar("anesthesiaFee", { length: 200 }).default(""), // 수면마취비 정보 (예: "수면마취비 별도")
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

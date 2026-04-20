@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `anesthesiaFee` varchar(200) DEFAULT '';

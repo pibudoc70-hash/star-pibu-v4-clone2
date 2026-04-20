@@ -692,7 +692,7 @@ export default function AdminDashboard() {
               <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
                 <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
                 <button
-                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [] }); setEditingEventId(null); }}
+                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [], isSpecialEvent: "0", anesthesiaFee: "" }); setEditingEventId(null); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
                   style={{ background: "#4A6FA5" }}
                 >
@@ -908,6 +908,30 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-2">
                         <input
                           type="checkbox"
+                          checked={eventForm.isSpecialEvent === "1"}
+                          onChange={(e) => {
+                            console.log('SPECIAL EVENT checkbox clicked:', e.target.checked);
+                            const newForm = { ...eventForm, isSpecialEvent: e.target.checked ? "1" : "0" };
+                            console.log('New form:', newForm);
+                            setEventForm(newForm);
+                          }}
+                          className="w-4 h-4"
+                        />
+                        <label className="text-sm text-[#6B7280]">SPECIAL EVENT로 표시</label>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-[#1F2937]">수면마취비 정보</label>
+                        <input
+                          type="text"
+                          placeholder="예: 수면마취비 별도"
+                          value={eventForm.anesthesiaFee || ""}
+                          onChange={(e) => setEventForm({ ...eventForm, anesthesiaFee: e.target.value })}
+                          className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
                           checked={eventForm.isActive === "1"}
                           onChange={(e) => setEventForm({ ...eventForm, isActive: e.target.checked ? "1" : "0" })}
                           className="w-4 h-4"
@@ -970,7 +994,9 @@ export default function AdminDashboard() {
                               onClick={() => {
                                 const formData = {
                                   ...event,
-                                  priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || [])
+                                  priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || []),
+                                  isSpecialEvent: event.isSpecialEvent || "0",
+                                  anesthesiaFee: event.anesthesiaFee || ""
                                 };
                                 setEventForm(formData);
                                 setEditingEventId(event.id);

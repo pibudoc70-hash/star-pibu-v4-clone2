@@ -32,6 +32,7 @@ interface SpecialEvent {
   cta: string;
   isActive: "0" | "1";
   sortOrder: number;
+  anesthesiaFee?: string; // 수면마취비 정보
 }
 
 export default function SpecialEventSection() {
@@ -77,9 +78,10 @@ export default function SpecialEventSection() {
     );
   }
 
-  if (!specialEvents || specialEvents.length === 0) {
-    return null;
-  }
+  // 이벤트가 없어도 섹션은 표시 ("진행중인 이벤트 없음" 메시지 표시)
+  // if (!specialEvents || specialEvents.length === 0) {
+  //   return null;
+  // }
 
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -95,6 +97,11 @@ export default function SpecialEventSection() {
         </div>
 
         {/* 이벤트 카드 그리드 */}
+        {specialEvents.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">진행중인 이벤트가 없습니다.</p>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {specialEvents.map((event) => {
             // priceRows 파싱
@@ -151,6 +158,13 @@ export default function SpecialEventSection() {
                 <p className="text-base font-medium text-gray-700 mb-4">
                   {event.productName}
                 </p>
+
+                {/* 수면마취비 정보 */}
+                {event.anesthesiaFee && (
+                  <p className="text-sm text-orange-600 font-semibold mb-4">
+                    {event.anesthesiaFee}
+                  </p>
+                )}
 
                 {/* 가격 정보 - 항상 첫 번째 가격 행만 표시 */}
                 <div className="mb-6">
@@ -241,6 +255,7 @@ export default function SpecialEventSection() {
             );
           })}
         </div>
+        )}
       </div>
     </section>
   );

@@ -265,6 +265,7 @@ export const appRouter = router({
         normalPrice: z.number().default(0),
         discountPrice: z.number().default(0),
         priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).default([]),
+        anesthesiaFee: z.string().max(200).default(""),
       }))
       .mutation(async ({ input }) => {
         const { priceRows, ...rest } = input;
@@ -277,8 +278,7 @@ export const appRouter = router({
       }),
 
     // 관리자: 이벤트 수정
-    update: adminProcedure
-      .input(z.object({
+    update: adminProcedure.input(z.object({
         id: z.number(),
         type: z.enum(["이벤트", "공지"]).optional(),
         title: z.string().min(1).max(200).optional(),
@@ -308,6 +308,7 @@ export const appRouter = router({
         normalPrice: z.number().optional(),
         discountPrice: z.number().optional(),
         priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).optional(),
+        anesthesiaFee: z.string().max(200).optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, priceRows, ...data } = input;
@@ -319,7 +320,7 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    // 관리자: 이벤트 삭제
+    // Admin: Delete event
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -432,8 +433,7 @@ export const appRouter = router({
       }),
 
     // 관리자: 이벤트 수정
-    update: adminProcedure
-      .input(z.object({
+    update: adminProcedure.input(z.object({
         id: z.number(),
         tab: z.string().min(1).max(50).optional(),
         badge: z.string().max(100).optional(),
@@ -460,7 +460,7 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    // 관리자: 이벤트 삭제
+    // Admin: Delete event
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {

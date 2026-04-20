@@ -7,14 +7,22 @@ import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 
+interface PriceRow {
+  label: string;
+  normalPrice: number;
+  discountPrice: number;
+}
+
 interface SpecialEvent {
   id: number;
   title: string;
   subtitle: string;
   desc: string;
+  content: string;
   productName: string;
   normalPrice: number;
   discountPrice: number;
+  priceRows?: string; // JSON 문자열
   imageUrl?: string;
   cta: string;
   isActive: "0" | "1";
@@ -25,6 +33,7 @@ export default function SpecialEventSection() {
   const { t } = useLang();
   const [specialEvents, setSpecialEvents] = useState<SpecialEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
 
   // tRPC 쿼리
   const { data, isLoading: queryLoading } = trpc.events.special.useQuery();
@@ -118,9 +127,70 @@ export default function SpecialEventSection() {
               </div>
 
               {/* CTA 버튼 */}
-              <button className="mt-auto px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-navy font-semibold rounded-full transition-colors">
-                {event.cta}
+              <button
+                onClick={() => setExpandedEventId(expandedEventId === event.id ? null : event.id)}
+                className={`mt-auto px-6 py-3 font-semibold rounded-full transition-colors ${
+                  expandedEventId === event.id
+                    ? 'bg-gray-300 hover:bg-gray-400 text-gray-700'
+                    : 'bg-yellow-400 hover:bg-yellow-500 text-navy'
+                }`}
+              >
+                {expandedEventId === event.id ? '접기' : event.cta}
               </button>
+
+              {/* 상세 정보 (확장 시 표시) */}
+              {expandedEventId === event.id && (
+                <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
+                  {/* 상세 설명 */}
+                  {event.desc && (
+                    <div>
+                      <p className="text-sm text-gray-600 whitespace-pre-wrap">{event.desc}</p>
+                    </div>
+                  )}
+
+                  {/* 가격 행 정보 */}
+                  {event.priceRows && (() => {
+                    try {
+                      const rows: PriceRow[] = JSON.parse(event.priceRows);
+                      if (rows.length > 0) {
+                        return (
+                          <div className="space-y-3">
+                            {rows.map((row, idx) => (
+                              <div key={idx} className="bg-gray-50 p-4 rounded-lg">
+                                <h4 className="font-semibold text-navy mb-2">{row.label}</h4>
+                                <div className="flex items-center gap-4">
+                                  <div>
+                                    <p className="text-xs text-gray-500">정상가</p>
+                                    <p className="text-sm text-gray-400 line-through">
+                                      {row.normalPrice.toLocaleString()}원
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs text-gray-500">할인가</p>
+                                    <p className="text-xl font-bold text-orange-500">
+                                      {row.discountPrice.toLocaleString()}원
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      }
+                    } catch (e) {
+                      console.error('Failed to parse priceRows:', e);
+                    }
+                    return null;
+                  })()}
+
+                  {/* 내용 */}
+                  {event.content && (
+                    <div>
+                      <p className="text-sm text-gray-600 whitespace-pre-wrap">{event.content}</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>

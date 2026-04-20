@@ -90,6 +90,11 @@ export const events = mysqlTable("events", {
   sortOrder: int("sortOrder").notNull().default(0),
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
   category: mysqlEnum("category", ["신규시술", "이벤트", "공지사항", "기타"]).notNull().default("이벤트"),
+  // SPECIAL EVENT 필드
+  isSpecialEvent: mysqlEnum("isSpecialEvent", ["0", "1"]).notNull().default("0"),
+  productName: varchar("productName", { length: 200 }).default(""),
+  normalPrice: int("normalPrice").default(0),
+  discountPrice: int("discountPrice").default(0),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

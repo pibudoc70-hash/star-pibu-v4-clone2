@@ -186,3 +186,10 @@ export async function incrementEventViews(id: number) {
   if (!row) return;
   await db.update(events).set({ views: (row.views ?? 0) + 1 }).where(eq(events.id, id));
 }
+
+// SPECIAL EVENT 관련 함수
+export async function getSpecialEvents() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+}

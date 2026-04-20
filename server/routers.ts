@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews } from "./db";
+import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents } from "./db";
 import { users, popupEvents, events } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
@@ -198,6 +198,11 @@ export const appRouter = router({
       return getListEvents();
     }),
 
+    // 공개: SPECIAL EVENT 조회
+    special: publicProcedure.query(async () => {
+      return getSpecialEvents();
+    }),
+
     // 공개: 단일 이벤트 조회 (조회수 증가)
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
@@ -254,6 +259,11 @@ export const appRouter = router({
         sortOrder: z.number().default(0),
         isActive: z.enum(["0", "1"]).default("1"),
         category: z.enum(["신규시술", "이벤트", "공지사항", "기타"]).default("이벤트"),
+        // SPECIAL EVENT 필드
+        isSpecialEvent: z.enum(["0", "1"]).default("0"),
+        productName: z.string().max(200).default(""),
+        normalPrice: z.number().default(0),
+        discountPrice: z.number().default(0),
       }))
       .mutation(async ({ input }) => {
         await createEvent(input);
@@ -286,6 +296,11 @@ export const appRouter = router({
         sortOrder: z.number().optional(),
         isActive: z.enum(["0", "1"]).optional(),
         category: z.enum(["신규시술", "이벤트", "공지사항", "기타"]).optional(),
+        // SPECIAL EVENT 필드
+        isSpecialEvent: z.enum(["0", "1"]).optional(),
+        productName: z.string().max(200).optional(),
+        normalPrice: z.number().optional(),
+        discountPrice: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;

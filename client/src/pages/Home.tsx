@@ -12,6 +12,7 @@ import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
 import ManagementDevicesSection from "@/components/ManagementDevicesSection";
 import EventsSection from "@/components/EventsSection";
+import SpecialEventSection from "@/components/SpecialEventSection";
 import ResultsSection from "@/components/ResultsSection";
 import FacilitySection from "@/components/FacilitySection";
 import ReviewsSection from "@/components/ReviewsSection";
@@ -56,6 +57,9 @@ export default function Home() {
 
         {/* 2. Events - 이벤트 & 공지사항 (기존 사이트와 동일하게 히어로 다음) */}
         <EventsSection />
+
+        {/* 2.5. SPECIAL EVENT - 특별 이벤트 섹션 */}
+        <SpecialEventSection />
 
         {/* 3. Doctors - 의료진 소개 (3명) */}
         <DoctorsSection />

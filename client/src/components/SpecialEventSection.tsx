@@ -106,25 +106,55 @@ export default function SpecialEventSection() {
                 {event.productName}
               </p>
 
-              {/* 가격 정보 */}
-              <div className="mb-6">
-                {/* 정상가 */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-sm text-gray-500">정상가</span>
-                  <span className="text-sm text-gray-400 line-through">
-                    {event.normalPrice.toLocaleString()}원
-                  </span>
-                </div>
-
-                {/* 할인가 */}
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">할인가</span>
-                  <span className="text-3xl font-bold text-orange-500">
-                    {event.discountPrice.toLocaleString()}
-                    <span className="text-lg">원</span>
-                  </span>
-                </div>
-              </div>
+              {/* 가격 정보 - 자세히 보기 전에는 첫 가격 행만 표시 */}
+              {(() => {
+                // priceRows가 있으면 첫 번째 행 표시, 없으면 기본 가격 표시
+                if (event.priceRows) {
+                  try {
+                    const rows: PriceRow[] = JSON.parse(event.priceRows);
+                    if (rows.length > 0) {
+                      const firstRow = rows[0];
+                      return (
+                        <div className="mb-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-sm text-gray-500">정상가</span>
+                            <span className="text-sm text-gray-400 line-through">
+                              {firstRow.normalPrice.toLocaleString()}원
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-600">할인가</span>
+                            <span className="text-3xl font-bold text-orange-500">
+                              {firstRow.discountPrice.toLocaleString()}
+                              <span className="text-lg">원</span>
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                  } catch (e) {
+                    console.error('Failed to parse priceRows:', e);
+                  }
+                }
+                // 기본값
+                return (
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm text-gray-500">정상가</span>
+                      <span className="text-sm text-gray-400 line-through">
+                        {event.normalPrice.toLocaleString()}원
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">할인가</span>
+                      <span className="text-3xl font-bold text-orange-500">
+                        {event.discountPrice.toLocaleString()}
+                        <span className="text-lg">원</span>
+                      </span>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* CTA 버튼 */}
               <button

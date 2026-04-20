@@ -73,7 +73,7 @@ export default function SpecialEventSection() {
             <div key={event.id} className="flex flex-col">
               {/* 이미지 (PC에서만 표시) */}
               {event.imageUrl && (
-                <div className="hidden md:block mb-6 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-100 aspect-square">
+                <div className="hidden md:block mb-6 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-100" style={{aspectRatio: '16/9'}}>
                   <img
                     src={event.imageUrl}
                     alt={event.title}

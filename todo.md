@@ -88,3 +88,10 @@
 - [x] 모든 활성 이벤트를 isSpecialEvent = "1"로 업데이트 (6개 행 업데이트)
 - [x] 웹페이지에서 6개 이벤트 모두 표시 확인 (완벽하게 작동)
 - [x] 최종 테스트 및 체크포인트 저장
+
+
+## Phase 15: SPECIAL EVENT 이미지 비율 수정 (가로 기준)
+- [x] SpecialEventSection.tsx에서 이미지 비율을 aspect-ratio 16/9로 수정
+- [x] CSS aspect-ratio 조정 (aspect-square 대신 16:9 비율 적용)
+- [x] 웹페이지에서 이미지 가로 비율 정상 표시 확인
+- [x] 최종 테스트 및 체크포인트 저장

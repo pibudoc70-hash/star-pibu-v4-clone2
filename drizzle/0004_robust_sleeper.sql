@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `priceRows` text DEFAULT ('[]') NOT NULL;

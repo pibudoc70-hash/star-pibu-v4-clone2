@@ -96,10 +96,11 @@
 - [x] 웹페이지에서 이미지 가로 비율 정상 표시 확인
 - [x] 최종 테스트 및 체크포인트 저장
 
-
 ## Phase 16: 관리자 대시보드 SPECIAL EVENT 폼 재구성 (기존 사이트 동일 형태)
 - [x] AdminDashboard.tsx에 정상가(normalPrice)와 할인가(discountPrice) 입력 필드 추가
 - [x] 이벤트 폼 초기화 시 normalPrice와 discountPrice 필드 포함
 - [x] 가격 행 추가/삭제 기능 구현 (단일 또는 여러 가지 가격 옵션 지원)
+- [x] DB 스키마에 priceRows 필드 추가 (가격 행 JSON 저장)
+- [x] 백엔드 라우터에 priceRows 필드 추가 (생성/수정)
 - [x] 12개 vitest 테스트 모두 통과
-- [ ] (선택사항) 좌측 폼 + 우측 미리보기 2단 레이아웃 재구성
+- [ ] (선택사항) 좌측 폼 + 우츂1 미리보기 2단 레이아웃 재구성

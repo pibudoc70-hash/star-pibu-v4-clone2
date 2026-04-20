@@ -264,9 +264,15 @@ export const appRouter = router({
         productName: z.string().max(200).default(""),
         normalPrice: z.number().default(0),
         discountPrice: z.number().default(0),
+        priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).default([]),
       }))
       .mutation(async ({ input }) => {
-        await createEvent(input);
+        const { priceRows, ...rest } = input;
+        const eventData = {
+          ...rest,
+          priceRows: JSON.stringify(priceRows || []),
+        };
+        await createEvent(eventData as any);
         return { success: true };
       }),
 
@@ -301,10 +307,15 @@ export const appRouter = router({
         productName: z.string().max(200).optional(),
         normalPrice: z.number().optional(),
         discountPrice: z.number().optional(),
+        priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, ...data } = input;
-        await updateEvent(id, data);
+        const { id, priceRows, ...data } = input;
+        const updateData: any = { ...data };
+        if (priceRows !== undefined) {
+          updateData.priceRows = JSON.stringify(priceRows);
+        }
+        await updateEvent(id, updateData);
         return { success: true };
       }),
 

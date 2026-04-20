@@ -95,6 +95,7 @@ export const events = mysqlTable("events", {
   productName: varchar("productName", { length: 200 }).default(""),
   normalPrice: int("normalPrice").default(0),
   discountPrice: int("discountPrice").default(0),
+  priceRows: text("priceRows").notNull(), // JSON 형식으로 여러 가격 행 저장
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

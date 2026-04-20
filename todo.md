@@ -165,3 +165,9 @@
 - [x] 배포 완료
 - [x] 네이버 웹마스터도구 인증 및 사이트맵 제출 완료
 - [ ] Google Search Console 인증 및 사이트맵 제출 (사용자 직접 진행)
+
+
+## Phase 26: 파비콘 추가
+- [x] 별 모양 로고를 favicon.ico로 변환
+- [x] favicon.ico를 client/public 디렉토리에 저장
+- [x] index.html에 favicon 링크 추가

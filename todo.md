@@ -66,3 +66,18 @@
 - [x] 홈페이지에 SPECIAL EVENT 섹션 추가
 - [x] 샘플 데이터 추가 (6개 스페셔 이벤트 데이터 삽입)
 - [x] 최종 테스트 및 체크포인트 저장
+
+
+## Phase 11: 이벤트 & 공지사항 섹션 숨김처리
+- [x] EventsSection을 홈페이지에서 제거/숨김처리
+- [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 12: 관리자 이미지 업로드 실패 문제 해결
+- [x] 관리자 대시보드 SPECIAL EVENT 이미지 업로드 실패 원인 파악 (events.uploadImage 라우터 추가)
+- [x] 이미지 업로드 기능 수정 (tRPC 라우터로 변경)
+- [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 13: imageUrl null 에러 수정
+- [x] AdminDashboard.tsx에서 imageUrl이 null인 경우 제거하도록 수정
+- [x] 이벤트 업데이트 성공 테스트 완료
+- [x] 12개 vitest 테스트 모두 통과

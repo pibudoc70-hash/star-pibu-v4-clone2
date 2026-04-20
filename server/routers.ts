@@ -315,6 +315,29 @@ export const appRouter = router({
         await deleteEvent(input.id);
         return { success: true };
       }),
+
+    uploadImage: adminProcedure
+      .input(z.object({
+        fileData: z.string(),
+        fileName: z.string(),
+        mimeType: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const base64Data = input.fileData.split(',')[1] || input.fileData;
+          const buffer = Buffer.from(base64Data, 'base64');
+          if (buffer.length > 5 * 1024 * 1024) {
+            throw new Error('File size exceeds 5MB');
+          }
+          const timestamp = Date.now();
+          const fileKey = `events/${timestamp}-${input.fileName}`;
+          const { url } = await storagePut(fileKey, buffer, input.mimeType);
+          return { success: true, url };
+        } catch (error) {
+          console.error('Image upload error:', error);
+          throw new Error('Image upload failed');
+        }
+      }),
   }),
 
   // ─── 팝업 이벤트 라우터 ────────────────────────────────────────────────────

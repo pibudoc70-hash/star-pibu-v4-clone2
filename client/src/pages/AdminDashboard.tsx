@@ -102,6 +102,10 @@ export default function AdminDashboard() {
     onError: () => toast.error("삭제에 실패했습니다."),
   });
 
+  const uploadEventImageMutation = trpc.events.uploadImage.useMutation({
+    onError: () => toast.error("이미지 업로드에 실패했습니다."),
+  });
+
   const updatePopupMutation = trpc.popup.update.useMutation({
     onSuccess: () => { refetchPopup(); toast.success("이벤트가 수정되었습니다."); setPopupEditId(null); setPopupForm(null); },
     onError: () => toast.error("수정에 실패했습니다."),
@@ -771,20 +775,32 @@ export default function AdminDashboard() {
                             if (file) {
                               setImageUploading(true);
                               try {
-                                const formData = new FormData();
-                                formData.append('file', file);
-                                const response = await fetch('/api/upload', {
-                                  method: 'POST',
-                                  body: formData,
-                                });
-                                const data = await response.json();
-                                if (data.url) {
-                                  setEventForm({ ...eventForm, imageUrl: data.url });
-                                  toast.success('이미지가 업로드되었습니다.');
-                                }
+                                const reader = new FileReader();
+                                reader.onload = async (event) => {
+                                  const fileData = event.target?.result as string;
+                                  try {
+                                    const result = await uploadEventImageMutation.mutateAsync({
+                                      fileData,
+                                      fileName: file.name,
+                                      mimeType: file.type || 'image/jpeg',
+                                    });
+                                    if (result.url) {
+                                      setEventForm({ ...eventForm, imageUrl: result.url });
+                                      toast.success('이미지가 업로드되었습니다.');
+                                    }
+                                  } catch (error) {
+                                    console.error('Upload error:', error);
+                                  } finally {
+                                    setImageUploading(false);
+                                  }
+                                };
+                                reader.onerror = () => {
+                                  toast.error('파일 읽기에 실패했습니다.');
+                                  setImageUploading(false);
+                                };
+                                reader.readAsDataURL(file);
                               } catch (error) {
                                 toast.error('이미지 업로드에 실패했습니다.');
-                              } finally {
                                 setImageUploading(false);
                               }
                             }
@@ -833,7 +849,11 @@ export default function AdminDashboard() {
                           onClick={() => {
                             if (eventForm.title && eventForm.desc && eventForm.content && eventForm.date) {
                               if (editingEventId) {
-                                updateEventMutation.mutate({ id: editingEventId, ...eventForm });
+                                const updateData = { id: editingEventId, ...eventForm };
+                                if (!updateData.imageUrl) {
+                                  delete updateData.imageUrl;
+                                }
+                                updateEventMutation.mutate(updateData);
                               } else {
                                 createEventMutation.mutate(eventForm);
                               }

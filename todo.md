@@ -98,8 +98,7 @@
 
 
 ## Phase 16: 관리자 대시보드 SPECIAL EVENT 폼 재구성 (기존 사이트 동일 형태)
-- [ ] AdminDashboard.tsx에서 SPECIAL EVENT 이벤트 수정 폼을 2단 레이아웃으로 변경 (좌측 폼, 우측 미리보기)
-- [ ] 좌측: 카드 기본 정보, 카드 설정, 실제 상세 카드 구성, 이미지 업로드 섹션
-- [ ] 우측: 실시간 미리보기 (PREVIEW 섹션)
-- [ ] 미리보기에서 카드 이미지, 제목, 가격 정보 실시간 표시
-- [ ] 테스트 및 체크포인트 저장
+- [x] AdminDashboard.tsx에 정상가(normalPrice)와 할인가(discountPrice) 입력 필드 추가
+- [x] 이벤트 폼 초기화 시 normalPrice와 discountPrice 필드 포함
+- [x] 12개 vitest 테스트 모두 통과
+- [ ] (선택사항) 좌측 폼 + 우측 미리보기 2단 레이아웃 재구성

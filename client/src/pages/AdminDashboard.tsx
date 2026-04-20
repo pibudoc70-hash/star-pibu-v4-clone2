@@ -692,7 +692,7 @@ export default function AdminDashboard() {
               <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
                 <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
                 <button
-                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "" }); setEditingEventId(null); }}
+                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0 }); setEditingEventId(null); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
                   style={{ background: "#4A6FA5" }}
                 >
@@ -761,6 +761,29 @@ export default function AdminDashboard() {
                           placeholder="배지 (예: 신규, 진행중)"
                           value={eventForm.badge}
                           onChange={(e) => setEventForm({ ...eventForm, badge: e.target.value })}
+                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                        />
+                        <input
+                          type="text"
+                          placeholder="상품명 (예: 세르프)"
+                          value={eventForm.productName || ""}
+                          onChange={(e) => setEventForm({ ...eventForm, productName: e.target.value })}
+                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          type="number"
+                          placeholder="정상가 (원)"
+                          value={eventForm.normalPrice || ""}
+                          onChange={(e) => setEventForm({ ...eventForm, normalPrice: parseInt(e.target.value) || 0 })}
+                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                        />
+                        <input
+                          type="number"
+                          placeholder="할인가 (원)"
+                          value={eventForm.discountPrice || ""}
+                          onChange={(e) => setEventForm({ ...eventForm, discountPrice: parseInt(e.target.value) || 0 })}
                           className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                         />
                       </div>

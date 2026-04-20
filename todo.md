@@ -146,3 +146,15 @@
 - [x] robots.txt 및 sitemap.xml 생성 및 배포
 - [x] Google Search Console 등록 (단계: robots.txt 및 sitemap.xml 중비 완료, 사용자 직접 등록 필요)
 - [x] 네이버 웹마스터도구 사이트맨 제출 (단계: 메타 태그 중비 완료, 사용자 직접 등록 필요)
+
+
+## Phase 23: 네이버 웹마스터도구 인증
+- [x] 네이버 HTML 확인 파일 다운로드 및 업로드
+- [x] 메타 태그 검증 방법으로 변경 (HTML 파일 업로드 방식 불가)
+- [x] 네이버 웹마스터도구 메타 태그 인증 (사용자 직접 진행)
+- [x] 네이버 웹마스터도구 사이트맵 제출 (인증 완료 후)
+
+## Phase 24: Google Search Console 등록
+- [x] Google Search Console 메타 태그 추가 (a7QxxU_tlMvQCrJLQ9oCwuoQwmoaWr64mF2t5b40EdU)
+- [ ] Google Search Console 메타 태그 인증 (사용자 직접 진행)
+- [ ] Google Search Console 사이트맵 제출 (인증 완료 후)

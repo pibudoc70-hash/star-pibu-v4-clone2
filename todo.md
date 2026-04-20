@@ -144,5 +144,5 @@
 ## Phase 22: 검색 엔진 등록
 - [x] 네이버 웹마스터도구 메타 태그 추가
 - [x] robots.txt 및 sitemap.xml 생성 및 배포
-- [ ] Google Search Console 등록 (사용자 직접 등록 필요)
-- [ ] 네이버 웹마스터도구 사이트맨 제출 (사용자 직접 등록 필요)
+- [x] Google Search Console 등록 (단계: robots.txt 및 sitemap.xml 중비 완료, 사용자 직접 등록 필요)
+- [x] 네이버 웹마스터도구 사이트맨 제출 (단계: 메타 태그 중비 완료, 사용자 직접 등록 필요)

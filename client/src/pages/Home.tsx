@@ -74,8 +74,8 @@ export default function Home() {
         {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 (숨김) */}
         {/* <PhilosophySection /> */}
 
-        {/* 6. Before & After Results */}
-        <ResultsSection />
+        {/* 6. Before & After Results (숨김) */}
+        {/* <ResultsSection /> */}
 
         {/* 7. Facility Gallery - 시설 갤러리 */}
         <FacilitySection />

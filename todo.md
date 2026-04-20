@@ -171,3 +171,9 @@
 - [x] 별 모양 로고를 favicon.ico로 변환
 - [x] favicon.ico를 client/public 디렉토리에 저장
 - [x] index.html에 favicon 링크 추가
+
+
+## Phase 27: 의사 정보 수정 (기존 사이트와 일치)
+- [x] 조시형 원장: 14개 → 8개 항목 수정
+- [x] 우혜진 원장: 10개 → 6개 항목 수정
+- [x] 이기욱 원장: 9개 → 6개 항목 수정

@@ -692,7 +692,7 @@ export default function AdminDashboard() {
               <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
                 <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
                 <button
-                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0 }); setEditingEventId(null); }}
+                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [] }); setEditingEventId(null); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
                   style={{ background: "#4A6FA5" }}
                 >
@@ -771,21 +771,74 @@ export default function AdminDashboard() {
                           className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                         />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="number"
-                          placeholder="정상가 (원)"
-                          value={eventForm.normalPrice || ""}
-                          onChange={(e) => setEventForm({ ...eventForm, normalPrice: parseInt(e.target.value) || 0 })}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                        <input
-                          type="number"
-                          placeholder="할인가 (원)"
-                          value={eventForm.discountPrice || ""}
-                          onChange={(e) => setEventForm({ ...eventForm, discountPrice: parseInt(e.target.value) || 0 })}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
+                      {/* 가격 행 관리 */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <label className="text-sm font-semibold text-[#1F2937]">가격 정보</label>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const priceRows = eventForm.priceRows || [];
+                              setEventForm({ ...eventForm, priceRows: [...priceRows, { label: "", normalPrice: 0, discountPrice: 0 }] });
+                            }}
+                            className="text-xs px-3 py-1 rounded-lg bg-[#4A6FA5] text-white hover:bg-[#3A5A95] transition-colors"
+                          >
+                            + 가격 행 추가
+                          </button>
+                        </div>
+                        {(eventForm.priceRows || []).length > 0 ? (
+                          <div className="space-y-2 bg-[#F9FAFB] p-4 rounded-lg">
+                            {(eventForm.priceRows || []).map((row: any, idx: number) => (
+                              <div key={idx} className="grid grid-cols-4 gap-2 items-end">
+                                <input
+                                  type="text"
+                                  placeholder="상품명 (예: 세르프 300샷)"
+                                  value={row.label || ""}
+                                  onChange={(e) => {
+                                    const rows = [...(eventForm.priceRows || [])];
+                                    rows[idx] = { ...rows[idx], label: e.target.value };
+                                    setEventForm({ ...eventForm, priceRows: rows });
+                                  }}
+                                  className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                                />
+                                <input
+                                  type="number"
+                                  placeholder="정상가 (원)"
+                                  value={row.normalPrice || ""}
+                                  onChange={(e) => {
+                                    const rows = [...(eventForm.priceRows || [])];
+                                    rows[idx] = { ...rows[idx], normalPrice: parseInt(e.target.value) || 0 };
+                                    setEventForm({ ...eventForm, priceRows: rows });
+                                  }}
+                                  className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                                />
+                                <input
+                                  type="number"
+                                  placeholder="할인가 (원)"
+                                  value={row.discountPrice || ""}
+                                  onChange={(e) => {
+                                    const rows = [...(eventForm.priceRows || [])];
+                                    rows[idx] = { ...rows[idx], discountPrice: parseInt(e.target.value) || 0 };
+                                    setEventForm({ ...eventForm, priceRows: rows });
+                                  }}
+                                  className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const rows = (eventForm.priceRows || []).filter((_: any, i: number) => i !== idx);
+                                    setEventForm({ ...eventForm, priceRows: rows });
+                                  }}
+                                  className="px-3 py-2 text-red-600 hover:text-red-700 font-semibold text-sm"
+                                >
+                                  삭제
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-[#9CA3AF] italic">가격 행을 추가하려면 위의 "+ 가격 행 추가" 버튼을 클릭하세요.</p>
+                        )}
                       </div>
                       {/* 이미지 업로드 */}
                       <div className="space-y-2">

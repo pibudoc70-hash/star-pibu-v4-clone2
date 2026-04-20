@@ -1,16 +1,18 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import FloatingCTA from "./FloatingCTA";
-import WelcomePopup from "./WelcomePopup";
+import Header from './Header';
+import Footer from './Footer';
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-grow">
+        {children}
+      </main>
       <Footer />
-      <FloatingCTA />
-      <WelcomePopup />
     </div>
   );
 }

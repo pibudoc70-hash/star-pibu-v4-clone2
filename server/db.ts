@@ -1,7 +1,8 @@
-import { eq, desc, asc } from "drizzle-orm";
+import { eq, desc, asc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, events, popupEvents, InsertEvent, InsertPopupEvent } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { InsertUser, users, events, popupEvents, reservations, guestOtps } from "../drizzle/schema";
+import type { InsertEvent, InsertReservation } from "../drizzle/schema";
+import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -21,7 +22,6 @@ export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
   if (!db) { console.warn("[Database] Cannot upsert user: database not available"); return; }
-
   try {
     const values: InsertUser = { openId: user.openId };
     const updateSet: Record<string, unknown> = {};
@@ -37,7 +37,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     textFields.forEach(assignNullable);
     if (user.lastSignedIn !== undefined) { values.lastSignedIn = user.lastSignedIn; updateSet.lastSignedIn = user.lastSignedIn; }
     if (user.role !== undefined) { values.role = user.role; updateSet.role = user.role; }
-    else if (user.openId === ENV.ownerOpenId) { values.role = 'admin'; updateSet.role = 'admin'; }
+    else if (user.openId === ENV.ownerOpenId) { values.role = "admin"; updateSet.role = "admin"; }
     if (!values.lastSignedIn) values.lastSignedIn = new Date();
     if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date();
     await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet });
@@ -54,27 +54,111 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// ─── Events ──────────────────────────────────────────────────────────────────
+// ─── 예약 관련 ────────────────────────────────────────────────────────────────
+export async function createReservation(data: InsertReservation) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.insert(reservations).values(data);
+}
 
+export async function getReservationsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(reservations).where(eq(reservations.userId, userId)).orderBy(desc(reservations.createdAt));
+}
+
+export async function getAllReservations(page = 1, pageSize = 20) {
+  const db = await getDb();
+  if (!db) return { items: [], total: 0 };
+  const offset = (page - 1) * pageSize;
+  const [items, countResult] = await Promise.all([
+    db.select().from(reservations).orderBy(desc(reservations.createdAt)).limit(pageSize).offset(offset),
+    db.select().from(reservations),
+  ]);
+  return { items, total: countResult.length };
+}
+
+export async function updateReservationStatus(id: number, status: "pending" | "confirmed" | "completed" | "cancelled", adminNote?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const updateData: Record<string, unknown> = { status };
+  if (adminNote !== undefined) updateData.adminNote = adminNote;
+  await db.update(reservations).set(updateData).where(eq(reservations.id, id));
+}
+
+export async function cancelReservation(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(reservations).set({ status: "cancelled" }).where(and(eq(reservations.id, id), eq(reservations.userId, userId)));
+}
+
+export async function getReservationStats() {
+  const db = await getDb();
+  if (!db) return { total: 0, pending: 0, confirmed: 0, completed: 0, cancelled: 0 };
+  const all = await db.select().from(reservations);
+  return {
+    total: all.length,
+    pending: all.filter(r => r.status === "pending").length,
+    confirmed: all.filter(r => r.status === "confirmed").length,
+    completed: all.filter(r => r.status === "completed").length,
+    cancelled: all.filter(r => r.status === "cancelled").length,
+  };
+}
+
+// ─── OTP 관련 ────────────────────────────────────────────────────────────────
+export function generateOtpCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+export async function createGuestOtp(phone: string, code: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const expiresAt = Date.now() + 5 * 60 * 1000; // 5분
+  await db.insert(guestOtps).values({ phone, code, expiresAt });
+}
+
+export async function verifyGuestOtp(phone: string, code: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  const now = Date.now();
+  const rows = await db.select().from(guestOtps)
+    .where(and(eq(guestOtps.phone, phone), eq(guestOtps.code, code), eq(guestOtps.verified, "0")))
+    .orderBy(desc(guestOtps.createdAt)).limit(1);
+  if (!rows.length || rows[0].expiresAt < now) return false;
+  await db.update(guestOtps).set({ verified: "1" }).where(eq(guestOtps.id, rows[0].id));
+  return true;
+}
+
+export async function cancelGuestReservation(id: number, phone: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(reservations).set({ status: "cancelled" }).where(and(eq(reservations.id, id), eq(reservations.phone, phone)));
+}
+
+// ─── 이벤트 관련 ─────────────────────────────────────────────────────────────
 export async function getAllEvents() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(events).orderBy(asc(events.sortOrder), desc(events.createdAt));
+  return db.select().from(events).where(eq(events.isActive, "1")).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
-export async function getActiveEvents() {
+export async function getFeaturedEvents() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(events)
-    .where(eq(events.isActive, "1"))
-    .orderBy(asc(events.sortOrder), desc(events.createdAt));
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isFeatured, "1"))).orderBy(asc(events.sortOrder));
+}
+
+export async function getListEvents() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(events).where(eq(events.isActive, "1")).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
 export async function getEventById(id: number) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(events).where(eq(events.id, id)).limit(1);
-  return result[0];
+  const rows = await db.select().from(events).where(eq(events.id, id)).limit(1);
+  return rows[0];
 }
 
 export async function createEvent(data: InsertEvent) {
@@ -98,60 +182,7 @@ export async function deleteEvent(id: number) {
 export async function incrementEventViews(id: number) {
   const db = await getDb();
   if (!db) return;
-  const ev = await getEventById(id);
-  if (ev) await db.update(events).set({ views: ev.views + 1 }).where(eq(events.id, id));
-}
-
-// ─── Popup Events ─────────────────────────────────────────────────────────────
-
-export async function getAllPopups() {
-  const db = await getDb();
-  if (!db) return [];
-  return db.select().from(popupEvents).orderBy(asc(popupEvents.sortOrder), desc(popupEvents.createdAt));
-}
-
-export async function getActivePopups() {
-  const db = await getDb();
-  if (!db) return [];
-  const now = Date.now();
-  const rows = await db.select().from(popupEvents)
-    .where(eq(popupEvents.isActive, "1"))
-    .orderBy(asc(popupEvents.sortOrder));
-  return rows.filter(p => {
-    if (p.startAt && now < p.startAt) return false;
-    if (p.endAt && now > p.endAt) return false;
-    return true;
-  });
-}
-
-export async function createPopup(data: InsertPopupEvent) {
-  const db = await getDb();
-  if (!db) throw new Error("DB not available");
-  await db.insert(popupEvents).values(data);
-}
-
-export async function updatePopup(id: number, data: Partial<InsertPopupEvent>) {
-  const db = await getDb();
-  if (!db) throw new Error("DB not available");
-  await db.update(popupEvents).set(data).where(eq(popupEvents.id, id));
-}
-
-export async function deletePopup(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("DB not available");
-  await db.delete(popupEvents).where(eq(popupEvents.id, id));
-}
-
-// ─── Users (admin) ────────────────────────────────────────────────────────────
-
-export async function getAllUsers() {
-  const db = await getDb();
-  if (!db) return [];
-  return db.select().from(users).orderBy(desc(users.createdAt));
-}
-
-export async function updateUserRole(id: number, role: "user" | "admin") {
-  const db = await getDb();
-  if (!db) throw new Error("DB not available");
-  await db.update(users).set({ role }).where(eq(users.id, id));
+  const row = await getEventById(id);
+  if (!row) return;
+  await db.update(events).set({ views: (row.views ?? 0) + 1 }).where(eq(events.id, id));
 }

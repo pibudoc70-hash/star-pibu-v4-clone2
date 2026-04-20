@@ -1,144 +1,109 @@
-import { useState } from "react";
-import { useLocation } from "wouter";
-import { Eye, Tag, Zap, Sparkles, Bell, Search } from "lucide-react";
-import MainLayout from "@/components/MainLayout";
-import { useLang } from "@/contexts/useLang";
-import { trpc } from "@/lib/trpc";
-
-const iconMap: Record<string, React.ElementType> = {
-  tag: Tag, zap: Zap, sparkles: Sparkles, bell: Bell,
-};
-
-const CATEGORIES = ["전체", "이벤트", "공지사항", "신규시술", "기타"];
+import { useLang } from '@/contexts/LangContext';
+import MainLayout from '@/components/MainLayout';
+import { trpc } from '@/lib/trpc';
+import { Loader2, Calendar, Eye } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'wouter';
 
 export default function Events() {
   const { t } = useLang();
-  const [, navigate] = useLocation();
-  const [category, setCategory] = useState("전체");
-  const [search, setSearch] = useState("");
-  const { data: events = [], isLoading } = trpc.events.list.useQuery();
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
 
-  const filtered = events.filter(ev => {
-    const matchCat = category === "전체" || ev.category === category || ev.type === category;
-    const matchSearch = !search || ev.title.includes(search) || ev.desc.includes(search);
-    return matchCat && matchSearch;
-  });
+  const { data: allEvents, isLoading } = trpc.events.list.useQuery();
+  const events = selectedCategory
+    ? allEvents?.filter((e) => e.category === selectedCategory)
+    : allEvents;
+
+  const categories = [
+    { value: undefined, label: t.events.filterAll },
+    { value: 'event', label: t.events.filterEvent },
+    { value: 'notice', label: t.events.filterNotice },
+    { value: 'etc', label: t.events.filterEtc },
+  ];
 
   return (
     <MainLayout>
-      <div className="pt-24 pb-16 min-h-screen bg-[var(--star-bg-section)]">
-        <div className="container">
-          {/* 헤더 */}
-          <div className="mb-10">
-            <p className="section-label mb-2">{t.events.label}</p>
-            <h1 className="text-3xl md:text-4xl font-black text-[#1a2744]">{t.events.title}</h1>
-          </div>
+      <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
+        <div className="container mx-auto px-4">
+          <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">{t.events.eyebrow}</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.events.sectionTitle}</h1>
+          <p className="text-gray-600 mt-4">{t.events.sectionSubtitle}</p>
+        </div>
+      </section>
 
-          {/* 필터 & 검색 */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <div className="flex flex-wrap gap-2">
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                    category === cat
-                      ? "bg-[#1a2744] text-white"
-                      : "bg-white text-gray-500 border border-gray-200 hover:border-[#c9a96e]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-            <div className="relative ml-auto">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="이벤트 검색..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="pl-8 pr-4 py-2 text-sm border border-gray-200 rounded-full focus:outline-none focus:border-[#c9a96e] bg-white"
-              />
-            </div>
+      <section className="bg-white border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex gap-2 overflow-x-auto py-3">
+            {categories.map((cat) => (
+              <button
+                key={String(cat.value)}
+                onClick={() => setSelectedCategory(cat.value)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                  selectedCategory === cat.value
+                    ? 'bg-amber-500 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-amber-100'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* 이벤트 목록 */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-48 bg-gray-200 rounded-xl animate-pulse" />
-              ))}
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="animate-spin text-amber-500" size={40} />
             </div>
-          ) : filtered.length === 0 ? (
-            <div className="text-center py-20 text-gray-400">
-              <Bell size={48} className="mx-auto mb-4 opacity-30" />
-              <p className="text-lg">등록된 이벤트가 없습니다.</p>
-            </div>
-          ) : (
+          ) : events && events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map(ev => {
-                const Icon = iconMap[ev.iconType || "tag"] || Tag;
-                const isFeatured = ev.isFeatured === "1";
-                return (
-                  <button
-                    key={ev.id}
-                    onClick={() => navigate(`/events/${ev.id}`)}
-                    className={`group text-left rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all card-hover ${
-                      isFeatured ? "md:col-span-2" : ""
-                    }`}
-                  >
-                    {isFeatured ? (
-                      <div
-                        className="p-6 h-full min-h-[180px] flex flex-col"
-                        style={{ background: `linear-gradient(135deg, ${ev.accent}, ${ev.accentDark})` }}
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white/20 text-white">
-                            {ev.badge}
-                          </span>
-                          {ev.hot === "1" && <span className="text-xs text-red-300 font-bold">🔥 HOT</span>}
-                        </div>
-                        <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-                          <Icon size={18} className="text-white" />
-                        </div>
-                        <h3 className="text-xl font-black text-white mb-1 group-hover:text-[#c9a96e] transition-colors">
-                          {ev.title}
-                        </h3>
-                        <p className="text-sm text-white/70 flex-1 line-clamp-2">{ev.desc}</p>
-                        <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/20 text-xs text-white/50">
-                          <span>{ev.date}</span>
-                          <span className="flex items-center gap-1"><Eye size={11} /> {ev.views}</span>
-                        </div>
-                      </div>
+              {events.map((event) => (
+                <Link key={event.id} href={`/events/${event.id}`}>
+                  <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer group">
+                    {event.imageUrl ? (
+                      <img
+                        src={event.imageUrl}
+                        alt={event.title}
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     ) : (
-                      <div className="bg-white p-5 h-full">
-                        <div className="flex items-center gap-2 mb-3">
-                          <span
-                            className="text-xs font-bold px-2 py-0.5 rounded-full"
-                            style={{ background: `${ev.badgeColor}18`, color: ev.badgeColor }}
-                          >
-                            {ev.badge || ev.type}
-                          </span>
-                          {ev.hot === "1" && <span className="text-xs text-red-400 font-bold">🔥</span>}
-                        </div>
-                        <h3 className="font-bold text-[#1a2744] mb-1.5 group-hover:text-[#c9a96e] transition-colors line-clamp-2">
-                          {ev.title}
-                        </h3>
-                        <p className="text-sm text-gray-500 line-clamp-2 mb-3">{ev.desc}</p>
-                        <div className="flex items-center justify-between text-xs text-gray-300">
-                          <span>{ev.date}</span>
-                          <span className="flex items-center gap-1"><Eye size={11} /> {ev.views}</span>
-                        </div>
+                      <div className="w-full h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+                        <span className="text-4xl">🏥</span>
                       </div>
                     )}
-                  </button>
-                );
-              })}
+                    <div className="p-5">
+                      {event.category && (
+                        <span className="text-xs text-amber-600 font-semibold bg-amber-50 px-2 py-1 rounded-full">
+                          {event.category}
+                        </span>
+                      )}
+                      <h3 className="text-lg font-bold text-gray-900 mt-3 mb-2 line-clamp-2">{event.title}</h3>
+                      <div className="flex items-center gap-4 text-xs text-gray-400 mt-3">
+                        {event.date && (
+                          <span className="flex items-center gap-1">
+                            <Calendar size={12} />
+                            {new Date(event.date).toLocaleDateString('ko-KR')}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1">
+                          <Eye size={12} />
+                          {event.views ?? 0}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-gray-500 text-lg">{t.events.noEvents}</p>
             </div>
           )}
         </div>
-      </div>
+      </section>
     </MainLayout>
   );
 }

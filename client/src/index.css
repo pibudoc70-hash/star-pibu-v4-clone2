@@ -3,6 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* 
+ * STAR 피부과 디자인 시스템 - 모던 클리니컬 엣지
+ * 컬러: 민트-네이비 듀오톤 (#F8FAFC, #81C7C9, #4A6FA5, #1F2937)
+ * 폰트: Noto Sans KR (한국어) + Montserrat (영문/숫자)
+ * 철학: 미니멀 + 감성적, 이미지 60% / 텍스트 40%
+ */
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -40,100 +47,88 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Star Dermatology Custom Colors */
+  --color-star-mint: #81C7C9;
+  --color-star-mint-light: #A7DADC;
+  --color-star-mint-pale: #EEF7F7;
+  --color-star-navy: #4A6FA5;
+  --color-star-navy-dark: #2D4A7A;
+  --color-star-bg: #F8FAFC;
+  --color-star-text: #1F2937;
+  --color-star-text-mid: #6B7280;
+  --color-star-kakao: #FEE500;
+  --color-star-naver: #03C75A;
 }
 
 :root {
-  /* Star 피부과 브랜드 컬러 */
-  --star-navy: #1a2744;
-  --star-navy-light: #243560;
-  --star-gold: #c9a96e;
-  --star-gold-light: #e8d5b0;
-  --star-mint: #4ecdc4;
-  --star-mint-light: #a8e6e2;
-  --star-bg-dark: #0d1b2a;
-  --star-bg-section: #f8f9fc;
-
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
+  --radius: 0.5rem;
+  --background: oklch(0.99 0.002 240);
+  --foreground: oklch(0.2 0.015 240);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --card-foreground: oklch(0.2 0.015 240);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --popover-foreground: oklch(0.2 0.015 240);
+  --primary: oklch(0.48 0.09 220);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.95 0.01 200);
+  --secondary-foreground: oklch(0.3 0.02 220);
+  --muted: oklch(0.96 0.005 220);
+  --muted-foreground: oklch(0.55 0.015 220);
+  --accent: oklch(0.78 0.06 195);
+  --accent-foreground: oklch(0.15 0.02 220);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
-
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --border: oklch(0.91 0.008 220);
+  --input: oklch(0.91 0.008 220);
+  --ring: oklch(0.48 0.09 220);
+  --chart-1: oklch(0.78 0.06 195);
+  --chart-2: oklch(0.65 0.08 200);
+  --chart-3: oklch(0.52 0.09 210);
+  --chart-4: oklch(0.48 0.09 220);
+  --chart-5: oklch(0.38 0.08 230);
+  --sidebar: oklch(0.98 0.003 220);
+  --sidebar-foreground: oklch(0.2 0.015 240);
+  --sidebar-primary: oklch(0.48 0.09 220);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.95 0.01 200);
+  --sidebar-accent-foreground: oklch(0.2 0.015 240);
+  --sidebar-border: oklch(0.91 0.008 220);
+  --sidebar-ring: oklch(0.48 0.09 220);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
   body {
     @apply bg-background text-foreground;
-    font-family: "Noto Sans KR", -apple-system, sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  html {
-    scroll-behavior: smooth;
+  /* 언어별 폰트 통일 */
+  body.font-lang-ko,
+  body.font-lang-ko * {
+    font-family: 'Noto Sans KR', sans-serif !important;
+  }
+  body.font-lang-ja,
+  body.font-lang-ja * {
+    font-family: 'Noto Sans JP', sans-serif !important;
+  }
+  body.font-lang-zh,
+  body.font-lang-zh * {
+    font-family: 'Noto Sans SC', sans-serif !important;
+  }
+  /* Montserrat는 영문/숫자 전용이므로 언어 무관하게 유지 */
+  body.font-lang-ko .font-montserrat,
+  body.font-lang-ja .font-montserrat,
+  body.font-lang-zh .font-montserrat {
+    font-family: 'Montserrat', sans-serif !important;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -146,74 +141,18 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+  }
 }
-
-/* 히어로 섹션 배경 */
-.hero-gradient {
-  background: linear-gradient(135deg, #0d1b2a 0%, #1a2744 50%, #1e3a5f 100%);
-}
-
-/* 섹션 레이블 */
-.section-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--star-gold);
-}
-
-/* 골드 언더라인 */
-.gold-underline::after {
-  content: "";
-  display: block;
-  width: 3rem;
-  height: 2px;
-  background: var(--star-gold);
-  margin-top: 0.5rem;
-}
-
-/* 카드 호버 */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-}
-
-/* 페이드인 */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-/* 스크롤바 */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: var(--star-navy); border-radius: 3px; }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -224,16 +163,808 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
+  }
+
+  /* Star Dermatology Custom Components */
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .star-mint-btn {
+    background-color: #81C7C9;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .star-mint-btn:hover {
+    background-color: #6BB8BA;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(129, 199, 201, 0.4);
+  }
+
+  .star-navy-btn {
+    background-color: #4A6FA5;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .star-navy-btn:hover {
+    background-color: #3A5A8F;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(74, 111, 165, 0.4);
+  }
+
+  .section-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .section-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .star-section-alt {
+    background-color: #EEF7F7;
+  }
+
+  .star-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #B8892A, #F5D78E, #C9A84C);
+    border-radius: 2px;
+    margin: 1rem 0;
+    box-shadow: 0 0 8px rgba(201,168,76,0.4);
+  }
+
+  .treatment-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1.5px solid transparent;
+    position: relative;
+    will-change: transform, box-shadow;
+    backface-visibility: hidden;
+  }
+  .treatment-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(209,171,103,0.04) 0%, rgba(250,248,244,0.06) 100%);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    pointer-events: none;
+  }
+  .treatment-card:hover {
+    transform: translateY(-8px) scale(1.012);
+    box-shadow: 0 24px 56px rgba(209,171,103,0.18), 0 8px 20px rgba(0,0,0,0.06);
+    border-color: rgba(209,171,103,0.40);
+  }
+  .treatment-card:hover::after {
+    opacity: 1;
+  }
+  .treatment-card:active {
+    transform: translateY(-4px) scale(1.006);
+    transition-duration: 0.12s;
+  }
+
+  .review-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    border-left: 4px solid #81C7C9;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SCROLL REVEAL ANIMATION SYSTEM
+     팝업과 동일한 spring easing 기반 통합 시스템
+     ═══════════════════════════════════════════════ */
+
+  /* 기본 대기 상태 - 모든 reveal 요소의 초기값 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    filter: blur(3px);
+    transition:
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* 뷰포트 진입 시 활성화 */
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+
+  /* 변형 방향 변형 */
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-28px) scale(0.97);
+    filter: blur(3px);
+    transition:
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0px);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(28px) scale(0.97);
+    filter: blur(3px);
+    transition:
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0px);
+  }
+
+  /* 섹션 헤더 전용 - 약간 더 느리고 강조 */
+  .reveal-heading {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+  }
+  .reveal-heading.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+
+  /* 카드 그리드 - stagger delay를 인라인 style로 제어 */
+  .reveal-card {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    filter: blur(2px);
+    transition:
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform, filter;
+  }
+  .reveal-card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+
+  /* 레거시 호환 */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.7s ease-out forwards;
+  }
+
+  /* Before/After Slider */
+  .before-after-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: ew-resize;
+  }
+
+  /* Header scroll effect */
+  .header-scrolled {
+    height: 64px !important;
+    background: rgba(255,255,255,0.98) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important;
+  }
+
+  /* Mobile menu */
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 40;
+    backdrop-filter: blur(4px);
+  }
+
+  .mobile-menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 280px;
+    background: white;
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-menu-panel.open {
+    transform: translateX(0);
+  }
+
+  /* Floating CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border-radius: 3rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+
+  /* Popup overlay */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: popupOverlayIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .popup-overlay.closing {
+    animation: popupOverlayOut 0.25s ease-in forwards;
+  }
+
+  .popup-modal {
+    animation: popupModalIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .popup-modal.closing {
+    animation: popupModalOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  .popup-tab-content {
+    animation: popupTabIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* 모바일 팝업 - 하단 슬라이드업 */
+  .popup-modal-mobile {
+    animation: popupMobileIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .popup-modal-mobile.closing {
+    animation: popupMobileOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  /* Gallery lightbox */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── Popup animations ── */
+  @keyframes popupOverlayIn {
+    from { opacity: 0; backdrop-filter: blur(0px); }
+    to   { opacity: 1; backdrop-filter: blur(4px); }
+  }
+
+  @keyframes popupOverlayOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  @keyframes popupModalIn {
+    from {
+      opacity: 0;
+      transform: translateY(32px) scale(0.94);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes popupModalOut {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+      filter: blur(2px);
+    }
+  }
+
+  @keyframes popupTabIn {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes popupMobileIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0.6;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes popupMobileOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero text animation */
+  @keyframes heroSlideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Hero 단어별 순차 등장 ── */
+  @keyframes wordReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(22px) scale(0.92);
+      filter: blur(6px);
+    }
+    60% {
+      filter: blur(0px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes charReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(16px) rotateX(40deg);
+      filter: blur(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) rotateX(0deg);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes heroFadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-word {
+    display: inline-block;
+    opacity: 0;
+    animation: wordReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: opacity, transform, filter;
+  }
+
+  .hero-char {
+    display: inline-block;
+    opacity: 0;
+    animation: charReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: opacity, transform, filter;
+    transform-origin: bottom center;
+    perspective: 400px;
+  }
+
+  .hero-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hero-fade {
+    opacity: 0;
+    animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Soft Glow animation for hero section ceiling light */
+  @keyframes softGlow {
+    0%   { opacity: 0.10; }
+    50%  { opacity: 0.25; }
+    100% { opacity: 0.10; }
+  }
+
+  /* Pulse animation for CTA */
+  @keyframes pulse-soft {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.3); }
+    50% { box-shadow: 0 0 0 12px rgba(74, 111, 165, 0); }
+  }
+
+  .star-navy-btn:focus {
+    animation: pulse-soft 2s infinite;
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* ─── 모바일 전면 최적화 (375px ~ 640px) ─── */
+  @media (max-width: 640px) {
+    /* 가로 스크롤 완전 방지 */
+    html, body, #root {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
+    /* 섹션 패딩 축소 */
+    section {
+      padding-top: 2.5rem !important;
+      padding-bottom: 2.5rem !important;
+    }
+
+    /* 컨테이너 좌우 패딩 */
+    .container {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+      max-width: 100% !important;
+    }
+
+    /* 섹션 헤딩 크기 축소 */
+    h2 {
+      font-size: clamp(1.3rem, 6vw, 1.8rem) !important;
+      line-height: 1.3 !important;
+    }
+    h3 {
+      font-size: clamp(1rem, 4.5vw, 1.3rem) !important;
+    }
+    h4 {
+      font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+    }
+
+    /* 그리드 갭 축소 */
+    .gap-8 { gap: 1.25rem !important; }
+    .gap-10 { gap: 1.5rem !important; }
+    .gap-12 { gap: 1.5rem !important; }
+    .gap-16 { gap: 2rem !important; }
+
+    /* 카드 패딩 축소 */
+    .p-6 { padding: 1rem !important; }
+    .p-8 { padding: 1.25rem !important; }
+    .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+    .py-8 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+
+    /* 이미지 오버플로우 방지 */
+    img {
+      max-width: 100% !important;
+      height: auto;
+    }
+
+    /* 텍스트 줄바꿈 허용 */
+    .whitespace-nowrap {
+      white-space: normal !important;
+    }
+
+    /* 모바일에서 큰 fixed 너비 방지 */
+    [style*="width: 400px"],
+    [style*="width:400px"],
+    [style*="min-width: 400px"] {
+      width: 100% !important;
+      min-width: unset !important;
+    }
+
+    /* 절대 위치 데코 요소 오버플로우 방지 */
+    .overflow-hidden {
+      overflow: hidden !important;
+    }
+
+    /* 버튼 텍스트 줄바꿈 방지 (너무 좁아지는 경우) */
+    .star-mint-btn, .star-navy-btn {
+      font-size: 0.85rem !important;
+      padding: 0.6rem 1rem !important;
+    }
+
+    /* 의료진 선택 카드 - 모바일에서 이름 텍스트 크기 줄이기 */
+    .doctor-select-card {
+      padding: 0.5rem !important;
+    }
+
+    /* 탭 버튼 - 모바일에서 작게 */
+    .tab-btn {
+      padding: 0.4rem 0.75rem !important;
+      font-size: 0.8rem !important;
+    }
+  }
+
+  /* Image hover zoom */
+  .img-zoom {
+    overflow: hidden;
+  }
+  .img-zoom img {
+    transition: transform 0.5s ease;
+  }
+  .img-zoom:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Card hover glow */
+  .card-glow:hover {
+    box-shadow: 0 8px 32px rgba(129, 199, 201, 0.2);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, #4A6FA5, #81C7C9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mobile Menu Item Stagger Animation */
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes menuItemInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .menu-item-stagger {
+    opacity: 0;
+    animation: menuItemIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  .menu-cta-stagger {
+    opacity: 0;
+    animation: menuItemInUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+
+  /* Mobile Menu Item Stagger OUT Animation (역방향 닫힘) */
+  @keyframes menuItemOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+  }
+
+  @keyframes menuItemOutDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  .menu-item-stagger-out {
+    animation: menuItemOut 0.22s cubic-bezier(0.55, 0, 0.8, 0.45) forwards;
+    animation-delay: var(--stagger-out-delay, 0ms);
+  }
+
+  .menu-cta-stagger-out {
+    animation: menuItemOutDown 0.18s cubic-bezier(0.55, 0, 0.8, 0.45) forwards;
+    animation-delay: var(--stagger-out-delay, 0ms);
+  }
+
+  /* Mobile padding for floating CTA */
+  @media (max-width: 768px) {
+    main {
+      padding-bottom: 60px;
+    }
+  }
+
+  /* ─── Hero Section 모바일 최적화 (375px ~ 640px) ─── */
+  @media (max-width: 640px) {
+    /* Hero section - 화면 전체 채우기 */
+    #home {
+      min-height: 100svh !important;
+      min-height: 100dvh !important;
+    }
+
+    /* Hero 콘텐츠 컨테이너 */
+    #home > .relative.z-10 {
+      padding-top: clamp(68px, 9vh, 88px) !important;
+      padding-bottom: clamp(52px, 8vh, 68px) !important;
+      max-width: 100% !important;
+      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
+      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
+    }
+
+    /* 로고 마진 축소 */
+    #home > .relative.z-10 > .hero-fade:first-child {
+      margin-bottom: clamp(0.6rem, 2.5vw, 1rem) !important;
+    }
+    /* 병원명 h1 - 모바일에서 letter-spacing 축소 및 폰트 크기 최적화 */
+    #home h1 {
+      font-size: clamp(1.3rem, 7.5vw, 2rem) !important;
+      letter-spacing: 0.04em !important;
+      word-break: keep-all !important;
+      overflow-wrap: break-word !important;
+      width: 100% !important;
+    }
+  }
+
+  /* ─── Hero Section 소형 모바일 최적화 (360px 이하) ─── */
+  @media (max-width: 360px) {
+    #home > .relative.z-10 {
+      padding-top: 68px !important;
+      padding-bottom: 52px !important;
+    }
+  }
+}
+
+  /* ── 카드 호버 이미지 확대 효과 ── */
+  @keyframes imageZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+
+  .treatment-card img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .treatment-card:hover img {
+    transform: scale(1.08);
+  }
+
+
+/* ── 모달 스크롤바 스타일 (데스크톱만) ── */
+@media (min-width: 1024px) {
+  /* 스크롤바 전체 스타일 */
+  .flex-1.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* 스크롤바 트랙 */
+  .flex-1.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* 스크롤바 썸 (드래그 부분) */
+  .flex-1.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  .flex-1.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: #f0f0f0;
+    background-clip: content-box;
+  }
+
+  /* 위/아래 화살표 버튼 */
+  .flex-1.overflow-y-auto::-webkit-scrollbar-button {
+    display: block;
+    height: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* 위쪽 화살표 */
+  .flex-1.overflow-y-auto::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="%23ffffff" d="M6 2l4 5H2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
+  }
+
+  /* 아래쪽 화살표 */
+  .flex-1.overflow-y-auto::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="%23ffffff" d="M6 10L2 5h8z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
   }
 }

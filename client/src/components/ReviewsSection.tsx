@@ -1,126 +1,292 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { useLang } from "@/contexts/useLang";
+/**
+ * ReviewsSection - 실제 후기
+ * 디자인: 연민트 배경, 슬라이더 형태 후기 카드
+ * 모바일: 가로 스와이프 슬라이더 (터치 스와이프 + 자동 슬라이드)
+ * 데스크톱: 3열 그리드 (페이지네이션)
+ */
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
+import { useLang } from "@/contexts/LangContext";
 
-const reviews = [
-  {
-    id: 1,
-    name: "김*영",
-    treatment: "써마지 FLX",
-    rating: 5,
-    text: "써마지 시술 후 피부 탄력이 눈에 띄게 좋아졌어요. 원장님이 직접 꼼꼼하게 시술해 주셔서 믿음이 갔습니다. 다음에도 꼭 방문할 예정입니다.",
-    date: "2026.03",
-  },
-  {
-    id: 2,
-    name: "이*수",
-    treatment: "눈밑지방재배치",
-    rating: 5,
-    text: "수술 없이 레이저로 눈밑 지방을 개선할 수 있다는 게 놀라웠어요. 회복도 빠르고 결과도 만족스럽습니다. 친절한 상담 덕분에 결정이 쉬웠어요.",
-    date: "2026.02",
-  },
-  {
-    id: 3,
-    name: "박*진",
-    treatment: "울쎄라피 프라임",
-    rating: 5,
-    text: "울쎄라피 프라임 시술 받았는데 리프팅 효과가 정말 좋네요. 전문의 선생님이 직접 시술해 주시고 시술 전 충분한 설명도 해주셔서 안심이 됐습니다.",
-    date: "2026.01",
-  },
-  {
-    id: 4,
-    name: "최*희",
-    treatment: "기미 치료 프로그램",
-    rating: 5,
-    text: "오랫동안 고민하던 기미가 많이 옅어졌어요. 복합 레이저 치료 덕분에 피부 톤도 밝아진 것 같습니다. 상담부터 시술까지 전반적으로 만족합니다.",
-    date: "2025.12",
-  },
-  {
-    id: 5,
-    name: "정*민",
-    treatment: "프로파운드 RF",
-    rating: 5,
-    text: "1회 시술로 이렇게 효과가 좋을 줄 몰랐어요. 피부 탄력이 확실히 개선되었고 주변에서도 좋아졌다고 하더라고요. 적극 추천합니다.",
-    date: "2025.11",
-  },
-];
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          size={14}
+          fill={i < rating ? "#FEE500" : "none"}
+          style={{ color: i < rating ? "#FEE500" : "#D1D5DB" }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function ReviewsSection() {
+  const sectionRef = useSectionReveal(80);
   const { t } = useLang();
-  const [page, setPage] = useState(0);
-  const perPage = 3;
+  const rv = t.reviews;
+
+  const reviews = rv.items;
+  const [current, setCurrent] = useState(0);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth < 768
+  );
+  const perPage = isMobile ? 1 : 3;
   const totalPages = Math.ceil(reviews.length / perPage);
-  const visible = reviews.slice(page * perPage, page * perPage + perPage);
+
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const goNext = useCallback(() => {
+    setCurrent((c) => (c + 1) % totalPages);
+  }, [totalPages]);
+
+  const goPrev = useCallback(() => {
+    setCurrent((c) => (c - 1 + totalPages) % totalPages);
+  }, [totalPages]);
+
+  const startAuto = useCallback(() => {
+    if (!isMobile) return;
+    if (autoTimer.current) clearInterval(autoTimer.current);
+    autoTimer.current = setInterval(goNext, 4000);
+  }, [isMobile, goNext]);
+
+  useEffect(() => {
+    startAuto();
+    return () => {
+      if (autoTimer.current) clearInterval(autoTimer.current);
+    };
+  }, [startAuto]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setCurrent(0);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    if (autoTimer.current) clearInterval(autoTimer.current);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) goNext();
+      else goPrev();
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+    startAuto();
+  };
+
+  const visible = reviews.slice(current * perPage, current * perPage + perPage);
 
   return (
-    <section id="reviews" className="py-20 bg-[var(--star-bg-section)]">
+    <section ref={sectionRef} id="reviews" className="py-16 sm:py-24 star-section-alt">
       <div className="container">
-        <div className="text-center mb-14">
-          <p className="section-label mb-3">{t.reviews.label}</p>
-          <h2 className="text-3xl md:text-4xl font-black text-[#1a2744] gold-underline inline-block">
-            {t.reviews.title}
+        {/* Section Header */}
+        <div className="text-center mb-8 sm:mb-12 reveal-heading">
+          <p
+            className="font-montserrat font-semibold text-sm tracking-widest mb-3"
+            style={{ color: "#81C7C9" }}
+          >
+            {rv.eyebrow}
+          </p>
+          <h2
+            className="mb-4"
+            style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
+          >
+            {rv.sectionTitle}
           </h2>
+          <div className="star-divider mx-auto mb-4" />
+          <div className="flex justify-center items-center gap-2">
+            <div className="flex gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={18} fill="#FEE500" style={{ color: "#FEE500" }} />
+              ))}
+            </div>
+            <span className="font-montserrat font-bold text-lg" style={{ color: "#1F2937" }}>4.9</span>
+            <span className="text-sm" style={{ color: "#6B7280" }}>/ 5.0 · {rv.ratingSource}</span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {visible.map(review => (
-            <div key={review.id} className="bg-white rounded-2xl p-6 shadow-sm card-hover">
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(review.rating)].map((_, i) => (
-                  <Star key={i} size={14} className="fill-[#c9a96e] text-[#c9a96e]" />
+        {/* 모바일: 스와이프 슬라이더 / 데스크톱: 3열 그리드 */}
+        {isMobile ? (
+          <div
+            className="relative"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-400 ease-in-out"
+                style={{ transform: `translateX(-${current * 100}%)` }}
+              >
+                {reviews.map((r, idx) => (
+                  <div key={idx} className="w-full flex-shrink-0 px-1">
+                    <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
+                      <Quote size={28} style={{ color: "#EEF7F7", marginBottom: "0.5rem" }} />
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
+                        "{r.text}"
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <StarRating rating={r.rating} />
+                            <span className="text-xs font-semibold" style={{ color: "#4A6FA5" }}>
+                              {r.treatment}
+                            </span>
+                          </div>
+                          <div className="text-xs" style={{ color: "#9CA3AF" }}>
+                            {r.name} · {r.age} · {r.date}
+                          </div>
+                        </div>
+                        <span
+                          className="text-xs px-2 py-1 rounded-full font-semibold"
+                          style={{
+                            background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#E8F9EF" : "#FFFDE7",
+                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#03C75A" : "#F59E0B",
+                          }}
+                        >
+                          {r.platform}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-4">
-                "{review.text}"
-              </p>
-              <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-                <div>
-                  <p className="font-bold text-[#1a2744] text-sm">{review.name}</p>
-                  <p className="text-xs text-[#c9a96e]">{review.treatment}</p>
-                </div>
-                <span className="text-xs text-gray-400">{review.date}</span>
-              </div>
             </div>
-          ))}
-        </div>
 
-        {/* 페이지네이션 */}
-        <div className="flex items-center justify-center gap-3">
-          <button
-            onClick={() => setPage(p => Math.max(0, p - 1))}
-            disabled={page === 0}
-            className="p-2 rounded-full border border-gray-200 hover:border-[#c9a96e] disabled:opacity-30 transition-colors"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          {[...Array(totalPages)].map((_, i) => (
             <button
-              key={i}
-              onClick={() => setPage(i)}
-              className={`w-8 h-8 rounded-full text-sm font-bold transition-colors ${
-                page === i ? "bg-[#1a2744] text-white" : "text-gray-400 hover:text-[#1a2744]"
-              }`}
+              onClick={() => { goPrev(); startAuto(); }}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
+              style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              aria-label={rv.prevLabel}
             >
-              {i + 1}
+              <ChevronLeft size={16} />
             </button>
-          ))}
-          <button
-            onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-            disabled={page === totalPages - 1}
-            className="p-2 rounded-full border border-gray-200 hover:border-[#c9a96e] disabled:opacity-30 transition-colors"
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
+            <button
+              onClick={() => { goNext(); startAuto(); }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
+              style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              aria-label={rv.nextLabel}
+            >
+              <ChevronRight size={16} />
+            </button>
 
-        <div className="text-center mt-6">
+            <div className="flex justify-center gap-2 mt-5">
+              {reviews.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setCurrent(i); startAuto(); }}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === current ? "22px" : "7px",
+                    height: "7px",
+                    background: i === current ? "#4A6FA5" : "#C7E8E9",
+                  }}
+                  aria-label={`${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <p className="text-center text-xs mt-3" style={{ color: "#9CA3AF" }}>
+              {rv.swipeHint}
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-3 gap-5 mb-8">
+              {visible.map((r, i) => (
+                <div
+                  key={i}
+                  className="reveal-card"
+                  style={{ transitionDelay: `${i * 0.1}s` }}
+                >
+                  <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
+                    <Quote size={28} style={{ color: "#EEF7F7", marginBottom: "0.5rem" }} />
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
+                      "{r.text}"
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <StarRating rating={r.rating} />
+                          <span className="text-xs font-semibold" style={{ color: "#4A6FA5" }}>
+                            {r.treatment}
+                          </span>
+                        </div>
+                        <div className="text-xs" style={{ color: "#9CA3AF" }}>
+                          {r.name} · {r.age} · {r.date}
+                        </div>
+                      </div>
+                      <span
+                        className="text-xs px-2 py-1 rounded-full font-semibold"
+                        style={{
+                          background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#E8F9EF" : "#FFFDE7",
+                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#03C75A" : "#F59E0B",
+                        }}
+                      >
+                        {r.platform}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center items-center gap-4">
+              <button
+                onClick={goPrev}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
+                style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <div className="flex gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className="w-2.5 h-2.5 rounded-full transition-all"
+                    style={{ background: i === current ? "#4A6FA5" : "#C7E8E9" }}
+                    aria-label={`${i + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={goNext}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
+                style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* More Reviews CTA */}
+        <div className="text-center mt-8">
           <a
-            href="https://map.naver.com/v5/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC"
+            href="https://pcmap.place.naver.com/hospital/12020103/review/visitor?fromPanelNum=2&locale=ko&searchText=%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC&svcName=map_pcv5&timestamp=202603301414"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-[#c9a96e] hover:underline font-semibold"
+            className="text-sm font-semibold underline underline-offset-4 transition-colors hover:opacity-70"
+            style={{ color: "#4A6FA5" }}
           >
-            {t.reviews.more} →
+            {rv.moreReviews}
           </a>
         </div>
       </div>

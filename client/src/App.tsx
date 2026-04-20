@@ -7,41 +7,36 @@ import { LangProvider } from "./contexts/LangContext";
 import { lazy, Suspense } from "react";
 import Home from "./pages/Home";
 
+// 동적 import로 라우트별 코드 스플리팅
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const Events = lazy(() => import("@/pages/Events"));
+const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
 const EventDetail = lazy(() => import("@/pages/EventDetail"));
 const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
 const AdminDashboard = lazy(() => import("@/pages/AdminDashboard"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("@/pages/NonCoveredGuide"));
-const Directions = lazy(() => import("@/pages/Directions"));
-const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
+// 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
 
+// 로드 중 로딩 스폰너
 function PageLoader() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#0d1b2a]">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 border-2 border-[#c9a96e] border-t-transparent rounded-full animate-spin" />
-        <p className="text-white/50 text-sm">Loading...</p>
-      </div>
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
     </div>
   );
 }
-
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/events" component={Events} />
-        <Route path="/events/:id" component={EventDetail} />
-        <Route path="/treatment/:name" component={TreatmentDetail} />
-        <Route path="/directions" component={Directions} />
-        <Route path="/foreign-guide" component={ForeignGuide} />
-        <Route path="/admin" component={AdminDashboard} />
-        <Route path="/privacy" component={Privacy} />
-        <Route path="/non-covered" component={NonCoveredGuide} />
-        <Route path="/404" component={NotFound} />
+        <Route path={"/"} component={Home} />
+        <Route path={"/foreign-guide"} component={ForeignGuide} />
+        <Route path={"/events/:id"} component={EventDetail} />
+        <Route path={"/treatment/:name"} component={TreatmentDetail} />
+        <Route path={"/admin"} component={AdminDashboard} />
+        <Route path={"/privacy"} component={Privacy} />
+        <Route path={"/non-covered"} component={NonCoveredGuide} />
+        <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

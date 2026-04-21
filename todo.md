@@ -190,3 +190,10 @@
 - [x] 정상가와 할인가 레이아웃 정렬
 - [x] 개발 서버에서 테스트 및 검증
 - [x] 최종 배포 및 체크포인트 저장
+
+## Phase 30: FAQ 스키마 구성 (AEO 최적화)
+- [x] react-helmet-async 패키지 설치
+- [x] main.tsx에서 HelmetProvider 설정
+- [x] FAQSection.tsx 수정 - FAQ 스키마 로직 추가
+- [x] 개발 서버에서 테스트 및 검증
+- [ ] 최종 배포 및 체크포인트 저장

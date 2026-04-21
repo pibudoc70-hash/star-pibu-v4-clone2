@@ -97,7 +97,7 @@ export default function SpecialEventSection() {
             <p className="text-lg text-gray-600">진행중인 이벤트가 없습니다.</p>
           </div>
         ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {specialEvents.map((event) => {
             // priceRows 파싱
             let priceRows: PriceRow[] = [];

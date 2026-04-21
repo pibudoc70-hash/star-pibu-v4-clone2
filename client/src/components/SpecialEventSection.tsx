@@ -160,7 +160,7 @@ export default function SpecialEventSection() {
                     {/* 할인가만 표시 (초기 상태) */}
                     <div className="mb-6">
                       <p className="text-sm text-gray-500 mb-1">할인가</p>
-                      <p className="text-3xl md:text-4xl font-bold" style={{ color: '#FF9500' }}>
+                      <p className="text-3xl md:text-4xl font-bold" style={{ color: '#d4af6c' }}>
                         {displayPrice.discountPrice.toLocaleString()}
                         <span className="text-lg md:text-xl ml-1">원</span>
                       </p>
@@ -213,7 +213,7 @@ export default function SpecialEventSection() {
                         </div>
                         <div>
                           <p className="text-xs text-gray-500 mb-1">할인가</p>
-                          <p className="text-2xl font-bold" style={{ color: '#FF9500' }}>
+                          <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
                             {displayPrice.discountPrice.toLocaleString()}원
                           </p>
                         </div>
@@ -235,7 +235,7 @@ export default function SpecialEventSection() {
                               </div>
                               <div>
                                 <p className="text-xs text-gray-500 mb-1">할인가</p>
-                                <p className="text-xl font-bold" style={{ color: '#FF9500' }}>
+                                <p className="text-xl font-bold" style={{ color: '#d4af6c' }}>
                                   {row.discountPrice.toLocaleString()}원
                                 </p>
                               </div>

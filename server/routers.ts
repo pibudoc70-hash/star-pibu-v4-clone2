@@ -320,6 +320,22 @@ export const appRouter = router({
         return { success: true };
       }),
 
+    // Admin: Update event sort order (drag and drop)
+    updateSortOrder: adminProcedure
+      .input(z.object({
+        items: z.array(z.object({ id: z.number(), sortOrder: z.number() }))
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Database not available");
+        for (const item of input.items) {
+          await db.update(events)
+            .set({ sortOrder: item.sortOrder })
+            .where(eq(events.id, item.id));
+        }
+        return { success: true };
+      }),
+
     // Admin: Delete event
     delete: adminProcedure
       .input(z.object({ id: z.number() }))

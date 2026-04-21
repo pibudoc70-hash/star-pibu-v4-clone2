@@ -196,4 +196,9 @@
 - [x] main.tsx에서 HelmetProvider 설정
 - [x] FAQSection.tsx 수정 - FAQ 스키마 로직 추가
 - [x] 개발 서버에서 테스트 및 검증
+- [x] 최종 배포 및 체크포인트 저장
+
+## Phase 31: 카카오톡 상담 링크 업데이트
+- [x] FAQSection.tsx의 카카오늤 링크 변경 (https://pf.kakao.com/_HNyGC)
+- [x] 개발 서버에서 링크 동작 확인
 - [ ] 최종 배포 및 체크포인트 저장

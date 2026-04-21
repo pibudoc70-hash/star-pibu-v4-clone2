@@ -159,7 +159,7 @@ export default function FAQSection() {
                 : "还有其他问题吗？请通过KakaoTalk随时咨询我们。"}
             </p>
             <a
-              href="https://pf.kakao.com/_xnxbxdxj"
+              href="https://pf.kakao.com/_HNyGC"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"

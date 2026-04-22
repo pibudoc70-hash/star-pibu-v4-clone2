@@ -143,7 +143,7 @@ export default function SpecialEventSection() {
                 {!isExpanded ? (
                   <div className="flex flex-col flex-1">
                     {/* 제목 */}
-                    <h3 className="text-xl md:text-2xl font-bold text-navy mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
                       {event.title}
                     </h3>
 
@@ -181,7 +181,7 @@ export default function SpecialEventSection() {
                   // 카드 컨테이너 - 확장 상태
                   <div className="flex flex-col flex-1">
                     {/* 제목 */}
-                    <h3 className="text-xl md:text-2xl font-bold text-navy mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
                       {event.title}
                     </h3>
 
@@ -195,12 +195,7 @@ export default function SpecialEventSection() {
                       {event.productName}
                     </p>
 
-                    {/* 수면마취비 정보 */}
-                    {event.anesthesiaFee && (
-                      <p className="text-sm text-orange-600 font-semibold mb-4">
-                        {event.anesthesiaFee}
-                      </p>
-                    )}
+
 
                     {/* 정상가와 할인가 (확장 상태) */}
                     <div className="mb-6 bg-gray-50 p-4 rounded-lg">

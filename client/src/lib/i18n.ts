@@ -77,6 +77,7 @@ export interface I18nContent {
       name: string;
       title: string;
       specialty: string;
+      intro?: string;
       careers: string[];
     }>;
   };
@@ -270,6 +271,7 @@ export const i18n: Record<Lang, I18nContent> = {
           name: "조시형",
           title: "원장",
           specialty: "피부과 전문의 · 의학박사",
+          intro: "2006년 부산 서면에서 첫 진료를 시작한 이래, 어느덧 20년이 넘는 시간 동안 수많은 환자분들의 피부 고민을 마주해 왔습니다.\n피부 치료는 단순히 장비를 사용하는 기술이 아니라, 환자의 피부 상태를 정확히 읽어내는 '안목'에서 시작됩니다. 무리한 시술보다는 가장 안전하고 자연스러운 결과를 지향합니다.\n앞으로도 변함없이 정직하고 숙련된 진료로 여러분의 피부 건강을 지켜드리겠습니다.",
           careers: [
             "피부과 전문의",
             "부산대학병원 피부과 수련",

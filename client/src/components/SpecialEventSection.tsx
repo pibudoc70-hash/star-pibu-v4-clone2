@@ -4,8 +4,8 @@
  * 데이터: tRPC events.special에서 동적 로드
  * 
  * 가격 행 표시 방식: 토글 방식
- * - 초기: 제목, 이벤트명, 할인가만 표시 + "자세히 보기" 버튼
- * - 클릭: 카드 내에서 확장되어 정상가, 추가 정보 표시 + "접기" 버튼
+ * - 초기: 제목, 이벤트명, 정상가/할인가 표시 + "자세히 보기" 버튼
+ * - 클릭: 카드 내에서 확장되어 추가 정보 표시 + "접기" 버튼
  * - 다시 클릭: 초기 상태로 돌아감
  */
 import { useEffect, useState } from "react";
@@ -153,17 +153,24 @@ export default function SpecialEventSection() {
                     </p>
 
                     {/* 상품명 */}
-                    <p className="text-base font-medium text-gray-700 mb-6">
+                    <p className="text-base font-medium text-gray-700 mb-4">
                       {event.productName}
                     </p>
 
-                    {/* 할인가만 표시 (초기 상태) */}
-                    <div className="mb-6">
-                      <p className="text-sm text-gray-500 mb-1">할인가</p>
-                      <p className="text-3xl md:text-4xl font-bold" style={{ color: '#d4af6c' }}>
-                        {displayPrice.discountPrice.toLocaleString()}
-                        <span className="text-lg md:text-xl ml-1">원</span>
-                      </p>
+                    {/* 정상가와 할인가 (초기 상태) */}
+                    <div className="mb-6 flex items-center gap-6">
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">정상가</p>
+                        <p className="text-sm text-gray-400 line-through">
+                          {displayPrice.normalPrice.toLocaleString()}원
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">할인가</p>
+                        <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
+                          {displayPrice.discountPrice.toLocaleString()}원
+                        </p>
+                      </div>
                     </div>
 
                     {/* 자세히 보기 버튼 */}
@@ -191,48 +198,46 @@ export default function SpecialEventSection() {
                     </p>
 
                     {/* 상품명 */}
-                    <p className="text-base font-medium text-gray-700 mb-6">
+                    <p className="text-base font-medium text-gray-700 mb-4">
                       {event.productName}
                     </p>
 
-
-
                     {/* 정상가와 할인가 (확장 상태) */}
-                    <div className="mb-6 bg-gray-50 p-4 rounded-lg">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div>
-                          <p className="text-xs text-gray-500 mb-1">정상가</p>
-                          <p className="text-sm text-gray-400 line-through">
-                            {displayPrice.normalPrice.toLocaleString()}원
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500 mb-1">할인가</p>
-                          <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
-                            {displayPrice.discountPrice.toLocaleString()}원
-                          </p>
-                        </div>
+                    <div className="mb-4 flex items-center gap-6">
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">정상가</p>
+                        <p className="text-sm text-gray-400 line-through">
+                          {displayPrice.normalPrice.toLocaleString()}원
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 mb-1">할인가</p>
+                        <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
+                          {displayPrice.discountPrice.toLocaleString()}원
+                        </p>
                       </div>
                     </div>
 
                     {/* 추가 가격 행 정보 (여러 개인 경우) */}
                     {hasMultipleRows && (
-                      <div className="mb-6 space-y-3">
+                      <div className="mb-4 space-y-2">
                         {priceRows.slice(1).map((row, idx) => (
-                          <div key={idx} className="bg-gray-50 p-4 rounded-lg">
-                            <h4 className="font-semibold text-navy mb-2">{row.label}</h4>
-                            <div className="flex items-center gap-4">
-                              <div>
-                                <p className="text-xs text-gray-500 mb-1">정상가</p>
-                                <p className="text-sm text-gray-400 line-through">
-                                  {row.normalPrice.toLocaleString()}원
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-500 mb-1">할인가</p>
-                                <p className="text-xl font-bold" style={{ color: '#d4af6c' }}>
-                                  {row.discountPrice.toLocaleString()}원
-                                </p>
+                          <div key={idx} className="flex items-start gap-6">
+                            <div className="flex-1">
+                              <p className="text-xs font-semibold text-navy mb-2">{row.label}</p>
+                              <div className="flex items-center gap-4">
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1">정상가</p>
+                                  <p className="text-xs text-gray-400 line-through">
+                                    {row.normalPrice.toLocaleString()}원
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1">할인가</p>
+                                  <p className="text-lg font-bold" style={{ color: '#d4af6c' }}>
+                                    {row.discountPrice.toLocaleString()}원
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -242,22 +247,48 @@ export default function SpecialEventSection() {
 
                     {/* 상세 설명 */}
                     {event.desc && (
-                      <div className="mb-6">
-                        <p className="text-sm text-gray-600 whitespace-pre-wrap">{event.desc}</p>
+                      <div className="mb-3">
+                        <p className="text-xs text-gray-600 whitespace-pre-wrap">{event.desc}</p>
                       </div>
                     )}
 
                     {/* 내용 */}
                     {event.content && (
-                      <div className="mb-6">
-                        <p className="text-sm text-gray-600 whitespace-pre-wrap">{event.content}</p>
+                      <div className="mb-4">
+                        <p className="text-xs text-gray-600 whitespace-pre-wrap">{event.content}</p>
                       </div>
                     )}
+
+                    {/* 상담 버튼 영역 */}
+                    <div className="flex gap-3 mb-3">
+                      <a
+                        href="https://pf.kakao.com/_HNyGC"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 font-semibold rounded-full transition-colors text-center text-navy hover:opacity-80"
+                        style={{
+                          backgroundColor: '#f7f4ee',
+                          fontSize: '0.875rem',
+                        }}
+                      >
+                        카카오 상담
+                      </a>
+                      <a
+                        href="tel:051-818-2300"
+                        className="flex-1 px-4 py-2 font-semibold rounded-full transition-colors text-center text-navy hover:opacity-80"
+                        style={{
+                          backgroundColor: '#f7f4ee',
+                          fontSize: '0.875rem',
+                        }}
+                      >
+                        전화 상담
+                      </a>
+                    </div>
 
                     {/* 접기 버튼 */}
                     <button
                       onClick={() => toggleExpanded(event.id)}
-                      className="mt-auto px-6 py-3 font-semibold rounded-full transition-colors bg-gray-300 hover:bg-gray-400 text-gray-700"
+                      className="w-full px-6 py-2 font-semibold rounded-full transition-colors bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm"
                     >
                       접기
                     </button>

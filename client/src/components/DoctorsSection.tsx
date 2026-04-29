@@ -4,7 +4,7 @@
  * - 카드 선택 + 상세 패널이 하나의 섹션으로 자연스럽게 연결
  * - 고급스러운 레이아웃: 좌측 세로 탭 + 우측 상세 정보
  */
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -45,7 +45,9 @@ const doctors = [
     cardImage: DR_JO_CARD_IMAGE,
     cardImagePosition: "center 15%",
     badge: "원장",
-    intro: "2006년 부산 서면에서 첫 진료를 시작한 이래, 어느덧 20년이 넘는 시간 동안 수많은 환자분들의 피부 고민을 마주해 왔습니다. 피부 치료는 단순히 장비를 사용하는 기술이 아니라, 환자의 피부 상태를 정확히 읽어내는 '안목'에서 시작됩니다. 무리한 시술보다는 가장 안전하고 자연스러운 결과를 지향합니다. 앞으로도 변함없이 정직하고 숙련된 진료로 여러분의 피부 건강을 지켜드리겠습니다.",
+    intro: `2006년 부산 서면에서 첫 진료를 시작한 이래, 어느덧 20년이 넘는 시간 동안 수많은 환자분들의 피부 고민을 마주해 왔습니다.
+피부 치료는 단순히 장비를 사용하는 기술이 아니라, 환자의 피부 상태를 정확히 읽어내는 '안목'에서 시작됩니다. 무리한 시술보다는 가장 안전하고 자연스러운 결과를 지향합니다.
+앞으로도 변함없이 정직하고 숙련된 진료로 여러분의 피부 건강을 지켜드리겠습니다.`,
     credentials: [
       { icon: Award, label: "자격", text: "피부과 전문의" },
       { icon: GraduationCap, label: "학력", text: "부산대학병원 피부과 수련" },
@@ -67,7 +69,8 @@ const doctors = [
     cardImage: DR_WOO_IMAGE_DESKTOP_JPG,
     cardImagePosition: "center 15%",
     badge: "원장",
-    intro: "가톨릭의대 피부과 수련과 고운세상 피부과에서의 폭넓은 임상 경험을 바탕으로, 한 분 한 분의 피부 고민에 공감하며 진료합니다. 단순히 증상만을 보는 것이 아니라 환자분의 피부 상태를 세심하게 체크하여 가장 조화롭고 효과적인 치료 솔루션을 제안해 드립니다. 특히 여드름과 색소 치료, 체계적인 피부 관리를 통해 건강한 아름다움을 되찾아 드리는 데 앞장서겠습니다.",
+    intro: `피부과 전문의로서 환자분들의 피부 건강을 최우선으로 생각합니다.
+정확한 진단과 맞춤형 치료를 통해 최고의 결과를 제공하기 위해 노력하겠습니다.`,
     credentials: [
       { icon: Award, label: "자격", text: "피부과 전문의" },
       { icon: GraduationCap, label: "학력", text: "카톨릭의대 피부과 수련" },
@@ -87,7 +90,8 @@ const doctors = [
     cardImage: DR_LEE_IMAGE_DESKTOP_JPG,
     cardImagePosition: "center 15%",
     badge: "원장",
-    intro: "의학박사의 전문적인 식견과 현장에서 다져진 풍부한 임상 데이터를 바탕으로 환자 한 분 한 분께 집중합니다. 레이저 시술부터 까다로운 피부질환 치료까지, 무엇보다 환자의 안전과 만족을 최우선으로 생각하며 세심하게 진단합니다. 풍부한 경험이 증명하는 차별화된 진료로 여러분의 피부 건강을 든든하게 지켜드리겠습니다.",
+    intro: `의학박사로서 최신 피부과학 지식을 바탕으로 환자분들께 최고 수준의 의료 서비스를 제공합니다.
+안전하고 효과적인 치료를 통해 여러분의 피부 건강을 지켜드리겠습니다.`,
     credentials: [
       { icon: Award, label: "자격", text: "피부과 전문의" },
       { icon: GraduationCap, label: "학력", text: "고신대학교 의과대학 의학박사" },
@@ -437,9 +441,14 @@ export default function DoctorsSection() {
                 <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
 
                 {/* 소개 */}
-                <p className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8, paddingBottom: '26px', whiteSpace: 'pre-line', fontSize: '15px' }}>
-                  {doctor.intro}
-                </p>
+                <div className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8, paddingBottom: '26px', fontSize: '15px' }}>
+                  {doctor.intro && doctor.intro.split('\n').map((line, idx, arr) => (
+                    <React.Fragment key={idx}>
+                      <p style={{ margin: '0 0 0.5em 0', whiteSpace: 'pre-wrap' }}>{line}</p>
+                      {idx < arr.length - 1 && <div style={{ height: '0.5em' }} />}
+                    </React.Fragment>
+                  ))}
+                </div>
 
                 {/* 전문 시술 태그 */}
                 <div style={{ marginBottom: "32px" }}>

@@ -102,3 +102,51 @@ export const events = mysqlTable("events", {
 });
 export type Event = typeof events.$inferSelect;
 export type InsertEvent = typeof events.$inferInsert;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 시술·장비 관리 테이블
+// ─────────────────────────────────────────────────────────────────────────────
+export const treatments = mysqlTable("treatments", {
+  id: int("id").autoincrement().primaryKey(),
+  categoryId: varchar("categoryId", { length: 50 }).notNull(), // best, lifting, eye, vitiligo, pigment, scar, acne_laser, rosacea, acne, fungus, psoriasis, volume, botox
+  name: varchar("name", { length: 200 }).notNull(),
+  nameEn: varchar("nameEn", { length: 200 }).notNull(),
+  desc: text("desc").notNull(),
+  time: varchar("time", { length: 50 }).notNull(), // "60~90분"
+  recovery: varchar("recovery", { length: 50 }).notNull(), // "당일 일상"
+  badge: varchar("badge", { length: 100 }).default(""),
+  badgeColor: varchar("badgeColor", { length: 20 }).default("#4A6FA5"),
+  image: text("image"), // 메인 이미지 URL
+  images: text("images").default("[]"), // JSON 배열: 복수 이미지
+  imgBg: varchar("imgBg", { length: 20 }).default(""),
+  cardBannerImage: text("cardBannerImage"), // 카드 배너 이미지
+  detail: text("detail"), // 상세 설명
+  caution: text("caution"), // 주의사항
+  sessions: varchar("sessions", { length: 200 }).default(""), // 권장 횟수/주기
+  effect: text("effect"), // 기대 효과
+  related: text("related").default("[]"), // JSON 배열: 연관 시술
+  steps: text("steps").default("[]"), // JSON 배열: 치료 단계
+  youtubeUrl: text("youtubeUrl"), // YouTube 영상 URL
+  modalImage: text("modalImage"), // 모달 이미지 (유튜브 대신)
+  best: mysqlEnum("best", ["0", "1"]).default("0"), // Best 시술 여부
+  sortOrder: int("sortOrder").notNull().default(0),
+  isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type Treatment = typeof treatments.$inferSelect;
+export type InsertTreatment = typeof treatments.$inferInsert;
+
+export const treatmentCategories = mysqlTable("treatmentCategories", {
+  id: varchar("id", { length: 50 }).primaryKey(), // best, lifting, eye, vitiligo, etc.
+  label: varchar("label", { length: 100 }).notNull(),
+  labelEn: varchar("labelEn", { length: 100 }).notNull(),
+  desc: text("desc").notNull(),
+  icon: varchar("icon", { length: 50 }).notNull(), // lucide-react 아이콘 이름
+  sortOrder: int("sortOrder").notNull().default(0),
+  isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type TreatmentCategory = typeof treatmentCategories.$inferSelect;
+export type InsertTreatmentCategory = typeof treatmentCategories.$inferInsert;

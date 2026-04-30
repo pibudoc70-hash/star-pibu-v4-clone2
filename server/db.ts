@@ -1,7 +1,7 @@
 import { eq, desc, asc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, events, popupEvents, reservations, guestOtps } from "../drizzle/schema";
-import type { InsertEvent, InsertReservation } from "../drizzle/schema";
+import { InsertUser, users, events, popupEvents, reservations, guestOtps, treatments, treatmentCategories } from "../drizzle/schema";
+import type { InsertEvent, InsertReservation, InsertTreatment, InsertTreatmentCategory, Treatment, TreatmentCategory } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -192,4 +192,81 @@ export async function getSpecialEvents() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+}
+
+// ─── 시술·장비 카테고리 관련 ────────────────────────────────────────────────────
+export async function getAllTreatmentCategories() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(treatmentCategories).where(eq(treatmentCategories.isActive, "1")).orderBy(asc(treatmentCategories.sortOrder));
+}
+
+export async function getTreatmentCategoryById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(treatmentCategories).where(eq(treatmentCategories.id, id)).limit(1);
+  return rows[0];
+}
+
+export async function createTreatmentCategory(data: InsertTreatmentCategory) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.insert(treatmentCategories).values(data);
+}
+
+export async function updateTreatmentCategory(id: string, data: Partial<InsertTreatmentCategory>) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(treatmentCategories).set(data).where(eq(treatmentCategories.id, id));
+}
+
+export async function deleteTreatmentCategory(id: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.delete(treatmentCategories).where(eq(treatmentCategories.id, id));
+}
+
+// ─── 시술·장비 관련 ────────────────────────────────────────────────────────────
+export async function getTreatmentsByCategory(categoryId: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(treatments).where(and(eq(treatments.categoryId, categoryId), eq(treatments.isActive, "1"))).orderBy(asc(treatments.sortOrder));
+}
+
+export async function getAllTreatments() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(treatments).where(eq(treatments.isActive, "1")).orderBy(asc(treatments.sortOrder));
+}
+
+export async function getTreatmentById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(treatments).where(eq(treatments.id, id)).limit(1);
+  return rows[0];
+}
+
+export async function createTreatment(data: InsertTreatment) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const result = await db.insert(treatments).values(data);
+  return result;
+}
+
+export async function updateTreatment(id: number, data: Partial<InsertTreatment>) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(treatments).set(data).where(eq(treatments.id, id));
+}
+
+export async function deleteTreatment(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.delete(treatments).where(eq(treatments.id, id));
+}
+
+export async function getTreatmentsByBest() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(treatments).where(and(eq(treatments.best, "1"), eq(treatments.isActive, "1"))).orderBy(asc(treatments.sortOrder));
 }

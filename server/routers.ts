@@ -1,9 +1,10 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
+import { treatmentsRouter } from "./treatments-router";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents } from "./db";
-import { users, popupEvents, events } from "../drizzle/schema";
+import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "./db";
+import { users, popupEvents, events, treatments, treatmentCategories } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
@@ -11,6 +12,7 @@ import { storagePut } from "./storage";
 
 export const appRouter = router({
   system: systemRouter,
+  treatments: treatmentsRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

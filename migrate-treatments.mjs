@@ -1,0 +1,67 @@
+import { getDb } from "./server/db.ts";
+import { sql } from "drizzle-orm";
+
+const db = getDb();
+
+async function migrate() {
+  try {
+    console.log("Creating treatmentCategories table...");
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS \`treatmentCategories\` (
+        \`id\` varchar(50) NOT NULL,
+        \`label\` varchar(100) NOT NULL,
+        \`labelEn\` varchar(100) NOT NULL,
+        \`desc\` text NOT NULL,
+        \`icon\` varchar(50) NOT NULL,
+        \`sortOrder\` int NOT NULL DEFAULT 0,
+        \`isActive\` enum('0','1') NOT NULL DEFAULT '1',
+        \`createdAt\` timestamp NOT NULL DEFAULT (now()),
+        \`updatedAt\` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+        CONSTRAINT \`treatmentCategories_id\` PRIMARY KEY(\`id\`)
+      )
+    `);
+    console.log("✓ treatmentCategories table created");
+
+    console.log("Creating treatments table...");
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS \`treatments\` (
+        \`id\` int AUTO_INCREMENT NOT NULL,
+        \`categoryId\` varchar(50) NOT NULL,
+        \`name\` varchar(200) NOT NULL,
+        \`nameEn\` varchar(200) NOT NULL,
+        \`desc\` text NOT NULL,
+        \`time\` varchar(50) NOT NULL,
+        \`recovery\` varchar(50) NOT NULL,
+        \`badge\` varchar(100) DEFAULT '',
+        \`badgeColor\` varchar(20) DEFAULT '#4A6FA5',
+        \`image\` text,
+        \`images\` text DEFAULT ('[]'),
+        \`imgBg\` varchar(20) DEFAULT '',
+        \`cardBannerImage\` text,
+        \`detail\` text,
+        \`caution\` text,
+        \`sessions\` varchar(200) DEFAULT '',
+        \`effect\` text,
+        \`related\` text DEFAULT ('[]'),
+        \`steps\` text DEFAULT ('[]'),
+        \`youtubeUrl\` text,
+        \`modalImage\` text,
+        \`best\` enum('0','1') DEFAULT '0',
+        \`sortOrder\` int NOT NULL DEFAULT 0,
+        \`isActive\` enum('0','1') NOT NULL DEFAULT '1',
+        \`createdAt\` timestamp NOT NULL DEFAULT (now()),
+        \`updatedAt\` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+        CONSTRAINT \`treatments_id\` PRIMARY KEY(\`id\`)
+      )
+    `);
+    console.log("✓ treatments table created");
+
+    console.log("\n✅ Migration completed successfully!");
+    process.exit(0);
+  } catch (error) {
+    console.error("❌ Migration failed:", error);
+    process.exit(1);
+  }
+}
+
+migrate();

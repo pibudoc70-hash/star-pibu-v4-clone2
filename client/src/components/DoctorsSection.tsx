@@ -1,48 +1,37 @@
-/**
- * DoctorsSection - 의료진 소개 (프리미엄 리디자인)
- * - 메인 컬러 #d2ac67 (골드)
- * - 카드 선택 + 상세 패널이 하나의 섹션으로 자연스럽게 연결
- * - 고급스러운 레이아웃: 좌측 세로 탭 + 우측 상세 정보
- */
-import React, { useState, useEffect, useRef } from "react";
-import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-react";
-import { useSectionReveal } from "@/hooks/useScrollReveal";
-import { useLang } from "@/contexts/LangContext";
+import React, { useState } from "react";
+import {
+  Award,
+  GraduationCap,
+  Stethoscope,
+  ChevronDown,
+  ChevronUp,
+  Phone,
+  MessageCircle,
+  Zap,
+} from "lucide-react";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
+const DR_JO_IMAGE =
+  "https://cdn.manus.space/starpibu-v4/doctors/jo-si-hyeong.jpg";
+const DR_WOO_IMAGE =
+  "https://cdn.manus.space/starpibu-v4/doctors/woo-hye-jin.jpg";
+const DR_LEE_IMAGE =
+  "https://cdn.manus.space/starpibu-v4/doctors/lee-gi-wook.jpg";
 
-const DR_JO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/01_5e3176cb.png";
-const DR_JO_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/01_5e3176cb.png";
-const DR_JO_IMAGE_MOBILE_WEBP = `${CDN}/dr_jo_profile-mobile_ee5a7e09.webp`;
-const DR_JO_IMAGE_MOBILE_JPG = `${CDN}/dr_jo_profile-mobile_ee5a7e09.webp`;
-
-const DR_WOO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/0211_8cfcf452.png";
-const DR_WOO_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/0211_8cfcf452.png";
-const DR_WOO_IMAGE_MOBILE_WEBP = `${CDN}/sub_01_02_img2-mobile_ceacc144.webp`;
-const DR_WOO_IMAGE_MOBILE_JPG = `${CDN}/sub_01_02_img2-mobile_ceacc144.webp`;
-
-const DR_LEE_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/03_46691618.png";
-const DR_LEE_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/03_46691618.png";
-const DR_LEE_IMAGE_MOBILE_WEBP = `${CDN}/sub_01_02_img5-mobile_2e57f5ca.webp`;
-const DR_LEE_IMAGE_MOBILE_JPG = `${CDN}/sub_01_02_img5-mobile_2e57f5ca.webp`;
-
-const DR_JO_IMAGE = DR_JO_IMAGE_DESKTOP_JPG;
-const DR_JO_CARD_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/01_5e3176cb.png";
-const DR_WOO_IMAGE = DR_WOO_IMAGE_DESKTOP_JPG;
-const DR_LEE_IMAGE = DR_LEE_IMAGE_DESKTOP_JPG;
-
-const GOLD = "#d2ac67";
-const GOLD_LIGHT = "#f9f3e8";
-const GOLD_MID = "#e8d5a3";
+const DR_JO_IMAGE_DESKTOP_JPG =
+  "https://cdn.manus.space/starpibu-v4/doctors/jo-si-hyeong-desktop.jpg";
+const DR_WOO_IMAGE_DESKTOP_JPG =
+  "https://cdn.manus.space/starpibu-v4/doctors/woo-hye-jin-desktop.jpg";
+const DR_LEE_IMAGE_DESKTOP_JPG =
+  "https://cdn.manus.space/starpibu-v4/doctors/lee-gi-wook-desktop.jpg";
 
 const doctors = [
   {
     id: 0,
     name: "조시형 원장",
     nameEn: "Dr. JO SI-HYEONG",
-    title: "피부과 전문의 · 의학박사",
+    title: "피부과 전문의",
     image: DR_JO_IMAGE,
-    cardImage: DR_JO_CARD_IMAGE,
+    cardImage: DR_JO_IMAGE_DESKTOP_JPG,
     cardImagePosition: "center 15%",
     badge: "원장",
     intro: `2006년 부산 서면에서 첫 진료를 시작한 이래, 어느덧 20년이 넘는 시간 동안 수많은 환자분들의 피부 고민을 마주해 왔습니다.
@@ -54,11 +43,11 @@ const doctors = [
       { icon: GraduationCap, label: "학력", text: "인제대 피부과 교수역임" },
       { icon: GraduationCap, label: "학력", text: "인제대, 부산대 외래교수역임" },
       { icon: Award, label: "경력", text: "부산경남울산피부과의사회 회장 역임" },
-      { icon: Zap, label: "자문의", text: "써마지 FLX 자문의" },
+      { icon: Award, label: "자문의", text: "써마지 FLX 자문의" },
       { icon: Stethoscope, label: "학회", text: "미국 피부과 학회 정회원(AAD)" },
       { icon: Stethoscope, label: "현직", text: "현) 스타피부과 원장" },
     ],
-    specialties: ["눈밑지방재배치", "울쎼라 프라임", "써마지", "흉터치료"],
+    specialties: ["눈밑지방재배치", "울쎄라 프라임", "써마지", "흉터치료"],
   },
   {
     id: 1,
@@ -79,7 +68,7 @@ const doctors = [
       { icon: Stethoscope, label: "학회", text: "미국 피부과 학회 정회원(AAD)" },
       { icon: Award, label: "경력", text: "전) 고운세상 김양제 피부과원장" },
     ],
-    specialties: ["여드름·흉터", "색소 치료", "피부 관리", "리프팅", "보톡스·필러", "피부질환"],
+    specialties: ["여드름·흉터", "색소 치료", "피부 관리", "리프팅", "보톡스·필러", "피부질환", "울쎄라", "써마지"],
   },
   {
     id: 2,
@@ -100,7 +89,7 @@ const doctors = [
       { icon: Stethoscope, label: "학회", text: "대한 피부과의사회 정회원" },
       { icon: Award, label: "경력", text: "전) 아름다운피부과 원장" },
     ],
-    specialties: ["레이저 시술", "피부질환", "손발톱무좀", "흉터 치료", "색소 레이저", "피부 관리"],
+    specialties: ["레이저 시술", "피부질환", "손발톱무좀", "흉터 치료", "색소 레이저", "피부 관리", "울쎄라", "써마지"],
   },
 ];
 
@@ -111,679 +100,148 @@ const preloadImages = () => {
   });
 };
 
+preloadImages();
+
 export default function DoctorsSection() {
-  const [activeDoctor, setActiveDoctor] = useState(0);
-  const [expandedCredentials, setExpandedCredentials] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
+  const [expandedDoctorId, setExpandedDoctorId] = useState<number | null>(null);
 
-  useEffect(() => {
-    preloadImages();
-  }, []);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
+  const toggleExpand = (id: number) => {
+    setExpandedDoctorId(expandedDoctorId === id ? null : id);
   };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      if (dx < 0) {
-        setActiveDoctor((prev) => (prev + 1) % doctors.length);
-        setExpandedCredentials(false);
-      } else {
-        setActiveDoctor((prev) => (prev - 1 + doctors.length) % doctors.length);
-        setExpandedCredentials(false);
-      }
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
-  const handleDoctorSelect = (i: number) => {
-    setActiveDoctor(i);
-    setExpandedCredentials(false);
-  };
-
-  const handleImageLoad = (id: number) => {
-    setImagesLoaded((prev) => ({ ...prev, [id]: true }));
-  };
-
-  const { t, lang } = useLang();
-
-  const mergedDoctors = doctors.map((d, idx) => ({
-    ...d,
-    name: t.doctors.list[idx]?.name ?? d.name,
-    title: t.doctors.list[idx]?.title ?? d.title,
-    credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "경력", text: c })) ?? d.credentials,
-    specialties: lang === "ko" ? d.specialties : (t.treatments.categories[idx % t.treatments.categories.length]?.items?.slice(0, 4) ?? d.specialties),
-  }));
-
-  const doctor = mergedDoctors[activeDoctor];
-  const sectionRef = useSectionReveal(90);
 
   return (
-    <section
-      ref={sectionRef}
-      id="doctors"
-      className="py-16 sm:py-24"
-      style={{ background: "#faf7f0" }}
-      role="region"
-      aria-label="의료진 소개"
-    >
-      <div className="container">
-        {/* ── Section Header ── */}
-        <div className="text-center mb-10 sm:mb-16 reveal-heading">
-          <p
-            className="font-montserrat text-xs tracking-[0.3em] mb-3 uppercase"
-            style={{ color: GOLD, fontWeight: 300 }}
-          >
-            {t.doctors.label}
+    <section id="doctors" className="py-16 bg-white">
+      <div className="container max-w-6xl">
+        <div className="text-center mb-12">
+          <p className="text-sm font-semibold text-amber-600 tracking-wider mb-2">
+            MEDICAL TEAM
           </p>
-          <h2
-            className="mb-3"
-            style={{ color: "#1a1a1a", fontSize: "clamp(1.6rem, 5vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em" }}
-          >
-            {t.doctors.title}
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            피부과전문의의 3인
           </h2>
-
-          <p className="text-sm leading-snug sm:leading-normal" style={{ color: '#d1ab67', fontSize: '18px', marginTop: '13px', maxWidth: '577px', margin: '13px auto 0' }}>
-            {lang === "ko" ? <><span className="sm:hidden">피부의 격(格)이 바뀌는 순간,<br />전문의의 안목이 차이를 만듭니다.</span><span className="hidden sm:inline">피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.</span></> : lang === "ja" ? "皮膚構造を理解する専門医のみが安全な結果を作ります。" : "只有了解皮肤结构的专科医生才能带来安全的效果。"}
-          </p>
         </div>
 
-        {/* ── 메인 패널: 좌측 의사 탭 + 우측 상세 ── */}
-        <div
-          className="rounded-3xl overflow-hidden"
-          style={{
-            background: "white",
-            boxShadow: "0 20px 60px rgba(210,172,103,0.15), 0 4px 20px rgba(0,0,0,0.06)",
-            border: `1px solid ${GOLD_MID}55`,
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* 데스크톱: 좌측 탭 + 우측 상세 */}
-          <div className="hidden lg:flex" style={{ minHeight: "520px" }}>
-            {/* 좌측 탭 패널 */}
-            <div
-              className="flex flex-col"
-              style={{
-                width: "220px",
-                flexShrink: 0,
-                background: `linear-gradient(170deg, #ede0b8 0%, #dfc99a 60%, #d4b87a 100%)`,
-                borderRight: `1px solid ${GOLD}44`,
-              }}
-            >
-              {/* 상단 브랜드 영역 */}
-              <div
-                className="px-5 py-7 border-b text-center"
-                style={{ borderColor: `${GOLD}33` }}
-              >
-                <div
-                  className="font-montserrat tracking-[0.3em] uppercase mb-3"
-                  style={{ color: '#af9e74', fontWeight: 300, fontSize: "0.84rem", letterSpacing: "0.3em" }}
-                >
-                  Medical Team
-                </div>
-                <div
-                  style={{
-                    color: '#997d4d',
-                    fontSize: "1.26rem",
-                    fontWeight: 700,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  피부과전문의 3인
-                </div>
-
-              </div>
-
-              {/* 의사 탭 목록 */}
-              <div className="flex flex-col flex-1 justify-center">
-                {mergedDoctors.map((d) => {
-                  const isActive = activeDoctor === d.id;
-                  return (
-                    <button
-                      key={d.id}
-                      onClick={() => handleDoctorSelect(d.id)}
-                      className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
-                      style={{
-                        background: isActive
-                          ? `linear-gradient(135deg, ${GOLD}33 0%, ${GOLD}08 100%)`
-                          : "transparent",
-                        borderBottom: `1px solid ${GOLD}22`,
-                      }}
-                    >
-                      {/* 썸네일 */}
-                      <div
-                        style={{
-                          width: "88px",
-                          height: "88px",
-                          borderRadius: "50%",
-                          overflow: "hidden",
-                          flexShrink: 0,
-                          border: isActive ? `2px solid ${GOLD}` : `2px solid ${GOLD}44`,
-                          transition: "border 0.3s ease",
-                        }}
-                      >
-                        <img
-                          src={(d as any).cardImage || d.image}
-                          alt={d.name}
-                          loading="eager"
-                          onLoad={() => handleImageLoad(d.id)}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            objectPosition: (d as any).cardImagePosition || ((d as any).cardImage ? "center top" : "top 10%"),
-                          }}
-                        />
-                      </div>
-                      {/* 이름/직책 */}
-                      <div className="text-center">
-                        <div
-                          className="flex items-baseline justify-center gap-1.5"
-                        >
-                          <span
-                            style={{
-                              color: isActive ? "#2c1f08" : "#5a3e16",
-                              fontWeight: isActive ? 700 : 500,
-                              fontSize: "1.2rem",
-                              transition: "color 0.3s ease",
-                              letterSpacing: "0.03em",
-                            }}
-                          >
-                            {d.name}
-                          </span>
-                          <span
-                            style={{
-                              color: isActive ? "#2c1f08" : "#5a3e16",
-                              fontWeight: 400,
-                              fontSize: "0.86rem",
-                              transition: "color 0.3s ease",
-                              letterSpacing: "0.05em",
-                            }}
-                          >
-                            원장
-                          </span>
-                        </div>
-                        {isActive && (
-                          <div
-                            style={{
-                              width: "20px",
-                              height: "1.5px",
-                              background: GOLD,
-                              margin: "5px auto 0",
-                              borderRadius: "2px",
-                            }}
-                          />
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-
-            </div>
-
-            {/* 우측 상세 패널 */}
-            <div className="flex flex-1">
-              {/* 사진 영역 */}
-              <div
-                className="relative flex-shrink-0"
-                style={{
-                  width: "420px",
-                  background: "#111",
-                  overflow: "hidden",
-                }}
-              >
-                {mergedDoctors.map((d) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {doctors.map((doctor) => (
+            <div key={doctor.id} className="flex flex-col h-full">
+              {/* Card Container */}
+              <div className="bg-gradient-to-b from-amber-50 to-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex-1 flex flex-col">
+                {/* Image Section */}
+                <div className="relative w-full h-64 md:h-72 overflow-hidden bg-gray-200">
                   <img
-                    key={d.id}
-                    src={d.image}
-                    alt={d.name}
-                    loading="eager"
-                    fetchPriority="high"
-                    onLoad={() => handleImageLoad(d.id)}
+                    src={
+                      window.innerWidth >= 768
+                        ? doctor.cardImage
+                        : doctor.image
+                    }
+                    alt={doctor.name}
+                    className="w-full h-full object-cover"
                     style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      objectPosition: "top 0%",
-                      opacity: activeDoctor === d.id ? 1 : 0,
-                      transition: "opacity 0.5s ease",
-                      zIndex: activeDoctor === d.id ? 1 : 0,
+                      objectPosition: doctor.cardImagePosition,
                     }}
                   />
-                ))}
-                {/* 우측 그라디언트 페이드 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    width: "80px",
-                    height: "100%",
-                    background: "linear-gradient(to right, transparent, white)",
-                    zIndex: 2,
-                  }}
-                />
-                {/* 하단 그라디언트 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "120px",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)",
-                    zIndex: 2,
-                  }}
-                />
-              </div>
-
-              {/* 텍스트 상세 */}
-              <div className="flex-1 p-12 flex flex-col gap-5 overflow-y-auto">
-                {/* 이름 헤더 */}
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="flex items-baseline gap-3 flex-wrap" style={{marginTop: '23px'}}>
-                      <h3
-                        style={{
-                          color: "#1a1a1a",
-                          fontSize: '34px',
-                          fontWeight: 800,
-                          lineHeight: 1.15,
-                          letterSpacing: "-0.02em",
-                        }}
-                      >
-                        {doctor.name}
-                      </h3>
-                      <span
-                        className="font-montserrat"
-                        style={{ color: GOLD, fontSize: '18px', fontWeight: 100, letterSpacing: "0.05em" }}
-                      >
-                        {doctor.nameEn}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#C0392B",
-                      color: "white",
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      width: '55px',
-                      height: '55px',
-                      borderRadius: "6px",
-                      lineHeight: 1.3,
-                      textAlign: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    피부과<br />전문의
-                  </div>
-                </div>
-
-                {/* 골드 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
-
-                {/* 소개 */}
-                <div className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8, paddingBottom: '26px', fontSize: '15px' }}>
-                  {doctor.intro && doctor.intro.split('\n').map((line, idx, arr) => (
-                    <React.Fragment key={idx}>
-                      <p style={{ margin: '0 0 0.5em 0', whiteSpace: 'pre-wrap' }}>{line}</p>
-                      {idx < arr.length - 1 && <div style={{ height: '0.5em' }} />}
-                    </React.Fragment>
-                  ))}
-                </div>
-
-                {/* 전문 시술 태그 */}
-                <div style={{ marginBottom: "32px" }}>
-                  <div className="flex items-center gap-2" style={{ marginBottom: "16px" }}>
-                    <Zap size={18} style={{ color: GOLD }} />
-                    <p
-                      className="text-xs tracking-widest uppercase"
-                      style={{ color: GOLD, fontWeight: 600, fontSize: '15px', margin: 0 }}
-                    >
-                      {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : "专业项目"}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2" style={{marginTop: '-6px'}}>
-                    {doctor.specialties.map((s) => (
-                      <span
-                        key={s}
-                        className="px-3 py-1.5 text-xs font-semibold"
-                        style={{
-                          background: GOLD_LIGHT,
-                          color: '#737373',
-                          fontWeight: 500,
-                          border: '1px solid #ffffff',
-                          borderRadius: "20px",
-                          paddingTop: '8px',
-                          height: '35px',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}22, transparent)`, margin: "0 0 32px 0" }} />
-
-                {/* 학력·경력·자격 - 항상 펼침 */}
-                <div>
-                  <div className="flex items-center gap-2" style={{ marginBottom: "16px" }}>
-                    <GraduationCap size={18} style={{ color: GOLD }} />
-                    <p
-                      className="text-xs tracking-widest uppercase"
-                      style={{ color: GOLD, fontWeight: 600, fontSize: '15px', margin: 0 }}
-                    >
-                      {lang === "ko"
-                        ? `학력 · 경력 · 자격`
-                        : lang === "ja"
-                        ? `学歴・経歴・資格`
-                        : `学历·经历·资质`}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {doctor.credentials.map((c) => {
-                      const Icon = c.icon;
-                      return (
-                        <div
-                          key={c.text}
-                          className="flex items-start gap-2.5 py-2"
-                          style={{ borderBottom: `1px solid ${GOLD}15` }}
-                        >
-                          <Icon size={14} style={{ color: GOLD, flexShrink: 0, marginTop: "3px" }} />
-                          <span className="text-xs leading-relaxed" style={{ color: "#555", lineHeight: 1.6, fontSize: '13px' }}>
-                            {c.text}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── 모바일 레이아웃 ── */}
-          <div className="lg:hidden">
-            {/* 모바일 탭 헤더 */}
-            <div
-              className="grid grid-cols-3"
-              style={{ borderBottom: `1px solid ${GOLD}33` }}
-            >
-              {mergedDoctors.map((d) => {
-                const isActive = activeDoctor === d.id;
-                return (
-                  <button
-                    key={d.id}
-                    onClick={() => handleDoctorSelect(d.id)}
-                    className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
-                    style={{
-                      background: isActive ? GOLD_LIGHT : "white",
-                      borderBottom: isActive ? `2px solid ${GOLD}` : "2px solid transparent",
-                    }}
-                  >
-                    {/* 썸네일 */}
-                    <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        border: isActive ? `2px solid ${GOLD}` : "2px solid #e5e7eb",
-                        marginBottom: "6px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <img
-                        src={(d as any).cardImage || d.image}
-                        alt={d.name}
-                        loading="eager"
-                        onLoad={() => handleImageLoad(d.id)}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          objectPosition: (d as any).cardImagePosition || ((d as any).cardImage ? "center 15%" : "top 10%"),
-                        }}
-                      />
-                    </div>
-
-                    <div
-                      style={{
-                        color: isActive ? "#1a1a1a" : "#9CA3AF",
-                        fontWeight: isActive ? 700 : 400,
-                        fontSize: "0.78rem",
-                        textAlign: "center",
-                      }}
-                    >
-                      {d.name}
-                    </div>
-                    <div
-                      style={{
-                        color: isActive ? GOLD : "#C4C4C4",
-                        fontSize: "0.62rem",
-                        marginTop: "1px",
-                        textAlign: "center",
-                      }}
-                    >
-                      원장
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* 모바일 상세 패널 */}
-            <div>
-              {/* 사진 */}
-              <div
-                style={{
-                  position: "relative",
-                  height: "clamp(320px, 70vw, 420px)",
-                  background: "#111",
-                  overflow: "hidden",
-                }}
-              >
-                {mergedDoctors.map((d) => (
-                  <img
-                    key={d.id}
-                    src={(d as any).mobileImage || d.image}
-                    alt={d.name}
-                    loading="eager"
-                    fetchPriority="high"
-                    onLoad={() => handleImageLoad(d.id)}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      objectPosition: (d as any).mobileObjectPosition || "center 15%",
-                      opacity: activeDoctor === d.id ? 1 : 0,
-                      transition: "opacity 0.5s ease",
-                      zIndex: activeDoctor === d.id ? 1 : 0,
-                    }}
-                  />
-                ))}
-                {/* 하단 그라디언트 오버레이 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "100px",
-                    background: "linear-gradient(to top, white 0%, transparent 100%)",
-                    zIndex: 2,
-                  }}
-                />
-              </div>
-
-              {/* 텍스트 */}
-              <div className="p-5 flex flex-col gap-4">
-                {/* 이름 헤더 */}
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 style={{ color: "#1a1a1a", fontSize: "1.3rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
-                      {doctor.name}
-                    </h3>
-                    <p className="font-montserrat mt-0.5" style={{ color: GOLD, fontSize: "0.75rem", fontWeight: 400 }}>
-                      {doctor.nameEn}
-                    </p>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#C0392B",
-                      color: "white",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "6px",
-                      lineHeight: 1.3,
-                      textAlign: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    피부과<br />전문의
-                  </div>
-                </div>
-
-                {/* 골드 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
-
-                {/* 소개 */}
-                <p className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8 }}>
-                  {doctor.intro}
-                </p>
-
-                {/* 전문 시술 태그 */}
-                <div>
-                  <p className="text-xs tracking-widest uppercase mb-2" style={{ color: GOLD, fontWeight: 600 }}>
-                    {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : "专业项目"}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {doctor.specialties.map((s) => (
-                      <span
-                        key={s}
-                        className="px-3 py-1.5 text-xs font-semibold"
-                        style={{
-                          background: GOLD_LIGHT,
-                          color: "#8B6914",
-                          border: `1px solid ${GOLD}44`,
-                          borderRadius: "20px",
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 학력·경력·자격 */}
-                <div
-                  style={{
-                    border: `1px solid ${GOLD}33`,
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <button
-                    onClick={() => setExpandedCredentials(!expandedCredentials)}
-                    className="w-full flex items-center justify-between px-4 py-3"
-                    style={{
-                      background: expandedCredentials ? GOLD_LIGHT : "#FAFAFA",
-                      transition: "background 0.2s ease",
-                    }}
-                  >
-                    <span className="text-xs font-bold tracking-wider" style={{ color: "#666" }}>
-                      {lang === "ko"
-                        ? `학력 · 경력 · 자격 (${doctor.credentials.length}건)`
-                        : lang === "ja"
-                        ? `学歴・経歴・資格 (${doctor.credentials.length}件)`
-                        : `学历·经历·资质 (${doctor.credentials.length}项)`}
-                    </span>
-                    <div
-                      style={{
-                        color: GOLD,
-                        transition: "transform 0.3s ease",
-                        transform: expandedCredentials ? "rotate(180deg)" : "rotate(0deg)",
-                      }}
-                    >
-                      <ChevronDown size={16} />
-                    </div>
-                  </button>
-                  {expandedCredentials && (
-                    <div className="px-4 py-4 grid grid-cols-1 gap-2">
-                      {doctor.credentials.map((c) => {
-                        const Icon = c.icon;
-                        return (
-                          <div
-                            key={c.text}
-                            className="flex items-start gap-2 py-1.5 px-2 rounded-lg"
-                            style={{ background: "#FAFAFA" }}
-                          >
-                            <Icon size={13} style={{ color: GOLD, flexShrink: 0, marginTop: "2px" }} />
-                            <span className="text-xs leading-relaxed" style={{ color: "#4B5563" }}>
-                              {c.text}
-                            </span>
-                          </div>
-                        );
-                      })}
+                  {doctor.badge && (
+                    <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      {doctor.badge}
                     </div>
                   )}
                 </div>
 
-                {/* 스와이프 힌트 */}
-                <div className="flex flex-col items-center gap-2 pt-2">
-                  <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                    {lang === "ko" ? "← 탭하여 의료진 보기 →" : lang === "ja" ? "← タップで医師を見る →" : "← 点击查看医生 →"}
+                {/* Info Section */}
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">
+                    {doctor.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-3">{doctor.nameEn}</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-4">
+                    {doctor.title}
                   </p>
-                  <div className="flex justify-center gap-2">
-                    {doctors.map((d) => (
-                      <button
-                        key={d.id}
-                        onClick={() => handleDoctorSelect(d.id)}
-                        style={{
-                          width: activeDoctor === d.id ? "24px" : "6px",
-                          height: "6px",
-                          borderRadius: "3px",
-                          background: activeDoctor === d.id ? GOLD : "#D1D5DB",
-                          transition: "all 0.3s ease",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
-                      />
-                    ))}
+
+                  {/* Specialties */}
+                  <div className="mb-4 flex-1">
+                    <div className="flex flex-wrap gap-2">
+                      {doctor.specialties.map((specialty, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-block bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded"
+                        >
+                          {specialty}
+                        </span>
+                      ))}
+                    </div>
                   </div>
+
+                  {/* Toggle Button */}
+                  <button
+                    onClick={() => toggleExpand(doctor.id)}
+                    className="w-full py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-semibold rounded transition-colors flex items-center justify-center gap-2"
+                  >
+                    {expandedDoctorId === doctor.id ? (
+                      <>
+                        <ChevronUp size={16} />
+                        접기
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown size={16} />
+                        자세히 보기
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
+
+              {/* Expanded Content */}
+              {expandedDoctorId === doctor.id && (
+                <div className="mt-4 p-6 bg-gray-50 rounded-lg border border-gray-200">
+                  {/* Intro */}
+                  <div className="mb-6">
+                    <p className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">
+                      {doctor.intro}
+                    </p>
+                  </div>
+
+                  {/* Credentials */}
+                  <div className="space-y-3 mb-6">
+                    {doctor.credentials.map((cred, idx) => {
+                      const Icon = cred.icon;
+                      return (
+                        <div key={idx} className="flex gap-3">
+                          <Icon size={18} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-xs font-semibold text-gray-600">
+                              {cred.label}
+                            </p>
+                            <p className="text-sm text-gray-700">{cred.text}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Contact Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <a
+                      href="https://pf.kakao.com/_HNyGC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 py-2 px-3 bg-yellow-400 hover:bg-yellow-500 text-gray-800 text-xs font-semibold rounded transition-colors"
+                    >
+                      <MessageCircle size={14} />
+                      카카오 상담
+                    </a>
+                    <a
+                      href="tel:051-818-2300"
+                      className="flex items-center justify-center gap-2 py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
+                    >
+                      <Phone size={14} />
+                      전화 상담
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

@@ -45,9 +45,9 @@ describe("events.special", () => {
 
     const eventData = {
       type: "이벤트" as const,
-      title: "울쎼라피 프라임",
+      title: "울쎄라피 프라임",
       subtitle: "특별한 가격으로 시작하는 고급 시술",
-      desc: "울쎼라피 프라임 시술입니다.",
+      desc: "울쎄라피 프라임 시술입니다.",
       content: "상세 설명",
       date: "2026년 4월 30일",
       badge: "신규",
@@ -66,7 +66,7 @@ describe("events.special", () => {
       isActive: "1" as const,
       category: "이벤트" as const,
       isSpecialEvent: "1" as const,
-      productName: "울쎼라피 프라임",
+      productName: "울쎄라피 프라임",
       normalPrice: 500000,
       discountPrice: 350000,
       priceRows: [{ label: "기본 패키지", normalPrice: 500000, discountPrice: 350000 }],

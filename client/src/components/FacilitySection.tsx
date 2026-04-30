@@ -83,7 +83,7 @@ export default function FacilitySection() {
   };
 
   return (
-    <section ref={sectionRef} id="facility" className="py-16 sm:py-24 bg-white">
+    <section ref={sectionRef} id="about" className="py-16 sm:py-24 bg-white">
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">

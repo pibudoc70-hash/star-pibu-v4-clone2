@@ -225,4 +225,4 @@
 
 ## Phase 36: 상단 메뉴 버튼 액션 수정 (2026-04-29)
 - [x] 상단 메뉴의 "이벤트" 버튼 액션 수정 - SpecialEventSection에 id="events" 추가
-- [ ] 상단 메뉴의 "피부과 소개" 버튼 액션 수정 - 대상 섹션 결정 필요
+- [x] 상단 메뉴의 "피부과 소개" 버튼 액션 수정 - FacilitySection에 id="about" 추가

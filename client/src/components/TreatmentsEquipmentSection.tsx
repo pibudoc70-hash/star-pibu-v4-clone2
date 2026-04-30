@@ -1173,7 +1173,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       badge: "전신 치료",
       badgeColor: "#4A6FA5",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/전신자외선_0b66082d.png",
-      modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/전신자외선_0b66082d.png",
+      youtubeUrl: "https://www.youtube.com/embed/RuJSEpsvy_Q",
       desc: "NB-UVB 전신 조사로 백반증·건선·아토피를 치료하는 광선 치료.\n광범위한 피부 병변에 효과적이며 약물 치료와 병행 시 효과가 향상됩니다.",
       time: "5~15분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/3PticSr0g4jr_e69d1049.jpg",

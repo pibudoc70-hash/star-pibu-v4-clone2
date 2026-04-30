@@ -55,7 +55,7 @@ const doctors = [
       { icon: GraduationCap, label: "학력", text: "인제대, 부산대 외래교수역임" },
       { icon: Award, label: "경력", text: "부산경남울산피부과의사회 회장 역임" },
       { icon: Zap, label: "자문의", text: "써마지 FLX 자문의" },
-      { icon: Award, label: "경력", text: "전) 부산 고운세상 피부과 대표원장" },
+      { icon: Award, label: "경력", text: "미국 피부과 학회 정회원(AAD)" },
       { icon: Stethoscope, label: "현직", text: "현) 스타피부과 대표원장" },
     ],
     specialties: ["눈밑지방재배치", "울쎼라 프라임", "써마지", "흉터치료"],

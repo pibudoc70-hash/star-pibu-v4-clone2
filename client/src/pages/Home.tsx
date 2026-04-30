@@ -30,7 +30,7 @@ export default function Home() {
 
   // 페이지 제목 설정 (SEO 최적화)
   useEffect(() => {
-    document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
+    document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎼라 써마지 리프팅 시술";
   }, []);
 
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤

@@ -55,10 +55,10 @@ const doctors = [
       { icon: GraduationCap, label: "학력", text: "인제대, 부산대 외래교수역임" },
       { icon: Award, label: "경력", text: "부산경남울산피부과의사회 회장 역임" },
       { icon: Zap, label: "자문의", text: "써마지 FLX 자문의" },
-      { icon: Award, label: "경력", text: "전) 부산 고운세상 피부과 대표원장" },
-      { icon: Stethoscope, label: "현직", text: "현) 스타피부과 대표원장" },
+      { icon: Award, label: "경력", text: "미국 피부과 학회 정회원(AAD)" },
+      { icon: Stethoscope, label: "현직", text: "현) 스타피부과 원장" },
     ],
-    specialties: ["눈밑지방재배치", "울쎼라 프라임", "써마지", "흉터치료"],
+    specialties: ["눈밑지방재배치", "울쎄라 프라임", "써마지", "흉터치료"],
   },
   {
     id: 1,
@@ -79,7 +79,7 @@ const doctors = [
       { icon: Stethoscope, label: "학회", text: "미국 피부과 학회 정회원(AAD)" },
       { icon: Award, label: "경력", text: "전) 고운세상 김양제 피부과원장" },
     ],
-    specialties: ["여드름·흉터", "색소 치료", "피부 관리", "리프팅", "보톡스·필러", "피부질환"],
+    specialties: ["여드름·흉터", "색소 치료", "피부 관리", "리프팅", "보톡스·필러", "피부질환", "울쎄라", "써마지"],
   },
   {
     id: 2,
@@ -100,7 +100,7 @@ const doctors = [
       { icon: Stethoscope, label: "학회", text: "대한 피부과의사회 정회원" },
       { icon: Award, label: "경력", text: "전) 아름다운피부과 원장" },
     ],
-    specialties: ["레이저 시술", "피부질환", "손발톱무좀", "흉터 치료", "색소 레이저", "피부 관리"],
+    specialties: ["레이저 시술", "피부질환", "손발톱무좀", "흉터 치료", "색소 레이저", "피부 관리", "울쎄라", "써마지"],
   },
 ];
 

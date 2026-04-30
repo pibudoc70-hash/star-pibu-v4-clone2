@@ -461,7 +461,7 @@ export default function DoctorsSection() {
                       {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : "专业项目"}
                     </p>
                   </div>
-                  <div className="flex flex-wrap gap-2" style={{marginTop: '-6px'}}>
+                  <div className="flex flex-wrap gap-2" style={{marginTop: '-6px', maxWidth: '420px'}}>
                     {doctor.specialties.map((s) => (
                       <span
                         key={s}

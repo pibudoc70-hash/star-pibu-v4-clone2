@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
-import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
+import TreatmentsEquipmentSectionV2 from "@/components/TreatmentsEquipmentSectionV2";
 import ManagementDevicesSection from "@/components/ManagementDevicesSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import ResultsSection from "@/components/ResultsSection";
@@ -66,7 +66,7 @@ export default function Home() {
         <DoctorsSection />
 
         {/* 4. Treatments + Equipment - 시술 안내 & 장비 소개 통합 */}
-        <TreatmentsEquipmentSection />
+        <TreatmentsEquipmentSectionV2 />
 
         {/* 5. Management Devices - 관리장비 */}
         <ManagementDevicesSection />

@@ -245,7 +245,7 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
             >
               <option value="">선택해주세요</option>
               {categories?.map((cat) => (
-                <option key={cat.id} value={cat.id}>
+                <option key={cat.id} value={String(cat.id)}>
                   {cat.label}
                 </option>
               ))}
@@ -466,7 +466,7 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
               >
                 <option value="">선택해주세요</option>
                 {categories?.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat.id} value={String(cat.id)}>
                     {cat.label}
                   </option>
                 ))}

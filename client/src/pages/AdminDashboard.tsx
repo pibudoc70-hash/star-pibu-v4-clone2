@@ -1196,17 +1196,13 @@ export default function AdminDashboard() {
             <div className="bg-white rounded-lg shadow-sm border border-[#E5E7EB]">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold text-[#1F2937]">예약 불가능 시간 설정</h2>
+                  <h2 className="text-lg font-semibold text-[#1F2937]">예약 불가능 날짜 설정</h2>
                   <button
                     onClick={() => {
                       const date = prompt("날짜를 입력하세요 (YYYY-MM-DD):");
                       if (!date) return;
-                      const startTime = prompt("시작 시간을 입력하세요 (HH:00):");
-                      if (!startTime) return;
-                      const endTime = prompt("종료 시간을 입력하세요 (HH:00):");
-                      if (!endTime) return;
                       const reason = prompt("사유 (선택):");
-                      createUnavailableSlot.mutate({ date, startTime, endTime, reason: reason || undefined });
+                      createUnavailableSlot.mutate({ date, reason: reason || undefined });
                     }}
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
                   >
@@ -1218,7 +1214,7 @@ export default function AdminDashboard() {
                   {unavailableSlotsData?.map((slot) => (
                     <div key={slot.id} className="flex items-center justify-between p-4 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
                       <div>
-                        <p className="font-semibold text-[#1F2937]">{slot.date} {slot.startTime} ~ {slot.endTime}</p>
+                        <p className="font-semibold text-[#1F2937]">{slot.date}</p>
                         {slot.reason && <p className="text-sm text-[#6B7280]">{slot.reason}</p>}
                       </div>
                       <button

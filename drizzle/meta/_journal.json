@@ -64,6 +64,13 @@
       "when": 1777712633682,
       "tag": "0008_wealthy_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1777714726497,
+      "tag": "0009_sturdy_diamondback",
+      "breakpoints": true
     }
   ]
 }

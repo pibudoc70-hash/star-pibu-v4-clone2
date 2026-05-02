@@ -155,8 +155,6 @@ export type InsertTreatmentCategory = typeof treatmentCategories.$inferInsert;
 export const unavailableSlots = mysqlTable("unavailableSlots", {
   id: int("id").autoincrement().primaryKey(),
   date: varchar("date", { length: 10 }).notNull(), // YYYY-MM-DD 형식
-  startTime: varchar("startTime", { length: 5 }).notNull(), // HH:00 형식
-  endTime: varchar("endTime", { length: 5 }).notNull(), // HH:00 형식
   reason: text("reason"), // 예: "점검", "긴급 휴무" 등
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

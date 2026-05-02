@@ -689,19 +689,15 @@ export const appRouter = router({
           return getUnavailableSlots(input.date);
         }),
 
-      // 예약 불가능 시간 추가
+      // 예약 불가능 날짜 추가
       create: adminProcedure
         .input(z.object({
           date: z.string().min(10).max(10), // YYYY-MM-DD
-          startTime: z.string().min(5).max(5), // HH:00
-          endTime: z.string().min(5).max(5), // HH:00
           reason: z.string().optional(),
         }))
         .mutation(async ({ input }) => {
           return createUnavailableSlot({
             date: input.date,
-            startTime: input.startTime,
-            endTime: input.endTime,
             reason: input.reason || null,
           });
         }),
@@ -716,13 +712,11 @@ export const appRouter = router({
           return { success: true };
         }),
 
-      // 예약 불가능 시간 수정
+      // 예약 불가능 날짜 수정
       update: adminProcedure
         .input(z.object({
           id: z.number(),
           date: z.string().min(10).max(10).optional(),
-          startTime: z.string().min(5).max(5).optional(),
-          endTime: z.string().min(5).max(5).optional(),
           reason: z.string().optional(),
         }))
         .mutation(async ({ input }) => {

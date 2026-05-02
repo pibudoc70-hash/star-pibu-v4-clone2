@@ -678,9 +678,9 @@ export const appRouter = router({
 
       }),
 
-    // 예약 불가능 시간 관리
+    // 예약 불가능 날짜 관리
     unavailableSlots: router({
-      // 예약 불가능 시간 목록 조회
+      // 예약 불가능 날짜 목록 조회
       list: adminProcedure
         .input(z.object({
           date: z.string().optional(),
@@ -692,7 +692,7 @@ export const appRouter = router({
       // 예약 불가능 날짜 추가
       create: adminProcedure
         .input(z.object({
-          date: z.string().min(10).max(10), // YYYY-MM-DD
+          date: z.string().min(10).max(10),
           reason: z.string().optional(),
         }))
         .mutation(async ({ input }) => {
@@ -702,7 +702,7 @@ export const appRouter = router({
           });
         }),
 
-      // 예약 불가능 시간 삭제
+      // 예약 불가능 날짜 삭제
       delete: adminProcedure
         .input(z.object({
           id: z.number(),

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
@@ -61,8 +61,23 @@ describe("auth", () => {
   });
 });
 
-// ── events 테스트 ─────────────────────────────────────────────────
+/// ── events 테스트 ────────────────────────────────────────────────
 describe("events", () => {
+  // 테스트 후 생성된 이벤트 정리
+  afterEach(async () => {
+    try {
+      const caller = appRouter.createCaller(makeCtx("admin"));
+      const events = await caller.events.list();
+      // 테스트 이벤트 삭제 ("테스트" 제목 포함)
+      for (const event of events) {
+        if (event.title?.includes("테스트")) {
+          await caller.events.delete({ id: event.id });
+        }
+      }
+    } catch (err) {
+      // 정리 실패해도 무시
+    }
+  });
   it("list: 공개 접근 가능 (빈 배열 또는 배열 반환)", async () => {
     const caller = appRouter.createCaller(makeGuestCtx());
     const result = await caller.events.list();
@@ -88,8 +103,23 @@ describe("events", () => {
   });
 });
 
-// ── popup 테스트 ──────────────────────────────────────────────────
+// // ── popup 테스트 ──────────────────────────────────────────────
 describe("popup", () => {
+  // 테스트 후 생성된 팝업 정리
+  afterEach(async () => {
+    try {
+      const caller = appRouter.createCaller(makeCtx("admin"));
+      const popups = await caller.popup.list();
+      // 테스트 팝업 삭제 ("테스트" 제목 포함)
+      for (const popup of popups) {
+        if (popup.title?.includes("테스트")) {
+          await caller.popup.delete({ id: popup.id });
+        }
+      }
+    } catch (err) {
+      // 정리 실패해도 무시
+    }
+  });
   it("list: 공개 접근 가능 (빈 배열 또는 배열 반환)", async () => {
     const caller = appRouter.createCaller(makeGuestCtx());
     const result = await caller.popup.list();

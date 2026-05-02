@@ -10,6 +10,7 @@ import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
 import { storagePut } from "./storage";
 import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "./email";
+import { sendSMS, getOTPMessage, getReservationConfirmationSMS, getReservationConfirmedSMS, getReservationCancelledSMS } from "./sms";
 
 export const appRouter = router({
   system: systemRouter,
@@ -135,10 +136,20 @@ export const appRouter = router({
         const code = generateOtpCode();
         await createGuestOtp(input.phone, code);
 
-        // OTP SMS 기능은 별도 설정 필요
-        console.log(`[OTP Dev] ${input.phone} → ${code}`);
+        // SMS로 OTP 발송
+        const message = getOTPMessage(code, 10);
+        const smsSent = await sendSMS({
+          phone: input.phone,
+          message,
+        });
 
-        return { success: true };
+        if (!smsSent) {
+          console.warn(`[OTP] SMS 발송 실패: ${input.phone}`);
+          // SMS 발송 실패해도 OTP는 생성됨 (개발 중 콘솔에서 확인 가능)
+          console.log(`[OTP Dev] ${input.phone} → ${code}`);
+        }
+
+        return { success: true, smsSent };
       }),
 
     // OTP 검증

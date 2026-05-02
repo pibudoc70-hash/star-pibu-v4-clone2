@@ -57,6 +57,7 @@ export const treatmentsRouter = router({
       youtubeUrl: z.string().optional(),
       modalImage: z.string().optional(),
       best: z.enum(["0", "1"]).optional(),
+      section: z.enum(["v1", "v2"]).optional(),
       sortOrder: z.number().optional(),
       isActive: z.enum(["0", "1"]).optional(),
     }))
@@ -83,6 +84,7 @@ export const treatmentsRouter = router({
         youtubeUrl: input.youtubeUrl,
         modalImage: input.modalImage,
         best: input.best || "0",
+        section: input.section || "v1",
         sortOrder: input.sortOrder || 0,
         isActive: input.isActive || "1",
       });

@@ -71,6 +71,13 @@
       "when": 1777714726497,
       "tag": "0009_sturdy_diamondback",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1777724788318,
+      "tag": "0010_outgoing_whirlwind",
+      "breakpoints": true
     }
   ]
 }

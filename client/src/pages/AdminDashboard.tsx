@@ -16,7 +16,7 @@ import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
 
-type AdminTab = "users" | "popup" | "events" | "treatments" | "reservations" | "unavailableSlots";
+type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "reservations" | "unavailableSlots";
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 type ReservationFilter = "all" | "member" | "guest";
 
@@ -271,6 +271,18 @@ export default function AdminDashboard() {
             <Stethoscope size={16} />
             시술·장비 관리
           </button>
+          {/* 시술·장비소개 2 관리 탭 */}
+          <button
+            onClick={() => setActiveTab("treatmentsV2")}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{
+              background: activeTab === "treatmentsV2" ? "rgba(255,255,255,0.15)" : "transparent",
+              color: activeTab === "treatmentsV2" ? "white" : "rgba(255,255,255,0.6)",
+            }}
+          >
+            <Stethoscope size={16} />
+            시술·장비소개 2 관리
+          </button>
           {/* 팝업 이벤트 탭 */}
           <button
             onClick={() => setActiveTab("popup")}
@@ -338,10 +350,10 @@ export default function AdminDashboard() {
         <header className="bg-white border-b border-[#E5E7EB] px-8 py-4 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-lg font-bold text-[#1F2937]">
-              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리"  : activeTab === "unavailableSlots" ? "예약 불가능 날짜" : "이벤트 관리"}
+              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "treatmentsV2" ? "시술·장비소개 2 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리"  : activeTab === "unavailableSlots" ? "예약 불가능 날짜" : "이벤트 관리"}
             </h1>
             <p className="text-xs text-[#9CA3AF]">
-              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다"  : activeTab === "unavailableSlots" ? "특정 날짜와 시간을 예약 불가능하도록 설정합니다" : "이벤트를 추가·수정·삭제합니다"}
+              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "treatmentsV2" ? "시술·장비소개 2에 표시될 시술를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다"  : activeTab === "unavailableSlots" ? "스단 날짜와 시간을 예약 불가능하도록 설정합니다" : "이벤트를 추가·수정·삭제합니다"}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -383,6 +395,11 @@ export default function AdminDashboard() {
           {/* ─── 시술·장비 관리 탭 ─── */}
           {activeTab === "treatments" && (
             <TreatmentsManager />
+          )}
+
+          {/* ─── 시술·장비소개 2 관리 탭 ─── */}
+          {activeTab === "treatmentsV2" && (
+            <TreatmentsManager section="v2" />
           )}
 
           {/* ─── 회원 관리 탭 ─── */}

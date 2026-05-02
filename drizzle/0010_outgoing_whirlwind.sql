@@ -1,0 +1,1 @@
+ALTER TABLE `treatments` ADD `section` enum('v1','v2') DEFAULT 'v1' NOT NULL;

@@ -22,6 +22,7 @@ interface TreatmentForm {
   caution?: string;
   youtubeUrl?: string;
   best?: "0" | "1";
+  section?: "v1" | "v2";
   sortOrder?: number;
   isActive?: "0" | "1";
 }
@@ -42,11 +43,16 @@ const CATEGORIES = [
   { id: "botox", label: "보톡스" },
 ];
 
-export default function TreatmentsManager() {
+interface TreatmentsManagerProps {
+  section?: "v1" | "v2";
+}
+
+export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerProps) {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
   const [form, setForm] = useState<TreatmentForm>({
+    section: section,
     categoryId: "best",
     name: "",
     nameEn: "",
@@ -65,7 +71,13 @@ export default function TreatmentsManager() {
   });
 
   // 시술 목록 조회
-  const { data: treatments, refetch: refetchTreatments, isLoading } = trpc.treatments.all.useQuery();
+  const { data: allTreatments, refetch: refetchTreatments, isLoading } = trpc.treatments.all.useQuery();
+  
+  // section별 필터링
+  const treatments = useMemo(() => {
+    if (!allTreatments) return [];
+    return allTreatments.filter((t: any) => (t.section || "v1") === section);
+  }, [allTreatments, section]);
 
   // 시술 생성
   const createMutation = trpc.treatments.create.useMutation({
@@ -149,7 +161,7 @@ export default function TreatmentsManager() {
         ...form,
       });
     } else {
-      createMutation.mutate(form);
+      createMutation.mutate({ ...form, section });
     }
   };
 

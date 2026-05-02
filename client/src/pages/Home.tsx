@@ -17,6 +17,7 @@ import ResultsSection from "@/components/ResultsSection";
 import FacilitySection from "@/components/FacilitySection";
 import ReviewsSection from "@/components/ReviewsSection";
 import FAQSection from "@/components/FAQSection";
+import ReservationSection from "@/components/ReservationSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -89,6 +90,9 @@ export default function Home() {
 
         {/* 9. FAQ - 자주 묻는 질문 */}
         <FAQSection />
+
+        {/* 9-2. Reservation - 예약 신청 */}
+        <ReservationSection />
 
         {/* 10. Location & Contact - 오시는 길 */}
         <ContactSection />

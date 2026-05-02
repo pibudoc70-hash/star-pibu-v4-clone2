@@ -16,7 +16,7 @@ import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
 
-type AdminTab = "users" | "popup" | "events" | "treatments";
+type AdminTab = "users" | "popup" | "events" | "treatments" | "reservations";
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 type ReservationFilter = "all" | "member" | "guest";
 
@@ -31,6 +31,7 @@ export default function AdminDashboard() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<AdminTab>("treatments");
   const [userPage, setUserPage] = useState(1);
+  const [reservationPage, setReservationPage] = useState(1);
   const [popupEditId, setPopupEditId] = useState<number | null>(null);
 
   const [imageUploading, setImageUploading] = useState(false);
@@ -42,6 +43,7 @@ export default function AdminDashboard() {
     startAt: number | null; endAt: number | null;
   } | null>(null);
   const pageSize = 15;
+  const reservationPageSize = 20;
 
   useEffect(() => {
     if (!loading) {
@@ -62,14 +64,25 @@ export default function AdminDashboard() {
     { enabled: !!user && user.role === "admin" && activeTab === "users" }
   );
 
-  // reservations query removed
+  // 예약 관리 쿼리
+  const { data: reservationsData, isLoading: reservationsLoading, refetch: refetchReservations } = trpc.admin.listReservations.useQuery(
+    { page: reservationPage, pageSize: reservationPageSize },
+    { enabled: !!user && user.role === "admin" && activeTab === "reservations" }
+  );
 
   const updateRoleMutation = trpc.admin.updateUserRole.useMutation({
     onSuccess: () => { refetchUsers(); refetchStats(); toast.success("역할이 변경되었습니다."); },
     onError: () => toast.error("역할 변경에 실패했습니다."),
   });
 
-  // updateStatusMutation removed
+  const updateReservationStatusMutation = trpc.admin.updateReservationStatus.useMutation({
+    onSuccess: () => { refetchReservations(); refetchStats(); toast.success("예약 상태가 변경되었습니다."); },
+    onError: (err) => toast.error("상태 변경 실패: " + err.message),
+  });
+
+  const handleStatusChange = (reservationId: number, newStatus: ReservationStatus) => {
+    updateReservationStatusMutation.mutate({ id: reservationId, status: newStatus });
+  };
 
   const { data: popupList, refetch: refetchPopup } = trpc.popup.adminList.useQuery(undefined, {
     enabled: !!user && user.role === "admin" && activeTab === "popup",
@@ -265,6 +278,18 @@ export default function AdminDashboard() {
             <Calendar size={16} />
             이벤트 관리
           </button>
+          {/* 예약 관리 탭 */}
+          <button
+            onClick={() => setActiveTab("reservations")}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{
+              background: activeTab === "reservations" ? "rgba(255,255,255,0.15)" : "transparent",
+              color: activeTab === "reservations" ? "white" : "rgba(255,255,255,0.6)",
+            }}
+          >
+            <ClipboardList size={16} />
+            예약 관리
+          </button>
         </nav>
 
         <div className="px-4 py-4 border-t border-white/10 space-y-2">
@@ -285,10 +310,10 @@ export default function AdminDashboard() {
         <header className="bg-white border-b border-[#E5E7EB] px-8 py-4 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-lg font-bold text-[#1F2937]">
-              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : "이벤트 관리"}
+              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리" : "이벤트 관리"}
             </h1>
             <p className="text-xs text-[#9CA3AF]">
-              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홈 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : "이벤트를 추가·수정·삭제합니다"}
+              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다" : "이벤트를 추가·수정·삭제합니다"}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -1044,6 +1069,99 @@ export default function AdminDashboard() {
                   )}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* ─── 예약 관리 탭 ─── */}
+          {activeTab === "reservations" && (
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
+              <div className="px-6 py-4 border-b border-[#F3F4F6] flex items-center justify-between">
+                <h2 className="text-sm font-bold text-[#1F2937]">
+                  예약 목록
+                  {reservationsData && <span className="ml-2 text-xs font-normal text-[#9CA3AF]">총 {reservationsData.total}건</span>}
+                </h2>
+              </div>
+
+              {reservationsLoading ? (
+                <div className="flex items-center justify-center py-16">
+                  <div className="w-8 h-8 border-4 border-[#4A9FA5] border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : (
+                <>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-[#F3F4F6]" style={{ background: "#F9FAFB" }}>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">ID</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">환자명</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">연락처</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">시술명</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">희망일시</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">상태</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">관리</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#F3F4F6]">
+                        {reservationsData?.items.map((reservation: any) => {
+                          const statusConfig = STATUS_CONFIG[reservation.status as ReservationStatus];
+                          return (
+                            <tr key={reservation.id} className="hover:bg-[#F9FAFB] transition-colors">
+                              <td className="px-6 py-4 text-[#9CA3AF] text-xs font-mono">#{reservation.id}</td>
+                              <td className="px-6 py-4 font-medium text-[#1F2937]">{reservation.patientName}</td>
+                              <td className="px-6 py-4 text-[#6B7280] text-xs">{reservation.phone}</td>
+                              <td className="px-6 py-4 text-[#6B7280] text-xs">{reservation.treatmentName}</td>
+                              <td className="px-6 py-4 text-[#6B7280] text-xs">
+                                {new Date(reservation.preferredDate).toLocaleDateString("ko-KR")} {reservation.preferredTime}
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: statusConfig.bg, color: statusConfig.color }}>
+                                  {statusConfig.label}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <select
+                                  value={reservation.status}
+                                  onChange={(e) => handleStatusChange(reservation.id, e.target.value as ReservationStatus)}
+                                  className="px-2 py-1 rounded-lg border border-[#E5E7EB] text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
+                                  style={{ color: statusConfig.color }}
+                                >
+                                  <option value="pending">대기 중</option>
+                                  <option value="confirmed">확정</option>
+                                  <option value="completed">완료</option>
+                                  <option value="cancelled">취소됨</option>
+                                </select>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* 페이지네이션 */}
+                  {reservationsData && reservationsData.total > reservationPageSize && (
+                    <div className="px-6 py-4 border-t border-[#F3F4F6] flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => setReservationPage(p => Math.max(1, p - 1))}
+                        disabled={reservationPage === 1}
+                        className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-50 transition-colors"
+                      >
+                        <ChevronLeft size={16} className="text-[#6B7280]" />
+                      </button>
+                      <span className="text-xs text-[#6B7280]">
+                        {reservationPage} / {Math.ceil(reservationsData.total / reservationPageSize)}
+                      </span>
+                      <button
+                        onClick={() => setReservationPage(p => p + 1)}
+                        disabled={reservationPage >= Math.ceil(reservationsData.total / reservationPageSize)}
+                        className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-50 transition-colors"
+                      >
+                        <ChevronRight size={16} className="text-[#6B7280]" />
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           )}
         </div>

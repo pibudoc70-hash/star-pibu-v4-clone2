@@ -232,6 +232,18 @@
 - [x] TreatmentsEquipmentSectionV2.tsx 컴포넌트 생성 (DB 연동 버전)
 - [x] Home.tsx에 TreatmentsEquipmentSectionV2 import 및 렌더링 추가
 - [x] 개발 서버 정상 작동 확인
-- [ ] 관리자 대시보드에서 시술 데이터 추가 테스트
-- [ ] Treatment Section 2 페이지에서 데이터 표시 확인
-- [ ] 최종 테스트 및 체크포인트 저장
+- [x] 관리자 대시보드에서 시술 데이터 추가 테스트 (피코레이저 토닝 추가)
+- [x] Treatment Section 2 페이지에서 데이터 표시 확인 (Best 시술 카운트 5→6 증가)
+- [x] 최종 테스트 및 체크포인트 저장 (버전: 6d5af679)
+
+## Phase 38: 예약 시스템 구현 (2026-05-02) - 완료
+- [x] DB 스키마 확인: reservations 테이블 이미 존재 (예약 정보 저장)
+- [x] 서버 라우터 확인: 예약 CRUD 프로시저 이미 구현
+- [x] 관리자 대시보드: 예약 관리 탭 추가 (AdminDashboard.tsx)
+- [x] 프론트엔드: ReservationForm.tsx 컴포넌트 생성 (회원/비회원 예약 + OTP 인증)
+- [x] 예약 센 추가: ReservationSection.tsx 생성 (홍페이지에 내재)
+- [x] Home.tsx에 ReservationSection import 및 렌더링 추가
+- [x] DB 헬퍼 함수 수정: 반환값 추가 (createReservation, updateReservationStatus, cancelReservation)
+- [x] Vitest 예약 테스트 작성 및 실행 (9개 테스트 모두 통과)
+- [ ] 이메일/SMS 알림 기능 추가 (선택사항)
+- [x] 최종 체크포인트 저장

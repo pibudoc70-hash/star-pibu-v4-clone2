@@ -2,7 +2,7 @@
  * TreatmentsManager - 시술·장비 관리 컴포넌트
  * 관리자가 시술 및 장비 정보를 추가, 수정, 삭제할 수 있는 UI
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X, Upload, Loader } from "lucide-react";

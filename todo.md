@@ -226,3 +226,12 @@
 ## Phase 36: 상단 메뉴 버튼 액션 수정 (2026-04-29)
 - [x] 상단 메뉴의 "이벤트" 버튼 액션 수정 - SpecialEventSection에 id="events" 추가
 - [x] 상단 메뉴의 "피부과 소개" 버튼 액션 수정 - FacilitySection에 id="about" 추가
+
+## Phase 37: Treatment Section 2 DB 연동 (2026-05-02)
+- [x] TreatmentsEquipmentSection.tsx의 JSX 에러 수정 (1854 라인 중복 닫기 태그 제거)
+- [x] TreatmentsEquipmentSectionV2.tsx 컴포넌트 생성 (DB 연동 버전)
+- [x] Home.tsx에 TreatmentsEquipmentSectionV2 import 및 렌더링 추가
+- [x] 개발 서버 정상 작동 확인
+- [ ] 관리자 대시보드에서 시술 데이터 추가 테스트
+- [ ] Treatment Section 2 페이지에서 데이터 표시 확인
+- [ ] 최종 테스트 및 체크포인트 저장

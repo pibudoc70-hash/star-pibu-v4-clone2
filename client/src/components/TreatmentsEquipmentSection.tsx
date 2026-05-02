@@ -1701,8 +1701,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
               <p className="text-sm font-bold" style={{ color: "#1F2937" }}>{eq.name}</p>
               <p className="text-xs line-clamp-2" style={{ color: "#6B7280" }}>{eq.desc}</p>
             </div>
-          </div>
-        ))}
+          </div>        ))}
       </div>
 
       {/* 더보기/접기 버튼 */}
@@ -1729,8 +1728,10 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
 // ─────────────────────────────────────────────────────────────────────────────
 export default function TreatmentsEquipmentSection() {
   const [activeId, setActiveId] = useState("best");
-
   const [showAll, setShowAll] = useState(true);
+  const [sortBy, setSortBy] = useState<"name" | "time" | "popular">("popular");
+  const [filterOpen, setFilterOpen] = useState(false);
+
   // 모바일: 3개, 데스크톱: 6개
   const INITIAL_SHOW = typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 6;
   const handleTabChange = (id: string) => {
@@ -1757,8 +1758,22 @@ export default function TreatmentsEquipmentSection() {
   }, [activeId]);
 
   const filteredTreatments = useMemo(() => {
-    return TREATMENTS[activeId] ?? [];
-  }, [activeId]);
+    let items = TREATMENTS[activeId] ?? [];
+    
+    // 정렬 적용
+    if (sortBy === "name") {
+      items = [...items].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+    } else if (sortBy === "time") {
+      items = [...items].sort((a, b) => {
+        const timeA = parseInt(a.time?.replace(/[^0-9]/g, '') || "0");
+        const timeB = parseInt(b.time?.replace(/[^0-9]/g, '') || "0");
+        return timeA - timeB;
+      });
+    }
+    // "popular"는 기본 순서 유지
+    
+    return items;
+  }, [activeId, sortBy]);
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }}>
@@ -1783,16 +1798,63 @@ export default function TreatmentsEquipmentSection() {
           </p>
         </div>
 
-        {/* ── 카테고리 탭 + 검색창 통합 카드 ── */}
+          {/* 카테고리 탭 + 필터/정렬 통합 카드 ── */}
         <div
           className="rounded-2xl px-4 py-4 mb-6"
           style={{
             background: "#fafafa", marginBottom: '15px', backgroundColor: '#ffffff',
           }}
         >
+          {/* 필터/정렬 버튼 (상단 우측) */}
+          <div className="flex justify-end gap-2 mb-4">
+            {/* 정렬 드롭다운 */}
+            <div className="relative">
+              <button
+                onClick={() => setFilterOpen(!filterOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                style={{
+                  backgroundColor: "#f3f4f6",
+                  color: "#6b7280",
+                  border: "1px solid #e5e7eb"
+                }}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                정렬
+              </button>
+              {filterOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200"
+                >
+                  {[
+                    { value: "popular", label: "인기도순" },
+                    { value: "name", label: "이름순" },
+                    { value: "time", label: "시간순" },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        setSortBy(option.value as "name" | "time" | "popular");
+                        setFilterOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                        sortBy === option.value
+                          ? "bg-blue-50 text-blue-600 font-medium"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           {/* 탭 컨테이너 - 모바일: 2열 그리드, 데스크탑: flex-wrap 가로 배열 */}
           <div
             ref={tabContainerRef}
+            className="mb-4"
           >
               {/* 모바일: 2열 그리드 */}
               <div className="grid grid-cols-2 gap-2 sm:hidden">

@@ -33,6 +33,7 @@ export default function AdminDashboard() {
   const [userPage, setUserPage] = useState(1);
   const [reservationPage, setReservationPage] = useState(1);
   const [popupEditId, setPopupEditId] = useState<number | null>(null);
+  const [unavailableSlotForm, setUnavailableSlotForm] = useState<{ date: string; reason: string } | null>(null);
 
   const [imageUploading, setImageUploading] = useState(false);
   const [popupForm, setPopupForm] = useState<{
@@ -1198,23 +1199,63 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-[#1F2937]">예약 불가능 날짜 설정</h2>
                   <button
-                    onClick={() => {
-                      const date = prompt("날짜를 입력하세요 (YYYY-MM-DD):");
-                      if (!date) return;
-                      // 날짜 형식 검증 (YYYY-MM-DD)
-                      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                        toast.error("날짜 형식이 올바르지 않습니다. (YYYY-MM-DD)");
-                        return;
-                      }
-                      const reason = prompt("사유 (선택):");
-                      createUnavailableSlot.mutate({ date, reason: reason || undefined });
-                    }}
+                    onClick={() => setUnavailableSlotForm({ date: "", reason: "" })}
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
                   >
                     <Plus size={16} />
                     추가
                   </button>
                 </div>
+                {unavailableSlotForm && (
+                  <div className="mb-6 p-4 bg-[#F3F4F6] rounded-lg border border-[#E5E7EB]">
+                    <h3 className="font-semibold text-[#1F2937] mb-4">예약 불가능 날짜 추가</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-[#1F2937] mb-2">날짜 *</label>
+                        <input
+                          type="date"
+                          value={unavailableSlotForm.date}
+                          onChange={(e) => setUnavailableSlotForm({ ...unavailableSlotForm, date: e.target.value })}
+                          className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-[#1F2937] mb-2">사유 (선택)</label>
+                        <input
+                          type="text"
+                          placeholder="예: 의료 회의, 시설 점검 등"
+                          value={unavailableSlotForm.reason}
+                          onChange={(e) => setUnavailableSlotForm({ ...unavailableSlotForm, reason: e.target.value })}
+                          className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            if (!unavailableSlotForm.date) {
+                              toast.error("날짜를 선택해주세요.");
+                              return;
+                            }
+                            createUnavailableSlot.mutate({
+                              date: unavailableSlotForm.date,
+                              reason: unavailableSlotForm.reason || undefined
+                            });
+                            setUnavailableSlotForm(null);
+                          }}
+                          className="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-semibold"
+                        >
+                          저장
+                        </button>
+                        <button
+                          onClick={() => setUnavailableSlotForm(null)}
+                          className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors font-semibold"
+                        >
+                          취소
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="space-y-2">
                   {unavailableSlotsData?.map((slot) => (
                     <div key={slot.id} className="flex items-center justify-between p-4 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">

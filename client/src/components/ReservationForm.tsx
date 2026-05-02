@@ -35,6 +35,83 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     notes: "",
   });
 
+  // 진료시간 설정
+  const CLINIC_HOURS = {
+    "1": { start: 10, end: 19, name: "월" },  // 월요일
+    "2": { start: 10, end: 19, name: "화" },  // 화요일
+    "3": { start: 10, end: 19, name: "수" },  // 수요일
+    "4": { start: 10, end: 19, name: "목" },  // 목요일
+    "5": { start: 10, end: 19, name: "금" },  // 금요일
+    "6": { start: 9.5, end: 15, name: "토" }, // 토요일 (09:30 ~ 15:00)
+    "0": { start: null, end: null, name: "일" }, // 일요일 (휴진)
+  };
+
+  // 공휴일 목록 (2026년 기준)
+  const HOLIDAYS = [
+    "2026-01-01", // 신정
+    "2026-02-17", // 설날
+    "2026-03-01", // 삼일절
+    "2026-04-15", // 국회의원선거일
+    "2026-05-05", // 어린이날
+    "2026-05-15", // 부처님오신날
+    "2026-06-06", // 현충일
+    "2026-08-15", // 광복절
+    "2026-09-24", // 추석
+    "2026-10-03", // 개천절
+    "2026-10-09", // 한글날
+    "2026-12-25", // 크리스마스
+  ];
+
+  // 예약 가능한 날짜인지 확인
+  const isAvailableDate = (dateStr: string): boolean => {
+    if (!dateStr) return false;
+    
+    const date = new Date(dateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // 당일 예약 불가
+    if (date <= today) return false;
+    
+    // 공휴일 확인
+    if (HOLIDAYS.includes(dateStr)) return false;
+    
+    // 일요일 확인 (0 = 일요일)
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek === 0) return false; // 일요일
+    
+    return true;
+  };
+
+  // 선택된 날짜의 진료시간 가져오기
+  const getClinicHours = (dateStr: string): { start: number; end: number } | null => {
+    if (!dateStr) return null;
+    const date = new Date(dateStr);
+    const dayOfWeek = date.getDay();
+    const hours = CLINIC_HOURS[String(dayOfWeek) as keyof typeof CLINIC_HOURS];
+    
+    if (hours.start === null) return null; // 휴진
+    return { start: Math.ceil(hours.start), end: hours.end - 1 }; // 끝나기 1시간 전까지만 예약
+  };
+
+  // 예약 가능한 시간 목록 생성
+  const getAvailableTimes = (dateStr: string): string[] => {
+    const hours = getClinicHours(dateStr);
+    if (!hours) return [];
+    
+    const date = new Date(dateStr);
+    const dayOfWeek = date.getDay();
+    const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5; // 월~금
+    
+    const times: string[] = [];
+    for (let h = hours.start; h <= hours.end; h++) {
+      // 평일 점심시간(13:00 ~ 14:00) 제외
+      if (isWeekday && h >= 13 && h < 14) continue;
+      times.push(`${String(h).padStart(2, "0")}:00`);
+    }
+    return times;
+  };
+
   // 시술 카테고리 (TreatmentsEquipmentSection과 동일)
   const CATEGORIES = [
     { id: "1", label: "Best 시술" },
@@ -345,7 +422,14 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
             <input
               type="date"
               value={reservationForm.preferredDate}
-              onChange={(e) => setReservationForm({ ...reservationForm, preferredDate: e.target.value })}
+              onChange={(e) => {
+                if (isAvailableDate(e.target.value)) {
+                  setReservationForm({ ...reservationForm, preferredDate: e.target.value, preferredTime: "10:00" });
+                } else {
+                  toast.error("예약 불가능한 날짜입니다. (당일, 일요일, 공휴일 제외)");
+                }
+              }}
+              min={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
             />
           </div>
@@ -358,14 +442,15 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
               onChange={(e) => setReservationForm({ ...reservationForm, preferredTime: e.target.value })}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
             >
-              {Array.from({ length: 24 }, (_, i) => {
-                const hour = String(i).padStart(2, "0");
-                return (
-                  <option key={hour} value={`${hour}:00`}>
-                    {hour}:00
+              {getAvailableTimes(reservationForm.preferredDate).length > 0 ? (
+                getAvailableTimes(reservationForm.preferredDate).map((time) => (
+                  <option key={time} value={time}>
+                    {time}
                   </option>
-                );
-              })}
+                ))
+              ) : (
+                <option value="">날짜를 먼저 선택해주세요</option>
+              )}
             </select>
           </div>
         </div>
@@ -537,7 +622,14 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
               <input
                 type="date"
                 value={guestForm.preferredDate}
-                onChange={(e) => setGuestForm({ ...guestForm, preferredDate: e.target.value })}
+                onChange={(e) => {
+                  if (isAvailableDate(e.target.value)) {
+                    setGuestForm({ ...guestForm, preferredDate: e.target.value, preferredTime: "10:00" });
+                  } else {
+                    toast.error("예약 불가능한 날짜입니다. (당일, 일요일, 공휴일 제외)");
+                  }
+                }}
+                min={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
               />
             </div>
@@ -550,14 +642,15 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
                 onChange={(e) => setGuestForm({ ...guestForm, preferredTime: e.target.value })}
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
               >
-                {Array.from({ length: 24 }, (_, i) => {
-                  const hour = String(i).padStart(2, "0");
-                  return (
-                    <option key={hour} value={`${hour}:00`}>
-                      {hour}:00
+                {getAvailableTimes(guestForm.preferredDate).length > 0 ? (
+                  getAvailableTimes(guestForm.preferredDate).map((time) => (
+                    <option key={time} value={time}>
+                      {time}
                     </option>
-                  );
-                })}
+                  ))
+                ) : (
+                  <option value="">날짜를 먼저 선택해주세요</option>
+                )}
               </select>
             </div>
           </div>

@@ -41,6 +41,23 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
     notes: "",
   });
 
+  // 시술 카테고리 (TreatmentsEquipmentSection과 동일)
+  const CATEGORIES = [
+    { id: "1", label: "Best 시술" },
+    { id: "2", label: "리프팅·탄력" },
+    { id: "3", label: "눈밑지방" },
+    { id: "4", label: "백반증" },
+    { id: "5", label: "색소·문신" },
+    { id: "6", label: "흉터·모공" },
+    { id: "7", label: "여드름" },
+    { id: "8", label: "홍조·혈관" },
+    { id: "9", label: "액취증·다한증" },
+    { id: "10", label: "손·발톱무좀" },
+    { id: "11", label: "건선·아토피" },
+    { id: "12", label: "볼륨·부스터" },
+    { id: "13", label: "보톡스·필러" },
+  ];
+
   // 시술 카테고리 및 시술명 (DB에서 조회)
   const { data: treatments } = trpc.treatments.all.useQuery();
   const { data: categories } = trpc.treatments.categories.useQuery();
@@ -245,8 +262,8 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
             >
               <option value="">선택해주세요</option>
-              {categories?.map((cat) => (
-                <option key={cat.id} value={String(cat.id)}>
+              {CATEGORIES.map((cat) => (
+                <option key={cat.id} value={cat.id}>
                   {cat.label}
                 </option>
               ))}
@@ -466,8 +483,8 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
               >
                 <option value="">선택해주세요</option>
-                {categories?.map((cat) => (
-                  <option key={cat.id} value={String(cat.id)}>
+                {CATEGORIES.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
                     {cat.label}
                   </option>
                 ))}

@@ -1201,6 +1201,11 @@ export default function AdminDashboard() {
                     onClick={() => {
                       const date = prompt("날짜를 입력하세요 (YYYY-MM-DD):");
                       if (!date) return;
+                      // 날짜 형식 검증 (YYYY-MM-DD)
+                      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                        toast.error("날짜 형식이 올바르지 않습니다. (YYYY-MM-DD)");
+                        return;
+                      }
                       const reason = prompt("사유 (선택):");
                       createUnavailableSlot.mutate({ date, reason: reason || undefined });
                     }}

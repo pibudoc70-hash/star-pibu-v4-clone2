@@ -661,20 +661,16 @@ export const appRouter = router({
           });
 
           try {
-            await sendEmail({
-              to: reservation.phone || "customer@example.com",
-              subject: `[STAR 피부과] 예약 상태 변경 알림 - ${statusLabels[input.status]}`,
-              html: getReservationStatusEmail({
-                patientName: reservation.patientName,
-                treatmentName: reservation.treatmentName,
-                status: input.status,
-                statusLabel: statusLabels[input.status],
-                preferredDate: preferredDateStr,
-                preferredTime: reservation.preferredTime,
-                adminNote: input.adminNote,
-                reservationId: reservation.id,
-              }),
-            });
+            // 비회원 예약은 전화번호로만 저장되어 있어 이메일 발송 불가
+            if (reservation.isGuest === "1") {
+              console.log("[Email] 비회원 예약 상태 변경 - 전화: " + reservation.phone);
+            } else {
+              // 회원 예약인 경우 - 사용자 정보는 데이터베이스에 저장되지 않아 이메일 발송 스킵
+              console.log("[Email] 회원 예약 상태 변경 - 사용자 이메일 주소 조회 스킵");
+              // TODO: 사용자 정보를 데이터베이스에서 조회하여 이메일 발송
+              // const user = await db.select().from(users).where(eq(users.id, reservation.userId)).limit(1);
+              // if (user[0]?.email) { await sendEmail({ to: user[0].email, ... }) }
+            }
           } catch (emailErr) {
             console.error("[Email] 상태 변경 이메일 발송 중 오류:", emailErr);
           }

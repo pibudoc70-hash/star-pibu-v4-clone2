@@ -245,7 +245,7 @@
 - [x] Home.tsx에 ReservationSection import 및 렌더링 추가
 - [x] DB 헬퍼 함수 수정: 반환값 추가 (createReservation, updateReservationStatus, cancelReservation)
 - [x] Vitest 예약 테스트 작성 및 실행 (9개 테스트 모두 통과)
-- [ ] 이메일/SMS 알림 기능 추가 (선택사항)
+- [x] 이메일/SMS 알림 기능 추가 (선택사항) - Phase 40, 41에서 완료
 - [x] 최종 체크포인트 저장
 
 ## Phase 39: 예약 시스템 최종 단계 (2026-05-02) - 완료

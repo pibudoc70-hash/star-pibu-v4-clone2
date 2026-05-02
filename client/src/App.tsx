@@ -13,6 +13,7 @@ const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
 const EventDetail = lazy(() => import("@/pages/EventDetail"));
 const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
 const AdminDashboard = lazy(() => import("@/pages/AdminDashboard"));
+const MyReservations = lazy(() => import("@/pages/MyReservations"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("@/pages/NonCoveredGuide"));
 // 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
@@ -34,6 +35,7 @@ function Router() {
         <Route path={"/events/:id"} component={EventDetail} />
         <Route path={"/treatment/:name"} component={TreatmentDetail} />
         <Route path={"/admin"} component={AdminDashboard} />
+        <Route path={"/my-reservations"} component={MyReservations} />
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/non-covered"} component={NonCoveredGuide} />
         <Route path={"/404"} component={NotFound} />

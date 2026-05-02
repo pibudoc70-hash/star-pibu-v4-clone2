@@ -627,7 +627,7 @@ export default function AdminDashboard() {
                       </div>
                       <div>
                         <label className="text-xs font-semibold text-[#374151] mb-1 block">가격 항목</label>
-                        {popupForm.priceItems.map((item, i) => (
+                        {(popupForm?.priceItems || []).map((item, i) => (
                           <div key={i} className="flex gap-2 mb-2">
                             <input className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs" value={item.label} onChange={e => setPopupForm(f => { if (!f) return f; const p = [...f.priceItems]; p[i] = { ...p[i], label: e.target.value }; return { ...f, priceItems: p }; })} placeholder="300샷" />
                             <input className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs" value={item.original} onChange={e => setPopupForm(f => { if (!f) return f; const p = [...f.priceItems]; p[i] = { ...p[i], original: e.target.value }; return { ...f, priceItems: p }; })} placeholder="원가(선택)" />
@@ -1016,7 +1016,7 @@ export default function AdminDashboard() {
                   {/* 이벤트 목록 */}
                   {eventsList && eventsList.length > 0 ? (
                     <div className="space-y-3">
-                      {eventsList.map((event: any) => (
+                      {(eventsList || []).map((event: any) => (
                         <div key={event.id} className="bg-white border border-[#E5E7EB] rounded-xl p-4 flex items-center justify-between">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -1102,7 +1102,7 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#F3F4F6]">
-                        {reservationsData?.items.map((reservation: any) => {
+                        {(reservationsData?.items || []).map((reservation: any) => {
                           const statusConfig = STATUS_CONFIG[reservation.status as ReservationStatus];
                           return (
                             <tr key={reservation.id} className="hover:bg-[#F9FAFB] transition-colors">

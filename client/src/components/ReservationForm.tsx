@@ -601,3 +601,5 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     </div>
   );
 }
+
+export default ReservationForm;

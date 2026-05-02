@@ -47,8 +47,9 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
 
   // 시술 카테고리별 시술명 매핑
   const treatmentsByCategory = treatments?.reduce((acc, t) => {
-    if (!acc[t.categoryId]) acc[t.categoryId] = [];
-    acc[t.categoryId].push({ id: t.id, name: t.name });
+    const catKey = String(t.categoryId);
+    if (!acc[catKey]) acc[catKey] = [];
+    acc[catKey].push({ id: t.id, name: t.name });
     return acc;
   }, {} as Record<string, Array<{ id: number; name: string }>>) ?? {};
 

@@ -256,8 +256,20 @@
 - [x] App.tsx에 MyReservations 라우트 추가
 - [x] 최종 테스트 및 체크포인트 저장
 
-## Bug Fix: AdminDashboard popupList undefined 에러 (2026-05-02)
-- [x] popupList.map() 에러 수정: (popupList || []).map()으로 변경
+## Bug Fix: AdminDashboard .map() undefined 에러 (2026-05-02)
+- [x] popupList.map() 에러 수정: (popupList || []).map()
+- [x] eventsList.map() 에러 수정: (eventsList || []).map()
+- [x] popupForm.priceItems.map() 에러 수정: (popupForm?.priceItems || []).map()
+- [x] reservationsData.items.map() 에러 수정: (reservationsData?.items || []).map()
 - [x] 모든 테스트 통과 (26개 테스트)
 - [x] 개발 서버 정상 작동
+- [x] 최종 체크포인트 저장 (948eb6bc)
+
+## Phase 40: 이메일 알림 기능 구현 (2026-05-02) - 완료
+- [x] 이메일 발송 서비스 구현: server/email.ts 생성
+- [x] 예약 생성 시 이메일 발송: 고객 및 관리자 알림
+- [x] 예약 상태 변경 시 이메일 발송: 상태별 메시지
+- [x] HTML 이메일 템플릿 작성: 3가지 날린 디자인 이메일
+- [x] server/routers.ts 수정: 예약 생성/상태 변경 시 이메일 발송 기능 추가
+- [x] 모든 테스트 통과 (26개 테스트)
 - [x] 최종 체크포인트 저장

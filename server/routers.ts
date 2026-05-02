@@ -9,6 +9,7 @@ import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
 import { storagePut } from "./storage";
+import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "./email";
 
 export const appRouter = router({
   system: systemRouter,
@@ -36,7 +37,7 @@ export const appRouter = router({
         notes: z.string().max(1000).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        await createReservation({
+        const reservation = await createReservation({
           userId: ctx.user.id,
           patientName: input.patientName,
           phone: input.phone,
@@ -48,19 +49,63 @@ export const appRouter = router({
           status: "pending",
         });
 
+        if (!reservation) throw new Error("Failed to create reservation");
+        const reservationId = reservation.id;
+
+        // 고객에게 예약 확인 이메일 발송
+        const preferredDateStr = new Date(input.preferredDate).toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "short",
+        });
+
+        try {
+          // 고객 이메일로 발송 (사용자 이메일 없으면 발송 스기)
+          if (!ctx.user.email) {
+            console.warn("[Email] User email not available, skipping customer email");
+          } else {
+            await sendEmail({
+              to: ctx.user.email,
+              subject: `[STAR 피부과] 예약 접수 알림 - #${reservationId}`,
+              html: getReservationConfirmationEmail({
+                patientName: input.patientName,
+                treatmentName: input.treatmentName,
+                preferredDate: preferredDateStr,
+                preferredTime: input.preferredTime,
+                phone: input.phone,
+                notes: input.notes,
+                reservationId,
+              }),
+            });
+          }
+        } catch (emailErr) {
+          console.error("[Email] 예약 확인 이메일 발송 중 오류:", emailErr);
+        }
+
         // 관리자에게 알림 발송
         await notifyOwner({
           title: "새 예약 신청",
-          content: `${input.patientName}님이 [${input.treatmentName}] 예약을 신청했습니다.\n희망일시: ${new Date(input.preferredDate).toLocaleDateString("ko-KR")} ${input.preferredTime}\n연락처: ${input.phone}`,
+          content: `${input.patientName}님이 [${input.treatmentName}] 예약을 신청했습니다.\n희망일시: ${preferredDateStr} ${input.preferredTime}\n연락처: ${input.phone}`,
         });
 
-        // 예약자에게 접수 확인 + 확정 안내 SMS 발송
+        // 관리자에게 예약 알림 이메일 발송
         try {
-        // SMS 기능 비활성화 (별도 설정 필요)
-          // SMS 기능은 별도 설정 필요
-        } catch (smsErr) {
-          // SMS 발송 실패는 예약 신청 자체를 막지 않음
-          console.error("[SMS] 예약 접수 SMS 발송 중 오류:", smsErr);
+          await sendEmail({
+            to: process.env.ADMIN_EMAIL || "admin@star-pibu.com",
+            subject: `[관리자] 새로운 예약 신청 - #${reservationId}`,
+            html: getAdminNotificationEmail({
+              patientName: input.patientName,
+              phone: input.phone,
+              treatmentName: input.treatmentName,
+              preferredDate: preferredDateStr,
+              preferredTime: input.preferredTime,
+              notes: input.notes,
+              reservationId,
+            }),
+          });
+        } catch (emailErr) {
+          console.error("[Email] 관리자 알림 이메일 발송 중 오류:", emailErr);
         }
 
         return { success: true };
@@ -586,6 +631,42 @@ export const appRouter = router({
         const reservation = reservationRows[0];
 
         await updateReservationStatus(input.id, input.status, input.adminNote);
+
+        // 고객에게 상태 변경 이메일 발송
+        if (reservation) {
+          const statusLabels: Record<string, string> = {
+            pending: "대기 중",
+            confirmed: "확정",
+            completed: "완료",
+            cancelled: "취소됨",
+          };
+
+          const preferredDateStr = new Date(reservation.preferredDate).toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            weekday: "short",
+          });
+
+          try {
+            await sendEmail({
+              to: reservation.phone || "customer@example.com",
+              subject: `[STAR 피부과] 예약 상태 변경 알림 - ${statusLabels[input.status]}`,
+              html: getReservationStatusEmail({
+                patientName: reservation.patientName,
+                treatmentName: reservation.treatmentName,
+                status: input.status,
+                statusLabel: statusLabels[input.status],
+                preferredDate: preferredDateStr,
+                preferredTime: reservation.preferredTime,
+                adminNote: input.adminNote,
+                reservationId: reservation.id,
+              }),
+            });
+          } catch (emailErr) {
+            console.error("[Email] 상태 변경 이메일 발송 중 오류:", emailErr);
+          }
+        }
 
          // SMS/알림톡 기능은 별도 설정 필요
         return { success: true, alimtalkSent: false };

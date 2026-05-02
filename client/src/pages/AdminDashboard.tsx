@@ -69,19 +69,19 @@ export default function AdminDashboard() {
     { page: reservationPage, pageSize: reservationPageSize },
     { enabled: !!user && user.role === "admin" && activeTab === "reservations" }
   );
-  // 예약 불가능 시간 쿼리
+  // 예약 불가능 날짜 쿼리
   const { data: unavailableSlotsData, refetch: refetchUnavailableSlots } = trpc.admin.unavailableSlots.list.useQuery(
     { date: undefined },
     { enabled: !!user && user.role === "admin" && activeTab === "unavailableSlots" }
   );
 
   const createUnavailableSlot = trpc.admin.unavailableSlots.create.useMutation({
-    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 시간이 추가되었습니다."); },
+    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 날짜가 추가되었습니다."); },
     onError: () => toast.error("추가에 실패했습니다."),
   });
 
   const deleteUnavailableSlot = trpc.admin.unavailableSlots.delete.useMutation({
-    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 시간이 삭제되었습니다."); },
+    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 날짜가 삭제되었습니다."); },
     onError: () => toast.error("삭제에 실패했습니다."),
   });
 
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
             }}
           >
             <Clock size={16} />
-            예약 불가능 시간
+            예약 불가능 날짜
           </button>
         </nav>
 
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
         <header className="bg-white border-b border-[#E5E7EB] px-8 py-4 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-lg font-bold text-[#1F2937]">
-              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리"  : activeTab === "unavailableSlots" ? "예약 불가능 시간" : "이벤트 관리"}
+              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리"  : activeTab === "unavailableSlots" ? "예약 불가능 날짜" : "이벤트 관리"}
             </h1>
             <p className="text-xs text-[#9CA3AF]">
               {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다"  : activeTab === "unavailableSlots" ? "특정 날짜와 시간을 예약 불가능하도록 설정합니다" : "이벤트를 추가·수정·삭제합니다"}

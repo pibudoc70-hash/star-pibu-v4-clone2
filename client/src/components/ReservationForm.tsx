@@ -42,7 +42,7 @@ export default function ReservationForm({ onSuccess }: ReservationFormProps) {
   });
 
   // 시술 카테고리 및 시술명 (DB에서 조회)
-  const { data: treatments } = trpc.treatments.list.useQuery();
+  const { data: treatments } = trpc.treatments.all.useQuery();
   const { data: categories } = trpc.treatments.categories.useQuery();
 
   // 시술 카테고리별 시술명 매핑

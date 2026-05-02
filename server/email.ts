@@ -1,7 +1,7 @@
 /**
  * Email Service - Manus 내장 API를 사용한 이메일 발송
  */
-import { invokeLLM } from "./server/_core/llm";
+
 
 export interface EmailOptions {
   to: string;

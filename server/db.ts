@@ -71,13 +71,13 @@ export async function getReservationsByUserId(userId: number) {
 
 export async function getAllReservations(page = 1, pageSize = 20) {
   const db = await getDb();
-  if (!db) return { reservations: [], total: 0 };
+  if (!db) return { items: [], total: 0 };
   const offset = (page - 1) * pageSize;
   const [items, countResult] = await Promise.all([
     db.select().from(reservations).orderBy(desc(reservations.createdAt)).limit(pageSize).offset(offset),
     db.select().from(reservations),
   ]);
-  return { reservations: items, total: countResult.length };
+  return { items, total: countResult.length };
 }
 
 export async function updateReservationStatus(id: number, status: "pending" | "confirmed" | "completed" | "cancelled", adminNote?: string) {

@@ -187,7 +187,7 @@ export default function MyReservations() {
                       <button
                         onClick={() => {
                           if (confirm("정말로 예약을 취소하시겠습니까?")) {
-                            cancelMutation.mutate({ reservationId: reservation.id });
+                            cancelMutation.mutate({ id: reservation.id });
                           }
                         }}
                         disabled={cancelMutation.isPending}

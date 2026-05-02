@@ -281,3 +281,16 @@
 - [x] 모든 테스트 통과 (26개 테스트)
 - [x] 개발 서버 정상 작동
 - [x] 최종 체크포인트 저장
+
+## Phase 42: 휴대폰 번호 형식 검증 및 타입 에러 수정 (2026-05-02)
+- [x] ReservationForm.tsx에 휴대폰 번호 형식 검증 추가 (010-1234-5678 또는 01012345678)
+- [x] server/email.ts에서 불필요한 import 제거 (invokeLLM)
+- [x] MyReservations.tsx에서 cancel 프로시저 호출 수정 (reservationId → id)
+- [x] AdminDashboard.tsx에서 reservationsData.items 접근 수정
+- [x] server/db.ts의 getAllReservations 함수 반환값 수정 (reservations → items)
+- [x] TreatmentsEquipmentSectionV2.tsx의 Treatment 인터페이스 타입 수정 (null 가능한 필드)
+- [x] server/routers.ts에 getReservationStatusEmail import 추가
+- [x] server/reservation.test.ts 테스트 코드 업데이트 (getAllReservations 함수 시그니처 변경에 맞게 수정)
+- [x] 모든 TypeScript 컴파일 에러 해결
+- [x] 모든 테스트 통과 (26개 테스트)
+- [x] 개발 서버 정상 작동

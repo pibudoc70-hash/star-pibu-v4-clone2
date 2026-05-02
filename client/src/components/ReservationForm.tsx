@@ -220,6 +220,12 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
       toast.error("휴대폰 번호를 입력해주세요.");
       return;
     }
+    // 휴대폰 번호 형식 검증
+    const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
+    if (!phoneRegex.test(guestForm.phone)) {
+      toast.error("올바른 휴대폰 번호 형식입니다. (010-1234-5678 형식)");
+      return;
+    }
     await sendOtpMutation.mutateAsync({ phone: guestForm.phone });
   };
 
@@ -232,7 +238,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     }
     await verifyOtpMutation.mutateAsync({
       phone: guestForm.phone,
-      otpCode: guestForm.otpCode,
+      code: guestForm.otpCode,
     });
   };
 
@@ -251,6 +257,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     await createGuestReservationMutation.mutateAsync({
       phone: guestForm.phone,
       patientName: guestForm.patientName,
+      otpCode: guestForm.otpCode,
       treatmentCategory: guestForm.treatmentCategory,
       treatmentName: guestForm.treatmentName,
       preferredDate: new Date(guestForm.preferredDate).getTime(),

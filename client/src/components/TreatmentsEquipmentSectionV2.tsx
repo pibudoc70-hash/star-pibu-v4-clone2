@@ -15,14 +15,23 @@ interface Treatment {
   desc: string;
   time: string;
   recovery: string;
-  badge?: string;
-  badgeColor?: string;
-  image?: string;
-  detail?: string;
-  caution?: string;
-  youtubeUrl?: string;
-  best?: string;
-  isActive?: string;
+  badge?: string | null;
+  badgeColor?: string | null;
+  image?: string | null;
+  detail?: string | null;
+  caution?: string | null;
+  youtubeUrl?: string | null;
+  best?: string | null;
+  isActive?: string | null;
+  images?: string | null;
+  imgBg?: string | null;
+  cardBannerImage?: string | null;
+  sessions?: string | null;
+  effect?: string | null;
+  related?: string | null;
+  steps?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const CATEGORIES = [

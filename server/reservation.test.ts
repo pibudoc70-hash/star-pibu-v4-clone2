@@ -71,16 +71,16 @@ describe("Reservation System", () => {
 
   describe("관리자 예약 관리", () => {
     it("should retrieve all reservations with pagination", async () => {
-      const result = await getAllReservations({ page: 1, limit: 10 });
+      const result = await getAllReservations(1, 10);
       expect(result).toBeDefined();
-      expect(result.reservations).toBeDefined();
-      expect(Array.isArray(result.reservations)).toBe(true);
+      expect(result.items).toBeDefined();
+      expect(Array.isArray(result.items)).toBe(true);
       expect(result.total).toBeGreaterThan(0);
     });
 
     it("should update reservation status", async () => {
-      const reservations = await getAllReservations({ page: 1, limit: 1 });
-      const reservationId = reservations.reservations[0].id;
+      const reservations = await getAllReservations(1, 1);
+      const reservationId = reservations.items[0].id;
 
       const result = await updateReservationStatus(reservationId, "confirmed");
       expect(result.status).toBe("confirmed");

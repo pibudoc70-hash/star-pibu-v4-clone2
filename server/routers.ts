@@ -9,7 +9,7 @@ import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
 import { storagePut } from "./storage";
-import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "./email";
+import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail, getReservationStatusEmail } from "./email";
 import { sendSMS, getOTPMessage, getReservationConfirmationSMS, getReservationConfirmedSMS, getReservationCancelledSMS } from "./sms";
 
 export const appRouter = router({

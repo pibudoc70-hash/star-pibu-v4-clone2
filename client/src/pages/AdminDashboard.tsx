@@ -477,7 +477,7 @@ export default function AdminDashboard() {
                 {!popupList || popupList.length === 0 ? (
                   <div className="text-center py-12 text-[#9CA3AF] text-sm">등록된 이벤트가 없습니다.</div>
                 ) : (
-                  popupList.map((ev: any) => (
+                  (popupList || []).map((ev: any) => (
                     <div key={ev.id} className="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex items-center gap-4">
                       {ev.imageUrl ? (
                         <img src={ev.imageUrl} alt={ev.title} className="w-16 h-16 object-contain rounded-xl border border-[#F3F4F6] flex-shrink-0" />

@@ -255,3 +255,9 @@
 - [x] 예약 취소 기능: 대기 중 예약만 취소 가능
 - [x] App.tsx에 MyReservations 라우트 추가
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Bug Fix: AdminDashboard popupList undefined 에러 (2026-05-02)
+- [x] popupList.map() 에러 수정: (popupList || []).map()으로 변경
+- [x] 모든 테스트 통과 (26개 테스트)
+- [x] 개발 서버 정상 작동
+- [x] 최종 체크포인트 저장

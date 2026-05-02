@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { treatmentsRouter } from "./treatments-router";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "./db";
+import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot } from "./db";
 import { users, popupEvents, events, treatments, treatmentCategories } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
@@ -676,9 +676,60 @@ export const appRouter = router({
           }
         }
 
-         // SMS/알림톡 기능은 별도 설정 필요
-        return { success: true, alimtalkSent: false };
       }),
+
+    // 예약 불가능 시간 관리
+    unavailableSlots: router({
+      // 예약 불가능 시간 목록 조회
+      list: adminProcedure
+        .input(z.object({
+          date: z.string().optional(),
+        }))
+        .query(async ({ input }) => {
+          return getUnavailableSlots(input.date);
+        }),
+
+      // 예약 불가능 시간 추가
+      create: adminProcedure
+        .input(z.object({
+          date: z.string().min(10).max(10), // YYYY-MM-DD
+          startTime: z.string().min(5).max(5), // HH:00
+          endTime: z.string().min(5).max(5), // HH:00
+          reason: z.string().optional(),
+        }))
+        .mutation(async ({ input }) => {
+          return createUnavailableSlot({
+            date: input.date,
+            startTime: input.startTime,
+            endTime: input.endTime,
+            reason: input.reason || null,
+          });
+        }),
+
+      // 예약 불가능 시간 삭제
+      delete: adminProcedure
+        .input(z.object({
+          id: z.number(),
+        }))
+        .mutation(async ({ input }) => {
+          await deleteUnavailableSlot(input.id);
+          return { success: true };
+        }),
+
+      // 예약 불가능 시간 수정
+      update: adminProcedure
+        .input(z.object({
+          id: z.number(),
+          date: z.string().min(10).max(10).optional(),
+          startTime: z.string().min(5).max(5).optional(),
+          endTime: z.string().min(5).max(5).optional(),
+          reason: z.string().optional(),
+        }))
+        .mutation(async ({ input }) => {
+          const { id, ...data } = input;
+          return updateUnavailableSlot(id, data);
+        }),
+    }),
   }),
 });
 

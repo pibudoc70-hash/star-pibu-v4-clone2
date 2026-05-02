@@ -16,7 +16,7 @@ import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
 
-type AdminTab = "users" | "popup" | "events" | "treatments" | "reservations";
+type AdminTab = "users" | "popup" | "events" | "treatments" | "reservations" | "unavailableSlots";
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 type ReservationFilter = "all" | "member" | "guest";
 
@@ -69,6 +69,21 @@ export default function AdminDashboard() {
     { page: reservationPage, pageSize: reservationPageSize },
     { enabled: !!user && user.role === "admin" && activeTab === "reservations" }
   );
+  // 예약 불가능 시간 쿼리
+  const { data: unavailableSlotsData, refetch: refetchUnavailableSlots } = trpc.admin.unavailableSlots.list.useQuery(
+    { date: undefined },
+    { enabled: !!user && user.role === "admin" && activeTab === "unavailableSlots" }
+  );
+
+  const createUnavailableSlot = trpc.admin.unavailableSlots.create.useMutation({
+    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 시간이 추가되었습니다."); },
+    onError: () => toast.error("추가에 실패했습니다."),
+  });
+
+  const deleteUnavailableSlot = trpc.admin.unavailableSlots.delete.useMutation({
+    onSuccess: () => { refetchUnavailableSlots(); toast.success("예약 불가능 시간이 삭제되었습니다."); },
+    onError: () => toast.error("삭제에 실패했습니다."),
+  });
 
   const updateRoleMutation = trpc.admin.updateUserRole.useMutation({
     onSuccess: () => { refetchUsers(); refetchStats(); toast.success("역할이 변경되었습니다."); },
@@ -290,6 +305,18 @@ export default function AdminDashboard() {
             <ClipboardList size={16} />
             예약 관리
           </button>
+          {/* 예약 불가능 시간 탭 */}
+          <button
+            onClick={() => setActiveTab("unavailableSlots")}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{
+              background: activeTab === "unavailableSlots" ? "rgba(255,255,255,0.15)" : "transparent",
+              color: activeTab === "unavailableSlots" ? "white" : "rgba(255,255,255,0.6)",
+            }}
+          >
+            <Clock size={16} />
+            예약 불가능 시간
+          </button>
         </nav>
 
         <div className="px-4 py-4 border-t border-white/10 space-y-2">
@@ -310,10 +337,10 @@ export default function AdminDashboard() {
         <header className="bg-white border-b border-[#E5E7EB] px-8 py-4 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-lg font-bold text-[#1F2937]">
-              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리" : "이벤트 관리"}
+              {activeTab === "treatments" ? "시술·장비 관리" : activeTab === "users" ? "회원 관리" : activeTab === "popup" ? "팩업 이벤트 관리" : activeTab === "reservations" ? "예약 관리"  : activeTab === "unavailableSlots" ? "예약 불가능 시간" : "이벤트 관리"}
             </h1>
             <p className="text-xs text-[#9CA3AF]">
-              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다" : "이벤트를 추가·수정·삭제합니다"}
+              {activeTab === "treatments" ? "시술 및 장비 정보를 추가·수정·삭제합니다" : activeTab === "users" ? "가입 회원 목록 및 역할 관리" : activeTab === "popup" ? "홍 팩업에 표시될 이벤트를 추가·수정·삭제합니다" : activeTab === "reservations" ? "고객 예약을 관리하고 상태를 변경합니다"  : activeTab === "unavailableSlots" ? "특정 날짜와 시간을 예약 불가능하도록 설정합니다" : "이벤트를 추가·수정·삭제합니다"}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -1162,6 +1189,48 @@ export default function AdminDashboard() {
                   )}
                 </>
               )}
+            </div>
+          )}
+          {/* 예약 불가능 시간 탭 */}
+          {activeTab === "unavailableSlots" && (
+            <div className="bg-white rounded-lg shadow-sm border border-[#E5E7EB]">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-semibold text-[#1F2937]">예약 불가능 시간 설정</h2>
+                  <button
+                    onClick={() => {
+                      const date = prompt("날짜를 입력하세요 (YYYY-MM-DD):");
+                      if (!date) return;
+                      const startTime = prompt("시작 시간을 입력하세요 (HH:00):");
+                      if (!startTime) return;
+                      const endTime = prompt("종료 시간을 입력하세요 (HH:00):");
+                      if (!endTime) return;
+                      const reason = prompt("사유 (선택):");
+                      createUnavailableSlot.mutate({ date, startTime, endTime, reason: reason || undefined });
+                    }}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+                  >
+                    <Plus size={16} />
+                    추가
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {unavailableSlotsData?.map((slot) => (
+                    <div key={slot.id} className="flex items-center justify-between p-4 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
+                      <div>
+                        <p className="font-semibold text-[#1F2937]">{slot.date} {slot.startTime} ~ {slot.endTime}</p>
+                        {slot.reason && <p className="text-sm text-[#6B7280]">{slot.reason}</p>}
+                      </div>
+                      <button
+                        onClick={() => deleteUnavailableSlot.mutate({ id: slot.id })}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -1,0 +1,21 @@
+--- a/client/src/pages/AdminDashboard.tsx
++++ b/client/src/pages/AdminDashboard.tsx
+@@ -290,6 +290,18 @@
+             <ClipboardList size={16} />
+             예약 관리
+           </button>
++          {/* 예약 불가능 시간 탭 */}
++          <button
++            onClick={() => setActiveTab("unavailableSlots")}
++            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
++            style={{
++              background: activeTab === "unavailableSlots" ? "rgba(255,255,255,0.15)" : "transparent",
++              color: activeTab === "unavailableSlots" ? "white" : "rgba(255,255,255,0.6)",
++            }}
++          >
++            <Clock size={16} />
++            예약 불가능 시간
++          </button>
+         </nav>
+ 
+         <div className="px-4 py-4 border-t border-white/10 space-y-2">

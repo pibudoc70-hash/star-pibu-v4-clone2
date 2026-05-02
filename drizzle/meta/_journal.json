@@ -57,6 +57,13 @@
       "when": 1777543735779,
       "tag": "0007_neat_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1777712633682,
+      "tag": "0008_wealthy_microchip",
+      "breakpoints": true
     }
   ]
 }

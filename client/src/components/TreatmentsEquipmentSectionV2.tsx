@@ -117,8 +117,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         <div
           className="relative overflow-hidden"
           style={{
-            aspectRatio: item.cardBannerImage ? "600 / 306" : "auto",
-            height: item.cardBannerImage ? "auto" : "167px",
+            height: item.cardBannerImage ? "280px" : "167px",
             background: item.cardBannerImage ? "transparent" : (item.imgBg || imgBg),
           }}
         >
@@ -126,7 +125,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
             <img
               src={item.cardBannerImage}
               alt={item.name}
-              className="w-full h-full object-cover block transition-transform duration-400 group-hover:scale-105"
+              className="w-full h-full object-contain block transition-transform duration-400 group-hover:scale-105"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}

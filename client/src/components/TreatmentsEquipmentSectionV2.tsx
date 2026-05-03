@@ -285,12 +285,12 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                 </div>
               )}
 
-              {/* 주의사항 */}
+              {/* 기대효과 */}
               {item.caution && (
                 <div className="mb-4" style={{ borderTop: "1px solid #f0e8d4", paddingTop: "14px" }}>
                   <div className="flex items-center gap-1.5 mb-1">
                     <span className="text-xs font-bold" style={{ color: "#d1ab67" }}>
-                      ⚠️ 주의사항
+                      ✨ 기대효과
                     </span>
                   </div>
                   <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>
@@ -330,14 +330,20 @@ export default function TreatmentsEquipmentSectionV2() {
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const sectionTopRef = useRef<HTMLDivElement>(null);
 
-  // DB에서 모든 시술 조회
-  const { data: treatments = [], isLoading } = trpc.treatments.all.useQuery();
+  // DB에서 V2 섹션의 모든 시술 조회
+  const { data: treatments = [], isLoading } = trpc.treatments.all.useQuery({ section: "v2" });
 
   // 카테고리별 필터링 및 정렬
   const filteredTreatments = useMemo(() => {
-    let items = treatments.filter(
-      (t: Treatment) => t.categoryId === activeId && t.isActive !== "0"
-    );
+    let items = treatments.filter((t: Treatment) => {
+      if (activeId === "best") {
+        // Best 시술: best='1'인 모든 시술 표시
+        return t.best === "1" && t.isActive !== "0" && t.section === "v2";
+      } else {
+        // 다른 탭: categoryId 필터링
+        return t.categoryId === activeId && t.isActive !== "0" && t.section === "v2";
+      }
+    });
 
     // 정렬 적용
     if (sortBy === "name") {
@@ -351,7 +357,7 @@ export default function TreatmentsEquipmentSectionV2() {
     }
 
     return items;
-  }, [activeId, sortBy, treatments]);
+  }, [activeId, sortBy, treatments, activeId]);
 
   // 모바일: 활성 탭이 항상 중앙에 오도록 자동 스크롤
   useEffect(() => {

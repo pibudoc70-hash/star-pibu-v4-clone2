@@ -71,7 +71,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
   });
 
   // 시술 목록 조회
-  const { data: allTreatments, refetch: refetchTreatments, isLoading } = trpc.treatments.all.useQuery();
+  const { data: allTreatments, refetch: refetchTreatments, isLoading } = trpc.treatments.all.useQuery({ section });
   
   // section별 필터링
   const treatments = useMemo(() => {
@@ -423,13 +423,13 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               {/* 주의사항 */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  주의사항
+                  기대효과
                 </label>
                 <textarea
                   value={form.caution}
                   onChange={(e) => setForm({ ...form, caution: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="시술 후 주의사항"
+                  placeholder="기대되는 효과"
                   rows={3}
                 />
               </div>
@@ -448,8 +448,21 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                 />
               </div>
 
-              {/* Best, 정렬순서, 활성화 */}
-              <div className="grid grid-cols-3 gap-4">
+              {/* Section, Best, 정렬순서, 활성화 */}
+              <div className="grid grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    섹션 *
+                  </label>
+                  <select
+                    value={form.section || "v1"}
+                    onChange={(e) => setForm({ ...form, section: e.target.value as "v1" | "v2" })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="v1">시술·장비소개 1</option>
+                    <option value="v2">시술·장비소개 2</option>
+                  </select>
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Best 시술

@@ -11,20 +11,24 @@ export const treatmentsRouter = router({
 
   // 공개: 특정 카테고리의 시술 조회
   byCategory: publicProcedure
-    .input(z.object({ categoryId: z.string() }))
+    .input(z.object({ categoryId: z.string(), section: z.string().optional() }))
     .query(async ({ input }) => {
-      return getTreatmentsByCategory(input.categoryId);
+      return getTreatmentsByCategory(input.categoryId, input.section);
     }),
 
   // 공개: 모든 시술 조회
-  all: publicProcedure.query(async () => {
-    return getAllTreatments();
-  }),
+  all: publicProcedure
+    .input(z.object({ section: z.string().optional() }).optional())
+    .query(async ({ input }) => {
+      return getAllTreatments(input?.section);
+    }),
 
   // 공개: Best 시술 조회
-  best: publicProcedure.query(async () => {
-    return getTreatmentsByBest();
-  }),
+  best: publicProcedure
+    .input(z.object({ section: z.string().optional() }).optional())
+    .query(async ({ input }) => {
+      return getTreatmentsByBest(input?.section);
+    }),
 
   // 공개: 특정 시술 조회
   byId: publicProcedure

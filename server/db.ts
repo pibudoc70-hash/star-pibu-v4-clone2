@@ -1,4 +1,4 @@
-import { eq, desc, asc, and } from "drizzle-orm";
+import { eq, desc, asc, and, or, isNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, events, popupEvents, reservations, guestOtps, treatments, treatmentCategories, unavailableSlots } from "../drizzle/schema";
 import type { InsertEvent, InsertReservation, InsertTreatment, InsertTreatmentCategory, Treatment, TreatmentCategory, UnavailableSlot, InsertUnavailableSlot } from "../drizzle/schema";
@@ -233,15 +233,26 @@ export async function deleteTreatmentCategory(id: string) {
 }
 
 // ─── 시술·장비 관련 ────────────────────────────────────────────────────────────
-export async function getTreatmentsByCategory(categoryId: string) {
+export async function getTreatmentsByCategory(categoryId: string, section?: string) {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(treatments).where(and(eq(treatments.categoryId, categoryId), eq(treatments.isActive, "1"))).orderBy(asc(treatments.sortOrder));
+  const conditions = [eq(treatments.categoryId, categoryId), eq(treatments.isActive, "1")];
+  if (section) {
+    conditions.push(eq(treatments.section, section));
+  }
+  return db.select().from(treatments).where(and(...conditions)).orderBy(asc(treatments.sortOrder));
 }
 
-export async function getAllTreatments() {
+export async function getAllTreatments(section?: string) {
   const db = await getDb();
   if (!db) return [];
+  
+  if (section === "v2") {
+    // V2 섹션: section='v2'만 조회
+    return db.select().from(treatments).where(and(eq(treatments.isActive, "1"), eq(treatments.section, "v2"))).orderBy(asc(treatments.sortOrder));
+  }
+  
+  // V1 또는 섹션이 지정되지 않은 경우: 모든 시술 조회 (클라이언트에서 필터링)
   return db.select().from(treatments).where(eq(treatments.isActive, "1")).orderBy(asc(treatments.sortOrder));
 }
 
@@ -271,10 +282,14 @@ export async function deleteTreatment(id: number) {
   await db.delete(treatments).where(eq(treatments.id, id));
 }
 
-export async function getTreatmentsByBest() {
+export async function getTreatmentsByBest(section?: string) {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(treatments).where(and(eq(treatments.best, "1"), eq(treatments.isActive, "1"))).orderBy(asc(treatments.sortOrder));
+  const conditions = [eq(treatments.best, "1"), eq(treatments.isActive, "1")];
+  if (section) {
+    conditions.push(eq(treatments.section, section));
+  }
+  return db.select().from(treatments).where(and(...conditions)).orderBy(asc(treatments.sortOrder));
 }
 
 

@@ -393,7 +393,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                       <img
                         src={form.image}
                         alt="preview"
-                        className="w-16 h-16 object-cover rounded"
+                        className="max-w-xs h-auto max-h-32 object-contain rounded border border-gray-200"
                       />
                       <button
                         onClick={() => setForm({ ...form, image: "" })}

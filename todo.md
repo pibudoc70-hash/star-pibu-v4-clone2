@@ -366,3 +366,14 @@
 - [x] 관리자 폼에 "섹션" 선택 필드 추가
 - [x] Best 시술 탭 필터링 로직 수정 (categoryId → isBest)
 - [x] Best 시술 탭에 2개의 시술 표시 확인 완료
+
+
+## Phase 51: YouTube 영상 URL 임베드 문제 해결 (2026-05-03)
+- [x] YouTube URL 자동 변환 함수 구현 (convertYoutubeUrl)
+- [x] 표준 YouTube URL → embed 형식 자동 변환
+- [x] 짧은 URL (youtu.be) → embed 형식 자동 변환
+- [x] 이미 embed 형식인 URL은 그대로 유지
+- [x] TreatmentsEquipmentSectionV2.tsx에 convertYoutubeUrl 함수 적용
+- [x] 관리자 대시보드에서 표준 YouTube URL 입력 후 자동 변환 테스트 완료
+- [x] 홈페이지 V2 섹션에서 YouTube 임베드 영상 정상 재생 확인
+- [x] 최종 테스트 및 체크포인트 준비

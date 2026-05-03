@@ -71,6 +71,26 @@ const CAT_IMG_BG: Record<string, string> = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// YouTube URL 변환 함수
+// ─────────────────────────────────────────────────────────────────────────────
+function convertYoutubeUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  
+  // 이미 embed 형식이면 그대로 반환
+  if (url.includes('youtube.com/embed/')) return url;
+  
+  // 표준 YouTube URL 형식 처리
+  // https://www.youtube.com/watch?v=VIDEO_ID
+  const watchMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (watchMatch && watchMatch[1]) {
+    return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  }
+  
+  // 이미 embed 형식이거나 다른 형식이면 그대로 반환
+  return url;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 시술 카드 컴포넌트
 // ─────────────────────────────────────────────────────────────────────────────
 function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number; imgBg: string }) {
@@ -97,7 +117,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         <div
           className="relative overflow-hidden"
           style={{
-            height: item.cardBannerImage ? "auto" : "192px",
+            height: item.cardBannerImage ? "auto" : "280px",
             background: item.cardBannerImage ? "transparent" : (item.imgBg || imgBg),
           }}
         >
@@ -105,7 +125,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
             <img
               src={item.cardBannerImage}
               alt={item.name}
-              className="w-full h-auto block transition-transform duration-400 group-hover:scale-105"
+              className="w-full h-full object-cover block transition-transform duration-400 group-hover:scale-105"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}
@@ -137,8 +157,8 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-contain transition-transform duration-400 group-hover:scale-115"
-              style={{ padding: "10px" }}
+              className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+              style={{}}
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}
@@ -204,7 +224,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                     style={{ paddingBottom: "56.25%", height: 0 }}
                   >
                     <iframe
-                      src={item.youtubeUrl}
+                      src={convertYoutubeUrl(item.youtubeUrl) || item.youtubeUrl}
                       title={`${item.name} 소개 영상`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -357,7 +377,7 @@ export default function TreatmentsEquipmentSectionV2() {
     }
 
     return items;
-  }, [activeId, sortBy, treatments, activeId]);
+  }, [activeId, sortBy, treatments]);
 
   // 모바일: 활성 탭이 항상 중앙에 오도록 자동 스크롤
   useEffect(() => {

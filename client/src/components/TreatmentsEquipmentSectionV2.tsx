@@ -117,7 +117,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         <div
           className="relative overflow-hidden"
           style={{
-            height: item.cardBannerImage ? "auto" : "306px",
+            height: item.cardBannerImage ? "auto" : "167px",
             background: item.cardBannerImage ? "transparent" : (item.imgBg || imgBg),
           }}
         >

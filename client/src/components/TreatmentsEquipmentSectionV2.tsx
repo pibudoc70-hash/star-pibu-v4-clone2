@@ -109,7 +109,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
   return (
     <>
       <div
-        className="treatment-card group cursor-pointer"
+        className="treatment-card group cursor-pointer flex flex-col"
         style={{ animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`, minHeight: "365px" }}
         onClick={() => setOpen(true)}
       >
@@ -171,7 +171,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         </div>
 
         {/* 텍스트 */}
-        <div className="p-3 sm:p-4">
+        <div className="p-3 sm:p-4 flex flex-col flex-1">
           <p className="text-xs font-normal mb-0.5 font-montserrat" style={{ color: "#d1ab67" }}>
             {item.nameEn || "TREATMENT"}
           </p>

@@ -433,3 +433,11 @@
 - [x] V2 카드 전체 높이 360px → 365px로 조정
 - [x] 개발 서버 재시작
 - [x] 카드 레이아웃 확인 (텍스트 영역 약 173px)
+
+## Phase 60: V2 카드 높이 및 테스트 이벤트 중복 등록 문제 해결 (2026-05-03)
+- [x] V2 카드 컨테이너에 flex flex-col 클래스 추가
+- [x] V2 텍스트 영역에 flex flex-col flex-1 추가 (카드 높이 365px 유지)
+- [x] events.special.test.ts에 cleanupTestEvents() 함수 추가
+- [x] afterEach() 훅으로 각 테스트 후 테스트 이벤트 자동 삭제
+- [x] 모든 vitest 테스트 통과 (26개)
+- [x] 테스트 이벤트 중복 생성 문제 해결

@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
 
@@ -30,6 +30,27 @@ function createAdminContext(): TrpcContext {
 }
 
 describe("events.special", () => {
+  // Cleanup function to remove test events
+  async function cleanupTestEvents(caller: any) {
+    const allEvents = await caller.events.list();
+    const testEventTitles = ["울쎼라피 프라임", "테스트 특별 이벤트", "비활성 특별 이벤트", "마취비 테스트 이벤트"];
+    for (const event of allEvents) {
+      if (testEventTitles.includes(event.title)) {
+        try {
+          await caller.events.delete({ id: event.id });
+        } catch (e) {
+          // Ignore deletion errors
+        }
+      }
+    }
+  }
+
+  afterEach(async () => {
+    const ctx = createAdminContext();
+    const caller = appRouter.createCaller(ctx);
+    await cleanupTestEvents(caller);
+  });
+
   it("should return empty array when no special events exist", async () => {
     const ctx = createAdminContext();
     const caller = appRouter.createCaller(ctx);

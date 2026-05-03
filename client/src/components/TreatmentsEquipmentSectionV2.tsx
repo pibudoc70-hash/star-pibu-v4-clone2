@@ -117,6 +117,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         <div
           className="relative overflow-hidden"
           style={{
+            aspectRatio: item.cardBannerImage ? "600 / 306" : "auto",
             height: item.cardBannerImage ? "auto" : "167px",
             background: item.cardBannerImage ? "transparent" : (item.imgBg || imgBg),
           }}

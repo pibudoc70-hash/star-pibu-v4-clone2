@@ -110,7 +110,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
     <>
       <div
         className="treatment-card group cursor-pointer"
-        style={{ animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`, minHeight: "360px" }}
+        style={{ animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`, minHeight: "365px" }}
         onClick={() => setOpen(true)}
       >
         {/* 이미지 */}

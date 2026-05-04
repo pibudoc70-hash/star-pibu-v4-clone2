@@ -8,16 +8,13 @@ import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
-
 const galleryImageSrcs = [
-  { srcWebP: `${CDN}/sub01_04_07-desktop_eabba615.webp`, srcJPG: `${CDN}/sub01_04_07-desktop.jpg` },
-  { srcWebP: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub01_04_01-desktop_9391bcd7.jpg", srcJPG: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub01_04_01-desktop_9391bcd7.jpg" },
-  { srcWebP: `${CDN}/sub01_04_02-desktop_de43f18c.webp`, srcJPG: `${CDN}/sub01_04_02-desktop.jpg` },
-  { srcWebP: `${CDN}/sub01_04_04-desktop_b7c7d14b.webp`, srcJPG: `${CDN}/sub01_04_04-desktop.jpg` },
-  { srcWebP: `${CDN}/sub01_04_03-desktop_09ad9a3f.webp`, srcJPG: `${CDN}/sub01_04_03-desktop.jpg` },
-  { srcWebP: `${CDN}/sub01_04_05-desktop_6b2831e9.webp`, srcJPG: `${CDN}/sub01_04_05-desktop.jpg` },
-  { srcWebP: `${CDN}/sub01_04_06-desktop_6057112b.webp`, srcJPG: `${CDN}/sub01_04_06-desktop.jpg` },
+  { srcWebP: "/manus-storage/clinic_tour_info_room_da12e0aa.webp", srcJPG: "/manus-storage/clinic_tour_info_room_da12e0aa.webp" },
+  { srcWebP: "/manus-storage/clinic_tour_consultation_e4f829c8.webp", srcJPG: "/manus-storage/clinic_tour_consultation_e4f829c8.webp" },
+  { srcWebP: "/manus-storage/clinic_tour_laser_corridor_f098e920.webp", srcJPG: "/manus-storage/clinic_tour_laser_corridor_f098e920.webp" },
+  { srcWebP: "/manus-storage/clinic_tour_reception_26281127.webp", srcJPG: "/manus-storage/clinic_tour_reception_26281127.webp" },
+  { srcWebP: "/manus-storage/clinic_tour_waiting_room_57492129.webp", srcJPG: "/manus-storage/clinic_tour_waiting_room_57492129.webp" },
+  { srcWebP: "/manus-storage/clinic_tour_management_55100c6a.webp", srcJPG: "/manus-storage/clinic_tour_management_55100c6a.webp" },
 ];
 
 const highlights = [

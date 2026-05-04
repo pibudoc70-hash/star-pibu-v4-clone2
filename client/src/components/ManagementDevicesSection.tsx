@@ -1,8 +1,7 @@
 /**
- * ManagementDevicesSection - 스타피부과 관리장비 섹션 (순수 캐러셀)
- * 가로 1줄로 옆으로 흘러가는 캐러셀
- * 이전/다음 버튼 + 터치 스와이프 지원
- * 클릭 기능 없음 - 순수 정보 표시
+ * ManagementDevicesSection - 스타피부과 관리장비 섹션 (캐러셀)
+ * 페이지에 4개 카드 고정 표시 + 좌우 스크롤로 나머지 카드 보기
+ * 기존 카드 스타일 유지 (원형 아이콘 + 금선 + 장비명 + 영문명 + 설명)
  */
 import { useLang } from "@/contexts/LangContext";
 import { useState, useRef, useEffect } from "react";
@@ -150,36 +149,41 @@ function DeviceCard({ device }: { device: Device }) {
 
   return (
     <div
-      className="bg-white rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-105 text-left border border-transparent hover:border-yellow-300 flex-shrink-0"
-      style={{ boxShadow: "0 1px 6px rgba(209,171,103,0.10)", width: "calc(25% - 12px)" }}
+      className="bg-white rounded-lg overflow-hidden flex flex-col text-left flex-shrink-0"
+      style={{
+        boxShadow: "0 1px 6px rgba(209,171,103,0.10)",
+        width: "calc(25% - 12px)",
+      }}
     >
-      {/* 상단 골드 라인 */}
+      {/* 상단 금선 */}
       <div className="h-1 w-full" style={{ background: "#d1ab67" }} />
 
-      {/* 이미지 */}
-      <div
-        className="w-full h-24 overflow-hidden flex items-center justify-center"
-        style={{ background: "#f5f0e8" }}
-      >
-        <img
-          src={imgUrl}
-          alt={device.name}
-          className="w-full h-full object-cover"
-        />
+      {/* 원형 아이콘 영역 */}
+      <div className="flex justify-center pt-4 pb-2">
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden"
+          style={{ background: "#f5f0e8", border: "2px solid #d1ab67" }}
+        >
+          <img
+            src={imgUrl}
+            alt={device.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
       {/* 장비명 + 영문명 + 설명 */}
-      <div className="px-3 py-2 flex flex-col flex-1">
-        <h3 className="text-xs font-bold leading-tight" style={{ color: "#1A2B4A" }}>
+      <div className="px-4 py-3 flex flex-col flex-1 text-center">
+        <h3 className="text-sm font-bold leading-tight" style={{ color: "#1A2B4A" }}>
           {device.name}
         </h3>
         <span
-          className="tracking-wide uppercase mt-0.5 text-xs"
+          className="tracking-wide uppercase mt-1 text-xs"
           style={{ color: "#d1ab67", fontWeight: 100, fontSize: "10px" }}
         >
           {device.nameEn}
         </span>
-        <p className="text-xs leading-relaxed mt-1 flex-1" style={{ color: "#6B7280" }}>
+        <p className="text-xs leading-relaxed mt-2 flex-1" style={{ color: "#6B7280" }}>
           {device.shortDesc}
         </p>
       </div>
@@ -234,10 +238,10 @@ export default function ManagementDevicesSection() {
   };
 
   return (
-    <section id="management-devices" className="py-12 sm:py-16 md:py-20" style={{ background: "#faf7f0" }}>
+    <section id="management-devices" className="py-12 sm:py-14 md:py-20" style={{ background: "#faf7f0" }}>
       <div className="max-w-7xl mx-auto px-3 sm:px-4">
         {/* 섹션 헤더 */}
-        <div className="text-center mb-6 sm:mb-10 md:mb-12">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <p
             className="text-xs tracking-[0.25em] uppercase mb-2 sm:mb-3"
             style={{ color: "#d1ab67", fontWeight: 300 }}
@@ -245,7 +249,7 @@ export default function ManagementDevicesSection() {
             Management Devices
           </p>
           <h2
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4"
             style={{ color: "#1A2B4A" }}
           >
             피부의 빛을 깨우는 스킨케어
@@ -255,20 +259,24 @@ export default function ManagementDevicesSection() {
           </p>
         </div>
 
-        {/* 캐러셀 컨테이너 */}
+        {/* 캐러셀 컨테이너 - 4개 카드 고정 */}
         <div className="relative">
-          {/* 스크롤 컨테이너 - 1줄 캐러셀 */}
+          {/* 스크롤 컨테이너 */}
           <div
             ref={scrollContainerRef}
             onScroll={checkScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className="flex overflow-x-auto gap-3 sm:gap-4 pb-3 sm:pb-4 scroll-smooth"
-            style={{ scrollBehavior: "smooth", scrollSnapType: "x mandatory" }}
+            style={{
+              scrollBehavior: "smooth",
+              scrollSnapType: "x mandatory",
+              width: "100%",
+            }}
           >
             {/* 모든 장비를 1줄로 표시 */}
             {devices.map((device, index) => (
-              <div key={`device-${index}`} className="flex-shrink-0" style={{ width: "calc(50% - 6px) sm:calc(33.333% - 9px) md:calc(25% - 12px)" }}>
+              <div key={`device-${index}`} className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4" style={{ marginRight: "12px" }}>
                 <DeviceCard device={device} />
               </div>
             ))}
@@ -278,7 +286,7 @@ export default function ManagementDevicesSection() {
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 sm:-translate-x-12 md:-translate-x-16 p-1.5 sm:p-2 rounded-full transition hover:bg-gray-200"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 sm:-translate-x-12 md:-translate-x-16 p-1.5 sm:p-2 rounded-full transition hover:bg-gray-200 z-10"
               style={{ color: "#d1ab67" }}
               aria-label="이전"
             >
@@ -290,7 +298,7 @@ export default function ManagementDevicesSection() {
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 sm:translate-x-12 md:translate-x-16 p-1.5 sm:p-2 rounded-full transition hover:bg-gray-200"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 sm:translate-x-12 md:translate-x-16 p-1.5 sm:p-2 rounded-full transition hover:bg-gray-200 z-10"
               style={{ color: "#d1ab67" }}
               aria-label="다음"
             >

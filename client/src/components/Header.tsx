@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import StarLogo from "./StarLogo";
 import { useLang } from "@/contexts/LangContext";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,6 +24,8 @@ export default function Header() {
   const { t } = useLang();
   const [location] = useLocation();
   const isHome = location === "/";
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
 
   const navItems = [
@@ -92,7 +95,11 @@ export default function Header() {
   };
 
   // 메뉴 랜더링 로직
-  const renderNavItems = navItems.filter(item => !item.hidden);
+  const renderNavItems = navItems.filter(item => {
+    // 장비2는 관리자만 보이기
+    if (item.hidden && !isAdmin) return false;
+    return true;
+  });
 
   const handleNavClick = (href: string) => {
     closeMobileMenu();
@@ -186,7 +193,7 @@ export default function Header() {
                   onClick={() => handleNavClick(item.href)}
                   className="relative transition-all duration-200 whitespace-nowrap px-3.5 py-2"
                   style={{
-                    color: item.hidden ? '#ffffff' : '#4f4f4f',
+                    color: '#4f4f4f',
                     fontSize: '14px',
                     fontWeight: active ? '600' : '400',
                     letterSpacing: "-0.01em",

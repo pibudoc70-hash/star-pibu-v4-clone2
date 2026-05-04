@@ -1,6 +1,6 @@
 /**
  * FacilitySection - 시설 갤러리
- * 디자인: PC(md 이상) - 3개×2행 그리드, 모바일(md 미만) - 슬라이드 캐러셀
+ * 디자인: PC(md 이상) - 3개×2행 가로 긴 그리드, 모바일(md 미만) - 슬라이드 캐러셀
  * 기능: 반응형 레이아웃 + 자동 슬라이드(모바일만) + 터치 스와이프(모바일만)
  */
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -15,6 +15,16 @@ const galleryImageSrcs = [
   { srcWebP: "/manus-storage/laser_corridor_9e114a15.jpg", srcJPG: "/manus-storage/laser_corridor_9e114a15.jpg" },
   { srcWebP: "/manus-storage/reception_desk_f4dd56dc.jpg", srcJPG: "/manus-storage/reception_desk_f4dd56dc.jpg" },
   { srcWebP: "/manus-storage/reception_desk_02_1fe4bedc.jpg", srcJPG: "/manus-storage/reception_desk_02_1fe4bedc.jpg" },
+];
+
+// PC 버전용 제목 (사용자 요청대로)
+const pcCardTitles = [
+  "메타뷰촬영실",
+  "피부대기실",
+  "다인피부관리실",
+  "레이저실 복도",
+  "안내데스크",
+  "안내데스크",
 ];
 
 const highlights = [
@@ -125,19 +135,19 @@ export default function FacilitySection() {
           ))}
         </div>
 
-        {/* PC VERSION: 3x2 Grid Layout (md and above) */}
+        {/* PC VERSION: 3x2 Grid Layout with Wide Cards (md and above) */}
         <div className="hidden md:grid grid-cols-3 gap-4 reveal-card">
           {galleryImages.map((img, i) => (
             <div
               key={i}
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105"
-              style={{ aspectRatio: "1/1" }}
+              style={{ aspectRatio: "16/9" }}
             >
               <picture>
                 <source srcSet={img.srcWebP} type="image/webp" />
                 <img
                   src={img.srcJPG}
-                  alt={img.label}
+                  alt={pcCardTitles[i]}
                   className="w-full h-full object-cover"
                 />
               </picture>
@@ -146,20 +156,14 @@ export default function FacilitySection() {
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
               />
-              {/* Content Overlay */}
+              {/* Content Overlay - Title Only */}
               <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3
-                  className="text-lg sm:text-xl font-bold mb-1"
+                  className="text-lg sm:text-xl font-bold"
                   style={{ color: "#FFFFFF" }}
                 >
-                  {img.label}
+                  {pcCardTitles[i]}
                 </h3>
-                <p
-                  className="text-xs sm:text-sm leading-relaxed"
-                  style={{ color: "rgba(255,255,255,0.85)" }}
-                >
-                  {img.desc}
-                </p>
               </div>
             </div>
           ))}

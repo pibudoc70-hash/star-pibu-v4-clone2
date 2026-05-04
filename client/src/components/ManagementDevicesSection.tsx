@@ -11,26 +11,26 @@ interface Device {
 }
 
 // ── CDN 경로 ──────────────────────────────────────────────────────────────
-const CDN = "https://d36hbw14aib5lz.cloudfront.net/310519663478405399/QdQ7tySKssCV8bdRzPPxg4";
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
 
 // ── 장비 이미지 맵 (CDN URL) ──────────────────────────────────────────────
 const deviceImages: Record<string, string> = {
-  sonopeel: `${CDN}/sonopeel.png`,
-  porederm: `${CDN}/porederm.png`,
-  airbubble: `${CDN}/airbubble.png`,
-  oxyjet: `${CDN}/oxyjet.png`,
-  inbio: `${CDN}/inbio.png`,
-  flawless: `${CDN}/flawless.png`,
-  dermalight: `${CDN}/dermalight.png`,
-  fray: `${CDN}/fray.png`,
-  ionzyme: `${CDN}/ionzyme.png`,
-  healingbright: `${CDN}/healingbright.png`,
-  mesoskin: `${CDN}/mesoskin.png`,
-  ultraduo: `${CDN}/ultraduo.png`,
-  triplemultigel: `${CDN}/triplemultigel.png`,
-  ldm: `${CDN}/ldm.png`,
-  ilumi: `${CDN}/ilumi.png`,
-  transkin: `${CDN}/transkin.png`,
+  sonopeel: `${CDN}/sonopeel_new.jpg`,
+  porederm: `${CDN}/porederm_new_896695b4.jpg`,
+  airbubble: `${CDN}/airbubble_new.jpg`,
+  oxyjet: `${CDN}/oxyjet_new.jpg`,
+  inbio: `${CDN}/inbio_new.jpg`,
+  flawless: `${CDN}/flawless_new.jpg`,
+  dermalight: `${CDN}/dermalight_new.jpg`,
+  fray: `${CDN}/fray_new.jpg`,
+  ionzyme: `${CDN}/ionzyme_new.jpg`,
+  healingbright: `${CDN}/healingbright_new.jpg`,
+  mesoskin: `${CDN}/mesoskin_new.jpg`,
+  ultraduo: `${CDN}/ultraduo_new.jpg`,
+  triplemultigel: `${CDN}/triplemultigel_new.jpg`,
+  ldm: `${CDN}/ldm_new.jpg`,
+  ilumi: `${CDN}/ilumi_new.jpg`,
+  transkin: `${CDN}/transkin_new.jpg`,
 };
 
 // ── 장비 데이터 ──────────────────────────────────────────────────────────

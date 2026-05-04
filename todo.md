@@ -503,3 +503,10 @@
 - [x] 설명 텍스트 이미지 아래 배치 및 왼쪽 정렬
 - [x] 브라우저 검증 (레이아웃 변경 확인)
 - [x] 최종 체크포인트 저장
+
+## Phase 64: 관리장비 이미지 CDN 경로 복구 (2026-05-04)
+- [x] S3 CDN 경로 확인 (d2xsxph8kpxj0f.cloudfront.net)
+- [x] ManagementDevicesSection.tsx CDN 경로 업데이트
+- [x] 이미지 파일명 수정 (_new 형식)
+- [x] 브라우저 검증 (이미지 로딩 확인)
+- [x] 최종 체크포인트 저장

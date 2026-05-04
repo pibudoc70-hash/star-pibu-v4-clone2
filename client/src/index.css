@@ -59,6 +59,10 @@
   --color-star-text-mid: #6B7280;
   --color-star-kakao: #FEE500;
   --color-star-naver: #03C75A;
+  /* About Section Gold Colors */
+  --color-gold-primary: #C9A961;
+  --color-gold-light: #E8DCC8;
+  --color-gold-pale: #F5F1ED;
 }
 
 :root {

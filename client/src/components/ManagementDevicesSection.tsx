@@ -149,10 +149,9 @@ function DeviceCard({ device }: { device: Device }) {
 
   return (
     <div
-      className="bg-white rounded-lg overflow-hidden flex flex-col text-left flex-shrink-0"
+      className="bg-white rounded-lg overflow-hidden flex flex-col text-left flex-shrink-0 h-full"
       style={{
         boxShadow: "0 1px 6px rgba(209,171,103,0.10)",
-        width: "calc(25% - 12px)",
       }}
     >
       {/* 상단 금선 */}
@@ -183,7 +182,7 @@ function DeviceCard({ device }: { device: Device }) {
         >
           {device.nameEn}
         </span>
-        <p className="text-xs leading-relaxed mt-2 flex-1" style={{ color: "#6B7280" }}>
+        <p className="text-xs leading-relaxed mt-2 line-clamp-3" style={{ color: "#6B7280" }}>
           {device.shortDesc}
         </p>
       </div>

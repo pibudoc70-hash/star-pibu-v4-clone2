@@ -1,7 +1,7 @@
 /**
- * FacilitySection - 시설 슬라이드 캐러셀
- * 디자인: 최신 트렌드 세련된 슬라이드 형태
- * 기능: 자동 슬라이드 + 수동 네비게이션 + 터치 스와이프
+ * FacilitySection - 시설 갤러리
+ * 디자인: PC(md 이상) - 3개×2행 그리드, 모바일(md 미만) - 슬라이드 캐러셀
+ * 기능: 반응형 레이아웃 + 자동 슬라이드(모바일만) + 터치 스와이프(모바일만)
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
@@ -41,7 +41,7 @@ export default function FacilitySection() {
     desc: fc.images[i]?.desc ?? "",
   }));
 
-  // 자동 슬라이드
+  // 자동 슬라이드 (모바일에서만)
   useEffect(() => {
     if (!isAutoPlay || isHovering) {
       if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
@@ -125,141 +125,13 @@ export default function FacilitySection() {
           ))}
         </div>
 
-        {/* Carousel Container */}
-        <div
-          className="reveal-card relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl"
-          style={{ aspectRatio: "16/9", minHeight: "300px" }}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Slides */}
-          <div className="relative w-full h-full">
-            {galleryImages.map((img, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-                style={{ opacity: i === currentIndex ? 1 : 0 }}
-              >
-                <picture>
-                  <source srcSet={img.srcWebP} type="image/webp" />
-                  <img
-                    src={img.srcJPG}
-                    alt={img.label}
-                    className="w-full h-full object-cover"
-                  />
-                </picture>
-                {/* Dark Overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Content Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
-            <div className="max-w-2xl">
-              <p
-                className="text-sm sm:text-base font-montserrat font-semibold tracking-widest mb-2 sm:mb-3"
-                style={{ color: "#C9A961" }}
-              >
-                시설 {currentIndex + 1} / {galleryImages.length}
-              </p>
-              <h3
-                className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-3"
-                style={{ color: "#FFFFFF" }}
-              >
-                {galleryImages[currentIndex].label}
-              </h3>
-              <p
-                className="text-sm sm:text-base leading-relaxed"
-                style={{ color: "rgba(255,255,255,0.85)" }}
-              >
-                {galleryImages[currentIndex].desc}
-              </p>
-            </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <button
-            onClick={goPrev}
-            className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-            style={{
-              background: "rgba(255,255,255,0.15)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-            aria-label="Previous slide"
-          >
-            <ChevronLeft size={24} className="text-white" />
-          </button>
-
-          <button
-            onClick={goNext}
-            className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-            style={{
-              background: "rgba(255,255,255,0.15)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-            aria-label="Next slide"
-          >
-            <ChevronRight size={24} className="text-white" />
-          </button>
-
-          {/* Play/Pause Button */}
-          <button
-            onClick={() => setIsAutoPlay(!isAutoPlay)}
-            className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-            style={{
-              background: "rgba(255,255,255,0.15)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-            aria-label={isAutoPlay ? "Pause autoplay" : "Play autoplay"}
-          >
-            {isAutoPlay ? (
-              <Pause size={18} className="text-white" />
-            ) : (
-              <Play size={18} className="text-white" />
-            )}
-          </button>
-
-          {/* Indicators */}
-          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-auto">
-            {galleryImages.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className="transition-all duration-300 rounded-full"
-                style={{
-                  width: i === currentIndex ? "32px" : "8px",
-                  height: "8px",
-                  background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
-                  cursor: "pointer",
-                }}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Thumbnail Strip (Desktop only) */}
-        <div className="hidden md:flex gap-3 mt-8 justify-center flex-wrap">
+        {/* PC VERSION: 3x2 Grid Layout (md and above) */}
+        <div className="hidden md:grid grid-cols-3 gap-4 reveal-card">
           {galleryImages.map((img, i) => (
-            <button
+            <div
               key={i}
-              onClick={() => setCurrentIndex(i)}
-              className="relative overflow-hidden rounded-lg transition-all duration-300 hover:ring-2"
-              style={{
-                width: "120px",
-                height: "80px",
-                opacity: i === currentIndex ? 1 : 0.5,
-                ring: i === currentIndex ? "2px solid #C9A961" : "none",
-              }}
+              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105"
+              style={{ aspectRatio: "1/1" }}
             >
               <picture>
                 <source srcSet={img.srcWebP} type="image/webp" />
@@ -269,14 +141,179 @@ export default function FacilitySection() {
                   className="w-full h-full object-cover"
                 />
               </picture>
-              {i === currentIndex && (
+              {/* Dark Overlay */}
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
+              />
+              {/* Content Overlay */}
+              <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
+                <h3
+                  className="text-lg sm:text-xl font-bold mb-1"
+                  style={{ color: "#FFFFFF" }}
+                >
+                  {img.label}
+                </h3>
+                <p
+                  className="text-xs sm:text-sm leading-relaxed"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
+                >
+                  {img.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* MOBILE VERSION: Carousel Layout (below md) */}
+        <div className="md:hidden reveal-card">
+          {/* Carousel Container */}
+          <div
+            className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl"
+            style={{ aspectRatio: "16/9", minHeight: "300px" }}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Slides */}
+            <div className="relative w-full h-full">
+              {galleryImages.map((img, i) => (
                 <div
-                  className="absolute inset-0"
-                  style={{ border: "2px solid #C9A961" }}
-                />
+                  key={i}
+                  className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+                  style={{ opacity: i === currentIndex ? 1 : 0 }}
+                >
+                  <picture>
+                    <source srcSet={img.srcWebP} type="image/webp" />
+                    <img
+                      src={img.srcJPG}
+                      alt={img.label}
+                      className="w-full h-full object-cover"
+                    />
+                  </picture>
+                  {/* Dark Overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Content Overlay */}
+            <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
+              <div className="max-w-2xl">
+                <p
+                  className="text-sm sm:text-base font-montserrat font-semibold tracking-widest mb-2 sm:mb-3"
+                  style={{ color: "#C9A961" }}
+                >
+                  시설 {currentIndex + 1} / {galleryImages.length}
+                </p>
+                <h3
+                  className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-3"
+                  style={{ color: "#FFFFFF" }}
+                >
+                  {galleryImages[currentIndex].label}
+                </h3>
+                <p
+                  className="text-sm sm:text-base leading-relaxed"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
+                >
+                  {galleryImages[currentIndex].desc}
+                </p>
+              </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={goPrev}
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft size={24} className="text-white" />
+            </button>
+
+            <button
+              onClick={goNext}
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+              aria-label="Next slide"
+            >
+              <ChevronRight size={24} className="text-white" />
+            </button>
+
+            {/* Play/Pause Button */}
+            <button
+              onClick={() => setIsAutoPlay(!isAutoPlay)}
+              className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+              aria-label={isAutoPlay ? "Pause autoplay" : "Play autoplay"}
+            >
+              {isAutoPlay ? (
+                <Pause size={18} className="text-white" />
+              ) : (
+                <Play size={18} className="text-white" />
               )}
             </button>
-          ))}
+
+            {/* Indicators */}
+            <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-auto">
+              {galleryImages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className="transition-all duration-300 rounded-full"
+                  style={{
+                    width: i === currentIndex ? "32px" : "8px",
+                    height: "8px",
+                    background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
+                    cursor: "pointer",
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Thumbnail Strip (Mobile) */}
+          <div className="flex gap-2 mt-4 justify-center flex-wrap">
+            {galleryImages.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className="relative overflow-hidden rounded-lg transition-all duration-300"
+                style={{
+                  width: "80px",
+                  height: "60px",
+                  opacity: i === currentIndex ? 1 : 0.5,
+                  border: i === currentIndex ? "2px solid #C9A961" : "1px solid #E5E7EB",
+                }}
+              >
+                <picture>
+                  <source srcSet={img.srcWebP} type="image/webp" />
+                  <img
+                    src={img.srcJPG}
+                    alt={img.label}
+                    className="w-full h-full object-cover"
+                  />
+                </picture>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

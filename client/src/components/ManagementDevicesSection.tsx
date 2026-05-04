@@ -287,12 +287,12 @@ export default function ManagementDevicesSection() {
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 400;
+      const scrollAmount = 320;
       scrollContainerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
       });
-      setTimeout(checkScroll, 300);
+      setTimeout(checkScroll, 600);
     }
   };
 
@@ -338,7 +338,7 @@ export default function ManagementDevicesSection() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             className="flex overflow-x-auto gap-4 pb-4 scroll-smooth"
-            style={{ scrollBehavior: "smooth" }}
+            style={{ scrollBehavior: "smooth", scrollSnapType: "x mandatory" }}
           >
             {/* 각 행을 2개씩 묶어서 표시 */}
             {Array.from({ length: Math.ceil(devices.length / 2) }).map((_, rowIdx) => (

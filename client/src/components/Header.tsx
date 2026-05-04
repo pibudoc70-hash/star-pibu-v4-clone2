@@ -32,8 +32,8 @@ export default function Header() {
     { label: t.nav.treatments,   href: "#treatments", icon: Stethoscope },
     { label: t.nav.about,        href: "/about",      icon: Info },
     { label: t.nav.facility,     href: "#facility",   icon: Building2 },
-    { label: "장비2",             href: "/equipment2", icon: Stethoscope },
     { label: t.nav.contact,      href: "#contact",    icon: MapPin },
+    { label: "장비2",             href: "/equipment2", icon: Stethoscope, hidden: true },
   ];
 
   // 스크롤 감지: scrolled 상태 + 활성 섹션 감지
@@ -90,6 +90,9 @@ export default function Header() {
       requestAnimationFrame(() => setMenuVisible(true));
     });
   };
+
+  // 메뉴 랜더링 로직
+  const renderNavItems = navItems.filter(item => !item.hidden);
 
   const handleNavClick = (href: string) => {
     closeMobileMenu();
@@ -175,7 +178,7 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center flex-1 justify-center" style={{ gap: "4px" }} role="navigation" aria-label="메인 네비게이션">
-            {navItems.map((item) => {
+            {renderNavItems.map((item) => {
               const active = isActive(item.href);
               return (
                 <button
@@ -183,7 +186,7 @@ export default function Header() {
                   onClick={() => handleNavClick(item.href)}
                   className="relative transition-all duration-200 whitespace-nowrap px-3.5 py-2"
                   style={{
-                    color: '#4f4f4f',
+                    color: item.hidden ? '#ffffff' : '#4f4f4f',
                     fontSize: '14px',
                     fontWeight: active ? '600' : '400',
                     letterSpacing: "-0.01em",
@@ -287,7 +290,7 @@ export default function Header() {
 
         {/* 모바일 네비게이션 - 아이콘 포함 */}
         <nav className="p-4 flex flex-col gap-1">
-          {navItems.map((item, index) => {
+          {renderNavItems.map((item, index) => {
             const active = isActive(item.href);
             const Icon = item.icon;
             return (

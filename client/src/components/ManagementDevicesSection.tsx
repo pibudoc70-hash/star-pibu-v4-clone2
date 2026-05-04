@@ -331,7 +331,7 @@ export default function ManagementDevicesSection() {
 
         {/* 캐러셀 컨테이너 */}
         <div className="relative">
-          {/* 스크롤 컨테이너 - 2줄 그리드 */}
+          {/* 스크롤 컨테이너 - 1줄 캐러셀 */}
           <div
             ref={scrollContainerRef}
             onScroll={checkScroll}
@@ -340,24 +340,13 @@ export default function ManagementDevicesSection() {
             className="flex overflow-x-auto gap-4 pb-4 scroll-smooth"
             style={{ scrollBehavior: "smooth", scrollSnapType: "x mandatory" }}
           >
-            {/* 각 행을 2개씩 묶어서 표시 */}
-            {Array.from({ length: Math.ceil(devices.length / 2) }).map((_, rowIdx) => (
-              <div key={rowIdx} className="flex flex-col gap-4 flex-shrink-0" style={{ width: "calc(100% - 16px)" }}>
-                {/* 첫 번째 행 */}
-                <div className="flex gap-4">
-                  {devices[rowIdx * 2] && (
-                    <DeviceCard
-                      device={devices[rowIdx * 2]}
-                      onClick={() => setSelectedDevice(devices[rowIdx * 2])}
-                    />
-                  )}
-                  {devices[rowIdx * 2 + 1] && (
-                    <DeviceCard
-                      device={devices[rowIdx * 2 + 1]}
-                      onClick={() => setSelectedDevice(devices[rowIdx * 2 + 1])}
-                    />
-                  )}
-                </div>
+            {/* 모든 장비를 1줄로 표시 */}
+            {devices.map((device) => (
+              <div key={device.id} className="flex-shrink-0" style={{ width: "calc(25% - 12px)" }}>
+                <DeviceCard
+                  device={device}
+                  onClick={() => setSelectedDevice(device)}
+                />
               </div>
             ))}
           </div>

@@ -9,12 +9,12 @@ import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
 const galleryImageSrcs = [
-  { srcWebP: "/manus-storage/clinic_tour_info_room_da12e0aa.webp", srcJPG: "/manus-storage/clinic_tour_info_room_da12e0aa.webp" },
-  { srcWebP: "/manus-storage/clinic_tour_consultation_e4f829c8.webp", srcJPG: "/manus-storage/clinic_tour_consultation_e4f829c8.webp" },
-  { srcWebP: "/manus-storage/clinic_tour_laser_corridor_f098e920.webp", srcJPG: "/manus-storage/clinic_tour_laser_corridor_f098e920.webp" },
-  { srcWebP: "/manus-storage/clinic_tour_reception_26281127.webp", srcJPG: "/manus-storage/clinic_tour_reception_26281127.webp" },
-  { srcWebP: "/manus-storage/clinic_tour_waiting_room_57492129.webp", srcJPG: "/manus-storage/clinic_tour_waiting_room_57492129.webp" },
-  { srcWebP: "/manus-storage/clinic_tour_management_55100c6a.webp", srcJPG: "/manus-storage/clinic_tour_management_55100c6a.webp" },
+  { srcWebP: "/manus-storage/메타뷰촬영실_70ff1b3a.jpg", srcJPG: "/manus-storage/메타뷰촬영실_70ff1b3a.jpg" },
+  { srcWebP: "/manus-storage/고객대기실_886121dc.jpg", srcJPG: "/manus-storage/고객대기실_886121dc.jpg" },
+  { srcWebP: "/manus-storage/다인피부관리실_573a0e44.jpg", srcJPG: "/manus-storage/다인피부관리실_573a0e44.jpg" },
+  { srcWebP: "/manus-storage/레이저실복도_dc426b35.jpg", srcJPG: "/manus-storage/레이저실복도_dc426b35.jpg" },
+  { srcWebP: "/manus-storage/안내데스크_3898253c.jpg", srcJPG: "/manus-storage/안내데스크_3898253c.jpg" },
+  { srcWebP: "/manus-storage/안내데스크02_7d3bc4b4.jpg", srcJPG: "/manus-storage/안내데스크02_7d3bc4b4.jpg" },
 ];
 
 const highlights = [

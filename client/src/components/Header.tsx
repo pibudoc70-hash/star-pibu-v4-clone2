@@ -32,6 +32,7 @@ export default function Header() {
     { label: t.nav.treatments,   href: "#treatments", icon: Stethoscope },
     { label: t.nav.about,        href: "/about",      icon: Info },
     { label: t.nav.facility,     href: "#facility",   icon: Building2 },
+    { label: "장비2",             href: "/equipment2", icon: Stethoscope },
     { label: t.nav.contact,      href: "#contact",    icon: MapPin },
   ];
 

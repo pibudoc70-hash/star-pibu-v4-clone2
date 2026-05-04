@@ -516,3 +516,11 @@
 - [x] ManagementDevicesSection.tsx에 모든 이미지 URL 적용
 - [x] 모든 16개 장비 이미지 정상 로드 확인
 - [x] 최종 체크포인트 저장
+
+## Phase 66: 시술·장비소개2 페이지 분리 (2026-05-04)
+- [x] 홈페이지에서 TreatmentsEquipmentSectionV2 숨기기
+- [x] 헤더 메뉴에 "장비2" 추가 (오시는 길 옆)
+- [x] Equipment2.tsx 페이지 생성 (/equipment2)
+- [x] App.tsx에 라우트 추가
+- [x] 네비게이션 링크 연결
+- [x] 최종 테스트 및 체크포인트 저장

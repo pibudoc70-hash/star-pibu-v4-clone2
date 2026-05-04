@@ -70,8 +70,8 @@ export default function Home() {
         {/* 4. Treatments + Equipment - 시술 안내 & 장비 소개 통합 */}
         <TreatmentsEquipmentSection />
 
-        {/* 4-2. Treatments + Equipment Section 2 - DB 연동 (관리자 등록) */}
-        <TreatmentsEquipmentSectionV2 />
+        {/* 4-2. Treatments + Equipment Section 2 - DB 연동 (관리자 등록) - 별도 페이지로 이동 */}
+        {/* <TreatmentsEquipmentSectionV2 /> */}
 
         {/* 5. Management Devices - 관리장비 */}
         <ManagementDevicesSection />

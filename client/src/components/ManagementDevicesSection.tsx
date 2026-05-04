@@ -1,12 +1,11 @@
 /**
- * ManagementDevicesSection - 스타피부과 관리장비 섹션 (리디자인)
- * PC: 3열 그리드, 모바일: 2열 그리드
- * 카드: 아이콘 + 장비명 + 한줄 설명
- * 클릭 시 모달에서 상세 설명 표시
+ * ManagementDevicesSection - 스타피부과 관리장비 섹션 (캐러셀 형태)
+ * 가로 2줄로 옆으로 흘러가는 캐러셀
+ * 이전/다음 버튼 + 터치 스와이프 지원
  */
 import { useLang } from "@/contexts/LangContext";
-import { useState } from "react";
-import { X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
 
@@ -168,15 +167,15 @@ function DeviceCard({ device, onClick }: { device: Device; onClick: () => void }
   return (
     <button
       onClick={onClick}
-      className="bg-white rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-105 text-left border border-transparent hover:border-yellow-300"
-      style={{ boxShadow: "0 1px 6px rgba(209,171,103,0.10)" }}
+      className="bg-white rounded-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-105 text-left border border-transparent hover:border-yellow-300 flex-shrink-0"
+      style={{ boxShadow: "0 1px 6px rgba(209,171,103,0.10)", width: "calc(50% - 8px)" }}
     >
       {/* 상단 골드 라인 */}
       <div className="h-1 w-full" style={{ background: "#d1ab67" }} />
 
       {/* 이미지 */}
       <div
-        className="w-full h-32 overflow-hidden flex items-center justify-center"
+        className="w-full h-24 overflow-hidden flex items-center justify-center"
         style={{ background: "#f5f0e8" }}
       >
         <img
@@ -187,17 +186,17 @@ function DeviceCard({ device, onClick }: { device: Device; onClick: () => void }
       </div>
 
       {/* 장비명 + 영문명 + 한줄 설명 */}
-      <div className="px-3 py-3 flex flex-col flex-1">
-        <h3 className="text-sm font-bold leading-tight" style={{ color: "#1A2B4A" }}>
+      <div className="px-3 py-2 flex flex-col flex-1">
+        <h3 className="text-xs font-bold leading-tight" style={{ color: "#1A2B4A" }}>
           {device.name}
         </h3>
         <span
-          className="tracking-wide uppercase mt-1 text-xs"
-          style={{ color: "#d1ab67", fontWeight: 100 }}
+          className="tracking-wide uppercase mt-0.5 text-xs"
+          style={{ color: "#d1ab67", fontWeight: 100, fontSize: "10px" }}
         >
           {device.nameEn}
         </span>
-        <p className="text-xs leading-relaxed mt-2 flex-1" style={{ color: "#6B7280" }}>
+        <p className="text-xs leading-relaxed mt-1 flex-1" style={{ color: "#6B7280" }}>
           {device.shortDesc}
         </p>
       </div>
@@ -268,10 +267,49 @@ export default function ManagementDevicesSection() {
   const md = t.managementDevices;
   const desc = managementDescriptions[lang] ?? managementDescriptions.ko;
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
+  // 터치 스와이프 지원
+  const [touchStart, setTouchStart] = useState(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    if (touchStart - touchEnd > 50) scroll("right");
+    if (touchEnd - touchStart > 50) scroll("left");
+  };
 
   return (
     <section id="management-devices" className="py-14 sm:py-20" style={{ background: "#faf7f0" }}>
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12">
           <p
@@ -291,15 +329,60 @@ export default function ManagementDevicesSection() {
           </p>
         </div>
 
-        {/* 장비 그리드 - PC: 3열, 모바일: 2열 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-          {devices.map((device, idx) => (
-            <DeviceCard
-              key={idx}
-              device={device}
-              onClick={() => setSelectedDevice(device)}
-            />
-          ))}
+        {/* 캐러셀 컨테이너 */}
+        <div className="relative">
+          {/* 스크롤 컨테이너 - 2줄 그리드 */}
+          <div
+            ref={scrollContainerRef}
+            onScroll={checkScroll}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="flex overflow-x-auto gap-4 pb-4 scroll-smooth"
+            style={{ scrollBehavior: "smooth" }}
+          >
+            {/* 각 행을 2개씩 묶어서 표시 */}
+            {Array.from({ length: Math.ceil(devices.length / 2) }).map((_, rowIdx) => (
+              <div key={rowIdx} className="flex flex-col gap-4 flex-shrink-0" style={{ width: "calc(100% - 16px)" }}>
+                {/* 첫 번째 행 */}
+                <div className="flex gap-4">
+                  {devices[rowIdx * 2] && (
+                    <DeviceCard
+                      device={devices[rowIdx * 2]}
+                      onClick={() => setSelectedDevice(devices[rowIdx * 2])}
+                    />
+                  )}
+                  {devices[rowIdx * 2 + 1] && (
+                    <DeviceCard
+                      device={devices[rowIdx * 2 + 1]}
+                      onClick={() => setSelectedDevice(devices[rowIdx * 2 + 1])}
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 이전 버튼 */}
+          {canScrollLeft && (
+            <button
+              onClick={() => scroll("left")}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 p-2 rounded-full transition hover:bg-gray-200"
+              style={{ color: "#d1ab67" }}
+            >
+              <ChevronLeft size={24} />
+            </button>
+          )}
+
+          {/* 다음 버튼 */}
+          {canScrollRight && (
+            <button
+              onClick={() => scroll("right")}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 p-2 rounded-full transition hover:bg-gray-200"
+              style={{ color: "#d1ab67" }}
+            >
+              <ChevronRight size={24} />
+            </button>
+          )}
         </div>
       </div>
 

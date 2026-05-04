@@ -1,92 +1,80 @@
-import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
-import { Award, Heart, Target } from 'lucide-react';
+import { useLang } from '@/contexts/LangContext';
 
 export default function About() {
   const { t } = useLang();
-
   return (
     <MainLayout>
-      {/* 페이지 헤더 */}
-      <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
-        <div className="container mx-auto px-4">
-          <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">{t.about.label}</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.about.title}</h1>
-          <p className="text-gray-600 mt-4 max-w-2xl">{t.about.desc}</p>
-        </div>
-      </section>
-
-      {/* 통계 */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {t.about.stats.map((stat, idx) => (
-              <div key={idx} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-amber-500">{stat.num}</div>
-                <div className="text-gray-600 mt-2 text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 병원 소개 */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">STAR 피부과</h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                스타피부과는 20년 이상의 풍부한 경험을 바탕으로 환자 중심의 진료를 제공하는 프리미엄 피부과 클리닉입니다.
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                최신 의료 기술과 세계 최고 수준의 장비를 갖추고 있으며, 전문가 의료진이 개인의 피부 상태에 맞춘 맞춤형 치료를 제공합니다.
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg h-80 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl font-bold text-amber-600">★</div>
-                <p className="text-gray-700 mt-4 font-semibold">STAR 피부과</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 미션·비전·가치 */}
+      {/* 피부과 소개 섹션 - About Us */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center">
-                  <Heart size={24} className="text-amber-600" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* 좌측 콘텐츠 */}
+            <div>
+              <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-4">About Us</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">빛나는 피부의 시작</h1>
+              <p className="text-amber-600 text-2xl font-bold mb-6">STAR DERMATOLOGY</p>
+              
+              <p className="text-gray-600 mb-8 leading-relaxed text-base">
+                2006년 부산 서면에서 문을 연 스타피부과는 지난 20여 년간 오직 고객의 피부만을 고민해 왔습니다. 세계적인 프리미엄 레이저 장비와 검증된 치료 프로토콜을 통해 의료 서비스의 질을 높였으며, 교수출신 피부과전문의의 20년 이상 풍부한 임상 경험의 노하우를 바탕으로 최상의 결과를 약속드립니다.
+              </p>
+
+              {/* 통계 정보 - 3개 박스 */}
+              <div className="grid grid-cols-3 gap-4 mb-8">
+                <div className="bg-amber-50 rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold text-amber-600 mb-2">20년+</div>
+                  <div className="text-gray-600 text-sm">피부과전문의 경력</div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">미션</h3>
+                <div className="bg-amber-50 rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold text-amber-600 mb-2">4,000례+</div>
+                  <div className="text-gray-600 text-sm">눈밑지방재배치술</div>
+                </div>
+                <div className="bg-amber-50 rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold text-amber-600 mb-2">50종+</div>
+                  <div className="text-gray-600 text-sm">프리미엄 레이저</div>
+                </div>
               </div>
-              <p className="text-gray-600">환자의 피부 건강과 아름다움을 위해 최고의 의료 서비스를 제공합니다.</p>
+
+              {/* 특징 설명 - 4개 박스 */}
+              <div className="space-y-4">
+                <div className="border-l-4 border-amber-600 pl-4">
+                  <h3 className="font-bold text-gray-900 mb-1"><span className="text-amber-600">S</span>pecial Guest</h3>
+                  <p className="text-gray-600 text-sm">모든 환자분은 우리에게 가장 특별한 분입니다. 개개인의 고민에 귀 기울이는 1:1 맞춤 진료를 실천합니다.</p>
+                </div>
+                <div className="border-l-4 border-amber-600 pl-4">
+                  <h3 className="font-bold text-gray-900 mb-1"><span className="text-amber-600">T</span>op Quality</h3>
+                  <p className="text-gray-600 text-sm">다양한 프리미엄 레이저와 앞선 의료 기술로 언제나 수준 높은 치료 결과를 선사합니다.</p>
+                </div>
+                <div className="border-l-4 border-amber-600 pl-4">
+                  <h3 className="font-bold text-gray-900 mb-1"><span className="text-amber-600">A</span>ttractive Atmosphere</h3>
+                  <p className="text-gray-600 text-sm">예약제를 통해 대기 시간을 줄이고, 오직 치료에만 집중할 수 있는 편안한 환경을 제공합니다.</p>
+                </div>
+                <div className="border-l-4 border-amber-600 pl-4">
+                  <h3 className="font-bold text-gray-900 mb-1"><span className="text-amber-600">R</span>esponsibility</h3>
+                  <p className="text-gray-600 text-sm">치료 설명과 경과 관찰에 책임감을 갖고, 결과에 만족하실 때까지 함께합니다.</p>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center">
-                  <Target size={24} className="text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">비전</h3>
+
+            {/* 우측 이미지 영역 */}
+            <div className="relative">
+              <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg h-96 flex items-center justify-center overflow-hidden">
+                <img 
+                  id="about-section-image"
+                  src="/manus-storage/medical_team_53232402.jpg" 
+                  alt="의료진"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <p className="text-gray-600">대한민국 최고의 피부과 전문 클리닉으로 성장하여 글로벌 의료 서비스를 선도합니다.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center">
-                  <Award size={24} className="text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">가치</h3>
+              <div className="absolute bottom-6 left-6 bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm font-semibold">
+                Since 2006
               </div>
-              <p className="text-gray-600">환자의 신뢰와 만족을 바탕으로 윤리적이고 책임감 있는 진료를 실천합니다.</p>
             </div>
           </div>
         </div>
       </section>
+
+
 
       {/* 진료 시간 */}
       <section className="py-16 bg-gray-50">

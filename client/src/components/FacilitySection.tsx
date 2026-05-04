@@ -9,12 +9,12 @@ import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
 const galleryImageSrcs = [
-  { srcWebP: "/manus-storage/메타뷰촬영실_70ff1b3a.jpg", srcJPG: "/manus-storage/메타뷰촬영실_70ff1b3a.jpg" },
-  { srcWebP: "/manus-storage/고객대기실_886121dc.jpg", srcJPG: "/manus-storage/고객대기실_886121dc.jpg" },
-  { srcWebP: "/manus-storage/다인피부관리실_573a0e44.jpg", srcJPG: "/manus-storage/다인피부관리실_573a0e44.jpg" },
-  { srcWebP: "/manus-storage/레이저실복도_dc426b35.jpg", srcJPG: "/manus-storage/레이저실복도_dc426b35.jpg" },
-  { srcWebP: "/manus-storage/안내데스크_3898253c.jpg", srcJPG: "/manus-storage/안내데스크_3898253c.jpg" },
-  { srcWebP: "/manus-storage/안내데스크02_7d3bc4b4.jpg", srcJPG: "/manus-storage/안내데스크02_7d3bc4b4.jpg" },
+  { srcWebP: "/manus-storage/metaview_room_3d1b41f7.jpg", srcJPG: "/manus-storage/metaview_room_3d1b41f7.jpg" },
+  { srcWebP: "/manus-storage/waiting_room_938afa37.jpg", srcJPG: "/manus-storage/waiting_room_938afa37.jpg" },
+  { srcWebP: "/manus-storage/skincare_room_0bd4dcb5.jpg", srcJPG: "/manus-storage/skincare_room_0bd4dcb5.jpg" },
+  { srcWebP: "/manus-storage/laser_corridor_ac370308.jpg", srcJPG: "/manus-storage/laser_corridor_ac370308.jpg" },
+  { srcWebP: "/manus-storage/reception_desk_414af051.jpg", srcJPG: "/manus-storage/reception_desk_414af051.jpg" },
+  { srcWebP: "/manus-storage/reception_desk_02_8d1b864b.jpg", srcJPG: "/manus-storage/reception_desk_02_8d1b864b.jpg" },
 ];
 
 const highlights = [
@@ -148,9 +148,7 @@ export default function FacilitySection() {
                 className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: "rgba(74,111,165,0.7)" }}
               >
-                <ZoomIn size={28} className="text-white mb-2" />
-                <span className="text-white font-bold text-sm">{img.label}</span>
-                <span className="text-white/80 text-xs mt-1 text-center px-4">{img.desc}</span>
+                <ZoomIn size={28} className="text-white" />
               </div>
               {/* Label */}
               <div

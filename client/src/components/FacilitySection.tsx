@@ -9,12 +9,12 @@ import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
 const galleryImageSrcs = [
-  { srcWebP: "/manus-storage/metaview_room_3d1b41f7.jpg", srcJPG: "/manus-storage/metaview_room_3d1b41f7.jpg" },
-  { srcWebP: "/manus-storage/waiting_room_938afa37.jpg", srcJPG: "/manus-storage/waiting_room_938afa37.jpg" },
-  { srcWebP: "/manus-storage/skincare_room_0bd4dcb5.jpg", srcJPG: "/manus-storage/skincare_room_0bd4dcb5.jpg" },
-  { srcWebP: "/manus-storage/laser_corridor_ac370308.jpg", srcJPG: "/manus-storage/laser_corridor_ac370308.jpg" },
-  { srcWebP: "/manus-storage/reception_desk_414af051.jpg", srcJPG: "/manus-storage/reception_desk_414af051.jpg" },
-  { srcWebP: "/manus-storage/reception_desk_02_8d1b864b.jpg", srcJPG: "/manus-storage/reception_desk_02_8d1b864b.jpg" },
+  { srcWebP: "/manus-storage/metaview_room_535d3491.jpg", srcJPG: "/manus-storage/metaview_room_535d3491.jpg" },
+  { srcWebP: "/manus-storage/waiting_room_ce355737.jpg", srcJPG: "/manus-storage/waiting_room_ce355737.jpg" },
+  { srcWebP: "/manus-storage/multi_skincare_room_ebebe73e.jpg", srcJPG: "/manus-storage/multi_skincare_room_ebebe73e.jpg" },
+  { srcWebP: "/manus-storage/laser_corridor_9e114a15.jpg", srcJPG: "/manus-storage/laser_corridor_9e114a15.jpg" },
+  { srcWebP: "/manus-storage/reception_desk_f4dd56dc.jpg", srcJPG: "/manus-storage/reception_desk_f4dd56dc.jpg" },
+  { srcWebP: "/manus-storage/reception_desk_02_1fe4bedc.jpg", srcJPG: "/manus-storage/reception_desk_02_1fe4bedc.jpg" },
 ];
 
 const highlights = [

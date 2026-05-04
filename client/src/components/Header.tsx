@@ -30,7 +30,7 @@ export default function Header() {
     { label: "이벤트",            href: "#events",     icon: Calendar },
     { label: t.nav.doctors,      href: "#doctors",    icon: Users },
     { label: t.nav.treatments,   href: "#treatments", icon: Stethoscope },
-    { label: t.nav.about,        href: "#about",      icon: Info },
+    { label: t.nav.about,        href: "/about",      icon: Info },
     { label: t.nav.facility,     href: "#facility",   icon: Building2 },
     { label: t.nav.contact,      href: "#contact",    icon: MapPin },
   ];

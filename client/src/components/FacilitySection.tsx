@@ -1,10 +1,10 @@
 /**
  * FacilitySection - 시설 갤러리
  * 디자인: PC(md 이상) - 3개×2행 가로 긴 그리드, 모바일(md 미만) - 슬라이드 캐러셀
- * 기능: 반응형 레이아웃 + 자동 슬라이드(모바일만) + 터치 스와이프(모바일만)
+ * 기능: 반응형 레이아웃 + 자동 슬라이드(모바일만) + 터치 스와이프(모바일만) + 라이트박스
  */
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
@@ -42,6 +42,7 @@ export default function FacilitySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
@@ -88,6 +89,8 @@ export default function FacilitySection() {
     }
     touchStartX.current = null;
   };
+
+  const closeLightbox = () => setLightboxIndex(null);
 
   return (
     <section ref={sectionRef} id="facility" className="py-16 sm:py-24 bg-white">
@@ -138,9 +141,10 @@ export default function FacilitySection() {
         {/* PC VERSION: 3x2 Grid Layout with Wide Cards (md and above) */}
         <div className="hidden md:grid grid-cols-3 gap-4 reveal-card">
           {galleryImages.map((img, i) => (
-            <div
+            <button
               key={i}
-              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105"
+              onClick={() => setLightboxIndex(i)}
+              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
               style={{ aspectRatio: "16/9" }}
             >
               <picture>
@@ -159,13 +163,13 @@ export default function FacilitySection() {
               {/* Content Overlay - Title Only */}
               <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3
-                  className="text-lg sm:text-xl font-bold"
-                  style={{ color: "#FFFFFF" }}
+                  className="font-semibold"
+                  style={{ color: "#FFFFFF", fontSize: "0.95rem" }}
                 >
                   {pcCardTitles[i]}
                 </h3>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -173,7 +177,7 @@ export default function FacilitySection() {
         <div className="md:hidden reveal-card">
           {/* Carousel Container */}
           <div
-            className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl"
+            className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl w-full"
             style={{ aspectRatio: "16/9", minHeight: "300px" }}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
@@ -205,27 +209,15 @@ export default function FacilitySection() {
               ))}
             </div>
 
-            {/* Content Overlay */}
+            {/* Content Overlay - Title Only */}
             <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
               <div className="max-w-2xl">
-                <p
-                  className="text-sm sm:text-base font-montserrat font-semibold tracking-widest mb-2 sm:mb-3"
-                  style={{ color: "#C9A961" }}
-                >
-                  시설 {currentIndex + 1} / {galleryImages.length}
-                </p>
                 <h3
-                  className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-3"
+                  className="text-2xl sm:text-4xl font-bold"
                   style={{ color: "#FFFFFF" }}
                 >
                   {galleryImages[currentIndex].label}
                 </h3>
-                <p
-                  className="text-sm sm:text-base leading-relaxed"
-                  style={{ color: "rgba(255,255,255,0.85)" }}
-                >
-                  {galleryImages[currentIndex].desc}
-                </p>
               </div>
             </div>
 
@@ -293,13 +285,13 @@ export default function FacilitySection() {
             </div>
           </div>
 
-          {/* Thumbnail Strip (Mobile) */}
-          <div className="flex gap-2 mt-4 justify-center flex-wrap">
+          {/* Thumbnail Strip (Mobile) - Fixed overflow issue */}
+          <div className="flex gap-2 mt-4 overflow-x-auto pb-2 px-2">
             {galleryImages.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentIndex(i)}
-                className="relative overflow-hidden rounded-lg transition-all duration-300"
+                className="relative overflow-hidden rounded-lg transition-all duration-300 flex-shrink-0"
                 style={{
                   width: "80px",
                   height: "60px",
@@ -319,6 +311,45 @@ export default function FacilitySection() {
             ))}
           </div>
         </div>
+
+        {/* Lightbox Modal (PC Only) */}
+        {lightboxIndex !== null && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
+            onClick={closeLightbox}
+          >
+            <div
+              className="relative max-w-4xl w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={closeLightbox}
+                className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
+                aria-label="Close lightbox"
+              >
+                <X size={32} />
+              </button>
+
+              {/* Image */}
+              <picture>
+                <source srcSet={galleryImageSrcs[lightboxIndex].srcWebP} type="image/webp" />
+                <img
+                  src={galleryImageSrcs[lightboxIndex].srcJPG}
+                  alt={pcCardTitles[lightboxIndex]}
+                  className="w-full h-auto rounded-lg"
+                />
+              </picture>
+
+              {/* Title */}
+              <div className="text-center mt-4">
+                <h3 className="text-white text-xl font-semibold">
+                  {pcCardTitles[lightboxIndex]}
+                </h3>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

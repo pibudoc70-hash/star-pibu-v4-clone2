@@ -13,24 +13,24 @@ interface Device {
 // ── CDN 경로 ──────────────────────────────────────────────────────────────
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
 
-// ── 장비 이미지 맵 (CDN URL) ──────────────────────────────────────────────
+// ── 장비 이미지 맵 (완전한 URL) ────────────────────────────────────────────
 const deviceImages: Record<string, string> = {
-  sonopeel: `${CDN}/sonopeel_new.jpg`,
-  porederm: `${CDN}/porederm_new_896695b4.jpg`,
-  airbubble: `${CDN}/airbubble_new.jpg`,
-  oxyjet: `${CDN}/oxyjet_new.jpg`,
-  inbio: `${CDN}/inbio_new.jpg`,
-  flawless: `${CDN}/flawless_new.jpg`,
-  dermalight: `${CDN}/dermalight_new.jpg`,
-  fray: `${CDN}/fray_new.jpg`,
-  ionzyme: `${CDN}/ionzyme_new.jpg`,
-  healingbright: `${CDN}/healingbright_new.jpg`,
-  mesoskin: `${CDN}/mesoskin_new.jpg`,
-  ultraduo: `${CDN}/ultraduo_new.jpg`,
-  triplemultigel: `${CDN}/triplemultigel_new.jpg`,
-  ldm: `${CDN}/ldm_new.jpg`,
-  ilumi: `${CDN}/ilumi_new.jpg`,
-  transkin: `${CDN}/transkin_new.jpg`,
+  sonopeel: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sonopeel_53d2c9d1.jpg",
+  porederm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/porederm_new_896695b4.jpg",
+  airbubble: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/airbubble_9631da26.jpg",
+  oxyjet: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/oxyet_a81daa05.jpg",
+  inbio: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/inbio_new_f3628f96.jpg",
+  flawless: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/flawless_48eb550e.jpg",
+  dermalight: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/dermalight_new_0effb3eb.jpg",
+  fray: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/fray_66504ffe.jpg",
+  ionzyme: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/ionzyme_ec731187.png",
+  healingbright: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/healingbright_d060a2aa.jpg",
+  mesoskin: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/mesoskin_new_32137830.jpg",
+  ultraduo: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/ultraduo_af289409.jpg",
+  triplemultigel: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/supersonic_5df47d2e.jpg",
+  ldm: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/ldm_ac66d69e.jpg",
+  ilumi: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/ilumi_new_3d286596.jpg",
+  transkin: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/transskin_67357f56.jpg",
 };
 
 // ── 장비 데이터 ──────────────────────────────────────────────────────────

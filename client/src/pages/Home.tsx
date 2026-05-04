@@ -76,8 +76,8 @@ export default function Home() {
         {/* 5. Management Devices - 관리장비 */}
         <ManagementDevicesSection />
 
-        {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 (숨김) */}
-        {/* <PhilosophySection /> */}
+        {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 */}
+        <PhilosophySection />
 
         {/* 6. Before & After Results (숨김) */}
         {/* <ResultsSection /> */}

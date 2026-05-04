@@ -341,8 +341,8 @@ export default function ManagementDevicesSection() {
             style={{ scrollBehavior: "smooth", scrollSnapType: "x mandatory" }}
           >
             {/* 모든 장비를 1줄로 표시 */}
-            {devices.map((device) => (
-              <div key={device.id} className="flex-shrink-0" style={{ width: "calc(25% - 12px)" }}>
+            {devices.map((device, index) => (
+              <div key={`device-${index}`} className="flex-shrink-0" style={{ width: "calc(25% - 12px)" }}>
                 <DeviceCard
                   device={device}
                   onClick={() => setSelectedDevice(device)}

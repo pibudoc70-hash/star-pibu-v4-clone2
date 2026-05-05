@@ -120,35 +120,37 @@ export default function ResultsStatisticsSection() {
         </div>
 
         {/* 통계 섹션 */}
-        <div className="bg-white rounded-2xl p-8 md:p-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {statistics.map((stat, index) => (
-              <div key={index} className="text-center">
-                {/* 아이콘 */}
-                <div className="flex justify-center mb-4">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-amber-50 flex items-center justify-center">
-                    {stat.icon}
-                  </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          {statistics.map((stat, index) => (
+            <div
+              key={index}
+              className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-lg"
+              style={{ background: '#F5F1ED' }}
+            >
+              {/* 아이콘 */}
+              <div className="flex justify-center mb-4">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center">
+                  {stat.icon}
                 </div>
-
-                {/* 숫자 */}
-                <p className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-                  {stat.number}
-                  {stat.unit && <span style={{ fontSize: '70%' }} className="ml-1">{stat.unit}</span>}
-                </p>
-
-                {/* 라벨 */}
-                <p className="text-sm md:text-base font-semibold text-gray-900 mb-1">
-                  {stat.label}
-                </p>
-
-                {/* 설명 */}
-                <p className="text-xs md:text-sm text-gray-600">
-                  {stat.description}
-                </p>
               </div>
-            ))}
-          </div>
+
+              {/* 숫자 */}
+              <p className="font-extrabold text-2xl sm:text-3xl mb-2" style={{ color: '#D1AB67' }}>
+                {stat.number}
+                {stat.unit && <span style={{ fontSize: '70%' }} className="ml-1">{stat.unit}</span>}
+              </p>
+
+              {/* 라벨 */}
+              <p className="text-xs sm:text-sm font-medium" style={{ color: '#6B7280' }}>
+                {stat.label}
+              </p>
+
+              {/* 설명 */}
+              <p className="text-xs" style={{ color: '#9CA3AF', marginTop: '0.5rem' }}>
+                {stat.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

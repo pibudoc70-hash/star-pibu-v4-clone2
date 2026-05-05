@@ -14,6 +14,7 @@ import TreatmentsEquipmentSectionV2 from "@/components/TreatmentsEquipmentSectio
 import ManagementDevicesSection from "@/components/ManagementDevicesSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import ResultsSection from "@/components/ResultsSection";
+import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
 import FacilitySection from "@/components/FacilitySection";
 import ReviewsSection from "@/components/ReviewsSection";
 import FAQSection from "@/components/FAQSection";
@@ -81,6 +82,9 @@ export default function Home() {
 
         {/* 6. Before & After Results (숨김) */}
         {/* <ResultsSection /> */}
+
+        {/* 6-2. Results & Statistics - 스타피부과를 선택하는 이유 (의료진 소개 + 통계) */}
+        <ResultsStatisticsSection />
 
         {/* 7. Facility Gallery - 시설 갤러리 */}
         <FacilitySection />

@@ -610,3 +610,8 @@
 ## Phase 83: 의료진 카드 직책 텍스트 크기 증가 (2026-05-05)
 - [x] ResultsStatisticsSection.tsx에서 의료진 카드의 직책(title) 텍스트 크기를 14px(text-sm)에서 24px로 증가
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 84: 통계 섹션 unit 글자 크기 70%로 축소 (2026-05-05)
+- [x] ResultsStatisticsSection.tsx에서 통계 데이터 구조 수정 (number와 unit 분리)
+- [x] 렌더링 부분에서 unit을 70% 크기로 표시하여 숫자 강조
+- [x] 최종 테스트 및 체크포인트 저장

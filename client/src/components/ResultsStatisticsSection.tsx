@@ -33,7 +33,8 @@ export default function ResultsStatisticsSection() {
           <path d="M9 5v2M15 5v2M6 15h12"/>
         </svg>
       ),
-      number: '20년',
+      number: '20',
+      unit: '년',
       label: '전문의 경력',
       description: '2006년 개원 이래',
     },
@@ -43,7 +44,8 @@ export default function ResultsStatisticsSection() {
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
       ),
-      number: '95%',
+      number: '95',
+      unit: '%',
       label: '환자 만족도',
       description: '네이버·구글 리뷰 기준',
     },
@@ -54,7 +56,8 @@ export default function ResultsStatisticsSection() {
           <polyline points="17 6 23 6 23 12"/>
         </svg>
       ),
-      number: '4,000례',
+      number: '4,000',
+      unit: '례',
       label: '눈밑지방재배치',
       description: '안전하고 검증된 시술',
     },
@@ -68,6 +71,7 @@ export default function ResultsStatisticsSection() {
         </svg>
       ),
       number: '1:1',
+      unit: '',
       label: '피부과전문의 시술',
       description: '모든 시술 직접 담당',
     },
@@ -130,6 +134,7 @@ export default function ResultsStatisticsSection() {
                 {/* 숫자 */}
                 <p className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                   {stat.number}
+                  {stat.unit && <span style={{ fontSize: '70%' }} className="ml-1">{stat.unit}</span>}
                 </p>
 
                 {/* 라벨 */}

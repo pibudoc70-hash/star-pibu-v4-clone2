@@ -689,9 +689,15 @@ export default function DoctorsSection() {
                 <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
 
                 {/* 소개 */}
-                <p className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8 }}>
-                  {doctor.intro}
-                </p>
+                <div className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8 }}>
+                  {Array.isArray(doctor.intro) ? (
+                    doctor.intro.map((para, idx) => (
+                      <p key={idx} style={{ margin: '0 0 1em 0', whiteSpace: 'normal', wordBreak: 'break-word' }}>{para}</p>
+                    ))
+                  ) : (
+                    <p>{doctor.intro}</p>
+                  )}
+                </div>
 
                 {/* 전문 시술 태그 */}
                 <div>

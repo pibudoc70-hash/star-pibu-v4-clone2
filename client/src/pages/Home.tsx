@@ -54,7 +54,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+    <div className="min-h-screen">
       {/* Fixed Header */}
       <Header />
 
@@ -63,47 +63,71 @@ export default function Home() {
         {/* 1. Hero - Full Screen */}
         <HeroSection />
 
-        {/* 2. SPECIAL EVENT - 특별 이벤트 섹션 */}
-        <SpecialEventSection />
+        {/* 2. SPECIAL EVENT - 특별 이벤트 섹션 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <SpecialEventSection />
+        </div>
 
-        {/* 3. Doctors - 의료진 소개 (3명) */}
-        <DoctorsSection />
+        {/* 3. Doctors - 의료진 소개 (3명) - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <DoctorsSection />
+        </div>
 
-        {/* 4. Treatments + Equipment - 시술 안내 & 장비 소개 통합 */}
-        <TreatmentsEquipmentSection />
+        {/* 4. Treatments + Equipment - 시술 안내 & 장비 소개 통합 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <TreatmentsEquipmentSection />
+        </div>
 
         {/* 4-2. Treatments + Equipment Section 2 - DB 연동 (관리자 등록) - 별도 페이지로 이동 */}
         {/* <TreatmentsEquipmentSectionV2 /> */}
 
-        {/* 5. Management Devices - 관리장비 */}
-        <ManagementDevicesSection />
+        {/* 5. Management Devices - 관리장비 - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <ManagementDevicesSection />
+        </div>
 
-        {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 */}
-        <PhilosophySection />
+        {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <PhilosophySection />
+        </div>
 
         {/* 6. Before & After Results (숨김) */}
         {/* <ResultsSection /> */}
 
-        {/* 6-2. Results & Statistics - 스타피부과를 선택하는 이유 (의료진 소개 + 통계) */}
-        <ResultsStatisticsSection />
+        {/* 6-2. Results & Statistics - 스타피부과를 선택하는 이유 (의료진 소개 + 통계) - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <ResultsStatisticsSection />
+        </div>
 
-        {/* 7. Facility Gallery - 시설 갤러리 */}
-        <FacilitySection />
+        {/* 7. Facility Gallery - 시설 갤러리 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <FacilitySection />
+        </div>
 
-        {/* 8. Patient Reviews - 환자 후기 */}
-        <ReviewsSection />
+        {/* 8. Patient Reviews - 환자 후기 - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <ReviewsSection />
+        </div>
 
-        {/* 8-2. YouTube Channel - 유튜브 채널 */}
-        <YouTubeSection />
+        {/* 8-2. YouTube Channel - 유튜브 채널 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <YouTubeSection />
+        </div>
 
-        {/* 9. FAQ - 자주 묻는 질문 */}
-        <FAQSection />
+        {/* 9. FAQ - 자주 묻는 질문 - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <FAQSection />
+        </div>
 
-        {/* 9-2. Reservation - 예약 신청 */}
-        <ReservationSection />
+        {/* 9-2. Reservation - 예약 신청 - 흰색 배경 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <ReservationSection />
+        </div>
 
-        {/* 10. Location & Contact - 오시는 길 */}
-        <ContactSection />
+        {/* 10. Location & Contact - 오시는 길 - 베이지 배경 */}
+        <div style={{ background: "#F5F1ED" }}>
+          <ContactSection />
+        </div>
       </main>
 
       {/* Footer */}

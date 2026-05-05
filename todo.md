@@ -680,3 +680,10 @@
 - [x] backgroundPosition을 center 38%에서 center center로 변경
 - [x] 모바일에서 배경 이미지가 중앙에 정렬되도록 수정
 - [x] 최종 테스트 및 체크포인트 준비
+
+## Phase 96: 섹션 배경색 교대 적용 (2026-05-06)
+- [x] 기존 사이트(star-pibu.com) 섹션 배경 패턴 분석
+- [x] Home.tsx의 모든 섹션에 배경색 적용
+- [x] 흰색(#FFFFFF)과 베이지(#F5F1ED) 색상 교대로 적용
+- [x] SPECIAL EVENT: 흰색, Doctors: 베이지, Treatments: 흰색, Management: 베이지, Philosophy: 흰색, Results: 베이지, Facility: 흰색, Reviews: 베이지, YouTube: 흰색, FAQ: 베이지, Reservation: 흰색, Contact: 베이지
+- [x] 최종 테스트 및 체크포인트 준비

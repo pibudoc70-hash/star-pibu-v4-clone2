@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // ── 장비 데이터 타입 ──────────────────────────────────────────────────────
@@ -222,6 +222,7 @@ export default function ManagementDevicesSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // ── 스크롤 상태 확인 ──
   const checkScroll = () => {
@@ -232,13 +233,18 @@ export default function ManagementDevicesSection() {
     }
   };
 
-  // ── 스크롤 함수 ──
+  // 스크롤 함수
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
       const scrollAmount = window.innerWidth < 640 ? 200 : 320;
-      const newScrollLeft =
-        scrollContainerRef.current.scrollLeft +
-        (direction === "left" ? -scrollAmount : scrollAmount);
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      let newScrollLeft = scrollLeft + (direction === "left" ? -scrollAmount : scrollAmount);
+      
+      // 끝에 도달하면 처음으로 돌아가기
+      if (newScrollLeft >= scrollWidth - clientWidth - 10) {
+        newScrollLeft = 0;
+      }
+      
       scrollContainerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: "smooth",
@@ -259,6 +265,41 @@ export default function ManagementDevicesSection() {
       scroll(diff > 0 ? "right" : "left");
     }
   };
+
+  // 자동 스크롤
+  useEffect(() => {
+    const startAutoScroll = () => {
+      autoScrollIntervalRef.current = setInterval(() => {
+        scroll("right");
+      }, 3000);
+    };
+
+    const stopAutoScroll = () => {
+      if (autoScrollIntervalRef.current) {
+        clearInterval(autoScrollIntervalRef.current);
+        autoScrollIntervalRef.current = null;
+      }
+    };
+
+    // 초기 시작
+    startAutoScroll();
+
+    // 마우스 호버 시 중지
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("mouseenter", stopAutoScroll);
+      container.addEventListener("mouseleave", startAutoScroll);
+    }
+
+    // 클린업
+    return () => {
+      stopAutoScroll();
+      if (container) {
+        container.removeEventListener("mouseenter", stopAutoScroll);
+        container.removeEventListener("mouseleave", startAutoScroll);
+      }
+    };
+  }, []);
 
   return (
     <section className="py-14 sm:py-20 bg-white">

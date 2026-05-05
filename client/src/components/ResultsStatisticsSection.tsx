@@ -6,7 +6,7 @@ export default function ResultsStatisticsSection() {
       id: 1,
       name: '조시형 원장',
       title: '검증된 경험',
-      description: '20년 이상 피부과 임상 경험으로 안전하고 신뢰할 수 있는 서울 제공',
+      description: ['2006년 부산 서면에서 첫 진료를 시작한 이래, 어느덧 20년이 넘는 시간 동안 수많은 환자분들의 피부 고민을 마주해 왔습니다.', '피부 치료는 단순히 장비를 사용하는 기술이 아니라, 환자의 피부 상태를 정확히 읽어내는 \'안목\'에서 시작됩니다. 무리한 시술보다는 가장 안전하고 자연스러운 결과를 지향합니다.', '앞으로도 변함없이 정직하고 숙련된 진료로 여러분의 피부 건강을 지켜드리겠습니다.'],
       image: '/manus-storage/01_cd3dce52.jpg',
     },
     {
@@ -111,9 +111,15 @@ export default function ResultsStatisticsSection() {
                 <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
                   {doctor.title}
                 </p>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose">
-                  {doctor.description}
-                </p>
+                <div className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose space-y-3">
+                  {Array.isArray(doctor.description) ? (
+                    doctor.description.map((para, idx) => (
+                      <p key={idx}>{para}</p>
+                    ))
+                  ) : (
+                    <p>{doctor.description}</p>
+                  )}
+                </div>
               </div>
             </div>
           ))}

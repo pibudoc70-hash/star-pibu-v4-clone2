@@ -368,7 +368,7 @@ export default function ManagementDevicesSection() {
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 sm:-translate-x-12 md:-translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 sm:-translate-x-12 md:-translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors hidden sm:block"
               aria-label="이전"
             >
               <ChevronLeft className="size-20 sm:w-6 sm:h-6" style={{ color: "#d1ab67" }} />
@@ -379,7 +379,7 @@ export default function ManagementDevicesSection() {
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 sm:translate-x-12 md:translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 sm:translate-x-12 md:translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors hidden sm:block"
               aria-label="다음"
             >
               <ChevronRight className="size-20 sm:w-6 sm:h-6" style={{ color: "#d1ab67" }} />

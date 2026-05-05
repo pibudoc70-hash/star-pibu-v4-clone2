@@ -17,6 +17,7 @@ import ResultsSection from "@/components/ResultsSection";
 import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
 import FacilitySection from "@/components/FacilitySection";
 import ReviewsSection from "@/components/ReviewsSection";
+import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
 import ReservationSection from "@/components/ReservationSection";
 import ContactSection from "@/components/ContactSection";
@@ -91,6 +92,9 @@ export default function Home() {
 
         {/* 8. Patient Reviews - 환자 후기 */}
         <ReviewsSection />
+
+        {/* 8-2. YouTube Channel - 유튜브 채널 */}
+        <YouTubeSection />
 
         {/* 9. FAQ - 자주 묻는 질문 */}
         <FAQSection />

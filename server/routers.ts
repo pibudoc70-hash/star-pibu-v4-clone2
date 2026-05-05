@@ -3,8 +3,8 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { treatmentsRouter } from "./treatments-router";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot } from "./db";
-import { users, popupEvents, events, treatments, treatmentCategories } from "../drizzle/schema";
+import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot, getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo } from "./db";
+import { users, popupEvents, events, treatments, treatmentCategories, youtubeVideos } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
@@ -724,6 +724,66 @@ export const appRouter = router({
           return updateUnavailableSlot(id, data);
         }),
     }),
+  }),
+
+  // ─── YouTube 라우터 ────────────────────────────────────────────────────────────
+  youtube: router({
+    // 모든 YouTube 영상 조회 (공개)
+    getAll: publicProcedure.query(async () => {
+      return getAllYouTubeVideos();
+    }),
+
+    // 타입별 YouTube 영상 조회 (공개)
+    getByType: publicProcedure
+      .input(z.object({
+        type: z.enum(["video", "shorts"]),
+      }))
+      .query(async ({ input }) => {
+        return getYouTubeVideosByType(input.type);
+      }),
+
+    // YouTube 영상 생성 (관리자)
+    create: adminProcedure
+      .input(z.object({
+        title: z.string().min(1).max(255),
+        videoId: z.string().min(1).max(50),
+        type: z.enum(["video", "shorts"]),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return createYouTubeVideo({
+          title: input.title,
+          videoId: input.videoId,
+          type: input.type,
+          sortOrder: input.sortOrder || 0,
+          isActive: "1",
+        });
+      }),
+
+    // YouTube 영상 수정 (관리자)
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1).max(255).optional(),
+        videoId: z.string().min(1).max(50).optional(),
+        type: z.enum(["video", "shorts"]).optional(),
+        sortOrder: z.number().optional(),
+        isActive: z.enum(["0", "1"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        return updateYouTubeVideo(id, data);
+      }),
+
+    // YouTube 영상 삭제 (관리자)
+    delete: adminProcedure
+      .input(z.object({
+        id: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        await deleteYouTubeVideo(input.id);
+        return { success: true };
+      }),
   }),
 });
 

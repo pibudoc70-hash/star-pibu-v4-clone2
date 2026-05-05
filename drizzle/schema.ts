@@ -153,10 +153,23 @@ export type TreatmentCategory = typeof treatmentCategories.$inferSelect;
 export type InsertTreatmentCategory = typeof treatmentCategories.$inferInsert;
 
 
+export const youtubeVideos = mysqlTable("youtubeVideos", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  videoId: varchar("videoId", { length: 50 }).notNull(),
+  type: mysqlEnum("type", ["video", "shorts"]).notNull(),
+  sortOrder: int("sortOrder").notNull().default(0),
+  isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
+export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
+
 export const unavailableSlots = mysqlTable("unavailableSlots", {
   id: int("id").autoincrement().primaryKey(),
-  date: varchar("date", { length: 10 }).notNull(), // YYYY-MM-DD 형식
-  reason: text("reason"), // 예: "점검", "긴급 휴무" 등
+  date: varchar("date", { length: 10 }).notNull(),
+  reason: text("reason"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

@@ -223,6 +223,7 @@ export default function ManagementDevicesSection() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // ── 스크롤 상태 확인 ──
   const checkScroll = () => {
@@ -230,6 +231,12 @@ export default function ManagementDevicesSection() {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      
+      // 현재 인덱스 계산
+      const scrollAmount = window.innerWidth < 640 ? 200 : 320;
+      const itemWidth = scrollAmount + 16; // 16은 gap
+      const index = Math.round(scrollLeft / itemWidth);
+      setCurrentIndex(Math.max(0, index));
     }
   };
 
@@ -247,6 +254,19 @@ export default function ManagementDevicesSection() {
       
       scrollContainerRef.current.scrollTo({
         left: newScrollLeft,
+        behavior: "smooth",
+      });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
+  // 인디케이터 클릭으로 이동
+  const scrollToIndex = (index: number) => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = window.innerWidth < 640 ? 200 : 320;
+      const itemWidth = scrollAmount + 16;
+      scrollContainerRef.current.scrollTo({
+        left: index * itemWidth,
         behavior: "smooth",
       });
       setTimeout(checkScroll, 300);
@@ -283,6 +303,7 @@ export default function ManagementDevicesSection() {
 
     // 초기 시작
     startAutoScroll();
+    checkScroll();
 
     // 마우스 호버 시 중지
     const container = scrollContainerRef.current;
@@ -364,6 +385,22 @@ export default function ManagementDevicesSection() {
               <ChevronRight className="size-20 sm:w-6 sm:h-6" style={{ color: "#d1ab67" }} />
             </button>
           )}
+        </div>
+
+        {/* 인디케이터 */}
+        <div className="flex justify-center gap-2 mt-4">
+          {devices.map((_, index) => (
+            <button
+              key={`indicator-${index}`}
+              onClick={() => scrollToIndex(index)}
+              className={`transition-all duration-300 rounded-full ${
+                currentIndex === index
+                  ? "w-8 h-2 bg-star-mint"
+                  : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
+              }`}
+              aria-label={`카드 ${index + 1}로 이동`}
+            />
+          ))}
         </div>
       </div>
     </section>

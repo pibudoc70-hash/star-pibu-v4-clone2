@@ -107,7 +107,7 @@ export default function ResultsStatisticsSection() {
                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                   {doctor.name}
                 </h3>
-                <p className="text-sm font-semibold text-amber-600 mb-3">
+                <p className="text-sm font-semibold mb-3" style={{ color: '#D1AB67' }}>
                   {doctor.title}
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed">

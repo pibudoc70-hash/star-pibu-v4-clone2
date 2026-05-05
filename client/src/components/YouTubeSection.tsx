@@ -49,7 +49,8 @@ export default function YouTubeSection() {
             YOUTUBE CHANNEL
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            피부과전문의가 알려주는 피부이야기
+            <span className="block md:inline">피부과전문의가 알려주는</span>
+            <span className="block md:inline"> 피부이야기</span>
           </h2>
           <p className="text-sm md:text-base text-gray-600">
             스타피부과 유튜브 채널에서 더 많은 정보를 확인하세요
@@ -79,7 +80,7 @@ export default function YouTubeSection() {
                     />
                     {/* 플레이 버튼 오버레이 */}
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors flex items-center justify-center">
-                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 flex items-center justify-center">
+                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/60 flex items-center justify-center">
                         <div className="w-0 h-0 border-l-8 md:border-l-10 border-l-transparent border-r-0 border-t-5 md:border-t-6 border-t-transparent border-b-5 md:border-b-6 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
                       </div>
                     </div>

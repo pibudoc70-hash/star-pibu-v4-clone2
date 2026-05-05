@@ -111,7 +111,7 @@ export default function ResultsStatisticsSection() {
                 <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
                   {doctor.title}
                 </p>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose">
                   {doctor.description}
                 </p>
               </div>

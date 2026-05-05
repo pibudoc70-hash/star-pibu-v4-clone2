@@ -3,6 +3,7 @@ import { AlertCircle, Phone, Send } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/useMobile";
 
 interface ReservationFormProps {
   onSuccess?: () => void;
@@ -10,7 +11,10 @@ interface ReservationFormProps {
 
 export function ReservationForm({ onSuccess }: ReservationFormProps) {
   const { user } = useAuth();
-  const [step, setStep] = useState<"info" | "verify" | "confirm">("info");
+  const isMobile = useIsMobile();
+  // 모바일에서는 인증 단계 건너뛰고 바로 confirm 단계로
+  const initialStep = isMobile && !user ? "confirm" : "info";
+  const [step, setStep] = useState<"info" | "verify" | "confirm">(initialStep);
 
   // 회원 예약 폼 상태
   const [reservationForm, setReservationForm] = useState({

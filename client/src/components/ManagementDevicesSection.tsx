@@ -349,7 +349,7 @@ export default function ManagementDevicesSection() {
             onScroll={checkScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex gap-4 overflow-x-auto scroll-smooth px-3 sm:px-4"
+            className="flex gap-4 overflow-x-auto scroll-smooth px-3 sm:px-4 scrollbar-hide"
             style={{
               scrollBehavior: "smooth",
               scrollSnapType: "x mandatory",

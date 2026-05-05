@@ -592,3 +592,7 @@
 ## Phase 79: 의료진 카드 제목 색상 변경 (2026-05-05)
 - [x] ResultsStatisticsSection.tsx의 의료진 카드 제목(doctor.title) 색상을 #D1AB67로 변경
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 80: RESULTS & STATISTICS 테스트 색상 변경 (2026-05-05)
+- [x] ResultsStatisticsSection.tsx의 "RESULTS & STATISTICS" 테스트 색상을 #D1AB67로 변경
+- [x] 최종 테스트 및 체크포인트 저장

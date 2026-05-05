@@ -104,7 +104,7 @@ export default function ResultsStatisticsSection() {
 
               {/* 의료진 정보 */}
               <div className="p-6 text-center">
-                <p className="text-sm font-semibold mb-3" style={{ color: '#D1AB67' }}>
+                <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
                   {doctor.title}
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed">

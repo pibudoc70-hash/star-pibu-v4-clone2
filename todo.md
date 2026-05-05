@@ -606,3 +606,7 @@
 ## Phase 82: 의료진 카드 이름 삭제 (2026-05-05)
 - [x] ResultsStatisticsSection.tsx에서 의료진 카드의 이름(doctor.name) 렌더링 부분 삭제
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 83: 의료진 카드 직책 텍스트 크기 증가 (2026-05-05)
+- [x] ResultsStatisticsSection.tsx에서 의료진 카드의 직책(title) 텍스트 크기를 14px(text-sm)에서 24px로 증가
+- [x] 최종 테스트 및 체크포인트 저장

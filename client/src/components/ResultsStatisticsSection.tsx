@@ -111,13 +111,13 @@ export default function ResultsStatisticsSection() {
                 <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
                   {doctor.title}
                 </p>
-                <div className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose space-y-3">
+                <div className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose space-y-2 sm:space-y-3">
                   {Array.isArray(doctor.description) ? (
                     doctor.description.map((para, idx) => (
-                      <p key={idx}>{para}</p>
+                      <p key={idx} className="break-words whitespace-normal">{para}</p>
                     ))
                   ) : (
-                    <p>{doctor.description}</p>
+                    <p className="break-words whitespace-normal">{doctor.description}</p>
                   )}
                 </div>
               </div>

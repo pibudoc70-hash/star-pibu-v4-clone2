@@ -171,9 +171,10 @@ function DeviceCard({ device }: { device: Device }) {
 
   return (
     <div
-      className="bg-white rounded-lg overflow-hidden flex flex-col text-left flex-shrink-0 h-full"
+      className="rounded-lg overflow-hidden flex flex-col text-left flex-shrink-0 h-full"
       style={{
-        boxShadow: "0 1px 6px rgba(209,171,103,0.10)",
+        background: "#F5F1ED",
+        boxShadow: "none",
       }}
     >
       {/* 상단 금선 */}

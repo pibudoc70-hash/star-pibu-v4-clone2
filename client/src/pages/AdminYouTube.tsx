@@ -17,7 +17,7 @@ interface YouTubeVideo {
 
 export default function AdminYouTube() {
   const { user } = useAuth();
-  const [, setLocation] = useRouter();
+  const { push } = useRouter();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -61,7 +61,7 @@ export default function AdminYouTube() {
           <h1 className="text-2xl font-bold text-gray-900 mb-4">접근 권한 없음</h1>
           <p className="text-gray-600">관리자만 접근할 수 있습니다.</p>
           <button
-            onClick={() => setLocation('/')}
+            onClick={() => push('/')}
             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             홈으로 돌아가기

@@ -625,3 +625,9 @@
 ## Phase 86: 시설안내 highlights 카드 섹션 삭제 (2026-05-05)
 - [x] FacilitySection.tsx에서 "50+", "3인", "2·4층", "전체" 카드 섹션 삭제
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 87: 스킨케어 카드 높이 조정 (2026-05-05)
+- [x] ManagementDevicesSection.tsx의 DeviceCard 높이를 PC에서 더 크게 조정
+- [x] py-3에서 py-4 md:py-5로 변경 (상단 패딩)
+- [x] pb-3에서 pb-4 md:pb-5로 변경 (하단 패딩)
+- [x] 최종 테스트 및 체크포인트 저장

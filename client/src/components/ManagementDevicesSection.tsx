@@ -180,7 +180,7 @@ function DeviceCard({ device }: { device: Device }) {
       <div className="h-1 w-full" style={{ background: "#d1ab67" }} />
 
       {/* 이미지 + 타이틀 가로 레이아웃 */}
-      <div className="flex gap-3 px-4 py-3">
+      <div className="flex gap-3 px-4 py-4 md:py-5">
         {/* 원형 아이콘 */}
         <div
           className="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
@@ -208,7 +208,7 @@ function DeviceCard({ device }: { device: Device }) {
       </div>
 
       {/* 설명 텍스트 (왼쪽 정렬) */}
-      <div className="px-4 pb-3">
+      <div className="px-4 pb-4 md:pb-5">
         <p className="text-xs leading-relaxed line-clamp-3" style={{ color: "#6B7280", textAlign: "left" }}>
           {device.shortDesc}
         </p>

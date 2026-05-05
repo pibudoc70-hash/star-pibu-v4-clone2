@@ -155,36 +155,79 @@ export default function YouTubeSection() {
       {/* 모달 - 영상 재생 */}
       {selectedVideo && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
-            {/* 닫기 버튼 */}
-            <button
-              onClick={() => setSelectedVideo(null)}
-              className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6 text-white" />
-            </button>
+          {/* 일반 영상: 가로 모달 */}
+          {selectedVideo.type === 'video' ? (
+            <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
+              {/* 닫기 버튼 */}
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
 
-            {/* YouTube 임베드 플레이어 */}
-            <div className="aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                title={selectedVideo.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
+              {/* YouTube 임베드 플레이어 */}
+              <div className="aspect-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                  title={selectedVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
 
-            {/* 제목 */}
-            <div className="p-4 bg-gray-900">
-              <h3 className="text-white font-semibold text-sm md:text-base line-clamp-2">
-                {selectedVideo.title}
-              </h3>
+              {/* 제목 */}
+              <div className="p-4 bg-gray-900">
+                <h3 className="text-white font-semibold text-sm md:text-base line-clamp-2">
+                  {selectedVideo.title}
+                </h3>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* 쇼츠: 세로 모달 */
+            <div className="relative w-full max-w-sm h-[80vh] md:h-auto md:max-h-[90vh] bg-black rounded-2xl overflow-hidden flex flex-col">
+              {/* 닫기 버튼 */}
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+
+              {/* YouTube 임베드 플레이어 - 세로 비율 */}
+              <div className="flex-1 flex items-center justify-center bg-black">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                  title={selectedVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                  style={{ aspectRatio: '9/16' }}
+                />
+              </div>
+
+              {/* 제목 */}
+              <div className="p-4 bg-gray-900 border-t border-gray-800">
+                <h3 className="text-white font-semibold text-sm line-clamp-2 mb-3">
+                  {selectedVideo.title}
+                </h3>
+                {/* 하단 닫기 버튼 */}
+                <button
+                  onClick={() => setSelectedVideo(null)}
+                  className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium"
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </section>

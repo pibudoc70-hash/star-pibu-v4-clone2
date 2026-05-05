@@ -10,13 +10,13 @@ import { getLoginUrl } from "@/const";
 import {
   Users, Shield, TrendingUp, ChevronLeft, ChevronRight,
   Crown, LogOut, Home, RefreshCw, Calendar, Clock,
-  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope
+  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope, Youtube
 } from "lucide-react";
 import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
 
-type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "reservations" | "unavailableSlots";
+type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "reservations" | "unavailableSlots" | "youtube";
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 type ReservationFilter = "all" | "member" | "guest";
 
@@ -329,6 +329,18 @@ export default function AdminDashboard() {
           >
             <Clock size={16} />
             예약 불가능 날짜
+          </button>
+          {/* 유튜브 관리 탭 */}
+          <button
+            onClick={() => window.location.href = "/admin/youtube"}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{
+              background: "transparent",
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
+            <Youtube size={16} />
+            유튜브 관리
           </button>
         </nav>
 

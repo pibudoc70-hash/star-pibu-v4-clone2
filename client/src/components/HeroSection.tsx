@@ -231,7 +231,7 @@ export default function HeroSection() {
         className="absolute inset-0 bg-cover bg-no-repeat sm:hidden"
         style={{
           backgroundImage: `url(${HERO_IMAGE_MOBILE_PORTRAIT_WEBP}), url(${HERO_IMAGE_MOBILE_PORTRAIT_JPG})`,
-          backgroundPosition: "center 38%",
+          backgroundPosition: "center center",
           backgroundSize: "cover",
           backfaceVisibility: "hidden",
         }}

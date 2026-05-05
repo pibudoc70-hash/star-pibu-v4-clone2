@@ -674,3 +674,9 @@
 - [x] TreatmentsEquipmentSectionV2.tsx의 Treatment 인터페이스에 section, sortOrder, modalImage 필드 추가
 - [x] AdminYouTube.tsx의 useRouter 에러 수정 (wouter의 useLocation 사용)
 - [x] 남은 TypeScript 에러: FacilitySection.test.tsx의 vitest 타입 정의 문제 (toBeInTheDocument 매처 타입 누락)
+
+## Phase 95: 모바일 배경 이미지 정렬 수정 (2026-05-06)
+- [x] HeroSection.tsx의 모바일 배경 이미지 위치 조정
+- [x] backgroundPosition을 center 38%에서 center center로 변경
+- [x] 모바일에서 배경 이미지가 중앙에 정렬되도록 수정
+- [x] 최종 테스트 및 체크포인트 준비

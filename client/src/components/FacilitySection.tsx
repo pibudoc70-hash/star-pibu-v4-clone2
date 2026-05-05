@@ -117,26 +117,7 @@ export default function FacilitySection() {
           )}
         </div>
 
-        {/* Highlights */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
-          {highlights.map((h, i) => (
-            <div
-              key={i}
-              className="reveal-card text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-lg"
-              style={{ transitionDelay: `${i * 0.08}s`, background: "#F5F1ED" }}
-            >
-              <div
-                className="font-montserrat font-extrabold text-2xl sm:text-3xl mb-2"
-                style={{ color: "#C9A961" }}
-              >
-                {h.num}
-              </div>
-              <div className="text-xs sm:text-sm font-medium" style={{ color: "#6B7280" }}>
-                {fc.highlights[i]?.label ?? ""}
-              </div>
-            </div>
-          ))}
-        </div>
+
 
         {/* PC VERSION: 3x2 Grid Layout with Wide Cards (md and above) */}
         <div className="hidden md:grid grid-cols-3 gap-4 reveal-card">

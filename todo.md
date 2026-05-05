@@ -649,5 +649,6 @@
 - [x] server/routers.ts에 YouTube API 라우터 추가
 - [x] Home.tsx에 YouTubeSection 임포트 및 추가
 - [x] DB에 샘플 데이터 (4개 영상 + 6개 쇼츠) 등록
-- [ ] 관리자 대시보드 YouTube 관리 UI 추가
-- [ ] 최종 테스트 및 체크포인트 저장
+- [x] 관리자 대시보드 YouTube 관리 UI 추가 (AdminYouTube.tsx)
+- [x] App.tsx에 /admin/youtube 라우트 추가
+- [x] 최종 테스트 및 체크포인트 저장

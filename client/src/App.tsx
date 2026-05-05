@@ -13,6 +13,7 @@ const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
 const EventDetail = lazy(() => import("@/pages/EventDetail"));
 const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
 const AdminDashboard = lazy(() => import("@/pages/AdminDashboard"));
+const AdminYouTube = lazy(() => import("@/pages/AdminYouTube"));
 const MyReservations = lazy(() => import("@/pages/MyReservations"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("@/pages/NonCoveredGuide"));
@@ -37,6 +38,7 @@ function Router() {
         <Route path={"/events/:id"} component={EventDetail} />
         <Route path={"/treatment/:name"} component={TreatmentDetail} />
         <Route path={"/admin"} component={AdminDashboard} />
+        <Route path={"/admin/youtube"} component={AdminYouTube} />
         <Route path={"/my-reservations"} component={MyReservations} />
         <Route path={"/equipment2"} component={Equipment2} />
         <Route path={"/privacy"} component={Privacy} />

@@ -596,3 +596,9 @@
 ## Phase 80: RESULTS & STATISTICS 테스트 색상 변경 (2026-05-05)
 - [x] ResultsStatisticsSection.tsx의 "RESULTS & STATISTICS" 테스트 색상을 #D1AB67로 변경
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 81: 전체 센션 가로 너비 제약 추가 (2026-05-05)
+- [x] index.css의 .container 클래스에 max-width 설정
+- [x] 모든 센션에 양쏽 여백 추가 (기존 사이트와 동일)
+- [x] 반응형 디자인 유지 (모바일에서는 전체 너비 사용)
+- [x] 최종 테스트 및 체크포인트 저장

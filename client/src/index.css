@@ -158,6 +158,9 @@
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    @media (min-width: 768px) {
+      max-width: 960px;
+    }
   }
 
   .flex {
@@ -176,7 +179,7 @@
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: 1120px;
     }
   }
 

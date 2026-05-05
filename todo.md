@@ -558,3 +558,9 @@
 - [x] ManagementDevicesSection.tsx의 스크롤 컨테이너 스크롤 막대 숨김
 - [x] CSS에서 scrollbar 숨김 처리
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 74: 모바일 캠러셀 중앙 정렬 수정 (2026-05-05)
+- [x] ManagementDevicesSection.tsx에서 모바일 스냉 정렬 설정 추가
+- [x] scroll-snap-align: center 적용
+- [x] 모바일 뜀에서 기능 중앙 정렬 확인
+- [x] 최종 테스트 및 체크포인트 저장

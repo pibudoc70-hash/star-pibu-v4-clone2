@@ -358,7 +358,7 @@ export default function ManagementDevicesSection() {
           >
             {/* 모든 장비를 1줄로 표시 */}
             {devices.map((device, index) => (
-              <div key={`device-${index}`} className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4" style={{ marginRight: "12px" }}>
+              <div key={`device-${index}`} className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4" style={{ marginRight: "12px", scrollSnapAlign: "center" }}>
                 <DeviceCard device={device} />
               </div>
             ))}

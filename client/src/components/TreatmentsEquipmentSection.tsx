@@ -98,7 +98,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       caution: "시술 후 당일 세안은 부드럽게 하고, 강한 마사지나 사우나는 1주일간 피하세요. 초음파 에너지 특성상 시술 직후 약간의 붓기나 열감이 있을 수 있으나 1~2일 내 가라앉습니다.",
       sessions: "1~2회 (6~12개월 간격)",
       effect: "얼굴 리프팅, 피부 탄력 개선, 주름 완화, 피부 재생, 수분 보충",
-      youtubeUrl: "https://www.youtube.com/embed/Anuuso34vXw",
+      youtubeUrl: "https://www.youtube.com/embed/VeADRwws0e8",
     },
     {
       name: "프로파운드 RF 리프팅",

@@ -930,6 +930,24 @@
     width: 8px;
   }
 
+  /* 가로 스크롤바 스타일 */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+
   /* 스크롤바 트랙 */
   .flex-1.overflow-y-auto::-webkit-scrollbar-track {
     background: transparent;

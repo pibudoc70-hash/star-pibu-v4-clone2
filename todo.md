@@ -662,3 +662,15 @@
 - [x] 의료진 카드 렌더링에서 배열 처리 로직 추가
 - [x] 모바일에서도 각 문단이 줄바꿈되어 표시
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 93: 모바일 히어로 섹션 버튼 간격 개선 (2026-05-06)
+- [x] HeroSection.tsx의 CTA 버튼 컨테이너 gap 값 수정
+- [x] 모바일에서 전화 버튼과 카카오/네이버 버튼 사이 간격 증가 (clamp(0.4rem, 1.5vw, 0.6rem) → clamp(1rem, 1.5vw, 0.6rem))
+- [x] 최종 테스트 및 체크포인트 준비
+
+## Phase 94: TypeScript 에러 수정 (2026-05-06)
+- [x] db.ts의 getTreatmentsByCategory 함수에서 section 타입 캐스팅 추가
+- [x] db.ts의 getTreatmentsByBest 함수에서 section 타입 캐스팅 추가
+- [x] TreatmentsEquipmentSectionV2.tsx의 Treatment 인터페이스에 section, sortOrder, modalImage 필드 추가
+- [x] AdminYouTube.tsx의 useRouter 에러 수정 (wouter의 useLocation 사용)
+- [x] 남은 TypeScript 에러: FacilitySection.test.tsx의 vitest 타입 정의 문제 (toBeInTheDocument 매처 타입 누락)

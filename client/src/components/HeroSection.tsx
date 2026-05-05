@@ -581,7 +581,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── CTA 버튼: 모바일 세로 스택 / 데스크톱 가로 일렬 ── */}
-        <div className="flex flex-col sm:flex-row items-center justify-center w-full" style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)", marginTop: '42px', maxWidth: '591px', width: '100%' }}>
+        <div className="flex flex-col sm:flex-row items-center justify-center w-full" style={{ gap: "clamp(1rem, 1.5vw, 0.6rem)", marginTop: '42px', maxWidth: '591px', width: '100%' }}>
           {/* 전화 버튼 - 모바일에서 전체 너비 */}
           <a
             href="tel:051-818-2300"

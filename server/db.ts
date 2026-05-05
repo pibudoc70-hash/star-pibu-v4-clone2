@@ -237,8 +237,8 @@ export async function getTreatmentsByCategory(categoryId: string, section?: stri
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(treatments.categoryId, categoryId), eq(treatments.isActive, "1")];
-  if (section) {
-    conditions.push(eq(treatments.section, section));
+  if (section && (section === "v1" || section === "v2")) {
+    conditions.push(eq(treatments.section, section as "v1" | "v2"));
   }
   return db.select().from(treatments).where(and(...conditions)).orderBy(asc(treatments.sortOrder));
 }
@@ -286,8 +286,8 @@ export async function getTreatmentsByBest(section?: string) {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(treatments.best, "1"), eq(treatments.isActive, "1")];
-  if (section) {
-    conditions.push(eq(treatments.section, section));
+  if (section && (section === "v1" || section === "v2")) {
+    conditions.push(eq(treatments.section, section as "v1" | "v2"));
   }
   return db.select().from(treatments).where(and(...conditions)).orderBy(asc(treatments.sortOrder));
 }

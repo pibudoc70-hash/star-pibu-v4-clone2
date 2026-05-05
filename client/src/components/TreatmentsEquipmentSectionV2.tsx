@@ -32,6 +32,9 @@ interface Treatment {
   effect?: string | null;
   related?: string | null;
   steps?: string | null;
+  section?: string | null;
+  sortOrder?: number;
+  modalImage?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 }

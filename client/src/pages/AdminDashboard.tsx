@@ -823,14 +823,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <textarea
-                        placeholder="설명 (간단한 설명)"
-                        value={eventForm.desc || ""}
-                        onChange={(e) => setEventForm({ ...eventForm, desc: e.target.value })}
-                        className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        rows={2}
-                      />
-                      <textarea
-                        placeholder="내용 (상세 설명)"
+                        placeholder="내용 (상세 설명, 선택사항)"
                         value={eventForm.content}
                         onChange={(e) => setEventForm({ ...eventForm, content: e.target.value })}
                         className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
@@ -839,7 +832,7 @@ export default function AdminDashboard() {
                       <div className="grid grid-cols-2 gap-4">
                         <input
                           type="text"
-                          placeholder="날짜 (예: 2026년 3월 28일)"
+                          placeholder="날짜 (예: 2026년 3월 28일) *필수"
                           value={eventForm.date}
                           onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
                           className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
@@ -1029,7 +1022,7 @@ export default function AdminDashboard() {
                         </button>
                         <button
                           onClick={() => {
-                            if (eventForm.title && eventForm.desc && eventForm.content && eventForm.date) {
+                            if (eventForm.title && eventForm.date) {
                               if (editingEventId) {
                                 const updateData = { id: editingEventId, ...eventForm };
                                 if (!updateData.imageUrl) {
@@ -1040,7 +1033,7 @@ export default function AdminDashboard() {
                                 createEventMutation.mutate(eventForm);
                               }
                             } else {
-                              toast.error("제목, 설명, 내용, 날짜를 모두 입력해주세요.");
+                              toast.error("제목과 날짜를 입력해주세요.");
                             }
                           }}
                           className="flex-1 px-4 py-2 rounded-lg font-semibold text-white transition-colors"

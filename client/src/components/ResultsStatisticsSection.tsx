@@ -6,7 +6,7 @@ export default function ResultsStatisticsSection() {
       id: 1,
       name: '조시형 원장',
       title: '검증된 경험',
-      description: ['20년 이상 피부과 임상 경험으로 안전하고 신뢰할 수 있는 시술 제공', '앞으로도 변함없이 정직하고 숙련된 진료로 여러분의 피부 건강을 지켜드리겠습니다.'],
+      description: ['20년 이상 피부과 임상 경험으로 안전하고 신뢰할 수 있는 시술 제공'],
       image: '/manus-storage/01_cd3dce52.jpg',
     },
     {

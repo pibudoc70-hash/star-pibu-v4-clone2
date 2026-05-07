@@ -10,7 +10,7 @@ import { getLoginUrl } from "@/const";
 import {
   Users, Shield, TrendingUp, ChevronLeft, ChevronRight,
   Crown, LogOut, Home, RefreshCw, Calendar, Clock,
-  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope, Youtube
+  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope, Youtube, ChevronUp, ChevronDown
 } from "lucide-react";
 import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
@@ -1065,6 +1065,32 @@ export default function AdminDashboard() {
                             </div>
                           </div>
                           <div className="flex gap-2">
+                            <button
+                              onClick={() => {
+                                const currentIndex = eventsList.findIndex((e: any) => e.id === event.id);
+                                if (currentIndex > 0) {
+                                  const prevEvent = eventsList[currentIndex - 1];
+                                  updateEventMutation.mutate({ id: event.id, sortOrder: prevEvent.sortOrder - 1 });
+                                }
+                              }}
+                              className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
+                              title="위로 이동"
+                            >
+                              <ChevronUp size={16} className="text-[#6B7280]" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                const currentIndex = eventsList.findIndex((e: any) => e.id === event.id);
+                                if (currentIndex < eventsList.length - 1) {
+                                  const nextEvent = eventsList[currentIndex + 1];
+                                  updateEventMutation.mutate({ id: event.id, sortOrder: nextEvent.sortOrder + 1 });
+                                }
+                              }}
+                              className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
+                              title="아래로 이동"
+                            >
+                              <ChevronDown size={16} className="text-[#6B7280]" />
+                            </button>
                             <button
                               onClick={() => {
                                 const formData = {

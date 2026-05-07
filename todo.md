@@ -687,3 +687,9 @@
 - [x] 흰색(#FFFFFF)과 베이지(#F5F1ED) 색상 교대로 적용
 - [x] SPECIAL EVENT: 흰색, Doctors: 베이지, Treatments: 흰색, Management: 베이지, Philosophy: 흰색, Results: 베이지, Facility: 흰색, Reviews: 베이지, YouTube: 흰색, FAQ: 베이지, Reservation: 흰색, Contact: 베이지
 - [x] 최종 테스트 및 체크포인트 준비
+
+## Phase 97: 파비콘 변경 (2026-05-06)
+- [x] 별 모양 파비콘 이미지 업로드
+- [x] client/public/favicon.ico로 파비콘 파일 적용
+- [x] 브라우저 탭에 새로운 파비콘 표시 확인
+- [x] 최종 테스트 및 체크포인트 준비

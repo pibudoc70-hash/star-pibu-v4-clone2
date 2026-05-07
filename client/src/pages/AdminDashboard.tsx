@@ -981,28 +981,25 @@ export default function AdminDashboard() {
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={eventForm.isFeatured === "1"}
-                          onChange={(e) => setEventForm({ ...eventForm, isFeatured: e.target.checked ? "1" : "0" })}
-                          className="w-4 h-4"
-                        />
-                        <label className="text-sm text-[#6B7280]">Featured 이벤트로 표시</label>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={eventForm.isSpecialEvent === "1"}
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-[#1F2937]">이벤트 유형</label>
+                        <select
+                          value={eventForm.isSpecialEvent === "1" ? "special" : eventForm.isFeatured === "1" ? "featured" : "normal"}
                           onChange={(e) => {
-                            console.log('SPECIAL EVENT checkbox clicked:', e.target.checked);
-                            const newForm = { ...eventForm, isSpecialEvent: e.target.checked ? "1" : "0" };
-                            console.log('New form:', newForm);
-                            setEventForm(newForm);
+                            if (e.target.value === "special") {
+                              setEventForm({ ...eventForm, isSpecialEvent: "1", isFeatured: "0" });
+                            } else if (e.target.value === "featured") {
+                              setEventForm({ ...eventForm, isSpecialEvent: "0", isFeatured: "1" });
+                            } else {
+                              setEventForm({ ...eventForm, isSpecialEvent: "0", isFeatured: "0" });
+                            }
                           }}
-                          className="w-4 h-4"
-                        />
-                        <label className="text-sm text-[#6B7280]">SPECIAL EVENT로 표시</label>
+                          className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                        >
+                          <option value="normal">일반 이벤트</option>
+                          <option value="featured">Featured 이벤트</option>
+                          <option value="special">SPECIAL EVENT</option>
+                        </select>
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-[#1F2937]">수면마취비 정보</label>

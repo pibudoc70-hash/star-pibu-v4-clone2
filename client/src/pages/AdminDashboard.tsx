@@ -4,6 +4,23 @@
  * - 예약 관리 탭: 예약 목록, 상태 변경
  */
 import { useEffect, useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
@@ -26,6 +43,55 @@ const STATUS_CONFIG: Record<ReservationStatus, { label: string; color: string; b
   completed: { label: "완료", color: "#6B7280", bg: "#F3F4F6" },
   cancelled: { label: "취소됨", color: "#EF4444", bg: "#FEE2E2" },
 };
+
+// 드래그 가능한 이벤트 아이템 컴포넌트
+function SortableEventItem({ event, onEdit, onDelete }: any) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: event.id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="bg-white border border-[#E5E7EB] rounded-xl p-4 flex items-center justify-between cursor-grab active:cursor-grabbing"
+      {...attributes}
+      {...listeners}
+    >
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <h4 className="font-bold text-[#1F2937]">{event.title}</h4>
+          {event.featured && <span className="px-2 py-0.5 bg-[#FEF3C7] text-[#92400E] text-xs font-semibold rounded">Featured</span>}
+          {event.isActive === '1' && <span className="px-2 py-0.5 bg-[#D1FAE5] text-[#065F46] text-xs font-semibold rounded">활성화</span>}
+          {event.isActive === '0' && <span className="px-2 py-0.5 bg-[#FEE2E2] text-[#991B1B] text-xs font-semibold rounded">비활성화</span>}
+        </div>
+        <p className="text-sm text-[#6B7280]">{event.subtitle}</p>
+        <div className="flex gap-4 text-xs text-[#9CA3AF] mt-2 flex-wrap">
+          <span>{event.date}</span>
+          <span>카테고리: {event.category || '이벤트'}</span>
+          <span>조회수: {event.views || 0}</span>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={onEdit}
+          className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
+        >
+          <Pencil size={16} className="text-[#6B7280]" />
+        </button>
+        <button
+          onClick={onDelete}
+          className="p-2 rounded-lg hover:bg-[#FEE2E2] transition-colors"
+        >
+          <Trash2 size={16} className="text-[#EF4444]" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminDashboard() {
   const { user, loading, isAuthenticated, logout } = useAuth();
@@ -112,10 +178,44 @@ export default function AdminDashboard() {
   // 이벤트 관리
   const [eventForm, setEventForm] = useState<any>(null);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
+  const [sortedEventsList, setSortedEventsList] = useState<any[]>([]);
 
   const { data: eventsList, refetch: refetchEvents } = trpc.events.list.useQuery(undefined, {
     enabled: !!user && user.role === "admin" && activeTab === "events",
   });
+
+  // eventsList가 변경될 때 sortedEventsList 업데이트
+  useEffect(() => {
+    if (eventsList) {
+      setSortedEventsList([...eventsList]);
+    }
+  }, [eventsList]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = sortedEventsList.findIndex((e) => e.id === active.id);
+      const newIndex = sortedEventsList.findIndex((e) => e.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newList = arrayMove(sortedEventsList, oldIndex, newIndex);
+        setSortedEventsList(newList);
+
+        // 새로운 순서로 sortOrder 업데이트
+        newList.forEach((event, index) => {
+          if (event.sortOrder !== index) {
+            updateEventMutation.mutate({ id: event.id, sortOrder: index });
+          }
+        });
+      }
+    }
+  };
 
   const createEventMutation = trpc.events.create.useMutation({
     onSuccess: () => { refetchEvents(); toast.success("이벤트가 추가되었습니다."); setEventForm(null); },
@@ -512,8 +612,8 @@ export default function AdminDashboard() {
                     </div>
                   )}
                 </>
-              )}
-            </div>
+                      )}
+                        </div>
           )}
 
           {/* ─── 팝업 이벤트 관리 탭 ─── */}
@@ -1046,80 +1146,29 @@ export default function AdminDashboard() {
                   )}
 
                   {/* 이벤트 목록 */}
-                  {eventsList && eventsList.length > 0 ? (
-                    <div className="space-y-3">
-                      {(eventsList || []).map((event: any) => (
-                        <div key={event.id} className="bg-white border border-[#E5E7EB] rounded-xl p-4 flex items-center justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1 flex-wrap">
-                              <h4 className="font-bold text-[#1F2937]">{event.title}</h4>
-                              {event.featured && <span className="px-2 py-0.5 bg-[#FEF3C7] text-[#92400E] text-xs font-semibold rounded">Featured</span>}
-                              {event.isActive === '1' && <span className="px-2 py-0.5 bg-[#D1FAE5] text-[#065F46] text-xs font-semibold rounded">활성화</span>}
-                              {event.isActive === '0' && <span className="px-2 py-0.5 bg-[#FEE2E2] text-[#991B1B] text-xs font-semibold rounded">비활성화</span>}
-                            </div>
-                            <p className="text-sm text-[#6B7280]">{event.subtitle}</p>
-                            <div className="flex gap-4 text-xs text-[#9CA3AF] mt-2 flex-wrap">
-                              <span>{event.date}</span>
-                              <span>카테고리: {event.category || '이벤트'}</span>
-                              <span>조회수: {event.views || 0}</span>
-                            </div>
-                          </div>
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => {
-                                const currentIndex = eventsList.findIndex((e: any) => e.id === event.id);
-                                if (currentIndex > 0) {
-                                  const prevEvent = eventsList[currentIndex - 1];
-                                  updateEventMutation.mutate({ id: event.id, sortOrder: prevEvent.sortOrder - 1 });
-                                }
-                              }}
-                              className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                              title="위로 이동"
-                            >
-                              <ChevronUp size={16} className="text-[#6B7280]" />
-                            </button>
-                            <button
-                              onClick={() => {
-                                const currentIndex = eventsList.findIndex((e: any) => e.id === event.id);
-                                if (currentIndex < eventsList.length - 1) {
-                                  const nextEvent = eventsList[currentIndex + 1];
-                                  updateEventMutation.mutate({ id: event.id, sortOrder: nextEvent.sortOrder + 1 });
-                                }
-                              }}
-                              className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                              title="아래로 이동"
-                            >
-                              <ChevronDown size={16} className="text-[#6B7280]" />
-                            </button>
-                            <button
-                              onClick={() => {
-                                const formData = {
-                                  ...event,
-                                  priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || []),
-                                  isSpecialEvent: event.isSpecialEvent || "0",
-                                  anesthesiaFee: event.anesthesiaFee || ""
-                                };
-                                setEventForm(formData);
-                                setEditingEventId(event.id);
-                              }}
-                              className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                            >
-                              <Pencil size={16} className="text-[#6B7280]" />
-                            </button>
-                            <button
-                              onClick={() => {
-                                if (confirm("정말 삭제하시겠습니까?")) {
-                                  deleteEventMutation.mutate({ id: event.id });
-                                }
-                              }}
-                              className="p-2 rounded-lg hover:bg-[#FEE2E2] transition-colors"
-                            >
-                              <Trash2 size={16} className="text-[#EF4444]" />
-                            </button>
-                          </div>
+                  {sortedEventsList && sortedEventsList.length > 0 ? (
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                      <SortableContext items={sortedEventsList.map(e => e.id)} strategy={verticalListSortingStrategy}>
+                        <div className="space-y-3">
+                          {(sortedEventsList || []).map((event: any) => (
+                            <SortableEventItem key={event.id} event={event} onEdit={() => {
+                              const formData = {
+                                ...event,
+                                priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || []),
+                                isSpecialEvent: event.isSpecialEvent || "0",
+                                anesthesiaFee: event.anesthesiaFee || ""
+                              };
+                              setEventForm(formData);
+                              setEditingEventId(event.id);
+                            }} onDelete={() => {
+                              if (confirm("정말 삭제하시겠습니까?")) {
+                                deleteEventMutation.mutate({ id: event.id });
+                              }
+                            }} />
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      </SortableContext>
+                    </DndContext>
                   ) : (
                     <div className="text-center py-12">
                       <p className="text-[#6B7280]">이벤트가 없습니다.</p>

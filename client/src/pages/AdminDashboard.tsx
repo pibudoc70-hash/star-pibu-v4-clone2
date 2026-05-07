@@ -855,22 +855,7 @@ export default function AdminDashboard() {
                           <option value="기타">기타</option>
                         </select>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="text"
-                          placeholder="배지 (예: 신규, 진행중)"
-                          value={eventForm.badge}
-                          onChange={(e) => setEventForm({ ...eventForm, badge: e.target.value })}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                        <input
-                          type="text"
-                          placeholder="상품명 (예: 세르프)"
-                          value={eventForm.productName || ""}
-                          onChange={(e) => setEventForm({ ...eventForm, productName: e.target.value })}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                      </div>
+
                       {/* 가격 행 관리 */}
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">

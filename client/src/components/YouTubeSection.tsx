@@ -79,9 +79,9 @@ export default function YouTubeSection() {
                       }}
                     />
                     {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors flex items-center justify-center">
-                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/60 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-8 md:border-l-10 border-l-transparent border-r-0 border-t-5 md:border-t-6 border-t-transparent border-b-5 md:border-b-6 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors">
+                      <div className="absolute bottom-3 left-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/60 flex items-center justify-center">
+                        <div className="w-0 h-0 border-l-5 md:border-l-7 border-l-transparent border-r-0 border-t-3 md:border-t-4 border-t-transparent border-b-3 md:border-b-4 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
                       </div>
                     </div>
                   </div>
@@ -120,9 +120,9 @@ export default function YouTubeSection() {
                       }}
                     />
                     {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-6 border-l-transparent border-r-0 border-t-4 border-t-transparent border-b-4 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors">
+                      <div className="absolute bottom-2 left-2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/90 flex items-center justify-center">
+                        <div className="w-0 h-0 border-l-4 border-l-transparent border-r-0 border-t-3 border-t-transparent border-b-3 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
                       </div>
                     </div>
                   </div>

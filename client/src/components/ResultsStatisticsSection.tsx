@@ -90,23 +90,37 @@ export default function ResultsStatisticsSection() {
           </h2>
         </div>
 
-        {/* 설명 카드 */}
+        {/* 의료진 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow p-6 sm:p-8 text-center"
+              className="rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
               style={{ background: '#F5F1ED' }}
             >
-              {/* 설명 */}
-              <div className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose space-y-2 sm:space-y-3">
-                {Array.isArray(doctor.description) ? (
-                  doctor.description.map((para, idx) => (
-                    <p key={idx} className="break-words whitespace-pre-wrap">{para}</p>
-                  ))
-                ) : (
-                  <p className="break-words whitespace-pre-wrap">{doctor.description}</p>
-                )}
+              {/* 의료진 사진 */}
+              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-200">
+                <img
+                  src={doctor.image}
+                  alt={doctor.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* 타이틀 및 설명 */}
+              <div className="p-4 sm:p-6 text-center w-full">
+                <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
+                  {doctor.title}
+                </p>
+                <div className="text-xs sm:text-sm text-gray-600 leading-relaxed sm:leading-loose space-y-2 sm:space-y-3 w-full">
+                  {Array.isArray(doctor.description) ? (
+                    doctor.description.map((para, idx) => (
+                      <p key={idx} className="break-words whitespace-pre-wrap text-center">{para}</p>
+                    ))
+                  ) : (
+                    <p className="break-words whitespace-pre-wrap text-center">{doctor.description}</p>
+                  )}
+                </div>
               </div>
             </div>
           ))}

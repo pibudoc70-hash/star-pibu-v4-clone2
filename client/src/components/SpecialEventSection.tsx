@@ -153,9 +153,17 @@ export default function SpecialEventSection() {
                     </p>
 
                     {/* 상품명 */}
-                    <p className="text-base font-medium text-gray-700 mb-4">
-                      {event.productName}
-                    </p>
+                    {priceRows.length > 0 ? (
+                      <p className="text-base font-medium text-gray-700 mb-4">
+                        {priceRows[0].label}
+                      </p>
+                    ) : (
+                      event.productName && (
+                        <p className="text-base font-medium text-gray-700 mb-4">
+                          {event.productName}
+                        </p>
+                      )
+                    )}
 
                     {/* 정상가와 할인가 (초기 상태) */}
                     <div className="mb-6 flex items-center gap-6">
@@ -198,9 +206,17 @@ export default function SpecialEventSection() {
                     </p>
 
                     {/* 상품명 */}
-                    <p className="text-base font-medium text-gray-700 mb-4">
-                      {event.productName}
-                    </p>
+                    {priceRows.length > 0 ? (
+                      <p className="text-base font-medium text-gray-700 mb-4">
+                        {priceRows[0].label}
+                      </p>
+                    ) : (
+                      event.productName && (
+                        <p className="text-base font-medium text-gray-700 mb-4">
+                          {event.productName}
+                        </p>
+                      )
+                    )}
 
                     {/* 정상가와 할인가 (확장 상태) */}
                     <div className="mb-4 flex items-center gap-6">

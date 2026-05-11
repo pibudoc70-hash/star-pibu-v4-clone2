@@ -72,7 +72,7 @@ export default function ContactSection() {
             className="mb-4"
             style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
           >
-            {t.access.title}
+            찾아오시는 길
           </h2>
           <div className="star-divider mx-auto" />
         </div>
@@ -81,7 +81,7 @@ export default function ContactSection() {
           {/* Map - 모바일에서 더 크게 */}
           <div
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
-            style={{ height: "clamp(300px, 60vw, 420px)" }}
+            style={{ height: "auto", minHeight: "500px" }}
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
 <MapView

@@ -85,6 +85,7 @@ export default function ContactSection() {
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
 <MapView
+              style={{ width: "100%", height: "100%" }}
               initialCenter={{ lat: 35.1572312, lng: 129.0581932 }}
               initialZoom={17}
               onMapReady={(map) => {

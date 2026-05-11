@@ -75,15 +75,19 @@ function SortableEventItem({ event, onEdit, onDelete }: any) {
           <span>조회수: {event.views || 0}</span>
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
         <button
-          onClick={(e) => { e.stopPropagation(); onEdit(); }}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEdit(); }}
+          onPointerDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onMouseDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
           className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
         >
           <Pencil size={16} className="text-[#6B7280]" />
         </button>
         <button
-          onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(); }}
+          onPointerDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onMouseDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
           className="p-2 rounded-lg hover:bg-[#FEE2E2] transition-colors"
         >
           <Trash2 size={16} className="text-[#EF4444]" />

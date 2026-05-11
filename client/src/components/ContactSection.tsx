@@ -81,7 +81,7 @@ export default function ContactSection() {
           {/* Map - 모바일에서 더 크게 */}
           <div
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
-            style={{ height: "auto", minHeight: "500px" }}
+            style={{ height: "auto", minHeight: "620px" }}
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
 <MapView

@@ -81,11 +81,11 @@ export default function ContactSection() {
           {/* Map - 모바일에서 더 크게 */}
           <div
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
-            style={{ height: "auto", minHeight: "620px" }}
+            style={{ display: "flex", flexDirection: "column", height: "auto", minHeight: "620px" }}
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
 <MapView
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "100%", flex: 1 }}
               initialCenter={{ lat: 35.1572312, lng: 129.0581932 }}
               initialZoom={17}
               onMapReady={(map) => {

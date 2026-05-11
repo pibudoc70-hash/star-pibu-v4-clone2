@@ -243,49 +243,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col gap-3">
-              <a
-                href="https://map.kakao.com/link/search/부산 서면 스타피부과"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 py-3.5 px-5 rounded-full font-semibold text-sm justify-center transition-all hover:-translate-y-0.5 active:scale-95"
-                style={{ background: "#4A6FA5", color: "white" }}
-              >
-                <Navigation size={16} />
-                {labels.kakaoMap}
-              </a>
-              <div className="grid grid-cols-3 gap-2">
-                <a
-                  href="https://pf.kakao.com/_HNyGC"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 py-3 px-2 rounded-full font-semibold text-xs justify-center active:scale-95"
-                  style={{ background: "#FEE500", color: "#1F2937" }}
-                >
-                  <MessageCircle size={14} />
-                  {labels.kakaoChat}
-                </a>
-                <a
-                  href="sms:010-5855-3201"
-                  className="flex items-center gap-1.5 py-3 px-2 rounded-full font-semibold text-xs justify-center text-white active:scale-95"
-                  style={{ background: "#4A6FA5" }}
-                >
-                  <Phone size={14} />
-                  {labels.smsConsult}
-                </a>
-                <a
-                  href="https://booking.naver.com/booking/13/bizes/209080"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 py-3 px-2 rounded-full font-semibold text-xs justify-center text-white active:scale-95"
-                  style={{ background: "#03C75A" }}
-                >
-                  <Calendar size={14} />
-                  {lang === "ja" ? "Naver予約" : lang === "zh" ? "Naver预约" : "네이버 예약"}
-                </a>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

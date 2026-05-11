@@ -77,13 +77,13 @@ function SortableEventItem({ event, onEdit, onDelete }: any) {
       </div>
       <div className="flex gap-2">
         <button
-          onClick={onEdit}
+          onClick={(e) => { e.stopPropagation(); onEdit(); }}
           className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
         >
           <Pencil size={16} className="text-[#6B7280]" />
         </button>
         <button
-          onClick={onDelete}
+          onClick={(e) => { e.stopPropagation(); onDelete(); }}
           className="p-2 rounded-lg hover:bg-[#FEE2E2] transition-colors"
         >
           <Trash2 size={16} className="text-[#EF4444]" />

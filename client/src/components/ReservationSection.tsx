@@ -44,10 +44,10 @@ export default function ReservationSection() {
               </div>
               <button
                 onClick={() => setShowSuccess(false)}
-                className="px-6 py-2 rounded-lg font-semibold text-white transition-colors"
+                className="px-6 py-2 rounded-lg font-semibold text-white transition-colors hover:opacity-90"
                 style={{ background: "#4A6FA5" }}
               >
-                새 예약 신청
+                예약 안내 확인
               </button>
             </div>
           ) : (

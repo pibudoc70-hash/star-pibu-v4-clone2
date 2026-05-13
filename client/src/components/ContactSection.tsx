@@ -199,11 +199,11 @@ export default function ContactSection() {
           {/* Info */}
           <div
             ref={infoPanelRef}
-            className="reveal-right lg:col-span-2 flex flex-col gap-4 sm:gap-5"
+            className="reveal-right lg:col-span-2 flex flex-col gap-2 sm:gap-3"
             style={{ transitionDelay: "0.15s" }}
           >
             {/* Address + 복사 버튼 */}
-            <div className="p-4 sm:p-5 rounded-xl" style={{ background: "white" }}>
+            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
               <div className="flex items-start gap-3">
                 <MapPin size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div className="flex-1 min-w-0">
@@ -238,7 +238,7 @@ export default function ContactSection() {
             </div>
 
             {/* Phone */}
-            <div className="p-4 sm:p-5 rounded-xl" style={{ background: "white" }}>
+            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
               <div className="flex items-center gap-3">
                 <Phone size={20} style={{ color: "#81C7C9", flexShrink: 0 }} />
                 <div>
@@ -255,7 +255,7 @@ export default function ContactSection() {
             </div>
 
             {/* Hours */}
-            <div className="p-4 sm:p-5 rounded-xl" style={{ background: "white" }}>
+            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
               <div className="flex items-start gap-3">
                 <Clock size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div className="flex-1">
@@ -281,7 +281,7 @@ export default function ContactSection() {
             </div>
 
             {/* Transit */}
-            <div className="p-4 sm:p-5 rounded-xl" style={{ background: "white" }}>
+            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
               <div className="flex items-start gap-3">
                 <Train size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div>

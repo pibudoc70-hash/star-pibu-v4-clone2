@@ -27,11 +27,12 @@ import { getLoginUrl } from "@/const";
 import {
   Users, Shield, TrendingUp, ChevronLeft, ChevronRight,
   Crown, LogOut, Home, RefreshCw, Calendar, Clock,
-  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope, Youtube, ChevronUp, ChevronDown
+  CheckCircle, XCircle, AlertCircle, ClipboardList, Megaphone, Plus, Pencil, Trash2, Eye, EyeOff, Stethoscope, Youtube, ChevronUp, ChevronDown, Download
 } from "lucide-react";
 import StarLogo from "@/components/StarLogo";
 import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
+import { exportReservationsToExcel } from "@/utils/excelExport";
 
 type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "reservations" | "unavailableSlots" | "youtube";
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
@@ -1198,6 +1199,20 @@ export default function AdminDashboard() {
                   예약 목록
                   {reservationsData && <span className="ml-2 text-xs font-normal text-[#9CA3AF]">총 {reservationsData.total}건</span>}
                 </h2>
+                <button
+                  onClick={() => {
+                    if (reservationsData?.items && reservationsData.items.length > 0) {
+                      exportReservationsToExcel(reservationsData.items);
+                      toast.success("엑셀 파일이 다운로드되었습니다.");
+                    } else {
+                      toast.error("다운로드할 예약 데이터가 없습니다.");
+                    }
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#4A6FA5] text-white text-xs font-semibold hover:bg-[#3A5A95] transition-colors"
+                >
+                  <Download size={16} />
+                  엑셀 다운로드
+                </button>
               </div>
 
               {reservationsLoading ? (

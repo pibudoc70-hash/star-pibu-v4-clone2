@@ -38,6 +38,26 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     notes: "",
   });
 
+  // 휴대폰번호 자동 포맷팅 함수
+  const formatPhoneNumber = (value: string) => {
+    // 숫자만 추출
+    const numbers = value.replace(/\D/g, "");
+    
+    // 11자리 이상이면 11자리까지만 유지
+    if (numbers.length > 11) {
+      return numbers.slice(0, 11);
+    }
+    
+    // 포맷팅: 010-1234-5678
+    if (numbers.length <= 3) {
+      return numbers;
+    } else if (numbers.length <= 7) {
+      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    } else {
+      return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+    }
+  };
+
   // 진료시간 설정
   const CLINIC_HOURS = {
     "1": { start: 10, end: 19, name: "월" },  // 월요일
@@ -527,7 +547,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
                 <input
                   type="tel"
                   value={guestForm.phone}
-                  onChange={(e) => setGuestForm({ ...guestForm, phone: e.target.value })}
+                  onChange={(e) => setGuestForm({ ...guestForm, phone: formatPhoneNumber(e.target.value) })}
                   placeholder="010-1234-5678"
                   className={`flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                     guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone)
@@ -613,7 +633,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
               <input
                 type="tel"
                 value={guestForm.phone}
-                onChange={(e) => setGuestForm({ ...guestForm, phone: e.target.value })}
+                onChange={(e) => setGuestForm({ ...guestForm, phone: formatPhoneNumber(e.target.value) })}
                 placeholder="010-1234-5678"
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                   guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone)

@@ -86,6 +86,26 @@ describe("Reservation System", () => {
       expect(result.status).toBe("confirmed");
     });
 
+    it("should add admin note to reservation", async () => {
+      const reservations = await getAllReservations(1, 1);
+      const reservationId = reservations.items[0].id;
+      const adminNote = "고객이 민감한 피부를 가지고 있습니다. 주의 필요.";
+
+      const result = await updateReservationStatus(reservationId, "confirmed", adminNote);
+      expect(result.adminNote).toBe(adminNote);
+    });
+
+    it("should update admin note without changing status", async () => {
+      const reservations = await getAllReservations(1, 1);
+      const reservationId = reservations.items[0].id;
+      const currentReservation = reservations.items[0];
+      const newAdminNote = "시술 후 일주일 내에 연락 필요";
+
+      const result = await updateReservationStatus(reservationId, currentReservation.status, newAdminNote);
+      expect(result.adminNote).toBe(newAdminNote);
+      expect(result.status).toBe(currentReservation.status);
+    });
+
     it("should get reservation statistics", async () => {
       const stats = await getReservationStats();
       expect(stats).toBeDefined();

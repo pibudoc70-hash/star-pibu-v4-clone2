@@ -72,7 +72,10 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   const isAvailableDate = (dateStr: string): boolean => {
     if (!dateStr) return false;
     
-    const date = new Date(dateStr);
+    // 날짜 문자열을 YYYY-MM-DD 형식으로 파싱 (시간대 문제 해결)
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     

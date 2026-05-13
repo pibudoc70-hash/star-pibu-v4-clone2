@@ -17,7 +17,11 @@ export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const infoPanelRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
   const [mapHeight, setMapHeight] = useState("620px");
+
+  // 스타피부과 정확한 좌표 (부산 서면 아이온시티빌딩)
+  const STAR_LOCATION = { lat: 35.1572312, lng: 129.0581932 };
 
   // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산
   useEffect(() => {
@@ -25,6 +29,15 @@ export default function ContactSection() {
       if (infoPanelRef.current) {
         const height = infoPanelRef.current.offsetHeight;
         setMapHeight(`${height}px`);
+
+        // 지도 크기 변경 후 중심 좌표 유지
+        if (mapInstanceRef.current) {
+          setTimeout(() => {
+            if (mapInstanceRef.current) {
+              mapInstanceRef.current.setCenter(STAR_LOCATION);
+            }
+          }, 0);
+        }
       }
     };
 
@@ -115,17 +128,25 @@ export default function ContactSection() {
             style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
-<MapView
+            <MapView
               style={{ width: "100%", height: "100%" }}
-              initialCenter={{ lat: 35.1572312, lng: 129.0581932 }}
+              initialCenter={STAR_LOCATION}
               initialZoom={17}
               onMapReady={(map) => {
-                // 스타피부과 정확한 좌표 (부산 서면 아이온시티빌딩)
-                const STAR_LOCATION = { lat: 35.1572312, lng: 129.0581932 };
+                // 지도 인스턴스 저장 (나중에 중심 좌표 유지용)
+                mapInstanceRef.current = map;
 
                 // 지도 중심 및 줌 설정
                 map.setCenter(STAR_LOCATION);
                 map.setZoom(17);
+
+                // 지도 크기 변경 이벤트 리스너 추가
+                if (window.google?.maps) {
+                  window.google.maps.event.addListener(map, 'bounds_changed', () => {
+                    // 지도 경계 변경 시 중심 좌표 유지
+                    map.setCenter(STAR_LOCATION);
+                  });
+                }
 
                 // 커스텀 마커 핀 엘리먼트 (SVG 별 아이콘 + 팝업 포함)
                 const pinEl = document.createElement('div');

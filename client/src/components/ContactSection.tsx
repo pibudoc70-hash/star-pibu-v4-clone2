@@ -135,7 +135,7 @@ export default function ContactSection() {
           <div className="star-divider mx-auto" />
         </div>
 
-        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'} gap-6 sm:gap-8 ${isMobile ? 'items-center' : 'items-stretch'}`}>
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'} gap-6 sm:gap-8 ${isMobile ? 'items-center' : 'items-stretch'} auto-rows-max lg:auto-rows-fr`}>
           {/* Map - 모바일에서 더 크게 */}
           <div
             ref={mapContainerRef}
@@ -217,7 +217,7 @@ export default function ContactSection() {
           {/* Info */}
           <div
             ref={infoPanelRef}
-            className="reveal-right lg:col-span-2 flex flex-col gap-2 sm:gap-3"
+            className="reveal-right lg:col-span-2 flex flex-col gap-2 sm:gap-3 lg:h-full"
             style={{ transitionDelay: "0.15s" }}
           >
             {/* Address + 복사 버튼 */}

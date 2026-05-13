@@ -43,7 +43,10 @@ export default function ReservationSection() {
                 </p>
               </div>
               <button
-                onClick={() => setShowSuccess(false)}
+                onClick={() => {
+                  setShowSuccess(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="px-6 py-2 rounded-lg font-semibold text-white transition-colors hover:opacity-90"
                 style={{ background: "#4A6FA5" }}
               >
@@ -54,7 +57,6 @@ export default function ReservationSection() {
             <ReservationForm
               onSuccess={() => {
                 setShowSuccess(true);
-                setTimeout(() => setShowSuccess(false), 5000);
               }}
             />
           )}

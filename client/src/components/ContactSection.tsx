@@ -18,34 +18,48 @@ export default function ContactSection() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const infoPanelRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
-  const [mapHeight, setMapHeight] = useState("620px");
+  const [mapHeight, setMapHeight] = useState("400px");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
   // 스타피부과 정확한 좌표 (부산 서면 아이온시티빌딩)
   const STAR_LOCATION = { lat: 35.1572312, lng: 129.0581932 };
 
-  // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산
+  // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산 (PC에서만)
   useEffect(() => {
     const updateMapHeight = () => {
-      if (infoPanelRef.current) {
+      // 윈도우 너비 확인
+      const isCurrentlyMobile = window.innerWidth < 1024;
+      setIsMobile(isCurrentlyMobile);
+
+      // PC에서만 정보 패널 높이에 맞춤
+      if (!isCurrentlyMobile && infoPanelRef.current) {
         const height = infoPanelRef.current.offsetHeight;
         setMapHeight(`${height}px`);
+      } else if (isCurrentlyMobile) {
+        // 모바일에서는 고정 높이 사용
+        setMapHeight("400px");
+      }
 
-        // 지도 크기 변경 후 중심 좌표 유지
-        if (mapInstanceRef.current) {
-          setTimeout(() => {
-            if (mapInstanceRef.current) {
-              mapInstanceRef.current.setCenter(STAR_LOCATION);
-            }
-          }, 0);
-        }
+      // 지도 크기 변경 후 중심 좌표 유지
+      if (mapInstanceRef.current) {
+        setTimeout(() => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.setCenter(STAR_LOCATION);
+          }
+        }, 0);
       }
     };
 
     // 초기 계산
     updateMapHeight();
 
-    // ResizeObserver로 정보 패널 높이 변화 감시
-    const observer = new ResizeObserver(updateMapHeight);
+    // ResizeObserver로 정보 패널 높이 변화 감시 (PC에서만)
+    const observer = new ResizeObserver(() => {
+      if (!isMobile && infoPanelRef.current) {
+        const height = infoPanelRef.current.offsetHeight;
+        setMapHeight(`${height}px`);
+      }
+    });
     if (infoPanelRef.current) {
       observer.observe(infoPanelRef.current);
     }
@@ -57,7 +71,7 @@ export default function ContactSection() {
       observer.disconnect();
       window.removeEventListener("resize", updateMapHeight);
     };
-  }, []);
+  }, [isMobile]);
 
   // 주소 복사
   const handleCopyAddress = async () => {
@@ -120,7 +134,7 @@ export default function ContactSection() {
           <div className="star-divider mx-auto" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'} gap-6 sm:gap-8 ${isMobile ? 'items-center' : 'items-start'}`}>
           {/* Map - 모바일에서 더 크게 */}
           <div
             ref={mapContainerRef}

@@ -693,3 +693,10 @@
 - [x] client/public/favicon.ico로 파비콘 파일 적용
 - [x] 브라우저 탭에 새로운 파비콘 표시 확인
 - [x] 최종 테스트 및 체크포인트 준비
+
+## Phase 98: 지도 높이 동적 계산 (2026-05-13)
+- [x] ContactSection.tsx에 useRef와 useEffect 추가
+- [x] ResizeObserver로 오른쪽 정보 패널 높이 감시
+- [x] 지도 높이를 정보 패널 높이에 동적으로 맞추기
+- [ ] PC와 모바일 모두에서 여백 없이 정렬 확인
+- [ ] 최종 테스트 및 체크포인트 저장

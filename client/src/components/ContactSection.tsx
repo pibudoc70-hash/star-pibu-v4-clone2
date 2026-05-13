@@ -5,7 +5,7 @@
  * 모바일 최적화: 지도 높이 확대, 주소 복사 버튼, 레이아웃 개선
  */
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MapPin, Phone, Clock, Train, Car, MessageCircle, Calendar, Navigation, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
@@ -15,6 +15,36 @@ export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const infoPanelRef = useRef<HTMLDivElement>(null);
+  const [mapHeight, setMapHeight] = useState("620px");
+
+  // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산
+  useEffect(() => {
+    const updateMapHeight = () => {
+      if (infoPanelRef.current) {
+        const height = infoPanelRef.current.offsetHeight;
+        setMapHeight(`${height}px`);
+      }
+    };
+
+    // 초기 계산
+    updateMapHeight();
+
+    // ResizeObserver로 정보 패널 높이 변화 감시
+    const observer = new ResizeObserver(updateMapHeight);
+    if (infoPanelRef.current) {
+      observer.observe(infoPanelRef.current);
+    }
+
+    // 윈도우 리사이즈 시에도 업데이트
+    window.addEventListener("resize", updateMapHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateMapHeight);
+    };
+  }, []);
 
   // 주소 복사
   const handleCopyAddress = async () => {
@@ -80,8 +110,9 @@ export default function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
           {/* Map - 모바일에서 더 크게 */}
           <div
+            ref={mapContainerRef}
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
-            style={{ display: "flex", flexDirection: "column", height: "620px" }}
+            style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
             aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
           >
 <MapView
@@ -145,7 +176,11 @@ export default function ContactSection() {
           </div>
 
           {/* Info */}
-          <div className="reveal-right lg:col-span-2 flex flex-col gap-4 sm:gap-5" style={{ transitionDelay: "0.15s" }}>
+          <div
+            ref={infoPanelRef}
+            className="reveal-right lg:col-span-2 flex flex-col gap-4 sm:gap-5"
+            style={{ transitionDelay: "0.15s" }}
+          >
             {/* Address + 복사 버튼 */}
             <div className="p-4 sm:p-5 rounded-xl" style={{ background: "white" }}>
               <div className="flex items-start gap-3">

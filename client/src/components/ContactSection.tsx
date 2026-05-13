@@ -134,7 +134,7 @@ export default function ContactSection() {
           <div className="star-divider mx-auto" />
         </div>
 
-        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'} gap-6 sm:gap-8 ${isMobile ? 'items-center' : 'items-start'}`}>
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-5'} gap-6 sm:gap-8 ${isMobile ? 'items-center' : 'items-stretch'}`}>
           {/* Map - 모바일에서 더 크게 */}
           <div
             ref={mapContainerRef}
@@ -218,7 +218,7 @@ export default function ContactSection() {
           >
             {/* Address + 복사 버튼 */}
             <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-start gap-3">
+              <div className="flex items-stretch gap-3">
                 <MapPin size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>{labels.address}</p>
@@ -270,7 +270,7 @@ export default function ContactSection() {
 
             {/* Hours */}
             <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-start gap-3">
+              <div className="flex items-stretch gap-3">
                 <Clock size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div className="flex-1">
                   <p className="font-bold text-sm mb-3" style={{ color: "#1F2937" }}>{labels.hours}</p>
@@ -296,7 +296,7 @@ export default function ContactSection() {
 
             {/* Transit */}
             <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-start gap-3">
+              <div className="flex items-stretch gap-3">
                 <Train size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div>
                   <p className="font-bold text-sm mb-2" style={{ color: "#1F2937" }}>{labels.transit}</p>
@@ -305,7 +305,7 @@ export default function ContactSection() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 mt-3">
+              <div className="flex items-stretch gap-3 mt-3">
                 <Car size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
                 <div>
                   <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>{labels.parking}</p>

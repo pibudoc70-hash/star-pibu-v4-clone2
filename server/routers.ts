@@ -178,6 +178,12 @@ export const appRouter = router({
         notes: z.string().max(1000).optional(),
       }))
       .mutation(async ({ input }) => {
+        // 휴대폰번호 형식 검증
+        const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
+        if (!phoneRegex.test(input.phone)) {
+          throw new Error("올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 형식)");
+        }
+
         // OTP 재검증 (이미 verified=1인 코드도 허용 - 같은 세션)
         const ok = await verifyGuestOtp(input.phone, input.otpCode);
         if (!ok) {

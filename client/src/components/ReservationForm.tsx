@@ -72,12 +72,14 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   const isAvailableDate = (dateStr: string): boolean => {
     if (!dateStr) return false;
     
-    // 날짜 문자열을 YYYY-MM-DD 형식으로 파싱 (시간대 문제 해결)
+    // 날짜 문자열을 YYYY-MM-DD 형식으로 파싱
     const [year, month, day] = dateStr.split('-').map(Number);
     const date = new Date(year, month - 1, day);
     
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // 한국 시간대 기준 오늘 날짜 계산
+    const now = new Date();
+    const koreaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+    const today = new Date(koreaTime.getFullYear(), koreaTime.getMonth(), koreaTime.getDate());
     
     // 당일 예약 불가 - 내일 이후만 예약 가능
     const tomorrow = new Date(today);

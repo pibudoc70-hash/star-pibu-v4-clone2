@@ -294,12 +294,6 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
       toast.error("연락처를 입력해주세요.");
       return;
     }
-    // 휴대폰 번호 형식 검증
-    const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
-    if (!phoneRegex.test(reservationForm.phone)) {
-      toast.error("올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 형식)");
-      return;
-    }
 
     await createReservationMutation.mutateAsync({
       patientName: reservationForm.patientName,
@@ -322,7 +316,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     // 휴대폰 번호 형식 검증
     const phoneRegex = /^01[0-9]-?\d{3,4}-?\d{4}$/;
     if (!phoneRegex.test(guestForm.phone)) {
-      toast.error("올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 형식)");
+      toast.error("올바른 휴대폰 번호 형식입니다. (010-1234-5678 형식)");
       return;
     }
     await sendOtpMutation.mutateAsync({ phone: guestForm.phone });

@@ -345,6 +345,12 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
       toast.error("희망 날짜를 선택해주세요.");
       return;
     }
+    // 휴대폰번호 형식 검증
+    const phoneRegex = /^01[0-9]-\d{3,4}-\d{4}$|^01[0-9]\d{7,8}$/;
+    if (!phoneRegex.test(guestForm.phone)) {
+      toast.error("올바른 휴대폰 번호를 입력해주세요. (010-1234-5678 또는 01012345678 형식)");
+      return;
+    }
 
     await createGuestReservationMutation.mutateAsync({
       phone: guestForm.phone,

@@ -1249,15 +1249,15 @@ export default function AdminDashboard() {
                                     className="px-2 py-1 rounded-lg border border-[#E5E7EB] text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
                                     style={{ color: statusConfig.color }}
                                   >
-                                    <option value="pending">\ub300\uae30 \uc911</option>
-                                    <option value="confirmed">\ud655\uc815</option>
-                                    <option value="completed">\uc644\ub8cc</option>
-                                    <option value="cancelled">\ucde8\uc18c\ub428</option>
+                                    <option value="pending">대기 중</option>
+                                    <option value="confirmed">확정</option>
+                                    <option value="completed">완료</option>
+                                    <option value="cancelled">취소됨</option>
                                   </select>
                                   <button
                                     onClick={() => setExpandedReservationId(isExpanded ? null : reservation.id)}
                                     className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
-                                    title="\uba54\ubaa8 \ucd94\uac00"
+                                    title="메모 추가"
                                   >
                                     {isExpanded ? <ChevronUp size={16} className="text-[#6B7280]" /> : <ChevronDown size={16} className="text-[#6B7280]" />}
                                   </button>
@@ -1268,17 +1268,17 @@ export default function AdminDashboard() {
                                   <td colSpan={8} className="px-6 py-4">
                                     <div className="space-y-3">
                                       <div>
-                                        <label className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">\uad00\ub9ac\uc790 \uba54\ubaa8</label>
+                                        <label className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">관리자 메모</label>
                                         <textarea
                                           value={reservationNotes[reservation.id] || reservation.adminNote || ""}
                                           onChange={(e) => handleAdminNoteChange(reservation.id, e.target.value)}
-                                          placeholder="\uc608\uc57d\uc790\ub97c \uc704\ud55c \uba54\ubaa8\ub97c \ub0a8\uae30\uc138\uc694"
+                                          placeholder="예약자를 위한 메모를 남기세요"
                                           className="w-full px-3 py-2 rounded-lg border border-[#E5E7EB] text-xs focus:outline-none focus:ring-2 focus:ring-[#4A6FA5] resize-none"
                                           rows={3}
                                         />
                                       </div>
                                       <div className="text-xs text-[#9CA3AF]">
-                                        \uba54\ubaa8 \ub0b4\uc6a9: {(reservationNotes[reservation.id] || reservation.adminNote || "").length}/500
+                                        메모 내용: {(reservationNotes[reservation.id] || reservation.adminNote || "").length}/500
                                       </div>
                                     </div>
                                   </td>

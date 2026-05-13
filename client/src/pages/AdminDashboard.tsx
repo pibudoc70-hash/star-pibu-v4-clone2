@@ -3,7 +3,7 @@
  * - 회원 관리 탭: 회원 목록, 역할 변경
  * - 예약 관리 탭: 예약 목록, 상태 변경
  */
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -1225,8 +1225,8 @@ export default function AdminDashboard() {
                           const statusConfig = STATUS_CONFIG[reservation.status as ReservationStatus];
                           const isExpanded = expandedReservationId === reservation.id;
                           return (
-                            <>
-                              <tr key={reservation.id} className="hover:bg-[#F9FAFB] transition-colors">
+                            <React.Fragment key={reservation.id}>
+                              <tr className="hover:bg-[#F9FAFB] transition-colors">
                                 <td className="px-6 py-4 text-[#6B7280] text-xs">{new Date(reservation.createdAt).toLocaleString("ko-KR")}</td>
                                 <td className="px-6 py-4 font-medium text-[#1F2937]">{reservation.patientName}</td>
                                 <td className="px-6 py-4 text-[#6B7280] text-xs">{reservation.phone}</td>
@@ -1284,7 +1284,7 @@ export default function AdminDashboard() {
                                   </td>
                                 </tr>
                               )}
-                            </>
+                            </React.Fragment>
                           );
                         })}
                       </tbody>

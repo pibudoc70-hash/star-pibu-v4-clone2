@@ -82,7 +82,7 @@ export default function FloatingCTA() {
             {labels.kakao}
           </a>
           <a
-            href="https://booking.naver.com/booking/13/bizes/1122956"
+            href="https://booking.naver.com/booking/13/bizes/209080"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold text-white"

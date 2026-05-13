@@ -76,8 +76,10 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // 당일 예약 불가
-    if (date <= today) return false;
+    // 당일 예약 불가 - 내일 이후만 예약 가능
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    if (date < tomorrow) return false;
     
     // 공휴일 확인
     if (HOLIDAYS.includes(dateStr)) return false;

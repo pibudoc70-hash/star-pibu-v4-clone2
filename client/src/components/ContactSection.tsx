@@ -33,8 +33,7 @@ export default function ContactSection() {
 
       // PC에서만 정보 패널 높이에 맞춤
       if (!isCurrentlyMobile && infoPanelRef.current) {
-        const height = infoPanelRef.current.offsetHeight;
-        setMapHeight(`${height}px`);
+        const height = infoPanelRef.current.offsetHeight;setMapHeight(`${height}px`);
       } else if (isCurrentlyMobile) {
         // 모바일에서는 고정 높이 사용
         setMapHeight("400px");
@@ -50,14 +49,14 @@ export default function ContactSection() {
       }
     };
 
-    // 초기 계산 (약간의 지연을 두어 DOM 렌더링 완료 후 높이 측정)
-    setTimeout(updateMapHeight, 100);
+    // 초기 계산 (DOM 렌더링 완료 후 높이 측정)
+    const initTimer = setTimeout(updateMapHeight, 200);
+    const initTimer2 = setTimeout(updateMapHeight, 500);
 
     // ResizeObserver로 정보 패널 높이 변화 감시 (PC에서만)
     const observer = new ResizeObserver(() => {
       if (!isMobile && infoPanelRef.current) {
-        const height = infoPanelRef.current.offsetHeight;
-        setMapHeight(`${height}px`);
+        const height = infoPanelRef.current.offsetHeight;setMapHeight(`${height}px`);
       }
     });
     if (infoPanelRef.current) {
@@ -70,6 +69,8 @@ export default function ContactSection() {
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", updateMapHeight);
+      clearTimeout(initTimer);
+      clearTimeout(initTimer2);
     };
   }, [isMobile]);
 
@@ -149,6 +150,9 @@ export default function ContactSection() {
               onMapReady={(map) => {
                 // 지도 인스턴스 저장 (나중에 중심 좌표 유지용)
                 mapInstanceRef.current = map;
+                
+                // 디버그: 지도 컨테이너 크기 확인
+                if (mapContainerRef.current) {}
 
                 // 지도 중심 및 줌 설정
                 map.setCenter(STAR_LOCATION);

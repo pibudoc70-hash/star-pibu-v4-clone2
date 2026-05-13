@@ -50,8 +50,8 @@ export default function ContactSection() {
       }
     };
 
-    // 초기 계산
-    updateMapHeight();
+    // 초기 계산 (약간의 지연을 두어 DOM 렌더링 완료 후 높이 측정)
+    setTimeout(updateMapHeight, 100);
 
     // ResizeObserver로 정보 패널 높이 변화 감시 (PC에서만)
     const observer = new ResizeObserver(() => {

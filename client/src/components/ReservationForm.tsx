@@ -516,22 +516,36 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
               <Phone size={16} className="inline mr-2" />
               휴대폰 번호 *
             </label>
-            <div className="flex gap-2">
-              <input
-                type="tel"
-                value={guestForm.phone}
-                onChange={(e) => setGuestForm({ ...guestForm, phone: e.target.value })}
-                placeholder="010-1234-5678"
-                className="flex-1 px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
-              />
-              <button
-                type="submit"
-                disabled={sendOtpMutation.isPending}
-                className="px-6 py-2 rounded-lg font-semibold text-white transition-colors"
-                style={{ background: sendOtpMutation.isPending ? "#D1D5DB" : "#4A6FA5" }}
-              >
-                {sendOtpMutation.isPending ? "발송 중..." : "인증번호 발송"}
-              </button>
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <input
+                  type="tel"
+                  value={guestForm.phone}
+                  onChange={(e) => setGuestForm({ ...guestForm, phone: e.target.value })}
+                  placeholder="010-1234-5678"
+                  className={`flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                    guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone)
+                      ? 'border-[#EF4444] focus:ring-[#EF4444]'
+                      : 'border-[#E5E7EB] focus:ring-[#4A6FA5]'
+                  }`}
+                />
+                <button
+                  type="submit"
+                  disabled={sendOtpMutation.isPending || !!(guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone))}
+                  className="px-6 py-2 rounded-lg font-semibold text-white transition-colors"
+                  style={{
+                    background:
+                      sendOtpMutation.isPending || (guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone))
+                        ? "#D1D5DB"
+                        : "#4A6FA5",
+                  }}
+                >
+                  {sendOtpMutation.isPending ? "발송 중..." : "인증번호 발송"}
+                </button>
+              </div>
+              {guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone) && (
+                <p className="text-sm text-[#EF4444]">올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 형식)</p>
+              )}
             </div>
           </div>
         </form>
@@ -585,6 +599,29 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           <div className="bg-[#DCFCE7] border border-[#86EFAC] rounded-lg p-4 flex gap-3">
             <AlertCircle size={20} className="text-[#15803D] flex-shrink-0" />
             <p className="text-sm text-[#166534]">인증되었습니다. 예약 정보를 입력해주세요.</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-[#1F2937] mb-2">휴대폰 번호 *</label>
+            <div className="space-y-2">
+              <input
+                type="tel"
+                value={guestForm.phone}
+                onChange={(e) => setGuestForm({ ...guestForm, phone: e.target.value })}
+                placeholder="010-1234-5678"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                  guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone)
+                    ? 'border-[#EF4444] focus:ring-[#EF4444]'
+                    : 'border-[#E5E7EB] focus:ring-[#4A6FA5]'
+                }`}
+              />
+              {guestForm.phone && !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone) && (
+                <p className="text-sm text-[#EF4444]">올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 형식)</p>
+              )}
+              {guestForm.phone && /^01[0-9]-?\d{3,4}-?\d{4}$/.test(guestForm.phone) && (
+                <p className="text-sm text-[#16A34A]">올바른 휴대폰 번호 형식입니다.</p>
+              )}
+            </div>
           </div>
 
           <div>

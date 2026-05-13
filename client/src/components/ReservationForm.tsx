@@ -13,8 +13,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   const { user } = useAuth();
   const isMobile = useIsMobile();
   // 모바일에서는 인증 단계 건너뛰고 바로 confirm 단계로
-  const initialStep = isMobile && !user ? "confirm" : "info";
-  const [step, setStep] = useState<"info" | "verify" | "confirm">(initialStep);
+  const [step, setStep] = useState<"info" | "verify" | "confirm">("confirm");
 
   // 회원 예약 폼 상태
   const [reservationForm, setReservationForm] = useState({
@@ -504,9 +503,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   // 비회원 예약 폼 렌더링
   return (
     <div className="space-y-6">
-      {/* Step 1: OTP 발송 */}
+      {/* Step 1: OTP 발송 - 숨김 처리 */}
       {step === "info" && (
-        <form onSubmit={handleSendOtp} className="space-y-6">
+        <form onSubmit={handleSendOtp} className="space-y-6" style={{ display: 'none' }}>
           <div className="bg-[#FEF3C7] border border-[#FCD34D] rounded-lg p-4 flex gap-3">
             <AlertCircle size={20} className="text-[#D97706] flex-shrink-0" />
             <p className="text-sm text-[#92400E]">비회원으로 예약하시려면 휴대폰 인증이 필요합니다.</p>
@@ -538,9 +537,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         </form>
       )}
 
-      {/* Step 2: OTP 검증 */}
+      {/* Step 2: OTP 검증 - 숨김 처리 */}
       {step === "verify" && (
-        <form onSubmit={handleVerifyOtp} className="space-y-6">
+        <form onSubmit={handleVerifyOtp} className="space-y-6" style={{ display: 'none' }}>
           <div className="bg-[#DBEAFE] border border-[#93C5FD] rounded-lg p-4 flex gap-3">
             <AlertCircle size={20} className="text-[#0284C7] flex-shrink-0" />
             <p className="text-sm text-[#0C4A6E]">휴대폰으로 받은 인증번호를 입력해주세요.</p>
@@ -580,7 +579,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         </form>
       )}
 
-      {/* Step 3: 예약 정보 입력 */}
+      {/* Step 3: 예약 정보 입력 - 항상 표시 */}
       {step === "confirm" && (
         <form onSubmit={handleGuestReservation} className="space-y-6">
           <div className="bg-[#DCFCE7] border border-[#86EFAC] rounded-lg p-4 flex gap-3">

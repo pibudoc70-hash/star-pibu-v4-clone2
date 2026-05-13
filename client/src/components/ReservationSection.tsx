@@ -32,10 +32,16 @@ export default function ReservationSection() {
                   <CheckCircle size={32} style={{ color: "#059669" }} />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-[#1F2937] mb-2">예약이 신청되었습니다!</h3>
-              <p className="text-[#6B7280] mb-6">
+              <h3 className="text-2xl font-bold text-[#1F2937] mb-4">예약 신청이 완료되었습니다!</h3>
+              <p className="text-[#6B7280] mb-4">
                 예약 신청이 완료되었습니다. 빠른 시간 내에 전화로 연락드리겠습니다.
               </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
+                <p className="text-sm text-[#1F2937] font-semibold mb-2">📋 예약 안내</p>
+                <p className="text-sm text-[#6B7280] leading-relaxed">
+                  현재 상태는 <span className="font-semibold text-[#1F2937]">예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-semibold text-[#059669]">확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.
+                </p>
+              </div>
               <button
                 onClick={() => setShowSuccess(false)}
                 className="px-6 py-2 rounded-lg font-semibold text-white transition-colors"

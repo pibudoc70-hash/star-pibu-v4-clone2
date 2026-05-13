@@ -84,6 +84,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     // 당일 예약 불가 - 내일 이후만 예약 가능
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log('Date Check:', { dateStr, date: date.toDateString(), today: today.toDateString(), tomorrow: tomorrow.toDateString(), isValid: date >= tomorrow });
     if (date < tomorrow) return false;
     
     // 공휴일 확인
@@ -444,7 +445,12 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
                   toast.error("예약 불가능한 날짜입니다. (당일, 일요일, 공휴일 제외)");
                 }
               }}
-              min={new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+              min={(() => {
+                const now = new Date();
+                const koreaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+                const tomorrow = new Date(koreaTime.getFullYear(), koreaTime.getMonth(), koreaTime.getDate() + 1);
+                return tomorrow.toISOString().split('T')[0];
+              })()}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
             />
           </div>

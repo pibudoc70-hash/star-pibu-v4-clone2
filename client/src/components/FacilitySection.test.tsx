@@ -1,6 +1,8 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
+import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
 import FacilitySection from "./FacilitySection";
 import { LangProvider } from "@/contexts/LangContext";
 

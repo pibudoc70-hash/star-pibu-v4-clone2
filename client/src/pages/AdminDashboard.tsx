@@ -1203,7 +1203,7 @@ export default function AdminDashboard() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-[#F3F4F6]" style={{ background: "#F9FAFB" }}>
-                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">ID</th>
+                          <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">예약 등록 일시</th>
                           <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">환자명</th>
                           <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">연락처</th>
                           <th className="text-left px-6 py-3 text-xs font-semibold text-[#6B7280] uppercase tracking-wider">시술명</th>
@@ -1218,7 +1218,7 @@ export default function AdminDashboard() {
                           const statusConfig = STATUS_CONFIG[reservation.status as ReservationStatus];
                           return (
                             <tr key={reservation.id} className="hover:bg-[#F9FAFB] transition-colors">
-                              <td className="px-6 py-4 text-[#9CA3AF] text-xs font-mono">#{reservation.id}</td>
+                              <td className="px-6 py-4 text-[#6B7280] text-xs">{new Date(reservation.createdAt).toLocaleString("ko-KR")}</td>
                               <td className="px-6 py-4 font-medium text-[#1F2937]">{reservation.patientName}</td>
                               <td className="px-6 py-4 text-[#6B7280] text-xs">{reservation.phone}</td>
                               <td className="px-6 py-4 text-[#6B7280] text-xs">{reservation.treatmentName}</td>

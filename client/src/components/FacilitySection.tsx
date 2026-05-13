@@ -3,7 +3,7 @@
  * 디자인: PC(md 이상) - 3개×2행 가로 긴 그리드, 모바일(md 미만) - 슬라이드 캐러셀
  * 기능: 반응형 레이아웃 + 자동 슬라이드(모바일만) + 터치 스와이프(모바일만) + 라이트박스
  */
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";

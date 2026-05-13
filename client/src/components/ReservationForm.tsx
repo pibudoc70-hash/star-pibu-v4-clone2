@@ -412,7 +412,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
             <input
               type="tel"
               value={reservationForm.phone}
-              onChange={(e) => setReservationForm({ ...reservationForm, phone: e.target.value })}
+              onChange={(e) => setReservationForm({ ...reservationForm, phone: formatPhoneNumber(e.target.value) })}
               placeholder="010-1234-5678"
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
             />

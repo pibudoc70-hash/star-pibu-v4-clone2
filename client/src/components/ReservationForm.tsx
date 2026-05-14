@@ -86,8 +86,11 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   ];
 
   // 예약 가능한 날짜인지 확인
-  // unavailableSlots 쿼리
-  const { data: unavailableSlotsData } = trpc.admin.unavailableSlots.list.useQuery({ date: undefined });
+  // unavailableSlots 쿼리 (공개 사용자는 비활성화)
+  const { data: unavailableSlotsData } = trpc.admin.unavailableSlots.list.useQuery(
+    { date: undefined },
+    { enabled: false } // 공개 페이지에서는 비활성화
+  );
   const isAvailableDate = (dateStr: string): boolean => {
     if (!dateStr) return false;
     

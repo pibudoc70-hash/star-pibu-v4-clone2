@@ -12,7 +12,19 @@ import FloatingCTA from "@/components/FloatingCTA";
 export default function Equipment2() {
   // 페이지 제목 설정 (SEO 최적화)
   useEffect(() => {
-    document.title = "시술·장비소개2 | 스타피부과";
+    document.title = "시술·장비소개 | 부산 스타피부과 울쎄라 써마지 리프팅 색소질환 레이저";
+    
+    // 메타 설명 동적 설정
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', '부산 스타피부과의 다양한 시술과 장비를 소개합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 레이저 시술 등 최신 의료 장비와 프리미엄 시술 프로그램을 제공합니다.');
+    }
+    
+    // 메타 키워드 동적 설정
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', '부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 피부시술, 장비소개, 부산리프팅, 피부관리');
+    }
   }, []);
 
   return (

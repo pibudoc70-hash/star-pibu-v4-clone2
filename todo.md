@@ -743,3 +743,9 @@
 - [ ] 시술별 구조화된 데이터(JSON-LD) 추가
 - [ ] 네이버 검색 최적화 (h1, h2 태그 구조 개선)
 - [x] 시술 페이지 메타 설명 및 키워드 추가
+
+## Phase 104: 검색 엔진 최적화 - Sitemap & Robots (2026-05-14)
+- [x] robots.txt 파일 생성 (client/public/)
+- [x] sitemap.xml 파일 생성 (client/public/)
+- [x] Express 서버에 정적 파일 제공 설정 (이미 구성)
+- [x] 검색 엔진 최적화 완료 및 테스트

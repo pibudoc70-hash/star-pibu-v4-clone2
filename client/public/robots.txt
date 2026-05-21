@@ -1,6 +1,35 @@
+# robots.txt for Star Dermatology Clinic
+# 검색 엔진 크롤러를 위한 지시사항
+
+# 모든 검색 엔진 크롤러 허용
 User-agent: *
 Allow: /
+
+# 특정 경로 제외
 Disallow: /admin
 Disallow: /api
+Disallow: /_next
+Disallow: /.git
+Disallow: /node_modules
 
+# Sitemap 위치
+Sitemap: https://star-pibu.com/sitemap.xml
 Sitemap: https://starpibu-qdq7tysk.manus.space/sitemap.xml
+
+# 크롤링 속도 제한
+Crawl-delay: 1
+
+# Google 특정 설정
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Naver 특정 설정
+User-agent: Yeti
+Allow: /
+Crawl-delay: 1
+
+# Bing 특정 설정
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

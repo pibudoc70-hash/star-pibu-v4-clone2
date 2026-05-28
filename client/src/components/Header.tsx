@@ -30,7 +30,7 @@ export default function Header() {
 
   const navItems = [
     { label: t.nav.home,         href: "#home",       icon: Home },
-    { label: "이벤트",            href: "#events",     icon: Calendar },
+    { label: "EVENT",            href: "#events",     icon: Calendar },
     { label: t.nav.doctors,      href: "#doctors",    icon: Users },
     { label: t.nav.treatments,   href: "#treatments", icon: Stethoscope },
     { label: t.nav.about,        href: "/about",      icon: Info },

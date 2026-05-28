@@ -760,11 +760,11 @@
 - [ ] Equipment2 관리 기능 테스트
 
 ## Phase 105: Equipment2 SEO 최적화 - 독립 웹페이지 구현 (2026-05-14)
-- [ ] 데이터베이스에 treatments 테이블에 slug 필드 추가
-- [ ] 관리자 신규 등록 페이지 생성 (/admin/equipment2/new)
-- [ ] 시술 상세 페이지 생성 (/equipment2/:slug)
-- [ ] 동적 SEO 메타 태그 설정 (각 시술별)
-- [ ] sitemap.xml 자동 업데이트 (v2 시술 포함)
-- [ ] 관리자 UI 업데이트 (모달 제거, 상세 페이지 링크 추가)
-- [ ] Equipment2 페이지 업데이트 (카드 클릭 시 상세 페이지 이동)
-- [ ] 테스트 및 최종 체크포인트
+- [x] 데이터베이스에 treatments 테이블에 slug 필드 추가
+- [x] 관리자 신규 등록 페이지 생성 (/admin/equipment2/new)
+- [x] 시술 상세 페이지 생성 (/equipment2/:slug)
+- [x] 동적 SEO 메타 태그 설정 (각 시술별)
+- [x] sitemap.xml 자동 업데이트 (v2 시술 포함)
+- [x] 관리자 UI 업데이트 (모달 제거, 상세 페이지 링크 추가)
+- [x] Equipment2 페이지 업데이트 (카드 클릭 시 상세 페이지 이동)
+- [x] 테스트 및 최종 체크포인트

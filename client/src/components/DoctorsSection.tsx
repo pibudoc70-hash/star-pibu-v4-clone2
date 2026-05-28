@@ -39,7 +39,7 @@ const doctors = [
   {
     id: 0,
     name: "조시형 원장",
-    nameEn: "Dr. JO SI-HYEONG",
+    nameEn: "Dr. JO SI-HYUNG",
     title: "피부과 전문의 · 의학박사",
     image: DR_JO_IMAGE,
     cardImage: DR_JO_CARD_IMAGE,

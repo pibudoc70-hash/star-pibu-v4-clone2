@@ -26,18 +26,76 @@ export default function Equipment2Detail() {
       if (found) {
         setTreatment(found);
         // 페이지 제목 설정
-        document.title = `${found.name} | 부산 스타피부과`;
+        document.title = `${found.name} | 부산 스타피부과 - 피부과 전문의 시술`;
         // 메타 설명 설정
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
-          metaDescription.setAttribute("content", found.desc);
+          metaDescription.setAttribute("content",
+            `부산 서면 스타피부과의 ${found.name} 시술 안내. ${found.desc || ''} 피부과 전문의가 직접 시술합니다. 온라인 예약 가능.`
+          );
         }
+        // 메타 키워드 설정
+        let metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (!metaKeywords) {
+          metaKeywords = document.createElement('meta');
+          metaKeywords.setAttribute('name', 'keywords');
+          document.head.appendChild(metaKeywords);
+        }
+        metaKeywords.setAttribute('content',
+          `${found.name}, ${found.nameEn || ''}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의, ${found.categoryId || '피부시술'}, 부산리프팅`
+        );
+        // OG 태그 설정
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', `${found.name} | 부산 스타피부과`);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute('content', `부산 서면 스타피부과의 ${found.name} 시술 안내. ${found.desc || ''} 피부과 전문의가 직접 시술합니다.`);
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', `https://www.star-pibu.com/equipment2/${slug}`);
+        // JSON-LD 구조화 데이터 추가
+        const existingLd = document.getElementById('treatment-jsonld');
+        if (existingLd) existingLd.remove();
+        const ldScript = document.createElement('script');
+        ldScript.id = 'treatment-jsonld';
+        ldScript.type = 'application/ld+json';
+        ldScript.text = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "MedicalProcedure",
+          "name": found.name,
+          "alternateName": found.nameEn || '',
+          "description": found.desc || '',
+          "procedureType": "https://schema.org/CosmeticProcedure",
+          "image": found.image || '',
+          "url": `https://www.star-pibu.com/equipment2/${slug}`,
+          "provider": {
+            "@type": "Physician",
+            "name": "스타피부과",
+            "url": "https://www.star-pibu.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "서면로 74 아이온시티빌딩 4층",
+              "addressLocality": "부산진구",
+              "addressRegion": "부산광역시",
+              "postalCode": "47252",
+              "addressCountry": "KR"
+            },
+            "telephone": "051-818-2300"
+          },
+          "bodyLocation": "피부",
+          "preparation": found.caution || '',
+          "followup": found.recovery || ''
+        });
+        document.head.appendChild(ldScript);
       } else {
         // 시술을 찾지 못한 경우
         setLocation("/equipment2");
       }
       setIsLoading(false);
     }
+    // 컴포넌트 언마운트 시 JSON-LD 제거
+    return () => {
+      const ldScript = document.getElementById('treatment-jsonld');
+      if (ldScript) ldScript.remove();
+    };
   }, [allTreatments, slug, setLocation]);
 
   if (isLoading) {

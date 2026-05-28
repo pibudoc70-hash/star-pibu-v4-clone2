@@ -427,7 +427,7 @@ export default function TreatmentsEquipmentSectionV2() {
             className="mb-4"
             style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
           >
-            관리자 등록 시술 프로그램
+            부산 서면 스타피부과 시술 프로그램
           </h2>
           <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal" style={{ color: "#d1ab67", paddingTop: "7px" }}>
             <span className="sm:hidden" style={{ fontSize: "18px" }}>

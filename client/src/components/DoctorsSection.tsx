@@ -453,7 +453,7 @@ export default function DoctorsSection() {
                       <p key={idx} style={{ margin: '0 0 1em 0', whiteSpace: 'normal', wordBreak: 'break-word' }}>{para}</p>
                     ))
                   ) : (
-                    doctor.intro.split('\n').map((line, idx, arr) => (
+                    (doctor.intro as string).split('\n').map((line: string, idx: number, arr: string[]) => (
                       <React.Fragment key={idx}>
                         <p style={{ margin: '0 0 0.5em 0', whiteSpace: 'pre-wrap' }}>{line}</p>
                         {idx < arr.length - 1 && <div style={{ height: '0.5em' }} />}

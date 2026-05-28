@@ -34,6 +34,8 @@ export default function Equipment2() {
 
       {/* Main Content */}
       <main className="pt-20">
+        {/* SEO 용 h1 태그 - 시각적으로 숨김으로써 접근성 유지 */}
+        <h1 className="sr-only">부산 서면 스타피부과 시술 안내 - 울쎄라 써마지 리프팅 색소질환 레이저</h1>
         {/* Treatments + Equipment Section 2 - DB 연동 (관리자 등록) */}
         <TreatmentsEquipmentSectionV2 />
 

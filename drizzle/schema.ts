@@ -128,6 +128,7 @@ export const treatments = mysqlTable("treatments", {
   steps: text("steps").default("[]"), // JSON 배열: 치료 단계
   youtubeUrl: text("youtubeUrl"), // YouTube 영상 URL
   modalImage: text("modalImage"), // 모달 이미지 (유튜브 대신)
+  slug: varchar("slug", { length: 200 }).unique(), // URL-friendly 슬러그 (예: ulthera, thermage)
   best: mysqlEnum("best", ["0", "1"]).default("0"), // Best 시술 여부
   section: mysqlEnum("section", ["v1", "v2"]).notNull().default("v1"), // v1: 기존 시술·장비소개, v2: 새로운 시술·장비소개 2
   sortOrder: int("sortOrder").notNull().default(0),

@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `treatments` ADD `slug` varchar(200);\nALTER TABLE `treatments` ADD CONSTRAINT `treatments_slug_unique` UNIQUE(`slug`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute ALTER TABLE `treatments` ADD `slug` varchar(200);\nALTER TABLE `treatments` ADD CONSTRAINT `treatments_slug_unique` UNIQUE(`slug`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2844
+}

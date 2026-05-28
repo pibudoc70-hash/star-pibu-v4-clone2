@@ -19,6 +19,7 @@ const Privacy = lazy(() => import("@/pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("@/pages/NonCoveredGuide"));
 const About = lazy(() => import("@/pages/About"));
 const Equipment2 = lazy(() => import("@/pages/Equipment2"));
+const Equipment2Detail = lazy(() => import("@/pages/Equipment2Detail"));
 // 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
 
 // 로드 중 로딩 스폰너
@@ -41,6 +42,7 @@ function Router() {
         <Route path={"/admin/youtube"} component={AdminYouTube} />
         <Route path={"/my-reservations"} component={MyReservations} />
         <Route path={"/equipment2"} component={Equipment2} />
+        <Route path={"/equipment2/:slug"} component={Equipment2Detail} />
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/non-covered"} component={NonCoveredGuide} />
         <Route path={"/about"} component={About} />

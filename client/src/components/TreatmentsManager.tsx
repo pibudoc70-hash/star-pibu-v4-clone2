@@ -15,6 +15,7 @@ interface TreatmentForm {
   desc: string;
   time: string;
   recovery: string;
+  slug?: string;
   badge?: string;
   badgeColor?: string;
   image?: string;
@@ -59,6 +60,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
     desc: "",
     time: "",
     recovery: "",
+    slug: "",
     badge: "",
     badgeColor: "#4A6FA5",
     image: "",
@@ -342,6 +344,21 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                     placeholder="예: 당일 일상"
                   />
                 </div>
+              </div>
+
+              {/* URL 슬러그 */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  URL 슬러그 (선택사항)
+                </label>
+                <input
+                  type="text"
+                  value={form.slug || ""}
+                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="예: ulthera-lifting (영문, 하이픈 사용)"
+                />
+                <p className="text-xs text-gray-500 mt-1">예약 페이지 URL: /equipment2/ulthera-lifting</p>
               </div>
 
               {/* 배지 */}

@@ -50,6 +50,7 @@ interface TreatmentsManagerProps {
 
 export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerProps) {
   const [showForm, setShowForm] = useState(false);
+  const isV2 = section === "v2";
   const [editingId, setEditingId] = useState<number | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
   const [form, setForm] = useState<TreatmentForm>({
@@ -233,7 +234,13 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
           <p className="text-sm text-gray-600 mt-1">시술 및 장비 정보를 추가, 수정, 삭제합니다</p>
         </div>
         <button
-          onClick={() => setShowForm(true)}
+          onClick={() => {
+            if (isV2) {
+              window.location.href = '/admin/equipment2/new';
+            } else {
+              setShowForm(true);
+            }
+          }}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           <Plus size={20} />

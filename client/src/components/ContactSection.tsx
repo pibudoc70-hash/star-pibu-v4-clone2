@@ -94,25 +94,26 @@ export default function ContactSection() {
   };
 
   // 진료시간 "휴진" 판별 (언어별)
-  const closedLabel = lang === "ja" ? "休診" : lang === "zh" ? "休诊" : "휴진";
+  const closedLabel = lang === "en" ? "Closed" : lang === "ja" ? "休診" : lang === "zh" ? "休诊" : "휴진";
 
   // 라벨 매핑
   const labels = {
-    locationInfo: lang === "ja" ? "アクセス・連絡先" : lang === "zh" ? "位置及联系方式" : "위치 및 연락정보",
-    address: lang === "ja" ? "住所" : lang === "zh" ? "地址" : "주소",
-    phone: lang === "ja" ? "電話" : lang === "zh" ? "电话" : "전화",
-    hours: lang === "ja" ? "診療時間" : lang === "zh" ? "诊疗时间" : "진료시간",
-    hoursNote: lang === "ja" ? "※ 平日昼休み 13:00–14:00 · 土曜日は昼休みなし" : lang === "zh" ? "※ 平日午休 13:00–14:00 · 周六不设午休" : "※ 평일 점심시간 13:00–14:00 · 토요일 점심시간 없이 진료",
-    transit: lang === "ja" ? "交通" : lang === "zh" ? "交通" : "대중교통",
-    transitDesc: lang === "ja" ? "地下鉄 西面駅 5番・7番出口 徒歩2分" : lang === "zh" ? "地铁西面站 5号·7号出口 步行2分钟" : "지하철 서면역 5번·7번 출구 도보 2분",
-    parking: lang === "ja" ? "駐車場" : lang === "zh" ? "停车场" : "주차",
-    parkingDesc: lang === "ja" ? "アイオンシティビル内駐車場利用可" : lang === "zh" ? "爱恩城大厦内停车场可用" : "아이온시티 건물 내 주차 가능",
-    kakaoMap: lang === "ja" ? "カカオマップで経路検索" : lang === "zh" ? "Kakao地图导航" : "카카오맵 길찾기",
-    kakaoChat: lang === "ja" ? "カカオ相談" : lang === "zh" ? "KakaoTalk咨询" : "카카오 상담",
-    smsConsult: lang === "ja" ? "SMS相談" : lang === "zh" ? "短信咨询" : "문자 상담",
-    naverMap: lang === "ja" ? "Naver地図" : lang === "zh" ? "Naver地图" : "네이버 지도",
-    copyAddress: lang === "ja" ? "住所をコピー" : lang === "zh" ? "复制地址" : "주소 복사",
-    copied: lang === "ja" ? "コピーしました！" : lang === "zh" ? "已复制！" : "복사됨!",
+    locationInfo: lang === "en" ? t.access.label : lang === "ja" ? "アクセス・連絡先" : lang === "zh" ? "位置及联系方式" : "위치 및 연락정보",
+    sectionTitle: lang === "en" ? t.access.title : lang === "ja" ? "アクセス" : lang === "zh" ? "来院のご案内" : "찾아오시는 길",
+    address: lang === "en" ? "Address" : lang === "ja" ? "住所" : lang === "zh" ? "地址" : "주소",
+    phone: lang === "en" ? "Phone" : lang === "ja" ? "電話" : lang === "zh" ? "电话" : "전화",
+    hours: lang === "en" ? "Clinic Hours" : lang === "ja" ? "診療時間" : lang === "zh" ? "诊疗时间" : "진료시간",
+    hoursNote: lang === "en" ? "※ Weekday lunch break 13:00–14:00 · No lunch break on Saturdays" : lang === "ja" ? "※ 平日昼休み 13:00–14:00 · 土曜日は昼休みなし" : lang === "zh" ? "※ 平日午休 13:00–14:00 · 周六不设午休" : "※ 평일 점심시간 13:00–14:00 · 토요일 점심시간 없이 진료",
+    transit: lang === "en" ? "Public Transit" : lang === "ja" ? "交通" : lang === "zh" ? "交通" : "대중교통",
+    transitDesc: lang === "en" ? t.access.subway : lang === "ja" ? "地下鉄 西面駅 5番・7番出口 徒歩2分" : lang === "zh" ? "地铁西面站 5号·7号出口 步行2分钟" : "지하철 서면역 5번·7번 출구 도보 2분",
+    parking: lang === "en" ? "Parking" : lang === "ja" ? "駐車場" : lang === "zh" ? "停车场" : "주차",
+    parkingDesc: lang === "en" ? t.access.parking : lang === "ja" ? "アイオンシティビル内駐車場利用可" : lang === "zh" ? "爱恩城大厦内停车场可用" : "아이온시티 건물 내 주차 가능",
+    kakaoMap: lang === "en" ? "Get Directions (Kakao Map)" : lang === "ja" ? "カカオマップで経路検索" : lang === "zh" ? "Kakao地图导航" : "카카오맵 길찾기",
+    kakaoChat: lang === "en" ? "KakaoTalk Chat" : lang === "ja" ? "カカオ相談" : lang === "zh" ? "KakaoTalk咨询" : "카카오 상담",
+    smsConsult: lang === "en" ? "SMS Consult" : lang === "ja" ? "SMS相談" : lang === "zh" ? "短信咨询" : "문자 상담",
+    naverMap: lang === "en" ? "Naver Map" : lang === "ja" ? "Naver地図" : lang === "zh" ? "Naver地图" : "네이버 지도",
+    copyAddress: lang === "en" ? "Copy Address" : lang === "ja" ? "住所をコピー" : lang === "zh" ? "复制地址" : "주소 복사",
+    copied: lang === "en" ? "Copied!" : lang === "ja" ? "コピーしました！" : lang === "zh" ? "已复制！" : "복사됨!",
   };
 
   return (
@@ -130,7 +131,7 @@ export default function ContactSection() {
             className="mb-4"
             style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
           >
-            찾아오시는 길
+            {labels.sectionTitle}
           </h2>
           <div className="star-divider mx-auto" />
         </div>

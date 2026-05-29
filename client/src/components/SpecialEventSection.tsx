@@ -83,7 +83,9 @@ export default function SpecialEventSection() {
           <div className="text-center mb-12">
             <p className="text-sm font-medium text-gold mb-2">FOR YOU</p>
             <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">SPECIAL EVENT</h2>
-            <p className="text-lg text-gold">로딩 중...</p>
+            <p className="text-lg text-gold">
+              {lang === "en" ? "Loading..." : lang === "ja" ? "読み込み中..." : lang === "zh" ? "加载中..." : "로딩 중..."}
+            </p>
           </div>
         </div>
       </section>
@@ -98,15 +100,23 @@ export default function SpecialEventSection() {
           <p className="text-sm font-medium text-gold mb-2">FOR YOU</p>
           <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">SPECIAL EVENT</h2>
           <p className="text-lg text-gold">
-            스타만의 특별한 가격으로,<br />
-            한 단계 높은 피부 관리를 시작해보세요.
+            {lang === "en" ? "Experience premium skin care at Star's exclusive prices." :
+             lang === "ja" ? "スターの特別価格で、ワンランク上のスキンケアを。" :
+             lang === "zh" ? "以STAR独家优惠价，享受顶级皮肤护理。" :
+             <>스타만의 특별한 가격으로,<br />한 단계 높은 피부 관리를 시작해보세요.</>
+            }
           </p>
         </div>
 
         {/* 이벤트 카드 그리드 */}
         {specialEvents.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-lg text-gray-600">진행중인 이벤트가 없습니다.</p>
+            <p className="text-lg text-gray-600">
+              {lang === "en" ? "No events currently available." :
+               lang === "ja" ? "現在開催中のイベントはございません。" :
+               lang === "zh" ? "目前没有进行中的活动。" :
+               "진행중인 이벤트가 없습니다."}
+            </p>
           </div>
         ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">

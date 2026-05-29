@@ -201,7 +201,7 @@ export default function DoctorsSection() {
           </h2>
 
           <p className="text-sm leading-snug sm:leading-normal" style={{ color: '#d1ab67', fontSize: '18px', marginTop: '13px', maxWidth: '577px', margin: '13px auto 0' }}>
-            {lang === "ko" ? <><span className="sm:hidden">피부의 격(格)이 바뀌는 순간,<br />전문의의 안목이 차이를 만듭니다.</span><span className="hidden sm:inline">피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.</span></> : lang === "ja" ? "皮膚構造を理解する専門医のみが安全な結果を作ります。" : "只有了解皮肤结构的专科医生才能带来安全的效果。"}
+            {lang === "ko" ? <><span className="sm:hidden">피부의 격(格)이 바뀌는 순간,<br />전문의의 안목이 차이를 만듭니다.</span><span className="hidden sm:inline">피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.</span></> : lang === "en" ? "Only a board-certified dermatologist's expertise makes the difference." : lang === "ja" ? "皮膚構造を理解する専門医のみが安全な結果を作ります。" : "只有了解皮肤结构的专科医生才能带来安全的效果。"}
           </p>
         </div>
 

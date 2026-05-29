@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
+import OptimizedImage from '@/components/OptimizedImage';
 
 interface YouTubeVideo {
   id: number;
@@ -70,10 +71,11 @@ export default function YouTubeSection() {
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`}
                       alt={video.title}
                       className="w-full h-full object-cover"
+                      usePicture={false}
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
                       }}
@@ -111,10 +113,11 @@ export default function YouTubeSection() {
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-[9/16] bg-gray-200 overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={`https://img.youtube.com/vi/${short.videoId}/maxresdefault.jpg`}
                       alt={short.title}
                       className="w-full h-full object-cover"
+                      usePicture={false}
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${short.videoId}/hqdefault.jpg`;
                       }}

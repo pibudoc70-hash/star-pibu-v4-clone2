@@ -258,7 +258,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               </h3>
               <button
                 onClick={resetForm}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-500 hover:text-gray-600"
               >
                 <X size={24} />
               </button>

@@ -1,5 +1,6 @@
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export default function About() {
   const { t } = useLang();
@@ -59,11 +60,12 @@ export default function About() {
             {/* 우측 이미지 영역 */}
             <div className="relative">
               <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg h-96 flex items-center justify-center overflow-hidden">
-                <img 
+                <OptimizedImage
                   id="about-section-image"
-                  src="/manus-storage/medical_team_53232402.jpg" 
+                  src="/manus-storage/medical_team_53232402.jpg"
                   alt="의료진"
                   className="w-full h-full object-cover"
+                  height={384}
                 />
               </div>
               <div className="absolute bottom-6 left-6 bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm font-semibold">

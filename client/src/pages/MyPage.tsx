@@ -282,7 +282,7 @@ export default function MyPage() {
                               {status.label}
                             </span>
                           </div>
-                          <span className="text-xs text-gray-400">#{res.id}</span>
+                          <span className="text-xs text-gray-500">#{res.id}</span>
                         </div>
 
                         <h3 className="font-bold text-base mb-2" style={{ color: "#0D2B4E" }}>{res.treatmentName}</h3>
@@ -306,7 +306,7 @@ export default function MyPage() {
                         )}
 
                         {res.notes && (
-                          <p className="text-xs text-gray-400 mb-3">요청사항: {res.notes}</p>
+                          <p className="text-xs text-gray-500 mb-3">요청사항: {res.notes}</p>
                         )}
 
                         {(res.status === "pending" || res.status === "confirmed") && (

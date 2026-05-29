@@ -449,7 +449,7 @@ function MemberInfoStep({ selectedTreatment, selectedDate, selectedTime, patient
         </div>
         <div>
           <label className="flex items-center gap-2 text-sm font-semibold mb-2.5" style={{ color: "#374151" }}>
-            <FileText size={14} style={{ color: "#4A9FA5" }} /> {L.notes} <span className="font-normal text-gray-400">{L.notesOptional}</span>
+            <FileText size={14} style={{ color: "#4A9FA5" }} /> {L.notes} <span className="font-normal text-gray-500">{L.notesOptional}</span>
           </label>
           <textarea placeholder={L.notesPlaceholder} value={notes} onChange={e => onNotesChange(e.target.value)}
             rows={3} className={`${inputCls} resize-none`} style={{ ...inputStyle(!!notes), lineHeight: "1.6" }} />
@@ -601,7 +601,7 @@ function GuestInfoStep({ selectedTreatment, selectedDate, selectedTime, onBack, 
           </div>
           <div>
             <label className="flex items-center gap-2 text-sm font-semibold mb-2.5" style={{ color: "#374151" }}>
-              <FileText size={14} style={{ color: "#4A9FA5" }} /> {L.notes} <span className="font-normal text-gray-400">{L.notesOptional}</span>
+              <FileText size={14} style={{ color: "#4A9FA5" }} /> {L.notes} <span className="font-normal text-gray-500">{L.notesOptional}</span>
             </label>
             <textarea placeholder={L.notesPlaceholder} value={notes} onChange={e => setNotes(e.target.value)}
               rows={3} className={`${inputCls} resize-none`} style={{ ...inputStyle(!!notes), lineHeight: "1.6" }} />

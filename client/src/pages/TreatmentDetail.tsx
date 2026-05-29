@@ -7,6 +7,7 @@ import { ArrowLeft, Clock, RefreshCw, DollarSign, Sparkles, ChevronDown, Chevron
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
@@ -374,10 +375,11 @@ export default function TreatmentDetail() {
           {/* 이미지 */}
           <div className="md:col-span-1">
             <div className="rounded-2xl overflow-hidden bg-gray-100 h-80 flex items-center justify-center">
-              <img
+              <OptimizedImage
                 src={treatment.image}
                 alt={treatment.name}
                 className="w-full h-full object-cover"
+                height={320}
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = "none";
                 }}

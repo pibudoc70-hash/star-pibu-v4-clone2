@@ -8,6 +8,7 @@ import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function Equipment2Detail() {
   const params = useParams();
@@ -160,7 +161,7 @@ export default function Equipment2Detail() {
           {/* 이미지 */}
           <div>
             {treatment.image && (
-              <img
+              <OptimizedImage
                 src={treatment.image}
                 alt={treatment.name}
                 className="w-full h-auto rounded-lg shadow-lg"
@@ -258,12 +259,13 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">시술 사례</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {images.map((img: string, idx: number) => (
-                <img
+              {images.map((imgSrc: string, idx: number) => (
+                <OptimizedImage
                   key={idx}
-                  src={img}
+                  src={imgSrc}
                   alt={`${treatment.name} 사례 ${idx + 1}`}
                   className="w-full h-64 object-cover rounded-lg"
+                  height={256}
                 />
               ))}
             </div>
@@ -301,10 +303,11 @@ export default function Equipment2Detail() {
                   onClick={() => setLocation(`/equipment2/${related.slug}`)}
                 >
                   {related.image && (
-                    <img
+                    <OptimizedImage
                       src={related.image}
                       alt={related.name}
                       className="w-full h-48 object-cover"
+                      height={192}
                     />
                   )}
                   <div className="p-4">

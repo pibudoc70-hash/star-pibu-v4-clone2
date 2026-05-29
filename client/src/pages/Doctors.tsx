@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import OptimizedImage from '@/components/OptimizedImage';
 
 const DOCTOR_IMAGES = [
   'https://d2fqpnqbhf3bxe.cloudfront.net/star-pibu/doctors/cho-si-hyung.jpg',
@@ -30,10 +31,11 @@ export default function Doctors() {
                 {/* 프로필 이미지 */}
                 <div className="bg-gradient-to-br from-amber-100 to-orange-100 h-72 flex items-center justify-center overflow-hidden">
                   {DOCTOR_IMAGES[idx] ? (
-                    <img
+                    <OptimizedImage
                       src={DOCTOR_IMAGES[idx]}
                       alt={doctor.name}
                       className="w-full h-full object-cover"
+                      height={288}
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}

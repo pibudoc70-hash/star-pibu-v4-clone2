@@ -9,6 +9,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { X, MessageCircle, Phone, Calendar } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface PriceItem {
   label: string;
@@ -258,7 +259,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
                 borderBottom: "1px solid #F3F4F6",
               }}
             >
-              <img
+              <OptimizedImage
                 src={ev.imageUrl}
                 alt={ev.title}
                 className="h-full object-contain py-3"
@@ -398,7 +399,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
                 background: `linear-gradient(160deg, ${ev.accentLight} 0%, #ffffff 100%)`,
                 borderLeft: "1px solid #F3F4F6",
               }}>
-              <img
+              <OptimizedImage
                 src={ev.imageUrl}
                 alt={ev.title}
                 style={{

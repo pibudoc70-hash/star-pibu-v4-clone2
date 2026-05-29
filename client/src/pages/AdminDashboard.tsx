@@ -365,7 +365,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <p className="text-white text-xs font-bold">STAR 피부과</p>
-              <p className="text-white/50 text-xs">관리자 대시보드</p>
+              <p className="text-white/70 text-xs">관리자 대시보드</p>
             </div>
           </div>
         </div>

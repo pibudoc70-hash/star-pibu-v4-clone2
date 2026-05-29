@@ -14,6 +14,7 @@ import { useLocation } from "wouter";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, AlertCircle, Repeat, Sparkles, ChevronRight, Star, Zap, Eye, Heart, Sun, Microscope, Droplets, Pill, Leaf, Wind, Circle, Layers, Footprints, ExternalLink } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -1430,7 +1431,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
         {/* 이미지 */}
         <div className="relative overflow-hidden" style={{ height: item.cardBannerImage ? 'auto' : '192px', background: item.cardBannerImage ? "transparent" : "#f6efe0" }}>
           {item.cardBannerImage ? (
-            <img
+            <OptimizedImage
               src={item.cardBannerImage}
               alt={item.name}
               className="w-full h-auto block transition-transform duration-400 group-hover:scale-105"
@@ -1439,10 +1440,10 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
           ) : item.images && item.images.length >= 2 ? (
             // 두 이미지 나란히 표시 - 균형잡힌 레이아웃
             <div className="w-full h-full flex items-center justify-center gap-2 transition-transform duration-400 group-hover:scale-105" style={{ padding: "8px 6px" }}>
-              {item.images.map((src, i) => (
-                <img
+              {item.images.map((imgSrc, i) => (
+                <OptimizedImage
                   key={i}
-                  src={src}
+                  src={imgSrc}
                   alt={`${item.name} ${i + 1}`}
                   className="object-contain flex-none"
                   style={{
@@ -1455,7 +1456,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
               ))}
             </div>
           ) : (
-            <img
+            <OptimizedImage
               src={item.image}
               alt={item.name}
               className="w-full h-full object-contain transition-transform duration-400 group-hover:scale-115"
@@ -1501,7 +1502,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
               {/* YouTube 영상 또는 모달 이미지 (해당 시술에만 표시) */}
               {!item.youtubeUrl && item.cardBannerImage && (
                 <div className="mb-5">
-                  <img
+                  <OptimizedImage
                     src={item.cardBannerImage}
                     alt={`${item.name} 베너`}
                     className="w-full rounded-xl shadow-md object-cover"
@@ -1639,10 +1640,11 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{selectedEq.desc}</p>
           </div>
           <div className="flex justify-center py-6" style={{ background: "white" }}>
-            <img
+            <OptimizedImage
               src={selectedEq.image}
               alt={selectedEq.name}
               className="h-32 object-contain"
+              height={128}
               onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.5"; }}
             />
           </div>
@@ -1708,10 +1710,12 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
               className="rounded-lg overflow-hidden flex items-center justify-center"
               style={{ width: "80px", height: "80px", background: "#f6efe0", aspectRatio: "1 / 1" }}
             >
-              <img
+              <OptimizedImage
                 src={eq.image}
                 alt={eq.name}
                 className="w-[85%] h-[85%] object-contain transition-transform duration-300 group-hover:scale-110"
+                width={68}
+                height={68}
                 onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.5"; }}
               />
             </div>

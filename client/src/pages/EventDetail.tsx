@@ -10,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
 
@@ -134,7 +135,7 @@ export default function EventDetail() {
           {/* 이미지 */}
           {event.imageUrl && (
             <div className="mb-8 rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
-              <img
+              <OptimizedImage
                 src={event.imageUrl}
                 alt={event.title}
                 className="w-full h-auto object-cover"

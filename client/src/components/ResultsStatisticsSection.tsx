@@ -1,4 +1,5 @@
 import React from 'react';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export default function ResultsStatisticsSection() {
   const doctors = [
@@ -100,7 +101,7 @@ export default function ResultsStatisticsSection() {
             >
               {/* 의료진 사진 */}
               <div className="relative h-64 md:h-72 overflow-hidden bg-gray-200">
-                <img
+                <OptimizedImage
                   src={doctor.image}
                   alt={doctor.title}
                   className="w-full h-full object-cover"

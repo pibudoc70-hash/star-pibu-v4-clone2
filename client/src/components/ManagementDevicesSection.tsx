@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import OptimizedImage from "@/components/OptimizedImage";
 
 // ── 장비 데이터 타입 ──────────────────────────────────────────────────────
 interface Device {
@@ -187,10 +188,12 @@ function DeviceCard({ device }: { device: Device }) {
           className="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
           style={{ background: "#f5f0e8", border: "2px solid #d1ab67" }}
         >
-          <img
+          <OptimizedImage
             src={imgUrl}
             alt={device.name}
             className="w-full h-full object-cover"
+            width={64}
+            height={64}
           />
         </div>
 

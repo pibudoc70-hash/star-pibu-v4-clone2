@@ -274,7 +274,7 @@ export default function EventsSection() {
                   {/* Right: Arrow */}
                   <ChevronRight
                     size={20}
-                    className="flex-shrink-0 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all"
+                    className="flex-shrink-0 text-gray-500 group-hover:text-gray-600 group-hover:translate-x-1 transition-all"
                   />
                 </div>
               </div>

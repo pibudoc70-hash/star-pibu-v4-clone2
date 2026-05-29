@@ -134,6 +134,9 @@ export default function FacilitySection() {
                   src={img.srcJPG}
                   alt={pcCardTitles[i]}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  width={800}
+                  height={450}
                 />
               </picture>
               {/* Dark Overlay */}
@@ -179,6 +182,9 @@ export default function FacilitySection() {
                       src={img.srcJPG}
                       alt={img.label}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      width={800}
+                      height={450}
                     />
                   </picture>
                   {/* Dark Overlay */}
@@ -286,6 +292,9 @@ export default function FacilitySection() {
                     src={img.srcJPG}
                     alt={img.label}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    width={800}
+                    height={450}
                   />
                 </picture>
               </button>
@@ -313,14 +322,17 @@ export default function FacilitySection() {
               </button>
 
               {/* Image */}
-              <picture>
-                <source srcSet={galleryImageSrcs[lightboxIndex].srcWebP} type="image/webp" />
-                <img
-                  src={galleryImageSrcs[lightboxIndex].srcJPG}
-                  alt={pcCardTitles[lightboxIndex]}
-                  className="w-full h-auto rounded-lg"
-                />
-              </picture>
+                <picture>
+                  <source srcSet={galleryImageSrcs[lightboxIndex].srcWebP} type="image/webp" />
+                  <img
+                    src={galleryImageSrcs[lightboxIndex].srcJPG}
+                    alt={pcCardTitles[lightboxIndex]}
+                    className="w-full h-auto rounded-lg"
+                    loading="lazy"
+                    width={1200}
+                    height={675}
+                  />
+                </picture>
 
               {/* Title */}
               <div className="text-center mt-4">

@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { ArrowRight, Clock, RefreshCw, Sparkles, ChevronDown, ChevronUp, MessageCircle } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -509,7 +510,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: any; i: numbe
         style={{ height: "190px", background: "#f0f4f8" }}
         onClick={() => setMobileOverlay((v) => !v)}
       >
-        <img
+        <OptimizedImage
           src={t.image}
           alt={t.name}
           className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"

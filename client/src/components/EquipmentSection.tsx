@@ -10,6 +10,7 @@
  */
 import { useState } from "react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -490,7 +491,7 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           className="flex items-center justify-center sm:justify-end pb-3 sm:pb-0 sm:pr-3 sm:w-[44%] sm:h-[160px]"
         >
           {!imgError ? (
-            <img
+            <OptimizedImage
               src={eq.image}
               alt={eq.name}
               className="object-contain transition-transform duration-500 group-hover:scale-105"

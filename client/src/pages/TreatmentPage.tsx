@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
+import OptimizedImage from "@/components/OptimizedImage";
 
 // ── 시술 데이터 타입 ──────────────────────────────────────────────────────────
 interface TreatmentData {
@@ -288,7 +289,7 @@ export default function TreatmentPage() {
           {/* 이미지 */}
           <div className="md:col-span-2">
             <div className="rounded-2xl overflow-hidden bg-gray-50 shadow-md">
-              <img
+              <OptimizedImage
                 src={treatment.image}
                 alt={`${treatment.name} 시술 이미지`}
                 className="w-full h-auto object-cover"
@@ -412,7 +413,7 @@ export default function TreatmentPage() {
                   onClick={() => setLocation(`/treatments/${t.slug}`)}
                   className="text-left p-4 rounded-xl border border-gray-200 hover:border-[#4A6FA5] hover:shadow-md transition-all group"
                 >
-                  <p className="text-xs text-gray-400 mb-1">{t.category}</p>
+                  <p className="text-xs text-gray-500 mb-1">{t.category}</p>
                   <p className="font-bold text-gray-800 group-hover:text-[#4A6FA5] transition-colors">
                     {t.name}
                   </p>

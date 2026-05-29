@@ -4,6 +4,7 @@ import { trpc } from '@/lib/trpc';
 import { Loader2, Calendar, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'wouter';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export default function Events() {
   const { t } = useLang();
@@ -63,10 +64,11 @@ export default function Events() {
                 <Link key={event.id} href={`/events/${event.id}`}>
                   <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer group">
                     {event.imageUrl ? (
-                      <img
+                      <OptimizedImage
                         src={event.imageUrl}
                         alt={event.title}
                         className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        height={192}
                       />
                     ) : (
                       <div className="w-full h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
@@ -80,7 +82,7 @@ export default function Events() {
                         </span>
                       )}
                       <h3 className="text-lg font-bold text-gray-900 mt-3 mb-2 line-clamp-2">{event.title}</h3>
-                      <div className="flex items-center gap-4 text-xs text-gray-400 mt-3">
+                      <div className="flex items-center gap-4 text-xs text-gray-500 mt-3">
                         {event.date && (
                           <span className="flex items-center gap-1">
                             <Calendar size={12} />

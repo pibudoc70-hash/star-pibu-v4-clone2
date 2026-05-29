@@ -169,7 +169,7 @@ export default function SpecialEventSection() {
                     <div className="mb-6 flex items-center gap-6">
                       <div>
                         <p className="text-xs text-gray-500 mb-1">정상가</p>
-                        <p className="text-sm text-gray-400 line-through">
+                        <p className="text-sm text-gray-500 line-through">
                           {displayPrice.normalPrice.toLocaleString()}원
                         </p>
                       </div>
@@ -222,7 +222,7 @@ export default function SpecialEventSection() {
                     <div className="mb-4 flex items-center gap-6">
                       <div>
                         <p className="text-xs text-gray-500 mb-1">정상가</p>
-                        <p className="text-sm text-gray-400 line-through">
+                        <p className="text-sm text-gray-500 line-through">
                           {displayPrice.normalPrice.toLocaleString()}원
                         </p>
                       </div>
@@ -244,7 +244,7 @@ export default function SpecialEventSection() {
                               <div className="flex items-center gap-4">
                                 <div>
                                   <p className="text-xs text-gray-500 mb-1">정상가</p>
-                                  <p className="text-xs text-gray-400 line-through">
+                                  <p className="text-xs text-gray-500 line-through">
                                     {row.normalPrice.toLocaleString()}원
                                   </p>
                                 </div>

@@ -19,28 +19,7 @@ const PATIENT_IMAGE_DESKTOP_JPG = NEW_IMAGE;
 // Award = 전문의 경력, ScanEye(눈 모양) = 눈밑 시술, Cpu = 첨단 장비
 const statIcons = [Award, ScanEye, Cpu];
 
-const starValues = [
-  {
-    letter: "S",
-    title: "Special Guest",
-    desc: "모든 환자분은 우리에게 가장 특별한 분입니다. 개개인의 고민에 귀 기울이는 1:1 맞춤 진료를 실천합니다.",
-  },
-  {
-    letter: "T",
-    title: "Top Quality",
-    desc: "다양한 프리미엄 레이저와 앞선 의료 기술로 언제나 수준 높은 치료 결과를 선사합니다.",
-  },
-  {
-    letter: "A",
-    title: "Attractive Atmosphere",
-    desc: "예약제를 통해 대기 시간을 줄이고, 오직 치료에만 집중할 수 있는 편안한 환경을 제공합니다.",
-  },
-  {
-    letter: "R",
-    title: "Responsibility",
-    desc: "치료 설명과 경과 관찰에 책임감을 갖고, 결과에 만족하실 때까지 함께합니다.",
-  },
-];
+// starValues is now sourced from i18n t.about.values
 
 export default function PhilosophySection() {
   const { t } = useLang();
@@ -115,7 +94,7 @@ export default function PhilosophySection() {
 
             {/* S.T.A.R. Values - 골드 왼쪽 보더 라인, 글자 2배 크게 */}
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
-              {starValues.map((v) => (
+              {t.about.values.map((v) => (
                 <div
                   key={v.letter}
                   className="flex items-start gap-3 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-0.5 cursor-default"

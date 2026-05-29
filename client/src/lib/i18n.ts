@@ -55,6 +55,7 @@ export interface I18nContent {
     title: string;
     desc: string;
     stats: Array<{ num: string; label: string }>;
+    values: Array<{ letter: string; title: string; desc: string }>;
   };
   hours: {
     label: string;
@@ -243,6 +244,12 @@ export const i18n: Record<Lang, I18nContent> = {
         { num: "20년+", label: "피부과전문의 경력" },
         { num: "4,000례+", label: "눈밑지방재배치술" },
         { num: "50종+", label: "프리미엄 레이저" },
+      ],
+      values: [
+        { letter: "S", title: "Special Guest", desc: "모든 환자분은 우리에게 가장 특별한 분입니다. 개개인의 고민에 귀 기울이는 1:1 맞춤 진료를 실천합니다." },
+        { letter: "T", title: "Top Quality", desc: "다양한 프리미엄 레이저와 앞선 의료 기술로 언제나 수준 높은 치료 결과를 선사합니다." },
+        { letter: "A", title: "Attractive Atmosphere", desc: "예약제를 통해 대기 시간을 줄이고, 오직 치료에만 집중할 수 있는 편안한 환경을 제공합니다." },
+        { letter: "R", title: "Responsibility", desc: "치료 설명과 경과 관찰에 책임감을 갖고, 결과에 만족하실 때까지 함께합니다." },
       ],
     },
     hours: {
@@ -628,6 +635,12 @@ export const i18n: Record<Lang, I18nContent> = {
         { num: "20+ yrs", label: "Board-Certified Specialists" },
         { num: "50+", label: "Original Laser Devices" },
       ],
+      values: [
+        { letter: "S", title: "Special Guest", desc: "Every patient is our most special guest. We practice personalized 1:1 consultations that truly listen to each individual's concerns." },
+        { letter: "T", title: "Top Quality", desc: "With diverse premium laser devices and advanced medical technology, we consistently deliver outstanding treatment results." },
+        { letter: "A", title: "Attractive Atmosphere", desc: "Our appointment-based system minimizes waiting time, providing a comfortable environment where you can focus solely on your treatment." },
+        { letter: "R", title: "Responsibility", desc: "We take full responsibility for treatment explanations and follow-up care, staying with you until you are completely satisfied with the results." },
+      ],
     },
     hours: {
       label: "Hours",
@@ -997,6 +1010,12 @@ export const i18n: Record<Lang, I18nContent> = {
         { num: "20年+", label: "教授出身専門医" },
         { num: "50+", label: "オリジナルレーザー機器" },
       ],
+      values: [
+        { letter: "S", title: "Special Guest", desc: "すべての患者様は私たちにとって最も大切な方です。お一人お一人のお悩みに耳を傍ける1対1のオーダーメイド診療を実践しています。" },
+        { letter: "T", title: "Top Quality", desc: "多様なプレミアムレーザーと先進医療技術により、常に高水準の治療結果を提供します。" },
+        { letter: "A", title: "Attractive Atmosphere", desc: "予約制により待ち時間を短縮し、治療のみに集中できる心地よい環境を提供します。" },
+        { letter: "R", title: "Responsibility", desc: "治療の説明と経過観察に責任感を持ち、結果にご満足いただけるまでともに歩みます。" },
+      ],
     },
     hours: {
       label: "診療時間",
@@ -1365,6 +1384,12 @@ export const i18n: Record<Lang, I18nContent> = {
         { num: "4,000+", label: "眼袋脂肪重置" },
         { num: "20年+", label: "教授出身专科医" },
         { num: "50+", label: "原装激光设备" },
+      ],
+      values: [
+        { letter: "S", title: "Special Guest", desc: "每位患者对我们来说都是最特别的人。我们实行认真倾听每个人烦恼的1对1个性化诊疗。" },
+        { letter: "T", title: "Top Quality", desc: "凭借多样的高级激光设备和先进医疗技术，始终提供高水平的治疗效果。" },
+        { letter: "A", title: "Attractive Atmosphere", desc: "通过预约制减少等候时间，提供只需专注于治疗的舒适环境。" },
+        { letter: "R", title: "Responsibility", desc: "认真进行治疗说明和预后观察，直到您对结果满意为止。" },
       ],
     },
     hours: {

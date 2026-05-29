@@ -17,6 +17,7 @@ import { useEffect, useRef } from "react";
 import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
+import OptimizedImage from "@/components/OptimizedImage";
 
 /** 금색 빛 가루 파티클 Canvas 컴포넌트 */
 function GoldParticles() {
@@ -337,9 +338,12 @@ export default function HeroSection() {
         >
           {/* 로고 */}
           <div style={{ position: "relative" }}>
-            <img
+            <OptimizedImage
               src={LOGO_IMAGE}
               alt="스타피부과 로고"
+              priority={true}
+              width={220}
+              height={220}
               style={{
                 height: 'clamp(120px, 30vw, 220px)',
                 width: 'clamp(120px, 30vw, 220px)',

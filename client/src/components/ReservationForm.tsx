@@ -394,10 +394,11 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 환자명 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">
+            <label htmlFor="res-patient-name" className="block text-sm font-semibold text-[#1F2937] mb-2">
               환자명 *
             </label>
             <input
+              id="res-patient-name"
               type="text"
               value={reservationForm.patientName}
               onChange={(e) => setReservationForm({ ...reservationForm, patientName: e.target.value })}
@@ -408,11 +409,12 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
           {/* 연락처 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">
+            <label htmlFor="res-phone" className="block text-sm font-semibold text-[#1F2937] mb-2">
               <Phone size={16} className="inline mr-2" />
               연락처 *
             </label>
             <input
+              id="res-phone"
               type="tel"
               value={reservationForm.phone}
               onChange={(e) => setReservationForm({ ...reservationForm, phone: formatPhoneNumber(e.target.value) })}
@@ -425,8 +427,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 시술 카테고리 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">시술 카테고리 *</label>
+            <label htmlFor="res-category" className="block text-sm font-semibold text-[#1F2937] mb-2">시술 카테고리 *</label>
             <select
+              id="res-category"
               value={reservationForm.treatmentCategory}
               onChange={(e) => setReservationForm({ ...reservationForm, treatmentCategory: e.target.value, treatmentName: "" })}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -442,8 +445,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
           {/* 시술명 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">시술명 *</label>
+            <label htmlFor="res-treatment" className="block text-sm font-semibold text-[#1F2937] mb-2">시술명 *</label>
             <select
+              id="res-treatment"
               value={reservationForm.treatmentName}
               onChange={(e) => setReservationForm({ ...reservationForm, treatmentName: e.target.value })}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -462,8 +466,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 희망 날짜 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">희망 날짜 *</label>
+            <label htmlFor="res-date" className="block text-sm font-semibold text-[#1F2937] mb-2">희망 날짜 *</label>
             <input
+              id="res-date"
               type="date"
               value={reservationForm.preferredDate}
               onChange={(e) => {
@@ -485,8 +490,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
           {/* 희망 시간 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">희망 시간</label>
+            <label htmlFor="res-time" className="block text-sm font-semibold text-[#1F2937] mb-2">희망 시간</label>
             <select
+              id="res-time"
               value={reservationForm.preferredTime}
               onChange={(e) => setReservationForm({ ...reservationForm, preferredTime: e.target.value })}
               className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -506,8 +512,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
         {/* 추가 사항 */}
         <div>
-          <label className="block text-sm font-semibold text-[#1F2937] mb-2">추가 사항</label>
+          <label htmlFor="res-notes" className="block text-sm font-semibold text-[#1F2937] mb-2">추가 사항</label>
           <textarea
+            id="res-notes"
             value={reservationForm.notes}
             onChange={(e) => setReservationForm({ ...reservationForm, notes: e.target.value })}
             placeholder="특별한 요청사항이 있으시면 입력해주세요"
@@ -541,13 +548,14 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">
+            <label htmlFor="guest-phone-otp" className="block text-sm font-semibold text-[#1F2937] mb-2">
               <Phone size={16} className="inline mr-2" />
               휴대폰 번호 *
             </label>
             <div className="space-y-2">
               <div className="flex gap-2">
                 <input
+                  id="guest-phone-otp"
                   type="tel"
                   value={guestForm.phone}
                   onChange={(e) => setGuestForm({ ...guestForm, phone: formatPhoneNumber(e.target.value) })}
@@ -589,8 +597,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">인증번호 *</label>
+            <label htmlFor="guest-otp-code" className="block text-sm font-semibold text-[#1F2937] mb-2">인증번호 *</label>
             <input
+              id="guest-otp-code"
               type="text"
               value={guestForm.otpCode}
               onChange={(e) => setGuestForm({ ...guestForm, otpCode: e.target.value })}
@@ -631,9 +640,10 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">휴대폰 번호 *</label>
+            <label htmlFor="guest-phone" className="block text-sm font-semibold text-[#1F2937] mb-2">휴대폰 번호 *</label>
             <div className="space-y-2">
               <input
+                id="guest-phone"
                 type="tel"
                 value={guestForm.phone}
                 onChange={(e) => setGuestForm({ ...guestForm, phone: formatPhoneNumber(e.target.value) })}
@@ -654,8 +664,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">환자명 *</label>
+            <label htmlFor="guest-patient-name" className="block text-sm font-semibold text-[#1F2937] mb-2">환자명 *</label>
             <input
+              id="guest-patient-name"
               type="text"
               value={guestForm.patientName}
               onChange={(e) => setGuestForm({ ...guestForm, patientName: e.target.value })}
@@ -667,8 +678,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 시술 카테고리 */}
             <div>
-              <label className="block text-sm font-semibold text-[#1F2937] mb-2">시술 카테고리 *</label>
+              <label htmlFor="guest-category" className="block text-sm font-semibold text-[#1F2937] mb-2">시술 카테고리 *</label>
               <select
+                id="guest-category"
                 value={guestForm.treatmentCategory}
                 onChange={(e) => setGuestForm({ ...guestForm, treatmentCategory: e.target.value, treatmentName: "" })}
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -684,8 +696,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
             {/* 시술명 */}
             <div>
-              <label className="block text-sm font-semibold text-[#1F2937] mb-2">시술명 *</label>
+              <label htmlFor="guest-treatment" className="block text-sm font-semibold text-[#1F2937] mb-2">시술명 *</label>
               <select
+                id="guest-treatment"
                 value={guestForm.treatmentName}
                 onChange={(e) => setGuestForm({ ...guestForm, treatmentName: e.target.value })}
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -704,8 +717,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 희망 날짜 */}
             <div>
-              <label className="block text-sm font-semibold text-[#1F2937] mb-2">희망 날짜 *</label>
+              <label htmlFor="guest-date" className="block text-sm font-semibold text-[#1F2937] mb-2">희망 날짜 *</label>
               <input
+                id="guest-date"
                 type="date"
                 value={guestForm.preferredDate}
                 onChange={(e) => {
@@ -722,8 +736,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
             {/* 희망 시간 */}
             <div>
-              <label className="block text-sm font-semibold text-[#1F2937] mb-2">희망 시간</label>
+              <label htmlFor="guest-time" className="block text-sm font-semibold text-[#1F2937] mb-2">희망 시간</label>
               <select
+                id="guest-time"
                 value={guestForm.preferredTime}
                 onChange={(e) => setGuestForm({ ...guestForm, preferredTime: e.target.value })}
                 className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]"
@@ -743,8 +758,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
 
           {/* 추가 사항 */}
           <div>
-            <label className="block text-sm font-semibold text-[#1F2937] mb-2">추가 사항</label>
+            <label htmlFor="guest-notes" className="block text-sm font-semibold text-[#1F2937] mb-2">추가 사항</label>
             <textarea
+              id="guest-notes"
               value={guestForm.notes}
               onChange={(e) => setGuestForm({ ...guestForm, notes: e.target.value })}
               placeholder="특별한 요청사항이 있으시면 입력해주세요"

@@ -787,3 +787,19 @@
 - [x] 각 페이지 개별 title/description SEO 설정
 - [x] App.tsx에 /treatments/:slug 라우트 추가
 - [x] TreatmentsEquipmentSection.tsx 카드 링크 업데이트 (울쎄라, 써마지, 눈밑지방재배치)
+
+## Phase 108: 이미지 최적화 (2026-05-29)
+- [ ] OptimizedImage / PictureImg 공통 컴포넌트 생성 (loading=lazy, width/height, WebP/AVIF picture 폴백)
+- [ ] HeroSection.tsx - fetchpriority=high + picture 태그 적용
+- [ ] DoctorsSection.tsx - loading=lazy + width/height 추가
+- [ ] FacilitySection.tsx - loading=lazy + width/height 추가
+- [ ] TreatmentsEquipmentSection.tsx - loading=lazy + width/height 추가
+- [ ] TreatmentsEquipmentSectionV2.tsx - loading=lazy + width/height 추가
+- [ ] EquipmentSection.tsx - loading=lazy + width/height 추가
+- [ ] PhilosophySection.tsx - loading=lazy + width/height 추가
+- [ ] SpecialEventSection.tsx - loading=lazy + width/height 추가
+- [ ] ResultsStatisticsSection.tsx - loading=lazy + width/height 추가
+- [ ] YouTubeSection.tsx - loading=lazy + width/height 추가
+- [ ] WelcomePopup.tsx - loading=lazy + width/height 추가
+- [ ] TreatmentPage.tsx - loading=lazy + width/height 추가
+- [ ] 기타 페이지(About, Doctors, EventDetail, Events, TreatmentDetail, Equipment2Detail) - loading=lazy 추가

@@ -45,14 +45,14 @@ export default function Footer() {
 
   // 라벨
   const labels = {
-    quickMenu: lang === "ja" ? "クイックメニュー" : lang === "zh" ? "快速菜单" : "빠른 메뉴",
-    mainTreatments: lang === "ja" ? "主な施術" : lang === "zh" ? "主要项目" : "주요 시술",
-    contactInfo: lang === "ja" ? "連絡先・アクセス" : lang === "zh" ? "联系方式及位置" : "연락처 및 위치",
-    brandDesc: lang === "ja" ? "釜山・西面を代表する皮膚科専門医クリニック" : lang === "zh" ? "釜山西面代表性皮肤科专科医院" : "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
+    quickMenu: lang === "ja" ? "クイックメニュー" : lang === "zh" ? "快速菜单" : lang === "en" ? "Quick Menu" : "빠른 메뉴",
+    mainTreatments: lang === "ja" ? "主な施術" : lang === "zh" ? "主要项目" : lang === "en" ? "Key Treatments" : "주요 시술",
+    contactInfo: lang === "ja" ? "連絡先・アクセス" : lang === "zh" ? "联系方式及位置" : lang === "en" ? "Contact & Location" : "연락처 및 위치",
+    brandDesc: lang === "ja" ? "釜山・西面を代表する皮膚科専門医クリニック" : lang === "zh" ? "釜山西面代表性皮肤科专科医院" : lang === "en" ? "Busan Seomyeon's leading dermatology clinic, led by board-certified specialists with 20+ years of experience." : "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
     fax: lang === "ja" ? "ファックス" : lang === "zh" ? "传真" : "팩스",
-    subwayInfo: lang === "ja" ? "西面駅 5・7番出口 徒歩2分" : lang === "zh" ? "西面站5·7号出口步行2分钟" : "서면역 5·7번 출구 도보 2분",
-    nonCovered: lang === "ja" ? "非保険診療案内" : lang === "zh" ? "非医保诊疗指南" : "비급여 진료안내",
-    privacy: lang === "ja" ? "個人情報処理方針" : lang === "zh" ? "个人信息处理方针" : "개인정보처리방침",
+    subwayInfo: lang === "ja" ? "西面駅 5・7番出口 徒歩2分" : lang === "zh" ? "西面站5·7号出口步行2分钟" : lang === "en" ? "Subway Line 1&2 Seomyeon Stn, Exit 5 or 7, 2 min walk" : "서면역 5·7번 출구 도보 2분",
+    nonCovered: lang === "ja" ? "非保険診療案内" : lang === "zh" ? "非医保诊疗指南" : lang === "en" ? "Non-Covered Services" : "비급여 진료안내",
+    privacy: lang === "ja" ? "個人情報処理方針" : lang === "zh" ? "个人信息处理方针" : lang === "en" ? "Privacy Policy" : "개인정보정체방침",
   };
 
   return (
@@ -153,7 +153,7 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <Phone size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
                 <a
-                  href="tel:051-818-2300"
+                  href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
                   className="text-sm font-montserrat font-semibold transition-colors hover:text-white"
                   style={{ color: "rgba(255,255,255,0.7)" }}
                 >

@@ -78,7 +78,7 @@ export interface I18nContent {
       name: string;
       title: string;
       specialty: string;
-      intro?: string;
+      intro?: string | string[];
       careers: string[];
     }>;
   };
@@ -724,33 +724,54 @@ export const i18n: Record<Lang, I18nContent> = {
           name: "Dr. Cho Si-hyung",
           title: "Director",
           specialty: "Board-Certified Dermatologist · MD, PhD",
+          intro: [
+            "Since opening in Busan Seomyeon in 2006, I have spent over 20 years listening to the skin concerns of countless patients.",
+            "Skin treatment is not merely a technique of using equipment — it begins with the insight to accurately read each patient's skin condition. I always pursue the safest and most natural results rather than aggressive procedures.",
+            "I will continue to provide honest, skilled care to protect your skin health."
+          ],
           careers: [
+            "Board-Certified Dermatologist",
             "Residency at Pusan National University Hospital, Dermatology",
             "Former Professor, Inje University Dermatology",
             "Former Adjunct Professor, Inje & Pusan National University",
-            "Member, Korean Dermatological Association",
+            "Former President, Busan·Gyeongnam·Ulsan Dermatology Association",
+            "Medical Advisor, Thermage FLX",
+            "Member, American Academy of Dermatology (AAD)",
+            "Current Director, STAR Dermatology Clinic",
           ],
         },
         {
           name: "Dr. Woo Hye-jin",
-          title: "Specialist",
+          title: "Director",
           specialty: "Board-Certified Dermatologist",
+          intro: [
+            "As a board-certified dermatologist, I place your skin health as my top priority.",
+            "I strive to deliver the best results through accurate diagnosis and personalized treatment."
+          ],
           careers: [
-            "MD, Pusan National University",
-            "Residency at Pusan National University Hospital, Dermatology",
+            "Board-Certified Dermatologist",
+            "Residency at Catholic University Medical School, Dermatology",
+            "Former Adjunct Professor, Catholic University Medical School, Dermatology",
             "Member, Korean Dermatological Association",
-            "Member, Korean Laser Society",
+            "Member, American Academy of Dermatology (AAD)",
+            "Former Director, Gowoon Sesang Kim Yang-je Dermatology",
           ],
         },
         {
           name: "Dr. Lee Ki-wook",
-          title: "Specialist",
-          specialty: "Board-Certified Dermatologist",
+          title: "Director",
+          specialty: "Board-Certified Dermatologist · MD, PhD",
+          intro: [
+            "As a medical doctor with a PhD, I provide the highest level of medical service based on the latest dermatological knowledge.",
+            "I am committed to protecting your skin health through safe and effective treatments."
+          ],
           careers: [
-            "MD, Inje University",
-            "Residency at Inje University Hospital, Dermatology",
+            "Board-Certified Dermatologist",
+            "MD, PhD — Kosin University College of Medicine",
+            "Adjunct Professor, Kosin University College of Medicine, Dermatology",
             "Member, Korean Dermatological Association",
-            "Member, Korean Society of Aesthetic Dermatology & Laser",
+            "Member, Korean Dermatology Practitioners Association",
+            "Former Director, Areumdaun Dermatology Clinic",
           ],
         },
       ],
@@ -1127,33 +1148,54 @@ export const i18n: Record<Lang, I18nContent> = {
           name: "チョ・シヒョン",
           title: "院長",
           specialty: "皮膚科専門医 · 医学博士",
+          intro: [
+            "2006年に釜山西面で初めて診察を開始して以来、いつのまにか20年以上の歳月が流れ、数多くの患者様の皮膚のお悩みと向き合ってきました。",
+            "皮膚治療は単に機器を使う技術ではなく、患者の皮膚状態を正確に読み取る「洞察力」から始まります。無理な施術よりも、最も安全で自然な結果を常に目指しています。",
+            "これからも変わらず、正直で熱練された診察で皆様の皮膚健康を守り続けます。"
+          ],
           careers: [
+            "皮膚科専門医",
             "釜山大学病院 皮膚科 研修",
             "仁済大学 皮膚科 教授歴任",
             "仁済大学・釜山大学 外来教授歴任",
-            "大韓皮膚科学会 正会員",
+            "釜山・慶南・蔽山皮膚科医師会 会長歴任",
+            "サーマジFLX アドバイザリー医",
+            "米国皮膚科学会（AAD）正会員",
+            "現) スタ皮膚科 院長",
           ],
         },
         {
           name: "ウ・ヘジン",
-          title: "医師",
+          title: "院長",
           specialty: "皮膚科専門医",
+          intro: [
+            "皮膚科専門医として、患者様の皮膚健康を最優先に考えています。",
+            "正確な診断とオーダーメイドの治療で最高の結果を提供できるよう努めます。"
+          ],
           careers: [
-            "釜山大学医学部 卒業",
-            "釜山大学病院 皮膚科 研修",
+            "皮膚科専門医",
+            "カトリック医科大学 皮膚科 研修",
+            "カトリック医科大学 皮膚科 外来教授歴任",
             "大韓皮膚科学会 正会員",
-            "大韓レーザー学会 正会員",
+            "米国皮膚科学会（AAD）正会員",
+            "前) ゴウンセサン キムヤンジェ皮膚科 院長",
           ],
         },
         {
           name: "イ・ギウク",
-          title: "医師",
-          specialty: "皮膚科専門医",
+          title: "院長",
+          specialty: "皮膚科専門医 · 医学博士",
+          intro: [
+            "医学博士として、最新の皮膚科学の知識を基に最高水準の医療サービスを提供します。",
+            "安全で効果的な治療で皮膚健康を守ります。"
+          ],
           careers: [
-            "仁済大学医学部 卒業",
-            "仁済大学病院 皮膚科 研修",
+            "皮膚科専門医",
+            "医学博士 — 高神大学医科学部",
+            "高神大学医科学部 皮膚科 外来教授",
             "大韓皮膚科学会 正会員",
-            "大韓美容皮膚·レーザー学会 正会員",
+            "大韓皮膚科医師会 正会員",
+            "前) アルムダウン皮膚科 院長",
           ],
         },
       ],
@@ -1527,36 +1569,57 @@ export const i18n: Record<Lang, I18nContent> = {
       title: "皮肤科专科医生介绍",
       list: [
         {
-          name: "赵时亨",
+          name: "赵时享",
           title: "院長",
           specialty: "皮肤科专科医生 · 医学博士",
+          intro: [
+            "自2006年在釜山西面开诊以来，不知不觉已经走过20年之久，在此期间面对了无数患者的皮肤烦恼。",
+            "皮肤治疗不仅仅是使用设备的技术，更要从准确判读患者皮肤状态的「眼力」开始。我始终追求最安全、最自然的效果，而非过度治疗。",
+            "未来我将一如既往，以诚实和精湛的诊疗为您的皮肤健康护航。"
+          ],
           careers: [
+            "皮肤科专科医生",
             "釜山大学医院 皮肤科 住院医师",
             "仁济大学 皮肤科 教授（前）",
             "仁济大学·釜山大学 外聘教授（前）",
-            "韩国皮肤科学会 正会员",
+            "釜山·庆南·蔽山皮肤科医师会 会长（前）",
+            "热玛吉FLX 顾问医生",
+            "美国皮肤科学会（AAD）正会员",
+            "现) 星皮肤科 院長",
           ],
         },
         {
-          name: "一惠贛",
-          title: "医生",
+          name: "吴惠进",
+          title: "院長",
           specialty: "皮肤科专科医生",
+          intro: [
+            "作为皮肤科专科医生，我将患者的皮肤健康放在首位。",
+            "通过准确诊断和个性化治疗，努力为您提供最佳效果。"
+          ],
           careers: [
-            "釜山大学医学部 毕业",
-            "釜山大学医院 皮肤科 住院医师",
+            "皮肤科专科医生",
+            "天主教医科大学 皮肤科 住院医师",
+            "天主教医科大学 皮肤科 外聘教授（前）",
             "韩国皮肤科学会 正会员",
-            "韩国激光学会 正会员",
+            "美国皮肤科学会（AAD）正会员",
+            "前) 高恩世界 金杨济皮肤科 院長",
           ],
         },
         {
-          name: "李基米",
-          title: "医生",
-          specialty: "皮肤科专科医生",
+          name: "李基沃",
+          title: "院長",
+          specialty: "皮肤科专科医生 · 医学博士",
+          intro: [
+            "作为医学博士，基于最新皮肤科学知识为患者提供最高水平的医疗服务。",
+            "通过安全有效的治疗保护您的皮肤健康。"
+          ],
           careers: [
-            "仁済大学医学部 毕业",
-            "仁済大学医院 皮肤科 住院医师",
+            "皮肤科专科医生",
+            "医学博士 — 高神大学医科学部",
+            "高神大学医科学部 皮肤科 外聘教授",
             "韩国皮肤科学会 正会员",
-            "韩国美容皮肤·激光学会 正会员",
+            "韩国皮肤科医师会 正会员",
+            "前) 美丽皮肤科 院長",
           ],
         },
       ],

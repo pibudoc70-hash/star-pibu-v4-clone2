@@ -160,12 +160,16 @@ export default function DoctorsSection() {
 
   const { t, lang } = useLang();
 
+  const badgeLabel = lang === "ko" ? "원장" : lang === "ja" ? "院長" : lang === "zh" ? "院長" : "Director";
+
   const mergedDoctors = doctors.map((d, idx) => ({
     ...d,
     name: t.doctors.list[idx]?.name ?? d.name,
     title: t.doctors.list[idx]?.title ?? d.title,
-    credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "경력", text: c })) ?? d.credentials,
+    intro: t.doctors.list[idx]?.intro ?? d.intro,
+    credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
     specialties: lang === "ko" ? d.specialties : (t.treatments.categories[idx % t.treatments.categories.length]?.items?.slice(0, 4) ?? d.specialties),
+    badge: badgeLabel,
   }));
 
   const doctor = mergedDoctors[activeDoctor];
@@ -244,7 +248,7 @@ export default function DoctorsSection() {
                     lineHeight: 1.3,
                   }}
                 >
-                  피부과전문의 3인
+                  {lang === "ko" ? "피부과전문의 3인" : lang === "ja" ? "皮膚科専門医 3名" : lang === "zh" ? "皮肤科专科医生 3位" : "3 Specialists"}
                 </div>
 
               </div>
@@ -315,7 +319,7 @@ export default function DoctorsSection() {
                               letterSpacing: "0.05em",
                             }}
                           >
-                            원장
+                            {badgeLabel}
                           </span>
                         </div>
                         {isActive && (
@@ -439,7 +443,7 @@ export default function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    피부과<br />전문의
+                    {lang === "ko" ? <>피부과<br />전문의</> : lang === "ja" ? <>皮膚科<br />専門医</> : lang === "zh" ? <>皮肤科<br />专科医生</> : <>Derm<br />Specialist</>}
                   </div>
                 </div>
 
@@ -598,7 +602,7 @@ export default function DoctorsSection() {
                         textAlign: "center",
                       }}
                     >
-                      원장
+                      {badgeLabel}
                     </div>
                   </button>
                 );
@@ -681,7 +685,7 @@ export default function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    피부과<br />전문의
+                    {lang === "ko" ? <>피부과<br />전문의</> : lang === "ja" ? <>皮膚科<br />専門医</> : lang === "zh" ? <>皮肤科<br />专科医生</> : <>Derm<br />Specialist</>}
                   </div>
                 </div>
 

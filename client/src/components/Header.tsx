@@ -5,15 +5,16 @@
  * 활성 메뉴: 스크롤 위치 감지 → 현재 섹션 메뉴 강조
  * 모바일 메뉴: 각 항목 앞에 아이콘 추가
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import {
   Menu, X, Phone, MessageCircle, Calendar,
-  Home, Info, Users, Stethoscope, Building2, MapPin, Globe,
+  Home, Info, Users, Stethoscope, Building2, MapPin, Globe, ChevronDown,
 } from "lucide-react";
 import StarLogo from "./StarLogo";
 import { useLang } from "@/contexts/LangContext";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { Lang } from "@/lib/i18n";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,7 +22,35 @@ export default function Header() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuClosing, setMenuClosing] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const { t, lang } = useLang();
+  const { t, lang, setLang } = useLang();
+  const [langDropOpen, setLangDropOpen] = useState(false);
+  const langDropRef = useRef<HTMLDivElement>(null);
+
+  // 언어 옵션 정의
+  const langOptions: { lang: Lang; label: string; flag: string; path: string }[] = [
+    { lang: "ko", label: "한국어", flag: "🇰🇷", path: "/" },
+    { lang: "en", label: "English", flag: "🇺🇸", path: "/en" },
+    { lang: "ja", label: "日本語", flag: "🇯🇵", path: "/ja" },
+    { lang: "zh", label: "中文", flag: "🇨🇳", path: "/zh" },
+  ];
+
+  const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
+
+  const handleLangChange = (option: typeof langOptions[0]) => {
+    setLangDropOpen(false);
+    window.location.href = option.path;
+  };
+
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langDropRef.current && !langDropRef.current.contains(e.target as Node)) {
+        setLangDropOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [])
   const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
   const LINE_URL = "https://line.me/ti/p/~star2006derm";
@@ -228,6 +257,45 @@ export default function Header() {
             })}
           </nav>
 
+          {/* Language Dropdown - Desktop */}
+          <div className="hidden md:flex items-center mr-2 flex-shrink-0" ref={langDropRef} style={{ position: "relative" }}>
+            <button
+              onClick={() => setLangDropOpen(!langDropOpen)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 hover:bg-gray-100"
+              style={{ fontSize: "13px", color: "#4f4f4f", border: "1px solid rgba(0,0,0,0.12)", background: langDropOpen ? "#f5f5f5" : "white" }}
+              aria-label="언어 선택"
+            >
+              <Globe size={13} style={{ color: "#888" }} />
+              <span>{currentLangOption.flag}</span>
+              <span style={{ fontWeight: 500 }}>{currentLangOption.label}</span>
+              <ChevronDown size={12} style={{ color: "#888", transform: langDropOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }} />
+            </button>
+            {langDropOpen && (
+              <div
+                className="absolute top-full mt-1.5 right-0 rounded-xl shadow-xl overflow-hidden"
+                style={{ background: "white", border: "1px solid rgba(0,0,0,0.1)", minWidth: "140px", zIndex: 200 }}
+              >
+                {langOptions.map((option) => (
+                  <button
+                    key={option.lang}
+                    onClick={() => handleLangChange(option)}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left transition-colors hover:bg-gray-50"
+                    style={{
+                      fontSize: "13px",
+                      color: option.lang === lang ? "#C9A84C" : "#333",
+                      fontWeight: option.lang === lang ? 600 : 400,
+                      background: option.lang === lang ? "rgba(201,168,76,0.06)" : "transparent",
+                    }}
+                  >
+                    <span style={{ fontSize: "16px" }}>{option.flag}</span>
+                    <span>{option.label}</span>
+                    {option.lang === lang && <span style={{ marginLeft: "auto", color: "#C9A84C", fontSize: "12px" }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
             <div className="relative">
@@ -358,6 +426,37 @@ export default function Header() {
             );
           })}
         </nav>
+
+        {/* 모바일 언어 선택 */}
+        <div
+          className={`p-4 border-t${menuClosing ? " menu-cta-stagger-out" : menuVisible ? " menu-cta-stagger" : ""}`}
+          style={{
+            borderColor: "rgba(0,0,0,0.08)",
+            ...(menuClosing
+              ? { "--stagger-out-delay": "0ms" } as React.CSSProperties
+              : menuVisible
+              ? { "--stagger-delay": `${80 + navItems.length * 45}ms` } as React.CSSProperties
+              : {}),
+          }}
+        >
+          <p className="text-xs font-semibold mb-2.5" style={{ color: "#999", letterSpacing: "0.05em" }}>LANGUAGE</p>
+          <div className="grid grid-cols-4 gap-2">
+            {langOptions.map((option) => (
+              <button
+                key={option.lang}
+                onClick={() => { closeMobileMenu(); setTimeout(() => { window.location.href = option.path; }, 100); }}
+                className="flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all"
+                style={{
+                  background: option.lang === lang ? "rgba(201,168,76,0.1)" : "rgba(0,0,0,0.04)",
+                  border: option.lang === lang ? "1.5px solid #C9A84C" : "1.5px solid transparent",
+                }}
+              >
+                <span style={{ fontSize: "20px" }}>{option.flag}</span>
+                <span style={{ fontSize: "10px", fontWeight: option.lang === lang ? 700 : 500, color: option.lang === lang ? "#C9A84C" : "#555" }}>{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* 모바일 CTA 버튼들 */}
         <div

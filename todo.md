@@ -818,3 +818,15 @@
 - [ ] hreflang 태그 추가 (ko/en/ja/zh 상호 참조)
 - [ ] App.tsx 라우팅 연결 (/en, /ja, /zh)
 - [ ] sitemap.xml 업데이트 (언어별 URL 포함)
+
+## Phase 111: 전체 컴포넌트 i18n 연결 (2026-05-30)
+- [ ] TreatmentsEquipmentSection.tsx useLang() 연결
+- [ ] DoctorsSection.tsx useLang() 연결
+- [ ] PhilosophySection.tsx useLang() 연결
+- [ ] ManagementDevicesSection.tsx useLang() 연결
+- [ ] ResultsStatisticsSection.tsx useLang() 연결
+- [ ] YouTubeSection.tsx useLang() 연결
+- [ ] ReservationSection.tsx useLang() 연결
+- [ ] ContactSection.tsx useLang() 연결
+- [ ] i18n.ts 4개 언어 번역 데이터 추가 (위 컴포넌트 전체)
+- [ ] /en, /ja, /zh 페이지를 Home.tsx와 동일한 컴포넌트 구조로 전환

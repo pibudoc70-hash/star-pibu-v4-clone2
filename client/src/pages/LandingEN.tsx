@@ -29,7 +29,7 @@ export default function LandingEN() {
 
   // Force English on mount
   useEffect(() => {
-    setLang("en");
+    setLang("en", false);
     document.title = "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning | Seomyeon";
     const metas: { name?: string; property?: string; content: string }[] = [
       { name: "description", content: "Star Dermatology in Busan Seomyeon. Board-certified dermatologist with 20+ years experience. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning, Pico Laser and 50+ premium treatments. Foreign patients welcome." },
@@ -77,6 +77,7 @@ export default function LandingEN() {
     scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
       document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
+      setLang("ko", false);
     };
   }, [setLang]);
 

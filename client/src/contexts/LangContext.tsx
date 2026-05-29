@@ -3,7 +3,7 @@ import { Lang, I18nContent, i18n } from "@/lib/i18n";
 
 interface LangContextType {
   lang: Lang;
-  setLang: (lang: Lang) => void;
+  setLang: (lang: Lang, persist?: boolean) => void;
   t: I18nContent;
 }
 
@@ -18,9 +18,11 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     return "ko";
   });
 
-  const setLang = (l: Lang) => {
+  const setLang = (l: Lang, persist = true) => {
     setLangState(l);
-    try { localStorage.setItem("star-lang", l); } catch {}
+    if (persist) {
+      try { localStorage.setItem("star-lang", l); } catch {}
+    }
   };
 
   useEffect(() => {

@@ -213,6 +213,34 @@ export interface I18nContent {
     kakao: string;
     businessInfo: string;
   };
+  youtube: {
+    sectionTitle: string;
+    sectionSubtitle: string;
+    latestVideos: string;
+    shorts: string;
+    visitChannel: string;
+    close: string;
+  };
+  reservation: {
+    sectionTitle: string;
+    sectionSubtitle: string;
+    loginCta: string;
+    guestCta: string;
+  };
+  treatmentPage: {
+    backHome: string;
+    recovery: string;
+    intro: string;
+    effects: string;
+    video: string;
+    caution: string;
+    ctaKakao: string;
+    ctaCall: string;
+    ctaBook: string;
+    otherTreatments: string;
+    notFound: string;
+    notFoundBack: string;
+  };
 }
 
 export const i18n: Record<Lang, I18nContent> = {
@@ -604,6 +632,34 @@ export const i18n: Record<Lang, I18nContent> = {
       kakao: "@스타피부과",
       businessInfo: "사업자등록번호: 605-24-84306 | 팩스: 051-818-2310 | 이메일: starpibu@naver.com",
     },
+    youtube: {
+      sectionTitle: "피부과전문의가 알려주는 피부이야기",
+      sectionSubtitle: "스타피부과 유튜브 채널에서 더 많은 정보를 확인하세요",
+      latestVideos: "최신 영상",
+      shorts: "쇼츠",
+      visitChannel: "유튜브 채널 방문하기",
+      close: "닫기",
+    },
+    reservation: {
+      sectionTitle: "온라인 예약",
+      sectionSubtitle: "간편하게 예약하고 대기 없이 방문하세요",
+      loginCta: "로그인하고 예약하기",
+      guestCta: "비회원으로 예약하기",
+    },
+    treatmentPage: {
+      backHome: "홈으로 돌아가기",
+      recovery: "회복기간",
+      intro: "시술 소개",
+      effects: "기대 효과",
+      video: "시술 영상",
+      caution: "주의사항",
+      ctaKakao: "카카오톡 상담",
+      ctaCall: "전화 상담",
+      ctaBook: "예약 신청",
+      otherTreatments: "다른 시술 보기",
+      notFound: "시술 정보를 찾을 수 없습니다.",
+      notFoundBack: "홈으로 돌아가기",
+    },
   },
 
   en: {
@@ -978,6 +1034,34 @@ export const i18n: Record<Lang, I18nContent> = {
       sms: "010-5855-3201",
       kakao: "@starpibu",
       businessInfo: "Business Reg. No.: 605-24-84306 | Fax: 051-818-2310 | Email: starpibu@naver.com",
+    },
+    youtube: {
+      sectionTitle: "Skin Stories from Our Dermatologists",
+      sectionSubtitle: "Visit our YouTube channel for more information",
+      latestVideos: "Latest Videos",
+      shorts: "Shorts",
+      visitChannel: "Visit YouTube Channel",
+      close: "Close",
+    },
+    reservation: {
+      sectionTitle: "Online Reservation",
+      sectionSubtitle: "Book easily and visit without waiting",
+      loginCta: "Log in & Book",
+      guestCta: "Book as Guest",
+    },
+    treatmentPage: {
+      backHome: "Back to Home",
+      recovery: "Recovery",
+      intro: "About This Treatment",
+      effects: "Expected Effects",
+      video: "Treatment Video",
+      caution: "Precautions",
+      ctaKakao: "KakaoTalk Consultation",
+      ctaCall: "Call Us",
+      ctaBook: "Book Now",
+      otherTreatments: "Other Treatments",
+      notFound: "Treatment information not found.",
+      notFoundBack: "Back to Home",
     },
   },
 
@@ -1354,6 +1438,34 @@ export const i18n: Record<Lang, I18nContent> = {
       kakao: "@starpibu",
       businessInfo: "事業者登録番号: 605-24-84306 | FAX: 051-818-2310 | Email: starpibu@naver.com",
     },
+    youtube: {
+      sectionTitle: "皮膚科専門医が教える肆の話",
+      sectionSubtitle: "スター皮膚科のYouTubeチャンネルでもっと多くの情報をご確認ください",
+      latestVideos: "最新動画",
+      shorts: "ショート",
+      visitChannel: "YouTubeチャンネルを訪問する",
+      close: "閉じる",
+    },
+    reservation: {
+      sectionTitle: "オンライン予約",
+      sectionSubtitle: "簡単に予約して待ちなしでご来院ください",
+      loginCta: "ログインして予約",
+      guestCta: "会員登録なしで予約",
+    },
+    treatmentPage: {
+      backHome: "ホームに戻る",
+      recovery: "回復期間",
+      intro: "施術の紹介",
+      effects: "期待できる効果",
+      video: "施術動画",
+      caution: "注意事項",
+      ctaKakao: "KakaoTalk相談",
+      ctaCall: "電話相談",
+      ctaBook: "予約申請",
+      otherTreatments: "他の施術を見る",
+      notFound: "施術情報が見つかりません。",
+      notFoundBack: "ホームに戻る",
+    },
   },
 
   zh: {
@@ -1727,7 +1839,35 @@ export const i18n: Record<Lang, I18nContent> = {
       phone: "051-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
-      businessInfo: "营业执照号: 605-24-84306 | 传真: 051-818-2310 | 邮箱: starpibu@naver.com",
+      businessInfo: "营业执照号: 605-24-84306 | 传真: 051-818-2310 | 邮筱: starpibu@naver.com",
+    },
+    youtube: {
+      sectionTitle: "皮肤科专家为您讲解皮肤故事",
+      sectionSubtitle: "请访问星皮肤科YouTube频道了解更多信息",
+      latestVideos: "最新视频",
+      shorts: "短视频",
+      visitChannel: "访问YouTube频道",
+      close: "关闭",
+    },
+    reservation: {
+      sectionTitle: "在线预约",
+      sectionSubtitle: "轻松预约，无需等候即可就诊",
+      loginCta: "登录并预约",
+      guestCta: "以访客身份预约",
+    },
+    treatmentPage: {
+      backHome: "返回首页",
+      recovery: "恢复期",
+      intro: "项目介绍",
+      effects: "预期效果",
+      video: "项目视频",
+      caution: "注意事项",
+      ctaKakao: "KakaoTalk咨询",
+      ctaCall: "电话咨询",
+      ctaBook: "预约申请",
+      otherTreatments: "查看其他项目",
+      notFound: "未找到该项目信息。",
+      notFoundBack: "返回首页",
     },
   },
 };

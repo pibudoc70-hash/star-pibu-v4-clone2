@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import OptimizedImage from '@/components/OptimizedImage';
+import { useLang } from '@/contexts/LangContext';
 
 interface YouTubeVideo {
   id: number;
@@ -13,6 +14,8 @@ interface YouTubeVideo {
 }
 
 export default function YouTubeSection() {
+  const { t } = useLang();
+  const yt = t.youtube;
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [shorts, setShorts] = useState<YouTubeVideo[]>([]);
@@ -50,18 +53,17 @@ export default function YouTubeSection() {
             YOUTUBE CHANNEL
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            <span className="block md:inline">피부과전문의가 알려주는</span>
-            <span className="block md:inline"> 피부이야기</span>
+            {yt.sectionTitle}
           </h2>
           <p className="text-sm md:text-base text-gray-600">
-            스타피부과 유튜브 채널에서 더 많은 정보를 확인하세요
+            {yt.sectionSubtitle}
           </p>
         </div>
 
         {/* 상단 영상 4개 */}
         {videos.length > 0 && (
           <div className="mb-16">
-            <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">최신 영상</h3>
+            <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
                 <button
@@ -103,7 +105,7 @@ export default function YouTubeSection() {
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
           <div>
-            <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">쇼츠</h3>
+            <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
                 <button
@@ -151,7 +153,7 @@ export default function YouTubeSection() {
             className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg"
             style={{ background: '#D1AB67', color: 'white' }}
           >
-            유튜브 채널 방문하기
+            {yt.visitChannel}
           </a>
         </div>
       </div>
@@ -227,7 +229,7 @@ export default function YouTubeSection() {
                   onClick={() => setSelectedVideo(null)}
                   className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium"
                 >
-                  닫기
+                  {yt.close}
                 </button>
               </div>
             </div>

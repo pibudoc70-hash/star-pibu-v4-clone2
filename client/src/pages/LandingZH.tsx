@@ -29,7 +29,7 @@ export default function LandingZH() {
 
   // Force Chinese on mount
   useEffect(() => {
-    setLang("zh");
+    setLang("zh", false);
     document.title = "釜山星皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置 | 西面";
     const metas: { name?: string; property?: string; content: string }[] = [
       { name: "description", content: "釜山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玛吉FLX、眼袋脂肪重置、皮秒激光等50余种优质项目。欢迎外国患者，提供中文咨询。" },
@@ -78,6 +78,7 @@ export default function LandingZH() {
     scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
       document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
+      setLang("ko", false);
     };
   }, [setLang]);
 

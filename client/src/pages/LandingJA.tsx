@@ -29,7 +29,7 @@ export default function LandingJA() {
 
   // Force Japanese on mount
   useEffect(() => {
-    setLang("ja");
+    setLang("ja", false);
     document.title = "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置 | 西面";
     const metas: { name?: string; property?: string; content: string }[] = [
       { name: "description", content: "釜山西面のスタ皮膚科。皮膚科専門医が20年以上の経験でウルセラピープライム、サーマジFLX、目の下の脂肪再配置、ピコレーザーなど50種以上の施術を提供。外国人患者様歓迎。" },
@@ -78,6 +78,7 @@ export default function LandingJA() {
     scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
       document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
+      setLang("ko", false);
     };
   }, [setLang]);
 

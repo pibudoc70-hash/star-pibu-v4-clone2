@@ -22,11 +22,23 @@ export default function Header() {
   const [menuClosing, setMenuClosing] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const { t, lang } = useLang();
-  const WECHAT_URL = "https://u.wechat.com/star2006beauty";
+  const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
-  const chatUrl = lang === "zh" ? WECHAT_URL : KAKAO_URL;
+  const LINE_URL = "https://line.me/ti/p/~star2006derm";
+  const NAVER_URL = "https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4";
+  const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
+  const reserveUrl = lang === "zh" ? LINE_URL : NAVER_URL;
   const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
   const chatColor = lang === "zh" ? "white" : "#1F2937";
+  const [wechatCopied, setWechatCopied] = useState(false);
+  const handleWechatClick = (e: React.MouseEvent) => {
+    if (lang !== "zh") return;
+    e.preventDefault();
+    navigator.clipboard.writeText(WECHAT_ID).then(() => {
+      setWechatCopied(true);
+      setTimeout(() => setWechatCopied(false), 2500);
+    });
+  };
   const [location] = useLocation();
   const isHome = location === "/";
   const { user } = useAuth();
@@ -217,22 +229,30 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
+            <div className="relative">
+              <a
+                href={chatUrl}
+                target={lang === "zh" ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                onClick={handleWechatClick}
+                className="flex items-center gap-1.5 font-semibold rounded-full transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
+                style={{ background: chatBg, color: chatColor, fontSize: "13px", padding: "6px 14px" }}
+              >
+                <MessageCircle size={13} />
+                {t.hero.cta_kakao}
+              </a>
+              {wechatCopied && lang === "zh" && (
+                <div className="absolute top-10 left-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg z-50">
+                  已复制 WeChat ID: <span className="font-bold">{WECHAT_ID}</span>
+                </div>
+              )}
+            </div>
             <a
-              href={chatUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-semibold rounded-full transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
-              style={{ background: chatBg, color: chatColor, fontSize: "13px", padding: "6px 14px" }}
-            >
-              <MessageCircle size={13} />
-              {t.hero.cta_kakao}
-            </a>
-            <a
-              href="https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4"
+              href={reserveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 font-semibold rounded-full text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
-              style={{ background: "#03C75A", fontSize: "13px", padding: "6px 14px" }}
+              style={{ background: lang === "zh" ? "#06C755" : "#03C75A", fontSize: "13px", padding: "6px 14px" }}
             >
               <Calendar size={13} />
               {t.hero.cta_reserve}
@@ -360,22 +380,30 @@ export default function Header() {
             <Phone size={16} />
             051-818-2300
           </a>
+          <div className="relative">
+            <a
+              href={chatUrl}
+              target={lang === "zh" ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              onClick={handleWechatClick}
+              className="flex items-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm w-full"
+              style={{ background: chatBg, color: chatColor }}
+            >
+              <MessageCircle size={16} />
+              {t.hero.cta_kakao}
+            </a>
+            {wechatCopied && lang === "zh" && (
+              <div className="absolute -top-10 left-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg z-50">
+                已复制 WeChat ID: <span className="font-bold">{WECHAT_ID}</span>
+              </div>
+            )}
+          </div>
           <a
-            href={chatUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm"
-            style={{ background: chatBg, color: chatColor }}
-          >
-            <MessageCircle size={16} />
-            {t.hero.cta_kakao}
-          </a>
-          <a
-            href="https://booking.naver.com/booking/13/bizes/1122956"
+            href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm text-white"
-            style={{ background: "linear-gradient(135deg, #03C75A, #02a84a)" }}
+            style={{ background: lang === "zh" ? "linear-gradient(135deg, #06C755, #04a843)" : "linear-gradient(135deg, #03C75A, #02a84a)" }}
           >
             <Calendar size={16} />
             {t.hero.cta_reserve}

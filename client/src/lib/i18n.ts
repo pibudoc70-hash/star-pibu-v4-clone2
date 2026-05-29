@@ -1528,7 +1528,7 @@ export const i18n: Record<Lang, I18nContent> = {
       floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
       cta_call: "051-818-2300",
       cta_kakao: "WeChat咨询",
-      cta_reserve: "Naver预约",
+      cta_reserve: "LINE咨询",
     },
     about: {
       label: "医院介绍",
@@ -1826,7 +1826,7 @@ export const i18n: Record<Lang, I18nContent> = {
       notFound: "未找到该治疗项目。",
       backBtn: "返回",
       ctaConsult: "WeChat咨询",
-      ctaReserve: "Naver预约",
+      ctaReserve: "LINE咨询",
     },
     faq: {
       sectionTitle: "常见问题",

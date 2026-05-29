@@ -13,7 +13,7 @@
  *
  * 모두 cubic-bezier(0.16, 1, 0.3, 1) spring easing — 팝업/섹션과 동일
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -202,10 +202,21 @@ const scrollToAbout = () => {
 
 export default function HeroSection() {
   const { t, lang } = useLang();
-  const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
+  const WECHAT_ID = "star2006beauty";
+  const chatUrl = lang === "zh" ? "#" : "https://pf.kakao.com/_HNyGC";
+  const reserveUrl = lang === "zh" ? "https://line.me/ti/p/~star2006derm" : "https://booking.naver.com/booking/13/bizes/209080";
   const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
   const chatColor = lang === "zh" ? "white" : "#1F2937";
   const chatShadow = lang === "zh" ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
+  const [wechatCopied, setWechatCopied] = useState(false);
+  const handleWechatClick = (e: React.MouseEvent) => {
+    if (lang !== "zh") return;
+    e.preventDefault();
+    navigator.clipboard.writeText(WECHAT_ID).then(() => {
+      setWechatCopied(true);
+      setTimeout(() => setWechatCopied(false), 2500);
+    });
+  };
   // 통계 섹션 IntersectionObserver ref
   const statsRef = useRef<HTMLDivElement>(null);
   // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
@@ -615,32 +626,39 @@ export default function HeroSection() {
           </a>
           {/* 카카오 + 네이버 버튼 - 모바일에서 2열, 데스크톱에서 인라인 */}
           <div className="flex flex-row w-full sm:w-auto" style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)" }}>
+            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1870ms" }}>
+              <a
+                href={chatUrl}
+                target={lang === "zh" ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                onClick={handleWechatClick}
+                className="flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
+                style={{
+                  background: chatBg,
+                  color: chatColor,
+                  boxShadow: chatShadow,
+                  fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
+                  padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
+                  whiteSpace: "nowrap",
+                  minWidth: "clamp(78px, 22vw, 130px)",
+                }}
+              >
+                <MessageCircle size={14} />
+                {wechatCopied && lang === "zh" ? "已复制!" : t.hero.cta_kakao}
+              </a>
+              {wechatCopied && lang === "zh" && (
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">
+                  ID: {WECHAT_ID}
+                </div>
+              )}
+            </div>
             <a
-              href={chatUrl}
+              href={reserveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
               style={{
-                background: chatBg,
-                color: chatColor,
-                boxShadow: chatShadow,
-                fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
-                padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-                animationDelay: "1870ms",
-                whiteSpace: "nowrap",
-                minWidth: "clamp(78px, 22vw, 130px)",
-              }}
-            >
-              <MessageCircle size={14} />
-              {t.hero.cta_kakao}
-            </a>
-            <a
-              href="https://booking.naver.com/booking/13/bizes/209080"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
-              style={{
-                background: "#03C75A",
+                background: lang === "zh" ? "#06C755" : "#03C75A",
                 color: "#FFFFFF",
                 boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
                 fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",

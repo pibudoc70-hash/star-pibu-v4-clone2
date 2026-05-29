@@ -23,17 +23,30 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const WECHAT_URL = "https://u.wechat.com/star2006beauty";
+  const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
-  const chatUrl = lang === "zh" ? WECHAT_URL : KAKAO_URL;
+  const LINE_URL = "https://line.me/ti/p/~star2006derm";
+  const NAVER_URL = "https://booking.naver.com/booking/13/bizes/209080";
+  const reserveUrl = lang === "zh" ? LINE_URL : NAVER_URL;
+  const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
+
+  const [wechatCopied, setWechatCopied] = useState(false);
+  const handleWechatClick = (e: React.MouseEvent) => {
+    if (lang !== "zh") return;
+    e.preventDefault();
+    navigator.clipboard.writeText(WECHAT_ID).then(() => {
+      setWechatCopied(true);
+      setTimeout(() => setWechatCopied(false), 2500);
+    });
+  };
 
   const labels = {
     call:      lang === "ja" ? "電話"         : lang === "zh" ? "电话"          : lang === "en" ? "Call"    : "전화",
     kakao:     lang === "ja" ? "カカオ"        : lang === "zh" ? "WeChat"         : lang === "en" ? "Kakao"   : "카카오",
-    map:       lang === "ja" ? "Naver予約"    : lang === "zh" ? "Naver预约"     : lang === "en" ? "Book"    : "예약",
+    map:       lang === "ja" ? "Naver予約"    : lang === "zh" ? "LINE"           : lang === "en" ? "Book"    : "예약",
     callAria:  lang === "ja" ? "電話相談"      : lang === "zh" ? "电话咨询"      : lang === "en" ? "Call Us" : "전화 상담",
     kakaoAria: lang === "ja" ? "カカオトーク"  : lang === "zh" ? "WeChat咨询" : lang === "en" ? "KakaoTalk" : "카카오톡 상담",
-    mapAria:   lang === "ja" ? "Naver予約"    : lang === "zh" ? "Naver预约"     : lang === "en" ? "Naver Booking" : "네이버 예약",
+    mapAria:   lang === "ja" ? "Naver予約"    : lang === "zh" ? "LINE咨询"       : lang === "en" ? "Naver Booking" : "네이버 예약",
     chatBg:    lang === "zh" ? "#07C160" : "#FEE500",
     chatColor: lang === "zh" ? "white" : "#1F2937",
   };
@@ -75,9 +88,10 @@ export default function FloatingCTA() {
           </a>
           <a
             href={chatUrl}
-            target="_blank"
+            target={lang === "zh" ? undefined : "_blank"}
             rel="noopener noreferrer"
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold"
+            onClick={handleWechatClick}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold relative"
             style={{
               background: labels.chatBg,
               color: labels.chatColor,
@@ -85,15 +99,20 @@ export default function FloatingCTA() {
             }}
           >
             <MessageCircle size={18} />
-            {labels.kakao}
+            {wechatCopied ? (lang === "zh" ? "已复制!" : labels.kakao) : labels.kakao}
+            {wechatCopied && lang === "zh" && (
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
+                ID: {WECHAT_ID}
+              </span>
+            )}
           </a>
           <a
-            href="https://booking.naver.com/booking/13/bizes/209080"
+            href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold text-white"
             style={{
-              background: "#03C75A",
+              background: lang === "zh" ? "#06C755" : "#03C75A",
               minHeight: "52px",
             }}
           >
@@ -165,25 +184,34 @@ export default function FloatingCTA() {
           </a>
 
           {/* 카카오 / WeChat */}
-          <a
-            href={chatUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
-            style={{ background: labels.chatBg }}
-            aria-label={labels.kakaoAria}
-            title={labels.kakaoAria}
-          >
-            <MessageCircle size={22} style={{ color: labels.chatColor }} />
-          </a>
+          <div className="relative">
+            <a
+              href={chatUrl}
+              target={lang === "zh" ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              onClick={handleWechatClick}
+              className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
+              style={{ background: labels.chatBg }}
+              aria-label={labels.kakaoAria}
+              title={labels.kakaoAria}
+            >
+              <MessageCircle size={22} style={{ color: labels.chatColor }} />
+            </a>
+            {wechatCopied && lang === "zh" && (
+              <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
+                已复制 WeChat ID<br />
+                <span className="font-bold">{WECHAT_ID}</span>
+              </div>
+            )}
+          </div>
 
-          {/* 네이버 예약 */}
+          {/* 네이버 예약 / LINE */}
           <a
-            href="https://booking.naver.com/booking/13/bizes/209080"
+            href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
-            style={{ background: "#03C75A" }}
+            style={{ background: lang === "zh" ? "#06C755" : "#03C75A" }}
             aria-label={labels.mapAria}
             title={labels.mapAria}
           >

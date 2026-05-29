@@ -678,7 +678,7 @@ export const i18n: Record<Lang, I18nContent> = {
       subtitle: "Where Natural Beauty Begins",
       badge: "Since 2006",
       floor: "Busan Seomyeon ION City Bldg. 4F Reception & Treatment | 2F Stem Cell Research Center",
-      cta_call: "051-818-2300",
+      cta_call: "+82-51-818-2300",
       cta_kakao: "KakaoTalk",
       cta_reserve: "Naver Booking",
     },
@@ -838,7 +838,7 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     footer: {
       address: "ION City Building 2F & 4F, 74 Seomyeon-ro, Busanjin-gu, Busan, Korea",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© STAR Dermatology Clinic. All rights reserved.",
@@ -964,7 +964,7 @@ export const i18n: Record<Lang, I18nContent> = {
       cta_call: "Phone Booking",
       directions: "Directions",
       address: "ION City Building 2F & 4F, Seomyeon, Busan",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       viewMap: "View Map",
     },
     treatmentDetail: {
@@ -1051,7 +1051,7 @@ export const i18n: Record<Lang, I18nContent> = {
       ]
     },
     contact: {
-      phone: "051-818-2300",
+      phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
       businessInfo: "Business Reg. No.: 605-24-84306 | Fax: 051-818-2310 | Email: starpibu@naver.com",
@@ -1102,9 +1102,9 @@ export const i18n: Record<Lang, I18nContent> = {
       subtitle: "自然な変化を生み出すクリニック",
       badge: "Since 2006",
       floor: "釜山西面 アイオンシティビル 4F 受付・診療 | 2F 幹細胞研究センター",
-      cta_call: "051-818-2300",
+      cta_call: "+82-51-818-2300",
       cta_kakao: "カカオ相談",
-      cta_reserve: "ネイバー予約",
+      cta_reserve: "LINE予約",
     },
     about: {
       label: "クリニック紹介",
@@ -1218,7 +1218,7 @@ export const i18n: Record<Lang, I18nContent> = {
       title: "外国人患者様へ",
       subtitle: "スター皮膚科は外国人患者様を歓迎いたします",
       steps: [
-        { step: "01", title: "ご予約", desc: "カカオトークまたはお電話でご予約ください。日本語でのお問い合わせはOTOMO（otomo-busan.com）をご利用ください。" },
+        { step: "01", title: "ご予約", desc: "LINEまたはお電話でご予約ください。日本語でのお問い合わせはLINE（@star2006derm）をご利用ください。" },
         { step: "02", title: "ご来院", desc: "西面駅5・7番出口から徒歩3分。アイオンシティビル4階です。" },
         { step: "03", title: "カウンセリング・施術", desc: "専門医が直接お肌の状態を診断し、最適な施術をご提案いたします。" },
         { step: "04", title: "アフターケア", desc: "施術後のケア方法をご案内いたします。帰国後もオンライン相談が可能です。" },
@@ -1262,7 +1262,7 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     footer: {
       address: "釜山広域市釜山鎮区西面路74 アイオンシティビル 2・4階",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© スター皮膚科. All rights reserved.",
@@ -1388,7 +1388,7 @@ export const i18n: Record<Lang, I18nContent> = {
       cta_call: "電話予約",
       directions: "アクセス",
       address: "釜山西面 アイオンシティビル 2F・4F",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       viewMap: "地図を見る",
     },
     treatmentDetail: {
@@ -1475,7 +1475,7 @@ export const i18n: Record<Lang, I18nContent> = {
       ]
     },
     contact: {
-      phone: "051-818-2300",
+      phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
       businessInfo: "事業者登録番号: 605-24-84306 | FAX: 051-818-2310 | Email: starpibu@naver.com",
@@ -1526,7 +1526,7 @@ export const i18n: Record<Lang, I18nContent> = {
       subtitle: "打造自然美丽的专业皮肤科",
       badge: "Since 2006",
       floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
-      cta_call: "051-818-2300",
+      cta_call: "+82-51-818-2300",
       cta_kakao: "WeChat咨询",
       cta_reserve: "LINE咨询",
     },
@@ -1686,7 +1686,7 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     footer: {
       address: "釜山广域市釜山镇区西面路74 爱恩城大厦 2·4楼",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© STAR皮肤科. All rights reserved.",
@@ -1812,7 +1812,7 @@ export const i18n: Record<Lang, I18nContent> = {
       cta_call: "电话预约",
       directions: "交通指南",
       address: "釜山西面 爱恩城大厦 2F、4F",
-      tel: "051-818-2300",
+      tel: "+82-51-818-2300",
       viewMap: "查看地图",
     },
     treatmentDetail: {
@@ -1899,7 +1899,7 @@ export const i18n: Record<Lang, I18nContent> = {
       ]
     },
     contact: {
-      phone: "051-818-2300",
+      phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
       businessInfo: "营业执照号: 605-24-84306 | 传真: 051-818-2310 | 邮筱: starpibu@naver.com",

@@ -24,7 +24,7 @@ function IconByType({ type, size = 20 }: { type?: string; size?: number }) {
 export default function EventDetail() {
   const params = useParams<{ id: string }>();
   const [, navigate] = useLocation();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const ed = t.eventDetail;
   const eventId = parseInt(params.id, 10);
 
@@ -166,7 +166,7 @@ export default function EventDetail() {
               {ed.cta_kakao}
             </a>
             <a
-              href="tel:051-818-2300"
+              href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
               className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all border-2"
               style={{ borderColor: accentColor, color: accentColor }}
             >

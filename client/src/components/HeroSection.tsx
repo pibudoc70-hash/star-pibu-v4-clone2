@@ -204,7 +204,7 @@ export default function HeroSection() {
   const { t, lang } = useLang();
   const WECHAT_ID = "star2006beauty";
   const chatUrl = lang === "zh" ? "#" : "https://pf.kakao.com/_HNyGC";
-  const reserveUrl = lang === "zh" ? "https://line.me/ti/p/~star2006derm" : "https://booking.naver.com/booking/13/bizes/209080";
+  const reserveUrl = lang === "zh" ? "https://line.me/ti/p/~star2006derm" : lang === "ja" ? "https://lin.ee/tyuRdUc" : "https://booking.naver.com/booking/13/bizes/209080";
   const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
   const chatColor = lang === "zh" ? "white" : "#1F2937";
   const chatShadow = lang === "zh" ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
@@ -603,7 +603,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center w-full" style={{ gap: "clamp(1rem, 1.5vw, 0.6rem)", marginTop: '42px', maxWidth: '591px', width: '100%' }}>
           {/* 전화 버튼 - 모바일에서 전체 너비 */}
           <a
-            href="tel:051-818-2300"
+            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
             className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
             style={{
               background: "linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.1) 100%)",

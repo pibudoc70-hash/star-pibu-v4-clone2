@@ -263,11 +263,11 @@ export default function ContactSection() {
                 <div>
                   <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>{labels.phone}</p>
                   <a
-                    href="tel:051-818-2300"
+                    href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
                     className="font-montserrat font-bold text-lg transition-colors hover:opacity-70"
                     style={{ color: "#4A6FA5" }}
                   >
-                    051-818-2300
+                    {lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
                   </a>
                 </div>
               </div>

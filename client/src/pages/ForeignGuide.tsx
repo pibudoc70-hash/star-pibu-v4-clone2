@@ -369,12 +369,12 @@ export default function ForeignGuide() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="tel:051-818-2300"
+              href={globalLang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
               className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
               style={{ background: colors.text, color: "white" }}
             >
               <Phone size={16} />
-              051-818-2300
+              {globalLang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
             </a>
             <a
               href="https://pf.kakao.com/_HNyGC"

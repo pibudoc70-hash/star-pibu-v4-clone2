@@ -26,8 +26,9 @@ export default function FloatingCTA() {
   const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
   const LINE_URL = "https://line.me/ti/p/~star2006derm";
+  const JA_LINE_URL = "https://lin.ee/tyuRdUc";
   const NAVER_URL = "https://booking.naver.com/booking/13/bizes/209080";
-  const reserveUrl = lang === "zh" ? LINE_URL : NAVER_URL;
+  const reserveUrl = lang === "zh" ? LINE_URL : lang === "ja" ? JA_LINE_URL : NAVER_URL;
   const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
 
   const [wechatCopied, setWechatCopied] = useState(false);
@@ -43,10 +44,10 @@ export default function FloatingCTA() {
   const labels = {
     call:      lang === "ja" ? "電話"         : lang === "zh" ? "电话"          : lang === "en" ? "Call"    : "전화",
     kakao:     lang === "ja" ? "カカオ"        : lang === "zh" ? "WeChat"         : lang === "en" ? "Kakao"   : "카카오",
-    map:       lang === "ja" ? "Naver予約"    : lang === "zh" ? "LINE"           : lang === "en" ? "Book"    : "예약",
+    map:       lang === "ja" ? "LINE予約"    : lang === "zh" ? "LINE"           : lang === "en" ? "Book"    : "예약",
     callAria:  lang === "ja" ? "電話相談"      : lang === "zh" ? "电话咨询"      : lang === "en" ? "Call Us" : "전화 상담",
     kakaoAria: lang === "ja" ? "カカオトーク"  : lang === "zh" ? "WeChat咨询" : lang === "en" ? "KakaoTalk" : "카카오톡 상담",
-    mapAria:   lang === "ja" ? "Naver予約"    : lang === "zh" ? "LINE咨询"       : lang === "en" ? "Naver Booking" : "네이버 예약",
+    mapAria:   lang === "ja" ? "LINE予約"    : lang === "zh" ? "LINE咨询"       : lang === "en" ? "Naver Booking" : "네이버 예약",
     chatBg:    lang === "zh" ? "#07C160" : "#FEE500",
     chatColor: lang === "zh" ? "white" : "#1F2937",
   };
@@ -73,7 +74,7 @@ export default function FloatingCTA() {
       >
         <div className="flex">
           <a
-            href="tel:051-818-2300"
+            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold"
             style={{
               background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
@@ -171,14 +172,14 @@ export default function FloatingCTA() {
         >
           {/* 전화 - 금색 그라디언트 */}
           <a
-            href="tel:051-818-2300"
+            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
             className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
             style={{
               background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
               boxShadow: "0 4px 16px rgba(201,168,76,0.45), 0 2px 8px rgba(0,0,0,0.15)",
             }}
             aria-label={labels.callAria}
-            title="051-818-2300"
+            title={lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
           >
             <Phone size={22} className="text-white" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }} />
           </a>

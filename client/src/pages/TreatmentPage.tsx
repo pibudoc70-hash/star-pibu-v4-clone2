@@ -4,6 +4,7 @@
  * SEO: 각 페이지마다 고유 title, description, JSON-LD MedicalProcedure 스키마 적용
  */
 import { useEffect } from "react";
+import { useLang } from "@/contexts/LangContext";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -148,6 +149,7 @@ function buildJsonLd(t: TreatmentData) {
 export default function TreatmentPage() {
   const params = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
+  const { lang } = useLang();
   const slug = params.slug;
   const treatment = TREATMENT_DATA[slug];
 
@@ -375,12 +377,12 @@ export default function TreatmentPage() {
             카카오톡 상담
           </a>
           <a
-            href="tel:051-818-2300"
+            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
             className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
             style={{ background: "linear-gradient(135deg, #2D4A7A 0%, #4A6FA5 100%)" }}
           >
             <span>📞</span>
-            051-818-2300
+            {lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
           </a>
           <button
             onClick={() => {

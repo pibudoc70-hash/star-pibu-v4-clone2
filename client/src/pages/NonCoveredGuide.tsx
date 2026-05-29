@@ -167,7 +167,7 @@ export default function NonCoveredGuide() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="tel:051-818-2300"
+                href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105"
                 style={{ background: "#1A4FA0", color: "#fff" }}
               >

@@ -13,7 +13,7 @@ const EQUIPMENT_LIST = [
 ];
 
 export default function Equipment() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <MainLayout>
@@ -51,7 +51,7 @@ export default function Equipment() {
               className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-3 rounded-lg font-semibold transition-colors">
               카카오톡 상담
             </a>
-            <a href="tel:051-818-2300"
+            <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
               className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-3 rounded-lg font-semibold transition-colors">
               {t.footer.tel}
             </a>

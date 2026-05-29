@@ -311,10 +311,10 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
             <MessageCircle size={16} />{wp.cta_kakao}
           </a>
           <div className="flex gap-2">
-            <a href="tel:051-818-2300"
+            <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center"
               style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />051-818-2300
+              <Phone size={13} />{lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
             </a>
             <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center text-white"
@@ -432,10 +432,10 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
             <MessageCircle size={16} />{wp.cta_kakao}
           </a>
           <div className="flex gap-2">
-            <a href="tel:051-818-2300"
+            <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-80"
               style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />051-818-2300
+              <Phone size={13} />{lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
             </a>
             <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-90 text-white"

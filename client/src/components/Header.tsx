@@ -25,9 +25,10 @@ export default function Header() {
   const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
   const LINE_URL = "https://line.me/ti/p/~star2006derm";
+  const JA_LINE_URL = "https://lin.ee/tyuRdUc";
   const NAVER_URL = "https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4";
   const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
-  const reserveUrl = lang === "zh" ? LINE_URL : NAVER_URL;
+  const reserveUrl = lang === "zh" ? LINE_URL : lang === "ja" ? JA_LINE_URL : NAVER_URL;
   const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
   const chatColor = lang === "zh" ? "white" : "#1F2937";
   const [wechatCopied, setWechatCopied] = useState(false);
@@ -373,12 +374,12 @@ export default function Header() {
           }}
         >
           <a
-            href="tel:051-818-2300"
+            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
             className="flex items-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm"
             style={{ background: "rgba(0,0,0,0.04)", color: "#333", border: "1px solid rgba(0,0,0,0.08)" }}
           >
             <Phone size={16} />
-            051-818-2300
+            {lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
           </a>
           <div className="relative">
             <a

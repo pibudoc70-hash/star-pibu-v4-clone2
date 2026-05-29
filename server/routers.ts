@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { treatmentsRouter } from "./treatments-router";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot, getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo } from "./db";
+import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getSpecialEventsByLang, getAllEventsByLang, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot, getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo } from "./db";
 import { users, popupEvents, events, treatments, treatmentCategories, youtubeVideos } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
@@ -263,10 +263,41 @@ export const appRouter = router({
       return getListEvents();
     }),
 
-    // 공개: SPECIAL EVENT 조회
-    special: publicProcedure.query(async () => {
-      return getSpecialEvents();
-    }),
+    // 공개: SPECIAL EVENT 조회 (언어 파라미터 지원)
+    special: publicProcedure
+      .input(z.object({ lang: z.string().default("ko") }).optional())
+      .query(async ({ input }) => {
+        const lang = input?.lang ?? "ko";
+        return getSpecialEventsByLang(lang);
+      }),
+
+    // 공개: 언어별 일반 이벤트 조회
+    listByLang: publicProcedure
+      .input(z.object({ lang: z.string().default("ko") }))
+      .query(async ({ input }) => {
+        return getAllEventsByLang(input.lang);
+      }),
+
+    // 관리자: AI 자동 번역
+    translate: adminProcedure
+      .input(z.object({
+        text: z.string(),
+        targetLang: z.enum(["en", "ja", "zh"]),
+        field: z.string(), // 어떤 필드인지 로그용
+      }))
+      .mutation(async ({ input }) => {
+        const { invokeLLM } = await import("./_core/llm");
+        const langNames: Record<string, string> = { en: "English", ja: "日本어", zh: "중국어(간체)"};
+        const response = await invokeLLM({
+          messages: [
+            { role: "system", content: `You are a professional medical/beauty clinic translator. Translate the following Korean text to ${langNames[input.targetLang]}. Return ONLY the translated text, no explanations, no quotes.` },
+            { role: "user", content: input.text },
+          ],
+        });
+        const rawContent = response.choices?.[0]?.message?.content ?? "";
+        const translated = typeof rawContent === "string" ? rawContent : "";
+        return { translated: translated.trim() };
+      }),
 
     // 공개: 단일 이벤트 조회 (조회수 증가)
     getById: publicProcedure
@@ -331,6 +362,20 @@ export const appRouter = router({
         discountPrice: z.number().default(0),
         priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).default([]),
         anesthesiaFee: z.string().max(200).default(""),
+        // 다국어 필드
+        targetLang: z.string().default("ko"),
+        titleEn: z.string().max(200).default(""),
+        titleJa: z.string().max(200).default(""),
+        titleZh: z.string().max(200).default(""),
+        subtitleEn: z.string().max(150).default(""),
+        subtitleJa: z.string().max(150).default(""),
+        subtitleZh: z.string().max(150).default(""),
+        descEn: z.string().default(""),
+        descJa: z.string().default(""),
+        descZh: z.string().default(""),
+        productNameEn: z.string().max(200).default(""),
+        productNameJa: z.string().max(200).default(""),
+        productNameZh: z.string().max(200).default(""),
       }))
       .mutation(async ({ input }) => {
         const { priceRows, ...rest } = input;
@@ -374,6 +419,20 @@ export const appRouter = router({
         discountPrice: z.number().optional(),
         priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).optional(),
         anesthesiaFee: z.string().max(200).optional(),
+        // 다국어 필드
+        targetLang: z.string().optional(),
+        titleEn: z.string().max(200).optional(),
+        titleJa: z.string().max(200).optional(),
+        titleZh: z.string().max(200).optional(),
+        subtitleEn: z.string().max(150).optional(),
+        subtitleJa: z.string().max(150).optional(),
+        subtitleZh: z.string().max(150).optional(),
+        descEn: z.string().optional(),
+        descJa: z.string().optional(),
+        descZh: z.string().optional(),
+        productNameEn: z.string().max(200).optional(),
+        productNameJa: z.string().max(200).optional(),
+        productNameZh: z.string().max(200).optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, priceRows, ...data } = input;

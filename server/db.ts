@@ -197,7 +197,21 @@ export async function incrementEventViews(id: number) {
 export async function getSpecialEvents() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"), eq(events.targetLang, "ko"))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+}
+
+// 언어별 SPECIAL EVENT 조회
+export async function getSpecialEventsByLang(lang: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"), eq(events.targetLang, lang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+}
+
+// 언어별 일반 이벤트 조회
+export async function getAllEventsByLang(lang: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.targetLang, lang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
 // ─── 시술·장비 카테고리 관련 ────────────────────────────────────────────────────

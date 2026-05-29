@@ -97,6 +97,20 @@ export const events = mysqlTable("events", {
   discountPrice: int("discountPrice").default(0),
   priceRows: text("priceRows").notNull(), // JSON 형식으로 여러 가격 행 저장
   anesthesiaFee: varchar("anesthesiaFee", { length: 200 }).default(""), // 수면마취비 정보 (예: "수면마취비 별도")
+  // 다국어 지원 필드
+  targetLang: varchar("targetLang", { length: 20 }).notNull().default("ko"), // "ko" | "en" | "ja" | "zh"
+  titleEn: varchar("titleEn", { length: 200 }).default(""),
+  titleJa: varchar("titleJa", { length: 200 }).default(""),
+  titleZh: varchar("titleZh", { length: 200 }).default(""),
+  subtitleEn: varchar("subtitleEn", { length: 150 }).default(""),
+  subtitleJa: varchar("subtitleJa", { length: 150 }).default(""),
+  subtitleZh: varchar("subtitleZh", { length: 150 }).default(""),
+  descEn: text("descEn"),
+  descJa: text("descJa"),
+  descZh: text("descZh"),
+  productNameEn: varchar("productNameEn", { length: 200 }).default(""),
+  productNameJa: varchar("productNameJa", { length: 200 }).default(""),
+  productNameZh: varchar("productNameZh", { length: 200 }).default(""),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

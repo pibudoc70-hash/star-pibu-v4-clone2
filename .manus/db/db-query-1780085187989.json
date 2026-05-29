@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `events` ADD `targetLang` varchar(20) DEFAULT 'ko' NOT NULL;\nALTER TABLE `events` ADD `titleEn` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `titleJa` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `titleZh` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `subtitleEn` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `subtitleJa` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `subtitleZh` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `descEn` text;\nALTER TABLE `events` ADD `descJa` text;\nALTER TABLE `events` ADD `descZh` text;\nALTER TABLE `events` ADD `productNameEn` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `productNameJa` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `productNameZh` varchar(200) DEFAULT '';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute ALTER TABLE `events` ADD `targetLang` varchar(20) DEFAULT 'ko' NOT NULL;\nALTER TABLE `events` ADD `titleEn` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `titleJa` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `titleZh` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `subtitleEn` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `subtitleJa` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `subtitleZh` varchar(150) DEFAULT '';\nALTER TABLE `events` ADD `descEn` text;\nALTER TABLE `events` ADD `descJa` text;\nALTER TABLE `events` ADD `descZh` text;\nALTER TABLE `events` ADD `productNameEn` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `productNameJa` varchar(200) DEFAULT '';\nALTER TABLE `events` ADD `productNameZh` varchar(200) DEFAULT '';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 7216
+}

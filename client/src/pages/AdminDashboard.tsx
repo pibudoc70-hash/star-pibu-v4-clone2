@@ -248,6 +248,37 @@ export default function AdminDashboard() {
     onError: () => toast.error("이미지 업로드에 실패했습니다."),
   });
 
+  const translateEventMutation = trpc.events.translate.useMutation({
+    onError: () => toast.error("번역에 실패했습니다."),
+  });
+
+  const [translating, setTranslating] = useState<string | null>(null);
+
+  const handleAutoTranslate = async (targetLang: "en" | "ja" | "zh") => {
+    if (!eventForm?.title) { toast.error("제목을 먼저 입력해주세요."); return; }
+    setTranslating(targetLang);
+    try {
+      const langSuffix = targetLang.charAt(0).toUpperCase() + targetLang.slice(1);
+      const fields: Record<string, string> = {
+        [`title${langSuffix}`]: eventForm.title || "",
+        [`subtitle${langSuffix}`]: eventForm.subtitle || "",
+        [`desc${langSuffix}`]: eventForm.desc || "",
+        [`productName${langSuffix}`]: eventForm.productName || "",
+      };
+      const updates: Record<string, string> = {};
+      for (const [key, text] of Object.entries(fields)) {
+        if (text.trim()) {
+          const res = await translateEventMutation.mutateAsync({ text, targetLang, field: key });
+          updates[key] = res.translated;
+        }
+      }
+      setEventForm((prev: any) => ({ ...prev, ...updates }));
+      toast.success(`${targetLang.toUpperCase()} 번역 완료!`);
+    } finally {
+      setTranslating(null);
+    }
+  };
+
   const updatePopupMutation = trpc.popup.update.useMutation({
     onSuccess: () => { refetchPopup(); toast.success("이벤트가 수정되었습니다."); setPopupEditId(null); setPopupForm(null); },
     onError: () => toast.error("수정에 실패했습니다."),
@@ -904,7 +935,7 @@ export default function AdminDashboard() {
               <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
                 <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
                 <button
-                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [], isSpecialEvent: "0", anesthesiaFee: "" }); setEditingEventId(null); }}
+                  onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [], isSpecialEvent: "0", anesthesiaFee: "", targetLang: "ko", titleEn: "", titleJa: "", titleZh: "", subtitleEn: "", subtitleJa: "", subtitleZh: "", descEn: "", descJa: "", descZh: "", productNameEn: "", productNameJa: "", productNameZh: "" }); setEditingEventId(null); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
                   style={{ background: "#4A6FA5" }}
                 >
@@ -1116,6 +1147,70 @@ export default function AdminDashboard() {
                           className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                         />
                       </div>
+                      {/* 다국어 설정 섹션 */}
+                      <div className="border border-[#E5E7EB] rounded-xl p-4 space-y-4 bg-[#F9FAFB]">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-sm font-bold text-[#1F2937]">국제 노출 설정</h4>
+                          <div className="flex gap-2">
+                            {(["en", "ja", "zh"] as const).map((lang) => (
+                              <button
+                                key={lang}
+                                type="button"
+                                disabled={translating === lang}
+                                onClick={() => handleAutoTranslate(lang)}
+                                className="px-3 py-1 text-xs font-semibold rounded-full border transition-colors"
+                                style={{ background: translating === lang ? "#E5E7EB" : "#4A6FA5", color: translating === lang ? "#9CA3AF" : "#fff", borderColor: "#4A6FA5" }}
+                              >
+                                {translating === lang ? "번역중..." : `AI ${lang.toUpperCase()} 번역`}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-[#6B7280]">노출 언어</label>
+                          <select
+                            value={eventForm.targetLang || "ko"}
+                            onChange={(e) => setEventForm({ ...eventForm, targetLang: e.target.value })}
+                            className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm bg-white"
+                          >
+                            <option value="ko">한국어 (한국어 페이지)</option>
+                            <option value="en">영어 (English 페이지)</option>
+                            <option value="ja">일본어 (日本어 페이지)</option>
+                            <option value="zh">중국어 (中文 페이지)</option>
+                          </select>
+                          <p className="text-xs text-[#9CA3AF]">선택한 언어 페이지에만 노출됩니다. AI 번역 버튼으로 자동 번역 후 수정 가능합니다.</p>
+                        </div>
+                        {/* 영어 번역 필드 */}
+                        {(eventForm.targetLang === "en" || eventForm.titleEn) && (
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold text-blue-600">한국어 원본 편집 후 AI EN 번역 버튼 클릭 → 영어 필드 자동 입력</label>
+                            <input type="text" placeholder="영어 제목 (EN Title)" value={eventForm.titleEn || ""} onChange={(e) => setEventForm({ ...eventForm, titleEn: e.target.value })} className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm" />
+                            <input type="text" placeholder="영어 부제목 (EN Subtitle)" value={eventForm.subtitleEn || ""} onChange={(e) => setEventForm({ ...eventForm, subtitleEn: e.target.value })} className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm" />
+                            <textarea placeholder="영어 설명 (EN Description)" value={eventForm.descEn || ""} onChange={(e) => setEventForm({ ...eventForm, descEn: e.target.value })} className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm" rows={2} />
+                            {eventForm.productName && <input type="text" placeholder="영어 시술명 (EN Product Name)" value={eventForm.productNameEn || ""} onChange={(e) => setEventForm({ ...eventForm, productNameEn: e.target.value })} className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm" />}
+                          </div>
+                        )}
+                        {/* 일본어 번역 필드 */}
+                        {(eventForm.targetLang === "ja" || eventForm.titleJa) && (
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold text-red-600">한국어 원본 편집 후 AI JA 번역 버튼 클릭 → 일본어 필드 자동 입력</label>
+                            <input type="text" placeholder="일본어 제목 (JA Title)" value={eventForm.titleJa || ""} onChange={(e) => setEventForm({ ...eventForm, titleJa: e.target.value })} className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm" />
+                            <input type="text" placeholder="일본어 부제목 (JA Subtitle)" value={eventForm.subtitleJa || ""} onChange={(e) => setEventForm({ ...eventForm, subtitleJa: e.target.value })} className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm" />
+                            <textarea placeholder="일본어 설명 (JA Description)" value={eventForm.descJa || ""} onChange={(e) => setEventForm({ ...eventForm, descJa: e.target.value })} className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm" rows={2} />
+                            {eventForm.productName && <input type="text" placeholder="일본어 시술명 (JA Product Name)" value={eventForm.productNameJa || ""} onChange={(e) => setEventForm({ ...eventForm, productNameJa: e.target.value })} className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm" />}
+                          </div>
+                        )}
+                        {/* 중국어 번역 필드 */}
+                        {(eventForm.targetLang === "zh" || eventForm.titleZh) && (
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold text-yellow-600">한국어 원본 편집 후 AI ZH 번역 버튼 클릭 → 중국어 필드 자동 입력</label>
+                            <input type="text" placeholder="중국어 제목 (ZH Title)" value={eventForm.titleZh || ""} onChange={(e) => setEventForm({ ...eventForm, titleZh: e.target.value })} className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm" />
+                            <input type="text" placeholder="중국어 부제목 (ZH Subtitle)" value={eventForm.subtitleZh || ""} onChange={(e) => setEventForm({ ...eventForm, subtitleZh: e.target.value })} className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm" />
+                            <textarea placeholder="중국어 설명 (ZH Description)" value={eventForm.descZh || ""} onChange={(e) => setEventForm({ ...eventForm, descZh: e.target.value })} className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm" rows={2} />
+                            {eventForm.productName && <input type="text" placeholder="중국어 시술명 (ZH Product Name)" value={eventForm.productNameZh || ""} onChange={(e) => setEventForm({ ...eventForm, productNameZh: e.target.value })} className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm" />}
+                          </div>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         <input
                           type="checkbox"
@@ -1168,7 +1263,20 @@ export default function AdminDashboard() {
                                 ...event,
                                 priceRows: typeof event.priceRows === 'string' ? JSON.parse(event.priceRows || '[]') : (event.priceRows || []),
                                 isSpecialEvent: event.isSpecialEvent || "0",
-                                anesthesiaFee: event.anesthesiaFee || ""
+                                anesthesiaFee: event.anesthesiaFee || "",
+                                targetLang: event.targetLang || "ko",
+                                titleEn: event.titleEn || "",
+                                titleJa: event.titleJa || "",
+                                titleZh: event.titleZh || "",
+                                subtitleEn: event.subtitleEn || "",
+                                subtitleJa: event.subtitleJa || "",
+                                subtitleZh: event.subtitleZh || "",
+                                descEn: event.descEn || "",
+                                descJa: event.descJa || "",
+                                descZh: event.descZh || "",
+                                productNameEn: event.productNameEn || "",
+                                productNameJa: event.productNameJa || "",
+                                productNameZh: event.productNameZh || "",
                               };
                               setEventForm(formData);
                               setEditingEventId(event.id);

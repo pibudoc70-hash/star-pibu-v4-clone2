@@ -32,18 +32,22 @@ interface SpecialEvent {
   cta: string;
   isActive: "0" | "1";
   sortOrder: number;
-  anesthesiaFee?: string; // 수면마취비 정보
+  anesthesiaFee?: string;
+  targetLang?: string;
+  titleEn?: string; titleJa?: string; titleZh?: string;
+  subtitleEn?: string; subtitleJa?: string; subtitleZh?: string;
+  descEn?: string; descJa?: string; descZh?: string;
+  productNameEn?: string; productNameJa?: string; productNameZh?: string;
 }
 
 export default function SpecialEventSection() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [specialEvents, setSpecialEvents] = useState<SpecialEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  // 각 이벤트별 확장 상태 (true = 확장됨, false = 축소됨)
   const [expandedEventIds, setExpandedEventIds] = useState<Set<number>>(new Set());
 
-  // tRPC 쿼리
-  const { data, isLoading: queryLoading } = trpc.events.special.useQuery();
+  // 언어별 SPECIAL EVENT 조회
+  const { data, isLoading: queryLoading } = trpc.events.special.useQuery({ lang });
 
   useEffect(() => {
     if (data) {
@@ -51,6 +55,14 @@ export default function SpecialEventSection() {
       setIsLoading(false);
     }
   }, [data]);
+
+  // 언어별 표시 텍스트 가져오기
+  const getLocalizedText = (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => {
+    if (lang === "en") return (event as any)[field + "En"] || event[field];
+    if (lang === "ja") return (event as any)[field + "Ja"] || event[field];
+    if (lang === "zh") return (event as any)[field + "Zh"] || event[field];
+    return event[field];
+  };
 
   const toggleExpanded = (eventId: number) => {
     setExpandedEventIds((prev) => {
@@ -133,7 +145,7 @@ export default function SpecialEventSection() {
                   <div className="hidden md:block mb-6 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-100" style={{aspectRatio: '16/9'}}>
                     <img
                       src={event.imageUrl}
-                      alt={event.title}
+                      alt={getLocalizedText(event, "title")}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -144,12 +156,12 @@ export default function SpecialEventSection() {
                   <div className="flex flex-col flex-1">
                     {/* 제목 */}
                     <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
-                      {event.title}
+                      {getLocalizedText(event, "title")}
                     </h3>
 
                     {/* 부제 */}
                     <p className="text-sm text-gray-600 mb-3">
-                      {event.subtitle}
+                      {getLocalizedText(event, "subtitle")}
                     </p>
 
                     {/* 상품명 */}
@@ -160,7 +172,7 @@ export default function SpecialEventSection() {
                     ) : (
                       event.productName && (
                         <p className="text-base font-medium text-gray-700 mb-4">
-                          {event.productName}
+                          {getLocalizedText(event, "productName")}
                         </p>
                       )
                     )}
@@ -197,12 +209,12 @@ export default function SpecialEventSection() {
                   <div className="flex flex-col flex-1">
                     {/* 제목 */}
                     <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
-                      {event.title}
+                      {getLocalizedText(event, "title")}
                     </h3>
 
                     {/* 부제 */}
                     <p className="text-sm text-gray-600 mb-3">
-                      {event.subtitle}
+                      {getLocalizedText(event, "subtitle")}
                     </p>
 
                     {/* 상품명 */}
@@ -213,7 +225,7 @@ export default function SpecialEventSection() {
                     ) : (
                       event.productName && (
                         <p className="text-base font-medium text-gray-700 mb-4">
-                          {event.productName}
+                          {getLocalizedText(event, "productName")}
                         </p>
                       )
                     )}

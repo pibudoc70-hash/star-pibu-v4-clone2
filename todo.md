@@ -750,14 +750,14 @@
 - [x] Express 서버에 정적 파일 제공 설정 (이미 구성)
 - [x] 검색 엔진 최적화 완료 및 테스트
 
-## Phase 105: Equipment2 관리 기능 개선 및 보안 강화 (2026-05-14)
-- [ ] 현재 Equipment2 관리 기능 구조 분석
-- [ ] 데이터베이스 스키마 검토 (treatments 테이블)
-- [ ] 관리자 UI 개선 (등록/수정/삭제 기능 강화)
-- [ ] 시술 정보 입력 폼 개선 (카테고리, 설명, 이미지)
-- [ ] 이미지 업로드 및 미리보기 기능 추가
-- [ ] 데이터 검증 및 보안 강화
-- [ ] Equipment2 관리 기능 테스트
+## Phase 105: Equipment2 관리 기능 개선 및 보안 강화 (2026-05-14) - 중복 항목 (이미 완료)
+- [x] 현재 Equipment2 관리 기능 구조 분석
+- [x] 데이터베이스 스키마 검토 (treatments 테이블) - slug 필드 추가
+- [x] 관리자 UI 개선 (등록/수정/삭제 기능 강화) - 신규 페이지 방식
+- [x] 시술 정보 입력 폼 개선 (카테고리, 설명, 이미지)
+- [x] 이미지 업로드 및 미리보기 기능 추가 (기존 구현)
+- [x] 데이터 검증 및 보안 강화 (프로시저 보호)
+- [x] Equipment2 관리 기능 테스트
 
 ## Phase 105: Equipment2 SEO 최적화 - 독립 웹페이지 구현 (2026-05-14)
 - [x] 데이터베이스에 treatments 테이블에 slug 필드 추가
@@ -768,3 +768,22 @@
 - [x] 관리자 UI 업데이트 (모달 제거, 상세 페이지 링크 추가)
 - [x] Equipment2 페이지 업데이트 (카드 클릭 시 상세 페이지 이동)
 - [x] 테스트 및 최종 체크포인트
+
+## Phase 106: 모바일 플로팅 CTA 버튼 추가 (2026-05-29)
+- [ ] FloatingCTA.tsx 컴포넌트 생성 (client/src/components/)
+- [ ] 전화걸기 버튼 (tel:051-818-2300)
+- [ ] 카카오톡 상담 버튼 (https://pf.kakao.com/_HNyGC)
+- [ ] 예약 신청 버튼 (#booking 섹션 스크롤)
+- [ ] 모바일 전용 표시 (md:hidden)
+- [ ] 스크롤 200px 이상에서 노출 (useState + useEffect)
+- [ ] fade-in 애니메이션 적용
+- [ ] App.tsx 또는 Home.tsx에 FloatingCTA 컴포넌트 추가
+
+## Phase 107: 시술별 상세 페이지 라우팅 구현 (2026-05-29)
+- [x] TreatmentPage.tsx 컴포넌트 생성 (/treatments/:slug)
+- [x] 울쎄라 프라임 페이지 (/treatments/ulthera) - JSON-LD MedicalProcedure 스키마
+- [x] 써마지 FLX 페이지 (/treatments/thermage) - JSON-LD MedicalProcedure 스키마
+- [x] 눈밑지방재배치 페이지 (/treatments/under-eye-fat) - JSON-LD MedicalProcedure 스키마
+- [x] 각 페이지 개별 title/description SEO 설정
+- [x] App.tsx에 /treatments/:slug 라우트 추가
+- [x] TreatmentsEquipmentSection.tsx 카드 링크 업데이트 (울쎄라, 써마지, 눈밑지방재배치)

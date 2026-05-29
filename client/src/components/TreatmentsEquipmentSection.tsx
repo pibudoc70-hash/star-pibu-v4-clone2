@@ -10,7 +10,8 @@
  *             여드름·액취증·다한증·발톱무좀
  */
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { Clock, RefreshCw, ChevronDown, ChevronUp, AlertCircle, Repeat, Sparkles, ChevronRight, Star, Zap, Eye, Heart, Sun, Microscope, Droplets, Pill, Leaf, Wind, Circle, Layers, Footprints } from "lucide-react";
+import { useLocation } from "wouter";
+import { Clock, RefreshCw, ChevronDown, ChevronUp, AlertCircle, Repeat, Sparkles, ChevronRight, Star, Zap, Eye, Heart, Sun, Microscope, Droplets, Pill, Leaf, Wind, Circle, Layers, Footprints, ExternalLink } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
@@ -1407,8 +1408,17 @@ const CAT_TAB_TEXT: Record<string, string> = {
 // ────────────────────────────────────────────────────────────────────────────────
 // 시술 카드 컴포넌트
 // ────────────────────────────────────────────────────────────────────────────────
+// 상세 페이지가 있는 시술 slug 매핑
+const DETAIL_PAGE_SLUGS: Record<string, string> = {
+  "울쎄라피 프라임": "ulthera",
+  "써마지 FLX": "thermage",
+  "눈밑지방재배치": "under-eye-fat",
+};
+
 function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; index: number; imgBg: string; catTextColor: string }) {
   const [open, setOpen] = useState(false);
+  const [, setLocation] = useLocation();
+  const detailSlug = DETAIL_PAGE_SLUGS[item.name];
 
   return (
     <>
@@ -1569,11 +1579,21 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
             {/* 연관 시술 추천 및 치료 단계는 사용하지 않음 */}
             </div>
             {/* CTA - 스크롤 가능 영역 하단에 고정 */}
+            {detailSlug && (
+              <button
+                onClick={() => { setOpen(false); setLocation(`/treatments/${detailSlug}`); }}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-3 flex-shrink-0 border"
+                style={{ background: "#f0f4fa", color: "#2D4A7A", borderColor: "#c7d2fe" }}
+              >
+                <ExternalLink size={14} />
+                상세 페이지 보기
+              </button>
+            )}
             <a
               href="https://pf.kakao.com/_HNyGC"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-4 flex-shrink-0"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-2 flex-shrink-0"
               style={{ background: "#FEE500", color: "#191919" }}
               onClick={() => setOpen(false)}
             >

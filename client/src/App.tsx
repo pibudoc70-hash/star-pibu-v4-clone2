@@ -22,6 +22,7 @@ const Equipment2 = lazy(() => import("@/pages/Equipment2"));
 const Equipment2Detail = lazy(() => import("@/pages/Equipment2Detail"));
 const AdminEquipment2New = lazy(() => import("@/pages/AdminEquipment2New"));
 const AdminEquipment2Edit = lazy(() => import("@/pages/AdminEquipment2Edit"));
+const TreatmentPage = lazy(() => import("@/pages/TreatmentPage"));
 // 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
 
 // 로드 중 로딩 스폰너
@@ -40,6 +41,7 @@ function Router() {
         <Route path={"/foreign-guide"} component={ForeignGuide} />
         <Route path={"/events/:id"} component={EventDetail} />
         <Route path={"/treatment/:name"} component={TreatmentDetail} />
+        <Route path={"/treatments/:slug"} component={TreatmentPage} />
         <Route path={"/admin"} component={AdminDashboard} />
         <Route path={"/admin/equipment2/new"} component={AdminEquipment2New} />
         <Route path={"/admin/equipment2/:id/edit"} component={AdminEquipment2Edit} />

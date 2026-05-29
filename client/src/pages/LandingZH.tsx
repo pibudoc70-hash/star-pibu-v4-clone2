@@ -1,13 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
-/**
- * LandingZH - 中文 SEO 落地页 (/zh)
- * 所有内容以中文硬编码 — 适配 Google/百度 爬虫
- */
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
+const CDN2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
+const LOGO = `${CDN}/star_ai_logo_1_73172f49.png`;
+const HERO_BG_DESKTOP = `${CDN}/hero-bg-new-desktop_2f8a8ccf.webp`;
+const HERO_BG_MOBILE = `${CDN}/hero-bg-new-mobile_ebac0b77.webp`;
+
+const DOCTORS = [
+  { name: "赵时亨 院长", title: "院长", specialty: "皮肤科专科医师 · 医学博士", img: `${CDN2}/01_5e3176cb.png`, careers: ["釜山大学医院 皮肤科 专科医师", "仁济大学 皮肤科 前教授", "热玛吉FLX 官方医疗顾问", "大韩皮肤科学会 正式会员"] },
+  { name: "禹惠珍 医生", title: "诊疗医", specialty: "皮肤科专科医师", img: `${CDN2}/0211_8cfcf452.png`, careers: ["釜山大学医学院 毕业", "釜山大学医院 皮肤科 专科医师", "大韩皮肤科学会 正式会员", "大韩激光学会 正式会员"] },
+  { name: "李基旭 医生", title: "诊疗医", specialty: "皮肤科专科医师", img: `${CDN2}/03_46691618.png`, careers: ["仁济大学医学院 毕业", "仁济大学医院 皮肤科 专科医师", "大韩皮肤科学会 正式会员", "大韩美容皮肤激光学会 正式会员"] },
+];
+
+const TREATMENTS = [
+  { name: "超声刀 Prime", slug: "ulthera", desc: "利用HIFU超声波能量，无需手术即可提升SMAS层。非侵入性面部提升的黄金标准。Star皮肤科是超声刀Prime官方认证诊所。", tags: ["非侵入", "SMAS提升", "无恢复期"], img: `${CDN2}/울쎄라_7f6c3083.jpg` },
+  { name: "热玛吉 FLX", slug: "thermage", desc: "第四代射频紧肤技术。促进深层胶原蛋白再生，打造紧致年轻肌肤。赵院长是热玛吉官方医疗顾问。", tags: ["射频能量", "胶原蛋白增生", "一次见效"], img: `${CDN2}/울써마지리프팅_17bc44ff.png` },
+  { name: "眼袋脂肪重置", slug: "under-eye-fat", desc: "重新分配眼袋脂肪，改善黑眼圈和泪沟。无需切开，效果自然。4000例以上手术经验。", tags: ["无切开", "4000例以上", "效果自然"], img: `${CDN}/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF.webp` },
+];
+
+const FACILITY_IMGS = [
+  { src: `${CDN}/gKokBoh3bDWm_b8ea202e.jpg`, alt: "Star皮肤科 前台" },
+  { src: `${CDN}/3PticSr0g4jr_e69d1049.jpg`, alt: "诊室" },
+  { src: `${CDN}/7IUeNj7YG383_91ad3b5b.jpg`, alt: "治疗室" },
+  { src: `${CDN}/BZDyHWjrUcLj_3f4c9c8d.jpg`, alt: "激光设备室" },
+];
+
+const REVIEWS = [
+  { name: "金**", treatment: "眼袋脂肪重置", text: "黑眼圈很严重，手术后一个月眼部明显亮了很多。效果自然，非常满意！" },
+  { name: "李**", treatment: "皮秒激光", text: "色斑很多，经过3次治疗明显改善了。肤色也变亮了，效果超出预期。" },
+  { name: "朴**", treatment: "超声刀 Prime", text: "提升效果非常好，效果自然，恢复期也很短，强烈推荐！" },
+];
+
 export default function LandingZH() {
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    document.title = "釜山Star皮肤科 | 超声刀 热玛吉 眼袋脂肪重置 | 西面皮肤科";
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.title = "釜山Star皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置 | 西面";
     const metas: { name?: string; property?: string; content: string }[] = [
       { name: "description", content: "釜山西面Star皮肤科。皮肤科专科医师，拥有20年以上临床经验。提供超声刀Prime、热玛吉FLX、眼袋脂肪重置、皮秒激光等50余种高端项目。欢迎外国患者，提供中文咨询服务。" },
       { name: "keywords", content: "釜山皮肤科, 西面皮肤科, 超声刀釜山, 热玛吉釜山, 眼袋脂肪重置韩国, 皮秒激光釜山, 韩国皮肤科, Star皮肤科, 釜山美容皮肤科, 中文皮肤科" },
@@ -18,310 +53,220 @@ export default function LandingZH() {
       { name: "robots", content: "index, follow" },
     ];
     metas.forEach(({ name, property, content }) => {
-      let el = name
-        ? document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)
-        : document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        if (name) el.setAttribute("name", name);
-        if (property) el.setAttribute("property", property);
-        document.head.appendChild(el);
-      }
+      let el = name ? document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`) : document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      if (!el) { el = document.createElement("meta"); if (name) el.setAttribute("name", name); if (property) el.setAttribute("property", property); document.head.appendChild(el); }
       el.setAttribute("content", content);
     });
-
-    // hreflang tags
-    const hreflangs = [
-      { hreflang: "ko", href: "https://star-pibu.com/" },
-      { hreflang: "en", href: "https://star-pibu.com/en" },
-      { hreflang: "ja", href: "https://star-pibu.com/ja" },
-      { hreflang: "zh", href: "https://star-pibu.com/zh" },
-      { hreflang: "x-default", href: "https://star-pibu.com/" },
-    ];
+    const hreflangs = [{ hreflang: "ko", href: "https://star-pibu.com/" }, { hreflang: "en", href: "https://star-pibu.com/en" }, { hreflang: "ja", href: "https://star-pibu.com/ja" }, { hreflang: "zh", href: "https://star-pibu.com/zh" }, { hreflang: "x-default", href: "https://star-pibu.com/" }];
     hreflangs.forEach(({ hreflang, href }) => {
       let el = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
-      if (!el) {
-        el = document.createElement("link");
-        el.setAttribute("rel", "alternate");
-        el.setAttribute("hreflang", hreflang);
-        document.head.appendChild(el);
-      }
+      if (!el) { el = document.createElement("link"); el.setAttribute("rel", "alternate"); el.setAttribute("hreflang", hreflang); document.head.appendChild(el); }
       el.setAttribute("href", href);
     });
-
-    // JSON-LD MedicalBusiness
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "MedicalBusiness",
-      "name": "Star皮肤科",
-      "alternateName": "STAR Dermatology Clinic",
-      "url": "https://star-pibu.com/zh",
-      "description": "釜山西面皮肤科专科医院。提供超声刀、热玛吉FLX、眼袋脂肪重置、皮秒激光等高端项目。",
-      "telephone": "+82-51-818-2300",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "西面路74 ION City大厦4F",
-        "addressLocality": "釜山镇区",
-        "addressRegion": "釜山",
-        "postalCode": "47189",
-        "addressCountry": "KR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 35.1579,
-        "longitude": 129.0597
-      },
-      "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "19:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:30", "closes": "15:00" }
-      ],
-      "medicalSpecialty": "Dermatology",
-      "availableService": [
-        { "@type": "MedicalProcedure", "name": "超声刀Prime", "description": "HIFU超声波SMAS层提升项目" },
-        { "@type": "MedicalProcedure", "name": "热玛吉FLX", "description": "第四代射频紧肤项目" },
-        { "@type": "MedicalProcedure", "name": "眼袋脂肪重置", "description": "无切口眼部年轻化手术" },
-        { "@type": "MedicalProcedure", "name": "皮秒激光", "description": "色素沉着及纹身去除皮秒激光" }
-      ],
-      "inLanguage": "zh",
-      "knowsLanguage": ["Korean", "English", "Japanese", "Chinese"]
-    };
+    const jsonLd = { "@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Star皮肤科", "url": "https://star-pibu.com/zh", "description": "釜山西面皮肤科专科诊所。", "telephone": "+82-51-818-2300", "address": { "@type": "PostalAddress", "streetAddress": "서면로 74, ION시티 4층", "addressLocality": "釜山镇区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" }, "geo": { "@type": "GeoCoordinates", "latitude": 35.1579, "longitude": 129.0597 }, "medicalSpecialty": "Dermatology", "inLanguage": "zh" };
     let scriptEl = document.querySelector<HTMLScriptElement>('script[data-ld="zh-medical"]');
-    if (!scriptEl) {
-      scriptEl = document.createElement("script");
-      scriptEl.setAttribute("type", "application/ld+json");
-      scriptEl.setAttribute("data-ld", "zh-medical");
-      document.head.appendChild(scriptEl);
-    }
+    if (!scriptEl) { scriptEl = document.createElement("script"); scriptEl.setAttribute("type", "application/ld+json"); scriptEl.setAttribute("data-ld", "zh-medical"); document.head.appendChild(scriptEl); }
     scriptEl.textContent = JSON.stringify(jsonLd);
-
-    return () => {
-      document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
-    };
+    return () => { document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술"; };
   }, []);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
-      {/* ── 语言导航 ── */}
-      <nav className="bg-[#1a1a2e] text-white py-2 px-4 text-sm flex justify-between items-center">
-        <span className="font-semibold tracking-wide">STAR DERMATOLOGY</span>
-        <div className="flex gap-3">
-          <Link href="/" className="opacity-60 hover:opacity-100">KO</Link>
-          <Link href="/en" className="opacity-60 hover:opacity-100">EN</Link>
-          <Link href="/ja" className="opacity-60 hover:opacity-100">JA</Link>
-          <span className="font-bold border-b border-white">ZH</span>
-        </div>
-      </nav>
 
-      {/* ── 首屏 ── */}
-      <section className="relative bg-[#1a1a2e] text-white py-24 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#0d0d1a] opacity-90" />
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-3">釜山·西面 · Since 2006</p>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">Star皮肤科</h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-2">釜山顶级皮肤科医院</p>
-          <p className="text-gray-400 mb-8">皮肤科专科医师 · 超声刀 · 热玛吉 · 眼袋脂肪重置</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="tel:+82518182300" className="bg-[#c9a84c] text-black font-bold py-3 px-8 rounded-full hover:bg-[#b8973b] transition">
-              📞 051-818-2300
-            </a>
-            <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" className="bg-[#FEE500] text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition">
-              💬 KakaoTalk咨询
-            </a>
+      {/* ── Header ── */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#1a1a2e]/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}>
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Link href="/zh">
+            <img src={LOGO} alt="Star皮肤科" className="h-10 w-auto" loading="eager" fetchPriority="high" />
+          </Link>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-white">
+            <a href="#treatments" className="hover:text-[#c9a84c] transition">治疗项目</a>
+            <a href="#doctors" className="hover:text-[#c9a84c] transition">医生介绍</a>
+            <a href="#facility" className="hover:text-[#c9a84c] transition">院内设施</a>
+            <a href="#access" className="hover:text-[#c9a84c] transition">交通指南</a>
+          </nav>
+          <div className="flex items-center gap-1 text-xs">
+            <Link href="/" className="text-white/60 hover:text-white px-2 py-1">KO</Link>
+            <Link href="/en" className="text-white/60 hover:text-white px-2 py-1">EN</Link>
+            <Link href="/ja" className="text-white/60 hover:text-white px-2 py-1">JA</Link>
+            <span className="text-[#c9a84c] font-bold border border-[#c9a84c] px-2 py-1 rounded">ZH</span>
           </div>
+        </div>
+      </header>
+
+      {/* ── Hero ── */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <picture className="absolute inset-0">
+          <source media="(max-width: 768px)" srcSet={HERO_BG_MOBILE} type="image/webp" />
+          <img src={HERO_BG_DESKTOP} alt="Star皮肤科 院内" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e]/70 via-[#1a1a2e]/50 to-[#1a1a2e]/80" />
+        <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-6">
+          <img src={LOGO} alt="Star皮肤科 Logo" className="h-24 w-auto mx-auto mb-6" loading="eager" />
+          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-3">釜山 · 西面 · 2006年创立</p>
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight">Star<br />皮肤科</h1>
+          <p className="text-xl md:text-2xl text-gray-200 mb-2">釜山高端皮肤科诊所</p>
+          <p className="text-gray-300 mb-10">皮肤科专科医师 · 超声刀 · 热玛吉 · 眼袋脂肪重置</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="tel:+82518182300" className="bg-[#c9a84c] text-black font-bold py-4 px-8 rounded-full hover:bg-[#b8973b] transition text-lg">📞 051-818-2300</a>
+            <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" className="bg-[#FEE500] text-black font-bold py-4 px-8 rounded-full hover:bg-yellow-400 transition text-lg">💬 KakaoTalk咨询</a>
+          </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-xs flex flex-col items-center gap-1 animate-bounce">
+          <span>SCROLL</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
         </div>
       </section>
 
-      {/* ── 数据 ── */}
-      <section className="bg-[#f8f6f0] py-12 px-6">
+      {/* ── Stats ── */}
+      <section className="bg-[#1a1a2e] text-white py-12 px-6">
         <div className="max-w-4xl mx-auto grid grid-cols-3 gap-6 text-center">
-          {[
-            { num: "20年+", label: "皮肤科专科医师经验", sub: "2006年开业" },
-            { num: "4,000+", label: "眼袋手术案例", sub: "经验丰富" },
-            { num: "50+", label: "高端激光设备", sub: "最新设备" },
-          ].map((s) => (
+          {[{ num: "20年+", label: "诊疗经验", sub: "2006年创立" }, { num: "4,000例+", label: "眼袋手术实绩", sub: "丰富经验" }, { num: "50种+", label: "高端激光设备", sub: "最新技术" }].map((s) => (
             <div key={s.label}>
-              <p className="text-3xl md:text-4xl font-bold text-[#c9a84c]">{s.num}</p>
-              <p className="font-semibold text-gray-800 mt-1">{s.label}</p>
-              <p className="text-sm text-gray-500">{s.sub}</p>
+              <p className="text-3xl md:text-5xl font-bold text-[#c9a84c]">{s.num}</p>
+              <p className="font-semibold mt-1">{s.label}</p>
+              <p className="text-sm text-gray-400">{s.sub}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── 关于我们 ── */}
-      <section className="py-16 px-6 max-w-3xl mx-auto text-center">
-        <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2">关于我们</p>
-        <h2 className="text-3xl font-bold mb-4">Star皮肤科简介</h2>
-        <p className="text-gray-600 leading-relaxed">
-          釜山西面交叉路口前的Star皮肤科，自2006年开业以来，始终坚持由皮肤科专科医师亲自进行一对一定制咨询。拥有50余种原装激光设备和20年以上经验的专科医师，为每位患者提供最优化的治疗方案。我们热忱欢迎外国患者，提供中文咨询服务，请放心前来就诊。
-        </p>
-      </section>
-
-      {/* ── 主要项目 ── */}
-      <section className="bg-[#f8f6f0] py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">项目介绍</p>
-          <h2 className="text-3xl font-bold text-center mb-10">招牌项目</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "超声刀Prime",
-                slug: "ulthera",
-                desc: "HIFU超声波能量无需手术即可提升SMAS层。非侵入性面部提升的黄金标准。Star皮肤科是官方超声刀Prime认证医院。",
-                tags: ["非侵入", "SMAS提升", "无需恢复"],
-              },
-              {
-                name: "热玛吉FLX",
-                slug: "thermage",
-                desc: "第四代射频紧肤。促进深层胶原蛋白再生，使肌肤更紧致年轻。赵时亨院长是热玛吉官方顾问。",
-                tags: ["射频能量", "胶原增生", "单次治疗"],
-              },
-              {
-                name: "眼袋脂肪重置",
-                slug: "under-eye-fat",
-                desc: "重新分布眼下脂肪，改善黑眼圈和凹陷。无切口自然效果。累计4,000例以上手术经验。",
-                tags: ["无切口", "4000例以上", "自然效果"],
-              },
-            ].map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                <h3 className="text-xl font-bold mb-2 text-[#1a1a2e]">{t.name}</h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">{t.desc}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {t.tags.map((tag) => (
-                    <span key={tag} className="bg-[#f0ebe0] text-[#8a6d3b] text-xs font-medium px-2 py-1 rounded-full">{tag}</span>
-                  ))}
-                </div>
-                <Link href={`/treatments/${t.slug}`} className="text-[#c9a84c] text-sm font-semibold hover:underline">
-                  了解更多 →
-                </Link>
+      {/* ── About ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2">诊所介绍</p>
+            <h2 className="text-4xl font-bold mb-6 leading-tight">专业与<br />卓越的融合</h2>
+            <p className="text-gray-600 leading-relaxed mb-4">位于釜山西面中心地带的Star皮肤科，自2006年创立以来一直提供高端皮肤护理服务。皮肤科专科医师亲自负责所有诊察，为每位患者制定最优治疗方案。</p>
+            <p className="text-gray-600 leading-relaxed mb-6">配备50余种最新激光设备，拥有20年以上临床经验，提供多样化治疗项目。设有中文咨询服务，外国患者可放心就诊。</p>
+            <div className="flex flex-wrap gap-3">
+              {["超声刀Prime官方认证", "热玛吉医疗顾问", "眼袋手术4000例以上"].map((badge) => (
+                <span key={badge} className="bg-[#f0ebe0] text-[#8a6d3b] text-xs font-semibold px-3 py-1.5 rounded-full">{badge}</span>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {FACILITY_IMGS.map((f) => (
+              <div key={f.src} className="aspect-square overflow-hidden rounded-xl">
+                <img src={f.src} alt={f.alt} className="w-full h-full object-cover hover:scale-105 transition duration-500" loading="lazy" width={300} height={300} />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 医生介绍 ── */}
-      <section className="py-16 px-6 max-w-5xl mx-auto">
-        <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">医生介绍</p>
-        <h2 className="text-3xl font-bold text-center mb-10">皮肤科专科医师</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              name: "赵时亨 院长",
-              title: "院长",
-              specialty: "皮肤科专科医师 · 医学博士",
-              careers: [
-                "釜山大学医院皮肤科住院医师",
-                "仁济大学皮肤科教授（前）",
-                "热玛吉官方顾问",
-                "大韩皮肤科学会正会员",
-              ],
-            },
-            {
-              name: "禹慧珍 医师",
-              title: "医师",
-              specialty: "皮肤科专科医师",
-              careers: [
-                "釜山大学医学院毕业",
-                "釜山大学医院皮肤科住院医师",
-                "大韩皮肤科学会正会员",
-                "大韩激光学会正会员",
-              ],
-            },
-            {
-              name: "李基旭 医师",
-              title: "医师",
-              specialty: "皮肤科专科医师",
-              careers: [
-                "仁济大学医学院毕业",
-                "仁济大学医院皮肤科住院医师",
-                "大韩皮肤科学会正会员",
-                "大韩美容皮肤·激光学会正会员",
-              ],
-            },
-          ].map((d) => (
-            <div key={d.name} className="bg-[#f8f6f0] rounded-2xl p-6">
-              <div className="w-16 h-16 bg-[#1a1a2e] rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
-                {d.name[0]}
+      {/* ── Treatments ── */}
+      <section id="treatments" className="bg-[#f8f6f0] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">治疗项目</p>
+          <h2 className="text-4xl font-bold text-center mb-12">代表治疗项目</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TREATMENTS.map((t) => (
+              <div key={t.name} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition group">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={t.img} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" width={400} height={300} />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 text-[#1a1a2e]">{t.name}</h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{t.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {t.tags.map((tag) => <span key={tag} className="bg-[#f0ebe0] text-[#8a6d3b] text-xs font-medium px-2 py-1 rounded-full">{tag}</span>)}
+                  </div>
+                  <Link href={`/treatments/${t.slug}`} className="text-[#c9a84c] text-sm font-semibold hover:underline">查看详情 →</Link>
+                </div>
               </div>
-              <h3 className="text-lg font-bold">{d.name}</h3>
-              <p className="text-[#c9a84c] text-sm font-medium mb-1">{d.title}</p>
-              <p className="text-gray-500 text-xs mb-3">{d.specialty}</p>
-              <ul className="text-xs text-gray-600 space-y-1">
-                {d.careers.map((c) => <li key={c} className="flex gap-1"><span className="text-[#c9a84c]">·</span>{c}</li>)}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── 外国患者指南 ── */}
-      <section className="bg-[#1a1a2e] text-white py-16 px-6">
+      {/* ── Doctors ── */}
+      <section id="doctors" className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">医生介绍</p>
+          <h2 className="text-4xl font-bold text-center mb-12">皮肤科专科医师团队</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {DOCTORS.map((d) => (
+              <div key={d.name} className="text-center group">
+                <div className="w-40 h-40 mx-auto rounded-full overflow-hidden mb-4 border-4 border-[#c9a84c]/30 group-hover:border-[#c9a84c] transition">
+                  <img src={d.img} alt={d.name} className="w-full h-full object-cover object-top" loading="lazy" width={160} height={160} />
+                </div>
+                <h3 className="text-lg font-bold">{d.name}</h3>
+                <p className="text-[#c9a84c] text-sm font-medium mb-1">{d.title}</p>
+                <p className="text-gray-500 text-xs mb-3">{d.specialty}</p>
+                <ul className="text-xs text-gray-600 space-y-1 text-left max-w-xs mx-auto">
+                  {d.careers.map((c) => <li key={c} className="flex gap-1"><span className="text-[#c9a84c] flex-shrink-0">·</span>{c}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Facility ── */}
+      <section id="facility" className="bg-[#1a1a2e] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">院内设施</p>
+          <h2 className="text-4xl font-bold text-center text-white mb-12">诊所内部</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {FACILITY_IMGS.map((f) => (
+              <div key={f.src} className="aspect-square overflow-hidden rounded-xl">
+                <img src={f.src} alt={f.alt} className="w-full h-full object-cover hover:scale-105 transition duration-500" loading="lazy" width={300} height={300} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Foreign Patient Guide ── */}
+      <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">外国患者指南</p>
-          <h2 className="text-3xl font-bold text-center mb-4">外国患者就诊指南</h2>
-          <p className="text-gray-300 text-center mb-10">Star皮肤科热忱欢迎外国患者。提供中文咨询服务，请放心就诊。</p>
+          <h2 className="text-4xl font-bold text-center mb-4">海外患者就诊指南</h2>
+          <p className="text-gray-500 text-center mb-12">Star皮肤科热烈欢迎外国患者。我们提供中文咨询服务，请放心就诊。</p>
           <div className="grid md:grid-cols-4 gap-4 mb-10">
-            {[
-              { step: "01", title: "预约", desc: "通过KakaoTalk或电话预约。可提供中文咨询服务。" },
-              { step: "02", title: "前往就诊", desc: "西面站5、7号出口步行3分钟。ION City大厦4楼。" },
-              { step: "03", title: "咨询·治疗", desc: "专科医师亲自评估皮肤状况，推荐最适合的治疗方案。" },
-              { step: "04", title: "术后护理", desc: "提供详细的术后护理指导。回国后也可在线咨询。" },
-            ].map((s) => (
-              <div key={s.step} className="bg-white/10 rounded-xl p-4">
-                <p className="text-[#c9a84c] text-2xl font-bold mb-2">{s.step}</p>
-                <p className="font-semibold mb-1">{s.title}</p>
-                <p className="text-gray-300 text-sm">{s.desc}</p>
+            {[{ step: "01", title: "预约", desc: "通过KakaoTalk或电话联系我们。中文咨询人员将为您服务。" }, { step: "02", title: "就诊", desc: "西面站5号或7号出口步行3分钟。ION City大厦4楼。" }, { step: "03", title: "诊察", desc: "皮肤科专科医师亲自诊察，为您制定最优治疗方案。" }, { step: "04", title: "术后护理", desc: "提供详细的术后护理说明书。回国后也可进行在线随访。" }].map((s) => (
+              <div key={s.step} className="bg-[#f8f6f0] rounded-2xl p-5">
+                <p className="text-[#c9a84c] text-3xl font-bold mb-2">{s.step}</p>
+                <p className="font-bold text-[#1a1a2e] mb-1">{s.title}</p>
+                <p className="text-gray-500 text-sm">{s.desc}</p>
               </div>
             ))}
           </div>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="bg-white/10 rounded-xl p-4">
-              <h3 className="font-bold mb-2">支付方式</h3>
-              <p className="text-gray-300">支持信用卡（Visa、Mastercard、Amex）。也可使用韩元现金支付。自动按当前汇率换算。</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-4">
-              <h3 className="font-bold mb-2">交通指南</h3>
-              <p className="text-gray-300">地铁：西面站（1、2号线）5、7号出口步行3分钟。<br />地址：釜山镇区西面路74 ION City大厦4F</p>
-            </div>
+            <div className="bg-[#f8f6f0] rounded-2xl p-5"><h3 className="font-bold text-[#1a1a2e] mb-2">支付方式</h3><p className="text-gray-600">支持信用卡（Visa、Mastercard、Amex）。也可使用韩国元现金支付。</p></div>
+            <div className="bg-[#f8f6f0] rounded-2xl p-5"><h3 className="font-bold text-[#1a1a2e] mb-2">交通指南</h3><p className="text-gray-600">地铁：西面站（1号线·2号线）5号或7号出口，步行3分钟<br />地址：釜山广域市 釜山镇区 西面路74 ION City 4楼</p></div>
           </div>
         </div>
       </section>
 
-      {/* ── 诊疗时间 ── */}
-      <section className="py-16 px-6 max-w-2xl mx-auto text-center">
-        <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2">诊疗时间</p>
-        <h2 className="text-3xl font-bold mb-6">诊疗时间</h2>
-        <div className="bg-[#f8f6f0] rounded-2xl p-6 text-left">
-          {[
-            { day: "周一至周五", time: "10:00 – 19:00" },
-            { day: "周六", time: "09:30 – 15:00" },
-            { day: "周日及节假日", time: "休诊" },
-          ].map((r) => (
-            <div key={r.day} className="flex justify-between py-2 border-b border-gray-200 last:border-0">
-              <span className="font-medium text-gray-700">{r.day}</span>
-              <span className="text-gray-600">{r.time}</span>
-            </div>
-          ))}
-          <p className="text-sm text-gray-500 mt-3">工作日午休 13:00 – 14:00 · 周六不休息</p>
+      {/* ── Hours ── */}
+      <section id="access" className="bg-[#f8f6f0] py-16 px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2">诊疗时间</p>
+          <h2 className="text-3xl font-bold mb-8">诊疗时间表</h2>
+          <div className="bg-white rounded-2xl p-6 text-left shadow-sm">
+            {[{ day: "周一至周五", time: "10:00 〜 19:00" }, { day: "周六", time: "09:30 〜 15:00" }, { day: "周日·节假日", time: "休诊" }].map((r) => (
+              <div key={r.day} className={`flex justify-between py-3 border-b border-gray-100 last:border-0 ${r.day === "周日·节假日" ? "text-gray-400" : ""}`}>
+                <span className="font-medium">{r.day}</span><span>{r.time}</span>
+              </div>
+            ))}
+            <p className="text-sm text-gray-400 mt-3">工作日午休 13:00〜14:00 · 周六无午休</p>
+          </div>
         </div>
       </section>
 
-      {/* ── 患者评价 ── */}
-      <section className="bg-[#f8f6f0] py-16 px-6">
+      {/* ── Reviews ── */}
+      <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2 text-center">患者评价</p>
-          <h2 className="text-3xl font-bold text-center mb-2">患者真实评价</h2>
-          <p className="text-center text-gray-500 mb-8">⭐ 4.9 / 5.0 · 基于Naver评价</p>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { name: "Kim**", treatment: "眼袋脂肪重置", text: "黑眼圈非常严重，手术后一个月眼部明显变亮。效果自然，非常满意！" },
-              { name: "Lee**", treatment: "皮秒激光", text: "斑点很多，经过3次治疗后明显改善。肤色也变得更亮了。" },
-              { name: "Park**", treatment: "超声刀Prime", text: "提升效果非常好。效果自然，恢复期短，非常满意！" },
-            ].map((r) => (
-              <div key={r.name} className="bg-white rounded-xl p-5 shadow-sm">
-                <p className="text-yellow-400 mb-2">★★★★★</p>
-                <p className="text-gray-700 text-sm mb-3 italic">"{r.text}"</p>
+          <h2 className="text-4xl font-bold text-center mb-2">患者真实评价</h2>
+          <p className="text-center text-gray-400 mb-10">⭐ 4.9 / 5.0 · Naver评价标准</p>
+          <div className="grid md:grid-cols-3 gap-5">
+            {REVIEWS.map((r) => (
+              <div key={r.name} className="bg-[#f8f6f0] rounded-2xl p-6 hover:shadow-md transition">
+                <p className="text-yellow-400 text-xl mb-3">★★★★★</p>
+                <p className="text-gray-700 text-sm mb-4 leading-relaxed italic">「{r.text}」</p>
                 <p className="text-[#c9a84c] text-xs font-semibold">{r.treatment}</p>
                 <p className="text-gray-400 text-xs">{r.name} · Naver</p>
               </div>
@@ -331,30 +276,28 @@ export default function LandingZH() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-16 px-6 text-center bg-[#1a1a2e] text-white">
-        <h2 className="text-3xl font-bold mb-3">预约咨询</h2>
-        <p className="text-gray-300 mb-8">欢迎外国患者。提供中文服务的工作人员将为您提供帮助。</p>
+      <section className="bg-[#1a1a2e] py-20 px-6 text-center text-white">
+        <p className="text-[#c9a84c] text-sm font-semibold tracking-widest uppercase mb-2">预约</p>
+        <h2 className="text-4xl font-bold mb-3">开启您的美肌之旅</h2>
+        <p className="text-gray-300 mb-10 max-w-xl mx-auto">欢迎外国患者。中文咨询人员将为您提供贴心服务。</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="tel:+82518182300" className="bg-[#c9a84c] text-black font-bold py-3 px-8 rounded-full hover:bg-[#b8973b] transition">
-            📞 051-818-2300
-          </a>
-          <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" className="bg-[#FEE500] text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-400 transition">
-            💬 KakaoTalk
-          </a>
+          <a href="tel:+82518182300" className="bg-[#c9a84c] text-black font-bold py-4 px-10 rounded-full hover:bg-[#b8973b] transition text-lg">📞 051-818-2300</a>
+          <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" className="bg-[#FEE500] text-black font-bold py-4 px-10 rounded-full hover:bg-yellow-400 transition text-lg">💬 KakaoTalk咨询</a>
         </div>
       </section>
 
-      {/* ── 页脚 ── */}
-      <footer className="bg-gray-900 text-gray-400 py-8 px-6 text-center text-sm">
+      {/* ── Footer ── */}
+      <footer className="bg-gray-950 text-gray-400 py-10 px-6 text-center text-sm">
+        <img src={LOGO} alt="Star皮肤科" className="h-10 w-auto mx-auto mb-4 opacity-70" loading="lazy" />
         <p className="font-semibold text-white mb-1">Star皮肤科</p>
-        <p>釜山广域市釜山镇区西面路74 ION City大厦 2·4楼</p>
+        <p>ION City大厦 2F·4F, 서면로 74, 부산진구, 부산, 韩国</p>
         <p className="mt-1">Tel: 051-818-2300 · Email: starpibu@naver.com</p>
-        <p className="mt-2 text-xs">营业执照号：605-24-84306 · © Star皮肤科. All rights reserved.</p>
-        <div className="mt-3 flex justify-center gap-4">
+        <p className="mt-2 text-xs">营业执照号: 605-24-84306 · © Star皮肤科. All rights reserved.</p>
+        <div className="mt-4 flex justify-center gap-4 text-xs">
           <Link href="/" className="hover:text-white">한국어</Link>
           <Link href="/en" className="hover:text-white">English</Link>
           <Link href="/ja" className="hover:text-white">日本語</Link>
-          <span className="text-white font-semibold">中文</span>
+          <span className="text-[#c9a84c] font-semibold">中文</span>
         </div>
       </footer>
     </div>

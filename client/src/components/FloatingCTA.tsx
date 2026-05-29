@@ -23,13 +23,19 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const WECHAT_URL = "https://u.wechat.com/star2006beauty";
+  const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
+  const chatUrl = lang === "zh" ? WECHAT_URL : KAKAO_URL;
+
   const labels = {
     call:      lang === "ja" ? "電話"         : lang === "zh" ? "电话"          : lang === "en" ? "Call"    : "전화",
-    kakao:     lang === "ja" ? "カカオ"        : lang === "zh" ? "카카오"         : lang === "en" ? "Kakao"   : "카카오",
+    kakao:     lang === "ja" ? "カカオ"        : lang === "zh" ? "WeChat"         : lang === "en" ? "Kakao"   : "카카오",
     map:       lang === "ja" ? "Naver予約"    : lang === "zh" ? "Naver预约"     : lang === "en" ? "Book"    : "예약",
     callAria:  lang === "ja" ? "電話相談"      : lang === "zh" ? "电话咨询"      : lang === "en" ? "Call Us" : "전화 상담",
-    kakaoAria: lang === "ja" ? "カカオトーク"  : lang === "zh" ? "KakaoTalk咨询" : lang === "en" ? "KakaoTalk" : "카카오톡 상담",
+    kakaoAria: lang === "ja" ? "カカオトーク"  : lang === "zh" ? "WeChat咨询" : lang === "en" ? "KakaoTalk" : "카카오톡 상담",
     mapAria:   lang === "ja" ? "Naver予約"    : lang === "zh" ? "Naver预约"     : lang === "en" ? "Naver Booking" : "네이버 예약",
+    chatBg:    lang === "zh" ? "#07C160" : "#FEE500",
+    chatColor: lang === "zh" ? "white" : "#1F2937",
   };
 
   // 현재 언어 제외한 전환 옵션 (EN/JP/CN/KO 텍스트 코드 사용)
@@ -68,13 +74,13 @@ export default function FloatingCTA() {
             {labels.call}
           </a>
           <a
-            href="https://pf.kakao.com/_HNyGC"
+            href={chatUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold"
             style={{
-              background: "#FEE500",
-              color: "#1F2937",
+              background: labels.chatBg,
+              color: labels.chatColor,
               minHeight: "52px",
             }}
           >
@@ -158,17 +164,17 @@ export default function FloatingCTA() {
             <Phone size={22} className="text-white" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }} />
           </a>
 
-          {/* 카카오 */}
+          {/* 카카오 / WeChat */}
           <a
-            href="https://pf.kakao.com/_HNyGC"
+            href={chatUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
-            style={{ background: "#FEE500" }}
+            style={{ background: labels.chatBg }}
             aria-label={labels.kakaoAria}
             title={labels.kakaoAria}
           >
-            <MessageCircle size={22} style={{ color: "#1F2937" }} />
+            <MessageCircle size={22} style={{ color: labels.chatColor }} />
           </a>
 
           {/* 네이버 예약 */}

@@ -21,7 +21,12 @@ export default function Header() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuClosing, setMenuClosing] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const WECHAT_URL = "https://u.wechat.com/star2006beauty";
+  const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
+  const chatUrl = lang === "zh" ? WECHAT_URL : KAKAO_URL;
+  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
+  const chatColor = lang === "zh" ? "white" : "#1F2937";
   const [location] = useLocation();
   const isHome = location === "/";
   const { user } = useAuth();
@@ -213,11 +218,11 @@ export default function Header() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
             <a
-              href="https://pf.kakao.com/_HNyGC"
+              href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 font-semibold rounded-full transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
-              style={{ background: "#FEE500", color: "#1F2937", fontSize: "13px", padding: "6px 14px" }}
+              style={{ background: chatBg, color: chatColor, fontSize: "13px", padding: "6px 14px" }}
             >
               <MessageCircle size={13} />
               {t.hero.cta_kakao}
@@ -356,11 +361,11 @@ export default function Header() {
             051-818-2300
           </a>
           <a
-            href="https://pf.kakao.com/_HNyGC"
+            href={chatUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 py-3.5 px-4 rounded-xl font-semibold text-sm"
-            style={{ background: "#FEE500", color: "#1F2937" }}
+            style={{ background: chatBg, color: chatColor }}
           >
             <MessageCircle size={16} />
             {t.hero.cta_kakao}

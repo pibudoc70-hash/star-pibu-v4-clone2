@@ -1527,7 +1527,7 @@ export const i18n: Record<Lang, I18nContent> = {
       badge: "Since 2006",
       floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
       cta_call: "051-818-2300",
-      cta_kakao: "KakaoTalk咨询",
+      cta_kakao: "WeChat咨询",
       cta_reserve: "Naver预约",
     },
     about: {
@@ -1642,7 +1642,7 @@ export const i18n: Record<Lang, I18nContent> = {
       title: "外国患者服务",
       subtitle: "STAR皮肤科欢迎外国患者",
       steps: [
-        { step: "01", title: "预约", desc: "请通过KakaoTalk或电话预约。我们提供中文咨询服务。" },
+        { step: "01", title: "预约", desc: "请通过WeChat或电话预约。我们提供中文咨询服务。" },
         { step: "02", title: "到院", desc: "地铁西面站5·7号出口步行3分钟。爱恩城大厦4楼。" },
         { step: "03", title: "咨询·治疗", desc: "专科医生将直接诊断您的皮肤状况，为您推荐最适合的治疗方案。" },
         { step: "04", title: "术后护理", desc: "我们将为您提供详细的术后护理指导，回国后也可进行在线咨询。" },
@@ -1796,7 +1796,7 @@ export const i18n: Record<Lang, I18nContent> = {
     welcomePopup: {
       title: "STAR皮肤科活动",
       subtitle: "立即查看",
-      cta_kakao: "KakaoTalk和诊",
+      cta_kakao: "WeChat咨询",
       cta_reserve: "在线预约",
       cta_call: "电话预约",
       dismiss: "关闭",
@@ -1808,7 +1808,7 @@ export const i18n: Record<Lang, I18nContent> = {
       backToList: "返回活动列表",
       views: "浏览",
       intro: "活动详情",
-      cta_kakao: "KakaoTalk和诊",
+      cta_kakao: "WeChat咨询",
       cta_call: "电话预约",
       directions: "交通指南",
       address: "釜山西面 爱恩城大厦 2F、4F",
@@ -1825,7 +1825,7 @@ export const i18n: Record<Lang, I18nContent> = {
       faqTitle: "常见问题",
       notFound: "未找到该治疗项目。",
       backBtn: "返回",
-      ctaConsult: "KakaoTalk和诊",
+      ctaConsult: "WeChat咨询",
       ctaReserve: "Naver预约",
     },
     faq: {
@@ -1925,7 +1925,7 @@ export const i18n: Record<Lang, I18nContent> = {
       effects: "预期效果",
       video: "项目视频",
       caution: "注意事项",
-      ctaKakao: "KakaoTalk咨询",
+      ctaKakao: "WeChat咨询",
       ctaCall: "电话咨询",
       ctaBook: "预约申请",
       otherTreatments: "查看其他项目",

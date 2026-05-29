@@ -156,14 +156,14 @@ export default function FAQSection() {
                 ? "Have more questions? Feel free to contact us via KakaoTalk."
                 : lang === "ja"
                 ? "他にご質問はありますか？KakaoTalkでお気軽にお問い合わせください。"
-                : "还有其他问题吗？请通过KakaoTalk随时咨询我们。"}
+                : "还有其他问题吗？请通过WeChat随时咨询我们。"}
             </p>
             <a
-              href="https://pf.kakao.com/_HNyGC"
+              href={lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC"}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"
-              style={{ background: "#FEE500", color: "#3A1D1D" }}
+              style={{ background: lang === "zh" ? "#07C160" : "#FEE500", color: lang === "zh" ? "white" : "#3A1D1D" }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 3C6.477 3 2 6.477 2 11c0 2.897 1.565 5.453 3.953 7.001L4.5 21l3.75-1.875C9.37 19.687 10.664 20 12 20c5.523 0 10-3.477 10-9S17.523 3 12 3z" />

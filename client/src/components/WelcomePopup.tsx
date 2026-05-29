@@ -187,8 +187,11 @@ interface PopupProps {
 function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange }: PopupProps) {
   const imgHeight = useNaturalImageHeight(ev.imageUrl);
   const { sheetRef, onTouchStart, onTouchMove, onTouchEnd } = useDragToClose(dismiss);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const wp = t.welcomePopup;
+  const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
+  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
+  const chatColor = lang === "zh" ? "white" : "#1F2937";
 
   return (
     <div
@@ -302,9 +305,9 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 
         {/* CTA 버튼 (하단 고정) */}
         <div className="px-5 pt-3 pb-3 flex flex-col gap-2 flex-shrink-0" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" onClick={dismiss}
+          <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
             className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center"
-            style={{ background: "#FEE500", color: "#1F2937" }}>
+            style={{ background: chatBg, color: chatColor }}>
             <MessageCircle size={16} />{wp.cta_kakao}
           </a>
           <div className="flex gap-2">
@@ -333,8 +336,11 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
 function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange }: PopupProps) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const wp = t.welcomePopup;
+  const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
+  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
+  const chatColor = lang === "zh" ? "white" : "#1F2937";
 
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
@@ -420,9 +426,9 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
 
         {/* CTA */}
         <div className="px-6 pb-4 pt-2 flex flex-col gap-2.5">
-          <a href="https://pf.kakao.com/_HNyGC" target="_blank" rel="noopener noreferrer" onClick={dismiss}
+          <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
             className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
-            style={{ background: "#FEE500", color: "#1F2937" }}>
+            style={{ background: chatBg, color: chatColor }}>
             <MessageCircle size={16} />{wp.cta_kakao}
           </a>
           <div className="flex gap-2">

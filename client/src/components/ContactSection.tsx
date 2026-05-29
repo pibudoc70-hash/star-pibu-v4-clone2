@@ -99,7 +99,7 @@ export default function ContactSection() {
   // 라벨 매핑
   const labels = {
     locationInfo: lang === "en" ? t.access.label : lang === "ja" ? "アクセス・連絡先" : lang === "zh" ? "位置及联系方式" : "위치 및 연락정보",
-    sectionTitle: lang === "en" ? t.access.title : lang === "ja" ? "アクセス" : lang === "zh" ? "来院のご案内" : "찾아오시는 길",
+    sectionTitle: lang === "en" ? t.access.title : lang === "ja" ? "アクセス" : lang === "zh" ? t.access.title : "찾아오시는 길",
     address: lang === "en" ? "Address" : lang === "ja" ? "住所" : lang === "zh" ? "地址" : "주소",
     phone: lang === "en" ? "Phone" : lang === "ja" ? "電話" : lang === "zh" ? "电话" : "전화",
     hours: lang === "en" ? "Clinic Hours" : lang === "ja" ? "診療時間" : lang === "zh" ? "诊疗时间" : "진료시간",

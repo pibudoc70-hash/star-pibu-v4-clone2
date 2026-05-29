@@ -150,7 +150,7 @@ export default function ReviewsSection() {
                             </span>
                           </div>
                           <div className="text-xs" style={{ color: "#9CA3AF" }}>
-                            {r.name} · {r.age} · {r.date}
+                            {r.name}
                           </div>
                         </div>
                         <span
@@ -229,7 +229,7 @@ export default function ReviewsSection() {
                           </span>
                         </div>
                         <div className="text-xs" style={{ color: "#9CA3AF" }}>
-                          {r.name} · {r.age} · {r.date}
+                          {r.name}
                         </div>
                       </div>
                       <span

@@ -803,3 +803,10 @@
 - [ ] WelcomePopup.tsx - loading=lazy + width/height 추가
 - [ ] TreatmentPage.tsx - loading=lazy + width/height 추가
 - [ ] 기타 페이지(About, Doctors, EventDetail, Events, TreatmentDetail, Equipment2Detail) - loading=lazy 추가
+
+## Phase 109: 환자후기 섹션 개선 (2026-05-29)
+- [x] 이름 별표 처리 (김** 형식 - 성만 남기고 이름 별표 처리) - 한국어/영어/일본어/중국어 모두
+- [x] 나이(age) 표시 삭제 - ReviewsSection.tsx UI 및 i18n.ts 데이터
+- [x] 날짜(date) 표시 삭제 - ReviewsSection.tsx UI 및 i18n.ts 데이터
+- [x] 네이버 플레이스 스타일 긍정 리뷰 6개 추가 (최**, 정**, 한**, 윤**, 강**, 조**)
+- [x] 4개 언어(한/영/일/중) 모두 동일 내용으로 업데이트

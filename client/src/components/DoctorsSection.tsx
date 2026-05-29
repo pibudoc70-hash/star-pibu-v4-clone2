@@ -160,7 +160,7 @@ export default function DoctorsSection() {
 
   const { t, lang } = useLang();
 
-  const badgeLabel = lang === "ko" ? "원장" : lang === "ja" ? "院長" : lang === "zh" ? "院長" : "Director";
+  const badgeLabel = lang === "ko" ? "원장" : lang === "ja" ? "院長" : lang === "zh" ? "院长" : "Director";
 
   const mergedDoctors = doctors.map((d, idx) => ({
     ...d,
@@ -474,7 +474,7 @@ export default function DoctorsSection() {
                       className="text-xs tracking-widest uppercase"
                       style={{ color: GOLD, fontWeight: 600, fontSize: '15px', margin: 0 }}
                     >
-                      {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : "专业项目"}
+                      {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : lang === "zh" ? "专业项目" : "Specialty Treatments"}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2" style={{marginTop: '-6px', maxWidth: '420px'}}>
@@ -514,7 +514,7 @@ export default function DoctorsSection() {
                         ? `학력 · 경력 · 자격`
                         : lang === "ja"
                         ? `学歴・経歴・資格`
-                        : `学历·经历·资质`}
+                        : lang === "zh" ? `学历·经历·资质` : `Education & Career`}
                     </p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -706,7 +706,7 @@ export default function DoctorsSection() {
                 {/* 전문 시술 태그 */}
                 <div>
                   <p className="text-xs tracking-widest uppercase mb-2" style={{ color: GOLD, fontWeight: 600 }}>
-                    {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : "专业项目"}
+                    {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : lang === "zh" ? "专业项目" : "Specialty Treatments"}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {doctor.specialties.map((s) => (
@@ -747,7 +747,7 @@ export default function DoctorsSection() {
                         ? `학력 · 경력 · 자격 (${doctor.credentials.length}건)`
                         : lang === "ja"
                         ? `学歴・経歴・資格 (${doctor.credentials.length}件)`
-                        : `学历·经历·资质 (${doctor.credentials.length}项)`}
+                        : lang === "zh" ? `学历·经历·资质 (${doctor.credentials.length}项)` : `Education & Career (${doctor.credentials.length})`}
                     </span>
                     <div
                       style={{

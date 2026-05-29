@@ -23,6 +23,9 @@ const Equipment2Detail = lazy(() => import("@/pages/Equipment2Detail"));
 const AdminEquipment2New = lazy(() => import("@/pages/AdminEquipment2New"));
 const AdminEquipment2Edit = lazy(() => import("@/pages/AdminEquipment2Edit"));
 const TreatmentPage = lazy(() => import("@/pages/TreatmentPage"));
+const LandingEN = lazy(() => import("@/pages/LandingEN"));
+const LandingJA = lazy(() => import("@/pages/LandingJA"));
+const LandingZH = lazy(() => import("@/pages/LandingZH"));
 // 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
 
 // 로드 중 로딩 스폰너
@@ -52,6 +55,9 @@ function Router() {
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/non-covered"} component={NonCoveredGuide} />
         <Route path={"/about"} component={About} />
+        <Route path={"/en"} component={LandingEN} />
+        <Route path={"/ja"} component={LandingJA} />
+        <Route path={"/zh"} component={LandingZH} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
       </Switch>

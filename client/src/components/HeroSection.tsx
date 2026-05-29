@@ -374,7 +374,7 @@ export default function HeroSection() {
           className="font-bold"
           style={{
             color: "#FFFFFF",
-            fontSize: "clamp(1.35rem, 5.5vw, 3.6rem)",
+            fontSize: "clamp(1.1rem, 4.2vw, 2.8rem)",
             marginBottom: "clamp(0.3rem, 1.2vh, 0.75rem)",
             fontFamily: "'Noto Sans KR', sans-serif",
             letterSpacing: "clamp(0.04em, 1.5vw, 0.12em)",
@@ -445,7 +445,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>년+</span>
+                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -487,7 +487,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>례+</span>
+                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -529,7 +529,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>종+</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -576,7 +576,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>대+</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",

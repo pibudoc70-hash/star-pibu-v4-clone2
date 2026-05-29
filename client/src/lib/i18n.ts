@@ -630,7 +630,7 @@ export const i18n: Record<Lang, I18nContent> = {
       phone: "051-818-2300",
       sms: "010-5855-3201",
       kakao: "@스타피부과",
-      businessInfo: "사업자등록번호: 605-24-84306 | 팩스: 051-818-2310 | 이메일: starpibu@naver.com",
+      businessInfo: "사업자등록번호: 605-24-84306 | 이메일: starpibu@naver.com",
     },
     youtube: {
       sectionTitle: "피부과전문의가 알려주는 피부이야기",
@@ -1054,7 +1054,7 @@ export const i18n: Record<Lang, I18nContent> = {
       phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
-      businessInfo: "Business Reg. No.: 605-24-84306 | Fax: 051-818-2310 | Email: starpibu@naver.com",
+      businessInfo: "Business Reg. No.: 605-24-84306 | Email: starpibu@naver.com",
     },
     youtube: {
       sectionTitle: "Skin Stories from Our Dermatologists",
@@ -1478,7 +1478,7 @@ export const i18n: Record<Lang, I18nContent> = {
       phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
-      businessInfo: "事業者登録番号: 605-24-84306 | FAX: 051-818-2310 | Email: starpibu@naver.com",
+      businessInfo: "事業者登録番号: 605-24-84306 | Email: starpibu@naver.com",
     },
     youtube: {
       sectionTitle: "皮膚科専門医が教える肆の話",
@@ -1902,7 +1902,7 @@ export const i18n: Record<Lang, I18nContent> = {
       phone: "+82-51-818-2300",
       sms: "010-5855-3201",
       kakao: "@starpibu",
-      businessInfo: "营业执照号: 605-24-84306 | 传真: 051-818-2310 | 邮筱: starpibu@naver.com",
+      businessInfo: "营业执照号: 605-24-84306 | 邮筱: starpibu@naver.com",
     },
     youtube: {
       sectionTitle: "皮肤科专家为您讲解皮肤故事",

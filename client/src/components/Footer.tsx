@@ -170,12 +170,7 @@ export default function Footer() {
                   {lang === "ja" ? "SMS: 010-5855-3201" : lang === "zh" ? "短信: 010-5855-3201" : lang === "en" ? "SMS: 010-5855-3201" : "문자: 010-5855-3201"}
                 </a>
               </div>
-              <div className="flex items-center gap-2">
-                <Printer size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
-                <span className="text-sm font-montserrat" style={{ color: "rgba(255,255,255,0.45)" }}>
-                  {t.footer.fax} ({labels.fax})
-                </span>
-              </div>
+
               <div className="flex items-center gap-2">
                 <Mail size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
                 <a
@@ -208,12 +203,12 @@ export default function Footer() {
         <div className="container flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-xs text-center md:text-left" style={{ color: "rgba(255,255,255,0.35)" }}>
             {lang === "ko"
-              ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306 | 팩스: 051-818-2310 | 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료), 2층(줄기세포 연구센터)"
+              ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306 | 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료), 2층(줄기세포 연구센터)"
               : lang === "ja"
-              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306 | FAX: 051-818-2310 | 釜山広域市釜山镇区西面路74 アイオンシティビル4F(受付・診療), 2F(幹細胞研究センター)"
+              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306 | 釜山広域市釜山镇区西面路74 アイオンシティビル4F(受付・診療), 2F(幹細胞研究センター)"
               : lang === "en"
-              ? "STAR Dermatology | Director: Cho Si-hyung | Business Reg. No.: 605-24-84306 | Fax: 051-818-2310 | 4F, Ion City Bldg, 74 Seomyeon-ro, Busanjin-gu, Busan"
-              : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306 | 传真: 051-818-2310 | 釜山广域市釜山镇区西面路74 爱恩城大厦4楼(接待·诊疗), 2楼(干细胞研究中心)"}
+              ? "STAR Dermatology | Director: Cho Si-hyung | Business Reg. No.: 605-24-84306 | 4F, Ion City Bldg, 74 Seomyeon-ro, Busanjin-gu, Busan"
+              : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306 | 釜山广域市釜山镇区西面路74 爱恩城大厦4楼(接待·诊疗), 2楼(干细胞研究中心)"}
           </p>
           <div className="flex gap-4">
             <a

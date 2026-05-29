@@ -198,8 +198,6 @@ export default function Privacy() {
               <span className="font-semibold">전화: 051-818-2300</span>
               <span className="hidden sm:inline" style={{ color: "#D1D5DB" }}>|</span>
               <span className="font-semibold">이메일: starpibu@naver.com</span>
-              <span className="hidden sm:inline" style={{ color: "#D1D5DB" }}>|</span>
-              <span className="font-semibold">팩스: 051-818-2310</span>
             </div>
           </div>
         </div>

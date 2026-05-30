@@ -770,14 +770,14 @@
 - [x] 테스트 및 최종 체크포인트
 
 ## Phase 106: 모바일 플로팅 CTA 버튼 추가 (2026-05-29)
-- [ ] FloatingCTA.tsx 컴포넌트 생성 (client/src/components/)
-- [ ] 전화걸기 버튼 (tel:051-818-2300)
-- [ ] 카카오톡 상담 버튼 (https://pf.kakao.com/_HNyGC)
-- [ ] 예약 신청 버튼 (#booking 섹션 스크롤)
-- [ ] 모바일 전용 표시 (md:hidden)
-- [ ] 스크롤 200px 이상에서 노출 (useState + useEffect)
-- [ ] fade-in 애니메이션 적용
-- [ ] App.tsx 또는 Home.tsx에 FloatingCTA 컴포넌트 추가
+- [x] FloatingCTA.tsx 컴포넌트 생성 (client/src/components/)
+- [x] 전화걸기 버튼 (tel:051-818-2300 / +82-51-818-2300)
+- [x] 카카오톡 상담 버튼 (https://pf.kakao.com/_HNyGC) + LINE/WeChat 언어별 분기
+- [x] 네이버 예약 버튼 (https://booking.naver.com/...) + LINE 예약 언어별 분기
+- [x] 모바일 하단 바 + 데스크톱 우측 하단 플로팅 버튼
+- [x] 스크롤 100px 이상에서 노출 (useState + useEffect)
+- [x] 슬라이드업/페이드인 애니메이션 적용
+- [x] Home.tsx에 FloatingCTA 컴포넌트 추가 (이미 완료)
 
 ## Phase 107: 시술별 상세 페이지 라우팅 구현 (2026-05-29)
 - [x] TreatmentPage.tsx 컴포넌트 생성 (/treatments/:slug)

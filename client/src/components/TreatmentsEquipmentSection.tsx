@@ -15,6 +15,7 @@ import { Clock, RefreshCw, ChevronDown, ChevronUp, AlertCircle, Repeat, Sparkles
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useLang } from "@/contexts/LangContext";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -1419,6 +1420,8 @@ const DETAIL_PAGE_SLUGS: Record<string, string> = {
 function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; index: number; imgBg: string; catTextColor: string }) {
   const [open, setOpen] = useState(false);
   const [, setLocation] = useLocation();
+  const { t, lang } = useLang();
+  const tr = t.treatments;
   const detailSlug = DETAIL_PAGE_SLUGS[item.name];
 
   return (
@@ -1535,7 +1538,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 <div className="flex items-center gap-1.5">
                   <Clock size={14} style={{ color: "#d1ab67" }} />
                   <div>
-                    <p className="text-xs" style={{ color: "#9CA3AF" }}>시술 시간</p>
+                    <p className="text-xs" style={{ color: "#9CA3AF" }}>{tr.modalTime}</p>
                     <p className="text-sm font-semibold" style={{ color: "#374151" }}>{item.time}</p>
                   </div>
                 </div>
@@ -1543,7 +1546,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 <div className="flex items-center gap-1.5">
                   <RefreshCw size={14} style={{ color: "#d1ab67" }} />
                   <div>
-                    <p className="text-xs" style={{ color: "#9CA3AF" }}>회복 기간</p>
+                    <p className="text-xs" style={{ color: "#9CA3AF" }}>{tr.modalRecovery}</p>
                     <p className="text-sm font-semibold" style={{ color: "#374151" }}>{item.recovery}</p>
                   </div>
                 </div>
@@ -1553,7 +1556,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                     <div className="flex items-center gap-1.5">
                       <Repeat size={14} style={{ color: "#d1ab67" }} />
                       <div>
-                        <p className="text-xs" style={{ color: "#9CA3AF" }}>권장 횟수</p>
+                        <p className="text-xs" style={{ color: "#9CA3AF" }}>{tr.modalSessions}</p>
                         <p className="text-sm font-semibold" style={{ color: "#374151" }}>{item.sessions}</p>
                       </div>
                     </div>
@@ -1571,7 +1574,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 <div className="mb-4" style={{ borderTop: "1px solid #f0e8d4", paddingTop: "14px" }}>
                   <div className="flex items-center gap-1.5 mb-1">
                     <Sparkles size={12} style={{ color: "#d1ab67" }} />
-                    <p className="text-xs font-bold" style={{ color: "#d1ab67" }}>기대 효과</p>
+                    <p className="text-xs font-bold" style={{ color: "#d1ab67" }}>{tr.modalEffect}</p>
                   </div>
                   <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>{item.effect}</p>
                 </div>
@@ -1587,18 +1590,18 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 style={{ background: "#f0f4fa", color: "#2D4A7A", borderColor: "#c7d2fe" }}
               >
                 <ExternalLink size={14} />
-                상세 페이지 보기
+                {tr.modalDetailBtn}
               </button>
             )}
             <a
-              href="https://pf.kakao.com/_HNyGC"
+              href={lang === 'zh' ? 'https://u.wechat.com/star2006beauty' : lang === 'ja' ? 'https://lin.ee/tyuRdUc' : lang === 'en' ? 'https://pf.kakao.com/_HNyGC' : 'https://pf.kakao.com/_HNyGC'}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-2 flex-shrink-0"
-              style={{ background: "#FEE500", color: "#191919" }}
+              style={{ background: lang === 'zh' || lang === 'ja' ? '#07C160' : '#FEE500', color: lang === 'zh' || lang === 'ja' ? 'white' : '#191919' }}
               onClick={() => setOpen(false)}
             >
-              카카오톡으로 상담하기
+              {tr.modalConsultBtn}
             </a>
           </div>
         </DialogContent>
@@ -1751,6 +1754,8 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
 // 메인 컴포넌트
 // ─────────────────────────────────────────────────────────────────────────────
 export default function TreatmentsEquipmentSection() {
+  const { t, lang } = useLang();
+  const tr = t.treatments;
   const [activeId, setActiveId] = useState("best");
   const [showAll, setShowAll] = useState(true);
   const [sortBy, setSortBy] = useState<"name" | "time" | "popular">("popular");
@@ -1814,11 +1819,11 @@ export default function TreatmentsEquipmentSection() {
             className="mb-4"
             style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
           >
-            검증된 숙련도와 최상의 솔루션
+            {lang === 'ko' ? '검증된 숙련도와 최상의 솔루션' : tr.title}
           </h2>
 
           <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal" style={{ color: '#d1ab67', paddingTop: '7px' }}>
-            <span className="sm:hidden" style={{fontSize: '18px'}}>20년 내공의 피부과전문의 시술,<br />프리미엄 레이저 장비 라인업</span><span className="hidden sm:inline" style={{fontSize: '18px'}}>20년 내공의 피부과전문의 시술, 프리미엄 레이저 장비 라인업</span>
+            <span style={{fontSize: '18px'}}>{tr.subtitle}</span>
           </p>
         </div>
 
@@ -1833,7 +1838,7 @@ export default function TreatmentsEquipmentSection() {
           <div className="flex justify-end gap-2 mb-4">
             {/* 정렬 드롭다운 */}
             <div className="relative">
-              <button
+                <button
                 onClick={() => setFilterOpen(!filterOpen)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{
@@ -1845,16 +1850,16 @@ export default function TreatmentsEquipmentSection() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
-                정렬
+                {tr.sortLabel}
               </button>
               {filterOpen && (
                 <div
                   className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200"
                 >
                   {[
-                    { value: "popular", label: "인기도순" },
-                    { value: "name", label: "이름순" },
-                    { value: "time", label: "시간순" },
+                    { value: "popular", label: tr.sortPopular },
+                    { value: "name", label: tr.sortName },
+                    { value: "time", label: tr.sortTime },
                   ].map((option) => (
                     <button
                       key={option.value}
@@ -1961,8 +1966,8 @@ export default function TreatmentsEquipmentSection() {
                   {filteredTreatments.length === 0 ? (
                     <div className="col-span-full text-center py-16" style={{ color: "#9CA3AF" }}>
                       <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      <p className="text-sm font-medium">검색 결과가 없습니다</p>
-                      <p className="text-xs mt-1">다른 키워드나 필터를 시도해 보세요</p>
+                      <p className="text-sm font-medium">{tr.noResults}</p>
+                      <p className="text-xs mt-1">{tr.noResultsHint}</p>
                     </div>
                   ) : (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
                     <TreatmentCard key={`${activeId}-t-${i}`} item={item} index={i} imgBg={CAT_IMG_BG[activeId] ?? "#F0F6F8"} catTextColor={CAT_TAB_TEXT[activeId] ?? "#3730A3"} />

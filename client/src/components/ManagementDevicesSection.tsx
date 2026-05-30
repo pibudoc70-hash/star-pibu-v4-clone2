@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useLang } from "@/contexts/LangContext";
 
 // ── 장비 데이터 타입 ──────────────────────────────────────────────────────
 interface Device {
@@ -223,6 +224,8 @@ function DeviceCard({ device }: { device: Device }) {
 
 // ── 섹션 컴포넌트 ──────────────────────────────────────────────────────────
 export default function ManagementDevicesSection() {
+  const { t } = useLang();
+  const md = t.managementDevices;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -338,10 +341,10 @@ export default function ManagementDevicesSection() {
             MANAGEMENT DEVICES
           </p>
           <h2 className="text-2xl sm:text-4xl font-bold mb-3" style={{ color: "#1A2B4A" }}>
-            피부의 빛을 깨우는 스킨케어
+            {md.sectionTitle}
           </h2>
           <p className="text-sm sm:text-base" style={{ color: "#d1ab67" }}>
-            보이지 않는 피부 속 깊은 층까지 설세하고 정교하게 케어합니다.
+            {md.sectionSubtitle}
           </p>
         </div>
 

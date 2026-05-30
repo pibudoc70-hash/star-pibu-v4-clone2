@@ -157,6 +157,7 @@ export default function SpecialEventSection() {
                       src={event.imageUrl}
                       alt={getLocalizedText(event, "title")}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 )}

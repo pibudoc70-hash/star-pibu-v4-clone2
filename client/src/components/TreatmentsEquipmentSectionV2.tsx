@@ -129,6 +129,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
               src={item.cardBannerImage}
               alt={item.name}
               className="w-full h-full object-contain block transition-transform duration-400 group-hover:scale-105"
+              loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}
@@ -150,6 +151,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                     maxWidth: "48%",
                     filter: "drop-shadow(1px 2px 4px rgba(0,0,0,0.08))",
                   }}
+                  loading="lazy"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.opacity = "0.5";
                   }}
@@ -162,6 +164,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
               alt={item.name}
               className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
               style={{}}
+              loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}
@@ -217,6 +220,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                     src={item.cardBannerImage}
                     alt={`${item.name} 베너`}
                     className="w-full rounded-xl shadow-md object-cover"
+                    loading="lazy"
                   />
                 </div>
               )}

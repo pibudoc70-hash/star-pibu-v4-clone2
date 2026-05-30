@@ -3,7 +3,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 
 export default function ResultsStatisticsSection() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const r = t.results;
 
   const doctors = [
@@ -28,15 +28,18 @@ export default function ResultsStatisticsSection() {
   ];
 
   const statNumbers = ['20', '95', '4,000', '1:1'];
-  const statUnits = ['년', '%', '례', ''];
-  const statUnitsEn = ['+yrs', '%', '+', ''];
-
-  const isKo = t === undefined || r.stats[0].label === '전문의 경력';
+  const statUnitsByLang: Record<string, string[]> = {
+    ko: ['년', '%', '례', ''],
+    en: ['+yrs', '%', '+', ''],
+    ja: ['年', '%', '例', ''],
+    zh: ['年', '%', '例', ''],
+  };
+  const statUnits = statUnitsByLang[lang] ?? statUnitsByLang.en;
 
   const statistics = r.stats.map((stat, i) => ({
     icon: getIcon(i),
     number: statNumbers[i],
-    unit: isKo ? statUnits[i] : statUnitsEn[i],
+    unit: statUnits[i],
     label: stat.label,
     description: stat.desc,
   }));

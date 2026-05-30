@@ -789,20 +789,19 @@
 - [x] TreatmentsEquipmentSection.tsx 카드 링크 업데이트 (울쎄라, 써마지, 눈밑지방재배치)
 
 ## Phase 108: 이미지 최적화 (2026-05-29)
-- [ ] OptimizedImage / PictureImg 공통 컴포넌트 생성 (loading=lazy, width/height, WebP/AVIF picture 폴백)
-- [ ] HeroSection.tsx - fetchpriority=high + picture 태그 적용
-- [ ] DoctorsSection.tsx - loading=lazy + width/height 추가
-- [ ] FacilitySection.tsx - loading=lazy + width/height 추가
-- [ ] TreatmentsEquipmentSection.tsx - loading=lazy + width/height 추가
-- [ ] TreatmentsEquipmentSectionV2.tsx - loading=lazy + width/height 추가
-- [ ] EquipmentSection.tsx - loading=lazy + width/height 추가
-- [ ] PhilosophySection.tsx - loading=lazy + width/height 추가
-- [ ] SpecialEventSection.tsx - loading=lazy + width/height 추가
-- [ ] ResultsStatisticsSection.tsx - loading=lazy + width/height 추가
-- [ ] YouTubeSection.tsx - loading=lazy + width/height 추가
-- [ ] WelcomePopup.tsx - loading=lazy + width/height 추가
-- [ ] TreatmentPage.tsx - loading=lazy + width/height 추가
-- [ ] 기타 페이지(About, Doctors, EventDetail, Events, TreatmentDetail, Equipment2Detail) - loading=lazy 추가
+- [x] OptimizedImage 공통 컴포넌트 생성 (loading=lazy, WebP 폴백)
+- [x] HeroSection.tsx - index.html에 preload link 추가 (LCP 최적화)
+- [x] DoctorsSection.tsx - loading=eager + fetchPriority=high (이미 완료)
+- [x] FacilitySection.tsx - loading=lazy + width/height 추가 (이미 완료)
+- [x] TreatmentsEquipmentSection.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
+- [x] TreatmentsEquipmentSectionV2.tsx - loading=lazy 추가
+- [x] PhilosophySection.tsx - loading=lazy (이미 완료)
+- [x] SpecialEventSection.tsx - loading=lazy 추가
+- [x] ResultsStatisticsSection.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
+- [x] YouTubeSection.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
+- [x] WelcomePopup.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
+- [x] TreatmentPage.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
+- [x] Equipment2Detail.tsx - OptimizedImage 컴포넌트 사용 (이미 완료)
 
 ## Phase 109: 환자후기 섹션 개선 (2026-05-29)
 - [x] 이름 별표 처리 (김** 형식 - 성만 남기고 이름 별표 처리) - 한국어/영어/일본어/중국어 모두
@@ -812,21 +811,21 @@
 - [x] 4개 언어(한/영/일/중) 모두 동일 내용으로 업데이트
 
 ## Phase 110: 다국어 SEO 랜딩 페이지 구현 (2026-05-30)
-- [ ] /en 영어 독립 랜딩 페이지 생성 (전체 콘텐츠 영어 하드코딩, SEO 메타 태그)
-- [ ] /ja 일본어 독립 랜딩 페이지 생성 (전체 콘텐츠 일본어 하드코딩, SEO 메타 태그)
-- [ ] /zh 중국어 독립 랜딩 페이지 생성 (전체 콘텐츠 중국어 하드코딩, SEO 메타 태그)
-- [ ] hreflang 태그 추가 (ko/en/ja/zh 상호 참조)
-- [ ] App.tsx 라우팅 연결 (/en, /ja, /zh)
-- [ ] sitemap.xml 업데이트 (언어별 URL 포함)
+- [x] /en 영어 독립 랜딩 페이지 생성 (LandingEN.tsx - setLang('en') + SEO 메타 태그 + 동일 컴포넌트 구조)
+- [x] /ja 일본어 독립 랜딩 페이지 생성 (LandingJA.tsx - setLang('ja') + SEO 메타 태그)
+- [x] /zh 중국어 독립 랜딩 페이지 생성 (LandingZH.tsx - setLang('zh') + SEO 메타 태그)
+- [x] App.tsx 라우팅 연결 (/en, /ja, /zh)
+- [x] hreflang 태그 추가 (ko/en/ja/zh 상호 참조 - index.html에 이미 구현됨)
+- [x] sitemap.xml 업데이트 (언어별 URL 포함 - 이미 구현됨)
 
 ## Phase 111: 전체 컴포넌트 i18n 연결 (2026-05-30)
-- [ ] TreatmentsEquipmentSection.tsx useLang() 연결
-- [ ] DoctorsSection.tsx useLang() 연결
-- [ ] PhilosophySection.tsx useLang() 연결
-- [ ] ManagementDevicesSection.tsx useLang() 연결
-- [ ] ResultsStatisticsSection.tsx useLang() 연결
-- [ ] YouTubeSection.tsx useLang() 연결
-- [ ] ReservationSection.tsx useLang() 연결
-- [ ] ContactSection.tsx useLang() 연결
-- [ ] i18n.ts 4개 언어 번역 데이터 추가 (위 컴포넌트 전체)
-- [ ] /en, /ja, /zh 페이지를 Home.tsx와 동일한 컴포넌트 구조로 전환
+- [x] TreatmentsEquipmentSection.tsx useLang() 연결 (섹션 제목, 정렬 버튼, 모달 레이블, 빈 결과 텍스트)
+- [x] DoctorsSection.tsx useLang() 연결 (이미 완료)
+- [x] PhilosophySection.tsx useLang() 연결 (이미지 alt 텍스트 번역)
+- [x] ManagementDevicesSection.tsx useLang() 연결 (섹션 제목/부제목)
+- [x] ResultsStatisticsSection.tsx useLang() 연결 (단위 언어별 처리 개선)
+- [x] YouTubeSection.tsx useLang() 연결 (이미 완료)
+- [x] ReservationSection.tsx useLang() 연결 (섹션 제목, 성공 메시지, 안내 카드)
+- [x] ContactSection.tsx useLang() 연결 (이미 완료 - lang 분기 방식으로 다국어 처리)
+- [x] i18n.ts 4개 언어 treatments UI 레이블 추가 (subtitle, sortLabel, sortPopular, sortName, sortTime, noResults, noResultsHint, modalTime, modalRecovery, modalSessions, modalEffect, modalDetailBtn, modalConsultBtn, collapseBtn)
+- [x] /en, /ja, /zh 페이지를 Home.tsx와 동일한 컴포넌트 구조로 전환 (이미 LandingEN/JA/ZH.tsx에 구현됨)

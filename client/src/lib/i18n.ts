@@ -85,6 +85,20 @@ export interface I18nContent {
   treatments: {
     label: string;
     title: string;
+    subtitle: string;
+    sortLabel: string;
+    sortPopular: string;
+    sortName: string;
+    sortTime: string;
+    noResults: string;
+    noResultsHint: string;
+    modalTime: string;
+    modalRecovery: string;
+    modalSessions: string;
+    modalEffect: string;
+    modalDetailBtn: string;
+    modalConsultBtn: string;
+    collapseBtn: string;
     categories: Array<{ name: string; items: string[] }>;
   };
   foreignGuide: {
@@ -355,6 +369,20 @@ export const i18n: Record<Lang, I18nContent> = {
     treatments: {
       label: "시술 안내",
       title: "주요 시술 및 장비",
+      subtitle: "20년 내공의 피부과전문의 시술, 프리미엄 레이저 장비 라인업",
+      sortLabel: "정렬",
+      sortPopular: "인기도순",
+      sortName: "이름순",
+      sortTime: "시간순",
+      noResults: "검색 결과가 없습니다",
+      noResultsHint: "다른 키워드나 필터를 시도해 보세요",
+      modalTime: "시술 시간",
+      modalRecovery: "회복 기간",
+      modalSessions: "권장 횟수",
+      modalEffect: "기대 효과",
+      modalDetailBtn: "상세 페이지 보기",
+      modalConsultBtn: "카카오톡으로 상담하기",
+      collapseBtn: "접기",
       categories: [
         { name: "리프팅·탄력", items: ["울쎄라피 프라임", "써마지 FLX", "세르프", "실루엣 리프트"] },
         { name: "볼륨·주사", items: ["스컬트라", "히알루론산 필러", "보톡스"] },
@@ -779,6 +807,20 @@ export const i18n: Record<Lang, I18nContent> = {
     treatments: {
       label: "Treatments",
       title: "Popular Treatments & Equipment",
+      subtitle: "Expert dermatologist treatments with 20+ years of experience & premium laser equipment",
+      sortLabel: "Sort",
+      sortPopular: "Popular",
+      sortName: "Name",
+      sortTime: "Duration",
+      noResults: "No results found",
+      noResultsHint: "Try a different keyword or filter",
+      modalTime: "Treatment Time",
+      modalRecovery: "Recovery",
+      modalSessions: "Recommended Sessions",
+      modalEffect: "Expected Results",
+      modalDetailBtn: "View Detail Page",
+      modalConsultBtn: "Consult via KakaoTalk",
+      collapseBtn: "Collapse",
       categories: [
         { name: "Lifting & Firming", items: ["Ultherapy Prime", "Thermage FLX", "XERF", "Silhouette Lift"] },
         { name: "Volume & Injections", items: ["Sculptra", "Hyaluronic Acid Filler", "Botox"] },
@@ -1203,6 +1245,20 @@ export const i18n: Record<Lang, I18nContent> = {
     treatments: {
       label: "施術案内",
       title: "主要施術·設備",
+      subtitle: "20年の経験を持つ皮膚科専門医による施術とプレミアムレーザー設備",
+      sortLabel: "並び替え",
+      sortPopular: "人気順",
+      sortName: "名前順",
+      sortTime: "所要時間順",
+      noResults: "検索結果がありません",
+      noResultsHint: "別のキーワードやフィルターをお試しください",
+      modalTime: "施術時間",
+      modalRecovery: "回復期間",
+      modalSessions: "推奨回数",
+      modalEffect: "期待できる効果",
+      modalDetailBtn: "詳細ページを見る",
+      modalConsultBtn: "KakaoTalkで相談する",
+      collapseBtn: "閉じる",
       categories: [
         { name: "リフティング·弾力", items: ["ウルセラピープライム", "サーマジFLX", "XERF", "シルエットリフト"] },
         { name: "ボリューム·注射", items: ["スカルプトラ", "ヒアルロン酸フィラー", "ボトックス"] },
@@ -1627,6 +1683,20 @@ export const i18n: Record<Lang, I18nContent> = {
     treatments: {
       label: "诊疗项目",
       title: "主要诊疗项目·设备",
+      subtitle: "20年经验的皮肤科专科医生治疗与高端激光设备",
+      sortLabel: "排序",
+      sortPopular: "人气排序",
+      sortName: "名称排序",
+      sortTime: "时间排序",
+      noResults: "未找到相关结果",
+      noResultsHint: "请尝试其他关键词或筛选条件",
+      modalTime: "治疗时间",
+      modalRecovery: "恢复期",
+      modalSessions: "建议次数",
+      modalEffect: "预期效果",
+      modalDetailBtn: "查看详情页面",
+      modalConsultBtn: "WeChat咨询",
+      collapseBtn: "收起",
       categories: [
         { name: "提升·紧致", items: ["欧活素提升疗法", "热磁治疗FLX", "XERF", "线雕提升"] },
         { name: "丰盈·注射", items: ["舒颜萃", "玻尿酸填充", "肉毒素"] },

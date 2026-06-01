@@ -95,7 +95,7 @@ export default function AdminEquipment2New() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="예: 울쎼라"
+                    placeholder="예: 울쎄라"
                     required
                   />
                 </div>

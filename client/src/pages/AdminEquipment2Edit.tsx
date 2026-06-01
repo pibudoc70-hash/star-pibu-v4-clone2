@@ -194,7 +194,7 @@ export default function AdminEquipment2Edit() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="예: 울쎼라"
+                    placeholder="예: 울쎄라"
                     required
                   />
                 </div>

@@ -829,3 +829,25 @@
 - [x] ContactSection.tsx useLang() 연결 (이미 완료 - lang 분기 방식으로 다국어 처리)
 - [x] i18n.ts 4개 언어 treatments UI 레이블 추가 (subtitle, sortLabel, sortPopular, sortName, sortTime, noResults, noResultsHint, modalTime, modalRecovery, modalSessions, modalEffect, modalDetailBtn, modalConsultBtn, collapseBtn)
 - [x] /en, /ja, /zh 페이지를 Home.tsx와 동일한 컴포넌트 구조로 전환 (이미 LandingEN/JA/ZH.tsx에 구현됨)
+
+## Phase 112: SEO/품질 2차 보완 (2026-06-01)
+- [ ] 상세 페이지별 고유 메타 태그 분리 (title, description, og:title, og:description, og:url)
+- [ ] 상세 페이지별 MedicalProcedure JSON-LD 구조화 데이터 추가 (시술명/설명/효과/주의사항/FAQ)
+- [ ] /en /ja /zh 페이지 한국어 문구 완전 제거 (버튼, 섹션 설명, 예약 영역 포함)
+- [ ] 경력/시술건수/장비수치 단일 데이터 소스로 통일 (모든 언어 동일 숫자)
+- [ ] 시술명 표기 통일 (울쎄라로 전체 통일, 울쎼라 제거)
+- [ ] JSON-LD sameAs를 실제 네이버플레이스/인스타그램/유튜브 링크로 교체
+- [ ] robots.txt에서 manus 도메인 sitemap 제거, star-pibu.com만 남기기
+- [ ] favicon 및 핵심 아이콘 자체 호스팅으로 변경 (외부 임시 URL 제거)
+
+## Phase 112: SEO/품질 2차 보완 (2026-06-01)
+- [x] TreatmentPage.tsx - react-helmet-async Helmet으로 페이지별 고유 title/description/og:*/canonical 분리
+- [x] TreatmentPage.tsx - MedicalProcedure + FAQPage JSON-LD 구조화 데이터 추가 (울쎄라피, 써마지, 눈밑지방재배치)
+- [x] ReservationForm.tsx - useLang 연결 및 4개 언어(한/영/일/중) 완전 번역 (폼 레이블, 플레이스홀더, 에러 메시지, 버튼)
+- [x] index.html - 울쎼라→울쎄라 오타 수정 (twitter:description, JSON-LD description, knowsAbout)
+- [x] index.html - favicon 자체 호스팅 변경 (manuscdn.com → /favicon.png, /favicon.ico)
+- [x] index.html - JSON-LD sameAs 실제 링크 교체 (네이버플레이스 12020103, 인스타그램 starpibu, 유튜브 @starpibu)
+- [x] robots.txt - manus 도메인 sitemap URL 제거 (star-pibu.com만 유지)
+- [x] i18n.ts - 일본어/중국어 stats 배열 순서 통일 (경력→시술건수→장비, 한국어/영어와 동일)
+- [x] AdminEquipment2New.tsx, AdminEquipment2Edit.tsx - 울쎼라 오타 수정
+- [x] 전체 vitest 47개 테스트 통과

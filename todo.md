@@ -851,3 +851,61 @@
 - [x] i18n.ts - 일본어/중국어 stats 배열 순서 통일 (경력→시술건수→장비, 한국어/영어와 동일)
 - [x] AdminEquipment2New.tsx, AdminEquipment2Edit.tsx - 울쎼라 오타 수정
 - [x] 전체 vitest 47개 테스트 통과
+
+## Phase 116: Issue 1 - 치료 상세페이지 SEO 분리 (2026-06-01)
+- [ ] TreatmentPage.tsx에 react-helmet-async Helmet 추가 (이미 설치됨)
+- [ ] 각 시술별 고유 title, meta description, og:title, og:description, og:url 분리
+- [ ] canonical을 각 상세 URL 기준으로 설정
+- [ ] MedicalProcedure JSON-LD 스키마 추가 (시술명, 설명, 기대효과, 주의사항)
+- [ ] FAQPage JSON-LD 스키마 추가 (시술별 FAQ 4~5개 항목)
+- [ ] view-source에서 메타 태그가 실제로 분리되어 보이는지 확인
+
+## Phase 117: Issue 2 - 다국어 페이지 완성 (2026-06-01)
+- [ ] /en /ja /zh 페이지의 모든 섹션 문구 현지화 검토
+- [ ] 숫자 불일치 수정 (12년+/2322례+/29종 → 통일)
+- [ ] i18n.ts의 stats 배열 순서 및 수치 확인
+- [ ] HeroSection, ResultsStatisticsSection 언어별 표시 확인
+- [ ] 예약 폼 전체 번역 확인 (ReservationForm.tsx)
+- [ ] 다국어 페이지 empty state 문구 통일
+
+## Phase 118: Issue 3 - 구조화 데이터와 브랜드 신뢰도 정리 (2026-06-01)
+- [ ] JSON-LD sameAs 실제 링크로 교체 (네이버플레이스, 인스타그램, 유튜브)
+- [ ] 실제 링크가 없는 항목은 sameAs에서 제거
+- [ ] 전체 사이트에서 울쎼라/울쎄라 표기 통일 (울쎄라로 통일)
+- [ ] 메타 설명과 JSON-LD 설명 브랜드 톤 정리
+- [ ] 메인 및 다국어 페이지 핵심 문구 동일성 확인
+
+## Phase 119: Issue 4 - 기술 SEO 정리 (2026-06-01)
+- [ ] robots.txt에서 manus 도메인 sitemap 주소 삭제
+- [ ] 현재 운영 도메인 sitemap만 유지
+- [ ] sitemap.xml의 주요 URL이 실제 페이지 구조와 일치하는지 점검
+- [ ] hreflang, canonical, sitemap 간 충돌 확인 및 정리
+
+## Phase 120: Issue 5 - 자산 및 운영 안정성 개선 (2026-06-01)
+- [ ] favicon, apple-touch-icon, shortcut icon을 자체 호스팅 경로로 변경
+- [ ] 외부 임시 파일 URL 제거 (manuscdn.com 등)
+- [ ] 브랜드 핵심 아이콘과 메타 이미지 URL 정리
+
+## Phase 121: Issue 6 - 법정/신뢰 페이지 보강 (2026-06-01)
+- [ ] /non-covered 페이지를 단순 외부 링크 안내에서 실제 안내 페이지로 보강
+- [ ] 대표 비급여 항목 추가
+- [ ] 병원 자체 안내 문구 추가
+- [ ] 갱신일 및 상담 전 참고 고지 추가
+- [ ] 개인정보처리방침 연결 구조 명확히 정리
+
+## Phase 122: Issue 7 - UX 문구 정리 (2026-06-01)
+- [ ] 메인페이지 중복 텍스트 제거
+- [ ] 어색한 연결 문장 개선
+- [ ] 섹션 제목과 본문 톤 차이 정리
+- [ ] 이벤트 없을 때 empty state 문구 개선
+- [ ] 후기 영역 포맷과 출처 표기 통일
+
+## Phase 123: 테스트 및 최종 검수 (2026-06-01)
+- [ ] 상세페이지별 메타 태그가 각 URL에 맞게 달라졌는지 확인
+- [ ] 상세페이지별 JSON-LD가 개별 적용됐는지 확인
+- [ ] en/ja/zh 페이지의 숫자와 문구가 일치하는지 확인
+- [ ] robots.txt에서 구형 manus sitemap이 제거됐는지 확인
+- [ ] favicon과 아이콘이 자체 호스팅으로 바뀌었는지 확인
+- [ ] non-covered 페이지가 실제 안내 페이지 역할을 하는지 확인
+- [ ] 전체 vitest 테스트 통과
+- [ ] 최종 체크포인트 저장

@@ -831,14 +831,14 @@
 - [x] /en, /ja, /zh 페이지를 Home.tsx와 동일한 컴포넌트 구조로 전환 (이미 LandingEN/JA/ZH.tsx에 구현됨)
 
 ## Phase 112: SEO/품질 2차 보완 (2026-06-01)
-- [ ] 상세 페이지별 고유 메타 태그 분리 (title, description, og:title, og:description, og:url)
-- [ ] 상세 페이지별 MedicalProcedure JSON-LD 구조화 데이터 추가 (시술명/설명/효과/주의사항/FAQ)
-- [ ] /en /ja /zh 페이지 한국어 문구 완전 제거 (버튼, 섹션 설명, 예약 영역 포함)
-- [ ] 경력/시술건수/장비수치 단일 데이터 소스로 통일 (모든 언어 동일 숫자)
-- [ ] 시술명 표기 통일 (울쎄라로 전체 통일, 울쎼라 제거)
-- [ ] JSON-LD sameAs를 실제 네이버플레이스/인스타그램/유튜브 링크로 교체
-- [ ] robots.txt에서 manus 도메인 sitemap 제거, star-pibu.com만 남기기
-- [ ] favicon 및 핵심 아이콘 자체 호스팅으로 변경 (외부 임시 URL 제거)
+- [x] 상세 페이지별 고유 메타 태그 분리 (TreatmentPage.tsx - Helmet으로 title/description/og:*/canonical 페이지별 독립 적용)
+- [x] 상세 페이지별 MedicalProcedure JSON-LD 구조화 데이터 추가 (울쎄라피/써마지/눈밑지방재배치 - MedicalProcedure + FAQPage 스키마)
+- [x] /en /ja /zh 페이지 한국어 문구 완전 제거 (ReservationForm.tsx useLang 연결 - 4개 언어 완전 번역)
+- [x] 경력/시술건수/장비수치 단일 데이터 소스로 통일 (i18n.ts stats 배열 순서 통일, HeroSection/ResultsStatistics 이미 i18n.ts 단일 소스 사용)
+- [x] 시술명 표기 통일 (울쎼라 오타 전체 제거 - index.html, AdminEquipment2New/Edit.tsx)
+- [x] JSON-LD sameAs를 실제 네이버플레이스/인스타그램/유튜브 링크로 교체 (index.html)
+- [x] robots.txt에서 manus 독립 도맨 sitemap URL 제거 (star-pibu.com만 유지)
+- [x] favicon 자체 호스팅으로 변경 (manuscdn.com 외부 URL 제거 → /favicon.png, /favicon.ico 사용)
 
 ## Phase 112: SEO/품질 2차 보완 (2026-06-01)
 - [x] TreatmentPage.tsx - react-helmet-async Helmet으로 페이지별 고유 title/description/og:*/canonical 분리
@@ -851,3 +851,28 @@
 - [x] i18n.ts - 일본어/중국어 stats 배열 순서 통일 (경력→시술건수→장비, 한국어/영어와 동일)
 - [x] AdminEquipment2New.tsx, AdminEquipment2Edit.tsx - 울쎼라 오타 수정
 - [x] 전체 vitest 47개 테스트 통과
+
+## Phase 113: Google Analytics 4 설정 및 이벤트 추적 (2026-06-01)
+- [ ] Google Analytics 4 속성 생성 (측정 ID 발급)
+- [ ] client/index.html에 GA4 gtag 스크립트 추가
+- [ ] 주요 이벤트 추적 설정 (페이지 뷰, 예약 신청, 상담 버튼 클릭, 전화 걸기)
+- [ ] 다국어 페이지(/en, /ja, /zh) 이벤트 분류 설정 (언어별 추적)
+- [ ] 개발 서버에서 GA4 이벤트 발생 확인
+
+## Phase 114: Search Console 최적화 및 성능 측정 (2026-06-01)
+- [ ] Search Console에 /en, /ja, /zh 페이지 URL 등록
+- [ ] 다국어 hreflang 태그 검증 (Search Console 국제화 보고서)
+- [ ] Lighthouse 성능 측정 (데스크톱/모바일)
+- [ ] CLS(누적 레이아웃 이동) 병목 분석
+- [ ] 폰트 로딩 최적화 (preload, font-display: swap)
+- [ ] 코드 스플리팅 적용 (라우트별 동적 import)
+- [ ] 성능 개선 후 재측정 및 체크포인트 저장
+
+## Phase 115: 시술 상세 페이지 확장 (2026-06-01)
+- [ ] 추가 시술 8개 데이터 정의 (보톡스, 필러, 레이저토닝, 리주란, 단싱, 타이탄, 써마지RF, 피코프락셀)
+- [ ] TreatmentDetail.tsx 및 TreatmentPage.tsx에 새 시술 데이터 추가
+- [ ] i18n.ts에 4개 언어(한/영/일/중) 시술 설명 추가
+- [ ] sitemap.xml에 새 시술 URL 추가 (/treatments/botox, /treatments/filler 등)
+- [ ] 개발 서버에서 새 시술 페이지 렌더링 확인
+- [ ] 모든 테스트 통과 확인
+- [ ] 최종 체크포인트 저장

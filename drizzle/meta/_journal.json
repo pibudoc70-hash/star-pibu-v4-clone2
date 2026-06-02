@@ -99,6 +99,13 @@
       "when": 1780085166399,
       "tag": "0013_worthless_mongu",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1780387100930,
+      "tag": "0014_pale_nekra",
+      "breakpoints": true
     }
   ]
 }

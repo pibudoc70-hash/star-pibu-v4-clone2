@@ -5,6 +5,7 @@
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
+import { useLang } from "@/contexts/LangContext";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, Sparkles, ChevronRight, Star } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -14,9 +15,20 @@ interface Treatment {
   categoryId: string;
   name: string;
   nameEn: string;
+  nameJa?: string | null;
+  nameZh?: string | null;
   desc: string;
+  descEn?: string | null;
+  descJa?: string | null;
+  descZh?: string | null;
   time: string;
+  timeEn?: string | null;
+  timeJa?: string | null;
+  timeZh?: string | null;
   recovery: string;
+  recoveryEn?: string | null;
+  recoveryJa?: string | null;
+  recoveryZh?: string | null;
   badge?: string | null;
   badgeColor?: string | null;
   image?: string | null;
@@ -98,6 +110,16 @@ function convertYoutubeUrl(url: string | null | undefined): string | null {
 // ─────────────────────────────────────────────────────────────────────────────
 function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number; imgBg: string }) {
   const [open, setOpen] = useState(false);
+  const langCtx = useLang();
+  const lang = langCtx.lang;
+
+  // 언어별 텍스트 선택 헬퍼 함수
+  const getText = (ko: string, en?: string | null, ja?: string | null, zh?: string | null): string => {
+    if (lang === "en") return en || ko;
+    if (lang === "ja") return ja || ko;
+    if (lang === "zh") return zh || ko;
+    return ko;
+  };
 
   // images 필드가 JSON 문자열이면 파싱
   let imageArray: string[] = [];
@@ -179,21 +201,21 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
         {/* 텍스트 */}
         <div className="p-3 sm:p-4 flex flex-col flex-1">
           <p className="text-xs font-normal mb-0.5 font-montserrat" style={{ color: "#d1ab67" }}>
-            {item.nameEn || "TREATMENT"}
+            {getText(item.nameEn || "TREATMENT", item.nameEn, item.nameJa, item.nameZh)}
           </p>
           <h3 className="text-base sm:text-lg font-bold mb-1" style={{ color: "#1F2937" }}>
-            {item.name}
+            {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
           </h3>
           <p className="text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3" style={{ color: "#6B7280" }}>
-            {item.desc}
+            {getText(item.desc, item.descEn, item.descJa, item.descZh)}
           </p>
           <div className="flex gap-3 flex-wrap items-center justify-between">
             <div className="flex gap-3 flex-wrap">
               <span className="flex items-center gap-1 text-xs" style={{ color: "#9CA3AF" }}>
-                <Clock size={11} /> {item.time}
+                <Clock size={11} /> {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
               </span>
               <span className="flex items-center gap-1 text-xs" style={{ color: "#9CA3AF" }}>
-                <RefreshCw size={11} /> 회복 {item.recovery}
+                <RefreshCw size={11} /> {lang === "en" ? "Recovery" : lang === "ja" ? "回復" : lang === "zh" ? "恢复" : "회복"} {getText(item.recovery, item.recoveryEn || "", item.recoveryJa || "", item.recoveryZh || "")}
               </span>
             </div>
             <span
@@ -243,10 +265,10 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
               )}
 
               <p className="text-xs font-normal mb-1 font-montserrat" style={{ color: "#d1ab67" }}>
-                {item.nameEn || "TREATMENT"}
+                {getText(item.nameEn || "TREATMENT", item.nameEn, item.nameJa, item.nameZh)}
               </p>
               <h2 className="text-xl font-bold mb-3" style={{ color: "#1F2937" }}>
-                {item.name}
+                {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
               </h2>
 
               {/* 기본 정보 */}
@@ -255,10 +277,10 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                   <Clock size={14} style={{ color: "#d1ab67" }} />
                   <div>
                     <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                      시술 시간
+                      {lang === "en" ? "Duration" : lang === "ja" ? "施術時間" : lang === "zh" ? "手术时间" : "시술 시간"}
                     </p>
-                    <p className="text-sm font-semibold" style={{ color: "#374151" }}>
-                      {item.time}
+                    <p className="text-sm font-bold" style={{ color: "#1F2937" }}>
+                      {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
                     </p>
                   </div>
                 </div>

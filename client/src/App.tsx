@@ -153,7 +153,7 @@ function Router() {
       <MapErrorBoundary>
         <Suspense fallback={<MapLoadingFallback />}>
           <Switch>
-        <Route path={"/"} component={Home} />
+            <Route path={"/"} component={Home} />
         <Route path={"/foreign-guide"} component={ForeignGuide} />
         <Route path={"/events/:id"} component={EventDetail} />
         <Route path={"/treatment/:name"} component={TreatmentDetail} />

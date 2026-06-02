@@ -125,24 +125,53 @@ export const treatments = mysqlTable("treatments", {
   categoryId: varchar("categoryId", { length: 50 }).notNull(), // best, lifting, eye, vitiligo, pigment, scar, acne_laser, rosacea, acne, fungus, psoriasis, volume, botox
   name: varchar("name", { length: 200 }).notNull(),
   nameEn: varchar("nameEn", { length: 200 }).notNull(),
+  nameJa: varchar("nameJa", { length: 200 }).default(""),
+  nameZh: varchar("nameZh", { length: 200 }).default(""),
   desc: text("desc").notNull(),
-  time: varchar("time", { length: 50 }).notNull(), // "60~90분"
-  recovery: varchar("recovery", { length: 50 }).notNull(), // "당일 일상"
+  descEn: text("descEn").default(""),
+  descJa: text("descJa").default(""),
+  descZh: text("descZh").default(""),
+  time: varchar("time", { length: 50 }).notNull(),
+  timeEn: varchar("timeEn", { length: 50 }).default(""),
+  timeJa: varchar("timeJa", { length: 50 }).default(""),
+  timeZh: varchar("timeZh", { length: 50 }).default(""),
+  recovery: varchar("recovery", { length: 50 }).notNull(),
+  recoveryEn: varchar("recoveryEn", { length: 50 }).default(""),
+  recoveryJa: varchar("recoveryJa", { length: 50 }).default(""),
+  recoveryZh: varchar("recoveryZh", { length: 50 }).default(""),
   badge: varchar("badge", { length: 100 }).default(""),
+  badgeEn: varchar("badgeEn", { length: 100 }).default(""),
+  badgeJa: varchar("badgeJa", { length: 100 }).default(""),
+  badgeZh: varchar("badgeZh", { length: 100 }).default(""),
   badgeColor: varchar("badgeColor", { length: 20 }).default("#4A6FA5"),
   image: text("image"), // 메인 이미지 URL
   images: text("images").default("[]"), // JSON 배열: 복수 이미지
   imgBg: varchar("imgBg", { length: 20 }).default(""),
   cardBannerImage: text("cardBannerImage"), // 카드 배너 이미지
-  detail: text("detail"), // 상세 설명
-  caution: text("caution"), // 주의사항
-  sessions: varchar("sessions", { length: 200 }).default(""), // 권장 횟수/주기
-  effect: text("effect"), // 기대 효과
+  detail: text("detail"),
+  detailEn: text("detailEn").default(""),
+  detailJa: text("detailJa").default(""),
+  detailZh: text("detailZh").default(""),
+  caution: text("caution"),
+  cautionEn: text("cautionEn").default(""),
+  cautionJa: text("cautionJa").default(""),
+  cautionZh: text("cautionZh").default(""),
+  sessions: varchar("sessions", { length: 200 }).default(""),
+  sessionsEn: varchar("sessionsEn", { length: 200 }).default(""),
+  sessionsJa: varchar("sessionsJa", { length: 200 }).default(""),
+  sessionsZh: varchar("sessionsZh", { length: 200 }).default(""),
+  effect: text("effect"),
+  effectEn: text("effectEn").default(""),
+  effectJa: text("effectJa").default(""),
+  effectZh: text("effectZh").default(""),
   related: text("related").default("[]"), // JSON 배열: 연관 시술
   steps: text("steps").default("[]"), // JSON 배열: 치료 단계
   youtubeUrl: text("youtubeUrl"), // YouTube 영상 URL
   modalImage: text("modalImage"), // 모달 이미지 (유튜브 대신)
-  slug: varchar("slug", { length: 200 }).unique(), // URL-friendly 슬러그 (예: ulthera, thermage)
+  slug: varchar("slug", { length: 200 }).unique(),
+  slugEn: varchar("slugEn", { length: 200 }).default(""),
+  slugJa: varchar("slugJa", { length: 200 }).default(""),
+  slugZh: varchar("slugZh", { length: 200 }).default(""),
   best: mysqlEnum("best", ["0", "1"]).default("0"), // Best 시술 여부
   section: mysqlEnum("section", ["v1", "v2"]).notNull().default("v1"), // v1: 기존 시술·장비소개, v2: 새로운 시술·장비소개 2
   sortOrder: int("sortOrder").notNull().default(0),

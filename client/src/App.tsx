@@ -168,6 +168,9 @@ function Router() {
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/non-covered"} component={NonCoveredGuide} />
         <Route path={"/about"} component={About} />
+        <Route path={"/en/about"} component={About} />
+        <Route path={"/ja/about"} component={About} />
+        <Route path={"/zh/about"} component={About} />
         <Route path={"/en"} component={LandingEN} />
         <Route path={"/ja"} component={LandingJA} />
         <Route path={"/zh"} component={LandingZH} />

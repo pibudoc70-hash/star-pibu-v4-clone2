@@ -27,22 +27,41 @@ export default function ResultsStatisticsSection() {
     },
   ];
 
-  const statNumbers = ['20', '95', '4,000', '1:1'];
-  const statUnitsByLang: Record<string, string[]> = {
-    ko: ['년', '%', '례', ''],
-    en: ['+yrs', '%', '+', ''],
-    ja: ['年', '%', '例', ''],
-    zh: ['年', '%', '例', ''],
-  };
-  const statUnits = statUnitsByLang[lang] ?? statUnitsByLang.en;
-
-  const statistics = r.stats.map((stat, i) => ({
-    icon: getIcon(i),
-    number: statNumbers[i],
-    unit: statUnits[i],
-    label: stat.label,
-    description: stat.desc,
-  }));
+  // about.stats에서 숫자 추출 (i18n.ts 단일 소스)
+  const aboutStats = t.about.stats;
+  
+  // results.stats는 4개 항목 (about.stats는 3개)
+  // 첫 3개는 about.stats에서, 4번째는 r.stats에서
+  const statistics = [
+    {
+      icon: getIcon(0),
+      number: aboutStats[0].num.replace(/[^0-9]/g, ''),
+      unit: lang === 'ko' ? '년' : lang === 'ja' ? '年' : lang === 'zh' ? '年' : '+yrs',
+      label: r.stats[0].label,
+      description: r.stats[0].desc,
+    },
+    {
+      icon: getIcon(1),
+      number: '95',
+      unit: '%',
+      label: r.stats[1].label,
+      description: r.stats[1].desc,
+    },
+    {
+      icon: getIcon(2),
+      number: aboutStats[1].num.replace(/[^0-9]/g, ''),
+      unit: lang === 'ko' ? '례' : lang === 'ja' ? '例' : lang === 'zh' ? '例' : '+',
+      label: r.stats[2].label,
+      description: r.stats[2].desc,
+    },
+    {
+      icon: getIcon(3),
+      number: '1',
+      unit: ':1',
+      label: r.stats[3].label,
+      description: r.stats[3].desc,
+    },
+  ];
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">

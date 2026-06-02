@@ -110,12 +110,18 @@ export default function SpecialEventSection() {
 
         {/* 이벤트 카드 그리드 */}
         {specialEvents.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">
-              {lang === "en" ? "No events currently available." :
-               lang === "ja" ? "現在開催中のイベントはございません。" :
-               lang === "zh" ? "目前没有进行中的活动。" :
-               "진행중인 이벤트가 없습니다."}
+          <div className="text-center py-16">
+            <p className="text-lg text-gray-700 mb-4">
+              {lang === "en" ? "We regularly update our special promotions to bring you the best value." :
+               lang === "ja" ? "既存のキャンペーンは終了いたしました。次回のキャンペーンをお気に入れください。" :
+               lang === "zh" ? "我们定期更新特殊优惠，为您提供最优价值。" :
+               "단기 스페셔른 이벤트를 준비 중입니다. 다시 가져주실 가지를 대기려 주세요."}
+            </p>
+            <p className="text-sm text-gray-500">
+              {lang === "en" ? "Contact us for more information about our services." :
+               lang === "ja" ? "詳しい情報はお気軽にご連絡ください。" :
+               lang === "zh" ? "详细信息请联系我们。" :
+               "자세한 정보는 연락처로 단락니다."}
             </p>
           </div>
         ) : (

@@ -38,11 +38,17 @@ export default function LandingJA() {
       { property: "og:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
       { property: "og:url", content: "https://star-pibu.com/ja" },
       { property: "og:locale", content: "ja_JP" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置" },
+      { name: "twitter:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
     ];
     metas.forEach(({ name, property, content }) => {
-      let el = name
-        ? document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)
-        : document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      let el: HTMLMetaElement | null = null;
+      if (name) {
+        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      } else if (property) {
+        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      }
       if (!el) {
         el = document.createElement("meta");
         if (name) el.setAttribute("name", name);

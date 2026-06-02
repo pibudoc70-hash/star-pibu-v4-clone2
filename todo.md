@@ -909,3 +909,82 @@
 - [ ] non-covered 페이지가 실제 안내 페이지 역할을 하는지 확인
 - [ ] 전체 vitest 테스트 통과
 - [ ] 최종 체크포인트 저장
+
+
+## Phase 124: 다국어 SEO 완성 - html lang & 메타 태그 분리 (2026-06-02)
+- [x] App.tsx에서 html lang 속성을 현재 언어에 따라 동적으로 설정 (HtmlLangUpdater 컴포넌트 추가)
+  - / (한국어): lang="ko"
+  - /en (영어): lang="en"
+  - /ja (일본어): lang="ja"
+  - /zh (중국어): lang="zh"
+- [x] LandingEN.tsx의 메타 태그 분리 (twitter:* 포함)
+  - title: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning | Seomyeon"
+  - description: 영어 설명 (현재 한국어 재사용 제거)
+  - og:title, og:description, og:url, twitter:card, twitter:title, twitter:description 모두 영어 기준으로 분리
+- [x] LandingJA.tsx의 메타 태그 분리 (twitter:* 포함)
+  - title: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置 | 西面"
+  - description: 일본어 설명
+  - og:title, og:description, og:url, twitter:card, twitter:title, twitter:description 모두 일본어 기준으로 분리
+- [x] LandingZH.tsx의 메타 태그 분리 (twitter:* 포함)
+  - title: "釜山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置 | 西面"
+  - description: 중국어 설명
+  - og:title, og:description, og:url, twitter:card, twitter:title, twitter:description 모두 중국어 기준으로 분리
+- [x] 모든 테스트 47개 통과 ✅
+
+## Phase 125: 상세페이지 SEO 분리 - 개별 메타 & JSON-LD (2026-06-02)
+- [x] TreatmentPage.tsx에 각 시술별 고유 메타 태그 구현 (이미 완료됨 - Phase 112)
+  - /treatments/ulthera: 울쎄라 전용 title/description/og:*
+  - /treatments/thermage: 써마지 전용 title/description/og:*
+  - /treatments/under-eye-fat: 눈밑지방재배치 전용 title/description/og:*
+- [x] 각 상세페이지 canonical을 해당 URL로 설정 (이미 완료됨)
+- [x] MedicalProcedure JSON-LD를 각 시술별로 개별 구성 (이미 완료됨)
+  - name, description, procedureType, expectedResult, risksFactor, faqPage 등
+- [x] FAQPage JSON-LD를 각 시술별 FAQ 기반으로 생성 (이미 완료됨)
+- [x] view-source에서 각 상세페이지 메타가 다르게 보이는지 확인 (이미 완료됨)
+
+## Phase 126: 숫자/통계/경력 일관성 정리 (2026-06-02)
+- [ ] i18n.ts의 stats 배열을 단일 데이터 소스로 통일
+  - 경력: 20년 (2006년 개원 기준)
+  - 시술건수: 4,000례
+  - 장비수: 50종
+- [ ] 모든 언어(ko/en/ja/zh)에서 동일한 숫자 사용
+- [ ] HeroSection.tsx에서 stats 표시 확인
+- [ ] ResultsStatisticsSection.tsx에서 stats 표시 확인
+- [ ] 메인 배너, About, 통계 섹션 전체에서 숫자 일관성 검증
+
+## Phase 127: 메인페이지 카피/UX 정리 (2026-06-02)
+- [ ] 중복 문장 제거 (섹션별 제목과 본문 중복 확인)
+- [ ] 붙어 있는 문장 자연스럽게 분리
+- [ ] 반복 표현 정리 (예: "시술", "피부" 등 과도한 반복)
+- [ ] 의료진/브랜드 소개 톤 통일
+- [ ] 이벤트 empty state 문구 개선 ("등록된 이벤트가 없습니다" → 더 신뢰감 있는 문구)
+- [ ] 후기 영역 포맷 통일 (이름 표기, 출처 표기)
+- [ ] 각 섹션 CTA 명확성 개선
+
+## Phase 128: 상세페이지 전환 최적화 (2026-06-02)
+- [ ] TreatmentPage.tsx에 상단 CTA 추가 (상담/예약 버튼)
+- [ ] TreatmentPage.tsx에 하단 CTA 추가 (상담/예약 버튼)
+- [ ] 관련 시술 연결 섹션 추가 (현재 시술과 유사한 다른 시술 추천)
+- [ ] FAQ 접기/펼치기 기능 개선 (UX 명확성)
+- [ ] 영상/전후사진/FAQ 순서 사용자 관점에서 재정렬
+- [ ] 전환 유도 박스 강화 (신뢰도 높은 문구)
+
+## Phase 129: 비급여 안내 페이지 보강 (2026-06-02)
+- [ ] NonCoveredGuide.tsx를 단순 외부 링크에서 실제 안내 페이지로 확장
+- [ ] 대표 비급여 항목 5~10개 추가 (카테고리별)
+- [ ] 병원 자체 안내 문구 추가 (심평원 링크와 함께)
+- [ ] 갱신일 및 상담 전 참고 고지 추가
+- [ ] 비용 변동 고지 추가
+- [ ] 개인정보처리방침 링크 연결
+- [ ] 상담/예약 CTA 추가
+
+## Phase 130: 최종 검수 (2026-06-02)
+- [ ] 각 언어 페이지(/en, /ja, /zh)의 html lang 속성 확인
+- [ ] 각 언어 페이지의 메타 태그가 해당 언어로 표시되는지 확인
+- [ ] 각 상세페이지의 메타 태그가 개별적으로 다르게 보이는지 확인
+- [ ] 각 상세페이지의 JSON-LD가 MedicalProcedure + FAQPage로 구성되는지 확인
+- [ ] 모든 언어에서 숫자(경력/시술건수/장비)가 동일한지 확인
+- [ ] 메인페이지 중복 문장과 어색한 카피가 제거됐는지 확인
+- [ ] non-covered 페이지가 실제 정보 페이지 역할을 하는지 확인
+- [ ] 전체 vitest 테스트 통과 확인
+- [ ] 최종 체크포인트 저장

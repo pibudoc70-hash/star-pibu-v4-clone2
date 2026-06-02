@@ -38,11 +38,17 @@ export default function LandingEN() {
       { property: "og:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
       { property: "og:url", content: "https://star-pibu.com/en" },
       { property: "og:locale", content: "en_US" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning" },
+      { name: "twitter:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
     ];
     metas.forEach(({ name, property, content }) => {
-      let el = name
-        ? document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)
-        : document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      let el: HTMLMetaElement | null = null;
+      if (name) {
+        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      } else if (property) {
+        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      }
       if (!el) {
         el = document.createElement("meta");
         if (name) el.setAttribute("name", name);

@@ -30,19 +30,25 @@ export default function LandingZH() {
   // Force Chinese on mount
   useEffect(() => {
     setLang("zh", false);
-    document.title = "釜山星皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置 | 西面";
+    document.title = "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置 | 西面";
     const metas: { name?: string; property?: string; content: string }[] = [
-      { name: "description", content: "釜山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玛吉FLX、眼袋脂肪重置、皮秒激光等50余种优质项目。欢迎外国患者，提供中文咨询。" },
-      { name: "keywords", content: "釜山皮肤科, 西面皮肤诊所, 超声刀釜山, 热玛吉釜山, 眼袋手术韩国, 皮秒激光釜山, 韩国美容皮肤科, 星皮肤科, 釜山整形美容, 中文皮肤科" },
-      { property: "og:title", content: "釜山星皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置" },
-      { property: "og:description", content: "釜山西面皮肤科专科诊所。20年以上经验，眼袋脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
+      { name: "description", content: "釉山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玻吉FLX、眉袋脚脂肪重置、皮秒激光筐50余种优质项目。欢迎外国患者，提供中文咨询。" },
+      { name: "keywords", content: "釉山皮肤科, 西面皮肤诊所, 超声刀釉山, 热玻吉釉山, 眉袋手术韓国, 皮秒激光釉山, 韓国美容皮肤科, 星皮肤科, 釉山整形美容, 中文皮肤科" },
+      { property: "og:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
+      { property: "og:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
       { property: "og:url", content: "https://star-pibu.com/zh" },
       { property: "og:locale", content: "zh_CN" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
+      { name: "twitter:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
     ];
     metas.forEach(({ name, property, content }) => {
-      let el = name
-        ? document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)
-        : document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      let el: HTMLMetaElement | null = null;
+      if (name) {
+        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      } else if (property) {
+        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      }
       if (!el) {
         el = document.createElement("meta");
         if (name) el.setAttribute("name", name);

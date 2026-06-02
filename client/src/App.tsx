@@ -1,10 +1,10 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { LangProvider } from "./contexts/LangContext";
-import { lazy, Suspense } from "react";
+import { LangProvider, useLang } from "./contexts/LangContext";
+import { lazy, Suspense, useEffect } from "react";
 import Home from "./pages/Home";
 
 // 동적 import로 라우트별 코드 스플리팅
@@ -36,9 +36,30 @@ function PageLoader() {
     </div>
   );
 }
+function HtmlLangUpdater() {
+  const [location] = useLocation();
+  const { lang } = useLang();
+
+  useEffect(() => {
+    // URL 기반으로 html lang 설정
+    let htmlLang = "ko";
+    if (location === "/en" || location.startsWith("/en/")) {
+      htmlLang = "en";
+    } else if (location === "/ja" || location.startsWith("/ja/")) {
+      htmlLang = "ja";
+    } else if (location === "/zh" || location.startsWith("/zh/")) {
+      htmlLang = "zh";
+    }
+    document.documentElement.lang = htmlLang;
+  }, [location]);
+
+  return null;
+}
+
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <HtmlLangUpdater />
       <Switch>
         <Route path={"/"} component={Home} />
         <Route path={"/foreign-guide"} component={ForeignGuide} />

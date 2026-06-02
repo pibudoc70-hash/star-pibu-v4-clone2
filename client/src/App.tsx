@@ -166,7 +166,17 @@ function Router() {
         <Route path={"/equipment2"} component={Equipment2} />
         <Route path={"/equipment2/:slug"} component={Equipment2Detail} />
         <Route path={"/privacy"} component={Privacy} />
+        <Route path={"/en/privacy"} component={Privacy} />
+        <Route path={"/ja/privacy"} component={Privacy} />
+        <Route path={"/zh/privacy"} component={Privacy} />
         <Route path={"/non-covered"} component={NonCoveredGuide} />
+        <Route path={"/en/non-covered"} component={NonCoveredGuide} />
+        <Route path={"/ja/non-covered"} component={NonCoveredGuide} />
+        <Route path={"/zh/non-covered"} component={NonCoveredGuide} />
+        <Route path={"/foreign-guide"} component={ForeignGuide} />
+        <Route path={"/en/foreign-guide"} component={ForeignGuide} />
+        <Route path={"/ja/foreign-guide"} component={ForeignGuide} />
+        <Route path={"/zh/foreign-guide"} component={ForeignGuide} />
         <Route path={"/about"} component={About} />
         <Route path={"/en/about"} component={About} />
         <Route path={"/ja/about"} component={About} />

@@ -122,13 +122,7 @@ export default function Footer() {
               {quickLinks.map((l) => (
                 <li key={l.label}>
                   <button
-                    onClick={() => {
-                      if (l.href.startsWith("/")) {
-                        window.location.href = l.href;
-                      } else {
-                        handleNavClick(l.href);
-                      }
-                    }}
+                    onClick={() => handleNavClick(l.href)}
                     className="text-sm transition-colors hover:text-white"
                     style={{ color: "rgba(255,255,255,0.55)" }}
                   >
@@ -241,13 +235,13 @@ export default function Footer() {
             >
               {labels.nonCovered}
             </a>
-            <a
-              href="/privacy"
+            <button
+              onClick={() => handleNavClick("/privacy")}
               className="text-xs transition-colors hover:text-white"
               style={{ color: "rgba(255,255,255,0.35)" }}
             >
               {labels.privacy}
-            </a>
+            </button>
           </div>
         </div>
         <div className="container mt-2">

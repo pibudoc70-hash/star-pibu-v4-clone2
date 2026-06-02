@@ -153,11 +153,28 @@ export default function Header() {
 
   const handleNavClick = (href: string) => {
     closeMobileMenu();
+    
+    // 다국어 페이지 기반 라우팅 헬퍼
+    const getLocalizedPath = () => {
+      if (lang === "en") return "/en";
+      if (lang === "ja") return "/ja";
+      if (lang === "zh") return "/zh";
+      return "/";
+    };
+    
+    // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
     if (href.startsWith("/")) {
-      window.location.href = href;
+      // 현재 언어 페이지가 한국어가 아닌 경우, 해당 언어 경로 추가
+      if (lang !== "ko") {
+        const basePath = getLocalizedPath();
+        window.location.href = `${basePath}${href}`;
+      } else {
+        window.location.href = href;
+      }
       return;
     }
     
+    // 해시 링크 (#home, #doctors 등)는 현재 페이지 기반
     // isHome이 true이면 현재 페이지에서 스크롤 (다국어 페이지 포함)
     if (isHome) {
       if (href === "#home") {
@@ -174,13 +191,6 @@ export default function Header() {
     }
     
     // isHome이 false이면 다른 페이지 → 현재 언어 페이지로 라우팅
-    const getLocalizedPath = () => {
-      if (lang === "en") return "/en";
-      if (lang === "ja") return "/ja";
-      if (lang === "zh") return "/zh";
-      return "/";
-    };
-    
     const basePath = getLocalizedPath();
     if (href === "#home") {
       window.location.href = basePath;

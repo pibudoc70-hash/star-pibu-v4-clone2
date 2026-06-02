@@ -17,12 +17,7 @@ export default function Footer() {
   const { t, lang } = useLang();
 
   const handleNavClick = (href: string) => {
-    if (href.startsWith("/")) {
-      window.location.href = href;
-      return;
-    }
-    
-    // 현재 언어 페이지 기반으로 라우팅
+    // 다국어 페이지 기반 라우팅 헬퍼
     const getLocalizedPath = () => {
       if (lang === "en") return "/en";
       if (lang === "ja") return "/ja";
@@ -30,7 +25,19 @@ export default function Footer() {
       return "/";
     };
     
-    // 현재 홈 페이지인 경우 스크롤, 아닌 경우 해당 언어 페이지로 이동
+    // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
+    if (href.startsWith("/")) {
+      // 현재 언어 페이지가 한국어가 아닌 경우, 해당 언어 경로 추가
+      if (lang !== "ko") {
+        const basePath = getLocalizedPath();
+        window.location.href = `${basePath}${href}`;
+      } else {
+        window.location.href = href;
+      }
+      return;
+    }
+    
+    // 해시 링크 (#home, #doctors 등)는 현재 페이지 기반
     const el = document.querySelector(href);
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
@@ -46,7 +53,7 @@ export default function Footer() {
   };
 
   const quickLinks = [
-    { label: t.nav.about, href: "#about" },
+    { label: t.nav.about, href: "/about" },
     { label: t.nav.doctors, href: "#doctors" },
     { label: t.nav.treatments, href: "#treatments" },
     { label: t.nav.facility, href: "#facility" },

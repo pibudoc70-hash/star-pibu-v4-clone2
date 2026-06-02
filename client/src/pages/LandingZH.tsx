@@ -36,11 +36,12 @@ export default function LandingZH() {
       { name: "keywords", content: "釉山皮肤科, 西面皮肤诊所, 超声刀釉山, 热玻吉釉山, 眉袋手术韓国, 皮秒激光釉山, 韓国美容皮肤科, 星皮肤科, 釉山整形美容, 中文皮肤科" },
       { property: "og:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
       { property: "og:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
-      { property: "og:url", content: "https://star-pibu.com/zh" },
+      { property: "og:url", content: "https://www.star-pibu.com/zh" },
       { property: "og:locale", content: "zh_CN" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
       { name: "twitter:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
+      { name: "canonical", content: "https://www.star-pibu.com/zh" },
     ];
     metas.forEach(({ name, property, content }) => {
       let el: HTMLMetaElement | null = null;
@@ -63,7 +64,7 @@ export default function LandingZH() {
       "@type": "MedicalBusiness",
       "name": "星皮肤科",
       "alternateName": "Star Dermatology",
-      "url": "https://star-pibu.com/zh",
+      "url": "https://www.star-pibu.com/zh",
       "telephone": "+82-51-818-2300",
       "address": { "@type": "PostalAddress", "streetAddress": "西面路74 ION城市大厦4层", "addressLocality": "釜山镇区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
       "openingHoursSpecification": [

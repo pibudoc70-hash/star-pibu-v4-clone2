@@ -36,11 +36,12 @@ export default function LandingJA() {
       { name: "keywords", content: "釜山皮膚科, 西面スキンクリニック, ウルセラピー釜山, サーマジ釜山, 目の下の脂肪再配置 韓国, ピコレーザー釜山, 韓国美容皮膚科, スタ皮膚科, 日本語対応 釜山" },
       { property: "og:title", content: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置" },
       { property: "og:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
-      { property: "og:url", content: "https://star-pibu.com/ja" },
+      { property: "og:url", content: "https://www.star-pibu.com/ja" },
       { property: "og:locale", content: "ja_JP" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置" },
       { name: "twitter:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
+      { name: "canonical", content: "https://www.star-pibu.com/ja" },
     ];
     metas.forEach(({ name, property, content }) => {
       let el: HTMLMetaElement | null = null;
@@ -63,7 +64,7 @@ export default function LandingJA() {
       "@type": "MedicalBusiness",
       "name": "スタ皮膚科",
       "alternateName": "Star Dermatology",
-      "url": "https://star-pibu.com/ja",
+      "url": "https://www.star-pibu.com/ja",
       "telephone": "+82-51-818-2300",
       "address": { "@type": "PostalAddress", "streetAddress": "西面路74 IONシティビル4F", "addressLocality": "釜山鎮区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
       "openingHoursSpecification": [

@@ -36,11 +36,12 @@ export default function LandingEN() {
       { name: "keywords", content: "Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea" },
       { property: "og:title", content: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning" },
       { property: "og:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
-      { property: "og:url", content: "https://star-pibu.com/en" },
+      { property: "og:url", content: "https://www.star-pibu.com/en" },
       { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning" },
       { name: "twitter:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
+      { name: "canonical", content: "https://www.star-pibu.com/en" },
     ];
     metas.forEach(({ name, property, content }) => {
       let el: HTMLMetaElement | null = null;
@@ -62,7 +63,7 @@ export default function LandingEN() {
       "@context": "https://schema.org",
       "@type": "MedicalBusiness",
       "name": "Star Dermatology",
-      "url": "https://star-pibu.com/en",
+      "url": "https://www.star-pibu.com/en",
       "telephone": "+82-51-818-2300",
       "address": { "@type": "PostalAddress", "streetAddress": "74 Seomyeon-ro, ION City Building 4F", "addressLocality": "Busanjin-gu", "addressRegion": "Busan", "postalCode": "47189", "addressCountry": "KR" },
       "openingHoursSpecification": [

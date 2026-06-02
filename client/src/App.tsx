@@ -51,6 +51,42 @@ function HtmlLangUpdater() {
       htmlLang = "zh";
     }
     document.documentElement.lang = htmlLang;
+    
+    // hreflang 태그 업데이트 (각 페이지에서 모든 언어 버전 참조)
+    const baseUrl = "https://www.star-pibu.com";
+    const hreflangs = [
+      { hreflang: "ko", href: `${baseUrl}/` },
+      { hreflang: "en", href: `${baseUrl}/en` },
+      { hreflang: "ja", href: `${baseUrl}/ja` },
+      { hreflang: "zh", href: `${baseUrl}/zh` },
+      { hreflang: "x-default", href: `${baseUrl}/` }
+    ];
+    
+    hreflangs.forEach(({ hreflang, href }) => {
+      let el = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
+      if (!el) {
+        el = document.createElement("link");
+        el.rel = "alternate";
+        el.hreflang = hreflang;
+        document.head.appendChild(el);
+      }
+      el.href = href;
+    });
+    
+    // canonical 태그 설정
+    let canonicalEl = document.querySelector<HTMLLinkElement>("link[rel='canonical']");
+    if (!canonicalEl) {
+      canonicalEl = document.createElement("link");
+      canonicalEl.rel = "canonical";
+      document.head.appendChild(canonicalEl);
+    }
+    
+    let canonicalUrl = `${baseUrl}/`;
+    if (htmlLang === "en") canonicalUrl = `${baseUrl}/en`;
+    else if (htmlLang === "ja") canonicalUrl = `${baseUrl}/ja`;
+    else if (htmlLang === "zh") canonicalUrl = `${baseUrl}/zh`;
+    
+    canonicalEl.href = canonicalUrl;
   }, [location]);
 
   return null;

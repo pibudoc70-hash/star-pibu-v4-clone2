@@ -1,0 +1,250 @@
+{
+  "query": "DESCRIBE treatments;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute DESCRIBE treatments;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "categoryId",
+      "Type": "varchar(50)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "name",
+      "Type": "varchar(200)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "nameEn",
+      "Type": "varchar(200)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "desc",
+      "Type": "text",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "time",
+      "Type": "varchar(50)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "recovery",
+      "Type": "varchar(50)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "badge",
+      "Type": "varchar(100)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    },
+    {
+      "Field": "badgeColor",
+      "Type": "varchar(20)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "#4A6FA5",
+      "Extra": ""
+    },
+    {
+      "Field": "image",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "images",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "imgBg",
+      "Type": "varchar(20)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    },
+    {
+      "Field": "cardBannerImage",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "detail",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "caution",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "sessions",
+      "Type": "varchar(200)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    },
+    {
+      "Field": "effect",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "related",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "steps",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "youtubeUrl",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "modalImage",
+      "Type": "longtext",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "best",
+      "Type": "enum('0','1')",
+      "Null": "YES",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "sortOrder",
+      "Type": "int",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "isActive",
+      "Type": "enum('0','1')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "1",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "section",
+      "Type": "enum('v1','v2')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "v1",
+      "Extra": ""
+    },
+    {
+      "Field": "slug",
+      "Type": "varchar(200)",
+      "Null": "YES",
+      "Key": "UNI",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "nameJa",
+      "Type": "varchar(200)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    },
+    {
+      "Field": "nameZh",
+      "Type": "varchar(200)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint\tNO\tPRI\tNULL\tauto_increment\ncategoryId\tvarchar(50)\tNO\t\tNULL\t\nname\tvarchar(200)\tNO\t\tNULL\t\nnameEn\tvarchar(200)\tNO\t\tNULL\t\ndesc\ttext\tNO\t\tNULL\t\ntime\tvarchar(50)\tNO\t\tNULL\t\nrecovery\tvarchar(50)\tNO\t\tNULL\t\nbadge\tvarchar(100)\tYES\t\t\t\nbadgeColor\tvarchar(20)\tYES\t\t#4A6FA5\t\nimage\tlongtext\tYES\t\tNULL\t\nimages\tlongtext\tYES\t\tNULL\t\nimgBg\tvarchar(20)\tYES\t\t\t\ncardBannerImage\tlongtext\tYES\t\tNULL\t\ndetail\tlongtext\tYES\t\tNULL\t\ncaution\tlongtext\tYES\t\tNULL\t\nsessions\tvarchar(200)\tYES\t\t\t\neffect\tlongtext\tYES\t\tNULL\t\nrelated\tlongtext\tYES\t\tNULL\t\nsteps\tlongtext\tYES\t\tNULL\t\nyoutubeUrl\tlongtext\tYES\t\tNULL\t\nmodalImage\tlongtext\tYES\t\tNULL\t\nbest\tenum('0','1')\tYES\t\t0\t\nsortOrder\tint\tNO\t\t0\t\nisActive\tenum('0','1')\tNO\t\t1\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\nsection\tenum('v1','v2')\tNO\t\tv1\t\nslug\tvarchar(200)\tYES\tUNI\tNULL\t\nnameJa\tvarchar(200)\tYES\t\t\t\nnameZh\tvarchar(200)\tYES\t\t\t\n",
+  "stderr": "",
+  "execution_time_ms": 1833
+}

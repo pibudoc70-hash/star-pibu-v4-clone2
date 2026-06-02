@@ -1,0 +1,100 @@
+{
+  "query": "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'treatments' ORDER BY ORDINAL_POSITION;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'treatments' ORDER BY ORDINAL_POSITION;",
+  "rows": [
+    {
+      "COLUMN_NAME": "id"
+    },
+    {
+      "COLUMN_NAME": "categoryId"
+    },
+    {
+      "COLUMN_NAME": "name"
+    },
+    {
+      "COLUMN_NAME": "nameEn"
+    },
+    {
+      "COLUMN_NAME": "desc"
+    },
+    {
+      "COLUMN_NAME": "time"
+    },
+    {
+      "COLUMN_NAME": "recovery"
+    },
+    {
+      "COLUMN_NAME": "badge"
+    },
+    {
+      "COLUMN_NAME": "badgeColor"
+    },
+    {
+      "COLUMN_NAME": "image"
+    },
+    {
+      "COLUMN_NAME": "images"
+    },
+    {
+      "COLUMN_NAME": "imgBg"
+    },
+    {
+      "COLUMN_NAME": "cardBannerImage"
+    },
+    {
+      "COLUMN_NAME": "detail"
+    },
+    {
+      "COLUMN_NAME": "caution"
+    },
+    {
+      "COLUMN_NAME": "sessions"
+    },
+    {
+      "COLUMN_NAME": "effect"
+    },
+    {
+      "COLUMN_NAME": "related"
+    },
+    {
+      "COLUMN_NAME": "steps"
+    },
+    {
+      "COLUMN_NAME": "youtubeUrl"
+    },
+    {
+      "COLUMN_NAME": "modalImage"
+    },
+    {
+      "COLUMN_NAME": "best"
+    },
+    {
+      "COLUMN_NAME": "sortOrder"
+    },
+    {
+      "COLUMN_NAME": "isActive"
+    },
+    {
+      "COLUMN_NAME": "createdAt"
+    },
+    {
+      "COLUMN_NAME": "updatedAt"
+    },
+    {
+      "COLUMN_NAME": "section"
+    },
+    {
+      "COLUMN_NAME": "slug"
+    },
+    {
+      "COLUMN_NAME": "nameJa"
+    },
+    {
+      "COLUMN_NAME": "nameZh"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\nid\ncategoryId\nname\nnameEn\ndesc\ntime\nrecovery\nbadge\nbadgeColor\nimage\nimages\nimgBg\ncardBannerImage\ndetail\ncaution\nsessions\neffect\nrelated\nsteps\nyoutubeUrl\nmodalImage\nbest\nsortOrder\nisActive\ncreatedAt\nupdatedAt\nsection\nslug\nnameJa\nnameZh\n",
+  "stderr": "",
+  "execution_time_ms": 1775
+}

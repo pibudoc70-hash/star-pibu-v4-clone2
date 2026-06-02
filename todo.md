@@ -986,3 +986,10 @@
 - [ ] non-covered 페이지가 실제 정보 페이지 역할을 하는지 확인
 - [ ] 전체 vitest 테스트 통과 확인
 - [ ] 최종 체크포인트 저장
+
+## Bug Fix: treatments 테이블 스키마 불일치 (2026-06-02)
+- [x] DB 마이그레이션: treatments 테이블에 다국어 필드 추가 (nameJa, nameZh, descEn/Ja/Zh 등 29개 필드)
+- [x] API 테스트: treatments.all 정상 작동 확인
+- [x] 홈 페이지 에러 해결: "Unexpected token <" 에러 완전히 해결됨
+- [x] 서버 재시작 및 검증 완료
+- [x] 최종 체크포인트 저장

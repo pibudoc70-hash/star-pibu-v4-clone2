@@ -30,18 +30,33 @@ interface Treatment {
   recoveryJa?: string | null;
   recoveryZh?: string | null;
   badge?: string | null;
+  badgeEn?: string | null;
+  badgeJa?: string | null;
+  badgeZh?: string | null;
+  detail?: string | null;
+  detailEn?: string | null;
+  detailJa?: string | null;
+  detailZh?: string | null;
+  caution?: string | null;
+  cautionEn?: string | null;
+  cautionJa?: string | null;
+  cautionZh?: string | null;
+  sessions?: string | null;
+  sessionsEn?: string | null;
+  sessionsJa?: string | null;
+  sessionsZh?: string | null;
+  effect?: string | null;
+  effectEn?: string | null;
+  effectJa?: string | null;
+  effectZh?: string | null;
   badgeColor?: string | null;
   image?: string | null;
-  detail?: string | null;
-  caution?: string | null;
   youtubeUrl?: string | null;
   best?: string | null;
   isActive?: string | null;
   images?: string | null;
   imgBg?: string | null;
   cardBannerImage?: string | null;
-  sessions?: string | null;
-  effect?: string | null;
   related?: string | null;
   steps?: string | null;
   section?: string | null;
@@ -289,10 +304,10 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                   <RefreshCw size={14} style={{ color: "#d1ab67" }} />
                   <div>
                     <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                      회복 기간
+                      {lang === "en" ? "Recovery" : lang === "ja" ? "回復期間" : lang === "zh" ? "恢复期" : "회복 기간"}
                     </p>
                     <p className="text-sm font-semibold" style={{ color: "#374151" }}>
-                      {item.recovery}
+                      {getText(item.recovery, item.recoveryEn || "", item.recoveryJa || "", item.recoveryZh || "")}
                     </p>
                   </div>
                 </div>
@@ -303,10 +318,10 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                       <RefreshCw size={14} style={{ color: "#d1ab67" }} />
                       <div>
                         <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                          권장 횟수
+                          {lang === "en" ? "Recommended Sessions" : lang === "ja" ? "推奨回数" : lang === "zh" ? "推荐次数" : "권장 횟수"}
                         </p>
                         <p className="text-sm font-semibold" style={{ color: "#374151" }}>
-                          {item.sessions}
+                          {getText(item.sessions || "", item.sessionsEn || "", item.sessionsJa || "", item.sessionsZh || "")}
                         </p>
                       </div>
                     </div>
@@ -316,7 +331,7 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
 
               {/* 상세 설명 */}
               <p className="text-sm leading-relaxed mb-4" style={{ color: "#4B5563" }}>
-                {item.detail || item.desc}
+                {getText(item.detail || item.desc, item.detailEn || item.descEn, item.detailJa || item.descJa, item.detailZh || item.descZh)}
               </p>
 
               {/* 기대 효과 */}
@@ -325,11 +340,11 @@ function TreatmentCard({ item, index, imgBg }: { item: Treatment; index: number;
                   <div className="flex items-center gap-1.5 mb-1">
                     <Sparkles size={12} style={{ color: "#d1ab67" }} />
                     <p className="text-xs font-bold" style={{ color: "#d1ab67" }}>
-                      기대 효과
+                      {lang === "en" ? "Expected Results" : lang === "ja" ? "期待される効果" : lang === "zh" ? "预期效果" : "기대 효과"}
                     </p>
                   </div>
                   <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>
-                    {item.effect}
+                    {getText(item.effect || "", item.effectEn || "", item.effectJa || "", item.effectZh || "")}
                   </p>
                 </div>
               )}

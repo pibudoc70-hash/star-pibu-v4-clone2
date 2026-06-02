@@ -21,13 +21,27 @@ export default function Footer() {
       window.location.href = href;
       return;
     }
-    // 현재 홈 페이지인 경우 스크롤, 아닌 경우 홈으로 이동
+    
+    // 현재 언어 페이지 기반으로 라우팅
+    const getLocalizedPath = () => {
+      if (lang === "en") return "/en";
+      if (lang === "ja") return "/ja";
+      if (lang === "zh") return "/zh";
+      return "/";
+    };
+    
+    // 현재 홈 페이지인 경우 스크롤, 아닌 경우 해당 언어 페이지로 이동
     const el = document.querySelector(href);
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     } else {
-      window.location.href = href === "#home" ? "/" : `/${href}`;
+      const basePath = getLocalizedPath();
+      if (href === "#home") {
+        window.location.href = basePath;
+      } else {
+        window.location.href = `${basePath}${href}`;
+      }
     }
   };
 

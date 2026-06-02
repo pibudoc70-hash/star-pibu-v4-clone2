@@ -4,8 +4,51 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider, useLang } from "./contexts/LangContext";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, Component, ReactNode } from "react";
 import Home from "./pages/Home";
+
+// ErrorBoundary for Map component
+class MapErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.warn("[MapErrorBoundary] Map component failed to load:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-2xl">
+          <a
+            href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors"
+          >
+            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#FFCD00" }}>
+              <span className="text-2xl font-bold" style={{ color: "#3C1E1E" }}>K</span>
+            </div>
+            <div>
+              <p className="font-bold text-gray-800 text-lg">카카오맵에서 보기</p>
+              <p className="text-gray-500 text-sm mt-1">부산 서면 아이온시티빌딩 2·4층</p>
+            </div>
+          </a>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // 동적 import로 라우트별 코드 스플리팅
 const NotFound = lazy(() => import("@/pages/NotFound"));
@@ -33,6 +76,17 @@ function PageLoader() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+    </div>
+  );
+}
+
+// Map 로드 실패 시 폴백 UI
+function MapLoadingFallback() {
+  return (
+    <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-2xl">
+      <div className="text-center">
+        <p className="text-gray-500">지도를 불러오는 중입니다...</p>
+      </div>
     </div>
   );
 }
@@ -96,7 +150,9 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <HtmlLangUpdater />
-      <Switch>
+      <MapErrorBoundary>
+        <Suspense fallback={<MapLoadingFallback />}>
+          <Switch>
         <Route path={"/"} component={Home} />
         <Route path={"/foreign-guide"} component={ForeignGuide} />
         <Route path={"/events/:id"} component={EventDetail} />
@@ -117,7 +173,9 @@ function Router() {
         <Route path={"/zh"} component={LandingZH} />
         <Route path={"/404"} component={NotFound} />
         <Route component={NotFound} />
-      </Switch>
+          </Switch>
+        </Suspense>
+      </MapErrorBoundary>
     </Suspense>
   );
 }

@@ -38,7 +38,9 @@ export default function Header() {
 
   const handleLangChange = (option: typeof langOptions[0]) => {
     setLangDropOpen(false);
-    window.location.href = option.path;
+    // 현재 페이지의 해시를 유지하면서 언어 변경
+    const hash = window.location.hash;
+    window.location.href = option.path + hash;
   };
 
   // 드롭다운 외부 클릭 시 닫기
@@ -120,25 +122,20 @@ export default function Header() {
     if (!isHome) setActiveSection("");
   }, [isHome]);
 
-  // 메뉴 닫기 - 역방향 stagger 후 패널 슬라이드 아웃
-  // 총 닫힘 시간: CTA(0ms) → nav 역순(30ms~345ms) → 헤더(375ms) → 패널 슬라이드(+300ms)
-  const CLOSE_STAGGER_TOTAL = 375 + 220; // 마지막 항목 딜레이 + 애니메이션 지속시간
+  // 메뉴 닫기 - 빠른 반응성을 위해 애니메이션 시간 단축
   const closeMobileMenu = () => {
     setMenuClosing(true);
-    // 역방향 stagger 완료 후 패널 전체 슬라이드 아웃
+    setMenuVisible(false);
     setTimeout(() => {
-      setMenuVisible(false);
       setMenuClosing(false);
-      setTimeout(() => setMobileOpen(false), 300);
-    }, CLOSE_STAGGER_TOTAL);
+      setMobileOpen(false);
+    }, 200); // 총 200ms로 단축 (기존 595ms)
   };
 
-  // 메뉴 열기
+  // 메뉴 열기 - 즉시 반응
   const openMobileMenu = () => {
     setMobileOpen(true);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setMenuVisible(true));
-    });
+    setMenuVisible(true);
   };
 
   // 메뉴 랜더링 로직
@@ -154,8 +151,22 @@ export default function Header() {
       window.location.href = href;
       return;
     }
+    
+    // 현재 언어 페이지 기반으로 라우팅
+    const getLocalizedPath = () => {
+      if (lang === "en") return "/en";
+      if (lang === "ja") return "/ja";
+      if (lang === "zh") return "/zh";
+      return "/";
+    };
+    
     if (!isHome) {
-      window.location.href = href === "#home" ? "/" : `/${href}`;
+      const basePath = getLocalizedPath();
+      if (href === "#home") {
+        window.location.href = basePath;
+      } else {
+        window.location.href = `${basePath}${href}`;
+      }
       return;
     }
     if (href === "#home") {

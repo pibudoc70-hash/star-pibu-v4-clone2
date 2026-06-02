@@ -40,7 +40,12 @@ export default function Header() {
     setLangDropOpen(false);
     // 현재 페이지의 해시를 유지하면서 언어 변경
     const hash = window.location.hash;
-    window.location.href = option.path + hash;
+    // 홈 페이지 간 이동 시 해시 제거 (홈으로 돌아가기)
+    if ((location === "/" || location === "/en" || location === "/ja" || location === "/zh") && !hash) {
+      window.location.href = option.path;
+    } else {
+      window.location.href = option.path + hash;
+    }
   };
 
   // 드롭다운 외부 클릭 시 닫기
@@ -72,7 +77,8 @@ export default function Header() {
     });
   };
   const [location] = useLocation();
-  const isHome = location === "/";
+  // 다국어 페이지도 홈 페이지로 간주
+  const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh";
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
 
@@ -152,7 +158,22 @@ export default function Header() {
       return;
     }
     
-    // 현재 언어 페이지 기반으로 라우팅
+    // isHome이 true이면 현재 페이지에서 스크롤 (다국어 페이지 포함)
+    if (isHome) {
+      if (href === "#home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      const el = document.querySelector(href);
+      if (el) {
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+      return;
+    }
+    
+    // isHome이 false이면 다른 페이지 → 현재 언어 페이지로 라우팅
     const getLocalizedPath = () => {
       if (lang === "en") return "/en";
       if (lang === "ja") return "/ja";
@@ -160,24 +181,11 @@ export default function Header() {
       return "/";
     };
     
-    if (!isHome) {
-      const basePath = getLocalizedPath();
-      if (href === "#home") {
-        window.location.href = basePath;
-      } else {
-        window.location.href = `${basePath}${href}`;
-      }
-      return;
-    }
+    const basePath = getLocalizedPath();
     if (href === "#home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    const el = document.querySelector(href);
-    if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.location.href = basePath;
+    } else {
+      window.location.href = `${basePath}${href}`;
     }
   };
 
@@ -187,6 +195,7 @@ export default function Header() {
       return location === href;
     }
     const sectionId = href.replace("#", "");
+    // 다국어 페이지에서도 섹션 활성 상태 표시
     return isHome && activeSection === sectionId;
   };
 

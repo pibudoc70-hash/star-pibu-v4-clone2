@@ -1061,3 +1061,7 @@
 ## 시설안내 버튼 버그 수정 (2026-06-03)
 - [x] Header.tsx - isHome일 때 window.scrollTo() 후 history.replaceState()로 URL 해시 업데이트 (popstate 버그 수정)
 - [x] Footer.tsx - 동일한 popstate 버그 수정
+
+## 헤더 스크롤 하이라이트 기능 (2026-06-03)
+- [x] Header.tsx - IntersectionObserver 기반 activeSection 감지 로직으로 교체 (scroll 이벤트 → IntersectionObserver)
+- [x] Header.tsx - 데스크탑 메뉴 하이라이트 스타일 개선 (회색 배경 → 골드 언더라인 + 텍스트 색상 변경)

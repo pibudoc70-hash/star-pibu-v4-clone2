@@ -94,33 +94,62 @@ export default function Header() {
     { label: "장비2",             href: "/equipment2", icon: Stethoscope, hidden: true },
   ];
 
-  // 스크롤 감지: scrolled 상태 + 활성 섹션 감지
+  // 스크롤 감지: scrolled 상태 + 활성 섹션 감지 (IntersectionObserver 기반)
   useEffect(() => {
-    const sectionIds = ["home", "events", "doctors", "treatments", "about", "facility", "contact"];
+    // scrolled 상태는 scroll 이벤트로 감지
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+    if (!isHome) return () => window.removeEventListener("scroll", handleScroll);
 
-      if (!isHome) return;
+    const sectionIds = ["home", "events", "doctors", "treatments", "facility", "contact"];
 
-      // 현재 뷰포트 중앙에 가장 가까운 섹션 찾기
-      const offset = 100;
+    // IntersectionObserver: 뷰포트 상단 기준으로 현재 섹션 감지
+    // rootMargin: 헤더 높이(80px)만큼 상단 오프셋, 하단은 -40% 이하인 섹션은 제외
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-80px 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    // 각 섹션 요소 관찰 시작
+    const observedEls: Element[] = [];
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        observer.observe(el);
+        observedEls.push(el);
+      }
+    });
+
+    // 초기 활성 섹션 설정 (스크롤 없이 페이지 로드 시)
+    const setInitialSection = () => {
       let current = "home";
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
           const top = el.getBoundingClientRect().top;
-          if (top <= offset) {
-            current = id;
-          }
+          if (top <= 90) current = id;
         }
       }
       setActiveSection(current);
     };
+    setInitialSection();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // 초기 실행
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observedEls.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+    };
   }, [isHome]);
 
   // 다른 페이지에서 돌아올 때 활성 섹션 초기화
@@ -277,15 +306,16 @@ export default function Header() {
                   onClick={() => handleNavClick(item.href)}
                   className="relative transition-all duration-200 whitespace-nowrap px-3.5 py-2"
                   style={{
-                    color: '#4f4f4f',
+                    color: active ? '#C9A84C' : '#4f4f4f',
                     fontSize: '14px',
-                    fontWeight: active ? '600' : '400',
+                    fontWeight: active ? '700' : '400',
                     letterSpacing: "-0.01em",
-                    background: active ? "#f0f0f0" : "transparent",
-                    borderRadius: '5px',
+                    background: active ? "rgba(201,168,76,0.08)" : "transparent",
+                    borderRadius: '6px',
                     paddingTop: '8px',
-                    paddingBottom: '8px',
-                    borderBottom: active ? '2px solid #ffffff' : '2px solid transparent',
+                    paddingBottom: '6px',
+                    borderBottom: active ? '2px solid #C9A84C' : '2px solid transparent',
+                    transition: 'color 0.2s, background 0.2s, border-color 0.2s',
                   }}
                 >
                   {item.label}

@@ -1184,3 +1184,11 @@
 - [x] PR-10: SpecialEventSection aria-expanded/aria-controls/aria-label 추가, Footer 오타 수정
 - [x] PR-11: SpecialEventSection raw img → OptimizedImage 교체
 - [x] PR-12: NonCoveredGuide 갱신일자/HIRA/가격변동/사전상담 문구 추가, TreatmentPage 의료광고 안내 추가, Footer 개인정보처리방침 오타 수정
+
+## Phase 37: JSON-LD 의료진 프로필 및 주요 시술 스키마 추가 (2026-06-04)
+
+- [x] constants.ts에 CLINIC_DOCTORS (의료진 3명 자격·경력·전문 분야) 추가
+- [x] constants.ts에 CLINIC_PROCEDURES (주요 시술 5종 MedicalProcedure 데이터) 추가
+- [x] SeoHead.tsx buildClinicJsonLd()에 employee(Physician) 스키마 통합
+- [x] SeoHead.tsx buildClinicJsonLd()에 availableService(MedicalProcedure) 스키마 통합
+- [x] TypeScript 에러 0건 확인

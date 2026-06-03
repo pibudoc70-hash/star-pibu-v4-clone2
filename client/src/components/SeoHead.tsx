@@ -19,7 +19,7 @@
  *   />
  */
 import { Helmet } from "react-helmet-async";
-import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_INFO, CLINIC_STATS, CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/constants";
 
 /** Schema.org JSON-LD 구조화 데이터 타입 */
 export type JsonLdSchema = Record<string, unknown>;
@@ -201,6 +201,38 @@ export function buildClinicJsonLd(): JsonLdSchema {
         },
       },
     ],
+    // 의료진 프로필 (Schema.org Person)
+    employee: CLINIC_DOCTORS.map((doc) => ({
+      "@type": "Physician",
+      "@id": `${CLINIC_INFO.url}/#physician-${doc.nameEn.toLowerCase().replace(/\s+/g, "-")}`,
+      name: doc.name,
+      alternateName: doc.nameEn,
+      jobTitle: doc.jobTitle,
+      url: doc.url,
+      worksFor: { "@id": `${CLINIC_INFO.url}/#organization` },
+      medicalSpecialty: {
+        "@type": "MedicalSpecialty",
+        name: "Dermatology",
+      },
+      knowsAbout: [...doc.specialties],
+      hasCredential: doc.credentials.map((cred) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: cred,
+      })),
+    })),
+    // 주요 시술 목록 (Schema.org MedicalProcedure)
+    availableService: CLINIC_PROCEDURES.map((proc) => ({
+      "@type": "MedicalProcedure",
+      name: proc.name,
+      alternateName: proc.nameEn,
+      url: proc.url,
+      description: proc.description,
+      bodyLocation: proc.bodyLocation,
+      procedureType: proc.procedureType,
+      followup: proc.followup,
+      howPerformed: proc.howPerformed,
+      provider: { "@id": `${CLINIC_INFO.url}/#organization` },
+    })),
     // 병원 통계 (Schema.org 비표준 확장 — 검색 엔진 무시해도 무방)
     additionalProperty: [
       {

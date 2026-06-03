@@ -5,6 +5,7 @@
  */
 import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import SeoHead from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
@@ -32,10 +33,7 @@ export default function Home() {
   const { user } = useAuth();
   void user; // auth state available for future use
 
-  // 페이지 제목 설정 (SEO 최적화)
-  useEffect(() => {
-    document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유";
-  }, []);
+
 
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
   useEffect(() => {
@@ -55,6 +53,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      <SeoHead
+        title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
+        description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리쥬란 등 프리미엄 시술 전문. 온라인 예약 가능."
+        keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리쥬란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
+        canonical="https://www.star-pibu.com/"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        hreflangs={[
+          { hreflang: "ko", href: "https://www.star-pibu.com/" },
+          { hreflang: "en", href: "https://www.star-pibu.com/en" },
+          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
+          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
+          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
+        ]}
+      />
       {/* Fixed Header */}
       <Header />
 

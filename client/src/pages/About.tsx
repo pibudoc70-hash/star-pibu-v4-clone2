@@ -1,11 +1,19 @@
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
+import SeoHead from '@/components/SeoHead';
 
 export default function About() {
   const { t } = useLang();
   return (
     <MainLayout>
+      <SeoHead
+        title="피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의"
+        description="부산 서면 스타피부과를 소개합니다. 20년 경력의 피부과 전문의가 직접 진료하며, 울쎄라, 써마지, 리프팅, 색소질환 등 프리미엄 시술을 제공합니다."
+        keywords="부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅"
+        canonical="https://www.star-pibu.com/about"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+      />
       {/* 피부과 소개 섹션 - About Us */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">

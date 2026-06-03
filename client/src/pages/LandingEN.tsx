@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
+import SeoHead from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -30,60 +31,7 @@ export default function LandingEN() {
   // Force English on mount
   useEffect(() => {
     setLang("en", false);
-    document.title = "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning | Seomyeon";
-    const metas: { name?: string; property?: string; content: string }[] = [
-      { name: "description", content: "Star Dermatology in Busan Seomyeon. Board-certified dermatologist with 20+ years experience. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning, Pico Laser and 50+ premium treatments. Foreign patients welcome." },
-      { name: "keywords", content: "Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea" },
-      { property: "og:title", content: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning" },
-      { property: "og:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
-      { property: "og:url", content: "https://www.star-pibu.com/en" },
-      { property: "og:locale", content: "en_US" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning" },
-      { name: "twitter:description", content: "Board-certified dermatologist in Busan Seomyeon. 20+ years experience, 4,000+ under-eye procedures, 50+ premium laser devices. Foreign patients welcome." },
-      { name: "canonical", content: "https://www.star-pibu.com/en" },
-    ];
-    metas.forEach(({ name, property, content }) => {
-      let el: HTMLMetaElement | null = null;
-      if (name) {
-        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-      } else if (property) {
-        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-      }
-      if (!el) {
-        el = document.createElement("meta");
-        if (name) el.setAttribute("name", name);
-        if (property) el.setAttribute("property", property);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    });
-    // JSON-LD
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "MedicalBusiness",
-      "name": "Star Dermatology",
-      "url": "https://www.star-pibu.com/en",
-      "telephone": "+82-51-818-2300",
-      "address": { "@type": "PostalAddress", "streetAddress": "74 Seomyeon-ro, ION City Building 4F", "addressLocality": "Busanjin-gu", "addressRegion": "Busan", "postalCode": "47189", "addressCountry": "KR" },
-      "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "19:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:30", "closes": "15:00" }
-      ],
-      "medicalSpecialty": "Dermatology",
-      "inLanguage": "en",
-      "knowsAbout": ["Ultherapy Prime", "Thermage FLX", "Under-Eye Fat Repositioning", "Laser Toning", "Pico Laser", "Rejuran Healer"]
-    };
-    let scriptEl = document.querySelector<HTMLScriptElement>('script[data-ld="en-medical"]');
-    if (!scriptEl) {
-      scriptEl = document.createElement("script");
-      scriptEl.setAttribute("type", "application/ld+json");
-      scriptEl.setAttribute("data-ld", "en-medical");
-      document.head.appendChild(scriptEl);
-    }
-    scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
-      document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
       setLang("ko", false);
     };
   }, [setLang]);
@@ -105,9 +53,33 @@ export default function LandingEN() {
 
   return (
     <div className="min-h-screen">
+      <SeoHead
+        title="Star Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning | Seomyeon"
+        description="Star Dermatology in Busan Seomyeon. Board-certified dermatologist with 20+ years experience. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning, Pico Laser and 50+ premium treatments. Foreign patients welcome."
+        keywords="Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea"
+        canonical="https://www.star-pibu.com/en"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        jsonLd={[{
+          "@context": "https://schema.org",
+          "@type": "MedicalBusiness",
+          "name": "Star Dermatology",
+          "url": "https://www.star-pibu.com/en",
+          "telephone": "+82-51-818-2300",
+          "address": { "@type": "PostalAddress", "streetAddress": "74 Seomyeon-ro, ION City Building 4F", "addressLocality": "Busanjin-gu", "addressRegion": "Busan", "postalCode": "47189", "addressCountry": "KR" },
+          "medicalSpecialty": "Dermatology",
+          "inLanguage": "en",
+          "knowsAbout": ["Ultherapy Prime", "Thermage FLX", "Under-Eye Fat Repositioning", "Laser Toning", "Pico Laser", "Rejuran Healer"]
+        }]}
+        hreflangs={[
+          { hreflang: "ko", href: "https://www.star-pibu.com/" },
+          { hreflang: "en", href: "https://www.star-pibu.com/en" },
+          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
+          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
+          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
+        ]}
+      />
       {/* Fixed Header */}
       <Header />
-
       {/* Main Content - identical to Home.tsx */}
       <main>
         <HeroSection />

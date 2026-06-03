@@ -6,6 +6,7 @@
 import { useState, useEffect } from "react";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
+import SeoHead from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
 
@@ -44,6 +45,18 @@ export default function ForeignGuide() {
 
   return (
     <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+      <SeoHead
+        title="외국인 안내 | 부산 스타피부과 - 영어·일본어·중국어 진료 안내"
+        description="부산 서면 스타피부과는 외국인 환자를 위한 영어·일본어·중국어 진료 안내를 제공합니다. Ultherapy, Thermage FLX, Under-Eye Fat Repositioning 등 프리미엄 시술 가능."
+        keywords="부산피부과외국인, Busan dermatology, 釜山皮肤科, 釜山皮膚科, 울쎄라피, Ultherapy Busan, 써마지부산"
+        canonical="https://www.star-pibu.com/foreign-guide"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        hreflangs={[
+          { hreflang: "en", href: "https://www.star-pibu.com/en" },
+          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
+          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
+        ]}
+      />
       <Header />
 
       {/* Hero Banner */}

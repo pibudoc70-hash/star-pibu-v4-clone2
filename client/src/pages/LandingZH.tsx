@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
+import SeoHead from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -30,61 +31,7 @@ export default function LandingZH() {
   // Force Chinese on mount
   useEffect(() => {
     setLang("zh", false);
-    document.title = "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置 | 西面";
-    const metas: { name?: string; property?: string; content: string }[] = [
-      { name: "description", content: "釉山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玻吉FLX、眉袋脚脂肪重置、皮秒激光筐50余种优质项目。欢迎外国患者，提供中文咨询。" },
-      { name: "keywords", content: "釉山皮肤科, 西面皮肤诊所, 超声刀釉山, 热玻吉釉山, 眉袋手术韓国, 皮秒激光釉山, 韓国美容皮肤科, 星皮肤科, 釉山整形美容, 中文皮肤科" },
-      { property: "og:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
-      { property: "og:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
-      { property: "og:url", content: "https://www.star-pibu.com/zh" },
-      { property: "og:locale", content: "zh_CN" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "釉山星皮肤科 | 超声刀·热玻吉FLX·眉袋脚脂肪重置" },
-      { name: "twitter:description", content: "釉山西面皮肤科专科诊所。20年以上经验，眉袋脚脂肪重置4,000例以上，50余种优质激光设备。欢迎外国患者。" },
-      { name: "canonical", content: "https://www.star-pibu.com/zh" },
-    ];
-    metas.forEach(({ name, property, content }) => {
-      let el: HTMLMetaElement | null = null;
-      if (name) {
-        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-      } else if (property) {
-        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-      }
-      if (!el) {
-        el = document.createElement("meta");
-        if (name) el.setAttribute("name", name);
-        if (property) el.setAttribute("property", property);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    });
-    // JSON-LD
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "MedicalBusiness",
-      "name": "星皮肤科",
-      "alternateName": "Star Dermatology",
-      "url": "https://www.star-pibu.com/zh",
-      "telephone": "+82-51-818-2300",
-      "address": { "@type": "PostalAddress", "streetAddress": "西面路74 ION城市大厦4层", "addressLocality": "釜山镇区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
-      "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "19:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:30", "closes": "15:00" }
-      ],
-      "medicalSpecialty": "Dermatology",
-      "inLanguage": "zh",
-      "knowsAbout": ["超声刀", "热玛吉FLX", "眼袋脂肪重置", "激光嫩肤", "皮秒激光", "婴儿针"]
-    };
-    let scriptEl = document.querySelector<HTMLScriptElement>('script[data-ld="zh-medical"]');
-    if (!scriptEl) {
-      scriptEl = document.createElement("script");
-      scriptEl.setAttribute("type", "application/ld+json");
-      scriptEl.setAttribute("data-ld", "zh-medical");
-      document.head.appendChild(scriptEl);
-    }
-    scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
-      document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
       setLang("ko", false);
     };
   }, [setLang]);
@@ -104,15 +51,39 @@ export default function LandingZH() {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
+   return (
     <div className="min-h-screen">
+      <SeoHead
+        title="釜山星皮肤科 | 超声刀·热玻吵FLX·眼袋脂肪重置 | 西面"
+        description="釜山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玻吵FLX、眼袋脂肪重置、皮秒激光筐50余种优质项目。欢迎外国患者，提供中文和询。"
+        keywords="釜山皮肤科, 西面皮肤诊所, 超声刀釜山, 热玻吵釜山, 眼袋手术韓国, 皮秒激光釜山, 韓国美容皮肤科, 星皮肤科, 釜山整形美容, 中文皮肤科"
+        canonical="https://www.star-pibu.com/zh"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        jsonLd={[{
+          "@context": "https://schema.org",
+          "@type": "MedicalBusiness",
+          "name": "星皮肤科",
+          "alternateName": "Star Dermatology",
+          "url": "https://www.star-pibu.com/zh",
+          "telephone": "+82-51-818-2300",
+          "address": { "@type": "PostalAddress", "streetAddress": "西面路74 ION城市大厨4层", "addressLocality": "釜山镇区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
+          "medicalSpecialty": "Dermatology",
+          "inLanguage": "zh",
+          "knowsAbout": ["超声刀", "热玸吵FLX", "眼袋脂肪重置", "激光嫩肤", "皮秒激光", "婴儿针"]
+        }]}
+        hreflangs={[
+          { hreflang: "ko", href: "https://www.star-pibu.com/" },
+          { hreflang: "en", href: "https://www.star-pibu.com/en" },
+          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
+          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
+          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
+        ]}
+      />
       {/* Fixed Header */}
       <Header />
-
       {/* Main Content - identical to Home.tsx */}
       <main>
         <HeroSection />
-
         <div style={{ background: "#FFFFFF" }}>
           <SpecialEventSection />
         </div>

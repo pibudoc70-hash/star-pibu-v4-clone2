@@ -1,0 +1,16 @@
+{
+  "query": "SELECT slug, name, image, section FROM treatments WHERE slug LIKE '%ulthera%' OR name LIKE '%울쎄라%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute SELECT slug, name, image, section FROM treatments WHERE slug LIKE '%ulthera%' OR name LIKE '%울쎄라%' LIMIT 5;",
+  "rows": [
+    {
+      "slug": "ulthera",
+      "name": "울쎄라",
+      "image": "https://d2xsxph8kpxj0f.cloudfront.net/310519663478405399/QdQ7tySKssCV8bdRzPPxg4/treatments/1779951321735-6zdas2qj9aj.jpg",
+      "section": "v2"
+    }
+  ],
+  "messages": [],
+  "stdout": "slug\tname\timage\tsection\nulthera\t울쎄라\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663478405399/QdQ7tySKssCV8bdRzPPxg4/treatments/1779951321735-6zdas2qj9aj.jpg\tv2\n",
+  "stderr": "",
+  "execution_time_ms": 1820
+}

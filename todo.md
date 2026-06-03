@@ -1006,3 +1006,27 @@
 - [x] 홈 페이지 에러 해결: "Unexpected token <" 에러 완전히 해결됨
 - [x] 서버 재시작 및 검증 완료
 - [x] 최종 체크포인트 저장
+
+## SeoHead 일괄 적용 (2026-06-03)
+- [ ] Home.tsx - SeoHead 적용 (canonical, og:image, og:site_name)
+- [ ] Equipment2.tsx - SeoHead 적용 (canonical, og:image, og:site_name)
+- [ ] About.tsx - SeoHead 적용 (고유 title, canonical)
+- [ ] ForeignGuide.tsx - SeoHead 적용 (고유 title, canonical)
+- [ ] Privacy.tsx - SeoHead 적용 (고유 title, canonical)
+- [ ] NonCoveredGuide.tsx - SeoHead 적용 (고유 title, canonical)
+- [ ] LandingEN.tsx - SeoHead 적용 (canonical, og:image)
+- [ ] LandingJA.tsx - SeoHead 적용 (canonical, og:image)
+- [ ] LandingZH.tsx - SeoHead 적용 (canonical, og:image)
+
+## SeoHead 일괄 적용 (2026-06-03)
+- [x] Home.tsx - SeoHead 적용 (title, description, canonical, ogImage, hreflangs)
+- [x] Equipment2.tsx - SeoHead 적용 (title, description, canonical, ogImage)
+- [x] About.tsx - SeoHead 적용 (title, description, canonical, ogImage)
+- [x] ForeignGuide.tsx - SeoHead 적용 (title, description, canonical, ogImage, hreflangs)
+- [x] Privacy.tsx - SeoHead 적용 (title, description, canonical, noindex=true)
+- [x] NonCoveredGuide.tsx - SeoHead 적용 (title, description, canonical, keywords)
+- [x] LandingEN.tsx - SeoHead 적용 (title, description, canonical, ogImage, jsonLd, hreflangs) + DOM 직접 수정 useEffect 제거
+- [x] LandingJA.tsx - SeoHead 적용 (title, description, canonical, ogImage, jsonLd, hreflangs) + DOM 직접 수정 useEffect 제거
+- [x] LandingZH.tsx - SeoHead 적용 (title, description, canonical, ogImage, jsonLd, hreflangs) + DOM 직접 수정 useEffect 제거
+- [x] TypeScript 0 errors 확인
+- [x] 체크포인트 저장

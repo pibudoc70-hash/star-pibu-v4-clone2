@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { ArrowLeft, Shield } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SeoHead from "@/components/SeoHead";
 
 const SECTIONS = [
   {
@@ -122,6 +123,12 @@ const SECTIONS = [
 export default function Privacy() {
   return (
     <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+      <SeoHead
+        title="개인정보처리방침 | 부산 서면 스타피부과"
+        description="스타피부과의원 개인정보처리방침입니다. 개인정보 보호법 제30조에 따라 개인정보의 처리 목적, 항목, 보유 기간 등을 안내합니다."
+        canonical="https://www.star-pibu.com/privacy"
+        noindex={true}
+      />
       <Header />
 
       <main className="pt-24 pb-20">

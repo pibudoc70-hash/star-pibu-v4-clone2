@@ -6,6 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
+import SeoHead from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -30,61 +31,7 @@ export default function LandingJA() {
   // Force Japanese on mount
   useEffect(() => {
     setLang("ja", false);
-    document.title = "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置 | 西面";
-    const metas: { name?: string; property?: string; content: string }[] = [
-      { name: "description", content: "釜山西面のスタ皮膚科。皮膚科専門医が20年以上の経験でウルセラピープライム、サーマジFLX、目の下の脂肪再配置、ピコレーザーなど50種以上の施術を提供。外国人患者様歓迎。" },
-      { name: "keywords", content: "釜山皮膚科, 西面スキンクリニック, ウルセラピー釜山, サーマジ釜山, 目の下の脂肪再配置 韓国, ピコレーザー釜山, 韓国美容皮膚科, スタ皮膚科, 日本語対応 釜山" },
-      { property: "og:title", content: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置" },
-      { property: "og:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
-      { property: "og:url", content: "https://www.star-pibu.com/ja" },
-      { property: "og:locale", content: "ja_JP" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置" },
-      { name: "twitter:description", content: "釜山西面の皮膚科専門医クリニック。20年以上の経験、目の下の脂肪再配置4,000件以上、50種以上のレーザー機器。外国人患者様歓迎。" },
-      { name: "canonical", content: "https://www.star-pibu.com/ja" },
-    ];
-    metas.forEach(({ name, property, content }) => {
-      let el: HTMLMetaElement | null = null;
-      if (name) {
-        el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-      } else if (property) {
-        el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-      }
-      if (!el) {
-        el = document.createElement("meta");
-        if (name) el.setAttribute("name", name);
-        if (property) el.setAttribute("property", property);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    });
-    // JSON-LD
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "MedicalBusiness",
-      "name": "スタ皮膚科",
-      "alternateName": "Star Dermatology",
-      "url": "https://www.star-pibu.com/ja",
-      "telephone": "+82-51-818-2300",
-      "address": { "@type": "PostalAddress", "streetAddress": "西面路74 IONシティビル4F", "addressLocality": "釜山鎮区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
-      "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "19:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:30", "closes": "15:00" }
-      ],
-      "medicalSpecialty": "Dermatology",
-      "inLanguage": "ja",
-      "knowsAbout": ["ウルセラピープライム", "サーマジFLX", "目の下の脂肪再配置", "レーザートーニング", "ピコレーザー", "リジュラン"]
-    };
-    let scriptEl = document.querySelector<HTMLScriptElement>('script[data-ld="ja-medical"]');
-    if (!scriptEl) {
-      scriptEl = document.createElement("script");
-      scriptEl.setAttribute("type", "application/ld+json");
-      scriptEl.setAttribute("data-ld", "ja-medical");
-      document.head.appendChild(scriptEl);
-    }
-    scriptEl.textContent = JSON.stringify(jsonLd);
     return () => {
-      document.title = "부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅 시술";
       setLang("ko", false);
     };
   }, [setLang]);
@@ -106,9 +53,34 @@ export default function LandingJA() {
 
   return (
     <div className="min-h-screen">
+      <SeoHead
+        title="釜山スタ皮膚科 | ウルセラピー・サーマジFLX・目の下の脂肪再配置 | 西面"
+        description="釜山西面のスタ皮膚科。皮膚科専門医が20年以上の経験でウルセラピープライム、サーマジFLX、目の下の脂肪再配置、ピコレーザーなど50種以上の施術を提供。外国人患者様歓迎。"
+        keywords="釜山皮膚科, 西面スキンクリニック, ウルセラピー釜山, サーマジ釜山, 目の下の脂肪再配置 韓国, ピコレーザー釜山, 韓国美容皮膚科, スタ皮膚科, 日本語対応 釜山"
+        canonical="https://www.star-pibu.com/ja"
+        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        jsonLd={[{
+          "@context": "https://schema.org",
+          "@type": "MedicalBusiness",
+          "name": "スタ皮膚科",
+          "alternateName": "Star Dermatology",
+          "url": "https://www.star-pibu.com/ja",
+          "telephone": "+82-51-818-2300",
+          "address": { "@type": "PostalAddress", "streetAddress": "西面路74 IONシティビル4F", "addressLocality": "釜山鎮区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
+          "medicalSpecialty": "Dermatology",
+          "inLanguage": "ja",
+          "knowsAbout": ["ウルセラピープライム", "サーマジFLX", "目の下の脂肪再配置", "レーザートーニング", "ピコレーザー", "リジュラン"]
+        }]}
+        hreflangs={[
+          { hreflang: "ko", href: "https://www.star-pibu.com/" },
+          { hreflang: "en", href: "https://www.star-pibu.com/en" },
+          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
+          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
+          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
+        ]}
+      />
       {/* Fixed Header */}
       <Header />
-
       {/* Main Content - identical to Home.tsx */}
       <main>
         <HeroSection />

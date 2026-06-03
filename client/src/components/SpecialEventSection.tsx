@@ -11,6 +11,7 @@
 import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface PriceRow {
   label: string;
@@ -168,11 +169,13 @@ export default function SpecialEventSection() {
                 {/* 이미지 (PC에서만 표시) */}
                 {event.imageUrl && (
                   <div className="hidden md:block mb-6 rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-100" style={{aspectRatio: '16/9'}}>
-                    <img
+                    <OptimizedImage
                       src={event.imageUrl}
                       alt={getLocalizedText(event, "title")}
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      width={800}
+                      height={450}
+                      priority={false}
                     />
                   </div>
                 )}
@@ -222,6 +225,9 @@ export default function SpecialEventSection() {
                     {/* 자세히 보기 버튼 */}
                     <button
                       onClick={() => toggleExpanded(event.id)}
+                      aria-expanded={false}
+                      aria-controls={`special-event-detail-${event.id}`}
+                      aria-label={`${getLocalizedText(event, 'title')} 자세히 보기`}
                       className="mt-auto px-6 py-3 font-semibold rounded-full transition-colors text-navy hover:opacity-80"
                       style={{
                         backgroundColor: '#f7f4ee',
@@ -232,7 +238,7 @@ export default function SpecialEventSection() {
                   </div>
                 ) : (
                   // 카드 컨테이너 - 확장 상태
-                  <div className="flex flex-col flex-1">
+                  <div id={`special-event-detail-${event.id}`} className="flex flex-col flex-1">
                     {/* 제목 */}
                     <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
                       {getLocalizedText(event, "title")}
@@ -342,6 +348,9 @@ export default function SpecialEventSection() {
                     {/* 접기 버튼 */}
                     <button
                       onClick={() => toggleExpanded(event.id)}
+                      aria-expanded={true}
+                      aria-controls={`special-event-detail-${event.id}`}
+                      aria-label={`${getLocalizedText(event, 'title')} 접기`}
                       className="w-full px-6 py-2 font-semibold rounded-full transition-colors bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm"
                     >
                       접기

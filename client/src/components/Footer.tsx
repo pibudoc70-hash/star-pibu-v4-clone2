@@ -83,7 +83,7 @@ export default function Footer() {
     fax: lang === "ja" ? "ファックス" : lang === "zh" ? "传真" : "팩스",
     subwayInfo: lang === "ja" ? "西面駅 5・7番出口 徒歩2分" : lang === "zh" ? "西面站5·7号出口步行2分钟" : lang === "en" ? "Subway Line 1&2 Seomyeon Stn, Exit 5 or 7, 2 min walk" : "서면역 5·7번 출구 도보 2분",
     nonCovered: lang === "ja" ? "非保険診療案内" : lang === "zh" ? "非医保诊疗指南" : lang === "en" ? "Non-Covered Services" : "비급여 진료안내",
-    privacy: lang === "ja" ? "個人情報処理方針" : lang === "zh" ? "个人信息处理方针" : lang === "en" ? "Privacy Policy" : "개인정보정체방침",
+    privacy: lang === "ja" ? "個人情報処理方针" : lang === "zh" ? "个人信息处理方针" : lang === "en" ? "Privacy Policy" : "개인정보처리방침",
   };
 
   return (

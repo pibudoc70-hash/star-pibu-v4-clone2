@@ -4,7 +4,6 @@
  * Strategy: Uses same components as Home.tsx, forces lang="zh" on mount
  */
 import { useEffect } from "react";
-import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
@@ -26,16 +25,7 @@ import WelcomePopup from "@/components/WelcomePopup";
 import LangSwitcher from "@/components/LangSwitcher";
 
 export default function LandingZH() {
-  const { setLang } = useLang();
-
-  // Force Chinese on mount
-  useEffect(() => {
-    setLang("zh", false);
-    return () => {
-      setLang("ko", false);
-    };
-  }, [setLang]);
-
+  // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/zh) 기반으로 자동 처리
   // Scroll to hash section if present
   useEffect(() => {
     const hash = window.location.hash;

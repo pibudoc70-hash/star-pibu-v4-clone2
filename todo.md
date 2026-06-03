@@ -1108,3 +1108,79 @@
 - [x] Equipment2Detail.tsx - provider 하드코딩을 CLINIC_INFO 참조로 교체
 - [x] TypeScript 에러 0건 확인
 - [x] 체크포인트 저장
+
+## PR-1: AdminDashboard any 타입 제거
+- [ ] client/src/types/admin.ts 신규 생성 (이벤트/팝업/예약/통계 타입 정의)
+- [ ] AdminDashboard.tsx에서 (ev as any), (stats as any), useState<any>, .map((x: any)) 패턴 제거
+- [ ] pnpm check 통과 확인
+
+## PR-2: OTP 보안 강화
+- [ ] OTP 재발송 60초 쿨다운 적용 (server/routers.ts)
+- [ ] OTP 인증 시도 5회 초과 시 잠금 (server/routers.ts)
+- [ ] OTP 발송 실패 시 UI 안내 (client/src/components/ReservationForm.tsx)
+- [ ] 콘솔 OTP 코드 노출 제거 (server/routers.ts, server/db.ts)
+- [ ] OTP 미인증 상태에서 예약 단계 진입 불가 처리
+
+## PR-3: 예약 가능 날짜 라우터 일관성
+- [ ] trpc.schedule.unavailableDates publicProcedure 확인/추가
+- [ ] ReservationForm 권한 오류 없이 조회 가능 확인
+
+## PR-4: DOM 직접 조작 SeoHead 통일
+- [ ] Equipment2.tsx document.title/meta 직접 조작 → SeoHead 교체
+- [ ] TreatmentDetail.tsx document.title/meta 직접 조작 → SeoHead 교체
+- [ ] 기타 잔존 DOM 직접 조작 파일 정리
+
+## PR-5: Equipment2Detail SEO 다국어화
+- [ ] seoDescription lang 분기 처리 (ko/en/ja/zh)
+- [ ] seoKeywords lang 분기 처리
+- [ ] ogLocale, hreflangs 정확히 전달
+
+## PR-6: LandingEN/JA/ZH setLang 강제 호출 제거
+- [ ] LandingEN.tsx useEffect setLang 제거
+- [ ] LandingJA.tsx useEffect setLang 제거
+- [ ] LandingZH.tsx useEffect setLang 제거
+
+## PR-7: TreatmentPage 다국어 데이터 구조
+- [ ] client/src/data/treatments/*.ts 다국어 구조 마련
+- [ ] TreatmentPage에서 lang selector 함수 사용
+- [ ] SeoHead에 언어별 title/description 전달
+
+## PR-8: 서버 logger 일원화
+- [ ] server/_core/logger.ts 신규 생성
+- [ ] server/routers.ts, server/db.ts console.log → logger 교체
+- [ ] 민감 정보(OTP, 전화번호) 로그 차단
+
+## PR-9: 테스트 안정화
+- [ ] mock DB 또는 in-memory로 DB 의존성 테스트 대체
+- [ ] pnpm test 실패 테스트 최소화
+
+## PR-10: 접근성 정리
+- [ ] SpecialEventSection 색상 대비 WCAG AA 확인
+- [ ] FloatingCTA 아이콘 버튼 aria-label 추가
+- [ ] ReservationForm label 명시
+- [ ] AdminDashboard 접근성 개선
+
+## PR-11: 이미지 최적화
+- [ ] SpecialEventSection raw img → OptimizedImage 교체
+- [ ] LCP 이미지 priority 적용
+- [ ] 카드 그리드 width/height 명시
+
+## PR-12: 의료광고 표기 및 비급여 안내 강화
+- [ ] NonCoveredGuide.tsx 필수 표기 보강 (가격 변동, 갱신일, HIRA, 사전 상담)
+- [ ] TreatmentPage 하단 의료광고 가이드 문구 추가
+- [ ] Footer 의료기관 정보 일관 표기 (대표자, 사업자등록번호 등)
+
+## PR-1~12 완료 (1차~3차 PR, 2026-06-04)
+
+- [x] PR-1: AdminDashboard any 타입 제거, client/src/types/admin.ts 신규 생성
+- [x] PR-2: OTP 60초 쿨다운, 5회 잠금, 콘솔 OTP 노출 제거
+- [x] PR-3: schedule.unavailableDates publicProcedure 확인 (이미 올바름)
+- [x] PR-4: DOM 직접 조작 없음 확인 (Map.tsx 제외 전부 SeoHead로 통일)
+- [x] PR-5: Equipment2Detail SEO 다국어화 (lang 분기 description/keywords)
+- [x] PR-6: LandingEN/JA/ZH setLang 강제 호출 제거
+- [x] PR-7: TreatmentPage 한국어 전용 구조 유지 (다국어 URL 미존재)
+- [x] PR-8: server/_core/logger.ts 신규 생성, db.ts/routers.ts/email.ts/sms.ts console.* 교체
+- [x] PR-9: 테스트 47개 전부 통과 확인 (별도 수정 불필요)
+- [x] PR-10: SpecialEventSection aria-expanded/aria-controls/aria-label 추가, Footer 오타 수정
+- [x] PR-11: SpecialEventSection raw img → OptimizedImage 교체
+- [x] PR-12: NonCoveredGuide 갱신일자/HIRA/가격변동/사전상담 문구 추가, TreatmentPage 의료광고 안내 추가, Footer 개인정보처리방침 오타 수정

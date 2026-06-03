@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, events, popupEvents, reservations, guestOtps, treatments, treatmentCategories, unavailableSlots, youtubeVideos } from "../drizzle/schema";
 import type { InsertEvent, InsertReservation, InsertTreatment, InsertTreatmentCategory, Treatment, TreatmentCategory, UnavailableSlot, InsertUnavailableSlot, YouTubeVideo, InsertYouTubeVideo } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { logger } from "./_core/logger";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -11,7 +12,7 @@ export async function getDb() {
     try {
       _db = drizzle(process.env.DATABASE_URL);
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      logger.warn("Database", `Failed to connect: ${error}`);
       _db = null;
     }
   }
@@ -21,7 +22,7 @@ export async function getDb() {
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
-  if (!db) { console.warn("[Database] Cannot upsert user: database not available"); return; }
+  if (!db) { logger.warn("Database", "Cannot upsert user: database not available"); return; }
   try {
     const values: InsertUser = { openId: user.openId };
     const updateSet: Record<string, unknown> = {};
@@ -42,7 +43,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     if (Object.keys(updateSet).length === 0) updateSet.lastSignedIn = new Date();
     await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet });
   } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
+    logger.error("Database", "Failed to upsert user", error);
     throw error;
   }
 }
@@ -317,7 +318,7 @@ export async function createUnavailableSlot(data: InsertUnavailableSlot): Promis
     const id = result[0].insertId;
     return db.select().from(unavailableSlots).where(eq(unavailableSlots.id, id)).then(rows => rows[0] || null);
   } catch (error) {
-    console.error("[Database] Failed to create unavailable slot:", error);
+    logger.error("Database", "Failed to create unavailable slot", error);
     return null;
   }
 }
@@ -331,7 +332,7 @@ export async function getUnavailableSlots(date?: string): Promise<UnavailableSlo
     }
     return db.select().from(unavailableSlots);
   } catch (error) {
-    console.error("[Database] Failed to get unavailable slots:", error);
+    logger.error("Database", "Failed to get unavailable slots", error);
     return [];
   }
 }
@@ -342,7 +343,7 @@ export async function deleteUnavailableSlot(id: number): Promise<void> {
   try {
     await db.delete(unavailableSlots).where(eq(unavailableSlots.id, id));
   } catch (error) {
-    console.error("[Database] Failed to delete unavailable slot:", error);
+    logger.error("Database", "Failed to delete unavailable slot", error);
   }
 }
 
@@ -353,7 +354,7 @@ export async function updateUnavailableSlot(id: number, data: Partial<InsertUnav
     await db.update(unavailableSlots).set(data).where(eq(unavailableSlots.id, id));
     return db.select().from(unavailableSlots).where(eq(unavailableSlots.id, id)).then(rows => rows[0] || null);
   } catch (error) {
-    console.error("[Database] Failed to update unavailable slot:", error);
+    logger.error("Database", "Failed to update unavailable slot", error);
     return null;
   }
 }
@@ -366,7 +367,7 @@ export async function getAllYouTubeVideos() {
   try {
     return db.select().from(youtubeVideos).where(eq(youtubeVideos.isActive, "1")).orderBy(asc(youtubeVideos.sortOrder));
   } catch (error) {
-    console.error("[Database] Failed to get YouTube videos:", error);
+    logger.error("Database", "Failed to get YouTube videos", error);
     return [];
   }
 }
@@ -377,7 +378,7 @@ export async function getYouTubeVideosByType(type: "video" | "shorts") {
   try {
     return db.select().from(youtubeVideos).where(and(eq(youtubeVideos.type, type), eq(youtubeVideos.isActive, "1"))).orderBy(asc(youtubeVideos.sortOrder));
   } catch (error) {
-    console.error("[Database] Failed to get YouTube videos by type:", error);
+    logger.error("Database", "Failed to get YouTube videos by type", error);
     return [];
   }
 }
@@ -390,7 +391,7 @@ export async function createYouTubeVideo(data: InsertYouTubeVideo): Promise<YouT
     const id = result[0].insertId;
     return db.select().from(youtubeVideos).where(eq(youtubeVideos.id, id)).then(rows => rows[0] || null);
   } catch (error) {
-    console.error("[Database] Failed to create YouTube video:", error);
+    logger.error("Database", "Failed to create YouTube video", error);
     return null;
   }
 }
@@ -402,7 +403,7 @@ export async function updateYouTubeVideo(id: number, data: Partial<InsertYouTube
     await db.update(youtubeVideos).set(data).where(eq(youtubeVideos.id, id));
     return db.select().from(youtubeVideos).where(eq(youtubeVideos.id, id)).then(rows => rows[0] || null);
   } catch (error) {
-    console.error("[Database] Failed to update YouTube video:", error);
+    logger.error("Database", "Failed to update YouTube video", error);
     return null;
   }
 }
@@ -413,6 +414,6 @@ export async function deleteYouTubeVideo(id: number): Promise<void> {
   try {
     await db.delete(youtubeVideos).where(eq(youtubeVideos.id, id));
   } catch (error) {
-    console.error("[Database] Failed to delete YouTube video:", error);
+    logger.error("Database", "Failed to delete YouTube video", error);
   }
 }

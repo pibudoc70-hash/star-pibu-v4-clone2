@@ -542,6 +542,15 @@ export default function TreatmentPage() {
               ))}
           </div>
         </div>
+
+        {/* 의료광고 가이드 문구 */}
+        <div className="mt-10 p-4 rounded-xl text-xs leading-relaxed" style={{ background: "#F8F9FA", border: "1px solid #E5E7EB", color: "#6B7280" }}>
+          <p className="font-semibold mb-1" style={{ color: "#374151" }}>⚠️ 의료광고 안내</p>
+          <p>• 시술 효과는 개인의 피부 상태, 생활 습관, 시술 횟수 등에 따라 다를 수 있습니다.</p>
+          <p>• 본 페이지의 시술 정보는 일반적인 안내를 목적으로 하며, 실제 진료 결과와 다를 수 있습니다.</p>
+          <p>• 정확한 진단과 시술 계획은 전문의 상담 후 결정됩니다.</p>
+          <p className="mt-1">• 의료법 제56조(의료광고의 금지 등) 및 관련 규정을 준수합니다.</p>
+        </div>
       </div>
     </div>
   );

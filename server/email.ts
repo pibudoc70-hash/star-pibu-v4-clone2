@@ -16,31 +16,15 @@ export interface EmailOptions {
  * @returns 발송 성공 여부
  */
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
+  // logger는 _core/logger를 사용하지만, 순환 import 방지를 위해 dynamic import 사용
+  const { logger } = await import("./_core/logger");
   try {
-    // Manus 내장 API를 통해 이메일 발송
-    // 실제 구현은 Manus 플랫폼의 이메일 서비스를 사용
-    console.log(`[Email] Sending to ${options.to}: ${options.subject}`);
-    
+    // 이메일 주소는 로그에 노출하지 않음
+    logger.info("Email", `이메일 발송 시도: ${options.subject}`);
     // TODO: Manus 이메일 API 통합
-    // const response = await fetch(process.env.BUILT_IN_FORGE_API_URL + '/email/send', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': `Bearer ${process.env.BUILT_IN_FORGE_API_KEY}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     to: options.to,
-    //     subject: options.subject,
-    //     html: options.html,
-    //     text: options.text,
-    //   }),
-    // });
-    
-    // 임시: 콘솔 로그로 대체
-    console.log(`[Email] Content: ${options.subject}`);
     return true;
   } catch (error) {
-    console.error('[Email] Error sending email:', error);
+    logger.error("Email", "Error sending email", error);
     return false;
   }
 }

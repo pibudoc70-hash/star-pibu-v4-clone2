@@ -11,6 +11,7 @@ import { notifyOwner } from "./_core/notification";
 import { storagePut } from "./storage";
 import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail, getReservationStatusEmail } from "./email";
 import { sendSMS, getOTPMessage, getReservationConfirmationSMS, getReservationConfirmedSMS, getReservationCancelledSMS } from "./sms";
+import { logger } from "./_core/logger";
 
 export const appRouter = router({
   system: systemRouter,
@@ -71,7 +72,7 @@ export const appRouter = router({
         try {
           // 고객 이메일로 발송 (사용자 이메일 없으면 발송 스기)
           if (!ctx.user.email) {
-            console.warn("[Email] User email not available, skipping customer email");
+            logger.warn("Email", "User email not available, skipping customer email");
           } else {
             await sendEmail({
               to: ctx.user.email,
@@ -88,7 +89,7 @@ export const appRouter = router({
             });
           }
         } catch (emailErr) {
-          console.error("[Email] 예약 확인 이메일 발송 중 오류:", emailErr);
+          logger.error("Email", "예약 확인 이메일 발송 중 오류", emailErr);
         }
 
         // 관리자에게 알림 발송
@@ -113,7 +114,7 @@ export const appRouter = router({
             }),
           });
         } catch (emailErr) {
-          console.error("[Email] 관리자 알림 이메일 발송 중 오류:", emailErr);
+          logger.error("Email", "관리자 알림 이메일 발송 중 오류", emailErr);
         }
 
         return { success: true };
@@ -140,6 +141,25 @@ export const appRouter = router({
         phone: z.string().min(9).max(20),
       }))
       .mutation(async ({ input }) => {
+        // 60초 쿨다운: 최근 60초 이내 발송된 OTP가 있으면 거절
+        const { getDb } = await import("./db");
+        const { guestOtps: guestOtpsTable } = await import("../drizzle/schema");
+        const { eq, and, gt } = await import("drizzle-orm");
+        const db = await getDb();
+        if (db) {
+          const cooldownMs = 60 * 1000; // 60초
+          const recentRows = await db.select({ id: guestOtpsTable.id })
+            .from(guestOtpsTable)
+            .where(and(
+              eq(guestOtpsTable.phone, input.phone),
+              gt(guestOtpsTable.expiresAt, Date.now() + (5 * 60 * 1000) - cooldownMs)
+            ))
+            .limit(1);
+          if (recentRows.length > 0) {
+            throw new Error("인증번호는 60초 후에 다시 요청할 수 있습니다.");
+          }
+        }
+
         // 실제 6자리 랜덤 OTP 생성
         const code = generateOtpCode();
         await createGuestOtp(input.phone, code);
@@ -152,7 +172,8 @@ export const appRouter = router({
         });
 
         if (!smsSent) {
-          console.warn(`[OTP] SMS 발송 실패: ${input.phone}`);
+          // 전화번호는 로그에 노출하지 않음
+          logger.warn("OTP", "SMS 발송 실패");
         }
 
         return { success: true, smsSent };
@@ -165,6 +186,24 @@ export const appRouter = router({
         code: z.string().length(6),
       }))
       .mutation(async ({ input }) => {
+        // 5회 실패 시 잠금: 최근 10분 내 미인증 OTP 5개 이상이면 거절
+        const { getDb } = await import("./db");
+        const { guestOtps: guestOtpsTable } = await import("../drizzle/schema");
+        const { eq, and, gt } = await import("drizzle-orm");
+        const db = await getDb();
+        if (db) {
+          const windowMs = 10 * 60 * 1000; // 10분
+          const recentFailed = await db.select({ id: guestOtpsTable.id })
+            .from(guestOtpsTable)
+            .where(and(
+              eq(guestOtpsTable.phone, input.phone),
+              eq(guestOtpsTable.verified, "0"),
+              gt(guestOtpsTable.expiresAt, Date.now() - windowMs)
+            ));
+          if (recentFailed.length >= 5) {
+            throw new Error("인증 시도 횟수를 초과했습니다. 10분 후 다시 시도해주세요.");
+          }
+        }
         const ok = await verifyGuestOtp(input.phone, input.code);
         if (!ok) throw new Error("인증번호가 올바르지 않거나 만료되었습니다.");
         return { verified: true };
@@ -243,7 +282,7 @@ export const appRouter = router({
         // SMS 기능 비활성화 (별도 설정 필요)
           // SMS 기능은 별도 설정 필요
         } catch (smsErr) {
-          console.error("[SMS] 비회원 예약 접수 SMS 오류:", smsErr);
+          logger.error("SMS", "비회원 예약 접수 SMS 오류", smsErr);
         }
 
         return { success: true };
@@ -488,7 +527,7 @@ export const appRouter = router({
           const { url } = await storagePut(fileKey, buffer, input.mimeType);
           return { success: true, url };
         } catch (error) {
-          console.error('Image upload error:', error);
+          logger.error("ImageUpload", "이미지 업로드 오류", error);
           throw new Error('Image upload failed');
         }
       }),
@@ -569,7 +608,7 @@ export const appRouter = router({
           });
           return { success: true };
         } catch (error) {
-          console.error('[Popup Create Error]', error);
+          logger.error("Popup", "팝업 생성 오류", error);
           throw error;
         }
       }),
@@ -746,16 +785,16 @@ export const appRouter = router({
           try {
             // 비회원 예약은 전화번호로만 저장되어 있어 이메일 발송 불가
             if (reservation.isGuest === "1") {
-              console.log("[Email] 비회원 예약 상태 변경 - 전화: " + reservation.phone);
+              logger.info("Email", "비회원 예약 상태 변경 처리");
             } else {
               // 회원 예약인 경우 - 사용자 정보는 데이터베이스에 저장되지 않아 이메일 발송 스킵
-              console.log("[Email] 회원 예약 상태 변경 - 사용자 이메일 주소 조회 스킵");
+              logger.info("Email", "회원 예약 상태 변경 처리");
               // TODO: 사용자 정보를 데이터베이스에서 조회하여 이메일 발송
               // const user = await db.select().from(users).where(eq(users.id, reservation.userId)).limit(1);
               // if (user[0]?.email) { await sendEmail({ to: user[0].email, ... }) }
             }
           } catch (emailErr) {
-            console.error("[Email] 상태 변경 이메일 발송 중 오류:", emailErr);
+            logger.error("Email", "상태 변경 이메일 발송 중 오류", emailErr);
           }
         }
 

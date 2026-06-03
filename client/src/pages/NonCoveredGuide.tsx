@@ -171,6 +171,40 @@ export default function NonCoveredGuide() {
             {labels.notice}
           </div>
 
+          {/* 의료광고 필수 표기 영역 */}
+          <div className="mt-6 p-5 rounded-xl text-xs leading-relaxed space-y-2" style={{ background: "#F0F4FF", border: "1.5px solid #C0D0F0", color: "#374151" }}>
+            <p className="font-bold text-sm mb-3" style={{ color: "#1A4FA0" }}>
+              {lang === "ko" ? "⚠️ 비급여 진료비 안내 주의사항" :
+               lang === "ja" ? "⚠️ 非保険診療費用の注意事項" :
+               lang === "zh" ? "⚠️ 非医保诊疗费用注意事项" :
+               "⚠️ Non-Covered Fee Notice"}
+            </p>
+            <p>
+              {lang === "ko" ? "• 비급여 진료비용은 의료기관의 사정에 따라 변동될 수 있으며, 실제 진료 시 다를 수 있습니다." :
+               lang === "ja" ? "• 非保険診療費用は医療機関の事情により変動する場合があります。" :
+               lang === "zh" ? "• 非医保诊疗费用可能根据医疗机构情况发生变动。" :
+               "• Non-covered fees may vary depending on the medical institution and may change at actual treatment."}
+            </p>
+            <p>
+              {lang === "ko" ? `• 마지막 갱신일: ${new Date().getFullYear()}년 ${new Date().getMonth() + 1}월` :
+               lang === "ja" ? `• 最終更新日: ${new Date().getFullYear()}年${new Date().getMonth() + 1}月` :
+               lang === "zh" ? `• 最后更新日期: ${new Date().getFullYear()}年${new Date().getMonth() + 1}月` :
+               `• Last updated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`}
+            </p>
+            <p>
+              {lang === "ko" ? "• 정확한 비용은 내원 상담 후 안내드리며, 사전 상담을 권장합니다." :
+               lang === "ja" ? "• 正確な費用は来院相談後にご案内します。事前相談をお勧めします。" :
+               lang === "zh" ? "• 准确费用将在就诊和诊后告知，建议提前和诊。" :
+               "• Exact costs will be provided after consultation. We recommend a prior consultation."}
+            </p>
+            <p>
+              {lang === "ko" ? "• 건강보험심사평가원(HIRA) 홈페이지에서 전체 의료기관의 비급여 진료비용을 비교할 수 있습니다." :
+               lang === "ja" ? "• 健康保険審査評価院(HIRA)のホームページで全医療機関の非保険診療費用を比較できます。" :
+               lang === "zh" ? "• 可在健康保险审查评价院(HIRA)网站比较各医疗机构的非医保诊疗费用。" :
+               "• You can compare non-covered fees across medical institutions on the HIRA website."}
+            </p>
+          </div>
+
           {/* 문의 CTA */}
           <div className="mt-10 text-center">
             <p className="text-sm mb-4" style={{ color: "#4A6FA5" }}>

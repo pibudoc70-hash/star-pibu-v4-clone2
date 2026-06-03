@@ -4,6 +4,18 @@
  * - 예약 관리 탭: 예약 목록, 상태 변경
  */
 import React, { useEffect, useState } from "react";
+import type {
+  AdminTab,
+  ReservationStatus,
+  ReservationFilter,
+  PopupEventItem,
+  PopupFormState,
+  EventListItem,
+  EventFormState,
+  PriceRow,
+  ReservationItem,
+  AdminStats,
+} from "@/types/admin";
 import {
   DndContext,
   closestCenter,
@@ -34,33 +46,7 @@ import TreatmentsManager from "@/components/TreatmentsManager";
 import { toast } from "sonner";
 import { exportReservationsToExcel } from "@/utils/excelExport";
 
-type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "reservations" | "unavailableSlots" | "youtube";
-type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
-type ReservationFilter = "all" | "member" | "guest";
-
-// 이벤트 목록 아이템 타입
-interface EventListItem {
-  id: number; tab?: string; badge?: string; title: string; subtitle?: string;
-  desc?: string; note?: string; imageUrl?: string | null; accent?: string; accentLight?: string;
-  sortOrder?: number; isActive?: "0" | "1"; featured?: boolean; date?: string;
-  category?: string; views?: number;
-  priceItems?: { label: string; original: string; price: string }[];
-  startAt?: number | null; endAt?: number | null;
-}
-
-
-// 예약 아이템 타입
-interface ReservationItem {
-  id: number; name: string; phone: string; date: string; time?: string;
-  treatment?: string; status: ReservationStatus; memo?: string;
-  adminNote?: string; createdAt?: number; userId?: number | null;
-}
-
-// 스탯 타입
-interface AdminStats {
-  reservations: { pending: number; confirmed: number; total: number };
-  users: { total: number; recent7d: number };
-}
+// 타입은 @/types/admin.ts에서 import됨
 
 const STATUS_CONFIG: Record<ReservationStatus, { label: string; color: string; bg: string }> = {
   pending: { label: "대기 중", color: "#D97706", bg: "#FEF3C7" },
@@ -137,13 +123,7 @@ export default function AdminDashboard() {
   const [expandedReservationId, setExpandedReservationId] = useState<number | null>(null); // 메모 입력 확장 상태
 
   const [imageUploading, setImageUploading] = useState(false);
-  const [popupForm, setPopupForm] = useState<{
-    tab: string; badge: string; title: string; subtitle: string;
-    desc: string; note: string; imageUrl: string;
-    accent: string; accentLight: string; sortOrder: number; isActive: "0" | "1";
-    priceItems: { label: string; original: string; price: string }[];
-    startAt: number | null; endAt: number | null;
-  } | null>(null);
+  const [popupForm, setPopupForm] = useState<PopupFormState | null>(null);
   const pageSize = 15;
   const reservationPageSize = 20;
 
@@ -216,10 +196,11 @@ export default function AdminDashboard() {
   });
 
   // 이벤트 관리
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [eventForm, setEventForm] = useState<any>(null);
+  const [eventForm, setEventForm] = useState<EventFormState | null>(null);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
-  const [sortedEventsList, setSortedEventsList] = useState<EventListItem[]>([]);
+  // sortedEventsList는 DB 반환 타입(events 테이블 row)과 호환되도록 EventListItem 대신 실제 DB 타입 사용
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [sortedEventsList, setSortedEventsList] = useState<any[]>([]);
 
   const { data: eventsList, refetch: refetchEvents } = trpc.events.list.useQuery(undefined, {
     enabled: !!user && user.role === "admin" && activeTab === "events",
@@ -301,7 +282,7 @@ export default function AdminDashboard() {
           updates[key] = res.translated;
         }
       }
-      setEventForm((prev: any) => ({ ...prev, ...updates }));
+      setEventForm((prev) => prev ? { ...prev, ...updates } : null);
       toast.success(`${targetLang.toUpperCase()} 번역 완료!`);
     } finally {
       setTranslating(null);
@@ -361,18 +342,24 @@ export default function AdminDashboard() {
     setPopupForm({ tab: "", badge: "", title: "", subtitle: "", desc: "", note: "", imageUrl: "", accent: "#4A6FA5", accentLight: "#EEF4FF", sortOrder: 0, isActive: "1", priceItems: [{ label: "", original: "", price: "" }], startAt: null, endAt: null });
   };
 
-  const openEditPopupForm = (ev: typeof popupList extends (infer T)[] | undefined ? T : never) => {
+  const openEditPopupForm = (ev: PopupEventItem) => {
     if (!ev) return;
-    setPopupEditId((ev as any).id);
+    setPopupEditId(ev.id);
     setPopupForm({
-      tab: (ev as any).tab, badge: (ev as any).badge, title: (ev as any).title,
-      subtitle: (ev as any).subtitle, desc: (ev as any).desc ?? "",
-      note: (ev as any).note, imageUrl: (ev as any).imageUrl ?? "",
-      accent: (ev as any).accent, accentLight: (ev as any).accentLight,
-      sortOrder: (ev as any).sortOrder, isActive: (ev as any).isActive,
-      priceItems: (ev as any).priceItems?.length ? (ev as any).priceItems : [{ label: "", original: "", price: "" }],
-      startAt: (ev as any).startAt ?? null,
-      endAt: (ev as any).endAt ?? null,
+      tab: ev.tab,
+      badge: ev.badge,
+      title: ev.title,
+      subtitle: ev.subtitle,
+      desc: ev.desc ?? "",
+      note: ev.note,
+      imageUrl: ev.imageUrl ?? "",
+      accent: ev.accent,
+      accentLight: ev.accentLight,
+      sortOrder: ev.sortOrder,
+      isActive: ev.isActive,
+      priceItems: ev.priceItems?.length ? ev.priceItems : [{ label: "", original: "", price: "" }],
+      startAt: ev.startAt ?? null,
+      endAt: ev.endAt ?? null,
     });
   };
 
@@ -561,8 +548,8 @@ export default function AdminDashboard() {
             {[
               { icon: <Users size={20} />, label: "전체 회원", value: stats?.totalUsers ?? "-", bg: "#EFF6FF", color: "#1D4ED8", iconBg: "#DBEAFE" },
               { icon: <TrendingUp size={20} />, label: "최근 7일 가입", value: stats?.recentSignups ?? "-", bg: "#F0FDF4", color: "#166534", iconBg: "#DCFCE7" },
-              { icon: <ClipboardList size={20} />, label: "대기 예약", value: (stats as any)?.reservations?.pending ?? "-", bg: "#FEF3C7", color: "#D97706", iconBg: "#FDE68A" },
-              { icon: <CheckCircle size={20} />, label: "확정 예약", value: (stats as any)?.reservations?.confirmed ?? "-", bg: "#F0FDF4", color: "#059669", iconBg: "#DCFCE7" },
+              { icon: <ClipboardList size={20} />, label: "대기 예약", value: (stats as AdminStats | undefined)?.reservations?.pending ?? "-", bg: "#FEF3C7", color: "#D97706", iconBg: "#FDE68A" },
+              { icon: <CheckCircle size={20} />, label: "확정 예약", value: (stats as AdminStats | undefined)?.reservations?.confirmed ?? "-", bg: "#F0FDF4", color: "#059669", iconBg: "#DCFCE7" },
             ].map((stat) => (
               <div key={stat.label} className="rounded-2xl p-5 flex items-center gap-4" style={{ background: stat.bg }}>
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: stat.iconBg, color: stat.color }}>
@@ -706,7 +693,7 @@ export default function AdminDashboard() {
                 {!popupList || popupList.length === 0 ? (
                   <div className="text-center py-12 text-[#9CA3AF] text-sm">등록된 이벤트가 없습니다.</div>
                 ) : (
-                  (popupList || []).map((ev: any) => (
+                  (popupList || []).map((ev: PopupEventItem) => (
                     <div key={ev.id} className="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex items-center gap-4">
                       {ev.imageUrl ? (
                         <img src={ev.imageUrl} alt={ev.title} className="w-16 h-16 object-contain rounded-xl border border-[#F3F4F6] flex-shrink-0" />
@@ -725,14 +712,14 @@ export default function AdminDashboard() {
                         <p className="font-bold text-[#1F2937] text-sm truncate">{ev.title}</p>
                         <p className="text-xs text-[#9CA3AF] truncate">{ev.tab} · 순서 {ev.sortOrder}</p>
                         {/* 유효기간 표시 */}
-                        {((ev as any).endAt || (ev as any).startAt) && (
+                        {(ev.endAt || ev.startAt) && (
                           <p className="text-xs mt-0.5">
-                            {(ev as any).endAt && Date.now() > (ev as any).endAt ? (
-                              <span className="text-red-500 font-semibold">⚠️ 기간 만료 ({new Date((ev as any).endAt).toLocaleDateString("ko-KR")})</span>
-                            ) : (ev as any).startAt && Date.now() < (ev as any).startAt ? (
-                              <span className="text-amber-500 font-semibold">⏳ {new Date((ev as any).startAt).toLocaleDateString("ko-KR")} 시작</span>
-                            ) : (ev as any).endAt ? (
-                              <span className="text-[#6B7280]">~ {new Date((ev as any).endAt).toLocaleDateString("ko-KR")} 종료</span>
+                            {ev.endAt && Date.now() > ev.endAt ? (
+                              <span className="text-red-500 font-semibold">⚠️ 기간 만료 ({new Date(ev.endAt).toLocaleDateString("ko-KR")})</span>
+                            ) : ev.startAt && Date.now() < ev.startAt ? (
+                              <span className="text-amber-500 font-semibold">⏳ {new Date(ev.startAt).toLocaleDateString("ko-KR")} 시작</span>
+                            ) : ev.endAt ? (
+                              <span className="text-[#6B7280]">~ {new Date(ev.endAt).toLocaleDateString("ko-KR")} 종료</span>
                             ) : null}
                           </p>
                         )}
@@ -1038,7 +1025,7 @@ export default function AdminDashboard() {
                         </div>
                         {(eventForm.priceRows || []).length > 0 ? (
                           <div className="space-y-2 bg-[#F9FAFB] p-4 rounded-lg">
-                            {(eventForm.priceRows || []).map((row: any, idx: number) => (
+                            {(eventForm.priceRows || []).map((row: PriceRow, idx: number) => (
                               <div key={idx} className="grid grid-cols-4 gap-2 items-end">
                                 <input
                                   type="text"
@@ -1076,7 +1063,7 @@ export default function AdminDashboard() {
                                 <button
                                   type="button"
                                   onClick={() => {
-                                    const rows = (eventForm.priceRows || []).filter((_: any, i: number) => i !== idx);
+                                    const rows = (eventForm.priceRows || []).filter((_: PriceRow, i: number) => i !== idx);
                                     setEventForm({ ...eventForm, priceRows: rows });
                                   }}
                                   className="px-3 py-2 text-red-600 hover:text-red-700 font-semibold text-sm"
@@ -1264,9 +1251,11 @@ export default function AdminDashboard() {
                                 if (!updateData.imageUrl) {
                                   delete updateData.imageUrl;
                                 }
-                                updateEventMutation.mutate(updateData);
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                updateEventMutation.mutate(updateData as any);
                               } else {
-                                createEventMutation.mutate(eventForm);
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                createEventMutation.mutate(eventForm as any);
                               }
                             } else {
                               toast.error("제목과 날짜를 입력해주세요.");
@@ -1286,7 +1275,7 @@ export default function AdminDashboard() {
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                       <SortableContext items={sortedEventsList.map(e => e.id)} strategy={verticalListSortingStrategy}>
                         <div className="space-y-3">
-                          {(sortedEventsList || []).map((event: any) => (
+                          {(sortedEventsList || []).map((event: EventListItem & Record<string, unknown>) => (
                             <SortableEventItem key={event.id} event={event} onEdit={() => {
                               const formData = {
                                 ...event,
@@ -1307,7 +1296,7 @@ export default function AdminDashboard() {
                                 productNameJa: event.productNameJa || "",
                                 productNameZh: event.productNameZh || "",
                               };
-                              setEventForm(formData);
+                              setEventForm(formData as EventFormState);
                               setEditingEventId(event.id);
                             }} onDelete={() => {
                               if (confirm("정말 삭제하시겠습니까?")) {
@@ -1373,7 +1362,7 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#F3F4F6]">
-                        {(reservationsData?.items || []).map((reservation: any) => {
+                        {(reservationsData?.items || []).map((reservation: ReservationItem) => {
                           const statusConfig = STATUS_CONFIG[reservation.status as ReservationStatus];
                           const isExpanded = expandedReservationId === reservation.id;
                           return (
@@ -1386,7 +1375,7 @@ export default function AdminDashboard() {
                                 <td className="px-6 py-4 text-[#6B7280] text-xs">
                                   {new Date(reservation.preferredDate).toLocaleDateString("ko-KR")} {reservation.preferredTime}
                                 </td>
-                                <td className="px-6 py-4 text-[#6B7280] text-xs max-w-xs truncate" title={reservation.notes}>
+                                <td className="px-6 py-4 text-[#6B7280] text-xs max-w-xs truncate" title={reservation.notes ?? undefined}>
                                   {reservation.notes || "-"}
                                 </td>
                                 <td className="px-6 py-4">

@@ -37,20 +37,20 @@ export async function sendSMS(options: SMSOptions): Promise<boolean> {
 
     if (!response.ok) {
       const error = await response.json();
-      console.error("[SMS] API Error:", error);
+      const { logger } = await import("./_core/logger");
+      logger.error("SMS", `API Error: ${JSON.stringify(error)}`);
       return false;
     }
 
     const result = await response.json();
-    console.log("[SMS] Sent successfully:", {
-      phone,
-      messageId: result.messageId,
-      status: result.status,
-    });
+    const { logger } = await import("./_core/logger");
+    // 전화번호는 로그에 노출하지 않음
+    logger.info("SMS", `Sent successfully: messageId=${result.messageId} status=${result.status}`);
 
     return true;
   } catch (error) {
-    console.error("[SMS] Error sending SMS:", error);
+    const { logger } = await import("./_core/logger");
+    logger.error("SMS", "Error sending SMS", error);
     return false;
   }
 }

@@ -198,9 +198,7 @@ export default function AdminDashboard() {
   // 이벤트 관리
   const [eventForm, setEventForm] = useState<EventFormState | null>(null);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
-  // sortedEventsList는 DB 반환 타입(events 테이블 row)과 호환되도록 EventListItem 대신 실제 DB 타입 사용
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [sortedEventsList, setSortedEventsList] = useState<any[]>([]);
+  const [sortedEventsList, setSortedEventsList] = useState<EventListItem[]>([]);
 
   const { data: eventsList, refetch: refetchEvents } = trpc.events.list.useQuery(undefined, {
     enabled: !!user && user.role === "admin" && activeTab === "events",
@@ -1251,11 +1249,57 @@ export default function AdminDashboard() {
                                 if (!updateData.imageUrl) {
                                   delete updateData.imageUrl;
                                 }
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                updateEventMutation.mutate(updateData as any);
+                                const { id: _id, type: _type, category: _cat, ...restUpdateData } = updateData;
+                                updateEventMutation.mutate({
+                                  id: editingEventId,
+                                  type: (_type as "이벤트" | "공지" | undefined),
+                                  category: (_cat as "신규시술" | "이벤트" | "공지사항" | "기타" | undefined),
+                                  ...restUpdateData,
+                                  priceRows: Array.isArray(restUpdateData.priceRows) ? restUpdateData.priceRows : [],
+                                });
                               } else {
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                createEventMutation.mutate(eventForm as any);
+                                createEventMutation.mutate({
+                                  title: eventForm.title,
+                                  date: eventForm.date ?? new Date().toISOString().slice(0, 10),
+                                  type: (eventForm.type as "이벤트" | "공지") ?? "이벤트",
+                                  subtitle: eventForm.subtitle ?? "",
+                                  desc: eventForm.desc ?? "",
+                                  content: eventForm.content ?? "",
+                                  isFeatured: eventForm.isFeatured ?? "0",
+                                  badge: eventForm.badge ?? "",
+                                  tag: eventForm.tag ?? "",
+                                  hot: eventForm.hot ?? "0",
+                                  cta: eventForm.cta ?? "자세히 보기",
+                                  accent: eventForm.accent ?? "#4A6FA5",
+                                  accentDark: eventForm.accentDark ?? "#2D4A7B",
+                                  accentBg: eventForm.accentBg ?? "#EEF3FA",
+                                  iconBg: eventForm.iconBg ?? "#E0EBF7",
+                                  iconType: eventForm.iconType ?? "tag",
+                                  badgeColor: eventForm.badgeColor ?? "#4A6FA5",
+                                  imageUrl: eventForm.imageUrl,
+                                  sortOrder: eventForm.sortOrder ?? 0,
+                                  isActive: eventForm.isActive ?? "1",
+                                  category: (eventForm.category as "신규시술" | "이벤트" | "공지사항" | "기타") ?? "이벤트",
+                                  isSpecialEvent: eventForm.isSpecialEvent ?? "0",
+                                  productName: eventForm.productName ?? "",
+                                  normalPrice: eventForm.normalPrice ?? 0,
+                                  discountPrice: eventForm.discountPrice ?? 0,
+                                  priceRows: Array.isArray(eventForm.priceRows) ? eventForm.priceRows : [],
+                                  anesthesiaFee: eventForm.anesthesiaFee ?? "",
+                                  targetLang: eventForm.targetLang ?? "ko",
+                                  titleEn: eventForm.titleEn ?? "",
+                                  titleJa: eventForm.titleJa ?? "",
+                                  titleZh: eventForm.titleZh ?? "",
+                                  subtitleEn: eventForm.subtitleEn ?? "",
+                                  subtitleJa: eventForm.subtitleJa ?? "",
+                                  subtitleZh: eventForm.subtitleZh ?? "",
+                                  descEn: eventForm.descEn ?? "",
+                                  descJa: eventForm.descJa ?? "",
+                                  descZh: eventForm.descZh ?? "",
+                                  productNameEn: eventForm.productNameEn ?? "",
+                                  productNameJa: eventForm.productNameJa ?? "",
+                                  productNameZh: eventForm.productNameZh ?? "",
+                                });
                               }
                             } else {
                               toast.error("제목과 날짜를 입력해주세요.");

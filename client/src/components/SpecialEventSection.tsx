@@ -41,6 +41,57 @@ interface SpecialEvent {
   productNameEn?: string; productNameJa?: string; productNameZh?: string;
 }
 
+// ── 카드 공통 헤더 (제목·부제·상품명·가격) ─────────────────────────────────────
+interface EventCardHeaderProps {
+  event: SpecialEvent;
+  priceRows: PriceRow[];
+  displayPrice: { normalPrice: number; discountPrice: number };
+  getLocalizedText: (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => string;
+  priceMb?: string;
+}
+
+function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, priceMb = "mb-6" }: EventCardHeaderProps) {
+  return (
+    <>
+      {/* 제목 */}
+      <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
+        {getLocalizedText(event, "title")}
+      </h3>
+      {/* 부제 */}
+      <p className="text-sm text-gray-600 mb-3">
+        {getLocalizedText(event, "subtitle")}
+      </p>
+      {/* 상품명 */}
+      {priceRows.length > 0 ? (
+        <p className="text-base font-medium text-gray-700 mb-4">
+          {priceRows[0].label}
+        </p>
+      ) : (
+        event.productName && (
+          <p className="text-base font-medium text-gray-700 mb-4">
+            {getLocalizedText(event, "productName")}
+          </p>
+        )
+      )}
+      {/* 정상가·할인가 */}
+      <div className={`${priceMb} flex items-center gap-6`}>
+        <div>
+          <p className="text-xs text-gray-500 mb-1">정상가</p>
+          <p className="text-sm text-gray-500 line-through">
+            {displayPrice.normalPrice.toLocaleString()}원
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 mb-1">할인가</p>
+          <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
+            {displayPrice.discountPrice.toLocaleString()}원
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function SpecialEventSection() {
   const { t, lang } = useLang();
   const [specialEvents, setSpecialEvents] = useState<SpecialEvent[]>([]);
@@ -122,16 +173,22 @@ export default function SpecialEventSection() {
         {specialEvents.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-lg text-gray-700 mb-4">
-              {lang === "en" ? "We regularly update our special promotions to bring you the best value." :
-               lang === "ja" ? "既存のキャンペーンは終了いたしました。次回のキャンペーンをお気に入れください。" :
-               lang === "zh" ? "我们定期更新特殊优惠，为您提供最优价值。" :
-               "단기 스페셔른 이벤트를 준비 중입니다. 다시 가져주실 가지를 대기려 주세요."}
+              {lang === "en"
+                ? "Our special promotions are currently being prepared. We will be back soon with new offers."
+                : lang === "ja"
+                ? "現在、スペシャルイベントを準備中です。近日中に新しいご案内をお届けします。"
+                : lang === "zh"
+                ? "特别优惠活动正在准备中，敬请期待。"
+                : "현재 진행 중인 스페셜 이벤트가 준비되고 있어요. 곧 새로운 혜택으로 찾아뵙겠습니다."}
             </p>
             <p className="text-sm text-gray-500">
-              {lang === "en" ? "Contact us for more information about our services." :
-               lang === "ja" ? "詳しい情報はお気軽にご連絡ください。" :
-               lang === "zh" ? "详细信息请联系我们。" :
-               "자세한 정보는 연락처로 단락니다."}
+              {lang === "en"
+                ? "For inquiries, please contact us via KakaoTalk or phone."
+                : lang === "ja"
+                ? "詳しくはカカオトークまたはお電話にてお問い合わせください。"
+                : lang === "zh"
+                ? "如需咨询，请通过KakaoTalk或电话与我们联系。"
+                : "자세한 안내는 카카오톡 상담 또는 전화로 문의해 주세요."}
             </p>
           </div>
         ) : (
@@ -183,45 +240,13 @@ export default function SpecialEventSection() {
                 {/* 카드 컨테이너 - 축소 상태 */}
                 {!isExpanded ? (
                   <div className="flex flex-col flex-1">
-                    {/* 제목 */}
-                    <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
-                      {getLocalizedText(event, "title")}
-                    </h3>
-
-                    {/* 부제 */}
-                    <p className="text-sm text-gray-600 mb-3">
-                      {getLocalizedText(event, "subtitle")}
-                    </p>
-
-                    {/* 상품명 */}
-                    {priceRows.length > 0 ? (
-                      <p className="text-base font-medium text-gray-700 mb-4">
-                        {priceRows[0].label}
-                      </p>
-                    ) : (
-                      event.productName && (
-                        <p className="text-base font-medium text-gray-700 mb-4">
-                          {getLocalizedText(event, "productName")}
-                        </p>
-                      )
-                    )}
-
-                    {/* 정상가와 할인가 (초기 상태) */}
-                    <div className="mb-6 flex items-center gap-6">
-                      <div>
-                        <p className="text-xs text-gray-500 mb-1">정상가</p>
-                        <p className="text-sm text-gray-500 line-through">
-                          {displayPrice.normalPrice.toLocaleString()}원
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 mb-1">할인가</p>
-                        <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
-                          {displayPrice.discountPrice.toLocaleString()}원
-                        </p>
-                      </div>
-                    </div>
-
+                    <EventCardHeader
+                      event={event}
+                      priceRows={priceRows}
+                      displayPrice={displayPrice}
+                      getLocalizedText={getLocalizedText}
+                      priceMb="mb-6"
+                    />
                     {/* 자세히 보기 버튼 */}
                     <button
                       onClick={() => toggleExpanded(event.id)}
@@ -229,9 +254,7 @@ export default function SpecialEventSection() {
                       aria-controls={`special-event-detail-${event.id}`}
                       aria-label={`${getLocalizedText(event, 'title')} 자세히 보기`}
                       className="mt-auto px-6 py-3 font-semibold rounded-full transition-colors text-navy hover:opacity-80"
-                      style={{
-                        backgroundColor: '#f7f4ee',
-                      }}
+                      style={{ backgroundColor: '#f7f4ee' }}
                     >
                       {event.cta}
                     </button>
@@ -239,44 +262,13 @@ export default function SpecialEventSection() {
                 ) : (
                   // 카드 컨테이너 - 확장 상태
                   <div id={`special-event-detail-${event.id}`} className="flex flex-col flex-1">
-                    {/* 제목 */}
-                    <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: '#d4af6c' }}>
-                      {getLocalizedText(event, "title")}
-                    </h3>
-
-                    {/* 부제 */}
-                    <p className="text-sm text-gray-600 mb-3">
-                      {getLocalizedText(event, "subtitle")}
-                    </p>
-
-                    {/* 상품명 */}
-                    {priceRows.length > 0 ? (
-                      <p className="text-base font-medium text-gray-700 mb-4">
-                        {priceRows[0].label}
-                      </p>
-                    ) : (
-                      event.productName && (
-                        <p className="text-base font-medium text-gray-700 mb-4">
-                          {getLocalizedText(event, "productName")}
-                        </p>
-                      )
-                    )}
-
-                    {/* 정상가와 할인가 (확장 상태) */}
-                    <div className="mb-4 flex items-center gap-6">
-                      <div>
-                        <p className="text-xs text-gray-500 mb-1">정상가</p>
-                        <p className="text-sm text-gray-500 line-through">
-                          {displayPrice.normalPrice.toLocaleString()}원
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 mb-1">할인가</p>
-                        <p className="text-2xl font-bold" style={{ color: '#d4af6c' }}>
-                          {displayPrice.discountPrice.toLocaleString()}원
-                        </p>
-                      </div>
-                    </div>
+                    <EventCardHeader
+                      event={event}
+                      priceRows={priceRows}
+                      displayPrice={displayPrice}
+                      getLocalizedText={getLocalizedText}
+                      priceMb="mb-4"
+                    />
 
                     {/* 추가 가격 행 정보 (여러 개인 경우) */}
                     {hasMultipleRows && (

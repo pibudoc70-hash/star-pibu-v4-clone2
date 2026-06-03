@@ -3,6 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { treatmentsRouter } from "./treatments-router";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { TRPCError } from "@trpc/server";
 import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getSpecialEventsByLang, getAllEventsByLang, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot, getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo } from "./db";
 import { users, popupEvents, events, treatments, treatmentCategories, youtubeVideos } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
@@ -186,27 +187,21 @@ export const appRouter = router({
         code: z.string().length(6),
       }))
       .mutation(async ({ input }) => {
-        // 5회 실패 시 잠금: 최근 10분 내 미인증 OTP 5개 이상이면 거절
-        const { getDb } = await import("./db");
-        const { guestOtps: guestOtpsTable } = await import("../drizzle/schema");
-        const { eq, and, gt } = await import("drizzle-orm");
-        const db = await getDb();
-        if (db) {
-          const windowMs = 10 * 60 * 1000; // 10분
-          const recentFailed = await db.select({ id: guestOtpsTable.id })
-            .from(guestOtpsTable)
-            .where(and(
-              eq(guestOtpsTable.phone, input.phone),
-              eq(guestOtpsTable.verified, "0"),
-              gt(guestOtpsTable.expiresAt, Date.now() - windowMs)
-            ));
-          if (recentFailed.length >= 5) {
-            throw new Error("인증 시도 횟수를 초과했습니다. 10분 후 다시 시도해주세요.");
+        try {
+          const ok = await verifyGuestOtp(input.phone, input.code);
+          if (!ok) throw new TRPCError({ code: "BAD_REQUEST", message: "인증번호가 올바르지 않거나 만료되었습니다." });
+          return { verified: true };
+        } catch (err) {
+          if (err instanceof Error && err.message.startsWith("OTP_LOCKED:")) {
+            const lockedUntil = parseInt(err.message.split(":")[1], 10);
+            const remainMin = Math.ceil((lockedUntil - Date.now()) / 60000);
+            throw new TRPCError({
+              code: "TOO_MANY_REQUESTS",
+              message: `인증 시도 횟수를 초과했습니다. ${remainMin}분 후 다시 시도해주세요.`,
+            });
           }
+          throw err;
         }
-        const ok = await verifyGuestOtp(input.phone, input.code);
-        if (!ok) throw new Error("인증번호가 올바르지 않거나 만료되었습니다.");
-        return { verified: true };
       }),
 
     // 비회원 예약 생성 (OTP 인증 완료 후)

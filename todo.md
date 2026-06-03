@@ -1192,3 +1192,37 @@
 - [x] SeoHead.tsx buildClinicJsonLd()에 employee(Physician) 스키마 통합
 - [x] SeoHead.tsx buildClinicJsonLd()에 availableService(MedicalProcedure) 스키마 통합
 - [x] TypeScript 에러 0건 확인
+
+## PR-13~19 작업 목록 (2026-06-04)
+
+- [ ] PR-13-1: SpecialEventSection 빈 상태 한국어 카피 정상화
+- [ ] PR-13-2: SpecialEventSection en/ja/zh 빈 상태 카피 톤 정리
+- [ ] PR-13-3: SpecialEventSection 카드 마크업 중복 제거
+- [ ] PR-14-1: ReservationForm OTP placeholder 4개 언어 안내 문구로 교체
+- [ ] PR-15-1: guestOtps 스키마 attemptCount/lockedUntil 컬럼 추가 및 마이그레이션
+- [ ] PR-15-2: verifyGuestOtp 실패 시 attemptCount 증가, 임계치 도달 시 lockedUntil 세팅
+- [ ] PR-15-3: verifyOtp/createGuest에서 잠금 상태 차단
+- [ ] PR-15-4: 잠금 응답 시 UX 안내 메시지 노출 (다국어)
+- [ ] PR-16-1: EventListItem/EventFormState 타입 보강 (zod schema 정렬)
+- [ ] PR-16-2: sortedEventsList any[] 제거
+- [ ] PR-16-3: mutation 인자 any 캐스팅 제거
+- [ ] PR-17-1: Equipment2Detail lang 분기 seoText 적용
+- [ ] PR-17-2: Equipment2Detail ogLocale/hreflangs 정확히 전달
+- [ ] PR-18-1: LocalizedString/TreatmentI18n 타입 정의
+- [ ] PR-18-2: ulthera 다국어 데이터 분리
+- [ ] PR-18-3: thermage, under-eye-fat 다국어 데이터 분리
+- [ ] PR-18-4: TreatmentPage lang 분기 렌더링 전환
+- [ ] PR-18-5: TreatmentPage SeoHead 다국어 메타 전달
+- [ ] PR-19-1: 다국어 treatments 라우트 추가
+- [ ] PR-19-2: canonical/hreflang 다국어 정렬 점검
+- [ ] PR-19-3: 다국어 라우트 스모크 테스트 추가
+
+## PR-13~19 완료 (2026-06-04)
+
+- [x] PR-13: SpecialEventSection 빈 상태 카피 4개 언어 정상화, EventCardHeader 헬퍼로 중복 마크업 제거
+- [x] PR-14: ReservationForm OTP placeholder 4개 언어 안내 문구로 교체
+- [x] PR-15: guestOtps 스키마 attemptCount/lockedUntil 컬럼 추가, verifyGuestOtp 5회 잠금 정책 도입, verifyOtp 프로시저 TRPCError TOO_MANY_REQUESTS 처리
+- [x] PR-16: AdminDashboard sortedEventsList any[] → EventListItem[], createEventMutation/updateEventMutation as any 제거
+- [x] PR-17: Equipment2Detail seoTitle/seoDescription/seoKeywords lang 분기 추가
+- [x] PR-18: Equipment2Detail 본문(detail/effect/caution) 및 제목 lang 분기 다국어 표시
+- [x] PR-19: App.tsx /en|ja|zh/equipment2/:slug 라우트 추가, buildHreflangs 다국어 경로 반영, canonical lang 기반 URL 수정

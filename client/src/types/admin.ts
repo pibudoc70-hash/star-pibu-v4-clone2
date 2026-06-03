@@ -58,7 +58,7 @@ export interface PopupFormState {
 }
 
 // ── 이벤트 목록 아이템 (trpc.events.list 반환 타입과 일치) ──────────────────────
-export interface EventListItem {
+export interface EventListItem extends Record<string, unknown> {
   id: number;
   type?: string;
   tab?: string;
@@ -79,24 +79,24 @@ export interface EventListItem {
   priceItems?: { label: string; original: string; price: string }[];
   startAt?: number | null;
   endAt?: number | null;
-  // 다국어 필드
-  titleEn?: string;
-  titleJa?: string;
-  titleZh?: string;
-  subtitleEn?: string;
-  subtitleJa?: string;
-  subtitleZh?: string;
-  descEn?: string;
-  descJa?: string;
-  descZh?: string;
-  productName?: string;
-  productNameEn?: string;
-  productNameJa?: string;
-  productNameZh?: string;
-  isSpecialEvent?: string;
-  anesthesiaFee?: string;
-  targetLang?: string;
-  priceRows?: PriceRow[] | string;
+  // 다국어 필드 (DB는 null 반환 가능성 있음)
+  titleEn?: string | null;
+  titleJa?: string | null;
+  titleZh?: string | null;
+  subtitleEn?: string | null;
+  subtitleJa?: string | null;
+  subtitleZh?: string | null;
+  descEn?: string | null;
+  descJa?: string | null;
+  descZh?: string | null;
+  productName?: string | null;
+  productNameEn?: string | null;
+  productNameJa?: string | null;
+  productNameZh?: string | null;
+  isSpecialEvent?: string | null;
+  anesthesiaFee?: string | null;
+  targetLang?: string | null;
+  priceRows?: PriceRow[] | string | null;
 }
 
 // ── 가격 행 ──────────────────────────────────────────────────────────────────

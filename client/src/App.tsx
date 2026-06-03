@@ -129,6 +129,12 @@ function Router() {
         <Route path={"/my-reservations"} component={MyReservations} />
         <Route path={"/equipment2"} component={Equipment2} />
         <Route path={"/equipment2/:slug"} component={Equipment2Detail} />
+        <Route path={"/en/equipment2"} component={Equipment2} />
+        <Route path={"/en/equipment2/:slug"} component={Equipment2Detail} />
+        <Route path={"/ja/equipment2"} component={Equipment2} />
+        <Route path={"/ja/equipment2/:slug"} component={Equipment2Detail} />
+        <Route path={"/zh/equipment2"} component={Equipment2} />
+        <Route path={"/zh/equipment2/:slug"} component={Equipment2Detail} />
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/en/privacy"} component={Privacy} />
         <Route path={"/ja/privacy"} component={Privacy} />

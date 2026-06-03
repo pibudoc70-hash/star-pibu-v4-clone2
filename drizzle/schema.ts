@@ -21,6 +21,8 @@ export const guestOtps = mysqlTable("guestOtps", {
   verified: mysqlEnum("verified", ["0", "1"]).notNull().default("0"),
   expiresAt: bigint("expiresAt", { mode: "number" }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
+  attemptCount: int("attemptCount").notNull().default(0),
+  lockedUntil: bigint("lockedUntil", { mode: "number" }),
 });
 export type GuestOtp = typeof guestOtps.$inferSelect;
 export type InsertGuestOtp = typeof guestOtps.$inferInsert;

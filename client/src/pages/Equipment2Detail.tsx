@@ -67,9 +67,33 @@ export default function Equipment2Detail() {
   const relatedTreatments = safeParseJson<RelatedTreatment[]>(treatment.related, []);
   const steps = safeParseJson<TreatmentStep[]>(treatment.steps, []);
 
-  const pageUrl = `https://www.star-pibu.com/equipment2/${slug}`;
-  const seoDescription = `부산 서면 스타피부과의 ${treatment.name} 시술 안내. ${treatment.desc || ''} 피부과 전문의가 직접 시술합니다. 온라인 예약 가능.`;
-  const seoKeywords = `${treatment.name}, ${treatment.nameEn || ''}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의, ${treatment.categoryId || '피부시술'}, 부산리프팅`;
+  const langPrefix = lang === "ko" ? "" : `/${lang}`;
+  const pageUrl = `https://www.star-pibu.com${langPrefix}/equipment2/${slug}`;
+
+  // lang 분기 SEO 데이터
+  const seoTitle = lang === "en"
+    ? `${treatment.nameEn || treatment.name} | Star Dermatology Clinic Busan`
+    : lang === "ja"
+    ? `${treatment.nameJa || treatment.nameEn || treatment.name} | スター皮膚科 野毛第一主義`
+    : lang === "zh"
+    ? `${treatment.nameZh || treatment.nameEn || treatment.name} | 野毛第一主义的Star皮肤科`
+    : `${treatment.name} | 부산 스타피부과 - 피부과 전문의 시술`;
+
+  const seoDescription = lang === "en"
+    ? `Star Dermatology Clinic in Seomyeon, Busan offers ${treatment.nameEn || treatment.name}. ${treatment.descEn || treatment.desc || ''} Performed by board-certified dermatologist. Online booking available.`
+    : lang === "ja"
+    ? `福岡・西面のスター皮膚科の${treatment.nameJa || treatment.nameEn || treatment.name}のご案内。${treatment.descJa || treatment.descEn || treatment.desc || ''} 皮膚科専門医が直接施術。オンライン予約可能。`
+    : lang === "zh"
+    ? `野毛第一主义的Star皮肤科（野毛西面）提供${treatment.nameZh || treatment.nameEn || treatment.name}项目。${treatment.descZh || treatment.descEn || treatment.desc || ''} 由皮肤科专科医生亲自操作。可在线预约。`
+    : `부산 서면 스타피부과의 ${treatment.name} 시술 안내. ${treatment.desc || ''} 피부과 전문의가 직접 시술합니다. 온라인 예약 가능.`;
+
+  const seoKeywords = lang === "en"
+    ? `${treatment.nameEn || treatment.name}, Busan dermatology, Star Dermatology, Seomyeon dermatologist, skin treatment Busan`
+    : lang === "ja"
+    ? `${treatment.nameJa || treatment.nameEn || treatment.name}, 福岡皮膚科, スター皮膚科, 西面皮膚科, 韓国皮膚科`
+    : lang === "zh"
+    ? `${treatment.nameZh || treatment.nameEn || treatment.name}, 野毛皮肤科, Star皮肤科, 韩国皮肤科, 西面皮肤科`
+    : `${treatment.name}, ${treatment.nameEn || ''}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의, ${treatment.categoryId || '피부시술'}, 부산리프팅`;
   const jsonLd = [{
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
@@ -103,21 +127,31 @@ export default function Equipment2Detail() {
     <div className="min-h-screen bg-white">
       {/* SeoHead: 선언적 SEO 메타태그 */}
       <SeoHead
-        title={`${treatment.name} | 부산 스타피부과 - 피부과 전문의 시술`}
+        title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords}
         canonical={pageUrl}
         ogImage={treatment.image || undefined}
         ogUrl={pageUrl}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
-        hreflangs={buildHreflangs(`/equipment2/${slug}`)}
+        hreflangs={buildHreflangs(
+          `/equipment2/${slug}`,
+          `/en/equipment2/${slug}`,
+          `/ja/equipment2/${slug}`,
+          `/zh/equipment2/${slug}`
+        )}
         jsonLd={jsonLd}
       />
 
       {/* 헤더 */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-2">{treatment.name}</h1>
+          <h1 className="text-4xl font-bold mb-2">
+            {lang === "en" ? (treatment.nameEn || treatment.name)
+              : lang === "ja" ? (treatment.nameJa || treatment.nameEn || treatment.name)
+              : lang === "zh" ? (treatment.nameZh || treatment.nameEn || treatment.name)
+              : treatment.name}
+          </h1>
           <p className="text-blue-100">{treatment.nameEn}</p>
         </div>
       </div>
@@ -176,21 +210,35 @@ export default function Equipment2Detail() {
         </div>
 
         {/* 상세 설명 */}
-        {treatment.detail && (
+        {(lang === "en" ? (treatment.detailEn || treatment.detail) : lang === "ja" ? (treatment.detailJa || treatment.detail) : lang === "zh" ? (treatment.detailZh || treatment.detail) : treatment.detail) && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">시술 소개</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {lang === "en" ? "Treatment Overview" : lang === "ja" ? "施術のご紹介" : lang === "zh" ? "项目介绍" : "시술 소개"}
+            </h2>
             <div className="prose max-w-none">
-              <Streamdown>{treatment.detail}</Streamdown>
+              <Streamdown>
+                {lang === "en" ? (treatment.detailEn || treatment.detail || "")
+                  : lang === "ja" ? (treatment.detailJa || treatment.detail || "")
+                  : lang === "zh" ? (treatment.detailZh || treatment.detail || "")
+                  : (treatment.detail || "")}
+              </Streamdown>
             </div>
           </div>
         )}
 
         {/* 기대 효과 */}
-        {treatment.effect && (
+        {(lang === "en" ? (treatment.effectEn || treatment.effect) : lang === "ja" ? (treatment.effectJa || treatment.effect) : lang === "zh" ? (treatment.effectZh || treatment.effect) : treatment.effect) && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">기대 효과</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {lang === "en" ? "Expected Results" : lang === "ja" ? "期待できる効果" : lang === "zh" ? "预期效果" : "기대 효과"}
+            </h2>
             <div className="prose max-w-none">
-              <Streamdown>{treatment.effect}</Streamdown>
+              <Streamdown>
+                {lang === "en" ? (treatment.effectEn || treatment.effect || "")
+                  : lang === "ja" ? (treatment.effectJa || treatment.effect || "")
+                  : lang === "zh" ? (treatment.effectZh || treatment.effect || "")
+                  : (treatment.effect || "")}
+              </Streamdown>
             </div>
           </div>
         )}
@@ -212,11 +260,18 @@ export default function Equipment2Detail() {
         )}
 
         {/* 주의사항 */}
-        {treatment.caution && (
+        {(lang === "en" ? (treatment.cautionEn || treatment.caution) : lang === "ja" ? (treatment.cautionJa || treatment.caution) : lang === "zh" ? (treatment.cautionZh || treatment.caution) : treatment.caution) && (
           <div className="mb-12 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-            <h2 className="text-xl font-bold text-yellow-900 mb-4">주의사항</h2>
+            <h2 className="text-xl font-bold text-yellow-900 mb-4">
+              {lang === "en" ? "Precautions" : lang === "ja" ? "注意事項" : lang === "zh" ? "注意事项" : "주의사항"}
+            </h2>
             <div className="prose max-w-none text-yellow-900">
-              <Streamdown>{treatment.caution}</Streamdown>
+              <Streamdown>
+                {lang === "en" ? (treatment.cautionEn || treatment.caution || "")
+                  : lang === "ja" ? (treatment.cautionJa || treatment.caution || "")
+                  : lang === "zh" ? (treatment.cautionZh || treatment.caution || "")
+                  : (treatment.caution || "")}
+              </Streamdown>
             </div>
           </div>
         )}

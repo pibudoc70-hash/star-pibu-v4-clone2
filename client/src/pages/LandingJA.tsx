@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -71,13 +71,8 @@ export default function LandingJA() {
           "inLanguage": "ja",
           "knowsAbout": ["ウルセラピープライム", "サーマジFLX", "目の下の脂肪再配置", "レーザートーニング", "ピコレーザー", "リジュラン"]
         }]}
-        hreflangs={[
-          { hreflang: "ko", href: "https://www.star-pibu.com/" },
-          { hreflang: "en", href: "https://www.star-pibu.com/en" },
-          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
-          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
-          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
-        ]}
+        ogLocale="ja_JP"
+        hreflangs={COMMON_HREFLANGS}
       />
       {/* Fixed Header */}
       <Header />

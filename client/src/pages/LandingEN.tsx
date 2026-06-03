@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -70,13 +70,8 @@ export default function LandingEN() {
           "inLanguage": "en",
           "knowsAbout": ["Ultherapy Prime", "Thermage FLX", "Under-Eye Fat Repositioning", "Laser Toning", "Pico Laser", "Rejuran Healer"]
         }]}
-        hreflangs={[
-          { hreflang: "ko", href: "https://www.star-pibu.com/" },
-          { hreflang: "en", href: "https://www.star-pibu.com/en" },
-          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
-          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
-          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
-        ]}
+        ogLocale="en_US"
+        hreflangs={COMMON_HREFLANGS}
       />
       {/* Fixed Header */}
       <Header />

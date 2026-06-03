@@ -35,7 +35,23 @@ const GOLD = "#d2ac67";
 const GOLD_LIGHT = "#f9f3e8";
 const GOLD_MID = "#e8d5a3";
 
-const doctors = [
+interface Doctor {
+  id: number;
+  name: string;
+  nameEn: string;
+  title: string;
+  image: string;
+  cardImage?: string;
+  cardImagePosition?: string;
+  mobileImage?: string;
+  mobileObjectPosition?: string;
+  badge: string;
+  intro: string[];
+  credentials: { icon: React.ElementType; label: string; text: string }[];
+  specialties: string[];
+}
+
+const doctors: Doctor[] = [
   {
     id: 0,
     name: "조시형 원장",
@@ -282,7 +298,7 @@ export default function DoctorsSection() {
                         }}
                       >
                         <img
-                          src={(d as any).cardImage || d.image}
+                          src={d.cardImage || d.image}
                           alt={d.name}
                           loading="eager"
                           onLoad={() => handleImageLoad(d.id)}
@@ -290,7 +306,7 @@ export default function DoctorsSection() {
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",
-                            objectPosition: (d as any).cardImagePosition || ((d as any).cardImage ? "center top" : "top 10%"),
+                            objectPosition: d.cardImagePosition || (d.cardImage ? "center top" : "top 10%"),
                           }}
                         />
                       </div>
@@ -571,7 +587,7 @@ export default function DoctorsSection() {
                       }}
                     >
                       <img
-                        src={(d as any).cardImage || d.image}
+                        src={d.cardImage || d.image}
                         alt={d.name}
                         loading="eager"
                         onLoad={() => handleImageLoad(d.id)}
@@ -579,7 +595,7 @@ export default function DoctorsSection() {
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
-                          objectPosition: (d as any).cardImagePosition || ((d as any).cardImage ? "center 15%" : "top 10%"),
+                          objectPosition: d.cardImagePosition || (d.cardImage ? "center 15%" : "top 10%"),
                         }}
                       />
                     </div>
@@ -623,7 +639,7 @@ export default function DoctorsSection() {
                 {mergedDoctors.map((d) => (
                   <img
                     key={d.id}
-                    src={(d as any).mobileImage || d.image}
+                    src={d.mobileImage || d.image}
                     alt={d.name}
                     loading="eager"
                     fetchPriority="high"
@@ -635,7 +651,7 @@ export default function DoctorsSection() {
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      objectPosition: (d as any).mobileObjectPosition || "center 15%",
+                      objectPosition: d.mobileObjectPosition || "center 15%",
                       opacity: activeDoctor === d.id ? 1 : 0,
                       transition: "opacity 0.5s ease",
                       zIndex: activeDoctor === d.id ? 1 : 0,

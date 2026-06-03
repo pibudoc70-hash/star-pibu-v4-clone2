@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import OptimizedImage from '@/components/OptimizedImage';
 
 const DOCTOR_IMAGES = [
@@ -14,6 +15,14 @@ export default function Doctors() {
 
   return (
     <MainLayout>
+      <SeoHead
+        title="의료진 소개 | 부산 서면 스타피부과"
+        description="부산 서면 스타피부과 의료진. 피부과 전문의 조시형 원장 외 전문 의료진이 직접 진료합니다. 20년 이상의 감방 시술 경험."
+        keywords="스타피부과 의료진, 조시형 원장, 부산피부과 전문의, 서면피부과 의사, 피부과전문의"
+        canonical="https://www.star-pibu.com/doctors"
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
+      />
       {/* 페이지 헤더 */}
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">

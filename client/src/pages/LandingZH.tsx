@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -71,13 +71,8 @@ export default function LandingZH() {
           "inLanguage": "zh",
           "knowsAbout": ["超声刀", "热玸吵FLX", "眼袋脂肪重置", "激光嫩肤", "皮秒激光", "婴儿针"]
         }]}
-        hreflangs={[
-          { hreflang: "ko", href: "https://www.star-pibu.com/" },
-          { hreflang: "en", href: "https://www.star-pibu.com/en" },
-          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
-          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
-          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
-        ]}
+        ogLocale="zh_CN"
+        hreflangs={COMMON_HREFLANGS}
       />
       {/* Fixed Header */}
       <Header />

@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import { Button } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
@@ -24,6 +25,14 @@ export default function Directions() {
 
   return (
     <MainLayout>
+      <SeoHead
+        title="오시는 길 | 부산 서면 스타피부과"
+        description="부산 서면 스타피부과 오시는 길 안내. 부산광역시 부산진구 서면문화로 27 아이온시티빌딩 10층. 서면역 1번 출구 도보 5분. 무료 주차 가능."
+        keywords="스타피부과 위치, 스타피부과 주소, 서면피부과 오시는길, 부산피부과 위치, 서면역 피부과"
+        canonical="https://www.star-pibu.com/directions"
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
+      />
       {/* 페이지 헤더 */}
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">

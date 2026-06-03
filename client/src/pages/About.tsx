@@ -28,20 +28,14 @@ export default function About() {
                 2006년 부산 서면에서 문을 연 스타피부과는 지난 20여 년간 오직 고객의 피부만을 고민해 왔습니다. 세계적인 프리미엄 레이저 장비와 검증된 치료 프로토콜을 통해 의료 서비스의 질을 높였으며, 교수출신 피부과전문의의 20년 이상 풍부한 임상 경험의 노하우를 바탕으로 최상의 결과를 약속드립니다.
               </p>
 
-              {/* 통계 정보 - 3개 박스 */}
+              {/* 통계 정보 - i18n 중앙 데이터 참조 */}
               <div className="grid grid-cols-3 gap-4 mb-8">
-                <div className="rounded-lg p-6 text-center" style={{backgroundColor: 'var(--color-gold-pale)'}}>
-                  <div className="text-3xl font-bold mb-2" style={{color: 'var(--color-gold-primary)'}}>20년+</div>
-                  <div className="text-gray-600 text-sm">피부과전문의 경력</div>
-                </div>
-                <div className="rounded-lg p-6 text-center" style={{backgroundColor: 'var(--color-gold-pale)'}}>
-                  <div className="text-3xl font-bold mb-2" style={{color: 'var(--color-gold-primary)'}}>4,000례+</div>
-                  <div className="text-gray-600 text-sm">눈밑지방재배치술</div>
-                </div>
-                <div className="rounded-lg p-6 text-center" style={{backgroundColor: 'var(--color-gold-pale)'}}>
-                  <div className="text-3xl font-bold mb-2" style={{color: 'var(--color-gold-primary)'}}>50종+</div>
-                  <div className="text-gray-600 text-sm">프리미엄 레이저</div>
-                </div>
+                {t.about.stats.slice(0, 3).map((stat, idx) => (
+                  <div key={idx} className="rounded-lg p-6 text-center" style={{backgroundColor: 'var(--color-gold-pale)'}}>
+                    <div className="text-3xl font-bold mb-2" style={{color: 'var(--color-gold-primary)'}}>{stat.num}</div>
+                    <div className="text-gray-600 text-sm">{stat.label}</div>
+                  </div>
+                ))}
               </div>
 
               {/* 특징 설명 - 4개 박스 */}

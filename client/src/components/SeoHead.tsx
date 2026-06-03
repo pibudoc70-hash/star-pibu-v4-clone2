@@ -1,7 +1,7 @@
 /**
  * SeoHead - 범용 SEO 메타태그 컴포넌트
  * react-helmet-async 기반으로 title, description, OG, Twitter, canonical,
- * JSON-LD 구조화 데이터를 선언적으로 주입합니다.
+ * hreflang, og:locale, JSON-LD 구조화 데이터를 선언적으로 주입합니다.
  *
  * 사용법:
  *   <SeoHead
@@ -9,10 +9,15 @@
  *     description="페이지 설명"
  *     canonical="https://www.star-pibu.com/treatments/ulthera"
  *     ogImage="https://cdn.example.com/image.jpg"
+ *     ogLocale="ko_KR"
+ *     ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
  *     jsonLd={[{ "@context": "https://schema.org", ... }]}
  *   />
  */
 import { Helmet } from "react-helmet-async";
+
+/** Schema.org JSON-LD 구조화 데이터 타입 */
+export type JsonLdSchema = Record<string, unknown>;
 
 export interface SeoHeadProps {
   /** <title> 태그 값 */
@@ -30,15 +35,42 @@ export interface SeoHeadProps {
   /** OG type (default: "website") */
   ogType?: string;
   /** JSON-LD 구조화 데이터 배열 */
-  jsonLd?: Record<string, unknown>[];
+  jsonLd?: JsonLdSchema[];
   /** hreflang 언어 대체 URL 목록 */
   hreflangs?: { hreflang: string; href: string }[];
   /** noindex 여부 (관리자 페이지 등) */
   noindex?: boolean;
+  /**
+   * og:locale (BCP 47 형식, e.g. "ko_KR", "en_US", "ja_JP", "zh_CN")
+   * 미지정 시 기본값 "ko_KR" 적용
+   */
+  ogLocale?: string;
+  /** og:locale:alternate 목록 */
+  ogLocaleAlternates?: string[];
 }
 
-const SITE_NAME = "부산 서면 스타피부과";
-const BASE_URL = "https://www.star-pibu.com";
+export const SITE_NAME = "부산 서면 스타피부과";
+export const BASE_URL = "https://www.star-pibu.com";
+
+/** 공통 hreflang 목록 (모든 페이지에서 재사용) */
+export const COMMON_HREFLANGS = [
+  { hreflang: "ko", href: `${BASE_URL}/` },
+  { hreflang: "en", href: `${BASE_URL}/en` },
+  { hreflang: "ja", href: `${BASE_URL}/ja` },
+  { hreflang: "zh", href: `${BASE_URL}/zh` },
+  { hreflang: "x-default", href: `${BASE_URL}/` },
+];
+
+/** 다국어 og:locale 매핑 */
+export const LANG_TO_OG_LOCALE: Record<string, string> = {
+  ko: "ko_KR",
+  en: "en_US",
+  ja: "ja_JP",
+  zh: "zh_CN",
+};
+
+/** 다국어 og:locale:alternate 목록 */
+export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN"];
 
 export default function SeoHead({
   title,
@@ -51,8 +83,11 @@ export default function SeoHead({
   jsonLd,
   hreflangs,
   noindex = false,
+  ogLocale = "ko_KR",
+  ogLocaleAlternates,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
+  const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
 
   return (
     <Helmet>
@@ -77,6 +112,10 @@ export default function SeoHead({
       {description && <meta property="og:description" content={description} />}
       <meta property="og:url" content={resolvedOgUrl} />
       {ogImage && <meta property="og:image" content={ogImage} />}
+      <meta property="og:locale" content={ogLocale} />
+      {alternates.map((loc) => (
+        <meta key={loc} property="og:locale:alternate" content={loc} />
+      ))}
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />

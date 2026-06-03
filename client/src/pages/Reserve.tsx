@@ -10,6 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import {
   Calendar, Clock, User, Phone, FileText,
@@ -680,6 +681,14 @@ export default function Reserve() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F8FAFC" }}>
+      <SeoHead
+        title="시술 예약 | 부산 서면 스타피부과"
+        description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."
+        keywords="스타피부과 예약, 서면피부과 예약, 부산피부과 온라인 예약, 스타피부과 시술 예약"
+        canonical="https://www.star-pibu.com/reserve"
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
+      />
       <Header />
 
       <div className="flex-1 pt-24 pb-24 px-4 sm:pb-16">

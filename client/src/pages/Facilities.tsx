@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 
 const FACILITY_HIGHLIGHTS = [
   { icon: '🏥', title: '프리미엄 진료실', desc: '최신 인테리어와 편안한 분위기의 1:1 프라이빗 진료실' },
@@ -15,6 +16,14 @@ export default function Facilities() {
 
   return (
     <MainLayout>
+      <SeoHead
+        title="시설 안내 | 부산 서면 스타피부과"
+        description="부산 서면 스타피부과 시설 안내. 프리미엄 진료실, 첨단 시술실, 전용 회복실 등 세계 최고 수준의 의료 장비를 갖춘 전문 시술 공간."
+        keywords="스타피부과 시설, 서면피부과 시설, 부산피부과 시설, 스타피부과 내부, 스타피부과 장비"
+        canonical="https://www.star-pibu.com/facilities"
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
+      />
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">
           <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">{t.facility.sectionTitle}</p>

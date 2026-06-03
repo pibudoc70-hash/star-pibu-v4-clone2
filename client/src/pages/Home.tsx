@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
@@ -58,13 +58,8 @@ export default function Home() {
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리쥬란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://www.star-pibu.com/"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
-        hreflangs={[
-          { hreflang: "ko", href: "https://www.star-pibu.com/" },
-          { hreflang: "en", href: "https://www.star-pibu.com/en" },
-          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
-          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
-          { hreflang: "x-default", href: "https://www.star-pibu.com/" },
-        ]}
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
       />
       {/* Fixed Header */}
       <Header />

@@ -487,16 +487,31 @@ const rubyPicoLaser = {
 };
 
 // 주요시술 순서: 눈밑지방재배치, 써마지FLX, 울쎄라프라임, 안면홍조치료, 루비피코레이저
-const allBestTreatments: any[] = [
+interface BestTreatment {
+  name: string;
+  nameEn?: string;
+  image: string;
+  category?: string;
+  desc?: string;
+  badge?: string | null;
+  badgeColor?: string;
+  price?: string;
+  slug?: string;
+  time?: string;
+  recovery?: string;
+  best?: boolean;
+}
+
+const allBestTreatments: BestTreatment[] = ([
   otherTreatments.find((t) => t.name === "눈밑지방재배치"),
   { ...liftingBestItems.find((i) => i.name === "써마지 FLX"), category: "리프팅·탄력", price: "상담 후 결정" },
   { ...liftingBestItems.find((i) => i.name === "울쎄라피 프라임"), category: "리프팅·탄력", price: "상담 후 결정" },
   otherTreatments.find((t) => t.name === "안면홍조 치료"),
   rubyPicoLaser,
-].filter(Boolean);
+] as Array<BestTreatment | undefined>).filter((t): t is BestTreatment => t !== undefined);
 
 // ── 카드 컴포넌트 ──────────────────────────────────────────────────────────
-function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: any; i: number; price?: string }) {
+function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment; i: number; price?: string }) {
   const [mobileOverlay, setMobileOverlay] = useState(false);
 
   return (
@@ -676,7 +691,7 @@ function LiftingGroupSection({
             {group.items.map((item, i) => (
               <TreatmentCard
                 key={`${group.id}-${item.name}`}
-                t={item}
+                t={{ ...item, category: group.label }}
                 i={i}
                 price="상담 후 결정"
               />

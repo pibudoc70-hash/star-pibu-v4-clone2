@@ -350,6 +350,43 @@ export default function TreatmentDetail() {
         keywords={`${treatment.name}, ${treatment.category}, 부산피부과, 피부시술, 부산리프팅`}
         ogImage={treatment.image}
         canonical={`https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`}
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "MedicalProcedure",
+            "name": treatment.name,
+            "description": treatment.detailedDesc || treatment.desc,
+            "procedureType": "https://schema.org/CosmeticProcedure",
+            "bodyLocation": treatment.category,
+            "followup": treatment.recovery,
+            "howPerformed": treatment.effect,
+            "preparation": `시술 시간: ${treatment.time}`,
+            "provider": {
+              "@type": "MedicalClinic",
+              "name": "스타피부과",
+              "url": "https://www.star-pibu.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "부산광역시 부산진구 서면",
+                "addressCountry": "KR"
+              }
+            }
+          },
+          ...(treatment.faqs && treatment.faqs.length > 0
+            ? [{
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": treatment.faqs.map((faq) => ({
+                  "@type": "Question",
+                  "name": faq.question,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                  }
+                }))
+              }]
+            : [])
+        ]}
       />
       {/* 헤더 */}
       <div className="bg-gradient-to-r from-[#4A6FA5] to-[#2D4A7A] text-white py-8">

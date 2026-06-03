@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import { trpc } from '@/lib/trpc';
 import { Loader2, Calendar, Eye } from 'lucide-react';
 import { useState } from 'react';
@@ -24,6 +25,14 @@ export default function Events() {
 
   return (
     <MainLayout>
+      <SeoHead
+        title="이벤트 · 안내 | 부산 서면 스타피부과"
+        description="부산 서면 스타피부과 이벤트 안내. 시술 할인, 신규 이벤트, 진료 공지 등 최신 소식을 확인하세요."
+        keywords="스타피부과 이벤트, 서면피부과 할인, 부산피부과 이벤트, 스타피부과 공지"
+        canonical="https://www.star-pibu.com/events"
+        ogLocale="ko_KR"
+        hreflangs={COMMON_HREFLANGS}
+      />
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">
           <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">{t.events.eyebrow}</p>

@@ -1061,3 +1061,20 @@
 ## 시설안내 버튼 버그 수정 (2026-06-03)
 - [x] Header.tsx - isHome일 때 window.scrollTo() 후 history.replaceState()로 URL 해시 업데이트 (popstate 버그 수정)
 - [x] Footer.tsx - 동일한 popstate 버그 수정
+
+## Production 품질 향상 작업 (2026-06-03)
+- [x] SeoHead.tsx - og:locale, og:locale:alternate 지원 추가 및 타입 개선
+- [x] Home.tsx - COMMON_HREFLANGS 사용 및 ogLocale 추가
+- [x] LandingEN.tsx - COMMON_HREFLANGS 사용 및 ogLocale 추가
+- [x] LandingJA.tsx - COMMON_HREFLANGS 사용 및 ogLocale 추가
+- [x] LandingZH.tsx - COMMON_HREFLANGS 사용 및 ogLocale 추가
+- [x] Directions.tsx - SeoHead 추가
+- [x] Doctors.tsx - SeoHead 추가
+- [x] Events.tsx - SeoHead 추가
+- [x] Facilities.tsx - SeoHead 추가
+- [x] Reserve.tsx - SeoHead 추가
+- [x] NotFound.tsx - SeoHead 추가 (noindex)
+- [x] About.tsx - 하드코딩된 통계 데이터를 t.about.stats 참조로 교체
+- [x] TreatmentDetail.tsx - MedicalProcedure + FAQPage JSON-LD 추가
+- [x] DoctorsSection.tsx - as any 제거
+- [x] TreatmentsSection.tsx - BestTreatment 인터페이스 추가 및 any 타입 교체

@@ -4,7 +4,7 @@
  * SEO: react-helmet-async로 각 페이지마다 고유 title, description, JSON-LD MedicalProcedure 스키마 적용
  * view-source 기준으로도 각 URL에 맞는 메타 태그가 보이도록 Helmet 사용
  */
-import { Helmet } from "react-helmet-async";
+import SeoHead from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
@@ -294,26 +294,16 @@ export default function TreatmentPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ── react-helmet-async: 페이지별 고유 메타 태그 ── */}
-      <Helmet>
-        <title>{treatment.seoTitle}</title>
-        <meta name="description" content={treatment.seoDescription} />
-        <meta name="keywords" content={treatment.seoKeywords} />
-        <meta property="og:title" content={treatment.seoTitle} />
-        <meta property="og:description" content={treatment.seoDescription} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={treatment.image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={treatment.seoTitle} />
-        <meta name="twitter:description" content={treatment.seoDescription} />
-        <link rel="canonical" href={pageUrl} />
-        {jsonLdArray && jsonLdArray.map((schema, i) => (
-          <script key={i} type="application/ld+json">
-            {JSON.stringify(schema)}
-          </script>
-        ))}
-      </Helmet>
+      {/* ── SeoHead: 페이지별 고유 메타 태그 ── */}
+      <SeoHead
+        title={treatment.seoTitle}
+        description={treatment.seoDescription}
+        keywords={treatment.seoKeywords}
+        canonical={pageUrl}
+        ogImage={treatment.image}
+        ogUrl={pageUrl}
+        jsonLd={jsonLdArray ?? undefined}
+      />
 
       {/* ── 히어로 배너 ── */}
       <div

@@ -287,8 +287,8 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   const lbl = FORM_LABELS[lang as keyof typeof FORM_LABELS] ?? FORM_LABELS.ko;
   const isKo = lang === "ko";
 
-  // 모바일에서는 인증 단계 건너뛰고 바로 confirm 단계로
-  const [step, setStep] = useState<"info" | "verify" | "confirm">("confirm");
+  // OTP 흐름: info(전화번호 입력) → verify(OTP 입력) → confirm(예약 정보 입력)
+  const [step, setStep] = useState<"info" | "verify" | "confirm">("info");
 
   // 회원 예약 폼 상태
   const [reservationForm, setReservationForm] = useState({
@@ -658,9 +658,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   // ── 비회원 예약 폼 ──
   return (
     <div className="space-y-6">
-      {/* Step 1: OTP 발송 - 숨김 처리 */}
+      {/* Step 1: OTP 발송 */}
       {step === "info" && (
-        <form onSubmit={handleSendOtp} className="space-y-6" style={{ display: 'none' }}>
+        <form onSubmit={handleSendOtp} className="space-y-6">
           <div className="bg-[#FEF3C7] border border-[#FCD34D] rounded-lg p-4 flex gap-3">
             <AlertCircle size={20} className="text-[#D97706] flex-shrink-0" />
             <p className="text-sm text-[#92400E]">{lbl.otpTitle}</p>
@@ -706,9 +706,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
         </form>
       )}
 
-      {/* Step 2: OTP 검증 - 숨김 처리 */}
+      {/* Step 2: OTP 검증 */}
       {step === "verify" && (
-        <form onSubmit={handleVerifyOtp} className="space-y-6" style={{ display: 'none' }}>
+        <form onSubmit={handleVerifyOtp} className="space-y-6">
           <div className="bg-[#DBEAFE] border border-[#93C5FD] rounded-lg p-4 flex gap-3">
             <AlertCircle size={20} className="text-[#0284C7] flex-shrink-0" />
             <p className="text-sm text-[#0C4A6E]">{lbl.otpVerifyMsg}</p>

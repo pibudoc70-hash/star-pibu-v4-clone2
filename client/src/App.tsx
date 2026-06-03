@@ -3,7 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { LangProvider, useLang } from "./contexts/LangContext";
+import { LangProvider } from "./contexts/LangContext";
 import { lazy, Suspense, useEffect, Component, ReactNode } from "react";
 import Home from "./pages/Home";
 
@@ -90,57 +90,17 @@ function MapLoadingFallback() {
     </div>
   );
 }
+// HtmlLangUpdater: html[lang] 속성만 URL 기반으로 업데이트
+// hreflang/canonical은 각 페이지의 SeoHead 컴포넌트에서 선언적으로 관리
 function HtmlLangUpdater() {
   const [location] = useLocation();
-  const { lang } = useLang();
 
   useEffect(() => {
-    // URL 기반으로 html lang 설정
     let htmlLang = "ko";
-    if (location === "/en" || location.startsWith("/en/")) {
-      htmlLang = "en";
-    } else if (location === "/ja" || location.startsWith("/ja/")) {
-      htmlLang = "ja";
-    } else if (location === "/zh" || location.startsWith("/zh/")) {
-      htmlLang = "zh";
-    }
+    if (location === "/en" || location.startsWith("/en/")) htmlLang = "en";
+    else if (location === "/ja" || location.startsWith("/ja/")) htmlLang = "ja";
+    else if (location === "/zh" || location.startsWith("/zh/")) htmlLang = "zh";
     document.documentElement.lang = htmlLang;
-    
-    // hreflang 태그 업데이트 (각 페이지에서 모든 언어 버전 참조)
-    const baseUrl = "https://www.star-pibu.com";
-    const hreflangs = [
-      { hreflang: "ko", href: `${baseUrl}/` },
-      { hreflang: "en", href: `${baseUrl}/en` },
-      { hreflang: "ja", href: `${baseUrl}/ja` },
-      { hreflang: "zh", href: `${baseUrl}/zh` },
-      { hreflang: "x-default", href: `${baseUrl}/` }
-    ];
-    
-    hreflangs.forEach(({ hreflang, href }) => {
-      let el = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
-      if (!el) {
-        el = document.createElement("link");
-        el.rel = "alternate";
-        el.hreflang = hreflang;
-        document.head.appendChild(el);
-      }
-      el.href = href;
-    });
-    
-    // canonical 태그 설정
-    let canonicalEl = document.querySelector<HTMLLinkElement>("link[rel='canonical']");
-    if (!canonicalEl) {
-      canonicalEl = document.createElement("link");
-      canonicalEl.rel = "canonical";
-      document.head.appendChild(canonicalEl);
-    }
-    
-    let canonicalUrl = `${baseUrl}/`;
-    if (htmlLang === "en") canonicalUrl = `${baseUrl}/en`;
-    else if (htmlLang === "ja") canonicalUrl = `${baseUrl}/ja`;
-    else if (htmlLang === "zh") canonicalUrl = `${baseUrl}/zh`;
-    
-    canonicalEl.href = canonicalUrl;
   }, [location]);
 
   return null;

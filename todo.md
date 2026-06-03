@@ -987,6 +987,19 @@
 - [ ] 전체 vitest 테스트 통과 확인
 - [ ] 최종 체크포인트 저장
 
+## 패치 초안 반영 (2026-06-03)
+- [x] SeoHead.tsx 신규 생성 (client/src/components/SeoHead.tsx)
+- [x] App.tsx HtmlLangUpdater에서 hreflang/canonical DOM 직접 수정 로직 제거
+- [x] TreatmentPage.tsx - Helmet 블록을 SeoHead 컴포넌트로 교체
+- [x] Equipment2Detail.tsx - DOM 직접 수정 useEffect를 SeoHead 선언적 방식으로 교체
+- [x] Equipment2Detail.tsx - /reservation → /reserve CTA 라우팅 오류 수정
+- [x] ReservationForm.tsx - step 초기값 "confirm" → "info"로 수정 (OTP 흐름 정상화)
+- [x] ReservationForm.tsx - step info/verify 폼의 display:none 제거
+- [x] server/routers.ts - 고정 OTP "123456" → generateOtpCode() 실제 생성 로직 적용
+- [x] TypeScript 타입 체크 통과 (0 errors)
+- [x] Vitest 테스트 통과 (47 tests passed)
+- [x] 프로덕션 빌드 성공
+
 ## Bug Fix: treatments 테이블 스키마 불일치 (2026-06-02)
 - [x] DB 마이그레이션: treatments 테이블에 다국어 필드 추가 (nameJa, nameZh, descEn/Ja/Zh 등 29개 필드)
 - [x] API 테스트: treatments.all 정상 작동 확인

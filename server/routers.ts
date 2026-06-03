@@ -133,8 +133,8 @@ export const appRouter = router({
         phone: z.string().min(9).max(20),
       }))
       .mutation(async ({ input }) => {
-        // 개발 모드: 항상 123456으로 설정
-        const code = "123456";
+        // 실제 6자리 랜덤 OTP 생성
+        const code = generateOtpCode();
         await createGuestOtp(input.phone, code);
 
         // SMS로 OTP 발송

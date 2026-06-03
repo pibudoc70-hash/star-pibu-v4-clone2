@@ -179,8 +179,11 @@ export default function Header() {
     // 해시 링크 (#home, #doctors 등)는 현재 페이지 기반
     // isHome이 true이면 현재 페이지에서 스크롤 (다국어 페이지 포함)
     if (isHome) {
+      const basePath = getLocalizedPath();
       if (href === "#home") {
         window.scrollTo({ top: 0, behavior: "smooth" });
+        // URL 해시 업데이트 (popstate 방지)
+        history.replaceState(null, "", basePath);
         return;
       }
       const el = document.querySelector(href);
@@ -188,6 +191,8 @@ export default function Header() {
         const offset = 80;
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
+        // URL 해시 업데이트 (popstate 방지)
+        history.replaceState(null, "", basePath + href);
       }
       return;
     }

@@ -40,12 +40,20 @@ export default function Footer() {
     }
     
     // 해시 링크 (#home, #doctors 등)는 현재 페이지 기반
+    const basePath = getLocalizedPath();
+    if (href === "#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      // URL 해시 업데이트 (popstate 방지)
+      history.replaceState(null, "", basePath);
+      return;
+    }
     const el = document.querySelector(href);
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
+      // URL 해시 업데이트 (popstate 방지)
+      history.replaceState(null, "", basePath + href);
     } else {
-      const basePath = getLocalizedPath();
       if (href === "#home") {
         window.location.href = basePath;
       } else {

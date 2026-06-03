@@ -1226,3 +1226,25 @@
 - [x] PR-17: Equipment2Detail seoTitle/seoDescription/seoKeywords lang 분기 추가
 - [x] PR-18: Equipment2Detail 본문(detail/effect/caution) 및 제목 lang 분기 다국어 표시
 - [x] PR-19: App.tsx /en|ja|zh/equipment2/:slug 라우트 추가, buildHreflangs 다국어 경로 반영, canonical lang 기반 URL 수정
+
+## PR-23: TreatmentPage 다국어 데이터 구조 분리 (2026-06-04)
+
+- [ ] Commit 23-1: client/src/lib/i18nText.ts 신규 생성 (LocalizedString, pickLocalized, pickLocalizedFaq)
+- [ ] Commit 23-2: client/src/data/treatments/index.ts 신규 생성 (TreatmentI18n, TREATMENT_DATA)
+- [ ] Commit 23-3: client/src/data/treatments/ulthera.ts 신규 생성 (4개 언어 본문/메타)
+- [ ] Commit 23-4: client/src/data/treatments/thermage.ts 신규 생성 (4개 언어 본문/메타)
+- [ ] Commit 23-5: client/src/data/treatments/under-eye-fat.ts 신규 생성 (4개 언어 본문/메타)
+- [ ] Commit 23-6: TreatmentPage.tsx 다국어 데이터 import 전환 (pickLocalized, pickLocalizedFaq 적용)
+- [ ] Commit 23-7: SeoHead 다국어 메타 정합성 점검 및 보정
+- [ ] Commit 23-8: vitest 다국어 시술 데이터 단위 테스트 추가
+
+## PR-23: TreatmentPage 다국어 데이터 구조 분리 (2026-06-04)
+
+- [x] Commit 23-1: client/src/lib/i18nText.ts 신규 생성 (LocalizedString, LocalizedFaq, pickLocalized, pickLocalizedFaq)
+- [x] Commit 23-2: client/src/data/treatments/index.ts 신규 생성 (TreatmentI18n 타입, TREATMENT_DATA, getTreatmentBySlug, getAllTreatments)
+- [x] Commit 23-3: client/src/data/treatments/ulthera.ts 신규 생성 (ko/en/ja/zh 전체 다국어 데이터)
+- [x] Commit 23-4: client/src/data/treatments/thermage.ts 신규 생성 (ko/en/ja/zh 전체 다국어 데이터)
+- [x] Commit 23-5: client/src/data/treatments/under-eye-fat.ts 신규 생성 (ko/en/ja/zh 전체 다국어 데이터)
+- [x] Commit 23-6: TreatmentPage.tsx 전체 재작성 - 인라인 한국어 고정 데이터 제거, 새 다국어 구조 적용
+- [x] Commit 23-7: server/i18nText.test.ts 신규 생성 (22개 단위 테스트 + 5개 데이터 정합성 테스트)
+- [x] Commit 23-8: 테스트 69개 전부 통과 확인 (TypeScript 에러 0건)

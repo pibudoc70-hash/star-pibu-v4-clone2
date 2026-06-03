@@ -10,7 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
-import type { Treatment } from "../../../drizzle/schema";
+import type { Treatment } from "@shared/types";
 
 // safe JSON parser
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {

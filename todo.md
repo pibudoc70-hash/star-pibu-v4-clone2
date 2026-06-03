@@ -1042,3 +1042,18 @@
 - [x] TypeScript 0 errors
 - [x] Vitest 47 tests passed
 - [x] 프로덕션 빌드 성공 (20.58s)
+
+## GitHub 코드 검수 수정 (2026-06-03)
+- [ ] TreatmentDetail.tsx - DOM 직접 수정 SEO → SeoHead로 교체, any 타입 제거
+- [ ] Home.tsx - 미사용 import TreatmentsEquipmentSectionV2 제거
+- [ ] App.tsx - /reserve, /directions, /mypage 라우트 등록
+- [ ] Equipment2Detail.tsx - drizzle/schema 직접 import → 로컬 인터페이스로 교체
+- [ ] AdminDashboard-backup.tsx, AdminDashboard-new.tsx 불필요 파일 삭제
+## GitHub 코드 검수 수정 완료 (2026-06-03)
+- [x] TreatmentDetail.tsx - SeoHead import 추가, useState<any> → 인라인 타입 정의, DOM 직접 수정 SEO useEffect 제거, SeoHead 컴포넌트 삽입
+- [x] Home.tsx - 미사용 import TreatmentsEquipmentSectionV2 제거
+- [x] Equipment2Detail.tsx - drizzle/schema 직접 import → @shared/types로 교체 (클라이언트-서버 경계 위반 해소)
+- [x] AdminDashboard-backup.tsx, AdminDashboard-new.tsx 불필요 파일 삭제
+- [x] TypeScript 0 errors 확인
+- [x] Vitest 47 tests passed
+- [x] 프로덕션 빌드 성공

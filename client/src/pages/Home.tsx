@@ -11,7 +11,6 @@ import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
-import TreatmentsEquipmentSectionV2 from "@/components/TreatmentsEquipmentSectionV2";
 import ManagementDevicesSection from "@/components/ManagementDevicesSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import ResultsSection from "@/components/ResultsSection";

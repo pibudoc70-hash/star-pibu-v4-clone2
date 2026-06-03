@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
+import SeoHead from "@/components/SeoHead";
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
@@ -290,7 +291,20 @@ const getAllTreatments = () => {
 
 export default function TreatmentDetail() {
   const [match, params] = useRoute("/treatment/:name");
-  const [treatment, setTreatment] = useState<any>(null);
+  const [treatment, setTreatment] = useState<{
+    name: string;
+    nameEn: string;
+    category: string;
+    desc: string;
+    time: string;
+    recovery: string;
+    price: string;
+    badge: string | null;
+    image: string;
+    effect: string;
+    detailedDesc: string;
+    faqs: Array<{ question: string; answer: string }>;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const { t } = useLang();
   const td = t.treatmentDetail;
@@ -300,25 +314,8 @@ export default function TreatmentDetail() {
       const decodedName = decodeURIComponent(params.name);
       const allTreatments = getAllTreatments();
       const found = allTreatments.find((tr) => tr.name === decodedName);
-      setTreatment(found);
-      
-      // SEO 메타 태그 동적 설정
-      if (found) {
-        // 페이지 제목
-        document.title = `${found.name} | 부산 스타피부과 - ${found.category}`;
-        
-        // 메타 설명
-        const metaDescription = document.querySelector('meta[name="description"]');
-        if (metaDescription) {
-          metaDescription.setAttribute('content', `${found.name}에 대해 알아보세요. ${found.desc} 부산 스타피부과에서 전문의가 직접 시술합니다.`);
-        }
-        
-        // 메타 키워드
-        const metaKeywords = document.querySelector('meta[name="keywords"]');
-        if (metaKeywords) {
-          metaKeywords.setAttribute('content', `${found.name}, ${found.category}, 부산피부과, 피부시술, 부산리프팅`);
-        }
-      }
+      setTreatment(found ?? null);
+
     }
     setLoading(false);
   }, [match, params]);
@@ -347,6 +344,13 @@ export default function TreatmentDetail() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SeoHead
+        title={`${treatment.name} | 부산 스타피부과 - ${treatment.category}`}
+        description={`${treatment.name}에 대해 알아보세요. ${treatment.desc} 부산 스타피부과에서 전문의가 직접 시술합니다.`}
+        keywords={`${treatment.name}, ${treatment.category}, 부산피부과, 피부시술, 부산리프팅`}
+        ogImage={treatment.image}
+        canonical={`https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`}
+      />
       {/* 헤더 */}
       <div className="bg-gradient-to-r from-[#4A6FA5] to-[#2D4A7A] text-white py-8">
         <div className="container">

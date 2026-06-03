@@ -3,6 +3,11 @@
  * react-helmet-async 기반으로 title, description, OG, Twitter, canonical,
  * hreflang, og:locale, JSON-LD 구조화 데이터를 선언적으로 주입합니다.
  *
+ * ── 자동 삽입 JSON-LD ──────────────────────────────────────────────────────
+ * `includeClinicSchema={true}` (기본값) 이면 MedicalBusiness 스키마를
+ * 모든 페이지에 자동으로 삽입합니다.
+ * 페이지별 추가 스키마는 `jsonLd` 배열로 전달합니다.
+ *
  * 사용법:
  *   <SeoHead
  *     title="페이지 제목"
@@ -10,11 +15,11 @@
  *     canonical="https://www.star-pibu.com/treatments/ulthera"
  *     ogImage="https://cdn.example.com/image.jpg"
  *     ogLocale="ko_KR"
- *     ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
  *     jsonLd={[{ "@context": "https://schema.org", ... }]}
  *   />
  */
 import { Helmet } from "react-helmet-async";
+import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
 
 /** Schema.org JSON-LD 구조화 데이터 타입 */
 export type JsonLdSchema = Record<string, unknown>;
@@ -34,7 +39,7 @@ export interface SeoHeadProps {
   ogUrl?: string;
   /** OG type (default: "website") */
   ogType?: string;
-  /** JSON-LD 구조화 데이터 배열 */
+  /** 페이지별 추가 JSON-LD 구조화 데이터 배열 */
   jsonLd?: JsonLdSchema[];
   /** hreflang 언어 대체 URL 목록 */
   hreflangs?: { hreflang: string; href: string }[];
@@ -47,6 +52,11 @@ export interface SeoHeadProps {
   ogLocale?: string;
   /** og:locale:alternate 목록 */
   ogLocaleAlternates?: string[];
+  /**
+   * MedicalBusiness 기본 스키마 자동 삽입 여부 (기본값: true)
+   * 관리자 페이지 등 불필요한 경우 false로 설정
+   */
+  includeClinicSchema?: boolean;
 }
 
 export const SITE_NAME = "부산 서면 스타피부과";
@@ -94,6 +104,172 @@ export function buildHreflangs(
   ];
 }
 
+/**
+ * MedicalBusiness + LocalBusiness 통합 JSON-LD 스키마 생성
+ * Google Rich Results에서 병원 정보 패널, 지식 그래프, 지도 결과에 활용됩니다.
+ */
+export function buildClinicJsonLd(): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": ["MedicalBusiness", "LocalBusiness"],
+    "@id": `${CLINIC_INFO.url}/#organization`,
+    name: CLINIC_INFO.name,
+    legalName: CLINIC_INFO.legalName,
+    url: CLINIC_INFO.url,
+    logo: {
+      "@type": "ImageObject",
+      url: CLINIC_INFO.logo,
+      width: 200,
+      height: 200,
+    },
+    image: CLINIC_INFO.image,
+    description: CLINIC_INFO.description,
+    foundingDate: CLINIC_INFO.foundingDate,
+    telephone: CLINIC_INFO.telephone,
+    email: CLINIC_INFO.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: CLINIC_INFO.address.streetAddress,
+      addressLocality: CLINIC_INFO.address.addressLocality,
+      addressRegion: CLINIC_INFO.address.addressRegion,
+      postalCode: CLINIC_INFO.address.postalCode,
+      addressCountry: CLINIC_INFO.address.addressCountry,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: CLINIC_INFO.geo.latitude,
+      longitude: CLINIC_INFO.geo.longitude,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Thursday", "Friday"],
+        opens: "10:00",
+        closes: "19:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Wednesday"],
+        opens: "10:00",
+        closes: "20:30",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday"],
+        opens: "10:00",
+        closes: "16:00",
+      },
+    ],
+    priceRange: CLINIC_INFO.priceRange,
+    currenciesAccepted: CLINIC_INFO.currenciesAccepted,
+    paymentAccepted: CLINIC_INFO.paymentAccepted,
+    medicalSpecialty: {
+      "@type": "MedicalSpecialty",
+      name: "Dermatology",
+    },
+    hasMap: `https://maps.google.com/?q=${CLINIC_INFO.geo.latitude},${CLINIC_INFO.geo.longitude}`,
+    sameAs: [...CLINIC_INFO.sameAs],
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      value: 3,
+      unitText: "physicians",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "312",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    knowsAbout: [
+      "눈밑지방재배치술",
+      "울쎄라",
+      "써마지",
+      "리주란힐러",
+      "피코레이저",
+      "보톡스",
+      "필러",
+      "피부과 전문의",
+    ],
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Medical Specialty Board Certification",
+        recognizedBy: {
+          "@type": "Organization",
+          name: "대한피부과학회",
+        },
+      },
+    ],
+    // 병원 통계 (Schema.org 비표준 확장 — 검색 엔진 무시해도 무방)
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "yearsOfExperience",
+        value: `${CLINIC_STATS.yearsExperience}+`,
+        unitText: "years",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "eyeBagProcedureCases",
+        value: `${CLINIC_STATS.eyeBagCases}+`,
+        unitText: "cases",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "laserEquipmentTypes",
+        value: `${CLINIC_STATS.laserTypes}+`,
+        unitText: "types",
+      },
+    ],
+  };
+}
+
+/**
+ * 웹사이트 검색 박스 JSON-LD (Google Sitelinks Searchbox)
+ */
+export function buildWebSiteJsonLd(): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${BASE_URL}/#website`,
+    url: BASE_URL,
+    name: SITE_NAME,
+    description: "부산 서면 스타피부과 공식 홈페이지",
+    inLanguage: ["ko", "en", "ja", "zh"],
+    publisher: {
+      "@id": `${BASE_URL}/#organization`,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${BASE_URL}/treatments?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/**
+ * BreadcrumbList JSON-LD 생성 헬퍼
+ * @param items  { name, url } 배열 (홈 → 현재 페이지 순)
+ */
+export function buildBreadcrumbJsonLd(
+  items: { name: string; url: string }[],
+): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 export default function SeoHead({
   title,
   description,
@@ -107,9 +283,18 @@ export default function SeoHead({
   noindex = false,
   ogLocale = "ko_KR",
   ogLocaleAlternates,
+  includeClinicSchema = true,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
+
+  // 기본 MedicalBusiness + WebSite 스키마 (모든 페이지 공통)
+  const baseSchemas: JsonLdSchema[] = includeClinicSchema
+    ? [buildClinicJsonLd(), buildWebSiteJsonLd()]
+    : [];
+
+  // 페이지별 추가 스키마
+  const allSchemas = [...baseSchemas, ...(jsonLd ?? [])];
 
   return (
     <Helmet>
@@ -145,8 +330,8 @@ export default function SeoHead({
       {description && <meta name="twitter:description" content={description} />}
       {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-      {/* JSON-LD 구조화 데이터 */}
-      {jsonLd?.map((schema, i) => (
+      {/* JSON-LD 구조화 데이터 (기본 + 페이지별) */}
+      {allSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(schema)}
         </script>

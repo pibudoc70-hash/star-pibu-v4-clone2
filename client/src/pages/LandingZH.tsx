@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -59,18 +59,11 @@ export default function LandingZH() {
         keywords="釜山皮肤科, 西面皮肤诊所, 超声刀釜山, 热玻吵釜山, 眼袋手术韓国, 皮秒激光釜山, 韓国美容皮肤科, 星皮肤科, 釜山整形美容, 中文皮肤科"
         canonical="https://www.star-pibu.com/zh"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
-        jsonLd={[{
-          "@context": "https://schema.org",
-          "@type": "MedicalBusiness",
-          "name": "星皮肤科",
-          "alternateName": "Star Dermatology",
-          "url": "https://www.star-pibu.com/zh",
-          "telephone": "+82-51-818-2300",
-          "address": { "@type": "PostalAddress", "streetAddress": "西面路74 ION城市大厨4层", "addressLocality": "釜山镇区", "addressRegion": "釜山", "postalCode": "47189", "addressCountry": "KR" },
-          "medicalSpecialty": "Dermatology",
-          "inLanguage": "zh",
-          "knowsAbout": ["超声刀", "热玸吵FLX", "眼袋脂肪重置", "激光嫩肤", "皮秒激光", "婴儿针"]
-        }]}
+        jsonLd={[
+          buildBreadcrumbJsonLd([
+            { name: "首页", url: "https://www.star-pibu.com/zh" },
+          ]),
+        ]}
         ogLocale="zh_CN"
         hreflangs={COMMON_HREFLANGS}
       />

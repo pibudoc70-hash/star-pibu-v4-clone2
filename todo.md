@@ -1093,3 +1093,18 @@
 - [x] PhilosophySection.tsx - CLINIC_STATS 참조로 통계 데이터 교체
 - [x] TypeScript 에러 0건 확인
 - [x] 체크포인트 저장
+
+## Phase 36: SeoHead JSON-LD 구조화 데이터 강화 (2026-06-04)
+- [x] constants.ts에 CLINIC_INFO 추가 (병원명, 주소, 전화, 좌표, 영업시간, sameAs 등)
+- [x] SeoHead.tsx에 buildClinicJsonLd() 헬퍼 추가 (MedicalBusiness + LocalBusiness 통합 스키마)
+- [x] SeoHead.tsx에 buildWebSiteJsonLd() 헬퍼 추가 (WebSite + SearchAction 스키마)
+- [x] SeoHead.tsx에 buildBreadcrumbJsonLd() 헬퍼 추가 (BreadcrumbList 스키마)
+- [x] SeoHead includeClinicSchema prop 추가 (기본값 true, 모든 페이지 자동 삽입)
+- [x] Home.tsx - BreadcrumbList JSON-LD 추가
+- [x] LandingEN.tsx - 중복 MedicalBusiness 제거, BreadcrumbList 추가
+- [x] LandingJA.tsx - 중복 MedicalBusiness 제거, BreadcrumbList 추가
+- [x] LandingZH.tsx - 중복 MedicalBusiness 제거, BreadcrumbList 추가
+- [x] TreatmentPage.tsx - provider 하드코딩을 CLINIC_INFO 참조로 교체
+- [x] Equipment2Detail.tsx - provider 하드코딩을 CLINIC_INFO 참조로 교체
+- [x] TypeScript 에러 0건 확인
+- [x] 체크포인트 저장

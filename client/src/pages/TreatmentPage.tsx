@@ -5,6 +5,7 @@
  * view-source 기준으로도 각 URL에 맞는 메타 태그가 보이도록 Helmet 사용
  */
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, BASE_URL } from "@/components/SeoHead";
+import { CLINIC_INFO } from "@/lib/constants";
 import { useLang } from "@/contexts/LangContext";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
@@ -151,27 +152,24 @@ function buildJsonLd(t: TreatmentData) {
     "status": "https://schema.org/ActiveActionStatus",
     "provider": {
       "@type": "MedicalBusiness",
-      "name": "스타피부과",
-      "url": "https://www.star-pibu.com",
-      "telephone": "051-818-2300",
+      "@id": `${CLINIC_INFO.url}/#organization`,
+      "name": CLINIC_INFO.name,
+      "url": CLINIC_INFO.url,
+      "telephone": CLINIC_INFO.telephone,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "서면로 74 아이온시티빌딩 4층",
-        "addressLocality": "부산진구",
-        "addressRegion": "부산광역시",
-        "postalCode": "47252",
-        "addressCountry": "KR"
+        "streetAddress": CLINIC_INFO.address.streetAddress,
+        "addressLocality": CLINIC_INFO.address.addressLocality,
+        "addressRegion": CLINIC_INFO.address.addressRegion,
+        "postalCode": CLINIC_INFO.address.postalCode,
+        "addressCountry": CLINIC_INFO.address.addressCountry,
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 35.1567,
-        "longitude": 129.0596
+        "latitude": CLINIC_INFO.geo.latitude,
+        "longitude": CLINIC_INFO.geo.longitude,
       },
-      "sameAs": [
-        "https://place.naver.com/hospital/12020103",
-        "https://www.instagram.com/starpibu",
-        "https://www.youtube.com/@starpibu"
-      ]
+      "sameAs": [...CLINIC_INFO.sameAs],
     }
   };
 

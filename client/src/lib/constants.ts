@@ -45,3 +45,44 @@ export const STAT_UNITS = {
 } as const;
 
 export type StatLang = keyof typeof STAT_UNITS.years;
+
+// ── 병원 정보 (구조화 데이터 JSON-LD용) ───────────────────────────────────────────────────────────────────────────────────
+export const CLINIC_INFO = {
+  name: "스타피부과",
+  legalName: "의료법인 스타피부과",
+  url: "https://www.star-pibu.com",
+  logo: "https://www.star-pibu.com/logo.png",
+  image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg",
+  telephone: "+82-51-818-2300",
+  email: "star2006beauty@naver.com",
+  foundingDate: "2006",
+  description: "부산 서면 위치한 피부과 전문의 클리닉. 눈밑지방재배치술, 울쓰라피, 써마지, 리주란 등 전문의가 직접 시술합니다.",
+  address: {
+    streetAddress: "부산광역시 부산진구 범일로 97 아이온시티빌딩 4층",
+    addressLocality: "부산진구",
+    addressRegion: "부산광역시",
+    postalCode: "47296",
+    addressCountry: "KR",
+  },
+  geo: {
+    latitude: 35.1579,
+    longitude: 129.0597,
+  },
+  openingHours: [
+    "Mo-Fr 10:00-19:00",
+    "Sa 10:00-16:00",
+  ],
+  specialOpeningHours: [
+    // 수요일 연장진료 (10:00-20:30)
+    "We 10:00-20:30",
+  ],
+  priceRange: "₩₩₩",
+  currenciesAccepted: "KRW",
+  paymentAccepted: "Cash, Credit Card",
+  medicalSpecialty: "Dermatology",
+  sameAs: [
+    "https://pf.kakao.com/_HNyGC",
+    "https://booking.naver.com/booking/13/bizes/209080",
+  ],
+} as const;
+

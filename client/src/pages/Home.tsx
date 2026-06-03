@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
-import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
@@ -60,6 +60,11 @@ export default function Home() {
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
+        jsonLd={[
+          buildBreadcrumbJsonLd([
+            { name: "홈", url: "https://www.star-pibu.com/" },
+          ]),
+        ]}
       />
       {/* Fixed Header */}
       <Header />

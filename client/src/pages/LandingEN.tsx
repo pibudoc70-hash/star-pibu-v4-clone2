@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -59,17 +59,11 @@ export default function LandingEN() {
         keywords="Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea"
         canonical="https://www.star-pibu.com/en"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
-        jsonLd={[{
-          "@context": "https://schema.org",
-          "@type": "MedicalBusiness",
-          "name": "Star Dermatology",
-          "url": "https://www.star-pibu.com/en",
-          "telephone": "+82-51-818-2300",
-          "address": { "@type": "PostalAddress", "streetAddress": "74 Seomyeon-ro, ION City Building 4F", "addressLocality": "Busanjin-gu", "addressRegion": "Busan", "postalCode": "47189", "addressCountry": "KR" },
-          "medicalSpecialty": "Dermatology",
-          "inLanguage": "en",
-          "knowsAbout": ["Ultherapy Prime", "Thermage FLX", "Under-Eye Fat Repositioning", "Laser Toning", "Pico Laser", "Rejuran Healer"]
-        }]}
+        jsonLd={[
+          buildBreadcrumbJsonLd([
+            { name: "Home", url: "https://www.star-pibu.com/en" },
+          ]),
+        ]}
         ogLocale="en_US"
         hreflangs={COMMON_HREFLANGS}
       />

@@ -3,7 +3,8 @@
  * URL: /equipment2/:slug
  * 각 시술별 독립적인 페이지로 SEO 최적화
  */
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import { useLang } from "@/contexts/LangContext";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
@@ -24,6 +25,7 @@ interface RelatedTreatment { id?: number; slug: string; name: string; desc?: str
 export default function Equipment2Detail() {
   const params = useParams();
   const [, setLocation] = useLocation();
+  const { lang } = useLang();
   const slug = params.slug as string;
   const [treatment, setTreatment] = useState<Treatment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,6 +107,8 @@ export default function Equipment2Detail() {
         canonical={pageUrl}
         ogImage={treatment.image || undefined}
         ogUrl={pageUrl}
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={buildHreflangs(`/equipment2/${slug}`)}
         jsonLd={jsonLd}
       />
 

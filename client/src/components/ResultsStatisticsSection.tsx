@@ -1,6 +1,7 @@
 import React from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
+import { CLINIC_STATS, STAT_UNITS, type StatLang } from '@/lib/constants';
 
 export default function ResultsStatisticsSection() {
   const { t, lang } = useLang();
@@ -27,37 +28,34 @@ export default function ResultsStatisticsSection() {
     },
   ];
 
-  // about.stats에서 숫자 추출 (i18n.ts 단일 소스)
-  const aboutStats = t.about.stats;
-  
-  // results.stats는 4개 항목 (about.stats는 3개)
-  // 첫 3개는 about.stats에서, 4번째는 r.stats에서
+  // constants.ts 단일 소스에서 통계 수치 참조
+  const l = lang as StatLang;
   const statistics = [
     {
       icon: getIcon(0),
-      number: aboutStats[0].num.replace(/[^0-9]/g, ''),
-      unit: lang === 'ko' ? '년' : lang === 'ja' ? '年' : lang === 'zh' ? '年' : '+yrs',
+      number: String(CLINIC_STATS.yearsExperience),
+      unit: STAT_UNITS.years[l],
       label: r.stats[0].label,
       description: r.stats[0].desc,
     },
     {
       icon: getIcon(1),
-      number: '95',
-      unit: '%',
+      number: String(CLINIC_STATS.satisfactionRate),
+      unit: STAT_UNITS.percent[l],
       label: r.stats[1].label,
       description: r.stats[1].desc,
     },
     {
       icon: getIcon(2),
-      number: aboutStats[1].num.replace(/[^0-9]/g, ''),
-      unit: lang === 'ko' ? '례' : lang === 'ja' ? '例' : lang === 'zh' ? '例' : '+',
+      number: CLINIC_STATS.eyeBagCases.toLocaleString(),
+      unit: STAT_UNITS.cases[l],
       label: r.stats[2].label,
       description: r.stats[2].desc,
     },
     {
       icon: getIcon(3),
-      number: '1',
-      unit: ':1',
+      number: String(CLINIC_STATS.doctorPatientRatio),
+      unit: STAT_UNITS.ratio[l],
       label: r.stats[3].label,
       description: r.stats[3].desc,
     },

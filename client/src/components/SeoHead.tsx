@@ -72,6 +72,28 @@ export const LANG_TO_OG_LOCALE: Record<string, string> = {
 /** 다국어 og:locale:alternate 목록 */
 export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN"];
 
+/**
+ * 페이지별 locale-aware hreflang 목록 생성 헬퍼
+ * @param koPath  한국어 경로 (e.g. "/foreign-guide")
+ * @param enPath  영어 경로 (e.g. "/en/foreign-guide"), 미지정 시 "/en"
+ * @param jaPath  일본어 경로 (e.g. "/ja/foreign-guide"), 미지정 시 "/ja"
+ * @param zhPath  중국어 경로 (e.g. "/zh/foreign-guide"), 미지정 시 "/zh"
+ */
+export function buildHreflangs(
+  koPath: string,
+  enPath?: string,
+  jaPath?: string,
+  zhPath?: string,
+): { hreflang: string; href: string }[] {
+  return [
+    { hreflang: "ko", href: `${BASE_URL}${koPath}` },
+    { hreflang: "en", href: `${BASE_URL}${enPath ?? "/en"}` },
+    { hreflang: "ja", href: `${BASE_URL}${jaPath ?? "/ja"}` },
+    { hreflang: "zh", href: `${BASE_URL}${zhPath ?? "/zh"}` },
+    { hreflang: "x-default", href: `${BASE_URL}${koPath}` },
+  ];
+}
+
 export default function SeoHead({
   title,
   description,

@@ -6,6 +6,7 @@
 import { ScanEye, Award, Cpu } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import { CLINIC_STATS } from "@/lib/constants";
 
 const NEW_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg";
 const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;
@@ -55,16 +56,28 @@ export default function PhilosophySection() {
               {t.about.desc}
             </p>
 
-            {/* Stats - 픽토그램 포함 */}
+            {/* Stats - 픽토그램 포함 (constants.ts 단일 소스) */}
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
               {[
-                { num: t.about.stats[0].num, label: t.about.stats[0].label },
-                { num: t.about.stats[1].num, label: t.about.stats[1].label },
-                { num: t.about.stats[2].num, label: t.about.stats[2].label },
+                {
+                  num: CLINIC_STATS.yearsExperience,
+                  suffix: lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+",
+                  label: t.about.stats[0].label,
+                },
+                {
+                  num: CLINIC_STATS.eyeBagCases.toLocaleString(),
+                  suffix: lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+",
+                  label: t.about.stats[1].label,
+                },
+                {
+                  num: CLINIC_STATS.laserTypes,
+                  suffix: lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+",
+                  label: t.about.stats[2].label,
+                },
               ].map((s, idx) => {
                 const Icon = statIcons[idx];
-                const numMain = s.num.replace(/(례\+|회\+|년\+|대\+|종\+|\+)$/, '');
-                const numSuffix = s.num.match(/(례\+|회\+|년\+|대\+|종\+|\+)$/)?.[0] ?? '';
+                const numMain = String(s.num);
+                const numSuffix = s.suffix;
                 return (
                   <div
                     key={s.label}

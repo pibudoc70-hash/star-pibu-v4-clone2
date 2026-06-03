@@ -4,7 +4,7 @@
  * SEO: react-helmet-async로 각 페이지마다 고유 title, description, JSON-LD MedicalProcedure 스키마 적용
  * view-source 기준으로도 각 URL에 맞는 메타 태그가 보이도록 Helmet 사용
  */
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, BASE_URL } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
@@ -270,7 +270,13 @@ export default function TreatmentPage() {
   const treatment = TREATMENT_DATA[slug];
   const lbl = LABELS[lang as keyof typeof LABELS] ?? LABELS.ko;
 
-  const pageUrl = `https://www.star-pibu.com/treatments/${slug}`;
+  const pageUrl = `${BASE_URL}/treatments/${slug}`;
+  const treatmentHreflangs = buildHreflangs(
+    `/treatments/${slug}`,
+    `/treatments/${slug}`,
+    `/treatments/${slug}`,
+    `/treatments/${slug}`,
+  );
   const jsonLdArray = treatment ? buildJsonLd(treatment) : null;
 
   // 시술을 찾지 못한 경우
@@ -302,6 +308,8 @@ export default function TreatmentPage() {
         canonical={pageUrl}
         ogImage={treatment.image}
         ogUrl={pageUrl}
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={treatmentHreflangs}
         jsonLd={jsonLdArray ?? undefined}
       />
 

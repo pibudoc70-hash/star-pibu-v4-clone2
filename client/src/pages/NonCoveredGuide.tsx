@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import LangSwitcher from "@/components/LangSwitcher";
 import { ExternalLink, Info, ChevronRight } from "lucide-react";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 
 export default function NonCoveredGuide() {
   const { lang } = useLang();
@@ -103,6 +103,13 @@ export default function NonCoveredGuide() {
         description="부산 서면 스타피부과의 비급여 진료안내입니다. 울쎄라, 써마지, 리프팅, 레이저 시술 등 비급여 진료 항목과 비용을 안내합니다. 의료법 제45조 준수."
         keywords="비급여진료, 비급여안내, 울쎄라가격, 써마지가격, 리프팅비용, 부산피부과가격"
         canonical="https://www.star-pibu.com/non-covered"
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={buildHreflangs(
+          "/non-covered",
+          "/en/non-covered",
+          "/ja/non-covered",
+          "/zh/non-covered",
+        )}
       />
       <Header />
       <main className="pt-20">

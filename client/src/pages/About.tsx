@@ -1,10 +1,10 @@
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
-import SeoHead from '@/components/SeoHead';
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from '@/components/SeoHead';
 
 export default function About() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   return (
     <MainLayout>
       <SeoHead
@@ -13,6 +13,8 @@ export default function About() {
         keywords="부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅"
         canonical="https://www.star-pibu.com/about"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}
       />
       {/* 피부과 소개 섹션 - About Us */}
       <section className="py-16 md:py-24 bg-white">

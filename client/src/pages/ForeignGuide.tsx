@@ -6,7 +6,7 @@
 import { useState, useEffect } from "react";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
 
@@ -51,11 +51,13 @@ export default function ForeignGuide() {
         keywords="부산피부과외국인, Busan dermatology, 釜山皮肤科, 釜山皮膚科, 울쎄라피, Ultherapy Busan, 써마지부산"
         canonical="https://www.star-pibu.com/foreign-guide"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
-        hreflangs={[
-          { hreflang: "en", href: "https://www.star-pibu.com/en" },
-          { hreflang: "ja", href: "https://www.star-pibu.com/ja" },
-          { hreflang: "zh", href: "https://www.star-pibu.com/zh" },
-        ]}
+        ogLocale={LANG_TO_OG_LOCALE[activeLang] ?? "ko_KR"}
+        hreflangs={buildHreflangs(
+          "/foreign-guide",
+          "/en/foreign-guide",
+          "/ja/foreign-guide",
+          "/zh/foreign-guide",
+        )}
       />
       <Header />
 

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
@@ -306,7 +306,7 @@ export default function TreatmentDetail() {
     faqs: Array<{ question: string; answer: string }>;
   } | null>(null);
   const [loading, setLoading] = useState(true);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const td = t.treatmentDetail;
 
   useEffect(() => {
@@ -350,6 +350,8 @@ export default function TreatmentDetail() {
         keywords={`${treatment.name}, ${treatment.category}, 부산피부과, 피부시술, 부산리프팅`}
         ogImage={treatment.image}
         canonical={`https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`}
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={buildHreflangs(`/treatment/${encodeURIComponent(treatment.name)}`)}
         jsonLd={[
           {
             "@context": "https://schema.org",

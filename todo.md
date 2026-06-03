@@ -1078,3 +1078,18 @@
 - [x] TreatmentDetail.tsx - MedicalProcedure + FAQPage JSON-LD 추가
 - [x] DoctorsSection.tsx - as any 제거
 - [x] TreatmentsSection.tsx - BestTreatment 인터페이스 추가 및 any 타입 교체
+
+## Phase 35: 다국어 SEO 완성 및 통계 데이터 중앙화 (2026-06-03)
+- [x] SeoHead.tsx에 buildHreflangs() 헬퍼 함수 추가 (페이지별 locale-aware hreflang 생성)
+- [x] TreatmentPage.tsx - hreflangs, ogLocale 추가 (/treatments/:slug)
+- [x] ForeignGuide.tsx - hreflangs 올바른 경로로 수정 (/en/foreign-guide 등), ogLocale 추가
+- [x] NonCoveredGuide.tsx - hreflangs, ogLocale 추가 (/en/non-covered 등)
+- [x] Equipment2Detail.tsx - hreflangs, ogLocale 추가, useLang() 추가
+- [x] About.tsx - hreflangs, ogLocale 추가 (/en/about 등)
+- [x] TreatmentDetail.tsx - hreflangs, ogLocale 추가 (레거시 /treatment/:name 라우트)
+- [x] src/lib/constants.ts 생성 (CLINIC_STATS, STAT_UNITS 중앙 관리)
+- [x] ResultsStatisticsSection.tsx - CLINIC_STATS 참조로 하드코딩 '95', '1' 교체
+- [x] HeroSection.tsx - CLINIC_STATS 참조로 i18n 파싱 제거
+- [x] PhilosophySection.tsx - CLINIC_STATS 참조로 통계 데이터 교체
+- [x] TypeScript 에러 0건 확인
+- [x] 체크포인트 저장

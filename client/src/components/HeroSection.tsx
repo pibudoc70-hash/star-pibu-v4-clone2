@@ -18,6 +18,7 @@ import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
+import { CLINIC_STATS } from "@/lib/constants";
 
 /** 금색 빛 가루 파티클 Canvas 컴포넌트 */
 function GoldParticles() {
@@ -219,19 +220,11 @@ export default function HeroSection() {
   };
   // 통계 섹션 IntersectionObserver ref
   const statsRef = useRef<HTMLDivElement>(null);
-  // i18n.ts의 about.stats에서 숫자 추출
-  const statsData = t.about.stats; // [{ num: "20년+", label: "..." }, ...]
-  const extractNum = (numStr: string) => {
-    const match = numStr.match(/\d+/);
-    return match ? parseInt(match[0], 10) : 0;
-  };
-  const num20 = extractNum(statsData[0]?.num || "20");
-  const num4000 = extractNum(statsData[1]?.num || "4000");
-  const num50 = extractNum(statsData[2]?.num || "50");
+  // constants.ts 단일 소스에서 통계 수치 직접 참조
   // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
-  const { value: count4000, isDone: done4000 } = useCountUp(num4000, 3500, "", 0, statsRef);
-  const { value: count20, isDone: done20 } = useCountUp(num20, 3500, "", 0, statsRef);
-  const { value: count50, isDone: done50 } = useCountUp(num50, 3500, "", 0, statsRef);
+  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 3500, "", 0, statsRef);
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 3500, "", 0, statsRef);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 3500, "", 0, statsRef);
   return (
     <section
       id="home"
@@ -454,7 +447,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{statsData[0]?.num.replace(/\d+/, "") || (lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+")}</span>
+                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -496,7 +489,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{statsData[1]?.num.replace(/\d+/, "") || (lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+")}</span>
+                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -538,7 +531,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{statsData[2]?.num.replace(/\d+/, "") || (lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+")}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -585,7 +578,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{statsData[2]?.num.replace(/\d+/, "") || (lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+")}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
               </div>
               <div style={{
                 height: "1.5px",

@@ -45,7 +45,7 @@ const FORM_LABELS = {
     validationPhoneFormat: "올바른 휴대폰 번호를 입력해주세요. (010-1234-5678 또는 01012345678 형식)",
     successMsg: "예약이 신청되었습니다. 곧 연락드리겠습니다.",
     errorMsg: "예약 신청 실패: ",
-    otpSentMsg: "인증번호가 발송되었습니다. (개발 모드: 콘솔 확인)",
+    otpSentMsg: "인증번호가 발송되었습니다. 휴대폰을 확인해주세요.",
     otpSentError: "OTP 발송 실패: ",
     otpVerifiedMsg: "인증되었습니다.",
     otpVerifyError: "인증 실패: ",
@@ -340,10 +340,7 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
     "2026-09-24", "2026-10-03", "2026-10-09", "2026-12-25",
   ];
 
-  const { data: unavailableSlotsData } = trpc.admin.unavailableSlots.list.useQuery(
-    { date: undefined },
-    { enabled: false }
-  );
+  const { data: unavailableSlotsData } = trpc.schedule.unavailableDates.useQuery();
 
   const isAvailableDate = (dateStr: string): boolean => {
     if (!dateStr) return false;

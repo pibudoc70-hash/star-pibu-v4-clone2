@@ -498,11 +498,11 @@ export default function TreatmentPage() {
           </a>
           <button
             onClick={() => {
-              const el = document.getElementById("booking") || document.getElementById("reservation");
+              const el = document.getElementById("reservation");
               if (el) {
                 el.scrollIntoView({ behavior: "smooth" });
               } else {
-                setLocation("/#booking");
+                setLocation("/#reservation");
               }
             }}
             className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"

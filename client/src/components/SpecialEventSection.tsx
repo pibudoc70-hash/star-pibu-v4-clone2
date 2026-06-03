@@ -56,12 +56,21 @@ export default function SpecialEventSection() {
     }
   }, [data]);
 
-  // 언어별 표시 텍스트 가져오기
-  const getLocalizedText = (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => {
-    if (lang === "en") return (event as any)[field + "En"] || event[field];
-    if (lang === "ja") return (event as any)[field + "Ja"] || event[field];
-    if (lang === "zh") return (event as any)[field + "Zh"] || event[field];
-    return event[field];
+  // 언어별 표시 텍스트 가져오기 (as any 없이 타입 안전하게 처리)
+  const getLocalizedText = (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName"): string => {
+    const localizedMap: Record<string, keyof SpecialEvent> = {
+      "titleEn": "titleEn", "titleJa": "titleJa", "titleZh": "titleZh",
+      "subtitleEn": "subtitleEn", "subtitleJa": "subtitleJa", "subtitleZh": "subtitleZh",
+      "descEn": "descEn", "descJa": "descJa", "descZh": "descZh",
+      "productNameEn": "productNameEn", "productNameJa": "productNameJa", "productNameZh": "productNameZh",
+    };
+    const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh" ? "Zh" : null;
+    if (suffix) {
+      const key = localizedMap[field + suffix];
+      const localized = key ? (event[key] as string | undefined) : undefined;
+      return localized || event[field] || "";
+    }
+    return event[field] || "";
   };
 
   const toggleExpanded = (eventId: number) => {

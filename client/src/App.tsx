@@ -3,7 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { LangProvider } from "./contexts/LangContext";
+import { LangProvider, useLang } from "./contexts/LangContext";
 import { lazy, Suspense, useEffect, Component, ReactNode } from "react";
 import Home from "./pages/Home";
 
@@ -90,22 +90,26 @@ function MapLoadingFallback() {
     </div>
   );
 }
-// HtmlLangUpdater: html[lang] 속성만 URL 기반으로 업데이트
+// HtmlLangUpdater: URL 기반으로 html[lang] 속성 + LangContext lang 상태 동기화
 // hreflang/canonical은 각 페이지의 SeoHead 컴포넌트에서 선언적으로 관리
 function HtmlLangUpdater() {
   const [location] = useLocation();
-
+  const { lang, setLang } = useLang();
   useEffect(() => {
-    let htmlLang = "ko";
-    if (location === "/en" || location.startsWith("/en/")) htmlLang = "en";
-    else if (location === "/ja" || location.startsWith("/ja/")) htmlLang = "ja";
-    else if (location === "/zh" || location.startsWith("/zh/")) htmlLang = "zh";
-    document.documentElement.lang = htmlLang;
-  }, [location]);
-
+    let urlLang: "ko" | "en" | "ja" | "zh" = "ko";
+    if (location === "/en" || location.startsWith("/en/")) urlLang = "en";
+    else if (location === "/ja" || location.startsWith("/ja/")) urlLang = "ja";
+    else if (location === "/zh" || location.startsWith("/zh/")) urlLang = "zh";
+    document.documentElement.lang = urlLang;
+    // URL이 명시적 다국어 경로인 경우 LangContext도 동기화 (persist=false: localStorage 오염 방지)
+    if (location === "/en" || location.startsWith("/en/") ||
+        location === "/ja" || location.startsWith("/ja/") ||
+        location === "/zh" || location.startsWith("/zh/")) {
+      if (lang !== urlLang) setLang(urlLang, false);
+    }
+  }, [location, lang, setLang]);
   return null;
 }
-
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>

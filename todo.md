@@ -1030,3 +1030,15 @@
 - [x] LandingZH.tsx - SeoHead 적용 (title, description, canonical, ogImage, jsonLd, hreflangs) + DOM 직접 수정 useEffect 제거
 - [x] TypeScript 0 errors 확인
 - [x] 체크포인트 저장
+
+## 8단계 운영 안정화 패치 (2026-06-03)
+- [x] 3단계: schedule.unavailableDates 공개 API 추가, createGuest 서버사이드 날짜 검증 추가, ReservationForm enabled:false 해제
+- [x] 3단계: OTP 개발 모드 console.log 제거
+- [x] 4단계: TreatmentPage CTA 스크롤 앵커 id=reservation 통일
+- [x] 5단계: App.tsx HtmlLangUpdater에서 URL 기반 LangContext lang 상태 동기화
+- [x] 6단계: Equipment2Detail any 타입 제거, RelatedTreatment 인터페이스 정의, safe JSON parser 적용
+- [x] 7단계: SpecialEventSection getLocalizedText as any 제거, 타입 안전 방식으로 교체
+- [x] 8단계: AdminDashboard EventListItem/ReservationItem/AdminStats 인터페이스 추가, SortableEventItem any 제거, eventForm eslint-disable 주석 추가
+- [x] TypeScript 0 errors
+- [x] Vitest 47 tests passed
+- [x] 프로덕션 빌드 성공 (20.58s)

@@ -25,6 +25,13 @@ export const appRouter = router({
   }),
 
   // ─── 예약 라우터 ────────────────────────────────────────────────────────────
+  // ─── 공개 예약 날짜 조회 ─────────────────────────────────────────────────────
+  schedule: router({
+    // 예약 불가 날짜 목록 (공개) - 비회원/일반 예약 폼에서 사용
+    unavailableDates: publicProcedure.query(async () => {
+      return getUnavailableSlots(undefined);
+    }),
+  }),
   reservation: router({
     // 예약 신청 (로그인 필요)
     create: protectedProcedure
@@ -146,8 +153,6 @@ export const appRouter = router({
 
         if (!smsSent) {
           console.warn(`[OTP] SMS 발송 실패: ${input.phone}`);
-          // SMS 발송 실패해도 OTP는 생성됨 (개발 중 콘솔에서 확인 가능)
-          console.log(`[OTP Dev] ${input.phone} → ${code}`);
         }
 
         return { success: true, smsSent };
@@ -177,13 +182,26 @@ export const appRouter = router({
         preferredTime: z.string().min(4).max(10),
         notes: z.string().max(1000).optional(),
       }))
-      .mutation(async ({ input }) => {
+       .mutation(async ({ input }) => {
         // 휴대폰번호 형식 검증 (010-1234-5678 또는 01012345678)
         const phoneRegex = /^01[0-9]-\d{3,4}-\d{4}$|^01[0-9]\d{7,8}$/;
         if (!phoneRegex.test(input.phone)) {
           throw new Error("올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 또는 01012345678 형식)");
         }
-
+        // 서버 사이드 날짜 검증
+        const preferredDateObj = new Date(input.preferredDate);
+        const koNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+        const koToday = new Date(koNow.getFullYear(), koNow.getMonth(), koNow.getDate());
+        const koTomorrow = new Date(koToday); koTomorrow.setDate(koTomorrow.getDate() + 1);
+        const dateOnly = new Date(preferredDateObj.getFullYear(), preferredDateObj.getMonth(), preferredDateObj.getDate());
+        if (dateOnly < koTomorrow) throw new Error("당일 예약은 불가합니다. 내일 이후 날짜를 선택해주세요.");
+        if (preferredDateObj.getDay() === 0) throw new Error("일요일은 예약이 불가합니다.");
+        // 관리자가 등록한 예약 불가 날짜 검증
+        const dateStr = `${preferredDateObj.getFullYear()}-${String(preferredDateObj.getMonth()+1).padStart(2,'0')}-${String(preferredDateObj.getDate()).padStart(2,'0')}`;
+        const unavailableSlots = await getUnavailableSlots(undefined);
+        if (unavailableSlots.some((s: { date: string }) => s.date === dateStr)) {
+          throw new Error("해당 날짜는 예약이 불가합니다. 다른 날짜를 선택해주세요.");
+        }
         // OTP 재검증 (이미 verified=1인 코드도 허용 - 같은 세션)
         const ok = await verifyGuestOtp(input.phone, input.otpCode);
         if (!ok) {

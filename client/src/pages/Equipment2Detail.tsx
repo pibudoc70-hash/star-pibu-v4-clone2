@@ -10,12 +10,22 @@ import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
+import type { Treatment } from "../../../drizzle/schema";
+
+// safe JSON parser
+function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
+  if (!raw) return fallback;
+  try { return JSON.parse(raw) as T; } catch { return fallback; }
+}
+
+interface TreatmentStep { title: string; description: string; }
+interface RelatedTreatment { id?: number; slug: string; name: string; desc?: string; image?: string; }
 
 export default function Equipment2Detail() {
   const params = useParams();
   const [, setLocation] = useLocation();
   const slug = params.slug as string;
-  const [treatment, setTreatment] = useState<any>(null);
+  const [treatment, setTreatment] = useState<Treatment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // 시술 목록 조회
@@ -23,7 +33,7 @@ export default function Equipment2Detail() {
 
   useEffect(() => {
     if (allTreatments && slug) {
-      const found = allTreatments.find((t: any) => t.slug === slug);
+      const found = allTreatments.find((t) => t.slug === slug);
       if (found) {
         setTreatment(found);
       } else {
@@ -49,35 +59,10 @@ export default function Equipment2Detail() {
     );
   }
 
-  // 이미지 배열 파싱
-  let images: string[] = [];
-  if (treatment.images) {
-    try {
-      images = JSON.parse(treatment.images);
-    } catch {
-      images = [];
-    }
-  }
-
-  // 연관 시술 파싱
-  let relatedTreatments: any[] = [];
-  if (treatment.related) {
-    try {
-      relatedTreatments = JSON.parse(treatment.related);
-    } catch {
-      relatedTreatments = [];
-    }
-  }
-
-  // 치료 단계 파싱
-  let steps: any[] = [];
-  if (treatment.steps) {
-    try {
-      steps = JSON.parse(treatment.steps);
-    } catch {
-      steps = [];
-    }
-  }
+  // safe JSON 파싱
+  const images = safeParseJson<string[]>(treatment.images, []);
+  const relatedTreatments = safeParseJson<RelatedTreatment[]>(treatment.related, []);
+  const steps = safeParseJson<TreatmentStep[]>(treatment.steps, []);
 
   const pageUrl = `https://www.star-pibu.com/equipment2/${slug}`;
   const seoDescription = `부산 서면 스타피부과의 ${treatment.name} 시술 안내. ${treatment.desc || ''} 피부과 전문의가 직접 시술합니다. 온라인 예약 가능.`;
@@ -209,7 +194,7 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">치료 단계</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {steps.map((step: any, idx: number) => (
+              {steps.map((step, idx) => (
                 <div key={idx} className="bg-gray-50 p-6 rounded-lg">
                   <div className="text-3xl font-bold text-blue-600 mb-2">{idx + 1}</div>
                   <h3 className="font-semibold text-gray-900 mb-2">{step.title}</h3>
@@ -235,7 +220,7 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">시술 사례</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {images.map((imgSrc: string, idx: number) => (
+              {images.map((imgSrc, idx) => (
                 <OptimizedImage
                   key={idx}
                   src={imgSrc}
@@ -272,9 +257,9 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">연관 시술</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedTreatments.map((related: any) => (
+              {relatedTreatments.map((related) => (
                 <div
-                  key={related.id}
+                  key={related.slug}
                   className="border rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer"
                   onClick={() => setLocation(`/equipment2/${related.slug}`)}
                 >

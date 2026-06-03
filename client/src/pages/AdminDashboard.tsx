@@ -38,6 +38,30 @@ type AdminTab = "users" | "popup" | "events" | "treatments" | "treatmentsV2" | "
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 type ReservationFilter = "all" | "member" | "guest";
 
+// 이벤트 목록 아이템 타입
+interface EventListItem {
+  id: number; tab?: string; badge?: string; title: string; subtitle?: string;
+  desc?: string; note?: string; imageUrl?: string | null; accent?: string; accentLight?: string;
+  sortOrder?: number; isActive?: "0" | "1"; featured?: boolean; date?: string;
+  category?: string; views?: number;
+  priceItems?: { label: string; original: string; price: string }[];
+  startAt?: number | null; endAt?: number | null;
+}
+
+
+// 예약 아이템 타입
+interface ReservationItem {
+  id: number; name: string; phone: string; date: string; time?: string;
+  treatment?: string; status: ReservationStatus; memo?: string;
+  adminNote?: string; createdAt?: number; userId?: number | null;
+}
+
+// 스탯 타입
+interface AdminStats {
+  reservations: { pending: number; confirmed: number; total: number };
+  users: { total: number; recent7d: number };
+}
+
 const STATUS_CONFIG: Record<ReservationStatus, { label: string; color: string; bg: string }> = {
   pending: { label: "대기 중", color: "#D97706", bg: "#FEF3C7" },
   confirmed: { label: "확정", color: "#059669", bg: "#D1FAE5" },
@@ -46,7 +70,11 @@ const STATUS_CONFIG: Record<ReservationStatus, { label: string; color: string; b
 };
 
 // 드래그 가능한 이벤트 아이템 컴포넌트
-function SortableEventItem({ event, onEdit, onDelete }: any) {
+function SortableEventItem({ event, onEdit, onDelete }: {
+  event: EventListItem;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: event.id });
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -188,9 +216,10 @@ export default function AdminDashboard() {
   });
 
   // 이벤트 관리
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [eventForm, setEventForm] = useState<any>(null);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
-  const [sortedEventsList, setSortedEventsList] = useState<any[]>([]);
+  const [sortedEventsList, setSortedEventsList] = useState<EventListItem[]>([]);
 
   const { data: eventsList, refetch: refetchEvents } = trpc.events.list.useQuery(undefined, {
     enabled: !!user && user.role === "admin" && activeTab === "events",

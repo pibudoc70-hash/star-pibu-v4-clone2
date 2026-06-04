@@ -14,6 +14,7 @@ import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
 import type { Treatment } from "@shared/types";
+import { getReservationPath } from "@/lib/reservationPath";
 
 // safe JSON parser
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
@@ -279,7 +280,7 @@ export default function Equipment2Detail() {
             </div>
 
             <button
-              onClick={() => setLocation("/reserve")}
+              onClick={() => window.location.href = getReservationPath(lang)}
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
               {L("book")}

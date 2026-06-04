@@ -1,4 +1,14 @@
 /**
+ * [LEGACY - NOT ROUTED]
+ * 이 파일은 현재 App.tsx 라우트에 등록되어 있지 않습니다.
+ * 예약 진입 정책은 홈의 #reservation 섹션으로 통일되어 있습니다:
+ *   ko => /#reservation
+ *   en => /en#reservation
+ *   ja => /ja#reservation
+ *   zh => /zh#reservation
+ * 이 파일을 재활성화하려면 App.tsx에 /reserve 라우트를 추가하고
+ * getReservationPath 헬퍼를 업데이트해야 합니다.
+ *
  * 시술 예약 신청 페이지 (다국어 지원: ko/en/ja/zh)
  * - 회원 예약: 로그인 후 바로 예약
  * - 비회원 간편 예약: 전화번호 OTP 인증 후 예약

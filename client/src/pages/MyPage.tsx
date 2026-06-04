@@ -15,6 +15,7 @@ import {
   Clock, CheckCircle, XCircle, AlertCircle, ChevronRight, Plus
 } from "lucide-react";
 import { toast } from "sonner";
+import { getReservationPath } from "@/lib/reservationPath";
 
 type ReservationStatus = "pending" | "confirmed" | "completed" | "cancelled";
 
@@ -148,7 +149,7 @@ export default function MyPage() {
 
               {/* 예약 신청 버튼 */}
               <a
-                href="/reserve"
+                href={getReservationPath("ko")}
                 className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-white mb-5 transition-all hover:opacity-90"
                 style={{ background: "linear-gradient(135deg, #4A9FA5 0%, #0D2B4E 100%)", boxShadow: "0 4px 16px rgba(74,159,165,0.3)" }}
               >
@@ -236,7 +237,7 @@ export default function MyPage() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-bold" style={{ color: "#0D2B4E" }}>예약 내역</h2>
                 <a
-                  href="/reserve"
+                  href={getReservationPath("ko")}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white"
                   style={{ background: "#4A9FA5" }}
                 >
@@ -257,7 +258,7 @@ export default function MyPage() {
                   <p className="text-sm font-semibold mb-1" style={{ color: "#374151" }}>예약 내역이 없습니다</p>
                   <p className="text-xs mb-5" style={{ color: "#9CA3AF" }}>원하시는 시술을 예약해 보세요</p>
                   <a
-                    href="/reserve"
+                    href={getReservationPath("ko")}
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white"
                     style={{ background: "#0D2B4E" }}
                   >

@@ -9,6 +9,7 @@ import { getLoginUrl } from "@/const";
 import { Calendar, Clock, Phone, User, AlertCircle, CheckCircle, XCircle, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { getReservationPath } from "@/lib/reservationPath";
 
 const STATUS_CONFIG = {
   pending: { label: "대기 중", color: "#D97706", bg: "#FEF3C7", icon: AlertCircle },
@@ -68,7 +69,7 @@ export default function MyReservations() {
             <h2 className="text-xl font-bold text-[#1F2937] mb-2">예약이 없습니다</h2>
             <p className="text-[#6B7280] mb-6">아직 예약하신 내역이 없습니다.</p>
             <a
-              href="/#reservation"
+              href={getReservationPath("ko")}
               className="inline-block px-6 py-2 rounded-lg font-semibold text-white transition-colors"
               style={{ background: "#4A6FA5" }}
             >

@@ -14,6 +14,7 @@ import { pickLocalized, pickLocalizedFaq } from "@/lib/i18nText";
 import type { SupportedLang } from "@/lib/i18nText";
 import { getTreatmentBySlug, getAllTreatments } from "@/data/treatments";
 import type { TreatmentI18n } from "@/data/treatments";
+import { getReservationPath } from "@/lib/reservationPath";
 
 // ── lang → URL prefix 매핑 ────────────────────────────────────────────────────
 const LANG_PREFIX: Record<SupportedLang, string> = {
@@ -426,7 +427,7 @@ export default function TreatmentPage() {
               if (el) {
                 el.scrollIntoView({ behavior: "smooth" });
               } else {
-                setLocation(`${localizedHomePath === "/" ? "" : localizedHomePath}/#reservation`);
+                window.location.href = getReservationPath(currentLang);
               }
             }}
             className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"

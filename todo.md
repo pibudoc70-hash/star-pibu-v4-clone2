@@ -1422,3 +1422,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Commit 6 (todo): server/routers.ts NOTE 블록에 트리거 시점/데이터 소스/fallback/활성화 방법 명시
 - [x] Commit 6 (todo): server/email.ts 파일 헤더에 EMAIL TRIGGER POINTS 3개 및 CURRENT FALLBACK 명시
 - [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공
+
+## PR-40: 다국어 UX/SEO/레거시 문서화 마감
+- [x] Commit 2 (header): Header.tsx buildLocalizedPath() 구현 — 현재 페이지 경로 유지하며 locale 전환 (desktop + mobile 모두 적용)
+- [x] Commit 3 (foreign-guide): ForeignGuide.tsx 내부 언어 토글 → navigate() 실제 route 이동 연동 (setActiveLang 상태만 변경 → navigate(`/${l}/foreign-guide`))
+- [x] Commit 4 (ux): ForeignGuide.tsx back link href=/{activeLang} locale-aware 처리, Privacy.tsx back link locale-aware (en/ja/zh/ko 각 언어 홈으로)
+- [x] Commit 5 (copy+legacy): Footer.tsx 일본어 privacy 라벨 오타 수정 (方针 U+9488 → 方針 U+91DD), Reserve.tsx 파일 헤더 주석 간소화
+- [x] Commit 6 (sw): sw.js GET-only 필터 추가, CACHE_NAME v2로 버전 업, 주석 영문 보강 (CRITICAL RULES 섹션 추가)
+- [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공

@@ -67,11 +67,11 @@ export const CLINIC_INFO = {
   description: "부산 서면 위치한 피부과 전문의 클리닉. 눈밑지방재배치술, 울쎄라피, 써마지, 리주란 등 전문의가 직접 시술합니다.",
   address: {
     // 기준값: 부산광역시 부산진구 서면로 74 아이온시티빌딩 (4층 접수·진료 / 2층 줄기세포 연구센터)
-    // 우편번호 47189 (부산진구 서면로 74 기준)
+    // 우편번호 47280 (부산광역시 부산진구 서면로 74 기준)
     streetAddress: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층",
     addressLocality: "부산진구",
     addressRegion: "부산광역시",
-    postalCode: "47189",
+    postalCode: "47280",
     addressCountry: "KR",
   },
   geo: {
@@ -88,6 +88,9 @@ export const CLINIC_INFO = {
   paymentAccepted: "Cash, Credit Card",
   medicalSpecialty: "Dermatology",
   sameAs: [
+    "https://place.naver.com/hospital/12020103",
+    "https://www.instagram.com/starpibu",
+    "https://www.youtube.com/@starpibu",
     "https://pf.kakao.com/_HNyGC",
     "https://booking.naver.com/booking/13/bizes/209080",
   ],

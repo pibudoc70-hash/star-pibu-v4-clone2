@@ -365,6 +365,9 @@ export default function SeoHead({
       {description && <meta property="og:description" content={description} />}
       <meta property="og:url" content={resolvedOgUrl} />
       {ogImage && <meta property="og:image" content={ogImage} />}
+      {ogImage && <meta property="og:image:width" content="1200" />}
+      {ogImage && <meta property="og:image:height" content="630" />}
+      {ogImage && <meta property="og:image:alt" content={title} />}
       <meta property="og:locale" content={ogLocale} />
       {alternates.map((loc) => (
         <meta key={loc} property="og:locale:alternate" content={loc} />

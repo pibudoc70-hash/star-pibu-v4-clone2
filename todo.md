@@ -1472,3 +1472,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P2: SeoHead prop semantics 명확화 (includeClinicSchema 주석에 WebSite 스키마도 함께 제어함 명시)
 - [x] P3: SpecialEventSection empty-state i18n.ts 중앙화 (specialEmptyTitle/specialEmptyDesc 4개 언어 추가)
 - [x] P4: PR-46 regression tests 추가 (server/pr46.regression.test.ts, 168개 테스트 전체 통과)
+
+## 5회 연속 분석·수정 사이클 (시니어 개발자 검수)
+- [x] Round 1: viewport maximum-scale=1 제거 (WCAG 1.4.4), og:image/twitter:image/theme-color 추가, HeroSection 배경 div aria-hidden="true" 추가, useScrollReveal prefers-reduced-motion 처리, .orig 백업 파일 삭제
+- [x] Round 2: index.html JSON-LD 우편번호 47280, 전화번호 국제형식 +82-51-818-2300, 좌표 35.1579/129.0597, sameAs 5개 통일, priceRange ₩₩₩ 수정
+- [x] Round 3: constants.ts sameAs에 instagram/youtube/place.naver 추가, 우편번호 47280으로 3개 파일 통일 (사용자 확인)
+- [x] Round 4: HeroSection 미사용 이미지 상수 8개 + 별칭 2개 제거, webVitals.ts console.log → isDev 조건부 처리, main.tsx SW 등록 성공 console.log 제거
+- [x] Round 5: ComponentShowcase.tsx console.log 제거, TypeScript 0 에러, 테스트 168개 전부 통과

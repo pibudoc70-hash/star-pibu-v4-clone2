@@ -25,12 +25,16 @@ function GoldParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // prefers-reduced-motion: 모션 감소 설정 시 파티클 비활성화
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animId: number;
+    let isRunning = true;
     const PARTICLE_COUNT = 80;
 
     type Particle = {
@@ -86,13 +90,27 @@ function GoldParticles() {
           Object.assign(p, mkParticle(true));
         }
       }
-      animId = requestAnimationFrame(draw);
+      if (isRunning) animId = requestAnimationFrame(draw);
     };
     draw();
 
+    // 탭 비활성화 시 RAF 중단 → 배터리/CPU 절약
+    const handleVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animId);
+      } else {
+        isRunning = true;
+        draw();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
+      isRunning = false;
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 
@@ -108,21 +126,8 @@ function GoldParticles() {
 // 반응형 이미지 URL (WebP + JPEG 폴백)
 const HERO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp";
 const HERO_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop.jpg";
-const HERO_IMAGE_TABLET_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-tablet_8fe8c7ce.webp";
-const HERO_IMAGE_TABLET_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-tablet.jpg";
-const HERO_IMAGE_MOBILE_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-mobile_ebac0b77.webp";
-const HERO_IMAGE_MOBILE_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-mobile.jpg";
-
 const HERO_IMAGE_MOBILE_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile_f9bea0c7.webp";
 const HERO_IMAGE_MOBILE_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
-const HERO_IMAGE_TABLET_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-tablet_1015c2bf.webp";
-const HERO_IMAGE_TABLET_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-tablet.jpg";
-const HERO_IMAGE_DESKTOP_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-desktop_c51543df.webp";
-const HERO_IMAGE_DESKTOP_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-desktop.jpg";
-
-// 기존 변수 호환성 유지
-const HERO_IMAGE = HERO_IMAGE_DESKTOP_JPG;
-const HERO_IMAGE_MOBILE = HERO_IMAGE_MOBILE_PORTRAIT_JPG;
 const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/star_ai_logo_1_73172f49.png";
 
 /** 문자열을 글자 단위로 분해하여 <span> 배열 반환 */
@@ -236,6 +241,7 @@ export default function HeroSection() {
       {/* 배경 이미지 - 데스크톱: 가로형, 모바일: 세로형 */}
       {/* 데스크톱 배경 (641px 이상) - 반응형 WebP 이미지 */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 bg-cover bg-no-repeat hidden sm:block"
         style={{
           backgroundImage: `url(${HERO_IMAGE_DESKTOP_WEBP}), url(${HERO_IMAGE_DESKTOP_JPG})`,
@@ -246,6 +252,7 @@ export default function HeroSection() {
       />
       {/* 모바일 배경 (640px 이하) - 반응형 WebP 이미지, 중앙 포커스 */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 bg-cover bg-no-repeat sm:hidden"
         style={{
           backgroundImage: `url(${HERO_IMAGE_MOBILE_PORTRAIT_WEBP}), url(${HERO_IMAGE_MOBILE_PORTRAIT_JPG})`,
@@ -257,6 +264,7 @@ export default function HeroSection() {
       {/* 오버레이 - 밝은 베이지 인테리어 사진에 맞게 조정 */}
       {/* 상단·하단에 어두운 그라디언트 → 텍스트 가독성 확보, 중앙은 사진 그대로 노출 */}
       <div
+        aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
@@ -265,6 +273,7 @@ export default function HeroSection() {
       />
       {/* 좌우 비네팅 — 사진 중앙 집중 */}
       <div
+        aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
@@ -273,6 +282,7 @@ export default function HeroSection() {
       />
       {/* 상단 조명 Soft Glow — 천장 조명의 골드빛 일렁임 */}
       <div
+        aria-hidden="true"
         className="absolute pointer-events-none"
         style={{
           top: 0,

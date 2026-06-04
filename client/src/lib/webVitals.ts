@@ -1,6 +1,9 @@
 /**
  * Core Web Vitals 모니터링 (Performance API 기반, 외부 패키지 불필요)
+ * 개발 환경에서만 콘솔 출력 — 프로덕션 빌드에서는 silent
  */
+const isDev = import.meta.env.DEV;
+
 export function initWebVitals() {
   if (typeof window === 'undefined' || !window.performance) return;
 
@@ -9,14 +12,14 @@ export function initWebVitals() {
   if (navEntries.length > 0) {
     const nav = navEntries[0];
     const ttfb = nav.responseStart - nav.fetchStart;
-    console.log(`📊 TTFB: ${ttfb.toFixed(0)}ms`);
+    if (isDev) console.log(`📊 TTFB: ${ttfb.toFixed(0)}ms`);
   }
 
   // FCP (First Contentful Paint)
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.name === 'first-contentful-paint') {
-        console.log(`📊 FCP: ${entry.startTime.toFixed(0)}ms`);
+        if (isDev) console.log(`📊 FCP: ${entry.startTime.toFixed(0)}ms`);
       }
     }
   });

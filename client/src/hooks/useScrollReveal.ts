@@ -44,6 +44,19 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
     const el = ref.current;
     if (!el) return;
 
+    // prefers-reduced-motion: 모션 감소 설정 시 즉시 visible 처리
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealClasses = ["reveal", "reveal-left", "reveal-right", "reveal-heading"];
+      if (revealClasses.some((c) => el.classList.contains(c))) {
+        el.classList.add("visible");
+      }
+      const cards = el.querySelectorAll<HTMLElement>(
+        ".reveal-card, .reveal, .reveal-left, .reveal-right, .reveal-heading"
+      );
+      cards.forEach((card) => card.classList.add("visible"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -92,6 +105,15 @@ export function useSectionReveal(staggerMs = 80) {
   useEffect(() => {
     const section = ref.current;
     if (!section) return;
+
+    // prefers-reduced-motion: 즉시 visible 처리
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const revealEls = section.querySelectorAll<HTMLElement>(
+        ".reveal, .reveal-left, .reveal-right, .reveal-heading, .reveal-card"
+      );
+      revealEls.forEach((el) => el.classList.add("visible"));
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {

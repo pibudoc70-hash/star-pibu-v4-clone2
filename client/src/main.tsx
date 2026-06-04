@@ -69,9 +69,6 @@ const trpcClient = trpc.createClient({
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('✅ Service Worker 등록 완료:', registration);
-      })
       .catch((error) => {
         console.warn('⚠️ Service Worker 등록 실패:', error);
       });

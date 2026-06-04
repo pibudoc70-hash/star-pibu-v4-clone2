@@ -15,6 +15,20 @@
  *
  * Until then, customer-facing emails are silently skipped; only
  * notifyOwner() alerts reach the owner via the Manus notification channel.
+ *
+ * EMAIL TRIGGER POINTS (PR-39):
+ *   1. 예약 확인 이메일: createReservation 프로시저 (routers.ts)
+ *      데이터: ctx.user.email (회원) — 비회원은 이메일 없음
+ *      템플릿: getReservationConfirmationEmail()
+ *   2. 예약 상태 변경 이메일: updateReservationStatus 프로시저 (routers.ts)
+ *      데이터: users.email (drizzle/schema.ts, varchar 320)
+ *      템플릿: getReservationStatusEmail()
+ *   3. 관리자 알림: createReservation 프로시저 (routers.ts)
+ *      데이터: 환경변수 ADMIN_EMAIL (env.ts에 없음 — SMTP 연동 시 추가 필요)
+ *      템플릿: getAdminNotificationEmail()
+ *
+ * CURRENT FALLBACK: 모든 이메일 발송 시도는 실패 없이 true를 반환 (스킵)
+ *   예약 데이터는 DB에 정상 저장되며, notifyOwner()만 실제 알림 역할을 함
  */
 
 

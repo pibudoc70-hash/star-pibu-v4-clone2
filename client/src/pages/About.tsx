@@ -51,6 +51,25 @@ export default function About() {
     lang === "en" ? { address: "Address", subway: "Subway", bus: "Bus", parking: "Parking" } :
     { address: "주소", subway: "지하철", bus: "버스", parking: "주차" };
 
+  // visible string i18n (PR-39: localized live 정책 UI 일관성)
+  const aboutUsLabel =
+    lang === "ja" ? "クリニック紹介" :
+    lang === "zh" ? "诊所介绍" :
+    lang === "en" ? "About Us" :
+    "피부과 소개";
+
+  const medicalTeamAlt =
+    lang === "ja" ? "医療チーム" :
+    lang === "zh" ? "医疗团队" :
+    lang === "en" ? "Medical Team" :
+    "의료진";
+
+  const sinceLabel =
+    lang === "ja" ? "2006年創業" :
+    lang === "zh" ? "创立于2006年" :
+    lang === "en" ? "Est. 2006" :
+    "Since 2006";
+
   return (
     <MainLayout>
       <SeoHead
@@ -69,7 +88,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* 좌측 콘텐츠 */}
             <div>
-              <p className="font-semibold text-sm uppercase tracking-wider mb-4" style={{color: 'var(--color-gold-primary)'}}>About Us</p>
+              <p className="font-semibold text-sm uppercase tracking-wider mb-4" style={{color: 'var(--color-gold-primary)'}}>{aboutUsLabel}</p>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{t.about.title}</h1>
               <p className="text-2xl font-bold mb-6" style={{color: 'var(--color-gold-primary)'}}>STAR DERMATOLOGY</p>
 
@@ -107,13 +126,13 @@ export default function About() {
                 <OptimizedImage
                   id="about-section-image"
                   src="/manus-storage/medical_team_53232402.jpg"
-                  alt="의료진"
+                  alt={medicalTeamAlt}
                   className="w-full h-full object-cover"
                   height={384}
                 />
               </div>
               <div className="absolute bottom-6 left-6 bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm font-semibold">
-                Since 2006
+                {sinceLabel}
               </div>
             </div>
           </div>

@@ -173,6 +173,13 @@ function Router() {
             <Route path={"/en/about"} component={About} />
             <Route path={"/ja/about"} component={About} />
             <Route path={"/zh/about"} component={About} />
+            {/*
+             * ForeignGuide: localized live — en/ja/zh 전용 외국어 안내 페이지 (PR-39 alias 정책 확정)
+             * - /foreign-guide: /en/foreign-guide 의 영어 alias (ko 콘텐츠 없음)
+             *   · activeLang 기본값 en → canonical = /en/foreign-guide 로 자동 정렬
+             *   · 별도 redirect 없이 alias 유지 (SPA 특성상 HTTP redirect 불필요)
+             * - /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide: 각 언어 canonical
+             */}
             <Route path={"/foreign-guide"} component={ForeignGuide} />
             <Route path={"/en/foreign-guide"} component={ForeignGuide} />
             <Route path={"/ja/foreign-guide"} component={ForeignGuide} />

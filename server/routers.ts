@@ -785,11 +785,16 @@ export const appRouter = router({
             } else {
               // 회원 예약인 경우 - users.email 필드가 존재하지만 sendEmail()은 no-op stub임
               logger.info("Email", "회원 예약 상태 변경 처리");
-              // NOTE: users.email 필드는 drizzle/schema.ts에 존재 (varchar 320).
-              //   하지만 sendEmail()은 현재 no-op stub임 (Manus 내장 이메일 API 미지원).
-              //   외부 SMTP 제공자 연동 후 아래 코드를 활성화:
+              // NOTE (PR-39): 예약 상태 변경 시 회원에게 이메일 발송 지점
+              // 트리거: admin이 예약 상태를 변경할 때 (updateReservationStatus 프로시저)
+              // 데이터 소스: users 테이블 (drizzle/schema.ts), userId = reservation.userId
+              //   users.email 필드: varchar(320), 로그인 시 Manus OAuth에서 자동 저장됨
+              // 현재 fallback: 이메일 스킵 (no-op stub) — 상태 변경은 DB에 저장되지만 이메일은 발송되지 않음
+              // 활성화 방법: server/email.ts의 TO ENABLE 절차 후 아래 코드 주석 해제
               // const user = await db.select().from(users).where(eq(users.id, reservation.userId)).limit(1);
-              // if (user[0]?.email) { await sendEmail({ to: user[0].email, ... }) }
+              // if (user[0]?.email) {
+              //   await sendEmail(getReservationStatusEmail({ patientName: user[0].name, newStatus: input.status, email: user[0].email }));
+              // }
             }
           } catch (emailErr) {
             logger.error("Email", "상태 변경 이메일 발송 중 오류", emailErr);

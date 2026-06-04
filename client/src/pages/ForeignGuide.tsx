@@ -3,13 +3,19 @@
  * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
  * 영어·일본어·중국어 방문객을 위한 전용 안내 페이지 (3개 언어 지원)
  *
- * [PAGE LIFECYCLE] localized live page (PR-38 정책 확정)
+ * [PAGE LIFECYCLE] localized live page (PR-39 alias 정책 확정)
  * - route: /foreign-guide, /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide (App.tsx live)
- * - canonical: activeLang 기반 동적 계산 (`/${activeLang}/foreign-guide`)
- *   · /foreign-guide 접근 시 activeLang 기본값 en → canonical = /en/foreign-guide
+ *
+ * [ALIAS POLICY] /foreign-guide = /en/foreign-guide 의 영어 alias
+ * - 이 페이지는 en/ja/zh 전용 콘텐츠로, ko 콘텐츠가 없음
+ * - /foreign-guide 접근 시 globalLang이 ko이면 activeLang 기본값 en으로 설정
+ * - canonical = `/${activeLang}/foreign-guide` 로 자동 정렬
+ *   · /foreign-guide 접근 → canonical = /en/foreign-guide (영어 alias 자동 정렬)
  *   · /en/foreign-guide → canonical = /en/foreign-guide
  *   · /ja/foreign-guide → canonical = /ja/foreign-guide
  *   · /zh/foreign-guide → canonical = /zh/foreign-guide
+ * - 별도 HTTP redirect 없음: SPA 환경에서 canonical 자동 정렬으로 충분
+ *
  * - ogUrl: canonical과 동일
  * - ogLocale: LANG_TO_OG_LOCALE[activeLang] (언어별 정렬)
  * - hreflangs: buildHreflangs("/foreign-guide", "/en/...", "/ja/...", "/zh/...")

@@ -707,7 +707,9 @@ export default function Reserve() {
       {/*
        * NOTE: This page is NOT ROUTED in App.tsx (legacy since PR-27).
        * noindex={true} prevents accidental search engine indexing if this
-       * component were ever rendered. The canonical URL /reserve is not live.
+       * component were ever rendered.
+       * canonical is intentionally omitted (PR-39): not-routed + noindex page
+       * does not need a canonical signal. noindex-only is sufficient.
        * Active reservation entry points:
        *   ko => /#reservation  |  en => /en#reservation
        *   ja => /ja#reservation  |  zh => /zh#reservation
@@ -716,7 +718,6 @@ export default function Reserve() {
         title="시술 예약 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."
         keywords="스타피부과 예약, 서면피부과 예약, 부산피부과 온라인 예약, 스타피부과 시술 예약"
-        canonical="https://www.star-pibu.com/reserve"
         noindex={true}
         ogLocale="ko_KR"
       />

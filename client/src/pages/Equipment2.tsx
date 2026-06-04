@@ -69,8 +69,13 @@ export default function Equipment2() {
 
       {/* Main Content */}
       <main className="pt-20">
-        {/* SEO 용 h1 태그 - 시각적으로 숨김으로써 접근성 유지 */}
-        <h1 className="sr-only">부산 서면 스타피부과 시술 안내 - 울쎄라 써마지 리프팅 색소질환 레이저</h1>
+        {/* SEO 용 h1 태그 - 시각적으로 숨김으로써 접근성 유지 (PR-39: lang-aware) */}
+        <h1 className="sr-only">
+          {lang === "ja" ? "釜山スター皮膚科 治療・機器ガイド - ウルセラピー サーマジ リフティング 色素治療 レーザー" :
+           lang === "zh" ? "釜山星皮肤科 治疗设备指南 - 热玛吉 提升 色素治疗 激光" :
+           lang === "en" ? "Star Dermatology Clinic Busan - Treatments & Equipment Guide: Ultherapy, Thermage, Lifting, Pigmentation, Laser" :
+           "부산 서면 스타피부과 시술 안내 - 울쎄라 써마지 리프팅 색소질환 레이저"}
+        </h1>
         {/* Treatments + Equipment Section 2 - DB 연동 (관리자 등록) */}
         <TreatmentsEquipmentSectionV2 />
 

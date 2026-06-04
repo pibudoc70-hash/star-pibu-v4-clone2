@@ -21,6 +21,7 @@ import { ArrowLeft, Shield } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SeoHead from "@/components/SeoHead";
+import { useLang } from "@/contexts/LangContext";
 
 const SECTIONS = [
   {
@@ -133,7 +134,15 @@ const SECTIONS = [
   },
 ];
 
+// 비-ko route 접근 시 표시할 짧은 안내 문구 (PR-39: noindex 정책 유지, UX 안내 보완)
+const NON_KO_NOTICE: Record<"en" | "ja" | "zh", string> = {
+  en: "This privacy policy is provided in Korean only, as required by Korean law. The Korean text below is the legally binding original.",
+  ja: "このプライバシーポリシーは韓国法の要件により韓国語のみで提供されています。以下の韓国語テキストが法的拘束力のある原文です。",
+  zh: "根据韩国法律要求，本隐私政策仅以韩语提供。以下韩语文本为具有法律约束力的原文。",
+};
+
 export default function Privacy() {
+  const { lang } = useLang();
   return (
     <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
       <SeoHead
@@ -152,6 +161,13 @@ export default function Privacy() {
             <ArrowLeft size={16} />
             홈으로 돌아가기
           </Link>
+
+          {/* 비-ko route 접근 시 법률 원문 안내 배너 (PR-39) */}
+          {lang !== "ko" && NON_KO_NOTICE[lang as "en" | "ja" | "zh"] && (
+            <div className="mb-6 p-4 rounded-lg text-sm" style={{ background: "#FFF7ED", border: "1px solid #FED7AA", color: "#92400E" }}>
+              {NON_KO_NOTICE[lang as "en" | "ja" | "zh"]}
+            </div>
+          )}
 
           {/* 헤더 */}
           <div className="mb-10 pb-8 border-b" style={{ borderColor: "#E5E7EB" }}>

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { MapView } from '@/components/Map';
 
 const HOSPITAL = {
-  address: '부산광역시 부산진구 서면문화로 27 아이온시티빌딩 10층',
+  address: '부산광역시 부산진구 서면로 74 아이온시티빌딩 4층',  // 기준값: 서면로 74 (CLINIC_INFO 동일)
   phone: '051-818-2300',
   kakaoMapUrl: 'https://map.kakao.com/link/search/스타피부과',
   naverMapUrl: 'https://map.naver.com/v5/search/스타피부과',
@@ -27,7 +27,7 @@ export default function Directions() {
     <MainLayout>
       <SeoHead
         title="오시는 길 | 부산 서면 스타피부과"
-        description="부산 서면 스타피부과 오시는 길 안내. 부산광역시 부산진구 서면문화로 27 아이온시티빌딩 10층. 서면역 1번 출구 도보 5분. 무료 주차 가능."
+        description="부산 서면 스타피부과 오시는 길 안내. 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층. 서면역 5·7번 출구 도보 3분. 주차 가능."
         keywords="스타피부과 위치, 스타피부과 주소, 서면피부과 오시는길, 부산피부과 위치, 서면역 피부과"
         canonical="https://www.star-pibu.com/directions"
         ogLocale="ko_KR"
@@ -166,7 +166,7 @@ export default function Directions() {
                 지하철 및 버스로 쉽게 접근 가능합니다.
               </p>
               <ul className="text-gray-600 text-sm space-y-2">
-                <li>• 지하철: 서면역 1번 출구 도보 5분</li>
+                <li>• 지하철: 서면역 5·7번 출구 도보 3분</li>
                 <li>• 버스: 서면역 정류장 인근</li>
                 <li>• 택시: 아이온시티빌딩 기준</li>
               </ul>

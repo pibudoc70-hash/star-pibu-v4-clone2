@@ -40,7 +40,7 @@ class MapErrorBoundary extends Component<
             </div>
             <div>
               <p className="font-bold text-gray-800 text-lg">카카오맵에서 보기</p>
-              <p className="text-gray-500 text-sm mt-1">부산 서면 아이온시티빌딩 2·4층</p>
+              <p className="text-gray-500 text-sm mt-1">부산 서면 아이온시티빌딩 4층(접수·진료) / 2층(줄기세포 연구센터)</p>
             </div>
           </a>
         </div>

@@ -44,9 +44,9 @@ export default function LandingZH() {
    return (
     <div className="min-h-screen">
       <SeoHead
-        title="釜山星皮肤科 | 超声刀·热玻吵FLX·眼袋脂肪重置 | 西面"
-        description="釜山西面星皮肤科。皮肤科专科医生拥有20年以上经验，提供超声刀、热玻吵FLX、眼袋脂肪重置、皮秒激光筐50余种优质项目。欢迎外国患者，提供中文和询。"
-        keywords="釜山皮肤科, 西面皮肤诊所, 超声刀釜山, 热玻吵釜山, 眼袋手术韓国, 皮秒激光釜山, 韓国美容皮肤科, 星皮肤科, 釜山整形美容, 中文皮肤科"
+        title="釜山STAR皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置 | 西面诊所"
+        description="釜山西面STAR皮肤科。皮肤科专科医生拥有20年以上丰富临床经验，提供超声刀、热玛吉FLX、眼袋脂肪重置、皮秒激光等中韓一流项目。欢迎外国患者，提供中文咨询服务。"
+        keywords="釜山皮肤科, 西面皮肤诊所, 超声刀釜山, 热玛吉釜山, 眼袋手术韓国, 皮秒激光釜山, 韓国美容皮肤科, STAR皮肤科, 釜山整形美容, 中文咨询皮肤科诊所"
         canonical="https://www.star-pibu.com/zh"
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
         jsonLd={[

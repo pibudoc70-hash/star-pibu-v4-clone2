@@ -1286,3 +1286,11 @@
 - [x] server/_core/sdk.ts (data as any) 6건 제거 - SDK 응답 타입 wrapper 도입
 - [x] server/events.special.test.ts any 4건 제거 - Event 타입 import 적용
 - [x] usePersistFn.ts any 재검토 - 불가피 확인 (useComposition 호환성 문제로 유지, 주석 보강)
+
+## PR-29: 다국어 랜딩 카피 품질 및 병원 정보 single source 정리 (2026-06-04)
+- [x] Commit 29-1: audit - 병원 정보 충돌(범일로 97 vs 서면로 74 vs 서면문화로 27) 및 JA/ZH 깨진 표현 전수 파악
+- [x] Commit 29-2: fix(constants) - CLINIC_INFO 주소 서면로 74 / 우편번호 47189 / description 오타(울쓰라피→울쎄라피) 수정
+- [x] Commit 29-3: fix(content) - i18n.ts/Footer.tsx/ContactSection.tsx/App.tsx/Directions.tsx 주소 기준값 통일
+- [x] Commit 29-4: fix(copy) - LandingJA スタ皮膚科→スター皮膚科, LandingZH 热玻吵→热玛吉/皮秒激光筐→皮秒激光/中文和询→中文咨询 교정
+- [x] Commit 29-5: fix(copy) - Footer brandDesc JA/ZH 브랜드명 표기 통일 및 톤 개선
+- [x] Commit 29-6: test - TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과, 검색 검증 완료

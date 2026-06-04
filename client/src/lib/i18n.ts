@@ -307,7 +307,7 @@ export const i18n: Record<Lang, I18nContent> = {
     access: {
       label: "오시는 길",
       title: "오시는 길",
-      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 2·4층",
+      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료) / 2층(줄기세포 연구센터)",
       subway: "지하철 1·2호선 서면역 5번·7번 출구 도보 3분",
       bus: "서면교차로 정류장 하차",
       parking: "아이온시티 건물 내 주차 가능",
@@ -441,7 +441,7 @@ export const i18n: Record<Lang, I18nContent> = {
       },
     },
     footer: {
-      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 2·4층",
+      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료) / 2층(줄기세포 연구센터)",
       tel: "051-818-2300",
       fax: "051-818-2310",
       email: "starpibu@naver.com",
@@ -567,7 +567,7 @@ export const i18n: Record<Lang, I18nContent> = {
       cta_kakao: "카카오톡 상담",
       cta_call: "전화 예약",
       directions: "오시는 길",
-      address: "부산 서면 아이온시티빌딩 2·4층",
+      address: "부산 서면 아이온시티빌딩 4층(접수·진료) / 2층(줄기세포 연구센터)",
       tel: "051-818-2300",
       viewMap: "지도 보기",
     },

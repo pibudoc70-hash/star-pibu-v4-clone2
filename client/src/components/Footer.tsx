@@ -79,7 +79,7 @@ export default function Footer() {
     quickMenu: lang === "ja" ? "クイックメニュー" : lang === "zh" ? "快速菜单" : lang === "en" ? "Quick Menu" : "빠른 메뉴",
     mainTreatments: lang === "ja" ? "主な施術" : lang === "zh" ? "主要项目" : lang === "en" ? "Key Treatments" : "주요 시술",
     contactInfo: lang === "ja" ? "連絡先・アクセス" : lang === "zh" ? "联系方式及位置" : lang === "en" ? "Contact & Location" : "연락처 및 위치",
-    brandDesc: lang === "ja" ? "釜山・西面を代表する皮膚科専門医クリニック" : lang === "zh" ? "釜山西面代表性皮肤科专科医院" : lang === "en" ? "Busan Seomyeon's leading dermatology clinic, led by board-certified specialists with 20+ years of experience." : "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
+    brandDesc: lang === "ja" ? "釜山西面のスター皮膚科。皮膚科専門医3名が20年以上の臨床経験で直接診療。" : lang === "zh" ? "釜山西面STAR皮肤科。皮肤科专科医生拥有20年以上丰富临床经验，亲自为患者提供诊疗。" : lang === "en" ? "Busan Seomyeon's leading dermatology clinic, led by board-certified specialists with 20+ years of experience." : "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
     fax: lang === "ja" ? "ファックス" : lang === "zh" ? "传真" : "팩스",
     subwayInfo: lang === "ja" ? "西面駅 5・7番出口 徒歩2分" : lang === "zh" ? "西面站5·7号出口步行2分钟" : lang === "en" ? "Subway Line 1&2 Seomyeon Stn, Exit 5 or 7, 2 min walk" : "서면역 5·7번 출구 도보 2분",
     nonCovered: lang === "ja" ? "非保険診療案内" : lang === "zh" ? "非医保诊疗指南" : lang === "en" ? "Non-Covered Services" : "비급여 진료안내",
@@ -230,7 +230,7 @@ export default function Footer() {
             {lang === "ko"
               ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306 | 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료), 2층(줄기세포 연구센터)"
               : lang === "ja"
-              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306 | 釜山広域市釜山镇区西面路74 アイオンシティビル4F(受付・診療), 2F(幹細胞研究センター)"
+              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306 | 釜山広域市釜山镇区西面路74 アイオンシティビル4F(受付・診療) / 2F(幹細胞研究センター)"
               : lang === "en"
               ? "STAR Dermatology | Director: Cho Si-hyung | Business Reg. No.: 605-24-84306 | 4F, Ion City Bldg, 74 Seomyeon-ro, Busanjin-gu, Busan"
               : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306 | 釜山广域市釜山镇区西面路74 爱恩城大厦4楼(接待·诊疗), 2楼(干细胞研究中心)"}

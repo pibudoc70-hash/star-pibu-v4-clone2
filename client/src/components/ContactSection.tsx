@@ -179,8 +179,8 @@ export default function ContactSection() {
                       <span style="font-size:16px;">⭐</span>
                       <strong style="color:#1F2937;font-size:14px;">스타피부과의원</strong>
                     </div>
-                    <p style="color:#6B7280;font-size:12px;margin:0 0 4px;">부산 부산진구 서면로 74</p>
-                    <p style="color:#6B7280;font-size:12px;margin:0 0 8px;">아이온시티빌딩 2·4층</p>
+                    <p style="color:#6B7280;font-size:12px;margin:0 0 4px;">부산진구 서면로 74</p>
+                    <p style="color:#6B7280;font-size:12px;margin:0 0 8px;">아이온시티빌딩 4층(접수·진료)</p>
                     <div style="display:flex;gap:6px;">
                       <span style="background:#EEF7F7;color:#4A6FA5;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;">서면역 5·7번 출구</span>
                       <span style="background:#FFF3E0;color:#E65100;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;">도보 2분</span>

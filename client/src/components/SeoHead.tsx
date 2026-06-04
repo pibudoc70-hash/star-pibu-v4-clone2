@@ -4,8 +4,9 @@
  * hreflang, og:locale, JSON-LD 구조화 데이터를 선언적으로 주입합니다.
  *
  * ── 자동 삽입 JSON-LD ──────────────────────────────────────────────────────
- * `includeClinicSchema={true}` (기본값) 이면 MedicalBusiness 스키마를
+ * `includeClinicSchema={true}` (기본값) 이면 **MedicalBusiness + WebSite 두 스키마**를
  * 모든 페이지에 자동으로 삽입합니다.
+ * `false`로 설정하면 두 스키마 모두 제외됩니다 (시술/장비 상세 페이지 등 중복 방지).
  * 페이지별 추가 스키마는 `jsonLd` 배열로 전달합니다.
  *
  * 사용법:
@@ -53,8 +54,12 @@ export interface SeoHeadProps {
   /** og:locale:alternate 목록 */
   ogLocaleAlternates?: string[];
   /**
-   * MedicalBusiness 기본 스키마 자동 삽입 여부 (기본값: true)
-   * 관리자 페이지 등 불필요한 경우 false로 설정
+   * 병원 기본 스키마 자동 삽입 여부 (기본값: true)
+   *
+   * - true  → buildClinicJsonLd() (MedicalBusiness) + buildWebSiteJsonLd() (WebSite) 모두 삽입
+   * - false → 두 스키마 모두 제외 (시술/장비 상세 페이지 등 중복 방지)
+   *
+   * @note 이 prop은 MedicalBusiness 스키마만이 아니라 WebSite 스키마도 함께 제어합니다.
    */
   includeClinicSchema?: boolean;
 }
@@ -334,7 +339,8 @@ export default function SeoHead({
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
 
-  // 기본 MedicalBusiness + WebSite 스키마 (모든 페이지 공통)
+  // 기본 스키마: includeClinicSchema=true 시 MedicalBusiness + WebSite 두 스키마 모두 삽입
+  // includeClinicSchema=false 시 두 스키마 모두 제외 (시술/장비 상세 페이지 중복 방지)
   const baseSchemas: JsonLdSchema[] = includeClinicSchema
     ? [buildClinicJsonLd(), buildWebSiteJsonLd()]
     : [];

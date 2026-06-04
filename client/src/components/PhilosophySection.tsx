@@ -61,17 +61,17 @@ export default function PhilosophySection() {
               {[
                 {
                   num: CLINIC_STATS.yearsExperience,
-                  suffix: `${STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}+`,
+                  suffix: STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en,
                   label: t.about.stats[0].label,
                 },
                 {
                   num: CLINIC_STATS.eyeBagCases.toLocaleString(),
-                  suffix: `${STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}+`,
+                  suffix: STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en,
                   label: t.about.stats[1].label,
                 },
                 {
                   num: CLINIC_STATS.laserTypes,
-                  suffix: `${STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+`,
+                  suffix: STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en,
                   label: t.about.stats[2].label,
                 },
               ].map((s, idx) => {

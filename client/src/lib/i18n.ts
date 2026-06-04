@@ -175,6 +175,10 @@ export interface I18nContent {
     noEvents: string;
     readMore: string;
     featured: string;
+    /** SPECIAL EVENT 섹션 empty state 제목 */
+    specialEmptyTitle: string;
+    /** SPECIAL EVENT 섹션 empty state 설명 */
+    specialEmptyDesc: string;
   };
   managementDevices: {
     sectionTitle: string;
@@ -534,6 +538,8 @@ export const i18n: Record<Lang, I18nContent> = {
       noEvents: "현재 이용 가능한 이벤트가 없습니다",
       readMore: "자세히 보기",
       featured: "주요 이벤트",
+      specialEmptyTitle: "스페셜 이벤트가 준비 중입니다.",
+      specialEmptyDesc: "곧 새로운 혜택으로 찾아뵙겠습니다. 자세한 안내는 카카오톡 또는 전화로 문의해 주세요.",
     },
     managementDevices: {
       sectionTitle: "관리 장비",
@@ -972,6 +978,8 @@ export const i18n: Record<Lang, I18nContent> = {
       noEvents: "No events currently available",
       readMore: "View Details",
       featured: "Featured Event",
+      specialEmptyTitle: "Special promotions are being prepared.",
+      specialEmptyDesc: "New offers coming soon. Contact us via KakaoTalk or phone for inquiries.",
     },
     managementDevices: {
       sectionTitle: "Management Devices",
@@ -1410,6 +1418,8 @@ export const i18n: Record<Lang, I18nContent> = {
       noEvents: "現在利用可能なイベントはありません",
       readMore: "詳細を見る",
       featured: "主推イベント",
+      specialEmptyTitle: "スペシャルイベントを準備中です。",
+      specialEmptyDesc: "近日中に新しいご案内をお届けします。カカオトークまたはお電話にてお問い合わせください。",
     },
     managementDevices: {
       sectionTitle: "ケア機器",
@@ -1848,6 +1858,8 @@ export const i18n: Record<Lang, I18nContent> = {
       noEvents: "目前没有可用的活动。",
       readMore: "查看详情",
       featured: "主推活动",
+      specialEmptyTitle: "特别优惠活动正在准备中。",
+      specialEmptyDesc: "即将推出新优惠，敬请期待。如需和询，请通过KakaoTalk或电话与我们联系。",
     },
     managementDevices: {
       sectionTitle: "护理设备",

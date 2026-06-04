@@ -13,6 +13,7 @@ import { Sparkles } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
+import { i18n } from "@/lib/i18n";
 
 interface PriceRow {
   label: string;
@@ -180,22 +181,10 @@ export default function SpecialEventSection() {
               <Sparkles size={28} style={{ color: '#C9A84C' }} strokeWidth={1.5} />
             </div>
             <p className="text-lg font-medium" style={{ color: '#4B5563' }}>
-              {lang === "en"
-                ? "Special promotions are being prepared."
-                : lang === "ja"
-                ? "スペシャルイベントを準備中です。"
-                : lang === "zh"
-                ? "特别优惠活动正在准备中。"
-                : "스페셜 이벤트가 준비 중입니다."}
+              {i18n[lang as keyof typeof i18n]?.events.specialEmptyTitle}
             </p>
             <p className="text-sm" style={{ color: '#9CA3AF' }}>
-              {lang === "en"
-                ? "New offers coming soon. Contact us via KakaoTalk or phone for inquiries."
-                : lang === "ja"
-                ? "近日中に新しいご案内をお届けします。カカオトークまたはお電話にてお問い合わせください。"
-                : lang === "zh"
-                ? "即将推出新优惠，敬请期待。如需咨询，请通过KakaoTalk或电话与我们联系。"
-                : "곧 새로운 혜택으로 찾아뵙겠습니다. 자세한 안내는 카카오톡 또는 전화로 문의해 주세요."}
+              {i18n[lang as keyof typeof i18n]?.events.specialEmptyDesc}
             </p>
           </div>
         ) : (

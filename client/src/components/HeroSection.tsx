@@ -447,7 +447,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}+</span>
+                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -489,7 +489,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}+</span>
+                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -531,7 +531,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -578,7 +578,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}</span>
               </div>
               <div style={{
                 height: "1.5px",

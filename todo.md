@@ -1466,3 +1466,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Phase 4: SpecialEventSection Empty State 다국어 개선 (Sparkles 아이콘 + 문구 정리)
 - [x] Phase 5: i18n Custom Hook 추출 — 추상화 불필요 판단 (최소 수정 원칙)
 - [x] Phase 5: 섹션 spacing/타이포그래피 일관성 정리 — 현재 일관성 확인됨
+
+## PR-47: PR-46 후속 품질 마감
+- [x] P1: English stats suffix double-plus 버그 수정 (constants.ts STAT_UNITS에 + 포함, HeroSection/PhilosophySection 렌더링에서 추가 + 제거)
+- [x] P2: SeoHead prop semantics 명확화 (includeClinicSchema 주석에 WebSite 스키마도 함께 제어함 명시)
+- [x] P3: SpecialEventSection empty-state i18n.ts 중앙화 (specialEmptyTitle/specialEmptyDesc 4개 언어 추가)
+- [x] P4: PR-46 regression tests 추가 (server/pr46.regression.test.ts, 168개 테스트 전체 통과)

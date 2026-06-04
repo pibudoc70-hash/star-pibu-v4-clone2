@@ -35,13 +35,21 @@ export const CLINIC_STATS = {
   doctorPatientRatio: 1,
 } as const;
 
-/** 다국어 단위 레이블 */
+/**
+ * 다국어 stat suffix 레이블 (숫자 뒤에 붙는 완전한 suffix, + 포함)
+ *
+ * 렌더링 정책:
+ *   - 이 상수를 그대로 숫자 뒤에 붙인다. 렌더링 레이어에서 추가 "+"를 붙이지 않는다.
+ *   - 기대 표시: ko=20년+, en=20+yrs, ja=20年+, zh=20年+
+ *
+ * ResultsStatisticsSection, HeroSection, PhilosophySection 모두 이 정책을 따른다.
+ */
 export const STAT_UNITS = {
-  years: { ko: "년", en: "+yrs", ja: "年", zh: "年" },
-  cases: { ko: "례", en: "+", ja: "例", zh: "例" },
-  types: { ko: "종", en: "+", ja: "種", zh: "种" },
-  percent: { ko: "%", en: "%", ja: "%", zh: "%" },
-  ratio: { ko: ":1", en: ":1", ja: ":1", zh: ":1" },
+  years:   { ko: "년+",  en: "+yrs", ja: "年+",  zh: "年+"  },
+  cases:   { ko: "례+",  en: "+",    ja: "例+",  zh: "例+"  },
+  types:   { ko: "종+",  en: "+",    ja: "種+",  zh: "种+"  },
+  percent: { ko: "%",   en: "%",    ja: "%",   zh: "%"   },
+  ratio:   { ko: ":1",  en: ":1",   ja: ":1",  zh: ":1"  },
 } as const;
 
 export type StatLang = keyof typeof STAT_UNITS.years;

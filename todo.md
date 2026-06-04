@@ -1488,9 +1488,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Round 5: vite.config.ts manualChunks 설정 — vendor-react/trpc/icons/katex 분리, 메인 번들 1,123kB → 622kB (45% 감소)
 
 ## 코드 리뷰 보고서 수정 (C-1, C-2, H-1~H-4)
-- [ ] C-1: index.html MedicalBusiness JSON-LD 중복 스키마 제거
-- [ ] C-2: Hash navigation MutationObserver 수정 (lazy 섹션 DOM 대기)
-- [ ] H-1: Header 모바일 메뉴 ESC 키 처리
-- [ ] H-2: Header 모바일 메뉴 버튼 aria-expanded 추가
-- [ ] H-3: Language Dropdown aria-expanded 추가
-- [ ] H-4: YouTubeSection 모달 ESC 키 처리
+- [x] C-1: index.html MedicalBusiness JSON-LD 중복 스키마 제거
+- [x] C-2: Hash navigation MutationObserver 수정 (lazy 섹션 DOM 대기)
+- [x] H-1: Header 모바일 메뉴 ESC 키 처리
+- [x] H-2: Header 모바일 메뉴 버튼 aria-expanded 추가
+- [x] H-3: Language Dropdown aria-expanded 추가
+- [x] H-4: YouTubeSection 모달 ESC 키 처리
+
+## 컴포넌트 리팩토링 Phase 3 (Custom Hook 추출)
+- [x] useClinicStats Hook 신규 작성 (client/src/hooks/useClinicStats.ts) — CLINIC_STATS + STAT_UNITS 중앙화
+- [x] PhilosophySection.tsx — useClinicStats Hook으로 교체 (STAT_UNITS 직접 참조 제거)
+- [x] ResultsStatisticsSection.tsx — useClinicStats Hook으로 교체 (lang as StatLang 캐스팅 제거)
+- [x] HeroSection.tsx — useClinicStats Hook으로 단위 문자열 교체 (useCountUp 애니메이션은 CLINIC_STATS 직접 유지)
+- [x] TypeScript 에러 0건 확인
+- [x] 테스트 168개 전부 통과 확인

@@ -1,11 +1,12 @@
 import React from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
-import { CLINIC_STATS, STAT_UNITS, type StatLang } from '@/lib/constants';
+import { useClinicStats } from '@/hooks/useClinicStats';
 
 export default function ResultsStatisticsSection() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const r = t.results;
+  const clinicStats = useClinicStats();
 
   const doctors = [
     {
@@ -28,37 +29,12 @@ export default function ResultsStatisticsSection() {
     },
   ];
 
-  // constants.ts 단일 소스에서 통계 수치 참조
-  const l = lang as StatLang;
+  // useClinicStats Hook으로 중앙화된 통계 수치 참조
   const statistics = [
-    {
-      icon: getIcon(0),
-      number: String(CLINIC_STATS.yearsExperience),
-      unit: STAT_UNITS.years[l],
-      label: r.stats[0].label,
-      description: r.stats[0].desc,
-    },
-    {
-      icon: getIcon(1),
-      number: String(CLINIC_STATS.satisfactionRate),
-      unit: STAT_UNITS.percent[l],
-      label: r.stats[1].label,
-      description: r.stats[1].desc,
-    },
-    {
-      icon: getIcon(2),
-      number: CLINIC_STATS.eyeBagCases.toLocaleString(),
-      unit: STAT_UNITS.cases[l],
-      label: r.stats[2].label,
-      description: r.stats[2].desc,
-    },
-    {
-      icon: getIcon(3),
-      number: String(CLINIC_STATS.doctorPatientRatio),
-      unit: STAT_UNITS.ratio[l],
-      label: r.stats[3].label,
-      description: r.stats[3].desc,
-    },
+    { icon: getIcon(0), number: clinicStats.years.value, unit: clinicStats.years.unit, label: r.stats[0].label, description: r.stats[0].desc },
+    { icon: getIcon(1), number: clinicStats.satisfaction.value, unit: clinicStats.satisfaction.unit, label: r.stats[1].label, description: r.stats[1].desc },
+    { icon: getIcon(2), number: clinicStats.cases.value, unit: clinicStats.cases.unit, label: r.stats[2].label, description: r.stats[2].desc },
+    { icon: getIcon(3), number: clinicStats.ratio.value, unit: clinicStats.ratio.unit, label: r.stats[3].label, description: r.stats[3].desc },
   ];
 
   return (

@@ -18,7 +18,8 @@ import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
-import { CLINIC_STATS, STAT_UNITS, type StatLang } from "@/lib/constants";
+import { CLINIC_STATS } from "@/lib/constants";
+import { useClinicStats } from "@/hooks/useClinicStats";
 
 /** 금색 빛 가루 파티클 Canvas 컴포넌트 */
 function GoldParticles() {
@@ -225,7 +226,8 @@ export default function HeroSection() {
   };
   // 통계 섹션 IntersectionObserver ref
   const statsRef = useRef<HTMLDivElement>(null);
-  // constants.ts 단일 소스에서 통계 수치 직접 참조
+  // useClinicStats Hook으로 단위 문자열 중앙화
+  const clinicStats = useClinicStats();
   // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
   const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 3500, "", 0, statsRef);
   const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 3500, "", 0, statsRef);
@@ -457,7 +459,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}</span>
+                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.years.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -499,7 +501,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}</span>
+                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.cases.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -541,7 +543,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -588,7 +590,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",

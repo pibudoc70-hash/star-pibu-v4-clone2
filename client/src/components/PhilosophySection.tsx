@@ -6,7 +6,7 @@
 import { ScanEye, Award, Cpu } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { CLINIC_STATS, STAT_UNITS, type StatLang } from "@/lib/constants";
+import { useClinicStats } from "@/hooks/useClinicStats";
 
 const NEW_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg";
 const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;
@@ -24,6 +24,7 @@ const statIcons = [Award, ScanEye, Cpu];
 
 export default function PhilosophySection() {
   const { t, lang } = useLang();
+  const stats = useClinicStats();
   const leftRef = useScrollReveal<HTMLDivElement>();
   const rightRef = useScrollReveal<HTMLDivElement>();
 
@@ -59,24 +60,12 @@ export default function PhilosophySection() {
             {/* Stats - 픽토그램 포함 (constants.ts 단일 소스) */}
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
               {[
-                {
-                  num: CLINIC_STATS.yearsExperience,
-                  suffix: STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en,
-                  label: t.about.stats[0].label,
-                },
-                {
-                  num: CLINIC_STATS.eyeBagCases.toLocaleString(),
-                  suffix: STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en,
-                  label: t.about.stats[1].label,
-                },
-                {
-                  num: CLINIC_STATS.laserTypes,
-                  suffix: STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en,
-                  label: t.about.stats[2].label,
-                },
+                { num: stats.years.value, suffix: stats.years.unit, label: t.about.stats[0].label },
+                { num: stats.cases.value, suffix: stats.cases.unit, label: t.about.stats[1].label },
+                { num: stats.types.value, suffix: stats.types.unit, label: t.about.stats[2].label },
               ].map((s, idx) => {
                 const Icon = statIcons[idx];
-                const numMain = String(s.num);
+                const numMain = s.num;
                 const numSuffix = s.suffix;
                 return (
                   <div

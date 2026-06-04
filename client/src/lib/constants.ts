@@ -62,7 +62,7 @@ export const CLINIC_INFO = {
   logo: "https://www.star-pibu.com/logo.png",
   image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg",
   telephone: "+82-51-818-2300",
-  email: "star2006beauty@naver.com",
+  email: "starpibu@naver.com",
   foundingDate: "2006",
   description: "부산 서면 위치한 피부과 전문의 클리닉. 눈밑지방재배치술, 울쎄라피, 써마지, 리주란 등 전문의가 직접 시술합니다.",
   address: {
@@ -80,12 +80,9 @@ export const CLINIC_INFO = {
   },
   openingHours: [
     "Mo-Fr 10:00-19:00",
-    "Sa 10:00-16:00",
+    "Sa 09:30-15:00",
   ],
-  specialOpeningHours: [
-    // 수요일 연장진료 (10:00-20:30)
-    "We 10:00-20:30",
-  ],
+  specialOpeningHours: [],
   priceRange: "₩₩₩",
   currenciesAccepted: "KRW",
   paymentAccepted: "Cash, Credit Card",

@@ -162,21 +162,15 @@ export function buildClinicJsonLd(): JsonLdSchema {
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Thursday", "Friday"],
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         opens: "10:00",
         closes: "19:00",
       },
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Wednesday"],
-        opens: "10:00",
-        closes: "20:30",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Saturday"],
-        opens: "10:00",
-        closes: "16:00",
+        opens: "09:30",
+        closes: "15:00",
       },
     ],
     priceRange: CLINIC_INFO.priceRange,

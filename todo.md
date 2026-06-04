@@ -1373,3 +1373,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] PR-33: redirect 로직 구현 (NAME_TO_SLUG 있으면 /treatments/:slug, 없으면 /404)
 - [x] PR-34: treatment.routes.seo.test.ts redirect 동작 검증 테스트 추가
 - [x] PR-34: 전체 테스트 127개 통과 확인 (PR-32/33 신규 12개 추가)
+
+## PR-35: 다국어 SEO 정합성 정리 (ForeignGuide/NonCoveredGuide/Equipment2/About)
+
+- [x] ForeignGuide.tsx - activeLang 기반 pageUrl 계산, canonical/ogUrl/title/description/keywords 정렬
+- [x] NonCoveredGuide.tsx - lang 기반 pageUrl 계산, canonical/ogUrl/title/description/keywords 정렬
+- [x] Equipment2.tsx - useLang 추가, lang 기반 pageUrl 계산, canonical/ogUrl/ogLocale/hreflangs/title/description/keywords 정렬
+- [x] About.tsx - lang 기반 pageUrl 계산, canonical/ogUrl/title/description/keywords 정렬
+- [x] Privacy.tsx - noindex=true 확인, 수정 불필요
+- [x] 전체 TypeScript 에러 0건 확인
+- [x] 테스트 127개 전부 통과 확인
+- [x] 빌드 성공 확인

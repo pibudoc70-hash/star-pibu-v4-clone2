@@ -5,13 +5,38 @@ import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from '@/components/SeoHead
 
 export default function About() {
   const { t, lang } = useLang();
+
+  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책)
+  const langPrefix = lang === "ko" ? "" : `/${lang}`;
+  const pageUrl = `https://www.star-pibu.com${langPrefix}/about`;
+
+  // 언어별 SEO 메타 (title/description/keywords)
+  const seoTitle =
+    lang === "ja" ? "クリニック紹介 | 釜山西面スター皮膚科 - 20年の経験を持つ皮膚科専門医" :
+    lang === "zh" ? "诊所介绍 | 釜山西面星皮肤科 - 20年经验皮肤科专科医生" :
+    lang === "en" ? "About Us | Star Dermatology Clinic Busan - 20 Years of Expert Care" :
+    "피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의";
+
+  const seoDescription =
+    lang === "ja" ? "釜山西面スター皮膚科をご紹介します。20年の経験を持つ皮膚科専門医が直接診療し、ウルセラピー・サーマジ・リフティング・色素治療などプレミアム治療を提供しています。" :
+    lang === "zh" ? "介绍釜山西面星皮肤科。拥有20年经验的皮肤科专科医生亲自诊疗，提供热玛吉、提升、色素治疗等高端治疗项目。" :
+    lang === "en" ? "About Star Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more." :
+    "부산 서면 스타피부과를 소개합니다. 20년 경력의 피부과 전문의가 직접 진료하며, 울쎄라, 써마지, 리프팅, 색소질환 등 프리미엄 시술을 제공합니다.";
+
+  const seoKeywords =
+    lang === "ja" ? "釜山皮膚科, スター皮膚科, 皮膚科専門医, 西面皮膚科, 釜山リフティング" :
+    lang === "zh" ? "釜山皮肤科, 星皮肤科, 皮肤科专科, 西面皮肤科, 釜山提升" :
+    lang === "en" ? "Busan dermatology, Star Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
+    "부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅";
+
   return (
     <MainLayout>
       <SeoHead
-        title="피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의"
-        description="부산 서면 스타피부과를 소개합니다. 20년 경력의 피부과 전문의가 직접 진료하며, 울쎄라, 써마지, 리프팅, 색소질환 등 프리미엄 시술을 제공합니다."
-        keywords="부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅"
-        canonical="https://www.star-pibu.com/about"
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        canonical={pageUrl}
+        ogUrl={pageUrl}
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}

@@ -38,6 +38,31 @@ export default function ForeignGuide() {
   const t = i18n[activeLang];
   const colors = LANG_COLORS[activeLang];
 
+  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책)
+  // ForeignGuide는 en/ja/zh만 지원 (한국어 route 없음)
+  const langPrefix = `/${activeLang}`;
+  const pageUrl = `https://www.star-pibu.com${langPrefix}/foreign-guide`;
+
+  // 언어별 SEO 메타 (title/description/keywords)
+  const SEO_META: Record<ForeignLang, { title: string; description: string; keywords: string }> = {
+    en: {
+      title: "Foreign Patient Guide | Star Dermatology Clinic Busan",
+      description: "Star Dermatology Clinic in Seomyeon, Busan offers English-language consultations. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning and more.",
+      keywords: "Busan dermatology, Star Dermatology Clinic, Ultherapy Busan, Thermage Busan, skin clinic Busan, foreign patient guide",
+    },
+    ja: {
+      title: "外国人患者ガイド | 釜山スター皮膚科",
+      description: "釜山西面のスター皮膚科では日本語対応の診療案内を提供しています。ウルセラピープライム・サーマジFLX・目の下の脂肪再配置など。",
+      keywords: "釜山皮膚科, スター皮膚科, ウルセラピー釜山, サーマジ釜山, 外国人診療, 日本語対応",
+    },
+    zh: {
+      title: "外国患者就诊指南 | 釜山星皮肤科",
+      description: "釜山西面星皮肤科提供中文就诊服务。热玛吉FLX、皮秒激光、眼袋脂肪重置等高端医疗项目，欢迎中文咨询。",
+      keywords: "釜山皮肤科, 星皮肤科, 热玛吉釜山, 皮秒激光釜山, 外国患者, 中文咨询",
+    },
+  };
+  const seo = SEO_META[activeLang];
+
   const handleLangSwitch = (l: ForeignLang) => {
     setActiveLang(l);
     setLang(l);
@@ -46,10 +71,11 @@ export default function ForeignGuide() {
   return (
     <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
       <SeoHead
-        title="외국인 안내 | 부산 스타피부과 - 영어·일본어·중국어 진료 안내"
-        description="부산 서면 스타피부과는 외국인 환자를 위한 영어·일본어·중국어 진료 안내를 제공합니다. Ultherapy, Thermage FLX, Under-Eye Fat Repositioning 등 프리미엄 시술 가능."
-        keywords="부산피부과외국인, Busan dermatology, 釜山皮肤科, 釜山皮膚科, 울쎄라피, Ultherapy Busan, 써마지부산"
-        canonical="https://www.star-pibu.com/foreign-guide"
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
+        canonical={pageUrl}
+        ogUrl={pageUrl}
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
         ogLocale={LANG_TO_OG_LOCALE[activeLang] ?? "ko_KR"}
         hreflangs={buildHreflangs(

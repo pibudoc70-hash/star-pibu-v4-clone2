@@ -1402,3 +1402,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Commit 37-4: email.ts - 파일 헤더에 CURRENT STATUS / TO ENABLE 절차 명시, sendEmail() 함수 주석 no-op stub 명시
 - [x] Commit 37-4: routers.ts line 788 - TODO → NOTE로 교체, users.email 존재 확인 + no-op stub 이유 + SMTP 연동 후 활성화 방법 명시
 - [x] Commit 37-5: TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공 확인
+
+## PR-38: 남은 정책 불일치와 레거시 문서화 이슈 마무리
+- [x] Commit 1 (audit): 각 파일 현재 상태 점검 — ForeignGuide/NonCoveredGuide/Equipment2/About/Privacy/TreatmentRedirect/Reserve/email.ts/routers.ts 전부 PR-35~37에서 이미 처리됨 확인
+- [x] Commit 2 (seo): ForeignGuide.tsx / NonCoveredGuide.tsx 파일 헤더에 [PAGE LIFECYCLE] localized live 정책 주석 추가 (route/canonical/ogUrl/ogLocale/hreflangs/noindex 명시)
+- [x] Commit 3 (seo): Equipment2.tsx 파일 헤더에 [PAGE LIFECYCLE] localized live 정책 주석 추가
+- [x] Commit 4 (policy): About.tsx 정책 주석 PR-38 기준 업데이트 (ogUrl/ogLocale/hreflangs 명시), Privacy.tsx noindex 이유/범위/다국어 route 관계 명확화 (hreflangs 없음 명시)
+- [x] Commit 5 (legacy): Reserve.tsx 사용되지 않는 COMMON_HREFLANGS import 제거
+- [x] Commit 6 (todo): server/routers.ts, server/email.ts TODO 0건 확인 (PR-37에서 처리 완료)
+- [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공

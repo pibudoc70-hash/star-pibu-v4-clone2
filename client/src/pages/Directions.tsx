@@ -98,7 +98,7 @@ export default function Directions() {
                       <p className="text-gray-600 text-sm mt-2">{HOSPITAL.address}</p>
                     </div>
                   </div>
-                  <button
+                  <button type="button"
                     onClick={handleCopyAddress}
                     className="text-amber-600 hover:text-amber-700 text-sm font-semibold flex items-center gap-1 mt-3"
                   >

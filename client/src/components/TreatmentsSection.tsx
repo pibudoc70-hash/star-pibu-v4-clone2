@@ -649,7 +649,7 @@ function LiftingGroupSection({
       style={{ borderColor: `${group.groupColor}40`, background: `${group.groupColor}06` }}
     >
       {/* 헤더 */}
-      <button
+      <button type="button"
         className="w-full flex items-center justify-between px-6 py-4 text-left"
         style={{ background: `${group.groupColor}12` }}
         onClick={() => setOpen((v) => !v)}
@@ -715,7 +715,7 @@ export default function TreatmentsSection() {
   const sectionRef = useSectionReveal(60);
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-24 bg-white">
+    <section ref={sectionRef} id="treatments-legacy" className="py-24 bg-white">
       <div className="container">
         {/* 헤더 */}
         <div className="text-center mb-12 reveal-heading">
@@ -741,7 +741,7 @@ export default function TreatmentsSection() {
         {/* 탭 메뉴 */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           {tabs.map((tab) => (
-            <button
+            <button type="button"
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"

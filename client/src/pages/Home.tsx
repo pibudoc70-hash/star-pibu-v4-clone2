@@ -2,42 +2,44 @@
  * Home Page - STAR 피부과
  * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
  * TreatmentsSection + EquipmentSection → TreatmentsEquipmentSection 통합
+ *
+ * 성능 최적화:
+ * - 폴드 위 섹션(Hero, SpecialEvent, Doctors, Treatments): eager import
+ * - 폴드 아래 섹션: React.lazy + Suspense로 코드 스플리팅
+ * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
-import { useEffect } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { lazy, Suspense, useEffect } from "react";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import PhilosophySection from "@/components/PhilosophySection";
+import SpecialEventSection from "@/components/SpecialEventSection";
 import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
-import ManagementDevicesSection from "@/components/ManagementDevicesSection";
-import SpecialEventSection from "@/components/SpecialEventSection";
-import ResultsSection from "@/components/ResultsSection";
-import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
-import FacilitySection from "@/components/FacilitySection";
-import ReviewsSection from "@/components/ReviewsSection";
-import YouTubeSection from "@/components/YouTubeSection";
-import FAQSection from "@/components/FAQSection";
-import ReservationSection from "@/components/ReservationSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import WelcomePopup from "@/components/WelcomePopup";
 
+// 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
+const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevicesSection"));
+const PhilosophySection = lazy(() => import("@/components/PhilosophySection"));
+const ResultsStatisticsSection = lazy(() => import("@/components/ResultsStatisticsSection"));
+const FacilitySection = lazy(() => import("@/components/FacilitySection"));
+const ReviewsSection = lazy(() => import("@/components/ReviewsSection"));
+const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const ReservationSection = lazy(() => import("@/components/ReservationSection"));
+const ContactSection = lazy(() => import("@/components/ContactSection"));
+
+/** 섹션 로딩 중 표시할 최소 스켈레톤 */
+function SectionFallback() {
+  return <div className="py-16 md:py-24" aria-hidden="true" />;
+}
+
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  const { user } = useAuth();
-  void user; // auth state available for future use
-
-
-
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
-    // 페이지 렌더링 완료 후 스크롤
     const timer = setTimeout(() => {
       const el = document.querySelector(hash);
       if (el) {
@@ -65,78 +67,91 @@ export default function Home() {
           ]),
         ]}
       />
+
       {/* Fixed Header */}
       <Header />
 
       {/* Main Content */}
       <main>
-        {/* 1. Hero - Full Screen */}
+        {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
 
-        {/* 2. SPECIAL EVENT - 특별 이벤트 섹션 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
+        {/* 2. SPECIAL EVENT - 흰색 배경 (eager) */}
+        <div className="bg-white">
           <SpecialEventSection />
         </div>
 
-        {/* 3. Doctors - 의료진 소개 (3명) - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
+        {/* 3. Doctors - 베이지 배경 (eager) */}
+        <div className="bg-[#F5F1ED]">
           <DoctorsSection />
         </div>
 
-        {/* 4. Treatments + Equipment - 시술 안내 & 장비 소개 통합 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
+        {/* 4. Treatments + Equipment - 흰색 배경 (eager) */}
+        <div className="bg-white">
           <TreatmentsEquipmentSection />
         </div>
 
-        {/* 4-2. Treatments + Equipment Section 2 - DB 연동 (관리자 등록) - 별도 페이지로 이동 */}
-        {/* <TreatmentsEquipmentSectionV2 /> */}
-
-        {/* 5. Management Devices - 관리장비 - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
-          <ManagementDevicesSection />
+        {/* 5. Management Devices - 베이지 배경 (lazy) */}
+        <div className="bg-[#F5F1ED]">
+          <Suspense fallback={<SectionFallback />}>
+            <ManagementDevicesSection />
+          </Suspense>
         </div>
 
-        {/* 6. About / Philosophy - 스타피부과를 선택하는 이유 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
-          <PhilosophySection />
+        {/* 6. Philosophy - 흰색 배경 (lazy) */}
+        <div className="bg-white">
+          <Suspense fallback={<SectionFallback />}>
+            <PhilosophySection />
+          </Suspense>
         </div>
 
-        {/* 6. Before & After Results (숨김) */}
-        {/* <ResultsSection /> */}
-
-        {/* 6-2. Results & Statistics - 스타피부과를 선택하는 이유 (의료진 소개 + 통계) - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
-          <ResultsStatisticsSection />
+        {/* 6-2. Results & Statistics - 베이지 배경 (lazy) */}
+        <div className="bg-[#F5F1ED]">
+          <Suspense fallback={<SectionFallback />}>
+            <ResultsStatisticsSection />
+          </Suspense>
         </div>
 
-        {/* 7. Facility Gallery - 시설 갤러리 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
-          <FacilitySection />
+        {/* 7. Facility Gallery - 흰색 배경 (lazy) */}
+        <div className="bg-white">
+          <Suspense fallback={<SectionFallback />}>
+            <FacilitySection />
+          </Suspense>
         </div>
 
-        {/* 8. Patient Reviews - 환자 후기 - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
-          <ReviewsSection />
+        {/* 8. Patient Reviews - 베이지 배경 (lazy) */}
+        <div className="bg-[#F5F1ED]">
+          <Suspense fallback={<SectionFallback />}>
+            <ReviewsSection />
+          </Suspense>
         </div>
 
-        {/* 8-2. YouTube Channel - 유튜브 채널 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
-          <YouTubeSection />
+        {/* 8-2. YouTube Channel - 흰색 배경 (lazy) */}
+        <div className="bg-white">
+          <Suspense fallback={<SectionFallback />}>
+            <YouTubeSection />
+          </Suspense>
         </div>
 
-        {/* 9. FAQ - 자주 묻는 질문 - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
-          <FAQSection />
+        {/* 9. FAQ - 베이지 배경 (lazy) */}
+        <div className="bg-[#F5F1ED]">
+          <Suspense fallback={<SectionFallback />}>
+            <FAQSection />
+          </Suspense>
         </div>
 
-        {/* 9-2. Reservation - 예약 신청 - 흰색 배경 */}
-        <div style={{ background: "#FFFFFF" }}>
-          <ReservationSection />
+        {/* 9-2. Reservation - 흰색 배경 (lazy) */}
+        <div className="bg-white">
+          <Suspense fallback={<SectionFallback />}>
+            <ReservationSection />
+          </Suspense>
         </div>
 
-        {/* 10. Location & Contact - 오시는 길 - 베이지 배경 */}
-        <div style={{ background: "#F5F1ED" }}>
-          <ContactSection />
+        {/* 10. Location & Contact - 베이지 배경 (lazy) */}
+        <div className="bg-[#F5F1ED]">
+          <Suspense fallback={<SectionFallback />}>
+            <ContactSection />
+          </Suspense>
         </div>
       </main>
 
@@ -148,7 +163,6 @@ export default function Home() {
 
       {/* Welcome Popup */}
       <WelcomePopup />
-
     </div>
   );
 }

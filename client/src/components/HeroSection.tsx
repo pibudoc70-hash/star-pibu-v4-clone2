@@ -689,7 +689,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── 스크롤 인디케이터 ── */}
-      <button
+      <button type="button"
         onClick={scrollToAbout}
         className="hero-fade absolute flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
         style={{

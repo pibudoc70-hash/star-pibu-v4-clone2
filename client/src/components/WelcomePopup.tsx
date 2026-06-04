@@ -229,7 +229,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
             <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
             <span className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
-          <button onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10" aria-label={wp.dismiss}>
+          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10" aria-label={wp.dismiss}>
             <X size={15} className="text-white/70" />
           </button>
         </div>
@@ -237,7 +237,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
         {/* 탭 */}
         <div className="flex flex-shrink-0" style={{ borderBottom: "1px solid #E5E7EB" }}>
           {events.map((e: PopupEvent, i: number) => (
-            <button
+            <button type="button"
               key={e.id}
               onClick={() => handleTabChange(i)}
               className="flex-1 py-2.5 text-xs font-semibold transition-all duration-200"
@@ -326,8 +326,8 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 
         {/* 하단 푸터 */}
         <div className="flex items-center justify-between px-5 py-2.5 flex-shrink-0" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <button onClick={dismissToday} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
-          <button onClick={dismiss} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
+          <button type="button" onClick={dismissToday} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
+          <button type="button" onClick={dismiss} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
         </div>
       </div>
     </div>
@@ -355,7 +355,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
             <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
             <span className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
-          <button onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/10 hover:scale-110 active:scale-95" aria-label={wp.dismiss}>
+          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/10 hover:scale-110 active:scale-95" aria-label={wp.dismiss}>
             <X size={15} className="text-white/70" />
           </button>
         </div>
@@ -363,7 +363,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
         {/* 탭 */}
         <div className="flex" style={{ borderBottom: "1px solid #E5E7EB" }}>
           {events.map((e: PopupEvent, i: number) => (
-            <button key={e.id} onClick={() => handleTabChange(i)}
+            <button type="button" key={e.id} onClick={() => handleTabChange(i)}
               className="flex-1 py-2.5 text-xs font-semibold transition-all duration-250"
               style={safeTab === i
                 ? { color: ev.accent, borderBottom: `2px solid ${ev.accent}`, background: ev.accentLight }
@@ -447,8 +447,8 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
 
         {/* 푸터 */}
         <div className="flex items-center justify-between px-6 py-3" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <button onClick={dismissToday} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
-          <button onClick={dismiss} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
+          <button type="button" onClick={dismissToday} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
+          <button type="button" onClick={dismiss} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
         </div>
       </div>
     </div>

@@ -157,7 +157,7 @@ export default function ForeignGuide() {
           {/* Language Toggle - EN / JP / CN */}
           <div className="flex items-center justify-center gap-3 mt-6">
             {FOREIGN_LANGS.map((l) => (
-              <button
+              <button type="button"
                 key={l}
                 onClick={() => handleLangSwitch(l)}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-200"

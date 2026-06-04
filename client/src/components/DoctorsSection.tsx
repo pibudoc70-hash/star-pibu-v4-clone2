@@ -274,7 +274,7 @@ export default function DoctorsSection() {
                 {mergedDoctors.map((d) => {
                   const isActive = activeDoctor === d.id;
                   return (
-                    <button
+                    <button type="button"
                       key={d.id}
                       onClick={() => handleDoctorSelect(d.id)}
                       className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
@@ -565,7 +565,7 @@ export default function DoctorsSection() {
               {mergedDoctors.map((d) => {
                 const isActive = activeDoctor === d.id;
                 return (
-                  <button
+                  <button type="button"
                     key={d.id}
                     onClick={() => handleDoctorSelect(d.id)}
                     className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
@@ -750,7 +750,7 @@ export default function DoctorsSection() {
                     overflow: "hidden",
                   }}
                 >
-                  <button
+                  <button type="button"
                     onClick={() => setExpandedCredentials(!expandedCredentials)}
                     className="w-full flex items-center justify-between px-4 py-3"
                     style={{
@@ -803,7 +803,7 @@ export default function DoctorsSection() {
                   </p>
                   <div className="flex justify-center gap-2">
                     {doctors.map((d) => (
-                      <button
+                      <button type="button"
                         key={d.id}
                         onClick={() => handleDoctorSelect(d.id)}
                         style={{

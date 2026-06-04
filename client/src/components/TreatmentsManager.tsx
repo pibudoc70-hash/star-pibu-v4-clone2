@@ -234,7 +234,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
           <h2 className="text-2xl font-bold text-gray-900">시술·장비 관리</h2>
           <p className="text-sm text-gray-600 mt-1">시술 및 장비 정보를 추가, 수정, 삭제합니다</p>
         </div>
-        <button
+        <button type="button"
           onClick={() => {
             if (isV2) {
               window.location.href = '/admin/equipment2/new';
@@ -257,7 +257,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               <h3 className="text-xl font-bold">
                 {editingId ? "시술 수정" : "새 시술 추가"}
               </h3>
-              <button
+              <button type="button"
                 onClick={resetForm}
                 className="text-gray-500 hover:text-gray-600"
               >
@@ -420,7 +420,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                         alt="preview"
                         className="max-w-xs h-auto max-h-32 object-contain rounded border border-gray-200"
                       />
-                      <button
+                      <button type="button"
                         onClick={() => setForm({ ...form, image: "" })}
                         className="text-red-600 hover:text-red-700"
                       >
@@ -530,13 +530,13 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
             {/* 버튼 */}
             <div className="sticky bottom-0 bg-gray-50 border-t p-6 flex gap-3 justify-end">
-              <button
+              <button type="button"
                 onClick={resetForm}
                 className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
               >
                 취소
               </button>
-              <button
+              <button type="button"
                 onClick={handleSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
@@ -598,13 +598,13 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button
+                        <button type="button"
                           onClick={() => handleEdit(treatment)}
                           className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition"
                         >
                           <Pencil size={18} />
                         </button>
-                        <button
+                        <button type="button"
                           onClick={() => handleDelete(treatment.id)}
                           className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
                         >

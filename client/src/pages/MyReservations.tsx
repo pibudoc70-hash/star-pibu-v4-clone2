@@ -186,7 +186,7 @@ export default function MyReservations() {
                   {/* 하단: 액션 버튼 */}
                   {reservation.status === "pending" && isUpcoming && (
                     <div className="px-6 py-4 border-t border-[#F3F4F6] flex gap-2">
-                      <button
+                      <button type="button"
                         onClick={() => {
                           if (confirm("정말로 예약을 취소하시겠습니까?")) {
                             cancelMutation.mutate({ id: reservation.id });

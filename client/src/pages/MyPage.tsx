@@ -107,7 +107,7 @@ export default function MyPage() {
               { key: "profile", label: "프로필" },
               { key: "reservations", label: "예약 내역" },
             ].map((tab) => (
-              <button
+              <button type="button"
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as "profile" | "reservations")}
                 className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all"
@@ -190,7 +190,7 @@ export default function MyPage() {
                   <h2 className="text-sm font-bold text-[#1F2937]">내 활동</h2>
                 </div>
                 <div className="divide-y divide-[#F3F4F6]">
-                  <button
+                  <button type="button"
                     onClick={() => setActiveTab("reservations")}
                     className="w-full flex items-center gap-4 px-6 py-4 hover:bg-[#F9FAFB] transition-colors"
                   >
@@ -220,7 +220,7 @@ export default function MyPage() {
               </div>
 
               {/* 로그아웃 */}
-              <button
+              <button type="button"
                 onClick={handleLogout}
                 className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-semibold hover:opacity-80 transition-all"
                 style={{ background: "#FEF2F2", color: "#EF4444" }}
@@ -311,7 +311,7 @@ export default function MyPage() {
                         )}
 
                         {(res.status === "pending" || res.status === "confirmed") && (
-                          <button
+                          <button type="button"
                             onClick={() => handleCancel(res.id)}
                             disabled={cancelMutation.isPending}
                             className="text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"

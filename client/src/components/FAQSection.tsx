@@ -75,7 +75,7 @@ export default function FAQSection() {
           {/* 장비 탭 */}
           <div className="flex flex-wrap gap-2 justify-center mb-8">
             {(faq.items as FAQItem[]).map((item: FAQItem, idx: number) => (
-              <button
+              <button type="button"
                 key={idx}
                 onClick={() => {
                   setOpenEquipment(idx);
@@ -102,7 +102,7 @@ export default function FAQSection() {
                 style={{ borderColor: "#D0E4FF" }}
               >
                 {/* 질문 */}
-                <button
+                <button type="button"
                   className="w-full flex items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-blue-50"
                   style={{ background: openQuestion === qIdx ? "#EBF3FF" : "#fff" }}
                   onClick={() => setOpenQuestion(openQuestion === qIdx ? null : qIdx)}

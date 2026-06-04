@@ -262,7 +262,7 @@ export default function Header() {
           style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 1.25rem", width: "100%" }}
         >
           {/* Logo */}
-          <button
+          <button type="button"
             onClick={() => handleNavClick("#home")}
             className="flex items-center group flex-shrink-0"
             aria-label="홈으로 이동"
@@ -293,7 +293,7 @@ export default function Header() {
             {renderNavItems.map((item) => {
               const active = isActive(item.href);
               return (
-                <button
+                <button type="button"
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
                   className="relative transition-all duration-200 whitespace-nowrap px-3.5 py-2"
@@ -317,7 +317,7 @@ export default function Header() {
 
           {/* Language Dropdown - Desktop */}
           <div className="hidden md:flex items-center mr-2 flex-shrink-0" ref={langDropRef} style={{ position: "relative" }}>
-            <button
+            <button type="button"
               onClick={() => setLangDropOpen(!langDropOpen)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 hover:bg-gray-100"
               style={{ fontSize: "13px", color: "#4f4f4f", border: "1px solid rgba(0,0,0,0.12)", background: langDropOpen ? "#f5f5f5" : "white" }}
@@ -334,7 +334,7 @@ export default function Header() {
                 style={{ background: "white", border: "1px solid rgba(0,0,0,0.1)", minWidth: "140px", zIndex: 200 }}
               >
                 {langOptions.map((option) => (
-                  <button
+                  <button type="button"
                     key={option.lang}
                     onClick={() => handleLangChange(option)}
                     className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left transition-colors hover:bg-gray-50"
@@ -388,7 +388,7 @@ export default function Header() {
 
           {/* Mobile Hamburger + 층별 안내 */}
           <div className="md:hidden ml-auto">
-            <button
+            <button type="button"
               className="p-2 rounded-lg transition-colors"
               style={{ color: "#1F2937" }}
               onClick={() => openMobileMenu()}
@@ -438,7 +438,7 @@ export default function Header() {
           }}
         >
 
-          <button
+          <button type="button"
             onClick={() => closeMobileMenu()}
             className="p-2 rounded-full transition-colors"
             style={{ color: "#666", background: "rgba(0,0,0,0.06)" }}
@@ -453,7 +453,7 @@ export default function Header() {
             const active = isActive(item.href);
             const Icon = item.icon;
             return (
-              <button
+              <button type="button"
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
                 className={`flex items-center gap-3 text-left py-3 px-4 rounded-xl text-sm font-semibold transition-colors duration-200${
@@ -500,7 +500,7 @@ export default function Header() {
           <p className="text-xs font-semibold mb-2.5" style={{ color: "#999", letterSpacing: "0.05em" }}>LANGUAGE</p>
           <div className="grid grid-cols-4 gap-2">
             {langOptions.map((option) => (
-              <button
+              <button type="button"
                 key={option.lang}
                 onClick={() => { closeMobileMenu(); setTimeout(() => { const hash = window.location.hash; window.location.href = buildLocalizedPath(option.lang) + hash; }, 100); }}
                 className="flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all"

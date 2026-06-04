@@ -122,7 +122,7 @@ export default function FacilitySection() {
         {/* PC VERSION: 3x2 Grid Layout with Wide Cards (md and above) */}
         <div className="hidden md:grid grid-cols-3 gap-4 reveal-card">
           {galleryImages.map((img, i) => (
-            <button
+            <button type="button"
               key={i}
               onClick={() => setLightboxIndex(i)}
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
@@ -209,7 +209,7 @@ export default function FacilitySection() {
             </div>
 
             {/* Navigation Buttons */}
-            <button
+            <button type="button"
               onClick={goPrev}
               className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
               style={{
@@ -222,7 +222,7 @@ export default function FacilitySection() {
               <ChevronLeft size={24} className="text-white" />
             </button>
 
-            <button
+            <button type="button"
               onClick={goNext}
               className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
               style={{
@@ -236,7 +236,7 @@ export default function FacilitySection() {
             </button>
 
             {/* Play/Pause Button */}
-            <button
+            <button type="button"
               onClick={() => setIsAutoPlay(!isAutoPlay)}
               className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
               style={{
@@ -256,7 +256,7 @@ export default function FacilitySection() {
             {/* Indicators */}
             <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 pointer-events-auto">
               {galleryImages.map((_, i) => (
-                <button
+                <button type="button"
                   key={i}
                   onClick={() => setCurrentIndex(i)}
                   className="transition-all duration-300 rounded-full"
@@ -275,7 +275,7 @@ export default function FacilitySection() {
           {/* Thumbnail Strip (Mobile) - Fixed overflow issue */}
           <div className="flex gap-2 mt-4 overflow-x-auto pb-2 px-2">
             {galleryImages.map((img, i) => (
-              <button
+              <button type="button"
                 key={i}
                 onClick={() => setCurrentIndex(i)}
                 className="relative overflow-hidden rounded-lg transition-all duration-300 flex-shrink-0"
@@ -313,7 +313,7 @@ export default function FacilitySection() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
-              <button
+              <button type="button"
                 onClick={closeLightbox}
                 className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
                 aria-label="Close lightbox"

@@ -127,7 +127,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((l) => (
                 <li key={l.label}>
-                  <button
+                  <button type="button"
                     onClick={() => handleNavClick(l.href)}
                     className="text-sm transition-colors hover:text-white"
                     style={{ color: "rgba(255,255,255,0.55)" }}
@@ -147,7 +147,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {treatmentItems.map((item) => (
                 <li key={item}>
-                  <button
+                  <button type="button"
                     onClick={() => handleNavClick("#treatments")}
                     className="text-sm transition-colors hover:text-white"
                     style={{ color: "rgba(255,255,255,0.55)" }}
@@ -241,7 +241,7 @@ export default function Footer() {
             >
               {labels.nonCovered}
             </a>
-            <button
+            <button type="button"
               onClick={() => handleNavClick("/privacy")}
               className="text-xs transition-colors hover:text-white"
               style={{ color: "rgba(255,255,255,0.35)" }}

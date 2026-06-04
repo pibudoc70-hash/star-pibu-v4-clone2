@@ -231,7 +231,7 @@ export default function ContactSection() {
                     {t.access.address}
                   </p>
                   {/* 주소 복사 버튼 */}
-                  <button
+                  <button type="button"
                     onClick={handleCopyAddress}
                     className="mt-2 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
                     style={{

@@ -381,7 +381,7 @@ export default function EquipmentSection() {
         {/* Category Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 md:mb-12">
           {categories.map((cat) => (
-            <button
+            <button type="button"
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"

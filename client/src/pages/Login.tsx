@@ -155,7 +155,7 @@ export default function Login() {
             </p>
 
             {SOCIAL_PROVIDERS.map((provider) => (
-              <button
+              <button type="button"
                 key={provider.id}
                 onClick={() => handleSocialLogin(provider.type)}
                 className="w-full flex items-center gap-3 px-5 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:translate-y-0"
@@ -187,7 +187,7 @@ export default function Login() {
             className="px-8 py-4 text-center"
             style={{ background: "#F9FAFB", borderTop: "1px solid #F3F4F6" }}
           >
-            <button
+            <button type="button"
               onClick={() => window.history.back()}
               className="text-xs text-[#9CA3AF] hover:text-[#4A6FA5] transition-colors"
             >

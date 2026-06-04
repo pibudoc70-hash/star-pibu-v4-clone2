@@ -59,7 +59,7 @@ export default function AdminYouTube() {
         <div className="bg-white p-8 rounded-lg shadow-lg text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">접근 권한 없음</h1>
           <p className="text-gray-600">관리자만 접근할 수 있습니다.</p>
-          <button
+          <button type="button"
             onClick={() => setLocation('/')}
             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
@@ -241,14 +241,14 @@ export default function AdminYouTube() {
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <div className="flex gap-2">
-                      <button
+                      <button type="button"
                         onClick={() => handleEdit(video)}
                         className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
                       >
                         <Edit2 size={16} />
                         수정
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => {
                           if (
                             confirm(

@@ -48,7 +48,7 @@ export default function EventDetail() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F7FA]">
         <p className="text-[#4A6FA5] text-lg font-semibold mb-4">{ed.notFound}</p>
-        <button
+        <button type="button"
           onClick={() => navigate("/#events")}
           className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4A6FA5] text-white text-sm font-medium hover:bg-[#2D4A7A] transition-colors"
         >
@@ -82,7 +82,7 @@ export default function EventDetail() {
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
           {/* 뒤로가기 버튼 */}
-          <button
+          <button type="button"
             onClick={() => navigate("/#events")}
             className="flex items-center gap-2 text-sm font-semibold mb-6 px-3 py-2 rounded-lg hover:bg-white/20 transition-colors"
             style={{ color: accentColor }}
@@ -183,7 +183,7 @@ export default function EventDetail() {
             </h3>
             <p className="text-[#6B7280] mb-2">{ed.address}</p>
             <p className="text-[#6B7280] mb-4">{ed.tel}</p>
-            <button
+            <button type="button"
               onClick={() => navigate("/#contact")}
               className="px-4 py-2 rounded-lg font-semibold transition-colors"
               style={{ backgroundColor: `${accentColor}15`, color: accentColor }}

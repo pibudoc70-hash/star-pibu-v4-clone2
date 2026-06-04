@@ -244,7 +244,7 @@ export default function SpecialEventSection() {
                       priceMb="mb-6"
                     />
                     {/* 자세히 보기 버튼 */}
-                    <button
+                    <button type="button"
                       onClick={() => toggleExpanded(event.id)}
                       aria-expanded={false}
                       aria-controls={`special-event-detail-${event.id}`}
@@ -334,7 +334,7 @@ export default function SpecialEventSection() {
                     </div>
 
                     {/* 접기 버튼 */}
-                    <button
+                    <button type="button"
                       onClick={() => toggleExpanded(event.id)}
                       aria-expanded={true}
                       aria-controls={`special-event-detail-${event.id}`}

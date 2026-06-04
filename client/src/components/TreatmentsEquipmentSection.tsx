@@ -1584,7 +1584,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
             </div>
             {/* CTA - 스크롤 가능 영역 하단에 고정 */}
             {detailSlug && (
-              <button
+              <button type="button"
                 onClick={() => { setOpen(false); setLocation(`/treatments/${detailSlug}`); }}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-3 flex-shrink-0 border"
                 style={{ background: "#f0f4fa", color: "#2D4A7A", borderColor: "#c7d2fe" }}
@@ -1631,7 +1631,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
           onClick={(e) => e.stopPropagation()}
         >
           <div className="px-6 py-5" style={{ background: "#f6efe0", borderBottom: "1px solid #e8dfc8" }}>
-            <button
+            <button type="button"
               onClick={() => setSelectedEq(null)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-colors"
               style={{ background: "rgba(0,0,0,0.08)", color: "#6B7280" }}
@@ -1733,7 +1733,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
 
       {/* 더보기/접기 버튼 */}
       {items.length > 4 && (
-        <button
+        <button type="button"
           className="w-full py-3 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors hover:bg-[#EEF7F7]"
           style={{ color: "#d1ab67", borderTop: "1px solid #e8dfc8" }}
           onClick={() => setExpanded((v) => !v)}
@@ -1838,7 +1838,7 @@ export default function TreatmentsEquipmentSection() {
           <div className="flex justify-end gap-2 mb-4">
             {/* 정렬 드롭다운 */}
             <div className="relative">
-                <button
+                <button type="button"
                 onClick={() => setFilterOpen(!filterOpen)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{
@@ -1861,7 +1861,7 @@ export default function TreatmentsEquipmentSection() {
                     { value: "name", label: tr.sortName },
                     { value: "time", label: tr.sortTime },
                   ].map((option) => (
-                    <button
+                    <button type="button"
                       key={option.value}
                       onClick={() => {
                         setSortBy(option.value as "name" | "time" | "popular");
@@ -1890,7 +1890,7 @@ export default function TreatmentsEquipmentSection() {
               {CATEGORIES.map((cat) => {
                 const isActive = activeId === cat.id;
                 return (
-                  <button
+                  <button type="button"
                     key={cat.id}
                     data-active={isActive ? "true" : "false"}
                     onClick={() => handleTabChange(cat.id)}
@@ -1920,7 +1920,7 @@ export default function TreatmentsEquipmentSection() {
               {CATEGORIES.map((cat) => {
                 const isActive = activeId === cat.id;
                 return (
-                  <button
+                  <button type="button"
                     key={cat.id}
                     data-active={isActive ? "true" : "false"}
                     onClick={() => handleTabChange(cat.id)}
@@ -1976,7 +1976,7 @@ export default function TreatmentsEquipmentSection() {
                 {/* 더 보기 / 접기 버튼 - 비활성화: 모든 카드 항상 표시 */}
                 {false && filteredTreatments.length > INITIAL_SHOW && (
                   <div className="flex justify-center" style={{marginTop: '68px'}}>
-                    <button
+                    <button type="button"
                       onClick={() => {
                         if (showAll) {
                           sectionTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

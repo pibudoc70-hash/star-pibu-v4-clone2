@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
@@ -25,13 +23,12 @@ export default function YouTubeSection() {
   const { data: allVideos } = trpc.youtube.getAll.useQuery();
 
   useEffect(() => {
-    if (allVideos) {
-      const videoList = allVideos.filter((v) => v.type === 'video') as YouTubeVideo[];
-      const shortsList = allVideos.filter((v) => v.type === 'shorts') as YouTubeVideo[];
-      setVideos(videoList);
-      setShorts(shortsList);
-      setIsLoading(false);
-    }
+    if (allVideos === undefined) return; // 로딩 중
+    const videoList = allVideos.filter((v) => v.type === 'video') as YouTubeVideo[];
+    const shortsList = allVideos.filter((v) => v.type === 'shorts') as YouTubeVideo[];
+    setVideos(videoList);
+    setShorts(shortsList);
+    setIsLoading(false);
   }, [allVideos]);
 
   if (isLoading) {
@@ -66,7 +63,7 @@ export default function YouTubeSection() {
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
-                <button
+                <button type="button"
                   key={video.id}
                   onClick={() => setSelectedVideo(video)}
                   className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105"
@@ -108,7 +105,7 @@ export default function YouTubeSection() {
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
-                <button
+                <button type="button"
                   key={short.id}
                   onClick={() => setSelectedVideo(short)}
                   className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105"
@@ -160,12 +157,18 @@ export default function YouTubeSection() {
 
       {/* 모달 - 영상 재생 */}
       {selectedVideo && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="yt-modal-title"
+          onClick={(e) => { if (e.target === e.currentTarget) setSelectedVideo(null); }}
+        >
           {/* 일반 영상: 가로 모달 */}
           {selectedVideo.type === 'video' ? (
             <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
               {/* 닫기 버튼 */}
-              <button
+              <button type="button"
                 onClick={() => setSelectedVideo(null)}
                 className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
               >
@@ -179,7 +182,7 @@ export default function YouTubeSection() {
                   height="100%"
                   src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
                   title={selectedVideo.title}
-                  frameBorder="0"
+                  style={{ border: 'none' }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full"
@@ -188,7 +191,7 @@ export default function YouTubeSection() {
 
               {/* 제목 */}
               <div className="p-4 bg-gray-900">
-                <h3 className="text-white font-semibold text-sm md:text-base line-clamp-2">
+                <h3 id="yt-modal-title" className="text-white font-semibold text-sm md:text-base line-clamp-2">
                   {selectedVideo.title}
                 </h3>
               </div>
@@ -197,7 +200,7 @@ export default function YouTubeSection() {
             /* 쇼츠: 세로 모달 */
             <div className="relative w-full max-w-sm h-[80vh] md:h-auto md:max-h-[90vh] bg-black rounded-2xl overflow-hidden flex flex-col">
               {/* 닫기 버튼 */}
-              <button
+              <button type="button"
                 onClick={() => setSelectedVideo(null)}
                 className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
               >
@@ -211,11 +214,10 @@ export default function YouTubeSection() {
                   height="100%"
                   src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
                   title={selectedVideo.title}
-                  frameBorder="0"
+                  style={{ border: 'none', aspectRatio: '9/16' }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full"
-                  style={{ aspectRatio: '9/16' }}
                 />
               </div>
 
@@ -225,7 +227,7 @@ export default function YouTubeSection() {
                   {selectedVideo.title}
                 </h3>
                 {/* 하단 닫기 버튼 */}
-                <button
+                <button type="button"
                   onClick={() => setSelectedVideo(null)}
                   className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium"
                 >

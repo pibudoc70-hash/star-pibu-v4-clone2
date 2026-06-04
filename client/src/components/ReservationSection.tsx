@@ -76,7 +76,7 @@ export default function ReservationSection() {
                   )}
                 </p>
               </div>
-              <button
+              <button type="button"
                 onClick={() => {
                   setShowSuccess(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });

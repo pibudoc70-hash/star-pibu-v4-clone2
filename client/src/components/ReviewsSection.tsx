@@ -169,7 +169,7 @@ export default function ReviewsSection() {
               </div>
             </div>
 
-            <button
+            <button type="button"
               onClick={() => { goPrev(); startAuto(); }}
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
               style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
@@ -177,7 +177,7 @@ export default function ReviewsSection() {
             >
               <ChevronLeft size={16} />
             </button>
-            <button
+            <button type="button"
               onClick={() => { goNext(); startAuto(); }}
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
               style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
@@ -188,7 +188,7 @@ export default function ReviewsSection() {
 
             <div className="flex justify-center gap-2 mt-5">
               {reviews.map((_, i) => (
-                <button
+                <button type="button"
                   key={i}
                   onClick={() => { setCurrent(i); startAuto(); }}
                   className="rounded-full transition-all duration-300"
@@ -248,7 +248,7 @@ export default function ReviewsSection() {
             </div>
 
             <div className="flex justify-center items-center gap-4">
-              <button
+              <button type="button"
                 onClick={goPrev}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
                 style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
@@ -257,7 +257,7 @@ export default function ReviewsSection() {
               </button>
               <div className="flex gap-2">
                 {Array.from({ length: totalPages }).map((_, i) => (
-                  <button
+                  <button type="button"
                     key={i}
                     onClick={() => setCurrent(i)}
                     className="w-2.5 h-2.5 rounded-full transition-all"
@@ -266,7 +266,7 @@ export default function ReviewsSection() {
                   />
                 ))}
               </div>
-              <button
+              <button type="button"
                 onClick={goNext}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
                 style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}

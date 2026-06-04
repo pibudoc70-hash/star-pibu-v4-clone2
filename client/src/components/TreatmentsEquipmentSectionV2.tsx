@@ -492,7 +492,7 @@ export default function TreatmentsEquipmentSectionV2() {
           {/* 필터/정렬 버튼 (상단 우측) */}
           <div className="flex justify-end gap-2 mb-4">
             <div className="relative">
-              <button
+              <button type="button"
                 onClick={() => setFilterOpen(!filterOpen)}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{
@@ -515,7 +515,7 @@ export default function TreatmentsEquipmentSectionV2() {
                     { value: "name", label: "이름순" },
                     { value: "time", label: "시간순" },
                   ].map((option) => (
-                    <button
+                    <button type="button"
                       key={option.value}
                       onClick={() => {
                         setSortBy(option.value as "name" | "time" | "popular");
@@ -542,7 +542,7 @@ export default function TreatmentsEquipmentSectionV2() {
               {CATEGORIES.map((cat) => {
                 const isActive = activeId === cat.id;
                 return (
-                  <button
+                  <button type="button"
                     key={cat.id}
                     data-active={isActive ? "true" : "false"}
                     onClick={() => handleTabChange(cat.id)}
@@ -573,7 +573,7 @@ export default function TreatmentsEquipmentSectionV2() {
               {CATEGORIES.map((cat) => {
                 const isActive = activeId === cat.id;
                 return (
-                  <button
+                  <button type="button"
                     key={cat.id}
                     data-active={isActive ? "true" : "false"}
                     onClick={() => handleTabChange(cat.id)}

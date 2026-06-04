@@ -283,11 +283,11 @@ function SuccessScreen({ treatmentName, selectedDate, selectedTime, isGuest, L }
         <p className="text-xs mb-6" style={{ color: "#9CA3AF" }}>{L.successContact}</p>
         <div className="flex gap-3">
           {!isGuest && (
-            <button onClick={() => navigate("/mypage")} className="flex-1 py-3 rounded-xl font-semibold text-sm" style={{ background: "#EEF7F7", color: "#4A9FA5" }}>
+            <button type="button" onClick={() => navigate("/mypage")} className="flex-1 py-3 rounded-xl font-semibold text-sm" style={{ background: "#EEF7F7", color: "#4A9FA5" }}>
               {L.viewHistory}
             </button>
           )}
-          <button onClick={() => navigate("/")} className="flex-1 py-3 rounded-xl font-semibold text-sm text-white" style={{ background: "#0D2B4E" }}>
+          <button type="button" onClick={() => navigate("/")} className="flex-1 py-3 rounded-xl font-semibold text-sm text-white" style={{ background: "#0D2B4E" }}>
             {L.goHome}
           </button>
         </div>
@@ -327,7 +327,7 @@ function TreatmentStep({ selectedCategory, selectedTreatment, onCategoryChange, 
       <h2 className="font-bold text-lg mb-4" style={{ color: "#0D2B4E" }}>{L.treatmentCategory}</h2>
       <div className="grid grid-cols-1 gap-3 mb-6">
         {TREATMENT_CATEGORIES.map((cat) => (
-          <button key={cat.category} onClick={() => { onCategoryChange(cat.category); onTreatmentChange(""); }}
+          <button type="button" key={cat.category} onClick={() => { onCategoryChange(cat.category); onTreatmentChange(""); }}
             className="text-left px-4 py-4 rounded-xl border-2 transition-all text-sm font-medium active:scale-[0.98]"
             style={{ borderColor: selectedCategory === cat.category ? "#4A9FA5" : "#E5E7EB", background: selectedCategory === cat.category ? "#EEF7F7" : "white", color: selectedCategory === cat.category ? "#0D2B4E" : "#374151", minHeight: "52px" }}>
             {cat.category}
@@ -339,7 +339,7 @@ function TreatmentStep({ selectedCategory, selectedTreatment, onCategoryChange, 
           <h2 className="font-bold text-lg mb-4" style={{ color: "#0D2B4E" }}>{L.treatmentItem}</h2>
           <div className="grid grid-cols-1 gap-3">
             {currentItems.map((item) => (
-              <button key={item} onClick={() => onTreatmentChange(item)}
+              <button type="button" key={item} onClick={() => onTreatmentChange(item)}
                 className="text-left px-4 py-4 rounded-xl border-2 transition-all text-sm active:scale-[0.98]"
                 style={{ borderColor: selectedTreatment === item ? "#4A9FA5" : "#E5E7EB", background: selectedTreatment === item ? "#EEF7F7" : "white", color: selectedTreatment === item ? "#0D2B4E" : "#374151", minHeight: "52px" }}>
                 {item}
@@ -348,7 +348,7 @@ function TreatmentStep({ selectedCategory, selectedTreatment, onCategoryChange, 
           </div>
         </>
       )}
-      <button onClick={onNext} disabled={!selectedTreatment}
+      <button type="button" onClick={onNext} disabled={!selectedTreatment}
         className="w-full mt-6 py-4 rounded-xl font-semibold text-white transition-opacity disabled:opacity-40 text-base"
         style={{ background: "#4A9FA5", minHeight: "56px" }}>
         {L.next}
@@ -394,7 +394,7 @@ function DateTimeStep({ selectedCategory, selectedTreatment, selectedDate, selec
         </div>
         <div className="grid grid-cols-4 gap-2">
           {TIME_SLOTS.map((time) => (
-            <button key={time} onClick={() => onTimeChange(time)}
+            <button type="button" key={time} onClick={() => onTimeChange(time)}
               className="py-3 rounded-xl text-sm font-medium border-2 transition-all active:scale-95"
               style={{ borderColor: selectedTime === time ? "#4A9FA5" : "#E5E7EB", background: selectedTime === time ? "#4A9FA5" : "white", color: selectedTime === time ? "white" : "#374151", minHeight: "48px" }}>
               {time}
@@ -403,8 +403,8 @@ function DateTimeStep({ selectedCategory, selectedTreatment, selectedDate, selec
         </div>
       </div>
       <div className="flex gap-3">
-        <button onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
-        <button onClick={onNext} disabled={!selectedDate || !selectedTime}
+        <button type="button" onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
+        <button type="button" onClick={onNext} disabled={!selectedDate || !selectedTime}
           className="flex-1 py-4 rounded-xl font-semibold text-white transition-opacity disabled:opacity-40 text-base"
           style={{ background: "#4A9FA5", minHeight: "56px" }}>
           {L.next}
@@ -457,8 +457,8 @@ function MemberInfoStep({ selectedTreatment, selectedDate, selectedTime, patient
         </div>
       </div>
       <div className="flex gap-3">
-        <button onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
-        <button onClick={onSubmit} disabled={isPending}
+        <button type="button" onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
+        <button type="button" onClick={onSubmit} disabled={isPending}
           className="flex-1 py-4 rounded-xl font-semibold text-white transition-opacity disabled:opacity-60 text-base"
           style={{ background: "#0D2B4E", minHeight: "56px" }}>
           {isPending ? L.submitting : L.submit}
@@ -552,7 +552,7 @@ function GuestInfoStep({ selectedTreatment, selectedDate, selectedTime, onBack, 
             disabled={otpVerified} inputMode="tel" autoComplete="tel"
             className={`flex-1 px-4 py-4 rounded-xl border-2 outline-none transition-colors`}
             style={{ ...inputStyle(!!guestPhone), opacity: otpVerified ? 0.6 : 1 }} />
-          <button onClick={handleSendOtp} disabled={sendOtp.isPending || countdown > 0 || otpVerified}
+          <button type="button" onClick={handleSendOtp} disabled={sendOtp.isPending || countdown > 0 || otpVerified}
             className="px-4 py-4 rounded-xl font-semibold text-sm text-white whitespace-nowrap disabled:opacity-50"
             style={{ background: "#4A9FA5", minWidth: "90px" }}>
             {sendOtp.isPending ? L.sending : countdown > 0 ? `${countdown}s` : otpSent ? L.resendOtp : L.sendOtp}
@@ -571,7 +571,7 @@ function GuestInfoStep({ selectedTreatment, selectedDate, selectedTime, onBack, 
               inputMode="numeric" maxLength={6}
               className="flex-1 px-4 py-4 rounded-xl border-2 outline-none transition-colors text-center tracking-[0.3em] font-bold text-lg"
               style={{ borderColor: otpCode.length === 6 ? "#4A9FA5" : "#E5E7EB", fontSize: "18px" }} />
-            <button onClick={handleVerifyOtp} disabled={verifyOtp.isPending || otpCode.length !== 6}
+            <button type="button" onClick={handleVerifyOtp} disabled={verifyOtp.isPending || otpCode.length !== 6}
               className="px-4 py-4 rounded-xl font-semibold text-sm text-white disabled:opacity-50"
               style={{ background: "#0D2B4E", minWidth: "80px" }}>
               {verifyOtp.isPending ? L.verifying : L.verify}
@@ -611,9 +611,9 @@ function GuestInfoStep({ selectedTreatment, selectedDate, selectedTime, onBack, 
       )}
 
       <div className="flex gap-3">
-        <button onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
+        <button type="button" onClick={onBack} className="flex-1 py-4 rounded-xl font-semibold text-sm" style={{ background: "#F3F4F6", color: "#374151", minHeight: "56px" }}>{L.back}</button>
         {otpVerified && (
-          <button onClick={handleSubmit} disabled={createGuest.isPending || !guestName.trim()}
+          <button type="button" onClick={handleSubmit} disabled={createGuest.isPending || !guestName.trim()}
             className="flex-1 py-4 rounded-xl font-semibold text-white transition-opacity disabled:opacity-60 text-base"
             style={{ background: "#0D2B4E", minHeight: "56px" }}>
             {createGuest.isPending ? L.submitting : L.submit}
@@ -715,14 +715,14 @@ export default function Reserve() {
 
               {/* 회원/비회원 탭 */}
               <div className="flex rounded-2xl p-1 mb-6" style={{ background: "#E5E7EB" }}>
-                <button
+                <button type="button"
                   onClick={() => { setMode("member"); setStep(0); setSelectedCategory(""); setSelectedTreatment(""); setSelectedDate(""); setSelectedTime(""); }}
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-all"
                   style={{ background: mode === "member" ? "white" : "transparent", color: mode === "member" ? "#0D2B4E" : "#6B7280", boxShadow: mode === "member" ? "0 1px 3px rgba(0,0,0,0.1)" : "none" }}>
                   <LogIn size={15} />
                   {L.memberTab}
                 </button>
-                <button
+                <button type="button"
                   onClick={() => { setMode("guest"); setStep(0); setSelectedCategory(""); setSelectedTreatment(""); setSelectedDate(""); setSelectedTime(""); }}
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-all"
                   style={{ background: mode === "guest" ? "white" : "transparent", color: mode === "guest" ? "#0D2B4E" : "#6B7280", boxShadow: mode === "guest" ? "0 1px 3px rgba(0,0,0,0.1)" : "none" }}>
@@ -743,7 +743,7 @@ export default function Reserve() {
                     <a href={getLoginUrl()} className="block w-full py-3.5 rounded-xl font-semibold text-white text-center text-sm" style={{ background: "#0D2B4E" }}>
                       {L.loginBtn}
                     </a>
-                    <button onClick={() => setMode("guest")} className="w-full py-3.5 rounded-xl font-semibold text-sm" style={{ background: "#EEF7F7", color: "#4A9FA5" }}>
+                    <button type="button" onClick={() => setMode("guest")} className="w-full py-3.5 rounded-xl font-semibold text-sm" style={{ background: "#EEF7F7", color: "#4A9FA5" }}>
                       {L.guestBtn}
                     </button>
                   </div>

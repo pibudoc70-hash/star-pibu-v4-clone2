@@ -1479,3 +1479,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Round 3: constants.ts sameAs에 instagram/youtube/place.naver 추가, 우편번호 47280으로 3개 파일 통일 (사용자 확인)
 - [x] Round 4: HeroSection 미사용 이미지 상수 8개 + 별칭 2개 제거, webVitals.ts console.log → isDev 조건부 처리, main.tsx SW 등록 성공 console.log 제거
 - [x] Round 5: ComponentShowcase.tsx console.log 제거, TypeScript 0 에러, 테스트 168개 전부 통과
+
+## 3차 5회 연속 분석·수정 사이클
+- [x] Round 1: YouTubeSection 'use client' 제거, Home.tsx lazy loading 적용(9개 섹션), inline style → CSS 클래스, void user 제거
+- [x] Round 2: frameBorder deprecated → style border:none (3개 파일), YouTubeSection 모달 접근성(role=dialog/aria-modal/aria-labelledby) 추가
+- [x] Round 3: EventsSection id="events-legacy", TreatmentsSection id="treatments-legacy" (미사용 컴포넌트 id 충돌 방지)
+- [x] Round 4: <button type="button"> 누락 156개 일괄 추가 (scripts/fix_button_type.py)
+- [x] Round 5: vite.config.ts manualChunks 설정 — vendor-react/trpc/icons/katex 분리, 메인 번들 1,123kB → 622kB (45% 감소)

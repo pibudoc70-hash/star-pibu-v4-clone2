@@ -373,7 +373,7 @@ export default function ManagementDevicesSection() {
 
           {/* 이전 버튼 */}
           {canScrollLeft && (
-            <button
+            <button type="button"
               onClick={() => scroll("left")}
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 sm:-translate-x-12 md:-translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors hidden sm:block"
               aria-label="이전"
@@ -384,7 +384,7 @@ export default function ManagementDevicesSection() {
 
           {/* 다음 버튼 */}
           {canScrollRight && (
-            <button
+            <button type="button"
               onClick={() => scroll("right")}
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 sm:translate-x-12 md:translate-x-16 z-10 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors hidden sm:block"
               aria-label="다음"
@@ -397,7 +397,7 @@ export default function ManagementDevicesSection() {
         {/* 인디케이터 */}
         <div className="flex justify-center gap-2 mt-4">
           {devices.map((_, index) => (
-            <button
+            <button type="button"
               key={`indicator-${index}`}
               onClick={() => scrollToIndex(index)}
               className={`transition-all duration-300 rounded-full ${

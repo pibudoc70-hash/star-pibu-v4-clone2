@@ -91,7 +91,7 @@ function SortableEventItem({ event, onEdit, onDelete }: {
         </div>
       </div>
       <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
-        <button
+        <button type="button"
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEdit(); }}
           onPointerDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
           onMouseDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
@@ -99,7 +99,7 @@ function SortableEventItem({ event, onEdit, onDelete }: {
         >
           <Pencil size={16} className="text-[#6B7280]" />
         </button>
-        <button
+        <button type="button"
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(); }}
           onPointerDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
           onMouseDownCapture={(e) => { e.preventDefault(); e.stopPropagation(); }}
@@ -417,7 +417,7 @@ export default function AdminDashboard() {
 
         <nav className="flex-1 px-4 py-4 space-y-1">
           {/* 시술·장비 관리 탭 */}
-          <button
+          <button type="button"
             onClick={() => setActiveTab("treatments")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -429,7 +429,7 @@ export default function AdminDashboard() {
             시술·장비 관리
           </button>
           {/* 시술·장비소개 2 관리 탭 */}
-          <button
+          <button type="button"
             onClick={() => setActiveTab("treatmentsV2")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -441,7 +441,7 @@ export default function AdminDashboard() {
             시술·장비소개 2 관리
           </button>
           {/* 팝업 이벤트 탭 */}
-          <button
+          <button type="button"
             onClick={() => setActiveTab("popup")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -452,7 +452,7 @@ export default function AdminDashboard() {
             <Megaphone size={16} />
             팝업 이벤트
           </button>
-          <button
+          <button type="button"
             onClick={() => setActiveTab("events")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -464,7 +464,7 @@ export default function AdminDashboard() {
             이벤트 관리
           </button>
           {/* 예약 관리 탭 */}
-          <button
+          <button type="button"
             onClick={() => setActiveTab("reservations")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -476,7 +476,7 @@ export default function AdminDashboard() {
             예약 관리
           </button>
           {/* 예약 불가능 시간 탭 */}
-          <button
+          <button type="button"
             onClick={() => setActiveTab("unavailableSlots")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -488,7 +488,7 @@ export default function AdminDashboard() {
             예약 불가능 날짜
           </button>
           {/* 유튜브 관리 탭 */}
-          <button
+          <button type="button"
             onClick={() => window.location.href = "/admin/youtube"}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
@@ -505,7 +505,7 @@ export default function AdminDashboard() {
           <a href="/" className="flex items-center gap-3 px-3 py-2 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm">
             <Home size={16} />홈페이지로
           </a>
-          <button
+          <button type="button"
             onClick={async () => { await logout(); window.location.href = "/"; }}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm"
           >
@@ -530,7 +530,7 @@ export default function AdminDashboard() {
               <Crown size={13} />
               {user.name ?? "관리자"}
             </div>
-            <button
+            <button type="button"
               onClick={() => { refetchUsers(); refetchStats(); }}
               className="p-2 rounded-xl hover:bg-[#F3F4F6] transition-colors text-[#6B7280]"
               title="새로고침"
@@ -636,7 +636,7 @@ export default function AdminDashboard() {
                               </td>
                               <td className="px-6 py-4">
                                 {member.id !== user.id && (
-                                  <button
+                                  <button type="button"
                                     onClick={() => updateRoleMutation.mutate({ userId: member.id, role: member.role === "admin" ? "user" : "admin" })}
                                     disabled={updateRoleMutation.isPending}
                                     className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors"
@@ -659,11 +659,11 @@ export default function AdminDashboard() {
                   {/* 페이지네이션 */}
                   {userTotalPages > 1 && (
                     <div className="flex items-center justify-center gap-2 px-6 py-4 border-t border-[#F3F4F6]">
-                      <button onClick={() => setUserPage(p => Math.max(1, p - 1))} disabled={userPage === 1} className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-40 transition-colors">
+                      <button type="button" onClick={() => setUserPage(p => Math.max(1, p - 1))} disabled={userPage === 1} className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-40 transition-colors">
                         <ChevronLeft size={16} className="text-[#6B7280]" />
                       </button>
                       <span className="text-sm text-[#6B7280]">{userPage} / {userTotalPages}</span>
-                      <button onClick={() => setUserPage(p => Math.min(userTotalPages, p + 1))} disabled={userPage === userTotalPages} className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-40 transition-colors">
+                      <button type="button" onClick={() => setUserPage(p => Math.min(userTotalPages, p + 1))} disabled={userPage === userTotalPages} className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-40 transition-colors">
                         <ChevronRight size={16} className="text-[#6B7280]" />
                       </button>
                     </div>
@@ -678,7 +678,7 @@ export default function AdminDashboard() {
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <p className="text-sm text-[#6B7280]">팝업에 표시되는 이벤트 목록입니다. 비활성 이벤트는 팝업에서 숨겨집니다.</p>
-                <button
+                <button type="button"
                   onClick={openNewPopupForm}
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                   style={{ background: "#4A9FA5" }}
@@ -723,21 +723,21 @@ export default function AdminDashboard() {
                         )}
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <button
+                        <button type="button"
                           onClick={() => togglePopupActive(ev.id, ev.isActive)}
                           className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
                           title={ev.isActive === "1" ? "비활성화" : "활성화"}
                         >
                           {ev.isActive === "1" ? <Eye size={15} className="text-green-600" /> : <EyeOff size={15} className="text-gray-400" />}
                         </button>
-                        <button
+                        <button type="button"
                           onClick={() => openEditPopupForm(ev)}
                           className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
                           title="수정"
                         >
                           <Pencil size={15} className="text-[#6B7280]" />
                         </button>
-                        <button
+                        <button type="button"
                           onClick={() => { if (confirm("이벤트를 삭제하시겠습니까?")) deletePopupMutation.mutate({ id: ev.id }); }}
                           className="p-2 rounded-lg hover:bg-red-50 transition-colors"
                           title="삭제"
@@ -755,7 +755,7 @@ export default function AdminDashboard() {
                   <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
                     <div className="px-6 py-4 border-b border-[#E5E7EB] flex items-center justify-between">
                       <h2 className="font-bold text-[#1F2937]">{popupEditId !== null ? "이벤트 수정" : "새 이벤트 추가"}</h2>
-                      <button onClick={() => { setPopupForm(null); setPopupEditId(null); }} className="text-[#9CA3AF] hover:text-[#374151] text-xl leading-none">&times;</button>
+                      <button type="button" onClick={() => { setPopupForm(null); setPopupEditId(null); }} className="text-[#9CA3AF] hover:text-[#374151] text-xl leading-none">&times;</button>
                     </div>
                     <div className="px-6 py-4 space-y-3">
                       <div className="grid grid-cols-2 gap-3">
@@ -847,11 +847,11 @@ export default function AdminDashboard() {
                             <input className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs" value={item.original} onChange={e => setPopupForm(f => { if (!f) return f; const p = [...f.priceItems]; p[i] = { ...p[i], original: e.target.value }; return { ...f, priceItems: p }; })} placeholder="원가(선택)" />
                             <input className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs" value={item.price} onChange={e => setPopupForm(f => { if (!f) return f; const p = [...f.priceItems]; p[i] = { ...p[i], price: e.target.value }; return { ...f, priceItems: p }; })} placeholder="80만원" />
                             {popupForm.priceItems.length > 1 && (
-                              <button onClick={() => setPopupForm(f => { if (!f) return f; return { ...f, priceItems: f.priceItems.filter((_, j) => j !== i) }; })} className="text-red-400 hover:text-red-600 px-1">&times;</button>
+                              <button type="button" onClick={() => setPopupForm(f => { if (!f) return f; return { ...f, priceItems: f.priceItems.filter((_, j) => j !== i) }; })} className="text-red-400 hover:text-red-600 px-1">&times;</button>
                             )}
                           </div>
                         ))}
-                        <button onClick={() => setPopupForm(f => f && ({ ...f, priceItems: [...f.priceItems, { label: "", original: "", price: "" }] }))} className="text-xs text-[#4A9FA5] hover:underline">+ 항목 추가</button>
+                        <button type="button" onClick={() => setPopupForm(f => f && ({ ...f, priceItems: [...f.priceItems, { label: "", original: "", price: "" }] }))} className="text-xs text-[#4A9FA5] hover:underline">+ 항목 추가</button>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
@@ -928,8 +928,8 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div className="px-6 py-4 border-t border-[#E5E7EB] flex justify-end gap-3">
-                      <button onClick={() => { setPopupForm(null); setPopupEditId(null); }} className="px-4 py-2 rounded-xl text-sm text-[#6B7280] hover:bg-[#F3F4F6] transition-colors">취소</button>
-                      <button
+                      <button type="button" onClick={() => { setPopupForm(null); setPopupEditId(null); }} className="px-4 py-2 rounded-xl text-sm text-[#6B7280] hover:bg-[#F3F4F6] transition-colors">취소</button>
+                      <button type="button"
                         onClick={submitPopupForm}
                         disabled={createPopupMutation.isPending || updatePopupMutation.isPending}
                         className="px-5 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-60"
@@ -948,7 +948,7 @@ export default function AdminDashboard() {
             <div className="flex-1 flex flex-col">
               <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
                 <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
-                <button
+                <button type="button"
                   onClick={() => { setEventForm({ type: "이벤트", title: "", subtitle: "", desc: "", content: "", date: "", badge: "", badgeColor: "#4A6FA5", accent: "#4A6FA5", accentDark: "#2D4A7A", accentBg: "#EEF3FA", iconBg: "#E0EBF7", iconType: "tag", tag: "", hot: "0", cta: "자세히 보기", views: 0, isFeatured: "0", sortOrder: 0, isActive: "1", category: "이벤트", imageUrl: "", productName: "", normalPrice: 0, discountPrice: 0, priceRows: [], isSpecialEvent: "0", anesthesiaFee: "", targetLang: "ko", titleEn: "", titleJa: "", titleZh: "", subtitleEn: "", subtitleJa: "", subtitleZh: "", descEn: "", descJa: "", descZh: "", productNameEn: "", productNameJa: "", productNameZh: "" }); setEditingEventId(null); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
                   style={{ background: "#4A6FA5" }}
@@ -1122,7 +1122,7 @@ export default function AdminDashboard() {
                         {eventForm.imageUrl && (
                           <div className="mt-2">
                             <img src={eventForm.imageUrl} alt="미리보기" className="w-full h-32 object-cover rounded-lg" />
-                            <button
+                            <button type="button"
                               onClick={() => setEventForm({ ...eventForm, imageUrl: '' })}
                               className="mt-2 text-sm text-red-600 hover:text-red-700"
                             >
@@ -1235,13 +1235,13 @@ export default function AdminDashboard() {
                         <label className="text-sm text-[#6B7280]">활성화</label>
                       </div>
                       <div className="flex gap-2">
-                        <button
+                        <button type="button"
                           onClick={() => { setEventForm(null); setEditingEventId(null); }}
                           className="flex-1 px-4 py-2 rounded-lg font-semibold text-[#6B7280] border border-[#D1D5DB] transition-colors hover:bg-[#F3F4F6]"
                         >
                           취소
                         </button>
-                        <button
+                        <button type="button"
                           onClick={() => {
                             if (eventForm.title && eventForm.date) {
                               if (editingEventId) {
@@ -1369,7 +1369,7 @@ export default function AdminDashboard() {
                   예약 목록
                   {reservationsData && <span className="ml-2 text-xs font-normal text-[#9CA3AF]">총 {reservationsData.total}건</span>}
                 </h2>
-                <button
+                <button type="button"
                   onClick={() => {
                     if (reservationsData?.items && reservationsData.items.length > 0) {
                       exportReservationsToExcel(reservationsData.items);
@@ -1439,7 +1439,7 @@ export default function AdminDashboard() {
                                     <option value="completed">완료</option>
                                     <option value="cancelled">취소됨</option>
                                   </select>
-                                  <button
+                                  <button type="button"
                                     onClick={() => setExpandedReservationId(isExpanded ? null : reservation.id)}
                                     className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"
                                     title="메모 추가"
@@ -1479,7 +1479,7 @@ export default function AdminDashboard() {
                   {/* 페이지네이션 */}
                   {reservationsData && reservationsData.total > reservationPageSize && (
                     <div className="px-6 py-4 border-t border-[#F3F4F6] flex items-center justify-center gap-2">
-                      <button
+                      <button type="button"
                         onClick={() => setReservationPage(p => Math.max(1, p - 1))}
                         disabled={reservationPage === 1}
                         className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-50 transition-colors"
@@ -1489,7 +1489,7 @@ export default function AdminDashboard() {
                       <span className="text-xs text-[#6B7280]">
                         {reservationPage} / {Math.ceil(reservationsData.total / reservationPageSize)}
                       </span>
-                      <button
+                      <button type="button"
                         onClick={() => setReservationPage(p => p + 1)}
                         disabled={reservationPage >= Math.ceil(reservationsData.total / reservationPageSize)}
                         className="p-2 rounded-lg hover:bg-[#F3F4F6] disabled:opacity-50 transition-colors"
@@ -1508,7 +1508,7 @@ export default function AdminDashboard() {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-[#1F2937]">예약 불가능 날짜 설정</h2>
-                  <button
+                  <button type="button"
                     onClick={() => setUnavailableSlotForm({ date: "", reason: "" })}
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
                   >
@@ -1540,7 +1540,7 @@ export default function AdminDashboard() {
                         />
                       </div>
                       <div className="flex gap-2">
-                        <button
+                        <button type="button"
                           onClick={() => {
                             if (!unavailableSlotForm.date) {
                               toast.error("날짜를 선택해주세요.");
@@ -1556,7 +1556,7 @@ export default function AdminDashboard() {
                         >
                           저장
                         </button>
-                        <button
+                        <button type="button"
                           onClick={() => setUnavailableSlotForm(null)}
                           className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors font-semibold"
                         >
@@ -1573,7 +1573,7 @@ export default function AdminDashboard() {
                         <p className="font-semibold text-[#1F2937]">{slot.date}</p>
                         {slot.reason && <p className="text-sm text-[#6B7280]">{slot.reason}</p>}
                       </div>
-                      <button
+                      <button type="button"
                         onClick={() => deleteUnavailableSlot.mutate({ id: slot.id })}
                         className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                       >

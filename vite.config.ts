@@ -167,6 +167,29 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // React 코어 — 가장 먼저 캐시되어야 하는 vendor
+          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
+            return "vendor-react";
+          }
+          // tRPC + React Query
+          if (id.includes("@trpc") || id.includes("@tanstack/react-query")) {
+            return "vendor-trpc";
+          }
+          // Lucide 아이콘 (큰 패키지)
+          if (id.includes("lucide-react")) {
+            return "vendor-icons";
+          }
+          // KaTeX (수식 렌더링 — 대형 패키지)
+          if (id.includes("katex")) {
+            return "vendor-katex";
+          }
+          // 나머지 node_modules는 Rollup 기본 청킹에 맡김
+        },
+      },
+    },
   },
   server: {
     host: true,

@@ -96,7 +96,7 @@ export default function EventsSection() {
   ];
 
   return (
-    <section id="events" className="py-16 sm:py-24 star-section-alt">
+    <section id="events-legacy" className="py-16 sm:py-24 star-section-alt">
       <div className="container">
         {/* ── Section Header ── */}
         <div className="text-center mb-8 sm:mb-12">
@@ -118,7 +118,7 @@ export default function EventsSection() {
         {/* ── Filter Tabs ── */}
         <div className="flex justify-center gap-2 mb-10 flex-wrap">
           {filterTabs.map((category) => (
-            <button
+            <button type="button"
               key={category}
               onClick={() => setActiveCategory(category)}
               className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
@@ -212,7 +212,7 @@ export default function EventsSection() {
                       <Calendar size={16} />
                       <span>{ev.date}</span>
                     </div>
-                    <button
+                    <button type="button"
                       className="flex items-center gap-1 px-4 py-2 rounded-lg font-semibold text-white transition-all group-hover:gap-2"
                       style={{ backgroundColor: ev.accent }}
                     >

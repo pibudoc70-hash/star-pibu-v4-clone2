@@ -49,7 +49,7 @@ function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string
           key={index}
           className="rounded-xl border border-gray-200 overflow-hidden"
         >
-          <button
+          <button type="button"
             onClick={() => setOpenIndex(openIndex === index ? null : index)}
             className="w-full flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors"
           >

@@ -71,7 +71,7 @@ export default function AdminEquipment2New() {
       <div className="max-w-4xl mx-auto px-4">
         {/* 헤더 */}
         <div className="flex items-center gap-4 mb-8">
-          <button
+          <button type="button"
             onClick={() => navigate("/admin")}
             className="p-2 hover:bg-gray-200 rounded-md transition"
           >

@@ -185,7 +185,7 @@ export default function TreatmentPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="text-gray-600 text-lg">{lbl.notFound}</p>
-        <button
+        <button type="button"
           onClick={() => setLocation(localizedHomePath)}
           className="flex items-center gap-2 text-[#4A6FA5] hover:underline"
         >
@@ -252,7 +252,7 @@ export default function TreatmentPage() {
         )}
         <div className="relative container mx-auto px-4 py-12">
           {/* 뒤로가기 */}
-        <button
+        <button type="button"
           onClick={() => setLocation(localizedHomePath)}
           className="inline-flex items-center gap-2 mb-6 text-white/80 hover:text-white transition-colors text-sm"
         >
@@ -353,7 +353,7 @@ export default function TreatmentPage() {
                 height="100%"
                 src={treatment.youtubeUrl}
                 title={`${treatmentName} 시술 영상`}
-                frameBorder="0"
+                style={{ border: 'none' }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -422,7 +422,7 @@ export default function TreatmentPage() {
             <span>📞</span>
             {currentLang === "ko" ? lbl.ctaCall : lbl.ctaCallIntl}
           </a>
-          <button
+          <button type="button"
             onClick={() => {
               const el = document.getElementById("reservation");
               if (el) {
@@ -448,7 +448,7 @@ export default function TreatmentPage() {
             {getAllTreatments()
               .filter((t) => t.slug !== slug)
               .map((t) => (
-                <button
+                <button type="button"
                   key={t.slug}
                   onClick={() => setLocation(`${langPrefix}/treatments/${t.slug}`)}
                   className="text-left p-4 rounded-xl border border-gray-200 hover:border-[#4A6FA5] hover:shadow-md transition-all group"

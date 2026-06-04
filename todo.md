@@ -1384,3 +1384,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 전체 TypeScript 에러 0건 확인
 - [x] 테스트 127개 전부 통과 확인
 - [x] 빌드 성공 확인
+
+## PR-36: About/Privacy 번역 완성도 및 SEO 정책 정리
+
+- [x] About.tsx 본문 i18n 교체 (소개 문단, 특징 박스, access 레이블 4개 언어 분기)
+- [x] About.tsx 깨진 문자열 0건 확인 (이미 정상 상태)
+- [x] About.tsx SEO 정책: localized live (canonical/ogUrl/ogLocale/hreflangs 4개 언어 정렬)
+- [x] Privacy.tsx SEO 정책: noindex live (ko 원문 단일 운영, ogUrl 명시적 추가)
+- [x] Privacy.tsx lifecycle 주석 추가 (법률 문서 특성상 ko 단일 운영 근거 명시)
+- [x] App.tsx about/privacy route 그룹에 SEO 정책 주석 추가
+- [x] TypeScript 에러 0건, 테스트 127개 통과, 빌드 성공

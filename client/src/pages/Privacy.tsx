@@ -1,6 +1,13 @@
 /**
  * Privacy Policy Page - 개인정보처리방침
  * 의료기관 개인정보처리방침 (개인정보 보호법 제30조 준수)
+ *
+ * [PAGE LIFECYCLE] noindex live page (정책 확정: PR-36)
+ * - route: /privacy, /en/privacy, /ja/privacy, /zh/privacy (App.tsx live)
+ * - canonical: https://www.star-pibu.com/privacy (ko 고정 — 법률 원문 기준)
+ * - noindex: true (검색 인덱싱 차단 — 법률 문서, 다국어 번역 미제공)
+ * - 번역 상태: 한국어 원문만 제공 (의료기관 법률 문서 특성상 ko 단일 운영)
+ * - SEO 정책: noindex이므로 canonical 고정이 SEO 영향 없음
  */
 
 import { Link } from "wouter";
@@ -127,6 +134,7 @@ export default function Privacy() {
         title="개인정보처리방침 | 부산 서면 스타피부과"
         description="스타피부과의원 개인정보처리방침입니다. 개인정보 보호법 제30조에 따라 개인정보의 처리 목적, 항목, 보유 기간 등을 안내합니다."
         canonical="https://www.star-pibu.com/privacy"
+        ogUrl="https://www.star-pibu.com/privacy"
         noindex={true}
       />
       <Header />

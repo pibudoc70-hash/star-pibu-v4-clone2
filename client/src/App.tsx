@@ -168,6 +168,7 @@ function Router() {
             <Route path={"/en/equipment2"} component={Equipment2} />
             <Route path={"/ja/equipment2"} component={Equipment2} />
             <Route path={"/zh/equipment2"} component={Equipment2} />
+            {/* About: localized live — canonical/hreflangs 4개 언어 정렬 (PR-36) */}
             <Route path={"/about"} component={About} />
             <Route path={"/en/about"} component={About} />
             <Route path={"/ja/about"} component={About} />
@@ -176,6 +177,7 @@ function Router() {
             <Route path={"/en/foreign-guide"} component={ForeignGuide} />
             <Route path={"/ja/foreign-guide"} component={ForeignGuide} />
             <Route path={"/zh/foreign-guide"} component={ForeignGuide} />
+            {/* Privacy: noindex live — ko 원문 단일 운영, 법률 문서 특성상 번역 미제공 (PR-36) */}
             <Route path={"/privacy"} component={Privacy} />
             <Route path={"/en/privacy"} component={Privacy} />
             <Route path={"/ja/privacy"} component={Privacy} />

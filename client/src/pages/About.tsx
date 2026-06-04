@@ -1,3 +1,15 @@
+/**
+ * About Page - 피부과 소개
+ *
+ * [PAGE LIFECYCLE] localized live page (정책 확정: PR-36)
+ * - route: /about, /en/about, /ja/about, /zh/about (App.tsx live)
+ * - canonical: 현재 언어 route 기준 (langPrefix 동적 계산)
+ * - hreflangs: 4개 언어 전부 (buildHreflangs)
+ * - 본문: t.about.desc / t.about.values / t.access (i18n 중앙화 완료)
+ * - SEO 신호: localized live 정책 — canonical/ogUrl/ogLocale/hreflangs 모두 정렬됨
+ *
+ * [TRANSLATION STATUS] 완성 (ko/en/ja/zh 전 섹션 i18n 처리)
+ */
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -29,6 +41,13 @@ export default function About() {
     lang === "en" ? "Busan dermatology, Star Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
     "부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅";
 
+  // access 섹션 레이블 (언어별 분기)
+  const accessLabels =
+    lang === "ja" ? { address: "住所", subway: "地下鉄", bus: "バス", parking: "駐車場" } :
+    lang === "zh" ? { address: "地址", subway: "地铁", bus: "公交", parking: "停车" } :
+    lang === "en" ? { address: "Address", subway: "Subway", bus: "Bus", parking: "Parking" } :
+    { address: "주소", subway: "지하철", bus: "버스", parking: "주차" };
+
   return (
     <MainLayout>
       <SeoHead
@@ -48,11 +67,11 @@ export default function About() {
             {/* 좌측 콘텐츠 */}
             <div>
               <p className="font-semibold text-sm uppercase tracking-wider mb-4" style={{color: 'var(--color-gold-primary)'}}>About Us</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">빛나는 피부의 시작</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{t.about.title}</h1>
               <p className="text-2xl font-bold mb-6" style={{color: 'var(--color-gold-primary)'}}>STAR DERMATOLOGY</p>
-              
+
               <p className="text-gray-600 mb-8 leading-relaxed text-base">
-                2006년 부산 서면에서 문을 연 스타피부과는 지난 20여 년간 오직 고객의 피부만을 고민해 왔습니다. 세계적인 프리미엄 레이저 장비와 검증된 치료 프로토콜을 통해 의료 서비스의 질을 높였으며, 교수출신 피부과전문의의 20년 이상 풍부한 임상 경험의 노하우를 바탕으로 최상의 결과를 약속드립니다.
+                {t.about.desc}
               </p>
 
               {/* 통계 정보 - i18n 중앙 데이터 참조 */}
@@ -65,24 +84,17 @@ export default function About() {
                 ))}
               </div>
 
-              {/* 특징 설명 - 4개 박스 */}
+              {/* 특징 설명 - STAR 4개 박스 (i18n) */}
               <div className="space-y-4">
-                <div className="border-l-4 pl-4" style={{borderColor: 'var(--color-gold-primary)'}}>
-                  <h3 className="font-bold text-gray-900 mb-1"><span style={{color: 'var(--color-gold-primary)'}}>S</span>pecial Guest</h3>
-                  <p className="text-gray-600 text-sm">모든 환자분은 우리에게 가장 특별한 분입니다. 개개인의 고민에 귀 기울이는 1:1 맞춤 진료를 실천합니다.</p>
-                </div>
-                <div className="border-l-4 pl-4" style={{borderColor: 'var(--color-gold-primary)'}}>
-                  <h3 className="font-bold text-gray-900 mb-1"><span style={{color: 'var(--color-gold-primary)'}}>T</span>op Quality</h3>
-                  <p className="text-gray-600 text-sm">다양한 프리미엄 레이저와 앞선 의료 기술로 언제나 수준 높은 치료 결과를 선사합니다.</p>
-                </div>
-                <div className="border-l-4 pl-4" style={{borderColor: 'var(--color-gold-primary)'}}>
-                  <h3 className="font-bold text-gray-900 mb-1"><span style={{color: 'var(--color-gold-primary)'}}>A</span>ttractive Atmosphere</h3>
-                  <p className="text-gray-600 text-sm">예약제를 통해 대기 시간을 줄이고, 오직 치료에만 집중할 수 있는 편안한 환경을 제공합니다.</p>
-                </div>
-                <div className="border-l-4 pl-4" style={{borderColor: 'var(--color-gold-primary)'}}>
-                  <h3 className="font-bold text-gray-900 mb-1"><span style={{color: 'var(--color-gold-primary)'}}>R</span>esponsibility</h3>
-                  <p className="text-gray-600 text-sm">치료 설명과 경과 관찰에 책임감을 갖고, 결과에 만족하실 때까지 함께합니다.</p>
-                </div>
+                {t.about.values.map((v, idx) => (
+                  <div key={idx} className="border-l-4 pl-4" style={{borderColor: 'var(--color-gold-primary)'}}>
+                    <h3 className="font-bold text-gray-900 mb-1">
+                      <span style={{color: 'var(--color-gold-primary)'}}>{v.letter}</span>
+                      {v.title.slice(1)}
+                    </h3>
+                    <p className="text-gray-600 text-sm">{v.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -104,8 +116,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-
 
       {/* 진료 시간 */}
       <section className="py-16 bg-gray-50">
@@ -138,19 +148,19 @@ export default function About() {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t.access.title}</h2>
             <div className="space-y-4 rounded-xl p-6" style={{backgroundColor: 'var(--color-gold-pale)'}}>
               <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>주소</span>
+                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.address}</span>
                 <span className="text-gray-700">{t.access.address}</span>
               </div>
               <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>지하철</span>
+                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.subway}</span>
                 <span className="text-gray-700">{t.access.subway}</span>
               </div>
               <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>버스</span>
+                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.bus}</span>
                 <span className="text-gray-700">{t.access.bus}</span>
               </div>
               <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>주차</span>
+                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.parking}</span>
                 <span className="text-gray-700">{t.access.parking}</span>
               </div>
             </div>

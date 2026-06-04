@@ -1,3 +1,22 @@
+/**
+ * [DORMANT PAGE - NOT ROUTED]
+ *
+ * STATUS: dormant/orphan — not registered in App.tsx.
+ * Location info is currently surfaced via ContactSection on the home page.
+ *
+ * CLASSIFICATION: dormant (future activation candidate)
+ *   The /directions standalone page was replaced by the ContactSection
+ *   embedded in the home landing flow (with Google Maps integration).
+ *   This file is kept as a candidate for a dedicated directions/access page.
+ *
+ * TO ACTIVATE:
+ *   Add <Route path="/directions" component={Directions} /> to App.tsx
+ *   and add a nav link in Header.tsx.
+ *
+ * DO NOT:
+ *   - Treat the SeoHead canonical below as an active SEO signal
+ *     (canonical is preserved for reference only; page is not live)
+ */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
@@ -25,6 +44,7 @@ export default function Directions() {
 
   return (
     <MainLayout>
+      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
       <SeoHead
         title="오시는 길 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 오시는 길 안내. 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층. 서면역 5·7번 출구 도보 3분. 주차 가능."

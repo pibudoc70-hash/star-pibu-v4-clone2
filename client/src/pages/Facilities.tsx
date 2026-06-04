@@ -1,3 +1,25 @@
+/**
+ * [DORMANT PAGE - NOT ROUTED]
+ *
+ * STATUS: dormant/orphan — not registered in App.tsx.
+ * Facility content is currently surfaced via FacilitySection on the home page.
+ *
+ * CLASSIFICATION: dormant (future activation candidate)
+ *   The /facilities standalone page was replaced by the FacilitySection
+ *   embedded in the home landing flow. This file is kept as a candidate
+ *   for a dedicated facility gallery page if the IA is expanded later.
+ *
+ * TO ACTIVATE:
+ *   Add <Route path="/facilities" component={Facilities} /> to App.tsx
+ *   and add a nav link in Header.tsx.
+ *
+ * NOTE: The /directions link inside this page's CTA section currently points
+ *   to an unrouted page. Update both routes together when activating.
+ *
+ * DO NOT:
+ *   - Treat the SeoHead canonical below as an active SEO signal
+ *     (canonical is preserved for reference only; page is not live)
+ */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
@@ -16,6 +38,7 @@ export default function Facilities() {
 
   return (
     <MainLayout>
+      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
       <SeoHead
         title="시설 안내 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 시설 안내. 프리미엄 진료실, 첨단 시술실, 전용 회복실 등 세계 최고 수준의 의료 장비를 갖춘 전문 시술 공간."

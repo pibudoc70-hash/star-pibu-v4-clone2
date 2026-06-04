@@ -1294,3 +1294,12 @@
 - [x] Commit 29-4: fix(copy) - LandingJA スタ皮膚科→スター皮膚科, LandingZH 热玻吵→热玛吉/皮秒激光筐→皮秒激光/中文和询→中文咨询 교정
 - [x] Commit 29-5: fix(copy) - Footer brandDesc JA/ZH 브랜드명 표기 통일 및 톤 개선
 - [x] Commit 29-6: test - TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과, 검색 검증 완료
+
+## PR-30: orphan/legacy page 상태 명시 및 운영 페이지 경계 정리
+
+- [x] Commit 30-1: live route vs unrouted page 분류 초안 작성
+- [x] Commit 30-2: Reserve.tsx legacy 상태 명확화 (LEGACY PAGE - NOT ROUTED 주석 + TO REACTIVATE 가이드)
+- [x] Commit 30-3: Doctors/Directions/Facilities/Events.tsx unrouted 상태 주석 추가 (DORMANT PAGE - NOT ROUTED)
+- [x] Commit 30-4: App.tsx Switch 블록 상단에 PAGE LIFECYCLE POLICY 주석 추가
+- [x] Commit 30-5: 5개 unrouted page SeoHead 앞에 inactive canonical 주석 추가
+- [x] Commit 30-6: TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과

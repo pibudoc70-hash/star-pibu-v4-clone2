@@ -1,13 +1,26 @@
 /**
- * [LEGACY - NOT ROUTED]
- * 이 파일은 현재 App.tsx 라우트에 등록되어 있지 않습니다.
- * 예약 진입 정책은 홈의 #reservation 섹션으로 통일되어 있습니다:
- *   ko => /#reservation
- *   en => /en#reservation
- *   ja => /ja#reservation
- *   zh => /zh#reservation
- * 이 파일을 재활성화하려면 App.tsx에 /reserve 라우트를 추가하고
- * getReservationPath 헬퍼를 업데이트해야 합니다.
+ * [LEGACY PAGE - NOT ROUTED]
+ *
+ * STATUS: legacy — not registered in App.tsx as of PR-27 (2025-04).
+ * This file is intentionally kept as a reference implementation.
+ *
+ * WHY NOT ROUTED:
+ *   Reservation entry was unified to the #reservation anchor section on each
+ *   landing page. Direct /reserve route was removed to avoid duplicate UX.
+ *     ko => /#reservation
+ *     en => /en#reservation
+ *     ja => /ja#reservation
+ *     zh => /zh#reservation
+ *
+ * TO REACTIVATE:
+ *   1. Add <Route path="/reserve" component={Reserve} /> back to App.tsx
+ *   2. Update any getReservationPath() helper to return "/reserve"
+ *   3. Re-evaluate OTP flow against current auth policy before going live
+ *
+ * DO NOT:
+ *   - Connect this file to App.tsx without reviewing the above steps
+ *   - Treat the SeoHead canonical below as an active SEO signal
+ *     (canonical is preserved for reference only; page is not live)
  *
  * 시술 예약 신청 페이지 (다국어 지원: ko/en/ja/zh)
  * - 회원 예약: 로그인 후 바로 예약
@@ -691,6 +704,7 @@ export default function Reserve() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F8FAFC" }}>
+      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
       <SeoHead
         title="시술 예약 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."

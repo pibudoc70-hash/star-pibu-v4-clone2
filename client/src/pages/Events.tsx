@@ -1,3 +1,24 @@
+/**
+ * [DORMANT PAGE - NOT ROUTED]
+ *
+ * STATUS: dormant/orphan — not registered in App.tsx.
+ * Individual event detail pages are live at /events/:id (EventDetail component).
+ * This events LIST page is not currently routed.
+ *
+ * CLASSIFICATION: dormant (high activation priority)
+ *   The /events list page was deferred when the home EventSection was built.
+ *   EventDetail (/events/:id) IS live. This list page is a natural companion
+ *   and is the most likely of the dormant pages to be activated next.
+ *
+ * TO ACTIVATE:
+ *   Add <Route path="/events" component={Events} /> to App.tsx
+ *   (place before the /events/:id route to avoid shadowing)
+ *   and add a nav link in Header.tsx.
+ *
+ * DO NOT:
+ *   - Treat the SeoHead canonical below as an active SEO signal
+ *     (canonical is preserved for reference only; page is not live)
+ */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
@@ -25,6 +46,7 @@ export default function Events() {
 
   return (
     <MainLayout>
+      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
       <SeoHead
         title="이벤트 · 안내 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 이벤트 안내. 시술 할인, 신규 이벤트, 진료 공지 등 최신 소식을 확인하세요."

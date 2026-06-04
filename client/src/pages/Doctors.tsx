@@ -1,3 +1,22 @@
+/**
+ * [DORMANT PAGE - NOT ROUTED]
+ *
+ * STATUS: dormant/orphan — not registered in App.tsx.
+ * Content is currently surfaced via DoctorsSection component on the home page.
+ *
+ * CLASSIFICATION: dormant (future activation candidate)
+ *   The /doctors standalone page was replaced by the DoctorsSection
+ *   embedded in the home landing flow. This file is kept as a candidate
+ *   for a dedicated doctors sub-page if the IA is expanded later.
+ *
+ * TO ACTIVATE:
+ *   Add <Route path="/doctors" component={Doctors} /> to App.tsx
+ *   and add a nav link in Header.tsx.
+ *
+ * DO NOT:
+ *   - Treat the SeoHead canonical below as an active SEO signal
+ *     (canonical is preserved for reference only; page is not live)
+ */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
@@ -15,6 +34,7 @@ export default function Doctors() {
 
   return (
     <MainLayout>
+      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
       <SeoHead
         title="의료진 소개 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 의료진. 피부과 전문의 조시형 원장 외 전문 의료진이 직접 진료합니다. 20년 이상의 감방 시술 경험."

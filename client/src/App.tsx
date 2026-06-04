@@ -117,6 +117,16 @@ function Router() {
       <MapErrorBoundary>
         <Suspense fallback={<MapLoadingFallback />}>
           <Switch>
+            {/*
+             * PAGE LIFECYCLE POLICY
+             * Only pages registered here are live and canonical.
+             * Files in client/src/pages/ that are NOT listed below are:
+             *   - dormant  : kept for future activation (Doctors, Directions, Facilities, Events)
+             *   - legacy   : superseded by current UX (Reserve, Login, Equipment)
+             *   - candidate: dev-only or removal candidate (ComponentShowcase, MyPage)
+             * To activate a dormant page, add its <Route> here and update Header.tsx.
+             * Do NOT connect page files to routes without reviewing their status comment.
+             */}
             {/* Home / language roots */}
             <Route path={"/"} component={Home} />
             <Route path={"/en"} component={LandingEN} />

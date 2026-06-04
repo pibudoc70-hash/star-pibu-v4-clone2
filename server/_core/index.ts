@@ -37,39 +37,11 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   
-  // Sitemap.xml 동적 생성
-  app.get('/sitemap.xml', (req, res) => {
-    const protocol = req.protocol || 'https';
-    const host = req.get('host') || 'star-pibu.com';
-    const baseUrl = `${protocol}://${host}`;
-    
-    const urls = [
-      { loc: '/', lastmod: '2026-04-20', changefreq: 'weekly', priority: '1.0' },
-      { loc: '/#about', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.8' },
-      { loc: '/#doctors', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.8' },
-      { loc: '/#treatments', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.8' },
-      { loc: '/#equipment', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.8' },
-      { loc: '/#facility', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.7' },
-      { loc: '/#contact', lastmod: '2026-04-20', changefreq: 'monthly', priority: '0.7' },
-    ];
-    
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-    
-    urls.forEach(url => {
-      xml += '  <url>\n';
-      xml += `    <loc>${baseUrl}${url.loc}</loc>\n`;
-      xml += `    <lastmod>${url.lastmod}</lastmod>\n`;
-      xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
-      xml += `    <priority>${url.priority}</priority>\n`;
-      xml += '  </url>\n';
-    });
-    
-    xml += '</urlset>';
-    
-    res.type('application/xml');
-    res.send(xml);
-  });
+  // NOTE: /sitemap.xml is served as a static file from client/public/sitemap.xml
+  // (via express.static in serveStatic). The dynamic route that was here has been
+  // removed because it only contained fragment URLs (#about, #doctors, etc.) and
+  // was shadowing the comprehensive static sitemap.xml.
+  // Source of truth: client/public/sitemap.xml
   // tRPC API
   app.use(
     "/api/trpc",

@@ -13,7 +13,7 @@ Disallow: /.git
 Disallow: /node_modules
 
 # Sitemap 위치
-Sitemap: https://star-pibu.com/sitemap.xml
+Sitemap: https://www.star-pibu.com/sitemap.xml
 
 # 크롤링 속도 제한
 Crawl-delay: 1

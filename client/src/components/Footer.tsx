@@ -5,6 +5,7 @@
  */
 import { MessageCircle, Youtube, BookOpen, Instagram, Phone, MapPin, Mail, Printer } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
+import { getLocaleBase } from "../../../shared/pathUtils";
 
 const sns = [
   { icon: MessageCircle, label: "KakaoTalk", href: "https://pf.kakao.com/_HNyGC", color: "#FEE500" },
@@ -17,13 +18,8 @@ export default function Footer() {
   const { t, lang } = useLang();
 
   const handleNavClick = (href: string) => {
-    // URL 경로 기반으로 현재 언어 판단 (localStorage 동기화 지연 방지)
-    const getLocalizedPath = () => {
-      if (window.location.pathname.startsWith("/en")) return "/en";
-      if (window.location.pathname.startsWith("/ja")) return "/ja";
-      if (window.location.pathname.startsWith("/zh")) return "/zh";
-      return "/";
-    };
+    // shared/pathUtils.getLocaleBase: /foreign-guide → "/en", /en/* → "/en", etc.
+    const getLocalizedPath = () => getLocaleBase(window.location.pathname);
     
     // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
     if (href.startsWith("/")) {

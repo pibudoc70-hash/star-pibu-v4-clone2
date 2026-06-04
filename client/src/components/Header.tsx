@@ -17,6 +17,7 @@ import StarLogo from "./StarLogo";
 import { useLang } from "@/contexts/LangContext";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Lang } from "@/lib/i18n";
+import { getLocaleBase } from "../../../shared/pathUtils";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -180,17 +181,11 @@ export default function Header() {
   const handleNavClick = (href: string) => {
     closeMobileMenu();
     
-    // URL 경로 기반으로 현재 언어 판단 (localStorage 동기화 지연 방지)
-    const getLocalizedPath = () => {
-      if (location.startsWith("/en")) return "/en";
-      if (location.startsWith("/ja")) return "/ja";
-      if (location.startsWith("/zh")) return "/zh";
-      return "/";
-    };
+    // shared/pathUtils.getLocaleBase: /foreign-guide → "/en", /en/* → "/en", etc.
+    const getLocalizedPath = () => getLocaleBase(location);
     
     // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
     if (href.startsWith("/")) {
-      // 현재 URL 경로 기반으로 언어 판단
       const basePath = getLocalizedPath();
       if (basePath !== "/") {
         // 다국어 페이지: 해당 언어 경로 추가

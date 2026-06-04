@@ -1,153 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!--
+  sitemap.xml — 스타피부과 (https://www.star-pibu.com)
+  SOURCE OF TRUTH: this static file (server/_core/index.ts dynamic route removed)
 
-  <!-- ── 한국어 메인 페이지 ── -->
+  POLICY
+  ──────
+  • Host: https://www.star-pibu.com (www canonical — matches SeoHead BASE_URL)
+  • Canonical-only: only indexable, canonical URLs are listed
+  • Excluded:
+      - /privacy          (noindex)
+      - /treatment/*      (legacy bridge; canonical owner is /treatments/:slug)
+      - /foreign-guide    (alias; canonical URLs are /en/foreign-guide etc.)
+      - fragment URLs     (#about, #doctors, etc.)
+  • foreign-guide: listed as localized canonical URLs (/en/, /ja/, /zh/)
+  • hreflang: included for multi-locale pages
+
+  Last updated: 2026-06-04
+-->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── 한국어 홈 (canonical) ── -->
   <url>
-    <loc>https://star-pibu.com/</loc>
+    <loc>https://www.star-pibu.com/</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ko"        href="https://star-pibu.com/" />
-    <xhtml:link rel="alternate" hreflang="en"        href="https://star-pibu.com/en" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="https://star-pibu.com/ja" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="https://star-pibu.com/zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/" />
   </url>
 
   <!-- ── 영어 랜딩 페이지 ── -->
   <url>
-    <loc>https://star-pibu.com/en</loc>
+    <loc>https://www.star-pibu.com/en</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ko"        href="https://star-pibu.com/" />
-    <xhtml:link rel="alternate" hreflang="en"        href="https://star-pibu.com/en" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="https://star-pibu.com/ja" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="https://star-pibu.com/zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/" />
   </url>
 
   <!-- ── 일본어 랜딩 페이지 ── -->
   <url>
-    <loc>https://star-pibu.com/ja</loc>
+    <loc>https://www.star-pibu.com/ja</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ko"        href="https://star-pibu.com/" />
-    <xhtml:link rel="alternate" hreflang="en"        href="https://star-pibu.com/en" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="https://star-pibu.com/ja" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="https://star-pibu.com/zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/" />
   </url>
 
   <!-- ── 중국어 랜딩 페이지 ── -->
   <url>
-    <loc>https://star-pibu.com/zh</loc>
+    <loc>https://www.star-pibu.com/zh</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ko"        href="https://star-pibu.com/" />
-    <xhtml:link rel="alternate" hreflang="en"        href="https://star-pibu.com/en" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="https://star-pibu.com/ja" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="https://star-pibu.com/zh" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/" />
   </url>
 
-  <!-- ── 시술 상세 페이지 (신규 slug 방식) ── -->
+  <!-- ── 시술 상세 페이지 (slug 방식 canonical) ── -->
   <url>
-    <loc>https://star-pibu.com/treatments/ulthera</loc>
+    <loc>https://www.star-pibu.com/treatments/ulthera</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://star-pibu.com/treatments/thermage</loc>
+    <loc>https://www.star-pibu.com/treatments/thermage</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://star-pibu.com/treatments/under-eye-fat</loc>
+    <loc>https://www.star-pibu.com/treatments/under-eye-fat</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ── 시술 상세 페이지 (기존 한국어 URL) ── -->
+  <!-- ── 장비 소개 페이지 ── -->
   <url>
-    <loc>https://star-pibu.com/treatment/%EC%9A%B8%EC%8E%84%EB%9D%BC%ED%94%BC%20%ED%94%84%EB%9D%BC%EC%9E%84</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%EC%8D%A8%EB%A7%88%EC%A7%80</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%EB%A6%AC%EC%A3%AC%EB%9E%80</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%EB%88%88%EB%B0%91%EC%A7%80%EB%B0%A9%EC%9E%AC%EB%B0%B0%EC%B9%98</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%EC%97%AC%EB%93%9C%EB%A6%84%EB%A0%88%EC%9D%B4%EC%A0%80</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%ED%98%B8%EC%A0%84%EC%A0%9C%EA%B1%B0</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://star-pibu.com/treatment/%EB%AA%A8%EA%B3%B5%EC%B6%95%EC%86%8C</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ── 주요 페이지 ── -->
-  <url>
-    <loc>https://star-pibu.com/equipment2</loc>
-    <lastmod>2026-05-14</lastmod>
+    <loc>https://www.star-pibu.com/equipment2</loc>
+    <lastmod>2026-05-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/equipment2" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/equipment2" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/equipment2" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/equipment2" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/equipment2" />
   </url>
+
+  <!-- ── 외국인 안내 (canonical localized URLs; /foreign-guide alias excluded) ── -->
   <url>
-    <loc>https://star-pibu.com/foreign-guide</loc>
+    <loc>https://www.star-pibu.com/en/foreign-guide</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/en/foreign-guide" />
   </url>
   <url>
-    <loc>https://star-pibu.com/about</loc>
+    <loc>https://www.star-pibu.com/ja/foreign-guide</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/en/foreign-guide" />
+  </url>
+  <url>
+    <loc>https://www.star-pibu.com/zh/foreign-guide</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/en/foreign-guide" />
+  </url>
+
+  <!-- ── 병원 소개 ── -->
+  <url>
+    <loc>https://www.star-pibu.com/about</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/about" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/about" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/about" />
   </url>
+
+  <!-- ── 비급여 진료안내 ── -->
   <url>
-    <loc>https://star-pibu.com/non-covered</loc>
+    <loc>https://www.star-pibu.com/non-covered</loc>
     <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/non-covered" />
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.star-pibu.com/en/non-covered" />
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://www.star-pibu.com/ja/non-covered" />
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://www.star-pibu.com/zh/non-covered" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/non-covered" />
   </url>
-  <url>
-    <loc>https://star-pibu.com/privacy</loc>
-    <lastmod>2026-05-30</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
+
+  <!--
+    EXCLUDED URLS (policy)
+    ──────────────────────
+    /privacy              → noindex (legal document, Korean only)
+    /treatment/*          → legacy bridge; canonical is /treatments/:slug
+    /foreign-guide        → alias; canonical is /en/foreign-guide
+    /#about, /#doctors…   → fragment URLs (not indexable)
+  -->
 
 </urlset>

@@ -10,6 +10,7 @@ import { Calendar, Clock, Phone, User, AlertCircle, CheckCircle, XCircle, Loader
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { getReservationPath } from "@/lib/reservationPath";
+import type { Reservation } from "../../../drizzle/schema";
 
 const STATUS_CONFIG = {
   pending: { label: "대기 중", color: "#D97706", bg: "#FEF3C7", icon: AlertCircle },
@@ -78,7 +79,7 @@ export default function MyReservations() {
           </div>
         ) : (
           <div className="space-y-4">
-            {reservations.map((reservation: any) => {
+            {reservations.map((reservation: Reservation) => {
               const statusConfig = STATUS_CONFIG[reservation.status as keyof typeof STATUS_CONFIG];
               const StatusIcon = statusConfig.icon;
               const preferredDate = new Date(reservation.preferredDate);

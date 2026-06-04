@@ -17,7 +17,7 @@ export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const infoPanelRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
+  const mapInstanceRef = useRef<google.maps.Map | null>(null);
   const [mapHeight, setMapHeight] = useState("400px");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 

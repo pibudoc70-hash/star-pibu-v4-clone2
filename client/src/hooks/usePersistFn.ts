@@ -1,6 +1,9 @@
 import { useRef } from "react";
 
-type noop = (...args: any[]) => any;
+// NOTE: any[] is intentional here — this hook is a generic function persister
+// that must accept any callback signature. Narrowing to unknown[] breaks
+// callers that pass typed event handlers (e.g., React.CompositionEvent).
+type noop = (...args: any[]) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /**
  * usePersistFn instead of useCallback to reduce cognitive load

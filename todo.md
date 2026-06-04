@@ -1272,3 +1272,12 @@
 - [x] Commit 27-4: fix(router) - /admin/equipment2/new가 /admin/:id/edit보다 앞, /equipment2/:slug가 /equipment2보다 앞 배치
 - [x] Commit 27-5: chore(router) - 그룹 주석 추가 (Home/Detail/Info/User/Admin/Fallback)
 - [x] Commit 27-6: test(router) - TypeScript 에러 0건, 테스트 115개 전부 통과 확인
+
+## PR-28: 운영 핵심 any 제거 및 타입 안전성 1차 정리 (2026-06-04)
+- [x] Commit 28-1: audit(types) - any 사용처 전체 파악 및 P1/P2/P3 우선순위 분류
+- [x] Commit 28-2: refactor(types) - MyReservations.tsx reservation any → Reservation 타입 import
+- [x] Commit 28-3: refactor(types) - TreatmentsManager.tsx filter/handleEdit/map any 3건 → Treatment 타입 import
+- [x] Commit 28-4: refactor(types) - ContactSection.tsx mapInstanceRef any → google.maps.Map | null
+- [x] Commit 28-5: refactor(server) - routers.ts createEvent as any → InsertEvent, updateData any → Partial<InsertEvent>
+- [x] Commit 28-6: refactor(boundary) - storage.ts data as any → new Uint8Array(data as Buffer), usePersistFn.ts any 주석 보강, input/textarea/dialog.tsx nativeEvent as any 제거
+- [x] Commit 28-7: test(types) - TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과, any 검색 결과 전/후 비교 확인

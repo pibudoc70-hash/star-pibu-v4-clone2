@@ -6,6 +6,7 @@ import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_
 import { TRPCError } from "@trpc/server";
 import { getDb, createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats, generateOtpCode, createGuestOtp, verifyGuestOtp, cancelGuestReservation, getAllEvents, getFeaturedEvents, getListEvents, getEventById, createEvent, updateEvent, deleteEvent, incrementEventViews, getSpecialEvents, getSpecialEventsByLang, getAllEventsByLang, getAllTreatmentCategories, getTreatmentCategoryById, createTreatmentCategory, updateTreatmentCategory, deleteTreatmentCategory, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest, createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot, getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo } from "./db";
 import { users, popupEvents, events, treatments, treatmentCategories, youtubeVideos } from "../drizzle/schema";
+import type { InsertEvent } from "../drizzle/schema";
 import { desc, eq, count, asc } from "drizzle-orm";
 import { z } from "zod/v4";
 import { notifyOwner } from "./_core/notification";
@@ -435,7 +436,7 @@ export const appRouter = router({
           ...rest,
           priceRows: JSON.stringify(priceRows || []),
         };
-        await createEvent(eventData as any);
+        await createEvent(eventData as InsertEvent);
         return { success: true };
       }),
 
@@ -488,7 +489,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { id, priceRows, ...data } = input;
-        const updateData: any = { ...data };
+        const updateData: Partial<InsertEvent> = { ...data };
         if (priceRows !== undefined) {
           updateData.priceRows = JSON.stringify(priceRows);
         }

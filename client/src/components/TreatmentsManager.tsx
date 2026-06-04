@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X, Upload, Loader } from "lucide-react";
+import type { Treatment } from "../../../drizzle/schema";
 
 interface TreatmentForm {
   id?: number;
@@ -79,7 +80,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
   // section별 필터링
   const treatments = useMemo(() => {
     if (!allTreatments) return [];
-    return allTreatments.filter((t: any) => (t.section || "v1") === section);
+    return allTreatments.filter((t: Treatment) => (t.section || "v1") === section);
   }, [allTreatments, section]);
 
   // 시술 생성
@@ -168,7 +169,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
     }
   };
 
-  const handleEdit = (treatment: any) => {
+  const handleEdit = (treatment: Treatment) => {
     setForm({
       id: treatment.id,
       categoryId: treatment.categoryId,
@@ -574,7 +575,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredTreatments.map((treatment: any) => (
+                {filteredTreatments.map((treatment: Treatment) => (
                   <tr key={treatment.id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {getCategoryLabel(treatment.categoryId)}

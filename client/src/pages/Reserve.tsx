@@ -1,12 +1,7 @@
 /**
  * [LEGACY PAGE - NOT ROUTED]
- *
- * STATUS: legacy — removed from App.tsx in PR-27 (2025-04).
- * Reservation is now handled via the #reservation anchor on each landing page:
- *   ko => /#reservation | en => /en#reservation
- *   ja => /ja#reservation | zh => /zh#reservation
- *
- * noindex-only: canonical intentionally omitted (PR-39).
+ * Reservation is handled via the #reservation anchor on each landing page.
+ * noindex-only: canonical intentionally omitted.
  */
 import { useState } from "react";
 import { useLocation } from "wouter";
@@ -15,7 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SeoHead from "@/components/SeoHead"; // COMMON_HREFLANGS 제거: NOT ROUTED legacy file — hreflangs 불필요
+import SeoHead from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import {
   Calendar, Clock, User, Phone, FileText,
@@ -686,16 +681,7 @@ export default function Reserve() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F8FAFC" }}>
-      {/*
-       * NOTE: This page is NOT ROUTED in App.tsx (legacy since PR-27).
-       * noindex={true} prevents accidental search engine indexing if this
-       * component were ever rendered.
-       * canonical is intentionally omitted (PR-39): not-routed + noindex page
-       * does not need a canonical signal. noindex-only is sufficient.
-       * Active reservation entry points:
-       *   ko => /#reservation  |  en => /en#reservation
-       *   ja => /ja#reservation  |  zh => /zh#reservation
-       */}
+      {/* noindex-only: not routed, canonical omitted intentionally. */}
       <SeoHead
         title="시술 예약 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."

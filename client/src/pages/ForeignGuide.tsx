@@ -90,11 +90,18 @@ export default function ForeignGuide() {
   const seo = SEO_META[activeLang];
 
   /**
-   * 내부 언어 토글: activeLang 변경 + 전역 lang 동기화 + 실제 route 이동
-   * URL / canonical / ogUrl / 표시 언어가 항상 일치하도록 보장.
+   * 내부 언어 토글: 실제 route 이동 + 사용자 선호 저장
+   *
+   * [PERSIST 정책]
+   *   - useEffect의 setLang(activeLang, false): route 기준 동기화 (localStorage 오염 방지)
+   *   - handleLangSwitch의 setLang(l, true (default)): 사용자가 직접 클릭한 언어는
+   *     선호로 간주하여 localStorage에 저장.
+   *     다른 페이지로 이동 후 foreign-guide로 돌아왔을 때
+   *     선호 언어를 유지하는 용도.
+   *   → route가 진실 원체이므로 activeLang은 언제나 URL에서 재계산됨.
    */
   const handleLangSwitch = (l: ForeignLang) => {
-    setLang(l);
+    setLang(l); // persist=true (default): 사용자 선호 저장
     navigate(`/${l}/foreign-guide`);
   };
 

@@ -11,6 +11,11 @@
  *   3. Only GET requests are handled; non-GET passes through unmodified.
  *   4. Only same-origin "basic" responses are stored in cache.
  *
+ * Navigation / document requests (mode === "navigate"):
+ *   Included in the network-first cache. All pages are public SPA shells;
+ *   auth checks happen inside React via tRPC, not at the HTML level.
+ *   Caching the shell is safe — admin routes are protected by tRPC procedures.
+ *
  * Cache versioning: bump CACHE_NAME when deploying breaking asset changes
  * to force old caches to be deleted on activate.
  */
@@ -59,7 +64,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // All other GET requests: try network first, fall back to cache.
+  // All other GET requests (including navigation/document): network-first.
   event.respondWith(
     fetch(event.request)
       .then((response) => {

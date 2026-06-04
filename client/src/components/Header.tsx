@@ -1,6 +1,6 @@
 /**
  * Header Component - STAR 피부과
- * 디자인: 모던 클리니컈 엣지 - 민트-네이비 듀오톤
+ * 디자인: 모던 클리닉 엣지 - 민트-네이비 듀오톤
  * 언어 전환: 데스크탑 + 모바일 드롭다운 선택자 (buildLocalizedPath 기반 locale-aware 전환)
  *   - /foreign-guide 계열에서 ko 선택 시 홈(/) 이동 (ko 콘텐츠 없음)
  *   - 그 외 경로: 현재 URL에서 lang prefix만 교체

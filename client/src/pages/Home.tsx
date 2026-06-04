@@ -24,7 +24,6 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import WelcomePopup from "@/components/WelcomePopup";
-import LangSwitcher from "@/components/LangSwitcher";
 
 export default function Home() {
   // The userAuth hooks provides authentication state
@@ -150,8 +149,6 @@ export default function Home() {
       {/* Welcome Popup */}
       <WelcomePopup />
 
-      {/* Language Switcher - Floating */}
-      <LangSwitcher />
     </div>
   );
 }

@@ -15,7 +15,6 @@ import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
-import LangSwitcher from "@/components/LangSwitcher";
 import { ExternalLink, Info, ChevronRight } from "lucide-react";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 
@@ -269,7 +268,6 @@ export default function NonCoveredGuide() {
       </main>
       <Footer />
       <FloatingCTA />
-      <LangSwitcher />
     </div>
   );
 }

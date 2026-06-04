@@ -22,7 +22,6 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import WelcomePopup from "@/components/WelcomePopup";
-import LangSwitcher from "@/components/LangSwitcher";
 
 export default function LandingZH() {
   // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/zh) 기반으로 자동 처리
@@ -114,7 +113,6 @@ export default function LandingZH() {
       <Footer />
       <FloatingCTA />
       <WelcomePopup />
-      <LangSwitcher />
     </div>
   );
 }

@@ -1,5 +1,20 @@
 /**
- * Email Service - Manus 내장 API를 사용한 이메일 발송
+ * Email Service
+ *
+ * CURRENT STATUS: sendEmail() is a no-op stub.
+ *   Manus does not provide a built-in outbound email API.
+ *   notifyOwner() (server/_core/notification.ts) is the only
+ *   built-in notification channel, but it targets the site owner only.
+ *
+ * TO ENABLE REAL EMAIL DELIVERY:
+ *   1. Choose an external SMTP provider (e.g. SendGrid, AWS SES, Resend).
+ *   2. Add the provider's API key via webdev_request_secrets
+ *      (e.g. SENDGRID_API_KEY or SMTP_HOST / SMTP_USER / SMTP_PASS).
+ *   3. Replace the stub body in sendEmail() with the provider's SDK call.
+ *   4. Expose the new env var in server/_core/env.ts.
+ *
+ * Until then, customer-facing emails are silently skipped; only
+ * notifyOwner() alerts reach the owner via the Manus notification channel.
  */
 
 
@@ -11,17 +26,23 @@ export interface EmailOptions {
 }
 
 /**
- * 이메일 발송 (Manus 내장 API 사용)
+ * 이메일 발송 (no-op stub)
+ *
+ * NOTE: This function currently does nothing.
+ *   See the file-level JSDoc above for integration steps.
+ *   Replace the stub body once an external SMTP provider is configured.
+ *
  * @param options 이메일 옵션
- * @returns 발송 성공 여부
+ * @returns 발송 성공 여부 (stub: 항상 true)
  */
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
   // logger는 _core/logger를 사용하지만, 순환 import 방지를 위해 dynamic import 사용
   const { logger } = await import("./_core/logger");
   try {
     // 이메일 주소는 로그에 노출하지 않음
-    logger.info("Email", `이메일 발송 시도: ${options.subject}`);
-    // TODO: Manus 이메일 API 통합
+    logger.info("Email", `[STUB] 이메일 발송 시도 (no-op): ${options.subject}`);
+    // STUB: no-op until external SMTP provider is configured.
+    // See file-level JSDoc for integration steps.
     return true;
   } catch (error) {
     logger.error("Email", "Error sending email", error);

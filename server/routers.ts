@@ -783,9 +783,11 @@ export const appRouter = router({
             if (reservation.isGuest === "1") {
               logger.info("Email", "비회원 예약 상태 변경 처리");
             } else {
-              // 회원 예약인 경우 - 사용자 정보는 데이터베이스에 저장되지 않아 이메일 발송 스킵
+              // 회원 예약인 경우 - users.email 필드가 존재하지만 sendEmail()은 no-op stub임
               logger.info("Email", "회원 예약 상태 변경 처리");
-              // TODO: 사용자 정보를 데이터베이스에서 조회하여 이메일 발송
+              // NOTE: users.email 필드는 drizzle/schema.ts에 존재 (varchar 320).
+              //   하지만 sendEmail()은 현재 no-op stub임 (Manus 내장 이메일 API 미지원).
+              //   외부 SMTP 제공자 연동 후 아래 코드를 활성화:
               // const user = await db.select().from(users).where(eq(users.id, reservation.userId)).limit(1);
               // if (user[0]?.email) { await sendEmail({ to: user[0].email, ... }) }
             }

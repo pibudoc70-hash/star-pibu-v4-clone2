@@ -704,12 +704,20 @@ export default function Reserve() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F8FAFC" }}>
-      {/* NOTE: canonical below is inactive — this page is not routed in App.tsx */}
+      {/*
+       * NOTE: This page is NOT ROUTED in App.tsx (legacy since PR-27).
+       * noindex={true} prevents accidental search engine indexing if this
+       * component were ever rendered. The canonical URL /reserve is not live.
+       * Active reservation entry points:
+       *   ko => /#reservation  |  en => /en#reservation
+       *   ja => /ja#reservation  |  zh => /zh#reservation
+       */}
       <SeoHead
         title="시술 예약 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."
         keywords="스타피부과 예약, 서면피부과 예약, 부산피부과 온라인 예약, 스타피부과 시술 예약"
         canonical="https://www.star-pibu.com/reserve"
+        noindex={true}
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
       />

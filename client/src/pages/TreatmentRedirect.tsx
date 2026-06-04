@@ -2,12 +2,18 @@
  * TreatmentRedirect.tsx
  *
  * PURPOSE:
- *   Handles the legacy /treatment/:name route and redirects to the canonical
+ *   Handles the legacy /treatment/:name route and navigates to the canonical
  *   /treatments/:slug URL when a slug mapping exists.
  *
  * REDIRECT LOGIC:
- *   - If NAME_TO_SLUG[name] exists → redirect to /treatments/:slug (permanent)
- *   - If no slug mapping found → redirect to /404
+ *   - If NAME_TO_SLUG[name] exists → SPA navigation to /treatments/:slug (replace history)
+ *   - If no slug mapping found → SPA navigation to /404 (replace history)
+ *
+ * NOTE: This is a client-side SPA route replacement (wouter navigate + replace: true),
+ * NOT an HTTP 301 redirect. The browser history entry is replaced so the user
+ * cannot navigate back to the legacy /treatment/:name URL within the session.
+ * For true HTTP-level permanent redirects, a server-side rule (e.g., nginx, CDN)
+ * would be required — not currently configured.
  *
  * This component replaces TreatmentDetail as the handler for /treatment/:name.
  * TreatmentDetail.tsx is kept as a reference but is no longer routed.
@@ -44,7 +50,7 @@ export default function TreatmentRedirect() {
     const slug = NAME_TO_SLUG[decodedName];
 
     if (slug) {
-      // Permanent redirect to canonical TreatmentPage URL
+      // SPA route replacement → canonical TreatmentPage URL (history entry replaced)
       navigate(`/treatments/${slug}`, { replace: true });
     } else {
       // Unknown treatment name → 404
@@ -52,6 +58,6 @@ export default function TreatmentRedirect() {
     }
   }, [params?.name, navigate]);
 
-  // Render nothing while redirect is in progress
+  // Render nothing while navigation is in progress
   return null;
 }

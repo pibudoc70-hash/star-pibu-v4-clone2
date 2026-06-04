@@ -1394,3 +1394,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Privacy.tsx lifecycle 주석 추가 (법률 문서 특성상 ko 단일 운영 근거 명시)
 - [x] App.tsx about/privacy route 그룹에 SEO 정책 주석 추가
 - [x] TypeScript 에러 0건, 테스트 127개 통과, 빌드 성공
+
+## PR-37: 레거시 브리지 문서화 정확성 및 남은 TODO 실행 가능성 정리
+- [x] Commit 37-1 (audit): TreatmentRedirect "permanent" 표현 오류 확인, Reserve.tsx noindex 누락 확인, routers.ts/email.ts TODO 구체화 필요 확인
+- [x] Commit 37-2: TreatmentRedirect.tsx - "permanent" 표현을 "SPA route replacement (replace history)" 로 정정
+- [x] Commit 37-3: Reserve.tsx - SeoHead에 noindex={true} 추가, 주석 강화 (NOT ROUTED 명시, 활성 예약 진입점 4개 언어 명시)
+- [x] Commit 37-4: email.ts - 파일 헤더에 CURRENT STATUS / TO ENABLE 절차 명시, sendEmail() 함수 주석 no-op stub 명시
+- [x] Commit 37-4: routers.ts line 788 - TODO → NOTE로 교체, users.email 존재 확인 + no-op stub 이유 + SMTP 연동 후 활성화 방법 명시
+- [x] Commit 37-5: TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공 확인

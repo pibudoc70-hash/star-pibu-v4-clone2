@@ -1360,3 +1360,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 | 피코레이저 | pico-laser | 미이전 (Step 1 대상) |
 | 루비피코레이저 | ruby-pico-laser | 미이전 (Step 1 대상) |
 | 안면홍조 치료 | rosacea | 미이전 (Step 1 대상) |
+
+## PR-31 남은 리스크 처리 (PR-32/33/34)
+
+- [x] PR-32: ulthera-classic.ts slug 데이터 파일 생성 (ko/en/ja/zh)
+- [x] PR-32: pico-laser.ts slug 데이터 파일 생성 (ko/en/ja/zh)
+- [x] PR-32: ruby-pico-laser.ts slug 데이터 파일 생성 (ko/en/ja/zh)
+- [x] PR-32: rosacea.ts slug 데이터 파일 생성 (ko/en/ja/zh)
+- [x] PR-32: treatments/index.ts에 4개 slug 등록
+- [x] PR-32: TreatmentDetail NAME_TO_SLUG 테이블에 4개 매핑 추가
+- [x] PR-33: App.tsx /treatment/:name route를 redirect 컴포넌트로 교체
+- [x] PR-33: redirect 로직 구현 (NAME_TO_SLUG 있으면 /treatments/:slug, 없으면 /404)
+- [x] PR-34: treatment.routes.seo.test.ts redirect 동작 검증 테스트 추가
+- [x] PR-34: 전체 테스트 127개 통과 확인 (PR-32/33 신규 12개 추가)

@@ -125,12 +125,18 @@ describe("treatments data integrity", () => {
     expect(underEyeFat.faq?.zh?.length).toBeGreaterThan(0);
   });
 
-  it("TREATMENT_DATA has 3 entries", async () => {
+  it("TREATMENT_DATA has 7 entries (PR-32: 4 new slugs added)", async () => {
     const { TREATMENT_DATA } = await import("../client/src/data/treatments/index");
-    expect(Object.keys(TREATMENT_DATA)).toHaveLength(3);
+    // Original 3 (PR-24)
     expect(TREATMENT_DATA["ulthera"]).toBeDefined();
     expect(TREATMENT_DATA["thermage"]).toBeDefined();
     expect(TREATMENT_DATA["under-eye-fat"]).toBeDefined();
+    // New 4 (PR-32)
+    expect(TREATMENT_DATA["ulthera-classic"]).toBeDefined();
+    expect(TREATMENT_DATA["pico-laser"]).toBeDefined();
+    expect(TREATMENT_DATA["ruby-pico-laser"]).toBeDefined();
+    expect(TREATMENT_DATA["rosacea"]).toBeDefined();
+    expect(Object.keys(TREATMENT_DATA)).toHaveLength(7);
   });
 
   it("getTreatmentBySlug returns undefined for unknown slug", async () => {

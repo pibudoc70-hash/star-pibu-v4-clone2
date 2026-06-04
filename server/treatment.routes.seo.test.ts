@@ -1,12 +1,14 @@
 /**
- * PR-24 검증 테스트: TreatmentPage 다국어 라우팅 및 SEO URL 정합성
+ * PR-24/31/32/33 검증 테스트: TreatmentPage 다국어 라우팅 및 SEO URL 정합성
  *
  * 소스코드 정적 검사 방식 (TreatmentsEquipmentSection.copy.test.ts 패턴 동일)
  * - App.tsx에 4개 treatment 라우트 존재 여부
  * - TreatmentPage.tsx의 LANG_PREFIX 정의 및 pageUrl/canonical/hreflang/JSON-LD 정합성
  * - 내부 이동 locale 유지 여부
+ * - PR-32: 7개 시술 slug 데이터 파일 존재 여부
+ * - PR-33: /treatment/:name → TreatmentRedirect 라우팅 여부
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 
 const appSource = readFileSync(
@@ -103,5 +105,86 @@ describe("PR-24: TreatmentPage 다국어 라우팅 정합성", () => {
         'const localizedHomePath = langPrefix || "/"'
       );
     });
+  });
+});
+
+describe("PR-32: 7개 시술 slug 데이터 파일 존재 여부", () => {
+  const EXPECTED_SLUGS = [
+    "ulthera",
+    "thermage",
+    "under-eye-fat",
+    "ulthera-classic",
+    "pico-laser",
+    "ruby-pico-laser",
+    "rosacea",
+  ];
+
+  for (const slug of EXPECTED_SLUGS) {
+    it(`${slug}.ts 데이터 파일이 존재해야 한다`, () => {
+      const filePath = path.resolve(
+        process.cwd(),
+        `client/src/data/treatments/${slug}.ts`
+      );
+      expect(existsSync(filePath)).toBe(true);
+    });
+  }
+
+  it("TREATMENT_DATA index에 7개 slug가 모두 등록되어야 한다", () => {
+    const indexSource = readFileSync(
+      path.resolve(process.cwd(), "client/src/data/treatments/index.ts"),
+      "utf8",
+    );
+    for (const slug of EXPECTED_SLUGS) {
+      // slug가 TREATMENT_DATA 키로 등록되어 있는지 확인
+      const isRegistered =
+        indexSource.includes(`"${slug}":`) ||
+        indexSource.includes(`  ${slug},`);
+      expect(isRegistered).toBe(true);
+    }
+  });
+});
+
+describe("PR-33: /treatment/:name redirect 정책 검증", () => {
+  it("/treatment/:name 라우트가 TreatmentRedirect를 사용해야 한다", () => {
+    const routeLines = appSource
+      .split("\n")
+      .filter((line) => line.includes('path={"/treatment/:name"}') && line.includes("<Route"));
+    expect(routeLines).toHaveLength(1);
+    expect(routeLines[0]).toContain("TreatmentRedirect");
+  });
+
+  it("TreatmentRedirect.tsx가 존재해야 한다", () => {
+    const filePath = path.resolve(
+      process.cwd(),
+      "client/src/pages/TreatmentRedirect.tsx"
+    );
+    expect(existsSync(filePath)).toBe(true);
+  });
+
+  it("TreatmentRedirect.tsx가 7개 시술 NAME_TO_SLUG 매핑을 포함해야 한다", () => {
+    const redirectSource = readFileSync(
+      path.resolve(process.cwd(), "client/src/pages/TreatmentRedirect.tsx"),
+      "utf8",
+    );
+    const expectedNames = [
+      "울쎄라",
+      "울쎄라피 프라임",
+      "써마지 FLX",
+      "눈밑지방재배치",
+      "피코레이저",
+      "루비피코레이저",
+      "안면홍조 치료",
+    ];
+    for (const name of expectedNames) {
+      expect(redirectSource).toContain(name);
+    }
+  });
+
+  it("TreatmentRedirect.tsx가 replace: true로 navigate를 호출해야 한다", () => {
+    const redirectSource = readFileSync(
+      path.resolve(process.cwd(), "client/src/pages/TreatmentRedirect.tsx"),
+      "utf8",
+    );
+    expect(redirectSource).toContain("replace: true");
   });
 });

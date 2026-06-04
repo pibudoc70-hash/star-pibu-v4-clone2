@@ -324,9 +324,15 @@ const getAllTreatments = () => {
  * 신규 시술은 TreatmentPage 데이터로 등록 후 이 테이블에 추가하지 말 것.
  */
 const NAME_TO_SLUG: Record<string, string> = {
-  "울쎄라": "ulthera",
+  // PR-31: 기존 매핑 (slug 파일 이미 존재)
+  "울쎄라": "ulthera-classic",
+  "울쎄라피 프라임": "ulthera",
   "써마지 FLX": "thermage",
   "눈밑지방재배치": "under-eye-fat",
+  // PR-32: 신규 slug 파일 생성 완료
+  "피코레이저": "pico-laser",
+  "루비피코레이저": "ruby-pico-laser",
+  "안면홍조 치료": "rosacea",
 };
 
 export default function TreatmentDetail() {

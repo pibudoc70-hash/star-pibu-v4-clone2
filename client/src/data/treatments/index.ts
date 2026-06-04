@@ -11,6 +11,10 @@ import type { LocalizedString, LocalizedFaq } from "@/lib/i18nText";
 import { ulthera } from "./ulthera";
 import { thermage } from "./thermage";
 import { underEyeFat } from "./under-eye-fat";
+import { ultheraClassic } from "./ulthera-classic";
+import { picoLaser } from "./pico-laser";
+import { rubyPicoLaser } from "./ruby-pico-laser";
+import { rosacea } from "./rosacea";
 
 export interface TreatmentI18n {
   slug: string;
@@ -51,6 +55,10 @@ export const TREATMENT_DATA: Record<string, TreatmentI18n> = {
   ulthera,
   thermage,
   "under-eye-fat": underEyeFat,
+  "ulthera-classic": ultheraClassic,
+  "pico-laser": picoLaser,
+  "ruby-pico-laser": rubyPicoLaser,
+  rosacea,
 };
 
 export function getTreatmentBySlug(slug: string | undefined): TreatmentI18n | undefined {

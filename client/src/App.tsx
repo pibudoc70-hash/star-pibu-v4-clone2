@@ -54,7 +54,9 @@ class MapErrorBoundary extends Component<
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const ForeignGuide = lazy(() => import("@/pages/ForeignGuide"));
 const EventDetail = lazy(() => import("@/pages/EventDetail"));
-const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
+const TreatmentRedirect = lazy(() => import("@/pages/TreatmentRedirect"));
+// TreatmentDetail is kept as a reference file but no longer routed (PR-33)
+// const TreatmentDetail = lazy(() => import("@/pages/TreatmentDetail"));
 const AdminDashboard = lazy(() => import("@/pages/AdminDashboard"));
 const AdminYouTube = lazy(() => import("@/pages/AdminYouTube"));
 const MyReservations = lazy(() => import("@/pages/MyReservations"));
@@ -145,13 +147,13 @@ function Router() {
              *   - SEO: full hreflang + MedicalProcedure JSON-LD
              *   - Treatments: ulthera, thermage, under-eye-fat
              *
-             * LEGACY BRIDGE ROUTE: /treatment/:name (TreatmentDetail)
-             *   - Korean-only, inline data, noindex applied (PR-31)
-             *   - Kept for inbound links to 7 treatments not yet migrated
-             *   - DO NOT add new treatments here; use TreatmentPage instead
-             *   - Migration target: see todo.md "PR-31 후속 통합 로드맵"
+             * LEGACY BRIDGE ROUTE: /treatment/:name (TreatmentRedirect)
+             *   - PR-32: All 7 treatments now have slug data files
+             *   - PR-33: Redirects to /treatments/:slug (replace history)
+             *   - Unknown names redirect to /404
+             *   - TreatmentDetail.tsx kept as reference, no longer routed
              */}
-            <Route path={"/treatment/:name"} component={TreatmentDetail} />
+            <Route path={"/treatment/:name"} component={TreatmentRedirect} />
             <Route path={"/treatments/:slug"} component={TreatmentPage} />
             <Route path={"/en/treatments/:slug"} component={TreatmentPage} />
             <Route path={"/ja/treatments/:slug"} component={TreatmentPage} />

@@ -31,6 +31,16 @@ export default function YouTubeSection() {
     setIsLoading(false);
   }, [allVideos]);
 
+  // H-4: 모달 ESC 키 닫기 (WCAG 2.1 SC 2.1.2)
+  useEffect(() => {
+    if (!selectedVideo) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedVideo(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [selectedVideo]);
+
   if (isLoading) {
     return (
       <section className="py-16 md:py-24 bg-white">

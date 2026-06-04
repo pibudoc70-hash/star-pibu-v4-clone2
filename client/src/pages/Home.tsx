@@ -37,18 +37,41 @@ function SectionFallback() {
 
 export default function Home() {
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
+  // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
-    const timer = setTimeout(() => {
-      const el = document.querySelector(hash);
+    const id = hash.slice(1);
+
+    const scrollToElement = (el: Element) => {
+      const offset = 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+
+    // 이미 DOM에 있으면 즉시 스크롤
+    const existing = document.getElementById(id);
+    if (existing) {
+      scrollToElement(existing);
+      return;
+    }
+
+    // lazy 섹션이 마운트될 때까지 MutationObserver로 대기 (최대 5초)
+    const observer = new MutationObserver(() => {
+      const el = document.getElementById(id);
       if (el) {
-        const offset = 80;
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
+        observer.disconnect();
+        clearTimeout(timeout);
+        scrollToElement(el);
       }
-    }, 300);
-    return () => clearTimeout(timer);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    const timeout = setTimeout(() => observer.disconnect(), 5000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (

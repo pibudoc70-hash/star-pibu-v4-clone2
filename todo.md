@@ -1486,3 +1486,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Round 3: EventsSection id="events-legacy", TreatmentsSection id="treatments-legacy" (미사용 컴포넌트 id 충돌 방지)
 - [x] Round 4: <button type="button"> 누락 156개 일괄 추가 (scripts/fix_button_type.py)
 - [x] Round 5: vite.config.ts manualChunks 설정 — vendor-react/trpc/icons/katex 분리, 메인 번들 1,123kB → 622kB (45% 감소)
+
+## 코드 리뷰 보고서 수정 (C-1, C-2, H-1~H-4)
+- [ ] C-1: index.html MedicalBusiness JSON-LD 중복 스키마 제거
+- [ ] C-2: Hash navigation MutationObserver 수정 (lazy 섹션 DOM 대기)
+- [ ] H-1: Header 모바일 메뉴 ESC 키 처리
+- [ ] H-2: Header 모바일 메뉴 버튼 aria-expanded 추가
+- [ ] H-3: Language Dropdown aria-expanded 추가
+- [ ] H-4: YouTubeSection 모달 ESC 키 처리

@@ -84,7 +84,28 @@ export default function Header() {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [])
+  }, []);
+
+  // H-1: 모바일 메뉴 ESC 키 닫기 (WCAG 2.1 SC 2.1.2)
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMobileMenu();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mobileOpen]);
+
+  // H-3: 언어 드롭다운 ESC 키 닫기
+  useEffect(() => {
+    if (!langDropOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLangDropOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [langDropOpen]);
   const WECHAT_ID = "star2006beauty";
   const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
   const LINE_URL = "https://line.me/ti/p/~star2006derm";
@@ -322,6 +343,8 @@ export default function Header() {
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 hover:bg-gray-100"
               style={{ fontSize: "13px", color: "#4f4f4f", border: "1px solid rgba(0,0,0,0.12)", background: langDropOpen ? "#f5f5f5" : "white" }}
               aria-label="언어 선택"
+              aria-expanded={langDropOpen}
+              aria-haspopup="listbox"
             >
               <Globe size={13} style={{ color: "#888" }} />
               <span>{currentLangOption.flag}</span>
@@ -393,6 +416,8 @@ export default function Header() {
               style={{ color: "#1F2937" }}
               onClick={() => openMobileMenu()}
               aria-label="메뉴 열기"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu-panel"
             >
               <Menu size={24} />
             </button>
@@ -415,6 +440,10 @@ export default function Header() {
       {/* Mobile Menu Panel */}
       {mobileOpen && (
       <div
+        id="mobile-menu-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="네비게이션 메뉴"
         className="fixed top-0 right-0 h-full z-50 shadow-2xl overflow-y-auto transition-all duration-300"
         style={{
           width: "min(88vw, 340px)",

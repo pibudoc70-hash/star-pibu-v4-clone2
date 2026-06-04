@@ -1,30 +1,13 @@
 /**
  * [LEGACY PAGE - NOT ROUTED]
  *
- * STATUS: legacy — not registered in App.tsx as of PR-27 (2025-04).
- * This file is intentionally kept as a reference implementation.
+ * STATUS: legacy — removed from App.tsx in PR-27 (2025-04).
+ * Reservation entry is now the #reservation anchor on each landing page:
+ *   ko => /#reservation | en => /en#reservation
+ *   ja => /ja#reservation | zh => /zh#reservation
  *
- * WHY NOT ROUTED:
- *   Reservation entry was unified to the #reservation anchor section on each
- *   landing page. Direct /reserve route was removed to avoid duplicate UX.
- *     ko => /#reservation
- *     en => /en#reservation
- *     ja => /ja#reservation
- *     zh => /zh#reservation
- *
- * TO REACTIVATE:
- *   1. Add <Route path="/reserve" component={Reserve} /> back to App.tsx
- *   2. Update any getReservationPath() helper to return "/reserve"
- *   3. Re-evaluate OTP flow against current auth policy before going live
- *
- * DO NOT:
- *   - Connect this file to App.tsx without reviewing the above steps
- *   - Treat the SeoHead canonical below as an active SEO signal
- *     (canonical is preserved for reference only; page is not live)
- *
- * 시술 예약 신청 페이지 (다국어 지원: ko/en/ja/zh)
- * - 회원 예약: 로그인 후 바로 예약
- * - 비회원 간편 예약: 전화번호 OTP 인증 후 예약
+ * TO REACTIVATE: add <Route path="/reserve" component={Reserve} /> to App.tsx
+ *   and re-evaluate OTP flow before going live.
  */
 import { useState } from "react";
 import { useLocation } from "wouter";

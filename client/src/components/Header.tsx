@@ -27,25 +27,43 @@ export default function Header() {
   const langDropRef = useRef<HTMLDivElement>(null);
 
   // 언어 옵션 정의
-  const langOptions: { lang: Lang; label: string; flag: string; path: string }[] = [
-    { lang: "ko", label: "한국어", flag: "🇰🇷", path: "/" },
-    { lang: "en", label: "English", flag: "🇺🇸", path: "/en" },
-    { lang: "ja", label: "日本語", flag: "🇯🇵", path: "/ja" },
-    { lang: "zh", label: "中文", flag: "🇨🇳", path: "/zh" },
+  const langOptions: { lang: Lang; label: string; flag: string }[] = [
+    { lang: "ko", label: "한국어", flag: "🇰🇷" },
+    { lang: "en", label: "English", flag: "🇺🇸" },
+    { lang: "ja", label: "日本語", flag: "🇯🇵" },
+    { lang: "zh", label: "中文", flag: "🇨🇳" },
   ];
 
   const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
 
+  /**
+   * locale-aware 언어 전환:
+   * 현재 URL에서 lang prefix(/en|/ja|/zh)를 제거한 뒤 새 prefix를 붙여 이동.
+   * 지원 패턴: /, /about, /equipment2, /equipment2/:slug,
+   *   /treatments/:slug, /foreign-guide, /privacy, /non-covered
+   * hash가 있으면 유지.
+   */
+  const buildLocalizedPath = (targetLang: Lang): string => {
+    const LANG_PREFIXES = ["/en", "/ja", "/zh"];
+    // 현재 pathname에서 lang prefix 제거
+    let stripped = location;
+    for (const prefix of LANG_PREFIXES) {
+      if (stripped === prefix || stripped.startsWith(prefix + "/")) {
+        stripped = stripped.slice(prefix.length) || "/";
+        break;
+      }
+    }
+    // 새 prefix 붙이기
+    const prefix = targetLang === "ko" ? "" : `/${targetLang}`;
+    const newPath = prefix + (stripped === "/" ? "" : stripped) || "/";
+    return newPath || "/";
+  };
+
   const handleLangChange = (option: typeof langOptions[0]) => {
     setLangDropOpen(false);
-    // 현재 페이지의 해시를 유지하면서 언어 변경
     const hash = window.location.hash;
-    // 홈 페이지 간 이동 시 해시 제거 (홈으로 돌아가기)
-    if ((location === "/" || location === "/en" || location === "/ja" || location === "/zh") && !hash) {
-      window.location.href = option.path;
-    } else {
-      window.location.href = option.path + hash;
-    }
+    const newPath = buildLocalizedPath(option.lang);
+    window.location.href = newPath + hash;
   };
 
   // 드롭다운 외부 클릭 시 닫기
@@ -481,7 +499,7 @@ export default function Header() {
             {langOptions.map((option) => (
               <button
                 key={option.lang}
-                onClick={() => { closeMobileMenu(); setTimeout(() => { window.location.href = option.path; }, 100); }}
+                onClick={() => { closeMobileMenu(); setTimeout(() => { const hash = window.location.hash; window.location.href = buildLocalizedPath(option.lang) + hash; }, 100); }}
                 className="flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all"
                 style={{
                   background: option.lang === lang ? "rgba(201,168,76,0.1)" : "rgba(0,0,0,0.04)",

@@ -1,56 +1,77 @@
 /**
  * Service Worker - Star Dermatology Clinic
+ *
  * Strategy: Network-first for all requests.
- * API routes (/api/*) are NEVER cached to prevent stale JSON issues.
+ *
+ * CRITICAL RULES:
+ *   1. /api/* requests are NEVER cached — always pass through to network.
+ *      Caching tRPC responses causes "Unexpected token '<'" JSON parse errors
+ *      when the SW serves stale HTML instead of JSON.
+ *   2. /manus-storage/* requests are NEVER cached — signed URLs expire.
+ *   3. Only GET requests are handled; non-GET passes through unmodified.
+ *   4. Only same-origin "basic" responses are stored in cache.
+ *
+ * Cache versioning: bump CACHE_NAME when deploying breaking asset changes
+ * to force old caches to be deleted on activate.
  */
+const CACHE_NAME = "star-pibu-v2";
 
-const CACHE_NAME = "star-pibu-v1";
-
-// API 경로는 절대 캐시하지 않음
+/**
+ * Patterns that must NEVER be cached.
+ * Tested against request.url.pathname.
+ */
 const NO_CACHE_PATTERNS = [
-  /^\/api\//,
-  /^\/manus-storage\//,
+  /^\/api\//,           // tRPC + OAuth endpoints
+  /^\/manus-storage\//, // Signed S3 URLs
 ];
 
-self.addEventListener("install", (event) => {
-  // 즉시 활성화
+// ── Install: skip waiting so new SW activates immediately ──────────────────
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
+// ── Activate: delete stale caches, claim all clients ──────────────────────
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames
-          .filter((name) => name !== CACHE_NAME)
-          .map((name) => caches.delete(name))
+    caches
+      .keys()
+      .then((names) =>
+        Promise.all(
+          names
+            .filter((name) => name !== CACHE_NAME)
+            .map((name) => caches.delete(name))
+        )
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 
+// ── Fetch: network-first, never cache API/storage ─────────────────────────
 self.addEventListener("fetch", (event) => {
+  // Only handle GET requests; let non-GET pass through unmodified.
+  if (event.request.method !== "GET") return;
+
   const url = new URL(event.request.url);
 
-  // API 요청 및 캐시 제외 패턴은 항상 네트워크로 직접 전달
+  // API and storage paths: bypass SW entirely, go straight to network.
   if (NO_CACHE_PATTERNS.some((pattern) => pattern.test(url.pathname))) {
     event.respondWith(fetch(event.request));
     return;
   }
 
-  // 그 외 요청: 네트워크 우선, 실패 시 캐시 사용
+  // All other GET requests: try network first, fall back to cache.
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // 유효한 응답만 캐시
+        // Cache only successful same-origin responses.
         if (
           response &&
           response.status === 200 &&
           response.type === "basic"
         ) {
-          const responseToCache = response.clone();
+          const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+            cache.put(event.request, clone);
           });
         }
         return response;

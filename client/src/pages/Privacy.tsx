@@ -156,10 +156,14 @@ export default function Privacy() {
 
       <main className="pt-24 pb-20">
         <div className="container max-w-4xl mx-auto px-4">
-          {/* 뒤로가기 */}
-          <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-colors hover:opacity-70" style={{ color: "#4A6FA5" }}>
+          {/* 뒤로가기 - locale-aware: 현재 언어 홈으로 이동 */}
+          <Link
+            href={lang === "en" ? "/en" : lang === "ja" ? "/ja" : lang === "zh" ? "/zh" : "/"}
+            className="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-colors hover:opacity-70"
+            style={{ color: "#4A6FA5" }}
+          >
             <ArrowLeft size={16} />
-            홈으로 돌아가기
+            {lang === "en" ? "Back to Home" : lang === "ja" ? "ホームへ戻る" : lang === "zh" ? "返回首页" : "홈으로 돌아가기"}
           </Link>
 
           {/* 비-ko route 접근 시 법률 원문 안내 배너 (PR-39) */}

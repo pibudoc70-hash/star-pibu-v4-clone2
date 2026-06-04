@@ -23,6 +23,7 @@
  * - noindex: 없음 (전체 색인 허용)
  */
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
@@ -41,13 +42,19 @@ const LANG_COLORS: Record<ForeignLang, { bg: string; text: string; accent: strin
 
 export default function ForeignGuide() {
   const { lang: globalLang, setLang } = useLang();
-  const [activeLang, setActiveLang] = useState<ForeignLang>(
-    globalLang === "en" || globalLang === "ja" || globalLang === "zh"
-      ? (globalLang as ForeignLang)
-      : "en"
-  );
+  const [, navigate] = useLocation();
 
-  // 전역 언어가 외국어로 바뀌면 activeLang도 동기화
+  // URL 경로에서 activeLang 결정 (route가 진실의 원천)
+  const pathLang: ForeignLang = (() => {
+    const p = window.location.pathname;
+    if (p.startsWith("/ja")) return "ja";
+    if (p.startsWith("/zh")) return "zh";
+    return "en"; // /foreign-guide 또는 /en/foreign-guide → en
+  })();
+
+  const [activeLang, setActiveLang] = useState<ForeignLang>(pathLang);
+
+  // 전역 언어 컨텍스트와 동기화 (Header 언어 전환 시)
   useEffect(() => {
     if (globalLang === "en" || globalLang === "ja" || globalLang === "zh") {
       setActiveLang(globalLang as ForeignLang);
@@ -82,9 +89,14 @@ export default function ForeignGuide() {
   };
   const seo = SEO_META[activeLang];
 
+  /**
+   * 내부 언어 토글: activeLang 변경 + 전역 lang 동기화 + 실제 route 이동
+   * URL / canonical / ogUrl / 표시 언어가 항상 일치하도록 보장.
+   */
   const handleLangSwitch = (l: ForeignLang) => {
     setActiveLang(l);
     setLang(l);
+    navigate(`/${l}/foreign-guide`);
   };
 
   return (
@@ -153,10 +165,10 @@ export default function ForeignGuide() {
         </div>
       </section>
 
-      {/* Back Button */}
+      {/* Back Button - locale-aware: /en, /ja, /zh 홈으로 이동 */}
       <div className="max-w-4xl mx-auto px-6 pt-6">
         <a
-          href="/"
+          href={`/${activeLang}`}
           className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70"
           style={{ color: "#6B7280" }}
         >

@@ -1447,3 +1447,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Reserve.tsx import 줄 inline 주석 제거
 - [x] Reserve.tsx JSX NOTE 블록 1줄로 간소화
 - [x] sw.js navigation/document request 처리 정책 명확화 주석 추가
+
+## PR-43: /foreign-guide alias Header/Footer 정합성, sitemap www 통일, 동적 sitemap 제거, LangSwitcher 삭제 (6f85cbb)
+- [x] shared/pathUtils.ts getLocaleBase 유틸 생성 (/foreign-guide → "/en" special-case 포함)
+- [x] Header.tsx getLocalizedPath → getLocaleBase 교체 (/foreign-guide에서 About 클릭 시 /en/about 이동)
+- [x] Footer.tsx getLocalizedPath → getLocaleBase 교체 (동일 정합성)
+- [x] sitemap.xml 재작성: www 호스트, canonical-only, /privacy·/treatment/*·/foreign-guide alias·fragment URL 제외
+- [x] robots.txt Sitemap URL www 호스트로 통일
+- [x] index.html hreflang URLs www 호스트로 통일
+- [x] server/_core/index.ts 동적 sitemap 라우트 제거 (static single source)
+- [x] LangSwitcher.tsx 삭제 (null 반환 stub, 모든 참조 제거 완료)

@@ -1,12 +1,15 @@
 /**
  * About Page - 피부과 소개
  *
- * [PAGE LIFECYCLE] localized live page (정책 확정: PR-36)
+ * [PAGE LIFECYCLE] localized live page (정책 확정: PR-38)
  * - route: /about, /en/about, /ja/about, /zh/about (App.tsx live)
- * - canonical: 현재 언어 route 기준 (langPrefix 동적 계산)
- * - hreflangs: 4개 언어 전부 (buildHreflangs)
+ * - canonical: lang 기반 동적 계산 (ko → /about, 기타 → /{lang}/about)
+ * - ogUrl: canonical과 동일
+ * - ogLocale: LANG_TO_OG_LOCALE[lang] (언어별 정렬)
+ * - hreflangs: buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")
+ * - title/description/keywords: ko/en/ja/zh 언어별 정렬
  * - 본문: t.about.desc / t.about.values / t.access (i18n 중앙화 완료)
- * - SEO 신호: localized live 정책 — canonical/ogUrl/ogLocale/hreflangs 모두 정렬됨
+ * - noindex: 없음 (전체 색인 허용)
  *
  * [TRANSLATION STATUS] 완성 (ko/en/ja/zh 전 섹션 i18n 처리)
  */

@@ -1,6 +1,15 @@
 /**
  * NonCoveredGuide - 비급여 진료안내 페이지
  * 건강보험 비급여 항목 안내 (4개 언어)
+ *
+ * [PAGE LIFECYCLE] localized live page (PR-38 정책 확정)
+ * - route: /non-covered, /en/non-covered, /ja/non-covered, /zh/non-covered (App.tsx live)
+ * - canonical: lang 기반 동적 계산 (ko → /non-covered, 기타 → /{lang}/non-covered)
+ * - ogUrl: canonical과 동일
+ * - ogLocale: LANG_TO_OG_LOCALE[lang] (언어별 정렬)
+ * - hreflangs: buildHreflangs("/non-covered", "/en/...", "/ja/...", "/zh/...")
+ * - 본문: ko/en/ja/zh 4개 언어 전체 제공 (의료법 제45조 준수)
+ * - noindex: 없음 (전체 색인 허용)
  */
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";

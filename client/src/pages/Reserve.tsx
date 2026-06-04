@@ -33,7 +33,7 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SeoHead, { COMMON_HREFLANGS } from "@/components/SeoHead";
+import SeoHead from "@/components/SeoHead"; // COMMON_HREFLANGS 제거: NOT ROUTED legacy file — hreflangs 불필요
 import { useLang } from "@/contexts/LangContext";
 import {
   Calendar, Clock, User, Phone, FileText,
@@ -719,7 +719,6 @@ export default function Reserve() {
         canonical="https://www.star-pibu.com/reserve"
         noindex={true}
         ogLocale="ko_KR"
-        hreflangs={COMMON_HREFLANGS}
       />
       <Header />
 

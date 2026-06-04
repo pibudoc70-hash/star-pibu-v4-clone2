@@ -2,6 +2,19 @@
  * ForeignGuide Page - STAR 피부과 외국어 안내
  * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
  * 영어·일본어·중국어 방문객을 위한 전용 안내 페이지 (3개 언어 지원)
+ *
+ * [PAGE LIFECYCLE] localized live page (PR-38 정책 확정)
+ * - route: /foreign-guide, /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide (App.tsx live)
+ * - canonical: activeLang 기반 동적 계산 (`/${activeLang}/foreign-guide`)
+ *   · /foreign-guide 접근 시 activeLang 기본값 en → canonical = /en/foreign-guide
+ *   · /en/foreign-guide → canonical = /en/foreign-guide
+ *   · /ja/foreign-guide → canonical = /ja/foreign-guide
+ *   · /zh/foreign-guide → canonical = /zh/foreign-guide
+ * - ogUrl: canonical과 동일
+ * - ogLocale: LANG_TO_OG_LOCALE[activeLang] (언어별 정렬)
+ * - hreflangs: buildHreflangs("/foreign-guide", "/en/...", "/ja/...", "/zh/...")
+ * - 본문: en/ja/zh 3개 언어 전체 제공 (한국어 콘텐츠 없음)
+ * - noindex: 없음 (전체 색인 허용)
  */
 import { useState, useEffect } from "react";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";

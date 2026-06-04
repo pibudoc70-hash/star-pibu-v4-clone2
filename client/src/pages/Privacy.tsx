@@ -2,12 +2,18 @@
  * Privacy Policy Page - 개인정보처리방침
  * 의료기관 개인정보처리방침 (개인정보 보호법 제30조 준수)
  *
- * [PAGE LIFECYCLE] noindex live page (정책 확정: PR-36)
+ * [PAGE LIFECYCLE] noindex live page (정책 확정: PR-38)
  * - route: /privacy, /en/privacy, /ja/privacy, /zh/privacy (App.tsx live)
- * - canonical: https://www.star-pibu.com/privacy (ko 고정 — 법률 원문 기준)
- * - noindex: true (검색 인덱싱 차단 — 법률 문서, 다국어 번역 미제공)
+ * - canonical: https://www.star-pibu.com/privacy (고정 — 법률 원문 ko 기준)
+ * - noindex: true — 모든 route에서 색인 차단
+ *   · 이유: 법률 문서 특성상 검색 유입 불필요, 다국어 번역 미제공
+ *   · /en/privacy, /ja/privacy, /zh/privacy도 동일하게 noindex (ko 단일 콘텐츠)
+ * - ogUrl: https://www.star-pibu.com/privacy (고정)
+ * - hreflangs: 없음 (noindex 정책에서 hreflang 색인 신호 불필요)
  * - 번역 상태: 한국어 원문만 제공 (의료기관 법률 문서 특성상 ko 단일 운영)
- * - SEO 정책: noindex이므로 canonical 고정이 SEO 영향 없음
+ * - SEO 정책: noindex이므로 canonical 고정이 실질 SEO 영향 없음
+ *   · 다국어 route가 live이지만 전체 noindex로 색인 신호 없음
+ *   · 사용자가 직접 URL 접근 시는 한국어 원문 표시
  */
 
 import { Link } from "wouter";

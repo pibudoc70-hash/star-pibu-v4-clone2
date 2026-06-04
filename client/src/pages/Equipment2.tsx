@@ -2,9 +2,14 @@
  * Equipment2 Page - 시술·장비소개2 (관리자 등록 시술 프로그램)
  * 별도 페이지에서 관리자가 등록한 시술을 표시하고 관리할 수 있는 페이지
  *
- * SEO 정책: localized live page
- * - /equipment2 (ko), /en/equipment2, /ja/equipment2, /zh/equipment2 모두 live
- * - canonical/ogUrl/ogLocale/hreflang은 현재 언어 route 기준으로 정렬
+ * [PAGE LIFECYCLE] localized live page (PR-38 정책 확정)
+ * - route: /equipment2, /en/equipment2, /ja/equipment2, /zh/equipment2 (App.tsx live)
+ * - canonical: lang 기반 동적 계산 (ko → /equipment2, 기타 → /{lang}/equipment2)
+ * - ogUrl: canonical과 동일
+ * - ogLocale: LANG_TO_OG_LOCALE[lang] (언어별 정렬)
+ * - hreflangs: buildHreflangs("/equipment2", "/en/...", "/ja/...", "/zh/...")
+ * - title/description/keywords: ko/en/ja/zh 언어별 정렬
+ * - noindex: 없음 (전체 색인 허용)
  * - Equipment2Detail.tsx의 다국어 SEO 패턴과 동일한 정책 적용
  */
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";

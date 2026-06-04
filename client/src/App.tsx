@@ -122,6 +122,9 @@ function Router() {
         <Route path={"/events/:id"} component={EventDetail} />
         <Route path={"/treatment/:name"} component={TreatmentDetail} />
         <Route path={"/treatments/:slug"} component={TreatmentPage} />
+        <Route path={"/en/treatments/:slug"} component={TreatmentPage} />
+        <Route path={"/ja/treatments/:slug"} component={TreatmentPage} />
+        <Route path={"/zh/treatments/:slug"} component={TreatmentPage} />
         <Route path={"/admin"} component={AdminDashboard} />
         <Route path={"/admin/equipment2/new"} component={AdminEquipment2New} />
         <Route path={"/admin/equipment2/:id/edit"} component={AdminEquipment2Edit} />

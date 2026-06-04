@@ -15,8 +15,16 @@ import type { SupportedLang } from "@/lib/i18nText";
 import { getTreatmentBySlug, getAllTreatments } from "@/data/treatments";
 import type { TreatmentI18n } from "@/data/treatments";
 
+// ── lang → URL prefix 매핑 ────────────────────────────────────────────────────
+const LANG_PREFIX: Record<SupportedLang, string> = {
+  ko: "",
+  en: "/en",
+  ja: "/ja",
+  zh: "/zh",
+};
+
 // ── JSON-LD 구조화 데이터 생성 (MedicalProcedure + FAQ) ──────────────────────
-function buildJsonLd(t: TreatmentI18n, lang: SupportedLang) {
+function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
   const name = pickLocalized(t.name, lang);
   const description = pickLocalized(t.seoDescription, lang);
   const detail = pickLocalized(t.detail, lang);
@@ -32,7 +40,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang) {
     "description": description,
     "procedureType": "https://schema.org/CosmeticProcedure",
     "image": t.image,
-    "url": `${BASE_URL}/treatments/${t.slug}`,
+    "url": pageUrl,
     "bodyLocation": bodyLocation,
     "preparation": caution,
     "followup": `회복 기간: ${recovery}. ${caution}`,
@@ -79,6 +87,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang) {
 
   return [medicalProcedure, faqPage];
 }
+
 
 // ── i18n 레이블 ──────────────────────────────────────────────────────────────
 const LABELS = {
@@ -158,14 +167,17 @@ export default function TreatmentPage() {
   const lbl = LABELS[lang as keyof typeof LABELS] ?? LABELS.ko;
   const currentLang = (lang as SupportedLang) ?? "ko";
 
-  const pageUrl = `${BASE_URL}/treatments/${slug}`;
+  // ── URL / SEO 계산 블록 ─────────────────────────────────────────────────────
+  const langPrefix = LANG_PREFIX[currentLang];
+  const localizedHomePath = langPrefix || "/";
+  const pageUrl = `${BASE_URL}${langPrefix}/treatments/${slug}`;
   const treatmentHreflangs = buildHreflangs(
     `/treatments/${slug}`,
-    `/treatments/${slug}`,
-    `/treatments/${slug}`,
-    `/treatments/${slug}`,
+    `/en/treatments/${slug}`,
+    `/ja/treatments/${slug}`,
+    `/zh/treatments/${slug}`,
   );
-  const jsonLdArray = treatment ? buildJsonLd(treatment, currentLang) : null;
+  const jsonLdArray = treatment ? buildJsonLd(treatment, currentLang, pageUrl) : null;
 
   // 시술을 찾지 못한 경우
   if (!treatment) {
@@ -173,7 +185,7 @@ export default function TreatmentPage() {
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="text-gray-600 text-lg">{lbl.notFound}</p>
         <button
-          onClick={() => setLocation("/")}
+          onClick={() => setLocation(localizedHomePath)}
           className="flex items-center gap-2 text-[#4A6FA5] hover:underline"
         >
           <ArrowLeft size={16} />
@@ -238,10 +250,10 @@ export default function TreatmentPage() {
         )}
         <div className="relative container mx-auto px-4 py-12">
           {/* 뒤로가기 */}
-          <button
-            onClick={() => setLocation("/")}
-            className="inline-flex items-center gap-2 mb-6 text-white/80 hover:text-white transition-colors text-sm"
-          >
+        <button
+          onClick={() => setLocation(localizedHomePath)}
+          className="inline-flex items-center gap-2 mb-6 text-white/80 hover:text-white transition-colors text-sm"
+        >
             <ArrowLeft size={16} />
             {lbl.backHome}
           </button>
@@ -414,7 +426,7 @@ export default function TreatmentPage() {
               if (el) {
                 el.scrollIntoView({ behavior: "smooth" });
               } else {
-                setLocation("/#reservation");
+                setLocation(`${localizedHomePath === "/" ? "" : localizedHomePath}/#reservation`);
               }
             }}
             className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
@@ -436,7 +448,7 @@ export default function TreatmentPage() {
               .map((t) => (
                 <button
                   key={t.slug}
-                  onClick={() => setLocation(`/treatments/${t.slug}`)}
+                  onClick={() => setLocation(`${langPrefix}/treatments/${t.slug}`)}
                   className="text-left p-4 rounded-xl border border-gray-200 hover:border-[#4A6FA5] hover:shadow-md transition-all group"
                 >
                   <p className="text-xs text-gray-500 mb-1">{pickLocalized(t.category, currentLang)}</p>

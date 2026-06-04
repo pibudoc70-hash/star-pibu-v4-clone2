@@ -1248,3 +1248,11 @@
 - [x] Commit 23-6: TreatmentPage.tsx 전체 재작성 - 인라인 한국어 고정 데이터 제거, 새 다국어 구조 적용
 - [x] Commit 23-7: server/i18nText.test.ts 신규 생성 (22개 단위 테스트 + 5개 데이터 정합성 테스트)
 - [x] Commit 23-8: 테스트 69개 전부 통과 확인 (TypeScript 에러 0건)
+
+## PR-24: TreatmentPage 다국어 라우팅 및 SEO URL 정합성 (2026-06-04)
+
+- [x] Commit 24-1: App.tsx에 /en|ja|zh/treatments/:slug 라우트 추가
+- [x] Commit 24-2: TreatmentPage canonical/hreflang/ogUrl/JSON-LD url 언어별 정렬
+- [x] Commit 24-3: TreatmentPage 내부 이동 locale prefix 유지
+- [x] Commit 24-4: URL/SEO 로직 정리 리팩토링 (단일 블록으로 정리됨)
+- [x] Commit 24-5: 테스트 추가 및 최종 검증 (82개 전부 통과)

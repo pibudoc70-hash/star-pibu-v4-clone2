@@ -1264,3 +1264,11 @@
 - [ ] Commit 25-3: UI 라벨 locale 정합성 보완
 - [ ] Commit 25-4: JSON-LD name/description fallback 언어별 정렬
 - [ ] Commit 25-5: 테스트 추가 및 금지 문자열 0건 검증
+
+## PR-27: App.tsx 라우트 구조 정리 (2026-06-04)
+- [x] Commit 27-1: audit(router) - App.tsx 전체 route 현황 파악, /foreign-guide 중복 선언 및 순서 혼재 확인
+- [x] Commit 27-2: fix(router) - /foreign-guide 중복 route 제거 (line 121 중복 삭제)
+- [x] Commit 27-3: refactor(router) - 그룹별 재배치 (홈/상세/소개정책/사용자/관리자/폴백 6그룹)
+- [x] Commit 27-4: fix(router) - /admin/equipment2/new가 /admin/:id/edit보다 앞, /equipment2/:slug가 /equipment2보다 앞 배치
+- [x] Commit 27-5: chore(router) - 그룹 주석 추가 (Home/Detail/Info/User/Admin/Fallback)
+- [x] Commit 27-6: test(router) - TypeScript 에러 0건, 테스트 115개 전부 통과 확인

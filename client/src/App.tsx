@@ -117,48 +117,58 @@ function Router() {
       <MapErrorBoundary>
         <Suspense fallback={<MapLoadingFallback />}>
           <Switch>
+            {/* Home / language roots */}
             <Route path={"/"} component={Home} />
-        <Route path={"/foreign-guide"} component={ForeignGuide} />
-        <Route path={"/events/:id"} component={EventDetail} />
-        <Route path={"/treatment/:name"} component={TreatmentDetail} />
-        <Route path={"/treatments/:slug"} component={TreatmentPage} />
-        <Route path={"/en/treatments/:slug"} component={TreatmentPage} />
-        <Route path={"/ja/treatments/:slug"} component={TreatmentPage} />
-        <Route path={"/zh/treatments/:slug"} component={TreatmentPage} />
-        <Route path={"/admin"} component={AdminDashboard} />
-        <Route path={"/admin/equipment2/new"} component={AdminEquipment2New} />
-        <Route path={"/admin/equipment2/:id/edit"} component={AdminEquipment2Edit} />
-        <Route path={"/admin/youtube"} component={AdminYouTube} />
-        <Route path={"/my-reservations"} component={MyReservations} />
-        <Route path={"/equipment2"} component={Equipment2} />
-        <Route path={"/equipment2/:slug"} component={Equipment2Detail} />
-        <Route path={"/en/equipment2"} component={Equipment2} />
-        <Route path={"/en/equipment2/:slug"} component={Equipment2Detail} />
-        <Route path={"/ja/equipment2"} component={Equipment2} />
-        <Route path={"/ja/equipment2/:slug"} component={Equipment2Detail} />
-        <Route path={"/zh/equipment2"} component={Equipment2} />
-        <Route path={"/zh/equipment2/:slug"} component={Equipment2Detail} />
-        <Route path={"/privacy"} component={Privacy} />
-        <Route path={"/en/privacy"} component={Privacy} />
-        <Route path={"/ja/privacy"} component={Privacy} />
-        <Route path={"/zh/privacy"} component={Privacy} />
-        <Route path={"/non-covered"} component={NonCoveredGuide} />
-        <Route path={"/en/non-covered"} component={NonCoveredGuide} />
-        <Route path={"/ja/non-covered"} component={NonCoveredGuide} />
-        <Route path={"/zh/non-covered"} component={NonCoveredGuide} />
-        <Route path={"/foreign-guide"} component={ForeignGuide} />
-        <Route path={"/en/foreign-guide"} component={ForeignGuide} />
-        <Route path={"/ja/foreign-guide"} component={ForeignGuide} />
-        <Route path={"/zh/foreign-guide"} component={ForeignGuide} />
-        <Route path={"/about"} component={About} />
-        <Route path={"/en/about"} component={About} />
-        <Route path={"/ja/about"} component={About} />
-        <Route path={"/zh/about"} component={About} />
-        <Route path={"/en"} component={LandingEN} />
-        <Route path={"/ja"} component={LandingJA} />
-        <Route path={"/zh"} component={LandingZH} />
-        <Route path={"/404"} component={NotFound} />
-        <Route component={NotFound} />
+            <Route path={"/en"} component={LandingEN} />
+            <Route path={"/ja"} component={LandingJA} />
+            <Route path={"/zh"} component={LandingZH} />
+
+            {/* Detail pages — specific routes before generic params */}
+            <Route path={"/events/:id"} component={EventDetail} />
+            <Route path={"/treatment/:name"} component={TreatmentDetail} />
+            <Route path={"/treatments/:slug"} component={TreatmentPage} />
+            <Route path={"/en/treatments/:slug"} component={TreatmentPage} />
+            <Route path={"/ja/treatments/:slug"} component={TreatmentPage} />
+            <Route path={"/zh/treatments/:slug"} component={TreatmentPage} />
+            <Route path={"/equipment2/:slug"} component={Equipment2Detail} />
+            <Route path={"/en/equipment2/:slug"} component={Equipment2Detail} />
+            <Route path={"/ja/equipment2/:slug"} component={Equipment2Detail} />
+            <Route path={"/zh/equipment2/:slug"} component={Equipment2Detail} />
+
+            {/* Info / policy / list pages — add new info pages in this group */}
+            <Route path={"/equipment2"} component={Equipment2} />
+            <Route path={"/en/equipment2"} component={Equipment2} />
+            <Route path={"/ja/equipment2"} component={Equipment2} />
+            <Route path={"/zh/equipment2"} component={Equipment2} />
+            <Route path={"/about"} component={About} />
+            <Route path={"/en/about"} component={About} />
+            <Route path={"/ja/about"} component={About} />
+            <Route path={"/zh/about"} component={About} />
+            <Route path={"/foreign-guide"} component={ForeignGuide} />
+            <Route path={"/en/foreign-guide"} component={ForeignGuide} />
+            <Route path={"/ja/foreign-guide"} component={ForeignGuide} />
+            <Route path={"/zh/foreign-guide"} component={ForeignGuide} />
+            <Route path={"/privacy"} component={Privacy} />
+            <Route path={"/en/privacy"} component={Privacy} />
+            <Route path={"/ja/privacy"} component={Privacy} />
+            <Route path={"/zh/privacy"} component={Privacy} />
+            <Route path={"/non-covered"} component={NonCoveredGuide} />
+            <Route path={"/en/non-covered"} component={NonCoveredGuide} />
+            <Route path={"/ja/non-covered"} component={NonCoveredGuide} />
+            <Route path={"/zh/non-covered"} component={NonCoveredGuide} />
+
+            {/* User pages */}
+            <Route path={"/my-reservations"} component={MyReservations} />
+
+            {/* Admin pages — specific routes (new/edit) before generic param */}
+            <Route path={"/admin/equipment2/new"} component={AdminEquipment2New} />
+            <Route path={"/admin/equipment2/:id/edit"} component={AdminEquipment2Edit} />
+            <Route path={"/admin/youtube"} component={AdminYouTube} />
+            <Route path={"/admin"} component={AdminDashboard} />
+
+            {/* Fallback — keep these last */}
+            <Route path={"/404"} component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
         </Suspense>
       </MapErrorBoundary>

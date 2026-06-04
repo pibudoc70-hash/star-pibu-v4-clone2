@@ -1,6 +1,34 @@
 /**
- * TreatmentDetail - 시술 상세 페이지
- * 시술의 효과, 시간, 회복 기간, 가격 정보 및 FAQ를 표시합니다.
+ * [LEGACY BRIDGE ROUTE - /treatment/:name]
+ *
+ * STATUS: legacy bridge route — live but NOT the canonical SEO owner.
+ *
+ * CANONICAL OWNER: TreatmentPage (/treatments/:slug)
+ *   The official treatment detail structure is TreatmentPage, which provides:
+ *   - Multilingual support (ko/en/ja/zh) via /[lang]/treatments/:slug
+ *   - Structured i18n data from client/src/data/treatments/*.ts
+ *   - MedicalProcedure + FAQ JSON-LD schema
+ *   - Proper hreflang for all 4 locales
+ *
+ * WHY THIS ROUTE STILL EXISTS:
+ *   1. TreatmentDetail covers 7 treatments (including 피코레이저, 루비피코레이저,
+ *      안면홍조, 울쎄라피 프라임) that have NOT yet been migrated to
+ *      the slug-based TreatmentPage data structure.
+ *   2. Removing this route would break existing inbound links and bookmarks
+ *      for those 7 treatments.
+ *   3. SEO policy (PR-31): this route uses noindex to prevent duplicate
+ *      indexing against TreatmentPage. For treatments that have a slug
+ *      counterpart, canonical is pointed to the TreatmentPage URL.
+ *
+ * MIGRATION PLAN (see todo.md "PR-31 후속 통합 로드맵"):
+ *   Step 1 — Create slug-based data files for remaining 7 treatments
+ *   Step 2 — Add 301 redirect from /treatment/:name → /treatments/:slug
+ *   Step 3 — Remove this file after redirect is confirmed stable (30+ days)
+ *
+ * DO NOT:
+ *   - Add new treatments to the inline allTreatments array below
+ *   - Expand this component's feature set (use TreatmentPage instead)
+ *   - Remove the noindex without completing the migration steps above
  */
 import { useRoute } from "wouter";
 import { ArrowLeft, Clock, RefreshCw, DollarSign, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
@@ -289,6 +317,18 @@ const getAllTreatments = () => {
   return [...liftingTreatments, ...eyeTreatments, ...pigmentTreatments, ...acneTreatments];
 };
 
+/**
+ * slug 매핑 테이블 (PR-31)
+ * TreatmentPage에 등록된 slug가 있는 시술만 포함.
+ * 여기 없는 시술은 noindex + 자신 canonical 유지.
+ * 신규 시술은 TreatmentPage 데이터로 등록 후 이 테이블에 추가하지 말 것.
+ */
+const NAME_TO_SLUG: Record<string, string> = {
+  "울쎄라": "ulthera",
+  "써마지 FLX": "thermage",
+  "눈밑지방재배치": "under-eye-fat",
+};
+
 export default function TreatmentDetail() {
   const [match, params] = useRoute("/treatment/:name");
   const [treatment, setTreatment] = useState<{
@@ -344,14 +384,28 @@ export default function TreatmentDetail() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* PR-31 SEO policy:
+           - noindex on all /treatment/:name pages (legacy bridge route)
+           - canonical points to /treatments/:slug if slug exists, otherwise self
+           - hreflangs removed for slug-mapped items (TreatmentPage owns them)
+      */}
       <SeoHead
         title={`${treatment.name} | 부산 스타피부과 - ${treatment.category}`}
         description={`${treatment.name}에 대해 알아보세요. ${treatment.desc} 부산 스타피부과에서 전문의가 직접 시술합니다.`}
         keywords={`${treatment.name}, ${treatment.category}, 부산피부과, 피부시술, 부산리프팅`}
         ogImage={treatment.image}
-        canonical={`https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`}
+        canonical={
+          NAME_TO_SLUG[treatment.name]
+            ? `https://www.star-pibu.com/treatments/${NAME_TO_SLUG[treatment.name]}`
+            : `https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`
+        }
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
-        hreflangs={buildHreflangs(`/treatment/${encodeURIComponent(treatment.name)}`)}
+        hreflangs={
+          NAME_TO_SLUG[treatment.name]
+            ? undefined  // slug 있는 시술: hreflang은 TreatmentPage가 소유
+            : buildHreflangs(`/treatment/${encodeURIComponent(treatment.name)}`)
+        }
+        noindex={true}
         jsonLd={[
           {
             "@context": "https://schema.org",

@@ -1303,3 +1303,60 @@
 - [x] Commit 30-4: App.tsx Switch 블록 상단에 PAGE LIFECYCLE POLICY 주석 추가
 - [x] Commit 30-5: 5개 unrouted page SeoHead 앞에 inactive canonical 주석 추가
 - [x] Commit 30-6: TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과
+
+## PR-31: TreatmentPage/TreatmentDetail 구조 역할 정리 및 canonical 정책 확정
+
+- [x] Commit 31-1: 두 route 구조 비교 및 canonical owner 확정 (TreatmentPage 선택)
+- [x] Commit 31-2: TreatmentDetail.tsx legacy route 주석 상세화 (STATUS/WHY/MIGRATION PLAN/DO NOT)
+- [x] Commit 31-3: TreatmentDetail SEO 신호 정리 (noindex=true + NAME_TO_SLUG 매핑으로 canonical 정렬)
+- [x] Commit 31-4: App.tsx TREATMENT DETAIL ROUTES 주석으로 ownership 명확화
+- [x] Commit 31-5: 후속 통합 로드맵 문서화
+
+## PR-31 후속 통합 로드맵 (현재 보류 이유 포함)
+
+### 현재 상태 (PR-31 완료 시점)
+
+TreatmentPage (`/treatments/:slug`) 가 canonical owner이며 3개 시술(ulthera, thermage, under-eye-fat) 운영 중.
+TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운영 중, noindex 적용.
+
+### 지금 바로 하지 않는 이유
+
+1. TreatmentDetail의 4개 미이전 시술(울쎄라피 프라임, 피코레이저, 루비피코레이저, 안면홍조 치료)에 대한 다국어 콘텐츠(en/ja/zh)가 아직 준비되지 않음.
+2. 301 redirect 추가 전에 slug 매핑이 완전히 확정되어야 하며, 잘못된 redirect는 SEO 손실을 야기함.
+3. 이번 PR은 "정책 정리"가 목적이며 구조 전면 통합은 별도 PR에서 진행.
+
+### 후속 PR 실행 계획 (PR-32 이후)
+
+#### Step 1 — 미이전 시술 slug 데이터 파일 생성 (PR-32)
+
+- [ ] `client/src/data/treatments/ulthera-prime.ts` 생성 (울쎄라피 프라임, ko/en/ja/zh)
+- [ ] `client/src/data/treatments/pico-laser.ts` 생성 (피코레이저, ko/en/ja/zh)
+- [ ] `client/src/data/treatments/ruby-pico-laser.ts` 생성 (루비피코레이저, ko/en/ja/zh)
+- [ ] `client/src/data/treatments/rosacea.ts` 생성 (안면홍조 치료, ko/en/ja/zh)
+- [ ] `client/src/data/treatments/index.ts`에 4개 slug 등록
+- [ ] TreatmentDetail의 NAME_TO_SLUG 테이블에 4개 매핑 추가
+
+#### Step 2 — 301 redirect 추가 (PR-33, Step 1 완료 후)
+
+- [ ] App.tsx에서 `/treatment/:name` route를 redirect 컴포넌트로 교체
+- [ ] redirect 로직: `NAME_TO_SLUG[name]`이 있으면 `/treatments/${slug}`로 301, 없으면 404
+- [ ] redirect 안정화 기간: 30일 이상 운영 후 TreatmentDetail 삭제 검토
+
+#### Step 3 — TreatmentDetail 제거 (PR-34, Step 2 완료 후 30일+)
+
+- [ ] `/treatment/:name` route 제거
+- [ ] `client/src/pages/TreatmentDetail.tsx` 파일 삭제
+- [ ] App.tsx에서 TreatmentDetail import 제거
+- [ ] 관련 테스트 정리
+
+### slug 매핑 확정 테이블 (PR-31 기준)
+
+| treatment.name | slug | 상태 |
+|---|---|---|
+| 울쎄라 | ulthera | 이전 완료 (TreatmentPage 운영 중) |
+| 써마지 FLX | thermage | 이전 완료 (TreatmentPage 운영 중) |
+| 눈밑지방재배치 | under-eye-fat | 이전 완료 (TreatmentPage 운영 중) |
+| 울쎄라피 프라임 | ulthera-prime | 미이전 (Step 1 대상) |
+| 피코레이저 | pico-laser | 미이전 (Step 1 대상) |
+| 루비피코레이저 | ruby-pico-laser | 미이전 (Step 1 대상) |
+| 안면홍조 치료 | rosacea | 미이전 (Step 1 대상) |

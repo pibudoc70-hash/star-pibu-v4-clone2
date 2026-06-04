@@ -38,9 +38,10 @@ describe("PR-24: TreatmentPage 다국어 라우팅 정합성", () => {
     });
 
     it("4개 라우트가 모두 TreatmentPage 컴포넌트를 사용해야 한다", () => {
+      // <Route 태그가 있는 라인만 필터링 (주석 라인 제외 — PR-31에서 주석에 /treatments/:slug 문자열이 포함됨)
       const treatmentRoutes = appSource
         .split("\n")
-        .filter((line) => line.includes("/treatments/:slug"));
+        .filter((line) => line.includes("/treatments/:slug") && line.includes("<Route"));
       // 4개 라우트 모두 TreatmentPage를 참조
       for (const line of treatmentRoutes) {
         expect(line).toContain("TreatmentPage");

@@ -135,6 +135,22 @@ function Router() {
 
             {/* Detail pages — specific routes before generic params */}
             <Route path={"/events/:id"} component={EventDetail} />
+
+            {/*
+             * TREATMENT DETAIL ROUTES — TWO STRUCTURES COEXIST (PR-31)
+             *
+             * CANONICAL OWNER: /treatments/:slug (TreatmentPage)
+             *   - Multilingual: /[lang]/treatments/:slug
+             *   - Data: client/src/data/treatments/*.ts
+             *   - SEO: full hreflang + MedicalProcedure JSON-LD
+             *   - Treatments: ulthera, thermage, under-eye-fat
+             *
+             * LEGACY BRIDGE ROUTE: /treatment/:name (TreatmentDetail)
+             *   - Korean-only, inline data, noindex applied (PR-31)
+             *   - Kept for inbound links to 7 treatments not yet migrated
+             *   - DO NOT add new treatments here; use TreatmentPage instead
+             *   - Migration target: see todo.md "PR-31 후속 통합 로드맵"
+             */}
             <Route path={"/treatment/:name"} component={TreatmentDetail} />
             <Route path={"/treatments/:slug"} component={TreatmentPage} />
             <Route path={"/en/treatments/:slug"} component={TreatmentPage} />

@@ -18,7 +18,12 @@
  *
  * - ogUrl: canonical과 동일
  * - ogLocale: LANG_TO_OG_LOCALE[activeLang] (언어별 정렬)
- * - hreflangs: buildHreflangs("/foreign-guide", "/en/...", "/ja/...", "/zh/...")
+ * - hreflangs: custom 배열 (ko 없음, x-default=/en/foreign-guide)
+ *   · en  -> /en/foreign-guide
+ *   · ja  -> /ja/foreign-guide
+ *   · zh  -> /zh/foreign-guide
+ *   · x-default -> /en/foreign-guide
+ *   · ko hreflang 없음 (ko 콘텐츠 없는 페이지이므로 sitemap 정책과 동일)
  * - 본문: en/ja/zh 3개 언어 전체 제공 (한국어 콘텐츠 없음)
  * - noindex: 없음 (전체 색인 허용)
  */
@@ -26,7 +31,7 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import SeoHead, { BASE_URL, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
 
@@ -115,12 +120,13 @@ export default function ForeignGuide() {
         ogUrl={pageUrl}
         ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
         ogLocale={LANG_TO_OG_LOCALE[activeLang] ?? "ko_KR"}
-        hreflangs={buildHreflangs(
-          "/foreign-guide",
-          "/en/foreign-guide",
-          "/ja/foreign-guide",
-          "/zh/foreign-guide",
-        )}
+        hreflangs={[
+          // ko hreflang 없음 — ko 콘텐츠가 없는 페이지 (sitemap 정책과 동일)
+          { hreflang: "en",        href: `${BASE_URL}/en/foreign-guide` },
+          { hreflang: "ja",        href: `${BASE_URL}/ja/foreign-guide` },
+          { hreflang: "zh",        href: `${BASE_URL}/zh/foreign-guide` },
+          { hreflang: "x-default", href: `${BASE_URL}/en/foreign-guide` },
+        ]}
       />
       <Header />
 

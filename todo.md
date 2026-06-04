@@ -1457,3 +1457,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] index.html hreflang URLs www 호스트로 통일
 - [x] server/_core/index.ts 동적 sitemap 라우트 제거 (static single source)
 - [x] LangSwitcher.tsx 삭제 (null 반환 stub, 모든 참조 제거 완료)
+
+### 홈페이지 Production 품질 개선 (PR-46)
+- [x] Phase 1: HeroSection LCP — fetchpriority=high, preload link 이미 적용됨 (OptimizedImage priority=true + index.html preload 2개 확인)
+- [x] Phase 2: Framer Motion — 프로젝트 전체 미사용 확인 (해당 없음)
+- [x] Phase 3: SeoHead — TreatmentPage/TreatmentDetail/Equipment2Detail includeClinicSchema=false 추가
+- [x] Phase 4: Stats 표시 로직 일관화 — HeroSection/PhilosophySection STAT_UNITS 상수 활용
+- [x] Phase 4: SpecialEventSection Empty State 다국어 개선 (Sparkles 아이콘 + 문구 정리)
+- [x] Phase 5: i18n Custom Hook 추출 — 추상화 불필요 판단 (최소 수정 원칙)
+- [x] Phase 5: 섹션 spacing/타이포그래피 일관성 정리 — 현재 일관성 확인됨

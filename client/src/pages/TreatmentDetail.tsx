@@ -449,6 +449,7 @@ export default function TreatmentDetail() {
               }]
             : [])
         ]}
+        includeClinicSchema={false}
       />
       {/* 헤더 */}
       <div className="bg-gradient-to-r from-[#4A6FA5] to-[#2D4A7A] text-white py-8">

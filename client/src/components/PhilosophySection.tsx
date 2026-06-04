@@ -6,7 +6,7 @@
 import { ScanEye, Award, Cpu } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_STATS, STAT_UNITS, type StatLang } from "@/lib/constants";
 
 const NEW_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg";
 const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;
@@ -61,17 +61,17 @@ export default function PhilosophySection() {
               {[
                 {
                   num: CLINIC_STATS.yearsExperience,
-                  suffix: lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+",
+                  suffix: `${STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}+`,
                   label: t.about.stats[0].label,
                 },
                 {
                   num: CLINIC_STATS.eyeBagCases.toLocaleString(),
-                  suffix: lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+",
+                  suffix: `${STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}+`,
                   label: t.about.stats[1].label,
                 },
                 {
                   num: CLINIC_STATS.laserTypes,
-                  suffix: lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+",
+                  suffix: `${STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+`,
                   label: t.about.stats[2].label,
                 },
               ].map((s, idx) => {

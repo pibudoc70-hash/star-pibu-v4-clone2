@@ -9,6 +9,7 @@
  * - 다시 클릭: 초기 상태로 돌아감
  */
 import { useEffect, useState } from "react";
+import { Sparkles } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -171,24 +172,30 @@ export default function SpecialEventSection() {
 
         {/* 이벤트 카드 그리드 */}
         {specialEvents.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-lg text-gray-700 mb-4">
+          <div className="text-center py-16 flex flex-col items-center gap-4">
+            <div
+              className="flex items-center justify-center w-16 h-16 rounded-full mb-2"
+              style={{ background: 'linear-gradient(135deg, #f6efe0 0%, #ede0c4 100%)' }}
+            >
+              <Sparkles size={28} style={{ color: '#C9A84C' }} strokeWidth={1.5} />
+            </div>
+            <p className="text-lg font-medium" style={{ color: '#4B5563' }}>
               {lang === "en"
-                ? "Our special promotions are currently being prepared. We will be back soon with new offers."
+                ? "Special promotions are being prepared."
                 : lang === "ja"
-                ? "現在、スペシャルイベントを準備中です。近日中に新しいご案内をお届けします。"
+                ? "スペシャルイベントを準備中です。"
                 : lang === "zh"
-                ? "特别优惠活动正在准备中，敬请期待。"
-                : "현재 진행 중인 스페셜 이벤트가 준비되고 있어요. 곧 새로운 혜택으로 찾아뵙겠습니다."}
+                ? "特别优惠活动正在准备中。"
+                : "스페셜 이벤트가 준비 중입니다."}
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm" style={{ color: '#9CA3AF' }}>
               {lang === "en"
-                ? "For inquiries, please contact us via KakaoTalk or phone."
+                ? "New offers coming soon. Contact us via KakaoTalk or phone for inquiries."
                 : lang === "ja"
-                ? "詳しくはカカオトークまたはお電話にてお問い合わせください。"
+                ? "近日中に新しいご案内をお届けします。カカオトークまたはお電話にてお問い合わせください。"
                 : lang === "zh"
-                ? "如需咨询，请通过KakaoTalk或电话与我们联系。"
-                : "자세한 안내는 카카오톡 상담 또는 전화로 문의해 주세요."}
+                ? "即将推出新优惠，敬请期待。如需咨询，请通过KakaoTalk或电话与我们联系。"
+                : "곧 새로운 혜택으로 찾아뵙겠습니다. 자세한 안내는 카카오톡 또는 전화로 문의해 주세요."}
             </p>
           </div>
         ) : (

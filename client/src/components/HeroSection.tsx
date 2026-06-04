@@ -18,7 +18,7 @@ import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
-import { CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_STATS, STAT_UNITS, type StatLang } from "@/lib/constants";
 
 /** 금색 빛 가루 파티클 Canvas 컴포넌트 */
 function GoldParticles() {
@@ -447,7 +447,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "년+" : lang === "ja" ? "年+" : lang === "zh" ? "年+" : "yrs+"}</span>
+                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.years[lang as StatLang] ?? STAT_UNITS.years.en}+</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -489,7 +489,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "례+" : lang === "ja" ? "件+" : lang === "zh" ? "例+" : "+"}</span>
+                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.cases[lang as StatLang] ?? STAT_UNITS.cases.en}+</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -531,7 +531,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -578,7 +578,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{lang === "ko" ? "종+" : lang === "ja" ? "種+" : lang === "zh" ? "种+" : "+"}</span>
+                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{STAT_UNITS.types[lang as StatLang] ?? STAT_UNITS.types.en}+</span>
               </div>
               <div style={{
                 height: "1.5px",

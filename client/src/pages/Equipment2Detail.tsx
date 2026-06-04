@@ -218,6 +218,7 @@ export default function Equipment2Detail() {
           `/zh/equipment2/${slug}`
         )}
         jsonLd={jsonLd}
+        includeClinicSchema={false}
       />
 
       {/* 헤더 */}

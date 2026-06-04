@@ -94,6 +94,10 @@ function MapLoadingFallback() {
 }
 // HtmlLangUpdater: URL 기반으로 html[lang] 속성 + LangContext lang 상태 동기화
 // hreflang/canonical은 각 페이지의 SeoHead 컴포넌트에서 선언적으로 관리
+//
+// /foreign-guide special-case:
+//   이 경로는 /en/foreign-guide 의 영어 alias 이므로 en으로 처리.
+//   LangContext / html[lang] / ForeignGuide.activeLang 이 모두 en 으로 일치하도록 보장.
 function HtmlLangUpdater() {
   const [location] = useLocation();
   const { lang, setLang } = useLang();
@@ -102,12 +106,18 @@ function HtmlLangUpdater() {
     if (location === "/en" || location.startsWith("/en/")) urlLang = "en";
     else if (location === "/ja" || location.startsWith("/ja/")) urlLang = "ja";
     else if (location === "/zh" || location.startsWith("/zh/")) urlLang = "zh";
+    // /foreign-guide (prefix 없음) = /en/foreign-guide 의 영어 alias
+    else if (location === "/foreign-guide" || location.startsWith("/foreign-guide/")) urlLang = "en";
     document.documentElement.lang = urlLang;
-    // URL이 명시적 다국어 경로인 경우 LangContext도 동기화 (persist=false: localStorage 오염 방지)
-    if (location === "/en" || location.startsWith("/en/") ||
-        location === "/ja" || location.startsWith("/ja/") ||
-        location === "/zh" || location.startsWith("/zh/")) {
-      if (lang !== urlLang) setLang(urlLang, false);
+    // URL이 명시적 다국어 경로(또는 foreign-guide alias)인 경우 LangContext도 동기화
+    // persist=false: localStorage 오염 방지 (URL이 바뀌면 다시 재동기화)
+    const isManagedLangPath =
+      location === "/en" || location.startsWith("/en/") ||
+      location === "/ja" || location.startsWith("/ja/") ||
+      location === "/zh" || location.startsWith("/zh/") ||
+      location === "/foreign-guide" || location.startsWith("/foreign-guide/");
+    if (isManagedLangPath && lang !== urlLang) {
+      setLang(urlLang, false);
     }
   }, [location, lang, setLang]);
   return null;

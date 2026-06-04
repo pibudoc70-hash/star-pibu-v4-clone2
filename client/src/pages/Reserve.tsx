@@ -2,12 +2,11 @@
  * [LEGACY PAGE - NOT ROUTED]
  *
  * STATUS: legacy — removed from App.tsx in PR-27 (2025-04).
- * Reservation entry is now the #reservation anchor on each landing page:
+ * Reservation is now handled via the #reservation anchor on each landing page:
  *   ko => /#reservation | en => /en#reservation
  *   ja => /ja#reservation | zh => /zh#reservation
  *
- * TO REACTIVATE: add <Route path="/reserve" component={Reserve} /> to App.tsx
- *   and re-evaluate OTP flow before going live.
+ * noindex-only: canonical intentionally omitted (PR-39).
  */
 import { useState } from "react";
 import { useLocation } from "wouter";

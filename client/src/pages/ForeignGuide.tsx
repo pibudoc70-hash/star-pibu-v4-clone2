@@ -8,7 +8,7 @@
  *
  * [ALIAS POLICY] /foreign-guide = /en/foreign-guide 의 영어 alias
  * - 이 페이지는 en/ja/zh 전용 콘텐츠로, ko 콘텐츠가 없음
- * - /foreign-guide 접근 시 globalLang이 ko이면 activeLang 기본값 en으로 설정
+ * - /foreign-guide 접근 시 activeLang = en (영어 alias 정책)
  * - canonical = `/${activeLang}/foreign-guide` 로 자동 정렬
  *   · /foreign-guide 접근 → canonical = /en/foreign-guide (영어 alias 자동 정렬)
  *   · /en/foreign-guide → canonical = /en/foreign-guide
@@ -22,7 +22,7 @@
  * - 본문: en/ja/zh 3개 언어 전체 제공 (한국어 콘텐츠 없음)
  * - noindex: 없음 (전체 색인 허용)
  */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
@@ -41,25 +41,25 @@ const LANG_COLORS: Record<ForeignLang, { bg: string; text: string; accent: strin
 };
 
 export default function ForeignGuide() {
-  const { lang: globalLang, setLang } = useLang();
-  const [, navigate] = useLocation();
+  const { setLang } = useLang();
+  const [location, navigate] = useLocation();
 
-  // URL 경로에서 activeLang 결정 (route가 진실의 원천)
-  const pathLang: ForeignLang = (() => {
-    const p = window.location.pathname;
-    if (p.startsWith("/ja")) return "ja";
-    if (p.startsWith("/zh")) return "zh";
+  /**
+   * activeLang: route(URL)가 진실의 원천
+   * - wouter location 변화 시마다 재계산 → back/forward 시 stale state 없음
+   * - /foreign-guide = /en/foreign-guide alias → en
+   * - 상태(useState)가 아닌 computed value이므로 동기화 불일치 불가
+   */
+  const activeLang: ForeignLang = (() => {
+    if (location.startsWith("/ja")) return "ja";
+    if (location.startsWith("/zh")) return "zh";
     return "en"; // /foreign-guide 또는 /en/foreign-guide → en
   })();
 
-  const [activeLang, setActiveLang] = useState<ForeignLang>(pathLang);
-
-  // 전역 언어 컨텍스트와 동기화 (Header 언어 전환 시)
+  // LangContext를 route 기준으로 항상 동기화 (persist=false: localStorage 오염 방지)
   useEffect(() => {
-    if (globalLang === "en" || globalLang === "ja" || globalLang === "zh") {
-      setActiveLang(globalLang as ForeignLang);
-    }
-  }, [globalLang]);
+    setLang(activeLang, false);
+  }, [activeLang, setLang]);
 
   const t = i18n[activeLang];
   const colors = LANG_COLORS[activeLang];
@@ -94,7 +94,6 @@ export default function ForeignGuide() {
    * URL / canonical / ogUrl / 표시 언어가 항상 일치하도록 보장.
    */
   const handleLangSwitch = (l: ForeignLang) => {
-    setActiveLang(l);
     setLang(l);
     navigate(`/${l}/foreign-guide`);
   };
@@ -441,12 +440,12 @@ export default function ForeignGuide() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href={globalLang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+              href="tel:+82-51-818-2300"
               className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
               style={{ background: colors.text, color: "white" }}
             >
               <Phone size={16} />
-              {globalLang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
+              {"+82-51-818-2300"}
             </a>
             <a
               href="https://pf.kakao.com/_HNyGC"

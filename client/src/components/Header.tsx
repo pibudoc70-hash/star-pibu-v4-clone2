@@ -1,7 +1,9 @@
 /**
  * Header Component - STAR 피부과
- * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
- * 언어 전환: 헤더에서 제거 (LangSwitcher 플로팅 버튼으로 대체)
+ * 디자인: 모던 클리니컈 엣지 - 민트-네이비 듀오톤
+ * 언어 전환: 데스크탑 + 모바일 드롭다운 선택자 (buildLocalizedPath 기반 locale-aware 전환)
+ *   - /foreign-guide 계열에서 ko 선택 시 홈(/) 이동 (ko 콘텐츠 없음)
+ *   - 그 외 경로: 현재 URL에서 lang prefix만 교체
  * 활성 메뉴: 스크롤 위치 감지 → 현재 섹션 메뉴 강조
  * 모바일 메뉴: 각 항목 앞에 아이콘 추가
  */
@@ -52,6 +54,12 @@ export default function Header() {
         stripped = stripped.slice(prefix.length) || "/";
         break;
       }
+    }
+    // /foreign-guide 계열에서 ko 선택 시 홈(/) 이동
+    // 이유: foreign-guide는 en/ja/zh 전용 페이지이므로 ko 콘텐츠 없음.
+    //   ko 선택 시 영어 alias 화면이 남아 헤더만 ko인 상태를 방지.
+    if (targetLang === "ko" && (stripped === "/foreign-guide" || stripped.startsWith("/foreign-guide/"))) {
+      return "/";
     }
     // 새 prefix 붙이기
     const prefix = targetLang === "ko" ? "" : `/${targetLang}`;

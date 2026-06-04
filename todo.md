@@ -1437,3 +1437,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Commit 4 (header): buildLocalizedPath에 /foreign-guide 계열에서 ko 선택 시 홈(/) 이동 정책 추가
 - [x] Commit 5 (docs): Header 상단 주석 최신화 (언어 전환 드롭다운 실제 구현 반영), Reserve.tsx TO REACTIVATE 절차 제거 (중립적 설명으로 간소화)
 - [x] Commit 6 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공
+
+## PR-42: 마감 품질 정리 (efd282f)
+- [x] LangSwitcher dead import 제거 (Home, LandingEN, LandingJA, LandingZH, NonCoveredGuide)
+- [x] LangSwitcher.tsx 사용되지 않는 import 제거 및 @deprecated 주석 정리
+- [x] Header.tsx 상단 오타 수정 (클리니컈 → 클리닉)
+- [x] ForeignGuide.tsx persist 정책 명확화 (useEffect: persist=false, handleLangSwitch: persist=true)
+- [x] Reserve.tsx 파일 헤더 주석 간소화 (4줄로 축약)
+- [x] Reserve.tsx import 줄 inline 주석 제거
+- [x] Reserve.tsx JSX NOTE 블록 1줄로 간소화
+- [x] sw.js navigation/document request 처리 정책 명확화 주석 추가

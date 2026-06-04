@@ -19,7 +19,10 @@
  * Usage:
  *   import { getLocaleBase } from "@/../../shared/pathUtils";
  *   const base = getLocaleBase(window.location.pathname); // "/en"
- *   window.location.href = base + "/about";               // "/en/about"
+ *   const href = base === "/" ? "/about" : `${base}/about`; // "/en/about"
+ *
+ * NOTE: buildPath() was removed in PR-45 — it was defined but never called.
+ *   To build a locale-aware path inline: base === "/" ? href : `${base}${href}`
  */
 
 export type LocaleBase = "/" | "/en" | "/ja" | "/zh";
@@ -27,6 +30,8 @@ export type LocaleBase = "/" | "/en" | "/ja" | "/zh";
 /**
  * Returns the logical locale base path for the given pathname.
  * Safe to call in both browser and SSR contexts.
+ *
+ * Callers: Header.tsx (buildLocalizedPath), Footer.tsx (getLocalizedPath)
  */
 export function getLocaleBase(pathname: string): LocaleBase {
   if (pathname.startsWith("/en")) return "/en";
@@ -38,15 +43,3 @@ export function getLocaleBase(pathname: string): LocaleBase {
   return "/";
 }
 
-/**
- * Build a locale-aware absolute path.
- *
- * Examples:
- *   buildPath("/en", "/about")   → "/en/about"
- *   buildPath("/",   "/about")   → "/about"
- *   buildPath("/en", "#doctors") → "/en#doctors"  (hash navigation)
- */
-export function buildPath(base: LocaleBase, href: string): string {
-  if (base === "/") return href;
-  return `${base}${href}`;
-}

@@ -84,10 +84,24 @@ export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN"];
 
 /**
  * 페이지별 locale-aware hreflang 목록 생성 헬퍼
- * @param koPath  한국어 경로 (e.g. "/foreign-guide")
- * @param enPath  영어 경로 (e.g. "/en/foreign-guide"), 미지정 시 "/en"
- * @param jaPath  일본어 경로 (e.g. "/ja/foreign-guide"), 미지정 시 "/ja"
- * @param zhPath  중국어 경로 (e.g. "/zh/foreign-guide"), 미지정 시 "/zh"
+ *
+ * ⚠️  이 helper는 ko/en/ja/zh 4개 언어가 모두 존재하는 페이지 전용입니다.
+ *    항상 ko hreflang을 포함하고 x-default = koPath 로 설정합니다.
+ *
+ *    locale subset 페이지(예: ForeignGuide — en/ja/zh만 존재, ko 없음)에는
+ *    이 helper를 사용하지 마십시오. 대신 hreflangs prop에 배열을 직접 전달하세요:
+ *
+ *      hreflangs={[
+ *        { hreflang: "en",        href: `${BASE_URL}/en/foreign-guide` },
+ *        { hreflang: "ja",        href: `${BASE_URL}/ja/foreign-guide` },
+ *        { hreflang: "zh",        href: `${BASE_URL}/zh/foreign-guide` },
+ *        { hreflang: "x-default", href: `${BASE_URL}/en/foreign-guide` },
+ *      ]}
+ *
+ * @param koPath  한국어 경로 (e.g. "/about")
+ * @param enPath  영어 경로 (e.g. "/en/about"), 미지정 시 "/en"
+ * @param jaPath  일본어 경로 (e.g. "/ja/about"), 미지정 시 "/ja"
+ * @param zhPath  중국어 경로 (e.g. "/zh/about"), 미지정 시 "/zh"
  */
 export function buildHreflangs(
   koPath: string,

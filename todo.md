@@ -1430,3 +1430,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Commit 5 (copy+legacy): Footer.tsx 일본어 privacy 라벨 오타 수정 (方针 U+9488 → 方針 U+91DD), Reserve.tsx 파일 헤더 주석 간소화
 - [x] Commit 6 (sw): sw.js GET-only 필터 추가, CACHE_NAME v2로 버전 업, 주석 영문 보강 (CRITICAL RULES 섹션 추가)
 - [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공
+
+## PR-41: /foreign-guide alias 정책 전체 일관화
+- [x] Commit 2 (app): HtmlLangUpdater에 /foreign-guide → en special-case 추가 (LangContext + html[lang] 동기화)
+- [x] Commit 3 (foreign-guide): activeLang을 useState → computed value로 변경 (location 파생), useEffect로 LangContext 동기화, globalLang 의존 제거
+- [x] Commit 4 (header): buildLocalizedPath에 /foreign-guide 계열에서 ko 선택 시 홈(/) 이동 정책 추가
+- [x] Commit 5 (docs): Header 상단 주석 최신화 (언어 전환 드롭다운 실제 구현 반영), Reserve.tsx TO REACTIVATE 절차 제거 (중립적 설명으로 간소화)
+- [x] Commit 6 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공

@@ -1,6 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { appRouter } from "./routers";
 import type { TrpcContext } from "./_core/context";
+import type { Event } from "../drizzle/schema";
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
 
@@ -31,7 +32,7 @@ function createAdminContext(): TrpcContext {
 
 describe("events.special", () => {
   // Cleanup function to remove test events
-  async function cleanupTestEvents(caller: any) {
+  async function cleanupTestEvents(caller: ReturnType<typeof appRouter.createCaller>) {
     const allEvents = await caller.events.list();
     const testEventTitles = ["울쎼라피 프라임", "테스트 특별 이벤트", "비활성 특별 이벤트", "마취비 테스트 이벤트"];
     for (const event of allEvents) {
@@ -145,7 +146,7 @@ describe("events.special", () => {
     expect(Array.isArray(specialEvents)).toBe(true);
     
     // 생성된 이벤트가 포함되어 있는지 확인
-    const testEvent = specialEvents.find((e: any) => e.title === "테스트 특별 이벤트");
+    const testEvent = specialEvents.find((e: Event) => e.title === "테스트 특별 이벤트");
     if (testEvent) {
       expect(testEvent.isSpecialEvent).toBe("1");
       expect(testEvent.isActive).toBe("1");
@@ -194,7 +195,7 @@ describe("events.special", () => {
     const specialEvents = await caller.events.special();
 
     // 비활성 이벤트는 포함되지 않아야 함
-    const inactiveEvent = specialEvents.find((e: any) => e.title === "비활성 특별 이벤트");
+    const inactiveEvent = specialEvents.find((e: Event) => e.title === "비활성 특별 이벤트");
     expect(inactiveEvent).toBeUndefined();
   });
 
@@ -239,7 +240,7 @@ describe("events.special", () => {
     const specialEvents = await caller.events.special();
 
     // 마취비 정보가 포함되어 있는지 확인
-    const testEvent = specialEvents.find((e: any) => e.title === "마취비 테스트 이벤트");
+    const testEvent = specialEvents.find((e: Event) => e.title === "마취비 테스트 이벤트");
     if (testEvent) {
       expect(testEvent.anesthesiaFee).toBe("수면마취비 별도 (별도 상담 필요)");
     }

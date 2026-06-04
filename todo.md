@@ -1281,3 +1281,8 @@
 - [x] Commit 28-5: refactor(server) - routers.ts createEvent as any → InsertEvent, updateData any → Partial<InsertEvent>
 - [x] Commit 28-6: refactor(boundary) - storage.ts data as any → new Uint8Array(data as Buffer), usePersistFn.ts any 주석 보강, input/textarea/dialog.tsx nativeEvent as any 제거
 - [x] Commit 28-7: test(types) - TypeScript 에러 0건, 빌드 성공, 테스트 115개 전부 통과, any 검색 결과 전/후 비교 확인
+
+## PR-28 후속: 남은 리스크 any 전부 제거 (2026-06-04)
+- [x] server/_core/sdk.ts (data as any) 6건 제거 - SDK 응답 타입 wrapper 도입
+- [x] server/events.special.test.ts any 4건 제거 - Event 타입 import 적용
+- [x] usePersistFn.ts any 재검토 - 불가피 확인 (useComposition 호환성 문제로 유지, 주석 보강)

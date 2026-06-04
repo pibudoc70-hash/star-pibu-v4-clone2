@@ -43,6 +43,8 @@ export interface GetUserInfoResponse {
   email?: string | null;
   platform?: string | null;
   loginMethod?: string | null;
+  /** Server may return a list of registered platforms (e.g. ["REGISTERED_PLATFORM_EMAIL"]) */
+  platforms?: string[];
 }
 
 export interface CanAccessRequest {
@@ -66,4 +68,6 @@ export interface GetUserInfoWithJwtResponse {
   email?: string | null;
   platform?: string | null;
   loginMethod?: string | null;
+  /** Server may return a list of registered platforms (e.g. ["REGISTERED_PLATFORM_EMAIL"]) */
+  platforms?: string[];
 }

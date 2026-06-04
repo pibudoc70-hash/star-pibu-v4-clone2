@@ -1411,3 +1411,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Commit 5 (legacy): Reserve.tsx 사용되지 않는 COMMON_HREFLANGS import 제거
 - [x] Commit 6 (todo): server/routers.ts, server/email.ts TODO 0건 확인 (PR-37에서 처리 완료)
 - [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공
+
+## PR-39: 다국어 UI 일관성, /foreign-guide alias 정책, legacy reserve signal, 서버 TODO 구체화
+
+- [x] Commit 2 (foreign-guide): ForeignGuide.tsx [ALIAS POLICY] 섹션 추가 — /foreign-guide = /en/foreign-guide 영어 alias 명확화, App.tsx route 그룹에 alias 정책 주석 추가
+- [x] Commit 3 (i18n-ui): About.tsx "About Us"→{aboutUsLabel}, alt="의료진"→{medicalTeamAlt}, "Since 2006"→{sinceLabel} lang-aware 처리 (ko/en/ja/zh 4개 언어)
+- [x] Commit 3 (i18n-ui): Equipment2.tsx sr-only h1 → ko/en/ja/zh lang-aware 처리 (한국어 오타 울쓠라→울쎄라 수정 포함)
+- [x] Commit 4 (privacy-ux): Privacy.tsx useLang import 추가, NON_KO_NOTICE 상수 추가, 비-ko route 접근 시 법률 원문 안내 배너 렌더링 (en/ja/zh 각 언어로 짧은 안내)
+- [x] Commit 5 (legacy): Reserve.tsx SeoHead에서 canonical 제거 (noindex-only로 단순화), 주석에 "canonical is intentionally omitted (PR-39)" 명시
+- [x] Commit 6 (todo): server/routers.ts NOTE 블록에 트리거 시점/데이터 소스/fallback/활성화 방법 명시
+- [x] Commit 6 (todo): server/email.ts 파일 헤더에 EMAIL TRIGGER POINTS 3개 및 CURRENT FALLBACK 명시
+- [x] Commit 7 (verification): TypeScript 에러 0건, 테스트 127개 전부 통과, 빌드 성공

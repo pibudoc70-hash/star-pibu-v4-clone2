@@ -1256,3 +1256,11 @@
 - [x] Commit 24-3: TreatmentPage 내부 이동 locale prefix 유지
 - [x] Commit 24-4: URL/SEO 로직 정리 리팩토링 (단일 블록으로 정리됨)
 - [x] Commit 24-5: 테스트 추가 및 최종 검증 (82개 전부 통과)
+
+## PR-25: Equipment2Detail ja/zh SEO 카피 오류 수정 및 다국어 메타 정리 (2026-06-04)
+
+- [ ] Commit 25-1: ja/zh SEO 금지 문자열 제거 및 부산 서면 기준 교정
+- [ ] Commit 25-2: equipmentSeoText.ts 헬퍼 파일 생성 및 SEO 로직 함수화
+- [ ] Commit 25-3: UI 라벨 locale 정합성 보완
+- [ ] Commit 25-4: JSON-LD name/description fallback 언어별 정렬
+- [ ] Commit 25-5: 테스트 추가 및 금지 문자열 0건 검증

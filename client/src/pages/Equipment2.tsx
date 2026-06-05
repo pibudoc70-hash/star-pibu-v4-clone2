@@ -54,7 +54,7 @@ export default function Equipment2() {
         keywords={seoKeywords}
         canonical={pageUrl}
         ogUrl={pageUrl}
-        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        ogImage="https://www.star-pibu.com/og-image.jpg"
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs(
           "/equipment2",

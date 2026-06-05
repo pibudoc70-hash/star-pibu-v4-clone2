@@ -47,7 +47,7 @@ export default function LandingEN() {
         description="Star Dermatology in Busan Seomyeon. Board-certified dermatologist with 20+ years experience. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning, Pico Laser and 50+ premium treatments. Foreign patients welcome."
         keywords="Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea"
         canonical="https://www.star-pibu.com/en"
-        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        ogImage="https://www.star-pibu.com/og-image.jpg"
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "Home", url: "https://www.star-pibu.com/en" },

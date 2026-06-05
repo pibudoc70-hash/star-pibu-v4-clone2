@@ -91,7 +91,27 @@ export default function FacilitySection() {
     touchStartX.current = null;
   };
 
-  const closeLightbox = () => setLightboxIndex(null);
+  const triggerBtnRef = useRef<HTMLButtonElement | null>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+
+  const openLightbox = (i: number, btn: HTMLButtonElement) => {
+    triggerBtnRef.current = btn;
+    setLightboxIndex(i);
+    requestAnimationFrame(() => lightboxCloseRef.current?.focus());
+  };
+
+  const closeLightbox = () => {
+    setLightboxIndex(null);
+    requestAnimationFrame(() => triggerBtnRef.current?.focus());
+  };
+
+  // A11y: ESC 키로 라이트박스 닫기
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeLightbox(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [lightboxIndex]);
 
   return (
     <section ref={sectionRef} id="facility" className="py-16 sm:py-24 bg-white">
@@ -125,9 +145,10 @@ export default function FacilitySection() {
           {galleryImages.map((img, i) => (
             <button type="button"
               key={i}
-              onClick={() => setLightboxIndex(i)}
+              onClick={(e) => openLightbox(i, e.currentTarget)}
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
               style={{ aspectRatio: "16/9" }}
+              aria-label={`${img.label} 이미지 확대 보기`}
             >
               <OptimizedImage
                 src={img.srcJPG}
@@ -294,6 +315,9 @@ export default function FacilitySection() {
         {/* Lightbox Modal (PC Only) */}
         {lightboxIndex !== null && (
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="시설 사진 확대"
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
             onClick={closeLightbox}
           >
@@ -303,9 +327,10 @@ export default function FacilitySection() {
             >
               {/* Close Button */}
               <button type="button"
+                ref={lightboxCloseRef}
                 onClick={closeLightbox}
                 className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
-                aria-label="Close lightbox"
+                aria-label="라이트박스 닫기"
               >
                 <X size={32} />
               </button>

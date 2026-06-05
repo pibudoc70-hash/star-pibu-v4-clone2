@@ -84,7 +84,7 @@ export default function Home() {
         description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리쥬란 등 프리미엄 시술 전문. 온라인 예약 가능."
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리쥬란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://www.star-pibu.com/"
-        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        ogImage="https://www.star-pibu.com/og-image.jpg"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
         jsonLd={[

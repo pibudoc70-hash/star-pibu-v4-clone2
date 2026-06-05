@@ -31,6 +31,9 @@ export default function Header() {
   const langTriggerRef = useRef<HTMLButtonElement>(null); // S2-T3: ESC 닫기 후 focus restore 대상
   // Bug Fix: 빠른 연속 클릭 시 이전 MutationObserver 취소용 ref
   const pendingNavRef = useRef<{ observer: MutationObserver; timeout: ReturnType<typeof setTimeout> } | null>(null);
+  // A11y: 모바일 메뉴 focus trap용 ref
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null); // 메뉴 닫힐 후 focus 복원 대상
 
   // 언어 옵션 정의
   const langOptions: { lang: Lang; label: string; flag: string }[] = [
@@ -98,6 +101,41 @@ export default function Header() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mobileOpen]);
+
+  // A11y: 모바일 메뉴 focus trap (Tab/Shift+Tab 제한)
+  useEffect(() => {
+    if (!mobileOpen || !mobileMenuRef.current) return;
+    const panel = mobileMenuRef.current;
+    const getFocusable = () => panel.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', onTab);
+    return () => document.removeEventListener('keydown', onTab);
+  }, [mobileOpen]);
+
+  // A11y: 모바일 메뉴 열릴 때 첫 버튼에 포커스, 닫힐 때 햄버거 버튼으로 복원
+  useEffect(() => {
+    if (mobileOpen) {
+      requestAnimationFrame(() => {
+        const first = mobileMenuRef.current?.querySelector<HTMLElement>('button');
+        first?.focus();
+      });
+    } else if (!mobileOpen) {
+      requestAnimationFrame(() => hamburgerRef.current?.focus());
+    }
   }, [mobileOpen]);
 
   // H-3: 언어 드롭다운 ESC 키 닫기 + S2-T3: focus restore
@@ -468,6 +506,7 @@ export default function Header() {
           {/* Mobile Hamburger + 층별 안내 */}
           <div className="md:hidden ml-auto">
             <button type="button"
+              ref={hamburgerRef}
               className="p-2 rounded-lg transition-colors"
               style={{ color: "#1F2937" }}
               onClick={() => openMobileMenu()}
@@ -496,6 +535,7 @@ export default function Header() {
       {/* Mobile Menu Panel */}
       {mobileOpen && (
       <div
+        ref={mobileMenuRef}
         id="mobile-menu-panel"
         role="dialog"
         aria-modal="true"

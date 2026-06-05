@@ -106,6 +106,8 @@ export default function FAQSection() {
                   className="w-full flex items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-blue-50"
                   style={{ background: openQuestion === qIdx ? "#EBF3FF" : "#fff" }}
                   onClick={() => setOpenQuestion(openQuestion === qIdx ? null : qIdx)}
+                  aria-expanded={openQuestion === qIdx}
+                  aria-controls={`faq-answer-${openEquipment}-${qIdx}`}
                 >
                   <div className="flex items-start gap-3">
                     <HelpCircle
@@ -129,6 +131,7 @@ export default function FAQSection() {
                 {/* 답변 */}
                 {openQuestion === qIdx && (
                   <div
+                    id={`faq-answer-${openEquipment}-${qIdx}`}
                     className="px-6 pb-5 pt-1 text-sm md:text-base leading-relaxed"
                     style={{ color: "#3A5A8A", background: "#F5F9FF" }}
                   >

@@ -1587,3 +1587,20 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] NAV-BUG-6: Footer.tsx — 헤더 높이 동적 계산 + lazy 섹션 MutationObserver 대기 로직 추가
 - [x] 검증: TypeScript 에러 0건, 175개 테스트 통과
 - [x] 체크포인트 저장
+
+## 홈페이지 전수 검수 (시니어 개발자 관점)
+
+### P1 수정 완료
+- [x] NAV-5: Header.tsx handleNavClick — 빠른 연속 클릭 시 MutationObserver 중복 (pendingNavRef로 해결)
+- [x] NAV-6: Header.tsx handleNavClick — 헤더 높이 고정값 80px → getHeaderOffset() 동적 계산
+- [x] NAV-7: Header.tsx handleNavClick — isHome 판단 시 wouter state 비동기 문제 → window.location.pathname 직접 사용
+- [x] NAV-8: Footer.tsx — lazy 섹션 MutationObserver 대기 로직 추가
+- [x] A11Y-1: WelcomePopup — ESC 닫기 + focus trap + focus restore 추가 (WCAG 2.1 SC 2.1.2)
+- [x] A11Y-2: FacilitySection lightbox — ESC 닫기 + role/aria + focus restore 추가
+- [x] A11Y-3: FAQSection 아코디언 — aria-expanded + aria-controls + id 연결
+- [x] PERF-1: HeroSection scrollToAbout — 고정 offset 80px → 동적 계산
+
+### P2 수정 완료
+- [x] SEO-1: Home.tsx ogImage — 한글 포함 CloudFront URL → www.star-pibu.com/og-image.jpg
+- [x] SEO-2: About.tsx, ForeignGuide.tsx, Equipment2.tsx, LandingEN/JA/ZH.tsx — 동일 ogImage 수정 (6개 파일)
+- [x] A11Y-4: Header.tsx 모바일 메뉴 — focus trap + focus restore (hamburgerRef, mobileMenuRef)

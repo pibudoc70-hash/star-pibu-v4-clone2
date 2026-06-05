@@ -99,6 +99,9 @@ export default function WelcomePopup() {
   const [tabKey, setTabKey] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // A11y: focus trap + ESC 닫기용 ref
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   const { data: events, isLoading } = trpc.popup.list.useQuery(undefined, {
     staleTime: 5 * 60 * 1000,
@@ -133,9 +136,47 @@ export default function WelcomePopup() {
   }, []);
 
   useEffect(() => {
-    if (visible) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
+    if (visible) {
+      document.body.style.overflow = "hidden";
+      // A11y: 팝업 열릴 때 이전 포커스 저장
+      lastFocusedRef.current = document.activeElement as HTMLElement;
+      // 닫기 버튼에 포커스 (rAF로 렌더 후)
+      requestAnimationFrame(() => {
+        const btn = dialogRef.current?.querySelector<HTMLElement>('button[aria-label]');
+        btn?.focus();
+      });
+    } else {
+      document.body.style.overflow = "";
+      // A11y: 팝업 닫힐 때 이전 포커스 복원
+      requestAnimationFrame(() => {
+        lastFocusedRef.current?.focus();
+        lastFocusedRef.current = null;
+      });
+    }
     return () => { document.body.style.overflow = ""; };
+  }, [visible]);
+
+  // A11y: focus trap — Tab/Shift+Tab을 모달 내부로 제한
+  useEffect(() => {
+    if (!visible || !dialogRef.current) return;
+    const getFocusable = () =>
+      dialogRef.current!.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusable();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', onTab);
+    return () => document.removeEventListener('keydown', onTab);
   }, [visible]);
 
   const triggerClose = useCallback((callback?: () => void) => {
@@ -148,6 +189,16 @@ export default function WelcomePopup() {
   }, []);
 
   const dismiss = useCallback(() => triggerClose(), [triggerClose]);
+
+  // A11y: ESC 키로 팝업 닫기 (WCAG 2.1 SC 2.1.2) — dismiss 선언 후에 등록
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [visible, dismiss]);
 
   const dismissToday = () =>
     triggerClose(() => {
@@ -167,8 +218,8 @@ export default function WelcomePopup() {
   const ev = events[safeTab] as PopupEvent;
 
   return isMobile
-    ? <MobilePopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} />
-    : <DesktopPopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} />;
+    ? <MobilePopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} dialogRef={dialogRef} />
+    : <DesktopPopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} dialogRef={dialogRef} />;
 }
 
 // ── 공통 props ────────────────────────────────────────────────────────────────
@@ -181,10 +232,11 @@ interface PopupProps {
   dismiss: () => void;
   dismissToday: () => void;
   handleTabChange: (i: number) => void;
+  dialogRef: React.RefObject<HTMLDivElement | null>;
 }
 
 // ── 모바일 팝업 ───────────────────────────────────────────────────────────────
-function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange }: PopupProps) {
+function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange, dialogRef }: PopupProps) {
   const imgHeight = useNaturalImageHeight(ev.imageUrl);
   const { sheetRef, onTouchStart, onTouchMove, onTouchEnd } = useDragToClose(dismiss);
   const { t, lang } = useLang();
@@ -201,7 +253,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
       // S1-T6: 오버레이 자체는 presentation — 실제 dialog role은 내부 div에 부여
     >
       <div
-        ref={sheetRef}
+        ref={(el) => { (sheetRef as React.MutableRefObject<HTMLDivElement | null>).current = el; (dialogRef as React.MutableRefObject<HTMLDivElement | null>).current = el; }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="welcome-popup-title-mobile"
@@ -339,7 +391,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 }
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
-function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange }: PopupProps) {
+function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange, dialogRef }: PopupProps) {
   const { t, lang } = useLang();
   const wp = t.welcomePopup;
   const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
@@ -349,6 +401,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
       <div
+        ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
         aria-labelledby="welcome-popup-title-desktop"

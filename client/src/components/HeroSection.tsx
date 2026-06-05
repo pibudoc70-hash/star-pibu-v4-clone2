@@ -202,7 +202,9 @@ function WordReveal({
 const scrollToAbout = () => {
   const el = document.querySelector("#about");
   if (el) {
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+    const offset = header ? header.offsetHeight + 8 : 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: "smooth" });
   }
 };

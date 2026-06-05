@@ -47,7 +47,7 @@ export default function LandingJA() {
         description="釜山西面のスター皮膚科。皮膚科専門医が20年以上の豊富な臨床経験で、ウルセラピープライム、サーマジFLX、目の下の脂肪再配置、ピコレーザーなど50種以上の施術を提供。日本語対応・外国人患者様歓迎。"
         keywords="釜山皮膚科, 西面クリニック, ウルセラピー釜山, サーマジ釜山, 目の下の脂肪再配置 韓国, ピコレーザー釜山, 韓国美容皮膚科, スター皮膚科, 釜山西面皮膚科, 日本語対応 釜山"
         canonical="https://www.star-pibu.com/ja"
-        ogImage="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/울쎄라피프라임_1_0daba485.png"
+        ogImage="https://www.star-pibu.com/og-image.jpg"
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "ホーム", url: "https://www.star-pibu.com/ja" },

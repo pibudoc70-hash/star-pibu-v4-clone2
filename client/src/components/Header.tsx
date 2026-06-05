@@ -51,16 +51,16 @@ const NAV_GROUPS: NavGroup[] = [
     labelEn: "TREATMENTS",
     icon: Stethoscope,
     children: [
-      { label: "Best 시술",    labelEn: "BEST",          href: "#treatments", badge: "HOT" },
-      { label: "리프팅·탄력",  labelEn: "LIFTING",       href: "#treatments" },
-      { label: "눈밑지방",     labelEn: "EYE",           href: "#treatments" },
-      { label: "색소·문신",    labelEn: "PIGMENT",       href: "#treatments" },
-      { label: "흉터·모공",    labelEn: "SCAR",          href: "#treatments" },
-      { label: "여드름",       labelEn: "ACNE",          href: "#treatments" },
-      { label: "홍조·혈관",    labelEn: "ROSACEA",       href: "#treatments" },
-      { label: "볼륨·부스터",  labelEn: "VOLUME",        href: "#treatments" },
-      { label: "보톡스·필러",  labelEn: "BOTOX",         href: "#treatments" },
-      { label: "줄기세포·재생",labelEn: "STEM CELL",     href: "/equipment2", badge: "NEW" },
+      { label: "Best 시술",    labelEn: "BEST",          href: "/equipment2?category=best",       badge: "HOT" },
+      { label: "리프팅·탄력",  labelEn: "LIFTING",       href: "/equipment2?category=lifting" },
+      { label: "눈밑지방",     labelEn: "EYE",           href: "/equipment2?category=eye" },
+      { label: "색소·문신",    labelEn: "PIGMENT",       href: "/equipment2?category=pigment" },
+      { label: "흉터·모공",    labelEn: "SCAR",          href: "/equipment2?category=scar" },
+      { label: "여드름",       labelEn: "ACNE",          href: "/equipment2?category=acne_laser" },
+      { label: "홍조·혈관",    labelEn: "ROSACEA",       href: "/equipment2?category=rosacea" },
+      { label: "볼륨·부스터",  labelEn: "VOLUME",        href: "/equipment2?category=volume" },
+      { label: "보톡스·필러",  labelEn: "BOTOX",         href: "/equipment2?category=botox" },
+      { label: "줄기세포·재생",labelEn: "STEM CELL",     href: "/equipment2?category=stemcell",   badge: "NEW" },
     ],
   },
   {
@@ -281,7 +281,9 @@ export default function Header() {
 
     if (href.startsWith("/")) {
       const basePath = getLocalizedPath();
-      window.location.href = basePath !== "/" ? `${basePath}${href}` : href;
+      // /equipment2?category=xxx 등 쿼리 파라미터 포함 경로 처리
+      const fullPath = basePath !== "/" ? `${basePath}${href}` : href;
+      window.location.href = fullPath;
       return;
     }
 

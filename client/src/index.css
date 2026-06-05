@@ -871,10 +871,10 @@
     animation-delay: var(--stagger-out-delay, 0ms);
   }
 
-  /* Mobile padding for floating CTA */
+  /* Mobile padding for bottom tab bar (60px + safe-area-inset-bottom) */
   @media (max-width: 768px) {
     main {
-      padding-bottom: 60px;
+      padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
     }
   }
 

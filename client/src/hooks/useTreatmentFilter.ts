@@ -5,6 +5,14 @@
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 
+/** URL ?category= 쿼리 파라미터에서 초기 탭 ID를 읽어온다 */
+function getInitialTabFromURL(defaultTab: string): string {
+  if (typeof window === "undefined") return defaultTab;
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get("category");
+  return cat ? cat : defaultTab;
+}
+
 export type SortBy = "name" | "time" | "popular";
 
 interface FilterableTreatment {
@@ -39,7 +47,7 @@ export function useTreatmentFilter<T extends FilterableTreatment>({
   treatments,
   defaultTab = "best",
 }: UseTreatmentFilterOptions): UseTreatmentFilterReturn<T> {
-  const [activeId, setActiveId] = useState(defaultTab);
+  const [activeId, setActiveId] = useState(() => getInitialTabFromURL(defaultTab));
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);

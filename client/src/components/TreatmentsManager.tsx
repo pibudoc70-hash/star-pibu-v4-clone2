@@ -43,6 +43,7 @@ const CATEGORIES = [
   { id: "psoriasis", label: "건선" },
   { id: "volume", label: "보톡스/필러" },
   { id: "botox", label: "보톡스" },
+  { id: "stemcell", label: "줄기세포·재생의학" },
 ];
 
 interface TreatmentsManagerProps {

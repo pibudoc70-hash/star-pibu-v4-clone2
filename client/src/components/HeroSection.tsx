@@ -348,18 +348,15 @@ export default function HeroSection() {
           left: "50%",
           transform: "translateX(-50%)",
           color: "rgba(255,255,255,0.85)",
-          /* [MOB-FONT-1] 10px → clamp(9px,2.6vw,10px): 320px 화면에서 9px 최소 보장 */
-          fontSize: "clamp(9px, 2.6vw, 10px)",
-          /* [MOB-FONT-1] letterSpacing 0.03em → 0.02em: 좁은 화면에서 글자 간격 축소 */
-          letterSpacing: "0.02em",
+          fontSize: "10px",
+          letterSpacing: "0.03em",
           animationDelay: "1250ms",
           whiteSpace: "normal",
           wordBreak: "keep-all",
           textShadow: "0 1px 4px rgba(0,0,0,0.6)",
           textAlign: "center",
           width: "90vw",
-          /* [MOB-FONT-1] lineHeight 1.4 → 1.5: 2줄 이상 표시 시 줄간격 여유 확보 */
-          lineHeight: 1.5,
+          lineHeight: 1.4,
         }}
       >
         {t.hero.floor}
@@ -429,14 +426,12 @@ export default function HeroSection() {
           className="font-bold"
           style={{
             color: "#FFFFFF",
-            /* [MOB-FONT-2] 모바일 하한 1.1rem → 1.3rem: 320px 화면에서 약 20.8px 보장 (기존 17.6px) */
-            fontSize: "clamp(1.3rem, 4.2vw, 2.8rem)",
+            fontSize: "clamp(1.1rem, 4.2vw, 2.8rem)",
             marginBottom: "clamp(0.3rem, 1.2vh, 0.75rem)",
             fontFamily: "'Noto Sans KR', sans-serif",
             letterSpacing: "clamp(0.04em, 1.5vw, 0.12em)",
             textShadow: "0 3px 16px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.15)",
-            /* [MOB-FONT-2] lineHeight 1.2 → 1.15: 대형 헤딩 줄간격 타이트하게 조정 */
-            lineHeight: 1.15,
+            lineHeight: 1.2,
           }}
         >
           <CharReveal
@@ -453,12 +448,9 @@ export default function HeroSection() {
           className="font-light"
           style={{
             color: "rgba(255,255,255,0.9)",
-            /* [MOB-FONT-3] 모바일 하한 0.85rem → 0.92rem: 320px 화면에서 약 14.7px 보장 (기존 13.6px) */
-            fontSize: "clamp(0.92rem, 3vw, 1.45rem)",
+            fontSize: "clamp(0.85rem, 3vw, 1.45rem)",
             marginBottom: "clamp(0.2rem, 0.8vh, 0.5rem)",
             letterSpacing: "0.02em",
-            /* [MOB-FONT-3] lineHeight 명시: 슬로건 줄간격 1.4로 가독성 확보 */
-            lineHeight: 1.4,
           }}
         >
           <WordReveal
@@ -492,8 +484,7 @@ export default function HeroSection() {
               <div
                 style={{
                   color: done20 ? "#F5D78E" : "rgba(255,255,255,0.97)",
-                  /* [MOB-FONT-4] 모바일 하한 1.2rem → 1.35rem: 320px 화면에서 약 21.6px 보장 (기존 19.2px) */
-                  fontSize: "clamp(1.35rem, 4.5vw, 2.2rem)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
                   fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 700,
                   textShadow: done20
@@ -522,11 +513,8 @@ export default function HeroSection() {
               <div
                 style={{
                   color: "rgba(255,255,255,0.6)",
-                  /* [MOB-FONT-5] 모바일 하한 0.62rem → 0.68rem: 320px 화면에서 약 10.9px 보장 (기존 9.9px) */
-                  fontSize: "clamp(0.68rem, 1.6vw, 0.78rem)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
                   letterSpacing: "0.04em", paddingTop: '8px',
-                  /* [MOB-FONT-5] lineHeight 1.3 추가: 2줄 라벨(영어) 줄간격 확보 */
-                  lineHeight: 1.3,
                 }}
               >
                 {t.about.stats[0].label}
@@ -541,8 +529,7 @@ export default function HeroSection() {
               <div
                 style={{
                   color: done4000 ? "#F5D78E" : "rgba(255,255,255,0.97)",
-                  /* [MOB-FONT-4] 모바일 하한 1.2rem → 1.35rem */
-                  fontSize: "clamp(1.35rem, 4.5vw, 2.2rem)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
                   fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 700,
                   textShadow: done4000
@@ -571,10 +558,8 @@ export default function HeroSection() {
               <div
                 style={{
                   color: "rgba(255,255,255,0.6)",
-                  /* [MOB-FONT-5] 모바일 하한 0.62rem → 0.68rem */
-                  fontSize: "clamp(0.68rem, 1.6vw, 0.78rem)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
                   letterSpacing: "0.04em", paddingTop: '8px',
-                  lineHeight: 1.3,
                 }}
               >
                 {t.about.stats[1].label}
@@ -589,8 +574,7 @@ export default function HeroSection() {
               <div
                 style={{
                   color: done50 ? "#F5D78E" : "rgba(255,255,255,0.97)",
-                  /* [MOB-FONT-4] 모바일 하한 1.2rem → 1.35rem */
-                  fontSize: "clamp(1.35rem, 4.5vw, 2.2rem)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
                   fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 700,
                   textShadow: done50
@@ -619,10 +603,8 @@ export default function HeroSection() {
               <div
                 style={{
                   color: "rgba(255,255,255,0.6)",
-                  /* [MOB-FONT-5] 모바일 하한 0.62rem → 0.68rem */
-                  fontSize: "clamp(0.68rem, 1.6vw, 0.78rem)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
                   letterSpacing: "0.04em", paddingTop: '8px',
-                  lineHeight: 1.3,
                 }}
               >
                 {t.about.stats[2].label}
@@ -642,8 +624,7 @@ export default function HeroSection() {
               <div
                 style={{
                   color: done50 ? "#F5D78E" : "rgba(255,255,255,0.97)",
-                  /* [MOB-FONT-4] 모바일 하한 1.2rem → 1.35rem (모바일 전용 50종+ 통계) */
-                  fontSize: "clamp(1.35rem, 4.5vw, 2.2rem)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
                   fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 700,
                   textShadow: done50
@@ -672,10 +653,8 @@ export default function HeroSection() {
               <div
                 style={{
                   color: "rgba(255,255,255,0.6)",
-                  /* [MOB-FONT-5] 모바일 하한 0.62rem → 0.68rem (모바일 전용 50종+ 라벨) */
-                  fontSize: "clamp(0.68rem, 1.6vw, 0.78rem)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
                   letterSpacing: "0.04em", paddingTop: '8px',
-                  lineHeight: 1.3,
                 }}
               >
                 {t.about.stats[2].label}
@@ -696,8 +675,7 @@ export default function HeroSection() {
               border: "1.5px solid rgba(201,168,76,0.55)",
               backdropFilter: "blur(8px)",
               boxShadow: "0 0 12px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
-              /* [MOB-FONT-6] 모바일 하한 0.7rem → 0.75rem: 320px 화면에서 12px 보장 (기존 11.2px) */
-              fontSize: "clamp(0.75rem, 2.8vw, 0.85rem)",
+              fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
               padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
               /* [FM-P1-5] 1750ms → 1350ms */
               animationDelay: "1350ms",
@@ -727,8 +705,7 @@ export default function HeroSection() {
                 background: lang === "zh" ? "#06C755" : "#03C75A",
                 color: "#FFFFFF",
                 boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
-                /* [MOB-FONT-6] 모바일 하한 0.7rem → 0.75rem */
-                fontSize: "clamp(0.75rem, 2.8vw, 0.85rem)",
+                fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
                 padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
                 animationDelay: "1470ms",
                 whiteSpace: "nowrap",
@@ -751,8 +728,7 @@ export default function HeroSection() {
                   background: chatBg,
                   color: chatColor,
                   boxShadow: chatShadow,
-                  /* [MOB-FONT-6] 모바일 하한 0.7rem → 0.75rem */
-                  fontSize: "clamp(0.75rem, 2.8vw, 0.85rem)",
+                  fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
                   padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
                   whiteSpace: "nowrap",
                   minWidth: "clamp(78px, 22vw, 130px)",

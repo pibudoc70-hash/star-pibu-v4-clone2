@@ -118,7 +118,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           <button
             type="button"
             onClick={toggle}
-            aria-expanded={false}
+            aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 자세히 보기`}
             className="mt-auto px-6 py-3 font-semibold rounded-full transition-colors text-navy hover:opacity-80"
@@ -203,7 +203,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           <button
             type="button"
             onClick={toggle}
-            aria-expanded={true}
+            aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 접기`}
             className="w-full px-6 py-2 font-semibold rounded-full transition-colors bg-gray-300 hover:bg-gray-400 text-gray-700 text-sm"

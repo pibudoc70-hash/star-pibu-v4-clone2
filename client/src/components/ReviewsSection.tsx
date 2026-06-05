@@ -126,8 +126,16 @@ export default function ReviewsSection() {
         {isMobile ? (
           <div
             className="relative"
+            role="region"
+            aria-label="후기 캐러셀"
+            tabIndex={0}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
+            // S2-T5: 방향키 지원 — ArrowLeft/ArrowRight
+            onKeyDown={(e) => {
+              if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); startAuto(); }
+              if (e.key === "ArrowRight") { e.preventDefault(); goNext(); startAuto(); }
+            }}
           >
             <div className="overflow-hidden">
               <div

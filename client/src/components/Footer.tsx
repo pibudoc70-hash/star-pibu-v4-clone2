@@ -4,6 +4,7 @@
  * i18n: useLang으로 한/중/일 전환
  */
 import { MessageCircle, Youtube, BookOpen, Instagram, Phone, MapPin, Mail, Printer } from "lucide-react";
+import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 import { getLocaleBase } from "../../../shared/pathUtils";
 
@@ -16,6 +17,7 @@ const sns = [
 
 export default function Footer() {
   const { t, lang } = useLang();
+  const [, navigate] = useLocation();
 
   const handleNavClick = (href: string) => {
     // shared/pathUtils.getLocaleBase: /foreign-guide → "/en", /en/* → "/en", etc.
@@ -23,14 +25,12 @@ export default function Footer() {
     
     // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
     if (href.startsWith("/")) {
-      // 현재 URL 경로 기반으로 언어 판단
+      // S2-T6: SPA navigate로 교체 — 페이지 전체 리로드 방지
       const basePath = getLocalizedPath();
       if (basePath !== "/") {
-        // 다국어 페이지: 해당 언어 경로 추가
-        window.location.href = `${basePath}${href}`;
+        navigate(`${basePath}${href}`);
       } else {
-        // 한국어 페이지: 그대로 이동
-        window.location.href = href;
+        navigate(href);
       }
       return;
     }
@@ -50,10 +50,11 @@ export default function Footer() {
       // URL 해시 업데이트 (popstate 방지)
       history.replaceState(null, "", basePath + href);
     } else {
+      // S2-T6: DOM에 섹션이 없을 때 SPA navigate로 이동
       if (href === "#home") {
-        window.location.href = basePath;
+        navigate(basePath || "/");
       } else {
-        window.location.href = `${basePath}${href}`;
+        navigate(`${basePath}${href}`);
       }
     }
   };

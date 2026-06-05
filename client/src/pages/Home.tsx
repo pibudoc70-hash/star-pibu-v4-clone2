@@ -31,8 +31,9 @@ const ReservationSection = lazy(() => import("@/components/ReservationSection"))
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 
 /** 섹션 로딩 중 표시할 최소 스켈레톤 */
-function SectionFallback() {
-  return <div className="py-16 md:py-24" aria-hidden="true" />;
+// S2-T4: CLS 감소 — 서스펜스 폴백에 min-h 지정으로 레이아웃 시프트 방지
+function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
+  return <div className={`${minH} py-16 md:py-24`} aria-hidden="true" />;
 }
 
 export default function Home() {
@@ -116,63 +117,63 @@ export default function Home() {
 
         {/* 5. Management Devices - 베이지 배경 (lazy) */}
         <div className="bg-[#F5F1ED]">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ManagementDevicesSection />
           </Suspense>
         </div>
 
         {/* 6. Philosophy - 흰색 배경 (lazy) */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <PhilosophySection />
           </Suspense>
         </div>
 
         {/* 6-2. Results & Statistics - 베이지 배경 (lazy) */}
         <div className="bg-[#F5F1ED]">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
             <ResultsStatisticsSection />
           </Suspense>
         </div>
 
         {/* 7. Facility Gallery - 흰색 배경 (lazy) */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
             <FacilitySection />
           </Suspense>
         </div>
 
         {/* 8. Patient Reviews - 베이지 배경 (lazy) */}
         <div className="bg-[#F5F1ED]">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReviewsSection />
           </Suspense>
         </div>
 
         {/* 8-2. YouTube Channel - 흰색 배경 (lazy) */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <YouTubeSection />
           </Suspense>
         </div>
 
         {/* 9. FAQ - 베이지 배경 (lazy) */}
         <div className="bg-[#F5F1ED]">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <FAQSection />
           </Suspense>
         </div>
 
         {/* 9-2. Reservation - 흰색 배경 (lazy) */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReservationSection />
           </Suspense>
         </div>
 
         {/* 10. Location & Contact - 베이지 배경 (lazy) */}
         <div className="bg-[#F5F1ED]">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <ContactSection />
           </Suspense>
         </div>

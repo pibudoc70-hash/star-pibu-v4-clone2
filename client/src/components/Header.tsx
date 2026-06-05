@@ -28,6 +28,7 @@ export default function Header() {
   const { t, lang, setLang } = useLang();
   const [langDropOpen, setLangDropOpen] = useState(false);
   const langDropRef = useRef<HTMLDivElement>(null);
+  const langTriggerRef = useRef<HTMLButtonElement>(null); // S2-T3: ESC 닫기 후 focus restore 대상
 
   // 언어 옵션 정의
   const langOptions: { lang: Lang; label: string; flag: string }[] = [
@@ -97,11 +98,15 @@ export default function Header() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mobileOpen]);
 
-  // H-3: 언어 드롭다운 ESC 키 닫기
+  // H-3: 언어 드롭다운 ESC 키 닫기 + S2-T3: focus restore
   useEffect(() => {
     if (!langDropOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLangDropOpen(false);
+      if (e.key === "Escape") {
+        setLangDropOpen(false);
+        // S2-T3: ESC 닫기 후 트리거 버튼으로 focus 복원
+        requestAnimationFrame(() => langTriggerRef.current?.focus());
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -339,6 +344,7 @@ export default function Header() {
           {/* Language Dropdown - Desktop */}
           <div className="hidden md:flex items-center mr-2 flex-shrink-0" ref={langDropRef} style={{ position: "relative" }}>
             <button type="button"
+              ref={langTriggerRef}
               onClick={() => setLangDropOpen(!langDropOpen)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 hover:bg-gray-100"
               style={{ fontSize: "13px", color: "#4f4f4f", border: "1px solid rgba(0,0,0,0.12)", background: langDropOpen ? "#f5f5f5" : "white" }}
@@ -353,12 +359,18 @@ export default function Header() {
             </button>
             {langDropOpen && (
               <div
+                role="listbox"
+                aria-label="언어 목록"
+                aria-activedescendant={`lang-option-${lang}`}
                 className="absolute top-full mt-1.5 right-0 rounded-xl shadow-xl overflow-hidden"
                 style={{ background: "white", border: "1px solid rgba(0,0,0,0.1)", minWidth: "140px", zIndex: 200 }}
               >
                 {langOptions.map((option) => (
                   <button type="button"
+                    id={`lang-option-${option.lang}`}
                     key={option.lang}
+                    role="option"
+                    aria-selected={option.lang === lang}
                     onClick={() => handleLangChange(option)}
                     className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left transition-colors hover:bg-gray-50"
                     style={{

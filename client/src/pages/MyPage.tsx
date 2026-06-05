@@ -5,6 +5,7 @@
  * - 빠른 상담 메뉴
  */
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
@@ -28,6 +29,7 @@ const STATUS_CONFIG: Record<ReservationStatus, { label: string; color: string; b
 
 export default function MyPage() {
   const { user, loading, isAuthenticated, logout } = useAuth();
+  const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<"profile" | "reservations">("profile");
 
   const { data: reservations, isLoading: reservationsLoading, refetch } = trpc.reservation.myReservations.useQuery(
@@ -45,6 +47,7 @@ export default function MyPage() {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
+      // S2-T1: getLoginUrl()은 외부 OAuth URL이므로 window.location 유지
       window.location.href = getLoginUrl();
     }
   }, [loading, isAuthenticated]);
@@ -65,7 +68,7 @@ export default function MyPage() {
 
   const handleLogout = async () => {
     await logout();
-    window.location.href = "/";
+    navigate("/");
   };
 
   const handleCancel = (id: number) => {

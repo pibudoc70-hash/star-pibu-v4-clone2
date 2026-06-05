@@ -4,6 +4,7 @@
  * - 예약 관리 탭: 예약 목록, 상태 변경
  */
 import React, { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 import type {
   AdminTab,
   ReservationStatus,
@@ -114,6 +115,7 @@ function SortableEventItem({ event, onEdit, onDelete }: {
 
 export default function AdminDashboard() {
   const { user, loading, isAuthenticated, logout } = useAuth();
+  const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<AdminTab>("treatments");
   const [userPage, setUserPage] = useState(1);
   const [reservationPage, setReservationPage] = useState(1);
@@ -130,9 +132,10 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (!loading) {
       if (!isAuthenticated) {
+        // S2-T1: SPA navigate — getLoginUrl()은 외부 OAuth URL이므로 window.location 유지
         window.location.href = getLoginUrl();
       } else if (user && user.role !== "admin") {
-        window.location.href = "/";
+        navigate("/");
       }
     }
   }, [loading, isAuthenticated, user]);
@@ -489,7 +492,7 @@ export default function AdminDashboard() {
           </button>
           {/* 유튜브 관리 탭 */}
           <button type="button"
-            onClick={() => window.location.href = "/admin/youtube"}
+            onClick={() => navigate("/admin/youtube")}
             className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
             style={{
               background: "transparent",
@@ -506,7 +509,7 @@ export default function AdminDashboard() {
             <Home size={16} />홈페이지로
           </a>
           <button type="button"
-            onClick={async () => { await logout(); window.location.href = "/"; }}
+            onClick={async () => { await logout(); navigate("/"); }}
             className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm"
           >
             <LogOut size={16} />로그아웃

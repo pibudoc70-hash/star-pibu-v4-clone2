@@ -30,7 +30,6 @@ const CATEGORIES = [
   { id: "psoriasis",  label: "건선·아토피",    labelEn: "PSORIASIS" },
   { id: "volume",     label: "볼륨·부스터",    labelEn: "VOLUME" },
   { id: "botox",      label: "보톡스·필러",    labelEn: "BOTOX" },
-  { id: "stemcell",   label: "줄기세포·재생",  labelEn: "STEM CELL" },
 ];
 
 // ─── 카테고리별 카드 배경색 ───────────────────────────────────────────────────
@@ -40,7 +39,6 @@ const CAT_IMG_BG: Record<string, string> = {
   volume: "#F0F6F8", botox: "#F0F6F8", acne_laser: "#F0F6F8",
   acne: "#F0F6F8", fungus: "#F0F6F8", vitiligo: "#F0F6F8",
   psoriasis: "#F0F6F8",
-  stemcell: "#F0F6F8",
 };
 
 // ─── Empty State ──────────────────────────────────────────────────────────────

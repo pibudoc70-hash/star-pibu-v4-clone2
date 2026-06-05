@@ -1569,3 +1569,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] IMG 검증: TypeScript 에러 0건 확인
 - [x] IMG 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
 - [x] IMG 체크포인트 저장
+
+## Bug Fix: 시설안내 첫 번째 클릭 오작동 (2026-06-05)
+
+- [x] 원인 분석: FacilitySection이 React.lazy로 lazy 로드되어 첫 클릭 시 DOM에 없음 → el=null → 스크롤 없이 return
+- [x] 원인 분석: el이 null일 때 MutationObserver 대기 없이 그냥 return → 두 번째 클릭 시 이미 DOM에 있어 정상 작동
+- [x] 수정: Header.tsx handleNavClick — el이 null일 때 MutationObserver로 최대 3초 대기 후 DOM 마운트 시 스크롤
+- [x] 검증: TypeScript 에러 0건, 175개 테스트 통과
+- [x] 체크포인트 저장

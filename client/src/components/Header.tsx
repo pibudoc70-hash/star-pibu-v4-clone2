@@ -233,14 +233,31 @@ export default function Header() {
         history.replaceState(null, "", basePath);
         return;
       }
-      const el = document.querySelector(href);
-      if (el) {
+      const scrollToEl = (el: Element) => {
         const offset = 80;
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
-        // URL 해시 업데이트 (popstate 방지)
         history.replaceState(null, "", basePath + href);
+      };
+      const el = document.querySelector(href);
+      if (el) {
+        scrollToEl(el);
+        return;
       }
+      // FacilitySection 등 lazy 섹션은 아직 DOM에 없을 수 있음.
+      // MutationObserver로 최대 3초 대기 후 마운트되면 스크롤.
+      const observer = new MutationObserver(() => {
+        const lazyEl = document.querySelector(href);
+        if (lazyEl) {
+          observer.disconnect();
+          clearTimeout(timeout);
+          scrollToEl(lazyEl);
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      const timeout = setTimeout(() => observer.disconnect(), 3000);
+      // URL 해시 미리 업데이트 (브라우저 기본 스크롤 방지용)
+      history.replaceState(null, "", basePath + href);
       return;
     }
     

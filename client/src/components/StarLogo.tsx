@@ -18,6 +18,10 @@ export default function StarLogo({ variant = "color", height = 52, className = "
       src={LOGO_URL}
       alt="스타피부과 로고"
       className={className}
+      // 로고는 헤더 LCP 요소 — eager + high priority로 즉시 로드
+      loading="eager"
+      decoding="async"
+      fetchPriority="high"
       style={{
         height: `${height}px`,
         width: "auto",

@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -297,10 +298,11 @@ export default function DoctorsSection() {
                           transition: "border 0.3s ease",
                         }}
                       >
-                        <img
+                        <OptimizedImage
                           src={d.cardImage || d.image}
                           alt={d.name}
-                          loading="eager"
+                          priority
+                          usePicture={false}
                           onLoad={() => handleImageLoad(d.id)}
                           style={{
                             width: "100%",
@@ -370,12 +372,12 @@ export default function DoctorsSection() {
                 }}
               >
                 {mergedDoctors.map((d) => (
-                  <img
+                  <OptimizedImage
                     key={d.id}
                     src={d.image}
                     alt={d.name}
-                    loading="eager"
-                    fetchPriority="high"
+                    priority
+                    usePicture={false}
                     onLoad={() => handleImageLoad(d.id)}
                     style={{
                       position: "absolute",
@@ -586,10 +588,11 @@ export default function DoctorsSection() {
                         flexShrink: 0,
                       }}
                     >
-                      <img
+                      <OptimizedImage
                         src={d.cardImage || d.image}
                         alt={d.name}
-                        loading="eager"
+                        priority
+                        usePicture={false}
                         onLoad={() => handleImageLoad(d.id)}
                         style={{
                           width: "100%",
@@ -637,12 +640,12 @@ export default function DoctorsSection() {
                 }}
               >
                 {mergedDoctors.map((d) => (
-                  <img
+                  <OptimizedImage
                     key={d.id}
                     src={d.mobileImage || d.image}
                     alt={d.name}
-                    loading="eager"
-                    fetchPriority="high"
+                    priority
+                    usePicture={false}
                     onLoad={() => handleImageLoad(d.id)}
                     style={{
                       position: "absolute",

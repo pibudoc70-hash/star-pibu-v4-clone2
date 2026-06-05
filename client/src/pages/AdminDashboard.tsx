@@ -697,7 +697,7 @@ export default function AdminDashboard() {
                   (popupList || []).map((ev: PopupEventItem) => (
                     <div key={ev.id} className="bg-white rounded-2xl border border-[#E5E7EB] p-4 flex items-center gap-4">
                       {ev.imageUrl ? (
-                        <img src={ev.imageUrl} alt={ev.title} className="w-16 h-16 object-contain rounded-xl border border-[#F3F4F6] flex-shrink-0" />
+                        <img src={ev.imageUrl} alt={ev.title} className="w-16 h-16 object-contain rounded-xl border border-[#F3F4F6] flex-shrink-0" loading="lazy" decoding="async" />
                       ) : (
                         <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: ev.accentLight }}>
                           <Megaphone size={24} style={{ color: ev.accent }} />
@@ -794,6 +794,8 @@ export default function AdminDashboard() {
                               src={popupForm.imageUrl}
                               alt="미리보기"
                               className="h-24 w-auto rounded-xl border border-[#E5E7EB] object-contain bg-[#F9FAFB]"
+                              loading="lazy"
+                              decoding="async"
                             />
                             <button
                               type="button"
@@ -1124,7 +1126,7 @@ export default function AdminDashboard() {
                         />
                         {eventForm.imageUrl && (
                           <div className="mt-2">
-                            <img src={eventForm.imageUrl} alt="미리보기" className="w-full h-32 object-cover rounded-lg" />
+                            <img src={eventForm.imageUrl} alt="미리보기" className="w-full h-32 object-cover rounded-lg" loading="lazy" decoding="async" />
                             <button type="button"
                               onClick={() => setEventForm({ ...eventForm, imageUrl: '' })}
                               className="mt-2 text-sm text-red-600 hover:text-red-700"

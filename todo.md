@@ -1550,4 +1550,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] S3-T5: server/main.redirect.test.ts redirect 회귀 테스트 — Sprint 1에서 이미 7개 작성
 - [x] S3 검증: TypeScript 에러 0건 확인
 - [x] S3 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
-- [ ] S3 체크포인트 저장
+- [x] S3 체크포인트 저장 — c0a5dfe5
+
+## 이미지 최적화 (2026-06-05)
+
+- [x] IMG-1: DoctorsSection.tsx — 4개 img 태그 OptimizedImage 교체 (LCP 이미지 priority 적용)
+- [x] IMG-2: FacilitySection.tsx — 4개 img 태그 OptimizedImage 교체 (picture 태그 내부 img 포함)
+- [x] IMG-3: TreatmentCard.tsx — 카드/멀티/단일 이미지 OptimizedImage 교체
+- [x] IMG-4: TreatmentCard.tsx 모달 이미지 — loading="lazy" 추가
+- [x] IMG-5: StarLogo.tsx — loading="eager" + fetchPriority="high" 추가 (LCP 로고)
+- [x] IMG-6: OptimizedImage 컴포넌트 — decoding="async" 속성 추가
+- [x] IMG-7: PhilosophySection.tsx — picture 태그 내부 img에 decoding="async" 추가
+- [x] IMG-8: ManusDialog.tsx — img loading="lazy" + decoding="async" 추가
+- [x] IMG-9: TreatmentsManager.tsx — 미리보기 img loading="lazy" + decoding="async" 추가
+- [x] IMG-10: AdminDashboard.tsx — 3개 img loading="lazy" + decoding="async" 추가
+- [x] IMG-11: AdminEquipment2New.tsx — 미리보기 img loading="lazy" + decoding="async" 추가
+- [x] IMG-12: AdminEquipment2Edit.tsx — 미리보기 img loading="lazy" + decoding="async" 추가
+- [x] IMG 검증: TypeScript 에러 0건 확인
+- [x] IMG 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
+- [x] IMG 체크포인트 저장

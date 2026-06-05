@@ -419,6 +419,8 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                         src={form.image}
                         alt="preview"
                         className="max-w-xs h-auto max-h-32 object-contain rounded border border-gray-200"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <button type="button"
                         onClick={() => setForm({ ...form, image: "" })}

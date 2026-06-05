@@ -4,6 +4,7 @@
  * 기능:
  * - loading="lazy" 기본 적용 (hero 등 LCP 이미지는 priority=true로 eager 전환)
  * - fetchpriority="high" (priority=true 시 적용)
+ * - decoding="async" 기본 적용 (priority=true 시 "sync" — LCP 이미지 즉시 디코딩)
  * - <picture> 태그로 WebP/AVIF 폴백 처리
  *   - CDN URL(cloudfront, manus-storage 등)은 쿼리스트링으로 포맷 힌트 추가
  *   - 로컬/알 수 없는 URL은 원본 그대로 사용
@@ -22,7 +23,7 @@ declare module 'react' {
 interface OptimizedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
-  /** true이면 loading="eager" + fetchpriority="high" (Hero/LCP 이미지용) */
+  /** true이면 loading="eager" + fetchpriority="high" + decoding="sync" (Hero/LCP 이미지용) */
   priority?: boolean;
   /** picture 태그 WebP/AVIF 소스 생성 여부 (기본 true) */
   usePicture?: boolean;
@@ -80,6 +81,9 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const loading: "lazy" | "eager" = priority ? "eager" : "lazy";
   const fetchPriorityValue = priority ? "high" : "auto";
+  // priority 이미지(LCP)는 "sync"로 즉시 디코딩 → 첫 화면 렌더링 블로킹 최소화
+  // 일반 이미지는 "async"로 메인 스레드와 병렬 디코딩 → 스크롤 성능 향상
+  const decodingValue: "async" | "sync" = priority ? "sync" : "async";
 
   const avifSrc = usePicture ? buildFormatSrc(src, "avif") : null;
   const webpSrc = usePicture ? buildFormatSrc(src, "webp") : null;
@@ -92,6 +96,7 @@ export default function OptimizedImage({
       src={src}
       alt={alt}
       loading={loading}
+      decoding={decodingValue}
       fetchPriority={fetchPriorityValue as 'high' | 'low' | 'auto'}
       width={width}
       height={height}

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, Sparkles, ChevronRight } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import OptimizedImage from "@/components/OptimizedImage";
 
 // ─── 타입 ────────────────────────────────────────────────────────────────────
 export interface Treatment {
@@ -118,11 +119,10 @@ function TreatmentCardImage({
       }}
     >
       {item.cardBannerImage ? (
-        <img
+        <OptimizedImage
           src={item.cardBannerImage}
           alt={item.name}
           className="w-full h-full object-contain block transition-transform duration-400 group-hover:scale-105"
-          loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = "0.5";
           }}
@@ -133,7 +133,7 @@ function TreatmentCardImage({
           style={{ padding: "8px 6px" }}
         >
           {imageArray.map((src, i) => (
-            <img
+            <OptimizedImage
               key={i}
               src={src}
               alt={`${item.name} ${i + 1}`}
@@ -143,7 +143,6 @@ function TreatmentCardImage({
                 maxWidth: "48%",
                 filter: "drop-shadow(1px 2px 4px rgba(0,0,0,0.08))",
               }}
-              loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.opacity = "0.5";
               }}
@@ -151,11 +150,10 @@ function TreatmentCardImage({
           ))}
         </div>
       ) : item.image ? (
-        <img
+        <OptimizedImage
           src={item.image}
           alt={item.name}
           className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-          loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = "0.5";
           }}
@@ -180,7 +178,7 @@ function TreatmentModalContent({
     <div className="flex flex-col h-full overflow-y-auto">
       {/* 모달 이미지 */}
       {item.modalImage && (
-        <img
+        <OptimizedImage
           src={item.modalImage}
           alt={item.name}
           className="w-full object-contain mb-4 rounded-xl"

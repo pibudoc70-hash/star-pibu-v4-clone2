@@ -316,6 +316,8 @@ export default function AdminEquipment2Edit() {
                       src={formData.image}
                       alt="미리보기"
                       className="max-w-xs h-auto rounded-md"
+                      loading="lazy"
+                      decoding="async"
                       onError={() => alert("이미지를 불러올 수 없습니다.")}
                     />
                   </div>

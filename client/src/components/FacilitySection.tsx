@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const galleryImageSrcs = [
   { srcWebP: "/manus-storage/metaview_room_535d3491.jpg", srcJPG: "/manus-storage/metaview_room_535d3491.jpg" },
@@ -128,17 +129,13 @@ export default function FacilitySection() {
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
               style={{ aspectRatio: "16/9" }}
             >
-              <picture>
-                <source srcSet={img.srcWebP} type="image/webp" />
-                <img
-                  src={img.srcJPG}
-                  alt={pcCardTitles[i]}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  width={800}
-                  height={450}
-                />
-              </picture>
+              <OptimizedImage
+                src={img.srcJPG}
+                alt={pcCardTitles[i]}
+                className="w-full h-full object-cover"
+                width={800}
+                height={450}
+              />
               {/* Dark Overlay */}
               <div
                 className="absolute inset-0"
@@ -176,17 +173,13 @@ export default function FacilitySection() {
                   className="absolute inset-0 transition-opacity duration-700 ease-in-out"
                   style={{ opacity: i === currentIndex ? 1 : 0 }}
                 >
-                  <picture>
-                    <source srcSet={img.srcWebP} type="image/webp" />
-                    <img
+                    <OptimizedImage
                       src={img.srcJPG}
-                      alt={img.label}
+                      alt={pcCardTitles[i]}
                       className="w-full h-full object-cover"
-                      loading="lazy"
                       width={800}
                       height={450}
                     />
-                  </picture>
                   {/* Dark Overlay */}
                   <div
                     className="absolute inset-0"
@@ -286,17 +279,13 @@ export default function FacilitySection() {
                   border: i === currentIndex ? "2px solid #C9A961" : "1px solid #E5E7EB",
                 }}
               >
-                <picture>
-                  <source srcSet={img.srcWebP} type="image/webp" />
-                  <img
-                    src={img.srcJPG}
-                    alt={img.label}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    width={800}
-                    height={450}
-                  />
-                </picture>
+                <OptimizedImage
+                  src={img.srcJPG}
+                  alt={img.label}
+                  className="w-full h-full object-cover"
+                  width={800}
+                  height={450}
+                />
               </button>
             ))}
           </div>
@@ -322,17 +311,13 @@ export default function FacilitySection() {
               </button>
 
               {/* Image */}
-                <picture>
-                  <source srcSet={galleryImageSrcs[lightboxIndex].srcWebP} type="image/webp" />
-                  <img
-                    src={galleryImageSrcs[lightboxIndex].srcJPG}
-                    alt={pcCardTitles[lightboxIndex]}
-                    className="w-full h-auto rounded-lg"
-                    loading="lazy"
-                    width={1200}
-                    height={675}
-                  />
-                </picture>
+                <OptimizedImage
+                  src={galleryImageSrcs[lightboxIndex].srcJPG}
+                  alt={pcCardTitles[lightboxIndex]}
+                  className="w-full h-auto rounded-lg"
+                  width={1200}
+                  height={675}
+                />
 
               {/* Title */}
               <div className="text-center mt-4">

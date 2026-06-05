@@ -161,7 +161,7 @@ export default function PhilosophySection() {
                 <source srcSet={PATIENT_IMAGE_MOBILE_WEBP} type="image/webp" />
                 <img
                   src={PATIENT_IMAGE_MOBILE_JPG}
-                  alt={lang === 'ko' ? '스타피부과 환자 상담' : lang === 'en' ? 'STAR Dermatology patient consultation' : lang === 'ja' ? 'スター皮膚科 患者カウンセリング' : 'STAR皮肤科患者咨询'}
+                  alt={lang === 'ko' ? '스타피부과 환자 상담' : lang === 'en' ? 'STAR Dermatology patient consultation' : lang === 'ja' ? 'スター皮膚科 患者カウンセリング' : 'STAR皮肤科患者和诊'}
                   className="relative z-10 w-full object-cover"
                   style={{
                     height: '520px',
@@ -170,6 +170,7 @@ export default function PhilosophySection() {
                     marginTop: '55px',
                   }}
                   loading="lazy"
+                  decoding="async"
                 />
               </picture>
             </div>

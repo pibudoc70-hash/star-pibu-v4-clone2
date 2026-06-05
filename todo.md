@@ -1676,3 +1676,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] PROD-P3-1: HeroSection unit span fontSize 50% → 65% (가독성 개선)
 - [x] PROD-P4-1: FAQSection py-20 md:py-28 → py-16 md:py-24 (사이트 표준 간격 통일)
 - [x] PROD-P4-2: ManagementDevicesSection py-14 sm:py-20 → py-16 sm:py-24 (사이트 표준 간격 통일)
+
+## 모바일 반응형 점검 (LandingEN/JA/ZH)
+- [x] MOB-1: HeroSection 모바일 floor 텍스트 — 영어 85자 whiteSpace:nowrap + 하드코딩 marginLeft 제거 → flex-wrap + text-center
+- [x] MOB-2: PhilosophySection stats 카드 고정 높이 133px → min-height (영어 27자 라벨 overflow 방지)
+- [x] MOB-3: ReservationSection 모바일 패딩 p-8 → p-4 sm:p-8 (320px 화면 폼 좌우 여백 확보)
+- [x] MOB-4: ResultsStatisticsSection 통계 카드 — 영어 20자 라벨 break-words 추가 (2열 그리드 높이 불균형 방지)

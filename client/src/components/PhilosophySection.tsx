@@ -71,7 +71,7 @@ export default function PhilosophySection() {
                   <div
                     key={s.label}
                     className="text-center p-2 sm:p-4 flex flex-col items-center justify-center"
-                    style={{ backgroundColor: '#f6efe0', borderRadius: '10px', height: '133px' }}
+                    style={{ backgroundColor: '#f6efe0', borderRadius: '10px', minHeight: '133px' }}
                   >
                     {/* 픽토그램 - 눈 모양(ScanEye) 포함 24px */}
                     <div className="flex justify-center mb-1 sm:mb-2">

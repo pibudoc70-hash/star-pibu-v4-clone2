@@ -46,7 +46,8 @@ export default function ReservationSection() {
         </div>
 
         {/* 예약 폼 또는 성공 메시지 */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-[#E5E7EB]">
+        {/* [MOB-3] 모바일 p-8(32px) → p-4(16px): 320px 화면에서 폼 좌우 여백 확보 */}
+        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 md:p-12 border border-[#E5E7EB]">
           {showSuccess ? (
             <div className="text-center py-12">
               <div className="flex justify-center mb-4">

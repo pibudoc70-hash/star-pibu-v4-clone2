@@ -336,21 +336,27 @@ export default function HeroSection() {
       <GoldParticles />
 
       {/* 층별 안내 - 모바일 전용: 헤더 바로 아래 중앙 */}
+      {/*
+       * [MOB-1] 영어(85자) floor 텍스트가 whiteSpace:nowrap + 하드코딩 marginLeft:-142px로
+       * 화면 밖으로 잘리는 문제 수정.
+       * → whiteSpace:normal + width:90vw + text-center로 자연스럽게 줄바꿈 처리
+       */}
       <p
         className="hero-fade absolute z-20 md:hidden"
         style={{
-          top: "68px",
+          top: "22px",
           left: "50%",
           transform: "translateX(-50%)",
           color: "rgba(255,255,255,0.85)",
           fontSize: "10px",
           letterSpacing: "0.03em",
           animationDelay: "1250ms",
-          whiteSpace: "nowrap",
+          whiteSpace: "normal",
+          wordBreak: "keep-all",
           textShadow: "0 1px 4px rgba(0,0,0,0.6)",
           textAlign: "center",
-          marginTop: '-46px',
-          marginLeft: '-142px',
+          width: "90vw",
+          lineHeight: 1.4,
         }}
       >
         {t.hero.floor}

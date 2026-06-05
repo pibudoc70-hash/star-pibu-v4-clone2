@@ -102,13 +102,13 @@ export default function ResultsStatisticsSection() {
                 {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}
               </p>
 
-              {/* 라벨 */}
-              <p className="text-xs sm:text-sm font-medium" style={{ color: '#6B7280' }}>
+              {/* 라벨 - [MOB-4] 영어 20자 라벨이 2열 그리드에서 카드 높이 불균형 방지: break-words 추가 */}
+              <p className="text-xs sm:text-sm font-medium break-words" style={{ color: '#6B7280' }}>
                 {stat.label}
               </p>
 
               {/* 설명 */}
-              <p className="text-xs" style={{ color: '#9CA3AF', marginTop: '0.5rem' }}>
+              <p className="text-xs break-words" style={{ color: '#9CA3AF', marginTop: '0.5rem' }}>
                 {stat.description}
               </p>
             </div>

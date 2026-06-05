@@ -54,7 +54,8 @@ export default function FAQSection() {
         </Helmet>
       )}
 
-      <section id="faq" className="py-20 md:py-28" style={{ background: "#F0F7FF" }}>
+      {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
+      <section id="faq" className="py-16 md:py-24" style={{ background: "#F0F7FF" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* 섹션 헤더 */}
           <div className="text-center mb-14">

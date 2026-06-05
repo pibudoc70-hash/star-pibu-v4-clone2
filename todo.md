@@ -1644,3 +1644,35 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] FM-P3-1: index.css prefers-reduced-motion 전역 블록 추가 (WCAG 2.1 SC 2.3.3)
 - [x] FM-P3-2: Hero softGlow/pulse-soft/animate-bounce reduced-motion 비활성화
 - [x] FM-P3-3: will-change: filter 제거 (reveal-left, reveal-right, reveal-card) — GPU 레이어 최소화
+
+## 실운영 수준 개선 (Production Hardening)
+
+### Phase 1: HeroSection LCP 최적화
+- [ ] PROD-P1-1: HeroSection 배경 이미지 CSS background → <picture> 태그로 교체 (LCP 이미지 브라우저 파싱 가능)
+- [ ] PROD-P1-2: index.html preload에 fetchpriority="high" 추가
+- [ ] PROD-P1-3: useCountUp duration 3500ms → 2000ms (기본값으로 복원)
+- [ ] PROD-P1-4: 모바일 CTA 버튼 순서 개선 (예약 버튼 우선순위 상향)
+
+### Phase 2: SeoHead JSON-LD 전략 개선
+- [ ] PROD-P2-1: SeoHead includeClinicSchema를 includeWebSiteSchema / includeMedicalSchema 두 개로 분리
+- [ ] PROD-P2-2: About/Doctors/Directions 등 내부 페이지에서 WebSite 스키마 제거 (홈만 유지)
+- [ ] PROD-P2-3: LandingEN/JA/ZH에 언어별 MedicalBusiness 스키마 확인
+
+### Phase 3: Stats 데이터 일관성
+- [ ] PROD-P3-1: HeroSection unit span fontSize 50% → 65% 상향 (가독성)
+- [ ] PROD-P3-2: ResultsStatisticsSection unit span fontSize 70% 통일 확인
+
+### Phase 4: 코드 품질 개선
+- [ ] PROD-P4-1: 섹션 py 비일관 항목 수정 (FAQSection py-20→py-16 sm:py-24, ManagementDevicesSection py-14→py-16 sm:py-24)
+- [ ] PROD-P4-2: HeroSection chatUrl/reserveUrl/chatBg 로직 useChatConfig 훅으로 추출
+
+## 실운영 수준 개선 (Production Hardening)
+- [x] PROD-P1-1: HeroSection 배경 이미지 CSS background → picture 태그 교체 (LCP 브라우저 파싱 가능)
+- [x] PROD-P1-2: index.html preload에 fetchpriority="high" 추가
+- [x] PROD-P1-3: useCountUp duration 3500ms → 2000ms (메인스레드 부담 감소)
+- [x] PROD-P1-4: 모바일 CTA 버튼 순서 개선 (예약 버튼 → 카카오 순)
+- [x] PROD-P2-1: SeoHead includeMedicalSchema / includeWebSiteSchema 분리 (하위 호환 유지)
+- [x] PROD-P2-2: Home.tsx에만 includeWebSiteSchema={true} 설정 (WebSite 스키마 중복 제거)
+- [x] PROD-P3-1: HeroSection unit span fontSize 50% → 65% (가독성 개선)
+- [x] PROD-P4-1: FAQSection py-20 md:py-28 → py-16 md:py-24 (사이트 표준 간격 통일)
+- [x] PROD-P4-2: ManagementDevicesSection py-14 sm:py-20 → py-16 sm:py-24 (사이트 표준 간격 통일)

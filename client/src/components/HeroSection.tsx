@@ -231,9 +231,10 @@ export default function HeroSection() {
   // useClinicStats Hook으로 단위 문자열 중앙화
   const clinicStats = useClinicStats();
   // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
-  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 3500, "", 0, statsRef);
-  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 3500, "", 0, statsRef);
-  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 3500, "", 0, statsRef);
+  // [PROD-P1-3] 카운팅 duration 3500ms → 2000ms: rAF 루프 1.5초 단축 → 메인스레드 부담 감소
+  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 2000, "", 0, statsRef);
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef);
   return (
     <section
       id="home"
@@ -242,29 +243,57 @@ export default function HeroSection() {
         minHeight: "100svh",
       }}
     >
-      {/* 배경 이미지 - 데스크톱: 가로형, 모바일: 세로형 */}
-      {/* 데스크톱 배경 (641px 이상) - 반응형 WebP 이미지 */}
-      <div
+      {/*
+       * [PROD-P1-1] LCP 최적화: CSS background-image → <picture> 태그 교체
+       * 이유: CSS background-image는 브라우저 프리로드 스캐너가 파싱 불가능.
+       * <picture> + <img fetchPriority="high"> 는 HTML 파싱 단계에서 즉시 감지되어
+       * LCP 이미지 요청이 최소 200~400ms 앞당겨짐.
+       * index.html의 <link rel="preload">와 이중 보장으로 LCP 최적화.
+       */}
+      <picture
         aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-no-repeat hidden sm:block"
-        style={{
-          backgroundImage: `url(${HERO_IMAGE_DESKTOP_WEBP}), url(${HERO_IMAGE_DESKTOP_JPG})`,
-          backgroundPosition: "center center",
-          backgroundSize: "cover",
-          backfaceVisibility: "hidden",
-        }}
-      />
-      {/* 모바일 배경 (640px 이하) - 반응형 WebP 이미지, 중앙 포커스 */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-no-repeat sm:hidden"
-        style={{
-          backgroundImage: `url(${HERO_IMAGE_MOBILE_PORTRAIT_WEBP}), url(${HERO_IMAGE_MOBILE_PORTRAIT_JPG})`,
-          backgroundPosition: "center center",
-          backgroundSize: "cover",
-          backfaceVisibility: "hidden",
-        }}
-      />
+        className="absolute inset-0 pointer-events-none"
+        style={{ display: "block" }}
+      >
+        {/* 데스크탑: 641px 이상 */}
+        <source
+          media="(min-width: 641px)"
+          srcSet={HERO_IMAGE_DESKTOP_WEBP}
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 641px)"
+          srcSet={HERO_IMAGE_DESKTOP_JPG}
+          type="image/jpeg"
+        />
+        {/* 모바일: 640px 이하 */}
+        <source
+          media="(max-width: 640px)"
+          srcSet={HERO_IMAGE_MOBILE_PORTRAIT_WEBP}
+          type="image/webp"
+        />
+        <source
+          media="(max-width: 640px)"
+          srcSet={HERO_IMAGE_MOBILE_PORTRAIT_JPG}
+          type="image/jpeg"
+        />
+        {/* fallback img — fetchPriority="high"로 LCP 우선 로드 */}
+        <img
+          src={HERO_IMAGE_DESKTOP_JPG}
+          alt=""
+          fetchPriority="high"
+          loading="eager"
+          decoding="sync"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+          }}
+        />
+      </picture>
       {/* 오버레이 - 밝은 베이지 인테리어 사진에 맞게 조정 */}
       {/* 상단·하단에 어두운 그라디언트 → 텍스트 가독성 확보, 중앙은 사진 그대로 노출 */}
       <div
@@ -463,7 +492,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count20}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.years.unit}</span>
+                {count20}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.years.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -508,7 +537,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count4000}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.cases.unit}</span>
+                {count4000}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.cases.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -553,7 +582,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
+                {count50}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -603,7 +632,7 @@ export default function HeroSection() {
                   textAlign: "right",
                 }}
               >
-                {count50}<span style={{ fontSize: "50%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
+                {count50}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
               </div>
               <div style={{
                 height: "1.5px",
@@ -653,10 +682,35 @@ export default function HeroSection() {
             <Phone size={14} />
             {t.hero.cta_call}
           </a>
-          {/* 카카오 + 네이버 버튼 - 모바일에서 2열, 데스크톱에서 인라인 */}
+          {/*
+           * [PROD-P1-4] 모바일 CTA 순서 개선: 예약 버튼 우선 노출
+           * 이유: 모바일 사용자의 주요 전환 목표는 예약. 네이버 예약 버튼을
+           * 카카오 앞에 배치하여 시각적 우선순위를 사용자 의도와 일치시킴.
+           */}
           <div className="flex flex-row w-full sm:w-auto" style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)" }}>
-            {/* [FM-P1-5] 1870ms → 1470ms */}
-            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1470ms" }}>
+            {/* 예약 버튼 - 모바일에서 첫 번째 (PROD-P1-4) */}
+            <a
+              href={reserveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
+              style={{
+                background: lang === "zh" ? "#06C755" : "#03C75A",
+                color: "#FFFFFF",
+                boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
+                fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
+                padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
+                animationDelay: "1470ms",
+                whiteSpace: "nowrap",
+                minWidth: "clamp(78px, 22vw, 130px)",
+                paddingTop: '11px',
+              }}
+            >
+              <Calendar size={14} />
+              {t.hero.cta_reserve}
+            </a>
+            {/* 카카오/위체트 버튼 - 모바일에서 두 번째 */}
+            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1590ms" }}>
               <a
                 href={chatUrl}
                 target={lang === "zh" ? undefined : "_blank"}
@@ -682,27 +736,6 @@ export default function HeroSection() {
                 </div>
               )}
             </div>
-            <a
-              href={reserveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
-              style={{
-                background: lang === "zh" ? "#06C755" : "#03C75A",
-                color: "#FFFFFF",
-                boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
-                fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
-                padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-              /* [FM-P1-5] 1990ms → 1590ms */
-                animationDelay: "1590ms",
-                whiteSpace: "nowrap",
-                minWidth: "clamp(78px, 22vw, 130px)",
-                paddingTop: '11px',
-              }}
-            >
-              <Calendar size={14} />
-              {t.hero.cta_reserve}
-            </a>
           </div>
         </div>
       </div>

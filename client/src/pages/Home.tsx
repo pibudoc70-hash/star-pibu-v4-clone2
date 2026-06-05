@@ -79,14 +79,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/*
+       * [PROD-P2-2] 홈페이지에만 includeWebSiteSchema={true} 설정
+       * 이유: WebSite 스키마(SearchAction)는 사이트 전체를 대표하는 루트 URL에만
+       * 삽입하는 것이 Google 권장 사항. 내부 페이지에 중복 삽입되면
+       * 신호 희석이 분산되어 Sitelinks Searchbox 인식률이 낙어집니다.
+       */}
       <SeoHead
-        title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
-        description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리쥬란 등 프리미엄 시술 전문. 온라인 예약 가능."
-        keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리쥬란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
+        title="부산 서면 스타피부과 | 피부과 전문의 울쓸라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
+        description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쓸라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리주란 등 프리미엄 시술 전문. 온라인 예약 가능."
+        keywords="부산피부과, 울쓸라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://www.star-pibu.com/"
         ogImage="https://www.star-pibu.com/og-image.jpg"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
+        includeWebSiteSchema={true}
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "홈", url: "https://www.star-pibu.com/" },

@@ -54,12 +54,31 @@ export interface SeoHeadProps {
   /** og:locale:alternate 목록 */
   ogLocaleAlternates?: string[];
   /**
-   * 병원 기본 스키마 자동 삽입 여부 (기본값: true)
+   * [PROD-P2-1] MedicalBusiness 스키마 삽입 여부 (기본값: true)
    *
-   * - true  → buildClinicJsonLd() (MedicalBusiness) + buildWebSiteJsonLd() (WebSite) 모두 삽입
-   * - false → 두 스키마 모두 제외 (시술/장비 상세 페이지 등 중복 방지)
+   * - true  → buildClinicJsonLd() (MedicalBusiness + LocalBusiness) 삽입
+   * - false → MedicalBusiness 스키마 제외 (시술/장비 상세 페이지 등)
    *
-   * @note 이 prop은 MedicalBusiness 스키마만이 아니라 WebSite 스키마도 함께 제어합니다.
+   * @deprecated 이전 `includeClinicSchema` prop을 대체합니다.
+   *   이전 동작 유지: includeClinicSchema 설정 시 includeMedicalSchema로 폴백
+   */
+  includeMedicalSchema?: boolean;
+  /**
+   * [PROD-P2-1] WebSite 스키마 삽입 여부 (기본값: false)
+   *
+   * - true  → buildWebSiteJsonLd() (WebSite + SearchAction) 삽입
+   * - false → WebSite 스키마 제외
+   *
+   * @note WebSite 스키마는 홈페이지("/")에만 삽입하는 것이 권장됩니다.
+   *   Google은 동일 사이트에서 WebSite 스키마가 여러 페이지에 중복 삽입되면
+   *   신호를 제대로 인식하지 못할 수 있습니다.
+   */
+  includeWebSiteSchema?: boolean;
+  /**
+   * @deprecated includeMedicalSchema를 사용하세요.
+   *   하위 호환성 유지를 위해 여전히 지원됩니다.
+   *   이전 동작: true → MedicalBusiness만 삽입 (이전에는 WebSite도 함께 삽입했으나
+   *   이제 WebSite는 includeWebSiteSchema로 분리되었습니다)
    */
   includeClinicSchema?: boolean;
 }
@@ -328,16 +347,36 @@ export default function SeoHead({
   noindex = false,
   ogLocale = "ko_KR",
   ogLocaleAlternates,
-  includeClinicSchema = true,
+  // [PROD-P2-1] 신규 분리된 props (기본값: MedicalBusiness true, WebSite false)
+  includeMedicalSchema,
+  includeWebSiteSchema = false,
+  // @deprecated: 하위 호환성 유지 (includeMedicalSchema로 폴백)
+  includeClinicSchema,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
 
-  // 기본 스키마: includeClinicSchema=true 시 MedicalBusiness + WebSite 두 스키마 모두 삽입
-  // includeClinicSchema=false 시 두 스키마 모두 제외 (시술/장비 상세 페이지 중복 방지)
-  const baseSchemas: JsonLdSchema[] = includeClinicSchema
-    ? [buildClinicJsonLd(), buildWebSiteJsonLd()]
-    : [];
+  /*
+   * [PROD-P2-1] JSON-LD 스키마 조립 로직
+   *
+   * 우선순위:
+   *   1. includeMedicalSchema 명시 지정 시 이를 사용
+   *   2. includeClinicSchema (이전 prop) 지정 시 폴백
+   *   3. 둘 다 미지정 시 기본값 true
+   *
+   * WebSite 스키마: includeWebSiteSchema로만 제어 (홈페이지에만 true)
+   */
+  const shouldIncludeMedical =
+    includeMedicalSchema !== undefined
+      ? includeMedicalSchema
+      : includeClinicSchema !== undefined
+        ? includeClinicSchema
+        : true; // 기본값: true
+
+  const baseSchemas: JsonLdSchema[] = [
+    ...(shouldIncludeMedical ? [buildClinicJsonLd()] : []),
+    ...(includeWebSiteSchema ? [buildWebSiteJsonLd()] : []),
+  ];
 
   // 페이지별 추가 스키마
   const allSchemas = [...baseSchemas, ...(jsonLd ?? [])];

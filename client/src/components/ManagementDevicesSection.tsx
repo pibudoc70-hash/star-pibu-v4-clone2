@@ -329,8 +329,9 @@ export default function ManagementDevicesSection() {
     };
   }, []);
 
+  // [PROD-P4-1] py-14 sm:py-20 → py-16 sm:py-24: 사이트 표준 셉션 간격으로 통일
   return (
-    <section className="py-14 sm:py-20 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="container">
         {/* 제목 */}
         <div className="text-center mb-8 sm:mb-12">

@@ -1,0 +1,43 @@
+{
+  "query": "SELECT id, name, nameEn, categoryId, section, isActive, sortOrder, badge, badgeColor FROM treatments WHERE categoryId = 'stemcell' ORDER BY sortOrder;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute SELECT id, name, nameEn, categoryId, section, isActive, sortOrder, badge, badgeColor FROM treatments WHERE categoryId = 'stemcell' ORDER BY sortOrder;",
+  "rows": [
+    {
+      "id": "210001",
+      "name": "지방유래 배양 줄기세포 (AD-MSC)",
+      "nameEn": "Adipose-Derived Cultured Stem Cells",
+      "categoryId": "stemcell",
+      "section": "v2",
+      "isActive": "0",
+      "sortOrder": "100",
+      "badge": "스타 줄기세포 연구센터",
+      "badgeColor": "#6B4FA5"
+    },
+    {
+      "id": "210002",
+      "name": "엑소좀 피부 재생",
+      "nameEn": "Exosome Skin Regeneration",
+      "categoryId": "stemcell",
+      "section": "v2",
+      "isActive": "0",
+      "sortOrder": "110",
+      "badge": "재생 부스터",
+      "badgeColor": "#5A8A6B"
+    },
+    {
+      "id": "210003",
+      "name": "고압산소 재생 치료 (HBOT)",
+      "nameEn": "Hyperbaric Oxygen Therapy (HBOT)",
+      "categoryId": "stemcell",
+      "section": "v2",
+      "isActive": "0",
+      "sortOrder": "120",
+      "badge": "재생 가속",
+      "badgeColor": "#3A7CA5"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tnameEn\tcategoryId\tsection\tisActive\tsortOrder\tbadge\tbadgeColor\n210001\t지방유래 배양 줄기세포 (AD-MSC)\tAdipose-Derived Cultured Stem Cells\tstemcell\tv2\t0\t100\t스타 줄기세포 연구센터\t#6B4FA5\n210002\t엑소좀 피부 재생\tExosome Skin Regeneration\tstemcell\tv2\t0\t110\t재생 부스터\t#5A8A6B\n210003\t고압산소 재생 치료 (HBOT)\tHyperbaric Oxygen Therapy (HBOT)\tstemcell\tv2\t0\t120\t재생 가속\t#3A7CA5\n",
+  "stderr": "",
+  "execution_time_ms": 1769
+}

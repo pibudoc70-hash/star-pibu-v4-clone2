@@ -1,0 +1,181 @@
+{
+  "query": "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = 'treatments' ORDER BY ORDINAL_POSITION;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = 'treatments' ORDER BY ORDINAL_POSITION;",
+  "rows": [
+    {
+      "COLUMN_NAME": "id"
+    },
+    {
+      "COLUMN_NAME": "categoryId"
+    },
+    {
+      "COLUMN_NAME": "name"
+    },
+    {
+      "COLUMN_NAME": "nameEn"
+    },
+    {
+      "COLUMN_NAME": "desc"
+    },
+    {
+      "COLUMN_NAME": "time"
+    },
+    {
+      "COLUMN_NAME": "recovery"
+    },
+    {
+      "COLUMN_NAME": "badge"
+    },
+    {
+      "COLUMN_NAME": "badgeColor"
+    },
+    {
+      "COLUMN_NAME": "image"
+    },
+    {
+      "COLUMN_NAME": "images"
+    },
+    {
+      "COLUMN_NAME": "imgBg"
+    },
+    {
+      "COLUMN_NAME": "cardBannerImage"
+    },
+    {
+      "COLUMN_NAME": "detail"
+    },
+    {
+      "COLUMN_NAME": "caution"
+    },
+    {
+      "COLUMN_NAME": "sessions"
+    },
+    {
+      "COLUMN_NAME": "effect"
+    },
+    {
+      "COLUMN_NAME": "related"
+    },
+    {
+      "COLUMN_NAME": "steps"
+    },
+    {
+      "COLUMN_NAME": "youtubeUrl"
+    },
+    {
+      "COLUMN_NAME": "modalImage"
+    },
+    {
+      "COLUMN_NAME": "best"
+    },
+    {
+      "COLUMN_NAME": "sortOrder"
+    },
+    {
+      "COLUMN_NAME": "isActive"
+    },
+    {
+      "COLUMN_NAME": "createdAt"
+    },
+    {
+      "COLUMN_NAME": "updatedAt"
+    },
+    {
+      "COLUMN_NAME": "section"
+    },
+    {
+      "COLUMN_NAME": "slug"
+    },
+    {
+      "COLUMN_NAME": "nameJa"
+    },
+    {
+      "COLUMN_NAME": "nameZh"
+    },
+    {
+      "COLUMN_NAME": "descEn"
+    },
+    {
+      "COLUMN_NAME": "descJa"
+    },
+    {
+      "COLUMN_NAME": "descZh"
+    },
+    {
+      "COLUMN_NAME": "timeEn"
+    },
+    {
+      "COLUMN_NAME": "timeJa"
+    },
+    {
+      "COLUMN_NAME": "timeZh"
+    },
+    {
+      "COLUMN_NAME": "recoveryEn"
+    },
+    {
+      "COLUMN_NAME": "recoveryJa"
+    },
+    {
+      "COLUMN_NAME": "recoveryZh"
+    },
+    {
+      "COLUMN_NAME": "badgeEn"
+    },
+    {
+      "COLUMN_NAME": "badgeJa"
+    },
+    {
+      "COLUMN_NAME": "badgeZh"
+    },
+    {
+      "COLUMN_NAME": "detailEn"
+    },
+    {
+      "COLUMN_NAME": "detailJa"
+    },
+    {
+      "COLUMN_NAME": "detailZh"
+    },
+    {
+      "COLUMN_NAME": "cautionEn"
+    },
+    {
+      "COLUMN_NAME": "cautionJa"
+    },
+    {
+      "COLUMN_NAME": "cautionZh"
+    },
+    {
+      "COLUMN_NAME": "sessionsEn"
+    },
+    {
+      "COLUMN_NAME": "sessionsJa"
+    },
+    {
+      "COLUMN_NAME": "sessionsZh"
+    },
+    {
+      "COLUMN_NAME": "effectEn"
+    },
+    {
+      "COLUMN_NAME": "effectJa"
+    },
+    {
+      "COLUMN_NAME": "effectZh"
+    },
+    {
+      "COLUMN_NAME": "slugEn"
+    },
+    {
+      "COLUMN_NAME": "slugJa"
+    },
+    {
+      "COLUMN_NAME": "slugZh"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\nid\ncategoryId\nname\nnameEn\ndesc\ntime\nrecovery\nbadge\nbadgeColor\nimage\nimages\nimgBg\ncardBannerImage\ndetail\ncaution\nsessions\neffect\nrelated\nsteps\nyoutubeUrl\nmodalImage\nbest\nsortOrder\nisActive\ncreatedAt\nupdatedAt\nsection\nslug\nnameJa\nnameZh\ndescEn\ndescJa\ndescZh\ntimeEn\ntimeJa\ntimeZh\nrecoveryEn\nrecoveryJa\nrecoveryZh\nbadgeEn\nbadgeJa\nbadgeZh\ndetailEn\ndetailJa\ndetailZh\ncautionEn\ncautionJa\ncautionZh\nsessionsEn\nsessionsJa\nsessionsZh\neffectEn\neffectJa\neffectZh\nslugEn\nslugJa\nslugZh\n",
+  "stderr": "",
+  "execution_time_ms": 1744
+}

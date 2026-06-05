@@ -88,7 +88,7 @@ export default function AdminEquipment2Edit() {
       alert("시술이 성공적으로 수정되었습니다!");
       navigate("/admin");
     } catch (error) {
-      console.error("수정 실패:", error);
+      if (import.meta.env.DEV) console.error('[Equipment2Edit 수정 실패]', error);
       alert("시술 수정에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);
@@ -113,7 +113,7 @@ export default function AdminEquipment2Edit() {
       alert("시술이 성공적으로 삭제되었습니다!");
       navigate("/admin");
     } catch (error) {
-      console.error("삭제 실패:", error);
+      if (import.meta.env.DEV) console.error('[Equipment2Edit 삭제 실패]', error);
       alert("시술 삭제에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsDeleting(false);

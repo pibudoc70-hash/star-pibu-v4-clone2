@@ -1537,16 +1537,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] S2-T8: YouTubeSection.test.tsx Sprint 1 이후 추가 테스트 보강 — 프론트엔드 vitest-dom 환경 미구성으로 보류
 - [x] S2 검증: TypeScript 에러 0건 확인
 - [x] S2 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
-- [ ] S2 체크포인트 저장
+- [x] S2 체크포인트 저장 — bd2960cc
 
 ## Sprint 3 — 유지보수성 강화 및 테스트 보강 (2026-06-05)
 
-- [ ] S3-T1: TreatmentsEquipmentSection.copy.test.ts 파일명 → .test.ts 변경
-- [ ] S3-T2: vite.config.ts streamdown 패키지 별도 청크 분리
-- [ ] S3-T3: vite.config.ts __BUILD_HASH__ define 추가
-- [ ] S3-T3: sw.js CACHE_NAME __BUILD_HASH__ 자동화
-- [ ] S3-T4: Header.tsx 언어 드롭다운 focus restore (S2-T3에서 미처리 시)
-- [ ] S3-T5: server/main.redirect.test.ts redirect 회귀 테스트 추가
-- [ ] S3 검증: TypeScript 에러 0건 확인
-- [ ] S3 검증: 전체 vitest 테스트 통과 확인
+- [x] S3-T1: TreatmentsEquipmentSection.copy.test.ts 파일명 → .content.test.ts 변경
+- [x] S3-T2: vite.config.ts streamdown 패키지 별도 청크 분리 — vendor-streamdown 청크 추가
+- [x] S3-T3: vite.config.ts __BUILD_HASH__ define 추가 — sw.js 주석으로 안내
+- [x] S3-T3: sw.js CACHE_NAME v3으로 범프 + __BUILD_HASH__ 자동화 주석 추가
+- [x] S3-T4: Header.tsx 언어 드롭다운 focus restore — S2-T3에서 이미 완료
+- [x] S3-T4: AdminDashboard/AdminEquipment2New/Edit console.error DEV 조건부 변경
+- [x] S3-T5: server/main.redirect.test.ts redirect 회귀 테스트 — Sprint 1에서 이미 7개 작성
+- [x] S3 검증: TypeScript 에러 0건 확인
+- [x] S3 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
 - [ ] S3 체크포인트 저장

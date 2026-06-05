@@ -18,8 +18,12 @@
  *
  * Cache versioning: bump CACHE_NAME when deploying breaking asset changes
  * to force old caches to be deleted on activate.
+ *
+ * S3-T3: 수동 버전 관리 대신 CI/CD 빌드 시 __BUILD_HASH__ 자동 치환을 권장합니다.
+ * 예: CACHE_NAME = "star-pibu-__BUILD_HASH__"
+ * vite.config.ts define: { __BUILD_HASH__: JSON.stringify(Date.now().toString(36)) }
  */
-const CACHE_NAME = "star-pibu-v2";
+const CACHE_NAME = "star-pibu-v3";
 
 /**
  * Patterns that must NEVER be cached.

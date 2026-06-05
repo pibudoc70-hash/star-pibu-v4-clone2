@@ -1103,7 +1103,7 @@ export default function AdminDashboard() {
                                       toast.success('이미지가 업로드되었습니다.');
                                     }
                                   } catch (error) {
-                                    console.error('Upload error:', error);
+                                    if (import.meta.env.DEV) console.error('[Upload Error]', error);
                                   } finally {
                                     setImageUploading(false);
                                   }

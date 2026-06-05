@@ -186,6 +186,10 @@ export default defineConfig({
           if (id.includes("katex")) {
             return "vendor-katex";
           }
+          // S3-T2: streamdown (마크다운 스트리밍 렌더러 — 독립 청크로 분리)
+          if (id.includes("streamdown")) {
+            return "vendor-streamdown";
+          }
           // 나머지 node_modules는 Rollup 기본 청킹에 맡김
         },
       },

@@ -59,7 +59,7 @@ export default function AdminEquipment2New() {
       alert("시술이 성공적으로 등록되었습니다!");
       navigate("/admin");
     } catch (error) {
-      console.error("등록 실패:", error);
+      if (import.meta.env.DEV) console.error('[Equipment2New 등록 실패]', error);
       alert("시술 등록에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);

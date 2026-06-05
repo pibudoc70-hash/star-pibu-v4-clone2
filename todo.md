@@ -1682,3 +1682,29 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] MOB-2: PhilosophySection stats 카드 고정 높이 133px → min-height (영어 27자 라벨 overflow 방지)
 - [x] MOB-3: ReservationSection 모바일 패딩 p-8 → p-4 sm:p-8 (320px 화면 폼 좌우 여백 확보)
 - [x] MOB-4: ResultsStatisticsSection 통계 카드 — 영어 20자 라벨 break-words 추가 (2열 그리드 높이 불균형 방지)
+
+## 모바일 폰트 크기 및 줄간격 최적화 (MOB-FONT)
+- [x] MOB-FONT-1: HeroSection — floor 텍스트 lineHeight 1.4 → 1.5, letterSpacing 0.03em → 0.02em
+- [x] MOB-FONT-2: HeroSection — 병원명 h1 clamp 모바일 하한 1.1rem → 1.3rem, lineHeight 1.2 → 1.15
+- [x] MOB-FONT-3: HeroSection — 슬로건 p clamp 모바일 하한 0.85rem → 0.92rem, lineHeight 명시 추가
+- [x] MOB-FONT-4: HeroSection — 통계 숫자 clamp 모바일 하한 1.2rem → 1.35rem
+- [x] MOB-FONT-5: HeroSection — 통계 라벨 clamp 모바일 하한 0.62rem → 0.68rem, lineHeight 1.3 추가
+- [x] MOB-FONT-6: HeroSection — CTA 버튼 텍스트 clamp 모바일 하한 0.7rem → 0.75rem
+- [x] MOB-FONT-7: PhilosophySection — h2 clamp 모바일 하한 1.5rem → 1.6rem, lineHeight leading-tight → 1.15
+- [x] MOB-FONT-8: PhilosophySection — desc p fontSize 15px → clamp(13px,3.5vw,15px), lineHeight relaxed 유지
+- [x] MOB-FONT-9: PhilosophySection — stats 카드 숫자 text-lg → clamp(14px,4vw,18px)
+- [x] MOB-FONT-10: PhilosophySection — stats 카드 라벨 lineHeight 1.3 명시 추가
+- [x] MOB-FONT-11: PhilosophySection — STAR values desc text-xs → clamp(10px,2.5vw,12px), lineHeight relaxed 유지
+
+## 모바일 폰트 크기 및 줄간격 최적화 (MOB-FONT)
+- [x] MOB-FONT-1: HeroSection — floor 텍스트 lineHeight 1.4 → 1.5, letterSpacing 0.03em → 0.02em
+- [x] MOB-FONT-2: HeroSection — 병원명 h1 clamp 모바일 하한 1.1rem → 1.3rem, lineHeight 1.2 → 1.15
+- [x] MOB-FONT-3: HeroSection — 슬로건 p clamp 모바일 하한 0.85rem → 0.92rem, lineHeight 명시 추가
+- [x] MOB-FONT-4: HeroSection — 통계 숫자 clamp 모바일 하한 1.2rem → 1.35rem
+- [x] MOB-FONT-5: HeroSection — 통계 라벨 clamp 모바일 하한 0.62rem → 0.68rem, lineHeight 1.3 추가
+- [x] MOB-FONT-6: HeroSection — CTA 버튼 텍스트 clamp 모바일 하한 0.7rem → 0.75rem
+- [x] MOB-FONT-7: PhilosophySection — h2 clamp 모바일 하한 1.5rem → 1.6rem, lineHeight leading-tight → 1.15
+- [x] MOB-FONT-8: PhilosophySection — desc p fontSize 15px → clamp(13px,3.5vw,15px), lineHeight relaxed 유지
+- [x] MOB-FONT-9: PhilosophySection — stats 카드 숫자 text-lg → clamp(14px,4vw,18px)
+- [x] MOB-FONT-10: PhilosophySection — stats 카드 라벨 lineHeight 1.3 명시 추가
+- [x] MOB-FONT-11: PhilosophySection — STAR values desc text-xs → clamp(10px,2.5vw,12px), lineHeight relaxed 유지

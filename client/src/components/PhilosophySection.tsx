@@ -42,8 +42,15 @@ export default function PhilosophySection() {
               {t.about.label}
             </p>
             <h2
-              className="mb-2 leading-tight"
-              style={{ color: "#1F2937", fontSize: "clamp(1.5rem, 5vw, 2.8rem)", fontWeight: 800 }}
+              className="mb-2"
+              style={{
+                color: "#1F2937",
+                /* [MOB-FONT-7] 모바일 하한 1.5rem → 1.6rem: 320px 화면에서 약 25.6px 보장 (기존 24px) */
+                fontSize: "clamp(1.6rem, 5vw, 2.8rem)",
+                fontWeight: 800,
+                /* [MOB-FONT-7] lineHeight leading-tight(1.25) → 1.15: 한국어/영어 2줄 헤딩 줄간격 타이트하게 */
+                lineHeight: 1.15,
+              }}
             >
               {t.about.title}
             </h2>
@@ -53,7 +60,16 @@ export default function PhilosophySection() {
             >
               STAR DERMATOLOGY
             </p>
-            <p className="leading-relaxed mb-8" style={{ color: "#6B7280", fontSize: '15px', fontWeight: '400' }}>
+            <p
+              className="leading-relaxed mb-8"
+              style={{
+                color: "#6B7280",
+                /* [MOB-FONT-8] 15px → clamp(13px,3.5vw,15px): 320px 화면에서 13px 최소 보장 */
+                fontSize: 'clamp(13px, 3.5vw, 15px)',
+                fontWeight: '400',
+                /* [MOB-FONT-8] lineHeight relaxed(1.625) 유지: 본문 줄간격 적절 */
+              }}
+            >
               {t.about.desc}
             </p>
 
@@ -78,15 +94,27 @@ export default function PhilosophySection() {
                       <Icon size={24} style={{ color: '#d1ab67', opacity: 0.85 }} strokeWidth={1.5} />
                     </div>
                     <div
-                      className="font-montserrat font-extrabold text-lg sm:text-2xl mb-1"
-                      style={{ color: '#d1ab67' }}
-                    >
+                    className="font-montserrat font-extrabold mb-1"
+                    style={{
+                      color: '#d1ab67',
+                      /* [MOB-FONT-9] text-lg(18px) → clamp(14px,4vw,18px): 320px 화면에서 14px 보장 */
+                      fontSize: 'clamp(14px, 4vw, 18px)',
+                    }}
+                  >
                       {numMain}
                       <span style={{ fontSize: '70%', fontWeight: 400, opacity: 0.8 }}>
                         {numSuffix}
                       </span>
                     </div>
-                    <div className="leading-tight" style={{ color: "#6B7280", fontSize: 'clamp(10px, 2.5vw, 13px)', wordBreak: 'keep-all' }}>
+                    <div
+                      style={{
+                        color: "#6B7280",
+                        fontSize: 'clamp(10px, 2.5vw, 13px)',
+                        wordBreak: 'keep-all',
+                        /* [MOB-FONT-10] lineHeight 1.3 명시: 2줄 라벨(영어 27자) 줄간격 확보 */
+                        lineHeight: 1.3,
+                      }}
+                    >
                       {s.label}
                     </div>
                   </div>
@@ -120,7 +148,15 @@ export default function PhilosophySection() {
                         {v.title.slice(1)}
                       </span>
                     </div>
-                    <div className="text-xs leading-relaxed mt-1" style={{ color: "#9CA3AF" }}>
+                    <div
+                      className="leading-relaxed mt-1"
+                      style={{
+                        color: "#9CA3AF",
+                        /* [MOB-FONT-11] text-xs(12px) → clamp(10px,2.5vw,12px): 320px 화면에서 10px 보장 */
+                        fontSize: 'clamp(10px, 2.5vw, 12px)',
+                        /* [MOB-FONT-11] lineHeight relaxed(1.625) 유지: 영어 설명 줄간격 적절 */
+                      }}
+                    >
                       {v.desc}
                     </div>
                   </div>

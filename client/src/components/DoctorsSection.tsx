@@ -4,7 +4,8 @@
  * - 카드 선택 + 상세 패널이 하나의 섹션으로 자연스럽게 연결
  * - 고급스러운 레이아웃: 좌측 세로 탭 + 우측 상세 정보
  */
-import React, { useState, useEffect, useRef } from "react";
+// [FM-P2-4] React.memo: 의료진 섹션은 언어 변경 시만 리렌더 필요
+import React, { memo, useState, useEffect, useRef } from "react";
 import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -134,7 +135,7 @@ const preloadImages = () => {
   });
 };
 
-export default function DoctorsSection() {
+function DoctorsSection() {
   const [activeDoctor, setActiveDoctor] = useState(0);
   const [expandedCredentials, setExpandedCredentials] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
@@ -190,7 +191,7 @@ export default function DoctorsSection() {
   }));
 
   const doctor = mergedDoctors[activeDoctor];
-  const sectionRef = useSectionReveal(90);
+  const sectionRef = useSectionReveal(60) // [FM-P1-7] 90 → 60;
 
   return (
     <section
@@ -830,3 +831,6 @@ export default function DoctorsSection() {
     </section>
   );
 }
+
+// [FM-P2-4] memo: 언어 컨텍스트 변경 외 리렌더 차단
+export default memo(DoctorsSection);

@@ -222,10 +222,11 @@
     box-shadow: 0 8px 24px rgba(74, 111, 165, 0.4);
   }
 
+  /* [FM-P1-2] 0.7s → 0.55s: 스크롤 시 레이아웃 시프트 감소 */
   .section-fade-in {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    transition: opacity 0.55s ease-out, transform 0.55s ease-out;
   }
   .section-fade-in.visible {
     opacity: 1;
@@ -314,6 +315,7 @@
   }
 
   /* 변형 방향 변형 */
+  /* [FM-P3-3] will-change: filter 제거 — visible 후 GPU 레이어 유지 없애 메모리 절약 */
   .reveal-left {
     opacity: 0;
     transform: translateX(-28px) scale(0.97);
@@ -322,7 +324,7 @@
       opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
+    will-change: opacity, transform;
   }
   .reveal-left.visible {
     opacity: 1;
@@ -330,6 +332,7 @@
     filter: blur(0px);
   }
 
+  /* [FM-P3-3] will-change: filter 제거 */
   .reveal-right {
     opacity: 0;
     transform: translateX(28px) scale(0.97);
@@ -338,7 +341,7 @@
       opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
       filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
+    will-change: opacity, transform;
   }
   .reveal-right.visible {
     opacity: 1;
@@ -347,15 +350,16 @@
   }
 
   /* 섹션 헤더 전용 - 약간 더 느리고 강조 */
+  /* [FM-P1-1] 0.65s → 0.55s: 유저가 인식하는 애니메이션 완료 시간 단축으로 스크롤 중 레이아웃 시프트 감소 */
   .reveal-heading {
     opacity: 0;
     transform: translateY(20px);
     filter: blur(4px);
     transition:
-      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
   }
   .reveal-heading.visible {
     opacity: 1;
@@ -364,6 +368,7 @@
   }
 
   /* 카드 그리드 - stagger delay를 인라인 style로 제어 */
+  /* [FM-P3-3] will-change: filter 제거 — 카드는 다수 존재하므로 GPU 레이어 수 최소화 */
   .reveal-card {
     opacity: 0;
     transform: translateY(24px) scale(0.96);
@@ -372,7 +377,7 @@
       opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform, filter;
+    will-change: opacity, transform;
   }
   .reveal-card.visible {
     opacity: 1;
@@ -391,8 +396,9 @@
     to { opacity: 1; transform: scale(1); }
   }
 
+  /* [FM-P1-3] 0.7s → 0.55s: 레거시 클래스 duration 일관성 확보 */
   .animate-fade-in-up {
-    animation: fadeInUp 0.7s ease-out forwards;
+    animation: fadeInUp 0.55s ease-out forwards;
   }
 
   /* Before/After Slider */
@@ -628,11 +634,12 @@
     }
   }
 
+  /* [FM-P1-4] wordReveal 0.65s → 0.55s: 히어로 스로건 단어별 등장 속도 개선 */
   .hero-word {
     display: inline-block;
     opacity: 0;
-    animation: wordReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: opacity, transform, filter;
+    animation: wordReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: opacity, transform;
   }
 
   .hero-char {
@@ -1003,4 +1010,72 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
+}
+
+
+/* ═══════════════════════════════════════════════
+   [FM-P3-1] prefers-reduced-motion 전역 대응
+   WCAG 2.1 SC 2.3.3 (AAA) 준수
+   사용자가 OS에서 "동작 줄이기" 설정 시 모든 애니메이션 즉시 비활성화
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  /* 모든 CSS transition 즉시 완료 */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* [FM-P3-2] Hero softGlow 무한 루프 비활성화 */
+  .hero-section-glow,
+  [class*="softGlow"],
+  [style*="softGlow"] {
+    animation: none !important;
+    opacity: 0.15 !important;
+  }
+
+  /* [FM-P3-2] pulse-soft (CTA 버튼 포커스 글로우) 비활성화 */
+  .star-navy-btn:focus {
+    animation: none !important;
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.5) !important;
+  }
+
+  /* animate-bounce (스크롤 인디케이터 화살표) 비활성화 */
+  .animate-bounce {
+    animation: none !important;
+  }
+
+  /* [FM-P3-3] will-change 제거 — reduced-motion 환경에서 GPU 레이어 낭비 방지 */
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-heading,
+  .reveal-card,
+  .hero-word,
+  .hero-char,
+  .hero-fade,
+  .treatment-card {
+    will-change: auto !important;
+  }
+
+  /* reveal 요소들 즉시 visible 상태로 표시 */
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-heading,
+  .reveal-card,
+  .hero-word,
+  .hero-char,
+  .hero-fade,
+  .section-fade-in,
+  .animate-fade-in-up {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }

@@ -1604,3 +1604,43 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SEO-1: Home.tsx ogImage — 한글 포함 CloudFront URL → www.star-pibu.com/og-image.jpg
 - [x] SEO-2: About.tsx, ForeignGuide.tsx, Equipment2.tsx, LandingEN/JA/ZH.tsx — 동일 ogImage 수정 (6개 파일)
 - [x] A11Y-4: Header.tsx 모바일 메뉴 — focus trap + focus restore (hamburgerRef, mobileMenuRef)
+
+## Framer Motion 성능 최적화 (CSS 애니메이션 시스템 기반)
+
+### Phase 1: duration 제한, stagger 축소, viewport once 강화
+- [ ] FM-P1-1: index.css reveal-heading transition 0.65s → 0.55s
+- [ ] FM-P1-2: index.css section-fade-in transition 0.7s → 0.55s
+- [ ] FM-P1-3: index.css animate-fade-in-up 0.7s → 0.55s
+- [ ] FM-P1-4: index.css wordReveal 0.65s → 0.55s
+- [ ] FM-P1-5: HeroSection 통계/CTA delay 축소 (1400ms~2100ms → 1000ms~1700ms)
+- [ ] FM-P1-6: HeroSection stat/CTA transition 0.7s → 0.5s
+- [ ] FM-P1-7: useSectionReveal staggerMs 기본값 80 → 50 (DoctorsSection 90→60, ResultsSection 100→60)
+- [ ] FM-P1-8: useScrollReveal rootMargin "-60px" → "-50px" (viewport once 강화)
+
+### Phase 2: useInView 훅 개선, useMemo variants, React.memo
+- [ ] FM-P2-1: useScrollReveal에 once:true 보장 로직 강화 (이미 unobserve 있음, 재확인)
+- [ ] FM-P2-2: useSectionReveal에 useCallback 적용 (observer 콜백 안정화)
+- [ ] FM-P2-3: ResultsSection React.memo 적용 (통계 카드 불필요 리렌더 방지)
+- [ ] FM-P2-4: DoctorsSection React.memo 적용
+
+### Phase 3: layout prop 최소화, prefers-reduced-motion CSS 전역 대응
+- [ ] FM-P3-1: index.css @media prefers-reduced-motion 전역 블록 추가
+- [ ] FM-P3-2: HeroSection softGlow 10s → prefers-reduced-motion 시 비활성화 CSS
+- [ ] FM-P3-3: will-change 남용 점검 (reveal-left/right will-change 범위 축소)
+
+## Framer Motion 성능 최적화 (3 Phase)
+- [x] FM-P1-1: index.css reveal-heading transition 0.65s → 0.55s
+- [x] FM-P1-2: index.css section-fade-in 0.7s → 0.55s
+- [x] FM-P1-3: index.css animate-fade-in-up 0.7s → 0.55s
+- [x] FM-P1-4: index.css wordReveal 0.65s → 0.55s
+- [x] FM-P1-5: HeroSection 통계/CTA animationDelay 400ms 단축
+- [x] FM-P1-6: HeroSection transition 0.7s → 0.5s
+- [x] FM-P1-7: useSectionReveal staggerMs 기본값 80 → 50, DoctorsSection 90→60, ResultsSection 100→60
+- [x] FM-P1-8: useScrollReveal rootMargin -60px → -50px
+- [x] FM-P2-1: useScrollReveal useCallback으로 observer 콜백 안정화
+- [x] FM-P2-2: useSectionReveal useCallback으로 observer 콜백 안정화
+- [x] FM-P2-3: ResultsSection React.memo 적용
+- [x] FM-P2-4: DoctorsSection React.memo 적용
+- [x] FM-P3-1: index.css prefers-reduced-motion 전역 블록 추가 (WCAG 2.1 SC 2.3.3)
+- [x] FM-P3-2: Hero softGlow/pulse-soft/animate-bounce reduced-motion 비활성화
+- [x] FM-P3-3: will-change: filter 제거 (reveal-left, reveal-right, reveal-card) — GPU 레이어 최소화

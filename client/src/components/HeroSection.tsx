@@ -440,9 +440,10 @@ export default function HeroSection() {
             style={{ gap: "clamp(1rem, 5vw, 3rem)", paddingTop: '30px' }}
           >
             {/* 20년+ - 첫 번째 */}
+            {/* [FM-P1-5] 1400ms → 1000ms: 히어로 진입 후 통계 등장까지 400ms 단축 */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1400ms" }}
+              style={{ animationDelay: "1000ms" }}
             >
               <div
                 style={{
@@ -454,7 +455,8 @@ export default function HeroSection() {
                     ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
                     : "0 2px 10px rgba(0,0,0,0.4)",
                   lineHeight: 1,
-                  transition: "color 0.7s ease, text-shadow 0.7s ease",
+                  /* [FM-P1-6] 0.7s → 0.5s: 카운터 완료 시 금색 전환 속도 개선 */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
                   fontVariantNumeric: "tabular-nums",
                   minWidth: "2ch",
                   display: "inline-block",
@@ -468,7 +470,8 @@ export default function HeroSection() {
                 background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
                 marginTop: "6px",
                 transform: done20 ? "scaleX(1)" : "scaleX(0)",
-                transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
                 transformOrigin: "center",
               }} />
               <div
@@ -482,9 +485,10 @@ export default function HeroSection() {
               </div>
             </div>
             {/* 4,000회+ - 두 번째 */}
+            {/* [FM-P1-5] 1520ms → 1120ms */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1520ms" }}
+              style={{ animationDelay: "1120ms" }}
             >
               <div
                 style={{
@@ -496,7 +500,8 @@ export default function HeroSection() {
                     ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
                     : "0 2px 10px rgba(0,0,0,0.4)",
                   lineHeight: 1,
-                  transition: "color 0.7s ease, text-shadow 0.7s ease",
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
                   fontVariantNumeric: "tabular-nums",
                   minWidth: "4ch",
                   display: "inline-block",
@@ -510,7 +515,8 @@ export default function HeroSection() {
                 background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
                 marginTop: "6px",
                 transform: done4000 ? "scaleX(1)" : "scaleX(0)",
-                transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
                 transformOrigin: "center",
               }} />
               <div
@@ -524,9 +530,10 @@ export default function HeroSection() {
               </div>
             </div>
             {/* 데스크톱에서만 3번째 통계 같은 행에 표시 */}
+            {/* [FM-P1-5] 1640ms → 1240ms */}
             <div
               className="text-center hero-fade hidden sm:block"
-              style={{ animationDelay: "1640ms" }}
+              style={{ animationDelay: "1240ms" }}
             >
               <div
                 style={{
@@ -538,7 +545,8 @@ export default function HeroSection() {
                     ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
                     : "0 2px 10px rgba(0,0,0,0.4)",
                   lineHeight: 1,
-                  transition: "color 0.7s ease, text-shadow 0.7s ease",
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
                   fontVariantNumeric: "tabular-nums",
                   minWidth: "2ch",
                   display: "inline-block",
@@ -552,7 +560,8 @@ export default function HeroSection() {
                 background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
                 marginTop: "6px",
                 transform: done50 ? "scaleX(1)" : "scaleX(0)",
-                transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
                 transformOrigin: "center",
               }} />
               <div
@@ -571,9 +580,10 @@ export default function HeroSection() {
             className="flex justify-center sm:hidden"
             style={{ marginTop: "clamp(0.5rem, 1.5vh, 0.75rem)" }}
           >
+            {/* [FM-P1-5] 1640ms → 1240ms (모바일 버전) */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1640ms" }}
+              style={{ animationDelay: "1240ms" }}
             >
               <div
                 style={{
@@ -585,7 +595,8 @@ export default function HeroSection() {
                     ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
                     : "0 2px 10px rgba(0,0,0,0.4)",
                   lineHeight: 1,
-                  transition: "color 0.7s ease, text-shadow 0.7s ease",
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
                   fontVariantNumeric: "tabular-nums",
                   minWidth: "2ch",
                   display: "inline-block",
@@ -599,7 +610,8 @@ export default function HeroSection() {
                 background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
                 marginTop: "6px",
                 transform: done50 ? "scaleX(1)" : "scaleX(0)",
-                transition: "transform 0.7s cubic-bezier(0.16,1,0.3,1)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
                 transformOrigin: "center",
               }} />
               <div
@@ -629,7 +641,8 @@ export default function HeroSection() {
               boxShadow: "0 0 12px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
               fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
               padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-              animationDelay: "1750ms",
+              /* [FM-P1-5] 1750ms → 1350ms */
+              animationDelay: "1350ms",
               whiteSpace: "nowrap",
               maxWidth: "min(100%, 320px)",
               paddingRight: '19px',
@@ -642,7 +655,8 @@ export default function HeroSection() {
           </a>
           {/* 카카오 + 네이버 버튼 - 모바일에서 2열, 데스크톱에서 인라인 */}
           <div className="flex flex-row w-full sm:w-auto" style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)" }}>
-            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1870ms" }}>
+            {/* [FM-P1-5] 1870ms → 1470ms */}
+            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1470ms" }}>
               <a
                 href={chatUrl}
                 target={lang === "zh" ? undefined : "_blank"}
@@ -679,7 +693,8 @@ export default function HeroSection() {
                 boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
                 fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
                 padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-                animationDelay: "1990ms",
+              /* [FM-P1-5] 1990ms → 1590ms */
+                animationDelay: "1590ms",
                 whiteSpace: "nowrap",
                 minWidth: "clamp(78px, 22vw, 130px)",
                 paddingTop: '11px',
@@ -701,7 +716,8 @@ export default function HeroSection() {
           left: "50%",
           transform: "translateX(-50%)",
           color: "rgba(255,255,255,0.55)",
-          animationDelay: "2100ms", marginBottom: '-7px', marginLeft: '-20px',
+          /* [FM-P1-5] 2100ms → 1700ms */
+          animationDelay: "1700ms", marginBottom: '-7px', marginLeft: '-20px',
         }}
         aria-label="아래로 스크롤"
       >

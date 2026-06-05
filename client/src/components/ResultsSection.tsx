@@ -2,6 +2,8 @@
  * ResultsSection - 시술 결과 & 통계
  * 디자인: 프리미엄 스타일 - 그래디언트 배경, 입체 카드, 인터랙티브 요소
  */
+// [FM-P2-3] React.memo: 부모 리렌더 시 불필요한 재렌더 방지 (통계 카드 카운팅 애니메이션 보호)
+import { memo } from "react";
 import { CheckCircle, TrendingUp, Users, Star, Award, Sparkles, Heart, Shield } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -15,8 +17,8 @@ const whyColors = ["#4A6FA5", "#81C7C9", "#4A6FA5"];
 const treatmentAccents = ["#4A6FA5", "#81C7C9", "#4A6FA5", "#81C7C9", "#4A6FA5", "#81C7C9"];
 const treatmentBgs = ["#EEF3FA", "#EEF7F7", "#EEF3FA", "#EEF7F7", "#EEF3FA", "#EEF7F7"];
 
-export default function ResultsSection() {
-  const sectionRef = useSectionReveal(100);
+function ResultsSection() {
+  const sectionRef = useSectionReveal(60) // [FM-P1-7] 100 → 60;
   const { t } = useLang();
   const r = t.results;
 
@@ -226,3 +228,6 @@ export default function ResultsSection() {
     </section>
   );
 }
+
+// [FM-P2-3] memo: 언어 컨텍스트 변경 외 리렌더 차단
+export default memo(ResultsSection);

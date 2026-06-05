@@ -9,18 +9,24 @@
  *   <div ref={ref} className="reveal"> ... </div>
  *
  *   // 여러 요소 stagger
- *   const ref = useScrollReveal({ stagger: 80 });
+ *   const ref = useScrollReveal({ stagger: 50 });
  *   <div ref={ref}>
  *     <div className="reveal-card"> ... </div>
  *     <div className="reveal-card"> ... </div>
  *   </div>
+ *
+ * Phase 2 최적화:
+ * - useCallback으로 observer 콜백 안정화 → 불필요한 observer 재생성 방지
+ * - once:true 보장: 이미 visible인 요소는 재처리 스킵
+ * - staggerMs 기본값 80→50 (Phase 1)
+ * - rootMargin -60px→-50px (Phase 1)
  */
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface ScrollRevealOptions {
   /** 뷰포트 교차 임계값 (0~1). 기본 0.12 */
   threshold?: number;
-  /** 루트 마진 (px). 기본 "0px 0px -60px 0px" — 약간 일찍 트리거 */
+  /** 루트 마진 (px). 기본 "0px 0px -50px 0px" — 약간 일찍 트리거 */
   rootMargin?: string;
   /** 자식 카드 stagger 간격 (ms). 0이면 stagger 없음 */
   stagger?: number;
@@ -33,12 +39,51 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
 ) {
   const {
     threshold = 0.12,
-    rootMargin = "0px 0px -60px 0px",
+    // [FM-P1-8] rootMargin -60px → -50px: viewport once 트리거 일관성 확보
+    rootMargin = "0px 0px -50px 0px",
     stagger = 0,
     staggerSelector = ".reveal-card",
   } = options;
 
   const ref = useRef<T>(null);
+
+  // [FM-P2-1] useCallback으로 observer 콜백 안정화 → 의존성 변경 시에만 재생성
+  const handleIntersect = useCallback(
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const target = entry.target as HTMLElement;
+
+        // [FM-P2-1] once:true 보장: 이미 visible이면 스킵
+        if (target.classList.contains("visible")) {
+          observer.unobserve(target);
+          return;
+        }
+
+        // 자기 자신이 reveal 클래스를 가지면 직접 활성화
+        const revealClasses = ["reveal", "reveal-left", "reveal-right", "reveal-heading"];
+        if (revealClasses.some((c) => target.classList.contains(c))) {
+          target.classList.add("visible");
+        }
+
+        // stagger 자식 처리
+        if (stagger > 0) {
+          const cards = target.querySelectorAll<HTMLElement>(staggerSelector);
+          cards.forEach((card, i) => {
+            // 이미 visible인 카드는 스킵
+            if (card.classList.contains("visible")) return;
+            setTimeout(() => {
+              card.classList.add("visible");
+            }, i * stagger);
+          });
+        }
+
+        observer.unobserve(target);
+      });
+    },
+    [stagger, staggerSelector]
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -57,40 +102,13 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const target = entry.target as HTMLElement;
-
-          // 자기 자신이 reveal 클래스를 가지면 직접 활성화
-          const revealClasses = ["reveal", "reveal-left", "reveal-right", "reveal-heading"];
-          if (revealClasses.some((c) => target.classList.contains(c))) {
-            target.classList.add("visible");
-          }
-
-          // stagger 자식 처리
-          if (stagger > 0) {
-            const cards = target.querySelectorAll<HTMLElement>(staggerSelector);
-            cards.forEach((card, i) => {
-              setTimeout(() => {
-                card.classList.add("visible");
-              }, i * stagger);
-            });
-          }
-
-          observer.unobserve(target);
-        });
-      },
-      { threshold, rootMargin }
-    );
+    const observer = new IntersectionObserver(handleIntersect, { threshold, rootMargin });
 
     // 자기 자신 관찰
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, [threshold, rootMargin, stagger, staggerSelector]);
+  }, [threshold, rootMargin, handleIntersect]);
 
   return ref;
 }
@@ -98,9 +116,48 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
 /**
  * useSectionReveal - 섹션 전체를 한 번에 처리하는 편의 훅
  * 섹션 루트 ref를 반환하며, 내부의 모든 reveal* 요소를 stagger로 활성화
+ *
+ * Phase 2 최적화:
+ * - useCallback으로 observer 콜백 안정화
+ * - once:true 보장: 이미 visible인 요소 스킵
  */
-export function useSectionReveal(staggerMs = 80) {
+// [FM-P1-7] staggerMs 기본값 80 → 50: 카드 등장 간격 단축으로 전체 섹션 완료 시간 감소
+export function useSectionReveal(staggerMs = 50) {
   const ref = useRef<HTMLElement>(null);
+
+  // [FM-P2-2] useCallback으로 observer 콜백 안정화 → staggerMs 변경 시에만 재생성
+  const handleIntersect = useCallback(
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const target = entry.target as HTMLElement;
+        const revealEls = target.querySelectorAll<HTMLElement>(
+          ".reveal, .reveal-left, .reveal-right, .reveal-heading, .reveal-card"
+        );
+
+        revealEls.forEach((el, i) => {
+          // [FM-P2-2] once:true 보장: 이미 visible인 요소는 스킵
+          if (el.classList.contains("visible")) return;
+
+          // 이미 delay가 인라인으로 설정된 경우 그것을 우선
+          const existingDelay = parseFloat(el.style.transitionDelay || "0");
+          if (existingDelay === 0) {
+            el.style.transitionDelay = `${i * staggerMs}ms`;
+          }
+          // 다음 프레임에서 visible 추가 (transition이 작동하도록)
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.classList.add("visible");
+            });
+          });
+        });
+
+        observer.unobserve(target);
+      });
+    },
+    [staggerMs]
+  );
 
   useEffect(() => {
     const section = ref.current;
@@ -116,38 +173,14 @@ export function useSectionReveal(staggerMs = 80) {
     }
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          const target = entry.target as HTMLElement;
-          const revealEls = target.querySelectorAll<HTMLElement>(
-            ".reveal, .reveal-left, .reveal-right, .reveal-heading, .reveal-card"
-          );
-
-          revealEls.forEach((el, i) => {
-            // 이미 delay가 인라인으로 설정된 경우 그것을 우선
-            const existingDelay = parseFloat(el.style.transitionDelay || "0");
-            if (existingDelay === 0) {
-              el.style.transitionDelay = `${i * staggerMs}ms`;
-            }
-            // 다음 프레임에서 visible 추가 (transition이 작동하도록)
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                el.classList.add("visible");
-              });
-            });
-          });
-
-          observer.unobserve(target);
-        });
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      handleIntersect,
+      // [FM-P1-8] rootMargin -40px → -50px: viewport once 트리거를 약간 더 일찍 발동
+      { threshold: 0.08, rootMargin: "0px 0px -50px 0px" }
     );
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, [staggerMs]);
+  }, [handleIntersect]);
 
   return ref;
 }

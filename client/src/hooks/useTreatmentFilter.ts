@@ -39,16 +39,7 @@ export function useTreatmentFilter<T extends FilterableTreatment>({
   treatments,
   defaultTab = "best",
 }: UseTreatmentFilterOptions): UseTreatmentFilterReturn<T> {
-  // URL ?category=xxx 파라미터가 있으면 해당 탭을 초기값으로 사용
-  const initialTab = (() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const cat = params.get("category");
-      if (cat) return cat;
-    }
-    return defaultTab;
-  })();
-  const [activeId, setActiveId] = useState(initialTab);
+  const [activeId, setActiveId] = useState(defaultTab);
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);

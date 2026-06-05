@@ -25,11 +25,13 @@ export default function MyReservations() {
     enabled: !!user,
   });
 
+  // S1-T3: window.location.reload() → trpc invalidate 교체
+  // React 상태 유지, 스크롤 위치 유지, 불필요한 네트워크 요청 제거
+  const utils = trpc.useUtils();
   const cancelMutation = trpc.reservation.cancel.useMutation({
     onSuccess: () => {
       toast.success("예약이 취소되었습니다.");
-      // 목록 새로고침
-      window.location.reload();
+      utils.reservation.myReservations.invalidate();
     },
     onError: (err) => toast.error("취소 실패: " + err.message),
   });

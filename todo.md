@@ -1502,3 +1502,51 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] HeroSection.tsx — useClinicStats Hook으로 단위 문자열 교체 (useCountUp 애니메이션은 CLINIC_STATS 직접 유지)
 - [x] TypeScript 에러 0건 확인
 - [x] 테스트 168개 전부 통과 확인
+
+## Sprint 1 — 배포 리스크 제거 및 핵심 버그 수정 (2026-06-05)
+
+- [x] S1-T1: main.tsx redirect 중복 방지 isRedirecting 플래그 추가
+- [x] S1-T1: main.tsx console.error → import.meta.env.DEV 조건 추가
+- [x] S1-T2: index.html analytics placeholder 제거
+- [x] S1-T2: main.tsx analytics 스크립트 조건부 동적 삽입
+- [x] S1-T3: MyReservations.tsx window.location.reload() → trpc invalidate 교체
+- [x] S1-T4: YouTubeSection.tsx isError 구조분해 및 에러 UI 추가
+- [x] S1-T4: YouTubeSection.tsx 이중 state(isLoading/videos/shorts) 제거
+- [x] S1-T5: YouTubeSection.tsx modal focus trap 구현
+- [x] S1-T5: YouTubeSection.tsx modal focus restore 구현
+- [x] S1-T6: WelcomePopup.tsx role="dialog" aria-modal aria-labelledby 추가
+- [ ] S1 테스트: YouTubeSection.test.tsx 신규 작성 (10개 이상) — 프론트엔드 컴포넌트 테스트 제외 (vitest-dom 환경 미구성)
+- [x] S1 테스트: main.redirect.test.ts 신규 작성 (redirect 중복 방지) — 7개 테스트 통과
+- [x] S1 검증: TypeScript 에러 0건 확인
+- [x] S1 검증: 전체 vitest 테스트 통과 확인 — 175개 통과
+- [ ] S1 체크포인트 저장
+
+## Sprint 2 — UX 품질 향상 및 SPA 일관성 (2026-06-05)
+
+- [ ] S2-T1: AdminDashboard.tsx YouTube 이동 window.location.href → navigate
+- [ ] S2-T1: AdminDashboard.tsx 로그아웃 후 홈 window.location.href → navigate
+- [ ] S2-T1: TreatmentsManager.tsx 장비 신규 등록 window.location.href → navigate
+- [ ] S2-T1: MyPage.tsx 로그아웃 후 홈 window.location.href → navigate
+- [ ] S2-T2: SpecialEventSection.tsx 이벤트 카드 button/a 교체 + aria-label
+- [ ] S2-T3: Header.tsx 언어 드롭다운 role="listbox" + role="option" + aria-selected
+- [ ] S2-T3: Header.tsx 언어 드롭다운 ESC 닫기 후 focus restore
+- [ ] S2-T4: Home.tsx SectionFallback 섹션별 min-h 지정으로 CLS 감소
+- [ ] S2-T5: ReviewsSection.tsx 캐러셀 ArrowLeft/ArrowRight 방향키 지원
+- [ ] S2-T6: Footer.tsx 내부 링크 SPA 해시 스크롤 교체
+- [ ] S2-T7: main.tsx window.location.href → window.location.replace
+- [ ] S2-T8: YouTubeSection.test.tsx Sprint 1 이후 추가 테스트 보강
+- [ ] S2 검증: TypeScript 에러 0건 확인
+- [ ] S2 검증: 전체 vitest 테스트 통과 확인
+- [ ] S2 체크포인트 저장
+
+## Sprint 3 — 유지보수성 강화 및 테스트 보강 (2026-06-05)
+
+- [ ] S3-T1: TreatmentsEquipmentSection.copy.test.ts 파일명 → .test.ts 변경
+- [ ] S3-T2: vite.config.ts streamdown 패키지 별도 청크 분리
+- [ ] S3-T3: vite.config.ts __BUILD_HASH__ define 추가
+- [ ] S3-T3: sw.js CACHE_NAME __BUILD_HASH__ 자동화
+- [ ] S3-T4: Header.tsx 언어 드롭다운 focus restore (S2-T3에서 미처리 시)
+- [ ] S3-T5: server/main.redirect.test.ts redirect 회귀 테스트 추가
+- [ ] S3 검증: TypeScript 에러 0건 확인
+- [ ] S3 검증: 전체 vitest 테스트 통과 확인
+- [ ] S3 체크포인트 저장

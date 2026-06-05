@@ -22,22 +22,25 @@ if (typeof window !== 'undefined') {
 
 const queryClient = new QueryClient();
 
+// S1-T1: redirect 중복 방지 플래그 — QueryCache + MutationCache 두 곳에서 동시에 발화해도 한 번만 실행
+let isRedirecting = false;
+
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
-
-  const isUnauthorized = error.message === UNAUTHED_ERR_MSG;
-
-  if (!isUnauthorized) return;
-
-  window.location.href = getLoginUrl();
+  if (error.message !== UNAUTHED_ERR_MSG) return;
+  if (isRedirecting) return;
+  isRedirecting = true;
+  // S1-T7: replace 사용 — 히스토리 오염 방지 (로그인 후 뒤로가기 시 인증 오류 페이지로 돌아가지 않음)
+  window.location.replace(getLoginUrl());
 };
 
 queryClient.getQueryCache().subscribe(event => {
   if (event.type === "updated" && event.action.type === "error") {
     const error = event.query.state.error;
     redirectToLoginIfUnauthorized(error);
-    console.error("[API Query Error]", error);
+    // S1-T1: console.error dev-only — production 노출 차단
+    if (import.meta.env.DEV) console.error("[API Query Error]", error);
   }
 });
 
@@ -45,7 +48,7 @@ queryClient.getMutationCache().subscribe(event => {
   if (event.type === "updated" && event.action.type === "error") {
     const error = event.mutation.state.error;
     redirectToLoginIfUnauthorized(error);
-    console.error("[API Mutation Error]", error);
+    if (import.meta.env.DEV) console.error("[API Mutation Error]", error);
   }
 });
 
@@ -63,6 +66,19 @@ const trpcClient = trpc.createClient({
     }),
   ],
 });
+
+// S1-T2: analytics 조건부 동적 삽입 — 환경변수 미설정 시 404 에러 방지
+if (
+  import.meta.env.VITE_ANALYTICS_ENDPOINT &&
+  import.meta.env.VITE_ANALYTICS_WEBSITE_ID
+) {
+  const analyticsScript = document.createElement('script');
+  analyticsScript.async = true;
+  analyticsScript.defer = true;
+  analyticsScript.src = `${import.meta.env.VITE_ANALYTICS_ENDPOINT}/umami`;
+  analyticsScript.dataset.websiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID;
+  document.head.appendChild(analyticsScript);
+}
 
 // Service Worker 등록 (프로덕션 환경에서만 활성화)
 // 개발 환경에서 SW 캐시로 인한 빈 화면 문제 방지

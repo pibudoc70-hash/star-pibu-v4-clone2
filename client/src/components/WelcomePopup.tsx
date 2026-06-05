@@ -198,9 +198,13 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
       className={`popup-overlay${closing ? " closing" : ""}`}
       style={{ alignItems: "flex-end", padding: 0 }}
       onClick={dismiss}
+      // S1-T6: 오버레이 자체는 presentation — 실제 dialog role은 내부 div에 부여
     >
       <div
         ref={sheetRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="welcome-popup-title-mobile"
         className={`popup-modal-mobile${closing ? " closing" : ""} w-full overflow-hidden shadow-2xl`}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={onTouchStart}
@@ -227,7 +231,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
         >
           <div className="flex items-center gap-2">
             <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
-            <span className="text-white text-xs font-medium opacity-70">{wp.title}</span>
+            <span id="welcome-popup-title-mobile" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
           <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10" aria-label={wp.dismiss}>
             <X size={15} className="text-white/70" />
@@ -345,6 +349,9 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="welcome-popup-title-desktop"
         className={`popup-modal relative w-full overflow-hidden shadow-2xl${closing ? " closing" : ""}`}
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: "520px", borderRadius: "20px", background: "#ffffff" }}
@@ -353,7 +360,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
         <div className="flex items-center justify-between px-6 py-3" style={{ background: "#1F2937" }}>
           <div className="flex items-center gap-2">
             <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
-            <span className="text-white text-xs font-medium opacity-70">{wp.title}</span>
+            <span id="welcome-popup-title-desktop" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
           <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/10 hover:scale-110 active:scale-95" aria-label={wp.dismiss}>
             <X size={15} className="text-white/70" />

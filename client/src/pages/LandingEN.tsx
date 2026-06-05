@@ -55,7 +55,9 @@ export default function LandingEN() {
         ]}
         ogLocale="en_US"
         hreflangs={COMMON_HREFLANGS}
+        includeMedicalSchema={true}
       />
+      {/* [PROD-P2-3] 다국어 랜딩 페이지에도 MedicalBusiness 스키마 삽입 (Google 검색 결과 리치 스니펫) */}
       {/* Fixed Header */}
       <Header />
       {/* Main Content - identical to Home.tsx */}

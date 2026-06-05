@@ -8,6 +8,7 @@
 import { useState, useEffect } from "react";
 import { MessageCircle, Calendar, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
+import { useChatConfig, CHAT_URLS } from "@/hooks/useChatConfig";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -21,14 +22,10 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // [PROD-P4-2] useChatConfig 훅으로 URL 중앙화
+  const { reserveUrl, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
-  const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
-  const LINE_URL = "https://line.me/ti/p/~star2006derm";
-  const JA_LINE_URL = "https://lin.ee/tyuRdUc";
-  const NAVER_URL = "https://booking.naver.com/booking/13/bizes/209080";
-
-  const reserveUrl = lang === "zh" ? LINE_URL : lang === "ja" ? JA_LINE_URL : NAVER_URL;
-  const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
+  const chatUrl = isZH ? "#" : CHAT_URLS.kakao;
 
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
@@ -50,9 +47,9 @@ export default function FloatingCTA() {
     mapAria:   lang === "ja" ? "LINE予約"  : lang === "zh" ? "LINE咨询"  : lang === "en" ? "Naver Booking" : "네이버 예약",
   };
 
-  // 메신저 버튼 색상
-  const chatBg    = lang === "ja" ? "#06C755" : lang === "zh" ? "#07C160" : "#FEE500";
-  const chatColor = lang === "ja" ? "white"   : lang === "zh" ? "white"   : "#1F2937";
+  // [PROD-P4-2] 메신저 버튼 색상 (isJA는 LINE 초록, isZH는 위체 초록, 기본 카카오 노란)
+  const chatBg    = isJA ? "#06C755" : isZH ? "#07C160" : "#FEE500";
+  const chatColor = isJA ? "white"   : isZH ? "white"   : "#1F2937";
 
   // 예약 버튼 색상 (LINE/네이버 모두 초록)
   const reserveBg = "#03C75A";

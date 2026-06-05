@@ -1608,25 +1608,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## Framer Motion 성능 최적화 (CSS 애니메이션 시스템 기반)
 
 ### Phase 1: duration 제한, stagger 축소, viewport once 강화
-- [ ] FM-P1-1: index.css reveal-heading transition 0.65s → 0.55s
-- [ ] FM-P1-2: index.css section-fade-in transition 0.7s → 0.55s
-- [ ] FM-P1-3: index.css animate-fade-in-up 0.7s → 0.55s
-- [ ] FM-P1-4: index.css wordReveal 0.65s → 0.55s
-- [ ] FM-P1-5: HeroSection 통계/CTA delay 축소 (1400ms~2100ms → 1000ms~1700ms)
-- [ ] FM-P1-6: HeroSection stat/CTA transition 0.7s → 0.5s
-- [ ] FM-P1-7: useSectionReveal staggerMs 기본값 80 → 50 (DoctorsSection 90→60, ResultsSection 100→60)
-- [ ] FM-P1-8: useScrollReveal rootMargin "-60px" → "-50px" (viewport once 강화)
+- [x] FM-P1-1: index.css reveal-heading transition 0.65s → 0.55s
+- [x] FM-P1-2: index.css section-fade-in transition 0.7s → 0.55s
+- [x] FM-P1-3: index.css animate-fade-in-up 0.7s → 0.55s
+- [x] FM-P1-4: index.css wordReveal 0.65s → 0.55s
+- [x] FM-P1-5: HeroSection 통계/CTA delay 축소 (1400ms~2100ms → 1000ms~1700ms)
+- [x] FM-P1-6: HeroSection stat/CTA transition 0.7s → 0.5s
+- [x] FM-P1-7: useSectionReveal staggerMs 기본값 80 → 50 (DoctorsSection 90→60, ResultsSection 100→60)
+- [x] FM-P1-8: useScrollReveal rootMargin "-60px" → "-50px" (viewport once 강화)
 
 ### Phase 2: useInView 훅 개선, useMemo variants, React.memo
-- [ ] FM-P2-1: useScrollReveal에 once:true 보장 로직 강화 (이미 unobserve 있음, 재확인)
-- [ ] FM-P2-2: useSectionReveal에 useCallback 적용 (observer 콜백 안정화)
-- [ ] FM-P2-3: ResultsSection React.memo 적용 (통계 카드 불필요 리렌더 방지)
-- [ ] FM-P2-4: DoctorsSection React.memo 적용
+- [x] FM-P2-1: useScrollReveal에 once:true 보장 로직 강화 (이미 unobserve 있음, 재확인)
+- [x] FM-P2-2: useSectionReveal에 useCallback 적용 (observer 콜백 안정화)
+- [x] FM-P2-3: ResultsSection React.memo 적용 (통계 카드 불필요 리렌더 방지)
+- [x] FM-P2-4: DoctorsSection React.memo 적용
 
 ### Phase 3: layout prop 최소화, prefers-reduced-motion CSS 전역 대응
-- [ ] FM-P3-1: index.css @media prefers-reduced-motion 전역 블록 추가
-- [ ] FM-P3-2: HeroSection softGlow 10s → prefers-reduced-motion 시 비활성화 CSS
-- [ ] FM-P3-3: will-change 남용 점검 (reveal-left/right will-change 범위 축소)
+- [x] FM-P3-1: index.css @media prefers-reduced-motion 전역 블록 추가
+- [x] FM-P3-2: HeroSection softGlow 10s → prefers-reduced-motion 시 비활성화 CSS
+- [x] FM-P3-3: will-change 남용 점검 (reveal-left/right will-change 범위 축소)
 
 ## Framer Motion 성능 최적화 (3 Phase)
 - [x] FM-P1-1: index.css reveal-heading transition 0.65s → 0.55s
@@ -1648,23 +1648,23 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 실운영 수준 개선 (Production Hardening)
 
 ### Phase 1: HeroSection LCP 최적화
-- [ ] PROD-P1-1: HeroSection 배경 이미지 CSS background → <picture> 태그로 교체 (LCP 이미지 브라우저 파싱 가능)
-- [ ] PROD-P1-2: index.html preload에 fetchpriority="high" 추가
-- [ ] PROD-P1-3: useCountUp duration 3500ms → 2000ms (기본값으로 복원)
-- [ ] PROD-P1-4: 모바일 CTA 버튼 순서 개선 (예약 버튼 우선순위 상향)
+- [x] PROD-P1-1: HeroSection 배경 이미지 CSS background → <picture> 태그로 교체 (LCP 이미지 브라우저 파싱 가능)
+- [x] PROD-P1-2: index.html preload에 fetchpriority="high" 추가
+- [x] PROD-P1-3: useCountUp duration 3500ms → 2000ms (기본값으로 복원)
+- [x] PROD-P1-4: 모바일 CTA 버튼 순서 개선 (예약 버튼 우선순위 상향)
 
 ### Phase 2: SeoHead JSON-LD 전략 개선
-- [ ] PROD-P2-1: SeoHead includeClinicSchema를 includeWebSiteSchema / includeMedicalSchema 두 개로 분리
-- [ ] PROD-P2-2: About/Doctors/Directions 등 내부 페이지에서 WebSite 스키마 제거 (홈만 유지)
-- [ ] PROD-P2-3: LandingEN/JA/ZH에 언어별 MedicalBusiness 스키마 확인
+- [x] PROD-P2-1: SeoHead includeClinicSchema를 includeWebSiteSchema / includeMedicalSchema 두 개로 분리
+- [x] PROD-P2-2: About/Doctors/Directions 등 내부 페이지에서 WebSite 스키마 제거 (홈만 유지)
+- [x] PROD-P2-3: LandingEN/JA/ZH에 언어별 MedicalBusiness 스키마 확인
 
 ### Phase 3: Stats 데이터 일관성
-- [ ] PROD-P3-1: HeroSection unit span fontSize 50% → 65% 상향 (가독성)
-- [ ] PROD-P3-2: ResultsStatisticsSection unit span fontSize 70% 통일 확인
+- [x] PROD-P3-1: HeroSection unit span fontSize 50% → 65% 상향 (가독성)
+- [x] PROD-P3-2: ResultsStatisticsSection unit span fontSize 70% 통일 확인
 
 ### Phase 4: 코드 품질 개선
-- [ ] PROD-P4-1: 섹션 py 비일관 항목 수정 (FAQSection py-20→py-16 sm:py-24, ManagementDevicesSection py-14→py-16 sm:py-24)
-- [ ] PROD-P4-2: HeroSection chatUrl/reserveUrl/chatBg 로직 useChatConfig 훅으로 추출
+- [x] PROD-P4-1: 섹션 py 비일관 항목 수정 (FAQSection py-20→py-16 sm:py-24, ManagementDevicesSection py-14→py-16 sm:py-24)
+- [x] PROD-P4-2: HeroSection chatUrl/reserveUrl/chatBg 로직 useChatConfig 훅으로 추출
 
 ## 실운영 수준 개선 (Production Hardening)
 - [x] PROD-P1-1: HeroSection 배경 이미지 CSS background → picture 태그 교체 (LCP 브라우저 파싱 가능)

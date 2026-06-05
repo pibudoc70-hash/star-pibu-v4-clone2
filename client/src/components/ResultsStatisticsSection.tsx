@@ -98,7 +98,8 @@ export default function ResultsStatisticsSection() {
               {/* 숫자 */}
               <p className="font-extrabold text-2xl sm:text-3xl mb-2" style={{ color: '#D1AB67' }}>
                 {stat.number}
-                {stat.unit && <span style={{ fontSize: '70%' }} className="ml-1">{stat.unit}</span>}
+                {/* [PROD-P3-2] fontSize 70% → 65%: HeroSection unit 표시와 통일 */}
+                {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}
               </p>
 
               {/* 라벨 */}

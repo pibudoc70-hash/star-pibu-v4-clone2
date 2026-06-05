@@ -55,6 +55,7 @@ export default function LandingZH() {
         ]}
         ogLocale="zh_CN"
         hreflangs={COMMON_HREFLANGS}
+        includeMedicalSchema={true}
       />
       {/* Fixed Header */}
       <Header />

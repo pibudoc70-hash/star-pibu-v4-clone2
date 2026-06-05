@@ -18,6 +18,7 @@ import { useLang } from "@/contexts/LangContext";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Lang } from "@/lib/i18n";
 import { getLocaleBase } from "../../../shared/pathUtils";
+import { useChatConfig, CHAT_URLS } from "@/hooks/useChatConfig";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -151,15 +152,13 @@ export default function Header() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [langDropOpen]);
+  // [PROD-P4-2] useChatConfig 훅으로 URL 중앙화
+  const { chatUrl: rawChatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
-  const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
-  const LINE_URL = "https://line.me/ti/p/~star2006derm";
-  const JA_LINE_URL = "https://lin.ee/tyuRdUc";
-  const NAVER_URL = "https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4";
-  const chatUrl = lang === "zh" ? "#" : KAKAO_URL;
-  const reserveUrl = lang === "zh" ? LINE_URL : lang === "ja" ? JA_LINE_URL : NAVER_URL;
-  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
-  const chatColor = lang === "zh" ? "white" : "#1F2937";
+  const chatUrl = isZH ? "#" : rawChatUrl;
+  // Header의 예약 URL은 네이버 지도 사용 (다른 컴포넌트는 예약 시스템)
+  const NAVER_MAP_URL = "https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4";
+  const reserveUrl = isZH ? CHAT_URLS.lineZH : isJA ? CHAT_URLS.lineJA : NAVER_MAP_URL;
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
     if (lang !== "zh") return;

@@ -20,6 +20,7 @@ import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
 import { CLINIC_STATS } from "@/lib/constants";
 import { useClinicStats } from "@/hooks/useClinicStats";
+import { useChatConfig } from "@/hooks/useChatConfig";
 
 /** 금색 빛 가루 파티클 Canvas 컴포넌트 */
 function GoldParticles() {
@@ -211,12 +212,12 @@ const scrollToAbout = () => {
 
 export default function HeroSection() {
   const { t, lang } = useLang();
+  // [PROD-P4-2] useChatConfig 훅으로 인라인 URL 로직 중앙화
+  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
-  const chatUrl = lang === "zh" ? "#" : "https://pf.kakao.com/_HNyGC";
-  const reserveUrl = lang === "zh" ? "https://line.me/ti/p/~star2006derm" : lang === "ja" ? "https://lin.ee/tyuRdUc" : "https://booking.naver.com/booking/13/bizes/209080";
-  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
-  const chatColor = lang === "zh" ? "white" : "#1F2937";
-  const chatShadow = lang === "zh" ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
+  // 중국어일 때 위체 클립보드 복사를 위해 href="#" 유지
+  const chatUrl = isZH ? "#" : rawChatUrl;
+  const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
     if (lang !== "zh") return;

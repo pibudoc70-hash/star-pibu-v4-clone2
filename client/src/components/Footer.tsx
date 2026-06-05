@@ -43,19 +43,30 @@ export default function Footer() {
       history.replaceState(null, "", basePath);
       return;
     }
+    // Bug Fix: 헤더 높이를 동적으로 계산
+    const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+    const headerOffset = header ? header.offsetHeight + 8 : 80;
     const el = document.querySelector(href);
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top, behavior: "smooth" });
       // URL 해시 업데이트 (popstate 방지)
       history.replaceState(null, "", basePath + href);
     } else {
-      // S2-T6: DOM에 섹션이 없을 때 SPA navigate로 이동
-      if (href === "#home") {
-        navigate(basePath || "/");
-      } else {
-        navigate(`${basePath}${href}`);
-      }
+      // lazy 섹션이 아직 DOM에 없으면 MutationObserver로 대기
+      const observer = new MutationObserver(() => {
+        const lazyEl = document.querySelector(href);
+        if (lazyEl) {
+          observer.disconnect();
+          clearTimeout(timeout);
+          const top2 = lazyEl.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top: top2, behavior: "smooth" });
+          history.replaceState(null, "", basePath + href);
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      const timeout = setTimeout(() => observer.disconnect(), 3000);
+      history.replaceState(null, "", basePath + href);
     }
   };
 

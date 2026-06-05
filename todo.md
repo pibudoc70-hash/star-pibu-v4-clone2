@@ -1577,3 +1577,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 수정: Header.tsx handleNavClick — el이 null일 때 MutationObserver로 최대 3초 대기 후 DOM 마운트 시 스크롤
 - [x] 검증: TypeScript 에러 0건, 175개 테스트 통과
 - [x] 체크포인트 저장
+
+## Bug Fix: 헤더 메뉴 클릭 간헐적 오작동 전수 수정 (2026-06-05)
+- [x] NAV-BUG-1: Header.tsx — pendingNavRef 추가, 빠른 연속 클릭 시 이전 MutationObserver 취소
+- [x] NAV-BUG-2: Header.tsx — getHeaderOffset() 함수로 헤더 높이 동적 계산 (고정 80px → 실제 높이+8px)
+- [x] NAV-BUG-3: Header.tsx — isHome 판단 시 window.location.pathname 기준으로 재확인 (wouter state 비동기 업데이트 대응)
+- [x] NAV-BUG-4: Header.tsx — scrollToEl에서 getBoundingClientRect().top + window.scrollY 절대 위치 계산 명확화
+- [x] NAV-BUG-5: Home.tsx — hash navigation useEffect에서 헤더 높이 동적 계산 적용
+- [x] NAV-BUG-6: Footer.tsx — 헤더 높이 동적 계산 + lazy 섹션 MutationObserver 대기 로직 추가
+- [x] 검증: TypeScript 에러 0건, 175개 테스트 통과
+- [x] 체크포인트 저장

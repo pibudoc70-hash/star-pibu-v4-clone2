@@ -45,7 +45,9 @@ export default function Home() {
     const id = hash.slice(1);
 
     const scrollToElement = (el: Element) => {
-      const offset = 80;
+      // Bug Fix: 헤더 높이를 동적으로 계산 (scrolled 상태에 따라 60px 또는 72px)
+      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+      const offset = header ? header.offsetHeight + 8 : 80;
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
     };

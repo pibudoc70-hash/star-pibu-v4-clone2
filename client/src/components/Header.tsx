@@ -29,6 +29,8 @@ export default function Header() {
   const [langDropOpen, setLangDropOpen] = useState(false);
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null); // S2-T3: ESC 닫기 후 focus restore 대상
+  // Bug Fix: 빠른 연속 클릭 시 이전 MutationObserver 취소용 ref
+  const pendingNavRef = useRef<{ observer: MutationObserver; timeout: ReturnType<typeof setTimeout> } | null>(null);
 
   // 언어 옵션 정의
   const langOptions: { lang: Lang; label: string; flag: string }[] = [
@@ -206,10 +208,23 @@ export default function Header() {
 
   const handleNavClick = (href: string) => {
     closeMobileMenu();
-    
+
+    // Bug Fix 1: 빠른 연속 클릭 시 이전 MutationObserver 취소
+    if (pendingNavRef.current) {
+      pendingNavRef.current.observer.disconnect();
+      clearTimeout(pendingNavRef.current.timeout);
+      pendingNavRef.current = null;
+    }
+
     // shared/pathUtils.getLocaleBase: /foreign-guide → "/en", /en/* → "/en", etc.
     const getLocalizedPath = () => getLocaleBase(location);
-    
+
+    // Bug Fix 2: 헤더 높이를 동적으로 계산 (scrolled 상태에 따라 60px 또는 72px)
+    const getHeaderOffset = () => {
+      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+      return header ? header.offsetHeight + 8 : 80;
+    };
+
     // 절대 경로 링크 (/about, /equipment2 등)는 locale-aware로 처리
     if (href.startsWith("/")) {
       const basePath = getLocalizedPath();
@@ -222,19 +237,25 @@ export default function Header() {
       }
       return;
     }
-    
+
+    // Bug Fix 3: isHome 판단 시 window.location.pathname 기준으로 재확인
+    // (wouter location state가 비동기 업데이트될 수 있으므로 실제 pathname 사용)
+    const currentPathname = window.location.pathname;
+    const isCurrentHome = currentPathname === "/" || currentPathname === "/en" || currentPathname === "/ja" || currentPathname === "/zh";
+
     // 해시 링크 (#home, #doctors 등)는 현재 페이지 기반
-    // isHome이 true이면 현재 페이지에서 스크롤 (다국어 페이지 포함)
-    if (isHome) {
+    // isCurrentHome이 true이면 현재 페이지에서 스크롤 (다국어 페이지 포함)
+    if (isCurrentHome) {
       const basePath = getLocalizedPath();
       if (href === "#home") {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        // URL 해시 업데이트 (popstate 방지)
         history.replaceState(null, "", basePath);
         return;
       }
       const scrollToEl = (el: Element) => {
-        const offset = 80;
+        // Bug Fix 4: smooth scroll 중 재클릭 시 정확한 위치 계산
+        // getBoundingClientRect().top은 현재 뷰포트 기준이므로 window.scrollY 더해야 절대 위치
+        const offset = getHeaderOffset();
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
         history.replaceState(null, "", basePath + href);
@@ -244,24 +265,30 @@ export default function Header() {
         scrollToEl(el);
         return;
       }
-      // FacilitySection 등 lazy 섹션은 아직 DOM에 없을 수 있음.
+      // lazy 섹션은 아직 DOM에 없을 수 있음.
       // MutationObserver로 최대 3초 대기 후 마운트되면 스크롤.
       const observer = new MutationObserver(() => {
         const lazyEl = document.querySelector(href);
         if (lazyEl) {
           observer.disconnect();
           clearTimeout(timeout);
+          pendingNavRef.current = null;
           scrollToEl(lazyEl);
         }
       });
       observer.observe(document.body, { childList: true, subtree: true });
-      const timeout = setTimeout(() => observer.disconnect(), 3000);
+      const timeout = setTimeout(() => {
+        observer.disconnect();
+        pendingNavRef.current = null;
+      }, 3000);
+      // 진행 중인 observer 저장 (다음 클릭 시 취소용)
+      pendingNavRef.current = { observer, timeout };
       // URL 해시 미리 업데이트 (브라우저 기본 스크롤 방지용)
       history.replaceState(null, "", basePath + href);
       return;
     }
-    
-    // isHome이 false이면 다른 페이지 → 현재 언어 페이지로 라우팅
+
+    // isCurrentHome이 false이면 다른 페이지 → 현재 언어 페이지로 라우팅
     const basePath = getLocalizedPath();
     if (href === "#home") {
       window.location.href = basePath;

@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, Sparkles, ChevronRight } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
+import { useChatConfig } from "@/hooks/useChatConfig";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
 
@@ -172,7 +173,12 @@ function TreatmentModalContent({
   onClose: () => void;
 }) {
   const { lang, getText } = useLocalizedText();
+  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const embedUrl = convertYoutubeUrl(item.youtubeUrl);
+
+  // 언어별 CTA 라벨
+  const ctaLabel = isZH ? "微信咨询" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오톡으로 상담하기";
+  const ctaAriaLabel = isZH ? "WeChat으로 상담" : isJA ? "LINE으로 상담" : lang === "en" ? "Chat via KakaoTalk" : "카카오톡으로 상담하기";
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
@@ -290,14 +296,15 @@ function TreatmentModalContent({
       )}
       {/* CTA 버튼 */}
       <a
-        href="https://pf.kakao.com/_HNyGC"
+        href={chatUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm transition-all duration-200 hover:brightness-95 active:scale-95 mt-4 flex-shrink-0"
-        style={{ background: "#FEE500", color: "#191919" }}
+        style={{ background: chatBg, color: chatColor }}
+        aria-label={ctaAriaLabel}
         onClick={onClose}
       >
-        카카오톡으로 상담하기
+        {ctaLabel}
       </a>
     </div>
   );

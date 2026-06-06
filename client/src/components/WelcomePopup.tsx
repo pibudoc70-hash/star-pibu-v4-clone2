@@ -9,6 +9,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { X, MessageCircle, Phone, Calendar } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
+import { useChatConfig } from "@/hooks/useChatConfig";
 import OptimizedImage from "@/components/OptimizedImage";
 
 interface PriceItem {
@@ -241,9 +242,9 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
   const { sheetRef, onTouchStart, onTouchMove, onTouchEnd } = useDragToClose(dismiss);
   const { t, lang } = useLang();
   const wp = t.welcomePopup;
-  const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
-  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
-  const chatColor = lang === "zh" ? "white" : "#1F2937";
+  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  // 언어별 메신저 라벨
+  const messengerLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat with us" : "카카오톡 상담";
 
   return (
     <div
@@ -364,7 +365,7 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
           <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
             className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center"
             style={{ background: chatBg, color: chatColor }}>
-            <MessageCircle size={16} />{wp.cta_kakao}
+            <MessageCircle size={16} />{messengerLabel}
           </a>
           <div className="flex gap-2">
             <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
@@ -394,9 +395,8 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange, dialogRef }: PopupProps) {
   const { t, lang } = useLang();
   const wp = t.welcomePopup;
-  const chatUrl = lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC";
-  const chatBg = lang === "zh" ? "#07C160" : "#FEE500";
-  const chatColor = lang === "zh" ? "white" : "#1F2937";
+  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  const messengerLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat with us" : "카카오톡 상담";
 
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
@@ -489,7 +489,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
           <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
             className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
             style={{ background: chatBg, color: chatColor }}>
-            <MessageCircle size={16} />{wp.cta_kakao}
+            <MessageCircle size={16} />{messengerLabel}
           </a>
           <div className="flex gap-2">
             <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}

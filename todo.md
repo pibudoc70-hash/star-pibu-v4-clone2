@@ -1682,3 +1682,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] MOB-2: PhilosophySection stats 카드 고정 높이 133px → min-height (영어 27자 라벨 overflow 방지)
 - [x] MOB-3: ReservationSection 모바일 패딩 p-8 → p-4 sm:p-8 (320px 화면 폼 좌우 여백 확보)
 - [x] MOB-4: ResultsStatisticsSection 통계 카드 — 영어 20자 라벨 break-words 추가 (2열 그리드 높이 불균형 방지)
+
+## 코드 품질 개선 — 시니어 개발자 리뷰 (2026-06-06)
+
+### P1 — merge-ready 필수 수정
+- [ ] CTA-P1-1: TreatmentCard.tsx 모달 CTA — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동
+- [ ] CTA-P1-2: WelcomePopup.tsx MobilePopup + DesktopPopup — chatUrl/chatBg/chatColor 인라인 분기 → useChatConfig 연동
+- [ ] CTA-P1-3: EventCard.tsx 상담 버튼 — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동
+- [ ] CTA-P1-4: useChatConfig.ts — JA 언어 chatUrl이 kakao로 떨어지는 버그 (isJA 분기 누락) 수정
+- [ ] NAV-P1-1: Header.tsx handleNavClick — locale prefix 중복 방지 로직 강화 (/en + /about → /en//about 방지)
+
+### P2 — 다음 PR에서 처리 권장
+- [ ] CTA-P2-1: FAQSection.tsx 하단 CTA — 하드코딩 WeChat/Kakao → useChatConfig 연동
+- [ ] CTA-P2-2: FloatingCTA.tsx — chatBg/chatColor 인라인 재계산 제거, useChatConfig 반환값 직접 사용
+- [ ] NAV-P2-1: Header.tsx primaryNav/secondaryNav 배열을 별도 상수 파일(shared/navConfig.ts)로 분리
+
+### P3 — 기술 부채 (백로그)
+- [ ] REFACTOR-P3-1: TreatmentsEquipmentSection.tsx (레거시) — TREATMENTS 인라인 데이터 DB 마이그레이션 후 파일 제거
+- [ ] REFACTOR-P3-2: App.tsx MapErrorBoundary — 전용 파일로 분리

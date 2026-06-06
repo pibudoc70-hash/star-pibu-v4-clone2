@@ -116,19 +116,23 @@ describe("모바일 언어 버튼 — setLang + replace 패턴 일관성", () =>
     expect(mobileBlock).toMatch(/window\.location\.replace/);
   });
 
-  it("모바일 언어 버튼에서도 setLang을 replace 이전에 호출해야 한다", () => {
-    // langOptions.map 블록 내 setLang과 replace 순서 확인
-    // 정규식 대신 단순 indexOf 순서 비교로 검증
-    const mapStart = headerSource.indexOf("langOptions.map(");
-    const mapEnd = headerSource.indexOf("</div>\n            {/* CTA", mapStart);
+  it("모바일 언어 버튼에서도 setLang을 closeMobileMenu 이전에 호출해야 한다", () => {
+    // 모바일 언어 그리드는 두 번째 langOptions.map 블록에 있음
+    const firstMap = headerSource.indexOf("langOptions.map(");
+    const mapStart = headerSource.indexOf("langOptions.map(", firstMap + 1);
+    // 모바일 CTA 주석을 끝 경계로 사용
+    const mapEnd = headerSource.indexOf("{/* 모바일 CTA", mapStart);
     const mobileBlock = mapStart > -1 && mapEnd > -1
       ? headerSource.slice(mapStart, mapEnd)
       : headerSource.slice(mapStart > -1 ? mapStart : 0);
     const setLangPos = mobileBlock.indexOf("setLang(");
-    const replacePos = mobileBlock.indexOf("window.location.replace");
+    const closeMobileMenuPos = mobileBlock.indexOf("closeMobileMenu(");
     expect(setLangPos).toBeGreaterThan(-1);
-    expect(replacePos).toBeGreaterThan(-1);
-    expect(setLangPos).toBeLessThan(replacePos);
+    expect(closeMobileMenuPos).toBeGreaterThan(-1);
+    // setLang이 closeMobileMenu보다 먼저 나와야 함
+    expect(setLangPos).toBeLessThan(closeMobileMenuPos);
+    // replace는 onAfterClose 콜백 내부에 있어야 함
+    expect(mobileBlock).toMatch(/closeMobileMenu\(\(\)/);
   });
 });
 

@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLang } from "@/contexts/LangContext";
+import { useChatConfig } from "@/hooks/useChatConfig";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 
 interface FAQQuestion { q: string; a: string; }
@@ -14,8 +15,13 @@ interface FAQItem { equipment: string; questions: FAQQuestion[]; }
 export default function FAQSection() {
   const { t, lang } = useLang();
   const faq = t.faq;
+  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const [openEquipment, setOpenEquipment] = useState<number>(0);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
+
+  // 언어별 FAQ 하단 CTA 라벨
+  const faqCtaLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Contact via Chat" : "카카오톡으로 문의";
+  const faqCtaDesc = isZH ? "还有其他问题吗？请通过WeChat随时和我们联系。" : isJA ? "他にご質問はありますか？LINEでお気軽にお問い合わせください。" : lang === "en" ? "Have more questions? Feel free to contact us via chat." : "더 궁금한 점이 있으신가요? 카카오톡으로 편하게 문의하세요.";
 
   /**
    * FAQ 스키마 생성 함수
@@ -153,26 +159,18 @@ export default function FAQSection() {
 
           {/* 하단 CTA */}
           <div className="mt-10 text-center">
-            <p className="text-sm mb-4" style={{ color: "#4A6FA5" }}>
-              {lang === "ko"
-                ? "더 궁금한 점이 있으신가요? 카카오톡으로 편하게 문의하세요."
-                : lang === "en"
-                ? "Have more questions? Feel free to contact us via KakaoTalk."
-                : lang === "ja"
-                ? "他にご質問はありますか？KakaoTalkでお気軽にお問い合わせください。"
-                : "还有其他问题吗？请通过WeChat随时咨询我们。"}
-            </p>
+            <p className="text-sm mb-4" style={{ color: "#4A6FA5" }}>{faqCtaDesc}</p>
             <a
-              href={lang === "zh" ? "https://u.wechat.com/star2006beauty" : "https://pf.kakao.com/_HNyGC"}
+              href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"
-              style={{ background: lang === "zh" ? "#07C160" : "#FEE500", color: lang === "zh" ? "white" : "#3A1D1D" }}
+              style={{ background: chatBg, color: chatColor }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 3C6.477 3 2 6.477 2 11c0 2.897 1.565 5.453 3.953 7.001L4.5 21l3.75-1.875C9.37 19.687 10.664 20 12 20c5.523 0 10-3.477 10-9S17.523 3 12 3z" />
               </svg>
-              {t.treatmentDetail.ctaConsult}
+              {faqCtaLabel}
             </a>
           </div>
         </div>

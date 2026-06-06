@@ -59,15 +59,15 @@ export function useChatConfig(): ChatConfig {
   const isZH = lang === "zh";
   const isJA = lang === "ja";
 
-  const chatUrl = isZH ? CHAT_URLS.wechat : CHAT_URLS.kakao;
+  const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? CHAT_URLS.lineJA : CHAT_URLS.kakao;
   const reserveUrl = isZH
     ? CHAT_URLS.lineZH
     : isJA
     ? CHAT_URLS.lineJA
     : CHAT_URLS.naver;
 
-  const chatBg = isZH ? CHAT_STYLES.wechat.bg : CHAT_STYLES.kakao.bg;
-  const chatColor = isZH ? CHAT_STYLES.wechat.color : CHAT_STYLES.kakao.color;
+  const chatBg = isZH ? CHAT_STYLES.wechat.bg : isJA ? CHAT_STYLES.line.bg : CHAT_STYLES.kakao.bg;
+  const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? CHAT_STYLES.line.color : CHAT_STYLES.kakao.color;
 
   return {
     chatUrl,

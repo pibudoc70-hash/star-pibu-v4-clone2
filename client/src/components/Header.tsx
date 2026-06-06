@@ -214,13 +214,15 @@ export default function Header() {
     if (!isHome) setActiveSection("");
   }, [isHome]);
 
-  const closeMobileMenu = () => {
+  // onAfterClose: 메뉴 닫힌 애니메이션(250ms) 완료 후 실행할 콜백
+  const closeMobileMenu = (onAfterClose?: () => void) => {
     setMenuClosing(true);
     setMenuVisible(false);
     setTimeout(() => {
       setMenuClosing(false);
       setMobileOpen(false);
-    }, 250);
+      onAfterClose?.();
+    }, 280); // 250ms 애니메이션 + 30ms 여유
   };
 
   const openMobileMenu = () => {
@@ -246,7 +248,8 @@ export default function Header() {
 
     if (href.startsWith("/")) {
       const basePath = getLocalizedPath();
-      if (basePath !== "/") {
+      // 중복 방지: basePath가 "/en" 일 때 href가 "/en/..."로 시작하면 basePath 접두어 생략
+      if (basePath !== "/" && !href.startsWith(basePath + "/") && href !== basePath) {
         window.location.href = `${basePath}${href}`;
       } else {
         window.location.href = href;
@@ -797,13 +800,14 @@ export default function Header() {
                     type="button"
                     key={option.lang}
                     onClick={() => {
-                      // LangContext 먼저 업데이트 (사용자 명시적 선택 → persist=true)
+                      // 1. LangContext 먼저 업데이트 (사용자 명시적 선택 → persist=true)
                       setLang(option.lang, true);
-                      closeMobileMenu();
-                      setTimeout(() => {
+                      // 2. 메뉴 닫힘 애니메이션(280ms) 완료 후 페이지 이동
+                      //    → 애니메이션이 잘리지 않고 부드럽게 완료된 뒤 전환
+                      closeMobileMenu(() => {
                         const hash = window.location.hash;
                         window.location.replace(buildLocalizedPath(option.lang) + hash);
-                      }, 100);
+                      });
                     }}
                     className="flex flex-col items-center gap-1 transition-all"
                     style={{

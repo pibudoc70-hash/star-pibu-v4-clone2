@@ -12,6 +12,8 @@
 import { useState } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
+import { useLang } from "@/contexts/LangContext";
+import { useChatConfig } from "@/hooks/useChatConfig";
 
 interface EventCardProps {
   event: SpecialEvent;
@@ -66,6 +68,12 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, pri
 // ── 메인 EventCard ────────────────────────────────────────────────────────────
 export default function EventCard({ event, getLocalizedText }: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { lang } = useLang();
+  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  // 언어별 CTA 라벨
+  const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
+  const phoneHref = lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300";
+  const phoneLabel = lang === "ko" ? "051-818-2300" : "+82-51-818-2300";
 
   // priceRows 파싱
   let priceRows: PriceRow[] = [];
@@ -182,20 +190,20 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           {/* 상담 버튼 */}
           <div className="flex gap-3 mb-3">
             <a
-              href="https://pf.kakao.com/_HNyGC"
+              href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 px-4 py-2 font-semibold rounded-full transition-colors text-center text-navy hover:opacity-80"
-              style={{ backgroundColor: "#f7f4ee", fontSize: "0.875rem" }}
+              className="flex-1 px-4 py-2 font-semibold rounded-full transition-colors text-center hover:opacity-80"
+              style={{ background: chatBg, color: chatColor, fontSize: "0.875rem" }}
             >
-              카카오 상담
+              {chatLabel}
             </a>
             <a
-              href="tel:051-818-2300"
+              href={phoneHref}
               className="flex-1 px-4 py-2 font-semibold rounded-full transition-colors text-center text-navy hover:opacity-80"
               style={{ backgroundColor: "#f7f4ee", fontSize: "0.875rem" }}
             >
-              전화 상담
+              {phoneLabel}
             </a>
           </div>
 

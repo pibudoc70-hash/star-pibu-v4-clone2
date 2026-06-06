@@ -1872,3 +1872,27 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P1-YT-1: YouTubeSection.tsx — ?? 한국어 fallback 9개 제거 (i18n 키 직접 사용)
 - [x] P1-TEST: i18nText.test.ts — P1 수정 회귀 방지 테스트 추가 (24개 케이스)
 - [x] P1-VALIDATE: type-check 0건 / test 19파일 385케이스 전체 통과
+
+## Round-2 시니어 재검수 수정 (2026-06-07)
+- [x] R2-TC-1: TreatmentCard.tsx — lang 삼항 4개(modalTime/Recovery/Sessions/Effect) → t.treatments.* 키 교체
+- [x] R2-TC-2: TreatmentCard.tsx — ctaLabel/ctaAriaLabel lang 삼항 → t.treatments.modalConsultBtn + t.floatingCta.kakaoAria 교체
+- [x] R2-TC-3: TreatmentCard.tsx — "✨ 기대효과" 하드코딩 → t.treatments.modalEffect 교체
+- [x] R2-TC-4: TreatmentCard.tsx — "자세히 보기" 하드코딩 → t.events.viewDetail 교체
+- [x] R2-TC-5: TreatmentCard.tsx — "상세 보기"/"상세 정보" aria-label/sr-only 하드코딩 → t.treatments.modalDetailBtn 교체
+- [x] R2-TC-6: TreatmentCard.tsx — useLang 훅 추가 (t 객체 직접 접근)
+- [x] R2-FAQ-1: FAQSection.tsx — faqCtaLabel/faqCtaDesc lang 삼항 4개 → i18n 키 교체
+- [x] R2-FAQ-2: i18n.types.ts faq 섹션에 ctaLabel/ctaDesc 필드 추가
+- [x] R2-FAQ-3: i18n.{ko,en,ja,zh}.ts faq.ctaLabel/ctaDesc 값 추가
+- [x] R2-FAQ-4: FAQSection.tsx — isZH/isJA/lang 미사용 변수 제거
+- [x] R2-EP-1: EquipmentPanel.tsx — tr? optional chaining 및 ?? fallback 제거
+- [x] R2-EP-2: EquipmentPanel.tsx — aria-label/DialogTitle 한국어 하드코딩 → t.treatments.modalDetailBtn 교체
+- [x] R2-HS-1: HeroSection.tsx — scrollLabel ?? "Scroll" fallback 제거
+- [x] R2-HS-2: HeroSection.tsx — aria-label="아래로 스크롤" 하드코딩 → t.hero.scrollLabel 교체
+- [x] R2-CS-1: ContactSection.tsx — mapAriaLabel ?? "스타피부과..." fallback 제거
+- [x] R2-CS-2: ContactSection.tsx — mapMarkerTitle ?? "스타피부과..." fallback 제거
+- [x] R2-SEO-1: Privacy.tsx SeoHead — includeMedicalSchema={false} 명시
+- [x] R2-SEO-2: NotFound.tsx SeoHead — includeMedicalSchema={false} 명시
+- [x] R2-SEO-3: Reserve.tsx SeoHead — includeMedicalSchema={false} 명시
+- [x] R2-JA-1: i18n.ja.ts treatments.modalConsultBtn "KakaoTalkで相談する" → "LINEで相談する" 수정
+- [x] R2-TEST: i18nText.test.ts — Round-2 회귀 방지 테스트 추가 (7개 describe, 17개 케이스)
+- [x] R2-VALIDATE: type-check 0건 / test 19파일 402케이스 전체 통과

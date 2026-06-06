@@ -17,6 +17,7 @@ export default function NotFound() {
         title="페이지를 찾을 수 없습니다 (404) | 스타피부과"
         description="요청하신 페이지를 찾을 수 없습니다."
         noindex
+        includeMedicalSchema={false}
       />
       <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
         <CardContent className="pt-8 pb-8 text-center">

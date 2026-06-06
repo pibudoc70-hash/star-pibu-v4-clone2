@@ -4,7 +4,7 @@
  * 카드 클릭 시 상세 Dialog를 열고, 언어별 텍스트를 표시한다.
  */
 import { useState } from "react";
-import { Clock, RefreshCw, ChevronDown, ChevronUp, Sparkles, ChevronRight } from "lucide-react";
+import { Clock, RefreshCw, Sparkles, ChevronRight } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -158,13 +158,14 @@ function TreatmentModalContent({
   item: Treatment;
   onClose: () => void;
 }) {
-  const { lang, getText } = useLocalizedText();
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  const { getText } = useLocalizedText();
+  const { t } = useLang();
+  const { chatUrl, chatBg, chatColor } = useChatConfig();
   const embedUrl = convertYoutubeUrl(item.youtubeUrl);
 
-  // 언어별 CTA 라벨
-  const ctaLabel = isZH ? "微信咨询" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오톡으로 상담하기";
-  const ctaAriaLabel = isZH ? "WeChat으로 상담" : isJA ? "LINE으로 상담" : lang === "en" ? "Chat via KakaoTalk" : "카카오톡으로 상담하기";
+  // i18n 키 사용 — 언어별 채팅 채널(KakaoTalk/LINE/WeChat)은 각 언어 파일에서 관리
+  const ctaLabel = t.treatments.modalConsultBtn;
+  const ctaAriaLabel = t.floatingCta.kakaoAria;
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
@@ -208,7 +209,7 @@ function TreatmentModalContent({
           <Clock size={14} style={{ color: "#d1ab67" }} />
           <div>
             <p className="text-xs" style={{ color: "#9CA3AF" }}>
-              {lang === "en" ? "Duration" : lang === "ja" ? "施術時間" : lang === "zh" ? "手术时间" : "시술 시간"}
+              {t.treatments.modalTime}
             </p>
             <p className="text-sm font-bold" style={{ color: "#1F2937" }}>
               {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
@@ -220,7 +221,7 @@ function TreatmentModalContent({
           <RefreshCw size={14} style={{ color: "#d1ab67" }} />
           <div>
             <p className="text-xs" style={{ color: "#9CA3AF" }}>
-              {lang === "en" ? "Recovery" : lang === "ja" ? "回復期間" : lang === "zh" ? "恢复期" : "회복 기간"}
+              {t.treatments.modalRecovery}
             </p>
             <p className="text-sm font-semibold" style={{ color: "#374151" }}>
               {getText(item.recovery, item.recoveryEn || "", item.recoveryJa || "", item.recoveryZh || "")}
@@ -234,7 +235,7 @@ function TreatmentModalContent({
               <RefreshCw size={14} style={{ color: "#d1ab67" }} />
               <div>
                 <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                  {lang === "en" ? "Recommended Sessions" : lang === "ja" ? "推奨回数" : lang === "zh" ? "推荐次数" : "권장 횟수"}
+                  {t.treatments.modalSessions}
                 </p>
                 <p className="text-sm font-semibold" style={{ color: "#374151" }}>
                   {getText(item.sessions || "", item.sessionsEn || "", item.sessionsJa || "", item.sessionsZh || "")}
@@ -259,7 +260,7 @@ function TreatmentModalContent({
           <div className="flex items-center gap-1.5 mb-1">
             <Sparkles size={12} style={{ color: "#d1ab67" }} />
             <p className="text-xs font-bold" style={{ color: "#d1ab67" }}>
-              {lang === "en" ? "Expected Results" : lang === "ja" ? "期待される効果" : lang === "zh" ? "预期效果" : "기대 효과"}
+              {t.treatments.modalEffect}
             </p>
           </div>
           <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>
@@ -272,7 +273,7 @@ function TreatmentModalContent({
         <div className="mb-4" style={{ borderTop: "1px solid #f0e8d4", paddingTop: "14px" }}>
           <div className="flex items-center gap-1.5 mb-1">
             <span className="text-xs font-bold" style={{ color: "#d1ab67" }}>
-              ✨ 기대효과
+              ✨ {t.treatments.modalEffect}
             </span>
           </div>
           <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>
@@ -299,6 +300,7 @@ function TreatmentModalContent({
 // ─── 카드 하단 정보 영역 ──────────────────────────────────────────────────────
 function TreatmentCardBody({ item }: { item: Treatment }) {
   const { getText } = useLocalizedText();
+  const { t } = useLang();
   return (
     <div className="p-4 flex flex-col flex-1">
       {item.badge && (
@@ -316,7 +318,7 @@ function TreatmentCardBody({ item }: { item: Treatment }) {
         {getText(item.desc, item.descEn, item.descJa, item.descZh)}
       </p>
       <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "#d1ab67" }}>
-        <span>자세히 보기</span>
+        <span>{t.events.viewDetail}</span>
         <ChevronRight size={13} />
       </div>
     </div>
@@ -335,6 +337,7 @@ export default function TreatmentCard({
 }) {
   const [open, setOpen] = useState(false);
   const { getText } = useLocalizedText();
+  const { t } = useLang();
 
   return (
     <>
@@ -349,7 +352,7 @@ export default function TreatmentCard({
         onClick={() => setOpen(true)}
         role="button"
         tabIndex={0}
-        aria-label={`${item.name} 상세 보기`}
+        aria-label={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${t.events.viewDetail}`}
         onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
       >
         <TreatmentCardImage item={item} imgBg={imgBg} />
@@ -363,7 +366,7 @@ export default function TreatmentCard({
           aria-labelledby={`treatment-modal-title-${item.id}`}
         >
           <DialogTitle id={`treatment-modal-title-${item.id}`} className="sr-only">
-            {getText(item.name, item.nameEn, item.nameJa, item.nameZh)} 상세 정보
+            {getText(item.name, item.nameEn, item.nameJa, item.nameZh)} {t.treatments.modalDetailBtn}
           </DialogTitle>
           <TreatmentModalContent item={item} onClose={() => setOpen(false)} />
         </DialogContent>

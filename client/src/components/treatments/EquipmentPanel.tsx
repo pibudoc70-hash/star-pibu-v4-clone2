@@ -49,7 +49,7 @@ export default function EquipmentPanel({ items, catId }: EquipmentPanelProps) {
           role="button"
           tabIndex={0}
           onKeyDown={(e) => e.key === "Enter" && setSelectedEq(eq)}
-          aria-label={`${eq.name} 장비 상세 보기`}
+          aria-label={`${eq.name} ${tr.modalDetailBtn}`}
         >
           <div className="w-14 h-14 rounded-lg overflow-hidden bg-slate-50 flex-shrink-0 border border-slate-100">
             <OptimizedImage
@@ -75,9 +75,9 @@ export default function EquipmentPanel({ items, catId }: EquipmentPanelProps) {
           aria-expanded={expanded}
         >
           {expanded ? (
-            <><ChevronUp size={14} />{tr?.collapseBtn ?? "접기"}</>
+            <><ChevronUp size={14} />{tr.collapseBtn}</>
           ) : (
-            <><ChevronDown size={14} />{tr?.moreBtn ?? `+${items.length - 4}개 더 보기`}</>
+            <><ChevronDown size={14} />{tr.moreBtn.replace("{n}", String(items.length - 4))}</>
           )}
         </button>
       )}
@@ -86,7 +86,7 @@ export default function EquipmentPanel({ items, catId }: EquipmentPanelProps) {
       {selectedEq && (
         <Dialog open={!!selectedEq} onOpenChange={() => setSelectedEq(null)}>
           <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
-            <DialogTitle className="sr-only">{selectedEq.name} 상세 정보</DialogTitle>
+            <DialogTitle className="sr-only">{selectedEq.name} {tr.modalDetailBtn}</DialogTitle>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
@@ -104,19 +104,19 @@ export default function EquipmentPanel({ items, catId }: EquipmentPanelProps) {
               </div>
               {getEqText(selectedEq, "detail") && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr?.equipmentDetailPending ?? "상세 설명"}</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr.equipmentDetailPending}</h4>
                   <p className="text-sm text-slate-600 leading-relaxed">{getEqText(selectedEq, "detail")}</p>
                 </div>
               )}
               {getEqText(selectedEq, "sessions") && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr?.modalSessions ?? "권장 횟수"}</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr.modalSessions}</h4>
                   <p className="text-sm text-slate-600">{getEqText(selectedEq, "sessions")}</p>
                 </div>
               )}
               {getEqText(selectedEq, "effect") && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr?.modalEffect ?? "기대 효과"}</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 mb-1">{tr.modalEffect}</h4>
                   <p className="text-sm text-slate-600">{getEqText(selectedEq, "effect")}</p>
                 </div>
               )}

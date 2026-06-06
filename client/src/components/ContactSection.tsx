@@ -96,21 +96,21 @@ export default function ContactSection() {
   };
 
   // 진료시간 "휴진" 판별: t.hours.rows 마지막 항목의 time 값 사용 (i18n 중앙화)
-  const closedLabel = t.hours.rows[t.hours.rows.length - 1]?.time ?? "휴진";
+  const closedLabel = t.hours.rows[t.hours.rows.length - 1]?.time ?? t.hours.rows[0]?.time ?? "";  // 마지막 행 time 값 (휴진 표시)
 
   // CONTACT-P2-A: i18n 키 직접 사용 (fallback 삼항 제거 — 4개 언어 모두 키 존재 확인)
-  const locationInfo = t.access.locationInfo ?? t.access.label;
-  const sectionTitle = t.access.sectionTitle ?? t.access.title;
+  const locationInfo = t.access.locationInfo ?? t.access.label;  // locationInfo 4개 언어 모두 존재
+  const sectionTitle = t.access.sectionTitle ?? t.access.title;  // sectionTitle 4개 언어 모두 존재
   const addressLabel = t.access.addressLabel!;
   const phoneLabel = t.access.phoneLabel!;
   const hoursLabel = t.access.hoursLabel!;
-  const hoursNote = t.access.hoursNote ?? t.hours.note;
+  const hoursNote = t.access.hoursNote ?? t.hours.note;  // hoursNote 4개 언어 모두 존재
   const transitLabel = t.access.transitLabel!;
-  const transitDesc = t.access.transitDesc ?? t.access.subway;
+  const transitDesc = t.access.transitDesc ?? t.access.subway;  // transitDesc 4개 언어 모두 존재
   const parkingLabel = t.access.parkingLabel!;
-  const parkingDesc = t.access.parkingDesc ?? t.access.parking;
+  const parkingDesc = t.access.parkingDesc ?? t.access.parking;  // parkingDesc 4개 언어 모두 존재
   const kakaoMapLabel = t.access.kakaoMapLabel!;
-  const naverMapLabel = t.access.naverMap ?? "Naver Map";
+  const naverMapLabel = t.access.naverMap ?? "Naver Map";  // naverMap 4개 언어 모두 존재
   const copyAddressLabel = t.access.copyAddress!;
   const copiedLabel = t.access.copiedLabel!;
 
@@ -142,7 +142,7 @@ export default function ContactSection() {
             ref={mapContainerRef}
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
             style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
-            aria-label={t.access.mapAriaLabel ?? "스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"}
+            aria-label={t.access.mapAriaLabel}
           >
             <MapView
               className="w-full h-full"
@@ -242,7 +242,7 @@ export default function ContactSection() {
                 new g.maps.marker.AdvancedMarkerElement({
                   position: STAR_LOCATION,
                   map,
-                  title: t.access.mapMarkerTitle ?? "스타피부과 서면 아이온시티",
+                  title: t.access.mapMarkerTitle,
                   content: pinEl,
                 });
               }}

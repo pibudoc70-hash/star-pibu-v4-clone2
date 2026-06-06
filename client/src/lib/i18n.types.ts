@@ -296,7 +296,9 @@ export interface I18nContent {
   faq: {
     sectionTitle: string;
     sectionSubtitle: string;
-    items: Array<{ equipment: string; questions: Array<{ q: string; a: string }> }>
+    items: Array<{ equipment: string; questions: Array<{ q: string; a: string }> }>;
+    ctaLabel: string;
+    ctaDesc: string;
   };
   contact: {
     phone: string;

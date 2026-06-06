@@ -404,3 +404,203 @@ describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증
     expect(src).toMatch(/t\.doctors\.teamLabel/);
   });
 });
+
+// ─── Round-2 Senior Review Regression Tests ──────────────────────────────────
+
+describe("Round-2 P1: FAQSection ctaLabel/ctaDesc i18n 키 적용 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("FAQSection.tsx에 lang 삼항 ctaLabel/ctaDesc 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/FAQSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/isZH \? "微信和我联系"/);
+    expect(src).not.toMatch(/isJA \? "LINE\u3067\u76f8\u8ac7"/);
+    expect(src).not.toMatch(/faqCtaLabel = isZH/);
+    expect(src).toMatch(/faqCtaLabel = faq\.ctaLabel/);
+    expect(src).toMatch(/faqCtaDesc = faq\.ctaDesc/);
+  });
+
+  it("i18n 4개 언어 파일에 faq.ctaLabel/ctaDesc 키가 존재해야 한다", () => {
+    const langs = ["ko", "en", "ja", "zh"];
+    for (const lang of langs) {
+      const src = readFileSync(
+        nodePath.resolve(process.cwd(), `client/src/lib/i18n.${lang}.ts`),
+        "utf8",
+      );
+      expect(src, `${lang}: faq.ctaLabel 누락`).toMatch(/ctaLabel:/);
+      expect(src, `${lang}: faq.ctaDesc 누락`).toMatch(/ctaDesc:/);
+    }
+  });
+
+  it("i18n.types.ts에 faq.ctaLabel/ctaDesc 타입이 선언되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/lib/i18n.types.ts"),
+      "utf8",
+    );
+    expect(src).toMatch(/ctaLabel: string/);
+    expect(src).toMatch(/ctaDesc: string/);
+  });
+});
+
+describe("Round-2 P1: TreatmentCard lang 삼항 제거 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("TreatmentCard.tsx에 lang 삼항 ctaLabel 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/TreatmentCard.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/isZH \? "WeChat\u548c\u6211\u8054\u7cfb"/);
+    expect(src).not.toMatch(/isJA \? "LINE\u3067\u76f8\u8ac7"/);
+    expect(src).toMatch(/t\.treatments\.modalConsultBtn/);
+  });
+
+  it("TreatmentCard.tsx에 기대효과/자세히 보기 한국어 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/TreatmentCard.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/✨ 기대효과/);
+    expect(src).not.toMatch(/자세히 보기/);
+    expect(src).not.toMatch(/상세 보기/);
+    expect(src).not.toMatch(/상세 정보/);
+  });
+
+  it("TreatmentCard.tsx에 t.treatments.modalTime/modalEffect/modalSessions 키가 사용되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/TreatmentCard.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/t\.treatments\.modalTime/);
+    expect(src).toMatch(/t\.treatments\.modalEffect/);
+    expect(src).toMatch(/t\.treatments\.modalSessions/);
+    expect(src).toMatch(/t\.treatments\.modalDetailBtn/);
+  });
+});
+
+describe("Round-2 P1: EquipmentPanel fallback 제거 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("EquipmentPanel.tsx에 한국어 ?? fallback이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/EquipmentPanel.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/\?\? "\uc811\uae30"/);
+    expect(src).not.toMatch(/\?\? `\+\$\{items\.length - 4\}\uac1c \ub354 \ubcf4\uae30`/);
+    expect(src).not.toMatch(/\?\? "\uc0c1\uc138 \uc124\uba85"/);
+    expect(src).not.toMatch(/\?\? "\uad8c\uc7a5 \ud69f\uc218"/);
+    expect(src).not.toMatch(/\?\? "\uae30\ub300 \ud6a8\uacfc"/);
+  });
+
+  it("EquipmentPanel.tsx에 aria-label 한국어 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/EquipmentPanel.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/\uC7A5\uBE44 \uC0C1\uC138 \uBCF4\uAE30/);
+    expect(src).toMatch(/tr\.modalDetailBtn/);
+  });
+
+  it("EquipmentPanel.tsx에 DialogTitle 한국어 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/treatments/EquipmentPanel.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/\uC0C1\uC138 \uC815\uBCF4/);
+    expect(src).toMatch(/tr\.modalDetailBtn/);
+  });
+});
+
+describe("Round-2 P1: HeroSection scrollLabel fallback 제거 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("HeroSection.tsx에 scrollLabel ?? 'Scroll' fallback이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/HeroSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/scrollLabel \?\? "Scroll"/);
+    expect(src).toMatch(/t\.hero\.scrollLabel/);
+  });
+
+  it("HeroSection.tsx에 aria-label 한국어 하드코딩이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/HeroSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/aria-label="\uC544\uB798\uB85C \uC2A4\uD06C\uB864"/);
+  });
+});
+
+describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("ContactSection.tsx에 mapAriaLabel 한국어 fallback이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/ContactSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/mapAriaLabel \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC704\uCE58 \uC9C0\uB3C4/);
+    expect(src).toMatch(/aria-label=\{t\.access\.mapAriaLabel\}/);
+  });
+
+  it("ContactSection.tsx에 mapMarkerTitle 한국어 fallback이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/ContactSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/mapMarkerTitle \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC11C\uBA74/);
+    expect(src).toMatch(/title: t\.access\.mapMarkerTitle/);
+  });
+});
+
+describe("Round-2 P2: noindex 페이지 includeMedicalSchema=false 명시 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("Privacy.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/pages/Privacy.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+  });
+
+  it("NotFound.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/pages/NotFound.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+  });
+
+  it("Reserve.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/pages/Reserve.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+  });
+});
+
+describe("Round-2 P1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+
+  it("i18n.ja.ts treatments.modalConsultBtn이 LINE 기반이어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/lib/i18n.ja.ts"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/modalConsultBtn: "KakaoTalk\u3067\u76f8\u8ac7\u3059\u308b"/);
+    expect(src).toMatch(/modalConsultBtn: "LINE\u3067\u76f8\u8ac7\u3059\u308b"/);
+  });
+});

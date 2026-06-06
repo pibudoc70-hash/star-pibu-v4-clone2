@@ -13,15 +13,14 @@ interface FAQQuestion { q: string; a: string; }
 interface FAQItem { equipment: string; questions: FAQQuestion[]; }
 
 export default function FAQSection() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const faq = t.faq;
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  const { chatUrl, chatBg, chatColor } = useChatConfig();
   const [openEquipment, setOpenEquipment] = useState<number>(0);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
-  // 언어별 FAQ 하단 CTA 라벨
-  const faqCtaLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Contact via Chat" : "카카오톡으로 문의";
-  const faqCtaDesc = isZH ? "还有其他问题吗？请通过WeChat随时和我们联系。" : isJA ? "他にご質問はありますか？LINEでお気軽にお問い合わせください。" : lang === "en" ? "Have more questions? Feel free to contact us via chat." : "더 궁금한 점이 있으신가요? 카카오톡으로 편하게 문의하세요.";
+  const faqCtaLabel = faq.ctaLabel;
+  const faqCtaDesc = faq.ctaDesc;
 
   /**
    * FAQ 스키마 생성 함수

@@ -594,10 +594,10 @@ export default function HeroSection() {
           /* [FM-P1-5] 2100ms → 1700ms */
           animationDelay: "1700ms", marginBottom: '-7px', marginLeft: '-20px',
         }}
-        aria-label="아래로 스크롤"
+        aria-label={t.hero.scrollLabel}
       >
         <span style={{ fontSize: "clamp(0.58rem, 1.4vw, 0.68rem)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-          {t.hero.scrollLabel ?? "Scroll"}
+          {t.hero.scrollLabel}
         </span>
         <ChevronDown size={16} className="animate-bounce" />
       </button>

@@ -161,7 +161,7 @@ export const ja: I18nContent = {
     modalSessions: "推奨回数",
     modalEffect: "期待できる効果",
     modalDetailBtn: "詳細ページを見る",
-    modalConsultBtn: "KakaoTalkで相談する",
+    modalConsultBtn: "LINEで相談する",
     collapseBtn: "閉じる",
     moreBtn: "さらに{n}件",
     recoveryPrefix: "回復：",
@@ -457,7 +457,9 @@ export const ja: I18nContent = {
           { q: "施術の間隔と回数はどのくらいですか？", a: "最初は2〜4週間隔で4回程度の集中施術をお勧めし、その後は3〜6ヶ月ごとのメンテナンス施術で効果を長く維持することができます。" },
         ]
       },
-    ]
+    ],
+    ctaLabel: "LINEでお問い合わせ",
+    ctaDesc: "他にご質問はありますか？LINEでお気軽にお問い合わせください。",
   },
   contact: {
     phone: "+82-51-818-2300",

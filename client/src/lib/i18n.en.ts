@@ -457,7 +457,9 @@ export const en: I18nContent = {
           { q: "What is the recommended treatment schedule?", a: "An intensive course of 4 sessions every 2–4 weeks is recommended initially. Maintenance sessions every 3–6 months thereafter will help sustain the results long-term." },
         ]
       },
-    ]
+    ],
+    ctaLabel: "Contact via Chat",
+    ctaDesc: "Have more questions? Feel free to contact us via chat.",
   },
   contact: {
     phone: "+82-51-818-2300",

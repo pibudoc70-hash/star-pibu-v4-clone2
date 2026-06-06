@@ -1896,3 +1896,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] R2-JA-1: i18n.ja.ts treatments.modalConsultBtn "KakaoTalkで相談する" → "LINEで相談する" 수정
 - [x] R2-TEST: i18nText.test.ts — Round-2 회귀 방지 테스트 추가 (7개 describe, 17개 케이스)
 - [x] R2-VALIDATE: type-check 0건 / test 19파일 402케이스 전체 통과
+
+## Round-3 리팩토링 (2026-06-07) - 완료
+- [x] Step 1: TreatmentsEquipmentSection.tsx 사용처/책임/롤백 이력 감사
+- [x] Step 2: 하드코딩 6건 수정 (aria-label/DialogTitle/alt/caution/cautionEn·Ja·Zh)
+  - Treatment 타입에 cautionEn/Ja/Zh 필드 추가
+  - i18n.types.ts treatments 섹션에 caution 키 추가 + 4개 언어 값 등록
+  - TreatmentCard.tsx caution 블록 getText() 패턴 적용
+- [x] Step 3: CategoryTabButton.tsx icon prop 추가 + 인라인 탭 버튼 2개 블록 → CategoryTabButton 교체
+- [x] Step 4: 인라인 TreatmentCard 함수(L37-184) → EquipmentTreatmentCard.tsx 추출
+  - /client/src/components/treatments/EquipmentTreatmentCard.tsx 신규 파일 생성
+  - TreatmentsEquipmentSection.tsx 인라인 함수 제거, EquipmentTreatmentCard import로 교체
+  - 불필요 import 정리 (Clock, RefreshCw, AlertCircle, Repeat, Sparkles, ExternalLink, Dialog 등)
+  - 테스트 3개 파일 업데이트 (i18nText.test.ts, step5.regression.test.ts, content.test.tsx)
+- [x] Step 5: 전체 검증 — TypeScript 0건, 테스트 402케이스 전체 통과
+- [x] 체크포인트 저장 (Round-3 최종)

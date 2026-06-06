@@ -155,6 +155,8 @@ export interface I18nContent {
     equipmentDetailPending: string;
     /** 장비 상담 버튼 */
     equipmentConsultBtn: string;
+    /** 주의사항 레이블 */
+    caution: string;
     categories: Array<{ name: string; items: string[] }>;
   };
   foreignGuide: {

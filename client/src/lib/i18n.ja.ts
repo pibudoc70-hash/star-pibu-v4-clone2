@@ -169,6 +169,7 @@ export const ja: I18nContent = {
     equipmentUnits: "{n}種保有",
     equipmentDetailPending: "詳細情報は準備中です。",
     equipmentConsultBtn: "LINEで設備の相談をする",
+    caution: "注意事項",
     categories: [
       { name: "リフティング·弾力", items: ["ウルセラピープライム", "サーマジFLX", "XERF", "シルエットリフト"] },
       { name: "ボリューム·注射", items: ["スカルプトラ", "ヒアルロン酸フィラー", "ボトックス"] },

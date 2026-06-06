@@ -123,19 +123,25 @@ describe("Map.tsx — i18n 키 사용 회귀 방지 (Step2 수정)", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // 3. TreatmentsEquipmentSection.tsx — getText 훅 사용 회귀 방지
 // ─────────────────────────────────────────────────────────────────────────────
-describe("TreatmentsEquipmentSection.tsx — getText 훅 사용 회귀 방지 (Step2 수정)", () => {
-  it("TreatmentsEquipmentSection.tsx에서 time 필드에 인라인 lang 삼항이 없어야 한다", () => {
-    // lang === "en" ? item.timeEn ?? item.time : ... 형태 제거
-    expect(treatmentsSource).not.toMatch(/lang\s*===\s*["']en["']\s*\?\s*\S*timeEn/);
-    expect(treatmentsSource).not.toMatch(/lang\s*===\s*["']ja["']\s*\?\s*\S*timeJa/);
+describe("EquipmentTreatmentCard.tsx — getText 훅 사용 회귀 방지 (Step4 분리)", () => {
+  // Step 4 리팩토링: 인라인 TreatmentCard 함수가 EquipmentTreatmentCard.tsx로 분리됨
+  const { readFileSync: readFS } = require("node:fs");
+  const nodePath2 = require("node:path");
+  const equipCardSource = readFS(
+    nodePath2.resolve(process.cwd(), "client/src/components/treatments/EquipmentTreatmentCard.tsx"),
+    "utf8",
+  );
+
+  it("EquipmentTreatmentCard.tsx에서 time 필드에 인라인 lang 삼항이 없어야 한다", () => {
+    expect(equipCardSource).not.toMatch(/lang\s*===\s*["']en["']\s*\?\s*\S*timeEn/);
+    expect(equipCardSource).not.toMatch(/lang\s*===\s*["']ja["']\s*\?\s*\S*timeJa/);
   });
 
-  it("TreatmentsEquipmentSection.tsx에서 getText 훅을 사용해야 한다", () => {
-    // getText(ko, en, ja, zh) 패턴으로 다국어 처리
-    expect(treatmentsSource).toContain("getText(");
+  it("EquipmentTreatmentCard.tsx에서 getText 훅을 사용해야 한다", () => {
+    expect(equipCardSource).toContain("getText(");
   });
 
-  it("TreatmentsEquipmentSection.tsx에서 useLocalizedText 훅을 import해야 한다", () => {
-    expect(treatmentsSource).toContain("useLocalizedText");
+  it("EquipmentTreatmentCard.tsx에서 useLocalizedText 훅을 import해야 한다", () => {
+    expect(equipCardSource).toContain("useLocalizedText");
   });
 });

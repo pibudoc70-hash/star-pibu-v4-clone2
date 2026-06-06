@@ -160,6 +160,7 @@ export const ko: I18nContent = {
     equipmentUnits: "{n}종 보유",
     equipmentDetailPending: "상세 정보 준비 중입니다.",
     equipmentConsultBtn: "카카오톡으로 장비 상담하기",
+    caution: "주의사항",
     categories: [
       { name: "리프팅·탄력", items: ["울쎄라피 프라임", "써마지 FLX", "세르프", "실루엣 리프트"] },
       { name: "볼륨·주사", items: ["스컬트라", "히알루론산 필러", "보톡스"] },

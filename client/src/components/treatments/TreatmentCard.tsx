@@ -268,16 +268,16 @@ function TreatmentModalContent({
           </p>
         </div>
       )}
-      {/* 주의사항/기대효과(caution) */}
-      {item.caution && (
+      {/* 주의사항(caution) */}
+      {(item.caution || item.cautionEn || item.cautionJa || item.cautionZh) && (
         <div className="mb-4" style={{ borderTop: "1px solid #f0e8d4", paddingTop: "14px" }}>
           <div className="flex items-center gap-1.5 mb-1">
             <span className="text-xs font-bold" style={{ color: "#d1ab67" }}>
-              ✨ {t.treatments.modalEffect}
+              ⚠️ {t.treatments.caution}
             </span>
           </div>
           <p className="text-sm" style={{ color: "#374151", lineHeight: 1.6 }}>
-            {item.caution}
+            {getText(item.caution ?? "", item.cautionEn ?? "", item.cautionJa ?? "", item.cautionZh ?? "")}
           </p>
         </div>
       )}

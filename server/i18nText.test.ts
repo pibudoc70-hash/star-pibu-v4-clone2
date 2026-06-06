@@ -154,9 +154,10 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
   const nodePath = require("node:path");
   const root = process.cwd();
 
-  it("TreatmentsEquipmentSection.tsx에 time/recovery 필드 inline lang 삼항이 없어야 한다", () => {
+  it("EquipmentTreatmentCard.tsx에 time/recovery 필드 inline lang 삼항이 없어야 한다", () => {
+    // Step 4 리팩토링: 인라인 TreatmentCard 함수가 EquipmentTreatmentCard.tsx로 분리됨
     const src = readFileSync(
-      nodePath.resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"),
+      nodePath.resolve(root, "client/src/components/treatments/EquipmentTreatmentCard.tsx"),
       "utf8",
     );
     // item.timeEn ?? item.time 형태의 inline 삼항이 없어야 함

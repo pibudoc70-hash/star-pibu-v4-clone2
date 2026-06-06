@@ -37,9 +37,14 @@ const equipmentPanelSource = readFileSync(
   path.resolve(root, 'client/src/components/treatments/EquipmentPanel.tsx'),
   'utf8',
 );
+// Step 4 리팩토링: 인라인 TreatmentCard 함수가 EquipmentTreatmentCard.tsx로 분리됨
+const equipmentTreatmentCardSource = readFileSync(
+  path.resolve(root, 'client/src/components/treatments/EquipmentTreatmentCard.tsx'),
+  'utf8',
+);
 
 // 전체 합산 소스 (데이터 + 컴포넌트)
-const combinedSource = source + '\n' + treatmentsDataSource + '\n' + equipmentDataSource + '\n' + categoriesSource + '\n' + equipmentPanelSource;
+const combinedSource = source + '\n' + treatmentsDataSource + '\n' + equipmentDataSource + '\n' + categoriesSource + '\n' + equipmentPanelSource + '\n' + equipmentTreatmentCardSource;
 
 // ─── 번역 누락 회귀 방지 테스트 ────────────────────────────────────────────────
 describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
@@ -85,16 +90,17 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
   });
 
   it('getText 헬퍼가 useLocalizedText 공유 hook으로 추출되어 import로 사용되어야 한다 (MAINT-P1-1)', () => {
-    // 이전: function getText(...) 이 TreatmentCard 내부에 정의됨
-    // 현재: useLocalizedText hook으로 추출되어 import로 사용
-    expect(source).toContain("import { useLocalizedText } from \"@/hooks/useLocalizedText\"");
+    // Step 4 리팩토링: 인라인 TreatmentCard 함수가 EquipmentTreatmentCard.tsx로 분리됨
+    // useLocalizedText는 EquipmentTreatmentCard.tsx에 위치
+    expect(equipmentTreatmentCardSource).toContain("import { useLocalizedText } from \"@/hooks/useLocalizedText\"");
     expect(source).not.toContain(
       'function getText(ko: string, en?: string, ja?: string, zh?: string): string',
     );
   });
 
   it('카드 desc 렌더링에 getText(item.desc, item.descEn, item.descJa, item.descZh)를 사용해야 한다', () => {
-    expect(source).toContain('getText(item.desc, item.descEn, item.descJa, item.descZh)');
+    // Step 4 리팩토링: 카드 렌더링은 EquipmentTreatmentCard.tsx에 위치
+    expect(equipmentTreatmentCardSource).toContain('getText(item.desc, item.descEn, item.descJa, item.descZh)');
   });
 
   it('장비 패널 desc 렌더링에 getEqText를 사용해야 한다', () => {
@@ -103,7 +109,8 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
   });
 
   it('카드 제목 렌더링에 getText(item.name, item.nameEn, item.nameJa, item.nameZh)를 사용해야 한다', () => {
-    expect(source).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh)');
+    // Step 4 리팩토링: 카드 렌더링은 EquipmentTreatmentCard.tsx에 위치
+    expect(equipmentTreatmentCardSource).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh)');
   });
 
   it('카테고리 탭 label 렌더링에 getCatLabel(cat, lang)을 사용해야 한다', () => {

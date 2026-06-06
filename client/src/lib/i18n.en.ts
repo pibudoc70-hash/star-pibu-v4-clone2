@@ -169,6 +169,7 @@ export const en: I18nContent = {
     equipmentUnits: "{n} units available",
     equipmentDetailPending: "Detailed information coming soon.",
     equipmentConsultBtn: "Consult about equipment via KakaoTalk",
+    caution: "Precautions",
     categories: [
       { name: "Lifting & Firming", items: ["Ultherapy Prime", "Thermage FLX", "XERF", "Silhouette Lift"] },
       { name: "Volume & Injections", items: ["Sculptra", "Hyaluronic Acid Filler", "Botox"] },

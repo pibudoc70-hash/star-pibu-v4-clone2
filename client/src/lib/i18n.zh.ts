@@ -169,6 +169,7 @@ export const zh: I18nContent = {
     equipmentUnits: "拥有{n}种",
     equipmentDetailPending: "详细信息准备中。",
     equipmentConsultBtn: "通过WeChat咨询设备",
+    caution: "注意事项",
     categories: [
       { name: "提升·紧致", items: ["欧活素提升疗法", "热磁治疗FLX", "XERF", "线雕提升"] },
       { name: "丰盈·注射", items: ["舒颜萃", "玻尿酸填充", "肉毒素"] },

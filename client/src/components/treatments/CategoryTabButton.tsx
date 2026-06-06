@@ -1,9 +1,12 @@
 /**
  * CategoryTabButton
- * TreatmentsEquipmentSectionV2의 카테고리 탭 버튼.
- * 모바일(compact)과 데스크탑(default) 두 가지 크기를 size prop으로 제어하여
+ * 카테고리 탭 버튼. 모바일(compact)과 데스크탑(default) 두 가지 크기를 size prop으로 제어하여
  * 기존 코드에서 중복 렌더링되던 두 개의 버튼 블록을 하나로 통합한다.
+ *
+ * icon prop: CATEGORY_ICON_MAP에서 전달받은 lucide-react 아이콘 컴포넌트.
+ *            미전달 시 기본 Star 아이콘 사용.
  */
+import React from "react";
 import { Star } from "lucide-react";
 
 interface CategoryTabButtonProps {
@@ -11,6 +14,8 @@ interface CategoryTabButtonProps {
   label: string;
   isActive: boolean;
   onClick: (id: string) => void;
+  /** lucide-react 아이콘 컴포넌트 */
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
   /** "sm" = 모바일 compact, "md" = 데스크탑 default */
   size?: "sm" | "md";
 }
@@ -36,6 +41,7 @@ export default function CategoryTabButton({
   label,
   isActive,
   onClick,
+  icon: Icon = Star,
   size = "md",
 }: CategoryTabButtonProps) {
   const isSm = size === "sm";
@@ -62,7 +68,7 @@ export default function CategoryTabButton({
           color: isActive ? "white" : "#9CA3AF",
         }}
       >
-        <Star size={12} />
+        <Icon size={isSm ? 12 : 13} />
       </span>
       <span>{label}</span>
     </button>

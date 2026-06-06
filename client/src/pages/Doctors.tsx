@@ -42,6 +42,8 @@ export default function Doctors() {
         canonical="https://www.star-pibu.com/doctors"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
+              includeMedicalSchema={true}
+
       />
       {/* 페이지 헤더 */}
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">

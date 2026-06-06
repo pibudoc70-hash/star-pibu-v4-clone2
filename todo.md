@@ -1911,3 +1911,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - 테스트 3개 파일 업데이트 (i18nText.test.ts, step5.regression.test.ts, content.test.tsx)
 - [x] Step 5: 전체 검증 — TypeScript 0건, 테스트 402케이스 전체 통과
 - [x] 체크포인트 저장 (Round-3 최종)
+
+## Round-4 시니어 재검수 (2026-06-07)
+- [x] P1: HeroSection.tsx "已复制!" 하드코딩 → t.access.copiedLabel 교체
+- [x] P1: Equipment2Detail.tsx 24개 인라인 lang 삼항 → useLocalizedText 훅으로 교체
+- [x] P1: Equipment2Detail.tsx 갤러리 alt "사례" 하드코딩 → LABELS.caseAlt 다국어 변수 활용
+- [x] P1: Equipment2Detail.tsx JSON-LD bodyLocation "피부" 하드코딩 → LABELS.bodyLoc 다국어 처리
+- [x] P1: i18n.ja.ts teamLabel "Medical Team" → "医療チーム", i18n.zh.ts → "医疗团队" 수정
+- [x] P2: About/Directions/Doctors/Events/Facilities/ForeignGuide/NonCoveredGuide/Equipment2 includeMedicalSchema={true} 명시
+- [x] 회귀 테스트 추가/보강: round4.regression.test.ts (30케이스 전체 통과)
+- [x] type-check + test 전체 통과 (TypeScript 0건, 432케이스 전체 통과)
+- [x] 최종 커밋 (체크포인트 저장)

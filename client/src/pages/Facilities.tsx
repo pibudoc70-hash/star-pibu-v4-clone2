@@ -46,6 +46,7 @@ export default function Facilities() {
         canonical="https://www.star-pibu.com/facilities"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
+        includeMedicalSchema={true}
       />
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">

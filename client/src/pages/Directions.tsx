@@ -52,6 +52,8 @@ export default function Directions() {
         canonical="https://www.star-pibu.com/directions"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
+              includeMedicalSchema={true}
+
       />
       {/* 페이지 헤더 */}
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">

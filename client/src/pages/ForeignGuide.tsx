@@ -128,6 +128,7 @@ export default function ForeignGuide() {
           { hreflang: "zh",        href: `${BASE_URL}/zh/foreign-guide` },
           { hreflang: "x-default", href: `${BASE_URL}/en/foreign-guide` },
         ]}
+        includeMedicalSchema={true}
       />
       <Header />
 

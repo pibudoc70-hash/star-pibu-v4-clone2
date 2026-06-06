@@ -144,7 +144,7 @@ export const ja: I18nContent = {
     specialtyTitle: "専門施術",
     credentialsTitle: "学歴 · 経歴 · 資格",
     swipeHint: "← スワイプして医師を見る →",
-    teamLabel: "Medical Team",
+    teamLabel: "医療チーム",
   },
   treatments: {
     label: "施術案内",

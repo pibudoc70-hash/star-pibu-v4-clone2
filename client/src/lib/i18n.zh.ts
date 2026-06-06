@@ -144,7 +144,7 @@ export const zh: I18nContent = {
     specialtyTitle: "专项诊疗",
     credentialsTitle: "学历 · 经历 · 资格",
     swipeHint: "← 滑动查看医生 →",
-    teamLabel: "Medical Team",
+    teamLabel: "医疗团队",
   },
   treatments: {
     label: "诊疗项目",

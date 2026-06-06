@@ -63,6 +63,7 @@ export default function Equipment2() {
           "/ja/equipment2",
           "/zh/equipment2",
         )}
+        includeMedicalSchema={true}
       />
 
       {/* Fixed Header */}

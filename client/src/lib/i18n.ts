@@ -70,6 +70,22 @@ export interface I18nContent {
     subway: string;
     bus: string;
     parking: string;
+    // ContactSection labels (CONTACT-P2-A)
+    locationInfo?: string;
+    sectionTitle?: string;
+    addressLabel?: string;
+    phoneLabel?: string;
+    hoursLabel?: string;
+    hoursNote?: string;
+    transitLabel?: string;
+    transitDesc?: string;
+    parkingLabel?: string;
+    parkingDesc?: string;
+    kakaoMapLabel?: string;
+    kakaoChat?: string;
+    naverMap?: string;
+    copyAddress?: string;
+    copiedLabel?: string;
   };
   doctors: {
     label: string;
@@ -323,6 +339,21 @@ export const i18n: Record<Lang, I18nContent> = {
       subway: "지하철 1·2호선 서면역 5번·7번 출구 도보 3분",
       bus: "서면교차로 정류장 하차",
       parking: "아이온시티 건물 내 주차 가능",
+      locationInfo: "위치 및 연락정보",
+      sectionTitle: "찾아오시는 길",
+      addressLabel: "주소",
+      phoneLabel: "전화",
+      hoursLabel: "진료시간",
+      hoursNote: "※ 평일 점심시간 13:00–14:00 · 토요일 점심시간 없이 진료",
+      transitLabel: "대중교통",
+      transitDesc: "지하철 서면역 5번·7번 출구 도보 2분",
+      parkingLabel: "주차",
+      parkingDesc: "아이온시티 건물 내 주차 가능",
+      kakaoMapLabel: "카카오맵 길찾기",
+      kakaoChat: "카카오 상담",
+      naverMap: "네이버 지도",
+      copyAddress: "주소 복사",
+      copiedLabel: "복사됨!",
     },
     doctors: {
       label: "Doctors",
@@ -764,6 +795,21 @@ export const i18n: Record<Lang, I18nContent> = {
       subway: "Subway Line 1 & 2 – Seomyeon Station Exit 5 or 7, 3-min walk",
       bus: "Get off at Seomyeon Intersection stop",
       parking: "Parking available inside ION City Building",
+      locationInfo: "Location & Contact",
+      sectionTitle: "How to Get Here",
+      addressLabel: "Address",
+      phoneLabel: "Phone",
+      hoursLabel: "Clinic Hours",
+      hoursNote: "* Weekday lunch break 13:00–14:00 · No lunch break on Saturdays",
+      transitLabel: "Transit",
+      transitDesc: "Subway Seomyeon Station Exit 5 or 7, 2-min walk",
+      parkingLabel: "Parking",
+      parkingDesc: "Parking available inside ION City Building",
+      kakaoMapLabel: "KakaoMap Directions",
+      kakaoChat: "KakaoTalk Chat",
+      naverMap: "Naver Map",
+      copyAddress: "Copy Address",
+      copiedLabel: "Copied!",
     },
     doctors: {
       label: "Our Doctors",
@@ -1211,6 +1257,21 @@ export const i18n: Record<Lang, I18nContent> = {
       subway: "地下鉄1・2号線 西面駅 5番・7番出口から徒歩3分",
       bus: "西面交差点バス停下車",
       parking: "アイオンシティビル内駐車場利用可",
+      locationInfo: "アクセス・連絡先",
+      sectionTitle: "アクセス",
+      addressLabel: "住所",
+      phoneLabel: "電話",
+      hoursLabel: "診察時間",
+      hoursNote: "※ 平日昂休み 13:00–14:00 · 土曜日昂休みなしで診察",
+      transitLabel: "交通機関",
+      transitDesc: "地下鉄西面駅５番・７番出口から徒歩2分",
+      parkingLabel: "驐車場",
+      parkingDesc: "アイオンシティビル内駐車場利用可",
+      kakaoMapLabel: "KakaoMapでルート検索",
+      kakaoChat: "LINEチャット",
+      naverMap: "Naver Map",
+      copyAddress: "住所をコピー",
+      copiedLabel: "コピーしました！",
     },
     doctors: {
       label: "医師紹介",
@@ -1658,6 +1719,21 @@ export const i18n: Record<Lang, I18nContent> = {
       subway: "地铁1·2号线 西面站 5号·7号出口步行3分钟",
       bus: "西面交叉路口公交站下车",
       parking: "爱恩城大厦内停车场可用",
+      locationInfo: "位置及联系方式",
+      sectionTitle: "交通指南",
+      addressLabel: "地址",
+      phoneLabel: "电话",
+      hoursLabel: "诊疗时间",
+      hoursNote: "※ 工作日午休 13:00–14:00 · 周六不设午休",
+      transitLabel: "交通方式",
+      transitDesc: "地铁1·2号线西面站5号·7号出口步行2分钟",
+      parkingLabel: "停车",
+      parkingDesc: "爱恩城大厦内停车场可用",
+      kakaoMapLabel: "KakaoMap导航",
+      kakaoChat: "微信和我联系",
+      naverMap: "Naver Map",
+      copyAddress: "复制地址",
+      copiedLabel: "已复制！",
     },
     doctors: {
       label: "医生介绍",

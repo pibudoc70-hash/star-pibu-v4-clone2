@@ -1700,3 +1700,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P3 — 기술 부채 (백로그)
 - [ ] REFACTOR-P3-1: TreatmentsEquipmentSection.tsx (레거시) — TREATMENTS 인라인 데이터 DB 마이그레이션 후 파일 제거
 - [ ] REFACTOR-P3-2: App.tsx MapErrorBoundary — 전용 파일로 분리
+
+## 전체 코드 냉정 검수 — 시니어 개발자 리뷰 Round 3 (2026-06)
+
+### P1 — 버그·접근성 위반 (즉시 수정)
+- [x] CONTACT-P1-A: ContactSection.tsx — window.innerWidth 초기 state 직접 읽기(SSR 불안전) → lazy initializer로 변경
+- [x] CONTACT-P1-B: ContactSection.tsx — 지도 마커 팝업 innerHTML 한국어 하드코딩 → 언어별 분기 적용
+- [x] CONTACT-P1-C: ContactSection.tsx — bounds_changed 이벤트에서 map.setCenter() 무한 루프 위험 → idle 이벤트 1회 리스너로 교체
+- [x] FLOATINGCTA-P1-A: FloatingCTA.tsx — JA 언어에서 chatUrl이 CHAT_URLS.kakao(한국어 URL)로 연결 → useChatConfig의 chatUrl 사용으로 교체
+- [x] HOME-P1-A: Home.tsx — SeoHead title/description/keywords에서 "울쓸라" 오타 3개 → "울쎄라" 수정 완료
+
+### P2 — 코드 품질·유지보수성 (이번 배치 수정)
+- [x] CONTACT-P2-A: ContactSection.tsx — labels 객체 14개 항목 인라인 분기 → i18n.ts access 블록 확장으로 중앙화
+- [x] CONTACT-P2-B: ContactSection.tsx — initTimer + initTimer2 중복 타이머 → rAF + 단일 fallback 타이머 패턴으로 교체
+- [ ] FLOATINGCTA-P2-A: FloatingCTA.tsx — labels 객체 인라인 분기 → i18n 키 사용 [보류: i18n.ts에 floatingCta 전용 블록 미존재, 다음 배치에서 인터페이스 확장 후 적용 예정]
+
+### P3 — 선택적 개선 (보류)
+- [ ] CONTACT-P3-A: ContactSection.tsx — 지도 마커 팝업 클릭 토글 로직을 React state로 관리
+- [ ] CONTACT-P3-B: ContactSection.tsx — 지도 높이 계산 로직을 커스텀 훅으로 분리

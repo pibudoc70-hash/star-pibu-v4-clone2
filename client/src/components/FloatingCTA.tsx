@@ -8,7 +8,7 @@
 import { useState, useEffect } from "react";
 import { MessageCircle, Calendar, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
-import { useChatConfig, CHAT_URLS } from "@/hooks/useChatConfig";
+import { useChatConfig } from "@/hooks/useChatConfig";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -22,10 +22,9 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // [PROD-P4-2] useChatConfig 훅으로 URL 중앙화
-  const { reserveUrl, isZH, isJA } = useChatConfig();
+  // useChatConfig 훅으로 URL 중앙화 (FLOATINGCTA-P1-A: chatUrl을 훅에서 직접 사용)
+  const { reserveUrl, chatUrl, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
-  const chatUrl = isZH ? "#" : CHAT_URLS.kakao;
 
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {

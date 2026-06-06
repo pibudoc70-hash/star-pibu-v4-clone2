@@ -37,7 +37,8 @@ function GoldParticles() {
 
     let animId: number;
     let isRunning = true;
-    const PARTICLE_COUNT = 80;
+    // [PERF-P1-1] 모바일(≤640px)에서 파티클 수 절반으로 감소 → 메인스레드 부담 감소
+    const PARTICLE_COUNT = window.innerWidth <= 640 ? 40 : 80;
 
     type Particle = {
       x: number;

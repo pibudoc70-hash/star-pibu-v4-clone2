@@ -312,6 +312,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0px);
+    will-change: auto;
   }
 
   /* 변형 방향 변형 */
@@ -330,6 +331,7 @@
     opacity: 1;
     transform: translateX(0) scale(1);
     filter: blur(0px);
+    will-change: auto;
   }
 
   /* [FM-P3-3] will-change: filter 제거 */
@@ -347,6 +349,7 @@
     opacity: 1;
     transform: translateX(0) scale(1);
     filter: blur(0px);
+    will-change: auto;
   }
 
   /* 섹션 헤더 전용 - 약간 더 느리고 강조 */
@@ -383,6 +386,8 @@
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0px);
+    /* [PERF-P1-2] 애니메이션 완료 후 GPU 레이어 해제 → 메모리 절약 */
+    will-change: auto;
   }
 
   /* 레거시 호환 */

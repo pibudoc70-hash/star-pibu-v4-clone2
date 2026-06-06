@@ -112,16 +112,18 @@ describe("Stat suffix source-of-truth (PR-46/47)", () => {
 // 2. SeoHead includeClinicSchema=false — 시술/장비 상세 페이지
 // ─────────────────────────────────────────────────────────────────────────────
 describe("SeoHead includeClinicSchema=false (PR-46)", () => {
-  it("TreatmentPage에 includeClinicSchema={false} 가 있어야 한다", () => {
-    expect(treatmentPageSource).toContain("includeClinicSchema={false}");
+  // [PHASE-4] includeClinicSchema → includeMedicalSchema 마이그레이션 (2026-06-06)
+  // 레거시 prop은 제거되었으므로 includeMedicalSchema={false}로 검증
+  it("TreatmentPage에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
+    expect(treatmentPageSource).toContain("includeMedicalSchema={false}");
   });
 
-  it("TreatmentDetail에 includeClinicSchema={false} 가 있어야 한다", () => {
-    expect(treatmentDetailSource).toContain("includeClinicSchema={false}");
+  it("TreatmentDetail에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
+    expect(treatmentDetailSource).toContain("includeMedicalSchema={false}");
   });
 
-  it("Equipment2Detail에 includeClinicSchema={false} 가 있어야 한다", () => {
-    expect(equipment2DetailSource).toContain("includeClinicSchema={false}");
+  it("Equipment2Detail에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
+    expect(equipment2DetailSource).toContain("includeMedicalSchema={false}");
   });
 
   it("SeoHead 구현에서 includeClinicSchema=false 시 두 스키마 모두 제외해야 한다", () => {

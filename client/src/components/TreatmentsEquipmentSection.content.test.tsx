@@ -53,8 +53,11 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
     }
   });
 
-  it('getText 헬퍼가 TreatmentCard 함수 내에 정의되어 있어야 한다', () => {
-    expect(source).toContain(
+  it('getText 헬퍼가 useLocalizedText 공유 hook으로 추출되어 import로 사용되어야 한다 (MAINT-P1-1)', () => {
+    // 이전: function getText(...) 이 TreatmentCard 내부에 정의됨
+    // 현재: useLocalizedText hook으로 추출되어 import로 사용
+    expect(source).toContain("import { useLocalizedText } from \"@/hooks/useLocalizedText\"");
+    expect(source).not.toContain(
       'function getText(ko: string, en?: string, ja?: string, zh?: string): string',
     );
   });

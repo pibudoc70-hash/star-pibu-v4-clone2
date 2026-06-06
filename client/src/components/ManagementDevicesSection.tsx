@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
+import { useLocalizedText } from "@/hooks/useLocalizedText";
 
 // ── 장비 데이터 타입 ──────────────────────────────────────────────────────────
 interface Device {
@@ -237,18 +238,14 @@ const devices: Device[] = [
 ];
 
 // ── 언어별 텍스트 선택 헬퍼 ──────────────────────────────────────────────────
-function getDeviceText(ko: string, en: string, ja: string, zh: string, lang: string): string {
-  if (lang === 'en') return en;
-  if (lang === 'ja') return ja;
-  if (lang === 'zh') return zh;
-  return ko;
-}
+// [MAINT-P1-1] getDeviceText → @/hooks/useLocalizedText 공유 hook으로 이동됨
 
 // ── 개별 카드 컴포넌트 ──────────────────────────────────────────────────────────
-function DeviceCard({ device, lang }: { device: Device; lang: string }) {
+function DeviceCard({ device }: { device: Device }) {
   const imgUrl = deviceImages[device.imgId] ?? `${CDN}/${device.imgId}.png`;
-  const displayName = getDeviceText(device.name, device.nameEn, device.nameJa, device.nameZh, lang);
-  const displayDesc = getDeviceText(device.shortDesc, device.shortDescEn, device.shortDescJa, device.shortDescZh, lang);
+  const { getText } = useLocalizedText();
+  const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh);
+  const displayDesc = getText(device.shortDesc, device.shortDescEn, device.shortDescJa, device.shortDescZh);
 
   return (
     <div
@@ -389,7 +386,7 @@ export default function ManagementDevicesSection() {
                   key={device.id}
                   style={{ scrollSnapAlign: "start", width: "200px" }}
                 >
-                  <DeviceCard device={device} lang={lang} />
+                  <DeviceCard device={device} />
                 </div>
               ))}
             </div>

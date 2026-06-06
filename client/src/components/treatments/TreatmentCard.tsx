@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, Sparkles, ChevronRight } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
 
@@ -77,22 +78,7 @@ function convertYoutubeUrl(url: string | null | undefined): string | null {
 }
 
 // ─── 언어별 텍스트 헬퍼 ──────────────────────────────────────────────────────
-function useLocalizedText() {
-  const { lang } = useLang();
-  const getText = (
-    ko: string | null | undefined,
-    en?: string | null,
-    ja?: string | null,
-    zh?: string | null
-  ): string => {
-    const base = ko ?? "";
-    if (lang === "en") return en || base;
-    if (lang === "ja") return ja || base;
-    if (lang === "zh") return zh || base;
-    return base;
-  };
-  return { lang, getText };
-}
+// [MAINT-P1-1] useLocalizedText → @/hooks/useLocalizedText 공유 hook으로 이동됨
 
 // ─── 카드 이미지 영역 ─────────────────────────────────────────────────────────
 function TreatmentCardImage({

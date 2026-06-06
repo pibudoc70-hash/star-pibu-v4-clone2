@@ -13,6 +13,7 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Clock, RefreshCw, ChevronDown, ChevronUp, AlertCircle, Repeat, Sparkles, ChevronRight, Star, Zap, Eye, Heart, Sun, Microscope, Droplets, Pill, Leaf, Wind, Circle, Layers, Footprints, ExternalLink } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
+import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
@@ -1491,14 +1492,8 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
   const tr = t.treatments;
   const detailSlug = DETAIL_PAGE_SLUGS[item.name];
 
-  // 언어별 텍스트 선택 헬퍼
-  function getText(ko: string, en?: string, ja?: string, zh?: string): string {
-    if (lang === 'en' && en) return en;
-    if (lang === 'ja' && ja) return ja;
-    if (lang === 'zh' && zh) return zh;
-    if (lang !== 'ko' && en) return en; // fallback to English for unknown locales
-    return ko;
-  }
+  // [MAINT-P1-1] getText → @/hooks/useLocalizedText 공유 hook 사용
+  const { getText } = useLocalizedText();
 
   return (
     <>
@@ -1694,13 +1689,8 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
   const visible = expanded ? items : items.slice(0, 4);
   const { lang } = useLang();
 
-  function getEqText(ko: string, en?: string, ja?: string, zh?: string): string {
-    if (lang === 'en' && en) return en;
-    if (lang === 'ja' && ja) return ja;
-    if (lang === 'zh' && zh) return zh;
-    if (lang !== 'ko' && en) return en;
-    return ko;
-  }
+  // [MAINT-P1-1] getEqText → @/hooks/useLocalizedText 공유 hook 사용
+  const { getText: getEqText } = useLocalizedText();
 
   return (
     <>

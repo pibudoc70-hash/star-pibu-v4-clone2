@@ -8,26 +8,31 @@ import { CheckCircle, TrendingUp, Users, Star, Award, Sparkles, Heart, Shield } 
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useLang } from "@/contexts/LangContext";
+import { useClinicStats } from "@/hooks/useClinicStats";
+import { STAR_COLORS } from "../../../shared/colors";
 
 const statIcons = [Award, Star, TrendingUp, Users];
-const statColors = ["#4A6FA5", "#81C7C9", "#4A6FA5", "#81C7C9"];
-const statBgs = ["#EEF3FA", "#EEF7F7", "#EEF3FA", "#EEF7F7"];
+const { navy, mint, dark, gray, muted, bgNavy, bgMint } = STAR_COLORS;
+const statColors = [navy, mint, navy, mint];
+const statBgs = [bgNavy, bgMint, bgNavy, bgMint];
 const whyIcons = [Shield, Heart, Sparkles];
-const whyColors = ["#4A6FA5", "#81C7C9", "#4A6FA5"];
-const treatmentAccents = ["#4A6FA5", "#81C7C9", "#4A6FA5", "#81C7C9", "#4A6FA5", "#81C7C9"];
-const treatmentBgs = ["#EEF3FA", "#EEF7F7", "#EEF3FA", "#EEF7F7", "#EEF3FA", "#EEF7F7"];
+const whyColors = [navy, mint, navy];
+const treatmentAccents = [navy, mint, navy, mint, navy, mint];
+const treatmentBgs = [bgNavy, bgMint, bgNavy, bgMint, bgNavy, bgMint];
 
 function ResultsSection() {
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 100 → 60;
   const { t } = useLang();
   const r = t.results;
+  // [STATS-P1-1] CLINIC_STATS 하드코딩 제거 → useClinicStats 연동
+  const clinicStats = useClinicStats();
 
   // 카운팅 애니메이션 적용
-  const { value: countValue1 } = useCountUp("20", 2000, "년+");
-  const { value: countValue2 } = useCountUp("98", 2000, "%");
-  const { value: countValue3 } = useCountUp("5", 2000, "만+");
+  const { value: countValue1 } = useCountUp(clinicStats.years.value, 2000, clinicStats.years.unit);
+  const { value: countValue2 } = useCountUp(clinicStats.satisfaction.value, 2000, clinicStats.satisfaction.unit);
+  const { value: countValue3 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit);
 
-  const countValues = [countValue1, countValue2, countValue3, "1:1"];
+  const countValues = [countValue1, countValue2, countValue3, `1:${clinicStats.ratio.value}`];
 
   return (
     <section ref={sectionRef} id="results" className="py-16 sm:py-24 bg-white relative overflow-hidden">
@@ -46,12 +51,12 @@ function ResultsSection() {
           </p>
           <h2
             className="mb-4"
-            style={{ color: "#1F2937", fontSize: "clamp(1.8rem, 6vw, 3rem)", fontWeight: 900, letterSpacing: "-0.5px" }}
+            style={{ color: dark, fontSize: "clamp(1.8rem, 6vw, 3rem)", fontWeight: 900, letterSpacing: "-0.5px" }}
           >
             {r.sectionTitle}
           </h2>
           <div className="star-divider mx-auto mb-6" />
-          <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: "#6B7280", lineHeight: 1.6 }}>
+          <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: gray, lineHeight: 1.6 }}>
             {r.sectionSubtitle}
           </p>
         </div>
@@ -76,10 +81,10 @@ function ResultsSection() {
                 >
                   <Icon size={32} style={{ color }} />
                 </div>
-                <h3 className="text-lg font-bold mb-2" style={{ color: "#1F2937" }}>
+                <h3 className="text-lg font-bold mb-2" style={{ color: dark }}>
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#6B7280" }}>
+                <p className="text-sm leading-relaxed" style={{ color: gray }}>
                   {item.desc}
                 </p>
                 <div
@@ -124,10 +129,10 @@ function ResultsSection() {
                   >
                     {countValues[i]}
                   </div>
-                  <div className="font-semibold text-sm mb-1" style={{ color: "#1F2937" }}>
+                  <div className="font-semibold text-sm mb-1" style={{ color: dark }}>
                     {s.label}
                   </div>
-                  <div className="text-xs" style={{ color: "#9CA3AF" }}>
+                  <div className="text-xs" style={{ color: muted }}>
                     {s.desc}
                   </div>
                 </div>
@@ -140,7 +145,7 @@ function ResultsSection() {
         <div className="mb-12">
           <h3
             className="text-center font-bold mb-10"
-            style={{ color: "#1F2937", fontSize: "clamp(1.3rem, 4vw, 1.6rem)" }}
+            style={{ color: dark, fontSize: "clamp(1.3rem, 4vw, 1.6rem)" }}
           >
             {r.treatmentResultsTitle}
           </h3>
@@ -164,7 +169,7 @@ function ResultsSection() {
                     style={{ borderBottom: `1px solid ${accentColor}22` }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-base" style={{ color: "#1F2937" }}>
+                      <h4 className="font-bold text-base" style={{ color: dark }}>
                         {tr.treatment}
                       </h4>
                       {isHighlight && (

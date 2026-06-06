@@ -72,6 +72,8 @@ export const ko: I18nContent = {
     copiedLabel: "복사됨!",
     mapViewLabel: "카카오맵에서 보기",
     mapAddressShort: "부산 서면 아이온시티빌딩 2·4층",
+    mapAriaLabel: "스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층",
+    mapMarkerTitle: "스타피부과 서면 아이온시티",
   },
   doctors: {
     label: "Doctors",
@@ -133,6 +135,7 @@ export const ko: I18nContent = {
     specialtyTitle: "전문 시술",
     credentialsTitle: "학력 · 경력 · 자격",
     swipeHint: "← 탭하여 의료진 보기 →",
+    teamLabel: "Medical Team",
   },
   treatments: {
     label: "시술 안내",

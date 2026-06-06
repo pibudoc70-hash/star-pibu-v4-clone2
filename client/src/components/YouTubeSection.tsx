@@ -128,14 +128,14 @@ export default function YouTubeSection() {
     return (
       <section
         className="py-16 md:py-24 bg-white"
-        aria-label={yt.loadingLabel ?? 'YouTube 채널 로딩 중'}
+        aria-label={yt.loadingLabel}
         aria-busy="true"
       >
         <div className="container mx-auto px-4 text-center">
           <div
             className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-300 mx-auto"
             role="status"
-            aria-label={yt.loadingLabel ?? '로딩 중'}
+            aria-label={yt.loadingLabel}
           />
         </div>
       </section>
@@ -147,11 +147,11 @@ export default function YouTubeSection() {
     return (
       <section
         className="py-16 md:py-24 bg-white"
-        aria-label={yt.errorLabel ?? 'YouTube 채널 오류'}
+        aria-label={yt.errorLabel}
       >
         <div className="container mx-auto px-4 text-center">
           <AlertCircle className="mx-auto mb-4 text-gray-400" size={48} aria-hidden="true" />
-          <p className="text-gray-600 mb-4">{yt.errorMessage ?? '영상을 불러오지 못했습니다.'}</p>
+          <p className="text-gray-600 mb-4">{yt.errorMessage}</p>
           <button
             type="button"
             onClick={() => refetch()}
@@ -159,7 +159,7 @@ export default function YouTubeSection() {
             style={{ background: '#D1AB67' }}
           >
             <RefreshCw size={16} aria-hidden="true" />
-            {yt.retry ?? '다시 시도'}
+            {yt.retry}
           </button>
         </div>
       </section>
@@ -197,7 +197,7 @@ export default function YouTubeSection() {
                   type="button"
                   key={video.id}
                   onClick={(e) => openModal(video, e.currentTarget)}
-                  aria-label={`${video.title} ${yt.playVideo ?? '영상 재생'}`}
+                  aria-label={`${video.title} ${yt.playVideo}`}
                   className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
                 >
                   {/* 썸네일 */}
@@ -241,7 +241,7 @@ export default function YouTubeSection() {
                   type="button"
                   key={short.id}
                   onClick={(e) => openModal(short, e.currentTarget)}
-                  aria-label={`${short.title} ${yt.playShorts ?? '쇼츠 재생'}`}
+                  aria-label={`${short.title} ${yt.playShorts}`}
                   className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
                 >
                   {/* 썸네일 */}
@@ -308,7 +308,7 @@ export default function YouTubeSection() {
                 type="button"
                 ref={closeButtonRef}
                 onClick={closeModal}
-                aria-label={yt.closeModal ?? '영상 모달 닫기'}
+                aria-label={yt.closeModal}
                 className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <X className="w-6 h-6 text-white" aria-hidden="true" />
@@ -343,7 +343,7 @@ export default function YouTubeSection() {
                 type="button"
                 ref={closeButtonRef}
                 onClick={closeModal}
-                aria-label={yt.closeModal ?? '쇼츠 모달 닫기'}
+                aria-label={yt.closeModal}
                 className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <X className="w-6 h-6 text-white" aria-hidden="true" />

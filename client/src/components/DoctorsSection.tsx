@@ -200,7 +200,7 @@ function DoctorsSection() {
       className="py-16 sm:py-24"
       style={{ background: "#faf7f0" }}
       role="region"
-      aria-label="의료진 소개"
+      aria-label={t.doctors.label}
     >
       <div className="container">
         {/* ── Section Header ── */}
@@ -255,7 +255,7 @@ function DoctorsSection() {
                   className="font-montserrat tracking-[0.3em] uppercase mb-3"
                   style={{ color: '#af9e74', fontWeight: 300, fontSize: "0.84rem", letterSpacing: "0.3em" }}
                 >
-                  Medical Team
+                  {t.doctors.teamLabel ?? "Medical Team"}
                 </div>
                 <div
                   style={{

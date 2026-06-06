@@ -203,3 +203,204 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
     expect(i18n.zh.access.mapAddressShort).toBeTruthy();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// P1 수정 회귀 방지 테스트 (PR-QA-P1)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("PR-QA-P1: i18n.zh.ts 오탈자 수정 회귀 방지", () => {
+  it("zh cta_kakao가 '咋讯' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.zh.hero.cta_kakao).not.toContain("咋讯");
+    expect(i18n.zh.hero.cta_kakao).toContain("咨询");
+  });
+
+  it("zh cta_reserve가 '咋讯' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.zh.hero.cta_reserve).not.toContain("咋讯");
+  });
+
+  it("zh hours.title이 '诊疗安内' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.zh.hours.title).not.toContain("安内");
+    expect(i18n.zh.hours.title).toBe("诊疗时间");
+  });
+
+  it("zh equipmentConsultBtn이 '和设备和论' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.zh.treatments.equipmentConsultBtn).not.toContain("和设备和论");
+    expect(i18n.zh.treatments.equipmentConsultBtn).toContain("咨询");
+  });
+
+  it("zh floatingCta.callAria가 '和论' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.zh.floatingCta.callAria).not.toContain("和论");
+    expect(i18n.zh.floatingCta.callAria).toContain("咨询");
+  });
+
+  it("zh results.treatmentResults에 '珑点去除' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const items = i18n.zh.results.treatmentResults;
+    const allImprovements = items.flatMap((item: { improvements: string[] }) => item.improvements).join(" ");
+    expect(allImprovements).not.toContain("珑点去除");
+  });
+
+  it("zh results.treatmentResults에 '改善波山红' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const items = i18n.zh.results.treatmentResults;
+    const allImprovements = items.flatMap((item: { improvements: string[] }) => item.improvements).join(" ");
+    expect(allImprovements).not.toContain("改善波山红");
+  });
+});
+
+describe("PR-QA-P1: i18n.ja.ts 오탈자 수정 회귀 방지", () => {
+  it("ja access.hoursNote가 '昂休み' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ja.access.hoursNote).not.toContain("昂休み");
+    expect(i18n.ja.access.hoursNote).toContain("昼休み");
+  });
+
+  it("ja access.parkingLabel이 '驐車場' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ja.access.parkingLabel).not.toContain("驐車場");
+    expect(i18n.ja.access.parkingLabel).toBe("駐車場");
+  });
+
+  it("ja footer.privacy가 '方针' 오탈자를 포함하지 않아야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ja.footer.privacy).not.toContain("方针");
+    expect(i18n.ja.footer.privacy).toContain("方針");
+  });
+
+  it("ja doctors.careers에 '蔽山' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const allCareers = i18n.ja.doctors.list.flatMap((d: { careers: string[] }) => d.careers).join(" ");
+    expect(allCareers).not.toContain("蔽山");
+  });
+
+  it("ja doctors.careers에 'スタ皮膚科' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const allCareers = i18n.ja.doctors.list.flatMap((d: { careers: string[] }) => d.careers).join(" ");
+    expect(allCareers).not.toContain("スタ皮膚科");
+  });
+
+  it("ja reviews에 '膚トーン' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
+    expect(allTexts).not.toContain("膚トーン");
+  });
+
+  it("ja reviews에 '膚の弾力' 오탈자가 없어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
+    expect(allTexts).not.toContain("膚の弾力");
+  });
+});
+
+describe("PR-QA-P1: i18n doctors.teamLabel 추가 검증", () => {
+  it("i18n.types.ts에 doctors.teamLabel 필드가 정의되어야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/lib/i18n.types.ts"),
+      "utf8",
+    );
+    expect(src).toMatch(/teamLabel\??:/);
+  });
+
+  it("4개 언어 모두 doctors.teamLabel 값이 있어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ko.doctors.teamLabel).toBeTruthy();
+    expect(i18n.en.doctors.teamLabel).toBeTruthy();
+    expect(i18n.ja.doctors.teamLabel).toBeTruthy();
+    expect(i18n.zh.doctors.teamLabel).toBeTruthy();
+  });
+});
+
+describe("PR-QA-P1: i18n access.mapAriaLabel/mapMarkerTitle 추가 검증", () => {
+  it("4개 언어 모두 access.mapAriaLabel 값이 있어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ko.access.mapAriaLabel).toBeTruthy();
+    expect(i18n.en.access.mapAriaLabel).toBeTruthy();
+    expect(i18n.ja.access.mapAriaLabel).toBeTruthy();
+    expect(i18n.zh.access.mapAriaLabel).toBeTruthy();
+  });
+
+  it("4개 언어 모두 access.mapMarkerTitle 값이 있어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ko.access.mapMarkerTitle).toBeTruthy();
+    expect(i18n.en.access.mapMarkerTitle).toBeTruthy();
+    expect(i18n.ja.access.mapMarkerTitle).toBeTruthy();
+    expect(i18n.zh.access.mapMarkerTitle).toBeTruthy();
+  });
+});
+
+describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
+  it("useCountUp.ts에 locale 파라미터가 있어야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/hooks/useCountUp.ts"),
+      "utf8",
+    );
+    expect(src).toMatch(/lang\?: string/);
+    expect(src).toMatch(/LANG_TO_LOCALE/);
+    expect(src).not.toMatch(/toLocaleString\(["']ko-KR["']\)/);
+  });
+
+  it("HeroSection.tsx가 useCountUp에 lang을 전달해야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/HeroSection.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/useCountUp\(.*lang\)/);
+  });
+
+  it("ResultsSection.tsx가 useCountUp에 lang을 전달해야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/ResultsSection.tsx"),
+      "utf8",
+    );
+    expect(src).toMatch(/useCountUp\(.*lang\)/);
+  });
+});
+
+describe("PR-QA-P1: YouTubeSection ?? fallback 제거 검증", () => {
+  it("YouTubeSection.tsx에 i18n 키에 대한 ?? 한국어 fallback이 없어야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/YouTubeSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/yt\.\w+ \?\? ['"][가-힣]/);
+    expect(src).not.toMatch(/yt\.\w+ \?\? 'YouTube/);
+  });
+});
+
+describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증", () => {
+  it("DoctorsSection.tsx에 aria-label 한국어 하드코딩이 없어야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/DoctorsSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/aria-label="의료진 소개"/);
+    expect(src).toMatch(/aria-label=\{t\.doctors\.label\}/);
+  });
+
+  it("DoctorsSection.tsx에 'Medical Team' 하드코딩 문자열이 없어야 한다", () => {
+    const { readFileSync } = require("node:fs");
+    const nodePath = require("node:path");
+    const src = readFileSync(
+      nodePath.resolve(process.cwd(), "client/src/components/DoctorsSection.tsx"),
+      "utf8",
+    );
+    expect(src).not.toMatch(/>Medical Team</);
+    expect(src).toMatch(/t\.doctors\.teamLabel/);
+  });
+});

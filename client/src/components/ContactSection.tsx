@@ -142,7 +142,7 @@ export default function ContactSection() {
             ref={mapContainerRef}
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
             style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
-            aria-label="스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"
+            aria-label={t.access.mapAriaLabel ?? "스타피부과 위치 지도 - 부산 서면 아이온시티빌딩 4층"}
           >
             <MapView
               className="w-full h-full"
@@ -242,7 +242,7 @@ export default function ContactSection() {
                 new g.maps.marker.AdvancedMarkerElement({
                   position: STAR_LOCATION,
                   map,
-                  title: "스타피부과 서면 아이온시티",
+                  title: t.access.mapMarkerTitle ?? "스타피부과 서면 아이온시티",
                   content: pinEl,
                 });
               }}

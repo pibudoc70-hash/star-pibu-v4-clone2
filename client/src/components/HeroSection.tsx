@@ -68,9 +68,9 @@ export default function HeroSection() {
   const clinicStats = useClinicStats();
   // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
   // [PROD-P1-3] 카운팅 duration 3500ms → 2000ms: rAF 루프 1.5초 단축 → 메인스레드 부담 감소
-  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 2000, "", 0, statsRef);
-  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef);
-  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef);
+  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 2000, "", 0, statsRef, lang);
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef, lang);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef, lang);
   return (
     <section
       id="home"

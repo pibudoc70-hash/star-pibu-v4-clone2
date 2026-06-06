@@ -72,6 +72,8 @@ export const en: I18nContent = {
     copiedLabel: "Copied!",
     mapViewLabel: "View on Google Maps",
     mapAddressShort: "Seomyeon, Busan – Ion City Bldg, 2F & 4F",
+    mapAriaLabel: "STAR Dermatology location map - Ion City Building 4F, Seomyeon, Busan",
+    mapMarkerTitle: "STAR Dermatology Seomyeon Ion City",
   },
   doctors: {
     label: "Our Doctors",
@@ -142,6 +144,7 @@ export const en: I18nContent = {
     specialtyTitle: "Specialty Treatments",
     credentialsTitle: "Education · Career · Credentials",
     swipeHint: "← Swipe to view doctors →",
+    teamLabel: "Medical Team",
   },
   treatments: {
     label: "Treatments",

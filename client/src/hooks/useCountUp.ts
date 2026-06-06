@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
  * - 0부터 시작하여 목표값까지 카운팅
  * - 모바일 대응: threshold 0.05 + rootMargin으로 조기 트리거
  * - isDone: 카운팅 완료 시 true → 완료 후 강조 효과 트리거용
+ * - locale: toLocaleString 포맷 로케일 (기본값 "ko-KR" → 호출부에서 lang 전달 권장)
  */
 
 // easeOutQuad: 선형에 가깝고 끝에서 아주 약간 감속 (GIF 패턴과 일치)
@@ -14,18 +15,29 @@ function easeOutQuad(t: number): number {
   return t * (2 - t);
 }
 
+/** lang → BCP-47 locale 매핑 */
+const LANG_TO_LOCALE: Record<string, string> = {
+  ko: "ko-KR",
+  en: "en-US",
+  ja: "ja-JP",
+  zh: "zh-CN",
+};
+
 export function useCountUp(
   targetValue: string | number,
   duration: number = 2000,
   suffix: string = "",
   startDelay: number = 0,
-  triggerRef?: React.RefObject<Element | null>
+  triggerRef?: React.RefObject<Element | null>,
+  lang?: string
 ): { value: string; isDone: boolean } {
   const [displayValue, setDisplayValue] = useState("0");
   const [isDone, setIsDone] = useState(false);
   const rafRef = useRef<number | null>(null);
   const delayTimerRef = useRef<NodeJS.Timeout | null>(null);
   const hasAnimatedRef = useRef(false);
+
+  const locale = lang ? (LANG_TO_LOCALE[lang] ?? "ko-KR") : "ko-KR";
 
   useEffect(() => {
     const numericValue =
@@ -58,14 +70,14 @@ export function useCountUp(
           const eased = easeOutQuad(rawProgress);
           const currentValue = Math.round(numericValue * eased);
 
-          // 천 단위 콤마 포맷
-          setDisplayValue(currentValue.toLocaleString("ko-KR"));
+          // 천 단위 콤마 포맷 (locale-aware)
+          setDisplayValue(currentValue.toLocaleString(locale));
 
           if (rawProgress < 1) {
             rafRef.current = requestAnimationFrame(animate);
           } else {
             // 최종값 정확히 고정 후 완료 플래그
-            setDisplayValue(numericValue.toLocaleString("ko-KR"));
+            setDisplayValue(numericValue.toLocaleString(locale));
             setIsDone(true);
           }
         };
@@ -110,7 +122,7 @@ export function useCountUp(
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
     };
-  }, [targetValue, duration, suffix, startDelay, triggerRef]);
+  }, [targetValue, duration, suffix, startDelay, triggerRef, locale]);
 
   return { value: displayValue, isDone };
 }

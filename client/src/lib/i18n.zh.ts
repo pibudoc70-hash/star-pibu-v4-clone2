@@ -18,8 +18,8 @@ export const zh: I18nContent = {
     badge: "Since 2006",
     floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
     cta_call: "+82-51-818-2300",
-    cta_kakao: "WeChat咋讯",
-    cta_reserve: "LINE咋讯",
+    cta_kakao: "WeChat咨询",
+    cta_reserve: "LINE预约",
     scrollLabel: "滚动",
   },
   about: {
@@ -40,7 +40,7 @@ export const zh: I18nContent = {
   },
   hours: {
     label: "诊疗时间",
-    title: "诊疗安内",
+    title: "诊疗时间",
     rows: [
       { day: "周一至周五", time: "10:00 – 19:00" },
       { day: "周六", time: "09:30 – 15:00" },
@@ -72,6 +72,8 @@ export const zh: I18nContent = {
     copiedLabel: "已复制！",
     mapViewLabel: "在Google地图查看",
     mapAddressShort: "釜山西面 爱恩城大厦 2·4楼",
+    mapAriaLabel: "星皮肤科位置地图 - 釜山西面爱恩城大厦 4楼",
+    mapMarkerTitle: "星皮肤科 西面爱恩城",
   },
   doctors: {
     label: "医生介绍",
@@ -142,6 +144,7 @@ export const zh: I18nContent = {
     specialtyTitle: "专项诊疗",
     credentialsTitle: "学历 · 经历 · 资格",
     swipeHint: "← 滑动查看医生 →",
+    teamLabel: "Medical Team",
   },
   treatments: {
     label: "诊疗项目",
@@ -165,7 +168,7 @@ export const zh: I18nContent = {
     equipmentRelated: "相关设备",
     equipmentUnits: "拥有{n}种",
     equipmentDetailPending: "详细信息准备中。",
-    equipmentConsultBtn: "通过WeChat和设备和论",
+    equipmentConsultBtn: "通过WeChat咨询设备",
     categories: [
       { name: "提升·紧致", items: ["欧活素提升疗法", "热磁治疗FLX", "XERF", "线雕提升"] },
       { name: "丰盈·注射", items: ["舒颜萃", "玻尿酸填充", "肉毒素"] },
@@ -243,9 +246,9 @@ export const zh: I18nContent = {
     call: "电话",
     kakao: "WeChat",
     reserve: "LINE",
-    callAria: "电话和论",
-    kakaoAria: "WeChat和论",
-    reserveAria: "LINE和论",
+    callAria: "电话咨询",
+    kakaoAria: "WeChat咨询",
+    reserveAria: "LINE预约",
   },
   results: {
     sectionTitle: "选择STAR皮肤科的理由",
@@ -268,8 +271,8 @@ export const zh: I18nContent = {
       { treatment: "热磁治疗FLX", period: "术后3个月", improvements: ["增强肌肤紧致度", "胶原蛋白再生", "整体肌肤改善"] },
       { treatment: "欧活素提升疗法", period: "术后6周", improvements: ["SMAS层提升", "改善肌肤弹性", "淡化皱纹"] },
       { treatment: "红宝石皮科激光", period: "3-5次术后", improvements: ["色斑改善", "肤色提亮", "防止色素沉着"] },
-      { treatment: "色素治疗", period: "4-6次术后", improvements: ["色斑·老年斑改善", "均匀肤色", "珑点去除"] },
-      { treatment: "面部红血丝治疗", period: "3次治疗后", improvements: ["改善波山红", "收缩毛细血管", "均匀肤色"] },
+      { treatment: "色素治疗", period: "4-6次术后", improvements: ["色斑·老年斑改善", "均匀肤色", "雀斑去除"] },
+      { treatment: "面部红血丝治疗", period: "3次治疗后", improvements: ["改善面部红血丝", "收缩毛细血管", "均匀肤色"] },
     ],
     notices: [
       "所有手术效果因人而异",
@@ -291,9 +294,9 @@ export const zh: I18nContent = {
       { name: "李**", age: "", treatment: "皮科激光", text: "我有很多色斑，3次治疗后改善明显。肤色也变亮了，很满意。", platform: "Naver", rating: 5, date: "" },
       { name: "朴**", age: "", treatment: "欧活素提升疗法", text: "提升效果非常好。效果自然，恢复期也很短，非常满意！", platform: "Naver", rating: 5, date: "" },
       { name: "崔**", age: "", treatment: "热玛吉FLX", text: "热玛吉后皮肤弹力明显改善。医生详细说明，让我很放心。术后护理指导也很贴心。强烈推荐！", platform: "Naver", rating: 5, date: "" },
-      { name: "郑**", age: "", treatment: "欧活素提升疗法", text: "在西面和多家诊所和谈过，星山皮肤科最专业。医生亲自操作，效果十分明显。强烈推荐！", platform: "Naver", rating: 5, date: "" },
+      { name: "郑**", age: "", treatment: "欧活素提升疗法", text: "在西面咨询过多家诊所，星皮肤科最专业。医生亲自操作，效果十分明显。强烈推荐！", platform: "Naver", rating: 5, date: "" },
       { name: "韩**", age: "", treatment: "激光调色", text: "常年烦恼的色斑经过几次治疗后明显淡化。工作人员非常亲切，设施干净整洁。很喜欢这里！", platform: "Naver", rating: 5, date: "" },
-      { name: "尹**", age: "", treatment: "眼袋脂肪重置", text: "考虑眼袋手术很久了，医生在和谈中详细说明，让我消除了顾虑。术后恢复快，效果非常自然，很满意。", platform: "Naver", rating: 5, date: "" },
+      { name: "尹**", age: "", treatment: "眼袋脂肪重置", text: "考虑眼袋手术很久了，医生在咨询中详细说明，让我消除了顾虑。术后恢复快，效果非常自然，很满意。", platform: "Naver", rating: 5, date: "" },
       { name: "姜**", age: "", treatment: "皮科激光", text: "困扰已久的色斑经3次治疗后明显淡化。由皮肤科专科医生亲自操作，十分放心。效果超出预期！", platform: "Naver", rating: 5, date: "" },
       { name: "赵**", age: "", treatment: "热玛吉FLX", text: "40多岁做了热玛吉后，周围的人都问我脸怎么了，变化如此明显。疼痛感比想象中少，恢复也很快。非常满意！", platform: "Naver", rating: 5, date: "" },
     ],

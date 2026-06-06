@@ -91,8 +91,12 @@ export interface I18nContent {
     copiedLabel?: string;
     /** Map.tsx 구글맵/카카오맵 보기 레이블 */
     mapViewLabel?: string;
-    /** Map.tsx 주소 단축형 */
+    /** Map.tsx 주소 단쳕형 */
     mapAddressShort?: string;
+    /** 지도 컨테이너 aria-label */
+    mapAriaLabel?: string;
+    /** 지도 마커 title */
+    mapMarkerTitle?: string;
   };
   doctors: {
     label: string;
@@ -120,6 +124,8 @@ export interface I18nContent {
     credentialsTitle: string;
     /** 모바일 스와이프 힌트 */
     swipeHint: string;
+    /** 데스크탑 좌측 레일 아이브로우 (예: "Medical Team") */
+    teamLabel?: string;
   };
   treatments: {
     label: string;

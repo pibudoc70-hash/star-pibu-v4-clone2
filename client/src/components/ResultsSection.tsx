@@ -22,15 +22,15 @@ const treatmentBgs = [bgNavy, bgMint, bgNavy, bgMint, bgNavy, bgMint];
 
 function ResultsSection() {
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 100 → 60;
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const r = t.results;
   // [STATS-P1-1] CLINIC_STATS 하드코딩 제거 → useClinicStats 연동
   const clinicStats = useClinicStats();
 
   // 카운팅 애니메이션 적용
-  const { value: countValue1 } = useCountUp(clinicStats.years.value, 2000, clinicStats.years.unit);
-  const { value: countValue2 } = useCountUp(clinicStats.satisfaction.value, 2000, clinicStats.satisfaction.unit);
-  const { value: countValue3 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit);
+  const { value: countValue1 } = useCountUp(clinicStats.years.value, 2000, clinicStats.years.unit, 0, undefined, lang);
+  const { value: countValue2 } = useCountUp(clinicStats.satisfaction.value, 2000, clinicStats.satisfaction.unit, 0, undefined, lang);
+  const { value: countValue3 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit, 0, undefined, lang);
 
   const countValues = [countValue1, countValue2, countValue3, `1:${clinicStats.ratio.value}`];
 

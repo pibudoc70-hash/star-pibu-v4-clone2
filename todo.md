@@ -1844,3 +1844,31 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SR-7: i18n.ts에 doctors.list[].specialties 키 추가 (en/ja/zh)
 - [x] SR-TEST: senior-review.regression.test.ts 신규 추가 (27개 테스트)
 - [x] SR-VALIDATE: type-check 0건 / build 성공 / test 19파일 361케이스 전체 통과
+## P1 전수 감사 수정 (2026-06-07)
+- [x] P1-ZH-1: i18n.zh.ts — cta_kakao/cta_reserve "咋讯" 오탈자 → "咨询"/"预约" 수정
+- [x] P1-ZH-2: i18n.zh.ts — hours.title "诊疗安内" → "诊疗时间" 수정
+- [x] P1-ZH-3: i18n.zh.ts — equipmentConsultBtn "和设备和论" → "通过WeChat咨询设备" 수정
+- [x] P1-ZH-4: i18n.zh.ts — floatingCta.callAria/kakaoAria/reserveAria "和论" 오탈자 수정
+- [x] P1-ZH-5: i18n.zh.ts — results.treatmentResults "珑点去除"/"改善波山红" 오탈자 수정
+- [x] P1-ZH-6: i18n.zh.ts — reviews.items "和谈" 오탈자 수정
+- [x] P1-JA-1: i18n.ja.ts — access.hoursNote "昂休み" → "昼休み" 수정
+- [x] P1-JA-2: i18n.ja.ts — access.parkingLabel "驐車場" → "駐車場" 수정
+- [x] P1-JA-3: i18n.ja.ts — footer.privacy "方针" → "方針" 수정
+- [x] P1-JA-4: i18n.ja.ts — doctors.careers "蔽山" → "ウルサン" 수정
+- [x] P1-JA-5: i18n.ja.ts — doctors.careers "スタ皮膚科" → "スター皮膚科" 수정
+- [x] P1-JA-6: i18n.ja.ts — reviews "膚トーン" → "肌トーン", "膚の弾力" → "肌の弾力" 수정
+- [x] P1-JA-7: i18n.ja.ts — reviews "聴かれる" → "聞かれる" 수정
+- [x] P1-DS-1: DoctorsSection.tsx — aria-label="의료진 소개" 하드코딩 → {t.doctors.label} 교체
+- [x] P1-DS-2: DoctorsSection.tsx — "Medical Team" eyebrow 하드코딩 → {t.doctors.teamLabel ?? "Medical Team"} 교체
+- [x] P1-DS-3: i18n.types.ts doctors에 teamLabel?: string 필드 추가
+- [x] P1-DS-4: i18n.{ko,en,ja,zh}.ts doctors.teamLabel 값 추가
+- [x] P1-CU-1: useCountUp.ts — toLocaleString("ko-KR") 하드코딩 제거 → lang 파라미터 + LANG_TO_LOCALE 매핑
+- [x] P1-CU-2: HeroSection.tsx — useCountUp 호출부에 lang 전달
+- [x] P1-CU-3: ResultsSection.tsx — useCountUp 호출부에 lang 전달
+- [x] P1-CS-1: ContactSection.tsx — aria-label 하드코딩 → {t.access.mapAriaLabel ?? "..."} 교체
+- [x] P1-CS-2: ContactSection.tsx — marker title 하드코딩 → t.access.mapMarkerTitle ?? "..." 교체
+- [x] P1-CS-3: i18n.types.ts access에 mapAriaLabel?/mapMarkerTitle? 필드 추가
+- [x] P1-CS-4: i18n.{ko,en,ja,zh}.ts access.mapAriaLabel/mapMarkerTitle 값 추가
+- [x] P1-YT-1: YouTubeSection.tsx — ?? 한국어 fallback 9개 제거 (i18n 키 직접 사용)
+- [x] P1-TEST: i18nText.test.ts — P1 수정 회귀 방지 테스트 추가 (24개 케이스)
+- [x] P1-VALIDATE: type-check 0건 / test 19파일 385케이스 전체 통과

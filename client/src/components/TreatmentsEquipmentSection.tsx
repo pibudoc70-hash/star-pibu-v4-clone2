@@ -6,7 +6,6 @@
  *   - 카테고리 상수: @/data/treatments/categories
  *   - 시술 데이터: @/data/treatments/treatments-data
  *   - 장비 데이터: @/data/treatments/equipment-data
- *   - EquipmentPanel: @/components/treatments/EquipmentPanel
  */
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { ChevronDown, ChevronUp, Star } from "lucide-react";
@@ -22,7 +21,6 @@ import {
   getCatLabel,
 } from "@/data/treatments/categories";
 import { TREATMENTS } from "@/data/treatments/treatments-data";
-import EquipmentPanel from "@/components/treatments/EquipmentPanel";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCard";
 

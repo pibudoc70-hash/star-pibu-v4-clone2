@@ -111,7 +111,7 @@ export default function ContactSection() {
   const parkingLabel = t.access.parkingLabel!;
   const parkingDesc = t.access.parkingDesc ?? t.access.parking;  // parkingDesc 4개 언어 모두 존재
   const kakaoMapLabel = t.access.kakaoMapLabel!;
-  const naverMapLabel = t.access.naverMap ?? "Naver Map";  // naverMap 4개 언어 모두 존재
+  const naverMapLabel = t.access.naverMap!;  // naverMap 4개 언어 모두 존재
   const copyAddressLabel = t.access.copyAddress!;
   const copiedLabel = t.access.copiedLabel!;
 

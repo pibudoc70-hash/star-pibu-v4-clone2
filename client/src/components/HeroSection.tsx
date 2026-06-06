@@ -537,7 +537,7 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
               style={{
-                background: lang === "zh" ? "#06C755" : "#03C75A",
+                background: isZH ? "#06C755" : "#03C75A",
                 color: "#FFFFFF",
                 boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
                 fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
@@ -555,7 +555,7 @@ export default function HeroSection() {
             <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1590ms" }}>
               <a
                 href={chatUrl}
-                target={lang === "zh" ? undefined : "_blank"}
+                target={isZH ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 onClick={handleWechatClick}
                 className="flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"

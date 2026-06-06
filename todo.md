@@ -1938,3 +1938,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [F] 회귀 테스트 추가/보강: round5.regression.test.ts (23케이스 전체 통과)
 - [x] 전체 검증: TypeScript 0건, 455케이스 전체 통과
 - [x] 최종 커밋 (체크포인트 저장)
+
+## Round-6 시니어 재검수 (2026-06-07)
+
+- [x] [A] TreatmentsEquipmentSection.tsx 미사용 EquipmentPanel import 제거
+- [~] [C] Equipment2Detail.tsx L166 헤더 서브타이틀: 원어명 병기 패턴으로 의도적 설계 — 보류
+- [x] [D] DoctorsSection.tsx aria-label ?? fallback 4곳 → i18n 키 단언(!)으로 교체
+- [x] [E] ContactSection.tsx naverMap ?? fallback 제거 → non-null assertion(!)
+- [x] [F] HeroSection.tsx L540 배경색/L558 target lang==="zh" 삼항 → isZH 변수 활용
+- [x] [H] 로직 기반 회귀 테스트 보강: round6.regression.test.ts (60케이스 전체 통과)
+- [x] 전체 검증: TypeScript 0건, 515케이스 전체 통과
+- [x] 최종 커밋 (체크포인트 저장)

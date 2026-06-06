@@ -279,7 +279,7 @@ function DoctorsSection() {
                     <button type="button"
                       key={d.id}
                       onClick={() => handleDoctorSelect(d.id)}
-                      aria-label={(t.doctors.selectDoctorLabel ?? "{name} 선택").replace("{name}", d.name)}
+                      aria-label={t.doctors.selectDoctorLabel!.replace("{name}", d.name)}
                       aria-pressed={activeDoctor === d.id}
                       className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
                       style={{
@@ -569,7 +569,7 @@ function DoctorsSection() {
                   <button type="button"
                     key={d.id}
                     onClick={() => handleDoctorSelect(d.id)}
-                    aria-label={(t.doctors.selectDoctorLabel ?? "{name} 선택").replace("{name}", d.name)}
+                    aria-label={t.doctors.selectDoctorLabel!.replace("{name}", d.name)}
                     aria-pressed={activeDoctor === d.id}
                     className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
                     style={{
@@ -758,8 +758,8 @@ function DoctorsSection() {
                     onClick={() => setExpandedCredentials(!expandedCredentials)}
                     aria-expanded={expandedCredentials}
                     aria-label={expandedCredentials
-                      ? (t.doctors.collapseCredentialsLabel ?? "학력·경력·자격 접기")
-                      : (t.doctors.expandCredentialsLabel ?? "학력·경력·자격 펼치기")}
+                      ? t.doctors.collapseCredentialsLabel!
+                      : t.doctors.expandCredentialsLabel!}
                     className="w-full flex items-center justify-between px-4 py-3"
                     style={{
                       background: expandedCredentials ? GOLD_LIGHT : "#FAFAFA",
@@ -810,7 +810,7 @@ function DoctorsSection() {
                       <button type="button"
                         key={d.id}
                         onClick={() => handleDoctorSelect(d.id)}
-                        aria-label={(t.doctors.dotNavLabel ?? "{name}로 이동").replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
+                        aria-label={t.doctors.dotNavLabel!.replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
                         aria-current={activeDoctor === d.id ? "true" : undefined}
                         style={{
                           width: activeDoctor === d.id ? "24px" : "6px",

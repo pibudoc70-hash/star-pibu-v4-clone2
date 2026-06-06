@@ -9,6 +9,13 @@
  *   - 모달 열릴 때 닫기 버튼에 자동 포커스
  *   - Tab/Shift+Tab이 모달 내부에서만 순환
  *   - 모달 닫힐 때 트리거 버튼으로 포커스 복귀
+ *
+ * P1 수정 (2025-06-06):
+ *   - body scroll lock: 모달 열릴 때 document.body overflow hidden, 닫힐 때 복원
+ *   - duplicate id 버그: yt-modal-title이 video/shorts 두 브랜치 모두에 동일 id 사용 → 조건부 단일 렌더로 수정
+ *   - focus trap stale ref: focusable 목록을 Tab 이벤트 시점에 재쿼리하여 DOM 변경에 안전하게 대응
+ *   - i18n 하드코딩 제거: 로딩/에러/aria 문자열을 i18n.ts youtube 블록으로 이전
+ *   - useAuth.ts useMemo 사이드이펙트: localStorage 쓰기를 useEffect로 분리 (별도 파일)
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, AlertCircle, RefreshCw } from 'lucide-react';
@@ -22,6 +29,9 @@ interface YouTubeVideo {
   videoId: string;
   type: 'video' | 'shorts';
 }
+
+// 모달 ID — 단일 aria-labelledby 참조 보장
+const MODAL_TITLE_ID = 'yt-modal-title';
 
 export default function YouTubeSection() {
   const { t } = useLang();
@@ -40,6 +50,17 @@ export default function YouTubeSection() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // P1-A: body scroll lock — 모달 열릴 때 스크롤 차단, 닫힐 때 복원
+  useEffect(() => {
+    if (selectedVideo) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [selectedVideo]);
+
   // S1-T5: 모달 열릴 때 닫기 버튼 포커스, 닫힐 때 트리거 버튼 포커스 복귀
   useEffect(() => {
     if (selectedVideo) {
@@ -54,17 +75,20 @@ export default function YouTubeSection() {
     }
   }, [selectedVideo]);
 
-  // S1-T5: focus trap — Tab/Shift+Tab을 모달 내부로 제한
+  // S1-T5 + P1-B: focus trap — Tab/Shift+Tab을 모달 내부로 제한
+  // P1-B 수정: focusable 목록을 이벤트 핸들러 내부에서 재쿼리 (stale ref 방지)
   useEffect(() => {
     if (!selectedVideo || !modalRef.current) return;
-    const focusable = modalRef.current.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])'
-    );
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
+    const modal = modalRef.current;
 
     const onTab = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
+      // 이벤트 시점에 재쿼리 — iframe 로드 완료 후 DOM 변경에 안전
+      const focusable = modal.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
       if (!first || !last) return;
       if (e.shiftKey) {
         if (document.activeElement === first) {
@@ -97,32 +121,45 @@ export default function YouTubeSection() {
     setSelectedVideo(video);
   }, []);
 
-  // S1-T4: 로딩 상태
+  const closeModal = useCallback(() => setSelectedVideo(null), []);
+
+  // S1-T4: 로딩 상태 — i18n 문자열 사용
   if (isLoading) {
     return (
-      <section className="py-16 md:py-24 bg-white" aria-label="YouTube 채널 로딩 중">
+      <section
+        className="py-16 md:py-24 bg-white"
+        aria-label={yt.loadingLabel ?? 'YouTube 채널 로딩 중'}
+        aria-busy="true"
+      >
         <div className="container mx-auto px-4 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-300 mx-auto" />
+          <div
+            className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-300 mx-auto"
+            role="status"
+            aria-label={yt.loadingLabel ?? '로딩 중'}
+          />
         </div>
       </section>
     );
   }
 
-  // S1-T4: 에러 상태 — 재시도 버튼 포함
+  // S1-T4: 에러 상태 — 재시도 버튼 포함, i18n 문자열 사용
   if (isError) {
     return (
-      <section className="py-16 md:py-24 bg-white" aria-label="YouTube 채널 오류">
+      <section
+        className="py-16 md:py-24 bg-white"
+        aria-label={yt.errorLabel ?? 'YouTube 채널 오류'}
+      >
         <div className="container mx-auto px-4 text-center">
           <AlertCircle className="mx-auto mb-4 text-gray-400" size={48} aria-hidden="true" />
-          <p className="text-gray-600 mb-4">영상을 불러오지 못했습니다.</p>
+          <p className="text-gray-600 mb-4">{yt.errorMessage ?? '영상을 불러오지 못했습니다.'}</p>
           <button
             type="button"
             onClick={() => refetch()}
             className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold text-white transition-all hover:shadow-lg"
             style={{ background: '#D1AB67' }}
           >
-            <RefreshCw size={16} />
-            다시 시도
+            <RefreshCw size={16} aria-hidden="true" />
+            {yt.retry ?? '다시 시도'}
           </button>
         </div>
       </section>
@@ -160,8 +197,8 @@ export default function YouTubeSection() {
                   type="button"
                   key={video.id}
                   onClick={(e) => openModal(video, e.currentTarget)}
-                  aria-label={`${video.title} 영상 재생`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105"
+                  aria-label={`${video.title} ${yt.playVideo ?? '영상 재생'}`}
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
@@ -175,7 +212,7 @@ export default function YouTubeSection() {
                       }}
                     />
                     {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors">
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
                       <div className="absolute bottom-3 left-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/60 flex items-center justify-center">
                         <div className="w-0 h-0 border-l-5 md:border-l-7 border-l-transparent border-r-0 border-t-3 md:border-t-4 border-t-transparent border-b-3 md:border-b-4 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
                       </div>
@@ -204,8 +241,8 @@ export default function YouTubeSection() {
                   type="button"
                   key={short.id}
                   onClick={(e) => openModal(short, e.currentTarget)}
-                  aria-label={`${short.title} 쇼츠 재생`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105"
+                  aria-label={`${short.title} ${yt.playShorts ?? '쇼츠 재생'}`}
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-[9/16] bg-gray-200 overflow-hidden">
@@ -219,7 +256,7 @@ export default function YouTubeSection() {
                       }}
                     />
                     {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors">
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
                       <div className="absolute bottom-2 left-2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/90 flex items-center justify-center">
                         <div className="w-0 h-0 border-l-4 border-l-transparent border-r-0 border-t-3 border-t-transparent border-b-3 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
                       </div>
@@ -227,7 +264,7 @@ export default function YouTubeSection() {
                   </div>
 
                   {/* 제목 */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2" aria-hidden="true">
                     <p className="text-xs font-medium text-white line-clamp-2">
                       {short.title}
                     </p>
@@ -244,7 +281,7 @@ export default function YouTubeSection() {
             href="https://www.youtube.com/@starpibu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg"
+            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
             style={{ background: '#D1AB67', color: 'white' }}
           >
             {yt.visitChannel}
@@ -252,28 +289,29 @@ export default function YouTubeSection() {
         </div>
       </div>
 
-      {/* S1-T5: 모달 — focus trap + focus restore 구현 */}
+      {/* S1-T5: 모달 — focus trap + focus restore + body scroll lock 구현 */}
       {selectedVideo && (
         <div
           ref={modalRef}
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="yt-modal-title"
-          onClick={(e) => { if (e.target === e.currentTarget) setSelectedVideo(null); }}
+          aria-labelledby={MODAL_TITLE_ID}
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
         >
-          {/* 일반 영상: 가로 모달 */}
+          {/* P1-C: 단일 브랜치 렌더 — duplicate id 제거 */}
           {selectedVideo.type === 'video' ? (
+            /* 일반 영상: 가로 모달 */
             <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
               {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
               <button
                 type="button"
                 ref={closeButtonRef}
-                onClick={() => setSelectedVideo(null)}
-                aria-label="영상 모달 닫기"
-                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
+                onClick={closeModal}
+                aria-label={yt.closeModal ?? '영상 모달 닫기'}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-white" aria-hidden="true" />
               </button>
 
               {/* YouTube 임베드 플레이어 */}
@@ -290,9 +328,9 @@ export default function YouTubeSection() {
                 />
               </div>
 
-              {/* 제목 */}
+              {/* 제목 — P1-C: 단일 id 보장 */}
               <div className="p-4 bg-gray-900">
-                <h3 id="yt-modal-title" className="text-white font-semibold text-sm md:text-base line-clamp-2">
+                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
                   {selectedVideo.title}
                 </h3>
               </div>
@@ -304,11 +342,11 @@ export default function YouTubeSection() {
               <button
                 type="button"
                 ref={closeButtonRef}
-                onClick={() => setSelectedVideo(null)}
-                aria-label="쇼츠 모달 닫기"
-                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors"
+                onClick={closeModal}
+                aria-label={yt.closeModal ?? '쇼츠 모달 닫기'}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <X className="w-6 h-6 text-white" />
+                <X className="w-6 h-6 text-white" aria-hidden="true" />
               </button>
 
               {/* YouTube 임베드 플레이어 - 세로 비율 */}
@@ -325,15 +363,15 @@ export default function YouTubeSection() {
                 />
               </div>
 
-              {/* 제목 + 하단 닫기 버튼 */}
+              {/* 제목 + 하단 닫기 버튼 — P1-C: 단일 id 보장 */}
               <div className="p-4 bg-gray-900 border-t border-gray-800">
-                <h3 id="yt-modal-title" className="text-white font-semibold text-sm line-clamp-2 mb-3">
+                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm line-clamp-2 mb-3">
                   {selectedVideo.title}
                 </h3>
                 <button
                   type="button"
-                  onClick={() => setSelectedVideo(null)}
-                  className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium"
+                  onClick={closeModal}
+                  className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   {yt.close}
                 </button>

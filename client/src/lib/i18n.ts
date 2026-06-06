@@ -238,6 +238,14 @@ export interface I18nContent {
     shorts: string;
     visitChannel: string;
     close: string;
+    // P1 i18n 추가 (optional — 미설정 시 컴포넌트 fallback 문자열 사용)
+    loadingLabel?: string;
+    errorLabel?: string;
+    errorMessage?: string;
+    retry?: string;
+    playVideo?: string;
+    playShorts?: string;
+    closeModal?: string;
   };
   reservation: {
     sectionTitle: string;
@@ -673,6 +681,13 @@ export const i18n: Record<Lang, I18nContent> = {
       shorts: "쇼츠",
       visitChannel: "유튜브 채널 방문하기",
       close: "닫기",
+      loadingLabel: "YouTube 채널 로딩 중",
+      errorLabel: "YouTube 채널 오류",
+      errorMessage: "영상을 불러오지 못했습니다.",
+      retry: "다시 시도",
+      playVideo: "영상 재생",
+      playShorts: "쇼츠 재생",
+      closeModal: "모달 닫기",
     },
     reservation: {
       sectionTitle: "온라인 예약",
@@ -1108,11 +1123,18 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     youtube: {
       sectionTitle: "Skin Stories from Our Dermatologists",
-      sectionSubtitle: "Visit our YouTube channel for more information",
+      sectionSubtitle: "Visit our YouTube channel for more skin care tips",
       latestVideos: "Latest Videos",
       shorts: "Shorts",
       visitChannel: "Visit YouTube Channel",
       close: "Close",
+      loadingLabel: "Loading YouTube channel",
+      errorLabel: "YouTube channel error",
+      errorMessage: "Failed to load videos.",
+      retry: "Try again",
+      playVideo: "Play video",
+      playShorts: "Play Shorts",
+      closeModal: "Close modal",
     },
     reservation: {
       sectionTitle: "Online Reservation",
@@ -1548,11 +1570,18 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     youtube: {
       sectionTitle: "皮膚科専門医が教える肆の話",
-      sectionSubtitle: "スター皮膚科のYouTubeチャンネルでもっと多くの情報をご確認ください",
+      sectionSubtitle: "スター皮膚科のYouTubeチャンネルでより多くの情報をご確認ください",
       latestVideos: "最新動画",
       shorts: "ショート",
       visitChannel: "YouTubeチャンネルを訪問する",
       close: "閉じる",
+      loadingLabel: "YouTubeチャンネル読み込み中",
+      errorLabel: "YouTubeチャンネルエラー",
+      errorMessage: "動画を読み込めませんでした。",
+      retry: "再試行",
+      playVideo: "動画を再生",
+      playShorts: "ショートを再生",
+      closeModal: "モーダルを閉じる",
     },
     reservation: {
       sectionTitle: "オンライン予約",
@@ -1988,11 +2017,18 @@ export const i18n: Record<Lang, I18nContent> = {
     },
     youtube: {
       sectionTitle: "皮肤科专家为您讲解皮肤故事",
-      sectionSubtitle: "请访问星皮肤科YouTube频道了解更多信息",
+      sectionSubtitle: "请访问STAR皮肤科YouTube频道了解更多信息",
       latestVideos: "最新视频",
       shorts: "短视频",
       visitChannel: "访问YouTube频道",
       close: "关闭",
+      loadingLabel: "YouTube频道加载中",
+      errorLabel: "YouTube频道错误",
+      errorMessage: "无法加载视频。",
+      retry: "重试",
+      playVideo: "播放视频",
+      playShorts: "播放短视频",
+      closeModal: "关闭弹窗",
     },
     reservation: {
       sectionTitle: "在线预约",

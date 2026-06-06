@@ -462,7 +462,7 @@ function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <>{line}<br /></> : line)}
+                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>)}
                   </div>
                 </div>
 
@@ -701,7 +701,7 @@ function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <>{line}<br /></> : line)}
+                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>)}
                   </div>
                 </div>
 

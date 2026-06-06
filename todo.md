@@ -1686,15 +1686,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 코드 품질 개선 — 시니어 개발자 리뷰 (2026-06-06)
 
 ### P1 — merge-ready 필수 수정
-- [ ] CTA-P1-1: TreatmentCard.tsx 모달 CTA — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동
-- [ ] CTA-P1-2: WelcomePopup.tsx MobilePopup + DesktopPopup — chatUrl/chatBg/chatColor 인라인 분기 → useChatConfig 연동
-- [ ] CTA-P1-3: EventCard.tsx 상담 버튼 — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동
-- [ ] CTA-P1-4: useChatConfig.ts — JA 언어 chatUrl이 kakao로 떨어지는 버그 (isJA 분기 누락) 수정
-- [ ] NAV-P1-1: Header.tsx handleNavClick — locale prefix 중복 방지 로직 강화 (/en + /about → /en//about 방지)
+- [x] CTA-P1-1: TreatmentCard.tsx 모달 CTA — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동 [이전 배치 완료]
+- [x] CTA-P1-2: WelcomePopup.tsx MobilePopup + DesktopPopup — chatUrl/chatBg/chatColor 인라인 분기 → useChatConfig 연동 [이전 배치 완료]
+- [x] CTA-P1-3: EventCard.tsx 상담 버튼 — 하드코딩 Kakao URL+한국어 라벨 → useChatConfig + useLang 연동 [이전 배치 완료]
+- [x] CTA-P1-4: useChatConfig.ts — JA 언어 chatUrl이 kakao로 떨어지는 버그 (isJA 분기 누락) 수정 [이전 배치 완료]
+- [x] NAV-P1-1: Header.tsx handleNavClick — locale prefix 중복 방지 로직 강화 (/en + /about → /en//about 방지) [이전 배치 완료]
 
 ### P2 — 다음 PR에서 처리 권장
-- [ ] CTA-P2-1: FAQSection.tsx 하단 CTA — 하드코딩 WeChat/Kakao → useChatConfig 연동
-- [ ] CTA-P2-2: FloatingCTA.tsx — chatBg/chatColor 인라인 재계산 제거, useChatConfig 반환값 직접 사용
+- [x] CTA-P2-1: FAQSection.tsx 하단 CTA — 하드코딩 WeChat/Kakao → useChatConfig 연동 [이전 배치 완료]
+- [x] CTA-P2-2: FloatingCTA.tsx — chatBg/chatColor 인라인 재계산 제거, useChatConfig 반환값 직접 사용 (중국어 aria 오타 수정 포함)
 - [ ] NAV-P2-1: Header.tsx primaryNav/secondaryNav 배열을 별도 상수 파일(shared/navConfig.ts)로 분리
 
 ### P3 — 기술 부채 (백로그)

@@ -22,8 +22,8 @@ export default function FloatingCTA() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // useChatConfig 훅으로 URL 중앙화 (FLOATINGCTA-P1-A: chatUrl을 훅에서 직접 사용)
-  const { reserveUrl, chatUrl, isZH, isJA } = useChatConfig();
+  // useChatConfig 후으로 URL/색상 중앙화 (CTA-P2-2: chatBg/chatColor 인라인 재계산 제거)
+  const { reserveUrl, chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
 
   const [wechatCopied, setWechatCopied] = useState(false);
@@ -45,10 +45,6 @@ export default function FloatingCTA() {
     kakaoAria: lang === "ja" ? "LINE相談"  : lang === "zh" ? "WeChat咨询": lang === "en" ? "KakaoTalk" : "카카오톡 상담",
     mapAria:   lang === "ja" ? "LINE予約"  : lang === "zh" ? "LINE咨询"  : lang === "en" ? "Naver Booking" : "네이버 예약",
   };
-
-  // [PROD-P4-2] 메신저 버튼 색상 (isJA는 LINE 초록, isZH는 위체 초록, 기본 카카오 노란)
-  const chatBg    = isJA ? "#06C755" : isZH ? "#07C160" : "#FEE500";
-  const chatColor = isJA ? "white"   : isZH ? "white"   : "#1F2937";
 
   // 예약 버튼 색상 (LINE/네이버 모두 초록)
   const reserveBg = "#03C75A";

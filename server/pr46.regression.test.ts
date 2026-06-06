@@ -493,20 +493,27 @@ describe("SEO/OG 정책 정합성 — OG_IMAGE_LOCALIZED 사용 (P1-seo-fix)", (
 // 섹션 13: Header.tsx reserveUrl 중복 계산 제거
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Header.tsx reserveUrl 중복 계산 제거 (P1-header-fix)", () => {
+  // 구조 분해 후 로직은 useHeaderState.ts에 위치 — 두 파일 합산 검사
   const headerSource2 = readFileSync(
     path.resolve(root, "client/src/components/Header.tsx"),
     "utf8",
   );
+  const hookSource2 = readFileSync(
+    path.resolve(root, "client/src/hooks/useHeaderState.ts"),
+    "utf8",
+  );
+  const combinedHeader = headerSource2 + "\n" + hookSource2;
 
   it("Header.tsx에 NAVER_MAP_URL 하드코딩이 없어야 한다 (useChatConfig().reserveUrl 사용)", () => {
-    expect(headerSource2).not.toContain("NAVER_MAP_URL");
+    expect(combinedHeader).not.toContain("NAVER_MAP_URL");
   });
   it("Header.tsx에 CHAT_URLS import가 없어야 한다 (미사용 import 제거)", () => {
-    expect(headerSource2).not.toContain("CHAT_URLS");
+    expect(combinedHeader).not.toContain("CHAT_URLS");
   });
   it("Header.tsx에서 useChatConfig에서 reserveUrl을 구조분해해야 한다", () => {
-    expect(headerSource2).toContain("reserveUrl");
-    expect(headerSource2).toContain("useChatConfig");
+    // 구조 분해 후 useHeaderState.ts에 위치
+    expect(combinedHeader).toContain("reserveUrl");
+    expect(combinedHeader).toContain("useChatConfig");
   });
 });
 

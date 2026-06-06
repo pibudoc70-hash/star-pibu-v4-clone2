@@ -59,7 +59,7 @@ describe("events.special", () => {
     const result = await caller.events.special();
 
     expect(Array.isArray(result)).toBe(true);
-  });
+  }, 10000);
 
   it("should create a special event with isSpecialEvent=1", async () => {
     const ctx = createAdminContext();

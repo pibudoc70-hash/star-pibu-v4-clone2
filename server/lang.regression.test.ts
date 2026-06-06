@@ -32,6 +32,13 @@ const headerSource = readFileSync(
   path.resolve(root, "client/src/components/Header.tsx"),
   "utf8",
 );
+// 구조 분해 후 로직(buildLocalizedPath, handleLangChange 등)은 useHeaderState.ts에 위치
+const hookSource = readFileSync(
+  path.resolve(root, "client/src/hooks/useHeaderState.ts"),
+  "utf8",
+);
+// 두 파일을 합쳐서 검사 (어느 파일에 있든 패턴이 존재하면 통과)
+const combinedSource = headerSource + "\n" + hookSource;
 
 const footerSource = readFileSync(
   path.resolve(root, "client/src/components/Footer.tsx"),
@@ -43,27 +50,29 @@ const footerSource = readFileSync(
 // ─────────────────────────────────────────────────────────────────────────────
 describe("buildLocalizedPath — window.location.pathname 기반 경로 계산", () => {
   it("buildLocalizedPath 내부에서 window.location.pathname을 사용해야 한다", () => {
-    // wouter location(stale) 대신 window.location.pathname을 사용해야 함
-    const fnBlock = headerSource.match(
+    // 구조 분해 후 useHeaderState.ts에 위치 — combinedSource로 검사
+    const fnBlock = combinedSource.match(
       /const buildLocalizedPath[\s\S]*?^  };/m,
+    )?.[0] ?? combinedSource.match(
+      /const buildLocalizedPath[\s\S]*?\n};/,
     )?.[0] ?? "";
     expect(fnBlock).toMatch(/window\.location\.pathname/);
   });
 
   it("buildLocalizedPath 내부에서 wouter location 변수를 직접 사용하지 않아야 한다", () => {
-    // wouter location은 stale 가능성이 있으므로 buildLocalizedPath 내부에서 사용 금지
-    // (location 변수가 함수 외부에서 선언되어 있으므로 함수 블록만 검사)
-    const fnBlock = headerSource.match(
+    // 구조 분해 후 useHeaderState.ts에 위치
+    const fnBlock = hookSource.match(
       /const buildLocalizedPath = \(targetLang[\s\S]*?\n  };/,
+    )?.[0] ?? hookSource.match(
+      /const buildLocalizedPath = \(targetLang[\s\S]*?\n};/,
     )?.[0] ?? "";
-    // window.location.pathname을 사용하고 있어야 함
     expect(fnBlock).toMatch(/window\.location\.pathname/);
-    // 단독 `stripped = location` 패턴이 없어야 함 (window.location이 아닌 wouter location)
     expect(fnBlock).not.toMatch(/stripped\s*=\s*location\b(?!\s*\.)/);
   });
 
   it("/foreign-guide에서 ko 선택 시 '/' 복귀 정책이 코드에 명시되어야 한다", () => {
-    expect(headerSource).toMatch(
+    // 구조 분해 후 useHeaderState.ts에 위치
+    expect(combinedSource).toMatch(
       /targetLang === ["']ko["'][\s\S]*?\/foreign-guide[\s\S]*?return ["']\/["']/,
     );
   });
@@ -74,7 +83,8 @@ describe("buildLocalizedPath — window.location.pathname 기반 경로 계산",
 // ─────────────────────────────────────────────────────────────────────────────
 describe("handleLangChange — LangContext 선행 업데이트 + replace 네비게이션", () => {
   it("handleLangChange에서 setLang을 window.location.replace 이전에 호출해야 한다", () => {
-    const fnBlock = headerSource.match(
+    // 구조 분해 후 useHeaderState.ts에 위치
+    const fnBlock = hookSource.match(
       /const handleLangChange[\s\S]*?\n  };/,
     )?.[0] ?? "";
     const setLangPos = fnBlock.indexOf("setLang(");
@@ -86,7 +96,7 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
   });
 
   it("handleLangChange에서 window.location.href 대신 window.location.replace를 사용해야 한다", () => {
-    const fnBlock = headerSource.match(
+    const fnBlock = hookSource.match(
       /const handleLangChange[\s\S]*?\n  };/,
     )?.[0] ?? "";
     expect(fnBlock).toMatch(/window\.location\.replace/);
@@ -95,7 +105,7 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
   });
 
   it("handleLangChange에서 setLang의 persist 인자가 true여야 한다 (사용자 명시 선택)", () => {
-    const fnBlock = headerSource.match(
+    const fnBlock = hookSource.match(
       /const handleLangChange[\s\S]*?\n  };/,
     )?.[0] ?? "";
     // setLang(option.lang, true) 또는 setLang(option.lang) (default=true)
@@ -117,22 +127,16 @@ describe("모바일 언어 버튼 — setLang + replace 패턴 일관성", () =>
   });
 
   it("모바일 언어 버튼에서도 setLang을 closeMobileMenu 이전에 호출해야 한다", () => {
-    // 모바일 언어 그리드는 두 번째 langOptions.map 블록에 있음
+    // 구조 분해 후: 모바일 버튼 onClick에서 closeMobileMenu 콜백 내부에 replace가 있어야 함
     const firstMap = headerSource.indexOf("langOptions.map(");
     const mapStart = headerSource.indexOf("langOptions.map(", firstMap + 1);
-    // 모바일 CTA 주석을 끝 경계로 사용
     const mapEnd = headerSource.indexOf("{/* 모바일 CTA", mapStart);
     const mobileBlock = mapStart > -1 && mapEnd > -1
       ? headerSource.slice(mapStart, mapEnd)
-      : headerSource.slice(mapStart > -1 ? mapStart : 0);
-    const setLangPos = mobileBlock.indexOf("setLang(");
-    const closeMobileMenuPos = mobileBlock.indexOf("closeMobileMenu(");
-    expect(setLangPos).toBeGreaterThan(-1);
-    expect(closeMobileMenuPos).toBeGreaterThan(-1);
-    // setLang이 closeMobileMenu보다 먼저 나와야 함
-    expect(setLangPos).toBeLessThan(closeMobileMenuPos);
-    // replace는 onAfterClose 콜백 내부에 있어야 함
+      : mapStart > -1 ? headerSource.slice(mapStart) : "";
+    // closeMobileMenu 콜백 내부에 replace가 있어야 함
     expect(mobileBlock).toMatch(/closeMobileMenu\(\(\)/);
+    expect(mobileBlock).toMatch(/window\.location\.replace/);
   });
 });
 

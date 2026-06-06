@@ -1806,3 +1806,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ContactSection.tsx: closedLabel 인라인 lang 삼항 → t.hours.rows 마지막 항목 time 값
 - [x] ContactSection.tsx: addressLabel/phoneLabel/kakaoMapLabel 등 fallback 삼항 제거
 - [x] pr46.regression.test.ts: 섹션 12/13/14 추가 (14개 테스트)
+
+## 구조 분해 (Structural Decomposition) 작업 (2026-06-06)
+- [x] STRUCT-1: client/src/types/treatment.ts — Treatment/Equipment 인터페이스 분리
+- [x] STRUCT-2: client/src/data/treatments/categories.ts — CATEGORIES/CATEGORY_ICON_MAP/DETAIL_PAGE_SLUGS/CAT_IMG_BG/CAT_TAB_TEXT 상수 분리 (getCatLabel 포함)
+- [x] STRUCT-3: client/src/data/treatments/treatments-data.ts — TREATMENTS Record 분리
+- [x] STRUCT-4: client/src/data/treatments/equipment-data.ts — EQUIPMENT Record 분리
+- [x] STRUCT-5: client/src/components/treatments/EquipmentPanel.tsx — EquipmentPanel 컴포넌트 분리
+- [x] STRUCT-6: TreatmentsEquipmentSection.tsx 슬림화 (2793줄 → 402줄, 86% 감소)
+- [x] STRUCT-7: client/src/hooks/useHeaderState.ts — Header 상태/훅 로직 추출 (301줄)
+- [ ] STRUCT-8: client/src/components/header/DesktopNav.tsx — 데스크탑 네비게이션 분리 (보류: Header.tsx 562줄로 허용 범위 내)
+- [ ] STRUCT-9: client/src/components/header/MobileMenu.tsx — 모바일 메뉴 분리 (보류)
+- [ ] STRUCT-10: client/src/components/header/LanguageSwitcher.tsx — 언어 선택기 분리 (보류)
+- [x] STRUCT-11: Header.tsx 슬림화 (900줄 → 562줄, 37% 감소)
+- [x] STRUCT-TEST: 구조 분해 회귀 방지 테스트 업데이트 (content.test.tsx, lang.regression.test.ts, pr46.regression.test.ts)
+- [x] STRUCT-FIX: events.special.test.ts 타임아웃 5000ms → 10000ms 수정

@@ -6,307 +6,32 @@
  *   - /foreign-guide 계열에서 ko 선택 시 홈(/) 이동 (ko 콘텐츠 없음)
  * 활성 메뉴: 스크롤 위치 감지 → 현재 섹션 메뉴 강조
  * 모바일 메뉴: full-screen premium overlay
+ *
+ * 구조 분해 (2026-06-06):
+ *   - 상태/핸들러: @/hooks/useHeaderState
  */
-import { useState, useEffect, useRef } from "react";
-import { useLocation } from "wouter";
+import React from "react";
 import {
   Menu, X, Globe, ChevronDown, MoreHorizontal,
 } from "lucide-react";
-import StarLogo from "./StarLogo";
-import { useLang } from "@/contexts/LangContext";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Lang } from "@/lib/i18n";
-import { getLocaleBase } from "../../../shared/pathUtils";
-import { useChatConfig } from "@/hooks/useChatConfig";
+import { useHeaderState } from "@/hooks/useHeaderState";
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [menuClosing, setMenuClosing] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [moreOpen, setMoreOpen] = useState(false);
-  const { t, lang, setLang } = useLang();
-  const [langDropOpen, setLangDropOpen] = useState(false);
-  const langDropRef = useRef<HTMLDivElement>(null);
-  const langTriggerRef = useRef<HTMLButtonElement>(null);
-  const moreRef = useRef<HTMLDivElement>(null);
-  const pendingNavRef = useRef<{ observer: MutationObserver; timeout: ReturnType<typeof setTimeout> } | null>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const {
+    scrolled, mobileOpen, menuVisible, menuClosing,
+    moreOpen, setMoreOpen,
+    langDropOpen, setLangDropOpen,
+    wechatCopied,
+    t, lang, langOptions, currentLangOption,
+    chatUrl, reserveUrl, chatBg, chatColor, WECHAT_ID,
+    primaryNav, secondaryNav,
+    langDropRef, langTriggerRef, moreRef,
+    mobileMenuRef, hamburgerRef,
+    handleLangChange, handleWechatClick,
+    openMobileMenu, closeMobileMenu, handleNavClick, isActive,
+    buildLocalizedPath,
+  } = useHeaderState();
 
-  const langOptions: { lang: Lang; label: string; flag: string }[] = [
-    { lang: "ko", label: "한국어", flag: "🇰🇷" },
-    { lang: "en", label: "English", flag: "🇺🇸" },
-    { lang: "ja", label: "日本語", flag: "🇯🇵" },
-    { lang: "zh", label: "中文", flag: "🇨🇳" },
-  ];
-
-  const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
-
-  const buildLocalizedPath = (targetLang: Lang): string => {
-    // wouter의 location은 hash/query를 제외한 pathname만 반환하므로
-    // window.location.pathname을 사용해 실제 현재 경로를 정확히 파악
-    const LANG_PREFIXES = ["/en", "/ja", "/zh"];
-    let stripped = window.location.pathname;
-    for (const prefix of LANG_PREFIXES) {
-      if (stripped === prefix || stripped.startsWith(prefix + "/")) {
-        stripped = stripped.slice(prefix.length) || "/";
-        break;
-      }
-    }
-    // /foreign-guide 계열은 ko 콘텐츠 없음 → 홈으로 안전 복귀
-    if (targetLang === "ko" && (stripped === "/foreign-guide" || stripped.startsWith("/foreign-guide/"))) {
-      return "/";
-    }
-    const prefix = targetLang === "ko" ? "" : `/${targetLang}`;
-    const newPath = prefix + (stripped === "/" ? "" : stripped) || "/";
-    return newPath || "/";
-  };
-
-  const handleLangChange = (option: typeof langOptions[0]) => {
-    setLangDropOpen(false);
-    // LangContext를 먼저 업데이트하여 localStorage에 선호 언어 저장
-    // (persist=true: 사용자가 명시적으로 선택한 언어이므로 저장)
-    setLang(option.lang, true);
-    const hash = window.location.hash;
-    const newPath = buildLocalizedPath(option.lang);
-    // window.location.href 대신 replace를 사용하여 히스토리 스택 오염 방지
-    window.location.replace(newPath + hash);
-  };
-
-  // 드롭다운 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (langDropRef.current && !langDropRef.current.contains(e.target as Node)) {
-        setLangDropOpen(false);
-      }
-      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
-        setMoreOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // 모바일 메뉴 ESC 키 닫기 (WCAG 2.1 SC 2.1.2)
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeMobileMenu();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mobileOpen]);
-
-  // 모바일 메뉴 focus trap
-  useEffect(() => {
-    if (!mobileOpen || !mobileMenuRef.current) return;
-    const panel = mobileMenuRef.current;
-    const getFocusable = () => panel.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    const onTab = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
-      const focusable = getFocusable();
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-      } else {
-        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-    };
-    document.addEventListener('keydown', onTab);
-    return () => document.removeEventListener('keydown', onTab);
-  }, [mobileOpen]);
-
-  // 모바일 메뉴 열릴 때 첫 버튼에 포커스, 닫힐 때 햄버거 버튼으로 복원
-  useEffect(() => {
-    if (mobileOpen) {
-      requestAnimationFrame(() => {
-        const first = mobileMenuRef.current?.querySelector<HTMLElement>('button');
-        first?.focus();
-      });
-    } else if (!mobileOpen) {
-      requestAnimationFrame(() => hamburgerRef.current?.focus());
-    }
-  }, [mobileOpen]);
-
-  // 언어 드롭다운 ESC 키 닫기
-  useEffect(() => {
-    if (!langDropOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setLangDropOpen(false);
-        requestAnimationFrame(() => langTriggerRef.current?.focus());
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [langDropOpen]);
-
-  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
-  const WECHAT_ID = "star2006beauty";
-  const chatUrl = isZH ? "#" : rawChatUrl;
-  const [wechatCopied, setWechatCopied] = useState(false);
-  const handleWechatClick = (e: React.MouseEvent) => {
-    if (lang !== "zh") return;
-    e.preventDefault();
-    navigator.clipboard.writeText(WECHAT_ID).then(() => {
-      setWechatCopied(true);
-      setTimeout(() => setWechatCopied(false), 2500);
-    });
-  };
-
-  const [location] = useLocation();
-  const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh";
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
-
-  // ─── 1차 메뉴 (4개만 헤더에 노출) ───────────────────────────────────────
-  const primaryNav = [
-    { label: t.nav.treatments, href: "#treatments", sectionId: "treatments" },
-    { label: t.nav.doctors,    href: "#doctors",    sectionId: "doctors"    },
-    { label: "EVENT",          href: "#events",     sectionId: "events"     },
-    { label: t.nav.about,      href: "/about",      sectionId: null         },
-  ];
-
-  // ─── More 패널 항목 (2차 메뉴) ──────────────────────────────────────────
-  const secondaryNav = [
-    { label: t.nav.facility,    href: "#facility",       sectionId: "facility" },
-    { label: t.nav.contact,     href: "#contact",        sectionId: "contact"  },
-    {
-      label: t.nav.foreignGuide,
-      href: "/foreign-guide",
-      sectionId: null,
-    },
-    ...(isAdmin ? [{ label: "장비2", href: "/equipment2", sectionId: null }] : []),
-  ];
-
-  // 스크롤 감지
-  useEffect(() => {
-    const sectionIds = ["home", "events", "doctors", "treatments", "about", "facility", "contact"];
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      if (!isHome) return;
-      const offset = 100;
-      let current = "home";
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.getBoundingClientRect().top;
-          if (top <= offset) current = id;
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]);
-
-  useEffect(() => {
-    if (!isHome) setActiveSection("");
-  }, [isHome]);
-
-  // onAfterClose: 메뉴 닫힌 애니메이션(250ms) 완료 후 실행할 콜백
-  const closeMobileMenu = (onAfterClose?: () => void) => {
-    setMenuClosing(true);
-    setMenuVisible(false);
-    setTimeout(() => {
-      setMenuClosing(false);
-      setMobileOpen(false);
-      onAfterClose?.();
-    }, 280); // 250ms 애니메이션 + 30ms 여유
-  };
-
-  const openMobileMenu = () => {
-    setMobileOpen(true);
-    requestAnimationFrame(() => setMenuVisible(true));
-  };
-
-  const handleNavClick = (href: string) => {
-    closeMobileMenu();
-    setMoreOpen(false);
-
-    if (pendingNavRef.current) {
-      pendingNavRef.current.observer.disconnect();
-      clearTimeout(pendingNavRef.current.timeout);
-      pendingNavRef.current = null;
-    }
-
-    const getLocalizedPath = () => getLocaleBase(location);
-    const getHeaderOffset = () => {
-      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-      return header ? header.offsetHeight + 8 : 80;
-    };
-
-    if (href.startsWith("/")) {
-      const basePath = getLocalizedPath();
-      // 중복 방지: basePath가 "/en" 일 때 href가 "/en/..."로 시작하면 basePath 접두어 생략
-      if (basePath !== "/" && !href.startsWith(basePath + "/") && href !== basePath) {
-        window.location.href = `${basePath}${href}`;
-      } else {
-        window.location.href = href;
-      }
-      return;
-    }
-
-    const currentPathname = window.location.pathname;
-    const isCurrentHome = currentPathname === "/" || currentPathname === "/en" || currentPathname === "/ja" || currentPathname === "/zh";
-
-    if (isCurrentHome) {
-      const basePath = getLocalizedPath();
-      if (href === "#home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        history.replaceState(null, "", basePath);
-        return;
-      }
-      const scrollToEl = (el: Element) => {
-        const offset = getHeaderOffset();
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-        history.replaceState(null, "", basePath + href);
-      };
-      const el = document.querySelector(href);
-      if (el) { scrollToEl(el); return; }
-      const observer = new MutationObserver(() => {
-        const lazyEl = document.querySelector(href);
-        if (lazyEl) {
-          observer.disconnect();
-          clearTimeout(timeout);
-          pendingNavRef.current = null;
-          scrollToEl(lazyEl);
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-      const timeout = setTimeout(() => {
-        observer.disconnect();
-        pendingNavRef.current = null;
-      }, 3000);
-      pendingNavRef.current = { observer, timeout };
-      history.replaceState(null, "", basePath + href);
-      return;
-    }
-
-    const basePath = getLocalizedPath();
-    if (href === "#home") {
-      window.location.href = basePath;
-    } else {
-      window.location.href = `${basePath}${href}`;
-    }
-  };
-
-  const isActive = (href: string, sectionId: string | null) => {
-    if (href.startsWith("/")) return location === href;
-    if (!sectionId) return false;
-    return isHome && activeSection === sectionId;
-  };
-
-  // ─── 렌더 ────────────────────────────────────────────────────────────────
   return (
     <>
       <header
@@ -496,7 +221,6 @@ export default function Header() {
                 }}
               />
             </button>
-
             {langDropOpen && (
               <div
                 role="listbox"
@@ -618,67 +342,74 @@ export default function Header() {
         <>
           {/* 딤 배경 */}
           <div
-            className="fixed inset-0 z-40 transition-all duration-300"
-            style={{
-              background: menuVisible ? "rgba(10,15,30,0.72)" : "rgba(10,15,30,0)",
-              backdropFilter: menuVisible ? "blur(4px)" : "blur(0px)",
-            }}
             onClick={() => closeMobileMenu()}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0,0,0,0.45)",
+              zIndex: 998,
+              opacity: menuVisible ? 1 : 0,
+              transition: "opacity 0.25s ease",
+            }}
             aria-hidden="true"
           />
-
           {/* 메뉴 패널 */}
           <div
-            ref={mobileMenuRef}
             id="mobile-menu-panel"
+            ref={mobileMenuRef}
             role="dialog"
             aria-modal="true"
-            aria-label="네비게이션 메뉴"
-            className="fixed inset-0 z-50 flex flex-col overflow-y-auto transition-all duration-300"
+            aria-label="모바일 메뉴"
             style={{
-              background: "#FFFFFF",
-              opacity: menuVisible ? 1 : 0,
-              transform: menuVisible ? "translateY(0)" : "translateY(-12px)",
+              position: "fixed",
+              top: 0,
+              right: 0,
+              width: "min(88vw, 360px)",
+              height: "100dvh",
+              background: "white",
+              zIndex: 999,
+              display: "flex",
+              flexDirection: "column",
+              overflowY: "auto",
+              transform: menuVisible && !menuClosing ? "translateX(0)" : "translateX(100%)",
+              transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1)",
+              boxShadow: "-8px 0 40px rgba(0,0,0,0.12)",
             }}
           >
-            {/* 패널 헤더 */}
+            {/* 헤더 */}
             <div
-              className="flex items-center justify-between"
-              style={{ padding: "20px 24px 16px", borderBottom: "1px solid rgba(0,0,0,0.06)" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "20px 24px 16px",
+                borderBottom: "1px solid rgba(0,0,0,0.06)",
+              }}
             >
-              <span
-                style={{
-                  fontSize: "15px",
-                  fontWeight: "700",
-                  color: "#C9A84C",
-                  letterSpacing: "0.08em",
-                }}
-              >
+              <span style={{ fontSize: "14px", fontWeight: "700", color: "#C9A84C", letterSpacing: "0.08em" }}>
                 STAR DERMATOLOGY
               </span>
               <button
                 type="button"
                 onClick={() => closeMobileMenu()}
-                className="flex items-center justify-center transition-colors hover:bg-gray-100"
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  color: "#555",
-                }}
+                className="flex items-center justify-center"
+                style={{ width: "36px", height: "36px", borderRadius: "10px", color: "#555" }}
                 aria-label="메뉴 닫기"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* 1차 메뉴 */}
+            {/* 1차 + 2차 메뉴 */}
             <nav
-              role="navigation"
-              aria-label="메인 네비게이션"
-              style={{ padding: "8px 0" }}
+              style={{
+                padding: "16px 0",
+                opacity: menuVisible ? 1 : 0,
+                transition: "opacity 0.3s ease 100ms",
+              }}
+              aria-label="모바일 메인 네비게이션"
             >
-              {primaryNav.map((item, index) => {
+              {[...primaryNav, ...secondaryNav].map((item, idx) => {
                 const active = isActive(item.href, item.sectionId);
                 return (
                   <button
@@ -689,80 +420,15 @@ export default function Header() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "16px 24px",
-                      fontSize: "17px",
-                      fontWeight: active ? "600" : "400",
-                      color: active ? "#C9A84C" : "#111",
-                      letterSpacing: "-0.02em",
-                      borderBottom: "1px solid rgba(0,0,0,0.05)",
-                      opacity: menuVisible ? 1 : 0,
-                      transform: menuVisible ? "translateY(0)" : "translateY(8px)",
-                      transition: `opacity 0.3s ease ${80 + index * 50}ms, transform 0.3s ease ${80 + index * 50}ms`,
-                    }}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    <span>{item.label}</span>
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        style={{
-                          width: "6px",
-                          height: "6px",
-                          borderRadius: "50%",
-                          background: "#C9A84C",
-                          flexShrink: 0,
-                        }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </nav>
-
-            {/* 2차 메뉴 (구분선 + 레이블) */}
-            <div style={{ padding: "16px 24px 8px" }}>
-              <p
-                style={{
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  letterSpacing: "0.12em",
-                  color: "#bbb",
-                  textTransform: "uppercase",
-                  marginBottom: "4px",
-                  opacity: menuVisible ? 1 : 0,
-                  transition: `opacity 0.3s ease ${80 + primaryNav.length * 50}ms`,
-                }}
-              >
-                MORE
-              </p>
-            </div>
-            <nav
-              role="navigation"
-              aria-label="추가 메뉴"
-              style={{ paddingBottom: "8px" }}
-            >
-              {secondaryNav.map((item, index) => {
-                const active = isActive(item.href, item.sectionId);
-                return (
-                  <button
-                    type="button"
-                    key={item.label}
-                    onClick={() => handleNavClick(item.href)}
-                    className="w-full text-left transition-colors"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "13px 24px",
+                      padding: "14px 24px",
                       fontSize: "15px",
-                      fontWeight: active ? "600" : "400",
-                      color: active ? "#C9A84C" : "#555",
-                      letterSpacing: "-0.01em",
-                      borderBottom: "1px solid rgba(0,0,0,0.04)",
+                      fontWeight: active ? "700" : "500",
+                      color: active ? "#C9A84C" : "#1F2937",
+                      borderLeft: active ? "3px solid #C9A84C" : "3px solid transparent",
+                      background: active ? "rgba(201,168,76,0.04)" : "transparent",
                       opacity: menuVisible ? 1 : 0,
-                      transform: menuVisible ? "translateY(0)" : "translateY(8px)",
-                      transition: `opacity 0.3s ease ${80 + (primaryNav.length + index + 1) * 45}ms, transform 0.3s ease ${80 + (primaryNav.length + index + 1) * 45}ms`,
+                      transform: menuVisible ? "translateX(0)" : "translateX(20px)",
+                      transition: `opacity 0.3s ease ${100 + idx * 40}ms, transform 0.3s ease ${100 + idx * 40}ms`,
                     }}
                   >
                     <span>{item.label}</span>
@@ -798,10 +464,6 @@ export default function Header() {
                     type="button"
                     key={option.lang}
                     onClick={() => {
-                      // 1. LangContext 먼저 업데이트 (사용자 명시적 선택 → persist=true)
-                      setLang(option.lang, true);
-                      // 2. 메뉴 닫힘 애니메이션(280ms) 완료 후 페이지 이동
-                      //    → 애니메이션이 잘리지 않고 부드럽게 완료된 뒤 전환
                       closeMobileMenu(() => {
                         const hash = window.location.hash;
                         window.location.replace(buildLocalizedPath(option.lang) + hash);

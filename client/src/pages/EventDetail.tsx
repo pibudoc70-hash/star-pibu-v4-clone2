@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
+import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_LOCALE, buildHreflangs } from "@/components/SeoHead";
 
 const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
 
@@ -61,8 +62,36 @@ export default function EventDetail() {
   const accentColor = event.accent ?? "#4A6FA5";
   const accentDark = event.accentDark ?? "#2D4A7A";
 
+  // 다국어 OG 메타 태그용 값 계산
+  const eventTitle =
+    (lang === "en" ? (event as Record<string, unknown>).titleEn as string | undefined :
+     lang === "ja" ? (event as Record<string, unknown>).titleJa as string | undefined :
+     lang === "zh" ? (event as Record<string, unknown>).titleZh as string | undefined :
+     undefined) ?? event.title;
+  const eventDesc =
+    (lang === "en" ? (event as Record<string, unknown>).descriptionEn as string | undefined :
+     lang === "ja" ? (event as Record<string, unknown>).descriptionJa as string | undefined :
+     lang === "zh" ? (event as Record<string, unknown>).descriptionZh as string | undefined :
+     undefined) ?? event.desc ?? event.content ?? "";
+  const ogLocale = LANG_TO_OG_LOCALE[lang] ?? "ko_KR";
+  const siteName = SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko;
+  const ogImg = event.imageUrl ?? OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko;
+  const koPath = `/events/${eventId}`;
+
   return (
     <div className="min-h-screen bg-[#F4F7FA] flex flex-col">
+      <SeoHead
+        title={`${eventTitle} | ${siteName}`}
+        description={String(eventDesc).slice(0, 160)}
+        canonical={`${BASE_URL}${lang === "ko" ? koPath : `/${lang}${koPath}`}`}
+        ogImage={ogImg}
+        ogSiteName={siteName}
+        ogLocale={ogLocale}
+        ogLocaleAlternates={(["ko_KR", "en_US", "ja_JP", "zh_CN"] as const).filter((l) => l !== ogLocale)}
+        ogType="article"
+        hreflangs={buildHreflangs(koPath, `/en${koPath}`, `/ja${koPath}`, `/zh${koPath}`)}
+        includeMedicalSchema={false}
+      />
       <Header />
 
       {/* ── 히어로 배너 ── */}

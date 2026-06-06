@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -47,13 +47,15 @@ export default function LandingJA() {
         description="釜山西面のスター皮膚科。皮膚科専門医が20年以上の豊富な臨床経験で、ウルセラピープライム、サーマジFLX、目の下の脂肪再配置、ピコレーザーなど50種以上の施術を提供。日本語対応・外国人患者様歓迎。"
         keywords="釜山皮膚科, 西面クリニック, ウルセラピー釜山, サーマジ釜山, 目の下の脂肪再配置 韓国, ピコレーザー釜山, 韓国美容皮膚科, スター皮膚科, 釜山西面皮膚科, 日本語対応 釜山"
         canonical="https://www.star-pibu.com/ja"
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED.ja}
+        ogSiteName={SITE_NAME_LOCALIZED.ja}
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "ホーム", url: "https://www.star-pibu.com/ja" },
           ]),
         ]}
         ogLocale="ja_JP"
+        ogLocaleAlternates={["ko_KR", "en_US", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
         includeMedicalSchema={true}
       />

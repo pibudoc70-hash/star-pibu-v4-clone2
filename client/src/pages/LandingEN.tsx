@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -47,13 +47,15 @@ export default function LandingEN() {
         description="Star Dermatology in Busan Seomyeon. Board-certified dermatologist with 20+ years experience. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning, Pico Laser and 50+ premium treatments. Foreign patients welcome."
         keywords="Busan dermatology, Seomyeon skin clinic, Ultherapy Busan, Thermage Busan, under-eye surgery Korea, pico laser Busan, Korean skin clinic, Star Dermatology, Busan aesthetic clinic, English dermatology Korea"
         canonical="https://www.star-pibu.com/en"
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED.en}
+        ogSiteName={SITE_NAME_LOCALIZED.en}
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "Home", url: "https://www.star-pibu.com/en" },
           ]),
         ]}
         ogLocale="en_US"
+        ogLocaleAlternates={["ko_KR", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
         includeMedicalSchema={true}
       />

@@ -9,7 +9,7 @@
  * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
 import { lazy, Suspense, useEffect } from "react";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
@@ -90,8 +90,10 @@ export default function Home() {
         description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리주란 등 프리미엄 시술 전문. 온라인 예약 가능."
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://www.star-pibu.com/"
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED.ko}
+        ogSiteName={SITE_NAME_LOCALIZED.ko}
         ogLocale="ko_KR"
+        ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
         includeWebSiteSchema={true}
         jsonLd={[

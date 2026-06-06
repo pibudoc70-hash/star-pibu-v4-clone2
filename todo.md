@@ -1745,3 +1745,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] PARTIAL-FIX-11: ManagementDevicesSection.tsx — getDeviceText() 헬퍼 추가, 렌더링 로직 전체 교체
 - [x] PARTIAL-FIX-12: TreatmentsEquipmentSection.content.test.tsx — nameJa/nameZh/getCatLabel/getEqText 검증 테스트 8개 추가
 - [x] PARTIAL-FIX-13: ManagementDevicesSection.content.test.tsx — 신규 번역 완전성 테스트 5개 추가
+
+## 다국어 OG/메타 태그 완성 (2026-06-06)
+- [x] SEO-OG-1: SeoHead.tsx — OG_IMAGE_LOCALIZED 상수를 새로 업로드된 manus-storage URL로 교체 (구 cloudfront URL 제거)
+- [x] SEO-OG-2: SeoHead.tsx — SITE_NAME_LOCALIZED 4개 언어 사이트명 추가 (ko/en/ja/zh)
+- [x] SEO-OG-3: SeoHead.tsx — LANG_TO_OG_LOCALE, ALL_OG_LOCALES, buildHreflangs, COMMON_HREFLANGS 헬퍼 추가
+- [x] SEO-OG-4: LandingEN.tsx — ogSiteName, ogImage(en), ogLocaleAlternates 적용
+- [x] SEO-OG-5: LandingJA.tsx — ogSiteName, ogImage(ja), ogLocaleAlternates 적용
+- [x] SEO-OG-6: LandingZH.tsx — ogSiteName, ogImage(zh), ogLocaleAlternates 적용
+- [x] SEO-OG-7: Home.tsx — ogSiteName, ogImage(ko), ogLocaleAlternates 적용
+- [x] SEO-OG-8: EventDetail.tsx — SeoHead 완전 추가 (동적 이벤트 제목/이미지/설명, 다국어 OG 태그)
+- [x] SEO-OG-9: Reserve.tsx — ogImage, ogSiteName 추가
+- [x] SEO-OG-10: OG 이미지 4개(ko/en/ja/zh) 생성 및 manus-storage 업로드 완료
+- [x] SEO-OG-11: SeoHead.multilang.test.ts — 다국어 SEO 상수 회귀 방지 테스트 27개 추가
+- [x] SEO-OG-12: vitest.config.ts — client/**/*.test.ts 패턴 추가 (순수 TS 테스트 파일 인식)

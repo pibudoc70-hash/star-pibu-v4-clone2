@@ -54,6 +54,12 @@ export interface SeoHeadProps {
   /** og:locale:alternate 목록 */
   ogLocaleAlternates?: string[];
   /**
+   * og:site_name 언어별 사이트명 오버라이드
+   * 미지정 시 SITE_NAME (한국어) 사용
+   * 언어별 페이지에서는 SITE_NAME_LOCALIZED[lang]을 전달하세요
+   */
+  ogSiteName?: string;
+  /**
    * [PROD-P2-1] MedicalBusiness 스키마 삽입 여부 (기본값: true)
    *
    * - true  → buildClinicJsonLd() (MedicalBusiness + LocalBusiness) 삽입
@@ -85,6 +91,22 @@ export interface SeoHeadProps {
 
 export const SITE_NAME = "부산 서면 스타피부과";
 export const BASE_URL = "https://www.star-pibu.com";
+
+/** 언어별 사이트명 (og:site_name, JSON-LD name 필드에 사용) */
+export const SITE_NAME_LOCALIZED: Record<string, string> = {
+  ko: "부산 서면 스타피부과",
+  en: "Star Dermatology Busan",
+  ja: "釜山スター皮膚科",
+  zh: "釜山STAR皮肤科",
+};
+
+/** 언어별 OG 이미지 URL (SNS 공유 시 사용, 1200×630px) */
+export const OG_IMAGE_LOCALIZED: Record<string, string> = {
+  ko: "/manus-storage/og-image-ko_5fc1105f.jpg",
+  en: "/manus-storage/og-image-en_dc8cb653.jpg",
+  ja: "/manus-storage/og-image-ja_273d0e42.jpg",
+  zh: "/manus-storage/og-image-zh_31a7313b.jpg",
+};
 
 /** 공통 hreflang 목록 (모든 페이지에서 재사용) */
 export const COMMON_HREFLANGS = [
@@ -347,6 +369,7 @@ export default function SeoHead({
   noindex = false,
   ogLocale = "ko_KR",
   ogLocaleAlternates,
+  ogSiteName,
   // [PROD-P2-1] 신규 분리된 props (기본값: MedicalBusiness true, WebSite false)
   includeMedicalSchema,
   includeWebSiteSchema = false,
@@ -354,6 +377,7 @@ export default function SeoHead({
   includeClinicSchema,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
+  const resolvedSiteName = ogSiteName ?? SITE_NAME;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
 
   /*
@@ -398,12 +422,14 @@ export default function SeoHead({
       ))}
 
       {/* Open Graph */}
-      <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:site_name" content={resolvedSiteName} />
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:url" content={resolvedOgUrl} />
       {ogImage && <meta property="og:image" content={ogImage} />}
+      {ogImage && ogImage.startsWith("https://") && <meta property="og:image:secure_url" content={ogImage} />}
+      {ogImage && <meta property="og:image:type" content="image/png" />}
       {ogImage && <meta property="og:image:width" content="1200" />}
       {ogImage && <meta property="og:image:height" content="630" />}
       {ogImage && <meta property="og:image:alt" content={title} />}

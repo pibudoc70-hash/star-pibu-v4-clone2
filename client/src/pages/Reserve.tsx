@@ -10,7 +10,7 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import {
   Calendar, Clock, User, Phone, FileText,
@@ -688,6 +688,8 @@ export default function Reserve() {
         keywords="스타피부과 예약, 서면피부과 예약, 부산피부과 온라인 예약, 스타피부과 시술 예약"
         noindex={true}
         ogLocale="ko_KR"
+        ogImage={OG_IMAGE_LOCALIZED.ko}
+        ogSiteName={SITE_NAME_LOCALIZED.ko}
       />
       <Header />
 

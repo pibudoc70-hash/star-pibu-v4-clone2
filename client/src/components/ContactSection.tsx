@@ -15,6 +15,7 @@ import { MapPin, Phone, Clock, Train, Car, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
 // initialCenter prop으로 전달될 때 참조 안정성을 보장
@@ -301,11 +302,11 @@ export default function ContactSection() {
                     {phoneLabel}
                   </p>
                   <a
-                    href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+                    href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
                     className="font-montserrat font-bold text-lg transition-colors hover:opacity-70"
                     style={{ color: "#4A6FA5" }}
                   >
-                    {lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
+                    {lang === "ko" ? CLINIC_TEL : CLINIC_TEL_INTL}
                   </a>
                 </div>
               </div>

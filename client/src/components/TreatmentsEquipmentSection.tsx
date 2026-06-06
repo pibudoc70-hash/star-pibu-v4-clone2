@@ -36,7 +36,8 @@ export default function TreatmentsEquipmentSection() {
   const [showAll, setShowAll] = useState(false);
   const [sortBy, setSortBy] = useState<"name" | "time" | "popular">("popular");
   const [filterOpen, setFilterOpen] = useState(false);
-  const INITIAL_SHOW = typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 6;
+  // [R5-P1] INITIAL_SHOW: 렌더마다 window.innerWidth 직접 접근 → useState lazy initializer로 교체
+  const [INITIAL_SHOW] = useState(() => typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 6);
   const sectionRef = useSectionReveal(60);
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const sectionTopRef = useRef<HTMLDivElement>(null);
@@ -63,7 +64,7 @@ export default function TreatmentsEquipmentSection() {
   }, [activeId, sortBy]);
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }}>
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }} aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 
@@ -87,6 +88,8 @@ export default function TreatmentsEquipmentSection() {
               <button
                 type="button"
                 onClick={() => setFilterOpen(!filterOpen)}
+                aria-expanded={filterOpen}
+                aria-label={tr.sortLabel}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{ backgroundColor: "#f3f4f6", color: "#6b7280", border: "1px solid #e5e7eb" }}
               >
@@ -106,6 +109,7 @@ export default function TreatmentsEquipmentSection() {
                       type="button"
                       key={opt.value}
                       onClick={() => { setSortBy(opt.value); setFilterOpen(false); }}
+                      aria-pressed={sortBy === opt.value}
                       className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       {opt.label}
@@ -190,6 +194,7 @@ export default function TreatmentsEquipmentSection() {
                         }
                         setShowAll(!showAll);
                       }}
+                      aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
                       className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95"
                       style={{
                         background: showAll ? "white" : "#d1ab67",

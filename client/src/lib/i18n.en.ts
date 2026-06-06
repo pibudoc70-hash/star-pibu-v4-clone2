@@ -145,6 +145,10 @@ export const en: I18nContent = {
     credentialsTitle: "Education · Career · Credentials",
     swipeHint: "← Swipe to view doctors →",
     teamLabel: "Medical Team",
+    selectDoctorLabel: "Select {name}",
+    expandCredentialsLabel: "Expand education & career",
+    collapseCredentialsLabel: "Collapse education & career",
+    dotNavLabel: "Go to {name}",
   },
   treatments: {
     label: "Treatments",
@@ -342,6 +346,8 @@ export const en: I18nContent = {
     specialEmptyDesc: "New offers coming soon. Contact us via KakaoTalk or phone for inquiries.",
   },
   managementDevices: {
+    scrollPrevLabel: "Previous",
+    scrollNextLabel: "Next",
     sectionTitle: "Management Devices",
     sectionSubtitle: "STAR Dermatology Management Equipment",
     items: [

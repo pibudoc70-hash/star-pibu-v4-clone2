@@ -5,7 +5,7 @@
  * - 고급스러운 레이아웃: 좌측 세로 탭 + 우측 상세 정보
  */
 // [FM-P2-4] React.memo: 의료진 섹션은 언어 변경 시만 리렌더 필요
-import React, { memo, useState, useEffect, useRef } from "react";
+import React, { memo, useState, useEffect, useRef, useMemo } from "react";
 import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -180,7 +180,8 @@ function DoctorsSection() {
 
   const badgeLabel = t.doctors.badge;
 
-  const mergedDoctors = doctors.map((d, idx) => ({
+  // [R5-P2] mergedDoctors: 매 렌더마다 재계산 → useMemo로 교체 (언어 변경 시만 업데이트)
+  const mergedDoctors = useMemo(() => doctors.map((d, idx) => ({
     ...d,
     name: t.doctors.list[idx]?.name ?? d.name,
     title: t.doctors.list[idx]?.title ?? d.title,
@@ -188,8 +189,7 @@ function DoctorsSection() {
     credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
     specialties: t.doctors.list[idx]?.specialties ?? d.specialties,
     badge: badgeLabel,
-  }));
-
+  })), [t.doctors, badgeLabel]);
   const doctor = mergedDoctors[activeDoctor];
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 90 → 60;
 
@@ -279,6 +279,8 @@ function DoctorsSection() {
                     <button type="button"
                       key={d.id}
                       onClick={() => handleDoctorSelect(d.id)}
+                      aria-label={(t.doctors.selectDoctorLabel ?? "{name} 선택").replace("{name}", d.name)}
+                      aria-pressed={activeDoctor === d.id}
                       className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
                       style={{
                         background: isActive
@@ -567,6 +569,8 @@ function DoctorsSection() {
                   <button type="button"
                     key={d.id}
                     onClick={() => handleDoctorSelect(d.id)}
+                    aria-label={(t.doctors.selectDoctorLabel ?? "{name} 선택").replace("{name}", d.name)}
+                    aria-pressed={activeDoctor === d.id}
                     className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
                     style={{
                       background: isActive ? GOLD_LIGHT : "white",
@@ -752,6 +756,10 @@ function DoctorsSection() {
                 >
                   <button type="button"
                     onClick={() => setExpandedCredentials(!expandedCredentials)}
+                    aria-expanded={expandedCredentials}
+                    aria-label={expandedCredentials
+                      ? (t.doctors.collapseCredentialsLabel ?? "학력·경력·자격 접기")
+                      : (t.doctors.expandCredentialsLabel ?? "학력·경력·자격 펼치기")}
                     className="w-full flex items-center justify-between px-4 py-3"
                     style={{
                       background: expandedCredentials ? GOLD_LIGHT : "#FAFAFA",
@@ -802,6 +810,8 @@ function DoctorsSection() {
                       <button type="button"
                         key={d.id}
                         onClick={() => handleDoctorSelect(d.id)}
+                        aria-label={(t.doctors.dotNavLabel ?? "{name}로 이동").replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
+                        aria-current={activeDoctor === d.id ? "true" : undefined}
                         style={{
                           width: activeDoctor === d.id ? "24px" : "6px",
                           height: "6px",

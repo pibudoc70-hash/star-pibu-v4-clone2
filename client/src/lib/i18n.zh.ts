@@ -145,6 +145,10 @@ export const zh: I18nContent = {
     credentialsTitle: "学历 · 经历 · 资格",
     swipeHint: "← 滑动查看医生 →",
     teamLabel: "医疗团队",
+    selectDoctorLabel: "选择{name}医生",
+    expandCredentialsLabel: "展开学历·经历·资格",
+    collapseCredentialsLabel: "收起学历·经历·资格",
+    dotNavLabel: "跳转到{name}医生",
   },
   treatments: {
     label: "诊疗项目",
@@ -342,6 +346,8 @@ export const zh: I18nContent = {
     specialEmptyDesc: "即将推出新优惠，敬请期待。如需和询，请通过KakaoTalk或电话与我们联系。",
   },
   managementDevices: {
+    scrollPrevLabel: "上一个",
+    scrollNextLabel: "下一个",
     sectionTitle: "护理设备",
     sectionSubtitle: "STAR皮肤科 护理设备",
     items: [

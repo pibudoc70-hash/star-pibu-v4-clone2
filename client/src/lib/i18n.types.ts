@@ -126,6 +126,14 @@ export interface I18nContent {
     swipeHint: string;
     /** 데스크탑 좌측 레일 아이브로우 (예: "Medical Team") */
     teamLabel?: string;
+    /** 의사 탭 버튼 aria-label (예: "{name} 의사 선택") */
+    selectDoctorLabel?: string;
+    /** 자격증 확장 버튼 aria-label */
+    expandCredentialsLabel?: string;
+    /** 자격증 접기 버튼 aria-label */
+    collapseCredentialsLabel?: string;
+    /** 도트 네비게이션 버튼 aria-label (예: "{name} 의사로 이동") */
+    dotNavLabel?: string;
   };
   treatments: {
     label: string;
@@ -256,6 +264,10 @@ export interface I18nContent {
     specialEmptyDesc: string;
   };
   managementDevices: {
+    /** 스크롤 이전 버튼 aria-label */
+    scrollPrevLabel?: string;
+    /** 스크롤 다음 버튼 aria-label */
+    scrollNextLabel?: string;
     sectionTitle: string;
     sectionSubtitle: string;
     items: Array<{ name: string; desc: string }>;

@@ -347,7 +347,7 @@ export default function ManagementDevicesSection() {
               onClick={() => scroll("left")}
               className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md -translate-x-3"
               style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
-              aria-label="Scroll left"
+              aria-label={t.managementDevices.scrollPrevLabel}
             >
               <ChevronLeft size={18} />
             </button>
@@ -360,7 +360,7 @@ export default function ManagementDevicesSection() {
               onClick={() => scroll("right")}
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md translate-x-3"
               style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
-              aria-label="Scroll right"
+              aria-label={t.managementDevices.scrollNextLabel}
             >
               <ChevronRight size={18} />
             </button>

@@ -1922,3 +1922,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 회귀 테스트 추가/보강: round4.regression.test.ts (30케이스 전체 통과)
 - [x] type-check + test 전체 통과 (TypeScript 0건, 432케이스 전체 통과)
 - [x] 최종 커밋 (체크포인트 저장)
+
+## Round-5 시니어 재검수 (2026-06-07)
+
+- [x] P1: TreatmentsEquipmentSection.tsx INITIAL_SHOW useState lazy initializer로 교체 (SSR 안전)
+- [x] P1: TreatmentsEquipmentSection.tsx 정렬 드롭다운/더보기/접기 버튼 aria-label 추가
+- [x] P1: TreatmentsEquipmentSection.tsx section aria-label 추가
+- [x] P1: DoctorsSection.tsx 의사 탭/자격증 확장/도트 네비게이션 버튼 aria-label 추가 + i18n 4개 언어 키 추가
+- [x] P1: ManagementDevicesSection.tsx 스크롤 버튼 aria-label 영어 하드코딩 → i18n 키로 교체 + fallback 제거
+- [x] P1: HeroSection.tsx tel href lang 삼항 → CLINIC_TEL/CLINIC_TEL_INTL 상수로 교체
+- [x] P1: ContactSection.tsx tel href/display lang 삼항 → CLINIC_TEL/CLINIC_TEL_INTL 상수로 교체
+- [x] P1: i18n.ko.ts teamLabel "Medical Team" → "의료팀" 수정
+- [x] P1: Home.tsx includeMedicalSchema={true} 명시
+- [x] P2: DoctorsSection.tsx mergedDoctors useMemo 적용 + useMemo import 추가
+- [x] [F] 회귀 테스트 추가/보강: round5.regression.test.ts (23케이스 전체 통과)
+- [x] 전체 검증: TypeScript 0건, 455케이스 전체 통과
+- [x] 최종 커밋 (체크포인트 저장)

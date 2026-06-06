@@ -145,6 +145,10 @@ export const ja: I18nContent = {
     credentialsTitle: "学歴 · 経歴 · 資格",
     swipeHint: "← スワイプして医師を見る →",
     teamLabel: "医療チーム",
+    selectDoctorLabel: "{name}医師を選択",
+    expandCredentialsLabel: "学歴・経歴・資格を展開",
+    collapseCredentialsLabel: "学歴・経歴・資格を折りたたむ",
+    dotNavLabel: "{name}医師へ移動",
   },
   treatments: {
     label: "施術案内",
@@ -342,6 +346,8 @@ export const ja: I18nContent = {
     specialEmptyDesc: "近日中に新しいご案内をお届けします。カカオトークまたはお電話にてお問い合わせください。",
   },
   managementDevices: {
+    scrollPrevLabel: "前へ",
+    scrollNextLabel: "次へ",
     sectionTitle: "ケア機器",
     sectionSubtitle: "スター皮膚科 ケア機器",
     items: [

@@ -18,7 +18,7 @@ import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
-import { CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_STATS, CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 import { useClinicStats } from "@/hooks/useClinicStats";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import GoldParticles from "@/components/hero/GoldParticles";
@@ -502,7 +502,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center w-full" style={{ gap: "clamp(1rem, 1.5vw, 0.6rem)", marginTop: '42px', maxWidth: '591px', width: '100%' }}>
           {/* 전화 버튼 - 모바일에서 전체 너비 */}
           <a
-            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+            href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
             className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
             style={{
               background: "linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.1) 100%)",

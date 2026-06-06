@@ -135,7 +135,11 @@ export const ko: I18nContent = {
     specialtyTitle: "전문 시술",
     credentialsTitle: "학력 · 경력 · 자격",
     swipeHint: "← 탭하여 의료진 보기 →",
-    teamLabel: "Medical Team",
+    teamLabel: "의료팀",
+    selectDoctorLabel: "{name} 의사 선택",
+    expandCredentialsLabel: "학력·경력·자격 펼치기",
+    collapseCredentialsLabel: "학력·경력·자격 접기",
+    dotNavLabel: "{name} 의사로 이동",
   },
   treatments: {
     label: "시술 안내",
@@ -333,6 +337,8 @@ export const ko: I18nContent = {
     specialEmptyDesc: "곧 새로운 혜택으로 찾아뵙겠습니다. 자세한 안내는 카카오톡 또는 전화로 문의해 주세요.",
   },
   managementDevices: {
+    scrollPrevLabel: "이전",
+    scrollNextLabel: "다음",
     sectionTitle: "관리 장비",
     sectionSubtitle: "스타피부과 관리 장비",
     items: [

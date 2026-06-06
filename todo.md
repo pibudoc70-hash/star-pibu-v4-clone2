@@ -1785,3 +1785,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] CLEANUP-3: TreatmentsEquipmentSectionV2.tsx 고아 파일 제거
 - [x] CLEANUP-4: ReservationForm.tsx.rej 파일 제거
 - [x] TEST-1: pr46.regression.test.ts — 섹션 5/6/7 추가 (27개 테스트: moreBtn/collapseBtn 4개 언어, 하드코딩 제거 확인, MutationObserver 패턴 확인)
+
+## P1 i18n 일관성 강화 (2026-06-06)
+- [x] i18n.ts: doctors 추가 키 7개 (badge/specialistCount/tagline/specialtyTitle/credentialsTitle/dermBadge/swipeHint) 4개 언어 추가
+- [x] i18n.ts: treatments 추가 키 5개 (recoveryPrefix/equipmentRelated/equipmentUnits/equipmentDetailPending/equipmentConsultBtn) 4개 언어 추가
+- [x] i18n.ts: floatingCta 블록 신규 (call/kakao/reserve/callAria/kakaoAria/reserveAria) 4개 언어 추가
+- [x] DoctorsSection.tsx: 인라인 lang 분기 12개 → t.doctors.* 교체 (badge/specialistCount/tagline/specialtyTitle/credentialsTitle/dermBadge/swipeHint)
+- [x] FloatingCTA.tsx: labels 인라인 객체 제거 → t.floatingCta.* 직접 사용
+- [x] Footer.tsx: labels 인라인 객체 제거 → t.footer.* 직접 사용
+- [x] Header.tsx: 외국인 안내 레이블 인라인 분기 → t.nav.foreignGuide
+- [x] TreatmentsEquipmentSection.tsx: EquipmentPanel 5개 + TreatmentCard recovery 접두어 인라인 분기 교체
+- [x] reports/performance-a11y-audit.md: 임시 감사 파일 git rm
+- [x] pr46.regression.test.ts: 섹션 8~11 추가 (34개 테스트)

@@ -148,11 +148,11 @@ export default function FacilitySection() {
               onClick={(e) => openLightbox(i, e.currentTarget)}
               className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
               style={{ aspectRatio: "16/9" }}
-              aria-label={`${img.label} 이미지 확대 보기`}
+              aria-label={`${img.label} ${fc.zoomHint}`}
             >
               <OptimizedImage
                 src={img.srcJPG}
-                alt={pcCardTitles[i]}
+                alt={img.label}
                 className="w-full h-full object-cover"
                 width={800}
                 height={450}
@@ -168,7 +168,7 @@ export default function FacilitySection() {
                   className="font-semibold"
                   style={{ color: "#FFFFFF", fontSize: "0.95rem" }}
                 >
-                  {pcCardTitles[i]}
+                  {img.label}
                 </h3>
               </div>
             </button>
@@ -196,7 +196,7 @@ export default function FacilitySection() {
                 >
                     <OptimizedImage
                       src={img.srcJPG}
-                      alt={pcCardTitles[i]}
+                      alt={img.label}
                       className="w-full h-full object-cover"
                       width={800}
                       height={450}
@@ -317,7 +317,7 @@ export default function FacilitySection() {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="시설 사진 확대"
+            aria-label={fc.zoomHint}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
             onClick={closeLightbox}
           >
@@ -330,7 +330,7 @@ export default function FacilitySection() {
                 ref={lightboxCloseRef}
                 onClick={closeLightbox}
                 className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
-                aria-label="라이트박스 닫기"
+                aria-label="Close"
               >
                 <X size={32} />
               </button>
@@ -347,7 +347,7 @@ export default function FacilitySection() {
               {/* Title */}
               <div className="text-center mt-4">
                 <h3 className="text-white text-xl font-semibold">
-                  {pcCardTitles[lightboxIndex]}
+                  {galleryImages[lightboxIndex].label}
                 </h3>
               </div>
             </div>

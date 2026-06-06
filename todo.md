@@ -1759,3 +1759,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SEO-OG-10: OG 이미지 4개(ko/en/ja/zh) 생성 및 manus-storage 업로드 완료
 - [x] SEO-OG-11: SeoHead.multilang.test.ts — 다국어 SEO 상수 회귀 방지 테스트 27개 추가
 - [x] SEO-OG-12: vitest.config.ts — client/**/*.test.ts 패턴 추가 (순수 TS 테스트 파일 인식)
+
+## 일본어/중국어 페이지 전수 검수 (2026-06-06)
+- [x] TreatmentsEquipmentSection: detail 84개 EN/JA/ZH 번역 완성 (100%)
+- [x] TreatmentsEquipmentSection: effect 74개 EN/JA/ZH 번역 완성 (100%)
+- [x] TreatmentsEquipmentSection: sessions 74개 EN/JA/ZH 번역 완성 (100%)
+- [x] TreatmentsEquipmentSection: h2 제목 하드코딩 제거 (tr.title로 통일)
+- [x] FacilitySection: pcCardTitles 한국어 하드코딩 → galleryImages[i].label로 교체
+- [x] FacilitySection: aria-label 한국어 하드코딩 → i18n zoomHint 키로 교체
+- [x] Map.tsx: 카카오맵 fallback 텍스트 다국어 처리
+- [x] TreatmentsEquipmentSection.multilang.test.ts: 번역 완성도 회귀 방지 테스트 16개 추가

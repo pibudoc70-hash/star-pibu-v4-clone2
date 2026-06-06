@@ -45,14 +45,17 @@ export default function Header() {
   const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
 
   const buildLocalizedPath = (targetLang: Lang): string => {
+    // wouter의 location은 hash/query를 제외한 pathname만 반환하므로
+    // window.location.pathname을 사용해 실제 현재 경로를 정확히 파악
     const LANG_PREFIXES = ["/en", "/ja", "/zh"];
-    let stripped = location;
+    let stripped = window.location.pathname;
     for (const prefix of LANG_PREFIXES) {
       if (stripped === prefix || stripped.startsWith(prefix + "/")) {
         stripped = stripped.slice(prefix.length) || "/";
         break;
       }
     }
+    // /foreign-guide 계열은 ko 콘텐츠 없음 → 홈으로 안전 복귀
     if (targetLang === "ko" && (stripped === "/foreign-guide" || stripped.startsWith("/foreign-guide/"))) {
       return "/";
     }
@@ -63,9 +66,13 @@ export default function Header() {
 
   const handleLangChange = (option: typeof langOptions[0]) => {
     setLangDropOpen(false);
+    // LangContext를 먼저 업데이트하여 localStorage에 선호 언어 저장
+    // (persist=true: 사용자가 명시적으로 선택한 언어이므로 저장)
+    setLang(option.lang, true);
     const hash = window.location.hash;
     const newPath = buildLocalizedPath(option.lang);
-    window.location.href = newPath + hash;
+    // window.location.href 대신 replace를 사용하여 히스토리 스택 오염 방지
+    window.location.replace(newPath + hash);
   };
 
   // 드롭다운 외부 클릭 시 닫기
@@ -790,10 +797,12 @@ export default function Header() {
                     type="button"
                     key={option.lang}
                     onClick={() => {
+                      // LangContext 먼저 업데이트 (사용자 명시적 선택 → persist=true)
+                      setLang(option.lang, true);
                       closeMobileMenu();
                       setTimeout(() => {
                         const hash = window.location.hash;
-                        window.location.href = buildLocalizedPath(option.lang) + hash;
+                        window.location.replace(buildLocalizedPath(option.lang) + hash);
                       }, 100);
                     }}
                     className="flex flex-col items-center gap-1 transition-all"

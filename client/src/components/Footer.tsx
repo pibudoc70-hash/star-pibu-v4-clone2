@@ -70,12 +70,16 @@ export default function Footer() {
     }
   };
 
+  // Header primaryNav + secondaryNav 순서와 일치 (일관성 유지)
   const quickLinks = [
-    { label: t.nav.about, href: "/about" },
-    { label: t.nav.doctors, href: "#doctors" },
+    // 1차 메뉴
     { label: t.nav.treatments, href: "#treatments" },
-    { label: t.nav.facility, href: "#facility" },
-    { label: t.nav.contact, href: "#contact" },
+    { label: t.nav.doctors,    href: "#doctors"    },
+    { label: "EVENT",          href: "#events"     },
+    { label: t.nav.about,      href: "/about"      },
+    // 2차 메뉴 (More 패널과 동일)
+    { label: t.nav.facility,   href: "#facility"   },
+    { label: t.nav.contact,    href: "#contact"    },
     { label: t.nav.foreignGuide, href: "/foreign-guide" },
   ];
 

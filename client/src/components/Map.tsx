@@ -200,9 +200,10 @@ export function MapView({
     init();
   }, [init]);
 
-  const { lang } = useLang();
-  const mapLabel = lang === 'ja' ? 'Google マップで見る' : lang === 'zh' ? '在Google地图查看' : lang === 'en' ? 'View on Google Maps' : '카카오맵에서 보기';
-  const mapAddress = lang === 'ja' ? '釜山西面 アイオンシティビル 2·4F' : lang === 'zh' ? '釜山西面 爱恩城大厦 2·4楼' : lang === 'en' ? 'Seomyeon, Busan – Ion City Bldg, 2F & 4F' : '부산 서면 아이온시티빌딩 2·4층';
+  const { t } = useLang();
+  // i18n.ts에 4개 언어 모두 정의됨 — fallback 삼항 불필요
+  const mapLabel = t.access.mapViewLabel ?? '카카오맵에서 보기';
+  const mapAddress = t.access.mapAddressShort ?? '부산 서면 아이온시티빌딩 2·4층';
 
   if (mapError) {
     return (

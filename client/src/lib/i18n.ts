@@ -86,6 +86,10 @@ export interface I18nContent {
     naverMap?: string;
     copyAddress?: string;
     copiedLabel?: string;
+    /** Map.tsx 구글맵/카카오맵 보기 레이블 */
+    mapViewLabel?: string;
+    /** Map.tsx 주소 단축형 */
+    mapAddressShort?: string;
   };
   doctors: {
     label: string;
@@ -396,6 +400,8 @@ export const i18n: Record<Lang, I18nContent> = {
       naverMap: "네이버 지도",
       copyAddress: "주소 복사",
       copiedLabel: "복사됨!",
+      mapViewLabel: "카카오맵에서 보기",
+      mapAddressShort: "부산 서면 아이온시티빌딩 2·4층",
     },
     doctors: {
       label: "Doctors",
@@ -882,6 +888,8 @@ export const i18n: Record<Lang, I18nContent> = {
       naverMap: "Naver Map",
       copyAddress: "Copy Address",
       copiedLabel: "Copied!",
+      mapViewLabel: "View on Google Maps",
+      mapAddressShort: "Seomyeon, Busan – Ion City Bldg, 2F & 4F",
     },
     doctors: {
       label: "Our Doctors",
@@ -1374,6 +1382,8 @@ export const i18n: Record<Lang, I18nContent> = {
       naverMap: "Naver Map",
       copyAddress: "住所をコピー",
       copiedLabel: "コピーしました！",
+      mapViewLabel: "Google マップで見る",
+      mapAddressShort: "釜山西面 アイオンシティビル 2・4F",
     },
     doctors: {
       label: "医師紹介",
@@ -1866,6 +1876,8 @@ export const i18n: Record<Lang, I18nContent> = {
       naverMap: "Naver Map",
       copyAddress: "复制地址",
       copiedLabel: "已复制！",
+      mapViewLabel: "在Google地图查看",
+      mapAddressShort: "釜山西面 爱恩城大厦 2·4楼",
     },
     doctors: {
       label: "医生介绍",

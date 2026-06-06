@@ -1821,3 +1821,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] STRUCT-11: Header.tsx 슬림화 (900줄 → 562줄, 37% 감소)
 - [x] STRUCT-TEST: 구조 분해 회귀 방지 테스트 업데이트 (content.test.tsx, lang.regression.test.ts, pr46.regression.test.ts)
 - [x] STRUCT-FIX: events.special.test.ts 타임아웃 5000ms → 10000ms 수정
+
+## Step 2~5 통합 감사 작업 (2026-06-06)
+- [x] STEP2-1: 피부과 소개(/about) 메뉴 연결 버그 수정 — handleNavClick basePath+"//about" 버그 → setLocation 사용
+- [x] STEP2-2: TreatmentsEquipmentSection.tsx — time/recovery/modal name 필드 inline lang 삼항 → getText 훅으로 통일
+- [x] STEP2-3: Map.tsx — 구글맵 레이블/주소 inline lang 삼항 → i18n 키(mapViewLabel/mapAddressShort) 사용
+- [x] STEP2-4: i18n.ts — access 타입에 mapViewLabel/mapAddressShort 키 추가 (4개 언어)
+- [x] STEP2-5: i18nText.test.ts — Step 2 i18n 일관성 회귀 방지 테스트 추가
+- [x] STEP3-GO: SEO/meta/schema/canonical/hreflang 정책 감사 — 이상 없음 (GO)
+- [x] STEP4-GO: 성능/렌더링/lazy loading 감사 — 이상 없음 (GO)
+- [x] STEP5-1: server/step5.regression.test.ts — handleNavClick setLocation 회귀 방지 + Map.tsx i18n 키 회귀 방지 + TreatmentsEquipmentSection getText 훅 회귀 방지 (11개 테스트)
+- [x] STEP5-2: Map.tsx — fallback 삼항 완전 제거 (i18n.ts에 4개 언어 모두 정의됨)

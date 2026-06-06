@@ -145,3 +145,60 @@ describe("treatments data integrity", () => {
     expect(getTreatmentBySlug(undefined)).toBeUndefined();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Step 2 회귀 방지: inline lang 삼항 제거 검증
+// ─────────────────────────────────────────────────────────────────────────────
+describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
+  const { readFileSync } = require("node:fs");
+  const nodePath = require("node:path");
+  const root = process.cwd();
+
+  it("TreatmentsEquipmentSection.tsx에 time/recovery 필드 inline lang 삼항이 없어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"),
+      "utf8",
+    );
+    // item.timeEn ?? item.time 형태의 inline 삼항이 없어야 함
+    expect(src).not.toMatch(/lang === ["']en["'] \? \(item\.timeEn/);
+    expect(src).not.toMatch(/lang === ["']en["'] \? \(item\.recoveryEn/);
+    // getText 훅을 사용해야 함
+    expect(src).toMatch(/getText\(item\.time, item\.timeEn/);
+    expect(src).toMatch(/getText\(item\.recovery, item\.recoveryEn/);
+  });
+
+  it("Map.tsx에 mapLabel/mapAddress i18n 키를 사용해야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(root, "client/src/components/Map.tsx"),
+      "utf8",
+    );
+    // t.access.mapViewLabel 키를 사용해야 함
+    expect(src).toMatch(/t\.access\.mapViewLabel/);
+    expect(src).toMatch(/t\.access\.mapAddressShort/);
+  });
+
+  it("i18n.ts access 타입에 mapViewLabel/mapAddressShort 키가 정의되어야 한다", () => {
+    const src = readFileSync(
+      nodePath.resolve(root, "client/src/lib/i18n.ts"),
+      "utf8",
+    );
+    expect(src).toMatch(/mapViewLabel\??:/);
+    expect(src).toMatch(/mapAddressShort\??:/);
+  });
+
+  it("i18n.ts 4개 언어 모두 mapViewLabel 값이 있어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ko.access.mapViewLabel).toBeTruthy();
+    expect(i18n.en.access.mapViewLabel).toBeTruthy();
+    expect(i18n.ja.access.mapViewLabel).toBeTruthy();
+    expect(i18n.zh.access.mapViewLabel).toBeTruthy();
+  });
+
+  it("i18n.ts 4개 언어 모두 mapAddressShort 값이 있어야 한다", async () => {
+    const { i18n } = await import("../client/src/lib/i18n");
+    expect(i18n.ko.access.mapAddressShort).toBeTruthy();
+    expect(i18n.en.access.mapAddressShort).toBeTruthy();
+    expect(i18n.ja.access.mapAddressShort).toBeTruthy();
+    expect(i18n.zh.access.mapAddressShort).toBeTruthy();
+  });
+});

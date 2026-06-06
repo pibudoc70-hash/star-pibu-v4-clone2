@@ -95,11 +95,11 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
           <div className="flex items-center gap-3 text-[10px] text-slate-400">
             <span className="flex items-center gap-0.5">
               <Clock size={10} />
-              {lang === "en" ? (item.timeEn ?? item.time) : lang === "ja" ? (item.timeJa ?? item.time) : lang === "zh" ? (item.timeZh ?? item.time) : item.time}
+              {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
             </span>
             <span className="flex items-center gap-0.5">
               <RefreshCw size={10} />
-              {tr.recoveryPrefix} {lang === "en" ? (item.recoveryEn ?? item.recovery) : lang === "ja" ? (item.recoveryJa ?? item.recovery) : lang === "zh" ? (item.recoveryZh ?? item.recovery) : item.recovery}
+              {tr.recoveryPrefix} {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
             </span>
           </div>
         </div>
@@ -116,11 +116,11 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
               </div>
               <div>
                 <h3 className="text-lg font-bold text-slate-800">
-                  {lang === "en" ? item.nameEn : lang === "ja" ? (item.nameJa ?? item.name) : lang === "zh" ? (item.nameZh ?? item.name) : item.name}
+                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
                 </h3>
                 <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                  <span className="flex items-center gap-1"><Clock size={12} />{tr.modalTime}: {lang === "en" ? (item.timeEn ?? item.time) : item.time}</span>
-                  <span className="flex items-center gap-1"><RefreshCw size={12} />{tr.modalRecovery}: {lang === "en" ? (item.recoveryEn ?? item.recovery) : item.recovery}</span>
+                  <span className="flex items-center gap-1"><Clock size={12} />{tr.modalTime}: {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}</span>
+                  <span className="flex items-center gap-1"><RefreshCw size={12} />{tr.modalRecovery}: {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}</span>
                 </div>
               </div>
             </div>

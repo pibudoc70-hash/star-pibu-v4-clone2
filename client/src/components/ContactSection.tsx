@@ -16,6 +16,11 @@ import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
+// 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
+// initialCenter prop으로 전달될 때 참조 안정성을 보장
+// (새 객체 참조는 다른 객체로 판단되어 불필요한 리렌더링을 유발할 수 있음)
+const STAR_LOCATION: google.maps.LatLngLiteral = { lat: 35.1572312, lng: 129.0581932 };
+
 export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
   const { t, lang } = useLang();
@@ -26,9 +31,6 @@ export default function ContactSection() {
   const [mapHeight, setMapHeight] = useState("400px");
   // CONTACT-P1-A: lazy initializer — window 접근을 렌더 외부로 이동
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
-
-  // 스타피부과 정확한 좌표 (부산 서면 아이온시티빌딩)
-  const STAR_LOCATION = { lat: 35.1572312, lng: 129.0581932 };
 
   // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산 (PC에서만)
   useEffect(() => {

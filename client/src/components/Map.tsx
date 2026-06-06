@@ -167,6 +167,10 @@ export function MapView({
   const [mapError, setMapError] = useState(false);
 
   const init = usePersistFn(async () => {
+    // 이미 초기화된 경우 재초기화 방지
+    // 이 가드가 없으면 커포넌트 리렌더링 시 init()이 다시 호출되어
+    // 기본값(initialCenter = 샌프란시스코 좌표)로 지도가 덮어쓰여지는 버그 발생
+    if (map.current) return;
     try {
       await loadMapScript();
       if (!mapContainer.current) return;

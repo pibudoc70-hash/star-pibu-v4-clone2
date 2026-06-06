@@ -1769,3 +1769,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] FacilitySection: aria-label 한국어 하드코딩 → i18n zoomHint 키로 교체
 - [x] Map.tsx: 카카오맵 fallback 텍스트 다국어 처리
 - [x] TreatmentsEquipmentSection.multilang.test.ts: 번역 완성도 회귀 방지 테스트 16개 추가
+
+## P1/P2 코드 품질 수정 (2026-06-06)
+- [x] P1-FIX-1: TreatmentsEquipmentSection.tsx — alt 하드코딩 `${item.name} 베너` → getText() 패턴으로 교체
+- [x] P1-FIX-2: TreatmentsEquipmentSection.tsx — title 하드코딩 `${item.name} 소개 영상` → i18n 처리
+- [x] P1-FIX-3: TreatmentsEquipmentSection.tsx — '접기' 하드코딩 → tr.collapseBtn (4개 언어)
+- [x] P1-FIX-4: TreatmentsEquipmentSection.tsx — '{n}개 더 보기' 하드코딩 → tr.moreBtn.replace('{n}', ...) (4개 언어)
+- [x] P1-FIX-5: TreatmentsEquipmentSection.tsx — EquipmentPanel 접기/펼치기 버튼 i18n 키로 교체
+- [x] P1-FIX-6: i18n.ts — treatments 타입에 moreBtn/collapseBtn 키 추가 (ko/en/ja/zh 4개 언어)
+- [x] P2-FIX-1: LandingJA.tsx — hash-scroll setTimeout(300) → MutationObserver 패턴으로 교체
+- [x] P2-FIX-2: LandingZH.tsx — hash-scroll setTimeout(300) → MutationObserver 패턴으로 교체
+- [x] P2-FIX-3: Equipment2.tsx — TreatmentsEquipmentSectionV2 고아 import → TreatmentsEquipmentSection으로 교체
+- [x] CLEANUP-1: scripts/ 디렉토리 25개 마이그레이션 스크립트 제거
+- [x] CLEANUP-2: docs/ 디렉토리 3개 임시 파일 제거
+- [x] CLEANUP-3: TreatmentsEquipmentSectionV2.tsx 고아 파일 제거
+- [x] CLEANUP-4: ReservationForm.tsx.rej 파일 제거
+- [x] TEST-1: pr46.regression.test.ts — 섹션 5/6/7 추가 (27개 테스트: moreBtn/collapseBtn 4개 언어, 하드코딩 제거 확인, MutationObserver 패턴 확인)

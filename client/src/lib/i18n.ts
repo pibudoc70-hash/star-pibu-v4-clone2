@@ -115,6 +115,7 @@ export interface I18nContent {
     modalDetailBtn: string;
     modalConsultBtn: string;
     collapseBtn: string;
+    moreBtn: string;
     categories: Array<{ name: string; items: string[] }>;
   };
   foreignGuide: {
@@ -426,6 +427,7 @@ export const i18n: Record<Lang, I18nContent> = {
       modalDetailBtn: "상세 페이지 보기",
       modalConsultBtn: "카카오톡으로 상담하기",
       collapseBtn: "접기",
+      moreBtn: "{n}개 더 보기",
       categories: [
         { name: "리프팅·탄력", items: ["울쎄라피 프라임", "써마지 FLX", "세르프", "실루엣 리프트"] },
         { name: "볼륨·주사", items: ["스컬트라", "히알루론산 필러", "보톡스"] },
@@ -888,6 +890,7 @@ export const i18n: Record<Lang, I18nContent> = {
       modalDetailBtn: "View Detail Page",
       modalConsultBtn: "Consult via KakaoTalk",
       collapseBtn: "Collapse",
+      moreBtn: "{n} more",
       categories: [
         { name: "Lifting & Firming", items: ["Ultherapy Prime", "Thermage FLX", "XERF", "Silhouette Lift"] },
         { name: "Volume & Injections", items: ["Sculptra", "Hyaluronic Acid Filler", "Botox"] },
@@ -1350,6 +1353,7 @@ export const i18n: Record<Lang, I18nContent> = {
       modalDetailBtn: "詳細ページを見る",
       modalConsultBtn: "KakaoTalkで相談する",
       collapseBtn: "閉じる",
+      moreBtn: "さらに{n}件",
       categories: [
         { name: "リフティング·弾力", items: ["ウルセラピープライム", "サーマジFLX", "XERF", "シルエットリフト"] },
         { name: "ボリューム·注射", items: ["スカルプトラ", "ヒアルロン酸フィラー", "ボトックス"] },
@@ -1812,6 +1816,7 @@ export const i18n: Record<Lang, I18nContent> = {
       modalDetailBtn: "查看详情页面",
       modalConsultBtn: "WeChat咨询",
       collapseBtn: "收起",
+      moreBtn: "再显示{n}个",
       categories: [
         { name: "提升·紧致", items: ["欧活素提升疗法", "热磁治疗FLX", "XERF", "线雕提升"] },
         { name: "丰盈·注射", items: ["舒颜萃", "玻尿酸填充", "肉毒素"] },

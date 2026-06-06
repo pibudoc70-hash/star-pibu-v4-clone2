@@ -25,19 +25,31 @@ import WelcomePopup from "@/components/WelcomePopup";
 
 export default function LandingZH() {
   // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/zh) 기반으로 자동 처리
-  // Scroll to hash section if present
+  // Scroll to hash section if present (MutationObserver 패턴 사용 — lazy 섹션 대응)
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
-    const timer = setTimeout(() => {
-      const el = document.querySelector(hash);
-      if (el) {
-        const offset = 80;
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
+    const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+    const headerOffset = header ? header.offsetHeight + 8 : 80;
+    const el = document.querySelector(hash);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top, behavior: "smooth" });
+      return;
+    }
+    // lazy 섹션이 아직 DOM에 없으면 MutationObserver로 대기
+    const observer = new MutationObserver(() => {
+      const lazyEl = document.querySelector(hash);
+      if (lazyEl) {
+        observer.disconnect();
+        clearTimeout(timeout);
+        const top2 = lazyEl.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: top2, behavior: "smooth" });
       }
-    }, 300);
-    return () => clearTimeout(timer);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    const timeout = setTimeout(() => observer.disconnect(), 3000);
+    return () => { observer.disconnect(); clearTimeout(timeout); };
   }, []);
 
    return (

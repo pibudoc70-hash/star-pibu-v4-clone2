@@ -2275,7 +2275,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 <div className="mb-5">
                   <OptimizedImage
                     src={item.cardBannerImage}
-                    alt={`${item.name} 베너`}
+                    alt={getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
                     className="w-full rounded-xl shadow-md object-cover"
                   />
                 </div>
@@ -2288,7 +2288,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 >
                   <iframe
                     src={item.youtubeUrl}
-                    title={`${item.name} 소개 영상`}
+                    title={getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="absolute top-0 left-0 w-full h-full"
@@ -2384,7 +2384,8 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
   const [expanded, setExpanded] = useState(false);
   const [selectedEq, setSelectedEq] = useState<Equipment | null>(null);
   const visible = expanded ? items : items.slice(0, 4);
-  const { lang } = useLang();
+  const { lang, t } = useLang();
+  const tr = t.treatments;
 
   // [MAINT-P1-1] getEqText → @/hooks/useLocalizedText 공유 hook 사용
   const { getText: getEqText } = useLocalizedText();
@@ -2515,9 +2516,9 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
           onClick={() => setExpanded((v) => !v)}
         >
           {expanded ? (
-            <><ChevronUp size={14} /> {lang === 'en' ? 'Collapse' : lang === 'ja' ? '閉じる' : lang === 'zh' ? '收起' : '접기'}</>
+            <><ChevronUp size={14} /> {tr.collapseBtn}</>
           ) : (
-            <><ChevronDown size={14} /> {lang === 'en' ? `${items.length - 4} more` : lang === 'ja' ? `${items.length - 4}種類もっと見る` : lang === 'zh' ? `再显示${items.length - 4}台` : `${items.length - 4}개 장비 더보기`}</>
+            <><ChevronDown size={14} /> {tr.moreBtn.replace('{n}', String(items.length - 4))}</>
           )}
         </button>
       )}
@@ -2769,12 +2770,12 @@ export default function TreatmentsEquipmentSection() {
                       {showAll ? (
                         <>
                           <ChevronUp size={16} />
-                          접기
+                          {tr.collapseBtn}
                         </>
                       ) : (
                         <>
                           <ChevronDown size={16} />
-                          {filteredTreatments.length - INITIAL_SHOW}개 더 보기
+                          {tr.moreBtn.replace('{n}', String(filteredTreatments.length - INITIAL_SHOW))}
                         </>
                       )}
                     </button>

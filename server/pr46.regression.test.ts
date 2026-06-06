@@ -216,3 +216,97 @@ describe("i18n.ts specialEmptyTitle/specialEmptyDesc 4개 언어 (PR-47)", () =>
     expect(i18nSource).toContain("即将推出新优惠");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. i18n.ts treatments.moreBtn / treatments.collapseBtn 4개 언어 존재
+//    (P1 수정: TreatmentsEquipmentSection 하드코딩 한국어 제거)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("i18n.ts treatments.moreBtn/collapseBtn 4개 언어 (P1-fix)", () => {
+  it("타입 정의에 moreBtn 키가 있어야 한다", () => {
+    expect(i18nSource).toContain("moreBtn: string;");
+  });
+  it("타입 정의에 collapseBtn 키가 있어야 한다", () => {
+    expect(i18nSource).toContain("collapseBtn: string;");
+  });
+  it("ko 번역에 moreBtn 이 있어야 한다 ({n}개 더 보기)", () => {
+    expect(i18nSource).toContain("{n}개 더 보기");
+  });
+  it("en 번역에 moreBtn 이 있어야 한다 ({n} more)", () => {
+    expect(i18nSource).toContain("{n} more");
+  });
+  it("ja 번역에 moreBtn 이 있어야 한다 (さらに{n}件)", () => {
+    expect(i18nSource).toContain("さらに{n}件");
+  });
+  it("zh 번역에 moreBtn 이 있어야 한다 (再显示{n}个)", () => {
+    expect(i18nSource).toContain("再显示{n}个");
+  });
+  it("ko 번역에 collapseBtn 이 있어야 한다 (접기)", () => {
+    expect(i18nSource).toContain('collapseBtn: "접기"');
+  });
+  it("en 번역에 collapseBtn 이 있어야 한다 (Collapse)", () => {
+    expect(i18nSource).toContain('collapseBtn: "Collapse"');
+  });
+  it("ja 번역에 collapseBtn 이 있어야 한다 (閉じる)", () => {
+    expect(i18nSource).toContain('collapseBtn: "閉じる"');
+  });
+  it("zh 번역에 collapseBtn 이 있어야 한다 (收起)", () => {
+    expect(i18nSource).toContain('collapseBtn: "收起"');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 6. TreatmentsEquipmentSection — 하드코딩 한국어 제거 확인
+//    (P1 수정: alt/title/접기/더보기 i18n 키로 교체)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("TreatmentsEquipmentSection 하드코딩 한국어 제거 (P1-fix)", () => {
+  const treatmentsSource = readFileSync(
+    path.resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"),
+    "utf8",
+  );
+  it("하드코딩된 '베너' 문자열이 없어야 한다 (alt 다국어화)", () => {
+    expect(treatmentsSource).not.toMatch(/`\$\{[^}]+\}\s*베너`/);
+  });
+  it("하드코딩된 '소개 영상' 문자열이 없어야 한다 (title 다국어화)", () => {
+    expect(treatmentsSource).not.toMatch(/`\$\{[^}]+\}\s*소개 영상`/);
+  });
+  it("하드코딩된 '접기' 문자열이 JSX 텍스트로 없어야 한다 (collapseBtn i18n 키 사용)", () => {
+    expect(treatmentsSource).not.toMatch(/>접기</);
+    expect(treatmentsSource).not.toMatch(/\{["']접기["']\}/);
+  });
+  it("하드코딩된 '개 더 보기' 문자열이 없어야 한다 (moreBtn i18n 키 사용)", () => {
+    expect(treatmentsSource).not.toMatch(/개 더 보기`/);
+  });
+  it("tr.moreBtn.replace 패턴이 사용되어야 한다", () => {
+    expect(treatmentsSource).toContain("tr.moreBtn.replace(");
+  });
+  it("tr.collapseBtn 패턴이 사용되어야 한다", () => {
+    expect(treatmentsSource).toContain("tr.collapseBtn");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 7. LandingJA/ZH — hash-scroll MutationObserver 패턴 사용 확인
+//    (P2 수정: setTimeout(300) → MutationObserver 패턴으로 교체)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("LandingJA/ZH hash-scroll MutationObserver 패턴 (P2-fix)", () => {
+  const landingJASource = readFileSync(
+    path.resolve(root, "client/src/pages/LandingJA.tsx"),
+    "utf8",
+  );
+  const landingZHSource = readFileSync(
+    path.resolve(root, "client/src/pages/LandingZH.tsx"),
+    "utf8",
+  );
+  it("LandingJA에서 MutationObserver를 사용해야 한다", () => {
+    expect(landingJASource).toContain("MutationObserver");
+  });
+  it("LandingZH에서 MutationObserver를 사용해야 한다", () => {
+    expect(landingZHSource).toContain("MutationObserver");
+  });
+  it("LandingJA에서 observer.disconnect()가 있어야 한다 (cleanup)", () => {
+    expect(landingJASource).toContain("observer.disconnect()");
+  });
+  it("LandingZH에서 observer.disconnect()가 있어야 한다 (cleanup)", () => {
+    expect(landingZHSource).toContain("observer.disconnect()");
+  });
+});

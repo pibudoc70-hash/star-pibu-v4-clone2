@@ -15,7 +15,7 @@
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
-import TreatmentsEquipmentSectionV2 from "@/components/TreatmentsEquipmentSectionV2";
+import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -77,7 +77,7 @@ export default function Equipment2() {
            "부산 서면 스타피부과 시술 안내 - 울쎄라 써마지 리프팅 색소질환 레이저"}
         </h1>
         {/* Treatments + Equipment Section 2 - DB 연동 (관리자 등록) */}
-        <TreatmentsEquipmentSectionV2 />
+        <TreatmentsEquipmentSection />
 
         {/* Location & Contact - 오시는 길 */}
         <ContactSection />

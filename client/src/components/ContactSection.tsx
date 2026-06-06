@@ -100,16 +100,16 @@ export default function ContactSection() {
   const closedLabel = t.hours.rows[t.hours.rows.length - 1]?.time ?? t.hours.rows[0]?.time ?? "";  // 마지막 행 time 값 (휴진 표시)
 
   // CONTACT-P2-A: i18n 키 직접 사용 (fallback 삼항 제거 — 4개 언어 모두 키 존재 확인)
-  const locationInfo = t.access.locationInfo ?? t.access.label;  // locationInfo 4개 언어 모두 존재
-  const sectionTitle = t.access.sectionTitle ?? t.access.title;  // sectionTitle 4개 언어 모두 존재
+  const locationInfo = t.access.locationInfo!;  // 4개 언어 모두 존재 확인
+  const sectionTitle = t.access.sectionTitle!;  // 4개 언어 모두 존재 확인
   const addressLabel = t.access.addressLabel!;
   const phoneLabel = t.access.phoneLabel!;
   const hoursLabel = t.access.hoursLabel!;
-  const hoursNote = t.access.hoursNote ?? t.hours.note;  // hoursNote 4개 언어 모두 존재
+  const hoursNote = t.access.hoursNote!;  // 4개 언어 모두 존재 확인
   const transitLabel = t.access.transitLabel!;
-  const transitDesc = t.access.transitDesc ?? t.access.subway;  // transitDesc 4개 언어 모두 존재
+  const transitDesc = t.access.transitDesc!;  // 4개 언어 모두 존재 확인
   const parkingLabel = t.access.parkingLabel!;
-  const parkingDesc = t.access.parkingDesc ?? t.access.parking;  // parkingDesc 4개 언어 모두 존재
+  const parkingDesc = t.access.parkingDesc!;  // 4개 언어 모두 존재 확인
   const kakaoMapLabel = t.access.kakaoMapLabel!;
   const naverMapLabel = t.access.naverMap!;  // naverMap 4개 언어 모두 존재
   const copyAddressLabel = t.access.copyAddress!;

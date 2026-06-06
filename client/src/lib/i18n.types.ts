@@ -88,7 +88,7 @@ export interface I18nContent {
     kakaoChat?: string;
     naverMap?: string;
     copyAddress?: string;
-    copiedLabel?: string;
+    copiedLabel: string;  // [R7] optional → required (4개 언어 모두 존재 확인)
     /** Map.tsx 구글맵/카카오맵 보기 레이블 */
     mapViewLabel?: string;
     /** Map.tsx 주소 단쳕형 */

@@ -1949,3 +1949,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [H] 로직 기반 회귀 테스트 보강: round6.regression.test.ts (60케이스 전체 통과)
 - [x] 전체 검증: TypeScript 0건, 515케이스 전체 통과
 - [x] 최종 커밋 (체크포인트 저장)
+
+## Round-7 시니어 재검수 (2026-06-07)
+
+- [x] P1: ContactSection.tsx `??` fallback 5개 → non-null assertion(`!`) 교체
+- [x] P1: i18n.types.ts `access.copiedLabel` optional → required 변경 + HeroSection.tsx fallback "已复制！" 제거
+- [x] P2: i18n.ko.ts doctors.list 3명 specialties 추가 (en/ja/zh와 타입 일관성)
+- [x] 회귀 테스트 추가: round7.regression.test.ts (20케이스 전체 통과)
+- [x] 전체 검증: TypeScript 0건, 535케이스 전체 통과
+- [x] 최종 커밋 (체크포인트 저장)

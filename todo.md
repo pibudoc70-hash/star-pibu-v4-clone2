@@ -1797,3 +1797,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TreatmentsEquipmentSection.tsx: EquipmentPanel 5개 + TreatmentCard recovery 접두어 인라인 분기 교체
 - [x] reports/performance-a11y-audit.md: 임시 감사 파일 git rm
 - [x] pr46.regression.test.ts: 섹션 8~11 추가 (34개 테스트)
+
+## P1 SEO/OG 정책 정합성 + Header/ContactSection 정리 (2026-06-06)
+- [x] About.tsx: 구 og-image.jpg → OG_IMAGE_LOCALIZED[lang] 교체
+- [x] ForeignGuide.tsx: 구 og-image.jpg → OG_IMAGE_LOCALIZED[lang] 교체
+- [x] Equipment2.tsx: 구 og-image.jpg → OG_IMAGE_LOCALIZED[lang] 교체
+- [x] Header.tsx: CHAT_URLS/NAVER_MAP_URL 중복 계산 제거, useChatConfig().reserveUrl 직접 사용
+- [x] ContactSection.tsx: closedLabel 인라인 lang 삼항 → t.hours.rows 마지막 항목 time 값
+- [x] ContactSection.tsx: addressLabel/phoneLabel/kakaoMapLabel 등 fallback 삼항 제거
+- [x] pr46.regression.test.ts: 섹션 12/13/14 추가 (14개 테스트)

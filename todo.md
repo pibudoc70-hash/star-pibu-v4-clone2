@@ -1729,3 +1729,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TRANS-FIX-6: EQUIPMENT 데이터 53개 항목 전체에 descEn/descJa/descZh 삽입 (25개 누락 항목 보완)
 - [x] TRANS-FIX-7: TreatmentsEquipmentSection.content.test.tsx — 번역 누락 회귀 방지 테스트 5개 추가 (TREATMENTS/EQUIPMENT 전수 검증, getText/getEqText 존재 확인)
 - [x] TRANS-FIX-8: 테스트 파일 확장자 .ts → .tsx 변경 (vitest include 패턴 준수)
+
+## 부분 번역 상태 근본 해결 (2026-06-06)
+
+- [x] PARTIAL-FIX-1: TreatmentsEquipmentSection.tsx — Treatment 인터페이스에 nameJa/nameZh 옵셔널 필드 추가
+- [x] PARTIAL-FIX-2: TreatmentsEquipmentSection.tsx — Equipment 인터페이스에 nameJa/nameZh 옵셔널 필드 추가
+- [x] PARTIAL-FIX-3: TreatmentsEquipmentSection.tsx — TreatmentCard h3 제목 {item.name} → getText(item.name, item.nameEn, item.nameJa, item.nameZh) 교체
+- [x] PARTIAL-FIX-4: TreatmentsEquipmentSection.tsx — 모달 h2 제목, DialogTitle, alt 속성 모두 getText() 교체
+- [x] PARTIAL-FIX-5: TreatmentsEquipmentSection.tsx — EquipmentPanel 장비 카드 제목 getEqText(eq.name, eq.brand, eq.nameJa, eq.nameZh) 교체
+- [x] PARTIAL-FIX-6: TreatmentsEquipmentSection.tsx — EquipmentPanel 모달 h3 제목 getEqText(selectedEq.name, ...) 교체
+- [x] PARTIAL-FIX-7: TreatmentsEquipmentSection.tsx — CATEGORIES 13개 항목에 labelJa/labelZh 추가
+- [x] PARTIAL-FIX-8: TreatmentsEquipmentSection.tsx — getCatLabel(cat, lang) 헬퍼 추가, cat.label → getCatLabel(cat, lang) 교체
+- [x] PARTIAL-FIX-9: ManagementDevicesSection.tsx — Device 인터페이스에 nameJa/nameZh/shortDescEn/shortDescJa/shortDescZh 필드 추가
+- [x] PARTIAL-FIX-10: ManagementDevicesSection.tsx — 16개 장비 항목 전체에 4개 언어 name/shortDesc 완전 번역 삽입
+- [x] PARTIAL-FIX-11: ManagementDevicesSection.tsx — getDeviceText() 헬퍼 추가, 렌더링 로직 전체 교체
+- [x] PARTIAL-FIX-12: TreatmentsEquipmentSection.content.test.tsx — nameJa/nameZh/getCatLabel/getEqText 검증 테스트 8개 추가
+- [x] PARTIAL-FIX-13: ManagementDevicesSection.content.test.tsx — 신규 번역 완전성 테스트 5개 추가

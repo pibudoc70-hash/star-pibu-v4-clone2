@@ -39,55 +39,55 @@ const CATEGORY_ICON_MAP: Record<string, React.ComponentType<{ size?: number; cla
 };
 
 const CATEGORIES = [
-  { id: "best",       label: "Best 시술",          labelEn: "BEST",          desc: "스타피부과에서 가장 많이 선택되는 대표 시술 프로그램입니다. 전문의가 직접 상담 후 피부 상태에 맞는 최적의 조합을 제안해 드립니다.",
+  { id: "best",       label: "Best 시술",          labelEn: "BEST", labelJa: "ベスト施術", labelZh: "精选项目",          desc: "스타피부과에서 가장 많이 선택되는 대표 시술 프로그램입니다. 전문의가 직접 상담 후 피부 상태에 맞는 최적의 조합을 제안해 드립니다.",
     descEn: "The most popular treatment programs at Star Dermatology. Our specialists will recommend the optimal combination for your skin condition after a thorough consultation.",
     descJa: "スター皮膚科で最も多く選ばれる代表的な施術プログラムです。専門医が直接カウンセリングを行い、お肌の状態に合った最適な組み合わせをご提案します。",
     descZh: "星皮肤科最受欢迎的代表性治疗项目。专科医生亲自咨询后，为您推荐最适合您肤质的最佳组合方案。" },
-  { id: "lifting",    label: "리프팅·탄력",         labelEn: "LIFTING",       desc: "처진 피부와 탄력 저하에 효과적인 리프팅 시술입니다. 울쏄라피·써마지 등 비절개 방식으로 자연스러운 리프팅 효과를 경험하세요.",
+  { id: "lifting",    label: "리프팅·탄력",         labelEn: "LIFTING", labelJa: "リフティング・弾力", labelZh: "提升·弹力",       desc: "처진 피부와 탄력 저하에 효과적인 리프팅 시술입니다. 울쏄라피·써마지 등 비절개 방식으로 자연스러운 리프팅 효과를 경험하세요.",
     descEn: "Effective lifting treatments for sagging skin and loss of elasticity. Experience natural lifting effects with non-surgical methods like Ultherapy and Thermage.",
     descJa: "たるんだ肌や弾力低下に効果的なリフティング施術です。ウルセラピー・サーマジなど非切開方式で自然なリフティング効果を体験してください。",
     descZh: "针对皮肤松弛和弹力下降的有效提升治疗。通过超声刀、热玛吉等非手术方式，体验自然的提升效果。" },
-  { id: "eye",        label: "눈밑지방",            labelEn: "EYE",           desc: "눈밑 지방 재배치 및 다크서클 개선 전문 시술입니다. 스타피부과 원장이 직접 집도하며, 자연스럽고 생기 있는 눈매를 만들어 드립니다.",
+  { id: "eye",        label: "눈밑지방",            labelEn: "EYE", labelJa: "目の下の脂肪", labelZh: "眼袋脂肪",           desc: "눈밑 지방 재배치 및 다크서클 개선 전문 시술입니다. 스타피부과 원장이 직접 집도하며, 자연스럽고 생기 있는 눈매를 만들어 드립니다.",
     descEn: "Specialized treatments for under-eye fat repositioning and dark circle improvement. Our doctors perform the procedure directly for natural, vibrant eyes.",
     descJa: "目の下の脂肪再配置とクマ改善の専門施術です。スター皮膚科の院長が直接執刀し、自然で生き生きとした目元を作ります。",
     descZh: "眼袋脂肪重置及黑眼圈改善专项治疗。由星皮肤科院长亲自操作，打造自然有神的眼部轮廓。" },
-  { id: "vitiligo",   label: "백반증",              labelEn: "VITILIGO",      desc: "피부 색소 소실로 인한 백반증을 전문적으로 치료합니다. 엑시머 레이저와 광선 치료를 병행하여 색소 재생을 유도합니다.",
+  { id: "vitiligo",   label: "백반증",              labelEn: "VITILIGO", labelJa: "白斑症", labelZh: "白癜风",      desc: "피부 색소 소실로 인한 백반증을 전문적으로 치료합니다. 엑시머 레이저와 광선 치료를 병행하여 색소 재생을 유도합니다.",
     descEn: "Specialized treatment for vitiligo caused by loss of skin pigmentation. Combining excimer laser and phototherapy to stimulate pigment regeneration.",
     descJa: "皮膚の色素消失による白斑を専門的に治療します。エキシマレーザーと光線治療を併用して色素再生を促進します。",
     descZh: "专业治疗因皮肤色素脱失引起的白癜风。结合准分子激光和光线治疗，促进色素再生。" },
-  { id: "pigment",    label: "색소·문신",           labelEn: "PIGMENT",       desc: "기미, 잡티, 문신 등 색소 병변을 효과적으로 제거합니다. 피부 타입에 맞는 레이저를 선택하여 부작용 없이 깨끗한 피부를 되찾아 드립니다.",
+  { id: "pigment",    label: "색소·문신",           labelEn: "PIGMENT", labelJa: "色素・タトゥー", labelZh: "色素·纹身",       desc: "기미, 잡티, 문신 등 색소 병변을 효과적으로 제거합니다. 피부 타입에 맞는 레이저를 선택하여 부작용 없이 깨끗한 피부를 되찾아 드립니다.",
     descEn: "Effectively removes pigmented lesions such as melasma, freckles, and tattoos. Restore clear skin without side effects by selecting the right laser for your skin type.",
     descJa: "シミ、そばかす、タトゥーなどの色素病変を効果的に除去します。肌タイプに合ったレーザーを選択して、副作用なくきれいな肌を取り戻します。",
     descZh: "有效去除黄褐斑、雀斑、纹身等色素病变。根据肤质选择合适的激光，无副作用地恢复净白肌肤。" },
-  { id: "scar",       label: "흉터·모공",           labelEn: "SCAR",          desc: "여드름 흉터, 수술 흉터, 넓어진 모공을 개선하는 시술입니다. 프락셀·CO2 레이저로 피부 재생을 촉진하여 매끄러운 피부결을 만들어 드립니다.",
+  { id: "scar",       label: "흉터·모공",           labelEn: "SCAR", labelJa: "傷跡・毛穴", labelZh: "疤痕·毛孔",          desc: "여드름 흉터, 수술 흉터, 넓어진 모공을 개선하는 시술입니다. 프락셀·CO2 레이저로 피부 재생을 촉진하여 매끄러운 피부결을 만들어 드립니다.",
     descEn: "Treatments to improve acne scars, surgical scars, and enlarged pores. Fraxel and CO2 lasers stimulate skin regeneration for smoother skin texture.",
     descJa: "ニキビ跡、手術跡、毛穴の開きを改善する施術です。フラクセル・CO2レーザーで皮膚再生を促進し、なめらかな肌質を作ります。",
     descZh: "改善痘疤、手术疤痕和毛孔粗大的治疗方案。通过飞梭激光、CO2激光促进皮肤再生，打造细腻肌肤。" },
-  { id: "acne_laser", label: "여드름",              labelEn: "ACNE",          desc: "여드름 원인을 근본적으로 치료하는 복합 시술 프로그램입니다. 피지 분비 조절부터 염증 완화, 흉터 예방까지 단계별로 관리해 드립니다.",
+  { id: "acne_laser", label: "여드름",              labelEn: "ACNE", labelJa: "ニキビ", labelZh: "痘痘",          desc: "여드름 원인을 근본적으로 치료하는 복합 시술 프로그램입니다. 피지 분비 조절부터 염증 완화, 흉터 예방까지 단계별로 관리해 드립니다.",
     descEn: "A comprehensive treatment program that addresses the root causes of acne. Step-by-step management from sebum regulation to inflammation relief and scar prevention.",
     descJa: "ニキビの原因を根本的に治療する複合施術プログラムです。皮脂分泌調整から炎症緩和、瘢痕予防まで段階的に管理します。",
     descZh: "从根本上治疗痘痘原因的综合治疗方案。从皮脂分泌调节到消炎、预防疤痕，进行阶段性管理。" },
-  { id: "rosacea",    label: "홍조·혈관",           labelEn: "ROSACEA",       desc: "얼굴 홍조, 실핏줄, 혈관 확장 등 혈관성 피부 고민을 해결합니다. 레이저 치료로 피부 톤을 균일하게 정돈해 드립니다.",
+  { id: "rosacea",    label: "홍조·혈관",           labelEn: "ROSACEA", labelJa: "紅潮・血管", labelZh: "红肌·血管",       desc: "얼굴 홍조, 실핏줄, 혈관 확장 등 혈관성 피부 고민을 해결합니다. 레이저 치료로 피부 톤을 균일하게 정돈해 드립니다.",
     descEn: "Resolves vascular skin concerns such as facial redness, broken capillaries, and dilated blood vessels. Laser treatment evens out skin tone.",
     descJa: "顔の紅潮、毛細血管拡張などの血管性肌悩みを解決します。レーザー治療で肌のトーンを均一に整えます。",
     descZh: "解决面部潮红、毛细血管扩张等血管性皮肤问题。通过激光治疗使肤色均匀。" },
-  { id: "acne",       label: "액취증·다한증",       labelEn: "HYPERHIDROSIS", desc: "겨드랑이 냄새(액취증)와 과도한 땀 분비(다한증)를 효과적으로 치료합니다. 보톡스 주사, 레이저 치료로 일상의 불편함을 해소해 드립니다.",
+  { id: "acne",       label: "액취증·다한증",       labelEn: "HYPERHIDROSIS", labelJa: "腋臭・多汗症", labelZh: "腋臭·多汗症", desc: "겨드랑이 냄새(액취증)와 과도한 땀 분비(다한증)를 효과적으로 치료합니다. 보톡스 주사, 레이저 치료로 일상의 불편함을 해소해 드립니다.",
     descEn: "Effective treatment for axillary odor (bromhidrosis) and excessive sweating (hyperhidrosis). Botox injections and laser treatments relieve daily discomfort.",
     descJa: "わきが（アポクリン汗腺臭）と多汗症を効果的に治療します。ボトックス注射、レーザー治療で日常の不快感を解消します。",
     descZh: "有效治疗腋臭和多汗症。通过肉毒素注射和激光治疗，消除日常生活中的不适。" },
-  { id: "fungus",     label: "손·발톱무좀",         labelEn: "NAIL FUNGUS",  desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 무좀 전용 레이저로 빠르고 간편하게 손·발톱무좀을 치료합니다.",
+  { id: "fungus",     label: "손·발톱무좀",         labelEn: "NAIL FUNGUS", labelJa: "爪水虫", labelZh: "甲癣",  desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 무좀 전용 레이저로 빠르고 간편하게 손·발톱무좀을 치료합니다.",
     descEn: "Fungal nail infection treated with a dedicated laser that destroys only the fungus without damaging surrounding tissue — fast and simple.",
     descJa: "周囲の組織を傷つけることなく真菌だけを破壊する爪水虫専用レーザーで、素早く簡単に爪水虫を治療します。",
     descZh: "使用专用激光在不损伤周围组织的情况下仅破坏真菌，快速简便地治疗甲癣（灰指甲）。" },
-  { id: "psoriasis",  label: "건선·아토피",         labelEn: "PSORIASIS",     desc: "만성 염증성 피부 질환인 건선과 아토피를 체계적으로 관리합니다. 증상 완화와 재발 방지를 위한 맞춤형 치료 계획을 제공합니다.",
+  { id: "psoriasis",  label: "건선·아토피",         labelEn: "PSORIASIS", labelJa: "乾癬・アトピー", labelZh: "银屑病·特应性",     desc: "만성 염증성 피부 질환인 건선과 아토피를 체계적으로 관리합니다. 증상 완화와 재발 방지를 위한 맞춤형 치료 계획을 제공합니다.",
     descEn: "Systematic management of psoriasis and atopic dermatitis, chronic inflammatory skin diseases. Customized treatment plans for symptom relief and relapse prevention.",
     descJa: "慢性炎症性皮膚疾患である乾癬とアトピーを体系的に管理します。症状緩和と再発防止のための個別化された治療計画を提供します。",
     descZh: "系统管理银屑病和特应性皮炎等慢性炎症性皮肤病。提供个性化治疗方案，缓解症状并预防复发。" },
-  { id: "volume",     label: "볼륨·부스터",         labelEn: "VOLUME",        desc: "피부 속 수분과 볼륨을 채워 생기 있는 피부를 만드는 시술입니다. 리쥴란·엑소좀 등 피부 재생 성분으로 탄력과 광채를 동시에 개선합니다.",
+  { id: "volume",     label: "볼륨·부스터",         labelEn: "VOLUME", labelJa: "ボリューム・ブースター", labelZh: "丰盈·提亮",        desc: "피부 속 수분과 볼륨을 채워 생기 있는 피부를 만드는 시술입니다. 리쥴란·엑소좀 등 피부 재생 성분으로 탄력과 광채를 동시에 개선합니다.",
     descEn: "Treatments to fill skin with moisture and volume for a radiant complexion. Rejuran, exosomes, and other skin regeneration ingredients improve elasticity and glow simultaneously.",
     descJa: "肌の中に水分とボリュームを補充して生き生きとした肌を作る施術です。リジュランやエクソソームなどの皮膚再生成分で弾力と輝きを同時に改善します。",
     descZh: "为肌肤补充水分和丰盈度，打造充满活力的肌肤。通过婴儿针、外泌体等皮肤再生成分，同时改善弹力和光泽。" },
-  { id: "botox",      label: "보톡스·필러",         labelEn: "BOTOX",         desc: "주름 개선과 얼굴 윤곽 교정에 효과적인 시술입니다. 자연스러운 결과를 위해 소량씩 정밀하게 시술하며, 당일 일상 복귀가 가능합니다.",
+  { id: "botox",      label: "보톡스·필러",         labelEn: "BOTOX", labelJa: "ボトックス・フィラー", labelZh: "肉毒素·填充",         desc: "주름 개선과 얼굴 윤곽 교정에 효과적인 시술입니다. 자연스러운 결과를 위해 소량씩 정밀하게 시술하며, 당일 일상 복귀가 가능합니다.",
     descEn: "Effective treatments for wrinkle improvement and facial contouring. Precise micro-dosing for natural results with same-day return to daily activities.",
     descJa: "しわ改善と顔のライン矯正に効果的な施術です。自然な結果のために少量ずつ精密に施術し、当日日常復帰が可能です。",
     descZh: "有效改善皱纹和面部轮廓的治疗。精准微量注射，效果自然，当天即可恢复日常生活。" },
@@ -99,6 +99,8 @@ const CATEGORIES = [
 interface Treatment {
   name: string;
   nameEn: string;
+  nameJa?: string;
+  nameZh?: string;
   desc: string;
   descEn?: string;
   descJa?: string;
@@ -1319,6 +1321,8 @@ const TREATMENTS: Record<string, Treatment[]> = {
 interface Equipment {
   brand: string;
   name: string;
+  nameJa?: string;
+  nameZh?: string;
   desc: string;
   descEn?: string;
   descJa?: string;
@@ -1471,6 +1475,15 @@ const DETAIL_PAGE_SLUGS: Record<string, string> = {
   "눈밑지방재배치": "under-eye-fat",
 };
 
+// ── 카테고리 label 언어별 선택 헬퍼 ─────────────────────────────────────────
+function getCatLabel(cat: { label: string; labelEn: string; labelJa?: string; labelZh?: string }, lang: string): string {
+  if (lang === 'en') return cat.labelEn;
+  if (lang === 'ja' && cat.labelJa) return cat.labelJa;
+  if (lang === 'zh' && cat.labelZh) return cat.labelZh;
+  if (lang !== 'ko' && cat.labelEn) return cat.labelEn;
+  return cat.label;
+}
+
 function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; index: number; imgBg: string; catTextColor: string }) {
   const [open, setOpen] = useState(false);
   const [, setLocation] = useLocation();
@@ -1524,7 +1537,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
           ) : (
             <OptimizedImage
               src={item.image}
-              alt={item.name}
+              alt={getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
               className="w-full h-full object-contain transition-transform duration-400 group-hover:scale-115"
               style={{ padding: "10px" }}
               onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.5"; }}
@@ -1536,7 +1549,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
         {/* 텍스트 */}
         <div className="p-3 sm:p-4">
           <p className="text-xs font-normal mb-0.5 font-montserrat" style={{ color: "#d1ab67" }}>{item.nameEn}</p>
-          <h3 className="text-base sm:text-lg font-bold mb-1" style={{ color: "#1F2937" }}>{item.name}</h3>
+          <h3 className="text-base sm:text-lg font-bold mb-1" style={{ color: "#1F2937" }}>{getText(item.name, item.nameEn, item.nameJa, item.nameZh)}</h3>
           <p className="text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3" style={{ color: "#6B7280" }}>{getText(item.desc, item.descEn, item.descJa, item.descZh)}</p>
           <div className="flex gap-3 flex-wrap items-center justify-between">
             <div className="flex gap-3 flex-wrap">
@@ -1560,7 +1573,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
       {/* 상세 모달 */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg p-0 overflow-hidden" style={{ borderRadius: "1.25rem" }} showCloseButton={false}>
-          <DialogTitle className="sr-only">{item.name}</DialogTitle>
+          <DialogTitle className="sr-only">{getText(item.name, item.nameEn, item.nameJa, item.nameZh)}</DialogTitle>
           {/* 모달 콘텐츠 */}
           <div className="p-6 flex flex-col" style={{ maxHeight: "90vh", overflow: "hidden" }}>
             {/* 스크롤 가능한 콘텐츠 영역 */}
@@ -1594,7 +1607,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
               )}
 
               <p className="text-xs font-normal mb-1 font-montserrat" style={{ color: "#d1ab67" }}>{item.nameEn}</p>
-              <h2 className="text-xl font-bold mb-3" style={{ color: "#1F2937" }}>{item.name}</h2>
+              <h2 className="text-xl font-bold mb-3" style={{ color: "#1F2937" }}>{getText(item.name, item.nameEn, item.nameJa, item.nameZh)}</h2>
 
               {/* 기본 정보 */}
               <div className="flex gap-4 mb-4 p-3 rounded-xl" style={{ background: "#f6efe0" }}>
@@ -1711,7 +1724,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
               ✕
             </button>
             <p className="text-xs font-semibold mb-1" style={{ color: "#d1ab67" }}>{selectedEq.brand}</p>
-            <h3 className="text-xl font-bold" style={{ color: "#1F2937" }}>{selectedEq.name}</h3>
+            <h3 className="text-xl font-bold" style={{ color: "#1F2937" }}>{getEqText(selectedEq.name, selectedEq.brand, selectedEq.nameJa, selectedEq.nameZh)}</h3>
             <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{getEqText(selectedEq.desc, selectedEq.descEn, selectedEq.descJa, selectedEq.descZh)}</p>
           </div>
           <div className="flex justify-center py-6" style={{ background: "white" }}>
@@ -1801,7 +1814,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             {/* 장비 정보 */}
             <div className="text-center w-full">
               <p className="text-xs font-semibold" style={{ color: "#d1ab67" }}>{eq.brand}</p>
-              <p className="text-sm font-bold" style={{ color: "#1F2937" }}>{eq.name}</p>
+              <p className="text-sm font-bold" style={{ color: "#1F2937" }}>{getEqText(eq.name, eq.brand, eq.nameJa, eq.nameZh)}</p>
               <p className="text-xs line-clamp-2" style={{ color: "#6B7280" }}>{getEqText(eq.desc, eq.descEn, eq.descJa, eq.descZh)}</p>
             </div>
           </div>        ))}
@@ -1986,7 +1999,7 @@ export default function TreatmentsEquipmentSection() {
                     <span style={{ display: "flex", alignItems: "center", color: isActive ? "white" : "#9CA3AF" }}>
                       {React.createElement(CATEGORY_ICON_MAP[cat.id] ?? Star, { size: 12 })}
                     </span>
-                    <span>{cat.label}</span>
+                    <span>{getCatLabel(cat, lang)}</span>
                   </button>
                 );
               })}
@@ -2016,7 +2029,7 @@ export default function TreatmentsEquipmentSection() {
                     <span style={{ display: "flex", alignItems: "center", color: isActive ? "white" : "#9CA3AF" }}>
                       {React.createElement(CATEGORY_ICON_MAP[cat.id] ?? Star, { size: 13 })}
                     </span>
-                    <span>{cat.label}</span>
+                    <span>{getCatLabel(cat, lang)}</span>
                   </button>
                 );
               })}

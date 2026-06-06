@@ -66,6 +66,32 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
   it('장비 패널 desc 렌더링에 getEqText를 사용해야 한다', () => {
     expect(source).toContain('getEqText(selectedEq.desc, selectedEq.descEn, selectedEq.descJa, selectedEq.descZh)');
   });
+
+  it('카드 제목 렌더링에 getText(item.name, item.nameEn, item.nameJa, item.nameZh)를 사용해야 한다', () => {
+    expect(source).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh)');
+  });
+
+  it('카테고리 탭 label 렌더링에 getCatLabel(cat, lang)을 사용해야 한다', () => {
+    expect(source).toContain('getCatLabel(cat, lang)');
+  });
+
+  it('getCatLabel 헬퍼가 정의되어 있어야 한다', () => {
+    expect(source).toContain('function getCatLabel(');
+  });
+
+  it('CATEGORIES에 labelJa가 13개 존재해야 한다', () => {
+    const labelJaCount = (source.match(/labelJa:/g) || []).length;
+    expect(labelJaCount).toBeGreaterThanOrEqual(13);
+  });
+
+  it('CATEGORIES에 labelZh가 13개 존재해야 한다', () => {
+    const labelZhCount = (source.match(/labelZh:/g) || []).length;
+    expect(labelZhCount).toBeGreaterThanOrEqual(13);
+  });
+
+  it('장비 타이틀 렌더링에 getEqText(selectedEq.name, ...)를 사용해야 한다', () => {
+    expect(source).toContain('getEqText(selectedEq.name, selectedEq.brand, selectedEq.nameJa, selectedEq.nameZh)');
+  });
 });
 
 // ─── 기존 카피 검증 테스트 ────────────────────────────────────────────────────

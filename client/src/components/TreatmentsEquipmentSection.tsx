@@ -39,19 +39,58 @@ const CATEGORY_ICON_MAP: Record<string, React.ComponentType<{ size?: number; cla
 };
 
 const CATEGORIES = [
-  { id: "best",       label: "Best 시술",          labelEn: "BEST",          desc: "스타피부과에서 가장 많이 선택되는 대표 시술 프로그램입니다. 전문의가 직접 상담 후 피부 상태에 맞는 최적의 조합을 제안해 드립니다." },
-  { id: "lifting",    label: "리프팅·탄력",         labelEn: "LIFTING",       desc: "처진 피부와 탄력 저하에 효과적인 리프팅 시술입니다. 울쏄라피·써마지 등 비절개 방식으로 자연스러운 리프팅 효과를 경험하세요." },
-  { id: "eye",        label: "눈밑지방",            labelEn: "EYE",           desc: "눈밑 지방 재배치 및 다크서클 개선 전문 시술입니다. 스타피부과 원장이 직접 집도하며, 자연스럽고 생기 있는 눈매를 만들어 드립니다." },
-  { id: "vitiligo",   label: "백반증",              labelEn: "VITILIGO",      desc: "피부 색소 소실로 인한 백반증을 전문적으로 치료합니다. 엑시머 레이저와 광선 치료를 병행하여 색소 재생을 유도합니다." },
-  { id: "pigment",    label: "색소·문신",           labelEn: "PIGMENT",       desc: "기미, 잡티, 문신 등 색소 병변을 효과적으로 제거합니다. 피부 타입에 맞는 레이저를 선택하여 부작용 없이 깨끗한 피부를 되찾아 드립니다." },
-  { id: "scar",       label: "흉터·모공",           labelEn: "SCAR",          desc: "여드름 흉터, 수술 흉터, 넓어진 모공을 개선하는 시술입니다. 프락셀·CO2 레이저로 피부 재생을 촉진하여 매끄러운 피부결을 만들어 드립니다." },
-  { id: "acne_laser", label: "여드름",              labelEn: "ACNE",          desc: "여드름 원인을 근본적으로 치료하는 복합 시술 프로그램입니다. 피지 분비 조절부터 염증 완화, 흉터 예방까지 단계별로 관리해 드립니다." },
-  { id: "rosacea",    label: "홍조·혈관",           labelEn: "ROSACEA",       desc: "얼굴 홍조, 실핏줄, 혈관 확장 등 혈관성 피부 고민을 해결합니다. 레이저 치료로 피부 톤을 균일하게 정돈해 드립니다." },
-  { id: "acne",       label: "액취증·다한증",       labelEn: "HYPERHIDROSIS", desc: "겨드랑이 냄새(액취증)와 과도한 땀 분비(다한증)를 효과적으로 치료합니다. 보톡스 주사, 레이저 치료로 일상의 불편함을 해소해 드립니다." },
-  { id: "fungus",     label: "손·발톱무좀",         labelEn: "NAIL FUNGUS",  desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 무좀 전용 레이저로 빠르고 간편하게 손·발톱무좀을 치료합니다." },
-  { id: "psoriasis",  label: "건선·아토피",         labelEn: "PSORIASIS",     desc: "만성 염증성 피부 질환인 건선과 아토피를 체계적으로 관리합니다. 증상 완화와 재발 방지를 위한 맞춤형 치료 계획을 제공합니다." },
-  { id: "volume",     label: "볼륨·부스터",         labelEn: "VOLUME",        desc: "피부 속 수분과 볼륨을 채워 생기 있는 피부를 만드는 시술입니다. 리쥴란·엑소좀 등 피부 재생 성분으로 탄력과 광채를 동시에 개선합니다." },
-  { id: "botox",      label: "보톡스·필러",         labelEn: "BOTOX",         desc: "주름 개선과 얼굴 윤곽 교정에 효과적인 시술입니다. 자연스러운 결과를 위해 소량씩 정밀하게 시술하며, 당일 일상 복귀가 가능합니다." },
+  { id: "best",       label: "Best 시술",          labelEn: "BEST",          desc: "스타피부과에서 가장 많이 선택되는 대표 시술 프로그램입니다. 전문의가 직접 상담 후 피부 상태에 맞는 최적의 조합을 제안해 드립니다.",
+    descEn: "The most popular treatment programs at Star Dermatology. Our specialists will recommend the optimal combination for your skin condition after a thorough consultation.",
+    descJa: "スター皮膚科で最も多く選ばれる代表的な施術プログラムです。専門医が直接カウンセリングを行い、お肌の状態に合った最適な組み合わせをご提案します。",
+    descZh: "星皮肤科最受欢迎的代表性治疗项目。专科医生亲自咨询后，为您推荐最适合您肤质的最佳组合方案。" },
+  { id: "lifting",    label: "리프팅·탄력",         labelEn: "LIFTING",       desc: "처진 피부와 탄력 저하에 효과적인 리프팅 시술입니다. 울쏄라피·써마지 등 비절개 방식으로 자연스러운 리프팅 효과를 경험하세요.",
+    descEn: "Effective lifting treatments for sagging skin and loss of elasticity. Experience natural lifting effects with non-surgical methods like Ultherapy and Thermage.",
+    descJa: "たるんだ肌や弾力低下に効果的なリフティング施術です。ウルセラピー・サーマジなど非切開方式で自然なリフティング効果を体験してください。",
+    descZh: "针对皮肤松弛和弹力下降的有效提升治疗。通过超声刀、热玛吉等非手术方式，体验自然的提升效果。" },
+  { id: "eye",        label: "눈밑지방",            labelEn: "EYE",           desc: "눈밑 지방 재배치 및 다크서클 개선 전문 시술입니다. 스타피부과 원장이 직접 집도하며, 자연스럽고 생기 있는 눈매를 만들어 드립니다.",
+    descEn: "Specialized treatments for under-eye fat repositioning and dark circle improvement. Our doctors perform the procedure directly for natural, vibrant eyes.",
+    descJa: "目の下の脂肪再配置とクマ改善の専門施術です。スター皮膚科の院長が直接執刀し、自然で生き生きとした目元を作ります。",
+    descZh: "眼袋脂肪重置及黑眼圈改善专项治疗。由星皮肤科院长亲自操作，打造自然有神的眼部轮廓。" },
+  { id: "vitiligo",   label: "백반증",              labelEn: "VITILIGO",      desc: "피부 색소 소실로 인한 백반증을 전문적으로 치료합니다. 엑시머 레이저와 광선 치료를 병행하여 색소 재생을 유도합니다.",
+    descEn: "Specialized treatment for vitiligo caused by loss of skin pigmentation. Combining excimer laser and phototherapy to stimulate pigment regeneration.",
+    descJa: "皮膚の色素消失による白斑を専門的に治療します。エキシマレーザーと光線治療を併用して色素再生を促進します。",
+    descZh: "专业治疗因皮肤色素脱失引起的白癜风。结合准分子激光和光线治疗，促进色素再生。" },
+  { id: "pigment",    label: "색소·문신",           labelEn: "PIGMENT",       desc: "기미, 잡티, 문신 등 색소 병변을 효과적으로 제거합니다. 피부 타입에 맞는 레이저를 선택하여 부작용 없이 깨끗한 피부를 되찾아 드립니다.",
+    descEn: "Effectively removes pigmented lesions such as melasma, freckles, and tattoos. Restore clear skin without side effects by selecting the right laser for your skin type.",
+    descJa: "シミ、そばかす、タトゥーなどの色素病変を効果的に除去します。肌タイプに合ったレーザーを選択して、副作用なくきれいな肌を取り戻します。",
+    descZh: "有效去除黄褐斑、雀斑、纹身等色素病变。根据肤质选择合适的激光，无副作用地恢复净白肌肤。" },
+  { id: "scar",       label: "흉터·모공",           labelEn: "SCAR",          desc: "여드름 흉터, 수술 흉터, 넓어진 모공을 개선하는 시술입니다. 프락셀·CO2 레이저로 피부 재생을 촉진하여 매끄러운 피부결을 만들어 드립니다.",
+    descEn: "Treatments to improve acne scars, surgical scars, and enlarged pores. Fraxel and CO2 lasers stimulate skin regeneration for smoother skin texture.",
+    descJa: "ニキビ跡、手術跡、毛穴の開きを改善する施術です。フラクセル・CO2レーザーで皮膚再生を促進し、なめらかな肌質を作ります。",
+    descZh: "改善痘疤、手术疤痕和毛孔粗大的治疗方案。通过飞梭激光、CO2激光促进皮肤再生，打造细腻肌肤。" },
+  { id: "acne_laser", label: "여드름",              labelEn: "ACNE",          desc: "여드름 원인을 근본적으로 치료하는 복합 시술 프로그램입니다. 피지 분비 조절부터 염증 완화, 흉터 예방까지 단계별로 관리해 드립니다.",
+    descEn: "A comprehensive treatment program that addresses the root causes of acne. Step-by-step management from sebum regulation to inflammation relief and scar prevention.",
+    descJa: "ニキビの原因を根本的に治療する複合施術プログラムです。皮脂分泌調整から炎症緩和、瘢痕予防まで段階的に管理します。",
+    descZh: "从根本上治疗痘痘原因的综合治疗方案。从皮脂分泌调节到消炎、预防疤痕，进行阶段性管理。" },
+  { id: "rosacea",    label: "홍조·혈관",           labelEn: "ROSACEA",       desc: "얼굴 홍조, 실핏줄, 혈관 확장 등 혈관성 피부 고민을 해결합니다. 레이저 치료로 피부 톤을 균일하게 정돈해 드립니다.",
+    descEn: "Resolves vascular skin concerns such as facial redness, broken capillaries, and dilated blood vessels. Laser treatment evens out skin tone.",
+    descJa: "顔の紅潮、毛細血管拡張などの血管性肌悩みを解決します。レーザー治療で肌のトーンを均一に整えます。",
+    descZh: "解决面部潮红、毛细血管扩张等血管性皮肤问题。通过激光治疗使肤色均匀。" },
+  { id: "acne",       label: "액취증·다한증",       labelEn: "HYPERHIDROSIS", desc: "겨드랑이 냄새(액취증)와 과도한 땀 분비(다한증)를 효과적으로 치료합니다. 보톡스 주사, 레이저 치료로 일상의 불편함을 해소해 드립니다.",
+    descEn: "Effective treatment for axillary odor (bromhidrosis) and excessive sweating (hyperhidrosis). Botox injections and laser treatments relieve daily discomfort.",
+    descJa: "わきが（アポクリン汗腺臭）と多汗症を効果的に治療します。ボトックス注射、レーザー治療で日常の不快感を解消します。",
+    descZh: "有效治疗腋臭和多汗症。通过肉毒素注射和激光治疗，消除日常生活中的不适。" },
+  { id: "fungus",     label: "손·발톱무좀",         labelEn: "NAIL FUNGUS",  desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 무좀 전용 레이저로 빠르고 간편하게 손·발톱무좀을 치료합니다.",
+    descEn: "Fungal nail infection treated with a dedicated laser that destroys only the fungus without damaging surrounding tissue — fast and simple.",
+    descJa: "周囲の組織を傷つけることなく真菌だけを破壊する爪水虫専用レーザーで、素早く簡単に爪水虫を治療します。",
+    descZh: "使用专用激光在不损伤周围组织的情况下仅破坏真菌，快速简便地治疗甲癣（灰指甲）。" },
+  { id: "psoriasis",  label: "건선·아토피",         labelEn: "PSORIASIS",     desc: "만성 염증성 피부 질환인 건선과 아토피를 체계적으로 관리합니다. 증상 완화와 재발 방지를 위한 맞춤형 치료 계획을 제공합니다.",
+    descEn: "Systematic management of psoriasis and atopic dermatitis, chronic inflammatory skin diseases. Customized treatment plans for symptom relief and relapse prevention.",
+    descJa: "慢性炎症性皮膚疾患である乾癬とアトピーを体系的に管理します。症状緩和と再発防止のための個別化された治療計画を提供します。",
+    descZh: "系统管理银屑病和特应性皮炎等慢性炎症性皮肤病。提供个性化治疗方案，缓解症状并预防复发。" },
+  { id: "volume",     label: "볼륨·부스터",         labelEn: "VOLUME",        desc: "피부 속 수분과 볼륨을 채워 생기 있는 피부를 만드는 시술입니다. 리쥴란·엑소좀 등 피부 재생 성분으로 탄력과 광채를 동시에 개선합니다.",
+    descEn: "Treatments to fill skin with moisture and volume for a radiant complexion. Rejuran, exosomes, and other skin regeneration ingredients improve elasticity and glow simultaneously.",
+    descJa: "肌の中に水分とボリュームを補充して生き生きとした肌を作る施術です。リジュランやエクソソームなどの皮膚再生成分で弾力と輝きを同時に改善します。",
+    descZh: "为肌肤补充水分和丰盈度，打造充满活力的肌肤。通过婴儿针、外泌体等皮肤再生成分，同时改善弹力和光泽。" },
+  { id: "botox",      label: "보톡스·필러",         labelEn: "BOTOX",         desc: "주름 개선과 얼굴 윤곽 교정에 효과적인 시술입니다. 자연스러운 결과를 위해 소량씩 정밀하게 시술하며, 당일 일상 복귀가 가능합니다.",
+    descEn: "Effective treatments for wrinkle improvement and facial contouring. Precise micro-dosing for natural results with same-day return to daily activities.",
+    descJa: "しわ改善と顔のライン矯正に効果的な施術です。自然な結果のために少量ずつ精密に施術し、当日日常復帰が可能です。",
+    descZh: "有效改善皱纹和面部轮廓的治疗。精准微量注射，效果自然，当天即可恢复日常生活。" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -61,8 +100,17 @@ interface Treatment {
   name: string;
   nameEn: string;
   desc: string;
+  descEn?: string;
+  descJa?: string;
+  descZh?: string;
   time: string;
+  timeEn?: string;
+  timeJa?: string;
+  timeZh?: string;
   recovery: string;
+  recoveryEn?: string;
+  recoveryJa?: string;
+  recoveryZh?: string;
   badge?: string | null;
   badgeColor?: string;
   image: string;
@@ -88,7 +136,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "울써마지 리프팅 + 리쥬란",
       nameEn: "ULTHERAPY + THERMAGE LIFT + REJURAN",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/울써마지리프팅_17bc44ff.png",
-      desc: "리프팅의 끝판왕이라 불리는 울쎄라피+써마지 복합 리프팅에 피부 재생 리쥬란을 더한 프리미엄 프로그램.",
+      desc: "리프팅의 끝판왕이라 불리는 울쎄라피+써마지 복합 리프팅에 피부 재생 리쥬란을 더한 프리미엄 프로그램.", descEn: "Premium program combining Ultherapy + Thermage lifting with Rejuran skin regeneration. Experience powerful lifting and skin renewal in a single session.", descJa: "ウルセラピー+サーマジ複合リフティングに皮膚再生リジュランを加えたプレミアムプログラム。1回の施術で強力なリフティングと肌再生を同時に体験できます。", descZh: "将超声刀+热玛吉复合提升与皮肤再生婴儿针相结合的高端项目。一次治疗同时体验强效提升和皮肤再生。",
       time: "90~120분", recovery: "당일 일상",
       badge: "진정하 시술", badgeColor: "#4A6FA5",
       image: `${CDN}/울쎄라피프라임_1_0daba485.png`,
@@ -107,7 +155,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "프로파운드 RF 리프팅",
       nameEn: "PROFOUND RF LIFTING",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/프로파운드_22222541.png",
-      desc: "마이크로니들 RF로 진피층에 직접 에너지를 전달하는 고효과 리프팅 시술.\n1회 시술로 강력한 탄력 개선을 원하는 분께 권장드립니다.",
+      desc: "마이크로니들 RF로 진피층에 직접 에너지를 전달하는 고효과 리프팅 시술.\n1회 시술로 강력한 탄력 개선을 원하는 분께 권장드립니다.", descEn: "High-efficacy lifting treatment that delivers RF energy directly to the dermis via microneedles. Recommended for those seeking powerful elasticity improvement in a single session.", descJa: "マイクロニードルRFで真皮層に直接エネルギーを届ける高効果リフティング施術。1回の施術で強力な弾力改善を望む方にお勧めです。", descZh: "通过微针将RF能量直接传递至真皮层的高效提升治疗。适合希望一次治疗获得强效弹力改善的人群。",
       time: "60~90분", recovery: "10일~2주",
       badge: "고효과 리프팅", badgeColor: "#4A6FA5",
       image: `${CDN}/프로파운드_93be7410.png`, best: true,
@@ -121,7 +169,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "볼륨업 프로그램",
       nameEn: "VOLUME UP PROGRAM · SCULPTRA",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/볼륨업프로그램_3442a94f.png",
-      desc: "FDA 승인 스컬트라로 피부 스스로 콜라겐을 생성해 자연스러운 볼륨을 회복.\n주름 개선·탄력·볼륨 회복 효과가 평균 2년 이상 지속됩니다.",
+      desc: "FDA 승인 스컬트라로 피부 스스로 콜라겐을 생성해 자연스러운 볼륨을 회복.\n주름 개선·탄력·볼륨 회복 효과가 평균 2년 이상 지속됩니다.", descEn: "FDA-approved Sculptra stimulates your skin to naturally produce collagen for restored volume. Wrinkle improvement, elasticity, and volume restoration effects last an average of 2+ years.", descJa: "FDA承認スカルプトラで皮膚自らがコラーゲンを生成し、自然なボリュームを回復。しわ改善・弾力・ボリューム回復効果が平均2年以上持続します。", descZh: "FDA认证的塑然雅刺激皮肤自然产生胶原蛋白，恢复自然丰盈感。改善皱纹、弹力和丰盈度的效果平均持续2年以上。",
       time: "30~60분", recovery: "당일 일상",
       badge: "2년 지속", badgeColor: "#9C5FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/treat-sculptra_c3f4b5f6.png", best: true,
@@ -135,7 +183,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "줄기세포 치료",
       nameEn: "STEM CELL THERAPY",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/줄기세포-치료_ff39fa9f.png",
-      desc: "자신의 혈액·지방에서 추출한 줄기세포를 피부에 직접 주사하는 자가세포 치료.\n이상반응 위험이 낮고 피부 재생·탄력 개선 효과를 기대할 수 있습니다.",
+      desc: "자신의 혈액·지방에서 추출한 줄기세포를 피부에 직접 주사하는 자가세포 치료.\n이상반응 위험이 낮고 피부 재생·탄력 개선 효과를 기대할 수 있습니다.", descEn: "Autologous cell therapy that directly injects stem cells extracted from your own blood or fat. Low risk of adverse reactions with expected skin regeneration and elasticity improvement.", descJa: "自分の血液・脂肪から抽出した幹細胞を皮膚に直接注射する自家細胞治療。異常反応リスクが低く、皮膚再生・弾力改善効果が期待できます。", descZh: "将从自身血液或脂肪中提取的干细胞直接注射到皮肤的自体细胞疗法。不良反应风险低，可期待皮肤再生和弹力改善效果。",
       time: "60~120분", recovery: "3~7일",
       badge: "자가세포", badgeColor: "#2E7D32",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/stemcell_treatment_card-oGb7XJiuyUVsc7VGWNioEw.webp", best: true,
@@ -149,7 +197,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "흉터 치료 프로그램",
       nameEn: "ULTRAPULSE + DRT + MIRAJET + TRIFILL PRO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/흉터치료_d89a476f.png",
-      desc: "울트라펄스 레이저·DRT·미라젯·트리필프로를 결합한 흉터 집중 프로그램.\n진정하 시술로 통증 걱정 없이 여드름·패인 흉터를 효과적으로 개선합니다.",
+      desc: "울트라펄스 레이저·DRT·미라젯·트리필프로를 결합한 흉터 집중 프로그램.\n진정하 시술로 통증 걱정 없이 여드름·패인 흉터를 효과적으로 개선합니다.", descEn: "Intensive scar program combining UltraPulse laser, DRT, MiraJet, and TriFill Pro. Effectively improves acne and pitted scars without pain under sedation.", descJa: "ウルトラパルスレーザー・DRT・ミラジェット・トリフィルプロを組み合わせた瘢痕集中プログラム。鎮静下施術で痛みの心配なくニキビ・陥没瘢痕を効果的に改善します。", descZh: "结合超脉冲激光、DRT、美拉射和三合一填充的疤痕集中治疗方案。在镇静麻醉下无痛有效改善痘疤和凹陷性疤痕。",
       time: "60~90분", recovery: "5~7일",
       badge: "진정하 시술", badgeColor: "#81C7C9",
       image: `https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/equip-mcl31-ultrapulse_84704967.png`,
@@ -168,7 +216,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "홍조 치료 프로그램",
       nameEn: "ROSACEA PROGRAM · EXCEL V+ + ADVATX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/홍조치료_32fd1648.png",
-      desc: "Excel V+·ADVATX 듀얼 레이저로 안면홍조·모세혈관 확장을 전문 치료.\n피부 표면에 상처 없이 붉은 피부를 눈에 띄게 개선하는 무상처 프로그램.",
+      desc: "Excel V+·ADVATX 듀얼 레이저로 안면홍조·모세혈관 확장을 전문 치료.\n피부 표면에 상처 없이 붉은 피부를 눈에 띄게 개선하는 무상처 프로그램.", descEn: "Excel V+ and ADVATX dual laser for professional treatment of facial redness and capillary dilation. No-wound program that visibly improves red skin without surface damage.", descJa: "Excel V+・ADVATXデュアルレーザーで顔面紅潮・毛細血管拡張を専門治療。皮膚表面に傷をつけずに赤い肌を目に見えて改善する無傷プログラム。", descZh: "Excel V+和ADVATX双激光专业治疗面部潮红和毛细血管扩张。无创治疗方案，显著改善红肌而不损伤皮肤表面。",
       time: "20~40분", recovery: "1~2일",
       badge: "무상처 치료", badgeColor: "#E57373",
       image: `${CDN}/엑셀V_70001aa7.png`,
@@ -188,7 +236,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "기미 치료 프로그램",
       nameEn: "MELASMA PROGRAM · EXCEL V+ + ENLIGHTEN III",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/기미치료_b14edb2c.png",
-      desc: "엑셀V+의 혈관 선택성 레이저와 엔라이튼3의 피코초 레이저를 복합한 기미 전문 프로그램. 기미 병변 아래 미세 혈관을 제거하고 표피·진피 색소를 동시에 분해하여 재발을 억제합니다. 시술 후 즉시 일상 복귀 가능.",
+      desc: "엑셀V+의 혈관 선택성 레이저와 엔라이튼3의 피코초 레이저를 복합한 기미 전문 프로그램. 기미 병변 아래 미세 혈관을 제거하고 표피·진피 색소를 동시에 분해하여 재발을 억제합니다. 시술 후 즉시 일상 복귀 가능.", descEn: "Melasma specialist program combining Excel V+ vascular-selective laser with Enlighten III picosecond laser. Simultaneously removes micro-vessels and breaks down epidermal/dermal pigment to prevent recurrence.", descJa: "エクセルV+の血管選択性レーザーとエンライトン3のピコ秒レーザーを複合したシミ専門プログラム。シミ病変下の微細血管を除去し、表皮・真皮色素を同時に分解して再発を抑制します。", descZh: "结合Excel V+血管选择性激光和Enlighten III皮秒激光的黄褐斑专项治疗。同时去除微血管并分解表皮/真皮色素，有效抑制复发。",
       time: "30~50분", recovery: "당일 일상",
       badge: "기미 특화", badgeColor: "#7C3AED",
       image: `${CDN}/엑셀V_70001aa7.png`,
@@ -209,7 +257,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "울쎄라피 프라임",
       nameEn: "ULTHERAPY PRIME",
-      desc: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",
+      desc: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.", descEn: "The latest upgraded version of Ultherapy with the highest lifting satisfaction rating. Covers wider areas faster for outstanding lifting results.", descJa: "リフティング満足度1位ウルセラピーの最新アップグレード版。より広い面積を素早くカバーし、卓越したリフティング効果を発揮します。", descZh: "提升满意度第一的超声刀最新升级版。更快覆盖更大面积，带来卓越的提升效果。",
       time: "60~90분", recovery: "당일 일상",
       badge: "인기", badgeColor: "#C8860A",
       image: `${CDN}/울쎄라피프라임_1_0daba485.png`, best: true,
@@ -223,7 +271,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "써마지 FLX",
       nameEn: "THERMAGE FLX",
-      desc: "4세대 고주파 리프팅의 정점. 피부 깊은 층 콜라겐을 자극해 탄력 개선과 주름 완화에 탁월.\n조시형 원장 공식 자문의로 최적의 파라미터 노하우를 보유합니다.",
+      desc: "4세대 고주파 리프팅의 정점. 피부 깊은 층 콜라겐을 자극해 탄력 개선과 주름 완화에 탁월.\n조시형 원장 공식 자문의로 최적의 파라미터 노하우를 보유합니다.", descEn: "The pinnacle of 4th-generation RF lifting. Stimulates deep collagen for excellent elasticity improvement and wrinkle reduction. Dr. Jo Si-hyeong is an official Thermage advisor with optimal parameter expertise.", descJa: "第4世代高周波リフティングの頂点。皮膚深層のコラーゲンを刺激して弾力改善としわ緩和に卓越。趙時亨院長はサーマジ公式アドバイザーとして最適なパラメータのノウハウを保有しています。", descZh: "第四代射频提升的巅峰之作。刺激皮肤深层胶原蛋白，卓越改善弹力和减少皱纹。赵时亨院长是热玛吉官方顾问，掌握最优参数技术。",
       time: "45~90분", recovery: "당일 일상",
       badge: "자문의", badgeColor: "#9C5FA5",
       image: `${CDN}/써마지FLX_20a90462.png`, best: true,
@@ -237,7 +285,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "세르프",
       nameEn: "XERF",
-      desc: "최신 고강도 RF 리프팅 장비. 절개 없이 자연스러운 리프팅 효과와 피부 탄력 개선.\n스타피부과 확장 이전 기념 특가 이벤트로 진행 중입니다.",
+      desc: "최신 고강도 RF 리프팅 장비. 절개 없이 자연스러운 리프팅 효과와 피부 탄력 개선.\n스타피부과 확장 이전 기념 특가 이벤트로 진행 중입니다.", descEn: "Latest high-intensity RF lifting device. Natural lifting effect and skin elasticity improvement without incisions. Currently available at special event pricing for Star Dermatology.", descJa: "最新高強度RFリフティング機器。切開なしで自然なリフティング効果と皮膚弾力改善。スター皮膚科拡張移転記念特価イベントで実施中です。", descZh: "最新高强度射频提升设备。无需切开，实现自然提升效果和皮肤弹力改善。目前正值星皮肤科扩张搬迁纪念特价活动期间。",
       time: "60~90분", recovery: "당일 일상",
       badge: "이벤트", badgeColor: "#E57373",
       image: `https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-xerf-cropped_d21e359e.png`, best: true,
@@ -251,7 +299,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "울쎄라",
       nameEn: "ULTHERA",
-      desc: "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅.\nFDA 승인 비수술 시술로 자연스러운 피부 탄력을 회복합니다.",
+      desc: "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅.\nFDA 승인 비수술 시술로 자연스러운 피부 탄력을 회복합니다.", descEn: "Traditional lifting using ultrasound energy to stimulate down to the SMAS layer. FDA-approved non-surgical treatment for naturally restored skin elasticity.", descJa: "超音波エネルギーでSMAS層まで刺激する正統リフティング。FDA承認の非手術施術で自然な皮膚弾力を回復します。", descZh: "使用超声波能量刺激至SMAS层的正统提升治疗。FDA认证非手术治疗，自然恢复皮肤弹力。",
       time: "60~90분", recovery: "당일 일상",
       image: `${CDN}/ultherapy_nobg_f4d10aca.png`,
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/울쎄라_7f6c3083.jpg",
@@ -264,7 +312,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "프로파운드",
       nameEn: "PROFOUND RF",
-      desc: "마이크로니들 RF 에너지로 피부 깊은 층까지 자극. 탄력 개선과 리프팅 효과가 탁월한 프리미엄 시술.",
+      desc: "마이크로니들 RF 에너지로 피부 깊은 층까지 자극. 탄력 개선과 리프팅 효과가 탁월한 프리미엄 시술.", descEn: "Microneedle RF energy stimulates deep skin layers. Premium treatment with outstanding elasticity improvement and lifting effects.", descJa: "マイクロニードルRFエネルギーで皮膚の深層まで刺激。弾力改善とリフティング効果が卓越したプレミアム施術。", descZh: "微针射频能量刺激皮肤深层。弹力改善和提升效果卓越的高端治疗。",
       time: "60~90분", recovery: "5~7일",
       image: `${CDN}/프로파운드_93be7410.png`,
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/프로파운드_65bb8cdd.jpg",
@@ -277,7 +325,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "텐쎄라",
       nameEn: "10THERA",
-      desc: "고주파와 초음파를 동시에 활용한 복합 리프팅.\n피부 탄력과 얼굴 윤곽 개선에 효과적인 프리미엄 시술.",
+      desc: "고주파와 초음파를 동시에 활용한 복합 리프팅.\n피부 탄력과 얼굴 윤곽 개선에 효과적인 프리미엄 시술.", descEn: "High-frequency RF lifting treatment for skin elasticity improvement. Effective for facial contouring and wrinkle reduction.", descJa: "皮膚弾力改善のための高周波RFリフティング施術。顔のラインとしわ改善に効果的です。", descZh: "改善皮肤弹力的高频射频提升治疗。有效改善面部轮廓和皱纹。",
       time: "40~60분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/11-Photoroom_2cf898c6.png",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_36_d097c102.jpg",
@@ -290,7 +338,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "버츄RF",
       nameEn: "VIRTUE RF",
-      desc: "마이크로니들 RF 시술로 피부 깊은 층에 에너지를 직접 전달.\n탄력 개선과 모공 축소 효과를 동시에 기대할 수 있습니다.",
+      desc: "마이크로니들 RF 시술로 피부 깊은 층에 에너지를 직접 전달.\n탄력 개선과 모공 축소 효과를 동시에 기대할 수 있습니다.", descEn: "Microneedle RF lifting that delivers RF energy precisely to the dermis. Effective for skin tightening, pore improvement, and scar treatment.", descJa: "RFエネルギーを真皮に精密に届けるマイクロニードルRFリフティング。皮膚引き締め、毛穴改善、瘢痕治療に効果的です。", descZh: "将射频能量精准传递至真皮的微针射频提升。有效紧致皮肤、改善毛孔和治疗疤痕。",
       time: "40~60분", recovery: "3~5일",
       image: `${CDN}/버츄RF_d5248119.png`,
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_43_f3a4cc84.jpg",
@@ -303,7 +351,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "슈링크 유니버스",
       nameEn: "SHURINK UNIVERSE",
-      desc: "집속 초음파 리프팅의 업그레이드 버전. 다양한 깊이의 에너지 전달로 효과적인 리프팅.\n기존 슈링크 대비 넓은 면적을 빠르게 커버하며 시술 시간이 단축됩니다.",
+      desc: "집속 초음파 리프팅의 업그레이드 버전. 다양한 깊이의 에너지 전달로 효과적인 리프팅.\n기존 슈링크 대비 넓은 면적을 빠르게 커버하며 시술 시간이 단축됩니다.", descEn: "Evolution of focused ultrasound lifting. Delivers precise HIFU energy to multiple skin layers for powerful lifting.", descJa: "集束超音波リフティングの進化形。複数の皮膚層に精密なHIFUエネルギーを届け、強力なリフティング効果を発揮します。", descZh: "聚焦超声提升的进化版本。向多个皮肤层精准传递HIFU能量，实现强效提升。",
       time: "40~60분", recovery: "당일 일상",
       image: `${CDN}/슈링크_6ee40d79.png`,
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_37_964152a8.jpg",
@@ -316,7 +364,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "온다",
       nameEn: "ONDA",
-      desc: "특허받은 극초단파(Microwave) 기술로 리프팅 및 타이트닝 효과를 부여.\n콜라겐을 지속적으로 장기화하여 즉각적인 리프팅과 탄력 개선을 경험하세요.",
+      desc: "특허받은 극초단파(Microwave) 기술로 리프팅 및 타이트닝 효과를 부여.\n콜라겐을 지속적으로 장기화하여 즉각적인 리프팅과 탄력 개선을 경험하세요.", descEn: "Microwave energy lifting and body contouring treatment. Targets fat cells and tightens skin simultaneously.", descJa: "マイクロ波エネルギーリフティングとボディコンタリング施術。脂肪細胞をターゲットにしながら皮膚を引き締めます。", descZh: "微波能量提升和身体塑形治疗。同时靶向脂肪细胞并紧致皮肤。",
       time: "30~60분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/onda-thumbnail_c9eb3dc4.png",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/onda-thumbnail_c9eb3dc4.png",
@@ -330,7 +378,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "텐써마",
       nameEn: "10THERMA",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_40_e5717309.jpg",
-      desc: "주사바늘 없이 약물을 진피층에 직접 주입하는 무침 시술.\n리프팅·피부 재생 효과를 기대할 수 있으며 시술 후 즉시 일상 복귀 가능.",
+      desc: "주사바늘 없이 약물을 진피층에 직접 주입하는 무침 시술.\n리프팅·피부 재생 효과를 기대할 수 있으며 시술 후 즉시 일상 복귀 가능.", descEn: "Advanced RF lifting treatment combining temperature control for precise skin rejuvenation.", descJa: "精密な皮膚若返りのための温度制御を組み合わせた高度なRFリフティング施術。", descZh: "结合温度控制的高级射频提升治疗，实现精准皮肤年轻化。",
       time: "20~40분", recovery: "당일 일상",
       image: `${CDN}/에너젯_afcf856d.png`,
       detail: "에너젯(Enerjet)은 고압 공기를 이용해 주사바늘 없이 약물을 피부 진피층에 직접 주입하는 무침 시술 장비입니다. 바늘 공포증이 있는 분들도 편안하게 받을 수 있으며, 시술 부위의 멍이나 출혈이 최소화됩니다. 히알루론산·성장인자·리쥬란 등 다양한 약물을 주입할 수 있으며, 피부 재생과 탄력 개선 효과를 기대할 수 있습니다.",
@@ -343,7 +391,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "BBL 스킨타이트",
       nameEn: "BBL SKINTYTE",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/스킨타이트_9db77bf0.png",
-      desc: "미국 SCITON사의 고성능 '쥴 레이저' 장비로 진행되는 시술로,\n적외선 빛을 이용하여 피부 속 콜라겐을 자극해 자연스럽게 탄력을 높여줍니다.",
+      desc: "미국 SCITON사의 고성능 '쥴 레이저' 장비로 진행되는 시술로,\n적외선 빛을 이용하여 피부 속 콜라겐을 자극해 자연스럽게 탄력을 높여줍니다.", descEn: "Phototherapy for combined redness and pigment improvement. Broadband light technology treats both vascular and pigmented lesions simultaneously.", descJa: "光治療による紅潮・色素複合改善。広帯域光技術で血管性と色素性の病変を同時に治療します。", descZh: "光疗复合改善红肌和色素。宽带光技术同时治疗血管性和色素性病变。",
       time: "30~60분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/스킨타이트_9db77bf0.png",
       detail: "쥴 BBL 스킨타이트는 미국 SCITON사의 고성능 '쥴 레이저' 장비로 진행되는 시술로, 적외선 빛을 이용하여 피부 속 콜라겐을 자극해서 자연스럽게 탄력을 높여주는 레이저입니다. 통증이나 마취 걱정 없이 편안하게 받을 수 있고, 시술 후 피부가 탱탱하고 매끈해지는 느낌을 확실히 느낄 수 있습니다. 피부 냉각 장치인 특수 사파이어 팁을 사용하여 시술 중 피부 표면을 열 손상으로부터 보호합니다. 리프팅 효과로 피부 탄력 개선과 잔주름 개선에 탁월하며, 콜라겐 생성을 촉진하여 피부 속부터 콜라겐 재생에 도움을 줍니다. 또한 기미, 주근깨 등 색소 치료에도 효과가 있는 화이트닝 효과까지 기대할 수 있습니다.",
@@ -356,7 +404,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "트리니티 리프토닝",
       nameEn: "TRINITY LIFTONING",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/trinity-thumbnail_b5123a89.jpg",
-      desc: "1064nm·808nm·755nm 3가지 파장이 동시 조사되는 국내 최초 복합 레이저.\n리프팅과 토닝을 한번에, 기미·잡티·홍조까지 맑고 깨끗한 피부로.",
+      desc: "1064nm·808nm·755nm 3가지 파장이 동시 조사되는 국내 최초 복합 레이저.\n리프팅과 토닝을 한번에, 기미·잡티·홍조까지 맑고 깨끗한 피부로.", descEn: "Simultaneous lifting and toning treatment. Combines lifting and skin tone improvement for comprehensive skin care.", descJa: "リフティングとトーニングを同時に行う施術。リフティングと肌のトーン改善を組み合わせた総合的なスキンケアです。", descZh: "同时进行提升和调肤的治疗。结合提升和肤色改善，实现全面护肤。",
       time: "10분 이내", recovery: "당일 일상",
       badge: "NEW", badgeColor: "#7C3AED",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/trinity-thumbnail_b5123a89.jpg",
@@ -374,7 +422,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "눈밑지방재배치",
       nameEn: "UNDER-EYE FAT REPOSITIONING",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/눈밑지방_4c0b8a51.png",
-      desc: "4,000례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선.\n지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.",
+      desc: "4,000례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선.\n지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.", descEn: "Specialized treatment for under-eye fat repositioning and dark circle improvement. Our doctors perform the procedure directly for natural, vibrant eyes.", descJa: "目の下の脂肪再配置とクマ改善の専門施術。スター皮膚科の院長が直接執刀し、自然で生き生きとした目元を作ります。", descZh: "眼袋脂肪重置及黑眼圈改善专项治疗。由院长亲自操作，打造自然有神的眼部轮廓。",
       time: "30~60분", recovery: "3~7일",
       badge: "BEST", badgeColor: "#4A6FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF.webp", best: true,
@@ -387,7 +435,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "런치타임 눈밑레이저",
       nameEn: "LUNCHTIME UNDER-EYE LASER",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/런치타임눈밑레이저_cf471de8.jpg",
-      desc: "특수 패치와 레이저 충격파로 조직 손상 없이 눈밑 지방을 감소시키는 비수술 시술.\n점심 시간에도 받을 수 있을 만큼 간편하며 피부 탄력 개선 효과를 기대할 수 있습니다.",
+      desc: "특수 패치와 레이저 충격파로 조직 손상 없이 눈밑 지방을 감소시키는 비수술 시술.\n점심 시간에도 받을 수 있을 만큼 간편하며 피부 탄력 개선 효과를 기대할 수 있습니다.", descEn: "Quick under-eye laser treatment with minimal downtime. Improves dark circles and fine lines around the eyes.", descJa: "ダウンタイムが最小限のクイックアイレーザー施術。目の周りのクマと小じわを改善します。", descZh: "停工期最短的快速眼部激光治疗。改善黑眼圈和眼周细纹。",
       time: "20~30분", recovery: "1~2일",
       badge: "간편", badgeColor: "#81C7C9",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/treat-lunchtime-laser-patch_afc9f430.jpg",
@@ -409,7 +457,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "ADVATX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/아드바_d0a73891.png",
       youtubeUrl: "https://www.youtube.com/embed/Mt-JsBhZXmA",
-      desc: "혈관·색소 병변 치료에 활용되는 레이저 장비.\n안면홍조·혈관 확장을 피부 자극 최소화 방식으로 개선합니다.",
+      desc: "혈관·색소 병변 치료에 활용되는 레이저 장비.\n안면홍조·혈관 확장을 피부 자극 최소화 방식으로 개선합니다.", descEn: "Laser for scar elasticity improvement. Dual-wavelength technology targets both vascular components and collagen for comprehensive scar treatment.", descJa: "瘢痕弾力改善レーザー。デュアル波長技術で血管成分とコラーゲンの両方をターゲットにし、総合的な瘢痕治療を実現します。", descZh: "疤痕弹力改善激光。双波长技术同时靶向血管成分和胶原蛋白，实现全面疤痕治疗。",
       time: "20~40분", recovery: "1~2일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/adva_card_53fcdcea.png",
       imgBg: "#FFFFFF",
@@ -424,7 +472,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "BBL",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/BBL_533a94c4.png",
       youtubeUrl: "https://www.youtube.com/embed/PbCt12_WYFo",
-      desc: "광치료로 홍조 완화와 피부 탄력 개선을 동시에 케어.\n지속 시술 시 피부 노화 개선 효과가 보고되어 있습니다.",
+      desc: "광치료로 홍조 완화와 피부 탄력 개선을 동시에 케어.\n지속 시술 시 피부 노화 개선 효과가 보고되어 있습니다.", descEn: "Broadband light phototherapy for skin tone improvement and rejuvenation.", descJa: "肌トーン改善と若返りのための広帯域光線治療。", descZh: "改善肤色和年轻化的宽带光光疗。",
       time: "20~40분", recovery: "1~2일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/bbl_card_86144b4c.png",
       imgBg: "#FFFFFF",
@@ -438,7 +486,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "엑셀 V+",
       nameEn: "EXCEL V+",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/엑셀V_119259b6.jpg",
-      desc: "혁관 선택성 듀얼 파장 레이저로 안면홍조·모세혈관 확장을 집중 치료.\n주변 조직 손상을 최소화하며 붉은 피부를 효과적으로 개선합니다.",
+      desc: "혁관 선택성 듀얼 파장 레이저로 안면홍조·모세혈관 확장을 집중 치료.\n주변 조직 손상을 최소화하며 붉은 피부를 효과적으로 개선합니다.", descEn: "Standard for vascular and redness treatment. Selectively targets hemoglobin to treat facial redness, capillaries, and vascular lesions.", descJa: "血管・色素治療の標準。ヘモグロビンを選択的にターゲットにして顔面紅潮、毛細血管、血管病変を治療します。", descZh: "血管和红肌治疗的标准。选择性靶向血红蛋白，治疗面部潮红、毛细血管和血管病变。",
       time: "20~40분", recovery: "1~3일",
       badge: "특화", badgeColor: "#E57373",
       image: `${CDN}/엑셀V_70001aa7.png`,
@@ -456,7 +504,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "PENTO 9900",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_25_36cb2ad0.jpg",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_25_36cb2ad0.jpg",
-      desc: "755nm 알렉산드라이트와 1064nm 앤디야그 듀얼 파장 레이저.\n기미·잡티·모공·탄력 개선까지 가능한 복합 피부 레이저입니다.",
+      desc: "755nm 알렉산드라이트와 1064nm 앤디야그 듀얼 파장 레이저.\n기미·잡티·모공·탄력 개선까지 가능한 복합 피부 레이저입니다.", descEn: "Combined pigment and elasticity treatment. Addresses both pigmentation and skin firmness in a single comprehensive treatment.", descJa: "色素弾力複合治療。色素沈着と皮膚の引き締めの両方を1回の総合治療で対処します。", descZh: "色素和弹力复合治疗。一次综合治疗同时解决色素沉着和皮肤紧致问题。",
       time: "20~40분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/pento1064_card_6653a66e.png",
       imgBg: "#FFFFFF",
@@ -472,7 +520,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/루메니스원_558f8b74.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/루메니스원_558f8b74.png",
       youtubeUrl: "https://www.youtube.com/embed/rA_n4hbY5Dc",
-      desc: "Lumenis사의 혈관 전문 레이저로 안면홍조·혈관종 치료에 특화.\n두 파장 조합으로 표재성부터 깊은 혈관 병변까지 폭넓게 대응합니다.",
+      desc: "Lumenis사의 혈관 전문 레이저로 안면홍조·혈관종 치료에 특화.\n두 파장 조합으로 표재성부터 깊은 혈관 병변까지 폭넓게 대응합니다.", descEn: "Multi-platform laser system for comprehensive skin treatment. Addresses pigmentation, vascular lesions, and skin rejuvenation.", descJa: "総合的な皮膚治療のためのマルチプラットフォームレーザーシステム。色素沈着、血管病変、皮膚若返りに対応します。", descZh: "综合皮肤治疗的多平台激光系统。解决色素沉着、血管病变和皮肤年轻化问题。",
       time: "20~40분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/lumenis_v_card_03c774b0.png",
       imgBg: "#FFFFFF",
@@ -487,7 +535,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "SYNERGY",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/씨너지_e96088b2.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/씨너지_e96088b2.png",
-      desc: "두 가지 파장을 동시에 조사하는 복합 혈관 레이저.\n다양한 깊이의 혈관 병변과 홍조를 맞춤형 파라미터로 치료합니다.",
+      desc: "두 가지 파장을 동시에 조사하는 복합 혈관 레이저.\n다양한 깊이의 혈관 병변과 홍조를 맞춤형 파라미터로 치료합니다.", descEn: "Dual-wavelength laser system for synergistic skin treatment. Combines multiple wavelengths for enhanced treatment efficacy.", descJa: "相乗的な皮膚治療のためのデュアル波長レーザーシステム。複数の波長を組み合わせて治療効果を高めます。", descZh: "协同皮肤治疗的双波长激光系统。结合多种波长提高治疗效果。",
       time: "20~40분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/cynergy_card_1cb99049.png",
       imgBg: "#FFFFFF",
@@ -504,7 +552,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "큐어맥스",
       nameEn: "CUREMAX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_53_222a4ae8.jpg",
-      desc: "다파장 복합 레이저로 기미·잡티·검버섯 등 색소 병변을 치료.\n피부 재생 효과를 함께 기대할 수 있습니다.",
+      desc: "다파장 복합 레이저로 기미·잡티·검버섯 등 색소 병변을 치료.\n피부 재생 효과를 함께 기대할 수 있습니다.", descEn: "CO2 laser device for acne scar and milia removal", descJa: "CO2レーザーニキビ瘢痕および稗粒腫除去機器", descZh: "CO2激光痘疤和粟粒疹去除设备",
       time: "20~40분", recovery: "3~5일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-curemax-nobg-7fJkMnOpQr3sT6uVwXyZdE.webp",
       youtubeUrl: "https://www.youtube.com/embed/YJE_IS5fFC0",
@@ -517,7 +565,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "스타워커 MAQX",
       nameEn: "STAR WALKER MAQX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/스타워커MAQX_5dd4eb14.jpg",
-      desc: "Q-스위치 Nd:YAG와 피코초 레이저를 결합한 복합 색소 치료 장비.\n532nm·1064nm·585nm·650nm 다중 파장으로 다양한 색소 병변에 대응합니다.",
+      desc: "Q-스위치 Nd:YAG와 피코초 레이저를 결합한 복합 색소 치료 장비.\n532nm·1064nm·585nm·650nm 다중 파장으로 다양한 색소 병변에 대응합니다.", descEn: "Specialized laser for pigment treatment. Combines Q-switched Nd:YAG and picosecond technology for versatile pigment removal.", descJa: "色素治療専門レーザー。QスイッチNd:YAGとピコ秒技術を組み合わせた多目的色素除去を実現します。", descZh: "色素治疗专用激光。结合Q开关Nd:YAG和皮秒技术，实现多功能色素去除。",
       time: "20~30분", recovery: "당일 일상",
       image: `${CDN}/스타워커_b95a35a4.png`,
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/스타워커MAQX_5dd4eb14.jpg",
@@ -530,7 +578,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "인라이튼 3세대 루비피코",
       nameEn: "ENLIGHTEN III RUBY PICO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/인라이튼_d0c7a409.jpg",
-      desc: "트리플 파장 피코초 레이저로 기미·잡티·문신을 효과적으로 분해.\n주변 조직 손상을 최소화하며 다양한 색소 병변에 대응합니다.",
+      desc: "트리플 파장 피코초 레이저로 기미·잡티·문신을 효과적으로 분해.\n주변 조직 손상을 최소화하며 다양한 색소 병변에 대응합니다.", descEn: "3rd-generation picosecond laser for comprehensive pigment treatment. Multiple wavelengths target different pigment depths for thorough removal.", descJa: "第3世代ピコ秒レーザーによる総合色素治療。複数の波長で異なる色素の深さをターゲットにし、徹底的に除去します。", descZh: "第三代皮秒激光综合色素治疗。多种波长针对不同深度的色素，实现彻底去除。",
       time: "20~40분", recovery: "3~5일",
       badge: "인기", badgeColor: "#4A6FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/엔라이턴3_nobg_83723c8a.png", best: true,
@@ -544,7 +592,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "엑셀 v+",
       nameEn: "EXCEL V+",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/pc_sub_03_03_26_caee4454.jpg",
-      desc: "국내 최초 도입! 민낯 종결 프리미엄 레이저.\n색소, 홍조, 혈관, 탄력을 빠르고 쉽게 치료합니다.",
+      desc: "국내 최초 도입! 민낯 종결 프리미엄 레이저.\n색소, 홍조, 혈관, 탄력을 빠르고 쉽게 치료합니다.", descEn: "Premium dual-wavelength laser for pigment, redness, and vascular treatment. First introduced in Korea, delivers comprehensive skin improvement.", descJa: "色素・紅潮・血管治療に対応するプレミアムデュアル波長レーザー。国内初導入、総合的な肌改善を実現します。", descZh: "适用于色素、红肌和血管治疗的高端双波长激光。国内首次引进，实现全面皮肤改善。",
       time: "20~40분", recovery: "당일 일상",
       image: `${CDN}/엑셀V_5364dd04.png`,
       youtubeUrl: "https://www.youtube.com/embed/ddelUmpPlu8",
@@ -557,7 +605,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "BBL 레이저",
       nameEn: "BBL",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/BBL_533a94c4.png",
-      desc: "Sciton BBL 광치료로 기미·잡티·일광 흑자 등 색소 병변을 복합 개선.\n홍조 완화와 피부 재생 효과를 동시에 기대할 수 있습니다.",
+      desc: "Sciton BBL 광치료로 기미·잡티·일광 흑자 등 색소 병변을 복합 개선.\n홍조 완화와 피부 재생 효과를 동시에 기대할 수 있습니다.", descEn: "BroadBand Light therapy for simultaneous treatment of pigmentation, redness, and skin aging. Clinically proven to improve skin quality with continued use.", descJa: "色素・紅潮・肌老化を同時にケアするBBL光治療。継続施術で肌質改善効果が臨床的に証明されています。", descZh: "同时治疗色素、红肌和皮肤老化的BBL光子治疗。持续治疗已被临床证明可改善肤质。",
       time: "20~40분", recovery: "당일~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-bbljoule-nobg-4dHiKlMnOp5qRsT8uVwXyZ.webp",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/BBL_533a94c4.png",
@@ -571,7 +619,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "루메니스 원",
       nameEn: "LUMENIS ONE",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/색소문신-루메니스원_fa549937.png",
-      desc: "IPL 기반 복합 광치료로 색소·홍조·피부결을 한 번에 개선.\n다양한 파장 필터로 피부 타입별 맞춤 치료가 가능합니다.",
+      desc: "IPL 기반 복합 광치료로 색소·홍조·피부결을 한 번에 개선.\n다양한 파장 필터로 피부 타입별 맞춤 치료가 가능합니다.", descEn: "Multi-platform laser system combining IPL and laser for comprehensive treatment of pigmentation, redness, and skin rejuvenation.", descJa: "IPLとレーザーを組み合わせたマルチプラットフォームシステムで色素・紅潮・肌再生を総合治療します。", descZh: "结合IPL和激光的多平台系统，综合治疗色素、红肌和皮肤再生。",
       time: "20~40분", recovery: "당일~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-lumenis-one-nobg-8eIjKlMnOp6rStU9vWxYzA.webp",
       youtubeUrl: "https://www.youtube.com/embed/rA_n4hbY5Dc",
@@ -583,7 +631,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {      name: "펜토 9900",
       nameEn: "PENTO 9900",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/색소문신-펜토_704d9859.png",
-      desc: "1064nm 레이저로 기미·잡티·문신 색소를 깊은 층까지 분해.\n혈관 병변 치료에도 활용되는 복합 레이저 장비입니다.",
+      desc: "1064nm 레이저로 기미·잡티·문신 색소를 깊은 층까지 분해.\n혈관 병변 치료에도 활용되는 복합 레이저 장비입니다.", descEn: "Dual-wavelength laser combining Alexandrite and Nd:YAG for effective treatment of melasma, freckles, and skin elasticity improvement.", descJa: "アレキサンドライトとNd:YAGのデュアル波長でシミ・そばかす・弾力改善に効果的なレーザーです。", descZh: "结合翠绿宝石和Nd:YAG双波长，有效治疗黄褐斑、雀斑并改善皮肤弹力。",
       time: "20~40분", recovery: "3~5일",
       image: `${CDN}/펜토 9900_3af14ef2.png`,
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/색소문신-펜토_704d9859.png",
@@ -596,7 +644,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "라셈드 울트라",
       nameEn: "LASEMD ULTRA",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/라셈드울트라_a5fd8612.png",
-      desc: "차원이 다른 피부 솔루션! 레이저와 스킨부스터 시술 효과가 동시에!\n수분 공급, 피부 재생, 탄력 증가, 피부톤·기미 개선, 광채 효과.",
+      desc: "차원이 다른 피부 솔루션! 레이저와 스킨부스터 시술 효과가 동시에!\n수분 공급, 피부 재생, 탄력 증가, 피부톤·기미 개선, 광채 효과.", descEn: "Thulium fiber laser for skin resurfacing and rejuvenation. Effective for fine lines, pores, and overall skin texture improvement.", descJa: "皮膚再生と若返りのためのツリウムファイバーレーザー。小じわ、毛穴、全体的な肌質改善に効果的です。", descZh: "用于皮肤再生和年轻化的铥纤维激光。有效改善细纹、毛孔和整体肌肤质感。",
       time: "20~40분", recovery: "1~3일",
       badge: "저자극 회복", badgeColor: "#7C3AED",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-lasemd-ultra-nobg-9fJkMnOpQr4sT7uVwXyZdE.webp",
@@ -615,7 +663,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "뉴 울트라 펄스 앙코르 스카 FX",
       nameEn: "NEW ULTRA PULSE ENCORE SCAAR FX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/울트라펄스_6857e3b1.png",
-      desc: "미국 루메니스사의 탄산가스 프락셔널 레이저로 각종 흉터, 색소침착, 피부톤 개선을 한번에!\n일반 프락셀 대비 5배 뛰어난 효과와 빠른 회복이 특징입니다.",
+      desc: "미국 루메니스사의 탄산가스 프락셔널 레이저로 각종 흉터, 색소침착, 피부톤 개선을 한번에!\n일반 프락셀 대비 5배 뛰어난 효과와 빠른 회복이 특징입니다.", descEn: "Advanced CO2 fractional laser for deep scar treatment. Targets scar tissue with precision for significant improvement.", descJa: "深い瘢痕治療のための高度なCO2フラクショナルレーザー。精密に瘢痕組織をターゲットにして大幅な改善を実現します。", descZh: "用于深度疤痕治疗的高级CO2点阵激光。精准靶向疤痕组织，实现显著改善。",
       time: "30~60분", recovery: "5~7일",
       badge: "특화", badgeColor: "#4A6FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/울트라펄스_6857e3b1.png", best: true,
@@ -630,7 +678,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "미라젯",
       nameEn: "MIRAJET",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/미라젯_8290d437.png",
-      desc: "바늘 없이! 화상 없이! 빠르고 효과적인 안티에이징.\n마이크로-젯 분사로 진피층에 약물을 효과적으로 전달합니다.",
+      desc: "바늘 없이! 화상 없이! 빠르고 효과적인 안티에이징.\n마이크로-젯 분사로 진피층에 약물을 효과적으로 전달합니다.", descEn: "Needle-free drug delivery system for painless treatment. Delivers medications precisely into the skin without needles.", descJa: "痛みのない施術のための無針薬物送達システム。針なしで薬剤を皮膚に精密に届けます。", descZh: "无痛治疗的无针药物输送系统。无需针头将药物精准输送到皮肤。",
       time: "20~40분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/미라젯_8290d437.png",
       youtubeUrl: "https://www.youtube.com/embed/J_6BHWGyC5g",
@@ -643,7 +691,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "DRT 진피재생술",
       nameEn: "DERMIS RESURFACING THERAPY",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/DRT_0cfd047a.png",
-      desc: "어븀야그 핀홀 방식의 최첨단 프락셔널 치료로 진피층까지 직접적인 미세 구멍을 형성.\n새로운 피부 조직 생성을 유도하여 흉터·모공·피부결을 개선합니다.",
+      desc: "어븀야그 핀홀 방식의 최첨단 프락셔널 치료로 진피층까지 직접적인 미세 구멍을 형성.\n새로운 피부 조직 생성을 유도하여 흉터·모공·피부결을 개선합니다.", descEn: "Comprehensive dermis resurfacing treatment for skin texture improvement. Stimulates collagen production for smoother, younger-looking skin.", descJa: "肌質改善のための総合的な真皮再生施術。コラーゲン生成を促進し、なめらかで若々しい肌を実現します。", descZh: "改善肌肤质感的综合真皮再生治疗。促进胶原蛋白生成，实现更细腻年轻的肌肤。",
       time: "30~60분", recovery: "2~5일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/DRT_0cfd047a.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/DRT_0cfd047a.png",
@@ -658,7 +706,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "TRIFILL PRO",
       youtubeUrl: "https://www.youtube.com/embed/DFB4SZU5U-g",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_47_81166797.jpg",
-      desc: "패인 흉터에 필러 성분을 정밀 주입해 즉각적으로 볼륨을 채워주는 시술.\n레이저 치료와 병행 시 흉터 개선 시너지 효과를 기대할 수 있습니다.",
+      desc: "패인 흉터에 필러 성분을 정밀 주입해 즉각적으로 볼륨을 채워주는 시술.\n레이저 치료와 병행 시 흉터 개선 시너지 효과를 기대할 수 있습니다.", descEn: "Advanced filler treatment for comprehensive volume restoration. Precisely fills depressed scars and volume-deficient areas.", descJa: "総合的なボリューム回復のための高度なフィラー施術。陥没瘢痕とボリューム不足部位を精密に補填します。", descZh: "全面丰盈恢复的高级填充治疗。精准填充凹陷疤痕和体积不足区域。",
       time: "20~40분", recovery: "1~3일",
       image: `${CDN}/더마샤인프로_d7a8f2c1.png`,
       detail: "트리필프로(Trifill Pro)는 패인 흉터 부위에 히알루론산 필러 성분을 정밀하게 주입하여 즉각적인 볼륨 개선 효과를 제공합니다. 여드름 흉터로 인한 음영과 패임을 채워주어 피부 표면을 고르게 만드는 데 활용됩니다. 레이저 치료와 병행하면 흉터 개선 효과를 극대화할 수 있으며, 시술 후 즉시 결과를 확인할 수 있습니다.",
@@ -671,7 +719,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "SST PRO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/모래알피부이식_b1e8163f.png",
       youtubeUrl: "https://www.youtube.com/embed/218RqWMl7Kg",
-      desc: "수술·외상·켈로이드 등 다양한 흉터 유형에 직접 작용하는 복합 치료.\n흉터의 색소 침착과 조직 경화를 점진적으로 개선합니다.",
+      desc: "수술·외상·켈로이드 등 다양한 흉터 유형에 직접 작용하는 복합 치료.\n흉터의 색소 침착과 조직 경화를 점진적으로 개선합니다.", descEn: "Treatment that harvests skin tissue in sand grain size and transplants it to vitiligo areas. Systematically treats even difficult-to-treat vitiligo areas.", descJa: "皮膚組織を砂粒大に採取して白斑部位に移植する施術。治療が難しかった難治性白斑部位まで丁寧かつ体系的に治療します。", descZh: "将皮肤组织采集成沙粒大小并移植到白癜风部位的治疗。系统性地治疗难以治疗的顽固性白癜风部位。",
       time: "20~40분", recovery: "3~5일",
       image: `${CDN}/프로파운드_93be7410.png`,
       detail: "SST Pro는 흉터 조직에 직접 작용하는 복합 치료 장비로, 수술 흉터·외상 흉터·켈로이드·비후성 흉터 등 다양한 흉터 유형에 활용됩니다. 흉터의 색소 침착을 개선하고 경화된 흉터 조직을 연화시켜 흉터의 외관과 질감을 점진적으로 개선합니다. 다른 흉터 치료 장비와 병행 시 더 효과적인 결과를 기대할 수 있습니다.",
@@ -684,7 +732,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "JOULE PROFRACTIONAL",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/쥴-프로프락셔널_f08a640a.png",
       youtubeUrl: "https://www.youtube.com/embed/_n50vuux5hg",
-      desc: "Sciton 쥴 플랫폼 기반 프랙셔널 레이저로 여드름 흉터·모공·피부결 특화 치료.\n표피와 진피를 동시 자극해 콜라겐 재생과 피부결 정돈 효과를 기대할 수 있습니다.",
+      desc: "Sciton 쥴 플랫폼 기반 프랙셔널 레이저로 여드름 흉터·모공·피부결 특화 치료.\n표피와 진피를 동시 자극해 콜라겐 재생과 피부결 정돈 효과를 기대할 수 있습니다.", descEn: "Fractional laser for scar and pore improvement. Precise micro-channels stimulate collagen for smoother skin.", descJa: "瘢痕・毛穴改善フラクショナルレーザー。精密なマイクロチャンネルでコラーゲンを刺激し、なめらかな肌を実現します。", descZh: "改善疤痕和毛孔的点阵激光。精准微通道刺激胶原蛋白，实现更细腻的肌肤。",
       time: "30~60분", recovery: "5~7일",
       badge: "모공·흉터 특화", badgeColor: "#065F46",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/joule-fractional-laser_5152ce2e.jpg",
@@ -698,7 +746,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "JOULE HALO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/헤일로_쥴_new_d88c347b.png",
       youtubeUrl: "https://www.youtube.com/embed/RmVQsewJBYE",
-      desc: "두 가지 파장을 동시에 조사해 모공·피부결·흉터·색소를 한 번에 복합 개선.\n시술 후 피부가 유리처럼 광나는 'Halo Glow' 효과로 유명합니다.",
+      desc: "두 가지 파장을 동시에 조사해 모공·피부결·흉터·색소를 한 번에 복합 개선.\n시술 후 피부가 유리처럼 광나는 'Halo Glow' 효과로 유명합니다.", descEn: "Dual-wavelength hybrid fractional laser for comprehensive skin rejuvenation. Simultaneously treats surface and deep skin layers.", descJa: "総合的な皮膚若返りのためのデュアル波長ハイブリッドフラクショナルレーザー。表皮と真皮を同時に治療します。", descZh: "双波长混合点阵激光实现全面皮肤年轻化。同时治疗表皮和真皮层。",
       time: "30~60분", recovery: "5~7일",
       badge: "Halo Glow", badgeColor: "#047857",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/halo-hybrid-laser_bf04f00b.jpeg",
@@ -716,7 +764,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "SKIN BOOSTER",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/스킨부스터_4529f8dc.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/스킨부스터_4529f8dc.png",
-      desc: "히알루론산 등 수분 성분을 피부 진피층에 직접 주입.\n피부 탄력·광채·수분을 동시에 개선하는 인기 시술.",
+      desc: "히알루론산 등 수분 성분을 피부 진피층에 직접 주입.\n피부 탄력·광채·수분을 동시에 개선하는 인기 시술.", descEn: "Hydrating skin booster injection for deep moisturization. Restores skin's natural moisture balance and improves elasticity.", descJa: "深い保湿のための水分補給スキンブースター注射。皮膚の自然な水分バランスを回復し、弾力を改善します。", descZh: "深层保湿的水润皮肤补充注射。恢复皮肤自然水分平衡，改善弹力。",
       time: "20~40분", recovery: "당일 일상",
       badge: "인기", badgeColor: "#81C7C9",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/7IUeNj7YG383_91ad3b5b.jpg", best: true,
@@ -730,7 +778,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "STEM CELL TREATMENT",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/줄기세포_9034d023.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/줄기세포_9034d023.png",
-      desc: "자가 줄기세포를 활용한 피부 재생 치료.\n피부 노화 개선과 탄력 회복에 효과적인 프리미엄 프로그램.",
+      desc: "자가 줄기세포를 활용한 피부 재생 치료.\n피부 노화 개선과 탄력 회복에 효과적인 프리미엄 프로그램.", descEn: "Stem cell-based skin regeneration treatment. Harnesses the regenerative power of stem cells for comprehensive skin renewal.", descJa: "幹細胞ベースの皮膚再生施術。幹細胞の再生力を活用して総合的な皮膚再生を実現します。", descZh: "基于干细胞的皮肤再生治疗。利用干细胞的再生能力实现全面皮肤更新。",
       time: "60~120분", recovery: "3~7일",
       badge: "프리미엄", badgeColor: "#9C5FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/Qv3RHE1FXMfm_stemcell.jpg",
@@ -744,7 +792,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "COLLAGEN INJECTION",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/콜라겐_2fb56379.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/콜라겐_2fb56379.png",
-      desc: "콜라겐 자극 주사로 피부 탄력과 볼륨을 자연스럽게 회복.\n지속 효과 6~12개월로 정기 관리에 적합한 시술.",
+      desc: "콜라겐 자극 주사로 피부 탄력과 볼륨을 자연스럽게 회복.\n지속 효과 6~12개월로 정기 관리에 적합한 시술.", descEn: "Direct collagen injection for skin elasticity and volume improvement. Replenishes lost collagen for firmer, more youthful skin.", descJa: "皮膚弾力とボリューム改善のためのコラーゲン直接注射。失われたコラーゲンを補充して、引き締まった若々しい肌を実現します。", descZh: "直接注射胶原蛋白改善皮肤弹力和丰盈度。补充流失的胶原蛋白，实现更紧致年轻的肌肤。",
       time: "20~30분", recovery: "1~3일",
       image: `${CDN}/에너젯_afcf856d.png`,
       detail: "콜라겐 자극 주사는 피부 진피층에 직접 주입하여 콜라겐 합성을 촉진하는 시술입니다. 노화로 인해 감소한 콜라겐을 보충하고 피부 탄력과 볼륨을 자연스럽게 회복시킵니다. 지속 효과는 6~12개월로, 정기적인 시술을 통해 피부 노화를 효과적으로 관리할 수 있습니다.",
@@ -757,7 +805,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "ASCE+",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/엑소좀_6eeb4268.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/엑소좀_6eeb4268.png",
-      desc: "줄기세포 배양액에서 추출한 엑소좀을 이용한 피부 재생 치료.\n피부 장벽 강화, 탄력 개선, 주름 완화 효과를 기대할 수 있습니다.",
+      desc: "줄기세포 배양액에서 추출한 엑소좀을 이용한 피부 재생 치료.\n피부 장벽 강화, 탄력 개선, 주름 완화 효과를 기대할 수 있습니다.", descEn: "Exosome-based skin regeneration therapy. Advanced cell-derived exosomes for comprehensive skin renewal and rejuvenation.", descJa: "エクソソームベースの皮膚再生療法。高度な細胞由来エクソソームで総合的な皮膚再生と若返りを実現します。", descZh: "基于外泌体的皮肤再生疗法。先进的细胞来源外泌体实现全面皮肤更新和年轻化。",
       time: "30~60분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/exosome_treatment_card-FL5KNDXVdmJCtUV4DFoGSD.webp",
       detail: "엑소좀(ASCE+)은 줄기세포 배양액에서 추출한 세포 외 소포체로, 성장 인자, 사이토카인, 마이크로RNA 등 피부 재생에 필요한 생리활성 물질을 풍부하게 함유하고 있습니다. 손상된 피부 세포의 재생을 촉진하고, 콜라겐 및 엘라스틴 합성을 자극하여 피부 탄력과 광채를 회복시킵니다. 염증 완화, 피부 장벽 강화, 주름 개선 등 종합적인 피부 재생 효과를 제공합니다. 다운타임이 거의 없어 바쁜 일상 중에도 시술이 가능합니다.",
@@ -770,7 +818,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "VOLUME UP PROGRAM · SCULPTRA",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/볼륨업프로그램_3442a94f.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/볼륨업프로그램_3442a94f.png",
-      desc: "FDA 승인 스컬트라로 피부 스스로 콜라겐을 생성해 자연스러운 볼륨을 회복.\n주름 개선·탄력·볼륨 회복 효과가 평균 2년 이상 지속됩니다.",
+      desc: "FDA 승인 스컬트라로 피부 스스로 콜라겐을 생성해 자연스러운 볼륨을 회복.\n주름 개선·탄력·볼륨 회복 효과가 평균 2년 이상 지속됩니다.", descEn: "FDA-approved collagen stimulator", descJa: "FDA承認コラーゲン刺激剤", descZh: "FDA认证胶原蛋白刺激剂",
       time: "30~60분", recovery: "당일 일상",
       badge: "2년 지속", badgeColor: "#9C5FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/treat-sculptra_c3f4b5f6.png",
@@ -785,7 +833,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "JUVELOOK VOLUME",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/쥬베룩볼륨_d9ad38c6.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/쥬베룩볼륨_d9ad38c6.png",
-      desc: "PDLLA·히알루론산 복합 콜라겐 자극 스킨부스터로 수분·탄력 동시 개선.\n노화로 인한 볼륨 감소와 피부 스러짐 개선, 지속 효과 12~18개월.",
+      desc: "PDLLA·히알루론산 복합 콜라겐 자극 스킨부스터로 수분·탄력 동시 개선.\n노화로 인한 볼륨 감소와 피부 스러짐 개선, 지속 효과 12~18개월.", descEn: "PDLLA volume filler for facial volume restoration and collagen stimulation. Long-lasting natural volume enhancement.", descJa: "顔のボリューム回復とコラーゲン刺激のためのPDLLAボリュームフィラー。長期持続する自然なボリュームアップを実現します。", descZh: "用于面部丰盈恢复和胶原蛋白刺激的PDLLA丰盈填充剂。持久自然的丰盈效果。",
       time: "20~40분", recovery: "1~3일",
       badge: "복합 효과", badgeColor: "#B45309",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/7IUeNj7YG383_91ad3b5b.jpg",
@@ -800,7 +848,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "RE20",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리투오_17dec4a1.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리투오_17dec4a1.png",
-      desc: "RE20 피부 재생 성분이 손상된 피부를 빠르게 회복시키고 수분을 공급.\n피부 자극 최소화로 민감한 피부도 안심하고 받을 수 있습니다.",
+      desc: "RE20 피부 재생 성분이 손상된 피부를 빠르게 회복시키고 수분을 공급.\n피부 자극 최소화로 민감한 피부도 안심하고 받을 수 있습니다.", descEn: "Regenerative skin treatment for comprehensive anti-aging. Stimulates natural skin renewal processes for youthful, radiant skin.", descJa: "総合的なアンチエイジングのための再生皮膚施術。自然な皮膚再生プロセスを刺激して若々しく輝く肌を実現します。", descZh: "全面抗衰老的再生皮肤治疗。刺激自然皮肤更新过程，实现年轻有光泽的肌肤。",
       time: "20~30분", recovery: "1~2일",
       badge: "수분·재생", badgeColor: "#A16207",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리투오_17dec4a1.png",
@@ -817,7 +865,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "보톡스",
       nameEn: "BOTOX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/botox_552ff42a.png",
-      desc: "보툴리눔 톡신을 정밀 주입해 표정 주름과 과도한 근육 움직임을 완화하는 시술.\n이마·미간·눈가 등 잔주름을 자연스럽게 정돈하고 슬림한 인상을 돕습니다.",
+      desc: "보툴리눔 톡신을 정밀 주입해 표정 주름과 과도한 근육 움직임을 완화하는 시술.\n이마·미간·눈가 등 잔주름을 자연스럽게 정돈하고 슬림한 인상을 돕습니다.", descEn: "Botulinum toxin injection for wrinkle improvement and facial contouring. Natural results with precise micro-dosing technique.", descJa: "しわ改善と顔のライン矯正のためのボツリヌス毒素注射。精密な少量施術で自然な結果を実現します。", descZh: "肉毒素注射改善皱纹和面部轮廓。精准微量注射，效果自然。",
       time: "10~20분", recovery: "당일 일상 복귀",
       badge: "주름 개선", badgeColor: "#D97706",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/BZDyHWjrUcLj_3f4c9c8d.jpg",
@@ -831,7 +879,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "필러",
       nameEn: "FILLER",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/filler_79748c4a.png",
-      desc: "히알루론산 필러로 꺼진 부위를 채워 볼륨과 윤곽을 자연스럽게 보완하는 시술.\n팔자·앞볼·입술·턱 라인 등 필요한 부위에 입체감을 더해 균형 잡힌 인상을 만듭니다.",
+      desc: "히알루론산 필러로 꺼진 부위를 채워 볼륨과 윤곽을 자연스럽게 보완하는 시술.\n팔자·앞볼·입술·턱 라인 등 필요한 부위에 입체감을 더해 균형 잡힌 인상을 만듭니다.", descEn: "Hyaluronic acid filler for volume restoration and facial contouring. Natural-looking results with immediate effect.", descJa: "ボリューム回復と顔のライン矯正のためのヒアルロン酸フィラー。即効性のある自然な仕上がりを実現します。", descZh: "透明质酸填充剂用于丰盈恢复和面部轮廓塑造。即时效果，外观自然。",
       time: "20~30분", recovery: "당일 일상 복귀",
       badge: "볼륨 개선", badgeColor: "#EC4899",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/zJEqJLqGqI2d_3f4c9c8d.jpg",
@@ -845,7 +893,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "윤곽 주사",
       nameEn: "CONTOURING INJECTION",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_49_354098fb.jpg",
-      desc: "지방 분해 주사로 이중턱·볼 지방 등을 비수술적으로 개선하며 수술 없이 얼굴 윤곽을 자연스럽게 개선하는 시술입니다.",
+      desc: "지방 분해 주사로 이중턱·볼 지방 등을 비수술적으로 개선하며 수술 없이 얼굴 윤곽을 자연스럽게 개선하는 시술입니다.", descEn: "Specialized injection for facial contouring and slimming. Precisely sculpts facial features for a more defined appearance.", descJa: "顔のラインと小顔のための専門注射。顔の輪郭を精密に彫刻して、より引き締まった外見を実現します。", descZh: "面部轮廓塑造和瘦脸专项注射。精准雕塑面部特征，呈现更立体的外观。",
       time: "20~30분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/0dVRx3DuVpWY_30a10709.jpg",
       detail: "지방 분해 성분을 이중턱, 볼 지방 등 원하는 부위에 직접 주입하여 지방 세포를 분해·제거하는 비수술적 시술입니다. 수술 없이 얼굴 윤곽을 개선할 수 있으며, 시술 후 점진적으로 지방이 감소하여 자연스러운 윤곽 변화를 기대할 수 있습니다.",
@@ -857,7 +905,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "리쥬란 힐러",
       nameEn: "REJURAN HEALER",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리쥬란힐러_98677b53.png",
-      desc: "연어 DNA 성분(PDRN)을 이용한 피부 재생 치료로 피부 탄력·수분·결을 종합적으로 개선하는 시술입니다.",
+      desc: "연어 DNA 성분(PDRN)을 이용한 피부 재생 치료로 피부 탄력·수분·결을 종합적으로 개선하는 시술입니다.", descEn: "Salmon DNA skin regeneration injection. PNPN component stimulates skin regeneration, improves elasticity, and restores youthful skin.", descJa: "サーモン由来DNA皮膚再生注射。PNPN成分が皮膚再生を促進し、弾力を改善して若々しい肌を回復します。", descZh: "三文鱼DNA皮肤再生注射。PNPN成分促进皮肤再生，改善弹力，恢复年轻肌肤。",
       time: "20~40분", recovery: "1~3일",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리쥬란힐러_98677b53.png",
       detail: "리쥬란 힐러는 연어 DNA에서 추출한 PDRN(폴리데옥시리보뉴클레오타이드) 성분을 피부 진피층에 주입하는 시술입니다. PDRN이 손상된 피부 세포의 DNA 복구를 촉진하고 콜라겐 합성을 자극하여 피부 탄력·수분·결을 종합적으로 개선합니다. 자연 유래 성분으로 부작용 위험이 낮습니다.",
@@ -869,7 +917,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "리쥬란 힐러 플러스",
       nameEn: "REJURAN HEALER PLUS",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/healer_plus_9a47b1bf.png",
-      desc: "PDRN 피부 재생과 HA 즉각 수분 공급을 동시에 누리는 리쥬란 업그레이드로 기존 리쥬란보다 수분감과 광채 효과가 더욱 뚜렷하게 나타납니다.",
+      desc: "PDRN 피부 재생과 HA 즉각 수분 공급을 동시에 누리는 리쥬란 업그레이드로 기존 리쥬란보다 수분감과 광채 효과가 더욱 뚜렷하게 나타납니다.", descEn: "Enhanced version of Rejuran Healer with higher concentration. More intensive skin regeneration and elasticity improvement for advanced anti-aging.", descJa: "より高濃度のリジュランヒーラーの強化版。より集中的な皮膚再生と弾力改善で高度なアンチエイジングを実現します。", descZh: "更高浓度的婴儿针加强版。更密集的皮肤再生和弹力改善，实现高级抗衰老效果。",
       time: "20~40분", recovery: "1~2일",
       badge: "재생·수분", badgeColor: "#4A6FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/healer_plus_9a47b1bf.png",
@@ -882,7 +930,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "쥬베룩",
       nameEn: "JUVELOOK SKIN BOOSTER",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/juvelook_f03b1652.png",
-      desc:"HA·PDLLA 복합 차세대 스킨부스터로 즉각 수분 공급과 콜라겐 생성 동시 유도하며 피부 탄력·광채·결을 한 번에 개선하는 복합 효과 스킨부스터입니다.",
+      desc:"HA·PDLLA 복합 차세대 스킨부스터로 즉각 수분 공급과 콜라겐 생성 동시 유도하며 피부 탄력·광채·결을 한 번에 개선하는 복합 효과 스킨부스터입니다.", descEn: "PDLLA skin booster for hydration and collagen stimulation. Improves skin texture and elasticity from within.", descJa: "保湿とコラーゲン刺激のためのPDLLAスキンブースター。内側から肌のテクスチャーと弾力を改善します。", descZh: "用于保湿和胶原蛋白刺激的PDLLA皮肤补充剂。从内部改善肌肤质感和弹力。",
       time: "20~30분", recovery: "당일 일상",
       badge: "수분·탄력", badgeColor: "#0C4A6E",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/IkzStH3azHFL_d72284cb.webp",
@@ -900,7 +948,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "아비클리어",
       nameEn: "AVICLEAR",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_51_8ba2c238.jpg",
-      desc: "FDA 승인 여드름 전용 1,726nm 레이저로 피지선을 선택적 억제.\n약물 없이 염증성·노듸성 여드름을 근본적으로 개선합니다.",
+      desc: "FDA 승인 여드름 전용 1,726nm 레이저로 피지선을 선택적 억제.\n약물 없이 염증성·노듸성 여드름을 근본적으로 개선합니다.", descEn: "FDA-approved 1,726nm laser exclusively for acne treatment. Targets sebaceous glands directly to reduce acne at the source.", descJa: "FDA承認のニキビ専用1,726nmレーザー。皮脂腺を直接ターゲットにしてニキビを根本から減少させます。", descZh: "FDA认证的1,726nm痘痘专用激光。直接靶向皮脂腺，从根源减少痘痘。",
       time: "30분", recovery: "1~3일",
       badge: "FDA 승인", badgeColor: "#E57373",
       image: `${CDN}/아비클리어_3d94823e.png`, best: true,
@@ -915,7 +963,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "카프리",
       nameEn: "CAPRI",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_17_6d79640f.jpg",
-      desc: "이중 파장 레이저로 염증성 여드름과 피지 분비를 직접 억제.\n염증 반응을 진정하며 여드름 재발을 효과적으로 방지합니다.",
+      desc: "이중 파장 레이저로 염증성 여드름과 피지 분비를 직접 억제.\n염증 반응을 진정하며 여드름 재발을 효과적으로 방지합니다.", descEn: "Dual-wavelength laser for inflammatory acne", descJa: "炎症性ニキビのデュアル波長レーザー", descZh: "炎症性痘痘双波长激光",
       time: "20~30분", recovery: "1~2일",
       badge: "염증 억제", badgeColor: "#C2410C",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/gKokBoh3bDWm_b8ea202e.jpg",
@@ -929,7 +977,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "플라듀오",
       nameEn: "PLADUO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_23_5c9552c8.png",
-      desc: "플라즈마와 레이저를 결합한 여드름 복합 치료 시스템.\n염증 진정과 피부 재생을 동시에 진행합니다.",
+      desc: "플라즈마와 레이저를 결합한 여드름 복합 치료 시스템.\n염증 진정과 피부 재생을 동시에 진행합니다.", descEn: "Combined plasma + laser acne treatment. Dual-action approach addresses both active acne and post-acne scarring.", descJa: "プラズマ+レーザー複合ニキビ治療。デュアルアクションアプローチで活動性ニキビとニキビ後の瘢痕の両方に対処します。", descZh: "等离子体+激光复合痘痘治疗。双重作用方式同时解决活动性痘痘和痘后疤痕。",
       time: "20~30분", recovery: "1~2일",
       badge: "복합 치료", badgeColor: "#9A3412",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/RypUEm7gjHfk_0760fc35.png",
@@ -943,7 +991,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {
       name: "플래티넘 PTT",      nameEn: "PLATINUM PTT",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/플래티넘_eecfc2a9.jpg",
-      desc: "플래티넘 나노입자 광열 치료로 여드름 박테리아를 선택적 파괴.\n항생제 부작용 없이 염증성 여드름을 효과적으로 개선합니다.",
+      desc: "플래티넘 나노입자 광열 치료로 여드름 박테리아를 선택적 파괴.\n항생제 부작용 없이 염증성 여드름을 효과적으로 개선합니다.", descEn: "Platinum nanoparticle photothermal acne treatment. Innovative technology using platinum nanoparticles for targeted acne elimination.", descJa: "プラチナナノ粒子光熱ニキビ治療。プラチナナノ粒子を使用した革新的な技術でニキビを標的に除去します。", descZh: "铂纳米粒子光热痘痘治疗。利用铂纳米粒子的创新技术靶向消除痘痘。",
       time: "30~40분", recovery: "1~2일",
       badge: "박테리아 파괴", badgeColor: "#7C3AED",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/플래티넘_eecfc2a9.jpg",
@@ -956,7 +1004,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
     {      name: "네오젠 플라즈마",
       nameEn: "NEOGEN PLASMA",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/네오젠_3d1a87bc.jpg",
-      desc: "네오젠 플라즈마로 피부 표면을 재생하는 비절제 치료.\n여드름 흉터·모공·피부결 개선에 효과적입니다.",
+      desc: "네오젠 플라즈마로 피부 표면을 재생하는 비절제 치료.\n여드름 흉터·모공·피부결 개선에 효과적입니다.", descEn: "Plasma energy skin regeneration treatment. Nitrogen plasma technology for skin resurfacing and rejuvenation.", descJa: "プラズマエネルギー皮膚再生施術。窒素プラズマ技術による皮膚再生と若返りを実現します。", descZh: "等离子体能量皮肤再生治疗。氮等离子体技术实现皮肤再生和年轻化。",
       time: "30~50분", recovery: "3~7일",
       badge: "피부 재생", badgeColor: "#0F766E",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/YgF34hnTbXog_e46e8323.png",
@@ -970,7 +1018,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "고바야시 절연침",
       nameEn: "AGNES",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/고바야시_600a1edd.png",
-      desc: "절연침 기술로 피지선을 선택적 억제하는 고주파 여드름 치료.\n피부 표면 손상을 최소화하며 회복 기간이 짧아 일상 복귀가 빠릅니다.",
+      desc: "절연침 기술로 피지선을 선택적 억제하는 고주파 여드름 치료.\n피부 표면 손상을 최소화하며 회복 기간이 짧아 일상 복귀가 빠릅니다.", descEn: "Insulated needle RF energy acne treatment", descJa: "絶縁針技術高周波エネルギーニキビ治療", descZh: "绝缘针技术高频能量痘痘治疗",
       time: "30~40분", recovery: "1~2일",
       badge: "절연침 기술", badgeColor: "#2563EB",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/고바야시_600a1edd.png",
@@ -989,7 +1037,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "미라드라이",
       nameEn: "MIRADRY FRESH",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_03_01_29_56ec9c83.jpg",
-      desc: "마이크로파 에너지로 겨드랑이 땅샘을 영구 제거하는 FDA 승인 시술.\n액취증과 다한증을 한 번에 동시에 해결합니다.",
+      desc: "마이크로파 에너지로 겨드랑이 땅샘을 영구 제거하는 FDA 승인 시술.\n액취증과 다한증을 한 번에 동시에 해결합니다.", descEn: "Permanent elimination of underarm sweat glands using microwave energy. FDA-approved device for long-lasting hyperhidrosis and bromhidrosis treatment.", descJa: "マイクロ波エネルギーで脇の汗腺を永久除去。FDA承認機器による長期持続する多汗症・わきが治療です。", descZh: "使用微波能量永久消除腋下汗腺。FDA认证设备，长效治疗多汗症和腋臭。",
       time: "60~90분", recovery: "3~5일",
       badge: "영구 제거", badgeColor: "#0F766E",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/HEkn0mzQWyoC_4d1c0020.jpeg",
@@ -1010,7 +1058,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "리포셋",
       nameEn: "LIPOSAT",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리포셋_f24523db.png",
-      desc: "부분 마취 후 3㎜ 정도로 결드랑이 두 군데를 절개한 후 금속관(캐뉼라)을 삽입해 땀샘을 긁어내는 다한증 치료법.\n영구적으로 땀샘를 제거하면서 보상성다한증이 없습니다.",
+      desc: "부분 마취 후 3㎜ 정도로 결드랑이 두 군데를 절개한 후 금속관(캐뉼라)을 삽입해 땀샘을 긁어내는 다한증 치료법.\n영구적으로 땀샘를 제거하면서 보상성다한증이 없습니다.", descEn: "RF energy simultaneously removes underarm sweat glands and fat without incisions. Treats both bromhidrosis and improves underarm contour.", descJa: "RFエネルギーで脇の汗腺と脂肪を非切開で同時除去。わきがの治療と脇のラインの改善を同時に実現します。", descZh: "射频能量无切口同时去除腋下汗腺和脂肪。同时治疗腋臭并改善腋下轮廓。",
       time: "40~60분", recovery: "2~3일",
       badge: "지방+땀샘 동시", badgeColor: "#7C3AED",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/리포셋_f24523db.png",
@@ -1031,7 +1079,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       name: "다한증 보톡스",
       nameEn: "HYPERHIDROSIS BOTOX",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/다한증_bd731d90.png",
-      desc: "보툴리누스 독소를 주사하여 땅샘 신경 신호를 차단하는 다한증 치료.\n시술 후 1~2주 내 효과가 나타나며 6~12개월 지속됩니다.",
+      desc: "보툴리누스 독소를 주사하여 땅샘 신경 신호를 차단하는 다한증 치료.\n시술 후 1~2주 내 효과가 나타나며 6~12개월 지속됩니다.", descEn: "Hyperhidrosis treatment by injecting botulinum toxin to block sweat gland nerve signals. Effects appear within 1-2 weeks and last 6-12 months.", descJa: "ボツリヌス毒素を注射して汗腺の神経信号を遮断する多汗症治療。施術後1〜2週間以内に効果が現れ、6〜12ヶ月持続します。", descZh: "注射肉毒素阻断汗腺神经信号的多汗症治疗。治疗后1-2周内出现效果，持续6-12个月。",
       time: "20~30분", recovery: "당일 일상 복귀",
       badge: "당일 복귀", badgeColor: "#0369A1",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/다한증_bd731d90.png",
@@ -1048,7 +1096,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "PINPOINTE",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/핀포인트_d7892fbb.png",
       youtubeUrl: "https://www.youtube.com/embed/ywUvlVZ2s6s",
-      desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 손·발톱 무좀 전용 치료 레이저.\nFDA 승인 장비로 안전하고 빠른 시술이 가능합니다.",
+      desc: "주변 조직 손상 없이 곰팡이균만을 파괴하는 손·발톱 무좀 전용 치료 레이저.\nFDA 승인 장비로 안전하고 빠른 시술이 가능합니다.", descEn: "Dedicated nail fungus treatment laser that destroys only the fungus without damaging surrounding tissue. FDA-approved device for safe and fast treatment.", descJa: "周囲の組織を傷つけることなく真菌だけを破壊する爪水虫専用治療レーザー。FDA承認機器で安全かつ迅速な施術が可能です。", descZh: "不损伤周围组织只破坏真菌的甲癣专用治疗激光。FDA认证设备，安全快速治疗。",
       time: "15~20분", recovery: "당일 일상",
       badge: "FDA 승인", badgeColor: "#0F766E",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/핀포인트_d7892fbb.png",
@@ -1070,7 +1118,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "HEALER 1064",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/힐러_fb0f59c9.jpg",
       youtubeUrl: "https://www.youtube.com/embed/vFudIEt6JDE",
-      desc: "1064nm 파장의 열에너지를 손·발톱 무좀균에 전달하여 곰팡이균을 사멸하는 레이저.\n경구 항진균제 없이 안전하게 치료합니다.",
+      desc: "1064nm 파장의 열에너지를 손·발톱 무좀균에 전달하여 곰팡이균을 사멸하는 레이저.\n경구 항진균제 없이 안전하게 치료합니다.", descEn: "Laser that delivers thermal energy of 1064nm wavelength to nail fungus to kill the fungus. Safe treatment without oral antifungal medication.", descJa: "1064nm波長の熱エネルギーを爪水虫菌に伝達して真菌を死滅させるレーザー。経口抗真菌薬なしで安全に治療できます。", descZh: "将1064nm波长热能传递给甲癣菌以杀灭真菌的激光。无需口服抗真菌药物，安全治疗。",
       time: "20~30분", recovery: "당일 일상",
       badge: "레이저 치료", badgeColor: "#0F766E",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/힐러_fb0f59c9.jpg",
@@ -1092,7 +1140,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "ONYCHO",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/오니코_e7c50add.jpg",
       youtubeUrl: "https://www.youtube.com/embed/gWlB90_W7ng",
-      desc: "양발 동시에 치료 가능한 식품의약품안전처 허가 획득 최신형 발톱무좀 치료 레이저.\n빠르고 효율적인 양측 동시 치료가 가능합니다.",
+      desc: "양발 동시에 치료 가능한 식품의약품안전처 허가 획득 최신형 발톱무좀 치료 레이저.\n빠르고 효율적인 양측 동시 치료가 가능합니다.", descEn: "Latest nail fungus treatment laser approved by MFDS that can treat both feet simultaneously. Fast and efficient bilateral simultaneous treatment.", descJa: "両足を同時に治療できる食品医薬品安全処許可取得の最新型爪水虫治療レーザー。迅速かつ効率的な両側同時治療が可能です。", descZh: "获得食品药品安全处批准的最新甲癣治疗激光，可同时治疗双足。快速高效的双侧同步治疗。",
       time: "15~25분", recovery: "당일 일상",
       badge: "식약처 허가", badgeColor: "#0369A1",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/오니코_e7c50add.jpg",
@@ -1114,7 +1162,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "EXCEL TOE",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/엑셀토우_ddf531cd.png",
       youtubeUrl: "https://www.youtube.com/embed/PhOEKQBdEL4",
-      desc: "KFDA 식약처 허가받은 양손발 통증 완화를 동시 치료 가능한 비침습·비열성 최신형 통증완화 레이저.\n무좀 치료와 통증 완화를 동시에 제공합니다.",
+      desc: "KFDA 식약처 허가받은 양손발 통증 완화를 동시 치료 가능한 비침습·비열성 최신형 통증완화 레이저.\n무좀 치료와 통증 완화를 동시에 제공합니다.", descEn: "KFDA-approved non-invasive, non-thermal latest pain relief laser that can simultaneously treat both hands and feet. Provides both fungal treatment and pain relief simultaneously.", descJa: "KFDA許可取得の両手足の痛み緩和を同時治療可能な非侵襲・非熱性最新型痛み緩和レーザー。水虫治療と痛み緩和を同時に提供します。", descZh: "获KFDA批准的非侵入性、非热性最新型疼痛缓解激光，可同时治疗双手双脚。同时提供甲癣治疗和疼痛缓解。",
       time: "20~30분", recovery: "당일 일상",
       badge: "KFDA 허가", badgeColor: "#7C3AED",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/엑셀토우_ddf531cd.png",
@@ -1140,7 +1188,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       badgeColor: "#4A6FA5",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/모래알피부이식_b1e8163f.png",
       youtubeUrl: "https://www.youtube.com/embed/218RqWMl7Kg",
-      desc: "피부조직을 모래알 크기로 채취하여 백반증 부위에 이식하는 시술.\n난치성 백반증 부위까지 꼼꼼하고 체계적으로 치료합니다.",
+      desc: "피부조직을 모래알 크기로 채취하여 백반증 부위에 이식하는 시술.\n난치성 백반증 부위까지 꼼꼼하고 체계적으로 치료합니다.", descEn: "Advanced scar treatment combining multiple modalities to target surgical, traumatic, and keloid scars. Progressively improves scar texture and pigmentation.", descJa: "手術・外傷・ケロイド瘢痕に複数モダリティを組み合わせた高度な瘢痕治療。瘢痕の質感と色素沈着を段階的に改善します。", descZh: "结合多种模式针对手术疤痕、外伤疤痕和瘢痕疙瘩的高级疤痕治疗。逐步改善疤痕质地和色素沉着。",
       time: "20~40분", recovery: "3~5일",
       image: `${CDN}/프로파운드_93be7410.png`,
       detail: "SST PRO(스킨 시딩 테크닉 PRO)는 모래알 피부이식술로 피부조직을 0.3Φ~0.1Φ 모래알 크기 또는 그보다 작게 채취하여, 백반증 부위에 피부를 이식합니다. 기존에 치료하기 어려웠던 난치성 백반증 부위인 손등, 헤어라인을 포함하는 안면부, 관절, 손발, 흐터·튜른살 부위, 굴곡진 부위를 보다 꼼꼼하고 체계적으로 시술할 수 있습니다. 건강보험, 실손보험 적용이 가능하며 출현이나 흐터가 거의 없고 피부 이식 후 높은 생착률을 자랑합니다.",
@@ -1155,7 +1203,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       badgeColor: "#4A6FA5",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/엑시머_3b91923d.png",
       youtubeUrl: "https://www.youtube.com/embed/iqogcu4A0OU",
-      desc: "308nm 엑시머 레이저로 백반증 부위 색소 세포를 집중 자극.\n정상 피부 노출을 최소화하며 노출 부위 백반증에 특히 효과적입니다.",
+      desc: "308nm 엑시머 레이저로 백반증 부위 색소 세포를 집중 자극.\n정상 피부 노출을 최소화하며 노출 부위 백반증에 특히 효과적입니다.", descEn: "308nm excimer laser intensively stimulates pigment cells in vitiligo areas. Minimizes normal skin exposure and is particularly effective for vitiligo in exposed areas.", descJa: "308nmエキシマレーザーで白斑部位の色素細胞を集中刺激。正常皮膚の露出を最小化し、露出部位の白斑に特に効果的です。", descZh: "308nm准分子激光集中刺激白癜风部位的色素细胞。最小化正常皮肤暴露，对暴露部位白癜风特别有效。",
       time: "20~40분", recovery: "당일 일상",
       image: `${CDN}/엑시머V7_5a8a4340.jpg`,
       detail: "엑시머 V7은 308nm 파장의 엑시머 레이저를 이용해 백반증 병변 부위의 멜라노사이트(색소 세포)를 선택적으로 자극하여 색소 재생을 유도하는 치료입니다. 전신 자외선 치료와 달리 병변 부위에만 집중 조사하여 정상 피부 노출을 최소화합니다. FDA 승인을 받은 안전한 치료법으로, 얼굴·목·손 등 노출 부위 백반증에 특히 효과적입니다.",
@@ -1177,7 +1225,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       badgeColor: "#4A6FA5",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/전신자외선_0b66082d.png",
       youtubeUrl: "https://www.youtube.com/embed/RuJSEpsvy_Q",
-      desc: "NB-UVB 전신 조사로 백반증·건선·아토피를 치료하는 광선 치료.\n광범위한 피부 병변에 효과적이며 약물 치료와 병행 시 효과가 향상됩니다.",
+      desc: "NB-UVB 전신 조사로 백반증·건선·아토피를 치료하는 광선 치료.\n광범위한 피부 병변에 효과적이며 약물 치료와 병행 시 효과가 향상됩니다.", descEn: "Phototherapy that treats vitiligo, psoriasis, and atopic dermatitis with NB-UVB whole-body irradiation. Effective for widespread skin lesions and enhanced when combined with medication.", descJa: "NB-UVB全身照射で白斑・乾癬・アトピーを治療する光線治療。広範囲な皮膚病変に効果的で、薬物治療と併用すると効果が向上します。", descZh: "NB-UVB全身照射治疗白癜风、银屑病和特应性皮炎的光线治疗。对广泛皮肤病变有效，与药物治疗联合使用效果更佳。",
       time: "5~15분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/3PticSr0g4jr_e69d1049.jpg",
       detail: "전신자외선 치료기는 311nm 협대역 자외선B(NB-UVB)를 전신에 균일하게 조사하는 광선 치료 장비입니다. 전신에 광범위하게 분포한 백반증, 건선, 아토피 피부염, 다형 홍반 등 다양한 피부 질환에 효과적입니다. 면역 조절 효과를 통해 피부 염증을 억제하고 색소 재생을 촉진하며, 약물 치료와 병행 시 치료 효과가 향상됩니다.",
@@ -1201,7 +1249,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       badgeColor: "#4A6FA5",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/전신자외선_0b66082d.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/전신자외선_0b66082d.png",
-      desc: "NB-UVB 전신 조사로 백반증·건선·아토피를 치료하는 광선 치료.\n광범위한 피부 병변에 효과적이며 약물 치료와 병행 시 효과가 향상됩니다.",
+      desc: "NB-UVB 전신 조사로 백반증·건선·아토피를 치료하는 광선 치료.\n광범위한 피부 병변에 효과적이며 약물 치료와 병행 시 효과가 향상됩니다.", descEn: "Narrowband UVB phototherapy system for treating vitiligo, psoriasis, and atopic dermatitis. Effective for widespread lesions with medication combination therapy.", descJa: "白斑・乾癬・アトピーを治療するNB-UVB光線療法システム。広範な病変に効果的で薬物との併用療法に対応します。", descZh: "用于治疗白癜风、银屑病和特应性皮炎的NB-UVB光线治疗系统。对广泛病变有效，支持与药物联合治疗。",
       time: "5~15분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/3PticSr0g4jr_e69d1049.jpg",
       detail: "전신자외선 치료기는 311nm 협대역 자외선B(NB-UVB)를 전신에 균일하게 조사하는 광선 치료 장비입니다. 전신에 광범위하게 분포한 백반증, 건선, 아토피 피부염, 다형 홍반 등 다양한 피부 질환에 효과적입니다. 면역 조절 효과를 통해 피부 염증을 억제하고 색소 재생을 촉진하며, 약물 치료와 병행 시 치료 효과가 향상됩니다.",
@@ -1224,6 +1272,9 @@ const TREATMENTS: Record<string, Treatment[]> = {
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/엑시머_3b91923d.png",
       youtubeUrl: "https://www.youtube.com/embed/iqogcu4A0OU",
       desc: "308nm 엑시머 레이저로 건선 병변 부위에 집중 조사하여 빠른 호전을 유도합니다.\n정상 피부 노출을 최소화하며 노출 부위 건선에 특히 효과적입니다.",
+      descEn: "308nm excimer laser for focused psoriasis lesion treatment. Minimizes normal skin exposure and is particularly effective for psoriasis in exposed areas.",
+      descJa: "308nmエキシマレーザーで乾癬病変部位に集中照射し、速やかな改善を誘導します。正常皮膚の露出を最小化し、露出部位の乾癬に特に効果的です。",
+      descZh: "308nm准分子激光集中照射银屑病病变部位，快速诱导改善。最小化正常皮肤暴露，对暴露部位银屑病特别有效。",
       time: "20~40분", recovery: "당일 일상",
       image: `${CDN}/엑시머V7_5a8a4340.jpg`,
       detail: "벨로시티 엑시머 V7은 308nm 파장의 엑시머 레이저를 이용해 건선 병변 부위의 T세포를 선택적으로 억제하여 빠른 호전을 유도하는 치료입니다. 전신 광선 치료와 달리 병변 부위에만 집중 조사하여 정상 피부 노출을 최소화합니다. FDA 승인을 받은 안전한 치료법으로, 두피·팔꿈치·무릎·손 등 노출 부위 건선에 특히 효과적입니다.",
@@ -1244,7 +1295,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/아토피_303bd029.png",
       modalImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497278486/AiHUSMdBVV7XMDwayPAEuD/아토피_303bd029.png",
       badge: "복합 치료",
-      desc: "NB-UVB 광선 치료와 보습·항염 치료를 병행하는 아토피 피부염 복합 관리 프로그램입니다.",
+      desc: "NB-UVB 광선 치료와 보습·항염 치료를 병행하는 아토피 피부염 복합 관리 프로그램입니다.", descEn: "Comprehensive atopic dermatitis management program combining NB-UVB phototherapy with moisturizing and anti-inflammatory treatments.", descJa: "NB-UVB光線治療と保湿・抗炎症治療を併行するアトピー性皮膚炎複合管理プログラムです。", descZh: "结合NB-UVB光线治疗与保湿、抗炎治疗的特应性皮炎综合管理方案。",
       time: "30~60분", recovery: "당일 일상",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/3PticSr0g4jr_e69d1049.jpg",
       detail: "아토피 피부염 복합 치료는 NB-UVB 광선 치료와 집중 보습 치료, 항염 레이저를 결합한 종합 관리 프로그램입니다. 광선 치료로 피부 면역 반응을 조절하고, 레이저 치료로 피부 장벽 기능을 강화하며, 맞춤형 보습 치료로 피부 수분을 유지합니다. 중등도~중증 아토피 피부염 환자에게 적합하며, 스테로이드 사용을 줄이는 데 도움이 됩니다.",
@@ -1269,104 +1320,107 @@ interface Equipment {
   brand: string;
   name: string;
   desc: string;
+  descEn?: string;
+  descJa?: string;
+  descZh?: string;
   image: string;
   detail?: string;
 }
 
 const EQUIPMENT: Record<string, Equipment[]> = {
   best: [
-    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", image: `${CDN}/울쎄라피프라임_1_798484e7.png` },
-    { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", image: `${CDN}/써마지FLX_f1163ff8.png` },
-    { brand: "REJURAN", name: "리쥬란 힐러", desc: "피부 재생 연어 주사", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
-    { brand: "ULTRAPULSE CO₂", name: "울트라펄스", desc: "흉터 치료 전문 CO₂ 레이저", image: `${CDN}/플라듀오_6eccf485.png` },
-    { brand: "EXCEL V+", name: "엑셀 V플러스", desc: "홍조·혈관 치료의 표준", image: `${CDN}/엑셀V_5364dd04.png` },
-    { brand: "ADVATX", name: "아드바티엑스", desc: "홍조 탄력 개선 레이저", image: `${CDN}/아드바Tx_e865914d.png` },
-    { brand: "SCULPTRA", name: "스컬트라", desc: "FDA 승인 콜라겐 자극제", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
-    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF 리프팅", image: `${CDN}/프로파운드_481e0c83.png` },
+    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", descEn: "Latest version with the highest lifting satisfaction rating", descJa: "リフティング満足度No.1最新バージョン", descZh: "提升满意度第一的最新版本", image: `${CDN}/울쎄라피프라임_1_798484e7.png` },
+    { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", descEn: "Official advisory device of Dr. Jo Si-hyeong", descJa: "趙時亨院長公式アドバイザー機器", descZh: "赵时亨院长官方顾问设备", image: `${CDN}/써마지FLX_f1163ff8.png` },
+    { brand: "REJURAN", name: "리쥬란 힐러", desc: "피부 재생 연어 주사", descEn: "Salmon DNA skin regeneration injection", descJa: "皮膚再生サーモンDNA注射", descZh: "皮肤再生三文鱼DNA注射", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
+    { brand: "ULTRAPULSE CO₂", name: "울트라펄스", desc: "흉터 치료 전문 CO₂ 레이저", descEn: "Specialized CO2 laser for scar treatment", descJa: "瘢痕治療専門CO2レーザー", descZh: "疤痕治疗专用CO2激光", image: `${CDN}/플라듀오_6eccf485.png` },
+    { brand: "EXCEL V+", name: "엑셀 V플러스", desc: "홍조·혈관 치료의 표준", descEn: "Standard for redness and vascular treatment", descJa: "紅潮・血管治療の標準", descZh: "红肌和血管治疗的标准", image: `${CDN}/엑셀V_5364dd04.png` },
+    { brand: "ADVATX", name: "아드바티엑스", desc: "홍조 탄력 개선 레이저", descEn: "Laser for redness and elasticity improvement", descJa: "紅潮弾力改善レーザー", descZh: "红肌弹力改善激光", image: `${CDN}/아드바Tx_e865914d.png` },
+    { brand: "SCULPTRA", name: "스컬트라", desc: "FDA 승인 콜라겐 자극제", descEn: "FDA-approved collagen stimulator", descJa: "FDA承認コラーゲン刺激剤", descZh: "FDA批准的胶原蛋白刺激剂", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
+    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF 리프팅", descEn: "RF lifting that directly stimulates the dermis layer", descJa: "真皮層を直接刺激するRFリフティング", descZh: "直接刺激真皮层的RF提升", image: `${CDN}/프로파운드_481e0c83.png` },
   ],
   lifting: [
-    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", image: `${CDN}/울쎄라피프라임_1_798484e7.png` },
-    { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", image: `${CDN}/써마지FLX_f1163ff8.png` },
-    { brand: "REVINAS", name: "세르프 리프팅", desc: "최신 고강도 RF 리프팅", image: `https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-xerf-cropped_d21e359e.png` },
-    { brand: "SHURINK UNIVERSE", name: "스른크 유니버스", desc: "집속 초음파 리프팅의 진화", image: `${CDN}/슈링크_77cc74d6.png` },
-    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF 리프팅", image: `${CDN}/프로파운드_481e0c83.png` },
-    { brand: "VIRTUE RF", name: "버츄RF", desc: "마이크로니들 RF 리프팅", image: `${CDN}/버츄RF_47204eff.png` },
-    { brand: "OLIGIO X", name: "올리지오X", desc: "RF 고주파 리프팅의 새로운 기준", image: `${CDN}/올리지오X_e1e54986.png` },
-    { brand: "TRINITY LIFTONING", name: "트리니티 리프토닝", desc: "리프팅과 토닝을 동시에", image: `${CDN}/트리니티리프토닝_4ef97ebc.png` },
-    { brand: "LAFERRA", name: "라페라 리프팅", desc: "고주파 얼굴 탄력 리프팅", image: `${CDN}/라페라_0cff5f1a.png` },
-    { brand: "EXILIS ULTRA", name: "엑실리스 울트라", desc: "RF+초음파 복합 리프팅", image: `${CDN}/엑실리스 울트라_5449a8ed.png` },
-    { brand: "TENSERA", name: "테늤라", desc: "고주파 초음파 복합 리프팅", image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/테늤라_nobg_v2_7713a6c6.png" },
-    { brand: "TENSEMA", name: "테늤마", desc: "고주파 초음파 복합 리프팅", image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/테늤마_nobg_083af6bb.png" },
+    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", descEn: "Latest version with the highest lifting satisfaction rating", descJa: "リフティング満足度No.1最新バージョン", descZh: "提升满意度第一的最新版本", image: `${CDN}/울쎄라피프라임_1_798484e7.png` },
+    { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", descEn: "Official advisory device of Dr. Jo Si-hyeong", descJa: "趙時亨院長公式アドバイザー機器", descZh: "赵时亨院长官方顾问设备", image: `${CDN}/써마지FLX_f1163ff8.png` },
+    { brand: "REVINAS", name: "세르프 리프팅", desc: "최신 고강도 RF 리프팅", descEn: "Latest high-intensity RF lifting", descJa: "最新高強度RFリフティング", descZh: "最新高强度射频提升", image: `https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/equip-xerf-cropped_d21e359e.png` },
+    { brand: "SHURINK UNIVERSE", name: "스른크 유니버스", desc: "집속 초음파 리프팅의 진화", descEn: "Evolution of focused ultrasound lifting", descJa: "集束超音波リフティングの進化", descZh: "聚焦超声提升的进化", image: `${CDN}/슈링크_77cc74d6.png` },
+    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF 리프팅", descEn: "RF lifting that directly stimulates the dermis layer", descJa: "真皮層を直接刺激するRFリフティング", descZh: "直接刺激真皮层的RF提升", image: `${CDN}/프로파운드_481e0c83.png` },
+    { brand: "VIRTUE RF", name: "버츄RF", desc: "마이크로니들 RF 리프팅", descEn: "Microneedle RF lifting treatment", descJa: "マイクロニードルRFリフティング", descZh: "微针RF提升治疗", image: `${CDN}/버츄RF_47204eff.png` },
+    { brand: "OLIGIO X", name: "올리지오X", desc: "RF 고주파 리프팅의 새로운 기준", descEn: "New standard in RF high-frequency lifting", descJa: "RF高周波リフティングの新基準", descZh: "射频高频提升的新标准", image: `${CDN}/올리지오X_e1e54986.png` },
+    { brand: "TRINITY LIFTONING", name: "트리니티 리프토닝", desc: "리프팅과 토닝을 동시에", descEn: "Simultaneous lifting and skin toning", descJa: "リフティングとトーニングを同時に", descZh: "同时进行提升和调肤", image: `${CDN}/트리니티리프토닝_4ef97ebc.png` },
+    { brand: "LAFERRA", name: "라페라 리프팅", desc: "고주파 얼굴 탄력 리프팅", descEn: "High-frequency facial elasticity lifting", descJa: "高周波顔面弾力リフティング", descZh: "高频面部弹力提升", image: `${CDN}/라페라_0cff5f1a.png` },
+    { brand: "EXILIS ULTRA", name: "엑실리스 울트라", desc: "RF+초음파 복합 리프팅", descEn: "Combined RF + ultrasound lifting", descJa: "RF+超音波複合リフティング", descZh: "射频+超声波复合提升", image: `${CDN}/엑실리스 울트라_5449a8ed.png` },
+    { brand: "TENSERA", name: "테늤라", desc: "고주파 초음파 복합 리프팅", descEn: "Combined high-frequency ultrasound lifting", descJa: "高周波超音波複合リフティング", descZh: "高频超声波复合提升", image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/테늤라_nobg_v2_7713a6c6.png" },
+    { brand: "TENSEMA", name: "테늤마", desc: "고주파 초음파 복합 리프팅", descEn: "Combined high-frequency ultrasound lifting", descJa: "高周波超音波複合リフティング", descZh: "高频超声波复合提升", image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/테늤마_nobg_083af6bb.png" },
   ],
   eye: [
-    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분 공급과 리프팅 동시", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
-    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", image: `${CDN}/에너젯_afcf856d.png` },
+    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분 공급과 리프팅 동시", descEn: "Simultaneous moisture supply and lifting", descJa: "水分補給とリフティングを同時に", descZh: "同时补水和提升", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
+    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", descEn: "Needle-free drug delivery lifting", descJa: "無針薬物注入リフティング", descZh: "无针药物注入提升", image: `${CDN}/에너젯_afcf856d.png` },
   ],
   rosacea: [
-    { brand: "EXCEL V+", name: "엑셀 V플러스", desc: "혈관·색소 치료의 표준", image: `${CDN}/엑셀V_5364dd04.png` },
-    { brand: "BBL HERO", name: "BBL 히어로", desc: "광치료 홍조·색소 복합 개선", image: `${CDN}/bbl-removebg-preview_f5544d44.png` },
+    { brand: "EXCEL V+", name: "엑셀 V플러스", desc: "혈관·색소 치료의 표준", descEn: "Standard for vascular and pigment treatment", descJa: "血管・色素治療の標準", descZh: "血管和色素治疗的标准", image: `${CDN}/엑셀V_5364dd04.png` },
+    { brand: "BBL HERO", name: "BBL 히어로", desc: "광치료 홍조·색소 복합 개선", descEn: "Phototherapy for combined redness and pigment improvement", descJa: "光治療による紅潮・色素複合改善", descZh: "光疗复合改善红肌和色素", image: `${CDN}/bbl-removebg-preview_f5544d44.png` },
   ],
   pigment: [
-    { brand: "DISCOVERY PICO", name: "디스커버리 피코", desc: "피코초 레이저 색소·문신 제거", image: `${CDN}/디스커버리피코_41237d61.png` },
-    { brand: "PICOSURE", name: "피코슈어", desc: "755nm 피코초 레이저", image: `${CDN}/피코슈어_71bad6af.png` },
-    { brand: "ENLIGHTEN 3RD", name: "인라이튼 루비피코", desc: "3세대 피코초 레이저", image: `${CDN}/인라이튼루비피코_43c3fbfb.png` },
-    { brand: "STAR WALKER MAQX", name: "스타워커 MAQX", desc: "색소 치료 전문 레이저", image: `${CDN}/스타워커_7ba78892.png`, detail: "스타워커 MAQX는 Q-스위치 Nd:YAG 레이저와 피코초 레이저를 결합한 복합 색소 치료 장비입니다. 532nm·1064nm·585nm·650nm 다중 파장을 지원하여 기미·잡티·문신·검버섯·오타모반 등 다양한 색소 병변에 대응합니다. 피코초 펄스로 색소 입자를 미세하게 분쇄하여 체내 흡수·배출을 촉진하며, 주변 정상 조직 손상을 최소화합니다." },
-    { brand: "PENTO 9900", name: "펜토 9900", desc: "색소 탄력 복합 치료", image: `${CDN}/펜토 9900_3af14ef2.png` },
-    { brand: "JOULE LASER", name: "줄 레이저", desc: "색소·흉터·박피 다목적 레이저", image: `${CDN}/힐러_6ec6c8e4.png` },
+    { brand: "DISCOVERY PICO", name: "디스커버리 피코", desc: "피코초 레이저 색소·문신 제거", descEn: "Picosecond laser for pigment and tattoo removal", descJa: "ピコ秒レーザーによる色素・タトゥー除去", descZh: "皮秒激光去除色素和纹身", image: `${CDN}/디스커버리피코_41237d61.png` },
+    { brand: "PICOSURE", name: "피코슈어", desc: "755nm 피코초 레이저", descEn: "755nm picosecond laser", descJa: "755nmピコ秒レーザー", descZh: "755nm皮秒激光", image: `${CDN}/피코슈어_71bad6af.png` },
+    { brand: "ENLIGHTEN 3RD", name: "인라이튼 루비피코", desc: "3세대 피코초 레이저", descEn: "3rd-generation picosecond laser", descJa: "第3世代ピコ秒レーザー", descZh: "第三代皮秒激光", image: `${CDN}/인라이튼루비피코_43c3fbfb.png` },
+    { brand: "STAR WALKER MAQX", name: "스타워커 MAQX", desc: "색소 치료 전문 레이저", descEn: "Specialized laser for pigment treatment", descJa: "色素治療専門レーザー", descZh: "色素治疗专用激光", image: `${CDN}/스타워커_7ba78892.png`, detail: "스타워커 MAQX는 Q-스위치 Nd:YAG 레이저와 피코초 레이저를 결합한 복합 색소 치료 장비입니다. 532nm·1064nm·585nm·650nm 다중 파장을 지원하여 기미·잡티·문신·검버섯·오타모반 등 다양한 색소 병변에 대응합니다. 피코초 펄스로 색소 입자를 미세하게 분쇄하여 체내 흡수·배출을 촉진하며, 주변 정상 조직 손상을 최소화합니다." },
+    { brand: "PENTO 9900", name: "펜토 9900", desc: "색소 탄력 복합 치료", descEn: "Combined pigment and elasticity treatment", descJa: "色素弾力複合治療", descZh: "色素和弹力综合治疗", image: `${CDN}/펜토 9900_3af14ef2.png` },
+    { brand: "JOULE LASER", name: "줄 레이저", desc: "색소·흉터·박피 다목적 레이저", descEn: "Multi-purpose laser for pigment, scars, and resurfacing", descJa: "色素・瘢痕・剥離の多目的レーザー", descZh: "色素、疤痕和磨皮多功能激光", image: `${CDN}/힐러_6ec6c8e4.png` },
   ],
   scar: [
-    { brand: "PLADUO", name: "플라듀오 레이저", desc: "여드름 흉터 전용 레이저", image: `${CDN}/플라듀오_6eccf485.png` },
-    { brand: "TIXEL LASER", name: "틱셀 레이저", desc: "여드름·흉터·모공 개선", image: `${CDN}/틱셀_98a5cbdf.png` },
-    { brand: "ADVATX", name: "아드바티엑스", desc: "흉터 탄력 개선 레이저", image: `${CDN}/아드바Tx_e865914d.png` },
-    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF", image: `${CDN}/프로파운드_481e0c83.png` },
+    { brand: "PLADUO", name: "플라듀오 레이저", desc: "여드름 흉터 전용 레이저", descEn: "Dedicated laser for acne scar treatment", descJa: "ニキビ瘢痕専用レーザー", descZh: "痘疤专用激光", image: `${CDN}/플라듀오_6eccf485.png` },
+    { brand: "TIXEL LASER", name: "틱셀 레이저", desc: "여드름·흉터·모공 개선", descEn: "Acne, scar, and pore improvement", descJa: "ニキビ・瘢痕・毛穴改善", descZh: "痘痘、疤痕和毛孔改善", image: `${CDN}/틱셀_98a5cbdf.png` },
+    { brand: "ADVATX", name: "아드바티엑스", desc: "흉터 탄력 개선 레이저", descEn: "Laser for scar and elasticity improvement", descJa: "瘢痕弾力改善レーザー", descZh: "疤痕和弹力改善激光", image: `${CDN}/아드바Tx_e865914d.png` },
+    { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF", descEn: "RF energy directly targeting the dermis layer", descJa: "真皮層を直接刺激するRFエネルギー", descZh: "直接作用于真皮层的RF能量", image: `${CDN}/프로파운드_481e0c83.png` },
   ],
   volume: [
-    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분·탄력 스킨부스터", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
-    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", image: `${CDN}/에너젯_afcf856d.png` },
+    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분·탄력 스킨부스터", descEn: "Moisture and elasticity skin booster", descJa: "水分・弾力スキンブースター", descZh: "水分和弹力皮肤促进剂", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
+    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", descEn: "Needle-free drug delivery lifting treatment", descJa: "無針薬物注入リフティング", descZh: "无针药物注射提升治疗", image: `${CDN}/에너젯_afcf856d.png` },
   ],
   botox: [
-    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분·탄력 스킨부스터", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
-    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", image: `${CDN}/에너젯_afcf856d.png` },
+    { brand: "DERMASHINE PRO", name: "더마샤인 프로", desc: "수분·탄력 스킨부스터", descEn: "Moisture and elasticity skin booster", descJa: "水分・弾力スキンブースター", descZh: "水分和弹力皮肤促进剂", image: `${CDN}/더마샤인프로_d7a8f2c1.png` },
+    { brand: "ENERJET", name: "에너젯", desc: "무침 약물 주입 리프팅", descEn: "Needle-free drug delivery lifting treatment", descJa: "無針薬物注入リフティング", descZh: "无针药物注射提升治疗", image: `${CDN}/에너젯_afcf856d.png` },
   ],
   acne_laser: [
-    { brand: "AVICLEAR", name: "아비클리어", desc: "FDA 승인 여드름 전용 1,726nm 레이저", image: `${CDN}/아비클리어_2d9cab50.png` },
-    { brand: "CAPRI LASER", name: "카프리", desc: "염증성 여드름 이중 파장 레이저", image: `${CDN}/아비클리어_2d9cab50.png` },
-    { brand: "PLADUO", name: "플라듀오", desc: "플라즈마+레이저 복합 여드름 치료", image: `${CDN}/플라듀오_6eccf485.png` },
-    { brand: "PLATINUM PTT", name: "플래티넘PTT", desc: "플래티넘 나노입자 광열 여드름 치료", image: `${CDN}/아비클리어_2d9cab50.png` },
-    { brand: "NEOGEN PLASMA", name: "네오젠플라즈마", desc: "플라즈마 에너지 피부 재생", image: `${CDN}/아비클리어_2d9cab50.png` },
-    { brand: "KOBAYASHI", name: "고바야시 절연침", desc: "절연침 기술 고주파 에너지 여드름 치료", image: `${CDN}/아비클리어_2d9cab50.png` },
+    { brand: "AVICLEAR", name: "아비클리어", desc: "FDA 승인 여드름 전용 1,726nm 레이저", descEn: "FDA-approved 1,726nm laser dedicated to acne treatment", descJa: "FDA承認ニキビ専用1,726nmレーザー", descZh: "FDA批准的1,726nm痘痘专用激光", image: `${CDN}/아비클리어_2d9cab50.png` },
+    { brand: "CAPRI LASER", name: "카프리", desc: "염증성 여드름 이중 파장 레이저", descEn: "Dual-wavelength laser for inflammatory acne", descJa: "炎症性ニキビ二重波長レーザー", descZh: "炎症性痘痘双波长激光", image: `${CDN}/아비클리어_2d9cab50.png` },
+    { brand: "PLADUO", name: "플라듀오", desc: "플라즈마+레이저 복합 여드름 치료", descEn: "Combined plasma and laser acne treatment", descJa: "プラズマ+レーザー複合ニキビ治療", descZh: "等离子体+激光复合痘痘治疗", image: `${CDN}/플라듀오_6eccf485.png` },
+    { brand: "PLATINUM PTT", name: "플래티넘PTT", desc: "플래티넘 나노입자 광열 여드름 치료", descEn: "Platinum nanoparticle photothermal acne treatment", descJa: "プラチナナノ粒子光熱ニキビ治療", descZh: "铂纳米粒子光热痘痘治疗", image: `${CDN}/아비클리어_2d9cab50.png` },
+    { brand: "NEOGEN PLASMA", name: "네오젠플라즈마", desc: "플라즈마 에너지 피부 재생", descEn: "Plasma energy skin regeneration", descJa: "プラズマエネルギー皮膚再生", descZh: "等离子体能量皮肤再生", image: `${CDN}/아비클리어_2d9cab50.png` },
+    { brand: "KOBAYASHI", name: "고바야시 절연침", desc: "절연침 기술 고주파 에너지 여드름 치료", descEn: "Insulated needle RF energy acne treatment", descJa: "絶縁針技術高周波エネルギーニキビ治療", descZh: "绝缘针技术高频能量痘痘治疗", image: `${CDN}/아비클리어_2d9cab50.png` },
   ],
   psoriasis: [
-    { brand: "NB-UVB SYSTEM", name: "전신자외선 치료기", desc: "협대역 자외선B 건선·아토피 치료", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "311nm NB-UVB를 전신에 균일 조사하는 광선 치료 장비. 건선·아토피 피부염·백반증에 활용됩니다." },
-    { brand: "EXCIMER V7", name: "엑시머 V7 (건선)", desc: "308nm 건선 병변 집중 레이저", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "308nm 엑시머 레이저로 건선 병변 부위에만 집중 조사. 전신 광선 치료 대비 치료 횟수를 단축합니다." },
+    { brand: "NB-UVB SYSTEM", name: "전신자외선 치료기", desc: "협대역 자외선B 건선·아토피 치료", descEn: "Narrowband UVB phototherapy for psoriasis and atopic dermatitis", descJa: "協帯域UVB乾癬・アトピー治療", descZh: "窄带UVB银屑病和特应性皮炎治疗", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "311nm NB-UVB를 전신에 균일 조사하는 광선 치료 장비. 건선·아토피 피부염·백반증에 활용됩니다." },
+    { brand: "EXCIMER V7", name: "엑시머 V7 (건선)", desc: "308nm 건선 병변 집중 레이저", descEn: "308nm excimer laser for focused psoriasis lesion treatment", descJa: "308nm乾癬病変集中レーザー", descZh: "308nm银屑病病变集中激光", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "308nm 엑시머 레이저로 건선 병변 부위에만 집중 조사. 전신 광선 치료 대비 치료 횟수를 단축합니다." },
   ],
   vitiligo: [
-    { brand: "EXCIMER V7", name: "엑시머 V7", desc: "308nm 백반증 전문 엑시머 레이저", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "엑시머 V7은 308nm 파장의 엑시머 레이저를 이용한 백반증·건선 전문 치료 장비입니다. 병변 부위에만 집중 조사하여 정상 피부 노출을 최소화하며, FDA 승인을 받은 안전한 장비입니다." },
-    { brand: "NB-UVB SYSTEM", name: "전신자외선 치료기", desc: "협대역 자외선B 전신 광선 치료", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "311nm 협대역 자외선B(NB-UVB)를 전신에 균일하게 조사하는 광선 치료 장비입니다. 전신 백반증·건선·아토피 피부염 등 다양한 피부 질환에 활용됩니다." },
-    { brand: "EPIDERMAL GRAFT", name: "표피이식 시스템", desc: "흡입 수포법 표피이식 전용 장비", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "흡입 수포법(Suction Blister)을 이용해 정상 피부 표피를 분리·채취하는 표피이식 전용 장비입니다. 안정기 백반증 수술적 치료에 활용됩니다." },
+    { brand: "EXCIMER V7", name: "엑시머 V7", desc: "308nm 백반증 전문 엑시머 레이저", descEn: "308nm excimer laser specialized for vitiligo", descJa: "308nm白斑専門エキシマレーザー", descZh: "308nm白癜风专用准分子激光", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "엑시머 V7은 308nm 파장의 엑시머 레이저를 이용한 백반증·건선 전문 치료 장비입니다. 병변 부위에만 집중 조사하여 정상 피부 노출을 최소화하며, FDA 승인을 받은 안전한 장비입니다." },
+    { brand: "NB-UVB SYSTEM", name: "전신자외선 치료기", desc: "협대역 자외선B 전신 광선 치료", descEn: "Narrowband UVB full-body phototherapy", descJa: "狭帯域UVB全身光線治療", descZh: "窄带UVB全身光线治疗", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "311nm 협대역 자외선B(NB-UVB)를 전신에 균일하게 조사하는 광선 치료 장비입니다. 전신 백반증·건선·아토피 피부염 등 다양한 피부 질환에 활용됩니다." },
+    { brand: "EPIDERMAL GRAFT", name: "표피이식 시스템", desc: "흡입 수포법 표피이식 전용 장비", descEn: "Epidermal graft system using suction blister method", descJa: "吸引水疱法表皮移植専用機器", descZh: "使用吸引水疱法的表皮移植专用设备", image: `${CDN}/엑시머V7_5a8a4340.jpg`, detail: "흡입 수포법(Suction Blister)을 이용해 정상 피부 표피를 분리·채취하는 표피이식 전용 장비입니다. 안정기 백반증 수술적 치료에 활용됩니다." },
   ],
   acne: [
     {
       brand: "SOLTA MEDICAL", name: "miraDry Fresh",
-      desc: "마이크로파 에너지로 겨드랑이 땀샘을 영구 제거하는 FDA 승인 장비",
+      desc: "마이크로파 에너지로 겨드랑이 땀샘을 영구 제거하는 FDA 승인 장비", descEn: "FDA-approved device for permanent underarm sweat gland removal using microwave energy", descJa: "マイクロ波エネルギーで脇の汗腺を永久除去するFDA承認機器", descZh: "使用微波能量永久去除腋下汗腺的FDA认证设备",
       image: `${CDN}/미라드라이_69912512.png`,
       detail: "Solta Medical의 miraDry Fresh는 2.45GHz 마이크로파 에너지를 이용해 에크린·아포크린 땀샘을 비절개로 영구 파괴합니다. 냉각 시스템이 표피를 보호하며 FDA 510(k) 승인 장비입니다.",
     },
     {
       brand: "LIPOSAT", name: "라이포샛 (Liposat)",
-      desc: "고주파 에너지로 겨드랑이 땀샘과 지방을 동시 제거하는 비절개 장비",
+      desc: "고주파 에너지로 겨드랑이 땀샘과 지방을 동시 제거하는 비절개 장비", descEn: "Non-incision device for simultaneous removal of underarm sweat glands and fat using RF energy", descJa: "RFエネルギーで脇の汗腺と脂肪を非切開で同時除去する機器", descZh: "使用射频能量无切口同时去除腋下汗腺和脂肪的设备",
       image: `${CDN}/에너젯_afcf856d.png`,
       detail: "라이포샛(Liposat)은 RF 에너지를 미세 캐뉼라를 통해 피부 아래 지방층에 전달하여 아포크린 땀샘과 지방 세포를 선택적으로 파괴합니다. 겨드랑이 라인 개선과 액취증 치료를 동시에 실현합니다.",
     },
     {
       brand: "ALLERGAN", name: "보톡스 주사 장비",
-      desc: "보툴리눔 독소를 정밀 주사하는 다한증 비수술 치료 장비",
+      desc: "보툴리눔 독소를 정밀 주사하는 다한증 비수술 치료 장비", descEn: "Non-surgical hyperhidrosis treatment device for precise botulinum toxin injection", descJa: "ボツリヌス毒素を精密注射する多汗症非手術治療機器", descZh: "精准注射肉毒素的多汗症非手术治疗设备",
       image: `${CDN}/에너젯_afcf856d.png`,
       detail: "미세 주사 기법으로 보툴리눔 독소를 겨드랑이·손바닥·발바닥 등 다한증 부위에 정밀 투여합니다. 아세틸콜린 분비를 억제하여 땀샘 신호를 차단하며, 시술 시간이 짧고 회복 기간이 없습니다.",
     },
     {
       brand: "CUREMAX", name: "큐어맥스",
-      desc: "CO2 레이저 여드름 흉터 및 단초 제거 장비",
+      desc: "CO2 레이저 여드름 흉터 및 단초 제거 장비", descEn: "CO2 laser device for acne scar and lesion removal", descJa: "CO2レーザーニキビ瘢痕・病変除去機器", descZh: "CO2激光痘疤和病变去除设备",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/큐어맥스_nobg_e5919a31.png",
       detail: "큐어맥스(CureMax)는 초단위 CO2 레이저 기술을 적용한 여드름 흉터 제거 및 단초 제거 전문 장비입니다. 비침습적 CO2 레이저로 여드름 흉터와 단초를 정밀하게 제거하며, 빠른 치료 시간과 효과적인 결과를 제공합니다.",
     },
@@ -1424,6 +1478,15 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
   const tr = t.treatments;
   const detailSlug = DETAIL_PAGE_SLUGS[item.name];
 
+  // 언어별 텍스트 선택 헬퍼
+  function getText(ko: string, en?: string, ja?: string, zh?: string): string {
+    if (lang === 'en' && en) return en;
+    if (lang === 'ja' && ja) return ja;
+    if (lang === 'zh' && zh) return zh;
+    if (lang !== 'ko' && en) return en; // fallback to English for unknown locales
+    return ko;
+  }
+
   return (
     <>
       <div
@@ -1474,14 +1537,14 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
         <div className="p-3 sm:p-4">
           <p className="text-xs font-normal mb-0.5 font-montserrat" style={{ color: "#d1ab67" }}>{item.nameEn}</p>
           <h3 className="text-base sm:text-lg font-bold mb-1" style={{ color: "#1F2937" }}>{item.name}</h3>
-          <p className="text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3" style={{ color: "#6B7280" }}>{item.desc}</p>
+          <p className="text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3" style={{ color: "#6B7280" }}>{getText(item.desc, item.descEn, item.descJa, item.descZh)}</p>
           <div className="flex gap-3 flex-wrap items-center justify-between">
             <div className="flex gap-3 flex-wrap">
               <span className="flex items-center gap-1 text-xs" style={{ color: "#9CA3AF" }}>
-                <Clock size={11} /> {item.time}
+                <Clock size={11} /> {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
               </span>
               <span className="flex items-center gap-1 text-xs" style={{ color: "#9CA3AF" }}>
-                <RefreshCw size={11} /> 회복 {item.recovery}
+                <RefreshCw size={11} /> {lang === 'ko' ? '회복 ' : lang === 'ja' ? '回復 ' : lang === 'zh' ? '恢复 ' : 'Recovery '}{getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
               </span>
             </div>
             <span
@@ -1539,7 +1602,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                   <Clock size={14} style={{ color: "#d1ab67" }} />
                   <div>
                     <p className="text-xs" style={{ color: "#9CA3AF" }}>{tr.modalTime}</p>
-                    <p className="text-sm font-semibold" style={{ color: "#374151" }}>{item.time}</p>
+                    <p className="text-sm font-semibold" style={{ color: "#374151" }}>{getText(item.time, item.timeEn, item.timeJa, item.timeZh)}</p>
                   </div>
                 </div>
                 <div className="w-px" style={{ background: "#E5E7EB" }} />
@@ -1547,7 +1610,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                   <RefreshCw size={14} style={{ color: "#d1ab67" }} />
                   <div>
                     <p className="text-xs" style={{ color: "#9CA3AF" }}>{tr.modalRecovery}</p>
-                    <p className="text-sm font-semibold" style={{ color: "#374151" }}>{item.recovery}</p>
+                    <p className="text-sm font-semibold" style={{ color: "#374151" }}>{getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}</p>
                   </div>
                 </div>
                 {item.sessions && (
@@ -1566,7 +1629,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
 
               {/* 상세 설명 */}
               <p className="text-sm leading-relaxed mb-4" style={{ color: "#4B5563" }}>
-                {item.detail ?? item.desc}
+                {item.detail ?? getText(item.desc, item.descEn, item.descJa, item.descZh)}
               </p>
 
               {/* 기대 효과 */}
@@ -1616,6 +1679,15 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
   const [expanded, setExpanded] = useState(false);
   const [selectedEq, setSelectedEq] = useState<Equipment | null>(null);
   const visible = expanded ? items : items.slice(0, 4);
+  const { lang } = useLang();
+
+  function getEqText(ko: string, en?: string, ja?: string, zh?: string): string {
+    if (lang === 'en' && en) return en;
+    if (lang === 'ja' && ja) return ja;
+    if (lang === 'zh' && zh) return zh;
+    if (lang !== 'ko' && en) return en;
+    return ko;
+  }
 
   return (
     <>
@@ -1640,7 +1712,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             </button>
             <p className="text-xs font-semibold mb-1" style={{ color: "#d1ab67" }}>{selectedEq.brand}</p>
             <h3 className="text-xl font-bold" style={{ color: "#1F2937" }}>{selectedEq.name}</h3>
-            <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{selectedEq.desc}</p>
+            <p className="text-sm mt-1" style={{ color: "#6B7280" }}>{getEqText(selectedEq.desc, selectedEq.descEn, selectedEq.descJa, selectedEq.descZh)}</p>
           </div>
           <div className="flex justify-center py-6" style={{ background: "white" }}>
             <OptimizedImage
@@ -1655,18 +1727,20 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             {selectedEq.detail ? (
               <p className="text-sm leading-relaxed" style={{ color: "#374151" }}>{selectedEq.detail}</p>
             ) : (
-              <p className="text-sm" style={{ color: "#9CA3AF" }}>상세 정보 준비 중입니다.</p>
+              <p className="text-sm" style={{ color: "#9CA3AF" }}>
+                {lang === 'en' ? 'Detailed information coming soon.' : lang === 'ja' ? '詳細情報は準備中です。' : lang === 'zh' ? '详细信息准备中。' : '상세 정보 준비 중입니다.'}
+              </p>
             )}
           </div>
           <div className="px-6 pb-6">
             <a
-              href="http://pf.kakao.com/_xnxmKxj/chat"
+              href={lang === 'zh' ? 'https://u.wechat.com/star2006beauty' : lang === 'ja' ? 'https://lin.ee/tyuRdUc' : 'http://pf.kakao.com/_xnxmKxj/chat'}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 active:scale-95"
-              style={{ background: "#FEE500", color: "#191919" }}
+              style={{ background: lang === 'zh' || lang === 'ja' ? '#07C160' : '#FEE500', color: lang === 'zh' || lang === 'ja' ? 'white' : '#191919' }}
             >
-              카카오톡으로 장비 상담하기
+              {lang === 'zh' ? '通过微信咨询设备' : lang === 'ja' ? 'LINEで機器について相談する' : lang === 'en' ? 'Consult via KakaoTalk' : '카카오톡으로 장비 상담하기'}
             </a>
           </div>
         </div>
@@ -1689,13 +1763,15 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
           <p className="text-xs font-semibold tracking-wider mb-0.5" style={{ color: "#d1ab67" }}>
             EQUIPMENT
           </p>
-          <h3 className="text-base font-bold" style={{ color: "#1F2937" }}>관련 장비</h3>
+          <h3 className="text-base font-bold" style={{ color: "#1F2937" }}>
+            {lang === 'en' ? 'Related Equipment' : lang === 'ja' ? '関連機器' : lang === 'zh' ? '相关设备' : '관련 장비'}
+          </h3>
         </div>
         <span
           className="px-3 py-1 rounded-full text-xs font-bold text-white"
           style={{ background: "#e8dfc8", color: "#d1ab67" }}
         >
-          {items.length}종 보유
+          {items.length}{lang === 'en' ? ' units' : lang === 'ja' ? '種類' : lang === 'zh' ? '台' : '종 보유'}
         </span>
       </div>
 
@@ -1726,7 +1802,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             <div className="text-center w-full">
               <p className="text-xs font-semibold" style={{ color: "#d1ab67" }}>{eq.brand}</p>
               <p className="text-sm font-bold" style={{ color: "#1F2937" }}>{eq.name}</p>
-              <p className="text-xs line-clamp-2" style={{ color: "#6B7280" }}>{eq.desc}</p>
+              <p className="text-xs line-clamp-2" style={{ color: "#6B7280" }}>{getEqText(eq.desc, eq.descEn, eq.descJa, eq.descZh)}</p>
             </div>
           </div>        ))}
       </div>
@@ -1739,9 +1815,9 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
           onClick={() => setExpanded((v) => !v)}
         >
           {expanded ? (
-            <><ChevronUp size={14} /> 접기</>
+            <><ChevronUp size={14} /> {lang === 'en' ? 'Collapse' : lang === 'ja' ? '閉じる' : lang === 'zh' ? '收起' : '접기'}</>
           ) : (
-            <><ChevronDown size={14} /> {items.length - 4}개 장비 더보기</>
+            <><ChevronDown size={14} /> {lang === 'en' ? `${items.length - 4} more` : lang === 'ja' ? `${items.length - 4}種類もっと見る` : lang === 'zh' ? `再显示${items.length - 4}台` : `${items.length - 4}개 장비 더보기`}</>
           )}
         </button>
       )}

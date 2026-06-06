@@ -1718,3 +1718,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P3 — 선택적 개선 (보류)
 - [ ] CONTACT-P3-A: ContactSection.tsx — 지도 마커 팝업 클릭 토글 로직을 React state로 관리
 - [ ] CONTACT-P3-B: ContactSection.tsx — 지도 높이 계산 로직을 커스텀 훅으로 분리
+
+## 외국어 페이지 번역 누락 근본 해결 (2026-06-06)
+
+- [x] TRANS-FIX-1: TreatmentsEquipmentSection.tsx — Treatment 인터페이스에 descEn/descJa/descZh 옵셔널 필드 추가
+- [x] TRANS-FIX-2: TreatmentsEquipmentSection.tsx — Equipment 인터페이스에 descEn/descJa/descZh 옵셔널 필드 추가
+- [x] TRANS-FIX-3: TreatmentsEquipmentSection.tsx — TreatmentCard에 getText() 헬퍼 추가, item.desc 렌더링을 getText(item.desc, item.descEn, item.descJa, item.descZh)로 교체
+- [x] TRANS-FIX-4: TreatmentsEquipmentSection.tsx — EquipmentPanel에 getEqText() 헬퍼 추가, selectedEq.desc 렌더링을 getEqText()로 교체
+- [x] TRANS-FIX-5: TREATMENTS 데이터 74개 항목 전체에 descEn/descJa/descZh 삽입 (Python 스크립트 일괄 처리)
+- [x] TRANS-FIX-6: EQUIPMENT 데이터 53개 항목 전체에 descEn/descJa/descZh 삽입 (25개 누락 항목 보완)
+- [x] TRANS-FIX-7: TreatmentsEquipmentSection.content.test.tsx — 번역 누락 회귀 방지 테스트 5개 추가 (TREATMENTS/EQUIPMENT 전수 검증, getText/getEqText 존재 확인)
+- [x] TRANS-FIX-8: 테스트 파일 확장자 .ts → .tsx 변경 (vitest include 패턴 준수)

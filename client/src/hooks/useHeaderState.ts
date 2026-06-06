@@ -34,7 +34,7 @@ export function useHeaderState() {
   const [wechatCopied, setWechatCopied] = useState(false);
 
   const { t, lang, setLang } = useLang();
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh";
@@ -169,12 +169,11 @@ export function useHeaderState() {
       history.replaceState(null, "", basePath + href);
       return;
     }
+    // 절대 경로 (/about, /foreign-guide 등) — wouter setLocation으로 SPA 라우팅
     const basePath = getLocalizedPath();
-    if (href === "#home") {
-      window.location.href = basePath;
-    } else {
-      window.location.href = `${basePath}${href}`;
-    }
+    // basePath가 "/" 일 때 href 앞에 붙이면 "//about" 이 되므로 조건 분기
+    const fullPath = basePath === "/" ? href : `${basePath}${href}`;
+    setLocation(fullPath);
   };
 
   const isActive = (href: string, sectionId: string | null) => {

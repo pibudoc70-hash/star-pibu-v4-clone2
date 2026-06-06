@@ -347,21 +347,22 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         role="banner"
         aria-label="사이트 헤더"
         style={{
-          height: scrolled ? "60px" : "72px",
-          backdropFilter: "blur(12px)",
+          height: scrolled ? "58px" : "76px",
+          background: scrolled
+            ? "rgba(255,255,255,0.94)"
+            : "rgba(255,255,255,0.82)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: scrolled
+            ? "1px solid rgba(201,168,76,0.18)"
+            : "1px solid rgba(255,255,255,0.3)",
           boxShadow: scrolled
-            ? "0 2px 20px rgba(0,0,0,0.08), 0 3px 0 0 transparent"
-            : "0 1px 0 rgba(0,0,0,0.06)",
-          borderBottom: scrolled ? "2px solid transparent" : "none",
-          backgroundImage: scrolled
-            ? "linear-gradient(rgba(255,255,255,0.98), rgba(255,255,255,0.98)), linear-gradient(90deg, transparent 0%, #C9A84C 30%, #F5D78E 50%, #C9A84C 70%, transparent 100%)"
-            : "linear-gradient(rgba(255,255,255,0.97), rgba(255,255,255,0.97))",
-          backgroundOrigin: "border-box",
-          backgroundClip: scrolled ? "padding-box, border-box" : "padding-box",
+            ? "0 4px 24px rgba(0,0,0,0.06), 0 1px 0 rgba(201,168,76,0.12)"
+            : "none",
         }}
       >
         <div
@@ -396,27 +397,41 @@ export default function Header() {
           </button>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center flex-1 justify-center" style={{ gap: "4px" }} role="navigation" aria-label="메인 네비게이션">
+          <nav className="hidden md:flex items-center flex-1 justify-center" style={{ gap: "2px" }} role="navigation" aria-label="메인 네비게이션">
             {renderNavItems.map((item) => {
               const active = isActive(item.href);
               return (
                 <button type="button"
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
-                  className="relative transition-all duration-200 whitespace-nowrap px-3.5 py-2"
+                  className="relative transition-all duration-200 whitespace-nowrap group"
                   style={{
-                    color: '#4f4f4f',
-                    fontSize: '14px',
-                    fontWeight: active ? '600' : '400',
-                    letterSpacing: "-0.01em",
-                    background: active ? "#f0f0f0" : "transparent",
-                    borderRadius: '5px',
-                    paddingTop: '8px',
-                    paddingBottom: '8px',
-                    borderBottom: active ? '2px solid #ffffff' : '2px solid transparent',
+                    color: active ? "#1A1A1A" : "#5a5a5a",
+                    fontSize: "13.5px",
+                    fontWeight: active ? "600" : "400",
+                    letterSpacing: "0.01em",
+                    background: "transparent",
+                    borderRadius: "8px",
+                    padding: "7px 14px",
+                    position: "relative",
                   }}
                 >
                   {item.label}
+                  {/* 하단 골드 언더라인 인디케이터 */}
+                  <span
+                    style={{
+                      position: "absolute",
+                      bottom: "4px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: active ? "20px" : "0px",
+                      height: "2px",
+                      background: "linear-gradient(90deg, #C9A84C, #F5D78E)",
+                      borderRadius: "2px",
+                      transition: "width 0.25s cubic-bezier(0.4,0,0.2,1)",
+                      display: "block",
+                    }}
+                  />
                 </button>
               );
             })}
@@ -478,10 +493,17 @@ export default function Header() {
                 target={lang === "zh" ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 onClick={handleWechatClick}
-                className="flex items-center gap-1.5 font-semibold rounded-full transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
-                style={{ background: chatBg, color: chatColor, fontSize: "13px", padding: "6px 14px" }}
+                className="flex items-center gap-1.5 font-semibold transition-all duration-200 whitespace-nowrap"
+                style={{
+                  background: chatBg,
+                  color: chatColor,
+                  fontSize: "12.5px",
+                  padding: "7px 16px",
+                  borderRadius: "100px",
+                  letterSpacing: "0.01em",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                }}
               >
-                <MessageCircle size={13} />
                 {t.hero.cta_kakao}
               </a>
               {wechatCopied && lang === "zh" && (
@@ -494,10 +516,16 @@ export default function Header() {
               href={reserveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-semibold rounded-full text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 whitespace-nowrap"
-              style={{ background: lang === "zh" ? "#06C755" : "#03C75A", fontSize: "13px", padding: "6px 14px" }}
+              className="flex items-center gap-1.5 font-semibold text-white transition-all duration-200 whitespace-nowrap hover:-translate-y-px"
+              style={{
+                background: "linear-gradient(135deg, #03C75A 0%, #02a84a 100%)",
+                fontSize: "12.5px",
+                padding: "7px 16px",
+                borderRadius: "100px",
+                letterSpacing: "0.01em",
+                boxShadow: "0 2px 12px rgba(3,199,90,0.28)",
+              }}
             >
-              <Calendar size={13} />
               {t.hero.cta_reserve}
             </a>
           </div>
@@ -571,39 +599,35 @@ export default function Header() {
           </button>
         </div>
 
-        {/* 모바일 네비게이션 - 아이콘 포함 */}
-        <nav className="p-4 flex flex-col gap-1">
+        {/* 모바일 네비게이션 - 아이콘 제거, 텍스트 중심 프리미엄 스타일 */}
+        <nav className="px-6 py-4 flex flex-col">
           {renderNavItems.map((item, index) => {
             const active = isActive(item.href);
-            const Icon = item.icon;
             return (
               <button type="button"
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className={`flex items-center gap-3 text-left py-3 px-4 rounded-xl text-sm font-semibold transition-colors duration-200${
+                className={`flex items-center justify-between text-left py-3.5 border-b transition-all duration-200${
                   menuClosing ? " menu-item-stagger-out" : menuVisible ? " menu-item-stagger" : ""
                 }`}
                 style={{
-                  color: active ? "#C9A84C" : "#333",
-                  background: active
-                    ? "rgba(201,168,76,0.08)"
-                    : "transparent",
-
+                  color: active ? "#C9A84C" : "#1a1a1a",
+                  fontSize: "15px",
+                  fontWeight: active ? "600" : "400",
+                  letterSpacing: "-0.01em",
+                  borderColor: "rgba(0,0,0,0.06)",
+                  background: "transparent",
                   ...(menuClosing
-                    ? { "--stagger-out-delay": `${(navItems.length - 1 - index) * 45}ms` } as React.CSSProperties
+                    ? { "--stagger-out-delay": `${(navItems.length - 1 - index) * 40}ms` } as React.CSSProperties
                     : menuVisible
-                    ? { "--stagger-delay": `${80 + index * 45}ms` } as React.CSSProperties
+                    ? { "--stagger-delay": `${60 + index * 40}ms` } as React.CSSProperties
                     : {}),
                 }}
               >
-                <span
-                  className="flex items-center justify-center flex-shrink-0"
-                  style={{ color: active ? "#C9A84C" : "#888" }}
-                >
-                  <Icon size={18} />
-                </span>
-                <span style={{ letterSpacing: "-0.01em" }}>{item.label}</span>
-
+                <span>{item.label}</span>
+                {active && (
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#C9A84C", flexShrink: 0 }} />
+                )}
               </button>
             );
           })}

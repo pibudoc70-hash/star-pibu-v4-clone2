@@ -109,79 +109,79 @@ export default function Home() {
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
 
-        {/* 2. SPECIAL EVENT - 흰색 배경 (eager) */}
-        <div className="bg-white">
+        {/* 2. SPECIAL EVENT — 순수 흰색, 상단 여백 증가로 허로 이후 숨 포인트 */}
+        <div style={{ background: "#FFFFFF" }}>
           <SpecialEventSection />
         </div>
 
-        {/* 3. Doctors - 베이지 배경 (eager) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 3. Doctors — 따뜻한 크림 오프화이트, 시각적 질감 전환 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <DoctorsSection />
         </div>
 
-        {/* 4. Treatments + Equipment - 흰색 배경 (eager) */}
-        <div className="bg-white">
+        {/* 4. Treatments + Equipment — 순수 흰색, 콘텐츠 밀도 높음 */}
+        <div style={{ background: "#FFFFFF" }}>
           <TreatmentsEquipmentSection />
         </div>
 
-        {/* 5. Management Devices - 베이지 배경 (lazy) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 5. Management Devices — 열린 어두운 배경으로 시각적 리듬 전환 */}
+        <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #243358 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ManagementDevicesSection />
           </Suspense>
         </div>
 
-        {/* 6. Philosophy - 흰색 배경 (lazy) */}
-        <div className="bg-white">
+        {/* 6. Philosophy — 미니멀 흰색, 여백 강조 */}
+        <div style={{ background: "#FAFAFA" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <PhilosophySection />
           </Suspense>
         </div>
 
-        {/* 6-2. Results & Statistics - 베이지 배경 (lazy) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 6-2. Results & Statistics — 연한 골드 톤 */}
+        <div style={{ background: "linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
             <ResultsStatisticsSection />
           </Suspense>
         </div>
 
-        {/* 7. Facility Gallery - 흰색 배경 (lazy) */}
-        <div className="bg-white">
+        {/* 7. Facility Gallery — 순수 흰색, 이미지 중심 */}
+        <div style={{ background: "#FFFFFF" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
             <FacilitySection />
           </Suspense>
         </div>
 
-        {/* 8. Patient Reviews - 베이지 배경 (lazy) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 8. Patient Reviews — 연한 웸아이보리 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReviewsSection />
           </Suspense>
         </div>
 
-        {/* 8-2. YouTube Channel - 흰색 배경 (lazy) */}
-        <div className="bg-white">
+        {/* 8-2. YouTube Channel — 어두운 에디토리얼 톤 */}
+        <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <YouTubeSection />
           </Suspense>
         </div>
 
-        {/* 9. FAQ - 베이지 배경 (lazy) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 9. FAQ — 순수 흰색 */}
+        <div style={{ background: "#FFFFFF" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <FAQSection />
           </Suspense>
         </div>
 
-        {/* 9-2. Reservation - 흰색 배경 (lazy) */}
-        <div className="bg-white">
+        {/* 9-2. Reservation — 미니멀 크림 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReservationSection />
           </Suspense>
         </div>
 
-        {/* 10. Location & Contact - 베이지 배경 (lazy) */}
-        <div className="bg-[#F5F1ED]">
+        {/* 10. Location & Contact — 다크 네이비 마무리 */}
+        <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <ContactSection />
           </Suspense>

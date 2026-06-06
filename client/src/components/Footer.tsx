@@ -95,178 +95,223 @@ export default function Footer() {
   };
 
   return (
-    <footer style={{ background: "#1A2744" }}>
-      {/* Top Section */}
-      <div className="container py-10 sm:py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
-          {/* Brand */}
-          <div className="sm:col-span-2 md:col-span-1">
-            <div className="mb-4">
-              <h3 className="text-lg font-bold tracking-wider" style={{ color: "#d2ac67" }}>
-                STAR DERMATOLOGY
-              </h3>
-            </div>
-            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.55)" }}>
+    <footer style={{ background: "#0F1A30" }}>
+
+      {/* ── Brand bar — 로고 + 슬로건 + SNS 아이콘 한 줄 정렬 ── */}
+      <div
+        className="container"
+        style={{
+          padding: "40px 1.25rem 32px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
+          {/* 브랜드 */}
+          <div>
+            <h3
+              style={{
+                fontSize: "18px",
+                fontWeight: "700",
+                letterSpacing: "0.12em",
+                color: "#C9A84C",
+                marginBottom: "4px",
+              }}
+            >
+              STAR DERMATOLOGY
+            </h3>
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)", letterSpacing: "0.04em" }}>
               {labels.brandDesc}
             </p>
-            {/* SNS */}
-            <div className="flex gap-3">
-              {sns.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                    style={{ background: "rgba(255,255,255,0.1)" }}
-                    aria-label={s.label}
-                    title={s.label}
-                  >
-                    <Icon size={16} className="text-white" />
-                  </a>
-                );
-              })}
-            </div>
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-sm font-bold mb-4 tracking-wider" style={{ color: "#81C7C9" }}>
-              {labels.quickMenu}
-            </h4>
-            <ul className="space-y-2">
-              {quickLinks.map((l) => (
-                <li key={l.label}>
-                  <button type="button"
-                    onClick={() => handleNavClick(l.href)}
-                    className="text-sm transition-colors hover:text-white"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
-                  >
-                    {l.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+          {/* SNS 아이콘 */}
+          <div style={{ display: "flex", gap: "8px" }}>
+            {sns.map((s) => {
+              const Icon = s.icon;
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-all hover:scale-110"
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                  aria-label={s.label}
+                  title={s.label}
+                >
+                  <Icon size={15} className="text-white" />
+                </a>
+              );
+            })}
           </div>
+        </div>
+      </div>
 
-          {/* Treatments */}
-          <div>
-            <h4 className="text-sm font-bold mb-4 tracking-wider" style={{ color: "#81C7C9" }}>
-              {labels.mainTreatments}
-            </h4>
-            <ul className="space-y-2">
-              {treatmentItems.map((item) => (
-                <li key={item}>
-                  <button type="button"
-                    onClick={() => handleNavClick("#treatments")}
-                    className="text-sm transition-colors hover:text-white"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* ── 3열 정보 영역 ── */}
+      <div
+        className="container"
+        style={{
+          padding: "32px 1.25rem",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          gap: "32px",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        {/* Quick Links */}
+        <div>
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "0.12em",
+              color: "rgba(255,255,255,0.35)",
+              marginBottom: "14px",
+              textTransform: "uppercase",
+            }}
+          >
+            {labels.quickMenu}
+          </p>
+          <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {quickLinks.map((l) => (
+              <li key={l.label}>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick(l.href)}
+                  className="transition-colors hover:text-white"
+                  style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", letterSpacing: "-0.01em" }}
+                >
+                  {l.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-sm font-bold mb-4 tracking-wider" style={{ color: "#81C7C9" }}>
-              {labels.contactInfo}
-            </h4>
-            <div className="space-y-3">
-              <div className="flex items-start gap-2">
-                <MapPin size={14} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>
-                  {t.footer.address}
+        {/* Key Treatments */}
+        <div>
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "0.12em",
+              color: "rgba(255,255,255,0.35)",
+              marginBottom: "14px",
+              textTransform: "uppercase",
+            }}
+          >
+            {labels.mainTreatments}
+          </p>
+          <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {treatmentItems.slice(0, 6).map((item) => (
+              <li key={item}>
+                <button
+                  type="button"
+                  onClick={() => handleNavClick("#treatments")}
+                  className="transition-colors hover:text-white"
+                  style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", letterSpacing: "-0.01em" }}
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "0.12em",
+              color: "rgba(255,255,255,0.35)",
+              marginBottom: "14px",
+              textTransform: "uppercase",
+            }}
+          >
+            {labels.contactInfo}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <a
+              href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+              className="transition-colors hover:text-white"
+              style={{ fontSize: "15px", fontWeight: "600", color: "rgba(255,255,255,0.8)", letterSpacing: "0.02em" }}
+            >
+              {t.footer.tel}
+            </a>
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: "1.6" }}>
+              {t.footer.address}
+            </p>
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>
+              {labels.subwayInfo}
+            </p>
+            {/* 영업시간 요약 */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px", paddingTop: "4px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              {t.hours.rows.slice(0, 3).map((row) => (
+                <p key={row.day} style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>
+                  {row.day} {row.time}
                 </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
-                <a
-                  href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
-                  className="text-sm font-montserrat font-semibold transition-colors hover:text-white"
-                  style={{ color: "rgba(255,255,255,0.7)" }}
-                >
-                  {t.footer.tel}
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <MessageCircle size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
-                <a
-                  href="sms:010-5855-3201"
-                  className="text-sm font-montserrat font-semibold transition-colors hover:text-white"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                >
-                  {lang === "ja" ? "SMS: 010-5855-3201" : lang === "zh" ? "短信: 010-5855-3201" : lang === "en" ? "SMS: 010-5855-3201" : "문자: 010-5855-3201"}
-                </a>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Mail size={14} style={{ color: "#81C7C9", flexShrink: 0 }} />
-                <a
-                  href={`mailto:${t.footer.email}`}
-                  className="text-sm transition-colors hover:text-white"
-                  style={{ color: "rgba(255,255,255,0.45)" }}
-                >
-                  {t.footer.email}
-                </a>
-              </div>
-              {/* Hours summary */}
-              <div className="text-xs space-y-1 pt-1" style={{ color: "rgba(255,255,255,0.4)" }}>
-                {t.hours.rows.map((row) => (
-                  <p key={row.day}>{row.day} {row.time}</p>
-                ))}
-                <p className="pt-1" style={{ color: "rgba(255,255,255,0.3)" }}>
-                  {labels.subwayInfo}
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* ── 하단 바 — 사업자 정보 + 법적 링크 ── */}
       <div
-        className="border-t py-6"
-        style={{ borderColor: "rgba(255,255,255,0.08)" }}
+        className="container"
+        style={{
+          padding: "20px 1.25rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+        }}
       >
-        <div className="container flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-center md:text-left" style={{ color: "rgba(255,255,255,0.35)" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
+          <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", lineHeight: "1.7" }}>
             {lang === "ko"
-              ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306 | 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층(접수·진료), 2층(줄기세포 연구센터)"
+              ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306"
               : lang === "ja"
-              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306 | 釜山広域市釜山镇区西面路74 アイオンシティビル4F(受付・診療) / 2F(幹細胞研究センター)"
+              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306"
               : lang === "en"
-              ? "STAR Dermatology | Director: Cho Si-hyung | Business Reg. No.: 605-24-84306 | 4F, Ion City Bldg, 74 Seomyeon-ro, Busanjin-gu, Busan"
-              : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306 | 釜山广域市釜山镇区西面路74 爱恩城大厦4楼(接待·诊疗), 2楼(干细胞研究中心)"}
+              ? "STAR Dermatology | Director: Cho Si-hyung | Reg. No.: 605-24-84306"
+              : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306"}
           </p>
-          <div className="flex gap-4">
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <a
               href="https://www.hira.or.kr/ra/medi/getHealthCareList.do"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              className="transition-colors hover:text-white"
+              style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
             >
               {labels.nonCovered}
             </a>
-            <button type="button"
+            <button
+              type="button"
               onClick={() => handleNavClick("/privacy")}
-              className="text-xs transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              className="transition-colors hover:text-white"
+              style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
             >
               {labels.privacy}
             </button>
           </div>
         </div>
-        <div className="container mt-2">
-          <p className="text-xs text-center md:text-left" style={{ color: "rgba(255,255,255,0.2)" }}>
-            {t.footer.copyright}
-          </p>
-        </div>
+        <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.15)" }}>
+          {t.footer.copyright}
+        </p>
       </div>
     </footer>
   );

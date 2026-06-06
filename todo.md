@@ -1832,3 +1832,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] STEP4-GO: 성능/렌더링/lazy loading 감사 — 이상 없음 (GO)
 - [x] STEP5-1: server/step5.regression.test.ts — handleNavClick setLocation 회귀 방지 + Map.tsx i18n 키 회귀 방지 + TreatmentsEquipmentSection getText 훅 회귀 방지 (11개 테스트)
 - [x] STEP5-2: Map.tsx — fallback 삼항 완전 제거 (i18n.ts에 4개 언어 모두 정의됨)
+
+## 시니어 리뷰 라운드 (2026-06-06)
+
+- [x] SR-1: HeroSection.tsx — t.nav.contact 역참조 버그 수정 → t.hero.scrollLabel i18n 키 사용
+- [x] SR-2: HeroSection.tsx — GoldParticles/HeroAnimations 서브 컴포넌트 분리 (773줄 → 606줄)
+- [x] SR-3: DoctorsSection.tsx — lang === "ko" specialties 분기 제거 → i18n 키 + fallback 패턴
+- [x] SR-4: i18n.ts 분리 (2304줄 → 6개 파일: i18n.types.ts + i18n.{ko,en,ja,zh}.ts + i18n.ts 조립)
+- [x] SR-5: SeoHead.tsx — includeClinicSchema deprecated prop 제거 + seoHelpers.ts 분리 (455줄 → 143줄)
+- [x] SR-6: i18n.ts에 hero.scrollLabel 키 추가 (ko/en/ja/zh)
+- [x] SR-7: i18n.ts에 doctors.list[].specialties 키 추가 (en/ja/zh)
+- [x] SR-TEST: senior-review.regression.test.ts 신규 추가 (27개 테스트)
+- [x] SR-VALIDATE: type-check 0건 / build 성공 / test 19파일 361케이스 전체 통과

@@ -176,7 +176,7 @@ function DoctorsSection() {
     setImagesLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
-  const { t, lang } = useLang();
+  const { t } = useLang();
 
   const badgeLabel = t.doctors.badge;
 
@@ -186,7 +186,7 @@ function DoctorsSection() {
     title: t.doctors.list[idx]?.title ?? d.title,
     intro: t.doctors.list[idx]?.intro ?? d.intro,
     credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
-    specialties: lang === "ko" ? d.specialties : (t.treatments.categories[idx % t.treatments.categories.length]?.items?.slice(0, 4) ?? d.specialties),
+    specialties: t.doctors.list[idx]?.specialties ?? d.specialties,
     badge: badgeLabel,
   }));
 

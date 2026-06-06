@@ -25,10 +25,21 @@ const treatmentsSource = readFileSync(
   path.resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"),
   "utf8",
 );
-const i18nSource = readFileSync(
-  path.resolve(root, "client/src/lib/i18n.ts"),
-  "utf8",
-);
+// i18n.ts는 분리되었으므로 6개 파일을 합산 (STRUCT-I18N-1)
+const i18nSource = [
+  "client/src/lib/i18n.ts",
+  "client/src/lib/i18n.types.ts",
+  "client/src/lib/i18n.ko.ts",
+  "client/src/lib/i18n.en.ts",
+  "client/src/lib/i18n.ja.ts",
+  "client/src/lib/i18n.zh.ts",
+].map((p) => {
+  try { return readFileSync(path.resolve(root, p), "utf8"); } catch { return ""; }
+}).join("\n");
+const koI18n = readFileSync(path.resolve(root, "client/src/lib/i18n.ko.ts"), "utf8");
+const enI18n = readFileSync(path.resolve(root, "client/src/lib/i18n.en.ts"), "utf8");
+const jaI18n = readFileSync(path.resolve(root, "client/src/lib/i18n.ja.ts"), "utf8");
+const zhI18n = readFileSync(path.resolve(root, "client/src/lib/i18n.zh.ts"), "utf8");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 1. handleNavClick — setLocation + basePath 조합 버그 수정 회귀 방지
@@ -94,28 +105,18 @@ describe("Map.tsx — i18n 키 사용 회귀 방지 (Step2 수정)", () => {
   });
 
   it("i18n.ts에 mapViewLabel 키가 4개 언어 모두 존재해야 한다", () => {
-    // ko, en, ja, zh 모두 mapViewLabel 키가 있어야 함
-    const koBlock = i18nSource.match(/ko:\s*\{[\s\S]*?(?=\n  en:)/)?.[0] ?? "";
-    const enBlock = i18nSource.match(/en:\s*\{[\s\S]*?(?=\n  ja:)/)?.[0] ?? "";
-    const jaBlock = i18nSource.match(/ja:\s*\{[\s\S]*?(?=\n  zh:)/)?.[0] ?? "";
-    const zhBlock = i18nSource.match(/zh:\s*\{[\s\S]*/)?.[0] ?? "";
-
-    expect(koBlock).toContain("mapViewLabel");
-    expect(enBlock).toContain("mapViewLabel");
-    expect(jaBlock).toContain("mapViewLabel");
-    expect(zhBlock).toContain("mapViewLabel");
+    // 분리된 언어별 파일에서 직접 검사
+    expect(koI18n).toContain("mapViewLabel");
+    expect(enI18n).toContain("mapViewLabel");
+    expect(jaI18n).toContain("mapViewLabel");
+    expect(zhI18n).toContain("mapViewLabel");
   });
 
   it("i18n.ts에 mapAddressShort 키가 4개 언어 모두 존재해야 한다", () => {
-    const koBlock = i18nSource.match(/ko:\s*\{[\s\S]*?(?=\n  en:)/)?.[0] ?? "";
-    const enBlock = i18nSource.match(/en:\s*\{[\s\S]*?(?=\n  ja:)/)?.[0] ?? "";
-    const jaBlock = i18nSource.match(/ja:\s*\{[\s\S]*?(?=\n  zh:)/)?.[0] ?? "";
-    const zhBlock = i18nSource.match(/zh:\s*\{[\s\S]*/)?.[0] ?? "";
-
-    expect(koBlock).toContain("mapAddressShort");
-    expect(enBlock).toContain("mapAddressShort");
-    expect(jaBlock).toContain("mapAddressShort");
-    expect(zhBlock).toContain("mapAddressShort");
+    expect(koI18n).toContain("mapAddressShort");
+    expect(enI18n).toContain("mapAddressShort");
+    expect(jaI18n).toContain("mapAddressShort");
+    expect(zhI18n).toContain("mapAddressShort");
   });
 });
 

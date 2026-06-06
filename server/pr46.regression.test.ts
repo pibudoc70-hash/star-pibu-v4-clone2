@@ -47,10 +47,17 @@ const specialEventSource = readFileSync(
   path.resolve(root, "client/src/components/SpecialEventSection.tsx"),
   "utf8",
 );
-const i18nSource = readFileSync(
-  path.resolve(root, "client/src/lib/i18n.ts"),
-  "utf8",
-);
+// i18n.ts는 분리되었으므로 5개 파일을 합산 (STRUCT-I18N-1)
+const i18nSource = [
+  "client/src/lib/i18n.ts",
+  "client/src/lib/i18n.types.ts",
+  "client/src/lib/i18n.ko.ts",
+  "client/src/lib/i18n.en.ts",
+  "client/src/lib/i18n.ja.ts",
+  "client/src/lib/i18n.zh.ts",
+].map((p) => {
+  try { return readFileSync(path.resolve(root, p), "utf8"); } catch { return ""; }
+}).join("\n");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 1. Stat suffix source-of-truth
@@ -126,20 +133,25 @@ describe("SeoHead includeClinicSchema=false (PR-46)", () => {
     expect(equipment2DetailSource).toContain("includeMedicalSchema={false}");
   });
 
-  it("SeoHead 구현에서 includeClinicSchema=false 시 두 스키마 모두 제외해야 한다", () => {
-    // buildClinicJsonLd와 buildWebSiteJsonLd 모두 includeClinicSchema 조건 안에 있어야 함
-    expect(seoHeadSource).toMatch(
-      /includeClinicSchema[\s\S]*buildClinicJsonLd[\s\S]*buildWebSiteJsonLd/,
-    );
-    // includeClinicSchema=false 시 빈 배열 반환 패턴
-    expect(seoHeadSource).toContain(": []");
+  it("SeoHead 구현에서 includeMedicalSchema=false 시 MedicalBusiness 스키마가 제외되어야 한다 (STRUCT-SEO-2)", () => {
+    // shouldIncludeMedical 조건으로 buildClinicJsonLd를 제어해야 함
+    expect(seoHeadSource).toMatch(/shouldIncludeMedical[\s\S]*buildClinicJsonLd/);
+    // includeMedicalSchema ?? true 패턴으로 기본값 true
+    expect(seoHeadSource).toMatch(/includeMedicalSchema.*\?\?.*true/);
   });
 
-  it("SeoHead prop 주석이 WebSite 스키마도 함께 제어함을 명시해야 한다", () => {
-    // 주석에 WebSite 언급
-    expect(seoHeadSource).toMatch(/WebSite/);
-    // prop 설명에 두 스키마 제어 언급
-    expect(seoHeadSource).toMatch(/MedicalBusiness.*WebSite|WebSite.*MedicalBusiness/s);
+  it("SeoHead에 includeClinicSchema deprecated prop이 제거되어야 한다 (STRUCT-SEO-2)", () => {
+    expect(seoHeadSource).not.toContain("includeClinicSchema");
+  });
+
+  it("seoHelpers.ts에 buildClinicJsonLd와 buildWebSiteJsonLd가 있어야 한다 (STRUCT-SEO-1)", () => {
+    const seoHelpersSource = readFileSync(
+      path.resolve(root, "client/src/lib/seoHelpers.ts"),
+      "utf8",
+    );
+    expect(seoHelpersSource).toContain("buildClinicJsonLd");
+    expect(seoHelpersSource).toContain("buildWebSiteJsonLd");
+    expect(seoHelpersSource).toContain("buildBreadcrumbJsonLd");
   });
 });
 

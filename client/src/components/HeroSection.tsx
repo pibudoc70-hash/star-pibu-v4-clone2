@@ -13,7 +13,7 @@
  *
  * 모두 cubic-bezier(0.16, 1, 0.3, 1) spring easing — 팝업/섹션과 동일
  */
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -21,110 +21,10 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { CLINIC_STATS } from "@/lib/constants";
 import { useClinicStats } from "@/hooks/useClinicStats";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import GoldParticles from "@/components/hero/GoldParticles";
+import { CharReveal, WordReveal } from "@/components/hero/HeroAnimations";
 
-/** 금색 빛 가루 파티클 Canvas 컴포넌트 */
-function GoldParticles() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    // prefers-reduced-motion: 모션 감소 설정 시 파티클 비활성화
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    let animId: number;
-    let isRunning = true;
-    // [PERF-P1-1] 모바일(≤640px)에서 파티클 수 절반으로 감소 → 메인스레드 부담 감소
-    const PARTICLE_COUNT = window.innerWidth <= 640 ? 40 : 80;
-
-    type Particle = {
-      x: number;
-      y: number;
-      size: number;
-      speedY: number;
-      speedX: number;
-      opacity: number;
-      opacityTarget: number;
-      opacitySpeed: number;
-    };
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const mkParticle = (forceBottom = false): Particle => ({
-      x: Math.random() * canvas.width,
-      y: forceBottom ? canvas.height + Math.random() * 60 : Math.random() * canvas.height,
-      size: 0.6 + Math.random() * 1.2,          // 0.6 ~ 1.8px
-      speedY: -(0.18 + Math.random() * 0.33),   // 위로 천천히 (1.5배 속도)
-      speedX: (Math.random() - 0.5) * 0.12,     // 좌우 미세 흔들림
-      opacity: 0,
-      opacityTarget: 0.12 + Math.random() * 0.12, // 최대 12~24%
-      opacitySpeed: 0.002 + Math.random() * 0.003,
-    });
-
-    const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, () =>
-      mkParticle(false)
-    );
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (const p of particles) {
-        // opacity fade in/out
-        if (p.opacity < p.opacityTarget) p.opacity = Math.min(p.opacity + p.opacitySpeed, p.opacityTarget);
-        else p.opacity = Math.max(p.opacity - p.opacitySpeed * 0.6, 0);
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210, 172, 80, ${p.opacity})`;
-        ctx.fill();
-
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        // 화면 위로 벗어나면 하단에서 재시작
-        if (p.y < -10) {
-          Object.assign(p, mkParticle(true));
-        }
-      }
-      if (isRunning) animId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    // 탭 비활성화 시 RAF 중단 → 배터리/CPU 절약
-    const handleVisibility = () => {
-      if (document.hidden) {
-        isRunning = false;
-        cancelAnimationFrame(animId);
-      } else {
-        isRunning = true;
-        draw();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      isRunning = false;
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", handleVisibility);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 pointer-events-none"
-      style={{ width: "100%", height: "100%", zIndex: 3 }}
-    />
-  );
-}
+// GoldParticles 이제 hero/GoldParticles.tsx에서 import
 
 // 반응형 이미지 URL (WebP + JPEG 폴백)
 const HERO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp";
@@ -133,73 +33,7 @@ const HERO_IMAGE_MOBILE_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/1
 const HERO_IMAGE_MOBILE_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
 const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/star_ai_logo_1_73172f49.png";
 
-/** 문자열을 글자 단위로 분해하여 <span> 배열 반환 */
-function CharReveal({
-  text,
-  startDelay = 0,
-  charGap = 55,
-  className = "",
-  style = {},
-}: {
-  text: string;
-  startDelay?: number;
-  charGap?: number;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <span className={className} style={{ display: "inline-block", ...style }}>
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          className="hero-char"
-          style={{ animationDelay: `${startDelay + i * charGap}ms`, fontWeight: '600' }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-/** 문자열을 공백 기준으로 단어 분해하여 <span> 배열 반환 */
-function WordReveal({
-  text,
-  startDelay = 0,
-  wordGap = 90,
-  className = "",
-  style = {},
-}: {
-  text: string;
-  startDelay?: number;
-  wordGap?: number;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  const words = text.split(" ");
-  return (
-    <span className={className} style={{ display: "inline", ...style }}>
-      {words.map((word, i) => (
-        <span key={i} style={{ display: "inline-block" }}>
-          <span
-            className="hero-word"
-            style={{ animationDelay: `${startDelay + i * wordGap}ms`, fontWeight: '100' }}
-          >
-            {word}
-          </span>
-          {i < words.length - 1 && (
-            <span
-              className="hero-word"
-              style={{ animationDelay: `${startDelay + i * wordGap}ms` }}
-            >
-              &nbsp;
-            </span>
-          )}
-        </span>
-      ))}
-    </span>
-  );
-}
+// CharReveal, WordReveal 이제 hero/HeroAnimations.tsx에서 import
 
 const scrollToAbout = () => {
   const el = document.querySelector("#about");
@@ -763,7 +597,7 @@ export default function HeroSection() {
         aria-label="아래로 스크롤"
       >
         <span style={{ fontSize: "clamp(0.58rem, 1.4vw, 0.68rem)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-          {t.nav.contact === "アクセス" ? "下へ" : t.nav.contact === "交通指南" ? "向下" : "Scroll"}
+          {t.hero.scrollLabel ?? "Scroll"}
         </span>
         <ChevronDown size={16} className="animate-bounce" />
       </button>

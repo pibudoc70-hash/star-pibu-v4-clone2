@@ -178,8 +178,9 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
   });
 
   it("i18n.ts access 타입에 mapViewLabel/mapAddressShort 키가 정의되어야 한다", () => {
+    // i18n.ts는 조립 파일이므로 타입 정의는 i18n.types.ts에서 검사 (STRUCT-I18N-1)
     const src = readFileSync(
-      nodePath.resolve(root, "client/src/lib/i18n.ts"),
+      nodePath.resolve(root, "client/src/lib/i18n.types.ts"),
       "utf8",
     );
     expect(src).toMatch(/mapViewLabel\??:/);

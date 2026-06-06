@@ -178,7 +178,7 @@ function DoctorsSection() {
 
   const { t, lang } = useLang();
 
-  const badgeLabel = lang === "ko" ? "원장" : lang === "ja" ? "院長" : lang === "zh" ? "院长" : "Director";
+  const badgeLabel = t.doctors.badge;
 
   const mergedDoctors = doctors.map((d, idx) => ({
     ...d,
@@ -219,7 +219,7 @@ function DoctorsSection() {
           </h2>
 
           <p className="text-sm leading-snug sm:leading-normal" style={{ color: '#d1ab67', fontSize: '18px', marginTop: '13px', maxWidth: '577px', margin: '13px auto 0' }}>
-            {lang === "ko" ? <><span className="sm:hidden">피부의 격(格)이 바뀌는 순간,<br />전문의의 안목이 차이를 만듭니다.</span><span className="hidden sm:inline">피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.</span></> : lang === "en" ? "Only a board-certified dermatologist's expertise makes the difference." : lang === "ja" ? "皮膚構造を理解する専門医のみが安全な結果を作ります。" : "只有了解皮肤结构的专科医生才能带来安全的效果。"}
+            {t.doctors.tagline}
           </p>
         </div>
 
@@ -266,7 +266,7 @@ function DoctorsSection() {
                     lineHeight: 1.3,
                   }}
                 >
-                  {lang === "ko" ? "피부과전문의 3인" : lang === "ja" ? "皮膚科専門医 3名" : lang === "zh" ? "皮肤科专科医生 3位" : "3 Specialists"}
+                  {t.doctors.specialistCount}
                 </div>
 
               </div>
@@ -462,7 +462,7 @@ function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    {lang === "ko" ? <>피부과<br />전문의</> : lang === "ja" ? <>皮膚科<br />専門医</> : lang === "zh" ? <>皮肤科<br />专科医生</> : <>Derm<br />Specialist</>}
+                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <>{line}<br /></> : line)}
                   </div>
                 </div>
 
@@ -493,7 +493,7 @@ function DoctorsSection() {
                       className="text-xs tracking-widest uppercase"
                       style={{ color: GOLD, fontWeight: 600, fontSize: '15px', margin: 0 }}
                     >
-                      {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : lang === "zh" ? "专业项目" : "Specialty Treatments"}
+                      {t.doctors.specialtyTitle}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2" style={{marginTop: '-6px', maxWidth: '420px'}}>
@@ -529,11 +529,7 @@ function DoctorsSection() {
                       className="text-xs tracking-widest uppercase"
                       style={{ color: GOLD, fontWeight: 600, fontSize: '15px', margin: 0 }}
                     >
-                      {lang === "ko"
-                        ? `학력 · 경력 · 자격`
-                        : lang === "ja"
-                        ? `学歴・経歴・資格`
-                        : lang === "zh" ? `学历·经历·资质` : `Education & Career`}
+                      {t.doctors.credentialsTitle}
                     </p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -705,7 +701,7 @@ function DoctorsSection() {
                       flexShrink: 0,
                     }}
                   >
-                    {lang === "ko" ? <>피부과<br />전문의</> : lang === "ja" ? <>皮膚科<br />専門医</> : lang === "zh" ? <>皮肤科<br />专科医生</> : <>Derm<br />Specialist</>}
+                    {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <>{line}<br /></> : line)}
                   </div>
                 </div>
 
@@ -726,7 +722,7 @@ function DoctorsSection() {
                 {/* 전문 시술 태그 */}
                 <div>
                   <p className="text-xs tracking-widest uppercase mb-2" style={{ color: GOLD, fontWeight: 600 }}>
-                    {lang === "ko" ? "전문 시술" : lang === "ja" ? "専門施術" : lang === "zh" ? "专业项目" : "Specialty Treatments"}
+                    {t.doctors.specialtyTitle}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {doctor.specialties.map((s) => (
@@ -763,11 +759,7 @@ function DoctorsSection() {
                     }}
                   >
                     <span className="text-xs font-bold tracking-wider" style={{ color: "#666" }}>
-                      {lang === "ko"
-                        ? `학력 · 경력 · 자격 (${doctor.credentials.length}건)`
-                        : lang === "ja"
-                        ? `学歴・経歴・資格 (${doctor.credentials.length}件)`
-                        : lang === "zh" ? `学历·经历·资质 (${doctor.credentials.length}项)` : `Education & Career (${doctor.credentials.length})`}
+                      {`${t.doctors.credentialsTitle} (${doctor.credentials.length})`}
                     </span>
                     <div
                       style={{
@@ -803,7 +795,7 @@ function DoctorsSection() {
                 {/* 스와이프 힌트 */}
                 <div className="flex flex-col items-center gap-2 pt-2">
                   <p className="text-xs" style={{ color: "#9CA3AF" }}>
-                    {lang === "ko" ? "← 탭하여 의료진 보기 →" : lang === "ja" ? "← タップで医師を見る →" : "← 点击查看医生 →"}
+                    {t.doctors.swipeHint}
                   </p>
                   <div className="flex justify-center gap-2">
                     {doctors.map((d) => (

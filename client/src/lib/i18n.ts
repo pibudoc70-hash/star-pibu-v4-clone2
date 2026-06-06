@@ -97,6 +97,20 @@ export interface I18nContent {
       intro?: string | string[];
       careers: string[];
     }>;
+    /** 섹션 슬로건 */
+    tagline: string;
+    /** 피부과전문의 N인 */
+    specialistCount: string;
+    /** 원장 배지 */
+    badge: string;
+    /** 피부과전문의 2줄 배지 */
+    dermBadge: string;
+    /** 전문 시술 레이블 */
+    specialtyTitle: string;
+    /** 학력·경력·자격 레이블 */
+    credentialsTitle: string;
+    /** 모바일 스와이프 힌트 */
+    swipeHint: string;
   };
   treatments: {
     label: string;
@@ -116,6 +130,16 @@ export interface I18nContent {
     modalConsultBtn: string;
     collapseBtn: string;
     moreBtn: string;
+    /** 카드 회복 기간 접두어 */
+    recoveryPrefix: string;
+    /** 관련 장비 패널 헤더 */
+    equipmentRelated: string;
+    /** 장비 수량 단위 — {n} 치환 */
+    equipmentUnits: string;
+    /** 장비 상세 준비 중 */
+    equipmentDetailPending: string;
+    /** 장비 상담 버튼 */
+    equipmentConsultBtn: string;
     categories: Array<{ name: string; items: string[] }>;
   };
   foreignGuide: {
@@ -145,6 +169,23 @@ export interface I18nContent {
     fax: string;
     email: string;
     copyright: string;
+    quickMenu: string;
+    mainTreatments: string;
+    contactInfo: string;
+    brandDesc: string;
+    faxLabel: string;
+    subwayInfo: string;
+    nonCovered: string;
+    privacy: string;
+    bizInfo: string;
+  };
+  floatingCta: {
+    call: string;
+    kakao: string;
+    reserve: string;
+    callAria: string;
+    kakaoAria: string;
+    reserveAria: string;
   };
   results: {
     sectionTitle: string;
@@ -409,6 +450,13 @@ export const i18n: Record<Lang, I18nContent> = {
           ],
         },
       ],
+      tagline: "피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.",
+      specialistCount: "피부과전문의 3인",
+      badge: "원장",
+      dermBadge: "피부과\n전문의",
+      specialtyTitle: "전문 시술",
+      credentialsTitle: "학력 · 경력 · 자격",
+      swipeHint: "← 탭하여 의료진 보기 →",
     },
     treatments: {
       label: "시술 안내",
@@ -428,6 +476,11 @@ export const i18n: Record<Lang, I18nContent> = {
       modalConsultBtn: "카카오톡으로 상담하기",
       collapseBtn: "접기",
       moreBtn: "{n}개 더 보기",
+      recoveryPrefix: "회복 ",
+      equipmentRelated: "관련 장비",
+      equipmentUnits: "{n}종 보유",
+      equipmentDetailPending: "상세 정보 준비 중입니다.",
+      equipmentConsultBtn: "카카오톡으로 장비 상담하기",
       categories: [
         { name: "리프팅·탄력", items: ["울쎄라피 프라임", "써마지 FLX", "세르프", "실루엣 리프트"] },
         { name: "볼륨·주사", items: ["스컬트라", "히알루론산 필러", "보톡스"] },
@@ -491,6 +544,23 @@ export const i18n: Record<Lang, I18nContent> = {
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© 스타피부과의원. All rights reserved.",
+      quickMenu: "빠른 메뉴",
+      mainTreatments: "주요 시술",
+      contactInfo: "연락정보 및 위치",
+      brandDesc: "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
+      faxLabel: "팩스",
+      subwayInfo: "서면역 5·7번 출구 도보 2분",
+      nonCovered: "비급여 진료안내",
+      privacy: "개인정보처리방침",
+      bizInfo: "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306",
+    },
+    floatingCta: {
+      call: "전화",
+      kakao: "카카오",
+      reserve: "예약",
+      callAria: "전화 상담",
+      kakaoAria: "카카오톡 상담",
+      reserveAria: "네이버 예약",
     },
     results: {
       sectionTitle: "스타피부과를 선택하는 이유",
@@ -872,6 +942,13 @@ export const i18n: Record<Lang, I18nContent> = {
           ],
         },
       ],
+      tagline: "The moment your skin's quality transforms — a specialist's eye makes all the difference.",
+      specialistCount: "3 Board-Certified Dermatologists",
+      badge: "Director",
+      dermBadge: "Board-Certified\nDermatologist",
+      specialtyTitle: "Specialty Treatments",
+      credentialsTitle: "Education · Career · Credentials",
+      swipeHint: "← Swipe to view doctors →",
     },
     treatments: {
       label: "Treatments",
@@ -891,6 +968,11 @@ export const i18n: Record<Lang, I18nContent> = {
       modalConsultBtn: "Consult via KakaoTalk",
       collapseBtn: "Collapse",
       moreBtn: "{n} more",
+      recoveryPrefix: "Recovery: ",
+      equipmentRelated: "Related Equipment",
+      equipmentUnits: "{n} units available",
+      equipmentDetailPending: "Detailed information coming soon.",
+      equipmentConsultBtn: "Consult about equipment via KakaoTalk",
       categories: [
         { name: "Lifting & Firming", items: ["Ultherapy Prime", "Thermage FLX", "XERF", "Silhouette Lift"] },
         { name: "Volume & Injections", items: ["Sculptra", "Hyaluronic Acid Filler", "Botox"] },
@@ -954,6 +1036,23 @@ export const i18n: Record<Lang, I18nContent> = {
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© STAR Dermatology Clinic. All rights reserved.",
+      quickMenu: "Quick Menu",
+      mainTreatments: "Key Treatments",
+      contactInfo: "Contact & Location",
+      brandDesc: "Busan Seomyeon's leading dermatology clinic, led by board-certified specialists with 20+ years of experience.",
+      faxLabel: "Fax",
+      subwayInfo: "Subway Line 1&2 Seomyeon Stn, Exit 5 or 7, 2 min walk",
+      nonCovered: "Non-Covered Services",
+      privacy: "Privacy Policy",
+      bizInfo: "STAR Dermatology | Director: Cho Si-hyung | Reg. No.: 605-24-84306",
+    },
+    floatingCta: {
+      call: "Call",
+      kakao: "Kakao",
+      reserve: "Book",
+      callAria: "Call Us",
+      kakaoAria: "KakaoTalk",
+      reserveAria: "Naver Booking",
     },
     results: {
       sectionTitle: "Why Choose STAR Dermatology",
@@ -1335,6 +1434,13 @@ export const i18n: Record<Lang, I18nContent> = {
           ],
         },
       ],
+      tagline: "皮膚の品格が変わる瞬間、専門医の審美眼が差を生みます。",
+      specialistCount: "皮膚科専門医 3名",
+      badge: "院長",
+      dermBadge: "皮膚科\n専門医",
+      specialtyTitle: "専門施術",
+      credentialsTitle: "学歴 · 経歴 · 資格",
+      swipeHint: "← スワイプして医師を見る →",
     },
     treatments: {
       label: "施術案内",
@@ -1354,6 +1460,11 @@ export const i18n: Record<Lang, I18nContent> = {
       modalConsultBtn: "KakaoTalkで相談する",
       collapseBtn: "閉じる",
       moreBtn: "さらに{n}件",
+      recoveryPrefix: "回復：",
+      equipmentRelated: "関連設備",
+      equipmentUnits: "{n}種保有",
+      equipmentDetailPending: "詳細情報は準備中です。",
+      equipmentConsultBtn: "LINEで設備の相談をする",
       categories: [
         { name: "リフティング·弾力", items: ["ウルセラピープライム", "サーマジFLX", "XERF", "シルエットリフト"] },
         { name: "ボリューム·注射", items: ["スカルプトラ", "ヒアルロン酸フィラー", "ボトックス"] },
@@ -1417,6 +1528,23 @@ export const i18n: Record<Lang, I18nContent> = {
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© スター皮膚科. All rights reserved.",
+      quickMenu: "クイックメニュー",
+      mainTreatments: "主な施術",
+      contactInfo: "連絡先・アクセス",
+      brandDesc: "釜山西面のスター皮膚科。皮膚科専門医3名が20年以上の臨床経験で直接診療。",
+      faxLabel: "ファックス",
+      subwayInfo: "西面駅 5・7番出口 徒歩2分",
+      nonCovered: "非保険診療案内",
+      privacy: "個人情報処理方针",
+      bizInfo: "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306",
+    },
+    floatingCta: {
+      call: "電話",
+      kakao: "LINE",
+      reserve: "LINE予約",
+      callAria: "電話相談",
+      kakaoAria: "LINE相談",
+      reserveAria: "LINE予約",
     },
     results: {
       sectionTitle: "スター皮膚科を選ぶ理由",
@@ -1798,6 +1926,13 @@ export const i18n: Record<Lang, I18nContent> = {
           ],
         },
       ],
+      tagline: "皮肤品质改变的瞬间，专科医生的审美眼光创造差异。",
+      specialistCount: "皮肤科专科医生 3名",
+      badge: "院长",
+      dermBadge: "皮肤科\n专科医生",
+      specialtyTitle: "专项诊疗",
+      credentialsTitle: "学历 · 经历 · 资格",
+      swipeHint: "← 滑动查看医生 →",
     },
     treatments: {
       label: "诊疗项目",
@@ -1817,6 +1952,11 @@ export const i18n: Record<Lang, I18nContent> = {
       modalConsultBtn: "WeChat咨询",
       collapseBtn: "收起",
       moreBtn: "再显示{n}个",
+      recoveryPrefix: "恢复：",
+      equipmentRelated: "相关设备",
+      equipmentUnits: "拥有{n}种",
+      equipmentDetailPending: "详细信息准备中。",
+      equipmentConsultBtn: "通过WeChat和设备和论",
       categories: [
         { name: "提升·紧致", items: ["欧活素提升疗法", "热磁治疗FLX", "XERF", "线雕提升"] },
         { name: "丰盈·注射", items: ["舒颜萃", "玻尿酸填充", "肉毒素"] },
@@ -1880,6 +2020,23 @@ export const i18n: Record<Lang, I18nContent> = {
       fax: "051-818-2310",
       email: "starpibu@naver.com",
       copyright: "© STAR皮肤科. All rights reserved.",
+      quickMenu: "快速菜单",
+      mainTreatments: "主要项目",
+      contactInfo: "联系方式及位置",
+      brandDesc: "釜山西面STAR皮肤科。皮肤科专科医生拥有20年以上丰富临床经验，亲自为患者提供诊疗。",
+      faxLabel: "传真",
+      subwayInfo: "地铁1·2号线西面站5、7号出口步行2分钟",
+      nonCovered: "非医保诊疗指南",
+      privacy: "个人信息处理方针",
+      bizInfo: "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306",
+    },
+    floatingCta: {
+      call: "电话",
+      kakao: "WeChat",
+      reserve: "LINE",
+      callAria: "电话和论",
+      kakaoAria: "WeChat和论",
+      reserveAria: "LINE和论",
     },
     results: {
       sectionTitle: "选择STAR皮肤科的理由",

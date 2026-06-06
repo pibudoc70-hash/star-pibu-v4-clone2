@@ -310,3 +310,144 @@ describe("LandingJA/ZH hash-scroll MutationObserver 패턴 (P2-fix)", () => {
     expect(landingZHSource).toContain("observer.disconnect()");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 8: doctors 추가 i18n 키 4개 언어 존재 확인 (P1-i18n-fix)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("i18n.ts doctors 추가 키 4개 언어 (P1-i18n-fix)", () => {
+  const KEYS = ["badge", "specialistCount", "tagline", "specialtyTitle", "credentialsTitle", "dermBadge", "swipeHint"];
+
+  for (const key of KEYS) {
+    it(`타입 정의에 doctors.${key} 키가 있어야 한다`, () => {
+      expect(i18nSource).toMatch(new RegExp(`${key}:\\s*string`));
+    });
+  }
+
+  it("ko 번역에 doctors.badge 가 있어야 한다 (원장)", () => {
+    expect(i18nSource).toContain('badge: "원장"');
+  });
+
+  it("en 번역에 doctors.badge 가 있어야 한다 (Director)", () => {
+    expect(i18nSource).toContain('badge: "Director"');
+  });
+
+  it("ja 번역에 doctors.badge 가 있어야 한다 (院長)", () => {
+    expect(i18nSource).toContain('badge: "院長"');
+  });
+
+  it("zh 번역에 doctors.badge 가 있어야 한다 (院长)", () => {
+    expect(i18nSource).toContain('badge: "院长"');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 9: treatments 추가 i18n 키 4개 언어 존재 확인 (P1-i18n-fix)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("i18n.ts treatments 추가 키 4개 언어 (P1-i18n-fix)", () => {
+  const KEYS = ["recoveryPrefix", "equipmentRelated", "equipmentUnits", "equipmentDetailPending", "equipmentConsultBtn"];
+
+  for (const key of KEYS) {
+    it(`타입 정의에 treatments.${key} 키가 있어야 한다`, () => {
+      expect(i18nSource).toMatch(new RegExp(`${key}:\\s*string`));
+    });
+  }
+
+  it("ko 번역에 treatments.recoveryPrefix 가 있어야 한다 (회복 )", () => {
+    expect(i18nSource).toContain("recoveryPrefix:");
+  });
+
+  it("treatments.equipmentUnits 에 {n} 플레이스홀더가 있어야 한다", () => {
+    expect(i18nSource).toContain("{n}");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 10: floatingCta i18n 블록 4개 언어 존재 확인 (P1-i18n-fix)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("i18n.ts floatingCta 블록 4개 언어 (P1-i18n-fix)", () => {
+  it("타입 정의에 floatingCta 블록이 있어야 한다", () => {
+    expect(i18nSource).toMatch(/floatingCta\s*:/);
+  });
+
+  it("floatingCta.kakao 키가 있어야 한다", () => {
+    expect(i18nSource).toContain("kakao:");
+  });
+
+  it("floatingCta.call 키가 있어야 한다", () => {
+    expect(i18nSource).toContain('call: "');
+  });
+
+  it("floatingCta.callAria 키가 있어야 한다", () => {
+    expect(i18nSource).toContain("callAria:");
+  });
+
+  it("floatingCta.reserve 키가 있어야 한다", () => {
+    expect(i18nSource).toContain("reserve:");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 11: 컴포넌트 인라인 lang 분기 제거 확인 (P1-i18n-fix)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("컴포넌트 인라인 lang 분기 제거 확인 (P1-i18n-fix)", () => {
+  const doctorsSource = readFileSync(
+    path.resolve(root, "client/src/components/DoctorsSection.tsx"),
+    "utf8",
+  );
+  const floatingSource = readFileSync(
+    path.resolve(root, "client/src/components/FloatingCTA.tsx"),
+    "utf8",
+  );
+  const headerSource = readFileSync(
+    path.resolve(root, "client/src/components/Header.tsx"),
+    "utf8",
+  );
+  const treatmentsSource2 = readFileSync(
+    path.resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"),
+    "utf8",
+  );
+
+  it("DoctorsSection에 '원장' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(doctorsSource).not.toContain("lang === \"ko\" ? \"원장\"");
+  });
+
+  it("DoctorsSection에 '피부과전문의 3인' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(doctorsSource).not.toContain("피부과전문의 3인");
+  });
+
+  it("DoctorsSection에 '전문 시술' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(doctorsSource).not.toContain("lang === \"ko\" ? \"전문 시술\"");
+  });
+
+  it("DoctorsSection에 '학력 · 경력 · 자격' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(doctorsSource).not.toContain("학력 · 경력 · 자격`");
+  });
+
+  it("DoctorsSection에 '탭하여 의료진 보기' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(doctorsSource).not.toContain("탭하여 의료진 보기");
+  });
+
+  it("FloatingCTA에 labels 인라인 객체가 없어야 한다", () => {
+    expect(floatingSource).not.toContain("const labels");
+  });
+
+  it("Header에 '외국인 안내' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(headerSource).not.toContain("\"외국인 안내\"");
+  });
+
+  it("TreatmentsEquipmentSection에 '회복 ' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(treatmentsSource2).not.toContain("lang === 'ko' ? '회복 '");
+  });
+
+  it("TreatmentsEquipmentSection에 '관련 장비' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(treatmentsSource2).not.toContain("lang === 'en' ? 'Related Equipment'");
+  });
+
+  it("TreatmentsEquipmentSection에 '상세 정보 준비 중' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(treatmentsSource2).not.toContain("상세 정보 준비 중입니다.");
+  });
+
+  it("TreatmentsEquipmentSection에 '카카오톡으로 장비 상담하기' 하드코딩 인라인 분기가 없어야 한다", () => {
+    expect(treatmentsSource2).not.toContain("카카오톡으로 장비 상담하기");
+  });
+});

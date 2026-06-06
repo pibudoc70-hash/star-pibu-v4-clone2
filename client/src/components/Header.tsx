@@ -181,7 +181,7 @@ export default function Header() {
     { label: t.nav.facility,    href: "#facility",       sectionId: "facility" },
     { label: t.nav.contact,     href: "#contact",        sectionId: "contact"  },
     {
-      label: lang === "ja" ? "外国人ガイド" : lang === "zh" ? "外国人指南" : lang === "en" ? "Foreign Guide" : "외국인 안내",
+      label: t.nav.foreignGuide,
       href: "/foreign-guide",
       sectionId: null,
     },

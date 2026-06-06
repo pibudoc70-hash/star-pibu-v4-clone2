@@ -2249,7 +2249,7 @@ function TreatmentCard({ item, index, imgBg, catTextColor }: { item: Treatment; 
                 <Clock size={11} /> {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
               </span>
               <span className="flex items-center gap-1 text-xs" style={{ color: "#9CA3AF" }}>
-                <RefreshCw size={11} /> {lang === 'ko' ? '회복 ' : lang === 'ja' ? '回復 ' : lang === 'zh' ? '恢复 ' : 'Recovery '}{getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                <RefreshCw size={11} /> {tr.recoveryPrefix}{getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
               </span>
             </div>
             <span
@@ -2429,7 +2429,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
               <p className="text-sm leading-relaxed" style={{ color: "#374151" }}>{getEqText(selectedEq.detail, selectedEq.detailEn, selectedEq.detailJa, selectedEq.detailZh)}</p>
             ) : (
               <p className="text-sm" style={{ color: "#9CA3AF" }}>
-                {lang === 'en' ? 'Detailed information coming soon.' : lang === 'ja' ? '詳細情報は準備中です。' : lang === 'zh' ? '详细信息准备中。' : '상세 정보 준비 중입니다.'}
+                {tr.equipmentDetailPending}
               </p>
             )}
           </div>
@@ -2441,7 +2441,7 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 active:scale-95"
               style={{ background: lang === 'zh' || lang === 'ja' ? '#07C160' : '#FEE500', color: lang === 'zh' || lang === 'ja' ? 'white' : '#191919' }}
             >
-              {lang === 'zh' ? '通过微信咨询设备' : lang === 'ja' ? 'LINEで機器について相談する' : lang === 'en' ? 'Consult via KakaoTalk' : '카카오톡으로 장비 상담하기'}
+              {tr.equipmentConsultBtn}
             </a>
           </div>
         </div>
@@ -2465,14 +2465,14 @@ function EquipmentPanel({ items, catId }: { items: Equipment[]; catId: string })
             EQUIPMENT
           </p>
           <h3 className="text-base font-bold" style={{ color: "#1F2937" }}>
-            {lang === 'en' ? 'Related Equipment' : lang === 'ja' ? '関連機器' : lang === 'zh' ? '相关设备' : '관련 장비'}
+            {tr.equipmentRelated}
           </h3>
         </div>
         <span
           className="px-3 py-1 rounded-full text-xs font-bold text-white"
           style={{ background: "#e8dfc8", color: "#d1ab67" }}
         >
-          {items.length}{lang === 'en' ? ' units' : lang === 'ja' ? '種類' : lang === 'zh' ? '台' : '종 보유'}
+          {tr.equipmentUnits.replace('{n}', String(items.length))}
         </span>
       </div>
 

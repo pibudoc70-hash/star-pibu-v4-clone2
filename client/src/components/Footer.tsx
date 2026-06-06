@@ -86,17 +86,7 @@ export default function Footer() {
   // 주요 시술 목록 (언어별)
   const treatmentItems = t.treatments.categories.flatMap((c) => c.items.slice(0, 2)).slice(0, 10);
 
-  // 라벨
-  const labels = {
-    quickMenu: lang === "ja" ? "クイックメニュー" : lang === "zh" ? "快速菜单" : lang === "en" ? "Quick Menu" : "빠른 메뉴",
-    mainTreatments: lang === "ja" ? "主な施術" : lang === "zh" ? "主要项目" : lang === "en" ? "Key Treatments" : "주요 시술",
-    contactInfo: lang === "ja" ? "連絡先・アクセス" : lang === "zh" ? "联系方式及位置" : lang === "en" ? "Contact & Location" : "연락처 및 위치",
-    brandDesc: lang === "ja" ? "釜山西面のスター皮膚科。皮膚科専門医3名が20年以上の臨床経験で直接診療。" : lang === "zh" ? "釜山西面STAR皮肤科。皮肤科专科医生拥有20年以上丰富临床经验，亲自为患者提供诊疗。" : lang === "en" ? "Busan Seomyeon's leading dermatology clinic, led by board-certified specialists with 20+ years of experience." : "20년 이상의 피부과 교수출신 전문의가 직접 진료하는 부산 서면 대표 피부과",
-    fax: lang === "ja" ? "ファックス" : lang === "zh" ? "传真" : "팩스",
-    subwayInfo: lang === "ja" ? "西面駅 5・7番出口 徒歩2分" : lang === "zh" ? "西面站5·7号出口步行2分钟" : lang === "en" ? "Subway Line 1&2 Seomyeon Stn, Exit 5 or 7, 2 min walk" : "서면역 5·7번 출구 도보 2분",
-    nonCovered: lang === "ja" ? "非保険診療案内" : lang === "zh" ? "非医保诊疗指南" : lang === "en" ? "Non-Covered Services" : "비급여 진료안내",
-    privacy: lang === "ja" ? "個人情報処理方針" : lang === "zh" ? "个人信息处理方针" : lang === "en" ? "Privacy Policy" : "개인정보처리방침",
-  };
+
 
   return (
     <footer style={{ background: "#0F1A30" }}>
@@ -127,7 +117,7 @@ export default function Footer() {
               STAR DERMATOLOGY
             </h3>
             <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)", letterSpacing: "0.04em" }}>
-              {labels.brandDesc}
+              {t.footer.brandDesc}
             </p>
           </div>
           {/* SNS 아이콘 */}
@@ -185,7 +175,7 @@ export default function Footer() {
               textTransform: "uppercase",
             }}
           >
-            {labels.quickMenu}
+            {t.footer.quickMenu}
           </p>
           <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {quickLinks.map((l) => (
@@ -215,7 +205,7 @@ export default function Footer() {
               textTransform: "uppercase",
             }}
           >
-            {labels.mainTreatments}
+            {t.footer.mainTreatments}
           </p>
           <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {treatmentItems.slice(0, 6).map((item) => (
@@ -245,7 +235,7 @@ export default function Footer() {
               textTransform: "uppercase",
             }}
           >
-            {labels.contactInfo}
+            {t.footer.contactInfo}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <a
@@ -259,7 +249,7 @@ export default function Footer() {
               {t.footer.address}
             </p>
             <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>
-              {labels.subwayInfo}
+              {t.footer.subwayInfo}
             </p>
             {/* 영업시간 요약 */}
             <div style={{ display: "flex", flexDirection: "column", gap: "3px", paddingTop: "4px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
@@ -285,13 +275,7 @@ export default function Footer() {
       >
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
           <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", lineHeight: "1.7" }}>
-            {lang === "ko"
-              ? "스타피부과의원 | 대표: 조시형 | 사업자등록번호: 605-24-84306"
-              : lang === "ja"
-              ? "スター皮膚科医院 | 代表: チョ・シヒョン | 事業者登録番号: 605-24-84306"
-              : lang === "en"
-              ? "STAR Dermatology | Director: Cho Si-hyung | Reg. No.: 605-24-84306"
-              : "STAR皮肤科医院 | 代表: 赵时享 | 营业执照号: 605-24-84306"}
+              {t.footer.bizInfo}
           </p>
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <a
@@ -301,7 +285,7 @@ export default function Footer() {
               className="transition-colors hover:text-white"
               style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
             >
-              {labels.nonCovered}
+              {t.footer.nonCovered}
             </a>
             <button
               type="button"
@@ -309,7 +293,7 @@ export default function Footer() {
               className="transition-colors hover:text-white"
               style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
             >
-              {labels.privacy}
+              {t.footer.privacy}
             </button>
           </div>
         </div>

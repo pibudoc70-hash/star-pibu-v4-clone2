@@ -12,7 +12,7 @@ import { useChatConfig } from "@/hooks/useChatConfig";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
-  const { lang } = useLang();
+  const { lang, t } = useLang();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,15 +36,7 @@ export default function FloatingCTA() {
     });
   };
 
-  // 언어별 라벨
-  const labels = {
-    call:      lang === "ja" ? "電話"      : lang === "zh" ? "电话"      : lang === "en" ? "Call"    : "전화",
-    kakao:     lang === "ja" ? "LINE"      : lang === "zh" ? "WeChat"    : lang === "en" ? "Kakao"   : "카카오",
-    map:       lang === "ja" ? "LINE予約"  : lang === "zh" ? "LINE"      : lang === "en" ? "Book"    : "예약",
-    callAria:  lang === "ja" ? "電話相談"  : lang === "zh" ? "电话咨询"  : lang === "en" ? "Call Us" : "전화 상담",
-    kakaoAria: lang === "ja" ? "LINE相談"  : lang === "zh" ? "WeChat咨询": lang === "en" ? "KakaoTalk" : "카카오톡 상담",
-    mapAria:   lang === "ja" ? "LINE予約"  : lang === "zh" ? "LINE咨询"  : lang === "en" ? "Naver Booking" : "네이버 예약",
-  };
+  const fc = t.floatingCta;
 
   // 예약 버튼 색상 (LINE/네이버 모두 초록)
   const reserveBg = "#03C75A";
@@ -75,7 +67,7 @@ export default function FloatingCTA() {
             }}
           >
             <Phone size={18} />
-            {labels.call}
+            {fc.call}
           </a>
 
           {/* 메신저 (카카오/LINE/WeChat) */}
@@ -92,7 +84,7 @@ export default function FloatingCTA() {
             }}
           >
             <MessageCircle size={18} />
-            {wechatCopied ? (lang === "zh" ? "已复制!" : labels.kakao) : labels.kakao}
+            {wechatCopied ? (lang === "zh" ? "已复制!" : fc.kakao) : fc.kakao}
             {wechatCopied && lang === "zh" && (
               <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
                 ID: {WECHAT_ID}
@@ -112,7 +104,7 @@ export default function FloatingCTA() {
             }}
           >
             <Calendar size={18} />
-            {labels.map}
+            {fc.reserve}
           </a>
         </div>
       </div>
@@ -134,8 +126,8 @@ export default function FloatingCTA() {
             background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
             boxShadow: "0 4px 16px rgba(201,168,76,0.45), 0 2px 8px rgba(0,0,0,0.15)",
           }}
-          aria-label={labels.callAria}
-          title={lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
+          aria-label={fc.callAria}
+          title={fc.callAria}
         >
           <Phone size={22} className="text-white" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }} />
         </a>
@@ -149,8 +141,8 @@ export default function FloatingCTA() {
             onClick={handleWechatClick}
             className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
             style={{ background: chatBg }}
-            aria-label={labels.kakaoAria}
-            title={labels.kakaoAria}
+            aria-label={fc.kakaoAria}
+            title={fc.kakaoAria}
           >
             <MessageCircle size={22} style={{ color: chatColor }} />
           </a>
@@ -169,8 +161,8 @@ export default function FloatingCTA() {
           rel="noopener noreferrer"
           className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
           style={{ background: reserveBg }}
-          aria-label={labels.mapAria}
-          title={labels.mapAria}
+          aria-label={fc.reserveAria}
+          title={fc.reserveAria}
         >
           <Calendar size={22} className="text-white" />
         </a>

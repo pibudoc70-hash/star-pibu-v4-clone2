@@ -31,7 +31,7 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
-import SeoHead, { BASE_URL, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import SeoHead, { BASE_URL, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
 
@@ -118,7 +118,8 @@ export default function ForeignGuide() {
         keywords={seo.keywords}
         canonical={pageUrl}
         ogUrl={pageUrl}
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED[activeLang] ?? OG_IMAGE_LOCALIZED.en}
+        ogSiteName={SITE_NAME_LOCALIZED[activeLang] ?? SITE_NAME_LOCALIZED.en}
         ogLocale={LANG_TO_OG_LOCALE[activeLang] ?? "ko_KR"}
         hreflangs={[
           // ko hreflang 없음 — ko 콘텐츠가 없는 페이지 (sitemap 정책과 동일)

@@ -451,3 +451,88 @@ describe("컴포넌트 인라인 lang 분기 제거 확인 (P1-i18n-fix)", () =>
     expect(treatmentsSource2).not.toContain("카카오톡으로 장비 상담하기");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 12: SEO/OG 정책 정합성 — About/ForeignGuide/Equipment2 OG 이미지
+// ─────────────────────────────────────────────────────────────────────────────
+describe("SEO/OG 정책 정합성 — OG_IMAGE_LOCALIZED 사용 (P1-seo-fix)", () => {
+  const aboutSource = readFileSync(
+    path.resolve(root, "client/src/pages/About.tsx"),
+    "utf8",
+  );
+  const foreignGuideSource = readFileSync(
+    path.resolve(root, "client/src/pages/ForeignGuide.tsx"),
+    "utf8",
+  );
+  const equipment2Source = readFileSync(
+    path.resolve(root, "client/src/pages/Equipment2.tsx"),
+    "utf8",
+  );
+
+  it("About.tsx에 구 og-image.jpg 하드코딩 URL이 없어야 한다", () => {
+    expect(aboutSource).not.toContain("og-image.jpg");
+  });
+  it("About.tsx에 OG_IMAGE_LOCALIZED를 import해야 한다", () => {
+    expect(aboutSource).toContain("OG_IMAGE_LOCALIZED");
+  });
+  it("ForeignGuide.tsx에 구 og-image.jpg 하드코딩 URL이 없어야 한다", () => {
+    expect(foreignGuideSource).not.toContain("og-image.jpg");
+  });
+  it("ForeignGuide.tsx에 OG_IMAGE_LOCALIZED를 import해야 한다", () => {
+    expect(foreignGuideSource).toContain("OG_IMAGE_LOCALIZED");
+  });
+  it("Equipment2.tsx에 구 og-image.jpg 하드코딩 URL이 없어야 한다", () => {
+    expect(equipment2Source).not.toContain("og-image.jpg");
+  });
+  it("Equipment2.tsx에 OG_IMAGE_LOCALIZED를 import해야 한다", () => {
+    expect(equipment2Source).toContain("OG_IMAGE_LOCALIZED");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 13: Header.tsx reserveUrl 중복 계산 제거
+// ─────────────────────────────────────────────────────────────────────────────
+describe("Header.tsx reserveUrl 중복 계산 제거 (P1-header-fix)", () => {
+  const headerSource2 = readFileSync(
+    path.resolve(root, "client/src/components/Header.tsx"),
+    "utf8",
+  );
+
+  it("Header.tsx에 NAVER_MAP_URL 하드코딩이 없어야 한다 (useChatConfig().reserveUrl 사용)", () => {
+    expect(headerSource2).not.toContain("NAVER_MAP_URL");
+  });
+  it("Header.tsx에 CHAT_URLS import가 없어야 한다 (미사용 import 제거)", () => {
+    expect(headerSource2).not.toContain("CHAT_URLS");
+  });
+  it("Header.tsx에서 useChatConfig에서 reserveUrl을 구조분해해야 한다", () => {
+    expect(headerSource2).toContain("reserveUrl");
+    expect(headerSource2).toContain("useChatConfig");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 섹션 14: ContactSection.tsx closedLabel i18n 중앙화 및 fallback 삼항 제거
+// ─────────────────────────────────────────────────────────────────────────────
+describe("ContactSection.tsx closedLabel i18n 중앙화 및 fallback 삼항 제거 (P2-contact-fix)", () => {
+  const contactSource = readFileSync(
+    path.resolve(root, "client/src/components/ContactSection.tsx"),
+    "utf8",
+  );
+
+  it("ContactSection.tsx에 closedLabel 인라인 lang 삼항이 없어야 한다", () => {
+    expect(contactSource).not.toContain('lang === "en" ? "Closed"');
+  });
+  it("ContactSection.tsx에서 t.hours.rows를 통해 closedLabel을 계산해야 한다", () => {
+    expect(contactSource).toContain("t.hours.rows");
+    expect(contactSource).toContain("closedLabel");
+  });
+  it("ContactSection.tsx addressLabel에 인라인 fallback 삼항이 없어야 한다", () => {
+    expect(contactSource).not.toContain("t.access.addressLabel ?? (lang");
+  });
+  it("ContactSection.tsx phoneLabel에 인라인 fallback 삼항이 없어야 한다", () => {
+    expect(contactSource).not.toContain("t.access.phoneLabel ?? (lang");
+  });
+  it("ContactSection.tsx kakaoMapLabel에 인라인 fallback 삼항이 없어야 한다", () => {
+    expect(contactSource).not.toContain("t.access.kakaoMapLabel ?? (lang");
+  });
+});

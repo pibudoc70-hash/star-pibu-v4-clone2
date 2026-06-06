@@ -12,7 +12,7 @@
  * - noindex: 없음 (전체 색인 허용)
  * - Equipment2Detail.tsx의 다국어 SEO 패턴과 동일한 정책 적용
  */
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
@@ -54,7 +54,8 @@ export default function Equipment2() {
         keywords={seoKeywords}
         canonical={pageUrl}
         ogUrl={pageUrl}
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko}
+        ogSiteName={SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs(
           "/equipment2",

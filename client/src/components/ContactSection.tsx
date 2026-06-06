@@ -93,25 +93,24 @@ export default function ContactSection() {
     }
   };
 
-  // 진료시간 "휴진" 판별 (언어별)
-  const closedLabel =
-    lang === "en" ? "Closed" : lang === "ja" ? "休診" : lang === "zh" ? "休诊" : "휴진";
+  // 진료시간 "휴진" 판별: t.hours.rows 마지막 항목의 time 값 사용 (i18n 중앙화)
+  const closedLabel = t.hours.rows[t.hours.rows.length - 1]?.time ?? "휴진";
 
-  // CONTACT-P2-A: i18n 키 직접 사용 (fallback 포함)
+  // CONTACT-P2-A: i18n 키 직접 사용 (fallback 삼항 제거 — 4개 언어 모두 키 존재 확인)
   const locationInfo = t.access.locationInfo ?? t.access.label;
   const sectionTitle = t.access.sectionTitle ?? t.access.title;
-  const addressLabel = t.access.addressLabel ?? (lang === "en" ? "Address" : lang === "ja" ? "住所" : lang === "zh" ? "地址" : "주소");
-  const phoneLabel = t.access.phoneLabel ?? (lang === "en" ? "Phone" : lang === "ja" ? "電話" : lang === "zh" ? "电话" : "전화");
-  const hoursLabel = t.access.hoursLabel ?? (lang === "en" ? "Clinic Hours" : lang === "ja" ? "診察時間" : lang === "zh" ? "诊疗时间" : "진료시간");
+  const addressLabel = t.access.addressLabel!;
+  const phoneLabel = t.access.phoneLabel!;
+  const hoursLabel = t.access.hoursLabel!;
   const hoursNote = t.access.hoursNote ?? t.hours.note;
-  const transitLabel = t.access.transitLabel ?? (lang === "en" ? "Transit" : lang === "ja" ? "交通機関" : lang === "zh" ? "交通方式" : "대중교통");
+  const transitLabel = t.access.transitLabel!;
   const transitDesc = t.access.transitDesc ?? t.access.subway;
-  const parkingLabel = t.access.parkingLabel ?? (lang === "en" ? "Parking" : lang === "ja" ? "駐車場" : lang === "zh" ? "停车" : "주차");
+  const parkingLabel = t.access.parkingLabel!;
   const parkingDesc = t.access.parkingDesc ?? t.access.parking;
-  const kakaoMapLabel = t.access.kakaoMapLabel ?? (lang === "en" ? "KakaoMap Directions" : lang === "ja" ? "KakaoMapでルート検索" : lang === "zh" ? "KakaoMap导航" : "카카오맵 길찾기");
+  const kakaoMapLabel = t.access.kakaoMapLabel!;
   const naverMapLabel = t.access.naverMap ?? "Naver Map";
-  const copyAddressLabel = t.access.copyAddress ?? (lang === "en" ? "Copy Address" : lang === "ja" ? "住所をコピー" : lang === "zh" ? "复制地址" : "주소 복사");
-  const copiedLabel = t.access.copiedLabel ?? (lang === "en" ? "Copied!" : lang === "ja" ? "コピーしました！" : lang === "zh" ? "已复制！" : "복사됨!");
+  const copyAddressLabel = t.access.copyAddress!;
+  const copiedLabel = t.access.copiedLabel!;
 
   return (
     <section ref={sectionRef} id="contact" className="py-16 sm:py-24 star-section-alt">

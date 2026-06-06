@@ -16,7 +16,7 @@
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from '@/components/SeoHead';
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from '@/components/SeoHead';
 
 export default function About() {
   const { t, lang } = useLang();
@@ -78,7 +78,8 @@ export default function About() {
         keywords={seoKeywords}
         canonical={pageUrl}
         ogUrl={pageUrl}
-        ogImage="https://www.star-pibu.com/og-image.jpg"
+        ogImage={OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko}
+        ogSiteName={SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}
       />

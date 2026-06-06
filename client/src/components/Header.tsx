@@ -17,7 +17,7 @@ import { useLang } from "@/contexts/LangContext";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Lang } from "@/lib/i18n";
 import { getLocaleBase } from "../../../shared/pathUtils";
-import { useChatConfig, CHAT_URLS } from "@/hooks/useChatConfig";
+import { useChatConfig } from "@/hooks/useChatConfig";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -148,11 +148,9 @@ export default function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [langDropOpen]);
 
-  const { chatUrl: rawChatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
   const chatUrl = isZH ? "#" : rawChatUrl;
-  const NAVER_MAP_URL = "https://map.naver.com/p/search/%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC%20%EC%84%9C%EB%A9%B4";
-  const reserveUrl = isZH ? CHAT_URLS.lineZH : isJA ? CHAT_URLS.lineJA : NAVER_MAP_URL;
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
     if (lang !== "zh") return;

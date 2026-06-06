@@ -1713,7 +1713,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P2 — 코드 품질·유지보수성 (이번 배치 수정)
 - [x] CONTACT-P2-A: ContactSection.tsx — labels 객체 14개 항목 인라인 분기 → i18n.ts access 블록 확장으로 중앙화
 - [x] CONTACT-P2-B: ContactSection.tsx — initTimer + initTimer2 중복 타이머 → rAF + 단일 fallback 타이머 패턴으로 교체
-- [ ] FLOATINGCTA-P2-A: FloatingCTA.tsx — labels 객체 인라인 분기 → i18n 키 사용 [보류: i18n.ts에 floatingCta 전용 블록 미존재, 다음 배치에서 인터페이스 확장 후 적용 예정]
+- [x] FLOATINGCTA-P2-A: FloatingCTA.tsx — labels 객체 인라인 분기 → t.floatingCta.* 직접 사용 (i18n.ts floatingCta 블록 신규 추가 완료)
 
 ### P3 — 선택적 개선 (보류)
 - [ ] CONTACT-P3-A: ContactSection.tsx — 지도 마커 팝업 클릭 토글 로직을 React state로 관리

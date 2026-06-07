@@ -328,6 +328,12 @@ export async function getTreatmentById(id: number) {
   return rows[0];
 }
 
+export async function getTreatmentBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(treatments).where(eq(treatments.slug, slug)).limit(1);
+  return rows[0];
+}
 export async function createTreatment(data: InsertTreatment) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");

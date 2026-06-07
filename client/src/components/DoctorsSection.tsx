@@ -180,16 +180,19 @@ function DoctorsSection() {
 
   const badgeLabel = t.doctors.badge;
 
-  // [R5-P2] mergedDoctors: 매 렌더마다 재계산 → useMemo로 교체 (언어 변경 시만 업데이트)
-  const mergedDoctors = useMemo(() => doctors.map((d, idx) => ({
-    ...d,
-    name: t.doctors.list[idx]?.name ?? d.name,
-    title: t.doctors.list[idx]?.title ?? d.title,
-    intro: t.doctors.list[idx]?.intro ?? d.intro,
-    credentials: t.doctors.list[idx]?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
-    specialties: t.doctors.list[idx]?.specialties ?? d.specialties,
-    badge: badgeLabel,
-  })), [t.doctors, badgeLabel]);
+  // [D항목] index 기반 merge → id 기반 find로 전환 (의사 순서 변경 시 불일치 방지)
+  const mergedDoctors = useMemo(() => doctors.map((d) => {
+    const locale = t.doctors.list.find((item) => item.id === d.id);
+    return {
+      ...d,
+      name: locale?.name ?? d.name,
+      title: locale?.title ?? d.title,
+      intro: locale?.intro ?? d.intro,
+      credentials: locale?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
+      specialties: locale?.specialties ?? d.specialties,
+      badge: badgeLabel,
+    };
+  }), [t.doctors, badgeLabel]);
   const doctor = mergedDoctors[activeDoctor];
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 90 → 60;
 

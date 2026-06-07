@@ -18,7 +18,7 @@ import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
-import { CLINIC_STATS, CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
+import { CLINIC_STATS, CLINIC_TEL, CLINIC_TEL_INTL, WECHAT_ID } from "@/lib/constants";
 import { useClinicStats } from "@/hooks/useClinicStats";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import GoldParticles from "@/components/hero/GoldParticles";
@@ -49,13 +49,13 @@ export default function HeroSection() {
   const { t, lang } = useLang();
   // [PROD-P4-2] useChatConfig 훅으로 인라인 URL 로직 중앙화
   const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
-  const WECHAT_ID = "star2006beauty";
+  // [F항목] WECHAT_ID 중복 선언 제거 → constants.ts에서 import
   // 중국어일 때 위체 클립보드 복사를 위해 href="#" 유지
   const chatUrl = isZH ? "#" : rawChatUrl;
   const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
-    if (lang !== "zh") return;
+    if (!isZH) return;
     e.preventDefault();
     navigator.clipboard.writeText(WECHAT_ID).then(() => {
       setWechatCopied(true);
@@ -570,9 +570,9 @@ export default function HeroSection() {
                 }}
               >
                 <MessageCircle size={14} />
-                {wechatCopied && lang === "zh" ? t.access.copiedLabel : t.hero.cta_kakao}
+                {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
               </a>
-              {wechatCopied && lang === "zh" && (
+              {wechatCopied && isZH && (
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">
                   ID: {WECHAT_ID}
                 </div>

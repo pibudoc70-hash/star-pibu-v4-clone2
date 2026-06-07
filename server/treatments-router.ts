@@ -1,5 +1,5 @@
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
-import { getAllTreatmentCategories, getTreatmentsByCategory, getAllTreatments, getTreatmentById, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "./db";
+import { getAllTreatmentCategories, getTreatmentsByCategory, getAllTreatments, getTreatmentById, getTreatmentBySlug, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "./db";
 import { z } from "zod/v4";
 import { storagePut } from "./storage";
 
@@ -35,6 +35,13 @@ export const treatmentsRouter = router({
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       return getTreatmentById(input.id);
+    }),
+
+  // 공개: slug로 단건 시술 조회
+  bySlug: publicProcedure
+    .input(z.object({ slug: z.string().min(1).max(200) }))
+    .query(async ({ input }) => {
+      return getTreatmentBySlug(input.slug);
     }),
 
   // 관리자: 시술 생성

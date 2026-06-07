@@ -6,23 +6,22 @@
  *   - 카테고리 상수: @/data/treatments/categories
  *   - 시술 데이터: @/data/treatments/treatments-data
  *   - 장비 데이터: @/data/treatments/equipment-data
+ *
+ * 구조 개선 (Round-10):
+ *   - filter/sort/scroll 로직 → useStaticTreatmentFilter hook으로 추출
+ *   - 모바일/데스크탑 탭 중복 렌더 → CategoryTabList 컴포넌트로 통합
  */
-import React, { useState, useMemo, useRef, useEffect } from "react";
-import { ChevronDown, ChevronUp, Star } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import { useRef } from "react";
 
 // ── 분리된 모듈 import ────────────────────────────────────────────────────────
-import {
-  CATEGORIES,
-  CATEGORY_ICON_MAP,
-  CAT_IMG_BG,
-  CAT_TAB_TEXT,
-  getCatLabel,
-} from "@/data/treatments/categories";
-import { TREATMENTS } from "@/data/treatments/treatments-data";
-import CategoryTabButton from "@/components/treatments/CategoryTabButton";
+import { CATEGORIES, CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
 import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCard";
+import CategoryTabList from "@/components/treatments/CategoryTabList";
+import { useStaticTreatmentFilter } from "@/hooks/useStaticTreatmentFilter";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
@@ -30,36 +29,24 @@ import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCa
 export default function TreatmentsEquipmentSection() {
   const { t, lang } = useLang();
   const tr = t.treatments;
-  const [activeId, setActiveId] = useState("best");
+
   const [showAll, setShowAll] = useState(false);
-  const [sortBy, setSortBy] = useState<"name" | "time" | "popular">("popular");
-  const [filterOpen, setFilterOpen] = useState(false);
   // [R5-P1] INITIAL_SHOW: 렌더마다 window.innerWidth 직접 접근 → useState lazy initializer로 교체
   const [INITIAL_SHOW] = useState(() => typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 6);
+
   const sectionRef = useSectionReveal(60);
-  const tabContainerRef = useRef<HTMLDivElement>(null);
   const sectionTopRef = useRef<HTMLDivElement>(null);
 
-  const handleTabChange = (id: string) => setActiveId(id);
-
-  // 활성 탭 자동 스크롤 (모바일)
-  useEffect(() => {
-    const container = tabContainerRef.current;
-    if (!container) return;
-    const activeBtn = container.querySelector<HTMLButtonElement>('[data-active="true"]');
-    if (!activeBtn) return;
-    container.scrollTo({
-      left: activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2,
-      behavior: "smooth",
-    });
-  }, [activeId]);
-
-  const filteredTreatments = useMemo(() => {
-    let items = TREATMENTS[activeId] ?? [];
-    if (sortBy === "name") items = [...items].sort((a, b) => a.name.localeCompare(b.name, "ko"));
-    else if (sortBy === "time") items = [...items].sort((a, b) => parseInt(a.time?.replace(/[^0-9]/g, "") || "0") - parseInt(b.time?.replace(/[^0-9]/g, "") || "0"));
-    return items;
-  }, [activeId, sortBy]);
+  const {
+    activeId,
+    sortBy,
+    filterOpen,
+    filteredTreatments,
+    tabContainerRef,
+    handleTabChange,
+    setSortBy,
+    setFilterOpen,
+  } = useStaticTreatmentFilter();
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }} aria-label={tr.label} role="region">
@@ -118,35 +105,14 @@ export default function TreatmentsEquipmentSection() {
             </div>
           </div>
 
-          {/* 탭 — 모바일: 2열 그리드, 데스크탑: flex-wrap */}
-          <div ref={tabContainerRef} className="mb-4">
-            <div className="grid grid-cols-2 gap-2 sm:hidden">
-              {CATEGORIES.map((cat) => (
-                <CategoryTabButton
-                  key={cat.id}
-                  id={cat.id}
-                  label={getCatLabel(cat, lang)}
-                  isActive={activeId === cat.id}
-                  onClick={handleTabChange}
-                  icon={CATEGORY_ICON_MAP[cat.id] ?? Star}
-                  size="sm"
-                />
-              ))}
-            </div>
-            <div className="hidden sm:flex sm:flex-wrap gap-2" style={{ marginTop: "9px", marginRight: "5px", marginBottom: "-4px", marginLeft: "16px" }}>
-              {CATEGORIES.map((cat) => (
-                <CategoryTabButton
-                  key={cat.id}
-                  id={cat.id}
-                  label={getCatLabel(cat, lang)}
-                  isActive={activeId === cat.id}
-                  onClick={handleTabChange}
-                  icon={CATEGORY_ICON_MAP[cat.id] ?? Star}
-                  size="md"
-                />
-              ))}
-            </div>
-          </div>
+          {/* 탭 — CategoryTabList로 모바일/데스크탑 중복 제거 */}
+          <CategoryTabList
+            categories={CATEGORIES}
+            activeId={activeId}
+            lang={lang}
+            onTabChange={handleTabChange}
+            containerRef={tabContainerRef}
+          />
         </div>
 
         {/* 시술 카드 그리드 */}

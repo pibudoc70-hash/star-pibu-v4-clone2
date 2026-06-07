@@ -271,3 +271,25 @@ export function buildBreadcrumbJsonLd(
   };
 }
 
+/**
+ * [G항목] SEO_PRESETS: 페이지 타입별 스키마 삽입 프리셋
+ * - boolean 조합 대신 pageType 단일 prop으로 추상화
+ *
+ * 사용 예:
+ *   <SeoHead pageType="home" ... />
+ *   <SeoHead pageType="treatment" ... />
+ *   <SeoHead pageType="default" ... />
+ */
+export type SeoPageType = "home" | "treatment" | "default" | "admin";
+
+export const SEO_PRESETS: Record<SeoPageType, { includeMedicalSchema: boolean; includeWebSiteSchema: boolean }> = {
+  /** 홈페이지: WebSite + MedicalBusiness 스키마 모두 포함 */
+  home: { includeMedicalSchema: true, includeWebSiteSchema: true },
+  /** 시술/장비 상세 페이지: MedicalBusiness 스키마만 포함 */
+  treatment: { includeMedicalSchema: true, includeWebSiteSchema: false },
+  /** 일반 페이지 (접근 안내, 의료진 등): MedicalBusiness 스키마만 포함 */
+  default: { includeMedicalSchema: true, includeWebSiteSchema: false },
+  /** 관리자 페이지: 스키마 없음 + noindex */
+  admin: { includeMedicalSchema: false, includeWebSiteSchema: false },
+};
+

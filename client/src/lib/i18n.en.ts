@@ -86,6 +86,7 @@ export const en: I18nContent = {
     title: "Meet Our Specialists",
     list: [
       {
+        id: 0,
         name: "Dr. Cho Si-hyung",
         title: "Director",
         specialty: "Board-Certified Dermatologist · MD, PhD",
@@ -107,6 +108,7 @@ export const en: I18nContent = {
         specialties: ["Under-Eye Fat Repositioning", "Lifting", "Ultherapy", "Thermage", "Scar Treatment", "Pigmentation", "Vitiligo", "Tattoo Removal", "Botox", "Filler"],
       },
       {
+        id: 1,
         name: "Dr. Woo Hye-jin",
         title: "Director",
         specialty: "Board-Certified Dermatologist",
@@ -125,6 +127,7 @@ export const en: I18nContent = {
         specialties: ["Lifting", "Ultherapy", "Thermage", "Scar Treatment", "Pigmentation", "Skin Conditions", "Tattoo Removal", "Nail Fungus", "Botox"],
       },
       {
+        id: 2,
         name: "Dr. Lee Ki-wook",
         title: "Director",
         specialty: "Board-Certified Dermatologist · MD, PhD",

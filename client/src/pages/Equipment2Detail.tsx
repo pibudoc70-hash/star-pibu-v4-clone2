@@ -2,19 +2,21 @@
  * Equipment2Detail - 시술 상세 페이지
  * URL: /equipment2/:slug
  * 각 시술별 독립적인 페이지로 SEO 최적화
+ *
+ * [Round-10 C항목] 전체 목록 조회 후 find(slug) → bySlug 단건 조회로 개선
+ * - isLoading / isError / notFound 상태를 명시적으로 분리
+ * - useEffect + setState 패턴 제거 (tRPC 쿼리 상태 직접 활용)
  */
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { CLINIC_INFO } from "@/lib/constants";
 import { getEquipmentSeoText } from "@/lib/equipmentSeoText";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
-import { useState, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
-import type { Treatment } from "@shared/types";
 import { getReservationPath } from "@/lib/reservationPath";
 
 // safe JSON parser
@@ -32,28 +34,22 @@ export default function Equipment2Detail() {
   const { lang } = useLang();
   const { getText } = useLocalizedText();
   const slug = params.slug as string;
-  const [treatment, setTreatment] = useState<Treatment | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // 시술 목록 조회
-  const { data: allTreatments } = trpc.treatments.all.useQuery({ section: "v2" });
-
-  useEffect(() => {
-    if (allTreatments && slug) {
-      const found = allTreatments.find((t) => t.slug === slug);
-      if (found) {
-        setTreatment(found);
-      } else {
-        setLocation("/equipment2");
-      }
-      setIsLoading(false);
-    }
-  }, [allTreatments, slug, setLocation]);
+  // [C항목] bySlug 단건 조회 — 전체 목록 fetch 후 find() 패턴 제거
+  const {
+    data: treatment,
+    isLoading,
+    isError,
+  } = trpc.treatments.bySlug.useQuery(
+    { slug },
+    { enabled: !!slug, retry: 1 }
+  );
 
   // locale별 UI 레이블 (getText 훅 활용)
   const LABELS = {
     loading:   getText("로딩 중...",       "Loading...",                    "読み込み中...",      "加载中..."),
-    notFound:  getText("시술 정보를 찾을 수 없습니다.", "Treatment information not found.", "施術情報が見つかりませんでした。", "未找到该项目信息。"),
+    notFound:  getText("시술 정보를 찾을 수 없습니다.", "Treatment information not found.", "施術情報が見つかりませんでました。", "未找到该项目信息。"),
+    error:     getText("데이터를 불러오는 중 오류가 발생했습니다.", "Failed to load treatment data.", "データの読み込みに失敗しました。", "加载数据时出错。"),
     time:      getText("시술 시간",         "Duration",                      "施術時間",           "施术时间"),
     recovery:  getText("회복 기간",         "Recovery",                      "回復期間",           "恢复期"),
     sessions:  getText("권장 횟수",         "Recommended Sessions",          "推奨回数",           "建议次数"),
@@ -69,6 +65,7 @@ export default function Equipment2Detail() {
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
   } as const;
 
+  // ── 로딩 상태 ──────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -78,10 +75,34 @@ export default function Equipment2Detail() {
     );
   }
 
+  // ── 에러 상태 ──────────────────────────────────────────────────────────────
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+        <p className="text-red-600">{LABELS.error}</p>
+        <button
+          type="button"
+          onClick={() => setLocation("/equipment2")}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          {getText("목록으로 돌아가기", "Back to list", "一覧に戻る", "返回列表")}
+        </button>
+      </div>
+    );
+  }
+
+  // ── notFound 상태 (쿼리 성공했지만 slug에 해당하는 데이터 없음) ──────────
   if (!treatment) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
         <p className="text-gray-600">{LABELS.notFound}</p>
+        <button
+          type="button"
+          onClick={() => setLocation("/equipment2")}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          {getText("목록으로 돌아가기", "Back to list", "一覧に戻る", "返回列表")}
+        </button>
       </div>
     );
   }

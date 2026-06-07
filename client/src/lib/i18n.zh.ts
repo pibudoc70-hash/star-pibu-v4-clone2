@@ -86,6 +86,7 @@ export const zh: I18nContent = {
     title: "皮肤科专科医生介绍",
     list: [
       {
+        id: 0,
         name: "赵时享",
         title: "院长",
         specialty: "皮肤科专科医生 · 医学博士",
@@ -107,6 +108,7 @@ export const zh: I18nContent = {
         specialties: ["眼袋脂肪重置", "提升", "超声刀", "热玛吉", "疤痕治疗", "色素治疗", "白癜风", "纹身去除", "肉毒素", "填充剂"],
       },
       {
+        id: 1,
         name: "吴惠进",
         title: "院长",
         specialty: "皮肤科专科医生",
@@ -125,6 +127,7 @@ export const zh: I18nContent = {
         specialties: ["提升", "超声刀", "热玛吉", "疤痕治疗", "色素治疗", "皮肤疾病", "纹身去除", "甲癣", "肉毒素"],
       },
       {
+        id: 2,
         name: "李基沃",
         title: "院长",
         specialty: "皮肤科专科医生 · 医学博士",

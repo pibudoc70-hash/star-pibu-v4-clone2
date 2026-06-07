@@ -31,8 +31,8 @@ describe("[A] TreatmentsEquipmentSection 미사용 import 제거", () => {
     expect(src).toMatch(/import EquipmentTreatmentCard/);
   });
 
-  it("CategoryTabButton import가 존재해야 한다", () => {
-    expect(src).toMatch(/import CategoryTabButton/);
+  it("CategoryTabList import가 존재해야 한다 (Round-10: CategoryTabButton → CategoryTabList 상위 컴포넌트로 추출)", () => {
+    expect(src).toMatch(/import CategoryTabList/);
   });
 });
 

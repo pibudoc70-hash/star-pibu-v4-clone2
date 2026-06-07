@@ -14,10 +14,13 @@ import {
   buildClinicJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
+  SEO_PRESETS,
+  type SeoPageType,
 } from "@/lib/seoHelpers";
 
 // Re-export for backward compatibility (기존 import 경로 유지)
 export type { JsonLdSchema } from "@/lib/seoHelpers";
+export type { SeoPageType } from "@/lib/seoHelpers";
 export {
   SITE_NAME,
   BASE_URL,
@@ -30,6 +33,7 @@ export {
   buildClinicJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
+  SEO_PRESETS,
 } from "@/lib/seoHelpers";
 
 export interface SeoHeadProps {
@@ -60,13 +64,24 @@ export interface SeoHeadProps {
   /** og:site_name 언어별 사이트명 오버라이드 */
   ogSiteName?: string;
   /**
+   * [G항목] 페이지 타입 프리셋 (SEO_PRESETS 참조)
+   * - "home"      → WebSite + MedicalBusiness 스키마 모두 포함
+   * - "treatment" → MedicalBusiness 스키마만 포함
+   * - "default"   → MedicalBusiness 스키마만 포함
+   * - "admin"     → 스키마 없음
+   * pageType을 지정하면 includeMedicalSchema/includeWebSiteSchema를 오버라이드합니다.
+   */
+  pageType?: SeoPageType;
+  /**
    * MedicalBusiness 스키마 삽입 여부 (기본값: true)
+   * pageType이 지정되면 무시됩니다.
    * - true  → buildClinicJsonLd() 삽입
    * - false → MedicalBusiness 스키마 제외
    */
   includeMedicalSchema?: boolean;
   /**
    * WebSite 스키마 삽입 여부 (기본값: false)
+   * pageType이 지정되면 무시됩니다.
    * 홈페이지("/")에만 true로 설정하세요.
    */
   includeWebSiteSchema?: boolean;
@@ -86,16 +101,20 @@ export default function SeoHead({
   ogLocale = "ko_KR",
   ogLocaleAlternates,
   ogSiteName,
+  pageType,
   includeMedicalSchema,
   includeWebSiteSchema = false,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const resolvedSiteName = ogSiteName ?? SITE_NAME;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
-  const shouldIncludeMedical = includeMedicalSchema ?? true;
+  // [G항목] pageType 프리셋이 지정되면 우선 적용, 아니면 기존 boolean prop 사용
+  const preset = pageType ? SEO_PRESETS[pageType] : null;
+  const shouldIncludeMedical = preset ? preset.includeMedicalSchema : (includeMedicalSchema ?? true);
+  const shouldIncludeWebSite = preset ? preset.includeWebSiteSchema : includeWebSiteSchema;
   const baseSchemas: JsonLdSchema[] = [
     ...(shouldIncludeMedical ? [buildClinicJsonLd()] : []),
-    ...(includeWebSiteSchema ? [buildWebSiteJsonLd()] : []),
+    ...(shouldIncludeWebSite ? [buildWebSiteJsonLd()] : []),
   ];
   const allSchemas = [...baseSchemas, ...(jsonLd ?? [])];
   return (

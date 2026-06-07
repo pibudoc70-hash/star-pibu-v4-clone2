@@ -1999,3 +1999,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [P2-2] admin.youtube 서브라우터 중복 제거 (youtube.ts 공개 조회만, CRUD는 admin.youtube로 통합)
 - [x] [P2-3] unavailableSlots 라우터 역할 명확화 — schedule(public)과 admin.unavailableSlots(CRUD)로 이미 올바르게 분리됨
 - [x] [P2-4] events/popup/admin/youtube 라우터 테스트 추가 (+25개 신규, 전체 564개 통과)
+
+## Round-10 시니어 검수 (A~G 7개 항목)
+
+- [ ] [A] TreatmentsEquipmentSection.tsx: useTreatmentFilter hook 연결 + 탭 중복 제거
+- [ ] [B] TreatmentsEquipmentSectionV2: 파일 부재 확인 → useTreatmentFilter가 TreatmentsEquipmentSection에 실제 적용되도록 연결
+- [ ] [C] Equipment2Detail.tsx: bySlug 단건 조회 프로시저 추가 + isLoading/isError/notFound 상태 명시적 분리
+- [ ] [D] DoctorsSection.tsx: index 기반 i18n merge → id 기반으로 교체
+- [ ] [E] ContactSection.tsx: map popup 생성 로직 helper 함수로 분리
+- [ ] [F] HeroSection.tsx: animation timing/business config/lang branching 정리
+- [ ] [G] SeoHead.tsx: page-type preset helper 구조로 개선
+- [ ] Round-10 회귀 테스트 추가 (5개 영역)
+- [ ] type-check/build/test 통과 + 체크포인트 저장

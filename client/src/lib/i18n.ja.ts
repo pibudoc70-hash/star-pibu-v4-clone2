@@ -86,6 +86,7 @@ export const ja: I18nContent = {
     title: "皮膚科専門医のご紹介",
     list: [
       {
+        id: 0,
         name: "チョ・シヒョン",
         title: "院長",
         specialty: "皮膚科専門医 · 医学博士",
@@ -107,6 +108,7 @@ export const ja: I18nContent = {
         specialties: ["クマ取り", "リフティング", "ウルセラ", "サーマジ", "傷跡治療", "色素治療", "白斑症", "タトゥー除去", "ボトックス", "フィラー"],
       },
       {
+        id: 1,
         name: "ウ・ヘジン",
         title: "院長",
         specialty: "皮膚科専門医",
@@ -125,6 +127,7 @@ export const ja: I18nContent = {
         specialties: ["リフティング", "ウルセラ", "サーマジ", "傷跡治療", "色素治療", "皮膚疾患", "タトゥー除去", "爪水虫", "ボトックス"],
       },
       {
+        id: 2,
         name: "イ・ギウク",
         title: "院長",
         specialty: "皮膚科専門医 · 医学博士",

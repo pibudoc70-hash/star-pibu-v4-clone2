@@ -115,6 +115,8 @@ export interface I18nContent {
     label: string;
     title: string;
     list: Array<{
+      /** doctors 배열의 id와 매핑되는 고유 식별자 (인덱스 기반 merge 제거) */
+      id: number;
       name: string;
       title: string;
       specialty: string;

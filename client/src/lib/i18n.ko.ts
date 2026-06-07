@@ -86,6 +86,7 @@ export const ko: I18nContent = {
     title: "피부과전문의 3인",
     list: [
       {
+        id: 0,
         name: "조시형",
         title: "원장",
         specialty: "피부과 전문의 · 의학박사",
@@ -105,6 +106,7 @@ export const ko: I18nContent = {
         specialties: ["눈밑지방재배치", "리프팅", "울쎄라", "써마지", "흉터치료", "색소치료", "백반증", "문신제거", "보톡스", "필러"],
       },
       {
+        id: 1,
         name: "우혜진",
         title: "원장",
         specialty: "피부과 전문의",
@@ -121,6 +123,7 @@ export const ko: I18nContent = {
         specialties: ["리프팅", "울쎄라", "써마지", "흉터치료", "색소치료", "피부질환", "문신제거", "조갑진균증", "보톡스"],
       },
       {
+        id: 2,
         name: "이기욱",
         title: "원장",
         specialty: "피부과 전문의 · 의학박사",

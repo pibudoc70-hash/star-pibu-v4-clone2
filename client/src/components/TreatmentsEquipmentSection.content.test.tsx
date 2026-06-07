@@ -113,8 +113,13 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
     expect(equipmentTreatmentCardSource).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh)');
   });
 
-  it('카테고리 탭 label 렌더링에 getCatLabel(cat, lang)을 사용해야 한다', () => {
-    expect(source).toContain('getCatLabel(cat, lang)');
+  it('커테고리 탭 label 렌더링에 getCatLabel(cat, lang)을 사용해야 한다 (Round-10: CategoryTabList으로 추출됨)', () => {
+    // Round-10 리팩터링: getCatLabel 호출이 CategoryTabList.tsx로 이동됨
+    const categoryTabListSource = readFileSync(
+      path.resolve(root, 'client/src/components/treatments/CategoryTabList.tsx'),
+      'utf8',
+    );
+    expect(categoryTabListSource).toContain('getCatLabel(cat, lang)');
   });
 
   it('getCatLabel 헬퍼가 정의되어 있어야 한다', () => {

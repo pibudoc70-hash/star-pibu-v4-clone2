@@ -10,9 +10,12 @@
  * CONTACT-P2-A: labels 객체 제거 → t.access.* i18n 키 직접 사용
  * CONTACT-P3-A: 팝업 토글 로직 React state로 관리 (onToggle 콜백)
  * CONTACT-P3-B: 지도 높이 계산 로직 useMapHeight 커스텀 훅으로 분리
+ * CONTACT-P4-A: document.execCommand deprecated → navigator.clipboard 전용 + 실패 시 안내
+ * CONTACT-P4-B: non-null assertion(!) 제거 → optional chaining + nullish coalescing
+ * CONTACT-P4-C: 지도 로드 실패 fallback UI (MapView 내부 자체 제공)
  */
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { MapPin, Phone, Clock, Train, Car, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
@@ -77,49 +80,48 @@ export default function ContactSection() {
   const { t } = useLang();
   const { phoneHref, phoneDisplay } = useChatConfig();
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   // CONTACT-P3-A: 팝업 토글 상태 React state로 관리
   const [markerPopupVisible, setMarkerPopupVisible] = useState(true);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   // CONTACT-P3-B: 지도 높이 계산 로직을 useMapHeight 커스텀 훅으로 분리
   const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
 
-  // 주소 복사
-  const handleCopyAddress = async () => {
+  // CONTACT-P4-A: navigator.clipboard 전용 (document.execCommand deprecated 제거)
+  const handleCopyAddress = useCallback(async () => {
+    setCopyFailed(false);
+    if (!navigator.clipboard) {
+      setCopyFailed(true);
+      return;
+    }
     try {
       await navigator.clipboard.writeText(t.access.address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback
-      const el = document.createElement("textarea");
-      el.value = t.access.address;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyFailed(true);
     }
-  };
+  }, [t.access.address]);
 
   // 진료시간 "휴진" 판별: t.hours.rows 마지막 항목의 time 값 사용 (i18n 중앙화)
   const closedLabel = t.hours.rows[t.hours.rows.length - 1]?.time ?? t.hours.rows[0]?.time ?? "";  // 마지막 행 time 값 (휴진 표시)
 
   // CONTACT-P2-A: i18n 키 직접 사용 (fallback 삼항 제거 — 4개 언어 모두 키 존재 확인)
-  const locationInfo = t.access.locationInfo!;  // 4개 언어 모두 존재 확인
-  const sectionTitle = t.access.sectionTitle!;  // 4개 언어 모두 존재 확인
-  const addressLabel = t.access.addressLabel!;
-  const phoneLabel = t.access.phoneLabel!;
-  const hoursLabel = t.access.hoursLabel!;
-  const hoursNote = t.access.hoursNote!;  // 4개 언어 모두 존재 확인
-  const transitLabel = t.access.transitLabel!;
-  const transitDesc = t.access.transitDesc!;  // 4개 언어 모두 존재 확인
-  const parkingLabel = t.access.parkingLabel!;
-  const parkingDesc = t.access.parkingDesc!;  // 4개 언어 모두 존재 확인
-  const kakaoMapLabel = t.access.kakaoMapLabel!;
-  const naverMapLabel = t.access.naverMap!;  // naverMap 4개 언어 모두 존재
-  const copyAddressLabel = t.access.copyAddress!;
-  const copiedLabel = t.access.copiedLabel!;
+  // CONTACT-P4-B: non-null assertion(!) 제거 → optional chaining + nullish coalescing
+  const locationInfo = t.access.locationInfo ?? "";
+  const sectionTitle = t.access.sectionTitle ?? "";
+  const addressLabel = t.access.addressLabel ?? "";
+  const phoneLabel = t.access.phoneLabel ?? "";
+  const hoursLabel = t.access.hoursLabel ?? "";
+  const hoursNote = t.access.hoursNote ?? "";
+  const transitLabel = t.access.transitLabel ?? "";
+  const transitDesc = t.access.transitDesc ?? "";
+  const parkingLabel = t.access.parkingLabel ?? "";
+  const parkingDesc = t.access.parkingDesc ?? "";
+  const kakaoMapLabel = t.access.kakaoMapLabel ?? "카카오맵";
+  const naverMapLabel = t.access.naverMap ?? "네이버지도";
+  const copyAddressLabel = t.access.copyAddress ?? "주소 복사";
+  const copiedLabel = t.access.copiedLabel ?? "복사됨";
 
   return (
     <section ref={sectionRef} id="contact" className="py-16 sm:py-24 star-section-alt">
@@ -217,9 +219,9 @@ export default function ContactSection() {
                     onClick={handleCopyAddress}
                     className="mt-2 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
                     style={{
-                      background: copied ? "#E8F9EF" : "#EEF7F7",
-                      color: copied ? "#03C75A" : "#4A6FA5",
-                      border: `1px solid ${copied ? "#03C75A33" : "#81C7C933"}`,
+                      background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "#EEF7F7",
+                      color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "#4A6FA5",
+                      border: `1px solid ${copied ? "#03C75A33" : copyFailed ? "#EF444433" : "#81C7C933"}`,
                     }}
                   >
                     {copied ? (
@@ -227,6 +229,8 @@ export default function ContactSection() {
                         <Check size={12} />
                         {copiedLabel}
                       </>
+                    ) : copyFailed ? (
+                      <span>직접 복사: {t.access.address}</span>
                     ) : (
                       <>
                         <Copy size={12} />

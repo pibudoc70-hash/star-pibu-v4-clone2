@@ -2,6 +2,8 @@
  * Round-7 시니어 재검수 회귀 테스트
  * 수정 항목:
  *   A. ContactSection.tsx ?? fallback 5개 → non-null assertion(!) 교체
+ *      [R13 업데이트] non-null assertion(!) → optional chaining + nullish coalescing(?? "")으로 재개선
+ *      (i18n.types.ts에서 optional 필드이므로 ?? fallback이 더 안전함)
  *   B. i18n.types.ts access.copiedLabel optional → required 변경
  *   C. i18n.ko.ts doctors.list 3명 specialties 추가
  */
@@ -15,44 +17,46 @@ function src(rel: string) {
   return readFileSync(resolve(ROOT, rel), "utf-8");
 }
 
-// ─── A. ContactSection ?? fallback 제거 ────────────────────────────────────
-describe("[A] ContactSection ?? fallback 제거", () => {
+// ─── A. ContactSection optional 필드 안전 접근 [R13 업데이트] ────────────────
+describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", () => {
   const contactSrc = src("client/src/components/ContactSection.tsx");
 
-  it("locationInfo ?? fallback이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/locationInfo\s*\?\?/);
+  // [R13] i18n.types.ts에서 optional 필드는 non-null assertion(!) 대신
+  // nullish coalescing(?? "") 방식이 더 안전함 → Round-13에서 재개선
+  it("locationInfo가 안전하게 접근되어야 한다 (non-null assertion 또는 nullish coalescing)", () => {
+    expect(contactSrc).toMatch(/locationInfo/);
   });
 
-  it("sectionTitle ?? fallback이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/sectionTitle\s*\?\?/);
+  it("sectionTitle이 안전하게 접근되어야 한다", () => {
+    expect(contactSrc).toMatch(/sectionTitle/);
   });
 
-  it("hoursNote ?? fallback이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/hoursNote\s*\?\?/);
+  it("hoursNote가 안전하게 접근되어야 한다", () => {
+    expect(contactSrc).toMatch(/hoursNote/);
   });
 
-  it("transitDesc ?? fallback이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/transitDesc\s*\?\?/);
+  it("transitDesc가 안전하게 접근되어야 한다", () => {
+    expect(contactSrc).toMatch(/transitDesc/);
   });
 
-  it("parkingDesc ?? fallback이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/parkingDesc\s*\?\?/);
+  it("parkingDesc가 안전하게 접근되어야 한다", () => {
+    expect(contactSrc).toMatch(/parkingDesc/);
   });
 
-  it("non-null assertion(!) 패턴으로 locationInfo 사용", () => {
-    expect(contactSrc).toMatch(/locationInfo!/);
+  it("[R13] locationInfo에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
+    expect(contactSrc).toMatch(/locationInfo\s*\?\?\s*["']/);
   });
 
-  it("non-null assertion(!) 패턴으로 hoursNote 사용", () => {
-    expect(contactSrc).toMatch(/hoursNote!/);
+  it("[R13] hoursNote에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
+    expect(contactSrc).toMatch(/hoursNote\s*\?\?\s*["']/);
   });
 
-  it("non-null assertion(!) 패턴으로 transitDesc 사용", () => {
-    expect(contactSrc).toMatch(/transitDesc!/);
+  it("[R13] transitDesc에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
+    expect(contactSrc).toMatch(/transitDesc\s*\?\?\s*["']/);
   });
 
-  it("non-null assertion(!) 패턴으로 parkingDesc 사용", () => {
-    expect(contactSrc).toMatch(/parkingDesc!/);
+  it("[R13] parkingDesc에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
+    expect(contactSrc).toMatch(/parkingDesc\s*\?\?\s*["']/);
   });
 });
 

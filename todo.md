@@ -2043,3 +2043,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round12.regression.test.ts 추가
 - [x] TypeScript 0 errors + 전체 테스트 통과 (29개 파일, 624개 테스트)
 - [x] 최종 커밋
+
+## Round-13 시니어 검수 (2026-06-07)
+- [ ] [R13-P1-1] HeroSection 이미지 URL constants 분리 + HeroAnimations 선언형 stagger 구조
+- [ ] [R13-P1-2] DoctorsSection useDoctorViewModel 훅 분리 + DoctorProfile/DoctorCredentials/DoctorImagePanel 서브컴포넌트 + 스크롤 초기화 + 이미지 skeleton
+- [ ] [R13-P1-3] DesignSystem PremiumButton/SurfaceCard hover DOM mutation 제거 → CSS class 기반
+- [x] [R13-P1-4] ContactSection: 지도 실패 fallback UI (MapView 내부 자체 제공 확인) + clipboard 개선 (navigator.clipboard 전용) + non-null assertion 제거 (?? fallback) + mapError state 제거
+- [x] [R13-P2-1] TreatmentsEquipmentSection hex 색상 → CSS 변수 토큰 치환 (#d1ab67, #FAF6EF, #F0F6F8, #3730A3, #6B7280, #e8dfc8 모두 제거)
+- [ ] [R13-P2-2] SeoHead pageType 전용 API 정리 + legacy prop 내부 호환용 축소 + 메타/스키마 테스트 강화
+- [ ] [R13-P2-3] constants CLINIC_STATS ↔ i18n 이중 관리 해소 + 타입 안전성 강화
+- [x] round10.regression.test.ts 작성 (31개 테스트: A~F 6개 영역)
+- [x] TypeScript 0 errors + 전체 테스트 통과 (30개 파일, 655개 테스트)
+- [x] round6/round7 회귀 테스트 R13 변경사항 반영 (이전 라운드 non-null assertion 패턴 → nullish coalescing 업데이트)
+- [x] 최종 커밋

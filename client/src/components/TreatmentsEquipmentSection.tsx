@@ -55,13 +55,13 @@ export default function TreatmentsEquipmentSection() {
 
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p className="text-sm tracking-widest mb-3 font-montserrat text-[#d1ab67] font-light" style={{ fontSize: "12px" }}>
+          <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
             TREATMENTS & EQUIPMENT
           </p>
           <h2 className="mb-4 text-gray-800 font-extrabold" style={{ fontSize: "clamp(1.4rem, 5vw, 2.6rem)" }}>
             {tr.title}
           </h2>
-          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[#d1ab67] pt-2">
+          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[var(--color-gold-primary)] pt-2">
             <span className="text-lg">{tr.subtitle}</span>
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function TreatmentsEquipmentSection() {
         {CATEGORIES.find((c) => c.id === activeId) && (
             <div
               key={`content-${activeId}`}
-              className="rounded-2xl mb-8 overflow-hidden bg-[#FAF6EF]"
+              className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)]"
               style={{ animation: "cardFadeIn 0.4s ease both" }}
             >
               <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
@@ -137,8 +137,8 @@ export default function TreatmentsEquipmentSection() {
                         key={`${activeId}-t-${i}`}
                         item={item}
                         index={i}
-                        imgBg={CAT_IMG_BG[activeId] ?? "#F0F6F8"}
-                        catTextColor={CAT_TAB_TEXT[activeId] ?? "#3730A3"}
+                        imgBg={CAT_IMG_BG[activeId] ?? "var(--color-star-mint-pale)"}
+                        catTextColor={CAT_TAB_TEXT[activeId] ?? "var(--color-star-navy)"}
                       />
                     ))
                   )}
@@ -157,9 +157,9 @@ export default function TreatmentsEquipmentSection() {
                       aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
                       className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95"
                       style={{
-                        background: showAll ? "white" : "#d1ab67",
-                        color: showAll ? "#6B7280" : "white",
-                        border: showAll ? "1.5px solid #e8dfc8" : "none",
+                        background: showAll ? "white" : "var(--color-gold-primary)",
+                        color: showAll ? "var(--color-star-text-mid)" : "white",
+                        border: showAll ? "1.5px solid var(--color-gold-light)" : "none",
                       }}
                     >
                       {showAll ? (

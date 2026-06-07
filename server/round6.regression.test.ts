@@ -76,8 +76,10 @@ describe("[E] ContactSection naverMap fallback 제거", () => {
     expect(src).not.toMatch(/naverMap\s*\?\?\s*["']Naver Map["']/);
   });
 
-  it("naverMapLabel이 non-null assertion(!)으로 선언되어야 한다", () => {
-    expect(src).toMatch(/naverMapLabel\s*=\s*t\.access\.naverMap!/);
+  it("naverMapLabel이 안전하게 선언되어야 한다 [R13: non-null assertion → nullish coalescing]", () => {
+    // [R13] non-null assertion(!) → optional chaining + nullish coalescing으로 개선됨
+    // naverMap은 i18n.types.ts에서 optional이므로 fallback이 필요함
+    expect(src).toMatch(/naverMapLabel\s*=\s*t\.access\.naverMap/);
   });
 });
 

@@ -2027,9 +2027,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## Round-12: Luxury Minimal Medical 리디자인 (2026-06-07)
 
-- [ ] [R12-A] 글로벌 디자인 시스템 — index.css 토큰 재정의 (warm white/ivory/champagne gold), 공통 컴포넌트 (SectionHeader, PremiumButton, SurfaceCard, EyebrowLabel, StatItem, CTAGroup)
-- [ ] [R12-B] HeroSection 리디자인 — 정보 밀도 감소, 브랜드 무드 강화, CTA 2개 이하, motion system 적용
-- [ ] [R12-C] DoctorsSection 리디자인 — editorial portrait 레이아웃, 정제된 tab navigation, 정보 우선순위 재구성
-- [ ] [R12-D] TreatmentsEquipmentSection 리디자인 — 큐레이션 쇼케이스, premium tab UI, 카드 밀도 감소
-- [ ] [R12-E] ContactSection 리디자인 — premium concierge 경험, hospitality style 레이아웃
-- [ ] [R12-F] tsc/test 검증 + 체크포인트 + 커밋 해시 보고
+- [x] [R12-A] 글로벌 디자인 시스템 구축 — DesignSystem.tsx 신규 생성 (DS 토큰 객체: color/shadow/radius/motion + EyebrowLabel/SectionHeader/PremiumButton/SurfaceCard/StatItem/CTAGroup 컴포넌트)
+- [x] [R12-B] HeroSection 리디자인 — 시네마틱 오버레이 정제, CTA 2개 단순화, HERO_DELAYS 상수 기반 motion system
+- [x] [R12-C] DoctorsSection 리디자인 — DS 토큰 기반 editorial portrait 레이아웃, 골드 accent 탭 네비게이션
+- [x] [R12-D] TreatmentsEquipmentSection 리디자인 — premium tab UI (골드 pill), 큐레이션 쇼케이스, CategoryTabButton/EquipmentTreatmentCard DS 토큰 기반 업그레이드
+- [x] [R12-E] ContactSection 리디자인 — DS 토큰 기반 premium concierge 경험, 골드 accent 카드, 골드 핀 지도 마커
+- [x] [R12-F] 전체 검증 완료: tsc 오류 0건 + 테스트 564/564 통과 + 체크포인트 저장

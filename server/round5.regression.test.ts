@@ -102,7 +102,11 @@ describe("C. ManagementDevicesSection - 스크롤 버튼 aria-label i18n", () =>
 // D. HeroSection / ContactSection - tel href 상수 사용
 // ─────────────────────────────────────────────────────────────────────────────
 describe("D. HeroSection/ContactSection - tel href CLINIC_TEL 상수", () => {
-  const heroSrc = read("client/src/components/HeroSection.tsx");
+  // [R12] HeroSection 리팩토링으로 CLINIC_TEL 로직이 hero/HeroActions.tsx로 이동
+  const heroSrc = [
+    read("client/src/components/HeroSection.tsx"),
+    read("client/src/components/hero/HeroActions.tsx"),
+  ].join("\n");
   const contactSrc = read("client/src/components/ContactSection.tsx");
 
   it("HeroSection에 CLINIC_TEL이 import되어야 한다", () => {

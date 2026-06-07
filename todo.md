@@ -2024,3 +2024,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 버그 수정: tRPC JSON 파싱 에러 (2026-06-07)
 
 - [x] [버그수정] vite.ts SPA fallback에서 /api/* 경로 제외 — 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환하여 "Unexpected token '<', <!doctype..." JSON 파싱 에러 발생하던 문제 수정
+
+## Round-12 시니어 검수 (2026-06-07)
+
+### P1 — 우선 수정
+- [x] [R12-P1-1] HeroSection 서브컴포넌트 분리 (HeroVisual, HeroCopy, HeroStatsStrip, HeroActions, HeroFloorBadge) + 인라인 스타일/매직 넘버 감소
+- [x] [R12-P1-2] HeroAnimations CSS 변수 기반 선언형 애니메이션 (per-span animationDelay → CSS custom property)
+- [x] [R12-P1-3] DoctorsSection 데이터/표현 분리 (doctors-data.ts 이미 있음 → hook/subcomponent 추가 분리)
+- [x] [R12-P1-4] DesignSystem.tsx 신규 생성 — PremiumButton/SurfaceCard hover class 기반으로 정리 (현재 onMouseEnter DOM mutation 없음 확인됨 → 공용 DS 파일 신규 생성)
+- [x] [R12-P1-5] ContactSection 지도 실패 fallback UI + clipboard 유틸 분리 + 마커 keyboard 접근성 + JSX 서브컴포넌트 분리
+
+### P2 — 다음 우선순위
+- [x] [R12-P2-1] TreatmentsEquipmentSection 직접 hex 색상 → DS 토큰 치환 + dropdown aria 강화
+- [x] [R12-P2-2] SeoHead/seoHelpers locale subset 정책 코드/테스트로 명확히 강제
+- [x] [R12-P2-3] constants CLINIC_STATS ↔ i18n stats 이중 관리 해소
+
+### 검증
+- [x] round12.regression.test.ts 추가
+- [x] TypeScript 0 errors + 전체 테스트 통과 (29개 파일, 624개 테스트)
+- [x] 최종 커밋

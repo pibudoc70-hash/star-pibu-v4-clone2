@@ -109,7 +109,11 @@ describe("[D] 4개 언어 copiedLabel 값 존재", () => {
 
 // ─── E. HeroSection copiedLabel 사용 확인 ─────────────────────────────────
 describe("[E] HeroSection copiedLabel i18n 사용", () => {
-  const heroSrc = src("client/src/components/HeroSection.tsx");
+  // [R12] HeroSection 리팩토링으로 copiedLabel 로직이 hero/HeroActions.tsx로 이동
+  const heroSrc = [
+    src("client/src/components/HeroSection.tsx"),
+    src("client/src/components/hero/HeroActions.tsx"),
+  ].join("\n");
 
   it("HeroSection에서 하드코딩된 已复制 문자열이 없어야 한다", () => {
     expect(heroSrc).not.toMatch(/已复制/);

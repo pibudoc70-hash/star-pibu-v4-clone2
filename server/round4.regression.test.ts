@@ -15,10 +15,12 @@ import path from "path";
 
 const root = path.resolve(__dirname, "..");
 
-const heroSource = readFileSync(
-  path.resolve(root, "client/src/components/HeroSection.tsx"),
-  "utf8"
-);
+// [R12] HeroSection 리팩토링으로 copiedLabel 로직이 hero/HeroActions.tsx로 이동
+// heroSource는 HeroSection + HeroActions 합산으로 검사
+const heroSource = [
+  readFileSync(path.resolve(root, "client/src/components/HeroSection.tsx"), "utf8"),
+  readFileSync(path.resolve(root, "client/src/components/hero/HeroActions.tsx"), "utf8"),
+].join("\n");
 const equipment2DetailSource = readFileSync(
   path.resolve(root, "client/src/pages/Equipment2Detail.tsx"),
   "utf8"

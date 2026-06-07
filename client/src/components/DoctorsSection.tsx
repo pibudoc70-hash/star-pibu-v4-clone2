@@ -3,90 +3,38 @@
  * - 메인 컬러 #d2ac67 (골드)
  * - 카드 선택 + 상세 패널이 하나의 섹션으로 자연스럽게 연결
  * - 고급스러운 레이아웃: 좌측 세로 탭 + 우측 상세 정보
+ *
+ * [R13-P1-2] 뷰모델 로직 분리:
+ * - 상태/핸들러/locale merge → hooks/useDoctorViewModel.ts
+ * - DoctorsSection은 렌더링만 담당
  */
 // [FM-P2-4] React.memo: 의료진 섹션은 언어 변경 시만 리렌더 필요
-import React, { memo, useState, useEffect, useRef, useMemo } from "react";
+import React, { memo } from "react";
 import { ChevronDown, Zap, GraduationCap } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 // [R12-P1-2] 데이터/표현 분리: 의료진 데이터는 lib/doctors-data.ts에서 관리
-import { doctors, GOLD, GOLD_LIGHT, GOLD_MID, DR_JO_IMAGE_DESKTOP_JPG, DR_WOO_IMAGE_DESKTOP_JPG, DR_LEE_IMAGE_DESKTOP_JPG, type Doctor } from "@/lib/doctors-data";
-
-
-const preloadImages = () => {
-  [DR_JO_IMAGE_DESKTOP_JPG, DR_WOO_IMAGE_DESKTOP_JPG, DR_LEE_IMAGE_DESKTOP_JPG].forEach((src) => {
-    const img = new Image();
-    img.src = src;
-  });
-};
+import { doctors, GOLD, GOLD_LIGHT, GOLD_MID } from "@/lib/doctors-data";
+// [R13-P1-2] 뷰모델 훅 import
+import { useDoctorViewModel } from "@/hooks/useDoctorViewModel";
 
 function DoctorsSection() {
-  const [activeDoctor, setActiveDoctor] = useState(0);
-  const [expandedCredentials, setExpandedCredentials] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
-
-  useEffect(() => {
-    preloadImages();
-  }, []);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      if (dx < 0) {
-        setActiveDoctor((prev) => (prev + 1) % doctors.length);
-        setExpandedCredentials(false);
-      } else {
-        setActiveDoctor((prev) => (prev - 1 + doctors.length) % doctors.length);
-        setExpandedCredentials(false);
-      }
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
-  const handleDoctorSelect = (i: number) => {
-    setActiveDoctor(i);
-    setExpandedCredentials(false);
-  };
-
-  const handleImageLoad = (id: number) => {
-    setImagesLoaded((prev) => ({ ...prev, [id]: true }));
-  };
-
   const { t } = useLang();
+  const {
+    mergedDoctors,
+    doctor,
+    activeDoctor,
+    expandedCredentials,
+    handleDoctorSelect,
+    handleImageLoad,
+    toggleCredentials,
+    handleTouchStart,
+    handleTouchEnd,
+  } = useDoctorViewModel(t);
 
   const badgeLabel = t.doctors.badge;
-
-  // [D항목] index 기반 merge → id 기반 find로 전환 (의사 순서 변경 시 불일치 방지)
-  const mergedDoctors = useMemo(() => doctors.map((d) => {
-    const locale = t.doctors.list.find((item) => item.id === d.id);
-    return {
-      ...d,
-      name: locale?.name ?? d.name,
-      title: locale?.title ?? d.title,
-      intro: locale?.intro ?? d.intro,
-      // [R11-A] locale.careers 텍스트만 교체, icon/label은 원본 credentials에서 유지
-      credentials: locale?.careers
-        ? d.credentials.map((cred, i) => ({
-            ...cred,
-            text: locale.careers![i] ?? cred.text,
-          }))
-        : d.credentials,
-      specialties: locale?.specialties ?? d.specialties,
-      badge: badgeLabel,
-    };
-  }), [t.doctors, badgeLabel]);
-  const doctor = mergedDoctors[activeDoctor];
-  const sectionRef = useSectionReveal(60) // [FM-P1-7] 90 → 60;
+  const sectionRef = useSectionReveal(60); // [FM-P1-7] 90 → 60
 
   return (
     <section
@@ -650,7 +598,7 @@ function DoctorsSection() {
                   }}
                 >
                   <button type="button"
-                    onClick={() => setExpandedCredentials(!expandedCredentials)}
+                    onClick={toggleCredentials}
                     aria-expanded={expandedCredentials}
                     aria-label={expandedCredentials
                       ? t.doctors.collapseCredentialsLabel!

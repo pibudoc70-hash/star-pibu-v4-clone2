@@ -34,13 +34,8 @@ import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
-
-// 반응형 이미지 URL (WebP + JPEG 폴백)
-const HERO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp";
-const HERO_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop.jpg";
-const HERO_IMAGE_MOBILE_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile_f9bea0c7.webp";
-const HERO_IMAGE_MOBILE_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
-const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/star_ai_logo_1_73172f49.png";
+// [R13-P1-1] 이미지 URL 상수를 hero/constants.ts로 분리
+import { HERO_IMAGES, HERO_LOGO_IMAGE } from "@/components/hero/constants";
 
 /**
  * [R11-C] 애니메이션 딜레이 매직넘버 → 명시적 상수
@@ -89,12 +84,12 @@ export default function HeroSection() {
         className="absolute inset-0 pointer-events-none"
         style={{ display: "block" }}
       >
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGE_DESKTOP_WEBP} type="image/webp" />
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGE_DESKTOP_JPG} type="image/jpeg" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGE_MOBILE_PORTRAIT_WEBP} type="image/webp" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGE_MOBILE_PORTRAIT_JPG} type="image/jpeg" />
+        <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
+        <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
+        <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
+        <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
         <img
-          src={HERO_IMAGE_DESKTOP_JPG}
+          src={HERO_IMAGES.desktopJpg}
           alt=""
           fetchPriority="high"
           loading="eager"
@@ -144,7 +139,7 @@ export default function HeroSection() {
         >
           <div style={{ position: "relative" }}>
             <OptimizedImage
-              src={LOGO_IMAGE}
+              src={HERO_LOGO_IMAGE}
               alt="스타피부과 로고"
               priority={true}
               width={220}

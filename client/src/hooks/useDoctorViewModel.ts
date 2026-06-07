@@ -1,0 +1,158 @@
+/**
+ * useDoctorViewModel
+ *
+ * [R13-P1-2] DoctorsSection.tsx에서 뷰모델 로직 분리
+ *
+ * 책임:
+ * - 활성 의사 선택 상태 (activeDoctor)
+ * - 학력·경력 펼침/접기 상태 (expandedCredentials)
+ * - 이미지 로드 상태 (imagesLoaded)
+ * - 터치 스와이프 핸들러
+ * - i18n locale merge → mergedDoctors (id 기반, [R11-A] 패턴 유지)
+ * - 현재 선택된 의사 뷰 데이터 (doctor)
+ *
+ * DoctorsSection 컴포넌트는 이 훅의 반환값을 받아 렌더링만 담당한다.
+ */
+import { useState, useEffect, useRef, useMemo } from "react";
+import React from "react";
+import { doctors, type Doctor } from "@/lib/doctors-data";
+import type { I18nContent } from "@/lib/i18n.types";
+
+// ── 타입 ─────────────────────────────────────────────────────────────────────
+
+/** locale merge 후 최종 렌더링에 사용되는 의사 뷰 타입 */
+export interface DoctorViewModel extends Doctor {
+  /** i18n에서 병합된 badge 텍스트 */
+  badge: string;
+}
+
+export interface UseDoctorViewModelReturn {
+  /** locale merge된 의사 목록 */
+  mergedDoctors: DoctorViewModel[];
+  /** 현재 선택된 의사 뷰 데이터 */
+  doctor: DoctorViewModel;
+  /** 현재 선택된 의사 인덱스 */
+  activeDoctor: number;
+  /** 학력·경력 펼침 상태 */
+  expandedCredentials: boolean;
+  /** 이미지 로드 완료 여부 (id → boolean) */
+  imagesLoaded: Record<number, boolean>;
+  /** 의사 탭 선택 핸들러 */
+  handleDoctorSelect: (i: number) => void;
+  /** 이미지 로드 완료 핸들러 */
+  handleImageLoad: (id: number) => void;
+  /** 학력·경력 펼침/접기 토글 */
+  toggleCredentials: () => void;
+  /** 터치 시작 핸들러 */
+  handleTouchStart: (e: React.TouchEvent) => void;
+  /** 터치 종료 핸들러 (스와이프 감지) */
+  handleTouchEnd: (e: React.TouchEvent) => void;
+}
+
+// ── 이미지 프리로드 ──────────────────────────────────────────────────────────
+
+function preloadDoctorImages() {
+  doctors.forEach((d) => {
+    const src = d.image;
+    const img = new Image();
+    img.src = src;
+  });
+}
+
+// ── 훅 ───────────────────────────────────────────────────────────────────────
+
+/**
+ * @param t - useLang()에서 받은 번역 객체
+ */
+export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
+  const [activeDoctor, setActiveDoctor] = useState(0);
+  const [expandedCredentials, setExpandedCredentials] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
+
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  // 이미지 프리로드 (마운트 시 1회)
+  useEffect(() => {
+    preloadDoctorImages();
+  }, []);
+
+  // 의사 전환 시 학력·경력 접기 초기화
+  const handleDoctorSelect = (i: number) => {
+    setActiveDoctor(i);
+    setExpandedCredentials(false);
+  };
+
+  const handleImageLoad = (id: number) => {
+    setImagesLoaded((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const toggleCredentials = () => {
+    setExpandedCredentials((prev) => !prev);
+  };
+
+  // 터치 스와이프 핸들러
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) {
+        setActiveDoctor((prev) => (prev + 1) % doctors.length);
+      } else {
+        setActiveDoctor((prev) => (prev - 1 + doctors.length) % doctors.length);
+      }
+      setExpandedCredentials(false);
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  const badgeLabel = t.doctors.badge;
+
+  // [D항목] index 기반 merge → id 기반 find로 전환 (의사 순서 변경 시 불일치 방지)
+  // [R11-A] locale.careers 텍스트만 교체, icon/label은 원본 credentials에서 유지
+  const mergedDoctors = useMemo<DoctorViewModel[]>(() => {
+    return doctors.map((d) => {
+      const locale = t.doctors.list.find((item: { id: number }) => item.id === d.id);
+      return {
+        ...d,
+        name: locale?.name ?? d.name,
+        title: locale?.title ?? d.title,
+        intro: Array.isArray(locale?.intro)
+          ? locale.intro
+          : locale?.intro
+          ? [locale.intro]
+          : d.intro,
+        credentials: locale?.careers
+          ? d.credentials.map((cred, i) => ({
+              ...cred,
+              text: locale.careers![i] ?? cred.text,
+            }))
+          : d.credentials,
+        specialties: locale?.specialties ?? d.specialties,
+        badge: badgeLabel,
+      };
+    });
+  }, [t.doctors, badgeLabel]);
+
+  const doctor = mergedDoctors[activeDoctor];
+
+  return {
+    mergedDoctors,
+    doctor,
+    activeDoctor,
+    expandedCredentials,
+    imagesLoaded,
+    handleDoctorSelect,
+    handleImageLoad,
+    toggleCredentials,
+    handleTouchStart,
+    handleTouchEnd,
+  };
+}

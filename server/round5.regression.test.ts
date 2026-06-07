@@ -55,16 +55,28 @@ describe("A. TreatmentsEquipmentSection - INITIAL_SHOW + aria-label", () => {
 describe("B. DoctorsSection - useMemo + aria-label", () => {
   const src = read("client/src/components/DoctorsSection.tsx");
 
-  it("useMemo가 import에 포함되어야 한다", () => {
-    expect(src).toMatch(/import.*useMemo.*from ['"]react['"]/);
+  // [R14] useMemo/mergedDoctors 로직이 useDoctorViewModel 훅으로 이전됨
+  it("useMemo가 import에 포함되어야 한다 (또는 훅에서 관리)", () => {
+    const hookSrc = read("client/src/hooks/useDoctorViewModel.ts");
+    const hasMemoInSection = /import.*useMemo.*from ['"']react['"']/.test(src);
+    const hasMemoInHook = /useMemo/.test(hookSrc);
+    expect(hasMemoInSection || hasMemoInHook).toBe(true);
   });
 
-  it("mergedDoctors가 useMemo로 감싸져야 한다", () => {
-    expect(src).toContain("useMemo(() => doctors.map");
+  it("mergedDoctors가 useMemo로 감싸져야 한다 (훅 또는 컴포넌트)", () => {
+    // [R14] DoctorsSection에서 useDoctorViewModel 훅으로 이전됨
+    const hookSrc = read("client/src/hooks/useDoctorViewModel.ts");
+    const hasMemoInSection = src.includes("useMemo(() => doctors.map");
+    const hasMemoInHook = /useMemo/.test(hookSrc) && hookSrc.includes("mergedDoctors");
+    expect(hasMemoInSection || hasMemoInHook).toBe(true);
   });
 
-  it("useMemo 의존성 배열에 t.doctors가 포함되어야 한다", () => {
-    expect(src).toContain("[t.doctors, badgeLabel]");
+  it("useMemo 의존성 배열에 t.doctors가 포함되어야 한다 (훅 또는 컴포넌트)", () => {
+    // [R14] DoctorsSection에서 useDoctorViewModel 훅으로 이전됨
+    const hookSrc = read("client/src/hooks/useDoctorViewModel.ts");
+    const hasDepInSection = src.includes("[t.doctors, badgeLabel]");
+    const hasDepInHook = hookSrc.includes("t.doctors");
+    expect(hasDepInSection || hasDepInHook).toBe(true);
   });
 
   it("탭 버튼에 aria-label이 있어야 한다", () => {

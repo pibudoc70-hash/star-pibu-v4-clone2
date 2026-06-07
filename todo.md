@@ -2056,3 +2056,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TypeScript 0 errors + 전체 테스트 통과 (30개 파일, 655개 테스트)
 - [x] round6/round7 회귀 테스트 R13 변경사항 반영 (이전 라운드 non-null assertion 패턴 → nullish coalescing 업데이트)
 - [x] 최종 커밋
+
+## Round-14 시니어 검수 (2026-06-07)
+- [x] [R14-P1-1] HeroSection 이미지 URL → hero/constants.ts 분리 (HERO_IMAGES 객체 + HERO_LOGO_IMAGE)
+- [x] [R14-P1-2] DoctorsSection useDoctorViewModel 훅 분리 (hooks/useDoctorViewModel.ts, 38개 테스트)
+- [x] round14.regression.test.ts 작성 (38개 테스트: A~B 2개 영역)
+- [x] round5/round9 회귀 테스트 R14 변경사항 반영 (useMemo/mergedDoctors 훅 이전 패턴)
+- [x] TypeScript 0 errors + 전체 테스트 통과 (31 files, 693 tests)
+- [x] 최종 커밋

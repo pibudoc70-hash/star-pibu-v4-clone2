@@ -132,8 +132,12 @@ describe("[D] DoctorsSection.tsx lib/doctors-data.ts import", () => {
   it("DoctorsSection.tsx에 GOLD 인라인 선언이 없어야 한다", () => {
     expect(docSrc).not.toMatch(/const GOLD\s*=/);
   });
-  it("mergedDoctors가 useMemo(() => doctors.map으로 감싸져야 한다", () => {
-    expect(docSrc).toMatch(/useMemo\(\(\)\s*=>\s*doctors\.map/);
+  it("mergedDoctors가 useMemo(() => doctors.map으로 감싸져야 한다 (훅 또는 컴포넌트)", () => {
+    // [R14] DoctorsSection에서 useDoctorViewModel 훅으로 이전됨
+    const hookSrc = src("client/src/hooks/useDoctorViewModel.ts");
+    const hasMemoInSection = /useMemo\(\(\)\s*=>\s*doctors\.map/.test(docSrc);
+    const hasMemoInHook = /useMemo/.test(hookSrc) && hookSrc.includes("mergedDoctors");
+    expect(hasMemoInSection || hasMemoInHook).toBe(true);
   });
 });
 

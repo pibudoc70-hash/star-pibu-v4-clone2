@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { MessageCircle, Calendar, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -25,6 +26,7 @@ export default function FloatingCTA() {
   // useChatConfig 후으로 URL/색상 중앙화 (CTA-P2-2: chatBg/chatColor 인라인 재계산 제거)
   const { reserveUrl, chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
+  const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
 
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
@@ -56,7 +58,7 @@ export default function FloatingCTA() {
         <div className="flex">
           {/* 전화 */}
           <a
-            href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+            href={telHref}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold"
             style={{
               background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
@@ -73,7 +75,7 @@ export default function FloatingCTA() {
           {/* 메신저 (카카오/LINE/WeChat) */}
           <a
             href={chatUrl}
-            target={lang === "zh" ? undefined : "_blank"}
+            target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold relative"
@@ -84,8 +86,8 @@ export default function FloatingCTA() {
             }}
           >
             <MessageCircle size={18} />
-            {wechatCopied ? (lang === "zh" ? "已复制!" : fc.kakao) : fc.kakao}
-            {wechatCopied && lang === "zh" && (
+            {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
+            {wechatCopied && isZH && (
               <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
                 ID: {WECHAT_ID}
               </span>
@@ -120,7 +122,7 @@ export default function FloatingCTA() {
       >
         {/* 전화 - 금색 그라디언트 */}
         <a
-          href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+          href={telHref}
           className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
           style={{
             background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
@@ -136,7 +138,7 @@ export default function FloatingCTA() {
         <div className="relative">
           <a
             href={chatUrl}
-            target={lang === "zh" ? undefined : "_blank"}
+            target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
             className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
@@ -146,9 +148,9 @@ export default function FloatingCTA() {
           >
             <MessageCircle size={22} style={{ color: chatColor }} />
           </a>
-          {wechatCopied && lang === "zh" && (
+          {wechatCopied && isZH && (
             <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
-              已复制 WeChat ID<br />
+              {t.access.copiedLabel}<br />
               <span className="font-bold">{WECHAT_ID}</span>
             </div>
           )}

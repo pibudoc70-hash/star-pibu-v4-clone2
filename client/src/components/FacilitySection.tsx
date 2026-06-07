@@ -231,7 +231,7 @@ export default function FacilitySection() {
                 backdropFilter: "blur(8px)",
                 border: "1px solid rgba(255,255,255,0.2)",
               }}
-              aria-label="Previous slide"
+              aria-label={fc.prevSlideLabel}
             >
               <ChevronLeft size={24} className="text-white" />
             </button>
@@ -244,7 +244,7 @@ export default function FacilitySection() {
                 backdropFilter: "blur(8px)",
                 border: "1px solid rgba(255,255,255,0.2)",
               }}
-              aria-label="Next slide"
+              aria-label={fc.nextSlideLabel}
             >
               <ChevronRight size={24} className="text-white" />
             </button>
@@ -258,7 +258,7 @@ export default function FacilitySection() {
                 backdropFilter: "blur(8px)",
                 border: "1px solid rgba(255,255,255,0.2)",
               }}
-              aria-label={isAutoPlay ? "Pause autoplay" : "Play autoplay"}
+              aria-label={isAutoPlay ? fc.pauseAutoplayLabel : fc.playAutoplayLabel}
             >
               {isAutoPlay ? (
                 <Pause size={18} className="text-white" />
@@ -280,7 +280,7 @@ export default function FacilitySection() {
                     background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
                     cursor: "pointer",
                   }}
-                  aria-label={`Go to slide ${i + 1}`}
+                  aria-label={fc.goToSlideLabel.replace("{n}", String(i + 1))}
                 />
               ))}
             </div>
@@ -330,7 +330,7 @@ export default function FacilitySection() {
                 ref={lightboxCloseRef}
                 onClick={closeLightbox}
                 className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
-                aria-label="Close"
+                 aria-label={fc.closeLightboxLabel}
               >
                 <X size={32} />
               </button>

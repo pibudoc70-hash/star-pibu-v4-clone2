@@ -7,6 +7,7 @@ import { MessageCircle, Youtube, BookOpen, Instagram, Phone, MapPin, Mail, Print
 import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 import { getLocaleBase } from "../../../shared/pathUtils";
+import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 
 const sns = [
   { icon: MessageCircle, label: "KakaoTalk", href: "https://pf.kakao.com/_HNyGC", color: "#FEE500" },
@@ -239,7 +240,7 @@ export default function Footer() {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <a
-              href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+              href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
               className="transition-colors hover:text-white"
               style={{ fontSize: "15px", fontWeight: "600", color: "rgba(255,255,255,0.8)", letterSpacing: "0.02em" }}
             >

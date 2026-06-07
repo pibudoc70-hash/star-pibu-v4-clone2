@@ -201,9 +201,8 @@ export function MapView({
   }, [init]);
 
   const { t } = useLang();
-  // i18n.ts에 4개 언어 모두 정의됨 — fallback 삼항 불필요
-  const mapLabel = t.access.mapViewLabel ?? '카카오맵에서 보기';
-  const mapAddress = t.access.mapAddressShort ?? '부산 서면 아이온시티빌딩 2·4층';
+  const mapLabel = t.access.mapViewLabel;
+  const mapAddress = t.access.mapAddressShort;
 
   if (mapError) {
     return (

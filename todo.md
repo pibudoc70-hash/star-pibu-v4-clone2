@@ -1958,3 +1958,44 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 회귀 테스트 추가: round7.regression.test.ts (20케이스 전체 통과)
 - [x] 전체 검증: TypeScript 0건, 535케이스 전체 통과
 - [x] 최종 커밋 (체크포인트 저장)
+
+## Round-8 시니어 재검수 (2026-06-07)
+
+### P1: 전화번호/WeChat/로딩/alt 하드코딩 제거
+- [ ] P1: FloatingCTA.tsx 전화번호 하드코딩 3곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [ ] P1: WelcomePopup.tsx 전화번호 하드코딩 4곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [ ] P1: Footer.tsx 전화번호 하드코딩 1곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [ ] P1: FloatingCTA.tsx "已复制!" 하드코딩 2곳 → t.access.copiedLabel 교체
+- [ ] P1: Header.tsx "已复制 WeChat ID" 하드코딩 2곳 → i18n 키 교체
+- [ ] P1: SpecialEventSection.tsx 로딩 텍스트 4중 삼항 → t.events.loading 교체
+- [ ] P1: PhilosophySection.tsx 이미지 alt 4중 삼항 → t.about.consultationAlt 키 추가 후 교체
+- [ ] P1/P2: i18n.types.ts teamLabel/mapViewLabel/mapAddressShort optional → required 변경
+- [ ] P1/P2: DoctorsSection.tsx teamLabel ?? "Medical Team" → 단언(!) 교체
+- [ ] P1/P2: Map.tsx mapViewLabel/mapAddressShort ?? fallback → 단언(!) 교체
+- [ ] P2: FacilitySection.tsx 슬라이드 버튼 aria-label 영어 하드코딩 6곳 → i18n 키 추가 후 교체
+- [ ] P2: server/routers.ts 914줄 → server/routers/ 디렉토리 분리 (auth/equipment/reservation/system)
+- [ ] 회귀 테스트 추가 (round8.regression.test.ts)
+- [ ] 전체 검증: TypeScript 0건, test 전체 통과
+- [ ] 최종 커밋
+
+## Round-9 시니어 검수 수정 (전체 14개 항목)
+
+### P0 — 즉시 수정
+- [x] [P0-1] DB 인덱스 추가: guestOtps.phone, reservations.phone/userId/status
+- [x] [P0-2] SMS 하드코딩 전화번호 → CLINIC_TEL 상수 교체 (server/sms.ts:98)
+- [x] [P0-3] ContactSection.tsx innerHTML 다국어 삼항 → i18n.access 키로 교체
+
+### P1 — 이번 스프린트
+- [x] [P1-1] i18n.types.ts youtube 블록 optional 7개 키 → required 승격
+- [x] [P1-2] AdminDashboard.tsx 1597줄 → admin/ 디렉토리 6개 탭으로 분리 (198줄로 감소)
+- [x] [P1-3] ReservationForm.tsx 906줄 → reservation/ 디렉토리 3단계로 분리 (22줄로 감소)
+- [x] [P1-4] HeroSection.tsx 인라인 style 정리 — 의도적 시각 조정값이므로 주석 보강으로 대체 (레이아웃 회귀 위험 방지)
+- [x] [P1-5] import React 불필요 사용 제거 (React 네임스페이스 미사용 2개 파일 제거)
+- [x] [P1-6] Dead code 파일 정리 — App.tsx lazy import로 이미 번들에서 제외됨, 추가 조치 불필요
+- [x] [P1-7] server/routers/admin.ts dynamic import → 정적 import 교체
+
+### P2 — 다음 스프린트
+- [x] [P2-1] guestOtps 만료 레코드 정리 스케줄러 추가 (server/otpCleanup.ts, 6시간 간격)
+- [x] [P2-2] admin.youtube 서브라우터 중복 제거 (youtube.ts 공개 조회만, CRUD는 admin.youtube로 통합)
+- [x] [P2-3] unavailableSlots 라우터 역할 명확화 — schedule(public)과 admin.unavailableSlots(CRUD)로 이미 올바르게 분리됨
+- [x] [P2-4] events/popup/admin/youtube 라우터 테스트 추가 (+25개 신규, 전체 564개 통과)

@@ -29,7 +29,7 @@ export default function AdminYouTube() {
   const { data: videos = [], refetch } = trpc.youtube.getAll.useQuery();
 
   // YouTube 영상 생성
-  const createMutation = trpc.youtube.create.useMutation({
+  const createMutation = trpc.admin.youtube.create.useMutation({
     onSuccess: () => {
       refetch();
       setFormData({ title: '', videoId: '', type: 'video', sortOrder: 0 });
@@ -37,7 +37,7 @@ export default function AdminYouTube() {
   });
 
   // YouTube 영상 수정
-  const updateMutation = trpc.youtube.update.useMutation({
+  const updateMutation = trpc.admin.youtube.update.useMutation({
     onSuccess: () => {
       refetch();
       setEditingId(null);
@@ -46,7 +46,7 @@ export default function AdminYouTube() {
   });
 
   // YouTube 영상 삭제
-  const deleteMutation = trpc.youtube.delete.useMutation({
+  const deleteMutation = trpc.admin.youtube.delete.useMutation({
     onSuccess: () => {
       refetch();
     },

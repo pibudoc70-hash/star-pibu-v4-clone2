@@ -59,6 +59,8 @@ export interface I18nContent {
     desc: string;
     stats: Array<{ num: string; label: string }>;
     values: Array<{ letter: string; title: string; desc: string }>;
+    /** 환자 상담 이미지 alt 텍스트 */
+    consultationAlt: string;
   };
   hours: {
     label: string;
@@ -90,13 +92,24 @@ export interface I18nContent {
     copyAddress?: string;
     copiedLabel: string;  // [R7] optional → required (4개 언어 모두 존재 확인)
     /** Map.tsx 구글맵/카카오맵 보기 레이블 */
-    mapViewLabel?: string;
-    /** Map.tsx 주소 단쳕형 */
-    mapAddressShort?: string;
+    mapViewLabel: string;  // [R8] optional → required (4개 언어 모두 존재 확인)
+    /** Map.tsx 주소 단철형 */
+    mapAddressShort: string;  // [R8] optional → required (4개 언어 모두 존재 확인)
     /** 지도 컨테이너 aria-label */
     mapAriaLabel?: string;
     /** 지도 마커 title */
     mapMarkerTitle?: string;
+    // P0-3: ContactSection.tsx 인라인 4중 삼항 제거 — i18n 키로 중앙화
+    /** 구글맵 마커 팝업: 병원명 */
+    mapPopupClinicName: string;
+    /** 구글맵 마커 팝업: 주소 1줄 */
+    mapPopupAddrLine1: string;
+    /** 구글맵 마커 팝업: 주소 2줄 (건물명 등) */
+    mapPopupAddrLine2: string;
+    /** 구글맵 마커 팝업: 지하철 출구 정보 */
+    mapPopupExitLabel: string;
+    /** 구글맵 마커 팝업: 도보 시간 */
+    mapPopupWalkLabel: string;
   };
   doctors: {
     label: string;
@@ -125,7 +138,7 @@ export interface I18nContent {
     /** 모바일 스와이프 힌트 */
     swipeHint: string;
     /** 데스크탑 좌측 레일 아이브로우 (예: "Medical Team") */
-    teamLabel?: string;
+    teamLabel: string;  // [R8] optional → required (4개 언어 모두 존재 확인)
     /** 의사 탭 버튼 aria-label (예: "{name} 의사 선택") */
     selectDoctorLabel?: string;
     /** 자격증 확장 버튼 aria-label */
@@ -240,6 +253,18 @@ export interface I18nContent {
     highlights: Array<{ label: string }>;
     images: Array<{ label: string; desc: string }>;
     zoomHint: string;
+    /** 슬라이드 이전 버튼 aria-label */
+    prevSlideLabel: string;
+    /** 슬라이드 다음 버튼 aria-label */
+    nextSlideLabel: string;
+    /** 자동재생 일시정지 버튼 aria-label */
+    pauseAutoplayLabel: string;
+    /** 자동재생 시작 버튼 aria-label */
+    playAutoplayLabel: string;
+    /** 슬라이드 이동 버튼 aria-label ({n} 치환) */
+    goToSlideLabel: string;
+    /** 라이트박스 닫기 버튼 aria-label */
+    closeLightboxLabel: string;
   };
   events: {
     eyebrow: string;
@@ -327,14 +352,14 @@ export interface I18nContent {
     shorts: string;
     visitChannel: string;
     close: string;
-    // P1 i18n 추가 (optional — 미설정 시 컴포넌트 fallback 문자열 사용)
-    loadingLabel?: string;
-    errorLabel?: string;
-    errorMessage?: string;
-    retry?: string;
-    playVideo?: string;
-    playShorts?: string;
-    closeModal?: string;
+    // P1-1: optional → required 승격 — 4개 언어 모두 값 쳄워져 있음 확인
+    loadingLabel: string;
+    errorLabel: string;
+    errorMessage: string;
+    retry: string;
+    playVideo: string;
+    playShorts: string;
+    closeModal: string;
   };
   reservation: {
     sectionTitle: string;

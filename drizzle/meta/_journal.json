@@ -113,6 +113,13 @@
       "when": 1780526195607,
       "tag": "0015_blue_black_bolt",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1780791247556,
+      "tag": "0016_thick_black_tom",
+      "breakpoints": true
     }
   ]
 }

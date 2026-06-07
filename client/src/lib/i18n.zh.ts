@@ -37,6 +37,7 @@ export const zh: I18nContent = {
       { letter: "A", title: "Attractive Atmosphere", desc: "通过预约制减少等候时间，提供只需专注于治疗的舒适环境。" },
       { letter: "R", title: "Responsibility", desc: "认真进行治疗说明和预后观察，直到您对结果满意为止。" },
     ],
+    consultationAlt: "STAR皮肤科患者和诊",
   },
   hours: {
     label: "诊疗时间",
@@ -74,6 +75,11 @@ export const zh: I18nContent = {
     mapAddressShort: "釜山西面 爱恩城大厦 2·4楼",
     mapAriaLabel: "星皮肤科位置地图 - 釜山西面爱恩城大厦 4楼",
     mapMarkerTitle: "星皮肤科 西面爱恩城",
+    mapPopupClinicName: "星皮肤科",
+    mapPopupAddrLine1: "釜山镇区西面路74号",
+    mapPopupAddrLine2: "爱恩城大厨4层",
+    mapPopupExitLabel: "5·7号出口",
+    mapPopupWalkLabel: "步行2分钟",
   },
   doctors: {
     label: "医生介绍",
@@ -324,6 +330,12 @@ export const zh: I18nContent = {
       { label: "等候区详情", desc: "舒适的休息区" },
     ],
     zoomHint: "点击图像放大",
+    prevSlideLabel: "上一张幻灯片",
+    nextSlideLabel: "下一张幻灯片",
+    pauseAutoplayLabel: "暂停自动播放",
+    playAutoplayLabel: "开始自动播放",
+    goToSlideLabel: "跳转到第{n}张幻灯片",
+    closeLightboxLabel: "关闭图像",
   },
   events: {
     eyebrow: "活动",

@@ -255,7 +255,7 @@ function DoctorsSection() {
                   className="font-montserrat tracking-[0.3em] uppercase mb-3"
                   style={{ color: '#af9e74', fontWeight: 300, fontSize: "0.84rem", letterSpacing: "0.3em" }}
                 >
-                  {t.doctors.teamLabel ?? "Medical Team"}
+                  {t.doctors.teamLabel}
                 </div>
                 <div
                   style={{

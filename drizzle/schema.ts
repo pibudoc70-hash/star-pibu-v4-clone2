@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint, index } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -23,7 +23,11 @@ export const guestOtps = mysqlTable("guestOtps", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   attemptCount: int("attemptCount").notNull().default(0),
   lockedUntil: bigint("lockedUntil", { mode: "number" }),
-});
+}, (table) => ({
+  // P0-1: OTP 레이트리밋 쿼리 (WHERE phone = ? AND expiresAt > ?) 성능 최적화
+  phoneIdx: index("guestOtps_phone_idx").on(table.phone),
+  phoneExpiresIdx: index("guestOtps_phone_expires_idx").on(table.phone, table.expiresAt),
+}));
 export type GuestOtp = typeof guestOtps.$inferSelect;
 export type InsertGuestOtp = typeof guestOtps.$inferInsert;
 
@@ -42,7 +46,13 @@ export const reservations = mysqlTable("reservations", {
   adminNote: text("adminNote"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  // P0-1: 예약 조회 성능 최적화 (회원 예약 목록, 전화번호 조회, 상태별 필터)
+  userIdIdx: index("reservations_userId_idx").on(table.userId),
+  phoneIdx: index("reservations_phone_idx").on(table.phone),
+  statusIdx: index("reservations_status_idx").on(table.status),
+  userIdStatusIdx: index("reservations_userId_status_idx").on(table.userId, table.status),
+}));
 export type Reservation = typeof reservations.$inferSelect;
 export type InsertReservation = typeof reservations.$inferInsert;
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 import { useClinicStats } from '@/hooks/useClinicStats';

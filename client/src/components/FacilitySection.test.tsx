@@ -1,6 +1,7 @@
 /**
  * FacilitySection Tests
  * Tests focus on DOM structure and aria attributes rather than CSS-dependent visibility.
+ * aria-label values use Korean i18n strings (i18n.ko.ts) — Round-8 리팩터
  */
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
@@ -58,32 +59,32 @@ describe("FacilitySection", () => {
   it("renders 6 slide indicator buttons", () => {
     renderWithLang(<FacilitySection />);
     const slideButtons = screen.getAllByRole("button").filter(
-      (btn) => btn.getAttribute("aria-label")?.startsWith("Go to slide")
+      (btn) => btn.getAttribute("aria-label")?.match(/\d+번 슬라이드로 이동/)
     );
     expect(slideButtons).toHaveLength(6);
   });
 
   it("renders navigation buttons with correct aria labels", () => {
     renderWithLang(<FacilitySection />);
-    expect(screen.getByLabelText("Previous slide")).toBeInTheDocument();
-    expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+    expect(screen.getByLabelText("이전 슬라이드")).toBeInTheDocument();
+    expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
   });
 
   it("renders play/pause button with correct initial aria label", () => {
     renderWithLang(<FacilitySection />);
-    expect(screen.getByLabelText("Pause autoplay")).toBeInTheDocument();
+    expect(screen.getByLabelText("자동 재생 일시정지")).toBeInTheDocument();
   });
 
   it("renders all 6 slide indicator buttons with correct aria labels", () => {
     renderWithLang(<FacilitySection />);
     for (let i = 1; i <= 6; i++) {
-      expect(screen.getByLabelText(`Go to slide ${i}`)).toBeInTheDocument();
+      expect(screen.getByLabelText(`${i}번 슬라이드로 이동`)).toBeInTheDocument();
     }
   });
 
   it("navigates to next slide when next button is clicked", () => {
     renderWithLang(<FacilitySection />);
-    const nextButton = screen.getByLabelText("Next slide");
+    const nextButton = screen.getByLabelText("다음 슬라이드");
     act(() => {
       fireEvent.click(nextButton);
     });
@@ -93,7 +94,7 @@ describe("FacilitySection", () => {
 
   it("navigates to previous slide when previous button is clicked", () => {
     renderWithLang(<FacilitySection />);
-    const prevButton = screen.getByLabelText("Previous slide");
+    const prevButton = screen.getByLabelText("이전 슬라이드");
     act(() => {
       fireEvent.click(prevButton);
     });
@@ -103,134 +104,134 @@ describe("FacilitySection", () => {
   it("navigates directly to slide when indicator is clicked", () => {
     renderWithLang(<FacilitySection />);
     const slideButtons = screen.getAllByRole("button").filter(
-      (btn) => btn.getAttribute("aria-label")?.startsWith("Go to slide")
+      (btn) => btn.getAttribute("aria-label")?.match(/\d+번 슬라이드로 이동/)
     );
     act(() => {
       fireEvent.click(slideButtons[2]!);
     });
     // All indicators should still be present
-    expect(screen.getByLabelText("Go to slide 3")).toBeInTheDocument();
+    expect(screen.getByLabelText("3번 슬라이드로 이동")).toBeInTheDocument();
   });
 
   it("wraps around when navigating past the last slide", () => {
     renderWithLang(<FacilitySection />);
     const slideButtons = screen.getAllByRole("button").filter(
-      (btn) => btn.getAttribute("aria-label")?.startsWith("Go to slide")
+      (btn) => btn.getAttribute("aria-label")?.match(/\d+번 슬라이드로 이동/)
     );
     // Go to last slide
     act(() => { fireEvent.click(slideButtons[5]!); });
     // Click next to wrap
-    const nextButton = screen.getByLabelText("Next slide");
+    const nextButton = screen.getByLabelText("다음 슬라이드");
     act(() => { fireEvent.click(nextButton); });
     // Component should still be functional
-    expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+    expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
   });
 
   it("wraps around when navigating before the first slide", () => {
     renderWithLang(<FacilitySection />);
-    const prevButton = screen.getByLabelText("Previous slide");
+    const prevButton = screen.getByLabelText("이전 슬라이드");
     act(() => { fireEvent.click(prevButton); });
-    expect(screen.getByLabelText("Previous slide")).toBeInTheDocument();
+    expect(screen.getByLabelText("이전 슬라이드")).toBeInTheDocument();
   });
 
   it("toggles autoplay when play/pause button is clicked", () => {
     renderWithLang(<FacilitySection />);
-    // Initially shows "Pause autoplay"
-    const pauseButton = screen.getByLabelText("Pause autoplay");
+    // Initially shows "자동 재생 일시정지"
+    const pauseButton = screen.getByLabelText("자동 재생 일시정지");
     expect(pauseButton).toBeInTheDocument();
-    
+
     act(() => { fireEvent.click(pauseButton); });
-    
-    // After click, should show "Play autoplay"
-    expect(screen.getByLabelText("Play autoplay")).toBeInTheDocument();
+
+    // After click, should show "자동 재생 시작"
+    expect(screen.getByLabelText("자동 재생 시작")).toBeInTheDocument();
   });
 
   it("auto-advances slides every 5 seconds when autoplay is enabled", () => {
     renderWithLang(<FacilitySection />);
     // Autoplay is enabled by default
-    expect(screen.getByLabelText("Pause autoplay")).toBeInTheDocument();
-    
+    expect(screen.getByLabelText("자동 재생 일시정지")).toBeInTheDocument();
+
     act(() => { vi.advanceTimersByTime(5000); });
-    
+
     // Component should still be functional after timer advance
-    expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+    expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
   });
 
   it("stops auto-advancing when autoplay is paused", () => {
     renderWithLang(<FacilitySection />);
-    const pauseButton = screen.getByLabelText("Pause autoplay");
+    const pauseButton = screen.getByLabelText("자동 재생 일시정지");
     act(() => { fireEvent.click(pauseButton); });
-    
-    // Now shows "Play autoplay"
-    expect(screen.getByLabelText("Play autoplay")).toBeInTheDocument();
-    
+
+    // Now shows "자동 재생 시작"
+    expect(screen.getByLabelText("자동 재생 시작")).toBeInTheDocument();
+
     act(() => { vi.advanceTimersByTime(5000); });
-    
-    // Should still show "Play autoplay" (not auto-resumed)
-    expect(screen.getByLabelText("Play autoplay")).toBeInTheDocument();
+
+    // Should still show "자동 재생 시작" (not auto-resumed)
+    expect(screen.getByLabelText("자동 재생 시작")).toBeInTheDocument();
   });
 
   it("stops auto-advancing when hovering over carousel", () => {
     renderWithLang(<FacilitySection />);
-    const carousel = screen.getByLabelText("Previous slide").closest("div")?.parentElement;
-    
+    const carousel = screen.getByLabelText("이전 슬라이드").closest("div")?.parentElement;
+
     if (carousel) {
       act(() => { fireEvent.mouseEnter(carousel); });
       act(() => { vi.advanceTimersByTime(5000); });
       // Component should still be functional
-      expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+      expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
     }
   });
 
   it("resumes auto-advancing when mouse leaves carousel", () => {
     renderWithLang(<FacilitySection />);
-    const carousel = screen.getByLabelText("Previous slide").closest("div")?.parentElement;
-    
+    const carousel = screen.getByLabelText("이전 슬라이드").closest("div")?.parentElement;
+
     if (carousel) {
       act(() => { fireEvent.mouseEnter(carousel); });
       act(() => { fireEvent.mouseLeave(carousel); });
       act(() => { vi.advanceTimersByTime(5000); });
-      expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+      expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
     }
   });
 
   it("handles touch swipe to next slide", () => {
     renderWithLang(<FacilitySection />);
-    const carousel = screen.getByLabelText("Previous slide").closest("div")?.parentElement;
-    
+    const carousel = screen.getByLabelText("이전 슬라이드").closest("div")?.parentElement;
+
     if (carousel) {
       act(() => {
         fireEvent.touchStart(carousel, { touches: [{ clientX: 100 }] });
         fireEvent.touchEnd(carousel, { changedTouches: [{ clientX: 50 }] });
       });
-      expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+      expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
     }
   });
 
   it("handles touch swipe to previous slide", () => {
     renderWithLang(<FacilitySection />);
-    const carousel = screen.getByLabelText("Previous slide").closest("div")?.parentElement;
-    
+    const carousel = screen.getByLabelText("이전 슬라이드").closest("div")?.parentElement;
+
     if (carousel) {
       act(() => {
         fireEvent.touchStart(carousel, { touches: [{ clientX: 50 }] });
         fireEvent.touchEnd(carousel, { changedTouches: [{ clientX: 100 }] });
       });
-      expect(screen.getByLabelText("Previous slide")).toBeInTheDocument();
+      expect(screen.getByLabelText("이전 슬라이드")).toBeInTheDocument();
     }
   });
 
   it("ignores small touch movements", () => {
     renderWithLang(<FacilitySection />);
-    const carousel = screen.getByLabelText("Previous slide").closest("div")?.parentElement;
-    
+    const carousel = screen.getByLabelText("이전 슬라이드").closest("div")?.parentElement;
+
     if (carousel) {
       act(() => {
         fireEvent.touchStart(carousel, { touches: [{ clientX: 100 }] });
         fireEvent.touchEnd(carousel, { changedTouches: [{ clientX: 95 }] });
       });
       // Component should still be functional
-      expect(screen.getByLabelText("Next slide")).toBeInTheDocument();
+      expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
     }
   });
 });

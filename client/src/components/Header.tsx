@@ -10,7 +10,6 @@
  * 구조 분해 (2026-06-06):
  *   - 상태/핸들러: @/hooks/useHeaderState
  */
-import React from "react";
 import {
   Menu, X, Globe, ChevronDown, MoreHorizontal,
 } from "lucide-react";
@@ -292,7 +291,7 @@ export default function Header() {
                   className="absolute bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg"
                   style={{ top: "calc(100% + 8px)", left: "0", zIndex: 50 }}
                 >
-                  已复制 WeChat ID: <span className="font-bold">{WECHAT_ID}</span>
+                  {t.access.copiedLabel}: <span className="font-bold">{WECHAT_ID}</span>
                 </div>
               )}
             </div>
@@ -526,7 +525,7 @@ export default function Header() {
                     className="absolute bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg"
                     style={{ top: "-40px", left: "0", zIndex: 50 }}
                   >
-                    已复制 WeChat ID: <span className="font-bold">{WECHAT_ID}</span>
+                    {t.access.copiedLabel}: <span className="font-bold">{WECHAT_ID}</span>
                   </div>
                 )}
               </div>

@@ -37,6 +37,7 @@ export const ja: I18nContent = {
       { letter: "A", title: "Attractive Atmosphere", desc: "予約制により待ち時間を短縮し、治療のみに集中できる心地よい環境を提供します。" },
       { letter: "R", title: "Responsibility", desc: "治療の説明と経過観察に責任感を持ち、結果にご満足いただけるまでともに歩みます。" },
     ],
+    consultationAlt: "スター皮膚科 患者カウンセリング",
   },
   hours: {
     label: "診療時間",
@@ -74,6 +75,11 @@ export const ja: I18nContent = {
     mapAddressShort: "釜山西面 アイオンシティビル 2・4F",
     mapAriaLabel: "スター皮膚科の場所地図 - 釜山西面 アイオンシティビル4F",
     mapMarkerTitle: "スター皮膚科 西面アイオンシティ",
+    mapPopupClinicName: "スター皮膚科",
+    mapPopupAddrLine1: "釜山镇区西面路74",
+    mapPopupAddrLine2: "アイオンシティビル4F",
+    mapPopupExitLabel: "5·7番出口",
+    mapPopupWalkLabel: "徒歩2分",
   },
   doctors: {
     label: "医師紹介",
@@ -324,6 +330,12 @@ export const ja: I18nContent = {
       { label: "待合室詳細", desc: "快適な休息スペース" },
     ],
     zoomHint: "画像をクリックして拡大表示",
+    prevSlideLabel: "前のスライド",
+    nextSlideLabel: "次のスライド",
+    pauseAutoplayLabel: "自動再生を一時停止",
+    playAutoplayLabel: "自動再生を開始",
+    goToSlideLabel: "{n}枚目のスライドへ移動",
+    closeLightboxLabel: "画像を閉じる",
   },
   events: {
     eyebrow: "イベント",

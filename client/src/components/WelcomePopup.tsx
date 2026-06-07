@@ -10,6 +10,7 @@ import { X, MessageCircle, Phone, Calendar } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 import OptimizedImage from "@/components/OptimizedImage";
 
 interface PriceItem {
@@ -243,8 +244,9 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
   const { t, lang } = useLang();
   const wp = t.welcomePopup;
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
-  // 언어별 메신저 라벨
-  const messengerLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat with us" : "카카오톡 상담";
+  const messengerLabel = wp.cta_kakao;
+  const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
+  const telDisplay = isZH || isJA ? CLINIC_TEL_INTL : CLINIC_TEL;
 
   return (
     <div
@@ -368,10 +370,10 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
             <MessageCircle size={16} />{messengerLabel}
           </a>
           <div className="flex gap-2">
-            <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+            <a href={telHref}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center"
               style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />{lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
+              <Phone size={13} />{telDisplay}
             </a>
             <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center text-white"
@@ -396,7 +398,9 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
   const { t, lang } = useLang();
   const wp = t.welcomePopup;
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
-  const messengerLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat with us" : "카카오톡 상담";
+  const messengerLabel = wp.cta_kakao;
+  const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
+  const telDisplay = isZH || isJA ? CLINIC_TEL_INTL : CLINIC_TEL;
 
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
@@ -492,10 +496,10 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
             <MessageCircle size={16} />{messengerLabel}
           </a>
           <div className="flex gap-2">
-            <a href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
+            <a href={telHref}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-80"
               style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />{lang === "ko" ? "051-818-2300" : "+82-51-818-2300"}
+              <Phone size={13} />{telDisplay}
             </a>
             <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
               className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-90 text-white"

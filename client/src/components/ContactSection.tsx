@@ -162,48 +162,13 @@ export default function ContactSection() {
                   });
                 }
 
-                // CONTACT-P1-B: 언어별 마커 팝업 텍스트
-                const popupLang = lang;
-                const clinicName =
-                  popupLang === "en"
-                    ? "Star Dermatology"
-                    : popupLang === "ja"
-                      ? "スター皮膚科"
-                      : popupLang === "zh"
-                        ? "星皮肤科"
-                        : "스타피부과의원";
-                const addrLine1 =
-                  popupLang === "en"
-                    ? "74 Seomyeon-ro, Busanjin-gu"
-                    : popupLang === "ja"
-                      ? "釜山鎮区西面路74"
-                      : popupLang === "zh"
-                        ? "釜山镇区西面路74号"
-                        : "부산진구 서면로 74";
-                const addrLine2 =
-                  popupLang === "en"
-                    ? "Ion City Bldg 4F"
-                    : popupLang === "ja"
-                      ? "アイオンシティビル4F"
-                      : popupLang === "zh"
-                        ? "爱恩城大厦4层"
-                        : "아이온시티빌딩 4층(접수·진료)";
-                const exitLabel =
-                  popupLang === "en"
-                    ? "Exit 5·7"
-                    : popupLang === "ja"
-                      ? "5·7番出口"
-                      : popupLang === "zh"
-                        ? "5·7号出口"
-                        : "서면역 5·7번 출구";
-                const walkLabel =
-                  popupLang === "en"
-                    ? "2 min walk"
-                    : popupLang === "ja"
-                      ? "徒歩2分"
-                      : popupLang === "zh"
-                        ? "步行2分钟"
-                        : "도보 2분";
+                // CONTACT-P1-B (P0-3 리팩터): 언어별 마커 팝업 텍스트
+                // 인라인 4중 삼항 제거 — i18n.access.mapPopup* 키 사용
+                const clinicName = t.access.mapPopupClinicName;
+                const addrLine1 = t.access.mapPopupAddrLine1;
+                const addrLine2 = t.access.mapPopupAddrLine2;
+                const exitLabel = t.access.mapPopupExitLabel;
+                const walkLabel = t.access.mapPopupWalkLabel;
 
                 const pinEl = document.createElement("div");
                 pinEl.style.cssText = "position:relative;cursor:pointer;";

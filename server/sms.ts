@@ -1,6 +1,8 @@
 /**
  * SMS Service - Manus 내장 API를 사용한 SMS 발송
  */
+// P0-2: 전화번호 하드코딩 제거 — CLINIC_TEL 상수로 중앙 관리
+import { CLINIC_TEL } from "../client/src/lib/constants";
 
 export interface SMSOptions {
   phone: string;
@@ -95,5 +97,5 @@ export function getReservationCancelledSMS(data: {
   patientName: string;
   reservationId: number;
 }): string {
-  return `[STAR 피부과] ${data.patientName}님의 예약이 취소되었습니다. 문의: 051-818-2300 (예약번호: #${data.reservationId})`;
+  return `[STAR 피부과] ${data.patientName}님의 예약이 취소되었습니다. 문의: ${CLINIC_TEL} (예약번호: #${data.reservationId})`;
 }

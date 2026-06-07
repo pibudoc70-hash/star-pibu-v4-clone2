@@ -37,6 +37,7 @@ export const en: I18nContent = {
       { letter: "A", title: "Attractive Atmosphere", desc: "Our appointment-based system minimizes waiting time, providing a comfortable environment where you can focus solely on your treatment." },
       { letter: "R", title: "Responsibility", desc: "We take full responsibility for treatment explanations and follow-up care, staying with you until you are completely satisfied with the results." },
     ],
+    consultationAlt: "STAR Dermatology patient consultation",
   },
   hours: {
     label: "Hours",
@@ -74,6 +75,11 @@ export const en: I18nContent = {
     mapAddressShort: "Seomyeon, Busan – Ion City Bldg, 2F & 4F",
     mapAriaLabel: "STAR Dermatology location map - Ion City Building 4F, Seomyeon, Busan",
     mapMarkerTitle: "STAR Dermatology Seomyeon Ion City",
+    mapPopupClinicName: "Star Dermatology",
+    mapPopupAddrLine1: "74 Seomyeon-ro, Busanjin-gu",
+    mapPopupAddrLine2: "Ion City Bldg 4F",
+    mapPopupExitLabel: "Exit 5·7",
+    mapPopupWalkLabel: "2 min walk",
   },
   doctors: {
     label: "Our Doctors",
@@ -324,6 +330,12 @@ export const en: I18nContent = {
       { label: "Waiting Area Detail", desc: "Comfortable rest space" },
     ],
     zoomHint: "Click image to zoom",
+    prevSlideLabel: "Previous slide",
+    nextSlideLabel: "Next slide",
+    pauseAutoplayLabel: "Pause autoplay",
+    playAutoplayLabel: "Play autoplay",
+    goToSlideLabel: "Go to slide {n}",
+    closeLightboxLabel: "Close image",
   },
   events: {
     eyebrow: "Events",

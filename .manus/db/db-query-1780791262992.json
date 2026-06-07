@@ -1,0 +1,9 @@
+{
+  "query": "CREATE INDEX `guestOtps_phone_idx` ON `guestOtps` (`phone`);\nCREATE INDEX `guestOtps_phone_expires_idx` ON `guestOtps` (`phone`,`expiresAt`);\nCREATE INDEX `reservations_userId_idx` ON `reservations` (`userId`);\nCREATE INDEX `reservations_phone_idx` ON `reservations` (`phone`);\nCREATE INDEX `reservations_status_idx` ON `reservations` (`status`);\nCREATE INDEX `reservations_userId_status_idx` ON `reservations` (`userId`,`status`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute CREATE INDEX `guestOtps_phone_idx` ON `guestOtps` (`phone`);\nCREATE INDEX `guestOtps_phone_expires_idx` ON `guestOtps` (`phone`,`expiresAt`);\nCREATE INDEX `reservations_userId_idx` ON `reservations` (`userId`);\nCREATE INDEX `reservations_phone_idx` ON `reservations` (`phone`);\nCREATE INDEX `reservations_status_idx` ON `reservations` (`status`);\nCREATE INDEX `reservations_userId_status_idx` ON `reservations` (`userId`,`status`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 4564
+}

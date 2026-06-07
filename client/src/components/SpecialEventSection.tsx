@@ -59,7 +59,7 @@ function SectionHeader({ lang }: { lang: string }) {
 
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
 export default function SpecialEventSection() {
-  const { lang } = useLang();
+  const { lang, t } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
   const { data: specialEvents = [], isLoading } = trpc.events.special.useQuery({ lang });
 
@@ -69,7 +69,7 @@ export default function SpecialEventSection() {
         <div className="container">
           <SectionHeader lang={lang} />
           <p className="text-center text-lg text-gold">
-            {lang === "en" ? "Loading..." : lang === "ja" ? "読み込み中..." : lang === "zh" ? "加载中..." : "로딩 중..."}
+            {t.events.loading}
           </p>
         </div>
       </section>

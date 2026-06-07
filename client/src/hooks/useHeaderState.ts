@@ -54,7 +54,7 @@ export function useHeaderState() {
   ];
   const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
 
-  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
+  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH, phoneHref, phoneDisplay } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
   const chatUrl = isZH ? "#" : rawChatUrl;
 
@@ -287,6 +287,7 @@ export function useHeaderState() {
     // 데이터
     t, lang, langOptions, currentLangOption,
     chatUrl, reserveUrl, chatBg, chatColor, WECHAT_ID,
+    phoneHref, phoneDisplay, isZH,
     primaryNav, secondaryNav,
     isHome,
     // Refs

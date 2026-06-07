@@ -6,7 +6,7 @@
 import React from "react";
 import {
   Star, Zap, Eye, Heart, Sun, Microscope, Droplets, Pill,
-  Leaf, Wind, Circle, Layers, Footprints,
+  Leaf, Wind, Circle, Layers, Footprints, Dna,
 } from "lucide-react";
 import type { Category } from "@/types/treatment";
 
@@ -24,6 +24,7 @@ export const CATEGORY_ICON_MAP: Record<string, React.ComponentType<{ size?: numb
   fungus:      Footprints,
   vitiligo:    Circle,
   psoriasis:   Layers,
+  stem_cell:   Dna,
 };
 
 export const CATEGORIES: Category[] = [
@@ -92,6 +93,11 @@ export const CATEGORIES: Category[] = [
     descEn: "Effective treatments for wrinkle improvement and facial contouring. Precise micro-dosing for natural results with same-day return to daily activities.",
     descJa: "しわ改善と顔のライン矯正に効果的な施術です。自然な結果のために少量ずつ精密に施術し、当日日常復帰が可能です。",
     descZh: "有效改善皱纹和面部轮廓的治疗。精准微量注射，效果自然，当天即可恢复日常生活。" },
+  { id: "stem_cell",  label: "줄기세포 치료",        labelEn: "STEM CELL",     labelJa: "幹細胞治療",          labelZh: "干细胞治疗",
+    desc: "자신의 혈액·지방에서 추출한 줄기세포를 피부에 직접 주사하는 자가세포 치료입니다. 이상반응 위험이 낮고 피부 재생·탄력 개선 효과를 기대할 수 있습니다.",
+    descEn: "Autologous cell therapy that directly injects stem cells extracted from your own blood or fat. Low risk of adverse reactions with expected skin regeneration and elasticity improvement.",
+    descJa: "自分の血液・脂肪から抽出した幹細胞を皮膚に直接注射する自家細胞治療。異常反応リスクが低く、皮膚再生・弾力改善効果が期待できます。",
+    descZh: "将从自身血液或脂肪中提取的干细胞直接注射到皮肤的自体细胞疗法。不良反应风险低，可期待皮肤再生和弹力改善效果。" },
 ];
 
 /** 카테고리 label 언어별 선택 헬퍼 */
@@ -118,6 +124,7 @@ export const CAT_IMG_BG: Record<string, string> = {
   acne_laser: "#FFF0F0",
   vitiligo:   "#F0FFF4",
   psoriasis:  "#FFF8F0",
+  stem_cell:  "#F0F4FF",
 };
 
 /** 카테고리별 탭 활성 텍스트 색상 */
@@ -135,6 +142,7 @@ export const CAT_TAB_TEXT: Record<string, string> = {
   acne_laser: "#B91C1C",
   vitiligo:   "#166534",
   psoriasis:  "#9A3412",
+  stem_cell:  "#4338CA",
 };
 
 /** 상세 페이지가 있는 시술 slug 매핑 */

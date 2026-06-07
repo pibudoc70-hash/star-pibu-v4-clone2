@@ -225,22 +225,38 @@ export default function HeroSection() {
         {/* 로고 */}
         <div
           className="hero-fade"
-          style={{ animationDelay: "0s", marginBottom: "clamp(0.5rem, 2vh, 1.25rem)" }}
+          style={{ animationDelay: "0s", marginBottom: "clamp(0.5rem, 2vh, 1.25rem)", display: "flex", justifyContent: "center" }}
         >
-          <OptimizedImage
-            src={LOGO_IMAGE}
-            alt="스타피부과 로고"
-            priority={true}
-            width={200}
-            height={200}
-            style={{
-              height: "clamp(88px, 22vw, 160px)",
-              width: "clamp(88px, 22vw, 160px)",
-              objectFit: "contain",
-              display: "block",
-              margin: "0 auto",
-            }}
-          />
+          <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            {/* 배경 glow halo */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: "-20px",
+                borderRadius: "50%",
+                background: "radial-gradient(ellipse at center, rgba(245,215,142,0.55) 0%, rgba(201,168,76,0.28) 45%, transparent 72%)",
+                filter: "blur(14px)",
+                animation: "logoPulse 3.5s ease-in-out infinite",
+                pointerEvents: "none",
+              }}
+            />
+            <OptimizedImage
+              src={LOGO_IMAGE}
+              alt="스타피부과 로고"
+              priority={true}
+              width={200}
+              height={200}
+              style={{
+                height: "clamp(88px, 22vw, 160px)",
+                width: "clamp(88px, 22vw, 160px)",
+                objectFit: "contain",
+                display: "block",
+                position: "relative",
+                filter: "drop-shadow(0 0 20px rgba(245,215,142,0.85)) drop-shadow(0 0 8px rgba(201,168,76,0.65)) drop-shadow(0 6px 18px rgba(0,0,0,0.50))",
+              }}
+            />
+          </div>
         </div>
 
         {/* 병원명 */}

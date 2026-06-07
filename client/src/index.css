@@ -716,6 +716,17 @@
     animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
+  /* Logo pulse glow animation */
+  @keyframes logoPulse {
+    0%, 100% {
+      opacity: 0.85;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.10);
+    }
+  }
   /* Soft Glow animation for hero section ceiling light */
   @keyframes softGlow {
     0%   { opacity: 0.10; }

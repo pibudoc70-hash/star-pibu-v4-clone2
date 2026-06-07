@@ -19,7 +19,7 @@ import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
-import { DS } from "@/components/ui/DesignSystem";
+import { DS, SectionHeader } from "@/components/ui/DesignSystem";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
 // initialCenter prop으로 전달될 때 참조 안정성을 보장
@@ -194,41 +194,19 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      className="py-16 sm:py-24"
       style={{ background: DS.color.warmWhite }}
       aria-label={sectionTitle}
       role="region"
     >
       <div className="container">
         {/* ── 섹션 헤더 ── */}
-        <div className="text-center mb-10 sm:mb-14 reveal-heading">
-          <p style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.72rem",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: DS.color.gold,
-            fontWeight: 400,
-            marginBottom: "12px",
-          }}>
-            {locationInfo}
-          </p>
-          <h2 style={{
-            color: DS.color.charcoal,
-            fontSize: "clamp(1.6rem, 5vw, 2.8rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            marginBottom: "10px",
-          }}>
-            {sectionTitle}
-          </h2>
-          {/* 골드 룰 */}
-          <div style={{
-            width: "40px", height: "1.5px",
-            background: `linear-gradient(90deg, transparent, ${DS.color.gold}, transparent)`,
-            margin: "0 auto",
-          }} />
-        </div>
+        <SectionHeader
+          eyebrow={locationInfo}
+          title={sectionTitle}
+          align="center"
+          titleSize="lg"
+          className="mb-10 sm:mb-14"
+        />
 
         {/* ── 지도 + 정보 패널 그리드 ── */}
         <div

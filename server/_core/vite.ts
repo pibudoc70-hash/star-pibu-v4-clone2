@@ -12,13 +12,10 @@ export async function setupVite(app: Express, server: Server) {
   const { server: _unusedServerConfig, ...restViteConfig } = viteConfig as any;
 
   const serverOptions = {
-    middlewareMode: true,
-    // HMR 설정:
-    // hmr: false 는 @vitejs/plugin-react의 React Fast Refresh preamble 주입을 막아
-    // "can't detect preamble" 에러를 유발하므로 사용 금지.
-    // server 객체를 전달하여 Express HTTP 서버와 WebSocket 업그레이드를 공유.
-    // 프록시 환경에서 WebSocket 연결 경고가 발생할 수 있지만 기능에는 영향 없음.
-    hmr: { server },
+    // Vite 7: middlewareMode에 server 객체를 직접 전달하여 WebSocket 프록시 자동 설정.
+    // 이 방식으로 hmr: false 없이 preamble 주입을 유지하면서 WebSocket 포트 불일치 해결.
+    // (이전 방식: middlewareMode: true + hmr: { server } — 5173 포트 참조 문제 발생)
+    middlewareMode: { server } as any,
     allowedHosts: true as const,
     fs: {
       strict: true,

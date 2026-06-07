@@ -1,15 +1,16 @@
 /**
- * CategoryTabButton
- * 카테고리 탭 버튼. 모바일(compact)과 데스크탑(default) 두 가지 크기를 size prop으로 제어하여
- * 기존 코드에서 중복 렌더링되던 두 개의 버튼 블록을 하나로 통합한다.
+ * CategoryTabButton — STAR 피부과 (Luxury Minimal Medical Redesign)
+ *
+ * 디자인 원칙:
+ * - 활성 탭: 골드 배경 pill + 흰색 텍스트 + 골드 그림자
+ * - 비활성 탭: ivory 배경 + 미드그레이 텍스트 + 골드 테두리(subtle)
+ * - hover: 골드 라이트 배경 + 딥그레이 텍스트
+ * - 전환: 300ms ease (모든 속성 통일)
  *
  * icon prop: CATEGORY_ICON_MAP에서 전달받은 lucide-react 아이콘 컴포넌트.
  *            미전달 시 기본 Star 아이콘 사용.
  *
- * 애니메이션: CSS custom property를 이용해 background-color, color, border-color,
- *             box-shadow, transform을 300ms ease로 부드럽게 전환한다.
- *             Tailwind의 transition-all은 inline style 변수에 적용되지 않으므로
- *             style 태그 대신 CSS-in-JS 방식의 transition 속성을 직접 지정한다.
+ * data-active: useStaticTreatmentFilter의 auto-scroll 로직이 의존하므로 반드시 유지.
  */
 import React from "react";
 import { Star } from "lucide-react";
@@ -25,7 +26,6 @@ interface CategoryTabButtonProps {
   size?: "sm" | "md";
 }
 
-/** 전환에 사용할 CSS transition 값 — 모든 변화 속성을 300ms ease로 통일 */
 const TRANSITION =
   "background-color 300ms ease, color 300ms ease, border-color 300ms ease, box-shadow 300ms ease, transform 300ms ease, font-weight 150ms ease";
 
@@ -44,29 +44,26 @@ export default function CategoryTabButton({
       type="button"
       data-active={isActive ? "true" : "false"}
       onClick={() => onClick(id)}
-      className={`flex items-center justify-center gap-1.5 whitespace-nowrap${
-        isSm ? " w-full" : ""
-      }`}
+      className={`flex items-center justify-center gap-1.5 whitespace-nowrap${isSm ? " w-full" : ""}`}
       style={{
-        padding: isSm ? "6px 12px" : "6px 14px",
+        padding: isSm ? "6px 12px" : "7px 16px",
         borderRadius: "999px",
         fontSize: isSm ? "0.78rem" : "0.85rem",
         fontWeight: isActive ? 700 : 500,
         /* 배경 */
-        backgroundColor: isActive ? "#d1ab67" : "#fafaf8",
+        backgroundColor: isActive ? "#C9A84C" : "#FAFAF8",
         /* 텍스트 */
-        color: isActive ? "#ffffff" : "#6B7280",
+        color: isActive ? "#FFFFFF" : "#6B6B6B",
         /* 테두리 */
-        border: `1.5px solid ${isActive ? "#d1ab67" : "#E5E7EB"}`,
+        border: `1.5px solid ${isActive ? "#C9A84C" : "rgba(201,168,76,0.25)"}`,
         /* 그림자 */
         boxShadow: isActive
-          ? "0 4px 14px rgba(209,171,103,0.38)"
+          ? "0 4px 16px rgba(201,168,76,0.32)"
           : "0 1px 3px rgba(0,0,0,0.04)",
         /* 미세 상승 */
-        transform: isActive ? "translateY(-2px)" : "translateY(0)",
+        transform: isActive ? "translateY(-1px)" : "translateY(0)",
         /* 부드러운 전환 */
         transition: TRANSITION,
-        /* 클릭 피드백 */
         cursor: "pointer",
         outline: "none",
       }}
@@ -75,7 +72,7 @@ export default function CategoryTabButton({
         style={{
           display: "flex",
           alignItems: "center",
-          color: isActive ? "#ffffff" : "#9CA3AF",
+          color: isActive ? "rgba(255,255,255,0.85)" : "#9A9A9A",
           transition: "color 300ms ease",
         }}
       >

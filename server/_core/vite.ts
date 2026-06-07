@@ -11,11 +11,21 @@ export async function setupVite(app: Express, server: Server) {
   // middlewareMode와 충돌할 수 있으므로 server 키를 serverOptions로 완전히 덮어씀
   const { server: _unusedServerConfig, ...restViteConfig } = viteConfig as any;
 
+  // 실제 서버 포트 감지 (server.address()가 null이면 기본값 3000 사용)
+  // clientPort: 브라우저가 WebSocket 연결 시 사용할 포트 (프록시 환경에서 중요)
+  const addr = server.address();
+  const actualPort =
+    addr && typeof addr === "object" && addr.port
+      ? addr.port
+      : parseInt(process.env.PORT || "3000");
+
   const serverOptions = {
-    // Vite 7: middlewareMode에 server 객체를 직접 전달하여 WebSocket 프록시 자동 설정.
-    // 이 방식으로 hmr: false 없이 preamble 주입을 유지하면서 WebSocket 포트 불일치 해결.
-    // (이전 방식: middlewareMode: true + hmr: { server } — 5173 포트 참조 문제 발생)
-    middlewareMode: { server } as any,
+    middlewareMode: true,
+    // Vite 7 HMR 설정:
+    // - hmr.server: Express HTTP 서버와 WebSocket 업그레이드를 공유 (별도 포트 24678 방지)
+    // - hmr.clientPort: 브라우저가 올바른 포트로 WebSocket 연결하도록 명시
+    // - hmr: false 는 React Fast Refresh preamble 주입을 막으므로 절대 사용 금지
+    hmr: { server, clientPort: actualPort },
     allowedHosts: true as const,
     fs: {
       strict: true,

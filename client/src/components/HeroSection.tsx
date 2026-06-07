@@ -35,19 +35,6 @@ const HERO_IMAGE_MOBILE_WEBP  = "https://d2xsxph8kpxj0f.cloudfront.net/104196446
 const HERO_IMAGE_MOBILE_JPG   = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
 const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/star_ai_logo_1_73172f49.png";
 
-// ── 애니메이션 딜레이 상수 ─────────────────────────────────────────────────────
-const HERO_DELAYS = {
-  logo:       "0ms",
-  title:      300,    // charReveal startDelay (ms)
-  subtitle:   900,    // wordReveal startDelay (ms)
-  ctaFirst:   "1200ms",
-  ctaSecond:  "1350ms",
-  statBase:   1500,   // 통계 strip 기준 (ms)
-  statStep:   100,    // 통계 stagger 간격
-  scroll:     "1700ms",
-  floor:      "1100ms",
-} as const;
-
 const scrollToAbout = () => {
   const el = document.querySelector("#about");
   if (el) {
@@ -64,34 +51,33 @@ interface StatStripItemProps {
   unit: string;
   label: string;
   isDone: boolean;
-  delay: number;
+  delayIndex: number; // 0, 1, 2 — CSS stagger
 }
 
-function StatStripItem({ value, unit, label, isDone, delay }: StatStripItemProps) {
+function StatStripItem({ value, unit, label, isDone, delayIndex }: StatStripItemProps) {
   return (
     <div
       className="hero-fade text-center"
-      style={{ animationDelay: `${delay}ms` }}
+      style={{ animationDelay: `${1.5 + delayIndex * 0.12}s` }}
     >
       {/* 수치 */}
       <div
+        className="font-bold tabular-nums leading-none"
         style={{
-          color: isDone ? "#F5D78E" : "rgba(255,255,255,0.92)",
-          fontSize: "clamp(1.05rem, 3.5vw, 1.7rem)",
+          color: isDone ? DS.color.goldLight : "rgba(255,255,255,0.92)",
+          fontSize: "clamp(1.05rem, 3.2vw, 1.6rem)",
           fontFamily: "'Montserrat', sans-serif",
-          fontWeight: 700,
-          lineHeight: 1,
           transition: `color ${DS.motion.slow} ${DS.motion.ease}`,
-          fontVariantNumeric: "tabular-nums",
         }}
       >
         {value}
-        <span style={{ fontSize: "58%", fontWeight: 300, opacity: 0.8, marginLeft: "2px" }}>
+        <span className="font-light" style={{ fontSize: "58%", opacity: 0.75, marginLeft: "2px" }}>
           {unit}
         </span>
       </div>
       {/* 골드 언더라인 */}
       <div
+        aria-hidden="true"
         style={{
           height: "1px",
           background: `linear-gradient(90deg, transparent, ${DS.color.gold}, transparent)`,
@@ -102,17 +88,17 @@ function StatStripItem({ value, unit, label, isDone, delay }: StatStripItemProps
         }}
       />
       {/* 레이블 */}
-      <div
+      <p
+        className="uppercase"
         style={{
-          color: "rgba(255,255,255,0.5)",
-          fontSize: "clamp(0.58rem, 1.4vw, 0.7rem)",
-          letterSpacing: "0.06em",
+          color: "rgba(255,255,255,0.45)",
+          fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)",
+          letterSpacing: "0.08em",
           marginTop: "5px",
-          textTransform: "uppercase",
         }}
       >
         {label}
-      </div>
+      </p>
     </div>
   );
 }
@@ -169,62 +155,57 @@ export default function HeroSection() {
         />
       </picture>
 
-      {/* ── 시네마틱 오버레이 — 상단/하단 어둠, 중앙 투명 ── */}
+      {/* ── 시네마틱 오버레이 (단일 레이어로 단순화) ── */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(5,10,25,0.78) 0%, rgba(5,10,25,0.28) 40%, rgba(5,10,25,0.32) 60%, rgba(5,10,25,0.85) 100%)",
+            "linear-gradient(to bottom, rgba(5,10,25,0.72) 0%, rgba(5,10,25,0.22) 42%, rgba(5,10,25,0.30) 62%, rgba(5,10,25,0.88) 100%)",
         }}
       />
       {/* 좌우 비네팅 */}
       <div
         aria-hidden="true"
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center, transparent 45%, rgba(3,7,18,0.38) 100%)",
-        }}
-      />
-      {/* 상단 골드 조명 glow */}
-      <div
-        aria-hidden="true"
-        className="absolute pointer-events-none"
-        style={{
-          top: 0, left: "50%", transform: "translateX(-50%)",
-          width: "60%", height: "35%",
-          background: "radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.22) 0%, rgba(201,168,76,0.06) 55%, transparent 80%)",
-          animation: "softGlow 10s ease-in-out infinite",
-          mixBlendMode: "screen",
-          willChange: "opacity",
+          background: "radial-gradient(ellipse at center, transparent 50%, rgba(3,7,18,0.30) 100%)",
         }}
       />
       <GoldParticles />
 
-      {/* ── 층별 안내 — 모바일: 헤더 아래 중앙 ── */}
+      {/* ── 층별 안내 — 모바일 ── */}
       <p
-        className="hero-fade absolute z-20 md:hidden"
+        className="hero-fade absolute z-20 md:hidden text-center"
         style={{
-          top: "22px", left: "50%", transform: "translateX(-50%)",
-          color: "rgba(255,255,255,0.75)",
-          fontSize: "10px", letterSpacing: "0.04em",
-          animationDelay: HERO_DELAYS.floor,
-          whiteSpace: "normal", wordBreak: "keep-all",
+          top: "22px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          color: "rgba(255,255,255,0.7)",
+          fontSize: "10px",
+          letterSpacing: "0.04em",
+          animationDelay: "1.1s",
+          whiteSpace: "normal",
+          wordBreak: "keep-all",
           textShadow: "0 1px 4px rgba(0,0,0,0.6)",
-          textAlign: "center", width: "90vw", lineHeight: 1.4,
+          width: "90vw",
+          lineHeight: 1.4,
         }}
       >
         {t.hero.floor}
       </p>
-      {/* 층별 안내 — 데스크톱: 우상단 */}
+      {/* 층별 안내 — 데스크톱 */}
       <p
         className="hero-fade absolute z-20 hidden md:block"
         style={{
-          top: "clamp(72px, 10vh, 90px)", right: "clamp(16px, 4vw, 40px)",
-          color: "rgba(255,255,255,0.6)",
-          fontSize: "clamp(0.6rem, 1.4vw, 0.75rem)", letterSpacing: "0.04em",
-          animationDelay: HERO_DELAYS.floor,
-          whiteSpace: "nowrap", textShadow: "0 1px 4px rgba(0,0,0,0.5)",
+          top: "clamp(72px, 10vh, 90px)",
+          right: "clamp(16px, 4vw, 40px)",
+          color: "rgba(255,255,255,0.55)",
+          fontSize: "clamp(0.6rem, 1.3vw, 0.72rem)",
+          letterSpacing: "0.04em",
+          animationDelay: "1.1s",
+          whiteSpace: "nowrap",
+          textShadow: "0 1px 4px rgba(0,0,0,0.5)",
         }}
       >
         {t.hero.floor}
@@ -244,7 +225,7 @@ export default function HeroSection() {
         {/* 로고 */}
         <div
           className="hero-fade"
-          style={{ animationDelay: HERO_DELAYS.logo, marginBottom: "clamp(0.5rem, 2vh, 1.5rem)" }}
+          style={{ animationDelay: "0s", marginBottom: "clamp(0.5rem, 2vh, 1.25rem)" }}
         >
           <OptimizedImage
             src={LOGO_IMAGE}
@@ -253,8 +234,8 @@ export default function HeroSection() {
             width={200}
             height={200}
             style={{
-              height: "clamp(100px, 25vw, 180px)",
-              width: "clamp(100px, 25vw, 180px)",
+              height: "clamp(88px, 22vw, 160px)",
+              width: "clamp(88px, 22vw, 160px)",
               objectFit: "contain",
               display: "block",
               margin: "0 auto",
@@ -271,11 +252,11 @@ export default function HeroSection() {
             marginBottom: "clamp(0.5rem, 1.5vh, 1rem)",
             fontFamily: "'Noto Sans KR', sans-serif",
             letterSpacing: "clamp(0.06em, 1.8vw, 0.14em)",
-            textShadow: "0 2px 20px rgba(0,0,0,0.35), 0 0 60px rgba(201,168,76,0.12)",
+            textShadow: "0 2px 20px rgba(0,0,0,0.30)",
             lineHeight: 1.15,
           }}
         >
-          <CharReveal text={t.hero.title} startDelay={HERO_DELAYS.title} charGap={60} />
+          <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
 
         {/* 슬로건 */}
@@ -289,7 +270,7 @@ export default function HeroSection() {
             lineHeight: 1.6,
           }}
         >
-          <WordReveal text={t.hero.subtitle} startDelay={HERO_DELAYS.subtitle} wordGap={85} />
+          <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
 
         {/* ── CTA 버튼 2개 ── */}
@@ -298,7 +279,7 @@ export default function HeroSection() {
           style={{ gap: "clamp(0.6rem, 2vw, 0.75rem)", maxWidth: "480px" }}
         >
           {/* Primary: 예약/채팅 */}
-          <div className="relative hero-fade w-full sm:w-auto" style={{ animationDelay: HERO_DELAYS.ctaFirst }}>
+          <div className="relative hero-fade w-full sm:w-auto" style={{ animationDelay: "1.2s" }}>
             <a
               href={chatUrl}
               target={isZH ? undefined : "_blank"}
@@ -345,7 +326,7 @@ export default function HeroSection() {
               fontSize: "clamp(0.78rem, 2.5vw, 0.9rem)",
               padding: "clamp(0.65rem, 2vw, 0.8rem) clamp(1.4rem, 4vw, 2rem)",
               transition: `all ${DS.motion.base} ${DS.motion.ease}`,
-              animationDelay: HERO_DELAYS.ctaSecond,
+              animationDelay: "1.35s",
               whiteSpace: "nowrap",
               textDecoration: "none",
               minWidth: "clamp(140px, 40vw, 200px)",
@@ -376,7 +357,7 @@ export default function HeroSection() {
             unit={clinicStats.years.unit}
             label={t.about.stats[0].label}
             isDone={done20}
-            delay={HERO_DELAYS.statBase}
+            delayIndex={0}
           />
           {/* 구분선 */}
           <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)", alignSelf: "center" }} />
@@ -385,7 +366,7 @@ export default function HeroSection() {
             unit={clinicStats.cases.unit}
             label={t.about.stats[1].label}
             isDone={done4000}
-            delay={HERO_DELAYS.statBase + HERO_DELAYS.statStep}
+            delayIndex={1}
           />
           <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)", alignSelf: "center" }} />
           <StatStripItem
@@ -393,7 +374,7 @@ export default function HeroSection() {
             unit={clinicStats.types.unit}
             label={t.about.stats[2].label}
             isDone={done50}
-            delay={HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}
+            delayIndex={2}
           />
         </div>
 
@@ -405,7 +386,7 @@ export default function HeroSection() {
           style={{
             color: "rgba(255,255,255,0.45)",
             marginTop: "clamp(0.75rem, 2vh, 1.25rem)",
-            animationDelay: HERO_DELAYS.scroll,
+            animationDelay: "1.7s",
             background: "none",
             border: "none",
             cursor: "pointer",

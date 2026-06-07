@@ -26,8 +26,8 @@ export const DS = {
   color: {
     // Core palette
     gold: "#C9A84C",
-    goldLight: "#F5EDD8",
-    goldMid: "#E8D5A3",
+    goldLight: "#F5D78E",  // 카운터 완료 시 골드 색상
+    goldMid: "#D4B87A",   // 중간 골드
     goldDim: "rgba(201,168,76,0.18)",
     charcoal: "#1A1A1A",
     deepGray: "#2D2D2D",
@@ -75,6 +75,9 @@ export const DS = {
     sectionGap: "clamp(3rem, 6vw, 5rem)",
     headerGap: "clamp(2rem, 4vw, 3rem)",
     cardGap: "clamp(1.25rem, 2.5vw, 2rem)",
+    // Inline padding
+    pagePx: "clamp(1.25rem, 5vw, 4rem)",
+    containerMax: "1200px",
   },
   typography: {
     eyebrow: {

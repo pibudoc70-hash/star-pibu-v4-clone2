@@ -561,7 +561,7 @@ function DoctorsSection() {
     <section
       ref={sectionRef}
       id="doctors"
-      style={{ background: DS.color.ivory }}
+      style={{ background: DS.color.ivory, paddingTop: DS.spacing.sectionPy, paddingBottom: DS.spacing.sectionPy }}
       role="region"
       aria-label={t.doctors.label}
     >

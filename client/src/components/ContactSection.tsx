@@ -194,7 +194,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       id="contact"
-      style={{ background: DS.color.warmWhite }}
+      style={{ background: DS.color.warmWhite, paddingTop: DS.spacing.sectionPy, paddingBottom: DS.spacing.sectionPy }}
       aria-label={sectionTitle}
       role="region"
     >

@@ -2020,3 +2020,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [R11-D] SeoHead: deprecated boolean props JSDoc @deprecated 명시
 - [x] [R11-E] TreatmentsEquipmentSection: IIFE 패턴 → 변수 선언으로 교체
 - [x] [R11-F] langPrefix 중앙화: getLocalizedUrl 유틸(lib/localizedPath.ts) 신규 + 5개 파일 적용 (Equipment2Detail, About, Equipment2, NonCoveredGuide, ForeignGuide)
+
+## 버그 수정: tRPC JSON 파싱 에러 (2026-06-07)
+
+- [x] [버그수정] vite.ts SPA fallback에서 /api/* 경로 제외 — 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환하여 "Unexpected token '<', <!doctype..." JSON 파싱 에러 발생하던 문제 수정

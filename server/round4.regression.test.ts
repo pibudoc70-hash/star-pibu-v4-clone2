@@ -133,7 +133,7 @@ describe("i18n.ja.ts / i18n.zh.ts — teamLabel 번역 품질 (Round-4-E)", () =
 // ─────────────────────────────────────────────────────────────────────────────
 // F. SeoHead includeMedicalSchema 명시 정책
 // ─────────────────────────────────────────────────────────────────────────────
-describe("SeoHead includeMedicalSchema 명시 정책 (Round-4-F)", () => {
+describe("SeoHead pageType 명시 정책 (Round-4-F)", () => {
   const pagesRequiringMedical = [
     "client/src/pages/About.tsx",
     "client/src/pages/Directions.tsx",
@@ -155,16 +155,16 @@ describe("SeoHead includeMedicalSchema 명시 정책 (Round-4-F)", () => {
   ];
 
   for (const pagePath of pagesRequiringMedical) {
-    it(`${pagePath.split("/").pop()} — includeMedicalSchema={true} 명시`, () => {
+    it(`${pagePath.split("/").pop()} — pageType="treatment" 또는 pageType="home" 명시`, () => {
       const src = readFileSync(path.resolve(root, pagePath), "utf8");
-      expect(src).toMatch(/includeMedicalSchema=\{true\}/);
+      expect(src).toMatch(/pageType="(treatment|home)"/);
     });
   }
 
   for (const pagePath of pagesExcludingMedical) {
-    it(`${pagePath.split("/").pop()} — includeMedicalSchema={false} 명시`, () => {
+    it(`${pagePath.split("/").pop()} — pageType="admin" 명시`, () => {
       const src = readFileSync(path.resolve(root, pagePath), "utf8");
-      expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+      expect(src).toMatch(/pageType="admin"/);
     });
   }
 });

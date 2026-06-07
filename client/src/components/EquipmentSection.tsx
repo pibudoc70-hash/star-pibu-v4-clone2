@@ -432,20 +432,10 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl group cursor-pointer card-fade-in"
+      className="relative overflow-hidden rounded-2xl group cursor-pointer card-fade-in ds-card-lift"
       style={{
         background: tone.bg,
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        boxShadow: "0 4px 20px rgba(31,58,95,0.15)",
         ...style,
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 48px rgba(31,58,95,0.3)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(31,58,95,0.15)";
       }}
     >
       {/* 데스크톱: 좌우 레이아웃 / 모바일: 상하 레이아웃 */}

@@ -90,7 +90,7 @@ export default function EventDetail() {
         ogLocaleAlternates={(["ko_KR", "en_US", "ja_JP", "zh_CN"] as const).filter((l) => l !== ogLocale)}
         ogType="article"
         hreflangs={buildHreflangs(koPath, `/en${koPath}`, `/ja${koPath}`, `/zh${koPath}`)}
-        includeMedicalSchema={false}
+        pageType="admin"
       />
       <Header />
 

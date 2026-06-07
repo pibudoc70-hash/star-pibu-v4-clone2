@@ -151,7 +151,7 @@ export default function Privacy() {
         canonical="https://www.star-pibu.com/privacy"
         ogUrl="https://www.star-pibu.com/privacy"
         noindex={true}
-        includeMedicalSchema={false}
+        pageType="admin"
       />
       <Header />
 

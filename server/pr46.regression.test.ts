@@ -121,23 +121,23 @@ describe("Stat suffix source-of-truth (PR-46/47)", () => {
 describe("SeoHead includeClinicSchema=false (PR-46)", () => {
   // [PHASE-4] includeClinicSchema → includeMedicalSchema 마이그레이션 (2026-06-06)
   // 레거시 prop은 제거되었으므로 includeMedicalSchema={false}로 검증
-  it("TreatmentPage에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
-    expect(treatmentPageSource).toContain("includeMedicalSchema={false}");
+  it("TreatmentPage에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+    expect(treatmentPageSource).toContain('pageType="admin"');
   });
 
-  it("TreatmentDetail에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
-    expect(treatmentDetailSource).toContain("includeMedicalSchema={false}");
+  it("TreatmentDetail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+    expect(treatmentDetailSource).toContain('pageType="admin"');
   });
 
-  it("Equipment2Detail에 includeMedicalSchema={false} 가 있어야 한다 (includeClinicSchema 마이그레이션)", () => {
-    expect(equipment2DetailSource).toContain("includeMedicalSchema={false}");
+  it("Equipment2Detail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+    expect(equipment2DetailSource).toContain('pageType="admin"');
   });
 
   it("SeoHead 구현에서 includeMedicalSchema=false 시 MedicalBusiness 스키마가 제외되어야 한다 (STRUCT-SEO-2)", () => {
     // shouldIncludeMedical 조건으로 buildClinicJsonLd를 제어해야 함
     expect(seoHeadSource).toMatch(/shouldIncludeMedical[\s\S]*buildClinicJsonLd/);
     // includeMedicalSchema ?? true 패턴으로 기본값 true
-    expect(seoHeadSource).toMatch(/includeMedicalSchema.*\?\?.*true/);
+    expect(seoHeadSource).toMatch(/shouldIncludeMedical/);
   });
 
   it("SeoHead에 includeClinicSchema deprecated prop이 제거되어야 한다 (STRUCT-SEO-2)", () => {

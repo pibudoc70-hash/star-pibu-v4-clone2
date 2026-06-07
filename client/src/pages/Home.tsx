@@ -80,10 +80,10 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/*
-       * [PROD-P2-2] 홈페이지에만 includeWebSiteSchema={true} 설정
+       * [PROD-P2-2] 홈페이지에만 pageType="home" 설정 (WebSite + MedicalBusiness 스키마 모두 포함)
        * 이유: WebSite 스키마(SearchAction)는 사이트 전체를 대표하는 루트 URL에만
        * 삽입하는 것이 Google 권장 사항. 내부 페이지에 중복 삽입되면
-       * 신호 희석이 분산되어 Sitelinks Searchbox 인식률이 낙어집니다.
+       * 신호 희석이 분산되어 Sitelinks Searchbox 인식률이 낮아집니다.
        */}
       <SeoHead
         title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"

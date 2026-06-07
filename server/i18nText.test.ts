@@ -559,40 +559,34 @@ describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거
       "utf8",
     );
     expect(src).not.toMatch(/mapMarkerTitle \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC11C\uBA74/);
-    expect(src).toMatch(/title: t\.access\.mapMarkerTitle/);
-  });
-});
-
-describe("Round-2 P2: noindex 페이지 includeMedicalSchema=false 명시 검증", () => {
+    edescribe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () => {
   const { readFileSync } = require("node:fs");
   const nodePath = require("node:path");
 
-  it("Privacy.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+  it("Privacy.tsx SeoHead에 pageType=\"admin\"이 명시되어야 한다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/pages/Privacy.tsx"),
       "utf8",
     );
-    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+    expect(src).toMatch(/pageType="admin"/);
   });
 
-  it("NotFound.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+  it("NotFound.tsx SeoHead에 pageType=\"admin\"이 명시되어야 한다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/pages/NotFound.tsx"),
       "utf8",
     );
-    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+    expect(src).toMatch(/pageType="admin"/);
   });
 
-  it("Reserve.tsx SeoHead에 includeMedicalSchema={false}가 명시되어야 한다", () => {
+  it("Reserve.tsx SeoHead에 pageType=\"admin\"이 명시되어야 한다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/pages/Reserve.tsx"),
       "utf8",
     );
-    expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+    expect(src).toMatch(/pageType="admin"/);
   });
-});
-
-describe("Round-2 P1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
+});1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
   const { readFileSync } = require("node:fs");
   const nodePath = require("node:path");
 

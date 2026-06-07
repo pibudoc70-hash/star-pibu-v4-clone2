@@ -356,8 +356,7 @@ export default function ContactSection() {
                 href="https://map.kakao.com/link/map/스타피부과,35.1572312,129.0581932"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95"
-                style={{ background: "#FEE500", color: "#3C1E1E", minWidth: "120px" }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[#FEE500] text-[#3C1E1E] min-w-[120px]"
               >
                 <MapPin size={14} />
                 {kakaoMapLabel}
@@ -366,8 +365,7 @@ export default function ContactSection() {
                 href="https://map.naver.com/v5/search/스타피부과%20서면"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95"
-                style={{ background: "#03C75A", color: "white", minWidth: "120px" }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[#03C75A] text-white min-w-[120px]"
               >
                 <MapPin size={14} />
                 {naverMapLabel}

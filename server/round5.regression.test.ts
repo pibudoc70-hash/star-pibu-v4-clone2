@@ -7,7 +7,7 @@
  * C. ManagementDevicesSection - 스크롤 버튼 aria-label i18n 키 교체
  * D. HeroSection/ContactSection - tel href CLINIC_TEL 상수 사용
  * E. i18n 4개 언어 - doctors 접근성 키 + managementDevices 스크롤 키 + ko teamLabel
- * F. Home.tsx - includeMedicalSchema 명시
+ * F. Home.tsx - pageType 명시
  */
 
 import { describe, it, expect } from "vitest";
@@ -167,12 +167,12 @@ describe("E. i18n - doctors 접근성 키 + managementDevices 스크롤 키 + ko
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// F. Home.tsx - includeMedicalSchema 명시
+// F. Home.tsx - pageType 명시
 // ─────────────────────────────────────────────────────────────────────────────
-describe("F. Home.tsx - includeMedicalSchema 명시", () => {
+describe("F. Home.tsx - pageType 명시", () => {
   const src = read("client/src/pages/Home.tsx");
 
-  it("Home.tsx SeoHead에 includeMedicalSchema={true}가 명시되어야 한다", () => {
-    expect(src).toContain("includeMedicalSchema={true}");
+  it("Home.tsx SeoHead에 pageType="home"이 명시되어야 한다", () => {
+    expect(src).toContain('pageType="home"');
   });
 });

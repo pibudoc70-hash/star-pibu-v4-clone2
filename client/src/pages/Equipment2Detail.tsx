@@ -177,7 +177,7 @@ export default function Equipment2Detail() {
           `/zh/equipment2/${slug}`
         )}
         jsonLd={jsonLd}
-        includeMedicalSchema={false}
+        pageType="admin"
       />
 
       {/* 헤더 */}

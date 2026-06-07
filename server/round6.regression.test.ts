@@ -117,9 +117,9 @@ describe("[G] SEO 정책 명시성", () => {
   ];
 
   medicalPages.forEach((page) => {
-    it(`${page.split("/").pop()} - includeMedicalSchema={true} 명시되어야 한다`, () => {
+    it(`${page.split("/").pop()} - pageType="treatment" 또는 pageType="home" 명시되어야 한다`, () => {
       const src = read(page);
-      expect(src).toMatch(/includeMedicalSchema=\{true\}/);
+      expect(src).toMatch(/pageType="(treatment|home)"/);
     });
   });
 
@@ -130,9 +130,9 @@ describe("[G] SEO 정책 명시성", () => {
   ];
 
   nonMedicalPages.forEach((page) => {
-    it(`${page.split("/").pop()} - includeMedicalSchema={false} 명시되어야 한다`, () => {
+    it(`${page.split("/").pop()} - pageType="admin" 명시되어야 한다`, () => {
       const src = read(page);
-      expect(src).toMatch(/includeMedicalSchema=\{false\}/);
+      expect(src).toMatch(/pageType="admin"/);
     });
   });
 });

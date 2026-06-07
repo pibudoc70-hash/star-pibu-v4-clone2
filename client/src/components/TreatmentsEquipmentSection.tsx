@@ -49,25 +49,25 @@ export default function TreatmentsEquipmentSection() {
   } = useStaticTreatmentFilter();
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }} aria-label={tr.label} role="region">
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p className="text-sm tracking-widest mb-3 font-montserrat" style={{ color: "#d1ab67", fontWeight: 300, fontSize: "12px" }}>
+          <p className="text-sm tracking-widest mb-3 font-montserrat text-[#d1ab67] font-light" style={{ fontSize: "12px" }}>
             TREATMENTS & EQUIPMENT
           </p>
-          <h2 className="mb-4" style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}>
+          <h2 className="mb-4 text-gray-800 font-extrabold" style={{ fontSize: "clamp(1.4rem, 5vw, 2.6rem)" }}>
             {tr.title}
           </h2>
-          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal" style={{ color: "#d1ab67", paddingTop: "7px" }}>
-            <span style={{ fontSize: "18px" }}>{tr.subtitle}</span>
+          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[#d1ab67] pt-2">
+            <span className="text-lg">{tr.subtitle}</span>
           </p>
         </div>
 
         {/* 카테고리 탭 + 필터/정렬 */}
-        <div className="rounded-2xl px-4 py-4 mb-6" style={{ background: "#ffffff", marginBottom: "15px" }}>
+        <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
           <div className="flex justify-end gap-2 mb-4">
             <div className="relative">
               <button
@@ -75,8 +75,7 @@ export default function TreatmentsEquipmentSection() {
                 onClick={() => setFilterOpen(!filterOpen)}
                 aria-expanded={filterOpen}
                 aria-label={tr.sortLabel}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                style={{ backgroundColor: "#f3f4f6", color: "#6b7280", border: "1px solid #e5e7eb" }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-500 border border-gray-200"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -119,13 +118,13 @@ export default function TreatmentsEquipmentSection() {
         {CATEGORIES.find((c) => c.id === activeId) && (
             <div
               key={`content-${activeId}`}
-              className="rounded-2xl mb-8 overflow-hidden"
-              style={{ background: "#FAF6EF", animation: "cardFadeIn 0.4s ease both" }}
+              className="rounded-2xl mb-8 overflow-hidden bg-[#FAF6EF]"
+              style={{ animation: "cardFadeIn 0.4s ease both" }}
             >
-              <div className="px-5 pt-5 pb-5" style={{ background: "white", borderRadius: "0 0 1rem 1rem" }}>
+              <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
                 <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredTreatments.length === 0 ? (
-                    <div className="col-span-full text-center py-16" style={{ color: "#9CA3AF" }}>
+                    <div className="col-span-full text-center py-16 text-gray-400">
                       <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -146,7 +145,7 @@ export default function TreatmentsEquipmentSection() {
                 </div>
                 {/* 더보기 / 접기 버튼 */}
                 {filteredTreatments.length > INITIAL_SHOW && (
-                  <div className="flex justify-center" style={{ marginTop: "68px" }}>
+                  <div className="flex justify-center mt-16">
                     <button
                       type="button"
                       onClick={() => {

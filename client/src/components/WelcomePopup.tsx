@@ -481,8 +481,7 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
                   transition: "transform 0.3s ease",
                   display: "block",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+                className="ds-img-zoom"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             </div>
           )}

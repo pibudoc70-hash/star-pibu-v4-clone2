@@ -687,7 +687,7 @@ export default function Reserve() {
         description="부산 서면 스타피부과 온라인 예약. 원하는 시술을 선택하고 날짜와 시간을 선택하세요. 회원/비회원 모두 예약 가능."
         keywords="스타피부과 예약, 서면피부과 예약, 부산피부과 온라인 예약, 스타피부과 시술 예약"
         noindex={true}
-        includeMedicalSchema={false}
+        pageType="admin"
         ogLocale="ko_KR"
         ogImage={OG_IMAGE_LOCALIZED.ko}
         ogSiteName={SITE_NAME_LOCALIZED.ko}

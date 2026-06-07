@@ -319,7 +319,7 @@ export default function HeroSection() {
               }}
             >
               <Calendar size={15} />
-              {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_reserve}
+              {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
             </a>
             {wechatCopied && isZH && (
               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">

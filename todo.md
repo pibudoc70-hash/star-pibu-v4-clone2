@@ -2024,3 +2024,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 버그 수정: tRPC JSON 파싱 에러 (2026-06-07)
 
 - [x] [버그수정] vite.ts SPA fallback에서 /api/* 경로 제외 — 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환하여 "Unexpected token '<', <!doctype..." JSON 파싱 에러 발생하던 문제 수정
+
+## Round-12: Luxury Minimal Medical 리디자인 (2026-06-07)
+
+- [ ] [R12-A] 글로벌 디자인 시스템 — index.css 토큰 재정의 (warm white/ivory/champagne gold), 공통 컴포넌트 (SectionHeader, PremiumButton, SurfaceCard, EyebrowLabel, StatItem, CTAGroup)
+- [ ] [R12-B] HeroSection 리디자인 — 정보 밀도 감소, 브랜드 무드 강화, CTA 2개 이하, motion system 적용
+- [ ] [R12-C] DoctorsSection 리디자인 — editorial portrait 레이아웃, 정제된 tab navigation, 정보 우선순위 재구성
+- [ ] [R12-D] TreatmentsEquipmentSection 리디자인 — 큐레이션 쇼케이스, premium tab UI, 카드 밀도 감소
+- [ ] [R12-E] ContactSection 리디자인 — premium concierge 경험, hospitality style 레이아웃
+- [ ] [R12-F] tsc/test 검증 + 체크포인트 + 커밋 해시 보고

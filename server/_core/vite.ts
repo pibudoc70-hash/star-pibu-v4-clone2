@@ -7,20 +7,30 @@ import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 
 export async function setupVite(app: Express, server: Server) {
+  // viteConfig.server에는 host:true 등 독립 서버 설정이 포함되어 있어
+  // middlewareMode와 충돌할 수 있으므로 server 키를 serverOptions로 완전히 덮어씀
+  const { server: _unusedServerConfig, ...restViteConfig } = viteConfig as any;
+
   const serverOptions = {
     middlewareMode: true,
-    // HMR WebSocket을 Express 서버와 같은 HTTP 서버에 바인딩
-    // clientPort를 지정하지 않으면 Vite가 기본값(5173)을 사용하여
-    // 프록시 환경에서 WebSocket 연결 실패가 발생함
+    // HMR WebSocket을 Express HTTP 서버에 직접 바인딩
+    // - server: HTTP 서버 인스턴스 (WebSocket upgrade 이벤트 공유)
+    // - clientPort: 브라우저가 WS 연결할 포트 (프록시 환경에서는 외부 포트 = 3000)
+    // - host: "0.0.0.0" 으로 모든 인터페이스에서 수신
     hmr: {
       server,
+      host: "0.0.0.0",
       clientPort: parseInt(process.env.PORT || "3000"),
     },
     allowedHosts: true as const,
+    fs: {
+      strict: true,
+      deny: ["**/.*"],
+    },
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
+    ...restViteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom",
@@ -30,8 +40,8 @@ export async function setupVite(app: Express, server: Server) {
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
 
-    // /api/* 경로는 SPA fallback에서 제외 — tRPC/OAuth/storage 요청에 HTML 반환 방지
-    // 이 가드가 없으면 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환할 수 있음
+    // /api/* 및 /manus-storage/* 경로는 SPA fallback에서 제외
+    // tRPC/OAuth/storage 요청에 HTML이 반환되는 것을 방지
     if (url.startsWith("/api/") || url.startsWith("/manus-storage/")) {
       return next();
     }

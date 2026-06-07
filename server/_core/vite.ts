@@ -13,15 +13,11 @@ export async function setupVite(app: Express, server: Server) {
 
   const serverOptions = {
     middlewareMode: true,
-    // HMR WebSocket을 Express HTTP 서버에 직접 바인딩
-    // - server: HTTP 서버 인스턴스 (WebSocket upgrade 이벤트 공유)
-    // - clientPort: 브라우저가 WS 연결할 포트 (프록시 환경에서는 외부 포트 = 3000)
-    // - host: "0.0.0.0" 으로 모든 인터페이스에서 수신
-    hmr: {
-      server,
-      host: "0.0.0.0",
-      clientPort: parseInt(process.env.PORT || "3000"),
-    },
+    // HMR을 비활성화하여 WebSocket 연결 실패 에러 완전 제거
+    // 프록시 환경(manus.computer 도메인)에서는 WebSocket 업그레이드가
+    // 정상적으로 전달되지 않아 "WebSocket closed without opened" 에러가 반복됨
+    // 기능에는 영향 없음 (코드 변경 시 수동 새로고침 필요)
+    hmr: false as const,
     allowedHosts: true as const,
     fs: {
       strict: true,

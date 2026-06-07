@@ -17,13 +17,13 @@ import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from '@/components/SeoHead';
+import { getLocalizedUrl } from '@/lib/localizedPath';
 
 export default function About() {
   const { t, lang } = useLang();
 
-  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책)
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
-  const pageUrl = `https://www.star-pibu.com${langPrefix}/about`;
+  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책) [R11-F]
+  const pageUrl = getLocalizedUrl(lang, "/about");
 
   // 언어별 SEO 메타 (title/description/keywords)
   const seoTitle =

@@ -14,6 +14,7 @@
  */
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
+import { getLocalizedUrl } from "@/lib/localizedPath";
 import Header from "@/components/Header";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
 import ContactSection from "@/components/ContactSection";
@@ -23,9 +24,8 @@ import FloatingCTA from "@/components/FloatingCTA";
 export default function Equipment2() {
   const { lang } = useLang();
 
-  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책)
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
-  const pageUrl = `https://www.star-pibu.com${langPrefix}/equipment2`;
+  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책) [R11-F]
+  const pageUrl = getLocalizedUrl(lang, "/equipment2");
 
   // 언어별 SEO 메타 (title/description/keywords)
   const seoTitle =

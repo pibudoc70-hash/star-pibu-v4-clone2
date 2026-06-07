@@ -188,7 +188,13 @@ function DoctorsSection() {
       name: locale?.name ?? d.name,
       title: locale?.title ?? d.title,
       intro: locale?.intro ?? d.intro,
-      credentials: locale?.careers?.map((c) => ({ icon: Award, label: "career", text: c })) ?? d.credentials,
+      // [R11-A] locale.careers 텍스트만 교체, icon/label은 원본 credentials에서 유지
+      credentials: locale?.careers
+        ? d.credentials.map((cred, i) => ({
+            ...cred,
+            text: locale.careers![i] ?? cred.text,
+          }))
+        : d.credentials,
       specialties: locale?.specialties ?? d.specialties,
       badge: badgeLabel,
     };
@@ -282,7 +288,7 @@ function DoctorsSection() {
                     <button type="button"
                       key={d.id}
                       onClick={() => handleDoctorSelect(d.id)}
-                      aria-label={t.doctors.selectDoctorLabel!.replace("{name}", d.name)}
+                      aria-label={(t.doctors.selectDoctorLabel ?? "").replace("{name}", d.name)}
                       aria-pressed={activeDoctor === d.id}
                       className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
                       style={{
@@ -572,7 +578,7 @@ function DoctorsSection() {
                   <button type="button"
                     key={d.id}
                     onClick={() => handleDoctorSelect(d.id)}
-                    aria-label={t.doctors.selectDoctorLabel!.replace("{name}", d.name)}
+                    aria-label={(t.doctors.selectDoctorLabel ?? "").replace("{name}", d.name)}
                     aria-pressed={activeDoctor === d.id}
                     className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
                     style={{
@@ -813,7 +819,7 @@ function DoctorsSection() {
                       <button type="button"
                         key={d.id}
                         onClick={() => handleDoctorSelect(d.id)}
-                        aria-label={t.doctors.dotNavLabel!.replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
+                        aria-label={(t.doctors.dotNavLabel ?? "").replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
                         aria-current={activeDoctor === d.id ? "true" : undefined}
                         style={{
                           width: activeDoctor === d.id ? "24px" : "6px",

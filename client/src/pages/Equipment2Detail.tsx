@@ -18,6 +18,7 @@ import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getReservationPath } from "@/lib/reservationPath";
+import { getLocalizedUrl } from "@/lib/localizedPath";
 
 // safe JSON parser
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
@@ -112,8 +113,8 @@ export default function Equipment2Detail() {
   const relatedTreatments = safeParseJson<RelatedTreatment[]>(treatment.related, []);
   const steps = safeParseJson<TreatmentStep[]>(treatment.steps, []);
 
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
-  const pageUrl = `https://www.star-pibu.com${langPrefix}/equipment2/${slug}`;
+  // [R11-F] langPrefix 인라인 삼항 → getLocalizedUrl 유틸로 교체
+  const pageUrl = getLocalizedUrl(lang, `/equipment2/${slug}`);
 
   // 다국어 이름/설명 (getText 훅 활용)
   const localizedName = getText(treatment.name, treatment.nameEn, treatment.nameJa, treatment.nameZh);
@@ -184,7 +185,7 @@ export default function Equipment2Detail() {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-2">{localizedName}</h1>
           <p className="text-blue-100">
-            {lang === "ko" ? (treatment.nameEn || "") : treatment.name}
+            {getText(treatment.nameEn || "", treatment.name, treatment.name, treatment.name)}
           </p>
         </div>
       </div>

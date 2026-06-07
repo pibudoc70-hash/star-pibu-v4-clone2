@@ -115,9 +115,13 @@ describe("D. HeroSection/ContactSection - tel href CLINIC_TEL 상수", () => {
     expect(heroSrc).not.toContain('"tel:+82-51-818-2300"');
   });
 
-  it("ContactSection에 CLINIC_TEL이 import되어야 한다", () => {
-    expect(contactSrc).toContain("CLINIC_TEL");
-    expect(contactSrc).toContain("CLINIC_TEL_INTL");
+  it("ContactSection에 CLINIC_TEL이 useChatConfig를 통해 간접 사용되어야 한다 [R11-B]", () => {
+    // R11-B: ContactSection은 CLINIC_TEL을 직접 import하지 않고
+    // useChatConfig hook을 통해 phoneHref/phoneDisplay로 간접 사용
+    expect(contactSrc).toContain("useChatConfig");
+    expect(contactSrc).toContain("phoneHref");
+    // 직접 import 없음 (useChatConfig 내부에서 처리)
+    expect(contactSrc).not.toContain('"tel:051-818-2300"');
   });
 
   it("ContactSection에 tel 번호 하드코딩이 없어야 한다", () => {

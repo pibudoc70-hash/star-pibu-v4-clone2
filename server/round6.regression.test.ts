@@ -39,11 +39,13 @@ describe("[A] TreatmentsEquipmentSection 미사용 import 제거", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // [D] DoctorsSection aria-label ?? fallback 제거
 // ─────────────────────────────────────────────────────────────────────────────
-describe("[D] DoctorsSection aria-label fallback 제거", () => {
+describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", () => {
   const src = read("client/src/components/DoctorsSection.tsx");
 
-  it("selectDoctorLabel에 ?? fallback이 없어야 한다", () => {
-    expect(src).not.toMatch(/selectDoctorLabel\s*\?\?/);
+  // R11-A: selectDoctorLabel/dotNavLabel은 .replace() 체이닝이 필요하므로
+  // non-null assertion(!)이 아닌 optional chaining + fallback("") 패턴 사용
+  it("selectDoctorLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
+    expect(src).toMatch(/selectDoctorLabel\s*\?\?\s*["']/);
   });
 
   it("expandCredentialsLabel에 ?? fallback이 없어야 한다", () => {
@@ -54,12 +56,13 @@ describe("[D] DoctorsSection aria-label fallback 제거", () => {
     expect(src).not.toMatch(/collapseCredentialsLabel\s*\?\?/);
   });
 
-  it("dotNavLabel에 ?? fallback이 없어야 한다", () => {
-    expect(src).not.toMatch(/dotNavLabel\s*\?\?/);
+  it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
+    expect(src).toMatch(/dotNavLabel\s*\?\?\s*["']/);
   });
 
-  it("selectDoctorLabel을 non-null assertion(!)으로 사용해야 한다", () => {
-    expect(src).toMatch(/selectDoctorLabel!/);
+  it("expandCredentialsLabel/collapseCredentialsLabel은 non-null assertion(!)으로 사용해야 한다", () => {
+    expect(src).toMatch(/expandCredentialsLabel!/);
+    expect(src).toMatch(/collapseCredentialsLabel!/);
   });
 });
 

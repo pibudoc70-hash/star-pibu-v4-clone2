@@ -74,14 +74,16 @@ export interface SeoHeadProps {
   pageType?: SeoPageType;
   /**
    * MedicalBusiness 스키마 삽입 여부 (기본값: true)
-   * pageType이 지정되면 무시됩니다.
+   * @deprecated pageType prop을 사용하세요. pageType이 지정되면 이 값은 무시됩니다.
+   * 사용 예: pageType="treatment" (이전: includeMedicalSchema={true})
    * - true  → buildClinicJsonLd() 삽입
    * - false → MedicalBusiness 스키마 제외
    */
   includeMedicalSchema?: boolean;
   /**
    * WebSite 스키마 삽입 여부 (기본값: false)
-   * pageType이 지정되면 무시됩니다.
+   * @deprecated pageType prop을 사용하세요. pageType이 지정되면 이 값은 무시됩니다.
+   * 사용 예: pageType="home" (이전: includeWebSiteSchema={true})
    * 홈페이지("/")에만 true로 설정하세요.
    */
   includeWebSiteSchema?: boolean;

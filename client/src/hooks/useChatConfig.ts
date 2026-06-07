@@ -1,13 +1,16 @@
 /**
- * useChatConfig — 채팅·예약 URL 및 버튼 스타일 중앙화 훅
+ * useChatConfig — 채팅·예약 URL, 버튼 스타일, 전화번호 중앙화 훅
  *
  * [PROD-P4-2] 동일한 URL 상수가 7개 이상 파일에 분산되어 있어 유지보수 위험 발생.
  * 이 훅으로 단일 진실 소스(Single Source of Truth)를 확립한다.
  *
+ * [R11-B] lang === "ko" 전화번호 분기 로직을 phoneHref/phoneDisplay/isKO 필드로 통합.
+ *
  * 사용 예:
- *   const { chatUrl, reserveUrl, chatBg, chatColor, naverUrl, kakaoUrl } = useChatConfig();
+ *   const { chatUrl, reserveUrl, chatBg, chatColor, naverUrl, kakaoUrl, phoneHref, phoneDisplay } = useChatConfig();
  */
 import { useLang } from "@/contexts/LangContext";
+import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 
 /** 언어별 채팅/예약 URL 상수 */
 export const CHAT_URLS = {
@@ -28,6 +31,12 @@ export const CHAT_STYLES = {
 } as const;
 
 export interface ChatConfig {
+  /** 현재 언어에 맞는 전화 href (tel:051-818-2300 또는 국제번호) */
+  phoneHref: string;
+  /** 전화번호 표시 문자열 (한국어: 051-818-2300, 기타: +82-51-818-2300) */
+  phoneDisplay: string;
+  /** 현재 언어가 한국어인지 여부 */
+  isKO: boolean;
   /** 현재 언어의 채팅 URL (카카오/위챗) */
   chatUrl: string;
   /** 현재 언어의 예약 URL (네이버/라인) */
@@ -49,15 +58,20 @@ export interface ChatConfig {
 }
 
 /**
- * 현재 언어에 맞는 채팅·예약 설정을 반환한다.
+ * 현재 언어에 맞는 채팅·예약·전화 설정을 반환한다.
  *
  * @returns ChatConfig 객체
  */
 export function useChatConfig(): ChatConfig {
   const { lang } = useLang();
 
+  const isKO = lang === "ko";
   const isZH = lang === "zh";
   const isJA = lang === "ja";
+
+  // 전화번호: 한국어는 국내 번호, 그 외는 국제 번호
+  const phoneHref = isKO ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`;
+  const phoneDisplay = isKO ? CLINIC_TEL : CLINIC_TEL_INTL;
 
   const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? CHAT_URLS.lineJA : CHAT_URLS.kakao;
   const reserveUrl = isZH
@@ -70,6 +84,9 @@ export function useChatConfig(): ChatConfig {
   const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? CHAT_STYLES.line.color : CHAT_STYLES.kakao.color;
 
   return {
+    phoneHref,
+    phoneDisplay,
+    isKO,
     chatUrl,
     reserveUrl,
     chatBg,

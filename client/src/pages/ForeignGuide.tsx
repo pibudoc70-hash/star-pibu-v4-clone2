@@ -69,10 +69,11 @@ export default function ForeignGuide() {
   const t = i18n[activeLang];
   const colors = LANG_COLORS[activeLang];
 
-  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책)
-  // ForeignGuide는 en/ja/zh만 지원 (한국어 route 없음)
-  const langPrefix = `/${activeLang}`;
-  const pageUrl = `https://www.star-pibu.com${langPrefix}/foreign-guide`;
+  // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책) [R11-F]
+  // ForeignGuide는 en/ja/zh 전용 페이지로 ko route가 없음.
+  // 모든 언어에 항상 /{lang} 접두사가 필요하므로 getLocalizedUrl 대신
+  // 이미 import된 BASE_URL + `/${activeLang}` 패턴 유지 (의도적 설계)
+  const pageUrl = `${BASE_URL}/${activeLang}/foreign-guide`;
 
   // 언어별 SEO 메타 (title/description/keywords)
   const SEO_META: Record<ForeignLang, { title: string; description: string; keywords: string }> = {

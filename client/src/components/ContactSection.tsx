@@ -15,7 +15,7 @@ import { MapPin, Phone, Clock, Train, Car, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
+import { useChatConfig } from "@/hooks/useChatConfig";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
 // initialCenter prop으로 전달될 때 참조 안정성을 보장
@@ -68,7 +68,8 @@ export function buildMarkerPinElement(params: {
 
 export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
-  const { t, lang } = useLang();
+  const { t } = useLang();
+  const { phoneHref, phoneDisplay } = useChatConfig();
   const [copied, setCopied] = useState(false);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const infoPanelRef = useRef<HTMLDivElement>(null);
@@ -282,11 +283,11 @@ export default function ContactSection() {
                     {phoneLabel}
                   </p>
                   <a
-                    href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
+                    href={phoneHref}
                     className="font-montserrat font-bold text-lg transition-colors hover:opacity-70"
                     style={{ color: "#4A6FA5" }}
                   >
-                    {lang === "ko" ? CLINIC_TEL : CLINIC_TEL_INTL}
+                    {phoneDisplay}
                   </a>
                 </div>
               </div>

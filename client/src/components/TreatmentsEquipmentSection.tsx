@@ -115,11 +115,8 @@ export default function TreatmentsEquipmentSection() {
           />
         </div>
 
-        {/* 시술 카드 그리드 */}
-        {(() => {
-          const cat = CATEGORIES.find((c) => c.id === activeId);
-          if (!cat) return null;
-          return (
+        {/* 시술 카드 그리드 — [R11-E] IIFE → 변수 선언으로 교체 */}
+        {CATEGORIES.find((c) => c.id === activeId) && (
             <div
               key={`content-${activeId}`}
               className="rounded-2xl mb-8 overflow-hidden"
@@ -176,8 +173,7 @@ export default function TreatmentsEquipmentSection() {
                 )}
               </div>
             </div>
-          );
-        })()}
+        )}
       </div>
     </section>
   );

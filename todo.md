@@ -2002,12 +2002,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## Round-10 시니어 검수 (A~G 7개 항목)
 
-- [ ] [A] TreatmentsEquipmentSection.tsx: useTreatmentFilter hook 연결 + 탭 중복 제거
-- [ ] [B] TreatmentsEquipmentSectionV2: 파일 부재 확인 → useTreatmentFilter가 TreatmentsEquipmentSection에 실제 적용되도록 연결
-- [ ] [C] Equipment2Detail.tsx: bySlug 단건 조회 프로시저 추가 + isLoading/isError/notFound 상태 명시적 분리
-- [ ] [D] DoctorsSection.tsx: index 기반 i18n merge → id 기반으로 교체
-- [ ] [E] ContactSection.tsx: map popup 생성 로직 helper 함수로 분리
-- [ ] [F] HeroSection.tsx: animation timing/business config/lang branching 정리
-- [ ] [G] SeoHead.tsx: page-type preset helper 구조로 개선
-- [ ] Round-10 회귀 테스트 추가 (5개 영역)
-- [ ] type-check/build/test 통과 + 체크포인트 저장
+- [x] [A] TreatmentsEquipmentSection.tsx: useTreatmentFilter hook 연결 + 탭 중복 제거
+- [x] [B] TreatmentsEquipmentSectionV2: 파일 부재 확인 → useTreatmentFilter가 TreatmentsEquipmentSection에 실제 적용되도록 연결
+- [x] [C] Equipment2Detail.tsx: bySlug 단건 조회 프로시저 추가 + isLoading/isError/notFound 상태 명시적 분리
+- [x] [D] DoctorsSection.tsx: index 기반 i18n merge → id 기반으로 교체
+- [x] [E] ContactSection.tsx: map popup 생성 로직 helper 함수로 분리
+- [x] [F] HeroSection.tsx: animation timing/business config/lang branching 정리
+- [x] [G] SeoHead.tsx: page-type preset helper 구조로 개선
+- [x] Round-10 회귀 테스트 추가 (5개 영역)
+- [x] type-check/build/test 통과 + 체크포인트 저장
+
+## Round-11 시니어 검수 (A~F 6개 항목)
+
+- [x] [R11-A] DoctorsSection: credentials locale merge 버그 수정 + non-null assertion 제거
+- [x] [R11-B] ContactSection: phone locale 분기 → useChatConfig hook phoneHref/phoneDisplay/isKO 필드 추가
+- [x] [R11-C] HeroSection: animation delay 매직넘버 → HERO_DELAYS 상수 추가
+- [x] [R11-D] SeoHead: deprecated boolean props JSDoc @deprecated 명시
+- [x] [R11-E] TreatmentsEquipmentSection: IIFE 패턴 → 변수 선언으로 교체
+- [x] [R11-F] langPrefix 중앙화: getLocalizedUrl 유틸(lib/localizedPath.ts) 신규 + 5개 파일 적용 (Equipment2Detail, About, Equipment2, NonCoveredGuide, ForeignGuide)

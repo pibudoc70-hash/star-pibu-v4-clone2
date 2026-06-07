@@ -35,6 +35,20 @@ const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8J
 
 // CharReveal, WordReveal 이제 hero/HeroAnimations.tsx에서 import
 
+/**
+ * [R11-C] 애니메이션 딜레이 매직넘버 → 명시적 상수
+ * 파일 상단 주석의 타임라인과 1:1 대응
+ */
+const HERO_DELAYS = {
+  floorBadge: "1250ms",   // 층별 안내
+  statBase: 1000,         // 수치 통계 기준 (ms)
+  statStep: 120,          // 수치 통계 stagger 간격
+  ctaFirst: "1350ms",     // 첫 번째 CTA 버튼
+  ctaSecond: "1470ms",    // 두 번째 CTA 버튼
+  ctaPhone: "1590ms",     // 전화 버튼
+  ctaScroll: "1700ms",    // 스크롤 인디케이터
+} as const;
+
 const scrollToAbout = () => {
   const el = document.querySelector("#about");
   if (el) {
@@ -185,7 +199,7 @@ export default function HeroSection() {
           color: "rgba(255,255,255,0.85)",
           fontSize: "10px",
           letterSpacing: "0.03em",
-          animationDelay: "1250ms",
+          animationDelay: HERO_DELAYS.floorBadge,
           whiteSpace: "normal",
           wordBreak: "keep-all",
           textShadow: "0 1px 4px rgba(0,0,0,0.6)",
@@ -206,7 +220,7 @@ export default function HeroSection() {
           color: "rgba(255,255,255,0.75)",
           fontSize: "clamp(0.62rem, 1.5vw, 0.8rem)",
           letterSpacing: "0.03em",
-          animationDelay: "1250ms",
+          animationDelay: HERO_DELAYS.floorBadge,
           whiteSpace: "nowrap",
           textShadow: "0 1px 4px rgba(0,0,0,0.5)",
         }}
@@ -314,7 +328,7 @@ export default function HeroSection() {
             {/* [FM-P1-5] 1400ms → 1000ms: 히어로 진입 후 통계 등장까지 400ms 단축 */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1000ms" }}
+              style={{ animationDelay: `${HERO_DELAYS.statBase}ms` }}
             >
               <div
                 style={{
@@ -359,7 +373,7 @@ export default function HeroSection() {
             {/* [FM-P1-5] 1520ms → 1120ms */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1120ms" }}
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms` }}
             >
               <div
                 style={{
@@ -404,7 +418,7 @@ export default function HeroSection() {
             {/* [FM-P1-5] 1640ms → 1240ms */}
             <div
               className="text-center hero-fade hidden sm:block"
-              style={{ animationDelay: "1240ms" }}
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms` }}
             >
               <div
                 style={{
@@ -454,7 +468,7 @@ export default function HeroSection() {
             {/* [FM-P1-5] 1640ms → 1240ms (모바일 버전) */}
             <div
               className="text-center hero-fade"
-              style={{ animationDelay: "1240ms" }}
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms` }}
             >
               <div
                 style={{
@@ -513,7 +527,7 @@ export default function HeroSection() {
               fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
               padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
               /* [FM-P1-5] 1750ms → 1350ms */
-              animationDelay: "1350ms",
+              animationDelay: HERO_DELAYS.ctaFirst,
               whiteSpace: "nowrap",
               maxWidth: "min(100%, 320px)",
               paddingRight: '19px',
@@ -542,7 +556,7 @@ export default function HeroSection() {
                 boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
                 fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
                 padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-                animationDelay: "1470ms",
+                animationDelay: HERO_DELAYS.ctaSecond,
                 whiteSpace: "nowrap",
                 minWidth: "clamp(78px, 22vw, 130px)",
                 paddingTop: '11px',
@@ -552,7 +566,7 @@ export default function HeroSection() {
               {t.hero.cta_reserve}
             </a>
             {/* 카카오/위체트 버튼 - 모바일에서 두 번째 */}
-            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: "1590ms" }}>
+            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: HERO_DELAYS.ctaPhone }}>
               <a
                 href={chatUrl}
                 target={isZH ? undefined : "_blank"}
@@ -592,7 +606,7 @@ export default function HeroSection() {
           transform: "translateX(-50%)",
           color: "rgba(255,255,255,0.55)",
           /* [FM-P1-5] 2100ms → 1700ms */
-          animationDelay: "1700ms", marginBottom: '-7px', marginLeft: '-20px',
+          animationDelay: HERO_DELAYS.ctaScroll, marginBottom: '-7px', marginLeft: '-20px',
         }}
         aria-label={t.hero.scrollLabel}
       >

@@ -96,7 +96,7 @@ export default function Home() {
         ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
         includeWebSiteSchema={true}
-        includeMedicalSchema={true}
+        pageType="home"
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "홈", url: "https://www.star-pibu.com/" },

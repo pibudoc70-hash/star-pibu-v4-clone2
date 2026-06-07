@@ -69,7 +69,7 @@ export default function LandingJA() {
         ogLocale="ja_JP"
         ogLocaleAlternates={["ko_KR", "en_US", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
-        includeMedicalSchema={true}
+        pageType="treatment"
       />
       {/* Fixed Header */}
       <Header />

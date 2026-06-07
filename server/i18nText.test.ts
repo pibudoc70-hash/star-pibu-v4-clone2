@@ -559,7 +559,9 @@ describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거
       "utf8",
     );
     expect(src).not.toMatch(/mapMarkerTitle \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC11C\uBA74/);
-    edescribe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () => {
+  });
+});
+describe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () => {
   const { readFileSync } = require("node:fs");
   const nodePath = require("node:path");
 
@@ -586,7 +588,8 @@ describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거
     );
     expect(src).toMatch(/pageType="admin"/);
   });
-});1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
+});
+describe("1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
   const { readFileSync } = require("node:fs");
   const nodePath = require("node:path");
 

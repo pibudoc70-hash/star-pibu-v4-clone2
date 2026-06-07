@@ -57,7 +57,7 @@ export default function LandingEN() {
         ogLocale="en_US"
         ogLocaleAlternates={["ko_KR", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
-        includeMedicalSchema={true}
+        pageType="treatment"
       />
       {/* [PROD-P2-3] 다국어 랜딩 페이지에도 MedicalBusiness 스키마 삽입 (Google 검색 결과 리치 스니펫) */}
       {/* Fixed Header */}

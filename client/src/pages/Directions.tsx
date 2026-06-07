@@ -52,7 +52,7 @@ export default function Directions() {
         canonical="https://www.star-pibu.com/directions"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
-              includeMedicalSchema={true}
+              pageType="treatment"
 
       />
       {/* 페이지 헤더 */}

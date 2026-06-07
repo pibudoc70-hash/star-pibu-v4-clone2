@@ -10,18 +10,11 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { Lang } from "@/lib/i18n";
 import { getLocaleBase } from "../../../shared/pathUtils";
+import type { NavItem as NavItemBase, LangOption as LangOptionBase } from "../../../shared/navConfig";
 
-export interface LangOption {
-  lang: Lang;
-  label: string;
-  flag: string;
-}
-
-export interface NavItem {
-  label: string;
-  href: string;
-  sectionId: string | null;
-}
+// re-export for backward compatibility
+export type NavItem = NavItemBase;
+export type LangOption = Omit<LangOptionBase, "lang"> & { lang: Lang };
 
 export function useHeaderState() {
   const [scrolled, setScrolled] = useState(false);

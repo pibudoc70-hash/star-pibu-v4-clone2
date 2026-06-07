@@ -121,15 +121,15 @@ describe("Stat suffix source-of-truth (PR-46/47)", () => {
 describe("SeoHead includeClinicSchema=false (PR-46)", () => {
   // [PHASE-4] includeClinicSchema → includeMedicalSchema 마이그레이션 (2026-06-06)
   // 레거시 prop은 제거되었으므로 includeMedicalSchema={false}로 검증
-  it("TreatmentPage에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+  it(`TreatmentPage에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
     expect(treatmentPageSource).toContain('pageType="admin"');
   });
 
-  it("TreatmentDetail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+  it(`TreatmentDetail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
     expect(treatmentDetailSource).toContain('pageType="admin"');
   });
 
-  it("Equipment2Detail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)", () => {
+  it(`Equipment2Detail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
     expect(equipment2DetailSource).toContain('pageType="admin"');
   });
 

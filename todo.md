@@ -1695,11 +1695,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P2 — 다음 PR에서 처리 권장
 - [x] CTA-P2-1: FAQSection.tsx 하단 CTA — 하드코딩 WeChat/Kakao → useChatConfig 연동 [이전 배치 완료]
 - [x] CTA-P2-2: FloatingCTA.tsx — chatBg/chatColor 인라인 재계산 제거, useChatConfig 반환값 직접 사용 (중국어 aria 오타 수정 포함)
-- [ ] NAV-P2-1: Header.tsx primaryNav/secondaryNav 배열을 별도 상수 파일(shared/navConfig.ts)로 분리
+- [x] NAV-P2-1: Header.tsx primaryNav/secondaryNav 배열을 별도 상수 파일(shared/navConfig.ts)로 분리
 
 ### P3 — 기술 부채 (백로그)
 - [ ] REFACTOR-P3-1: TreatmentsEquipmentSection.tsx (레거시) — TREATMENTS 인라인 데이터 DB 마이그레이션 후 파일 제거
-- [ ] REFACTOR-P3-2: App.tsx MapErrorBoundary — 전용 파일로 분리
+- [x] REFACTOR-P3-2: App.tsx MapErrorBoundary — 전용 파일로 분리
 
 ## 전체 코드 냉정 검수 — 시니어 개발자 리뷰 Round 3 (2026-06)
 
@@ -1716,8 +1716,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] FLOATINGCTA-P2-A: FloatingCTA.tsx — labels 객체 인라인 분기 → t.floatingCta.* 직접 사용 (i18n.ts floatingCta 블록 신규 추가 완료)
 
 ### P3 — 선택적 개선 (보류)
-- [ ] CONTACT-P3-A: ContactSection.tsx — 지도 마커 팝업 클릭 토글 로직을 React state로 관리
-- [ ] CONTACT-P3-B: ContactSection.tsx — 지도 높이 계산 로직을 커스텀 훅으로 분리
+- [x] CONTACT-P3-A: ContactSection.tsx — 지도 마커 팝업 클릭 토글 로직을 React state로 관리
+- [x] CONTACT-P3-B: ContactSection.tsx — 지도 높이 계산 로직을 커스텀 훅으로 분리
 
 ## 외국어 페이지 번역 누락 근본 해결 (2026-06-06)
 
@@ -1962,21 +1962,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## Round-8 시니어 재검수 (2026-06-07)
 
 ### P1: 전화번호/WeChat/로딩/alt 하드코딩 제거
-- [ ] P1: FloatingCTA.tsx 전화번호 하드코딩 3곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
-- [ ] P1: WelcomePopup.tsx 전화번호 하드코딩 4곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
-- [ ] P1: Footer.tsx 전화번호 하드코딩 1곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
-- [ ] P1: FloatingCTA.tsx "已复制!" 하드코딩 2곳 → t.access.copiedLabel 교체
-- [ ] P1: Header.tsx "已复制 WeChat ID" 하드코딩 2곳 → i18n 키 교체
-- [ ] P1: SpecialEventSection.tsx 로딩 텍스트 4중 삼항 → t.events.loading 교체
-- [ ] P1: PhilosophySection.tsx 이미지 alt 4중 삼항 → t.about.consultationAlt 키 추가 후 교체
-- [ ] P1/P2: i18n.types.ts teamLabel/mapViewLabel/mapAddressShort optional → required 변경
-- [ ] P1/P2: DoctorsSection.tsx teamLabel ?? "Medical Team" → 단언(!) 교체
-- [ ] P1/P2: Map.tsx mapViewLabel/mapAddressShort ?? fallback → 단언(!) 교체
-- [ ] P2: FacilitySection.tsx 슬라이드 버튼 aria-label 영어 하드코딩 6곳 → i18n 키 추가 후 교체
-- [ ] P2: server/routers.ts 914줄 → server/routers/ 디렉토리 분리 (auth/equipment/reservation/system)
-- [ ] 회귀 테스트 추가 (round8.regression.test.ts)
-- [ ] 전체 검증: TypeScript 0건, test 전체 통과
-- [ ] 최종 커밋
+- [x] P1: FloatingCTA.tsx 전화번호 하드코딩 3곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [x] P1: WelcomePopup.tsx 전화번호 하드코딩 4곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [x] P1: Footer.tsx 전화번호 하드코딩 1곳 → CLINIC_TEL/CLINIC_TEL_INTL 상수 교체
+- [x] P1: FloatingCTA.tsx "已复制!" 하드코딩 2곳 → t.access.copiedLabel 교체
+- [x] P1: Header.tsx "已复制 WeChat ID" 하드코딩 2곳 → i18n 키 교체
+- [x] P1: SpecialEventSection.tsx 로딩 텍스트 4중 삼항 → t.events.loading 교체
+- [x] P1: PhilosophySection.tsx 이미지 alt 4중 삼항 → t.about.consultationAlt 키 추가 후 교체
+- [x] P1/P2: i18n.types.ts teamLabel/mapViewLabel/mapAddressShort optional → required 변경
+- [x] P1/P2: DoctorsSection.tsx teamLabel ?? "Medical Team" → 단언(!) 교체
+- [x] P1/P2: Map.tsx mapViewLabel/mapAddressShort ?? fallback → 단언(!) 교체
+- [x] P2: FacilitySection.tsx 슬라이드 버튼 aria-label 영어 하드코딩 6곳 → i18n 키 추가 후 교체
+- [x] P2: server/routers.ts 914줄 → server/routers/ 디렉토리 분리 (auth/equipment/reservation/system)
+- [x] 회귀 테스트 추가 (round8.regression.test.ts)
+- [x] 전체 검증: TypeScript 0건, test 전체 통과
+- [x] 최종 커밋
 
 ## Round-9 시니어 검수 수정 (전체 14개 항목)
 

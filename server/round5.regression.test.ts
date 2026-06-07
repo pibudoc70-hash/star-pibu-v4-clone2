@@ -172,7 +172,7 @@ describe("E. i18n - doctors 접근성 키 + managementDevices 스크롤 키 + ko
 describe("F. Home.tsx - pageType 명시", () => {
   const src = read("client/src/pages/Home.tsx");
 
-  it("Home.tsx SeoHead에 pageType="home"이 명시되어야 한다", () => {
+  it(`Home.tsx SeoHead에 pageType="home"이 명시되어야 한다`, () => {
     expect(src).toContain('pageType="home"');
   });
 });

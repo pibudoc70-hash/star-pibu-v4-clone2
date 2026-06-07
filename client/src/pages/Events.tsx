@@ -54,7 +54,7 @@ export default function Events() {
         canonical="https://www.star-pibu.com/events"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
-        includeMedicalSchema={true}
+        pageType="treatment"
       />
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">

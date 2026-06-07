@@ -8,14 +8,17 @@
  * CONTACT-P1-B: 마커 팝업 언어별 분기 (ko/en/ja/zh)
  * CONTACT-P1-C: bounds_changed → idle 1회 리스너 (무한루프 방지)
  * CONTACT-P2-A: labels 객체 제거 → t.access.* i18n 키 직접 사용
+ * CONTACT-P3-A: 팝업 토글 로직 React state로 관리 (onToggle 콜백)
+ * CONTACT-P3-B: 지도 높이 계산 로직 useMapHeight 커스텀 훅으로 분리
  */
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { MapPin, Phone, Clock, Train, Car, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { useMapHeight } from "@/hooks/useMapHeight";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
 // initialCenter prop으로 전달될 때 참조 안정성을 보장
@@ -33,8 +36,9 @@ export function buildMarkerPinElement(params: {
   addrLine2: string;
   exitLabel: string;
   walkLabel: string;
+  onToggle?: (visible: boolean) => void;
 }): HTMLElement {
-  const { clinicName, addrLine1, addrLine2, exitLabel, walkLabel } = params;
+  const { clinicName, addrLine1, addrLine2, exitLabel, walkLabel, onToggle } = params;
   const pinEl = document.createElement("div");
   pinEl.style.cssText = "position:relative;cursor:pointer;";
   pinEl.innerHTML = `
@@ -55,12 +59,14 @@ export function buildMarkerPinElement(params: {
       <div style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid white;"></div>
     </div>
   `;
+  // CONTACT-P3-A: popupVisible을 클로저 변수로 유지하되 onToggle 콜백으로 React state와 연동
   let popupVisible = true;
   pinEl.addEventListener("click", () => {
     const popup = pinEl.querySelector("#star-map-popup") as HTMLElement | null;
     if (popup) {
       popupVisible = !popupVisible;
       popup.style.display = popupVisible ? "block" : "none";
+      onToggle?.(popupVisible);
     }
   });
   return pinEl;
@@ -71,56 +77,11 @@ export default function ContactSection() {
   const { t } = useLang();
   const { phoneHref, phoneDisplay } = useChatConfig();
   const [copied, setCopied] = useState(false);
+  // CONTACT-P3-A: 팝업 토글 상태 React state로 관리
+  const [markerPopupVisible, setMarkerPopupVisible] = useState(true);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const infoPanelRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<google.maps.Map | null>(null);
-  const [mapHeight, setMapHeight] = useState("400px");
-  // CONTACT-P1-A: lazy initializer — window 접근을 렌더 외부로 이동
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 1024);
-
-  // 오른쪽 정보 패널의 높이를 기반으로 지도 높이 동적 계산 (PC에서만)
-  useEffect(() => {
-    const updateMapHeight = () => {
-      const isCurrentlyMobile = window.innerWidth < 1024;
-      setIsMobile(isCurrentlyMobile);
-
-      if (!isCurrentlyMobile && infoPanelRef.current) {
-        const height = infoPanelRef.current.offsetHeight;
-        setMapHeight(`${height}px`);
-      } else if (isCurrentlyMobile) {
-        setMapHeight("400px");
-      }
-
-      if (mapInstanceRef.current) {
-        setTimeout(() => {
-          mapInstanceRef.current?.setCenter(STAR_LOCATION);
-        }, 0);
-      }
-    };
-
-    // CONTACT-P2-B: 중복 타이머 → rAF + 단일 fallback 타이머
-    let rafId = requestAnimationFrame(updateMapHeight);
-    const initTimer = setTimeout(updateMapHeight, 300);
-
-    const observer = new ResizeObserver(() => {
-      if (!isMobile && infoPanelRef.current) {
-        const height = infoPanelRef.current.offsetHeight;
-        setMapHeight(`${height}px`);
-      }
-    });
-    if (infoPanelRef.current) {
-      observer.observe(infoPanelRef.current);
-    }
-
-    window.addEventListener("resize", updateMapHeight);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateMapHeight);
-      cancelAnimationFrame(rafId);
-      clearTimeout(initTimer);
-    };
-  }, [isMobile]);
+  // CONTACT-P3-B: 지도 높이 계산 로직을 useMapHeight 커스텀 훅으로 분리
+  const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
 
   // 주소 복사
   const handleCopyAddress = async () => {
@@ -189,6 +150,7 @@ export default function ContactSection() {
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
             style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
             aria-label={t.access.mapAriaLabel}
+            data-popup-visible={markerPopupVisible}
           >
             <MapView
               className="w-full h-full"
@@ -208,12 +170,14 @@ export default function ContactSection() {
                 }
 
                 // [E항목] buildMarkerPinElement 순수 함수로 위임 (테스트 가능)
+                // CONTACT-P3-A: onToggle 콜백으로 팝업 상태를 React state와 연동
                 const pinEl = buildMarkerPinElement({
                   clinicName: t.access.mapPopupClinicName,
                   addrLine1: t.access.mapPopupAddrLine1,
                   addrLine2: t.access.mapPopupAddrLine2,
                   exitLabel: t.access.mapPopupExitLabel,
                   walkLabel: t.access.mapPopupWalkLabel,
+                  onToggle: setMarkerPopupVisible,
                 });
 
                 const g = window.google;

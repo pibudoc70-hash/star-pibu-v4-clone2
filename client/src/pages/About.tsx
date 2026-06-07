@@ -82,7 +82,7 @@ export default function About() {
         ogSiteName={SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}
-        includeMedicalSchema={true}
+        pageType="treatment"
       />
       {/* 피부과 소개 섹션 - About Us */}
       <section className="py-16 md:py-24 bg-white">

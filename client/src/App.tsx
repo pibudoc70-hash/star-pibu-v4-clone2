@@ -4,51 +4,9 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider, useLang } from "./contexts/LangContext";
-import { lazy, Suspense, useEffect, Component, ReactNode } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Home from "./pages/Home";
-
-// ErrorBoundary for Map component
-class MapErrorBoundary extends Component<
-  { children: ReactNode },
-  { hasError: boolean }
-> {
-  constructor(props: { children: ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error) {
-    console.warn("[MapErrorBoundary] Map component failed to load:", error);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-2xl">
-          <a
-            href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors"
-          >
-            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#FFCD00" }}>
-              <span className="text-2xl font-bold" style={{ color: "#3C1E1E" }}>K</span>
-            </div>
-            <div>
-              <p className="font-bold text-gray-800 text-lg">카카오맵에서 보기</p>
-              <p className="text-gray-500 text-sm mt-1">부산 서면 아이온시티빌딩 4층(접수·진료) / 2층(줄기세포 연구센터)</p>
-            </div>
-          </a>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
+import MapErrorBoundary from "./components/MapErrorBoundary";
 
 // 동적 import로 라우트별 코드 스플리팅
 const NotFound = lazy(() => import("@/pages/NotFound"));

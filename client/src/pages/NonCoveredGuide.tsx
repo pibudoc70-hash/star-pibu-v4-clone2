@@ -142,7 +142,7 @@ export default function NonCoveredGuide() {
           "/ja/non-covered",
           "/zh/non-covered",
         )}
-        includeMedicalSchema={true}
+        pageType="treatment"
       />
       <Header />
       <main className="pt-20">

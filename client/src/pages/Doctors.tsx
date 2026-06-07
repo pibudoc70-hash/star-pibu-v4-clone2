@@ -42,7 +42,7 @@ export default function Doctors() {
         canonical="https://www.star-pibu.com/doctors"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
-              includeMedicalSchema={true}
+              pageType="treatment"
 
       />
       {/* 페이지 헤더 */}

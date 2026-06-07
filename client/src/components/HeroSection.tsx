@@ -1,23 +1,20 @@
 /**
- * HeroSection — STAR 피부과 (Luxury Minimal Medical Redesign)
+ * HeroSection - STAR 피부과
  *
- * 디자인 원칙:
- * - 브랜드 무드 우선: 첫 화면에서 premium clinic 느낌이 먼저 전달
- * - 정보 밀도 최소화: 병원명 + 슬로건 + CTA 2개 + 통계 strip
- * - 시네마틱 오버레이: 상단 어둠 → 중앙 투명 → 하단 어둠 구조
- * - Motion system: DS.motion 토큰 기반, 등장 애니메이션 절제
- * - 통계는 Hero 하단 strip으로 분리 (정보 계층 명확화)
+ * 애니메이션 시스템:
+ * - 로고: heroFadeUp (0.0s)
+ * - 병원명 "스타피부과": 글자별 charReveal stagger (0.3s~)
+ * - 개원 배지: heroFadeUp (0.75s)
+ * - 슬로건 단어별: wordReveal stagger (0.9s~)
+ * - 층별 안내: heroFadeUp (1.25s)
+ * - 수치 통계: heroFadeUp stagger (1.4s~)
+ * - CTA 버튼: heroFadeUp stagger (1.7s~)
+ * - 스크롤 인디케이터: heroFadeUp (2.1s)
  *
- * 애니메이션 타임라인:
- * - 로고:       0ms
- * - 병원명:     300ms (charReveal stagger)
- * - 슬로건:     900ms (wordReveal stagger)
- * - CTA 버튼:   1200ms / 1350ms
- * - 통계 strip: 1500ms stagger
- * - 스크롤:     1700ms
+ * 모두 cubic-bezier(0.16, 1, 0.3, 1) spring easing — 팝업/섹션과 동일
  */
-import React, { useRef, useState } from "react";
-import { Calendar, ChevronDown, Phone } from "lucide-react";
+import { useRef, useState } from "react";
+import { MessageCircle, Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -26,14 +23,31 @@ import { useClinicStats } from "@/hooks/useClinicStats";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import GoldParticles from "@/components/hero/GoldParticles";
 import { CharReveal, WordReveal } from "@/components/hero/HeroAnimations";
-import { DS } from "@/components/ui/DesignSystem";
 
-// ── 이미지 URL ─────────────────────────────────────────────────────────────────
+// GoldParticles 이제 hero/GoldParticles.tsx에서 import
+
+// 반응형 이미지 URL (WebP + JPEG 폴백)
 const HERO_IMAGE_DESKTOP_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp";
-const HERO_IMAGE_DESKTOP_JPG  = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop.jpg";
-const HERO_IMAGE_MOBILE_WEBP  = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile_f9bea0c7.webp";
-const HERO_IMAGE_MOBILE_JPG   = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
+const HERO_IMAGE_DESKTOP_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop.jpg";
+const HERO_IMAGE_MOBILE_PORTRAIT_WEBP = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile_f9bea0c7.webp";
+const HERO_IMAGE_MOBILE_PORTRAIT_JPG = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile.jpg";
 const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/star_ai_logo_1_73172f49.png";
+
+// CharReveal, WordReveal 이제 hero/HeroAnimations.tsx에서 import
+
+/**
+ * [R11-C] 애니메이션 딜레이 매직넘버 → 명시적 상수
+ * 파일 상단 주석의 타임라인과 1:1 대응
+ */
+const HERO_DELAYS = {
+  floorBadge: "1250ms",   // 층별 안내
+  statBase: 1000,         // 수치 통계 기준 (ms)
+  statStep: 120,          // 수치 통계 stagger 간격
+  ctaFirst: "1350ms",     // 첫 번째 CTA 버튼
+  ctaSecond: "1470ms",    // 두 번째 CTA 버튼
+  ctaPhone: "1590ms",     // 전화 버튼
+  ctaScroll: "1700ms",    // 스크롤 인디케이터
+} as const;
 
 const scrollToAbout = () => {
   const el = document.querySelector("#about");
@@ -45,71 +59,15 @@ const scrollToAbout = () => {
   }
 };
 
-// ── StatStrip 아이템 ────────────────────────────────────────────────────────────
-interface StatStripItemProps {
-  value: string | number;
-  unit: string;
-  label: string;
-  isDone: boolean;
-  delayIndex: number; // 0, 1, 2 — CSS stagger
-}
-
-function StatStripItem({ value, unit, label, isDone, delayIndex }: StatStripItemProps) {
-  return (
-    <div
-      className="hero-fade text-center"
-      style={{ animationDelay: `${1.5 + delayIndex * 0.12}s` }}
-    >
-      {/* 수치 */}
-      <div
-        className="font-bold tabular-nums leading-none"
-        style={{
-          color: isDone ? DS.color.goldLight : "rgba(255,255,255,0.92)",
-          fontSize: "clamp(1.05rem, 3.2vw, 1.6rem)",
-          fontFamily: "'Montserrat', sans-serif",
-          transition: `color ${DS.motion.slow} ${DS.motion.ease}`,
-        }}
-      >
-        {value}
-        <span className="font-light" style={{ fontSize: "58%", opacity: 0.75, marginLeft: "2px" }}>
-          {unit}
-        </span>
-      </div>
-      {/* 골드 언더라인 */}
-      <div
-        aria-hidden="true"
-        style={{
-          height: "1px",
-          background: `linear-gradient(90deg, transparent, ${DS.color.gold}, transparent)`,
-          marginTop: "5px",
-          transform: isDone ? "scaleX(1)" : "scaleX(0)",
-          transition: `transform ${DS.motion.slow} ${DS.motion.spring}`,
-          transformOrigin: "center",
-        }}
-      />
-      {/* 레이블 */}
-      <p
-        className="uppercase"
-        style={{
-          color: "rgba(255,255,255,0.45)",
-          fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)",
-          letterSpacing: "0.08em",
-          marginTop: "5px",
-        }}
-      >
-        {label}
-      </p>
-    </div>
-  );
-}
-
-// ── HeroSection ────────────────────────────────────────────────────────────────
 export default function HeroSection() {
   const { t, lang } = useLang();
-  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH, phoneHref } = useChatConfig();
+  // [PROD-P4-2] useChatConfig 훅으로 인라인 URL 로직 중앙화
+  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
+  // [F항목] WECHAT_ID 중복 선언 제거 → constants.ts에서 import
+  // 중국어일 때 위체 클립보드 복사를 위해 href="#" 유지
   const chatUrl = isZH ? "#" : rawChatUrl;
+  const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
   const [wechatCopied, setWechatCopied] = useState(false);
-
   const handleWechatClick = (e: React.MouseEvent) => {
     if (!isZH) return;
     e.preventDefault();
@@ -118,29 +76,58 @@ export default function HeroSection() {
       setTimeout(() => setWechatCopied(false), 2500);
     });
   };
-
+  // 통계 섹션 IntersectionObserver ref
   const statsRef = useRef<HTMLDivElement>(null);
+  // useClinicStats Hook으로 단위 문자열 중앙화
   const clinicStats = useClinicStats();
+  // 스크롤 진입 시 카운팅 애니메이션 (0 → 목표값)
+  // [PROD-P1-3] 카운팅 duration 3500ms → 2000ms: rAF 루프 1.5초 단축 → 메인스레드 부담 감소
   const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 2000, "", 0, statsRef, lang);
-  const { value: count20,   isDone: done20   } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef, lang);
-  const { value: count50,   isDone: done50   } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef, lang);
-
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef, lang);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef, lang);
   return (
     <section
       id="home"
       className="relative flex flex-col items-center justify-center overflow-hidden"
-      style={{ minHeight: "100svh" }}
+      style={{
+        minHeight: "100svh",
+      }}
     >
-      {/* ── 배경 이미지 (LCP 최적화) ── */}
+      {/*
+       * [PROD-P1-1] LCP 최적화: CSS background-image → <picture> 태그 교체
+       * 이유: CSS background-image는 브라우저 프리로드 스캐너가 파싱 불가능.
+       * <picture> + <img fetchPriority="high"> 는 HTML 파싱 단계에서 즉시 감지되어
+       * LCP 이미지 요청이 최소 200~400ms 앞당겨짐.
+       * index.html의 <link rel="preload">와 이중 보장으로 LCP 최적화.
+       */}
       <picture
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{ display: "block" }}
       >
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGE_DESKTOP_WEBP} type="image/webp" />
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGE_DESKTOP_JPG}  type="image/jpeg" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGE_MOBILE_WEBP}  type="image/webp" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGE_MOBILE_JPG}   type="image/jpeg" />
+        {/* 데스크탑: 641px 이상 */}
+        <source
+          media="(min-width: 641px)"
+          srcSet={HERO_IMAGE_DESKTOP_WEBP}
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 641px)"
+          srcSet={HERO_IMAGE_DESKTOP_JPG}
+          type="image/jpeg"
+        />
+        {/* 모바일: 640px 이하 */}
+        <source
+          media="(max-width: 640px)"
+          srcSet={HERO_IMAGE_MOBILE_PORTRAIT_WEBP}
+          type="image/webp"
+        />
+        <source
+          media="(max-width: 640px)"
+          srcSet={HERO_IMAGE_MOBILE_PORTRAIT_JPG}
+          type="image/jpeg"
+        />
+        {/* fallback img — fetchPriority="high"로 LCP 우선 로드 */}
         <img
           src={HERO_IMAGE_DESKTOP_JPG}
           alt=""
@@ -148,62 +135,92 @@ export default function HeroSection() {
           loading="eager"
           decoding="sync"
           style={{
-            position: "absolute", inset: 0,
-            width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center center",
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
           }}
         />
       </picture>
-
-      {/* ── 시네마틱 오버레이 (단일 레이어로 단순화) ── */}
+      {/* 오버레이 - 밝은 베이지 인테리어 사진에 맞게 조정 */}
+      {/* 상단·하단에 어두운 그라디언트 → 텍스트 가독성 확보, 중앙은 사진 그대로 노출 */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(5,10,25,0.72) 0%, rgba(5,10,25,0.22) 42%, rgba(5,10,25,0.30) 62%, rgba(5,10,25,0.88) 100%)",
+            "linear-gradient(to bottom, rgba(10,18,40,0.72) 0%, rgba(10,18,40,0.38) 35%, rgba(10,18,40,0.42) 65%, rgba(10,18,40,0.80) 100%)",
         }}
       />
-      {/* 좌우 비네팅 */}
+      {/* 좌우 비네팅 — 사진 중앙 집중 */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
-          background: "radial-gradient(ellipse at center, transparent 50%, rgba(3,7,18,0.30) 100%)",
+          background:
+            "radial-gradient(ellipse at center, transparent 40%, rgba(5,10,25,0.45) 100%)", paddingTop: '7px', marginTop: '1px',
         }}
       />
+      {/* 상단 조명 Soft Glow — 천장 조명의 골드빛 일렁임 */}
+      <div
+        aria-hidden="true"
+        className="absolute pointer-events-none"
+        style={{
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "70%",
+          height: "38%",
+          background:
+            "radial-gradient(ellipse at 50% 0%, rgba(210,172,103,0.9) 0%, rgba(210,172,103,0.3) 45%, transparent 75%)",
+          animation: "softGlow 10s ease-in-out infinite",
+          opacity: 0.15,
+          mixBlendMode: "screen",
+          willChange: "opacity",
+        }}
+      />
+      {/* 금색 빛 가루 파티클 */}
       <GoldParticles />
 
-      {/* ── 층별 안내 — 모바일 ── */}
+      {/* 층별 안내 - 모바일 전용: 헤더 바로 아래 중앙 */}
+      {/*
+       * [MOB-1] 영어(85자) floor 텍스트가 whiteSpace:nowrap + 하드코딩 marginLeft:-142px로
+       * 화면 밖으로 잘리는 문제 수정.
+       * → whiteSpace:normal + width:90vw + text-center로 자연스럽게 줄바꿈 처리
+       */}
       <p
-        className="hero-fade absolute z-20 md:hidden text-center"
+        className="hero-fade absolute z-20 md:hidden"
         style={{
           top: "22px",
           left: "50%",
           transform: "translateX(-50%)",
-          color: "rgba(255,255,255,0.7)",
+          color: "rgba(255,255,255,0.85)",
           fontSize: "10px",
-          letterSpacing: "0.04em",
-          animationDelay: "1.1s",
+          letterSpacing: "0.03em",
+          animationDelay: HERO_DELAYS.floorBadge,
           whiteSpace: "normal",
           wordBreak: "keep-all",
           textShadow: "0 1px 4px rgba(0,0,0,0.6)",
+          textAlign: "center",
           width: "90vw",
           lineHeight: 1.4,
         }}
       >
         {t.hero.floor}
       </p>
-      {/* 층별 안내 — 데스크톱 */}
+
+      {/* 층별 안내 - 데스크톱: 우상단 고정 */}
       <p
         className="hero-fade absolute z-20 hidden md:block"
         style={{
           top: "clamp(72px, 10vh, 90px)",
           right: "clamp(16px, 4vw, 40px)",
-          color: "rgba(255,255,255,0.55)",
-          fontSize: "clamp(0.6rem, 1.3vw, 0.72rem)",
-          letterSpacing: "0.04em",
-          animationDelay: "1.1s",
+          color: "rgba(255,255,255,0.75)",
+          fontSize: "clamp(0.62rem, 1.5vw, 0.8rem)",
+          letterSpacing: "0.03em",
+          animationDelay: HERO_DELAYS.floorBadge,
           whiteSpace: "nowrap",
           textShadow: "0 1px 4px rgba(0,0,0,0.5)",
         }}
@@ -211,210 +228,393 @@ export default function HeroSection() {
         {t.hero.floor}
       </p>
 
-      {/* ── 메인 콘텐츠 ── */}
+      {/* 콘텐츠 */}
       <div
         className="relative z-10 text-center flex flex-col items-center w-full"
         style={{
-          maxWidth: "min(640px, 94vw)",
+          maxWidth: "min(680px, 96vw)",
           padding: "0 clamp(1.25rem, 6vw, 2rem)",
-          paddingTop: "clamp(100px, 18vh, 160px)",
-          paddingBottom: "clamp(80px, 12vh, 140px)",
+          paddingTop: '141px',
+          paddingBottom: "clamp(40px, 6vh, 100px)",
           boxSizing: "border-box",
+          paddingRight: '35px',
+          marginTop: '-47px',
         }}
       >
-        {/* 로고 */}
+
+        {/* ── 로고 (입체감 강화 + 금색 테두리) ── */}
         <div
           className="hero-fade"
-          style={{ animationDelay: "0s", marginBottom: "clamp(0.5rem, 2vh, 1.25rem)", display: "flex", justifyContent: "center" }}
+          style={{
+            animationDelay: "0ms",
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "clamp(0.25rem, 1.5vh, 1.75rem)",
+          }}
         >
-          <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            {/* 배경 glow halo */}
-            <div
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: "-20px",
-                borderRadius: "50%",
-                background: "radial-gradient(ellipse at center, rgba(245,215,142,0.55) 0%, rgba(201,168,76,0.28) 45%, transparent 72%)",
-                filter: "blur(14px)",
-                animation: "logoPulse 3.5s ease-in-out infinite",
-                pointerEvents: "none",
-              }}
-            />
+          {/* 로고 */}
+          <div style={{ position: "relative" }}>
             <OptimizedImage
               src={LOGO_IMAGE}
               alt="스타피부과 로고"
               priority={true}
-              width={200}
-              height={200}
+              width={220}
+              height={220}
               style={{
-                height: "clamp(88px, 22vw, 160px)",
-                width: "clamp(88px, 22vw, 160px)",
+                height: 'clamp(120px, 30vw, 220px)',
+                width: 'clamp(120px, 30vw, 220px)',
                 objectFit: "contain",
-                display: "block",
-                position: "relative",
-                filter: "drop-shadow(0 0 20px rgba(245,215,142,0.85)) drop-shadow(0 0 8px rgba(201,168,76,0.65)) drop-shadow(0 6px 18px rgba(0,0,0,0.50))",
+                display: "block", marginTop: '-31px',
               }}
             />
           </div>
         </div>
 
-        {/* 병원명 */}
+        {/* ── 병원명: 글자별 charReveal ── */}
         <h1
           className="font-bold"
           style={{
             color: "#FFFFFF",
-            fontSize: "clamp(1.2rem, 4.5vw, 2.8rem)",
-            marginBottom: "clamp(0.5rem, 1.5vh, 1rem)",
+            fontSize: "clamp(1.1rem, 4.2vw, 2.8rem)",
+            marginBottom: "clamp(0.3rem, 1.2vh, 0.75rem)",
             fontFamily: "'Noto Sans KR', sans-serif",
-            letterSpacing: "clamp(0.06em, 1.8vw, 0.14em)",
-            textShadow: "0 2px 20px rgba(0,0,0,0.30)",
-            lineHeight: 1.15,
+            letterSpacing: "clamp(0.04em, 1.5vw, 0.12em)",
+            textShadow: "0 3px 16px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.15)",
+            lineHeight: 1.2,
           }}
         >
-          <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
+          <CharReveal
+            text={t.hero.title}
+            startDelay={300}
+            charGap={60}
+          />
         </h1>
 
-        {/* 슬로건 */}
+
+
+        {/* ── 슬로건: 단어별 wordReveal ── */}
         <p
           className="font-light"
           style={{
-            color: "rgba(255,255,255,0.82)",
-            fontSize: "clamp(0.88rem, 2.8vw, 1.35rem)",
-            marginBottom: "clamp(1.5rem, 4vh, 2.5rem)",
-            letterSpacing: "0.015em",
-            lineHeight: 1.6,
+            color: "rgba(255,255,255,0.9)",
+            fontSize: "clamp(0.85rem, 3vw, 1.45rem)",
+            marginBottom: "clamp(0.2rem, 0.8vh, 0.5rem)",
+            letterSpacing: "0.02em",
           }}
         >
-          <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
+          <WordReveal
+            text={t.hero.subtitle}
+            startDelay={900}
+            wordGap={85}
+          />
         </p>
 
-        {/* ── CTA 버튼 2개 ── */}
-        <div
-          className="flex flex-col sm:flex-row items-center justify-center w-full"
-          style={{ gap: "clamp(0.6rem, 2vw, 0.75rem)", maxWidth: "480px" }}
-        >
-          {/* Primary: 예약/채팅 */}
-          <div className="relative hero-fade w-full sm:w-auto" style={{ animationDelay: "1.2s" }}>
-            <a
-              href={chatUrl}
-              target={isZH ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              onClick={handleWechatClick}
-              className="flex items-center gap-2 justify-center w-full sm:w-auto"
-              style={{
-                background: chatBg,
-                color: chatColor,
-                borderRadius: DS.radius.pill,
-                fontWeight: 700,
-                fontSize: "clamp(0.78rem, 2.5vw, 0.9rem)",
-                padding: "clamp(0.65rem, 2vw, 0.8rem) clamp(1.4rem, 4vw, 2rem)",
-                boxShadow: isZH
-                  ? "0 4px 20px rgba(7,193,96,0.3)"
-                  : "0 4px 20px rgba(254,229,0,0.25)",
-                transition: `all ${DS.motion.base} ${DS.motion.ease}`,
-                whiteSpace: "nowrap",
-                textDecoration: "none",
-                minWidth: "clamp(140px, 40vw, 200px)",
-              }}
-            >
-              <Calendar size={15} />
-              {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
-            </a>
-            {wechatCopied && isZH && (
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">
-                ID: {WECHAT_ID}
-              </div>
-            )}
-          </div>
 
-          {/* Secondary: 전화 */}
+
+        {/* ── 수치 통계: 모바일 2+1 레이아웃, 데스크탑 3열 ── */}
+        <div
+          ref={statsRef}
+          style={{
+            marginBottom: "clamp(1rem, 3vh, 2.5rem)",
+            width: "100%",
+          }}
+        >
+          {/* 데스크톱: 3열 / 모바일: 상단 2열 */}
+          <div
+            className="flex justify-center"
+            style={{ gap: "clamp(1rem, 5vw, 3rem)", paddingTop: '30px' }}
+          >
+            {/* 20년+ - 첫 번째 */}
+            {/* [FM-P1-5] 1400ms → 1000ms: 히어로 진입 후 통계 등장까지 400ms 단축 */}
+            <div
+              className="text-center hero-fade"
+              style={{ animationDelay: `${HERO_DELAYS.statBase}ms` }}
+            >
+              <div
+                style={{
+                  color: done20 ? "#F5D78E" : "rgba(255,255,255,0.97)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 700,
+                  textShadow: done20
+                    ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
+                    : "0 2px 10px rgba(0,0,0,0.4)",
+                  lineHeight: 1,
+                  /* [FM-P1-6] 0.7s → 0.5s: 카운터 완료 시 금색 전환 속도 개선 */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "2ch",
+                  display: "inline-block",
+                  textAlign: "right",
+                }}
+              >
+                {count20}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.years.unit}</span>
+              </div>
+              <div style={{
+                height: "1.5px",
+                background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+                marginTop: "6px",
+                transform: done20 ? "scaleX(1)" : "scaleX(0)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+                transformOrigin: "center",
+              }} />
+              <div
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
+                  letterSpacing: "0.04em", paddingTop: '8px',
+                }}
+              >
+                {t.about.stats[0].label}
+              </div>
+            </div>
+            {/* 4,000회+ - 두 번째 */}
+            {/* [FM-P1-5] 1520ms → 1120ms */}
+            <div
+              className="text-center hero-fade"
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms` }}
+            >
+              <div
+                style={{
+                  color: done4000 ? "#F5D78E" : "rgba(255,255,255,0.97)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 700,
+                  textShadow: done4000
+                    ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
+                    : "0 2px 10px rgba(0,0,0,0.4)",
+                  lineHeight: 1,
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "4ch",
+                  display: "inline-block",
+                  textAlign: "right",
+                }}
+              >
+                {count4000}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.cases.unit}</span>
+              </div>
+              <div style={{
+                height: "1.5px",
+                background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+                marginTop: "6px",
+                transform: done4000 ? "scaleX(1)" : "scaleX(0)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+                transformOrigin: "center",
+              }} />
+              <div
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
+                  letterSpacing: "0.04em", paddingTop: '8px',
+                }}
+              >
+                {t.about.stats[1].label}
+              </div>
+            </div>
+            {/* 데스크톱에서만 3번째 통계 같은 행에 표시 */}
+            {/* [FM-P1-5] 1640ms → 1240ms */}
+            <div
+              className="text-center hero-fade hidden sm:block"
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms` }}
+            >
+              <div
+                style={{
+                  color: done50 ? "#F5D78E" : "rgba(255,255,255,0.97)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 700,
+                  textShadow: done50
+                    ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
+                    : "0 2px 10px rgba(0,0,0,0.4)",
+                  lineHeight: 1,
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "2ch",
+                  display: "inline-block",
+                  textAlign: "right",
+                }}
+              >
+                {count50}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
+              </div>
+              <div style={{
+                height: "1.5px",
+                background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+                marginTop: "6px",
+                transform: done50 ? "scaleX(1)" : "scaleX(0)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+                transformOrigin: "center",
+              }} />
+              <div
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
+                  letterSpacing: "0.04em", paddingTop: '8px',
+                }}
+              >
+                {t.about.stats[2].label}
+              </div>
+            </div>
+          </div>
+          {/* 모바일에서만 3번째 통계 하단 중앙에 표시 */}
+          <div
+            className="flex justify-center sm:hidden"
+            style={{ marginTop: "clamp(0.5rem, 1.5vh, 0.75rem)" }}
+          >
+            {/* [FM-P1-5] 1640ms → 1240ms (모바일 버전) */}
+            <div
+              className="text-center hero-fade"
+              style={{ animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms` }}
+            >
+              <div
+                style={{
+                  color: done50 ? "#F5D78E" : "rgba(255,255,255,0.97)",
+                  fontSize: "clamp(1.2rem, 4.5vw, 2.2rem)",
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 700,
+                  textShadow: done50
+                    ? "0 0 20px rgba(245,215,142,0.65), 0 2px 10px rgba(0,0,0,0.4)"
+                    : "0 2px 10px rgba(0,0,0,0.4)",
+                  lineHeight: 1,
+                  /* [FM-P1-6] 0.7s → 0.5s */
+                  transition: "color 0.5s ease, text-shadow 0.5s ease",
+                  fontVariantNumeric: "tabular-nums",
+                  minWidth: "2ch",
+                  display: "inline-block",
+                  textAlign: "right",
+                }}
+              >
+                {count50}<span style={{ fontSize: "65%", fontWeight: 300, opacity: 0.85 }}>{clinicStats.types.unit}</span>
+              </div>
+              <div style={{
+                height: "1.5px",
+                background: "linear-gradient(90deg, transparent, #C9A84C, transparent)",
+                marginTop: "6px",
+                transform: done50 ? "scaleX(1)" : "scaleX(0)",
+                /* [FM-P1-6] 0.7s → 0.5s */
+                transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
+                transformOrigin: "center",
+              }} />
+              <div
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "clamp(0.62rem, 1.6vw, 0.78rem)",
+                  letterSpacing: "0.04em", paddingTop: '8px',
+                }}
+              >
+                {t.about.stats[2].label}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── CTA 버튼: 모바일 세로 스택 / 데스크톱 가로 일렬 ── */}
+        <div className="flex flex-col sm:flex-row items-center justify-center w-full" style={{ gap: "clamp(1rem, 1.5vw, 0.6rem)", marginTop: '42px', maxWidth: '591px', width: '100%' }}>
+          {/* 전화 버튼 - 모바일에서 전체 너비 */}
           <a
-            href={phoneHref ?? (lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`)}
-            className="hero-fade flex items-center gap-2 justify-center w-full sm:w-auto"
+            href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
+            className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
             style={{
-              background: "rgba(255,255,255,0.08)",
-              color: "rgba(255,255,255,0.9)",
-              border: "1.5px solid rgba(255,255,255,0.22)",
-              borderRadius: DS.radius.pill,
+              background: "linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.1) 100%)",
+              color: "#F5D78E",
+              border: "1.5px solid rgba(201,168,76,0.55)",
               backdropFilter: "blur(8px)",
-              fontWeight: 600,
-              fontSize: "clamp(0.78rem, 2.5vw, 0.9rem)",
-              padding: "clamp(0.65rem, 2vw, 0.8rem) clamp(1.4rem, 4vw, 2rem)",
-              transition: `all ${DS.motion.base} ${DS.motion.ease}`,
-              animationDelay: "1.35s",
+              boxShadow: "0 0 12px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
+              fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
+              padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
+              /* [FM-P1-5] 1750ms → 1350ms */
+              animationDelay: HERO_DELAYS.ctaFirst,
               whiteSpace: "nowrap",
-              textDecoration: "none",
-              minWidth: "clamp(140px, 40vw, 200px)",
+              maxWidth: "min(100%, 320px)",
+              paddingRight: '19px',
+              marginTop: '0px',
+              marginBottom: '0px',
             }}
           >
-            <Phone size={15} />
+            <Phone size={14} />
             {t.hero.cta_call}
           </a>
+          {/*
+           * [PROD-P1-4] 모바일 CTA 순서 개선: 예약 버튼 우선 노출
+           * 이유: 모바일 사용자의 주요 전환 목표는 예약. 네이버 예약 버튼을
+           * 카카오 앞에 배치하여 시각적 우선순위를 사용자 의도와 일치시킴.
+           */}
+          <div className="flex flex-row w-full sm:w-auto" style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)" }}>
+            {/* 예약 버튼 - 모바일에서 첫 번째 (PROD-P1-4) */}
+            <a
+              href={reserveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
+              style={{
+                background: isZH ? "#06C755" : "#03C75A",
+                color: "#FFFFFF",
+                boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
+                fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
+                padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
+                animationDelay: HERO_DELAYS.ctaSecond,
+                whiteSpace: "nowrap",
+                minWidth: "clamp(78px, 22vw, 130px)",
+                paddingTop: '11px',
+              }}
+            >
+              <Calendar size={14} />
+              {t.hero.cta_reserve}
+            </a>
+            {/* 카카오/위체트 버튼 - 모바일에서 두 번째 */}
+            <div className="relative hero-fade flex-1 sm:flex-none" style={{ animationDelay: HERO_DELAYS.ctaPhone }}>
+              <a
+                href={chatUrl}
+                target={isZH ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                onClick={handleWechatClick}
+                className="flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
+                style={{
+                  background: chatBg,
+                  color: chatColor,
+                  boxShadow: chatShadow,
+                  fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
+                  padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
+                  whiteSpace: "nowrap",
+                  minWidth: "clamp(78px, 22vw, 130px)",
+                }}
+              >
+                <MessageCircle size={14} />
+                {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
+              </a>
+              {wechatCopied && isZH && (
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">
+                  ID: {WECHAT_ID}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ── 통계 Strip — Hero 하단 고정 ── */}
-      <div
-        ref={statsRef}
-        className="absolute bottom-0 left-0 right-0 z-10"
+      {/* ── 스크롤 인디케이터 ── */}
+      <button type="button"
+        onClick={scrollToAbout}
+        className="hero-fade absolute flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
         style={{
-          background: "linear-gradient(to top, rgba(3,7,18,0.82) 0%, rgba(3,7,18,0.55) 60%, transparent 100%)",
-          paddingBottom: "clamp(2rem, 5vh, 3.5rem)",
-          paddingTop: "clamp(2.5rem, 6vh, 4rem)",
+          bottom: "clamp(1.25rem, 3.5vh, 2.5rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          color: "rgba(255,255,255,0.55)",
+          /* [FM-P1-5] 2100ms → 1700ms */
+          animationDelay: HERO_DELAYS.ctaScroll, marginBottom: '-7px', marginLeft: '-20px',
         }}
+        aria-label={t.hero.scrollLabel}
       >
-        <div
-          className="flex justify-center items-end"
-          style={{ gap: "clamp(1.5rem, 6vw, 4rem)" }}
-        >
-          <StatStripItem
-            value={count20}
-            unit={clinicStats.years.unit}
-            label={t.about.stats[0].label}
-            isDone={done20}
-            delayIndex={0}
-          />
-          {/* 구분선 */}
-          <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)", alignSelf: "center" }} />
-          <StatStripItem
-            value={count4000}
-            unit={clinicStats.cases.unit}
-            label={t.about.stats[1].label}
-            isDone={done4000}
-            delayIndex={1}
-          />
-          <div style={{ width: "1px", height: "36px", background: "rgba(255,255,255,0.15)", alignSelf: "center" }} />
-          <StatStripItem
-            value={count50}
-            unit={clinicStats.types.unit}
-            label={t.about.stats[2].label}
-            isDone={done50}
-            delayIndex={2}
-          />
-        </div>
-
-        {/* 스크롤 인디케이터 */}
-        <button
-          type="button"
-          onClick={scrollToAbout}
-          className="hero-fade flex flex-col items-center gap-1 mx-auto transition-opacity hover:opacity-60"
-          style={{
-            color: "rgba(255,255,255,0.45)",
-            marginTop: "clamp(0.75rem, 2vh, 1.25rem)",
-            animationDelay: "1.7s",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-          }}
-          aria-label={t.hero.scrollLabel}
-        >
-          <span style={{ fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase" }}>
-            {t.hero.scrollLabel}
-          </span>
-          <ChevronDown size={14} className="animate-bounce" />
-        </button>
-      </div>
+        <span style={{ fontSize: "clamp(0.58rem, 1.4vw, 0.68rem)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+          {t.hero.scrollLabel}
+        </span>
+        <ChevronDown size={16} className="animate-bounce" />
+      </button>
     </section>
   );
 }

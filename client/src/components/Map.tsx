@@ -207,7 +207,7 @@ export function MapView({
   if (mapError) {
     return (
       <div
-        className={cn("w-full h-full min-h-[300px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
+        className={cn("w-full h-[500px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
       >
         <a
           href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"

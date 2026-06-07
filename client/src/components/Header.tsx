@@ -23,8 +23,9 @@ export default function Header() {
     wechatCopied,
     t, lang, langOptions, currentLangOption,
     chatUrl, reserveUrl, chatBg, chatColor, WECHAT_ID,
-    phoneHref, phoneDisplay, isZH,
     primaryNav, secondaryNav,
+    langDropRef, langTriggerRef, moreRef,
+    mobileMenuRef, hamburgerRef,
     handleLangChange, handleWechatClick,
     openMobileMenu, closeMobileMenu, handleNavClick, isActive,
     buildLocalizedPath,
@@ -266,27 +267,26 @@ export default function Header() {
           </div>
 
           {/* ── 데스크탑 예약 CTA ── */}
-          <div className="hidden lg:flex items-center flex-shrink-0" style={{ marginLeft: "12px", gap: "6px" }}>
-            {/* 카카오톡 상담 */}
+          <div className="hidden lg:flex items-center flex-shrink-0" style={{ marginLeft: "12px", gap: "8px" }}>
             <div className="relative">
               <a
                 href={chatUrl}
-                target={isZH ? undefined : "_blank"}
+                target={lang === "zh" ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 onClick={handleWechatClick}
-                className="flex items-center gap-1 font-semibold transition-all duration-200 whitespace-nowrap hover:opacity-90"
+                className="flex items-center font-semibold transition-all duration-200 whitespace-nowrap hover:opacity-90"
                 style={{
                   background: chatBg,
                   color: chatColor,
-                  fontSize: "12px",
-                  padding: "7px 14px",
+                  fontSize: "12.5px",
+                  padding: "7px 16px",
                   borderRadius: "100px",
                   letterSpacing: "0.01em",
                 }}
               >
                 {t.hero.cta_kakao}
               </a>
-              {wechatCopied && isZH && (
+              {wechatCopied && lang === "zh" && (
                 <div
                   className="absolute bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg"
                   style={{ top: "calc(100% + 8px)", left: "0", zIndex: 50 }}
@@ -295,37 +295,21 @@ export default function Header() {
                 </div>
               )}
             </div>
-            {/* 네이버 예약 */}
             <a
               href={reserveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 font-semibold text-white transition-all duration-200 whitespace-nowrap hover:opacity-90"
+              className="flex items-center font-semibold text-white transition-all duration-200 whitespace-nowrap hover:-translate-y-px"
               style={{
                 background: "linear-gradient(135deg, #03C75A 0%, #02a84a 100%)",
-                fontSize: "12px",
-                padding: "7px 14px",
+                fontSize: "12.5px",
+                padding: "7px 18px",
                 borderRadius: "100px",
                 letterSpacing: "0.01em",
-                boxShadow: "0 2px 10px rgba(3,199,90,0.25)",
+                boxShadow: "0 2px 12px rgba(3,199,90,0.25)",
               }}
             >
               {t.hero.cta_reserve}
-            </a>
-            {/* 전화 */}
-            <a
-              href={phoneHref}
-              className="flex items-center gap-1 font-semibold transition-all duration-200 whitespace-nowrap hover:opacity-90"
-              style={{
-                background: "#1F2937",
-                color: "#FFFFFF",
-                fontSize: "12px",
-                padding: "7px 14px",
-                borderRadius: "100px",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {phoneDisplay}
             </a>
           </div>
 

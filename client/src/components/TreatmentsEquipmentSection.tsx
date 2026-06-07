@@ -1,11 +1,5 @@
 /**
- * TreatmentsEquipmentSection — STAR 피부과 (Luxury Minimal Medical Redesign)
- *
- * 디자인 원칙:
- * - Premium tab UI: 골드 언더라인 + 정제된 pill 스타일
- * - 큐레이션 쇼케이스: 카드 밀도 감소, 더 넓은 여백
- * - DS 토큰 기반: DesignSystem.tsx의 color/shadow/radius/motion 사용
- * - 기존 기능 유지: 필터, 정렬, 더보기/접기, 모달, 상세 페이지 링크
+ * TreatmentsEquipmentSection - 시술 안내 + 장비 소개 통합 섹션
  *
  * 구조 분해 (2026-06-06):
  *   - 타입: @/types/treatment
@@ -17,11 +11,11 @@
  *   - filter/sort/scroll 로직 → useStaticTreatmentFilter hook으로 추출
  *   - 모바일/데스크탑 탭 중복 렌더 → CategoryTabList 컴포넌트로 통합
  */
-import { useState, useRef } from "react";
-import { ChevronDown, ChevronUp, SlidersHorizontal, Check } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { DS, SectionHeader } from "@/components/ui/DesignSystem";
+import { useRef } from "react";
 
 // ── 분리된 모듈 import ────────────────────────────────────────────────────────
 import { CATEGORIES, CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
@@ -55,37 +49,25 @@ export default function TreatmentsEquipmentSection() {
   } = useStaticTreatmentFilter();
 
   return (
-    <section
-      ref={sectionRef}
-      id="treatments"
-      style={{ background: DS.color.warmWhite }}
-      aria-label={tr.label}
-      role="region"
-    >
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: "#ffffff" }} aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 
-        {/* ── 섹션 헤더 ── */}
-        <SectionHeader
-          eyebrow="TREATMENTS &amp; EQUIPMENT"
-          title={tr.title}
-          tagline={tr.subtitle}
-          align="center"
-          titleSize="lg"
-          className="mb-10 sm:mb-14"
-        />
+        {/* 섹션 헤더 */}
+        <div className="text-center mb-8 sm:mb-12 reveal-heading">
+          <p className="text-sm tracking-widest mb-3 font-montserrat" style={{ color: "#d1ab67", fontWeight: 300, fontSize: "12px" }}>
+            TREATMENTS & EQUIPMENT
+          </p>
+          <h2 className="mb-4" style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}>
+            {tr.title}
+          </h2>
+          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal" style={{ color: "#d1ab67", paddingTop: "7px" }}>
+            <span style={{ fontSize: "18px" }}>{tr.subtitle}</span>
+          </p>
+        </div>
 
-        {/* ── 카테고리 탭 + 필터/정렬 ── */}
-        <div
-          className="rounded-2xl px-4 py-4 mb-6"
-          style={{
-            background: DS.color.white,
-            boxShadow: DS.shadow.sm,
-            border: `1px solid rgba(201,168,76,0.12)`,
-            marginBottom: "15px",
-          }}
-        >
-          {/* 정렬 버튼 */}
+        {/* 카테고리 탭 + 필터/정렬 */}
+        <div className="rounded-2xl px-4 py-4 mb-6" style={{ background: "#ffffff", marginBottom: "15px" }}>
           <div className="flex justify-end gap-2 mb-4">
             <div className="relative">
               <button
@@ -93,26 +75,16 @@ export default function TreatmentsEquipmentSection() {
                 onClick={() => setFilterOpen(!filterOpen)}
                 aria-expanded={filterOpen}
                 aria-label={tr.sortLabel}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                style={{
-                  backgroundColor: filterOpen ? DS.color.goldLight : DS.color.ivory,
-                  color: filterOpen ? DS.color.deepGray : DS.color.midGray,
-                  border: `1px solid ${filterOpen ? DS.color.gold : "rgba(201,168,76,0.25)"}`,
-                  transition: `all ${DS.motion.base} ${DS.motion.ease}`,
-                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                style={{ backgroundColor: "#f3f4f6", color: "#6b7280", border: "1px solid #e5e7eb" }}
               >
-                <SlidersHorizontal size={14} />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
                 {tr.sortLabel}
               </button>
               {filterOpen && (
-                <div
-                  className="absolute right-0 mt-2 w-44 rounded-xl z-10 overflow-hidden"
-                  style={{
-                    background: DS.color.white,
-                    boxShadow: DS.shadow.lg,
-                    border: `1px solid rgba(201,168,76,0.2)`,
-                  }}
-                >
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
                   {([
                     { value: "popular", label: tr.sortPopular },
                     { value: "name",    label: tr.sortName },
@@ -123,15 +95,9 @@ export default function TreatmentsEquipmentSection() {
                       key={opt.value}
                       onClick={() => { setSortBy(opt.value); setFilterOpen(false); }}
                       aria-pressed={sortBy === opt.value}
-                      className="w-full text-left px-4 py-3 text-sm flex items-center justify-between transition-colors"
-                      style={{
-                        background: sortBy === opt.value ? DS.color.goldLight : "transparent",
-                        color: sortBy === opt.value ? DS.color.deepGray : DS.color.midGray,
-                        fontWeight: sortBy === opt.value ? 600 : 400,
-                      }}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       {opt.label}
-                      {sortBy === opt.value && <Check size={13} style={{ color: DS.color.gold }} />}
                     </button>
                   ))}
                 </div>
@@ -149,74 +115,64 @@ export default function TreatmentsEquipmentSection() {
           />
         </div>
 
-        {/* ── 시술 카드 그리드 — [R11-E] IIFE → 변수 선언으로 교체 ── */}
+        {/* 시술 카드 그리드 — [R11-E] IIFE → 변수 선언으로 교체 */}
         {CATEGORIES.find((c) => c.id === activeId) && (
-          <div
-            key={`content-${activeId}`}
-            className="rounded-2xl mb-8 overflow-hidden"
-            style={{
-              background: DS.color.ivory,
-              animation: "cardFadeIn 0.4s ease both",
-              border: `1px solid rgba(201,168,76,0.12)`,
-            }}
-          >
             <div
-              className="px-5 pt-6 pb-6"
-              style={{ background: DS.color.white, borderRadius: "0 0 1rem 1rem" }}
+              key={`content-${activeId}`}
+              className="rounded-2xl mb-8 overflow-hidden"
+              style={{ background: "#FAF6EF", animation: "cardFadeIn 0.4s ease both" }}
             >
-              <div className="grid gap-5 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredTreatments.length === 0 ? (
-                  <div className="col-span-full text-center py-16" style={{ color: DS.color.lightGray }}>
-                    <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-sm font-medium">{tr.noResults}</p>
-                    <p className="text-xs mt-1">{tr.noResultsHint}</p>
+              <div className="px-5 pt-5 pb-5" style={{ background: "white", borderRadius: "0 0 1rem 1rem" }}>
+                <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {filteredTreatments.length === 0 ? (
+                    <div className="col-span-full text-center py-16" style={{ color: "#9CA3AF" }}>
+                      <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-sm font-medium">{tr.noResults}</p>
+                      <p className="text-xs mt-1">{tr.noResultsHint}</p>
+                    </div>
+                  ) : (
+                    (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
+                      <EquipmentTreatmentCard
+                        key={`${activeId}-t-${i}`}
+                        item={item}
+                        index={i}
+                        imgBg={CAT_IMG_BG[activeId] ?? "#F0F6F8"}
+                        catTextColor={CAT_TAB_TEXT[activeId] ?? "#3730A3"}
+                      />
+                    ))
+                  )}
+                </div>
+                {/* 더보기 / 접기 버튼 */}
+                {filteredTreatments.length > INITIAL_SHOW && (
+                  <div className="flex justify-center" style={{ marginTop: "68px" }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (showAll) {
+                          sectionTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                        setShowAll(!showAll);
+                      }}
+                      aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
+                      className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95"
+                      style={{
+                        background: showAll ? "white" : "#d1ab67",
+                        color: showAll ? "#6B7280" : "white",
+                        border: showAll ? "1.5px solid #e8dfc8" : "none",
+                      }}
+                    >
+                      {showAll ? (
+                        <><ChevronUp size={16} />{tr.collapseBtn}</>
+                      ) : (
+                        <><ChevronDown size={16} />{tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}</>
+                      )}
+                    </button>
                   </div>
-                ) : (
-                  (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
-                    <EquipmentTreatmentCard
-                      key={`${activeId}-t-${i}`}
-                      item={item}
-                      index={i}
-                      imgBg={CAT_IMG_BG[activeId] ?? "#F0F6F8"}
-                      catTextColor={CAT_TAB_TEXT[activeId] ?? "#3730A3"}
-                    />
-                  ))
                 )}
               </div>
-
-              {/* ── 더보기 / 접기 버튼 ── */}
-              {filteredTreatments.length > INITIAL_SHOW && (
-                <div className="flex justify-center" style={{ marginTop: "56px" }}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (showAll) {
-                        sectionTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }
-                      setShowAll(!showAll);
-                    }}
-                    aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
-                    className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-all"
-                    style={{
-                      background: showAll ? DS.color.white : DS.color.gold,
-                      color: showAll ? DS.color.midGray : DS.color.white,
-                      border: showAll ? `1.5px solid rgba(201,168,76,0.35)` : "none",
-                      boxShadow: showAll ? "none" : DS.shadow.gold,
-                      transition: `all ${DS.motion.base} ${DS.motion.ease}`,
-                    }}
-                  >
-                    {showAll ? (
-                      <><ChevronUp size={16} />{tr.collapseBtn}</>
-                    ) : (
-                      <><ChevronDown size={16} />{tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}</>
-                    )}
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
         )}
       </div>
     </section>

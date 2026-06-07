@@ -1,12 +1,12 @@
 /**
  * Home Page - STAR 피부과
- * 디자인: Premium Clinic Top-Tier (R13 리디자인)
+ * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
  * TreatmentsSection + EquipmentSection → TreatmentsEquipmentSection 통합
  *
  * 성능 최적화:
  * - 폴드 위 섹션(Hero, SpecialEvent, Doctors, Treatments): eager import
  * - 폴드 아래 섹션: React.lazy + Suspense로 코드 스플리팅
- * - 배경 리듬: warm white/ivory 레이어 교체 패턴 (DS 토큰 기반)
+ * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
 import { lazy, Suspense, useEffect } from "react";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
@@ -112,75 +112,83 @@ export default function Home() {
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
 
-        {/* 2. SPECIAL EVENT — white (SpecialEventSection 자체 배경) */}
-        <SpecialEventSection />
+        {/* 2. SPECIAL EVENT — 순수 흰색, 상단 여백 증가로 허로 이후 숨 포인트 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <SpecialEventSection />
+        </div>
 
-        {/* 3. Doctors — ivory (DoctorsSection 자체 배경: DS.color.ivory) */}
-        <DoctorsSection />
+        {/* 3. Doctors — 따뜻한 크림 오프화이트, 시각적 질감 전환 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
+          <DoctorsSection />
+        </div>
 
-        {/* 4. Treatments + Equipment — warmWhite (TreatmentsEquipmentSection 자체 배경) */}
-        <TreatmentsEquipmentSection />
+        {/* 4. Treatments + Equipment — 순수 흰색, 콘텐츠 밀도 높음 */}
+        <div style={{ background: "#FFFFFF" }}>
+          <TreatmentsEquipmentSection />
+        </div>
 
-        {/* 5. Management Devices — dark editorial (DS.color.darkNavy) */}
+        {/* 5. Management Devices — 열린 어두운 배경으로 시각적 리듬 전환 */}
         <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #243358 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ManagementDevicesSection />
           </Suspense>
         </div>
 
-        {/* 6. Philosophy — white */}
-        <div style={{ background: "#FAFAF8" }}>
+        {/* 6. Philosophy — 미니멀 흰색, 여백 강조 */}
+        <div style={{ background: "#FAFAFA" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <PhilosophySection />
           </Suspense>
         </div>
 
-        {/* 6-2. Results & Statistics — soft beige */}
-        <div style={{ background: "linear-gradient(135deg, #F7F4EF 0%, #F0EBE1 100%)" }}>
+        {/* 6-2. Results & Statistics — 연한 골드 톤 */}
+        <div style={{ background: "linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
             <ResultsStatisticsSection />
           </Suspense>
         </div>
 
-        {/* 7. Facility Gallery — white */}
+        {/* 7. Facility Gallery — 순수 흰색, 이미지 중심 */}
         <div style={{ background: "#FFFFFF" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
             <FacilitySection />
           </Suspense>
         </div>
 
-        {/* 8. Patient Reviews — ivory */}
-        <div style={{ background: "linear-gradient(180deg, #F7F4EF 0%, #F0EBE1 100%)" }}>
+        {/* 8. Patient Reviews — 연한 웸아이보리 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReviewsSection />
           </Suspense>
         </div>
 
-        {/* 8-2. YouTube Channel — dark editorial */}
+        {/* 8-2. YouTube Channel — 어두운 에디토리얼 톤 */}
         <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <YouTubeSection />
           </Suspense>
         </div>
 
-        {/* 9. FAQ — white */}
+        {/* 9. FAQ — 순수 흰색 */}
         <div style={{ background: "#FFFFFF" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <FAQSection />
           </Suspense>
         </div>
 
-        {/* 9-2. Reservation — soft beige */}
-        <div style={{ background: "linear-gradient(180deg, #F7F4EF 0%, #F0EBE1 100%)" }}>
+        {/* 9-2. Reservation — 미니멀 크림 */}
+        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReservationSection />
           </Suspense>
         </div>
 
-        {/* 10. Location & Contact — warmWhite (ContactSection 자체 배경) */}
-        <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
-          <ContactSection />
-        </Suspense>
+        {/* 10. Location & Contact — 다크 네이비 마무리 */}
+        <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <ContactSection />
+          </Suspense>
+        </div>
       </main>
 
       {/* Footer */}

@@ -7,34 +7,20 @@ import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 
 export async function setupVite(app: Express, server: Server) {
-  // viteConfig.server에는 host:true 등 독립 서버 설정이 포함되어 있어
-  // middlewareMode와 충돌할 수 있으므로 server 키를 serverOptions로 완전히 덮어씀
-  const { server: _unusedServerConfig, ...restViteConfig } = viteConfig as any;
-
-  // 실제 서버 포트 감지 (server.address()가 null이면 기본값 3000 사용)
-  // clientPort: 브라우저가 WebSocket 연결 시 사용할 포트 (프록시 환경에서 중요)
-  const addr = server.address();
-  const actualPort =
-    addr && typeof addr === "object" && addr.port
-      ? addr.port
-      : parseInt(process.env.PORT || "3000");
-
   const serverOptions = {
     middlewareMode: true,
-    // Vite 7 HMR 설정:
-    // - hmr.server: Express HTTP 서버와 WebSocket 업그레이드를 공유 (별도 포트 24678 방지)
-    // - hmr.clientPort: 브라우저가 올바른 포트로 WebSocket 연결하도록 명시
-    // - hmr: false 는 React Fast Refresh preamble 주입을 막으므로 절대 사용 금지
-    hmr: { server, clientPort: actualPort },
-    allowedHosts: true as const,
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+    // HMR WebSocket을 Express 서버와 같은 HTTP 서버에 바인딩
+    // clientPort를 지정하지 않으면 Vite가 기본값(5173)을 사용하여
+    // 프록시 환경에서 WebSocket 연결 실패가 발생함
+    hmr: {
+      server,
+      clientPort: parseInt(process.env.PORT || "3000"),
     },
+    allowedHosts: true as const,
   };
 
   const vite = await createViteServer({
-    ...restViteConfig,
+    ...viteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom",
@@ -44,8 +30,8 @@ export async function setupVite(app: Express, server: Server) {
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
 
-    // /api/* 및 /manus-storage/* 경로는 SPA fallback에서 제외
-    // tRPC/OAuth/storage 요청에 HTML이 반환되는 것을 방지
+    // /api/* 경로는 SPA fallback에서 제외 — tRPC/OAuth/storage 요청에 HTML 반환 방지
+    // 이 가드가 없으면 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환할 수 있음
     if (url.startsWith("/api/") || url.startsWith("/manus-storage/")) {
       return next();
     }

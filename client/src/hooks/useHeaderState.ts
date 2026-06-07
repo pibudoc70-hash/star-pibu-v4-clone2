@@ -287,7 +287,6 @@ export function useHeaderState() {
     // 데이터
     t, lang, langOptions, currentLangOption,
     chatUrl, reserveUrl, chatBg, chatColor, WECHAT_ID,
-    phoneHref, phoneDisplay, isZH,
     primaryNav, secondaryNav,
     isHome,
     // Refs

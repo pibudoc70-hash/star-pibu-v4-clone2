@@ -13,11 +13,12 @@ export async function setupVite(app: Express, server: Server) {
 
   const serverOptions = {
     middlewareMode: true,
-    // HMR을 비활성화하여 WebSocket 연결 실패 에러 완전 제거
-    // 프록시 환경(manus.computer 도메인)에서는 WebSocket 업그레이드가
-    // 정상적으로 전달되지 않아 "WebSocket closed without opened" 에러가 반복됨
-    // 기능에는 영향 없음 (코드 변경 시 수동 새로고침 필요)
-    hmr: false as const,
+    // HMR 설정:
+    // hmr: false 는 @vitejs/plugin-react의 React Fast Refresh preamble 주입을 막아
+    // "can't detect preamble" 에러를 유발하므로 사용 금지.
+    // server 객체를 전달하여 Express HTTP 서버와 WebSocket 업그레이드를 공유.
+    // 프록시 환경에서 WebSocket 연결 경고가 발생할 수 있지만 기능에는 영향 없음.
+    hmr: { server },
     allowedHosts: true as const,
     fs: {
       strict: true,

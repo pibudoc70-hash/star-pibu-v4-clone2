@@ -21,7 +21,7 @@ import { useState, useRef } from "react";
 import { ChevronDown, ChevronUp, SlidersHorizontal, Check } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { DS } from "@/components/ui/DesignSystem";
+import { DS, SectionHeader } from "@/components/ui/DesignSystem";
 
 // ── 분리된 모듈 import ────────────────────────────────────────────────────────
 import { CATEGORIES, CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
@@ -58,7 +58,6 @@ export default function TreatmentsEquipmentSection() {
     <section
       ref={sectionRef}
       id="treatments"
-      className="py-16 sm:py-24"
       style={{ background: DS.color.warmWhite }}
       aria-label={tr.label}
       role="region"
@@ -67,43 +66,14 @@ export default function TreatmentsEquipmentSection() {
         <div ref={sectionTopRef} />
 
         {/* ── 섹션 헤더 ── */}
-        <div className="text-center mb-10 sm:mb-14 reveal-heading">
-          <p style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.72rem",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: DS.color.gold,
-            fontWeight: 400,
-            marginBottom: "12px",
-          }}>
-            TREATMENTS &amp; EQUIPMENT
-          </p>
-          <h2 style={{
-            color: DS.color.charcoal,
-            fontSize: "clamp(1.6rem, 5vw, 2.8rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            marginBottom: "10px",
-          }}>
-            {tr.title}
-          </h2>
-          {/* 골드 룰 */}
-          <div style={{
-            width: "40px", height: "1.5px",
-            background: `linear-gradient(90deg, transparent, ${DS.color.gold}, transparent)`,
-            margin: "0 auto 14px",
-          }} />
-          <p style={{
-            color: DS.color.gold,
-            fontSize: "clamp(0.88rem, 2.2vw, 1.05rem)",
-            maxWidth: "540px",
-            margin: "0 auto",
-            lineHeight: 1.65,
-          }}>
-            {tr.subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="TREATMENTS &amp; EQUIPMENT"
+          title={tr.title}
+          tagline={tr.subtitle}
+          align="center"
+          titleSize="lg"
+          className="mb-10 sm:mb-14"
+        />
 
         {/* ── 카테고리 탭 + 필터/정렬 ── */}
         <div

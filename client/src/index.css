@@ -149,6 +149,12 @@
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 800;
   }
+
+  /* R13: 섹션 기본 vertical rhythm — DS 토큰 기반 */
+  section {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
 }
 
 @layer components {
@@ -705,10 +711,10 @@
       box-sizing: border-box;
     }
 
-    /* 섹션 패딩 축소 */
+    /* 섹션 패딩 축소 — R13 DS 토큰 모바일 override */
     section {
-      padding-top: 2.5rem !important;
-      padding-bottom: 2.5rem !important;
+      padding-top: clamp(2.5rem, 8vw, 4rem) !important;
+      padding-bottom: clamp(2.5rem, 8vw, 4rem) !important;
     }
 
     /* 컨테이너 좌우 패딩 */

@@ -13,7 +13,7 @@ import { Award, GraduationCap, Stethoscope, ChevronDown, Zap } from "lucide-reac
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
-import { DS } from "@/components/ui/DesignSystem";
+import { DS, SectionHeader } from "@/components/ui/DesignSystem";
 
 const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
@@ -561,50 +561,20 @@ function DoctorsSection() {
     <section
       ref={sectionRef}
       id="doctors"
-      className="py-16 sm:py-24"
       style={{ background: DS.color.ivory }}
       role="region"
       aria-label={t.doctors.label}
     >
       <div className="container">
         {/* ── Section Header ── */}
-        <div className="text-center mb-10 sm:mb-14 reveal-heading">
-          <p style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: "0.72rem",
-            letterSpacing: "0.28em",
-            textTransform: "uppercase",
-            color: DS.color.gold,
-            fontWeight: 400,
-            marginBottom: "12px",
-          }}>
-            {t.doctors.label}
-          </p>
-          <h2 style={{
-            color: DS.color.charcoal,
-            fontSize: "clamp(1.6rem, 5vw, 2.8rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            marginBottom: "10px",
-          }}>
-            {t.doctors.title}
-          </h2>
-          {/* 골드 룰 */}
-          <div style={{
-            width: "40px", height: "1.5px",
-            background: `linear-gradient(90deg, transparent, ${DS.color.gold}, transparent)`,
-            margin: "0 auto 14px",
-          }} />
-          <p style={{
-            color: DS.color.gold,
-            fontSize: "clamp(0.88rem, 2.2vw, 1.05rem)",
-            maxWidth: "540px",
-            margin: "0 auto",
-            lineHeight: 1.65,
-          }}>
-            {t.doctors.tagline}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow={t.doctors.label}
+          title={t.doctors.title}
+          tagline={t.doctors.tagline}
+          align="center"
+          titleSize="lg"
+          className="mb-10 sm:mb-14"
+        />
 
         {/* ── 메인 패널 ── */}
         <div

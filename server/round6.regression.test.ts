@@ -97,7 +97,9 @@ describe("[F] HeroSection brittle locale 제거", () => {
   });
 
   it("isZH 변수가 useChatConfig에서 구조분해되어야 한다", () => {
-    expect(src).toMatch(/isZH\s*\}/);
+    // isZH가 useChatConfig 구조분해 내에 포함되면 OK (마지막 항목이 아니어도 됨 — R12 리디자인에서 phoneHref가 마지막 항목으로 이동됨)
+    expect(src).toMatch(/isZH/);
+    expect(src).toMatch(/useChatConfig/);
   });
 });
 

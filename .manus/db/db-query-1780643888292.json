@@ -1,0 +1,25 @@
+{
+  "query": "SELECT id, name, isActive FROM treatments WHERE categoryId = 'stemcell' ORDER BY sortOrder;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2BKoXPWW58mLYdu.7a9668250bc6 --database QdQ7tySKssCV8bdRzPPxg4 --execute SELECT id, name, isActive FROM treatments WHERE categoryId = 'stemcell' ORDER BY sortOrder;",
+  "rows": [
+    {
+      "id": "210001",
+      "name": "지방유래 배양 줄기세포 (AD-MSC)",
+      "isActive": "1"
+    },
+    {
+      "id": "210002",
+      "name": "엑소좀 피부 재생",
+      "isActive": "1"
+    },
+    {
+      "id": "210003",
+      "name": "고압산소 재생 치료 (HBOT)",
+      "isActive": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tisActive\n210001\t지방유래 배양 줄기세포 (AD-MSC)\t1\n210002\t엑소좀 피부 재생\t1\n210003\t고압산소 재생 치료 (HBOT)\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1890
+}

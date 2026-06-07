@@ -183,8 +183,8 @@ export default function Home() {
           </Suspense>
         </div>
 
-        {/* 10. Location & Contact — 다크 네이비 마무리 */}
-        <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
+        {/* 10. Location & Contact — ContactSection 자체 배경(warmWhite) 사용 */}
+        <div>
           <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
             <ContactSection />
           </Suspense>

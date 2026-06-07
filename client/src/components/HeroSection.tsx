@@ -16,7 +16,7 @@
  * - 통계 strip: 1500ms stagger
  * - 스크롤:     1700ms
  */
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Calendar, ChevronDown, Phone } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";

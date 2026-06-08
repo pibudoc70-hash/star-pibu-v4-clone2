@@ -149,41 +149,51 @@ export function buildHreflangs(
 /**
  * MedicalBusiness + LocalBusiness 통합 JSON-LD 스키마 생성
  * Google Rich Results에서 병원 정보 패널, 지식 그래프, 지도 결과에 활용됩니다.
+ *
+ * [SRP-DI] 인자 주입 패턴 적용:
+ * - 기본값 = 현재 상수 (프로덕션 코드 동일하게 동작)
+ * - 테스트에서는 목(mock) 데이터를 주입하여 외부 의존성 격리 가능
  */
-export function buildClinicJsonLd(): JsonLdSchema {
+export function buildClinicJsonLd(
+  clinicInfo = CLINIC_INFO,
+  clinicStats = CLINIC_STATS,
+  seoClinicMeta = SEO_CLINIC_META,
+  clinicDoctors = CLINIC_DOCTORS,
+  clinicProcedures = CLINIC_PROCEDURES,
+): JsonLdSchema {
   return {
     "@context": "https://schema.org",
     "@type": ["MedicalBusiness", "LocalBusiness"],
-    "@id": `${CLINIC_INFO.url}/#organization`,
-    name: CLINIC_INFO.name,
-    legalName: CLINIC_INFO.legalName,
-    url: CLINIC_INFO.url,
+    "@id": `${clinicInfo.url}/#organization`,
+    name: clinicInfo.name,
+    legalName: clinicInfo.legalName,
+    url: clinicInfo.url,
     logo: {
       "@type": "ImageObject",
-      url: CLINIC_INFO.logo,
+      url: clinicInfo.logo,
       width: 200,
       height: 200,
     },
-    image: CLINIC_INFO.image,
-    description: CLINIC_INFO.description,
-    foundingDate: CLINIC_INFO.foundingDate,
-    telephone: CLINIC_INFO.telephone,
-    email: CLINIC_INFO.email,
+    image: clinicInfo.image,
+    description: clinicInfo.description,
+    foundingDate: clinicInfo.foundingDate,
+    telephone: clinicInfo.telephone,
+    email: clinicInfo.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: CLINIC_INFO.address.streetAddress,
-      addressLocality: CLINIC_INFO.address.addressLocality,
-      addressRegion: CLINIC_INFO.address.addressRegion,
-      postalCode: CLINIC_INFO.address.postalCode,
-      addressCountry: CLINIC_INFO.address.addressCountry,
+      streetAddress: clinicInfo.address.streetAddress,
+      addressLocality: clinicInfo.address.addressLocality,
+      addressRegion: clinicInfo.address.addressRegion,
+      postalCode: clinicInfo.address.postalCode,
+      addressCountry: clinicInfo.address.addressCountry,
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: CLINIC_INFO.geo.latitude,
-      longitude: CLINIC_INFO.geo.longitude,
+      latitude: clinicInfo.geo.latitude,
+      longitude: clinicInfo.geo.longitude,
     },
-    // [R24-P1-4] CLINIC_INFO.openingHours 기반 파싱 (하드코딩 제거)
-    openingHoursSpecification: CLINIC_INFO.openingHours.map((spec) => {
+    // [R24-P1-4] clinicInfo.openingHours 기반 파싱 (하드코딩 제거)
+    openingHoursSpecification: clinicInfo.openingHours.map((spec) => {
       // 형식: "Mo-Fr 10:00-19:00" 또는 "Sa 09:30-15:00"
       const [daysPart, timesPart] = spec.split(" ");
       const [opens, closes] = timesPart.split("-");
@@ -202,30 +212,27 @@ export function buildClinicJsonLd(): JsonLdSchema {
         : [DAY_MAP[daysPart] ?? daysPart];
       return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
     }),
-    priceRange: CLINIC_INFO.priceRange,
-    currenciesAccepted: CLINIC_INFO.currenciesAccepted,
-    paymentAccepted: CLINIC_INFO.paymentAccepted,
+    priceRange: clinicInfo.priceRange,
+    currenciesAccepted: clinicInfo.currenciesAccepted,
+    paymentAccepted: clinicInfo.paymentAccepted,
     medicalSpecialty: {
       "@type": "MedicalSpecialty",
       name: "Dermatology",
     },
-    hasMap: `https://maps.google.com/?q=${CLINIC_INFO.geo.latitude},${CLINIC_INFO.geo.longitude}`,
-    sameAs: [...CLINIC_INFO.sameAs],
-    // [R24-P1-4] SEO_CLINIC_META.physicianCount 참조
+    hasMap: `https://maps.google.com/?q=${clinicInfo.geo.latitude},${clinicInfo.geo.longitude}`,
+    sameAs: [...clinicInfo.sameAs],
+    // [SRP-DI] 파라미터로 주입된 seoClinicMeta 사용
     numberOfEmployees: {
       "@type": "QuantitativeValue",
-      value: SEO_CLINIC_META.physicianCount,
+      value: seoClinicMeta.physicianCount,
       unitText: "physicians",
     },
-    // [R24-P1-4] SEO_CLINIC_META.aggregateRating 참조
     aggregateRating: {
       "@type": "AggregateRating",
-      ...SEO_CLINIC_META.aggregateRating,
+      ...seoClinicMeta.aggregateRating,
     },
-    // [R24-P1-4] SEO_CLINIC_META.knowsAbout 참조
-    knowsAbout: [...SEO_CLINIC_META.knowsAbout],
-    // [R24-P1-4] SEO_CLINIC_META.hasCredential 참조
-    hasCredential: SEO_CLINIC_META.hasCredential.map((cred) => ({
+    knowsAbout: [...seoClinicMeta.knowsAbout],
+    hasCredential: seoClinicMeta.hasCredential.map((cred) => ({
       "@type": "EducationalOccupationalCredential",
       credentialCategory: cred.credentialCategory,
       recognizedBy: {
@@ -233,15 +240,15 @@ export function buildClinicJsonLd(): JsonLdSchema {
         name: cred.recognizedBy,
       },
     })),
-    // 의료진 프로필 (Schema.org Person)
-    employee: CLINIC_DOCTORS.map((doc) => ({
+    // [SRP-DI] 파라미터로 주입된 clinicDoctors 사용
+    employee: clinicDoctors.map((doc) => ({
       "@type": "Physician",
-      "@id": `${CLINIC_INFO.url}/#physician-${doc.nameEn.toLowerCase().replace(/\s+/g, "-")}`,
+      "@id": `${clinicInfo.url}/#physician-${doc.nameEn.toLowerCase().replace(/\s+/g, "-")}`,
       name: doc.name,
       alternateName: doc.nameEn,
       jobTitle: doc.jobTitle,
       url: doc.url,
-      worksFor: { "@id": `${CLINIC_INFO.url}/#organization` },
+      worksFor: { "@id": `${clinicInfo.url}/#organization` },
       medicalSpecialty: {
         "@type": "MedicalSpecialty",
         name: "Dermatology",
@@ -252,8 +259,8 @@ export function buildClinicJsonLd(): JsonLdSchema {
         credentialCategory: cred,
       })),
     })),
-    // 주요 시술 목록 (Schema.org MedicalProcedure)
-    availableService: CLINIC_PROCEDURES.map((proc) => ({
+    // [SRP-DI] 파라미터로 주입된 clinicProcedures 사용
+    availableService: clinicProcedures.map((proc) => ({
       "@type": "MedicalProcedure",
       name: proc.name,
       alternateName: proc.nameEn,
@@ -263,26 +270,26 @@ export function buildClinicJsonLd(): JsonLdSchema {
       procedureType: proc.procedureType,
       followup: proc.followup,
       howPerformed: proc.howPerformed,
-      provider: { "@id": `${CLINIC_INFO.url}/#organization` },
+      provider: { "@id": `${clinicInfo.url}/#organization` },
     })),
     // 병원 통계 (Schema.org 비표준 확장 — 검색 엔진 무시해도 무방)
     additionalProperty: [
       {
         "@type": "PropertyValue",
         name: "yearsOfExperience",
-        value: `${CLINIC_STATS.yearsExperience}+`,
+        value: `${clinicStats.yearsExperience}+`,
         unitText: "years",
       },
       {
         "@type": "PropertyValue",
         name: "eyeBagProcedureCases",
-        value: `${CLINIC_STATS.eyeBagCases}+`,
+        value: `${clinicStats.eyeBagCases}+`,
         unitText: "cases",
       },
       {
         "@type": "PropertyValue",
         name: "laserEquipmentTypes",
-        value: `${CLINIC_STATS.laserTypes}+`,
+        value: `${clinicStats.laserTypes}+`,
         unitText: "types",
       },
     ],

@@ -29,6 +29,7 @@
  *            + CLS 정책: min-height 예약으로 레이아웃 이동 방지
  */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useScrollEnd } from "@/hooks/useScrollEnd";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -48,9 +49,9 @@ const MOBILE_SHOW  = 3;     // < 640px: 3개
 const TABLET_SHOW  = 4;     // 640px ~ 767px: 4개 (태블릿 세로)
 const DESKTOP_SHOW = 6;     // >= 768px: 6개
 
-// [R22-P0-2] scrollend 폴백 타임아웃 (scrollend 미지원 브라우저용)
-// 매직 넘버가 아닌 명시적 의미: smooth scroll 최대 예상 완료 시간
-const SCROLL_COMPLETE_FALLBACK_MS = 500;
+// [P0-3] SCROLL_COMPLETE_FALLBACK_MS → useScrollEnd 기본값(500ms)으로 통일
+// 이중 정의 제거: useScrollEnd.ts의 fallbackMs 기본값과 동일하므로 별도 상수 불필요
+const SCROLL_COMPLETE_FALLBACK_MS = 500; // useScrollEnd default와 동기화
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
@@ -141,34 +142,19 @@ export default function TreatmentsEquipmentSection() {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [filterOpen, closeFilter]);
 
-  // [R22-P0-2] scrollend 이벤트 기반 포커스 복원 핸들러
-  // setTimeout(420ms) 매직 넘버 제거 → scrollend 완료 시점에 포커스 복원
-  // scrollend 미지원 브라우저: SCROLL_COMPLETE_FALLBACK_MS 후 폴백
+  // [P0-3] useScrollEnd 훅으로 scrollend 로직 추출
+  // - 누수 방지: 두 경로(scrollend/fallback) 모두 정확히 한 번만 실행
+  // - 폴백 타이머 cleanup 보장
+  const scrollToTopAndFocus = useScrollEnd(
+    sectionTopRef,
+    useCallback(() => { showAllBtnRef.current?.focus(); }, []),
+    SCROLL_COMPLETE_FALLBACK_MS,
+  );
+
   const handleCollapseClick = useCallback(() => {
-    const target = sectionTopRef.current;
-    const btnRef = showAllBtnRef.current;
-    if (target) {
-      let settled = false;
-      const onScrollEnd = () => {
-        if (settled) return;
-        settled = true;
-        btnRef?.focus();
-      };
-      // scrollend 이벤트 등록 (지원 브라우저)
-      target.addEventListener("scrollend", onScrollEnd, { once: true });
-      // 폴백: scrollend 미지원 브라우저에서 SCROLL_COMPLETE_FALLBACK_MS 후 실행
-      const fallbackTimer = window.setTimeout(() => {
-        target.removeEventListener("scrollend", onScrollEnd);
-        onScrollEnd();
-      }, SCROLL_COMPLETE_FALLBACK_MS);
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      // scrollend가 먼저 발생하면 폴백 타이머 정리
-      void Promise.resolve().then(() => {
-        if (settled) window.clearTimeout(fallbackTimer);
-      });
-    }
     setShowAll(false);
-  }, []);
+    scrollToTopAndFocus();
+  }, [scrollToTopAndFocus]);
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">

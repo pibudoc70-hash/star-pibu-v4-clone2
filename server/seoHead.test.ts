@@ -208,10 +208,12 @@ describe("F. buildClinicJsonLd: 핵심 필드", () => {
 
   it("F-3: CLINIC_INFO에서 name/url/telephone/address를 사용해야 한다", () => {
     const src = readSeoHelpers();
-    expect(src).toContain("CLINIC_INFO.name");
-    expect(src).toContain("CLINIC_INFO.url");
-    expect(src).toContain("CLINIC_INFO.telephone");
-    expect(src).toContain("CLINIC_INFO.address");
+    // [P0-2 리팩토링] buildClinicJsonLd가 인자 주입 패턴으로 변경됨
+    // clinicInfo 파라미터를 통해 사용하므로, 파라미터 기반 패턴 검증
+    expect(src).toMatch(/clinicInfo\.name|CLINIC_INFO\.name/);
+    expect(src).toMatch(/clinicInfo\.url|CLINIC_INFO\.url/);
+    expect(src).toMatch(/clinicInfo\.telephone|CLINIC_INFO\.telephone/);
+    expect(src).toMatch(/clinicInfo\.address|CLINIC_INFO\.address/);
   });
 
   it("F-4: aggregateRating이 있어야 한다", () => {

@@ -37,9 +37,15 @@ export default function Directions() {
   const [copied, setCopied] = useState(false);
 
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(HOSPITAL.address);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
+    navigator.clipboard.writeText(HOSPITAL.address)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {
+        // 클립보드 접근 불가 시 조용히 무시
+      });
   };
 
   return (

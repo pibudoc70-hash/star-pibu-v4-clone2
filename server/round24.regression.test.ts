@@ -111,7 +111,10 @@ describe("C. seoHelpers 하드코딩 제거 (P1-4)", () => {
 
   it("C-5: seoHelpers.ts의 openingHoursSpecification이 CLINIC_INFO.openingHours를 파싱한다", () => {
     const src = readClient("lib/seoHelpers.ts");
-    expect(src).toMatch(/CLINIC_INFO\.openingHours\.map/);
+    // [P0-2 리팩토링] buildClinicJsonLd가 인자 주입 패턴으로 변경됨
+    // clinicInfo 파라미터를 통해 openingHours를 사용하므로, 파라미터 기반 패턴 검증
+    // 실제 데이터 소스는 기본값 = CLINIC_INFO임을 함수 시그니처로 확인
+    expect(src).toMatch(/clinicInfo\.openingHours\.map|CLINIC_INFO\.openingHours\.map/);
   });
 });
 

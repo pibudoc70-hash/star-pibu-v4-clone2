@@ -32,10 +32,15 @@ export default function FloatingCTA() {
   const handleWechatClick = (e: React.MouseEvent) => {
     if (lang !== "zh") return;
     e.preventDefault();
-    navigator.clipboard.writeText(WECHAT_ID).then(() => {
-      setWechatCopied(true);
-      setTimeout(() => setWechatCopied(false), 2500);
-    });
+    // [P2] .catch() 추가 — HTTPS 미적용 환경·권한 거부 시 unhandled rejection 방지
+    navigator.clipboard.writeText(WECHAT_ID)
+      .then(() => {
+        setWechatCopied(true);
+        setTimeout(() => setWechatCopied(false), 2500);
+      })
+      .catch(() => {
+        // 클립보드 접근 불가 시 조용히 무시 (UI 상태 변경 없음)
+      });
   };
 
   const fc = t.floatingCta;

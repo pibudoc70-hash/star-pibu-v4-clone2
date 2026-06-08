@@ -75,8 +75,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center overflow-hidden"
-      style={{ minHeight: "100svh" }}
+      className="relative flex flex-col items-center justify-center overflow-hidden min-h-svh"
     >
       {/* LCP 최적화: <picture> 태그 */}
       <picture

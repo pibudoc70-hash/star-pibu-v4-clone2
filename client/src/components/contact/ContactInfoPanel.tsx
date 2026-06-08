@@ -16,6 +16,8 @@ interface ContactInfoPanelProps {
   infoPanelRef: React.RefObject<HTMLDivElement | null>;
   copied: boolean;
   copyFailed: boolean;
+  /** [R17-P1-3] clipboard 실패 원인 세분화 */
+  copyFailReason?: 'unsupported' | 'denied' | 'error' | null;
   closedLabel: string;
   phoneHref: string;
   phoneDisplay: string;
@@ -27,6 +29,7 @@ export default function ContactInfoPanel({
   infoPanelRef,
   copied,
   copyFailed,
+  copyFailReason = null,
   closedLabel,
   phoneHref,
   phoneDisplay,
@@ -78,7 +81,13 @@ export default function ContactInfoPanel({
                   {copiedLabel}
                 </>
               ) : copyFailed ? (
-                <span>직접 복사: {t.access.address}</span>
+                <span>
+                  {copyFailReason === 'unsupported'
+                    ? '직접 복사: ' + t.access.address
+                    : copyFailReason === 'denied'
+                    ? '권한 거부됨 — 직접 복사: ' + t.access.address
+                    : '복사 실패 — 직접 복사: ' + t.access.address}
+                </span>
               ) : (
                 <>
                   <Copy size={12} />

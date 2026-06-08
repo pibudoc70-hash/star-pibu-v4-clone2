@@ -81,6 +81,8 @@ export default function ContactSection() {
   const { phoneHref, phoneDisplay } = useChatConfig();
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  // [R17-P1-3] clipboard 실패 원인 세분화: 'unsupported' | 'denied' | 'error'
+  const [copyFailReason, setCopyFailReason] = useState<'unsupported' | 'denied' | 'error' | null>(null);
   // CONTACT-P3-A: 팝업 토글 상태 React state로 관리
   const [markerPopupVisible, setMarkerPopupVisible] = useState(true);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -88,18 +90,27 @@ export default function ContactSection() {
   const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
 
   // CONTACT-P4-A: navigator.clipboard 전용 (document.execCommand deprecated 제거)
+  // [R17-P1-3] clipboard 실패 원인 세분화
   const handleCopyAddress = useCallback(async () => {
     setCopyFailed(false);
+    setCopyFailReason(null);
     if (!navigator.clipboard) {
       setCopyFailed(true);
+      setCopyFailReason('unsupported');
       return;
     }
     try {
       await navigator.clipboard.writeText(t.access.address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
+    } catch (err) {
       setCopyFailed(true);
+      // NotAllowedError: 사용자가 클립보드 권한을 거부한 경우
+      if (err instanceof DOMException && err.name === 'NotAllowedError') {
+        setCopyFailReason('denied');
+      } else {
+        setCopyFailReason('error');
+      }
     }
   }, [t.access.address]);
 
@@ -186,6 +197,7 @@ export default function ContactSection() {
             infoPanelRef={infoPanelRef}
             copied={copied}
             copyFailed={copyFailed}
+            copyFailReason={copyFailReason}
             closedLabel={closedLabel}
             phoneHref={phoneHref}
             phoneDisplay={phoneDisplay}

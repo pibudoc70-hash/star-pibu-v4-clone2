@@ -2106,3 +2106,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round5 회귀 테스트 R16 변경사항 반영 (aria-pressed → aria-selected 등)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (33 files, 781 tests)
 - [x] 최종 커밋
+
+## Round-17 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [ ] [R17-P0-1] HeroSection: `minHeight: "100svh"` → `min-h-svh` Tailwind 클래스 (다음 라운드 대상)
+- [x] [R17-P0-3] DoctorsSection: 인라인 style 51 → 4곳 (objectPosition 데이터 주도값만 유지) + GOLD 상수 제거 → CSS 변수 --dr-gold/--dr-gold-light/--dr-gold-mid 이관
+- [x] [R17-P0-3] CategoryTabButton: 인라인 style 전체 → .cat-tab-btn CSS class-variant 재설계 + WAI-ARIA role/aria-selected/tabIndex prop 추가
+### P1 – 중요
+- [x] [R17-P1-1] CategoryTabList: WAI-ARIA tablist semantics + roving tabindex + aria-selected + ArrowLeft/Right/Home/End 키보드 네비게이션
+- [x] [R17-P1-2] EquipmentTreatmentCard: Space key 대응 + focus-visible 링 (.treatment-card:focus-visible) 추가
+- [x] [R17-P1-3] ContactSection: clipboard 실패 사유 세분화 (copyFailReason: 'unsupported' | 'denied' | 'error') + ContactInfoPanel에 prop 전달
+- [x] [R17-P1-4] useStaticTreatmentFilter: defaultTab validation + resolveDefaultTab 함수 (NODE_ENV !== production 경고 + fallback)
+### P2 – 품질 마무리
+- [x] [R17-P2-1] SeoHead: deprecated prop JSDoc 정리 (@deprecated + @internal 통합, 중복 제거)
+- [x] [R17-P2-2] seoHelpers: buildBreadcrumbJsonLd 빈 배열 가드 + buildHreflangs 슬래시 시작 검증 (개발 환경 경고)
+- [ ] [R17-P2-3] constants.ts: 미디어 URL 하드코딩 → asset config 계층 추출 (다음 라운드 대상)
+### 검증
+- [x] round17.regression.test.ts 작성 (60개 테스트: A~H 8개 영역)
+- [x] TypeScript 0 errors + 전체 테스트 통과 (34 files, 841 tests)
+- [x] 최종 커밋

@@ -10,6 +10,19 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import type { Treatment } from "@/types/treatment";
 import { TREATMENTS } from "@/data/treatments/treatments-data";
 
+// [R17-P2] defaultTab validation: TREATMENTS에 없는 탭 ID를 전달하면 콘솔 경고 + fallback
+function resolveDefaultTab(tab: string): string {
+  if (tab in TREATMENTS) return tab;
+  const fallback = Object.keys(TREATMENTS)[0] ?? "best";
+  if (process.env.NODE_ENV !== "production") {
+    console.warn(
+      `[useStaticTreatmentFilter] defaultTab "${tab}" not found in TREATMENTS. ` +
+      `Falling back to "${fallback}". Valid keys: ${Object.keys(TREATMENTS).join(", ")}`
+    );
+  }
+  return fallback;
+}
+
 export type SortBy = "name" | "time" | "popular";
 
 interface UseStaticTreatmentFilterReturn {
@@ -53,7 +66,8 @@ export function sortTreatments(items: Treatment[], sortBy: SortBy): Treatment[] 
 // ── Hook ──────────────────────────────────────────────────────────────────────
 
 export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmentFilterReturn {
-  const [activeId, setActiveId] = useState(defaultTab);
+  // [R17-P2] defaultTab validation
+  const [activeId, setActiveId] = useState(() => resolveDefaultTab(defaultTab));
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);

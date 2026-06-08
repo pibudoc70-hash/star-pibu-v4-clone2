@@ -73,13 +73,16 @@ export interface SeoHeadProps {
    */
   pageType?: SeoPageType;
   /**
-   * MedicalBusiness 스키마 삽입 여부 (기본값: true)
    * @deprecated pageType prop을 사용하세요.
    * 사용 예: pageType="treatment" (이전: includeMedicalSchema={true})
+   * @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요.
    */
-  /** @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요 */
   includeMedicalSchema?: boolean;
-  /** @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요 */
+  /**
+   * @deprecated pageType prop을 사용하세요.
+   * 사용 예: pageType="home" (이전: includeWebSiteSchema={true})
+   * @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요.
+   */
   includeWebSiteSchema?: boolean;
 }
 

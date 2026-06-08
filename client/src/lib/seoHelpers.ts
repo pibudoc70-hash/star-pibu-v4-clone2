@@ -71,6 +71,17 @@ export function buildHreflangs(
   jaPath?: string,
   zhPath?: string,
 ): { hreflang: string; href: string }[] {
+  // [R17-P2] 런타임 가드: path는 '/'(루트) 또는 '/'로 시작해야 함
+  if (process.env.NODE_ENV !== "production") {
+    const paths = [koPath, enPath, jaPath, zhPath].filter(Boolean) as string[];
+    const invalid = paths.filter((p) => p !== "/" && !p.startsWith("/"));
+    if (invalid.length > 0) {
+      console.warn(
+        `[buildHreflangs] path는 '/'(루트) 또는 '/'로 시작해야 합니다. ` +
+        `잘못된 값: ${invalid.join(", ")}`
+      );
+    }
+  }
   return [
     { hreflang: "ko", href: `${BASE_URL}${koPath}` },
     { hreflang: "en", href: `${BASE_URL}${enPath ?? "/en"}` },
@@ -260,6 +271,13 @@ export function buildWebSiteJsonLd(): JsonLdSchema {
 export function buildBreadcrumbJsonLd(
   items: { name: string; url: string }[],
 ): JsonLdSchema {
+  // [R17-P2] 런타임 가드: 빈 배열 전달 시 경고 + 최소 1개 항목 필요
+  if (process.env.NODE_ENV !== "production" && items.length === 0) {
+    console.warn(
+      "[buildBreadcrumbJsonLd] items 배열이 비어 있습니다. " +
+      "최소한 [홈, 현재 페이지] 2개 항목을 전달하세요."
+    );
+  }
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

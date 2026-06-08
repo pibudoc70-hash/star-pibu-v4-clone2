@@ -63,6 +63,21 @@
   --color-gold-primary: #C9A961;
   --color-gold-light: #E8DCC8;
   --color-gold-pale: #F5F1ED;
+  /* DoctorsSection Gold Tokens (doctors-data.ts 동기화) */
+  --dr-gold: #d2ac67;
+  --dr-gold-light: #f9f3e8;
+  --dr-gold-mid: #e8d5a3;
+  /* DoctorsSection Text Tokens */
+  --dr-text-dark: #1a1a1a;
+  --dr-text-mid: #555;
+  --dr-text-muted: #666;
+  --dr-text-gray: #4B5563;
+  --dr-text-inactive: #9CA3AF;
+  --dr-text-dot-inactive: #C4C4C4;
+  --dr-text-specialty: #8B6914;
+  /* DoctorsSection Tab Active Tokens */
+  --dr-tab-active-text: #2c1f08;
+  --dr-tab-inactive-text: #5a3e16;
 }
 
 :root {
@@ -279,6 +294,60 @@
     transform: translateY(-4px) scale(1.006);
     transition-duration: 0.12s;
   }
+  /* [R17-P1-2] focus-visible 링: 키보드 네비게이션 시리는 시각적 포커스 표시 */
+  .treatment-card:focus-visible {
+    outline: 2px solid var(--dr-gold);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--dr-gold) 20%, transparent);
+  }
+
+  /* [R17-P2] CategoryTabButton — inline style → CSS class-variant */
+  .cat-tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    white-space: nowrap;
+    border-radius: 999px;
+    cursor: pointer;
+    outline: none;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease,
+      border-color 300ms ease,
+      box-shadow 300ms ease,
+      transform 300ms ease,
+      font-weight 150ms ease;
+    /* inactive default */
+    background-color: #fafaf8;
+    color: #6B7280;
+    border: 1.5px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transform: translateY(0);
+    font-weight: 500;
+  }
+  .cat-tab-btn[data-active="true"] {
+    background-color: #d1ab67;
+    color: #ffffff;
+    border-color: #d1ab67;
+    box-shadow: 0 4px 14px rgba(209,171,103,0.38);
+    transform: translateY(-2px);
+    font-weight: 700;
+  }
+  .cat-tab-btn:focus-visible {
+    outline: 2px solid #d1ab67;
+    outline-offset: 2px;
+  }
+  .cat-tab-btn-sm { padding: 6px 12px; font-size: 0.78rem; }
+  .cat-tab-btn-md { padding: 6px 14px; font-size: 0.85rem; }
+  /* Icon wrapper */
+  .cat-tab-icon {
+    display: flex;
+    align-items: center;
+    color: #9CA3AF;
+    transition: color 300ms ease;
+  }
+  .cat-tab-btn[data-active="true"] .cat-tab-icon { color: #ffffff; }
 
   .review-card {
     background: white;
@@ -773,6 +842,7 @@
     height: 1.5px;
     margin: 5px auto 0;
     border-radius: 2px;
+    background: var(--dr-gold);
   }
   .dr-photo-panel {
     width: 420px;
@@ -848,9 +918,14 @@
     padding-top: 8px;
     height: 35px;
     text-align: center;
+    background: var(--dr-gold-light);
+    color: #737373;
   }
   .dr-specialty-chip-mobile {
     border-radius: 20px;
+    background: var(--dr-gold-light);
+    color: var(--dr-text-specialty);
+    border: 1px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
   }
   .dr-credentials-item-desktop {
     display: flex;
@@ -858,6 +933,7 @@
     gap: 0.625rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 8%, transparent);
   }
   .dr-mob-photo-wrap {
     position: relative;
@@ -887,7 +963,225 @@
   .dr-credentials-item-mobile {
     background: #FAFAFA;
   }
-  .dr-dot-hint { color: #9CA3AF; }
+  .dr-dot-hint { color: var(--dr-text-inactive); }
+
+  /* [R17-P0-3] DoctorsSection 추가 CSS 클래스 — 인라인 style 교체 */
+  /* Section header */
+  .dr-section-eyebrow {
+    color: var(--dr-gold);
+    font-weight: 300;
+  }
+  .dr-section-title {
+    color: var(--dr-text-dark);
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .dr-section-tagline {
+    color: var(--dr-gold);
+    font-size: 18px;
+    margin: 13px auto 0;
+    max-width: 577px;
+  }
+  /* Panel border */
+  .dr-panel-border {
+    border: 1px solid color-mix(in srgb, var(--dr-gold-mid) 33%, transparent);
+  }
+  /* Desktop layout min-height */
+  .dr-desktop-panel { min-height: 520px; }
+  /* Tab sidebar border */
+  .dr-tab-sidebar-border {
+    border-right: 1px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
+  }
+  /* Brand area border */
+  .dr-brand-border {
+    border-color: color-mix(in srgb, var(--dr-gold) 20%, transparent);
+  }
+  /* Desktop tab button: base + active/inactive background */
+  .dr-tab-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem;
+    transition: all 300ms ease;
+    position: relative;
+    width: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .dr-tab-btn[data-active="true"] {
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--dr-gold) 20%, transparent) 0%,
+      color-mix(in srgb, var(--dr-gold) 3%, transparent) 100%);
+  }
+  .dr-tab-btn[data-active="false"] { background: transparent; }
+  .dr-tab-btn-border {
+    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 13%, transparent);
+  }
+  /* Desktop tab thumbnail border */
+  .dr-thumb-border[data-active="true"] {
+    border: 2px solid var(--dr-gold);
+  }
+  .dr-thumb-border[data-active="false"] {
+    border: 2px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
+  }
+  /* Desktop tab name/badge color */
+  .dr-tab-name-desktop[data-active="true"] {
+    color: var(--dr-tab-active-text);
+    font-weight: 700;
+  }
+  .dr-tab-name-desktop[data-active="false"] {
+    color: var(--dr-tab-inactive-text);
+    font-weight: 500;
+  }
+  .dr-tab-badge-desktop[data-active="true"] { color: var(--dr-tab-active-text); }
+  .dr-tab-badge-desktop[data-active="false"] { color: var(--dr-tab-inactive-text); }
+  /* Active underline background merged into R16 class definition above */
+  /* Desktop detail: name header margin */
+  .dr-name-header { margin-top: 23px; }
+  /* nameEn style */
+  .dr-name-en {
+    color: var(--dr-gold);
+    font-size: 18px;
+    font-weight: 100;
+    letter-spacing: 0.05em;
+  }
+  /* Gold divider backgrounds */
+  .dr-gold-divider-strong {
+    background: linear-gradient(to right,
+      color-mix(in srgb, var(--dr-gold) 20%, transparent), transparent);
+  }
+  .dr-gold-divider-light {
+    background: linear-gradient(to right,
+      color-mix(in srgb, var(--dr-gold) 13%, transparent), transparent);
+    margin-bottom: 32px;
+  }
+  /* Intro paragraph styles */
+  .dr-intro-para {
+    margin: 0 0 1em 0;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .dr-intro-para-pre {
+    margin: 0 0 0.5em 0;
+    white-space: pre-wrap;
+  }
+  .dr-intro-spacer { height: 0.5em; }
+  /* Section sub-header (specialty / credentials) */
+  .dr-sub-header-wrap {
+    margin-bottom: 16px;
+  }
+  .dr-sub-header-icon { color: var(--dr-gold); }
+  .dr-sub-header-text {
+    color: var(--dr-gold);
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0;
+  }
+  /* Specialty wrap */
+  .dr-specialty-wrap {
+    margin-top: -6px;
+    max-width: 420px;
+  }
+  /* Specialty chip colors and credentials item border merged into R16 class definitions above */
+  /* Credentials icon */
+  .dr-credentials-icon {
+    color: var(--dr-gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .dr-credentials-icon-mobile {
+    color: var(--dr-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  /* Credentials text */
+  .dr-credentials-text-desktop {
+    color: var(--dr-text-mid);
+    line-height: 1.6;
+    font-size: 13px;
+  }
+  .dr-credentials-text-mobile { color: var(--dr-text-gray); }
+  /* Mobile tab list border */
+  .dr-mob-tablist-border {
+    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+  }
+  /* Mobile tab button: active/inactive */
+  .dr-mob-tab-btn[data-active="true"] {
+    background: var(--dr-gold-light);
+    border-bottom: 2px solid var(--dr-gold);
+  }
+  .dr-mob-tab-btn[data-active="false"] {
+    background: white;
+    border-bottom: 2px solid transparent;
+  }
+  /* Mobile thumb border */
+  .dr-mob-thumb-border[data-active="true"] {
+    border: 2px solid var(--dr-gold);
+  }
+  .dr-mob-thumb-border[data-active="false"] {
+    border: 2px solid #e5e7eb;
+  }
+  /* Mobile tab name/badge */
+  .dr-mob-tab-name[data-active="true"] {
+    color: var(--dr-text-dark);
+    font-weight: 700;
+  }
+  .dr-mob-tab-name[data-active="false"] {
+    color: var(--dr-text-inactive);
+    font-weight: 400;
+  }
+  .dr-mob-tab-badge[data-active="true"] { color: var(--dr-gold); }
+  .dr-mob-tab-badge[data-active="false"] { color: var(--dr-text-dot-inactive); }
+  /* Mobile nameEn */
+  .dr-mob-name-en {
+    color: var(--dr-gold);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  /* Mobile specialty title */
+  .dr-mob-specialty-title {
+    color: var(--dr-gold);
+    font-weight: 600;
+  }
+  /* Accordion border */
+  .dr-accordion-border {
+    border: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+  }
+  /* Accordion button */
+  .dr-accordion-btn[data-expanded="true"] {
+    background: var(--dr-gold-light);
+    transition: background 0.2s ease;
+  }
+  .dr-accordion-btn[data-expanded="false"] {
+    background: #FAFAFA;
+    transition: background 0.2s ease;
+  }
+  /* Accordion label text */
+  .dr-accordion-label { color: var(--dr-text-muted); }
+  /* Accordion chevron */
+  .dr-accordion-chevron {
+    color: var(--dr-gold);
+    transition: transform 0.3s ease;
+  }
+  .dr-accordion-chevron[data-expanded="true"] { transform: rotate(180deg); }
+  .dr-accordion-chevron[data-expanded="false"] { transform: rotate(0deg); }
+  /* Dot nav button */
+  .dr-dot-nav {
+    height: 6px;
+    background: #D1D5DB;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.3s;
+  }
+  .dr-dot-nav[data-active="true"] {
+    width: 24px;
+    background: var(--dr-gold);
+  }
+  .dr-dot-nav[data-active="false"] { width: 6px; }
 
   /* Soft Glow animation for hero section ceiling light */
   @keyframes softGlow {

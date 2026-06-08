@@ -54,7 +54,13 @@ export default function EquipmentTreatmentCard({
         role="button"
         tabIndex={0}
         aria-label={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${tr.modalDetailBtn}`}
-        onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
+        // [R17-P1-2] Space key 지원 추가 + focus-visible 링 보강
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setOpen(true);
+          }
+        }}
       >
         {/* 이미지 */}
         <div

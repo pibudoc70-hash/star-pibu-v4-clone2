@@ -37,12 +37,27 @@ export const SITE_NAME_LOCALIZED: Record<string, string> = {
  */
 export const OG_IMAGE_LOCALIZED: Record<string, string> = OG_IMAGES;
 
-/** 공통 hreflang 목록 (모든 페이지에서 재사용) */
+/**
+ * 공통 hreflang 목록 — 홈페이지(루트) 전용
+ *
+ * ⚠️  x-default 정책:
+ *   - COMMON_HREFLANGS: x-default = BASE_URL + "/" (루트 홈페이지 고정)
+ *     → 홈페이지 전용 상수이므로 x-default는 항상 루트를 가리킴
+ *   - buildHreflangs(): x-default = koPath (페이지별 한국어 경로)
+ *     → 페이지별 hreflang 생성 시 koPath가 x-default로 설정됨
+ *
+ * 두 방식의 x-default 정책이 다른 것은 의도적입니다:
+ *   - COMMON_HREFLANGS는 홈페이지 전용이므로 루트가 x-default
+ *   - buildHreflangs는 개별 페이지용이므로 koPath가 x-default
+ *
+ * [R23-P1] 정책 불일치 문서화 — 혼용 방지
+ */
 export const COMMON_HREFLANGS = [
   { hreflang: "ko", href: `${BASE_URL}/` },
   { hreflang: "en", href: `${BASE_URL}/en` },
   { hreflang: "ja", href: `${BASE_URL}/ja` },
   { hreflang: "zh", href: `${BASE_URL}/zh` },
+  // x-default: 홈페이지 루트 고정 (buildHreflangs의 koPath 기반 x-default와 다름)
   { hreflang: "x-default", href: `${BASE_URL}/` },
 ];
 

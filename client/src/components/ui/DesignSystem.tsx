@@ -14,7 +14,7 @@
  *   <PremiumButton variant="outline" onDark>전화 상담</PremiumButton>
  *   <SurfaceCard variant="elevated">...</SurfaceCard>
  */
-import { forwardRef, type ButtonHTMLAttributes, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes, type ButtonHTMLAttributes, type KeyboardEvent } from "react";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Design Tokens (CSS custom property 기반)
@@ -199,6 +199,17 @@ export const SurfaceCard = forwardRef<HTMLDivElement, SurfaceCardProps>(
       .filter(Boolean)
       .join(" ");
 
+    // [R23-P0] WCAG 2.1.1: role="button"인 div는 Enter/Space 키로 활성화되어야 함
+    const handleKeyDown = interactive
+      ? (e: KeyboardEvent<HTMLDivElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            (e.currentTarget as HTMLDivElement).click();
+          }
+          rest.onKeyDown?.(e);
+        }
+      : rest.onKeyDown;
+
     return (
       <div
         ref={ref}
@@ -207,6 +218,7 @@ export const SurfaceCard = forwardRef<HTMLDivElement, SurfaceCardProps>(
         tabIndex={interactive ? 0 : undefined}
         role={interactive ? "button" : undefined}
         {...rest}
+        onKeyDown={handleKeyDown}
       >
         {children}
       </div>

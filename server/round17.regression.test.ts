@@ -326,12 +326,14 @@ describe("H. seoHelpers: 런타임 가드 추가", () => {
   });
 
   it("H-3: buildHreflangs에 슬래시 시작 검증이 있어야 한다", () => {
-    const hrefSection = seoHelpersSrc.match(/buildHreflangs[\s\S]{0,600}/)?.[0] ?? "";
+    // [R23] COMMON_HREFLANGS 주석 추가로 함수 본문이 600자 이후에 위치하므로 1500자로 확장
+    const hrefSection = seoHelpersSrc.match(/buildHreflangs[\s\S]{0,3000}/)?.[0] ?? "";
     expect(hrefSection).toContain("startsWith");
   });
 
   it("H-4: buildHreflangs 가드에 개발 환경 경고가 있어야 한다", () => {
-    const hrefSection = seoHelpersSrc.match(/buildHreflangs[\s\S]{0,600}/)?.[0] ?? "";
+    // [R23] COMMON_HREFLANGS 주석 추가로 함수 본문이 600자 이후에 위치하므로 1500자로 확장
+    const hrefSection = seoHelpersSrc.match(/buildHreflangs[\s\S]{0,3000}/)?.[0] ?? "";
     expect(hrefSection).toContain("NODE_ENV");
     expect(hrefSection).toContain("console.warn");
   });

@@ -2210,3 +2210,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] R22-P1-6: constants - CLINIC_STAT_UNIT_MAP satisfies 타입 검증 + StatKey/ClinicStatKey export
 - [x] R22-P2: P2 실제 결함 없음 확인 (reduced-motion 전역 처리 완료, focus-visible R21 완료, FacilitySection onMouseEnter/Leave 정상 패턴)
 - [x] R22: round22.regression.test.ts 작성 (39 파일 / 1030개 통과)
+
+## Round-23 시니어 검수 (2026-06-08)
+- [x] R23-P0-1: DesignSystem SurfaceCard interactive onKeyDown Enter/Space 핸들러 추가 (WCAG 2.1.1)
+- [x] R23-P0-2: useStaticTreatmentFilter VALID_TAB_IDS readonly TreatmentTabId[] 타입 강화
+- [x] R23-P0-3: useStaticTreatmentFilter auto-scroll offsetLeft → scrollIntoView 방식 교체
+- [x] R23-P1-1: seoHelpers COMMON_HREFLANGS vs buildHreflangs x-default 정책 불일치 문서화
+- [x] R23-P2: 실측 결함 없음 확인 (reduced-motion/focus-visible/CategoryTabList 키보드 모두 완료)
+- [x] R23-TEST: round23.regression.test.ts 작성 (40파일 1065개 통과)

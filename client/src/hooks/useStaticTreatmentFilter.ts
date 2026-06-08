@@ -28,7 +28,8 @@ import { sortTreatments } from "@/lib/treatmentSortUtils";
 export type TreatmentTabId = string;
 
 // [R22-P0-3] 유효한 탭 ID 배열 — 테스트에서 fallback 검증용으로 노출
-export const VALID_TAB_IDS: readonly string[] = Object.keys(TREATMENTS);
+// [R23-P0] readonly TreatmentTabId[]로 타입 강화 (string[]보다 의미 명확)
+export const VALID_TAB_IDS: readonly TreatmentTabId[] = Object.keys(TREATMENTS) as TreatmentTabId[];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // resolveDefaultTab
@@ -95,16 +96,18 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
     return sortTreatments(items, sortBy);
   }, [activeId, sortBy]);
 
-  /** 모바일: 활성 탭이 항상 중앙에 오도록 자동 스크롤 */
+  /** 모바일: 활성 탭이 항상 중앙에 오도록 자동 스크롤
+   * [R23-P0] offsetLeft 기반 계산 → scrollIntoView 방식으로 교체
+   * offsetLeft는 offsetParent 기준이므로 중첩 컨테이너에서 오계산 가능.
+   * scrollIntoView({ inline: "center" })는 브라우저가 직접 계산하므로 더 안정적.
+   */
   useEffect(() => {
     const container = tabContainerRef.current;
     if (!container) return;
     const activeBtn = container.querySelector<HTMLButtonElement>('[data-active="true"]');
     if (!activeBtn) return;
-    container.scrollTo({
-      left: activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2,
-      behavior: "smooth",
-    });
+    // scrollIntoView는 부모 스크롤 컨테이너 기준으로 정확히 계산
+    activeBtn.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
   }, [activeId]);
 
   const handleTabChange = useCallback((id: TreatmentTabId) => setActiveId(id), []);

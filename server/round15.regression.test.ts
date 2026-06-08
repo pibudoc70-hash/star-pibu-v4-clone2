@@ -169,7 +169,12 @@ describe("E. useStaticTreatmentFilter private helper 분리", () => {
   const filterFile = readFile("client/src/hooks/useStaticTreatmentFilter.ts");
 
   it("E-1: sortTreatments 또는 applySort private helper 함수가 있다", () => {
-    expect(filterFile).toMatch(/function sort|const sort|applySort|sortItems/i);
+    // [R20-P2-7] sortTreatments는 lib/treatmentSortUtils.ts로 이동됨
+    // useStaticTreatmentFilter.ts에서 직접 정의하지 않아도 re-export로 제공
+    const utilsFile = readFile("client/src/lib/treatmentSortUtils.ts");
+    const hasSortInFilter = filterFile.match(/function sort|const sort|applySort|sortItems/i);
+    const hasSortInUtils = utilsFile.match(/function sort|const sort|applySort|sortItems/i);
+    expect(hasSortInFilter || hasSortInUtils).toBeTruthy();
   });
 
   it("E-2: handleSortChange 또는 의미 있는 핸들러 함수가 export된다", () => {

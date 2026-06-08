@@ -18,6 +18,7 @@
  *   - 섹션 헤더 h2 style → Tailwind arbitrary value
  *   - 카드 그리드 animation style → animate-card-fade class
  * [R18-P1-4] filter dropdown ArrowUp/Down/Enter 키보드 탐색 추가
+ * [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정책화
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -52,10 +53,19 @@ export default function TreatmentsEquipmentSection() {
     filterOpen,
     filteredTreatments,
     tabContainerRef,
-    handleTabChange,
+    handleTabChange: _handleTabChange,
     handleSortChange,
     toggleFilter,
   } = useStaticTreatmentFilter();
+
+  // [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정송화
+  // 카테고리를 전환하면 새 카테고리의 아이템 수가 다를 수 있으므로
+  // 이전 카테고리의 showAll 상태를 유지하면 INITIAL_SHOW보다 적은 아이템이 있어도
+  // 더보기 버튼이 나타나는 UX 문제가 생김 → 새 카테고리 진입 시 항상 접혀진 상태로 시작
+  const handleTabChange = useCallback((id: string) => {
+    _handleTabChange(id);
+    setShowAll(false);
+  }, [_handleTabChange]);
 
   // [R18-P2-7] setFilterOpen deprecated setter 제거 → closeFilter 로컸 함수
   // toggleFilter는 열기/닫기 토글이므로, 닫기 전용 closeFilter를 정의

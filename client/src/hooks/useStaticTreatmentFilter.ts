@@ -9,6 +9,8 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import type { Treatment } from "@/types/treatment";
 import { TREATMENTS } from "@/data/treatments/treatments-data";
+// [R20-P2-7] sortTreatments / parseMinutes → lib/treatmentSortUtils.ts로 이동
+import { sortTreatments } from "@/lib/treatmentSortUtils";
 
 // [R17-P2] defaultTab validation: TREATMENTS에 없는 탭 ID를 전달하면 콘솔 경고 + fallback
 function resolveDefaultTab(tab: string): string {
@@ -23,7 +25,9 @@ function resolveDefaultTab(tab: string): string {
   return fallback;
 }
 
-export type SortBy = "name" | "time" | "popular";
+// [R20-P2-7] SortBy 타입은 treatmentSortUtils.ts에서 re-export
+export type { SortBy } from "@/lib/treatmentSortUtils";
+import type { SortBy } from "@/lib/treatmentSortUtils";
 
 interface UseStaticTreatmentFilterReturn {
   activeId: string;
@@ -38,28 +42,10 @@ interface UseStaticTreatmentFilterReturn {
   toggleFilter: () => void;
 }
 
-// ── Private helpers ───────────────────────────────────────────────────────────
-
-/**
- * [R15-P1-2] 정렬 로직 분리: useMemo 내부 인라인 → 순수 함수
- * 원본 배열을 변경하지 않고 새 배열을 반환한다.
- */
-export function sortTreatments(items: Treatment[], sortBy: SortBy): Treatment[] {
-  if (sortBy === "name") {
-    return [...items].sort((a, b) => a.name.localeCompare(b.name, "ko"));
-  }
-  if (sortBy === "time") {
-    return [...items].sort((a, b) => {
-      const parseMinutes = (t: string | undefined) =>
-        parseInt((t ?? "").replace(/[^0-9]/g, "") || "0", 10);
-      return parseMinutes(a.time) - parseMinutes(b.time);
-    });
-  }
-  // "popular" — 데이터 원본 순서 유지
-  return items;
-}
-
 // ── Hook ──────────────────────────────────────────────────────────────────────
+// [R20-P2-7] sortTreatments는 lib/treatmentSortUtils.ts로 이동됨
+// 하위 호환성 re-export: 이전 import 경로(useStaticTreatmentFilter에서 sortTreatments import)를 사용하는 코드가 있다면 계속 동작
+export { sortTreatments } from "@/lib/treatmentSortUtils";
 
 export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmentFilterReturn {
   // [R17-P2] defaultTab validation

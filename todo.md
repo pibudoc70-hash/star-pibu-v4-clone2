@@ -2168,3 +2168,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round17/round5/round6/round9/round15/round16/senior-review 테스트: DoctorsSection 서브컴포넌트 분리 후행 호환 업데이트
 - [x] TypeScript 0 errors + 전체 테스트 통과 (36 files, 935 tests)
 - [x] 최종 커밋
+
+## Round-20 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R20-P0-3] HeroSection: HERO_DELAYS 상수를 hero/constants.ts로 이동 (현재 HeroSection.tsx 내부 정의)
+### P1 – 중요
+- [x] [R20-P1-4] TreatmentsEquipmentSection: activeCategory 변경 시 showAll reset 명시적 정책화
+- [x] [R20-P1-5] EquipmentTreatmentCard: TreatmentCardShell / TreatmentCardMedia / TreatmentMeta 서브컴포넌트 분리 (134줄)
+### P2 – 품질 마무리
+- [x] [R20-P2-7] useStaticTreatmentFilter: sortTreatments parseMinutes → lib/treatmentSortUtils.ts 분리
+- [x] [R20-P2-8] SeoHead: deprecated boolean fallback 제거 로드맵 코드 반영 + admin noindex 검증 테스트
+- [x] [R20-P2-9] constants.ts: lib/assetConfig.ts 분리 (HERO_IMAGES, HERO_LOGO_IMAGE 등 asset URL 계층)
+### 검증
+- [x] round20.regression.test.ts 작성
+- [x] TypeScript 0 errors + 전체 테스트 통과 (37 files, 953 tests)
+- [x] 최종 커밋

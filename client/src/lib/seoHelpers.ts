@@ -2,6 +2,8 @@
 // 기존 import 경로 유지: import { ... } from '@/components/SeoHead' (re-export됨)
 import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
 import { CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/clinic-data";
+// [R20-P2-9] 에셋 URL 중앙 관리 → assetConfig.ts
+import { OG_IMAGES } from "@/lib/assetConfig";
 
 /**
  * JsonLdSchema — JSON-LD 스키마 타입
@@ -27,13 +29,13 @@ export const SITE_NAME_LOCALIZED: Record<string, string> = {
   zh: "釜山STAR皮肤科",
 };
 
-/** 언어별 OG 이미지 URL (SNS 공유 시 사용, 1200×630px) */
-export const OG_IMAGE_LOCALIZED: Record<string, string> = {
-  ko: "/manus-storage/og-image-ko_5fc1105f.jpg",
-  en: "/manus-storage/og-image-en_dc8cb653.jpg",
-  ja: "/manus-storage/og-image-ja_273d0e42.jpg",
-  zh: "/manus-storage/og-image-zh_31a7313b.jpg",
-};
+/**
+ * 언어별 OG 이미지 URL (SNS 공유 시 사용, 1200×630px)
+ *
+ * [R20-P2-9] URL 정의는 lib/assetConfig.ts에서 중앙 관리
+ * 여기서는 re-export하여 기존 import 경로를 유지
+ */
+export const OG_IMAGE_LOCALIZED: Record<string, string> = OG_IMAGES;
 
 /** 공통 hreflang 목록 (모든 페이지에서 재사용) */
 export const COMMON_HREFLANGS = [

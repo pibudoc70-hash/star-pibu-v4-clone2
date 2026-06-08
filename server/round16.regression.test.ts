@@ -187,7 +187,11 @@ describe("D. EquipmentTreatmentCard: CSS custom property 기반 스타일", () =
   });
 
   it("D-5: 카드 이미지 높이에 h-48 Tailwind 클래스가 사용되어야 한다", () => {
-    expect(cardSrc).toContain("h-48");
+    // [R20-P1-5] h-48 클래스는 TreatmentCardMedia.tsx로 이동됨
+    const mediaSrc = readClient("components/treatments/TreatmentCardMedia.tsx");
+    const hasH48InCard = cardSrc.includes("h-48");
+    const hasH48InMedia = mediaSrc.includes("h-48");
+    expect(hasH48InCard || hasH48InMedia).toBe(true);
   });
 });
 

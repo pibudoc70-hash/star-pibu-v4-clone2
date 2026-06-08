@@ -37,21 +37,11 @@ import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
 // [R13-P1-1] 이미지 URL 상수를 hero/constants.ts로 분리
-import { HERO_IMAGES, HERO_LOGO_IMAGE } from "@/components/hero/constants";
-
-/**
- * [R11-C] 애니메이션 딜레이 매직넘버 → 명시적 상수
- * 파일 상단 주석의 타임라인과 1:1 대응
- */
-export const HERO_DELAYS = {
-  floorBadge: "1250ms",
-  statBase: 1000,
-  statStep: 120,
-  ctaFirst: "1350ms",
-  ctaSecond: "1470ms",
-  ctaPhone: "1590ms",
-  ctaScroll: "1700ms",
-} as const;
+// [R20-P0-3] HERO_DELAYS 상수도 hero/constants.ts로 이동 (애니메이션 타이밍 변경 시 이 파일만 수정)
+import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
+// [R20-P0-3] 하위 호환성 re-export: 이전 import 경로(HeroSection에서 HERO_DELAYS 직접 import)를 사용하는 코드가 있다면 계속 동작
+// 신규 코드는 hero/constants.ts에서 직접 import하세요
+export { HERO_DELAYS } from "@/components/hero/constants";
 
 export default function HeroSection() {
   const { t, lang } = useLang();

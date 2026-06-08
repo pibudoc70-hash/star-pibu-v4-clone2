@@ -9,15 +9,20 @@
  * [R18-P1-5] 모달 콘텐츠 → EquipmentTreatmentModal 컴포넌트로 분리
  *   - 카드 컴포넌트는 카드 UI + 모달 열기 상태만 담당
  *   - 모달 내용은 EquipmentTreatmentModal에서 관리
+ *
+ * [R20-P1-5] 서브컴포넌트 분리
+ *   - TreatmentCardMedia: 이미지 영역 (배너/복수/단수 + 배지)
+ *   - TreatmentMeta: 텍스트 메타 영역 (시술명/설명/시간/회복)
+ *   - 카드 셰(button + CSS custom property 주입)은 이 파일에 유지
  */
 import React, { useState } from "react";
-import { Clock, RefreshCw } from "lucide-react";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
-import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
 import type { Treatment } from "@/types/treatment";
 import { DETAIL_PAGE_SLUGS } from "@/data/treatments/categories";
 import { EquipmentTreatmentModal } from "@/components/treatments/EquipmentTreatmentModal";
+import { TreatmentCardMedia } from "@/components/treatments/TreatmentCardMedia";
+import { TreatmentMeta } from "@/components/treatments/TreatmentMeta";
 
 interface EquipmentTreatmentCardProps {
   item: Treatment;
@@ -45,6 +50,11 @@ export default function EquipmentTreatmentCard({
     "--delay": `${Math.min(index * 0.07, 0.42)}s`,
   } as React.CSSProperties;
 
+  const localizedName = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
+  const localizedDesc = getText(item.desc, item.descEn, item.descJa, item.descZh);
+  const localizedTime = getText(item.time, item.timeEn, item.timeJa, item.timeZh);
+  const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
+
   return (
     <>
       {/* [R19-P1-5] div → button 요소 전환 (WAI-ARIA 네이티브 시맨틱) */}
@@ -53,73 +63,19 @@ export default function EquipmentTreatmentCard({
         className="treatment-card group cursor-pointer animate-card-fade w-full text-left"
         style={cardStyle}
         onClick={() => setOpen(true)}
-        aria-label={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${tr.modalDetailBtn}`}
+        aria-label={`${localizedName} ${tr.modalDetailBtn}`}
       >
-        {/* 이미지 영역 */}
-        <div
-          className={[
-            "relative overflow-hidden",
-            item.cardBannerImage ? "h-auto bg-transparent" : "h-48 bg-[#f6efe0]",
-          ].join(" ")}
-        >
-          {item.cardBannerImage ? (
-            <OptimizedImage
-              src={item.cardBannerImage}
-              alt={item.name}
-              className="w-full object-cover"
-            />
-          ) : item.images && item.images.length > 1 ? (
-            <div className="flex h-full">
-              {item.images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="flex-1 overflow-hidden bg-[var(--card-img-bg)]"
-                >
-                  <OptimizedImage
-                    src={img}
-                    alt={`${item.name} ${idx + 1}`}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <OptimizedImage
-              src={item.image}
-              alt={item.name}
-              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
-            />
-          )}
-          {item.badge && (
-            <span
-              className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow bg-[var(--card-accent)]"
-              style={item.badgeColor ? { "--card-accent": item.badgeColor } as React.CSSProperties : undefined}
-            >
-              {item.badge}
-            </span>
-          )}
-        </div>
+        {/* [R20-P1-5] 이미지 영역 → TreatmentCardMedia 서브컴포넌트 */}
+        <TreatmentCardMedia item={item} name={localizedName} />
 
-        {/* 텍스트 영역 */}
-        <div className="p-3">
-          <h3 className="font-bold text-slate-800 text-sm leading-tight mb-1">
-            {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
-          </h3>
-          <p className="text-xs text-slate-500 line-clamp-2 mb-2">
-            {getText(item.desc, item.descEn, item.descJa, item.descZh)}
-          </p>
-          <div className="flex items-center gap-3 text-[10px] text-slate-400">
-            <span className="flex items-center gap-0.5">
-              <Clock size={10} />
-              {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
-            </span>
-            <span className="flex items-center gap-0.5">
-              <RefreshCw size={10} />
-              {tr.recoveryPrefix}{" "}
-              {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
-            </span>
-          </div>
-        </div>
+        {/* [R20-P1-5] 텍스트 메타 영역 → TreatmentMeta 서브컴포넌트 */}
+        <TreatmentMeta
+          name={localizedName}
+          desc={localizedDesc}
+          time={localizedTime}
+          recovery={localizedRecovery}
+          recoveryPrefix={tr.recoveryPrefix}
+        />
       </button>
 
       {/* [R18-P1-5] 상세 모달 → EquipmentTreatmentModal 컴포넌트로 분리 */}

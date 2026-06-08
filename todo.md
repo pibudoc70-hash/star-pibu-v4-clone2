@@ -2230,11 +2230,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] R24-P1-6: CategoryTabList activeId/onTabChange 타입을 TreatmentTabId로 강화
 
 ## 연구 및 발표 활동 섹션 추가 (2026-06-08)
-- [ ] client/src/pages/Research.tsx 신규 생성 (조시형 원장 논문·학회 발표 정적 데이터)
-- [ ] App.tsx에 /research 라우트 추가 (lazy import)
-- [ ] useHeaderState.ts secondaryNav에 "연구 및 발표 활동" 메뉴 추가 (외국어 안내 아래)
-- [ ] i18n.ko.ts nav.research 레이블 추가
-- [ ] TypeScript 0 errors + 전체 테스트 통과
+- [x] client/src/pages/Research.tsx 신규 생성 (조시형 원장 논문·학회 발표 정적 데이터)
+- [x] App.tsx에 /research 라우트 추가 (lazy import)
+- [x] useHeaderState.ts secondaryNav에 "연구 및 발표 활동" 메뉴 추가 (외국어 안내 아래)
+- [x] i18n.ko.ts nav.research 레이블 추가
+- [x] TypeScript 0 errors + 전체 테스트 통과 (1160개)
 
 ## Phase N+1: 연구 및 발표 활동 섹션 추가 (2026-06-08)
 - [x] 조시형 원장 논문·학회 발표 자료 조사 (공식 블로그, KISS, PubMed)

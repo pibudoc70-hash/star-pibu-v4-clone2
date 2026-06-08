@@ -66,7 +66,10 @@ export const CLINIC_INFO = {
   legalName: "의료법인 스타피부과",
   url: "https://www.star-pibu.com",
   logo: "https://www.star-pibu.com/logo.png",
-  image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg",
+  // [R18-P2-9] cloudfront URL → manus-storage 경로로 교체
+  // TODO: 전용 클리닉 대표 이미지 업로드 훅 아래 경로를 업데이트하세요
+  //       현재는 ko OG 이미지를 임시 대체값으로 사용합니다
+  image: "/manus-storage/og-image-ko_5fc1105f.jpg",
   telephone: "+82-51-818-2300",
   email: "starpibu@naver.com",
   foundingDate: "2006",

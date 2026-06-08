@@ -17,6 +17,7 @@
  *   - 더보기 버튼 인라인 style → Tailwind conditional class
  *   - 섹션 헤더 h2 style → Tailwind arbitrary value
  *   - 카드 그리드 animation style → animate-card-fade class
+ * [R18-P1-4] filter dropdown ArrowUp/Down/Enter 키보드 탐색 추가
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -54,24 +55,58 @@ export default function TreatmentsEquipmentSection() {
     handleTabChange,
     handleSortChange,
     toggleFilter,
-    setFilterOpen,
   } = useStaticTreatmentFilter();
 
-  // [R16-P1-1] Escape 키 + outside click으로 dropdown 닫기
+  // [R18-P2-7] setFilterOpen deprecated setter 제거 → closeFilter 로컸 함수
+  // toggleFilter는 열기/닫기 토글이므로, 닫기 전용 closeFilter를 정의
+  const closeFilter = useCallback(() => {
+    if (filterOpen) toggleFilter();
+  }, [filterOpen, toggleFilter]);
+
+  // [R18-P1-4] filter dropdown 키보드 탐색: Escape + ArrowUp/Down + Enter
+  const SORT_OPTIONS = (['popular', 'name', 'time'] as const);
   const handleFilterKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "Escape") setFilterOpen(false);
-  }, [setFilterOpen]);
+    if (e.key === 'Escape') {
+      closeFilter();
+      return;
+    }
+    if (!filterOpen) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        toggleFilter(); // 닫혀있을 때만 호출되므로 toggleFilter = 열기
+      }
+      return;
+    }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const currentIdx = SORT_OPTIONS.indexOf(sortBy as typeof SORT_OPTIONS[number]);
+      const next = e.key === 'ArrowDown'
+        ? (currentIdx + 1) % SORT_OPTIONS.length
+        : (currentIdx - 1 + SORT_OPTIONS.length) % SORT_OPTIONS.length;
+      handleSortChange(SORT_OPTIONS[next]);
+      // 포커스를 새로 선택된 option 버튼으로 이동
+      const listbox = filterRef.current?.querySelector('[role="listbox"]');
+      if (listbox) {
+        const opts = listbox.querySelectorAll<HTMLElement>('[role="option"]');
+        opts[next]?.focus();
+      }
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      closeFilter();
+    }
+  }, [closeFilter, toggleFilter, filterOpen, sortBy, handleSortChange, SORT_OPTIONS]);
 
   useEffect(() => {
     if (!filterOpen) return;
     const handleOutside = (e: MouseEvent) => {
       if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
-        setFilterOpen(false);
+        closeFilter();
       }
     };
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
-  }, [filterOpen, setFilterOpen]);
+  }, [filterOpen, closeFilter]);
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">
@@ -125,7 +160,7 @@ export default function TreatmentsEquipmentSection() {
                       key={opt.value}
                       role="option"
                       aria-selected={sortBy === opt.value}
-                      onClick={() => { handleSortChange(opt.value); setFilterOpen(false); }}
+                      onClick={() => { handleSortChange(opt.value); closeFilter(); }}
                       className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       {opt.label}

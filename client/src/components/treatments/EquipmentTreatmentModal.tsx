@@ -1,0 +1,178 @@
+/**
+ * EquipmentTreatmentModal — 시술 상세 모달 컴포넌트
+ *
+ * [R18-P1-5] EquipmentTreatmentCard.tsx에서 모달 콘텐츠를 별도 컴포넌트로 분리
+ *
+ * 책임:
+ * - Dialog 열림/닫힘 상태 수신 (open, onOpenChange)
+ * - 시술 상세 정보 표시 (이미지, 유튜브, 시간/회복, 효과, 주의사항)
+ * - 상세 페이지 이동 버튼 (detailSlug 있을 때만)
+ * - 전화 상담 버튼
+ */
+import {
+  Clock, RefreshCw, AlertCircle, Repeat, Sparkles, ExternalLink,
+} from "lucide-react";
+import { useLocation } from "wouter";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import OptimizedImage from "@/components/OptimizedImage";
+import { useLocalizedText } from "@/hooks/useLocalizedText";
+import { useLang } from "@/contexts/LangContext";
+import type { Treatment } from "@/types/treatment";
+import { CLINIC_TEL } from "@/lib/constants";
+
+interface EquipmentTreatmentModalProps {
+  item: Treatment;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  detailSlug: string | undefined;
+}
+
+export function EquipmentTreatmentModal({
+  item,
+  open,
+  onOpenChange,
+  detailSlug,
+}: EquipmentTreatmentModalProps) {
+  const { t } = useLang();
+  const tr = t.treatments;
+  const { getText } = useLocalizedText();
+  const [, setLocation] = useLocation();
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+        <DialogTitle className="sr-only">
+          {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}{" "}
+          {tr.modalDetailBtn}
+        </DialogTitle>
+        <div className="space-y-4">
+          {/* 헤더: 이미지 + 이름 + 시간/회복 */}
+          <div className="flex items-start gap-4">
+            <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
+              <OptimizedImage
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-slate-800">
+                {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
+              </h3>
+              <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                <span className="flex items-center gap-1">
+                  <Clock size={12} />
+                  {tr.modalTime}:{" "}
+                  {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
+                </span>
+                <span className="flex items-center gap-1">
+                  <RefreshCw size={12} />
+                  {tr.modalRecovery}:{" "}
+                  {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 유튜브 임베드 */}
+          {item.youtubeUrl && (
+            <div className="rounded-xl overflow-hidden aspect-video">
+              <iframe
+                src={item.youtubeUrl}
+                title={item.name}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          {/* 모달 이미지 (유튜브 없을 때) */}
+          {!item.youtubeUrl && item.modalImage && (
+            <div className="rounded-xl overflow-hidden">
+              <OptimizedImage
+                src={item.modalImage}
+                alt={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${tr.modalDetailBtn}`}
+                className="w-full object-contain"
+              />
+            </div>
+          )}
+
+          {/* 상세 설명 */}
+          {getText(item.detail, item.detailEn, item.detailJa, item.detailZh) && (
+            <p className="text-sm text-slate-600 leading-relaxed">
+              {getText(item.detail, item.detailEn, item.detailJa, item.detailZh)}
+            </p>
+          )}
+
+          {/* 효과 */}
+          {getText(item.effect, item.effectEn, item.effectJa, item.effectZh) && (
+            <div>
+              <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                <Sparkles size={14} className="text-amber-500" />
+                {tr.modalEffect}
+              </h4>
+              <p className="text-sm text-slate-600">
+                {getText(item.effect, item.effectEn, item.effectJa, item.effectZh)}
+              </p>
+            </div>
+          )}
+
+          {/* 시술 횟수 */}
+          {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh) && (
+            <div>
+              <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                <Repeat size={14} className="text-blue-500" />
+                {tr.modalSessions}
+              </h4>
+              <p className="text-sm text-slate-600">
+                {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh)}
+              </p>
+            </div>
+          )}
+
+          {/* 주의사항 */}
+          {(item.caution || item.cautionEn || item.cautionJa || item.cautionZh) && (
+            <div>
+              <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
+                <AlertCircle size={14} className="text-red-400" />
+                {tr.caution}
+              </h4>
+              <p className="text-sm text-slate-600">
+                {getText(
+                  item.caution ?? "",
+                  item.cautionEn ?? "",
+                  item.cautionJa ?? "",
+                  item.cautionZh ?? "",
+                )}
+              </p>
+            </div>
+          )}
+
+          {/* 상세 페이지 이동 버튼 */}
+          {detailSlug && (
+            <button
+              type="button"
+              onClick={() => {
+                onOpenChange(false);
+                setLocation(`/treatment/${detailSlug}`);
+              }}
+              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 bg-[var(--card-accent)]"
+            >
+              <ExternalLink size={14} />
+              {tr.modalDetailBtn}
+            </button>
+          )}
+
+          {/* 전화 상담 버튼 */}
+          <a
+            href={`tel:${CLINIC_TEL}`}
+            className="block w-full py-2.5 rounded-xl text-sm font-semibold text-center border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            {tr.modalConsultBtn}
+          </a>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

@@ -190,8 +190,11 @@ describe("HeroSection 서브 컴포넌트 분리 검증 (STRUCT-HERO-1)", () => 
     expect(existsSync(path.resolve(root, "client/src/components/hero/HeroAnimations.tsx"))).toBe(true);
   });
 
-  it("HeroSection.tsx는 GoldParticles를 hero/ 서브 디렉토리에서 import해야 한다", () => {
-    expect(heroSource).toMatch(/from\s+["'].*hero\/GoldParticles["']/);
+  it("HeroSection.tsx는 GoldParticles 또는 HeroBackgroundLayers를 hero/ 서브 디렉토리에서 import해야 한다 ([R18] HeroBackgroundLayers로 추상화)", () => {
+    // [R18-P0-2] GoldParticles는 HeroBackgroundLayers 내부로 이동됨
+    const hasGoldParticles = /from\s+["'].*hero\/GoldParticles["']/.test(heroSource);
+    const hasBackgroundLayers = /from\s+["'].*hero\/HeroBackgroundLayers["']/.test(heroSource);
+    expect(hasGoldParticles || hasBackgroundLayers).toBe(true);
   });
 
   it("HeroSection.tsx는 CharReveal/WordReveal을 hero/ 서브 디렉토리에서 import해야 한다", () => {

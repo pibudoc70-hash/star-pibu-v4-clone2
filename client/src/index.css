@@ -1619,3 +1619,73 @@
 @media (prefers-reduced-motion: reduce) {
   .ds-img-zoom:hover { transform: none; }
 }
+
+/* ─── R18-P0-2: HeroScrollIndicator / HeroActions CSS classes ─── */
+/* HeroScrollIndicator */
+.hero-scroll-btn {
+  position: absolute;
+  bottom: clamp(1.25rem, 3.5vh, 2.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: -7px;
+  margin-left: -20px;
+}
+.hero-scroll-label {
+  font-size: clamp(0.58rem, 1.4vw, 0.68rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+/* HeroActions container */
+.hero-actions-wrap {
+  gap: clamp(1rem, 1.5vw, 0.6rem);
+  margin-top: 42px;
+  max-width: 591px;
+  width: 100%;
+}
+.hero-actions-row {
+  gap: clamp(0.4rem, 1.5vw, 0.6rem);
+}
+/* HeroActions: phone button */
+.hero-btn-phone {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
+  color: #F5D78E;
+  border: 1.5px solid rgba(201, 168, 76, 0.55);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-size: clamp(0.7rem, 2.8vw, 0.85rem);
+  padding: clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
+  white-space: nowrap;
+  max-width: min(100%, 320px);
+  padding-right: 19px;
+}
+/* HeroActions: reserve/chat button shared sizing */
+.hero-btn-action {
+  font-size: clamp(0.7rem, 2.8vw, 0.85rem);
+  padding: clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
+  white-space: nowrap;
+  min-width: clamp(78px, 22vw, 130px);
+}
+/* HeroActions: reserve button (Naver green) */
+.hero-btn-reserve {
+  background: #03C75A;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(3, 199, 90, 0.35);
+  padding-top: 11px;
+}
+/* HeroActions: WeChat reserve button */
+.hero-btn-reserve-zh {
+  background: #06C755;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(3, 199, 90, 0.35);
+  padding-top: 11px;
+}
+/* focus-visible for hero CTA buttons */
+.hero-btn-phone:focus-visible,
+.hero-btn-action:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.8);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-btn .animate-bounce { animation: none; }
+}

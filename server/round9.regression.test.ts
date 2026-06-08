@@ -60,8 +60,11 @@ describe("[A] hero/ 서브컴포넌트 신규 생성", () => {
 // B. HeroSection.tsx — 서브컴포넌트 import 사용
 describe("[B] HeroSection.tsx 서브컴포넌트 import", () => {
   const heroSrc = src("client/src/components/HeroSection.tsx");
-  it("HeroOverlays를 import해야 한다", () => {
-    expect(heroSrc).toMatch(/from.*hero\/HeroOverlays/);
+  it("HeroOverlays 또는 HeroBackgroundLayers를 import해야 한다 ([R18] HeroBackgroundLayers로 추상화)", () => {
+    // [R18-P0-2] HeroOverlays는 HeroBackgroundLayers로 대체됨
+    const hasOverlays = /from.*hero\/HeroOverlays/.test(heroSrc);
+    const hasBackgroundLayers = /from.*hero\/HeroBackgroundLayers/.test(heroSrc);
+    expect(hasOverlays || hasBackgroundLayers).toBe(true);
   });
   it("HeroStatsStrip을 import해야 한다", () => {
     expect(heroSrc).toMatch(/from.*hero\/HeroStatsStrip/);

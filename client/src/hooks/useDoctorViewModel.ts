@@ -3,22 +3,24 @@
  *
  * [R13-P1-2] DoctorsSection.tsx에서 뷰모델 로직 분리
  * [R15-P0-3] WAI-ARIA tablist 키보드 네비게이션 핸들러 추가
+ * [R18-P0-3] 터치 스와이프 로직 → useDoctorSwipe 훅으로 분리
  *
  * 책임:
  * - 활성 의사 선택 상태 (activeDoctor)
  * - 학력·경력 펼침/접기 상태 (expandedCredentials)
  * - 이미지 로드 상태 (imagesLoaded)
- * - 터치 스와이프 핸들러
+ * - 터치 스와이프 핸들러 (useDoctorSwipe 위임)
  * - WAI-ARIA tablist 키보드 네비게이션 (handleTabKeyDown)
  * - i18n locale merge → mergedDoctors (id 기반, [R11-A] 패턴 유지)
  * - 현재 선택된 의사 뷰 데이터 (doctor)
  *
  * DoctorsSection 컴포넌트는 이 훅의 반환값을 받아 렌더링만 담당한다.
  */
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import React from "react";
 import { doctors, type Doctor } from "@/lib/doctors-data";
 import type { I18nContent } from "@/lib/i18n.types";
+import { useDoctorSwipe } from "@/hooks/useDoctorSwipe";
 
 // ── 타입 ─────────────────────────────────────────────────────────────────────
 
@@ -79,9 +81,6 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
   const [expandedCredentials, setExpandedCredentials] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
 
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
-
   // 이미지 프리로드 (마운트 시 1회)
   useEffect(() => {
     preloadDoctorImages();
@@ -101,27 +100,17 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     setExpandedCredentials((prev) => !prev);
   }, []);
 
-  // 터치 스와이프 핸들러
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-  }, []);
-
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-      if (dx < 0) {
-        setActiveDoctor((prev) => (prev + 1) % doctors.length);
-      } else {
-        setActiveDoctor((prev) => (prev - 1 + doctors.length) % doctors.length);
-      }
+  // [R18-P0-3] 터치 스와이프 로직 → useDoctorSwipe 훅으로 위임
+  const { handleTouchStart, handleTouchEnd } = useDoctorSwipe({
+    onSwipeLeft: () => {
+      setActiveDoctor((prev) => (prev + 1) % doctors.length);
       setExpandedCredentials(false);
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  }, []);
+    },
+    onSwipeRight: () => {
+      setActiveDoctor((prev) => (prev - 1 + doctors.length) % doctors.length);
+      setExpandedCredentials(false);
+    },
+  });
 
   /**
    * [R15-P0-3] WAI-ARIA tablist 키보드 네비게이션

@@ -19,6 +19,9 @@
  * - HeroStatsStrip: 통계 스트립 (HeroStatItem 포함)
  * - HeroActions: CTA 버튼 그룹
  * - HeroScrollIndicator: 스크롤 인디케이터
+ *
+ * [R18-P0-2] 배경 레이어 추상화:
+ * - HeroBackgroundLayers: HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립
  */
 import { useRef, useState } from "react";
 import { useLang } from "@/contexts/LangContext";
@@ -27,9 +30,8 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { CLINIC_STATS, WECHAT_ID } from "@/lib/constants";
 import { useClinicStats } from "@/hooks/useClinicStats";
 import { useChatConfig } from "@/hooks/useChatConfig";
-import GoldParticles from "@/components/hero/GoldParticles";
 import { CharReveal, WordReveal } from "@/components/hero/HeroAnimations";
-import { HeroDarkOverlay, HeroVignette, HeroGoldGlow } from "@/components/hero/HeroOverlays";
+import { HeroBackgroundLayers } from "@/components/hero/HeroBackgroundLayers";
 import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
@@ -96,11 +98,8 @@ export default function HeroSection() {
         />
       </picture>
 
-      {/* [R12-P1-1] 오버레이 서브컴포넌트 */}
-      <HeroDarkOverlay />
-      <HeroVignette />
-      <HeroGoldGlow />
-      <GoldParticles />
+      {/* [R18-P0-2] 배경 레이어 조립 → HeroBackgroundLayers로 추상화 */}
+      <HeroBackgroundLayers />
 
       {/* [R12-P1-1] 층별 안내 서브컴포넌트 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />

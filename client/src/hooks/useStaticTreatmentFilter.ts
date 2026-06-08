@@ -36,10 +36,6 @@ interface UseStaticTreatmentFilterReturn {
   handleSortChange: (sort: SortBy) => void;
   /** [R15-P1-2] 필터 드롭다운 토글 핸들러 */
   toggleFilter: () => void;
-  /** @deprecated 하위 호환용 — 새 코드에서는 handleSortChange를 사용하세요 */
-  setSortBy: React.Dispatch<React.SetStateAction<SortBy>>;
-  /** @deprecated 하위 호환용 — 새 코드에서는 toggleFilter를 사용하세요 */
-  setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // ── Private helpers ───────────────────────────────────────────────────────────
@@ -105,8 +101,5 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
     handleTabChange,
     handleSortChange,
     toggleFilter,
-    // 하위 호환
-    setSortBy,
-    setFilterOpen,
   };
 }

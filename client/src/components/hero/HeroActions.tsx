@@ -7,6 +7,13 @@
  * 3. 카카오/WeChat 버튼
  *
  * 모바일: 세로 스택 / 데스크톱: 가로 일렬
+ *
+ * [R18-P0-2] 인라인 style → CSS 클래스 교체
+ * - .hero-actions-wrap / .hero-actions-row: 컨테이너 gap/margin
+ * - .hero-btn-phone: 전화 버튼 스타일
+ * - .hero-btn-action: 예약/채팅 버튼 공통 사이즈
+ * - .hero-btn-reserve / .hero-btn-reserve-zh: 예약 버튼 색상
+ * - animationDelay (데이터 기반) + chatBg/chatColor (동적 prop): 인라인 style 유지
  */
 import { MessageCircle, Calendar, Phone } from "lucide-react";
 import { CLINIC_TEL, CLINIC_TEL_INTL, WECHAT_ID } from "@/lib/constants";
@@ -46,58 +53,25 @@ export function HeroActions({
   delays,
 }: HeroActionsProps) {
   return (
-    <div
-      className="flex flex-col sm:flex-row items-center justify-center w-full"
-      style={{
-        gap: "clamp(1rem, 1.5vw, 0.6rem)",
-        marginTop: "42px",
-        maxWidth: "591px",
-        width: "100%",
-      }}
-    >
+    <div className="flex flex-col sm:flex-row items-center justify-center hero-actions-wrap">
       {/* 전화 버튼 - 모바일에서 전체 너비 */}
       <a
         href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
-        className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
-        style={{
-          background: "linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.1) 100%)",
-          color: "#F5D78E",
-          border: "1.5px solid rgba(201,168,76,0.55)",
-          backdropFilter: "blur(8px)",
-          boxShadow: "0 0 12px rgba(201,168,76,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
-          fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
-          padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-          animationDelay: delays.ctaFirst,
-          whiteSpace: "nowrap",
-          maxWidth: "min(100%, 320px)",
-          paddingRight: "19px",
-        }}
+        className="hero-fade hero-btn-phone flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
+        style={{ animationDelay: delays.ctaFirst }}
       >
         <Phone size={14} />
         {t.hero.cta_call}
       </a>
 
-      <div
-        className="flex flex-row w-full sm:w-auto"
-        style={{ gap: "clamp(0.4rem, 1.5vw, 0.6rem)" }}
-      >
+      <div className="flex flex-row w-full sm:w-auto hero-actions-row">
         {/* 예약 버튼 - 모바일에서 첫 번째 */}
         <a
           href={reserveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hero-fade flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none"
-          style={{
-            background: isZH ? "#06C755" : "#03C75A",
-            color: "#FFFFFF",
-            boxShadow: "0 4px 18px rgba(3,199,90,0.35)",
-            fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
-            padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-            animationDelay: delays.ctaSecond,
-            whiteSpace: "nowrap",
-            minWidth: "clamp(78px, 22vw, 130px)",
-            paddingTop: "11px",
-          }}
+          className={`hero-fade hero-btn-action flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
+          style={{ animationDelay: delays.ctaSecond }}
         >
           <Calendar size={14} />
           {t.hero.cta_reserve}
@@ -113,15 +87,11 @@ export function HeroActions({
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={onWechatClick}
-            className="flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
+            className="hero-btn-action flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
             style={{
               background: chatBg,
               color: chatColor,
               boxShadow: chatShadow,
-              fontSize: "clamp(0.7rem, 2.8vw, 0.85rem)",
-              padding: "clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem)",
-              whiteSpace: "nowrap",
-              minWidth: "clamp(78px, 22vw, 130px)",
             }}
           >
             <MessageCircle size={14} />

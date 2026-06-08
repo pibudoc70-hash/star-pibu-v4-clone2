@@ -13,6 +13,7 @@
  * CONTACT-P4-A: document.execCommand deprecated → navigator.clipboard 전용 + 실패 시 안내
  * CONTACT-P4-B: non-null assertion(!) 제거 → optional chaining + nullish coalescing
  * CONTACT-P4-C: 지도 로드 실패 fallback UI (MapView 내부 자체 제공)
+ * [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캐플슐화
  */
 
 import { useState, useRef, useCallback } from "react";
@@ -21,6 +22,7 @@ import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
+import { useClinicMap } from "@/hooks/useClinicMap";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
@@ -89,6 +91,22 @@ export default function ContactSection() {
   // CONTACT-P3-B: 지도 높이 계산 로직을 useMapHeight 커스텀 훅으로 분리
   const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
 
+  // [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캐플슐화
+  // 훅 의존성: t.access.* 연라이브 값은 마운트 시 한 번만 생성되므로 useMemo 불필요
+  const { handleMapReady } = useClinicMap({
+    location: STAR_LOCATION,
+    zoom: 17,
+    markerParams: {
+      clinicName: t.access.mapPopupClinicName,
+      addrLine1: t.access.mapPopupAddrLine1,
+      addrLine2: t.access.mapPopupAddrLine2,
+      exitLabel: t.access.mapPopupExitLabel,
+      walkLabel: t.access.mapPopupWalkLabel,
+    },
+    mapInstanceRef,
+    onPopupToggle: setMarkerPopupVisible,
+  });
+
   // CONTACT-P4-A: navigator.clipboard 전용 (document.execCommand deprecated 제거)
   // [R17-P1-3] clipboard 실패 원인 세분화
   const handleCopyAddress = useCallback(async () => {
@@ -152,42 +170,7 @@ export default function ContactSection() {
               className="w-full h-full"
               initialCenter={STAR_LOCATION}
               initialZoom={17}
-              onMapReady={(map) => {
-                mapInstanceRef.current = map;
-
-                map.setCenter(STAR_LOCATION);
-                map.setZoom(17);
-
-                // CONTACT-P1-C: idle 이벤트 1회만 사용 (무한루프 방지)
-                if (window.google?.maps) {
-                  window.google.maps.event.addListenerOnce(map, "idle", () => {
-                    map.setCenter(STAR_LOCATION);
-                  });
-                }
-
-                // [E항목] buildMarkerPinElement 순수 함수로 위임 (테스트 가능)
-                // CONTACT-P3-A: onToggle 콜백으로 팝업 상태를 React state와 연동
-                const pinEl = buildMarkerPinElement({
-                  clinicName: t.access.mapPopupClinicName,
-                  addrLine1: t.access.mapPopupAddrLine1,
-                  addrLine2: t.access.mapPopupAddrLine2,
-                  exitLabel: t.access.mapPopupExitLabel,
-                  walkLabel: t.access.mapPopupWalkLabel,
-                  onToggle: setMarkerPopupVisible,
-                });
-
-                const g = window.google;
-                if (!g?.maps?.marker?.AdvancedMarkerElement) {
-                  console.warn("[ContactSection] AdvancedMarkerElement not available");
-                  return;
-                }
-                new g.maps.marker.AdvancedMarkerElement({
-                  position: STAR_LOCATION,
-                  map,
-                  title: t.access.mapMarkerTitle,
-                  content: pinEl,
-                });
-              }}
+              onMapReady={handleMapReady}
             />
           </div>
 

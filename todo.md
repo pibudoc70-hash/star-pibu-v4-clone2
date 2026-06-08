@@ -2125,3 +2125,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round17.regression.test.ts 작성 (60개 테스트: A~H 8개 영역)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (34 files, 841 tests)
 - [x] 최종 커밋
+
+## Round-18 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R18-P0-1] DesignSystem: onMouseEnter/Leave 확인 — FacilitySection의 isHovering은 carousel 자동재생 제어용 state 관리로 정상 패턴 (수정 불필요)
+- [x] [R18-P0-2] HeroScrollIndicator/HeroActions: 인라인 style → CSS 클래스 교체 (데이터 기반 animationDelay/chatBg/chatColor는 유지)
+- [x] [R18-P0-2] HeroBackgroundLayers.tsx 신규 생성 (HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립 추상화)
+- [x] [R18-P0-2] HeroSection.tsx: HeroBackgroundLayers 사용 + aria-hidden 배경 요소 접근성 보강
+- [x] [R18-P0-3] useDoctorSwipe.ts 신규 생성 (swipe 로직 분리) + useDoctorViewModel에서 import
+- [ ] [R18-P0-3-defer] DoctorsSection: DoctorTabs/Details/Media/Credentials 서브컴포넌트 분리 — 475줄 파일이지만 desktop/mobile 이원화 마크업이 서로 다른 데이터 흐름을 가지므로 다음 라운드에서 신중하게 분리
+### P1 – 중요
+- [x] [R18-P1-4] TreatmentsEquipmentSection: setFilterOpen deprecated setter 제거 → closeFilter 로컈 함수 + ArrowDown/Up 키보드 탐색
+- [x] [R18-P1-5] EquipmentTreatmentModal.tsx 신규 생성 (모달 서브컴포넌트 분리) + EquipmentTreatmentCard 200줄 이하로 축소
+- [x] [R18-P1-6] useClinicMap.ts 신규 생성 (ContactSection onMapReady 콜백 캐시화) + ContactSection 컴포넌트 최상위에서 훅 호출
+### P2 – 품질 마무리
+- [x] [R18-P2-7] useStaticTreatmentFilter: setSortBy/setFilterOpen deprecated setter 완전 제거
+- [x] [R18-P2-8] SeoHead.multilang.test.ts: SEO_PRESETS + buildClinicJsonLd + buildBreadcrumbJsonLd + buildWebSiteJsonLd 테스트 추가 (45개 테스트)
+- [x] [R18-P2-9] constants.ts: CLINIC_INFO.image cloudfront URL → manus-storage 경로로 교체 (TODO: 전용 클리닉 대표 이미지 업로드 후 업데이트)
+### 검증
+- [x] round18.regression.test.ts 작성 (38개 테스트: A~I 9개 영역)
+- [x] round9/senior-review.regression.test.ts: HeroBackgroundLayers 추상화 후행 호환 테스트 업데이트
+- [x] TypeScript 0 errors + 전체 테스트 통과 (35 files, 897 tests)
+- [x] 최종 커밋

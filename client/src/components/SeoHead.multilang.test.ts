@@ -8,6 +8,10 @@
  *   - ALL_OG_LOCALES: 전체 locale 목록 완전성 검증
  *   - buildHreflangs: 언어별 hreflang URL 생성 정확성 검증
  *   - COMMON_HREFLANGS: 공통 hreflang 목록 완전성 검증
+ *   - [R18-P2-8] SEO_PRESETS: pageType → schema 조합 검증
+ *   - [R18-P2-8] buildClinicJsonLd: MedicalBusiness 스키마 출력 검증
+ *   - [R18-P2-8] buildWebSiteJsonLd: WebSite 스키마 출력 검증
+ *   - [R18-P2-8] buildBreadcrumbJsonLd: BreadcrumbList 스키마 출력 검증
  */
 import { describe, it, expect } from "vitest";
 import {
@@ -18,6 +22,10 @@ import {
   COMMON_HREFLANGS,
   BASE_URL,
   buildHreflangs,
+  SEO_PRESETS,
+  buildClinicJsonLd,
+  buildWebSiteJsonLd,
+  buildBreadcrumbJsonLd,
 } from "./SeoHead";
 
 describe("OG_IMAGE_LOCALIZED", () => {
@@ -172,5 +180,129 @@ describe("buildHreflangs", () => {
   it("결과에 5개 항목(ko, en, ja, zh, x-default)이 있어야 한다", () => {
     const result = buildHreflangs("/");
     expect(result).toHaveLength(5);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// [R18-P2-8] SEO_PRESETS 출력 테스트 (pageType → schema 조합 검증)
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("SEO_PRESETS", () => {
+  it("home 프리셋은 MedicalBusiness + WebSite 스키마를 모두 포함해야 한다", () => {
+    expect(SEO_PRESETS.home.includeMedicalSchema).toBe(true);
+    expect(SEO_PRESETS.home.includeWebSiteSchema).toBe(true);
+  });
+
+  it("treatment 프리셋은 MedicalBusiness만 포함해야 한다", () => {
+    expect(SEO_PRESETS.treatment.includeMedicalSchema).toBe(true);
+    expect(SEO_PRESETS.treatment.includeWebSiteSchema).toBe(false);
+  });
+
+  it("default 프리셋은 MedicalBusiness만 포함해야 한다", () => {
+    expect(SEO_PRESETS.default.includeMedicalSchema).toBe(true);
+    expect(SEO_PRESETS.default.includeWebSiteSchema).toBe(false);
+  });
+
+  it("admin 프리셋은 스키마를 포함하지 않아야 한다", () => {
+    expect(SEO_PRESETS.admin.includeMedicalSchema).toBe(false);
+    expect(SEO_PRESETS.admin.includeWebSiteSchema).toBe(false);
+  });
+
+  it("SEO_PRESETS에 4개 pageType이 모두 정의되어 있어야 한다", () => {
+    const keys = Object.keys(SEO_PRESETS);
+    expect(keys).toContain("home");
+    expect(keys).toContain("treatment");
+    expect(keys).toContain("default");
+    expect(keys).toContain("admin");
+    expect(keys).toHaveLength(4);
+  });
+});
+
+describe("buildClinicJsonLd", () => {
+  it("@type이 MedicalBusiness를 포함해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const types = schema["@type"] as string | string[];
+    const typeList = Array.isArray(types) ? types : [types];
+    expect(typeList).toContain("MedicalBusiness");
+  });
+
+  it("@context가 https://schema.org여야 한다", () => {
+    const schema = buildClinicJsonLd();
+    expect(schema["@context"]).toBe("https://schema.org");
+  });
+
+  it("name 필드가 존재해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    expect(typeof schema["name"]).toBe("string");
+    expect((schema["name"] as string).length).toBeGreaterThan(0);
+  });
+
+  it("address 필드가 존재해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    expect(schema["address"]).toBeDefined();
+  });
+
+  it("telephone 필드가 존재해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    expect(typeof schema["telephone"]).toBe("string");
+  });
+
+  it("url 필드가 BASE_URL을 포함해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    expect(schema["url"]).toContain("star-pibu.com");
+  });
+});
+
+describe("buildWebSiteJsonLd", () => {
+  it("@type이 WebSite여야 한다", () => {
+    const schema = buildWebSiteJsonLd();
+    expect(schema["@type"]).toBe("WebSite");
+  });
+
+  it("url 필드가 BASE_URL이어야 한다", () => {
+    const schema = buildWebSiteJsonLd();
+    expect(schema["url"]).toBe("https://www.star-pibu.com");
+  });
+
+  it("name 필드가 존재해야 한다", () => {
+    const schema = buildWebSiteJsonLd();
+    expect(typeof schema["name"]).toBe("string");
+  });
+});
+
+describe("buildBreadcrumbJsonLd", () => {
+  it("빈 배열을 전달하면 itemListElement가 비어있어야 한다", () => {
+    const schema = buildBreadcrumbJsonLd([]);
+    // seoHelpers는 빈 배열에도 빈 BreadcrumbList를 반환하도록 설계됨
+    // null 반환 또는 빈 itemListElement 중 하나여야 함
+    if (schema === null) {
+      expect(schema).toBeNull();
+    } else {
+      const list = schema["itemListElement"] as unknown[];
+      expect(list).toHaveLength(0);
+    }
+  });
+
+  it("@type이 BreadcrumbList여야 한다", () => {
+    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://www.star-pibu.com/" }]);
+    expect(schema?.["@type"]).toBe("BreadcrumbList");
+  });
+
+  it("itemListElement 배열 길이가 입력 배열과 일치해야 한다", () => {
+    const items = [
+      { name: "홈", url: "https://www.star-pibu.com/" },
+      { name: "시술", url: "https://www.star-pibu.com/treatments" },
+    ];
+    const schema = buildBreadcrumbJsonLd(items);
+    const list = schema?.["itemListElement"] as unknown[];
+    expect(list).toHaveLength(2);
+  });
+
+  it("각 ListItem에 position, name, item 필드가 있어야 한다", () => {
+    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://www.star-pibu.com/" }]);
+    const item = (schema?.["itemListElement"] as Record<string, unknown>[])[0];
+    expect(item["position"]).toBe(1);
+    expect(item["name"]).toBe("홈");
+    expect(item["item"]).toBe("https://www.star-pibu.com/");
   });
 });

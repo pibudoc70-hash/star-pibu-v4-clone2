@@ -11,6 +11,7 @@ export const zh: I18nContent = {
     facility: "设施介绍",
     contact: "交通指南",
     foreignGuide: "外语服务",
+    research: "研究及学术活动",
   },
   hero: {
     title: "STAR皮肤科",

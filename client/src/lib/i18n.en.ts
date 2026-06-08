@@ -11,6 +11,7 @@ export const en: I18nContent = {
     facility: "Facility",
     contact: "Directions",
     foreignGuide: "Foreign Patient Guide",
+    research: "Research & Presentations",
   },
   hero: {
     title: "STAR Dermatology",

@@ -11,6 +11,7 @@ export const ko: I18nContent = {
     facility: "시설안내",
     contact: "오시는 길",
     foreignGuide: "외국어 안내",
+    research: "연구 및 발표 활동",
   },
   hero: {
     title: "스타피부과",

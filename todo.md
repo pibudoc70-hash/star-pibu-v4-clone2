@@ -2228,3 +2228,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] R24-P1-4: seoHelpers buildClinicJsonLd - openingHoursSpecification CLINIC_INFO.openingHours 파싱
 - [x] R24-P1-5: constants/stats 연결 검증 - CLINIC_STAT_UNIT_MAP satisfies 타입 검증
 - [x] R24-P1-6: CategoryTabList activeId/onTabChange 타입을 TreatmentTabId로 강화
+
+## 연구 및 발표 활동 섹션 추가 (2026-06-08)
+- [ ] client/src/pages/Research.tsx 신규 생성 (조시형 원장 논문·학회 발표 정적 데이터)
+- [ ] App.tsx에 /research 라우트 추가 (lazy import)
+- [ ] useHeaderState.ts secondaryNav에 "연구 및 발표 활동" 메뉴 추가 (외국어 안내 아래)
+- [ ] i18n.ko.ts nav.research 레이블 추가
+- [ ] TypeScript 0 errors + 전체 테스트 통과
+
+## Phase N+1: 연구 및 발표 활동 섹션 추가 (2026-06-08)
+- [x] 조시형 원장 논문·학회 발표 자료 조사 (공식 블로그, KISS, PubMed)
+- [x] Research.tsx 페이지 생성 (/research) - 논문 5편, 학회 발표 5건, 해외 연수 5건, 소속 학회 9개
+- [x] App.tsx에 /research 라우트 등록
+- [x] useHeaderState.ts secondaryNav에 "연구 및 발표 활동" 메뉴 추가 (외국어 안내 아래)
+- [x] i18n.types.ts nav 타입에 research 필드 추가
+- [x] i18n.ko.ts nav에 "연구 및 발표 활동" 레이블 추가
+- [x] i18n.en.ts nav에 "Research & Presentations" 레이블 추가
+- [x] i18n.ja.ts nav에 "研究・発表活動" 레이블 추가
+- [x] i18n.zh.ts nav에 "研究及学术活动" 레이블 추가
+- [x] TypeScript 컴파일 오류 0개 확인
+
+## Phase N+2: 메인 히어로 "50종+ 프리미엄 레이저" 중복 제거 (2026-06-08)
+- [x] HeroStatsStrip.tsx 수정 - 3개 통계를 항상 한 행에 표시하고 중복 행 제거

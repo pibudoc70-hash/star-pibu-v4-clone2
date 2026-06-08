@@ -11,6 +11,7 @@ export const ja: I18nContent = {
     facility: "施設案内",
     contact: "アクセス",
     foreignGuide: "外国語案内",
+    research: "研究・発表活動",
   },
   hero: {
     title: "スター皮膚科",

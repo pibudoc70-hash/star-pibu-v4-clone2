@@ -64,6 +64,7 @@ export function useHeaderState() {
     { label: t.nav.facility,    href: "#facility",    sectionId: "facility" },
     { label: t.nav.contact,     href: "#contact",     sectionId: "contact"  },
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
+    { label: t.nav.research,      href: "/research",      sectionId: null   },
     ...(isAdmin ? [{ label: "주요 시술 및 장비", href: "/equipment2", sectionId: null }] : []),
   ];
 

@@ -29,6 +29,7 @@ const TreatmentPage = lazy(() => import("@/pages/TreatmentPage"));
 const LandingEN = lazy(() => import("@/pages/LandingEN"));
 const LandingJA = lazy(() => import("@/pages/LandingJA"));
 const LandingZH = lazy(() => import("@/pages/LandingZH"));
+const Research = lazy(() => import("@/pages/Research"));
 // 로그인·마이페이지·예약 페이지는 네이버예약·카카오톡 외부 링크로 대체됨
 
 // 로드 중 로딩 스폰너
@@ -152,6 +153,8 @@ function Router() {
             <Route path={"/en/foreign-guide"} component={ForeignGuide} />
             <Route path={"/ja/foreign-guide"} component={ForeignGuide} />
             <Route path={"/zh/foreign-guide"} component={ForeignGuide} />
+            {/* Research: 연구 및 발표 활동 — 한국어 전용 정적 페이지 */}
+            <Route path={"/research"} component={Research} />
             {/* Privacy: noindex live — ko 원문 단일 운영, 법률 문서 특성상 번역 미제공 (PR-36) */}
             <Route path={"/privacy"} component={Privacy} />
             <Route path={"/en/privacy"} component={Privacy} />

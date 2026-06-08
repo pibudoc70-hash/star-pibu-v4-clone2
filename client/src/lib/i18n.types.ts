@@ -41,6 +41,7 @@ export interface I18nContent {
     facility: string;
     contact: string;
     foreignGuide: string;
+    research: string;
   };
   hero: {
     title: string;

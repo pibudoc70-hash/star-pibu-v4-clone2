@@ -465,12 +465,6 @@ export default function Research() {
                 className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span
-                    className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{ backgroundColor: "var(--color-gold-pale)", color: "var(--color-gold-primary)" }}
-                  >
-                    {pres.year}
-                  </span>
                   <span className="text-xs text-gray-500 font-medium">{pres.event}</span>
                 </div>
                 <h3 className="text-sm md:text-base font-bold text-gray-900 mb-1 leading-snug">

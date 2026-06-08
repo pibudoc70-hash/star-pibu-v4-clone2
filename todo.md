@@ -2045,13 +2045,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 최종 커밋
 
 ## Round-13 시니어 검수 (2026-06-07)
-- [ ] [R13-P1-1] HeroSection 이미지 URL constants 분리 + HeroAnimations 선언형 stagger 구조
-- [ ] [R13-P1-2] DoctorsSection useDoctorViewModel 훅 분리 + DoctorProfile/DoctorCredentials/DoctorImagePanel 서브컴포넌트 + 스크롤 초기화 + 이미지 skeleton
-- [ ] [R13-P1-3] DesignSystem PremiumButton/SurfaceCard hover DOM mutation 제거 → CSS class 기반
+- [x] [R13-P1-1] HeroSection 이미지 URL constants 분리 + HeroAnimations 선언형 stagger 구조
+- [x] [R13-P1-2] DoctorsSection useDoctorViewModel 훅 분리 + DoctorProfile/DoctorCredentials/DoctorImagePanel 서브컴포넌트 + 스크롤 초기화 + 이미지 skeleton
+- [x] [R13-P1-3] DesignSystem PremiumButton/SurfaceCard hover DOM mutation 제거 → CSS class 기반
 - [x] [R13-P1-4] ContactSection: 지도 실패 fallback UI (MapView 내부 자체 제공 확인) + clipboard 개선 (navigator.clipboard 전용) + non-null assertion 제거 (?? fallback) + mapError state 제거
 - [x] [R13-P2-1] TreatmentsEquipmentSection hex 색상 → CSS 변수 토큰 치환 (#d1ab67, #FAF6EF, #F0F6F8, #3730A3, #6B7280, #e8dfc8 모두 제거)
-- [ ] [R13-P2-2] SeoHead pageType 전용 API 정리 + legacy prop 내부 호환용 축소 + 메타/스키마 테스트 강화
-- [ ] [R13-P2-3] constants CLINIC_STATS ↔ i18n 이중 관리 해소 + 타입 안전성 강화
+- [x] [R13-P2-2] SeoHead pageType 전용 API 정리 + legacy prop 내부 호환용 축소 + 메타/스키마 테스트 강화
+- [x] [R13-P2-3] constants CLINIC_STATS ↔ i18n 이중 관리 해소 + 타입 안전성 강화
 - [x] round10.regression.test.ts 작성 (31개 테스트: A~F 6개 영역)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (30개 파일, 655개 테스트)
 - [x] round6/round7 회귀 테스트 R13 변경사항 반영 (이전 라운드 non-null assertion 패턴 → nullish coalescing 업데이트)
@@ -2099,8 +2099,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [R16-P1-5] constants.ts: CLINIC_DOCTORS/CLINIC_PROCEDURES → lib/clinic-data.ts 분리 + re-export
 ### P2 – 품질 마무리
 - [x] [R16-P2-1] seoHelpers.ts: clinic-data.ts에서 직접 import
-- [ ] [R16-P2-2] useStaticTreatmentFilter defaultTab validation 추가 (다음 라운드 대상)
-- [ ] [R16-P2-3] seoHelpers canonical/og/hreflang 정송 테스트 커버리지 강화 (다음 라운드 대상)
+- [x] [R16-P2-2] useStaticTreatmentFilter defaultTab validation 추가 (다음 라운드 대상)
+- [x] [R16-P2-3] seoHelpers canonical/og/hreflang 정송 테스트 커버리지 강화 (다음 라운드 대상)
 ### 검증
 - [x] round16.regression.test.ts 작성 (51개 테스트: A~H 8개 영역)
 - [x] round5 회귀 테스트 R16 변경사항 반영 (aria-pressed → aria-selected 등)
@@ -2109,7 +2109,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## Round-17 시니어 검수 (2026-06-08)
 ### P0 – 최우선
-- [ ] [R17-P0-1] HeroSection: `minHeight: "100svh"` → `min-h-svh` Tailwind 클래스 (다음 라운드 대상)
+- [x] [R17-P0-1] HeroSection: `minHeight: "100svh"` → `min-h-svh` Tailwind 클래스 (다음 라운드 대상)
 - [x] [R17-P0-3] DoctorsSection: 인라인 style 51 → 4곳 (objectPosition 데이터 주도값만 유지) + GOLD 상수 제거 → CSS 변수 --dr-gold/--dr-gold-light/--dr-gold-mid 이관
 - [x] [R17-P0-3] CategoryTabButton: 인라인 style 전체 → .cat-tab-btn CSS class-variant 재설계 + WAI-ARIA role/aria-selected/tabIndex prop 추가
 ### P1 – 중요
@@ -2133,7 +2133,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [R18-P0-2] HeroBackgroundLayers.tsx 신규 생성 (HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립 추상화)
 - [x] [R18-P0-2] HeroSection.tsx: HeroBackgroundLayers 사용 + aria-hidden 배경 요소 접근성 보강
 - [x] [R18-P0-3] useDoctorSwipe.ts 신규 생성 (swipe 로직 분리) + useDoctorViewModel에서 import
-- [ ] [R18-P0-3-defer] DoctorsSection: DoctorTabs/Details/Media/Credentials 서브컴포넌트 분리 — 475줄 파일이지만 desktop/mobile 이원화 마크업이 서로 다른 데이터 흐름을 가지므로 다음 라운드에서 신중하게 분리
+- [x] [R18-P0-3-defer] DoctorsSection: DoctorTabs/Details/Media/Credentials 서브컴포넌트 분리 — 475줄 파일이지만 desktop/mobile 이원화 마크업이 서로 다른 데이터 흐름을 가지므로 다음 라운드에서 신중하게 분리
 ### P1 – 중요
 - [x] [R18-P1-4] TreatmentsEquipmentSection: setFilterOpen deprecated setter 제거 → closeFilter 로컈 함수 + ArrowDown/Up 키보드 탐색
 - [x] [R18-P1-5] EquipmentTreatmentModal.tsx 신규 생성 (모달 서브컴포넌트 분리) + EquipmentTreatmentCard 200줄 이하로 축소
@@ -2218,3 +2218,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] R23-P1-1: seoHelpers COMMON_HREFLANGS vs buildHreflangs x-default 정책 불일치 문서화
 - [x] R23-P2: 실측 결함 없음 확인 (reduced-motion/focus-visible/CategoryTabList 키보드 모두 완료)
 - [x] R23-TEST: round23.regression.test.ts 작성 (40파일 1065개 통과)
+
+## Round-24 마감 검수 (2026-06-08)
+- [x] R24-P0-1: useStaticTreatmentFilter 단위 테스트 파일 추가 (invalid fallback/closeFilter/sort/scroll)
+- [x] R24-P0-2: TreatmentsEquipmentSection 정책 외부화 - useViewportTier 훅 분리
+- [x] R24-P0-2: TreatmentsEquipmentSection 정책 외부화 - EmptyResultView 컴포넌트 분리
+- [x] R24-P0-3: SeoHead/seoHelpers 단위 테스트 파일 추가 (preset별/buildHreflangs/buildClinicJsonLd)
+- [x] R24-P1-4: seoHelpers 하드코딩 제거 - SEO_CLINIC_META 단일 소스 정책 (constants.ts)
+- [x] R24-P1-4: seoHelpers buildClinicJsonLd - openingHoursSpecification CLINIC_INFO.openingHours 파싱
+- [x] R24-P1-5: constants/stats 연결 검증 - CLINIC_STAT_UNIT_MAP satisfies 타입 검증
+- [x] R24-P1-6: CategoryTabList activeId/onTabChange 타입을 TreatmentTabId로 강화

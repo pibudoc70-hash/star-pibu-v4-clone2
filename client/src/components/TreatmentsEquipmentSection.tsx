@@ -38,12 +38,12 @@ import { CATEGORIES, CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categori
 import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCard";
 import CategoryTabList from "@/components/treatments/CategoryTabList";
 import { useStaticTreatmentFilter } from "@/hooks/useStaticTreatmentFilter";
+import { useViewportTier, SM_BREAKPOINT, MD_BREAKPOINT } from "@/hooks/useViewportTier";
+import EmptyResultView from "@/components/treatments/EmptyResultView";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // [R22-P0-2] 3단계 breakpoint 정책 (Tailwind sm/md 동기화)
 // ─────────────────────────────────────────────────────────────────────────────
-const SM_BREAKPOINT = 640;  // Tailwind sm: 640px
-const MD_BREAKPOINT = 768;  // Tailwind md: 768px
 const MOBILE_SHOW  = 3;     // < 640px: 3개
 const TABLET_SHOW  = 4;     // 640px ~ 767px: 4개 (태블릿 세로)
 const DESKTOP_SHOW = 6;     // >= 768px: 6개
@@ -55,15 +55,6 @@ const SCROLL_COMPLETE_FALLBACK_MS = 500;
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
 // ─────────────────────────────────────────────────────────────────────────────
-type ViewportTier = "mobile" | "tablet" | "desktop";
-
-function getViewportTier(): ViewportTier {
-  if (typeof window === "undefined") return "desktop";
-  if (window.innerWidth < SM_BREAKPOINT) return "mobile";
-  if (window.innerWidth < MD_BREAKPOINT) return "tablet";
-  return "desktop";
-}
-
 export default function TreatmentsEquipmentSection() {
   const { t, lang } = useLang();
   const tr = t.treatments;
@@ -71,19 +62,8 @@ export default function TreatmentsEquipmentSection() {
   const [showAll, setShowAll] = useState(false);
 
   // [R22-P0-2] 3단계 breakpoint: mobile(<640) / tablet(640~767) / desktop(>=768)
-  const [viewportTier, setViewportTier] = useState<ViewportTier>(() => getViewportTier());
-  useEffect(() => {
-    const mqlSm = window.matchMedia(`(max-width: ${SM_BREAKPOINT - 1}px)`);
-    const mqlMd = window.matchMedia(`(max-width: ${MD_BREAKPOINT - 1}px)`);
-    const handler = () => setViewportTier(getViewportTier());
-    mqlSm.addEventListener("change", handler);
-    mqlMd.addEventListener("change", handler);
-    return () => {
-      mqlSm.removeEventListener("change", handler);
-      mqlMd.removeEventListener("change", handler);
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // [R24-P0-2] getViewportTier/ViewportTier → useViewportTier 훅으로 교체
+  const viewportTier = useViewportTier();
 
   // INITIAL_SHOW: breakpoint tier 변경 시 재계산
   const INITIAL_SHOW = useMemo(() => {
@@ -280,13 +260,8 @@ export default function TreatmentsEquipmentSection() {
                   className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                 >
                   {filteredTreatments.length === 0 ? (
-                    <div className="col-span-full text-center py-16 text-gray-400">
-                      <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <p className="text-sm font-medium">{tr.noResults}</p>
-                      <p className="text-xs mt-1">{tr.noResultsHint}</p>
-                    </div>
+                    /* [R24-P0-2] EmptyResultView 컴포넌트로 분리 */
+                    <EmptyResultView message={tr.noResults} hint={tr.noResultsHint} />
                   ) : (
                     (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
                       <EquipmentTreatmentCard

@@ -125,6 +125,42 @@ export const CLINIC_INFO = {
 } as const;
 
 
+// ── SEO JSON-LD 전용 메타 (buildClinicJsonLd 하드코딩 제거용) ─────────────────────────
+// [R24-P1-4] seoHelpers.ts 하드코딩 운영 정보 → constants 단일 소스 정책
+/**
+ * SEO JSON-LD 전용 운영 메타 상수.
+ * buildClinicJsonLd()에서 직접 참조하여 하드코딩을 제거합니다.
+ */
+export const SEO_CLINIC_META = {
+  /** 의료진 수 (numberOfEmployees.value) */
+  physicianCount: 3,
+  /** 집계 평점 */
+  aggregateRating: {
+    ratingValue: "4.9",
+    reviewCount: "312",
+    bestRating: "5",
+    worstRating: "1",
+  },
+  /** 진료 분야 키워드 (knowsAbout) */
+  knowsAbout: [
+    "눈밑지방재배치술",
+    "울쎄라",
+    "써마지",
+    "리주란힐러",
+    "피코레이저",
+    "보톡스",
+    "필러",
+    "피부과 전문의",
+  ],
+  /** 자격증/인증 (hasCredential) */
+  hasCredential: [
+    {
+      credentialCategory: "Medical Specialty Board Certification",
+      recognizedBy: "대한피부과학회",
+    },
+  ],
+} as const;
+
 // ── 의료진 프로필 + 주요 시술 목록 (JSON-LD 스키마용) ─────────────────────────
 // [R16-P2-3] lib/clinic-data.ts로 분리 — seoHelpers.ts에서 직접 import
 // 하위 호환성을 위해 re-export 유지 (기존 import 경로가 있다면 계속 동작)

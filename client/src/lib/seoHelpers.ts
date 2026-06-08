@@ -1,6 +1,6 @@
 // SEO 상수 및 JSON-LD 헬퍼 함수 — SeoHead.tsx에서 분리 (STRUCT-SEO-1)
 // 기존 import 경로 유지: import { ... } from '@/components/SeoHead' (re-export됨)
-import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_INFO, CLINIC_STATS, SEO_CLINIC_META } from "@/lib/constants";
 import { CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/clinic-data";
 // [R20-P2-9] 에셋 URL 중앙 관리 → assetConfig.ts
 import { OG_IMAGES } from "@/lib/assetConfig";
@@ -182,20 +182,26 @@ export function buildClinicJsonLd(): JsonLdSchema {
       latitude: CLINIC_INFO.geo.latitude,
       longitude: CLINIC_INFO.geo.longitude,
     },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "10:00",
-        closes: "19:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday"],
-        opens: "09:30",
-        closes: "15:00",
-      },
-    ],
+    // [R24-P1-4] CLINIC_INFO.openingHours 기반 파싱 (하드코딩 제거)
+    openingHoursSpecification: CLINIC_INFO.openingHours.map((spec) => {
+      // 형식: "Mo-Fr 10:00-19:00" 또는 "Sa 09:30-15:00"
+      const [daysPart, timesPart] = spec.split(" ");
+      const [opens, closes] = timesPart.split("-");
+      const DAY_MAP: Record<string, string> = {
+        Mo: "Monday", Tu: "Tuesday", We: "Wednesday",
+        Th: "Thursday", Fr: "Friday", Sa: "Saturday", Su: "Sunday",
+      };
+      const days = daysPart.includes("-")
+        ? (() => {
+            const [startDay, endDay] = daysPart.split("-");
+            const order = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+            const si = order.indexOf(startDay);
+            const ei = order.indexOf(endDay);
+            return order.slice(si, ei + 1).map((d) => DAY_MAP[d] ?? d);
+          })()
+        : [DAY_MAP[daysPart] ?? daysPart];
+      return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
+    }),
     priceRange: CLINIC_INFO.priceRange,
     currenciesAccepted: CLINIC_INFO.currenciesAccepted,
     paymentAccepted: CLINIC_INFO.paymentAccepted,
@@ -205,38 +211,28 @@ export function buildClinicJsonLd(): JsonLdSchema {
     },
     hasMap: `https://maps.google.com/?q=${CLINIC_INFO.geo.latitude},${CLINIC_INFO.geo.longitude}`,
     sameAs: [...CLINIC_INFO.sameAs],
+    // [R24-P1-4] SEO_CLINIC_META.physicianCount 참조
     numberOfEmployees: {
       "@type": "QuantitativeValue",
-      value: 3,
+      value: SEO_CLINIC_META.physicianCount,
       unitText: "physicians",
     },
+    // [R24-P1-4] SEO_CLINIC_META.aggregateRating 참조
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "312",
-      bestRating: "5",
-      worstRating: "1",
+      ...SEO_CLINIC_META.aggregateRating,
     },
-    knowsAbout: [
-      "눈밑지방재배치술",
-      "울쎄라",
-      "써마지",
-      "리주란힐러",
-      "피코레이저",
-      "보톡스",
-      "필러",
-      "피부과 전문의",
-    ],
-    hasCredential: [
-      {
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "Medical Specialty Board Certification",
-        recognizedBy: {
-          "@type": "Organization",
-          name: "대한피부과학회",
-        },
+    // [R24-P1-4] SEO_CLINIC_META.knowsAbout 참조
+    knowsAbout: [...SEO_CLINIC_META.knowsAbout],
+    // [R24-P1-4] SEO_CLINIC_META.hasCredential 참조
+    hasCredential: SEO_CLINIC_META.hasCredential.map((cred) => ({
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: cred.credentialCategory,
+      recognizedBy: {
+        "@type": "Organization",
+        name: cred.recognizedBy,
       },
-    ],
+    })),
     // 의료진 프로필 (Schema.org Person)
     employee: CLINIC_DOCTORS.map((doc) => ({
       "@type": "Physician",

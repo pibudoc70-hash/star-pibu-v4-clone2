@@ -67,8 +67,11 @@ describe("B. TreatmentsEquipmentSection", () => {
   const content = readClient("components/TreatmentsEquipmentSection.tsx");
 
   it("B-1: SM_BREAKPOINT = 640, MD_BREAKPOINT = 768 상수가 정의된다 (Tailwind sm/md 동기화)", () => {
-    expect(content).toContain("SM_BREAKPOINT = 640");
-    expect(content).toContain("MD_BREAKPOINT = 768");
+    // [R24-P0-2] useViewportTier.ts로 분리됨 — 두 파일 중 하나에 있으면 통과
+    const viewportTierSrc = readClient("hooks/useViewportTier.ts");
+    const hasInSection = content.includes("SM_BREAKPOINT = 640") && content.includes("MD_BREAKPOINT = 768");
+    const hasInHook = viewportTierSrc.includes("SM_BREAKPOINT = 640") && viewportTierSrc.includes("MD_BREAKPOINT = 768");
+    expect(hasInSection || hasInHook).toBe(true);
   });
 
   it("B-2: MOBILE_SHOW / TABLET_SHOW / DESKTOP_SHOW 3단계 breakpoint 정책이 존재한다", () => {
@@ -78,10 +81,13 @@ describe("B. TreatmentsEquipmentSection", () => {
   });
 
   it("B-3: ViewportTier 타입이 mobile/tablet/desktop 3단계로 정의된다", () => {
-    expect(content).toContain("ViewportTier");
-    expect(content).toContain('"mobile"');
-    expect(content).toContain('"tablet"');
-    expect(content).toContain('"desktop"');
+    // [R24-P0-2] useViewportTier.ts로 분리됨 — 두 파일 중 하나에 있으면 통과
+    const viewportTierSrc = readClient("hooks/useViewportTier.ts");
+    const combined = content + viewportTierSrc;
+    expect(combined).toContain("ViewportTier");
+    expect(combined).toContain('"mobile"');
+    expect(combined).toContain('"tablet"');
+    expect(combined).toContain('"desktop"');
   });
 
   it("B-4: setTimeout(420) 매직 넘버가 없다 (scrollend 이벤트 기반으로 교체)", () => {

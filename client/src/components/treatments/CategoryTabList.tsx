@@ -14,12 +14,14 @@ import type { Category } from "@/types/treatment";
 import CategoryTabButton from "./CategoryTabButton";
 import { CATEGORY_ICON_MAP, getCatLabel } from "@/data/treatments/categories";
 import type { Lang } from "@/lib/i18n.types";
+import type { TreatmentTabId } from "@/hooks/useStaticTreatmentFilter";
 
 interface CategoryTabListProps {
   categories: Category[];
-  activeId: string;
+  /** [R24-P1-6] TreatmentTabId 타입으로 강화 — string보다 의미 명확 */
+  activeId: TreatmentTabId;
   lang: Lang;
-  onTabChange: (id: string) => void;
+  onTabChange: (id: TreatmentTabId) => void;
   containerRef?: React.RefObject<HTMLDivElement | null>;
   /** WAI-ARIA: tablist의 aria-label */
   ariaLabel?: string;

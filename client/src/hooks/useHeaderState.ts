@@ -64,7 +64,7 @@ export function useHeaderState() {
     { label: t.nav.facility,    href: "#facility",    sectionId: "facility" },
     { label: t.nav.contact,     href: "#contact",     sectionId: "contact"  },
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
-    ...(isAdmin ? [{ label: "장비2", href: "/equipment2", sectionId: null }] : []),
+    ...(isAdmin ? [{ label: "주요 시술 및 장비", href: "/equipment2", sectionId: null }] : []),
   ];
 
   // ── URL 유틸 ──────────────────────────────────────────────────────────────

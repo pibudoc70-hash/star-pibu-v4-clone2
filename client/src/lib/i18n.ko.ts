@@ -10,7 +10,7 @@ export const ko: I18nContent = {
     doctors: "피부과전문의",
     facility: "시설안내",
     contact: "오시는 길",
-    foreignGuide: "外國語 案內",
+    foreignGuide: "외국어 안내",
   },
   hero: {
     title: "스타피부과",

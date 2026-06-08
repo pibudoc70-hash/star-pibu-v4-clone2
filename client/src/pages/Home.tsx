@@ -9,7 +9,7 @@
  * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
 import { lazy, Suspense, useEffect } from "react";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
@@ -87,7 +87,7 @@ export default function Home() {
        */}
       <SeoHead
         title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
-        description="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리주란 등 프리미엄 시술 전문. 온라인 예약 가능."
+        description="부산 서면 스타피부과(서면로 74 아이온시티빌딩 4F)는 20년 이상 경력 피부과 전문의 3인이 울세라피·써마지 FLX·눈밑지방재배치·리주란힐러·피코레이저 등 50종 프리미엄 레이저를 직접 담당합니다. 영어·일본어·중국어 외국인 환자 진료 가능. 전화 051-818-2300."
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://www.star-pibu.com/"
         ogImage={OG_IMAGE_LOCALIZED.ko}
@@ -99,6 +99,32 @@ export default function Home() {
         jsonLd={[
           buildBreadcrumbJsonLd([
             { name: "홈", url: "https://www.star-pibu.com/" },
+          ]),
+          buildFAQPageJsonLd([
+            {
+              question: "스타피부과는 어디에 위치하나요?",
+              answer: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층에 위치합니다. 부산 지하철 1·2호선 서면역에서 도보 5분 거리입니다. 전화: 051-818-2300"
+            },
+            {
+              question: "스타피부과 진료 시간은 어떻게 되나요?",
+              answer: "월요일~금요일 오전 10시~오후 7시, 토요일 오전 9시 30분~오후 3시입니다. 일요일과 공휴일은 휴진합니다."
+            },
+            {
+              question: "울세라와 써마지의 차이는 무엇인가요?",
+              answer: "울세라피는 집속 초음파(HIFU)로 피부 깊은 SMAS층까지 자극하는 FDA 승인 비수술 리프팅 시술이고, 써마지 FLX는 4세대 고주파(RF) 에너지로 콜라겐을 재생시키는 리프팅 장비입니다. 두 시술은 작용 원리가 달라 병행 시 시너지 효과를 낼 수 있습니다."
+            },
+            {
+              question: "눈밑지방재배치술이란 무엇인가요?",
+              answer: "눈 아래 과잌 지방을 제거하지 않고 꼬진 눈물고랑 부위로 재배치하여 자연스러운 눈밑 라인을 형성하는 시술입니다. 스타피부과 조시형 원장은 4,000례 이상의 시술 경험을 보유하고 있습니다."
+            },
+            {
+              question: "스타피부과에서 외국인 환자도 진료가 가능한가요?",
+              answer: "네, 영어·일본어·중국어 안내를 제공합니다. 외국인 환자 전용 안내 페이지(https://www.star-pibu.com/en/foreign-guide)를 참고하세요."
+            },
+            {
+              question: "스타피부과는 어떤 시술을 전문으로 하나요?",
+              answer: "울세라피, 써마지 FLX, 눈밑지방재배치, 리주란힐러, 피코레이저 토닝, 색소질환 치료, 여드름 치료 등 50종 이상의 프리미엄 레이저 시술을 보유하고 있습니다. 20년 이상 경력의 피부과 전문의 3인이 모든 시술을 직접 담당합니다."
+            },
           ]),
         ]}
       />

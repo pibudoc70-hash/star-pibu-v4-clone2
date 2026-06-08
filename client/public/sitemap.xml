@@ -151,6 +151,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/about" />
   </url>
 
+  <!-- ── 연구 및 발표 활동 ── -->
+  <url>
+    <loc>https://www.star-pibu.com/research</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ko"        href="https://www.star-pibu.com/research" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.star-pibu.com/research" />
+  </url>
+
   <!-- ── 비급여 진료안내 ── -->
   <url>
     <loc>https://www.star-pibu.com/non-covered</loc>

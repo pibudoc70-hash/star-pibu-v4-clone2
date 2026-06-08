@@ -2250,3 +2250,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## Phase N+2: 메인 히어로 "50종+ 프리미엄 레이저" 중복 제거 (2026-06-08)
 - [x] HeroStatsStrip.tsx 수정 - 3개 통계를 항상 한 행에 표시하고 중복 행 제거
+
+## AI 검색 최적화 (AIO) - 2026-06-08
+
+- [ ] llms.txt 생성 (AI 크롤러 전용 콘텐츠 파일)
+- [ ] llms-full.txt 생성 (전체 콘텐츠 상세 버전)
+- [ ] FAQPage JSON-LD 스키마 강화 (홈·시술 페이지)
+- [ ] Physician JSON-LD 스키마 강화 (조시형 원장 상세)
+- [ ] robots.txt AI 크롤러 허용 정책 추가 (GPTBot, PerplexityBot, ClaudeBot 등)
+- [ ] sitemap.xml /research 페이지 추가
+- [ ] meta description AI 인용 최적화

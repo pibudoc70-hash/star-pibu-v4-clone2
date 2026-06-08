@@ -32,3 +32,52 @@ Crawl-delay: 1
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
+
+# ── AI 검색 크롤러 (명시적 허용) ──────────────────────────────────
+# OpenAI ChatGPT / SearchGPT
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Claude-Web
+Allow: /
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+Crawl-delay: 1
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+Crawl-delay: 1
+
+# Amazon Alexa AI
+User-agent: Amazonbot
+Allow: /
+Crawl-delay: 1
+
+# ── AI 크롤러 전용 콘텐츠 파일 ────────────────────────────────────
+# LLM 최적화 콘텐츠: https://www.star-pibu.com/llms.txt
+# 전체 상세 콘텐츠: https://www.star-pibu.com/llms-full.txt

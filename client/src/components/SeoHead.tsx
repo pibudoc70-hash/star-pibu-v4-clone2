@@ -14,6 +14,7 @@ import {
   buildClinicJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
+  buildFAQPageJsonLd,
   SEO_PRESETS,
   type SeoPageType,
 } from "@/lib/seoHelpers";
@@ -33,6 +34,7 @@ export {
   buildClinicJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
+  buildFAQPageJsonLd,
   SEO_PRESETS,
 } from "@/lib/seoHelpers";
 

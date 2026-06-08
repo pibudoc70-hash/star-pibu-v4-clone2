@@ -349,6 +349,29 @@ export function buildBreadcrumbJsonLd(
 }
 
 /**
+ * FAQPage JSON-LD 스키마 생성 헬퍼 (AI 검색 최적화)
+ * Google AI Overviews, ChatGPT, Perplexity에서 직접 인용되는 질문답변 스키마
+ *
+ * @param items  { question, answer } 배열
+ */
+export function buildFAQPageJsonLd(
+  items: { question: string; answer: string }[],
+): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+/**
  * [G항목] SEO_PRESETS: 페이지 타입별 스키마 삽입 프리셋
  * - boolean 조합 대신 pageType 단일 prop으로 추상화
  *

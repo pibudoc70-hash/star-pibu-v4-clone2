@@ -26,10 +26,11 @@ function read(rel: string) {
 describe("A. TreatmentsEquipmentSection - INITIAL_SHOW + aria-label", () => {
   const src = read("client/src/components/TreatmentsEquipmentSection.tsx");
 
-  it("INITIAL_SHOW는 useState lazy initializer를 사용해야 한다", () => {
-    // [R21] useState lazy initializer: 단일라인 "useState(() =>" 또는 멀티라인 "useState(\n  () =>" 패턴 모두 허용
+  it("INITIAL_SHOW는 lazy initializer 또는 useMemo를 사용해야 한다", () => {
+    // [R21] useState lazy initializer 또는 [R22] useMemo 패턴 모두 허용
     const hasLazyInit = src.includes("useState(() =>") || /useState\(\s*\n\s*\(\) =>/.test(src);
-    expect(hasLazyInit).toBe(true);
+    const hasMemo = src.includes("useMemo(() =>");
+    expect(hasLazyInit || hasMemo).toBe(true);
     // 렌더 중 직접 할당 패턴이 없어야 함
     expect(src).not.toMatch(/const INITIAL_SHOW\s*=\s*typeof window/);
   });

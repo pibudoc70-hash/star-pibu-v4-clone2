@@ -277,7 +277,10 @@ describe("F. useStaticTreatmentFilter: defaultTab validation", () => {
   });
 
   it("F-5: useState lazy initializer로 resolveDefaultTab을 호출해야 한다", () => {
-    expect(filterSrc).toContain("useState(() => resolveDefaultTab(defaultTab))");
+    // [R22] 제네릭 타입 파라미터 포함 패턴도 허용: useState<TreatmentTabId>(() => resolveDefaultTab(...))
+    const hasLazyInit = filterSrc.includes("useState(() => resolveDefaultTab(defaultTab))") ||
+      /useState<[^>]+>\(\(\) => resolveDefaultTab/.test(filterSrc);
+    expect(hasLazyInit).toBe(true);
   });
 });
 

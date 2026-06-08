@@ -62,6 +62,24 @@ export const STAT_UNITS = {
 
 export type StatLang = keyof typeof STAT_UNITS.years;
 
+// [R22-P1-6] CLINIC_STATS 키와 STAT_UNITS 키 연결 타입
+// CLINIC_STATS의 각 숫자 값에 대응하는 STAT_UNITS 키를 명시적으로 매핑
+// 이 타입을 통해 렌더링 레이어에서 올바른 suffix를 사용하는지 컴파일 타임에 검증 가능
+export type StatKey = keyof typeof STAT_UNITS;
+export type ClinicStatKey = keyof typeof CLINIC_STATS;
+
+/**
+ * CLINIC_STATS 키 → STAT_UNITS 키 매핑
+ * 렌더링 레이어에서 올바른 suffix를 선택하는 단일 소스
+ */
+export const CLINIC_STAT_UNIT_MAP = {
+  yearsExperience:    "years",
+  eyeBagCases:        "cases",
+  laserTypes:         "types",
+  satisfactionRate:   "percent",
+  doctorPatientRatio: "ratio",
+} as const satisfies Record<ClinicStatKey, StatKey>;
+
 // ── 병원 정보 (구조화 데이터 JSON-LD용) ───────────────────────────────────────────────────────────────────────────────────
 export const CLINIC_INFO = {
   name: "스타피부과",

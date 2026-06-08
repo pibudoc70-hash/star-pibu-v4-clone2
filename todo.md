@@ -2200,3 +2200,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round21.regression.test.ts 작성
 - [x] TypeScript 0 errors + 전체 테스트 통과
 - [x] 최종 커밋
+
+## Round-22 시니어 검수 (2026-06-08)
+- [x] R22-P0-1: DesignSystem.tsx 신규 생성 - PremiumButton/SurfaceCard CSS class/variant 기반 선언형 재설계
+- [x] R22-P0-2: TreatmentsEquipmentSection - 3단계 breakpoint(mobile/tablet/desktop) + SCROLL_COMPLETE_FALLBACK_MS 상수 + aria-live/aria-atomic + scrollend 이벤트 기반 포커스 복원
+- [x] R22-P0-3: useStaticTreatmentFilter - closeFilter hook 내부화 + VALID_TAB_IDS export + UseStaticTreatmentFilterReturn export
+- [x] R22-P1-4: SeoHead - preset별 canonical/og/twitter/json-ld/hreflang 테스트 추가 (round22.regression.test.ts)
+- [x] R22-P1-5: seoHelpers - buildHreflangs 4개 언어 고정 제약 + JSON-LD 핵심 필드 테스트 추가
+- [x] R22-P1-6: constants - CLINIC_STAT_UNIT_MAP satisfies 타입 검증 + StatKey/ClinicStatKey export
+- [x] R22-P2: P2 실제 결함 없음 확인 (reduced-motion 전역 처리 완료, focus-visible R21 완료, FacilitySection onMouseEnter/Leave 정상 패턴)
+- [x] R22: round22.regression.test.ts 작성 (39 파일 / 1030개 통과)

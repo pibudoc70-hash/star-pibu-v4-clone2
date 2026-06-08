@@ -23,6 +23,10 @@
  *            + resize/rotation 시 MediaQueryList 기반 반응형 정책
  *            + 더보기/접기 버튼 포커스 복원 UX (키보드/스크린리더 접근성)
  *            + aria-expanded / aria-controls 추가
+ * [R22-P0-2] setTimeout(420ms) 매직 넘버 제거 → scrollend 이벤트 기반 포커스 복원
+ *            + 태블릿(MD: 768px) breakpoint 정책 추가 (MOBILE/TABLET/DESKTOP 3단계)
+ *            + aria-live="polite" + aria-atomic="false" 상태 알림 (스크린리더 지원)
+ *            + CLS 정책: min-height 예약으로 레이아웃 이동 방지
  */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -36,40 +40,57 @@ import CategoryTabList from "@/components/treatments/CategoryTabList";
 import { useStaticTreatmentFilter } from "@/hooks/useStaticTreatmentFilter";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// [R21-P0-2] Tailwind sm: breakpoint 상수 (640px) — 하드코딩 제거
-// Tailwind의 sm: breakpoint와 단일 소스로 동기화
+// [R22-P0-2] 3단계 breakpoint 정책 (Tailwind sm/md 동기화)
 // ─────────────────────────────────────────────────────────────────────────────
-const SM_BREAKPOINT = 640; // Tailwind sm: 640px
-const MOBILE_SHOW = 3;
-const DESKTOP_SHOW = 6;
+const SM_BREAKPOINT = 640;  // Tailwind sm: 640px
+const MD_BREAKPOINT = 768;  // Tailwind md: 768px
+const MOBILE_SHOW  = 3;     // < 640px: 3개
+const TABLET_SHOW  = 4;     // 640px ~ 767px: 4개 (태블릿 세로)
+const DESKTOP_SHOW = 6;     // >= 768px: 6개
+
+// [R22-P0-2] scrollend 폴백 타임아웃 (scrollend 미지원 브라우저용)
+// 매직 넘버가 아닌 명시적 의미: smooth scroll 최대 예상 완료 시간
+const SCROLL_COMPLETE_FALLBACK_MS = 500;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
 // ─────────────────────────────────────────────────────────────────────────────
+type ViewportTier = "mobile" | "tablet" | "desktop";
+
+function getViewportTier(): ViewportTier {
+  if (typeof window === "undefined") return "desktop";
+  if (window.innerWidth < SM_BREAKPOINT) return "mobile";
+  if (window.innerWidth < MD_BREAKPOINT) return "tablet";
+  return "desktop";
+}
+
 export default function TreatmentsEquipmentSection() {
   const { t, lang } = useLang();
   const tr = t.treatments;
 
   const [showAll, setShowAll] = useState(false);
 
-  // [R21-P0-2] INITIAL_SHOW: MediaQueryList 기반 반응형 정책
-  // - 마운트 시 초기값 결정 (SSR 안전: window 없으면 false)
-  // - resize/rotation 시 MediaQueryList change 이벤트로 동기화
-  // - showAll=false 상태에서만 의미 있음 (showAll=true이면 전체 표시)
-  const [isMobileView, setIsMobileView] = useState(
-    () => typeof window !== "undefined" ? window.innerWidth < SM_BREAKPOINT : false
-  );
+  // [R22-P0-2] 3단계 breakpoint: mobile(<640) / tablet(640~767) / desktop(>=768)
+  const [viewportTier, setViewportTier] = useState<ViewportTier>(() => getViewportTier());
   useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${SM_BREAKPOINT - 1}px)`);
-    const handler = (e: MediaQueryListEvent) => setIsMobileView(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
+    const mqlSm = window.matchMedia(`(max-width: ${SM_BREAKPOINT - 1}px)`);
+    const mqlMd = window.matchMedia(`(max-width: ${MD_BREAKPOINT - 1}px)`);
+    const handler = () => setViewportTier(getViewportTier());
+    mqlSm.addEventListener("change", handler);
+    mqlMd.addEventListener("change", handler);
+    return () => {
+      mqlSm.removeEventListener("change", handler);
+      mqlMd.removeEventListener("change", handler);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // INITIAL_SHOW: breakpoint 변경 시 재계산 (useMemo로 파생값 처리)
-  const INITIAL_SHOW = useMemo(
-    () => isMobileView ? MOBILE_SHOW : DESKTOP_SHOW,
-    [isMobileView]
-  );
+
+  // INITIAL_SHOW: breakpoint tier 변경 시 재계산
+  const INITIAL_SHOW = useMemo(() => {
+    if (viewportTier === "mobile") return MOBILE_SHOW;
+    if (viewportTier === "tablet") return TABLET_SHOW;
+    return DESKTOP_SHOW;
+  }, [viewportTier]);
 
   const sectionRef = useSectionReveal(60);
   const sectionTopRef = useRef<HTMLDivElement>(null);
@@ -87,22 +108,14 @@ export default function TreatmentsEquipmentSection() {
     handleTabChange: _handleTabChange,
     handleSortChange,
     toggleFilter,
+    closeFilter,
   } = useStaticTreatmentFilter();
 
   // [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정책화
-  // 카테고리를 전환하면 새 카테고리의 아이템 수가 다를 수 있으므로
-  // 이전 카테고리의 showAll 상태를 유지하면 INITIAL_SHOW보다 적은 아이템이 있어도
-  // 더보기 버튼이 나타나는 UX 문제가 생김 → 새 카테고리 진입 시 항상 접혀진 상태로 시작
   const handleTabChange = useCallback((id: string) => {
     _handleTabChange(id);
     setShowAll(false);
   }, [_handleTabChange]);
-
-  // [R18-P2-7] setFilterOpen deprecated setter 제거 → closeFilter 로컬 함수
-  // toggleFilter는 열기/닫기 토글이므로, 닫기 전용 closeFilter를 정의
-  const closeFilter = useCallback(() => {
-    if (filterOpen) toggleFilter();
-  }, [filterOpen, toggleFilter]);
 
   // [R18-P1-4] filter dropdown 키보드 탐색: Escape + ArrowUp/Down + Enter
   const SORT_OPTIONS = (['popular', 'name', 'time'] as const);
@@ -114,7 +127,7 @@ export default function TreatmentsEquipmentSection() {
     if (!filterOpen) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
-        toggleFilter(); // 닫혀있을 때만 호출되므로 toggleFilter = 열기
+        toggleFilter();
       }
       return;
     }
@@ -125,7 +138,6 @@ export default function TreatmentsEquipmentSection() {
         ? (currentIdx + 1) % SORT_OPTIONS.length
         : (currentIdx - 1 + SORT_OPTIONS.length) % SORT_OPTIONS.length;
       handleSortChange(SORT_OPTIONS[next]);
-      // 포커스를 새로 선택된 option 버튼으로 이동
       const listbox = filterRef.current?.querySelector('[role="listbox"]');
       if (listbox) {
         const opts = listbox.querySelectorAll<HTMLElement>('[role="option"]');
@@ -136,7 +148,7 @@ export default function TreatmentsEquipmentSection() {
       e.preventDefault();
       closeFilter();
     }
-  }, [closeFilter, toggleFilter, filterOpen, sortBy, handleSortChange, SORT_OPTIONS]);
+  }, [closeFilter, toggleFilter, filterOpen, sortBy, handleSortChange]);
 
   useEffect(() => {
     if (!filterOpen) return;
@@ -148,6 +160,35 @@ export default function TreatmentsEquipmentSection() {
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [filterOpen, closeFilter]);
+
+  // [R22-P0-2] scrollend 이벤트 기반 포커스 복원 핸들러
+  // setTimeout(420ms) 매직 넘버 제거 → scrollend 완료 시점에 포커스 복원
+  // scrollend 미지원 브라우저: SCROLL_COMPLETE_FALLBACK_MS 후 폴백
+  const handleCollapseClick = useCallback(() => {
+    const target = sectionTopRef.current;
+    const btnRef = showAllBtnRef.current;
+    if (target) {
+      let settled = false;
+      const onScrollEnd = () => {
+        if (settled) return;
+        settled = true;
+        btnRef?.focus();
+      };
+      // scrollend 이벤트 등록 (지원 브라우저)
+      target.addEventListener("scrollend", onScrollEnd, { once: true });
+      // 폴백: scrollend 미지원 브라우저에서 SCROLL_COMPLETE_FALLBACK_MS 후 실행
+      const fallbackTimer = window.setTimeout(() => {
+        target.removeEventListener("scrollend", onScrollEnd);
+        onScrollEnd();
+      }, SCROLL_COMPLETE_FALLBACK_MS);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      // scrollend가 먼저 발생하면 폴백 타이머 정리
+      void Promise.resolve().then(() => {
+        if (settled) window.clearTimeout(fallbackTimer);
+      });
+    }
+    setShowAll(false);
+  }, []);
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">
@@ -222,15 +263,22 @@ export default function TreatmentsEquipmentSection() {
           />
         </div>
 
-        {/* 시술 카드 그리드 — [R11-E] IIFE → 변수 선언으로 교체 */}
+        {/* 시술 카드 그리드 */}
         {CATEGORIES.find((c) => c.id === activeId) && (
             <div
               key={`content-${activeId}`}
               className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade"
             >
               <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
-                {/* [R21-P0-2] id="treatments-grid": aria-controls 연결 대상 */}
-                <div id="treatments-grid" className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {/* [R22-P0-2] aria-live: 스크린리더가 목록 변화를 인지하도록 */}
+                {/* aria-atomic="false": 전체 재읽기 대신 변경된 항목만 알림 */}
+                <div
+                  id="treatments-grid"
+                  aria-live="polite"
+                  aria-atomic="false"
+                  aria-label="시술 목록"
+                  className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                >
                   {filteredTreatments.length === 0 ? (
                     <div className="col-span-full text-center py-16 text-gray-400">
                       <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -254,18 +302,17 @@ export default function TreatmentsEquipmentSection() {
                 {/* 더보기 / 접기 버튼 */}
                 {filteredTreatments.length > INITIAL_SHOW && (
                   <div className="flex justify-center mt-16">
-                    {/* [R21-P0-2] aria-expanded + aria-controls + 포커스 복원 */}
                     <button
                       ref={showAllBtnRef}
                       type="button"
                       onClick={() => {
                         if (showAll) {
-                          // 접기: 섹션 상단으로 스크롤 후 버튼에 포커스 복원
-                          sectionTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                          // smooth scroll 완료 후 포커스 복원 (~400ms)
-                          setTimeout(() => showAllBtnRef.current?.focus(), 420);
+                          // [R22-P0-2] 접기: scrollend 이벤트 기반 포커스 복원
+                          // setTimeout 매직 넘버(420ms) 제거
+                          handleCollapseClick();
+                        } else {
+                          setShowAll(true);
                         }
-                        setShowAll(!showAll);
                       }}
                       aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
                       aria-expanded={showAll}

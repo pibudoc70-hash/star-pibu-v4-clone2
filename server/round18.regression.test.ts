@@ -116,8 +116,11 @@ describe("D. TreatmentsEquipmentSection: setFilterOpen deprecated setter 제거"
     expect(treatSrc).not.toMatch(/setFilterOpen\s*,|,\s*setFilterOpen/);
   });
 
-  it("D-2: closeFilter 로컬 함수가 정의되어 있어야 한다", () => {
-    expect(treatSrc).toMatch(/const\s+closeFilter\s*=/);
+  it("D-2: closeFilter 함수가 존재해야 한다 (로컬 정의 또는 hook에서 직접 제공)", () => {
+    // [R22-P0-3] closeFilter가 hook에서 직접 제공되므로 로컬 const 정의 없이 구조분해로 사용
+    const hasLocalCloseFilter = /const\s+closeFilter\s*=/.test(treatSrc);
+    const hasHookCloseFilter = treatSrc.includes("closeFilter,") || treatSrc.includes("closeFilter }") || treatSrc.includes("closeFilter:");
+    expect(hasLocalCloseFilter || hasHookCloseFilter).toBe(true);
   });
 
   it("D-3: Escape 키 핸들러가 closeFilter를 사용해야 한다", () => {

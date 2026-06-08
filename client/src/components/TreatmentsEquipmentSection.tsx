@@ -19,8 +19,12 @@
  *   - 카드 그리드 animation style → animate-card-fade class
  * [R18-P1-4] filter dropdown ArrowUp/Down/Enter 키보드 탐색 추가
  * [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정책화
+ * [R21-P0-2] INITIAL_SHOW 640px 하드코딩 → Tailwind sm breakpoint 동기화
+ *            + resize/rotation 시 MediaQueryList 기반 반응형 정책
+ *            + 더보기/접기 버튼 포커스 복원 UX (키보드/스크린리더 접근성)
+ *            + aria-expanded / aria-controls 추가
  */
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -32,6 +36,14 @@ import CategoryTabList from "@/components/treatments/CategoryTabList";
 import { useStaticTreatmentFilter } from "@/hooks/useStaticTreatmentFilter";
 
 // ─────────────────────────────────────────────────────────────────────────────
+// [R21-P0-2] Tailwind sm: breakpoint 상수 (640px) — 하드코딩 제거
+// Tailwind의 sm: breakpoint와 단일 소스로 동기화
+// ─────────────────────────────────────────────────────────────────────────────
+const SM_BREAKPOINT = 640; // Tailwind sm: 640px
+const MOBILE_SHOW = 3;
+const DESKTOP_SHOW = 6;
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
 // ─────────────────────────────────────────────────────────────────────────────
 export default function TreatmentsEquipmentSection() {
@@ -39,13 +51,32 @@ export default function TreatmentsEquipmentSection() {
   const tr = t.treatments;
 
   const [showAll, setShowAll] = useState(false);
-  // [R5-P1] INITIAL_SHOW: 렌더마다 window.innerWidth 직접 접근 → useState lazy initializer로 교체
-  const [INITIAL_SHOW] = useState(() => typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 6);
+
+  // [R21-P0-2] INITIAL_SHOW: MediaQueryList 기반 반응형 정책
+  // - 마운트 시 초기값 결정 (SSR 안전: window 없으면 false)
+  // - resize/rotation 시 MediaQueryList change 이벤트로 동기화
+  // - showAll=false 상태에서만 의미 있음 (showAll=true이면 전체 표시)
+  const [isMobileView, setIsMobileView] = useState(
+    () => typeof window !== "undefined" ? window.innerWidth < SM_BREAKPOINT : false
+  );
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${SM_BREAKPOINT - 1}px)`);
+    const handler = (e: MediaQueryListEvent) => setIsMobileView(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  // INITIAL_SHOW: breakpoint 변경 시 재계산 (useMemo로 파생값 처리)
+  const INITIAL_SHOW = useMemo(
+    () => isMobileView ? MOBILE_SHOW : DESKTOP_SHOW,
+    [isMobileView]
+  );
 
   const sectionRef = useSectionReveal(60);
   const sectionTopRef = useRef<HTMLDivElement>(null);
   // [R16-P1-1] filter dropdown outside click 감지용
   const filterRef = useRef<HTMLDivElement>(null);
+  // [R21-P0-2] 더보기/접기 버튼 포커스 복원 ref
+  const showAllBtnRef = useRef<HTMLButtonElement>(null);
 
   const {
     activeId,
@@ -58,7 +89,7 @@ export default function TreatmentsEquipmentSection() {
     toggleFilter,
   } = useStaticTreatmentFilter();
 
-  // [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정송화
+  // [R20-P1-4] activeCategory 변경 시 showAll reset 명시적 정책화
   // 카테고리를 전환하면 새 카테고리의 아이템 수가 다를 수 있으므로
   // 이전 카테고리의 showAll 상태를 유지하면 INITIAL_SHOW보다 적은 아이템이 있어도
   // 더보기 버튼이 나타나는 UX 문제가 생김 → 새 카테고리 진입 시 항상 접혀진 상태로 시작
@@ -67,7 +98,7 @@ export default function TreatmentsEquipmentSection() {
     setShowAll(false);
   }, [_handleTabChange]);
 
-  // [R18-P2-7] setFilterOpen deprecated setter 제거 → closeFilter 로컸 함수
+  // [R18-P2-7] setFilterOpen deprecated setter 제거 → closeFilter 로컬 함수
   // toggleFilter는 열기/닫기 토글이므로, 닫기 전용 closeFilter를 정의
   const closeFilter = useCallback(() => {
     if (filterOpen) toggleFilter();
@@ -198,7 +229,8 @@ export default function TreatmentsEquipmentSection() {
               className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade"
             >
               <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
-                <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {/* [R21-P0-2] id="treatments-grid": aria-controls 연결 대상 */}
+                <div id="treatments-grid" className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredTreatments.length === 0 ? (
                     <div className="col-span-full text-center py-16 text-gray-400">
                       <svg className="w-12 h-12 mx-auto mb-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,17 +254,25 @@ export default function TreatmentsEquipmentSection() {
                 {/* 더보기 / 접기 버튼 */}
                 {filteredTreatments.length > INITIAL_SHOW && (
                   <div className="flex justify-center mt-16">
+                    {/* [R21-P0-2] aria-expanded + aria-controls + 포커스 복원 */}
                     <button
+                      ref={showAllBtnRef}
                       type="button"
                       onClick={() => {
                         if (showAll) {
+                          // 접기: 섹션 상단으로 스크롤 후 버튼에 포커스 복원
                           sectionTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                          // smooth scroll 완료 후 포커스 복원 (~400ms)
+                          setTimeout(() => showAllBtnRef.current?.focus(), 420);
                         }
                         setShowAll(!showAll);
                       }}
                       aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
+                      aria-expanded={showAll}
+                      aria-controls="treatments-grid"
                       className={[
                         "flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2",
                         showAll
                           ? "bg-white text-[var(--color-star-text-mid)] border border-[1.5px] border-[var(--color-gold-light)]"
                           : "bg-[var(--color-gold-primary)] text-white border-none",

@@ -243,8 +243,16 @@ describe("I. constants.ts: CLINIC_INFO.image cloudfront URL 제거", () => {
   });
 
   it("I-2: CLINIC_INFO.image가 manus-storage 경로를 사용해야 한다", () => {
+    // [R21-P1-7] CLINIC_INFO.image가 CLINIC_REPRESENTATIVE_IMAGE 변수 참조로 교체됨
+    // 직접 문자열 매칭 대신 assetConfig 참조 또는 manus-storage 포함 여부 확인
     const imageMatch = constantsSrc.match(/image\s*:\s*["'][^"']*["']/);
-    expect(imageMatch?.[0] ?? "").toContain("manus-storage");
+    const hasDirectManus = (imageMatch?.[0] ?? "").includes("manus-storage");
+    // 변수 참조 패턴: CLINIC_REPRESENTATIVE_IMAGE
+    const hasVariableRef = constantsSrc.includes("CLINIC_REPRESENTATIVE_IMAGE");
+    // assetConfig에서 manus-storage 경로 사용 확인
+    const assetConfigSrc = readLib("assetConfig.ts");
+    const assetConfigHasManus = assetConfigSrc.includes("manus-storage");
+    expect(hasDirectManus || (hasVariableRef && assetConfigHasManus)).toBe(true);
   });
 
   it("I-3: CLINIC_INFO 객체가 name/url/telephone 필드를 포함해야 한다", () => {

@@ -2120,7 +2120,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P2 – 품질 마무리
 - [x] [R17-P2-1] SeoHead: deprecated prop JSDoc 정리 (@deprecated + @internal 통합, 중복 제거)
 - [x] [R17-P2-2] seoHelpers: buildBreadcrumbJsonLd 빈 배열 가드 + buildHreflangs 슬래시 시작 검증 (개발 환경 경고)
-- [ ] [R17-P2-3] constants.ts: 미디어 URL 하드코딩 → asset config 계층 추출 (다음 라운드 대상)
+- [x] [R17-P2-3] constants.ts: 미디어 URL 하드코딩 → asset config 계층 추출 — R20에서 assetConfig.ts 분리로 완료
 ### 검증
 - [x] round17.regression.test.ts 작성 (60개 테스트: A~H 8개 영역)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (34 files, 841 tests)
@@ -2158,11 +2158,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### P1 – 중요
 - [x] [R19-P1-5] EquipmentTreatmentCard: div → button 요소 전환 (WAI-ARIA 네이티브 시맨틱, onKeyDown 핸들러 불필요)
 - [x] [R19-P1-6] mapHelpers.ts 신규 생성 (buildMarkerPinElement 순수 함수 추출) + useClinicMap에서 ContactSection 역방향 의존 제거
-- [ ] [R19-P1-4-defer] TreatmentsEquipmentSection: INITIAL_SHOW viewport resize 정책 + activeCategory 변경 시 showAll reset — 현재 lazy initializer 사용으로 정상 패턴 (다음 라운드)
+- [x] [R19-P1-4-defer] TreatmentsEquipmentSection: INITIAL_SHOW viewport resize 정책 + activeCategory 변경 시 showAll reset — R20에서 완료
 ### P2 – 품질 마무리
 - [x] [R19-P2-8] seoHelpers.ts: JsonLdSchema 타입 강화 (Record<string, unknown> → 구조적 타입) + SEO_PRESETS satisfies 연산자 적용
-- [ ] [R19-P2-7-defer] useStaticTreatmentFilter: sortTreatments locale/time util 분리 — 다음 라운드
-- [ ] [R19-P2-9-defer] constants.ts: asset config 계층 (lib/assetConfig.ts) 분리 — 다음 라운드
+- [x] [R19-P2-7-defer] useStaticTreatmentFilter: sortTreatments locale/time util 분리 — R20에서 완료
+- [x] [R19-P2-9-defer] constants.ts: asset config 계층 (lib/assetConfig.ts) 분리 — R20에서 완료
 ### 검증
 - [x] round19.regression.test.ts 작성 (42개 테스트: A~I 9개 영역)
 - [x] round17/round5/round6/round9/round15/round16/senior-review 테스트: DoctorsSection 서브컴포넌트 분리 후행 호환 업데이트
@@ -2182,4 +2182,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### 검증
 - [x] round20.regression.test.ts 작성
 - [x] TypeScript 0 errors + 전체 테스트 통과 (37 files, 953 tests)
+- [x] 최종 커밋
+
+## Round-21 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R21-P0-1] DesignSystem: PremiumButton/SurfaceCard onMouseEnter/Leave DOM mutation → CSS class/variant 기반 재설계
+- [x] [R21-P0-2] TreatmentsEquipmentSection: INITIAL_SHOW 640px 하드코딩 → Tailwind breakpoint 동기화 + 더보기/접기 포커스 UX
+- [x] [R21-P0-3] ContactSection: map lifecycle 캡슐화 강화 (hook/adapter 계층으로 이동)
+### P1 – 구조/검증 강화
+- [x] [R21-P1-4] SeoHead: deprecated boolean fallback 실제 제거 + preset별 테스트 추가
+- [x] [R21-P1-5] seoHelpers: hreflang/subset 정책 타입 가드 + x-default 정책 테스트
+- [x] [R21-P1-6] useStaticTreatmentFilter: resolveDefaultTab 타입 안전성 + hook public surface 정리 + 테스트
+- [x] [R21-P1-7] constants/assetConfig: CLINIC_INFO.image 정책 + 상수 분리 타입 안전성
+### P2 – 조건부 마무리
+- [x] [R21-P2-8] HeroSection/DoctorsSection: reduced-motion/focus-visible/screen-reader 실제 누락 확인 후 최소 수정
+### 검증
+- [x] round21.regression.test.ts 작성
+- [x] TypeScript 0 errors + 전체 테스트 통과
 - [x] 최종 커밋

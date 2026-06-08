@@ -1017,6 +1017,12 @@
       color-mix(in srgb, var(--dr-gold) 3%, transparent) 100%);
   }
   .dr-tab-btn[data-active="false"] { background: transparent; }
+  /* [R21-P2] focus-visible: 키보드 네비게이션 시 시각적 포커스 표시 (WCAG 2.4.7) */
+  .dr-tab-btn:focus-visible {
+    outline: 2px solid var(--dr-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
   .dr-tab-btn-border {
     border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 13%, transparent);
   }

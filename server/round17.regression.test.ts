@@ -286,18 +286,21 @@ describe("G. SeoHead: deprecated prop JSDoc 정리", () => {
   const seoHeadSrc = readClient("components/SeoHead.tsx");
 
   it("G-1: includeMedicalSchema에 @deprecated JSDoc이 있어야 한다", () => {
-    // @deprecated 태그가 includeMedicalSchema 근처에 있어야 함
-    const deprecatedSection = seoHeadSrc.match(/@deprecated[\s\S]{0,200}includeMedicalSchema/)?.[0] ?? "";
-    expect(deprecatedSection.length).toBeGreaterThan(0);
+    // [R21-P1-4] deprecated boolean props 실제 제거 완료
+    // includeMedicalSchema/includeWebSiteSchema Props에서 제거됨 → @deprecated 주석도 제거됨
+    // 대신 내부 구현에서 preset.includeMedicalSchema로 사용됨
+    expect(seoHeadSrc).toContain("includeMedicalSchema");
   });
 
   it("G-2: includeWebSiteSchema에 @deprecated JSDoc이 있어야 한다", () => {
-    const deprecatedSection = seoHeadSrc.match(/@deprecated[\s\S]{0,200}includeWebSiteSchema/)?.[0] ?? "";
-    expect(deprecatedSection.length).toBeGreaterThan(0);
+    // [R21-P1-4] deprecated boolean props 실제 제거 완료
+    expect(seoHeadSrc).toContain("includeWebSiteSchema");
   });
 
   it("G-3: @internal 태그가 deprecated prop에 있어야 한다", () => {
-    expect(seoHeadSrc).toContain("@internal");
+    // [R21-P1-4] deprecated props 제거 완료 → @internal 주석도 제거됨
+    // 대신 pageType 프리셋 기반 구현이 있어야 함
+    expect(seoHeadSrc).toContain("SEO_PRESETS");
   });
 
   it("G-4: pageType prop이 SeoHead에 있어야 한다", () => {

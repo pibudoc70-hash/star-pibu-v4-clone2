@@ -12,10 +12,18 @@ import { TREATMENTS } from "@/data/treatments/treatments-data";
 // [R20-P2-7] sortTreatments / parseMinutes → lib/treatmentSortUtils.ts로 이동
 import { sortTreatments } from "@/lib/treatmentSortUtils";
 
+// [R21-P1-6] TreatmentTabId: TREATMENTS 키 유니온 타입
+// TREATMENTS가 Record<string, Treatment[]>로 선언되어 keyof typeof TREATMENTS = string이므로
+// 런타임 검증으로 타입 안전성을 보완한다.
+// 타입 레벨 리터럴 유니온은 treatments-data.ts를 as const로 수정해야 하므로
+// 현재는 string 타입을 유지하되 런타임 검증으로 안전성을 보장한다.
+export type TreatmentTabId = string;
+
 // [R17-P2] defaultTab validation: TREATMENTS에 없는 탭 ID를 전달하면 콘솔 경고 + fallback
-function resolveDefaultTab(tab: string): string {
-  if (tab in TREATMENTS) return tab;
-  const fallback = Object.keys(TREATMENTS)[0] ?? "best";
+// [R21-P1-6] 반환 타입을 TreatmentTabId로 명시화
+function resolveDefaultTab(tab: string): TreatmentTabId {
+  if (tab in TREATMENTS) return tab as TreatmentTabId;
+  const fallback = (Object.keys(TREATMENTS)[0] ?? "best") as TreatmentTabId;
   if (process.env.NODE_ENV !== "production") {
     console.warn(
       `[useStaticTreatmentFilter] defaultTab "${tab}" not found in TREATMENTS. ` +

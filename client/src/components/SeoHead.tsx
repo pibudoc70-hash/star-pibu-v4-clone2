@@ -68,32 +68,9 @@ export interface SeoHeadProps {
    * - "home"      → WebSite + MedicalBusiness 스키마 모두 포함
    * - "treatment" → MedicalBusiness 스키마만 포함
    * - "default"   → MedicalBusiness 스키마만 포함
-   * - "admin"     → 스키마 없음
-   * pageType을 지정하면 includeMedicalSchema/includeWebSiteSchema를 오버라이드합니다.
+   * - "admin"     → 스키마 없음 + 자동 noindex
    */
   pageType?: SeoPageType;
-  /**
-   * @deprecated pageType prop을 사용하세요.
-   * 사용 예: pageType="treatment" (이전: includeMedicalSchema={true})
-   * @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요.
-   *
-   * [R20-P2-8] 제거 로드맵 (TODO R21):
-   *   1. 사용 없음 확인: grep -rn 'includeMedicalSchema' client/src/ | grep -v '.test.' | grep -v 'SeoHead'
-   *   2. shouldIncludeMedical = preset.includeMedicalSchema (단순화)
-   *   3. 이 prop 정의 제거
-   */
-  includeMedicalSchema?: boolean;
-  /**
-   * @deprecated pageType prop을 사용하세요.
-   * 사용 예: pageType="home" (이전: includeWebSiteSchema={true})
-   * @internal 하위 호환성 유지용 — 신규 코드에서는 pageType을 사용하세요.
-   *
-   * [R20-P2-8] 제거 로드맵 (TODO R21):
-   *   1. 사용 없음 확인: grep -rn 'includeWebSiteSchema' client/src/ | grep -v '.test.' | grep -v 'SeoHead'
-   *   2. shouldIncludeWebSite = preset.includeWebSiteSchema (단순화)
-   *   3. 이 prop 정의 제거
-   */
-  includeWebSiteSchema?: boolean;
 }
 
 export default function SeoHead({
@@ -111,21 +88,16 @@ export default function SeoHead({
   ogLocaleAlternates,
   ogSiteName,
   pageType = "default",
-  includeMedicalSchema,
-  includeWebSiteSchema,
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const resolvedSiteName = ogSiteName ?? SITE_NAME;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
-  // [R20-P2-8] pageType 프리셋 우선 적용
-  // TODO(R21): boolean fallback 제거 로드맵
-  //   1. includeMedicalSchema/includeWebSiteSchema 사용하는 코드 없음 확인
-  //   2. shouldIncludeMedical = preset.includeMedicalSchema (단순화)
-  //   3. Props 인터페이스에서 includeMedicalSchema/includeWebSiteSchema 제거
+  // [R21-P1-4] deprecated boolean fallback 제거 완료
+  // includeMedicalSchema/includeWebSiteSchema prop 제거 → pageType 프리셋만 사용
   const preset = SEO_PRESETS[pageType];
-  const shouldIncludeMedical = preset.includeMedicalSchema ?? (includeMedicalSchema ?? true);
-  const shouldIncludeWebSite = preset.includeWebSiteSchema ?? (includeWebSiteSchema ?? false);
-  // [R20-P2-8] admin pageType은 자동 noindex 정송화
+  const shouldIncludeMedical = preset.includeMedicalSchema;
+  const shouldIncludeWebSite = preset.includeWebSiteSchema;
+  // [R20-P2-8] admin pageType은 자동 noindex 정책화
   // pageType="admin"이면 noindex prop을 명시하지 않아도 noindex 적용
   // 이로 인해 실수로 noindex를 빠뜨려도 admin 페이지는 항상 noindex
   const effectiveNoindex = noindex || pageType === "admin";

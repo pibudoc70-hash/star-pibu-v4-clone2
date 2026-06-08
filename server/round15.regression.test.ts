@@ -241,14 +241,22 @@ describe("G. SeoHead deprecated prop 및 Home.tsx 정리", () => {
   });
 
   it("G-3: SeoHead.tsx에 deprecated prop 타입이 유지된다 (하위 호환)", () => {
+    // [R21-P1-4] deprecated boolean props 실제 제거 완료
+    // includeMedicalSchema/includeWebSiteSchema는 Props 인터페이스에서 제거됨
+    // 단, 내부 구현에서 preset.includeMedicalSchema로 사용되므로 문자열 자체는 존재함
     const seoHeadFile = readFile("client/src/components/SeoHead.tsx");
-    expect(seoHeadFile).toMatch(/includeMedicalSchema/);
-    expect(seoHeadFile).toMatch(/includeWebSiteSchema/);
+    // pageType 프리셋 기반 구현이 있어야 함
+    expect(seoHeadFile).toContain("pageType");
+    expect(seoHeadFile).toContain("SEO_PRESETS");
   });
 
   it("G-4: SeoHead.tsx에 @deprecated 또는 @internal JSDoc 주석이 있다", () => {
+    // [R21-P1-4] deprecated props 실제 제거 완료 — @deprecated 주석도 함께 제거됨
+    // 대신 pageType 프리셋 기반 구현이 있어야 함
     const seoHeadFile = readFile("client/src/components/SeoHead.tsx");
-    expect(seoHeadFile).toMatch(/@deprecated|@internal/);
+    expect(seoHeadFile).toContain("pageType");
+    // R21 이후: @deprecated 주석 없어도 됨 (props 자체 제거됨)
+    // expect(seoHeadFile).toMatch(/@deprecated|@internal/);
   });
 });
 

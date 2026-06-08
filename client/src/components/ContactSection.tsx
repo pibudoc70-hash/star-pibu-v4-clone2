@@ -13,10 +13,14 @@
  * CONTACT-P4-A: document.execCommand deprecated → navigator.clipboard 전용 + 실패 시 안내
  * CONTACT-P4-B: non-null assertion(!) 제거 → optional chaining + nullish coalescing
  * CONTACT-P4-C: 지도 로드 실패 fallback UI (MapView 내부 자체 제공)
- * [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캐플슐화
+ * [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캡슐화
+ * [R21-P0-3] mapContainerRef / markerPopupVisible 직접 소유 제거
+ *            - mapContainerRef: MapView에 전달되지 않는 불필요한 ref → 제거
+ *            - markerPopupVisible 상태 소유권 → useClinicMap 훅으로 이전
+ *            - data-popup-visible: CSS에서 미사용 → 제거
  */
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
@@ -42,14 +46,13 @@ export default function ContactSection() {
   const [copyFailed, setCopyFailed] = useState(false);
   // [R17-P1-3] clipboard 실패 원인 세분화: 'unsupported' | 'denied' | 'error'
   const [copyFailReason, setCopyFailReason] = useState<'unsupported' | 'denied' | 'error' | null>(null);
-  // CONTACT-P3-A: 팝업 토글 상태 React state로 관리
-  const [markerPopupVisible, setMarkerPopupVisible] = useState(true);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
+
   // CONTACT-P3-B: 지도 높이 계산 로직을 useMapHeight 커스텀 훅으로 분리
   const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
 
-  // [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캐플슐화
-  // 훅 의존성: t.access.* 연라이브 값은 마운트 시 한 번만 생성되므로 useMemo 불필요
+  // [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캡슐화
+  // [R21-P0-3] markerPopupVisible 상태 소유권 → useClinicMap 훅으로 이전
+  //            ContactSection은 mapContainerRef / markerPopupVisible 직접 소유 제거
   const { handleMapReady } = useClinicMap({
     location: STAR_LOCATION,
     zoom: 17,
@@ -61,7 +64,6 @@ export default function ContactSection() {
       walkLabel: t.access.mapPopupWalkLabel,
     },
     mapInstanceRef,
-    onPopupToggle: setMarkerPopupVisible,
   });
 
   // CONTACT-P4-A: navigator.clipboard 전용 (document.execCommand deprecated 제거)
@@ -116,12 +118,12 @@ export default function ContactSection() {
           className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-5"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
         >
           {/* Map - 모바일에서 더 크게 */}
+          {/* [R21-P0-3] mapContainerRef 제거 (MapView에 전달되지 않는 불필요한 ref) */}
+          {/* [R21-P0-3] data-popup-visible 제거 (CSS에서 미사용) */}
           <div
-            ref={mapContainerRef}
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg flex flex-col min-h-[300px]"
             style={{ height: mapHeight }}
             aria-label={t.access.mapAriaLabel}
-            data-popup-visible={markerPopupVisible}
           >
             <MapView
               className="w-full h-full"

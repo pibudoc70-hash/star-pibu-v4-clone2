@@ -73,7 +73,11 @@ export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN"];
  *        { hreflang: "x-default", href: `${BASE_URL}/en/foreign-guide` },
  *      ]}
  *
- * @param koPath  한국어 경로 (e.g. "/about")
+ * x-default 정책: koPath가 항상 x-default로 설정됩니다.
+ *   - 한국어 콘텐츠가 없는 subset 페이지에서는 이 함수를 사용하지 마세요.
+ *   - subset 페이지에서는 x-default를 영어 경로로 설정하는 것이 올바릅니다.
+ *
+ * @param koPath  한국어 경로 (e.g. "/about") — x-default로도 사용됨
  * @param enPath  영어 경로 (e.g. "/en/about"), 미지정 시 "/en"
  * @param jaPath  일본어 경로 (e.g. "/ja/about"), 미지정 시 "/ja"
  * @param zhPath  중국어 경로 (e.g. "/zh/about"), 미지정 시 "/zh"
@@ -94,12 +98,35 @@ export function buildHreflangs(
         `잘못된 값: ${invalid.join(", ")}`
       );
     }
+    // [R21-P1-5] subset 페이지 오용 방지 가드:
+    // koPath가 '/ko/' 프리픽스로 시작하면 subset 페이지에서 잘못 사용하는 것일 수 있음
+    // (ko 콘텐츠가 없는 페이지는 koPath가 없어야 하므로)
+    if (enPath?.startsWith("/") && !enPath.startsWith("/en")) {
+      console.warn(
+        `[buildHreflangs] enPath가 '/en'으로 시작하지 않습니다: ${enPath}. ` +
+        `영어 경로는 '/en/...' 형식이어야 합니다.`
+      );
+    }
+    if (jaPath?.startsWith("/") && !jaPath.startsWith("/ja")) {
+      console.warn(
+        `[buildHreflangs] jaPath가 '/ja'으로 시작하지 않습니다: ${jaPath}. ` +
+        `일본어 경로는 '/ja/...' 형식이어야 합니다.`
+      );
+    }
+    if (zhPath?.startsWith("/") && !zhPath.startsWith("/zh")) {
+      console.warn(
+        `[buildHreflangs] zhPath가 '/zh'로 시작하지 않습니다: ${zhPath}. ` +
+        `중국어 경로는 '/zh/...' 형식이어야 합니다.`
+      );
+    }
   }
   return [
     { hreflang: "ko", href: `${BASE_URL}${koPath}` },
     { hreflang: "en", href: `${BASE_URL}${enPath ?? "/en"}` },
     { hreflang: "ja", href: `${BASE_URL}${jaPath ?? "/ja"}` },
     { hreflang: "zh", href: `${BASE_URL}${zhPath ?? "/zh"}` },
+    // x-default 정책: koPath가 항상 x-default로 설정됨
+    // subset 페이지(예: ForeignGuide)에서는 이 함수 대신 hreflangs prop에 배열을 직접 전달할 것
     { hreflang: "x-default", href: `${BASE_URL}${koPath}` },
   ];
 }

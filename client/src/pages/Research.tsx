@@ -374,7 +374,6 @@ export default function Research() {
               >
                 <div className="flex flex-wrap items-start gap-2 mb-2">
                   <CategoryBadge category={paper.category} />
-                  <span className="text-xs text-gray-400 font-medium">{paper.year}</span>
                   {paper.citations !== undefined && (
                     <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-50 text-green-700">
                       인용 {paper.citations}회
@@ -396,8 +395,6 @@ export default function Research() {
                 >
                   {paper.journal}
                 </p>
-                {/* 저자 */}
-                <p className="text-xs text-gray-500 mb-2">{paper.authors}</p>
                 {/* 상세 설명 */}
                 <p className="text-sm text-gray-600 leading-relaxed">{paper.detail}</p>
                 {/* PubMed 링크 */}
@@ -438,7 +435,6 @@ export default function Research() {
               >
                 <div className="flex flex-wrap items-start gap-2 mb-2">
                   <CategoryBadge category={paper.category} />
-                  <span className="text-xs text-gray-400 font-medium">{paper.year}</span>
                 </div>
                 <h3 className="text-base md:text-lg font-bold text-gray-900 mb-0.5 leading-snug">
                   {paper.title}
@@ -447,7 +443,6 @@ export default function Research() {
                   <p className="text-sm text-gray-500 italic mb-2 leading-snug">{paper.titleEn}</p>
                 )}
                 <p className="text-sm font-semibold text-blue-700 mb-1">{paper.journal}</p>
-                <p className="text-xs text-gray-500 mb-2">{paper.authors}</p>
                 <p className="text-sm text-gray-600 leading-relaxed">{paper.detail}</p>
               </li>
             ))}

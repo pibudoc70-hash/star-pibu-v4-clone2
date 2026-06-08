@@ -103,11 +103,12 @@ export function DoctorDesktopLayout({
                 <span className="font-montserrat dr-name-en">{doctor.nameEn}</span>
               </div>
             </div>
-            <div className="dr-derm-badge dr-derm-badge-desktop">
-              {t.doctors.dermBadge.split("\n").map((line, i) =>
-                i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>
-              )}
-            </div>
+            <img
+              src="/manus-storage/derm-specialist-badge_9b9bcf96.png"
+              alt={t.doctors.dermBadge.replace("\n", " ")}
+              className="dr-derm-badge-img dr-derm-badge-img-desktop"
+              draggable={false}
+            />
           </div>
 
           {/* 소개 */}

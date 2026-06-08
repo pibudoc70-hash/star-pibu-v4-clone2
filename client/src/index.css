@@ -897,6 +897,15 @@
   }
   .dr-derm-badge-desktop { font-size: 15px; width: 55px; height: 55px; }
   .dr-derm-badge-mobile  { font-size: 10px; width: 44px; height: 44px; }
+  /* 공식 피부과 전문의 로고 이미지 (텍스트 박스 대체) */
+  .dr-derm-badge-img {
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 6px;
+    display: block;
+  }
+  .dr-derm-badge-img-desktop { width: 60px; height: 60px; }
+  .dr-derm-badge-img-mobile  { width: 48px; height: 48px; }
   .dr-gold-divider {
     height: 1px;
     margin: 0 0 20px 0;

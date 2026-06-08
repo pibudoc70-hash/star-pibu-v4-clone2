@@ -91,11 +91,12 @@ export function DoctorMobileLayout({
               <h3 className="dr-mob-name-h3">{doctor.name}</h3>
               <p className="font-montserrat mt-0.5 dr-mob-name-en">{doctor.nameEn}</p>
             </div>
-            <div className="dr-derm-badge dr-derm-badge-mobile">
-              {t.doctors.dermBadge.split("\n").map((line, i) =>
-                i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>
-              )}
-            </div>
+            <img
+              src="/manus-storage/derm-specialist-badge_9b9bcf96.png"
+              alt={t.doctors.dermBadge.replace("\n", " ")}
+              className="dr-derm-badge-img dr-derm-badge-img-mobile"
+              draggable={false}
+            />
           </div>
 
           {/* 골드 구분선 */}

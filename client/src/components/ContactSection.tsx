@@ -16,12 +16,12 @@
  */
 
 import { useState, useRef, useCallback } from "react";
-import { MapPin, Phone, Clock, Train, Car, Copy, Check } from "lucide-react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
+import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
 // initialCenter prop으로 전달될 때 참조 안정성을 보장
@@ -108,20 +108,9 @@ export default function ContactSection() {
 
   // CONTACT-P2-A: i18n 키 직접 사용 (fallback 삼항 제거 — 4개 언어 모두 키 존재 확인)
   // CONTACT-P4-B: non-null assertion(!) 제거 → optional chaining + nullish coalescing
+  // [R15-P1-2] addressLabel/phoneLabel 등 Info Panel 전용 변수는 ContactInfoPanel로 이전
   const locationInfo = t.access.locationInfo ?? "";
   const sectionTitle = t.access.sectionTitle ?? "";
-  const addressLabel = t.access.addressLabel ?? "";
-  const phoneLabel = t.access.phoneLabel ?? "";
-  const hoursLabel = t.access.hoursLabel ?? "";
-  const hoursNote = t.access.hoursNote ?? "";
-  const transitLabel = t.access.transitLabel ?? "";
-  const transitDesc = t.access.transitDesc ?? "";
-  const parkingLabel = t.access.parkingLabel ?? "";
-  const parkingDesc = t.access.parkingDesc ?? "";
-  const kakaoMapLabel = t.access.kakaoMapLabel ?? "카카오맵";
-  const naverMapLabel = t.access.naverMap ?? "네이버지도";
-  const copyAddressLabel = t.access.copyAddress ?? "주소 복사";
-  const copiedLabel = t.access.copiedLabel ?? "복사됨";
 
   return (
     <section ref={sectionRef} id="contact" className="py-16 sm:py-24 star-section-alt">
@@ -197,151 +186,17 @@ export default function ContactSection() {
             />
           </div>
 
-          {/* Info Panel */}
-          <div
-            ref={infoPanelRef}
-            className="reveal-right lg:col-span-2 flex flex-col gap-2 sm:gap-3 lg:h-full"
-            style={{ transitionDelay: "0.15s" }}
-          >
-            {/* Address + 복사 버튼 */}
-            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-stretch gap-3">
-                <MapPin size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
-                <div className="flex-1 min-w-0">
-                  <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>
-                    {addressLabel}
-                  </p>
-                  <p className="text-sm" style={{ color: "#6B7280" }}>
-                    {t.access.address}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={handleCopyAddress}
-                    className="mt-2 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
-                    style={{
-                      background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "#EEF7F7",
-                      color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "#4A6FA5",
-                      border: `1px solid ${copied ? "#03C75A33" : copyFailed ? "#EF444433" : "#81C7C933"}`,
-                    }}
-                  >
-                    {copied ? (
-                      <>
-                        <Check size={12} />
-                        {copiedLabel}
-                      </>
-                    ) : copyFailed ? (
-                      <span>직접 복사: {t.access.address}</span>
-                    ) : (
-                      <>
-                        <Copy size={12} />
-                        {copyAddressLabel}
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-center gap-3">
-                <Phone size={20} style={{ color: "#81C7C9", flexShrink: 0 }} />
-                <div>
-                  <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>
-                    {phoneLabel}
-                  </p>
-                  <a
-                    href={phoneHref}
-                    className="font-montserrat font-bold text-lg transition-colors hover:opacity-70"
-                    style={{ color: "#4A6FA5" }}
-                  >
-                    {phoneDisplay}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Hours */}
-            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-stretch gap-3">
-                <Clock size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
-                <div className="flex-1">
-                  <p className="font-bold text-sm mb-3" style={{ color: "#1F2937" }}>
-                    {hoursLabel}
-                  </p>
-                  <div className="space-y-1.5">
-                    {t.hours.rows.map((h) => (
-                      <div key={h.day} className="flex justify-between text-sm">
-                        <span style={{ color: "#6B7280" }}>{h.day}</span>
-                        <span
-                          className="font-semibold"
-                          style={{ color: h.time === closedLabel ? "#EF4444" : "#1F2937" }}
-                        >
-                          {h.time}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <p
-                    className="text-xs mt-3 p-2 rounded-lg"
-                    style={{ background: "#EEF7F7", color: "#4A6FA5" }}
-                  >
-                    {hoursNote}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Transit & Parking */}
-            <div className="p-3 sm:p-4 rounded-xl" style={{ background: "white" }}>
-              <div className="flex items-stretch gap-3">
-                <Train size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
-                <div>
-                  <p className="font-bold text-sm mb-2" style={{ color: "#1F2937" }}>
-                    {transitLabel}
-                  </p>
-                  <p className="text-sm" style={{ color: "#6B7280" }}>
-                    {transitDesc}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-stretch gap-3 mt-3">
-                <Car size={20} style={{ color: "#81C7C9", flexShrink: 0, marginTop: "2px" }} />
-                <div>
-                  <p className="font-bold text-sm mb-1" style={{ color: "#1F2937" }}>
-                    {parkingLabel}
-                  </p>
-                  <p className="text-sm" style={{ color: "#6B7280" }}>
-                    {parkingDesc}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* External Map Links */}
-            <div className="flex gap-2 flex-wrap">
-              <a
-                href="https://map.kakao.com/link/map/스타피부과,35.1572312,129.0581932"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${kakaoMapLabel} (새 탭에서 열림)`}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[#FEE500] text-[#3C1E1E] min-w-[120px]"
-              >
-                <MapPin size={14} />
-                {kakaoMapLabel}
-              </a>
-              <a
-                aria-label={`${naverMapLabel} (새 탭에서 열림)`}
-                href="https://map.naver.com/v5/search/스타피부과%20서면"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[#03C75A] text-white min-w-[120px]"
-              >
-                <MapPin size={14} />
-                {naverMapLabel}
-              </a>
-            </div>
-          </div>
+          {/* [R15-P1-2] Info Panel → ContactInfoPanel 서브컴포넌트로 분리 */}
+          <ContactInfoPanel
+            t={t}
+            infoPanelRef={infoPanelRef}
+            copied={copied}
+            copyFailed={copyFailed}
+            closedLabel={closedLabel}
+            phoneHref={phoneHref}
+            phoneDisplay={phoneDisplay}
+            onCopyAddress={handleCopyAddress}
+          />
         </div>
       </div>
     </section>

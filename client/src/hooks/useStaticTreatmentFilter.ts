@@ -2,8 +2,11 @@
  * useStaticTreatmentFilter
  * TreatmentsEquipmentSection(정적 데이터 버전)의 탭 필터 + 정렬 + 탭 자동 스크롤 로직.
  * DB 연동 버전은 useTreatmentFilter를 사용한다.
+ *
+ * [R15-P1-2] 정렬 로직을 private helper(sortTreatments)로 분리.
+ *            setSortBy/setFilterOpen 직접 노출 → handleSortChange/toggleFilter 래핑.
  */
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import type { Treatment } from "@/types/treatment";
 import { TREATMENTS } from "@/data/treatments/treatments-data";
 
@@ -16,9 +19,38 @@ interface UseStaticTreatmentFilterReturn {
   filteredTreatments: Treatment[];
   tabContainerRef: React.RefObject<HTMLDivElement | null>;
   handleTabChange: (id: string) => void;
+  /** [R15-P1-2] 직접 setState 대신 의미 있는 핸들러로 래핑 */
+  handleSortChange: (sort: SortBy) => void;
+  /** [R15-P1-2] 필터 드롭다운 토글 핸들러 */
+  toggleFilter: () => void;
+  /** @deprecated 하위 호환용 — 새 코드에서는 handleSortChange를 사용하세요 */
   setSortBy: React.Dispatch<React.SetStateAction<SortBy>>;
+  /** @deprecated 하위 호환용 — 새 코드에서는 toggleFilter를 사용하세요 */
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+// ── Private helpers ───────────────────────────────────────────────────────────
+
+/**
+ * [R15-P1-2] 정렬 로직 분리: useMemo 내부 인라인 → 순수 함수
+ * 원본 배열을 변경하지 않고 새 배열을 반환한다.
+ */
+export function sortTreatments(items: Treatment[], sortBy: SortBy): Treatment[] {
+  if (sortBy === "name") {
+    return [...items].sort((a, b) => a.name.localeCompare(b.name, "ko"));
+  }
+  if (sortBy === "time") {
+    return [...items].sort((a, b) => {
+      const parseMinutes = (t: string | undefined) =>
+        parseInt((t ?? "").replace(/[^0-9]/g, "") || "0", 10);
+      return parseMinutes(a.time) - parseMinutes(b.time);
+    });
+  }
+  // "popular" — 데이터 원본 순서 유지
+  return items;
+}
+
+// ── Hook ──────────────────────────────────────────────────────────────────────
 
 export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmentFilterReturn {
   const [activeId, setActiveId] = useState(defaultTab);
@@ -28,17 +60,8 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
 
   /** 카테고리 + 정렬 필터링 */
   const filteredTreatments = useMemo(() => {
-    let items: Treatment[] = TREATMENTS[activeId] ?? [];
-    if (sortBy === "name") {
-      items = [...items].sort((a, b) => a.name.localeCompare(b.name, "ko"));
-    } else if (sortBy === "time") {
-      items = [...items].sort((a, b) => {
-        const timeA = parseInt((a.time ?? "").replace(/[^0-9]/g, "") || "0");
-        const timeB = parseInt((b.time ?? "").replace(/[^0-9]/g, "") || "0");
-        return timeA - timeB;
-      });
-    }
-    return items;
+    const items: Treatment[] = TREATMENTS[activeId] ?? [];
+    return sortTreatments(items, sortBy);
   }, [activeId, sortBy]);
 
   /** 모바일: 활성 탭이 항상 중앙에 오도록 자동 스크롤 */
@@ -53,7 +76,11 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
     });
   }, [activeId]);
 
-  const handleTabChange = (id: string) => setActiveId(id);
+  const handleTabChange = useCallback((id: string) => setActiveId(id), []);
+
+  /** [R15-P1-2] 의미 있는 핸들러 래핑 */
+  const handleSortChange = useCallback((sort: SortBy) => setSortBy(sort), []);
+  const toggleFilter = useCallback(() => setFilterOpen((prev) => !prev), []);
 
   return {
     activeId,
@@ -62,6 +89,9 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
     filteredTreatments,
     tabContainerRef,
     handleTabChange,
+    handleSortChange,
+    toggleFilter,
+    // 하위 호환
     setSortBy,
     setFilterOpen,
   };

@@ -38,11 +38,18 @@ export default function EquipmentTreatmentCard({
   const detailSlug = DETAIL_PAGE_SLUGS[item.name];
   const { getText } = useLocalizedText();
 
+  // [R15-P1-1] CSS custom property 기반: 동적 색상/딥레이를 CSS 변수로 전달
+  const cardStyle = {
+    "--card-img-bg": imgBg,
+    "--card-accent": catTextColor,
+    "--delay": `${Math.min(index * 0.07, 0.42)}s`,
+  } as React.CSSProperties;
+
   return (
     <>
       <div
-        className="treatment-card group cursor-pointer"
-        style={{ animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both` }}
+        className="treatment-card group cursor-pointer animate-card-fade"
+        style={cardStyle}
         onClick={() => setOpen(true)}
         role="button"
         tabIndex={0}
@@ -68,8 +75,7 @@ export default function EquipmentTreatmentCard({
               {item.images.map((img, idx) => (
                 <div
                   key={idx}
-                  className="flex-1 overflow-hidden"
-                  style={{ background: imgBg }}
+                  className="flex-1 overflow-hidden bg-[var(--card-img-bg)]"
                 >
                   <OptimizedImage
                     src={img}
@@ -83,14 +89,13 @@ export default function EquipmentTreatmentCard({
             <OptimizedImage
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-              style={{ background: imgBg }}
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
             />
           )}
           {item.badge && (
             <span
-              className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow"
-              style={{ background: item.badgeColor ?? catTextColor }}
+              className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow bg-[var(--card-accent)]"
+              style={item.badgeColor ? { background: item.badgeColor } : undefined}
             >
               {item.badge}
             </span>
@@ -244,8 +249,7 @@ export default function EquipmentTreatmentCard({
                   setOpen(false);
                   setLocation(`/treatment/${detailSlug}`);
                 }}
-                className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2"
-                style={{ background: catTextColor }}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 bg-[var(--card-accent)]"
               >
                 <ExternalLink size={14} />
                 {tr.modalDetailBtn}

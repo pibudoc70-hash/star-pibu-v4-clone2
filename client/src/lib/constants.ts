@@ -16,11 +16,17 @@ export const WECHAT_ID = "star2006beauty";
 // ── 핵심 통계 (단일 소스 of truth) ────────────────────────────────────────────
 /**
  * CLINIC_STATS: 병원 주요 수치 상수
- * - i18n.ts의 about.stats와 동일한 수치를 공유합니다.
- * - 숫자 변경 시 이 파일과 i18n.ts 두 곳을 함께 수정하세요.
  *
- * 다국어 레이블은 i18n.ts의 t.about.stats[n].label을 사용하고,
- * 숫자/단위만 이 상수를 참조합니다.
+ * ## 설계 의도 — 이중 관리가 아닌 역할 분리
+ *
+ * | 소스 | 목적 |
+ * |---|---|
+ * | `CLINIC_STATS` (constants.ts) | 순수 숫자 값 — `useCountUp` 애니메이션 + JSON-LD 스키마 |
+ * | `i18n.*.ts > about.stats` | 완성된 다국어 표시 문자열 ("20년+" 등) |
+ * | `useClinicStats` 훅 | 두 소스를 연결하여 단일 API 제공 |
+ *
+ * 숫자 변경 시 이 파일을 수정하면 `useCountUp`과 JSON-LD에 자동 반영됩니다.
+ * 표시 문자열(다국어 레이블)은 `client/src/lib/i18n.*.ts`의 `about.stats`를 함께 수정하세요.
  */
 export const CLINIC_STATS = {
   /** 피부과 전문의 경력 (년) */

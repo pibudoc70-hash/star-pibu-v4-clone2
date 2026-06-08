@@ -95,7 +95,6 @@ export default function Home() {
         ogLocale="ko_KR"
         ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
-        includeWebSiteSchema={true}
         pageType="home"
         jsonLd={[
           buildBreadcrumbJsonLd([

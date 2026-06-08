@@ -41,10 +41,8 @@ export default function CategoryTabList({
         ))}
       </div>
       {/* 데스크탑: flex-wrap */}
-      <div
-        className="hidden sm:flex sm:flex-wrap gap-2"
-        style={{ marginTop: "9px", marginRight: "5px", marginBottom: "-4px", marginLeft: "16px" }}
-      >
+      {/* [R15-P1-1] margin inline style → Tailwind 클래스 치환 */}
+      <div className="hidden sm:flex sm:flex-wrap gap-2 mt-[9px] mr-[5px] -mb-1 ml-4">
         {categories.map((cat) => (
           <CategoryTabButton
             key={cat.id}

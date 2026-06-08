@@ -143,14 +143,17 @@ describe("[D] DoctorsSection.tsx lib/doctors-data.ts import", () => {
 
 // E. ContactSection.tsx — 외부 지도 링크 aria-label 추가
 describe("[E] ContactSection.tsx 외부 지도 링크 접근성", () => {
+  // [R15-P1-2] 지도 링크는 ContactInfoPanel.tsx로 이전됨
   const contactSrc = src("client/src/components/ContactSection.tsx");
+  const infoPanelSrc = src("client/src/components/contact/ContactInfoPanel.tsx");
+  const combinedSrc = contactSrc + infoPanelSrc;
   it("카카오맵 링크에 aria-label이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/map\.kakao\.com[\s\S]{0,200}aria-label/);
+    expect(combinedSrc).toMatch(/map\.kakao\.com[\s\S]{0,200}aria-label/);
   });
   it("네이버맵 링크에 aria-label이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/map\.naver\.com[\s\S]{0,200}aria-label|aria-label[\s\S]{0,200}map\.naver\.com/);
+    expect(combinedSrc).toMatch(/map\.naver\.com[\s\S]{0,200}aria-label|aria-label[\s\S]{0,200}map\.naver\.com/);
   });
   it("카카오맵 aria-label에 새 탭 안내가 포함되어야 한다", () => {
-    expect(contactSrc).toMatch(/\uc0c8 \ud0ed/);
+    expect(combinedSrc).toMatch(/\uc0c8 \ud0ed/);
   });
 });

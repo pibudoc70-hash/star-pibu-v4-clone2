@@ -40,12 +40,17 @@ describe("[A] TreatmentsEquipmentSection 미사용 import 제거", () => {
 // [D] DoctorsSection aria-label ?? fallback 제거
 // ─────────────────────────────────────────────────────────────────────────────
 describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", () => {
+  // [R15-P0-3] selectDoctorLabel은 useDoctorViewModel 훅으로 이전됨
   const src = read("client/src/components/DoctorsSection.tsx");
+  const viewModelSrc = read("client/src/hooks/useDoctorViewModel.ts");
 
   // R11-A: selectDoctorLabel/dotNavLabel은 .replace() 체이닝이 필요하므로
   // non-null assertion(!)이 아닌 optional chaining + fallback("") 패턴 사용
-  it("selectDoctorLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
-    expect(src).toMatch(/selectDoctorLabel\s*\?\?\s*["']/);
+  // [R15] selectDoctorLabel은 현재 코드에서 미사용 (탭 버튼 aria-label은 t.doctors.label 직접 사용)
+  // dotNavLabel은 DoctorsSection.tsx에서 ?? "" fallback으로 사용 중
+  it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
+    // dotNavLabel ?? "" 패턴이 DoctorsSection에 있어야 함
+    expect(src).toMatch(/dotNavLabel\s*\?\?\s*["']/);
   });
 
   it("expandCredentialsLabel에 ?? fallback이 없어야 한다", () => {
@@ -70,16 +75,21 @@ describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", (
 // [E] ContactSection naverMap ?? fallback 제거
 // ─────────────────────────────────────────────────────────────────────────────
 describe("[E] ContactSection naverMap fallback 제거", () => {
+  // [R15-P1-2] naverMapLabel은 ContactInfoPanel.tsx로 이전됨
   const src = read("client/src/components/ContactSection.tsx");
+  const infoPanelSrc = read("client/src/components/contact/ContactInfoPanel.tsx");
 
   it("naverMap에 ?? \"Naver Map\" fallback이 없어야 한다", () => {
-    expect(src).not.toMatch(/naverMap\s*\?\?\s*["']Naver Map["']/);
+    const combined = src + infoPanelSrc;
+    expect(combined).not.toMatch(/naverMap\s*\?\?\s*["']Naver Map["']/);
   });
 
   it("naverMapLabel이 안전하게 선언되어야 한다 [R13: non-null assertion → nullish coalescing]", () => {
     // [R13] non-null assertion(!) → optional chaining + nullish coalescing으로 개선됨
+    // [R15] naverMapLabel은 ContactInfoPanel.tsx로 이전됨
     // naverMap은 i18n.types.ts에서 optional이므로 fallback이 필요함
-    expect(src).toMatch(/naverMapLabel\s*=\s*t\.access\.naverMap/);
+    const combined = src + infoPanelSrc;
+    expect(combined).toMatch(/naverMapLabel\s*=\s*t\.access\.naverMap/);
   });
 });
 

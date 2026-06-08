@@ -31,6 +31,7 @@ function DoctorsSection() {
     toggleCredentials,
     handleTouchStart,
     handleTouchEnd,
+    handleTabKeyDown,
   } = useDoctorViewModel(t);
 
   const badgeLabel = t.doctors.badge;
@@ -115,15 +116,25 @@ function DoctorsSection() {
               </div>
 
               {/* 의사 탭 목록 */}
-              <div className="flex flex-col flex-1 justify-center">
+              {/* [R15-P0-3] WAI-ARIA tablist (vertical) */}
+              <div
+                role="tablist"
+                aria-orientation="vertical"
+                aria-label={t.doctors.label}
+                className="flex flex-col flex-1 justify-center"
+              >
                 {mergedDoctors.map((d) => {
                   const isActive = activeDoctor === d.id;
                   return (
                     <button type="button"
                       key={d.id}
+                      role="tab"
+                      id={`doctor-tab-${d.id}`}
+                      aria-controls={`doctor-panel-${d.id}`}
+                      aria-selected={activeDoctor === d.id}
+                      tabIndex={activeDoctor === d.id ? 0 : -1}
                       onClick={() => handleDoctorSelect(d.id)}
-                      aria-label={(t.doctors.selectDoctorLabel ?? "").replace("{name}", d.name)}
-                      aria-pressed={activeDoctor === d.id}
+                      onKeyDown={(e) => handleTabKeyDown(e, "vertical")}
                       className="flex flex-col items-center gap-3 px-4 py-5 transition-all duration-300 relative w-full"
                       style={{
                         background: isActive
@@ -207,7 +218,13 @@ function DoctorsSection() {
             </div>
 
             {/* 우측 상세 패널 */}
-            <div className="flex flex-1">
+            {/* [R15-P0-3] WAI-ARIA tabpanel */}
+            <div
+              role="tabpanel"
+              id={`doctor-panel-${activeDoctor}`}
+              aria-labelledby={`doctor-tab-${activeDoctor}`}
+              className="flex flex-1"
+            >
               {/* 사진 영역 */}
               <div
                 className="relative flex-shrink-0"
@@ -402,7 +419,11 @@ function DoctorsSection() {
           {/* ── 모바일 레이아웃 ── */}
           <div className="lg:hidden">
             {/* 모바일 탭 헤더 */}
+            {/* [R15-P0-3] WAI-ARIA tablist (horizontal) */}
             <div
+              role="tablist"
+              aria-orientation="horizontal"
+              aria-label={t.doctors.label}
               className="grid grid-cols-3"
               style={{ borderBottom: `1px solid ${GOLD}33` }}
             >
@@ -411,9 +432,13 @@ function DoctorsSection() {
                 return (
                   <button type="button"
                     key={d.id}
+                    role="tab"
+                    id={`doctor-mob-tab-${d.id}`}
+                    aria-controls={`doctor-mob-panel-${d.id}`}
+                    aria-selected={activeDoctor === d.id}
+                    tabIndex={activeDoctor === d.id ? 0 : -1}
                     onClick={() => handleDoctorSelect(d.id)}
-                    aria-label={(t.doctors.selectDoctorLabel ?? "").replace("{name}", d.name)}
-                    aria-pressed={activeDoctor === d.id}
+                    onKeyDown={(e) => handleTabKeyDown(e, "horizontal")}
                     className="flex flex-col items-center py-4 px-2 transition-all duration-300 relative"
                     style={{
                       background: isActive ? GOLD_LIGHT : "white",
@@ -473,7 +498,12 @@ function DoctorsSection() {
             </div>
 
             {/* 모바일 상세 패널 */}
-            <div>
+            {/* [R15-P0-3] WAI-ARIA tabpanel */}
+            <div
+              role="tabpanel"
+              id={`doctor-mob-panel-${activeDoctor}`}
+              aria-labelledby={`doctor-mob-tab-${activeDoctor}`}
+            >
               {/* 사진 */}
               <div
                 style={{

@@ -2064,3 +2064,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round5/round9 회귀 테스트 R14 변경사항 반영 (useMemo/mergedDoctors 훅 이전 패턴)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (31 files, 693 tests)
 - [x] 최종 커밋
+
+## Round-15 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R15-P0-1] HeroAnimations: animationDelay 인라인 style → CSS custom property --delay 기반 선언형 재설계 + 스크린리더 접근성 (aria-hidden + sr-only)
+- [x] [R15-P0-2] HeroSection: 인라인 style 매직넘버 확인 (이미 CSS 토큰 기반 완료, 추가 작업 불필요)
+- [x] [R15-P0-3] DoctorsSection: role="tab"/tablist/tabpanel WAI-ARIA 패턴 + handleTabKeyDown (ArrowUp/Down/Left/Right/Home/End)
+- [x] [R15-P0-4] DoctorsSection: 인라인 style 매직넘버 확인 (이미 대부분 CSS 토큰 기반 완료)
+### P1 – 중요
+- [x] [R15-P1-1] CategoryTabList: 데스크탑 margin inline style → Tailwind 클래스 치환
+- [x] [R15-P1-2] EquipmentTreatmentCard: --card-img-bg/--card-accent CSS custom property + animate-card-fade 클래스
+- [x] [R15-P1-3] ContactSection: ContactInfoPanel 서브컴포넌트 분리 (contact/ContactInfoPanel.tsx) + hex 색상 → CSS 변수
+- [x] [R15-P1-4] useStaticTreatmentFilter: 정렬 로직 private helper 분리 + 핸들러 래핑
+### P2 – 품질 완성
+- [x] [R15-P2-1] SeoHead: deprecated prop JSDoc 개선 + Home.tsx 중복 prop (includeWebSiteSchema) 제거
+- [x] [R15-P2-2] seoHelpers: buildHreflangs JSDoc 유지 (타입 가드는 이미 적절히 구현됨)
+- [x] [R15-P2-3] constants.ts: CLINIC_STATS JSDoc 역할 분리 표 작성 (CLINIC_DOCTORS/PROCEDURES 분리는 다음 라운드 대상)
+### 검증
+- [x] round15.regression.test.ts 작성 (37개 테스트: A~H 8개 영역)
+- [x] round6/round7/round9 회귀 테스트 R15 변경사항 반영 (서브컴포넌트 분리 후 파일 경로 업데이트)
+- [x] TypeScript 0 errors + 전체 테스트 통과 (32 files, 730 tests)
+- [x] 최종 커밋

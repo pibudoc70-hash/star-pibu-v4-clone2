@@ -2,18 +2,20 @@
  * useDoctorViewModel
  *
  * [R13-P1-2] DoctorsSection.tsx에서 뷰모델 로직 분리
+ * [R15-P0-3] WAI-ARIA tablist 키보드 네비게이션 핸들러 추가
  *
  * 책임:
  * - 활성 의사 선택 상태 (activeDoctor)
  * - 학력·경력 펼침/접기 상태 (expandedCredentials)
  * - 이미지 로드 상태 (imagesLoaded)
  * - 터치 스와이프 핸들러
+ * - WAI-ARIA tablist 키보드 네비게이션 (handleTabKeyDown)
  * - i18n locale merge → mergedDoctors (id 기반, [R11-A] 패턴 유지)
  * - 현재 선택된 의사 뷰 데이터 (doctor)
  *
  * DoctorsSection 컴포넌트는 이 훅의 반환값을 받아 렌더링만 담당한다.
  */
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import React from "react";
 import { doctors, type Doctor } from "@/lib/doctors-data";
 import type { I18nContent } from "@/lib/i18n.types";
@@ -47,6 +49,14 @@ export interface UseDoctorViewModelReturn {
   handleTouchStart: (e: React.TouchEvent) => void;
   /** 터치 종료 핸들러 (스와이프 감지) */
   handleTouchEnd: (e: React.TouchEvent) => void;
+  /**
+   * WAI-ARIA tablist 키보드 네비게이션 핸들러
+   * - 세로 방향(vertical): ArrowUp/ArrowDown
+   * - 가로 방향(horizontal): ArrowLeft/ArrowRight
+   * - Home: 첫 번째 탭, End: 마지막 탭
+   * - 방향키 입력 시 기본 스크롤 동작 방지 (preventDefault)
+   */
+  handleTabKeyDown: (e: React.KeyboardEvent, orientation?: "vertical" | "horizontal") => void;
 }
 
 // ── 이미지 프리로드 ──────────────────────────────────────────────────────────
@@ -78,26 +88,26 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
   }, []);
 
   // 의사 전환 시 학력·경력 접기 초기화
-  const handleDoctorSelect = (i: number) => {
+  const handleDoctorSelect = useCallback((i: number) => {
     setActiveDoctor(i);
     setExpandedCredentials(false);
-  };
+  }, []);
 
-  const handleImageLoad = (id: number) => {
+  const handleImageLoad = useCallback((id: number) => {
     setImagesLoaded((prev) => ({ ...prev, [id]: true }));
-  };
+  }, []);
 
-  const toggleCredentials = () => {
+  const toggleCredentials = useCallback(() => {
     setExpandedCredentials((prev) => !prev);
-  };
+  }, []);
 
   // 터치 스와이프 핸들러
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
-  };
+  }, []);
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
     if (touchStartX.current === null || touchStartY.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
@@ -111,7 +121,58 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     }
     touchStartX.current = null;
     touchStartY.current = null;
-  };
+  }, []);
+
+  /**
+   * [R15-P0-3] WAI-ARIA tablist 키보드 네비게이션
+   * ARIA Authoring Practices Guide (APG) Tab Pattern 준수:
+   * - vertical tablist: ArrowUp(이전), ArrowDown(다음)
+   * - horizontal tablist: ArrowLeft(이전), ArrowRight(다음)
+   * - Home: 첫 번째 탭 포커스, End: 마지막 탭 포커스
+   */
+  const handleTabKeyDown = useCallback(
+    (e: React.KeyboardEvent, orientation: "vertical" | "horizontal" = "vertical") => {
+      const total = doctors.length;
+      let next: number | null = null;
+
+      if (orientation === "vertical") {
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          next = (activeDoctor - 1 + total) % total;
+        } else if (e.key === "ArrowDown") {
+          e.preventDefault();
+          next = (activeDoctor + 1) % total;
+        }
+      } else {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          next = (activeDoctor - 1 + total) % total;
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          next = (activeDoctor + 1) % total;
+        }
+      }
+
+      if (e.key === "Home") {
+        e.preventDefault();
+        next = 0;
+      } else if (e.key === "End") {
+        e.preventDefault();
+        next = total - 1;
+      }
+
+      if (next !== null) {
+        handleDoctorSelect(next);
+        // 포커스를 새 탭 버튼으로 이동 (DOM에서 tablist 내 tab 버튼 탐색)
+        const tablist = (e.currentTarget as HTMLElement).closest("[role='tablist']");
+        if (tablist) {
+          const tabs = tablist.querySelectorAll<HTMLElement>("[role='tab']");
+          tabs[next]?.focus();
+        }
+      }
+    },
+    [activeDoctor, handleDoctorSelect],
+  );
 
   const badgeLabel = t.doctors.badge;
 
@@ -154,5 +215,6 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     toggleCredentials,
     handleTouchStart,
     handleTouchEnd,
+    handleTabKeyDown,
   };
 }

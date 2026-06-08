@@ -4,6 +4,7 @@
  *   A. ContactSection.tsx ?? fallback 5개 → non-null assertion(!) 교체
  *      [R13 업데이트] non-null assertion(!) → optional chaining + nullish coalescing(?? "")으로 재개선
  *      (i18n.types.ts에서 optional 필드이므로 ?? fallback이 더 안전함)
+ *      [R15 업데이트] hoursNote/transitDesc/parkingDesc는 ContactInfoPanel.tsx로 이전됨
  *   B. i18n.types.ts access.copiedLabel optional → required 변경
  *   C. i18n.ko.ts doctors.list 3명 specialties 추가
  */
@@ -19,7 +20,10 @@ function src(rel: string) {
 
 // ─── A. ContactSection optional 필드 안전 접근 [R13 업데이트] ────────────────
 describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", () => {
+  // [R15-P1-2] hoursNote/transitDesc/parkingDesc는 ContactInfoPanel.tsx로 이전됨
   const contactSrc = src("client/src/components/ContactSection.tsx");
+  const infoPanelSrc = src("client/src/components/contact/ContactInfoPanel.tsx");
+  const combinedSrc = contactSrc + infoPanelSrc;
 
   // [R13] i18n.types.ts에서 optional 필드는 non-null assertion(!) 대신
   // nullish coalescing(?? "") 방식이 더 안전함 → Round-13에서 재개선
@@ -32,15 +36,18 @@ describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", 
   });
 
   it("hoursNote가 안전하게 접근되어야 한다", () => {
-    expect(contactSrc).toMatch(/hoursNote/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/hoursNote/);
   });
 
   it("transitDesc가 안전하게 접근되어야 한다", () => {
-    expect(contactSrc).toMatch(/transitDesc/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/transitDesc/);
   });
 
   it("parkingDesc가 안전하게 접근되어야 한다", () => {
-    expect(contactSrc).toMatch(/parkingDesc/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/parkingDesc/);
   });
 
   it("[R13] locationInfo에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
@@ -48,15 +55,18 @@ describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", 
   });
 
   it("[R13] hoursNote에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/hoursNote\s*\?\?\s*["']/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/hoursNote\s*\?\?\s*["']/);
   });
 
   it("[R13] transitDesc에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/transitDesc\s*\?\?\s*["']/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/transitDesc\s*\?\?\s*["']/);
   });
 
   it("[R13] parkingDesc에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/parkingDesc\s*\?\?\s*["']/);
+    // [R15] ContactInfoPanel로 이전됨
+    expect(combinedSrc).toMatch(/parkingDesc\s*\?\?\s*["']/);
   });
 });
 

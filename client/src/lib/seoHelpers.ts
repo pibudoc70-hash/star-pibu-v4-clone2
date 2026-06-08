@@ -3,7 +3,18 @@
 import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
 import { CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/clinic-data";
 
-export type JsonLdSchema = Record<string, unknown>;
+/**
+ * JsonLdSchema — JSON-LD 스키마 타입
+ *
+ * [R19-P2] Record<string, unknown> → 전용 타입으로 강화
+ * - @context와 @type은 모든 유효한 JSON-LD에 필수
+ * - 나머지 필드는 스키마별로 다르므로 unknown 허용
+ */
+export type JsonLdSchema = {
+  "@context": string;
+  "@type": string | string[];
+  [key: string]: unknown;
+};
 
 export const SITE_NAME = "부산 서면 스타피부과";
 export const BASE_URL = "https://www.star-pibu.com";
@@ -301,7 +312,12 @@ export function buildBreadcrumbJsonLd(
  */
 export type SeoPageType = "home" | "treatment" | "default" | "admin";
 
-export const SEO_PRESETS: Record<SeoPageType, { includeMedicalSchema: boolean; includeWebSiteSchema: boolean }> = {
+/** SeoPreset 타입 정의 */
+export type SeoPreset = { includeMedicalSchema: boolean; includeWebSiteSchema: boolean };
+
+export const SEO_PRESETS = {
+  // [R19-P2] satisfies 적용: 타입 추론 유지 + 정확성 제약
+  // 새 SeoPageType 키 추가 시 컴파일러가 누락 감지
   /** 홈페이지: WebSite + MedicalBusiness 스키마 모두 포함 */
   home: { includeMedicalSchema: true, includeWebSiteSchema: true },
   /** 시술/장비 상세 페이지: MedicalBusiness 스키마만 포함 */
@@ -310,5 +326,5 @@ export const SEO_PRESETS: Record<SeoPageType, { includeMedicalSchema: boolean; i
   default: { includeMedicalSchema: true, includeWebSiteSchema: false },
   /** 관리자 페이지: 스키마 없음 + noindex */
   admin: { includeMedicalSchema: false, includeWebSiteSchema: false },
-};
+} satisfies Record<SeoPageType, SeoPreset>;
 

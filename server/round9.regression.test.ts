@@ -126,8 +126,11 @@ describe("[C] lib/doctors-data.ts 신규 생성", () => {
 // D. DoctorsSection.tsx — lib/doctors-data.ts import 사용
 describe("[D] DoctorsSection.tsx lib/doctors-data.ts import", () => {
   const docSrc = src("client/src/components/DoctorsSection.tsx");
+  // [R19] DoctorsSection 서브컴포넌트 분리 후 DoctorMobileLayout에서 import
+  const mobileSrc = src("client/src/components/doctors/DoctorMobileLayout.tsx");
   it("lib/doctors-data에서 doctors를 import해야 한다", () => {
-    expect(docSrc).toMatch(/from.*lib\/doctors-data/);
+    const combinedSrc = docSrc + "\n" + mobileSrc;
+    expect(combinedSrc).toMatch(/from.*lib\/doctors-data/);
   });
   it("DoctorsSection.tsx에 인라인 doctors 배열 선언이 없어야 한다", () => {
     expect(docSrc).not.toMatch(/const doctors:\s*Doctor\[\]/);

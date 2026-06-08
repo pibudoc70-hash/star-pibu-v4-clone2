@@ -2147,3 +2147,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round9/senior-review.regression.test.ts: HeroBackgroundLayers 추상화 후행 호환 테스트 업데이트
 - [x] TypeScript 0 errors + 전체 테스트 통과 (35 files, 897 tests)
 - [x] 최종 커밋
+
+## Round-19 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R19-P0-1] DesignSystem: onMouseEnter/Leave 확인 — DesignSystem.tsx 파일 없음, FacilitySection isHovering은 carousel 제어용 정상 패턴 (수정 불필요)
+- [x] [R19-P0-2] DoctorsSection: DoctorTabButton + DoctorDesktopLayout + DoctorMobileLayout + DoctorCredentials 4개 서브컴포넌트 분리. DoctorsSection.tsx 475줄 → 98줄 조립자로 축소
+- [x] [R19-P0-2] DoctorTabButton.tsx: aria-label 추가 (doctor.name 기반)
+- [x] [R19-P0-2] DoctorsSection.tsx: t.doctors.teamLabel 적용 (eyebrow 텍스트)
+- [x] [R19-P0-3] HeroStatItem/HeroStatsStrip/HeroFloorBadge: 인라인 style → .hero-stat-item/.hero-stat-value/.hero-floor-badge CSS 클래스 교체
+### P1 – 중요
+- [x] [R19-P1-5] EquipmentTreatmentCard: div → button 요소 전환 (WAI-ARIA 네이티브 시맨틱, onKeyDown 핸들러 불필요)
+- [x] [R19-P1-6] mapHelpers.ts 신규 생성 (buildMarkerPinElement 순수 함수 추출) + useClinicMap에서 ContactSection 역방향 의존 제거
+- [ ] [R19-P1-4-defer] TreatmentsEquipmentSection: INITIAL_SHOW viewport resize 정책 + activeCategory 변경 시 showAll reset — 현재 lazy initializer 사용으로 정상 패턴 (다음 라운드)
+### P2 – 품질 마무리
+- [x] [R19-P2-8] seoHelpers.ts: JsonLdSchema 타입 강화 (Record<string, unknown> → 구조적 타입) + SEO_PRESETS satisfies 연산자 적용
+- [ ] [R19-P2-7-defer] useStaticTreatmentFilter: sortTreatments locale/time util 분리 — 다음 라운드
+- [ ] [R19-P2-9-defer] constants.ts: asset config 계층 (lib/assetConfig.ts) 분리 — 다음 라운드
+### 검증
+- [x] round19.regression.test.ts 작성 (42개 테스트: A~I 9개 영역)
+- [x] round17/round5/round6/round9/round15/round16/senior-review 테스트: DoctorsSection 서브컴포넌트 분리 후행 호환 업데이트
+- [x] TypeScript 0 errors + 전체 테스트 통과 (36 files, 935 tests)
+- [x] 최종 커밋

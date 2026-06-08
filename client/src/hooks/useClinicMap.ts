@@ -23,7 +23,8 @@
  */
 import { useCallback } from "react";
 import type { MutableRefObject } from "react";
-import { buildMarkerPinElement } from "@/components/ContactSection";
+// [R19-P1-6] 의존 방향 역전 해소: ContactSection → lib/mapHelpers (순수 헬퍼 계층)
+import { buildMarkerPinElement } from "@/lib/mapHelpers";
 
 interface UseClinicMapOptions {
   location: google.maps.LatLngLiteral;

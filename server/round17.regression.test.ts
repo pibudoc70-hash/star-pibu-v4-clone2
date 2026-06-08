@@ -31,12 +31,17 @@ function readLib(rel: string) {
 
 // ─── A. DoctorsSection ───────────────────────────────────────────────────────
 describe("A. DoctorsSection: 인라인 style 최소화 + CSS 변수 이관", () => {
+  // [R19] DoctorsSection 서브컴포넌트 분리 후 클래스가 서브컴포넌트에 뛰어짔
   const doctorsSrc = readClient("components/DoctorsSection.tsx");
+  const desktopSrc = readClient("components/doctors/DoctorDesktopLayout.tsx");
+  const mobileSrc = readClient("components/doctors/DoctorMobileLayout.tsx");
+  const tabBtnSrc = readClient("components/doctors/DoctorTabButton.tsx");
+  const allDoctorsSrc = doctorsSrc + "\n" + desktopSrc + "\n" + mobileSrc + "\n" + tabBtnSrc;
   const indexCss = readClient("index.css");
 
   it("A-1: GOLD 상수 import가 없어야 한다 (CSS 변수로 이관)", () => {
     // doctors-data에서 GOLD/GOLD_LIGHT/GOLD_MID를 import하지 않아야 함
-    expect(doctorsSrc).not.toMatch(/import\s*\{[^}]*\bGOLD\b[^}]*\}\s*from/);
+    expect(allDoctorsSrc).not.toMatch(/import\s*\{[^}]*\bGOLD\b[^}]*\}\s*from/);
   });
 
   it("A-2: --dr-gold CSS 변수가 index.css에 정의되어 있어야 한다", () => {
@@ -52,36 +57,36 @@ describe("A. DoctorsSection: 인라인 style 최소화 + CSS 변수 이관", () 
   });
 
   it("A-5: 인라인 style 개수가 5개 이하여야 한다 (데이터 주도 objectPosition만 허용)", () => {
-    const matches = doctorsSrc.match(/style=\{\{/g) ?? [];
+    const matches = allDoctorsSrc.match(/style=\{\{/g) ?? [];
     expect(matches.length).toBeLessThanOrEqual(5);
   });
 
   it("A-6: data-active attribute가 사용되어야 한다 (CSS 선택자 기반 활성 스타일)", () => {
-    expect(doctorsSrc).toContain('data-active=');
+    expect(allDoctorsSrc).toContain('data-active=');
   });
 
-  it("A-7: dr-tab-btn CSS 클래스가 DoctorsSection에 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-tab-btn");
+  it("A-7: dr-tab-btn CSS 클래스가 DoctorsSection 영역에 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-tab-btn");
   });
 
-  it("A-8: dr-thumb-desktop CSS 클래스가 DoctorsSection에 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-thumb-desktop");
+  it("A-8: dr-thumb-desktop CSS 클래스가 DoctorsSection 영역에 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-thumb-desktop");
   });
 
-  it("A-9: dr-active-underline CSS 클래스가 DoctorsSection에 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-active-underline");
+  it("A-9: dr-active-underline CSS 클래스가 DoctorsSection 영역에 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-active-underline");
   });
 
-  it("A-10: WAI-ARIA role=\"tablist\"가 DoctorsSection에 있어야 한다", () => {
-    expect(doctorsSrc).toContain('role="tablist"');
+  it("A-10: WAI-ARIA role=\"tablist\"가 DoctorsSection 영역에 있어야 한다", () => {
+    expect(allDoctorsSrc).toContain('role="tablist"');
   });
 
-  it("A-11: WAI-ARIA role=\"tab\"이 DoctorsSection에 있어야 한다", () => {
-    expect(doctorsSrc).toContain('role="tab"');
+  it("A-11: WAI-ARIA role=\"tab\"이 DoctorsSection 영역에 있어야 한다", () => {
+    expect(allDoctorsSrc).toContain('role="tab"');
   });
 
-  it("A-12: WAI-ARIA role=\"tabpanel\"이 DoctorsSection에 있어야 한다", () => {
-    expect(doctorsSrc).toContain('role="tabpanel"');
+  it("A-12: WAI-ARIA role=\"tabpanel\"이 DoctorsSection 영역에 있어야 한다", () => {
+    expect(allDoctorsSrc).toContain('role="tabpanel"');
   });
 
   it("A-13: dr-tab-btn CSS 클래스가 index.css에 정의되어 있어야 한다", () => {
@@ -97,27 +102,24 @@ describe("A. DoctorsSection: 인라인 style 최소화 + CSS 변수 이관", () 
 describe("B. EquipmentTreatmentCard: Space key + focus-visible 링", () => {
   const cardSrc = readClient("components/treatments/EquipmentTreatmentCard.tsx");
   const indexCss = readClient("index.css");
-
-  it("B-1: Space key (\" \") onKeyDown 핸들러가 있어야 한다", () => {
-    expect(cardSrc).toContain('" "');
+  it("B-1: EquipmentTreatmentCard가 button 요소를 사용해야 한다 ([R19] div role=button → button 전환)", () => {
+    // [R19-P1-5] div role="button" → button 요소 전환
+    // button 요소는 기본적으로 Enter/Space를 처리하므로 onKeyDown 핸들러 불필요
+    expect(cardSrc).toMatch(/<button/);
+    expect(cardSrc).not.toMatch(/role="button"/);
   });
-
-  it("B-2: e.preventDefault()가 Space/Enter 핸들러에 있어야 한다", () => {
-    expect(cardSrc).toContain("e.preventDefault()");
-  });
-
-  it("B-3: treatment-card:focus-visible CSS 스타일이 index.css에 있어야 한다", () => {
+  it("B-2: treatment-card:focus-visible CSS 스타일이 index.css에 있어야 한다", () => {
     expect(indexCss).toMatch(/\.treatment-card:focus-visible\s*\{/);
   });
-
-  it("B-4: focus-visible outline이 --dr-gold 변수를 사용해야 한다", () => {
+  it("B-3: focus-visible outline이 --dr-gold 변수를 사용해야 한다", () => {
     const focusBlock = indexCss.match(/\.treatment-card:focus-visible\s*\{[^}]+\}/)?.[0] ?? "";
     expect(focusBlock).toContain("--dr-gold");
   });
-
-  it("B-5: onKeyDown에 Enter와 Space 모두 처리해야 한다", () => {
-    expect(cardSrc).toContain('"Enter"');
-    expect(cardSrc).toContain('" "');
+  it("B-4: EquipmentTreatmentCard에 aria-label이 있어야 한다 (접근성)", () => {
+    expect(cardSrc).toMatch(/aria-label/);
+  });
+  it("B-5: treatment-card CSS 클래스가 사용되어야 한다", () => {
+    expect(cardSrc).toContain("treatment-card");
   });
 });
 

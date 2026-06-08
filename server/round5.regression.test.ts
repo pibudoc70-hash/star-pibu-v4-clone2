@@ -83,7 +83,11 @@ describe("B. DoctorsSection - useMemo + aria-label", () => {
   });
 
   it("탭 버튼에 aria-label이 있어야 한다", () => {
-    expect(src).toMatch(/aria-label=\{.*doctor.*name/);
+    // [R19] DoctorsSection 서브컴포넌트 분리 후 DoctorTabButton에 있음
+    const tabBtnSrc = read("client/src/components/doctors/DoctorTabButton.tsx");
+    const hasDirect = /aria-label=\{.*doctor.*name/.test(src);
+    const hasInSubcomp = /aria-label=\{doctor\.name\}/.test(tabBtnSrc);
+    expect(hasDirect || hasInSubcomp).toBe(true);
   });
 });
 

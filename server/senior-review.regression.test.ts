@@ -21,10 +21,14 @@ const heroSource = readFileSync(
   path.resolve(root, "client/src/components/HeroSection.tsx"),
   "utf8",
 );
-const doctorsSource = readFileSync(
-  path.resolve(root, "client/src/components/DoctorsSection.tsx"),
-  "utf8",
-);
+// [R19] DoctorsSection 서브컴포넌트 분리 후 통합 소스로 검사
+const doctorsSource = [
+  "client/src/components/DoctorsSection.tsx",
+  "client/src/components/doctors/DoctorDesktopLayout.tsx",
+  "client/src/components/doctors/DoctorMobileLayout.tsx",
+  "client/src/components/doctors/DoctorTabButton.tsx",
+  "client/src/components/doctors/DoctorCredentials.tsx",
+].map((f) => readFileSync(path.resolve(root, f), "utf8")).join("\n");
 const seoHeadSource = readFileSync(
   path.resolve(root, "client/src/components/SeoHead.tsx"),
   "utf8",

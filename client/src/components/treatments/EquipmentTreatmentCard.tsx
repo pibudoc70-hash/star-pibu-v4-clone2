@@ -47,20 +47,13 @@ export default function EquipmentTreatmentCard({
 
   return (
     <>
-      <div
-        className="treatment-card group cursor-pointer animate-card-fade"
+      {/* [R19-P1-5] div → button 요소 전환 (WAI-ARIA 네이티브 시맨틱) */}
+      <button
+        type="button"
+        className="treatment-card group cursor-pointer animate-card-fade w-full text-left"
         style={cardStyle}
         onClick={() => setOpen(true)}
-        role="button"
-        tabIndex={0}
         aria-label={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${tr.modalDetailBtn}`}
-        // [R17-P1-2] Space key 지원 추가 + focus-visible 링 보강
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setOpen(true);
-          }
-        }}
       >
         {/* 이미지 영역 */}
         <div
@@ -127,7 +120,7 @@ export default function EquipmentTreatmentCard({
             </span>
           </div>
         </div>
-      </div>
+      </button>
 
       {/* [R18-P1-5] 상세 모달 → EquipmentTreatmentModal 컴포넌트로 분리 */}
       <EquipmentTreatmentModal

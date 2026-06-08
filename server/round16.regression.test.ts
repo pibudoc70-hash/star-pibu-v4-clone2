@@ -75,7 +75,12 @@ describe("A. HeroSection: hero 유틸리티 CSS 클래스 + 인라인 style 제�
 
 // ─── B. DoctorsSection ───────────────────────────────────────────────────────
 describe("B. DoctorsSection: 인라인 style → CSS 클래스 교체", () => {
+  // [R19] DoctorsSection 서브컴포넌트 분리 후 클래스가 서브컴포넌트에 뛰어짔
   const doctorsSrc = readClient("components/DoctorsSection.tsx");
+  const desktopSrc = readClient("components/doctors/DoctorDesktopLayout.tsx");
+  const mobileSrc = readClient("components/doctors/DoctorMobileLayout.tsx");
+  const tabBtnSrc = readClient("components/doctors/DoctorTabButton.tsx");
+  const allDoctorsSrc = doctorsSrc + "\n" + desktopSrc + "\n" + mobileSrc + "\n" + tabBtnSrc;
   const indexCss = readClient("index.css");
 
   it("B-1: dr-section-bg CSS 클래스가 index.css에 정의되어 있어야 한다", () => {
@@ -94,32 +99,32 @@ describe("B. DoctorsSection: 인라인 style → CSS 클래스 교체", () => {
     expect(indexCss).toMatch(/\.dr-name-h3-desktop\s*\{/);
   });
 
-  it("B-5: DoctorsSection에 dr-section-bg 클래스가 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-section-bg");
+  it("B-5: DoctorsSection 영역에 dr-section-bg 클래스가 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-section-bg");
   });
 
-  it("B-6: DoctorsSection에 dr-panel-card 클래스가 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-panel-card");
+  it("B-6: DoctorsSection 영역에 dr-panel-card 클래스가 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-panel-card");
   });
 
-  it("B-7: DoctorsSection에 dr-tab-sidebar 클래스가 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-tab-sidebar");
+  it("B-7: DoctorsSection 영역에 dr-tab-sidebar 클래스가 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-tab-sidebar");
   });
 
-  it("B-8: DoctorsSection에 dr-name-h3-desktop 클래스가 사용되어야 한다", () => {
-    expect(doctorsSrc).toContain("dr-name-h3-desktop");
+  it("B-8: DoctorsSection 영역에 dr-name-h3-desktop 클래스가 사용되어야 한다", () => {
+    expect(allDoctorsSrc).toContain("dr-name-h3-desktop");
   });
 
-  it("B-9: DoctorsSection에 role=\"tablist\"가 있어야 한다 (WAI-ARIA 유지)", () => {
-    expect(doctorsSrc).toContain('role="tablist"');
+  it("B-9: DoctorsSection 영역에 role=\"tablist\"가 있어야 한다 (WAI-ARIA 유지)", () => {
+    expect(allDoctorsSrc).toContain('role="tablist"');
   });
 
-  it("B-10: DoctorsSection에 role=\"tab\"이 있어야 한다 (WAI-ARIA 유지)", () => {
-    expect(doctorsSrc).toContain('role="tab"');
+  it("B-10: DoctorsSection 영역에 role=\"tab\"이 있어야 한다 (WAI-ARIA 유지)", () => {
+    expect(allDoctorsSrc).toContain('role="tab"');
   });
 
-  it("B-11: DoctorsSection에 role=\"tabpanel\"이 있어야 한다 (WAI-ARIA 유지)", () => {
-    expect(doctorsSrc).toContain('role="tabpanel"');
+  it("B-11: DoctorsSection 영역에 role=\"tabpanel\"이 있어야 한다 (WAI-ARIA 유지)", () => {
+    expect(allDoctorsSrc).toContain('role="tabpanel"');
   });
 });
 

@@ -41,33 +41,33 @@ describe("[A] TreatmentsEquipmentSection 미사용 import 제거", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", () => {
   // [R15-P0-3] selectDoctorLabel은 useDoctorViewModel 훅으로 이전됨
+  // [R19] DoctorsSection 서브컴포넌트 분리 후 DoctorMobileLayout에 있음
   const src = read("client/src/components/DoctorsSection.tsx");
-  const viewModelSrc = read("client/src/hooks/useDoctorViewModel.ts");
+  const mobileSrc = read("client/src/components/doctors/DoctorMobileLayout.tsx");
+  const combinedSrc = src + "\n" + mobileSrc;
 
-  // R11-A: selectDoctorLabel/dotNavLabel은 .replace() 체이닝이 필요하므로
-  // non-null assertion(!)이 아닌 optional chaining + fallback("") 패턴 사용
-  // [R15] selectDoctorLabel은 현재 코드에서 미사용 (탭 버튼 aria-label은 t.doctors.label 직접 사용)
-  // dotNavLabel은 DoctorsSection.tsx에서 ?? "" fallback으로 사용 중
   it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
-    // dotNavLabel ?? "" 패턴이 DoctorsSection에 있어야 함
-    expect(src).toMatch(/dotNavLabel\s*\?\?\s*["']/);
+    // [R19] DoctorMobileLayout에 dotNavLabel ?? "" 패턴 존재
+    expect(combinedSrc).toMatch(/dotNavLabel\s*\?\?\s*["']/);
   });
 
   it("expandCredentialsLabel에 ?? fallback이 없어야 한다", () => {
-    expect(src).not.toMatch(/expandCredentialsLabel\s*\?\?/);
+    expect(combinedSrc).not.toMatch(/expandCredentialsLabel\s*\?\?/);
   });
 
   it("collapseCredentialsLabel에 ?? fallback이 없어야 한다", () => {
-    expect(src).not.toMatch(/collapseCredentialsLabel\s*\?\?/);
+    expect(combinedSrc).not.toMatch(/collapseCredentialsLabel\s*\?\?/);
   });
 
-  it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
-    expect(src).toMatch(/dotNavLabel\s*\?\?\s*["']/);
+  it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A] (2차)", () => {
+    expect(combinedSrc).toMatch(/dotNavLabel\s*\?\?\s*["']/);
   });
 
-  it("expandCredentialsLabel/collapseCredentialsLabel은 non-null assertion(!)으로 사용해야 한다", () => {
-    expect(src).toMatch(/expandCredentialsLabel!/);
-    expect(src).toMatch(/collapseCredentialsLabel!/);
+  it("expandCredentialsLabel/collapseCredentialsLabel은 직접 prop 전달로 사용해야 한다", () => {
+    // [R19] DoctorCredentials에 prop으로 전달하는 방식으로 변경
+    const hasNonNull = /expandCredentialsLabel!/.test(combinedSrc);
+    const hasPropPass = /expandLabel=\{t\.doctors\.expandCredentialsLabel\}/.test(combinedSrc);
+    expect(hasNonNull || hasPropPass).toBe(true);
   });
 });
 

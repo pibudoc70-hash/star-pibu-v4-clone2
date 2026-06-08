@@ -68,18 +68,24 @@ describe("A. HeroAnimations 선언형 motion config", () => {
 // B. DoctorsSection WAI-ARIA tab 패턴
 // ─────────────────────────────────────────────────────────────────────────────
 describe("B. DoctorsSection WAI-ARIA tab/tablist/tabpanel", () => {
-  const doctorsFile = readFile("client/src/components/DoctorsSection.tsx");
+  // [R19] DoctorsSection 서브컴포넌트 분리 후 WAI-ARIA 속성이 서브컴포넌트에 뛰어짔
+  const doctorsFile = [
+    readFile("client/src/components/DoctorsSection.tsx"),
+    readFile("client/src/components/doctors/DoctorDesktopLayout.tsx"),
+    readFile("client/src/components/doctors/DoctorMobileLayout.tsx"),
+    readFile("client/src/components/doctors/DoctorTabButton.tsx"),
+  ].join("\n");
   const viewModelFile = readFile("client/src/hooks/useDoctorViewModel.ts");
 
-  it("B-1: DoctorsSection에 role=\"tablist\"가 있다", () => {
+  it("B-1: DoctorsSection 영역에 role=\"tablist\"가 있다", () => {
     expect(doctorsFile).toMatch(/role="tablist"/);
   });
 
-  it("B-2: DoctorsSection에 role=\"tab\"이 있다", () => {
+  it("B-2: DoctorsSection 영역에 role=\"tab\"이 있다", () => {
     expect(doctorsFile).toMatch(/role="tab"/);
   });
 
-  it("B-3: DoctorsSection에 role=\"tabpanel\"이 있다", () => {
+  it("B-3: DoctorsSection 영역에 role=\"tabpanel\"이 있다", () => {
     expect(doctorsFile).toMatch(/role="tabpanel"/);
   });
 
@@ -106,7 +112,7 @@ describe("B. DoctorsSection WAI-ARIA tab/tablist/tabpanel", () => {
     expect(viewModelFile).toMatch(/End/);
   });
 
-  it("B-9: DoctorsSection에서 handleTabKeyDown을 onKeyDown에 연결한다", () => {
+  it("B-9: DoctorsSection 영역에서 handleTabKeyDown을 onKeyDown에 연결한다", () => {
     expect(doctorsFile).toMatch(/onKeyDown.*handleTabKeyDown|handleTabKeyDown.*onKeyDown/);
   });
 });

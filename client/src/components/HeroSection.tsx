@@ -81,8 +81,7 @@ export default function HeroSection() {
       {/* LCP 최적화: <picture> 태그 */}
       <picture
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{ display: "block" }}
+        className="absolute inset-0 block pointer-events-none"
       >
         <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
         <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
@@ -94,14 +93,7 @@ export default function HeroSection() {
           fetchPriority="high"
           loading="eager"
           decoding="sync"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center center",
-          }}
+          className="hero-bg-img"
         />
       </picture>
 
@@ -115,72 +107,28 @@ export default function HeroSection() {
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />
 
       {/* 콘텐츠 */}
-      <div
-        className="relative z-10 text-center flex flex-col items-center w-full"
-        style={{
-          maxWidth: "min(680px, 96vw)",
-          padding: "0 clamp(1.25rem, 6vw, 2rem)",
-          paddingTop: "141px",
-          paddingBottom: "clamp(40px, 6vh, 100px)",
-          boxSizing: "border-box",
-          paddingRight: "35px",
-          marginTop: "-47px",
-        }}
-      >
+      <div className="relative z-10 text-center flex flex-col items-center w-full hero-content">
         {/* 로고 */}
-        <div
-          className="hero-fade"
-          style={{
-            animationDelay: "0ms",
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "clamp(0.25rem, 1.5vh, 1.75rem)",
-          }}
-        >
-          <div style={{ position: "relative" }}>
+        <div className="hero-fade hero-logo-wrap">
+          <div className="relative">
             <OptimizedImage
               src={HERO_LOGO_IMAGE}
               alt="스타피부과 로고"
               priority={true}
               width={220}
               height={220}
-              style={{
-                height: "clamp(120px, 30vw, 220px)",
-                width: "clamp(120px, 30vw, 220px)",
-                objectFit: "contain",
-                display: "block",
-                marginTop: "-31px",
-              }}
+              className="hero-logo-img"
             />
           </div>
         </div>
 
         {/* 병원명: 글자별 charReveal */}
-        <h1
-          className="font-bold"
-          style={{
-            color: "#FFFFFF",
-            fontSize: "clamp(1.1rem, 4.2vw, 2.8rem)",
-            marginBottom: "clamp(0.3rem, 1.2vh, 0.75rem)",
-            fontFamily: "'Noto Sans KR', sans-serif",
-            letterSpacing: "clamp(0.04em, 1.5vw, 0.12em)",
-            textShadow: "0 3px 16px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.15)",
-            lineHeight: 1.2,
-          }}
-        >
+        <h1 className="font-bold hero-title">
           <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
 
         {/* 슬로건: 단어별 wordReveal */}
-        <p
-          className="font-light"
-          style={{
-            color: "rgba(255,255,255,0.9)",
-            fontSize: "clamp(0.85rem, 3vw, 1.45rem)",
-            marginBottom: "clamp(0.2rem, 0.8vh, 0.5rem)",
-            letterSpacing: "0.02em",
-          }}
-        >
+        <p className="font-light hero-subtitle">
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
 

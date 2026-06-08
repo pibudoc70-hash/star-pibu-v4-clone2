@@ -40,8 +40,11 @@ describe("A. TreatmentsEquipmentSection - INITIAL_SHOW + aria-label", () => {
     expect(src).toContain("aria-expanded={filterOpen}");
   });
 
-  it("정렬 옵션 버튼에 aria-pressed가 있어야 한다", () => {
-    expect(src).toContain("aria-pressed={sortBy === opt.value}");
+  it("정렬 옵션 버튼에 aria-selected 또는 aria-pressed가 있어야 한다", () => {
+    // R16: 드롭다운 내 옵션 패턴으로 변경 (aria-selected이 role=option에 더 적합)
+    const hasAriaSelected = src.includes("aria-selected={sortBy === opt.value}");
+    const hasAriaPressed = src.includes("aria-pressed={sortBy === opt.value}");
+    expect(hasAriaSelected || hasAriaPressed).toBe(true);
   });
 
   it("더보기/접기 버튼에 aria-label이 있어야 한다", () => {

@@ -58,11 +58,10 @@ export default function EquipmentTreatmentCard({
       >
         {/* 이미지 */}
         <div
-          className="relative overflow-hidden"
-          style={{
-            height: item.cardBannerImage ? "auto" : "192px",
-            background: item.cardBannerImage ? "transparent" : "#f6efe0",
-          }}
+          className={[
+            "relative overflow-hidden",
+            item.cardBannerImage ? "h-auto bg-transparent" : "h-48 bg-[#f6efe0]",
+          ].join(" ")}
         >
           {item.cardBannerImage ? (
             <OptimizedImage
@@ -95,7 +94,7 @@ export default function EquipmentTreatmentCard({
           {item.badge && (
             <span
               className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow bg-[var(--card-accent)]"
-              style={item.badgeColor ? { background: item.badgeColor } : undefined}
+              style={item.badgeColor ? { "--card-accent": item.badgeColor } as React.CSSProperties : undefined}
             >
               {item.badge}
             </span>

@@ -2085,3 +2085,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round6/round7/round9 회귀 테스트 R15 변경사항 반영 (서브컴포넌트 분리 후 파일 경로 업데이트)
 - [x] TypeScript 0 errors + 전체 테스트 통과 (32 files, 730 tests)
 - [x] 최종 커밋
+
+## Round-16 시니어 검수 (2026-06-08)
+### P0 – 최우선
+- [x] [R16-P0-1] HeroSection: hero-bg-img/hero-content/hero-title/hero-subtitle CSS 클래스 추가 + 인라인 style 제거 (paddingTop:141px, marginTop:-47px 등)
+- [x] [R16-P0-2] DesignSystem: onMouseEnter/Leave DOM style 직접 변경 패턴 확인 (확인 결과: 이미 CSS class 기반 완료 — 추가 작업 불필요)
+- [x] [R16-P0-3] DoctorsSection: 인라인 style 68곣 → CSS 클래스 교체 (dr-section-bg/dr-panel-card/dr-tab-sidebar/dr-name-h3-desktop 등)
+### P1 – 중요
+- [x] [R16-P1-1] TreatmentsEquipmentSection: Escape 키 + outside click 닫기 + handleSortChange/toggleFilter + aria-haspopup
+- [x] [R16-P1-2] EquipmentTreatmentCard: 이미지 영역 인라인 style 제거 + badgeColor CSS 변수
+- [x] [R16-P1-3] ContactSection: 인라인 style 3곣 제거 (text-[var(--color-star-mint)], text-[clamp(...)], flex flex-col)
+- [x] [R16-P1-4] CategoryTabList: mt-[9px] mr-[5px] 매직넘버 → mt-2 mr-1 Tailwind 표준 토큰
+- [x] [R16-P1-5] constants.ts: CLINIC_DOCTORS/CLINIC_PROCEDURES → lib/clinic-data.ts 분리 + re-export
+### P2 – 품질 마무리
+- [x] [R16-P2-1] seoHelpers.ts: clinic-data.ts에서 직접 import
+- [ ] [R16-P2-2] useStaticTreatmentFilter defaultTab validation 추가 (다음 라운드 대상)
+- [ ] [R16-P2-3] seoHelpers canonical/og/hreflang 정송 테스트 커버리지 강화 (다음 라운드 대상)
+### 검증
+- [x] round16.regression.test.ts 작성 (51개 테스트: A~H 8개 영역)
+- [x] round5 회귀 테스트 R16 변경사항 반영 (aria-pressed → aria-selected 등)
+- [x] TypeScript 0 errors + 전체 테스트 통과 (33 files, 781 tests)
+- [x] 최종 커밋

@@ -41,8 +41,7 @@ function DoctorsSection() {
     <section
       ref={sectionRef}
       id="doctors"
-      className="py-16 sm:py-24"
-      style={{ background: "#faf7f0" }}
+      className="py-16 sm:py-24 dr-section-bg"
       role="region"
       aria-label={t.doctors.label}
     >
@@ -69,47 +68,28 @@ function DoctorsSection() {
 
         {/* ── 메인 패널: 좌측 의사 탭 + 우측 상세 ── */}
         <div
-          className="rounded-3xl overflow-hidden"
-          style={{
-            background: "white",
-            boxShadow: "0 20px 60px rgba(210,172,103,0.15), 0 4px 20px rgba(0,0,0,0.06)",
-            border: `1px solid ${GOLD_MID}55`,
-          }}
+          className="rounded-3xl overflow-hidden dr-panel-card"
+          style={{ border: `1px solid ${GOLD_MID}55` }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
           {/* 데스크톱: 좌측 탭 + 우측 상세 */}
-          <div className="hidden lg:flex" style={{ minHeight: "520px" }}>
+          <div className="hidden lg:flex" style={{ minHeight: "520px" }}
+          >
             {/* 좌측 탭 패널 */}
             <div
-              className="flex flex-col"
-              style={{
-                width: "220px",
-                flexShrink: 0,
-                background: `linear-gradient(170deg, #ede0b8 0%, #dfc99a 60%, #d4b87a 100%)`,
-                borderRight: `1px solid ${GOLD}44`,
-              }}
+              className="flex flex-col dr-tab-sidebar"
+              style={{ borderRight: `1px solid ${GOLD}44` }}
             >
               {/* 상단 브랜드 영역 */}
               <div
                 className="px-5 py-7 border-b text-center"
                 style={{ borderColor: `${GOLD}33` }}
               >
-                <div
-                  className="font-montserrat tracking-[0.3em] uppercase mb-3"
-                  style={{ color: '#af9e74', fontWeight: 300, fontSize: "0.84rem", letterSpacing: "0.3em" }}
-                >
+                <div className="font-montserrat tracking-[0.3em] uppercase mb-3 dr-brand-label">
                   {t.doctors.teamLabel}
                 </div>
-                <div
-                  style={{
-                    color: '#997d4d',
-                    fontSize: "1.26rem",
-                    fontWeight: 700,
-                    letterSpacing: "-0.01em",
-                    lineHeight: 1.3,
-                  }}
-                >
+                <div className="dr-brand-count">
                   {t.doctors.specialistCount}
                 </div>
 
@@ -145,15 +125,8 @@ function DoctorsSection() {
                     >
                       {/* 썸네일 */}
                       <div
-                        style={{
-                          width: "88px",
-                          height: "88px",
-                          borderRadius: "50%",
-                          overflow: "hidden",
-                          flexShrink: 0,
-                          border: isActive ? `2px solid ${GOLD}` : `2px solid ${GOLD}44`,
-                          transition: "border 0.3s ease",
-                        }}
+                        className="dr-thumb-desktop"
+                        style={{ border: isActive ? `2px solid ${GOLD}` : `2px solid ${GOLD}44` }}
                       >
                         <OptimizedImage
                           src={d.cardImage || d.image}
@@ -175,37 +148,22 @@ function DoctorsSection() {
                           className="flex items-baseline justify-center gap-1.5"
                         >
                           <span
-                            style={{
-                              color: isActive ? "#2c1f08" : "#5a3e16",
-                              fontWeight: isActive ? 700 : 500,
-                              fontSize: "1.2rem",
-                              transition: "color 0.3s ease",
-                              letterSpacing: "0.03em",
-                            }}
+                            className="dr-tab-name-desktop"
+                            style={{ color: isActive ? "#2c1f08" : "#5a3e16", fontWeight: isActive ? 700 : 500 }}
                           >
                             {d.name}
                           </span>
                           <span
-                            style={{
-                              color: isActive ? "#2c1f08" : "#5a3e16",
-                              fontWeight: 400,
-                              fontSize: "0.86rem",
-                              transition: "color 0.3s ease",
-                              letterSpacing: "0.05em",
-                            }}
+                            className="dr-tab-badge-desktop"
+                            style={{ color: isActive ? "#2c1f08" : "#5a3e16" }}
                           >
                             {badgeLabel}
                           </span>
                         </div>
                         {isActive && (
                           <div
-                            style={{
-                              width: "20px",
-                              height: "1.5px",
-                              background: GOLD,
-                              margin: "5px auto 0",
-                              borderRadius: "2px",
-                            }}
+                            className="dr-active-underline"
+                            style={{ background: GOLD }}
                           />
                         )}
                       </div>
@@ -226,14 +184,7 @@ function DoctorsSection() {
               className="flex flex-1"
             >
               {/* 사진 영역 */}
-              <div
-                className="relative flex-shrink-0"
-                style={{
-                  width: "420px",
-                  background: "#111",
-                  overflow: "hidden",
-                }}
-              >
+              <div className="relative flex-shrink-0 dr-photo-panel">
                 {mergedDoctors.map((d) => (
                   <OptimizedImage
                     key={d.id}
@@ -242,44 +193,18 @@ function DoctorsSection() {
                     priority
                     usePicture={false}
                     onLoad={() => handleImageLoad(d.id)}
+                    className="dr-photo-img"
                     style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
                       objectPosition: "top 0%",
                       opacity: activeDoctor === d.id ? 1 : 0,
-                      transition: "opacity 0.5s ease",
                       zIndex: activeDoctor === d.id ? 1 : 0,
                     }}
                   />
                 ))}
                 {/* 우측 그라디언트 페이드 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    width: "80px",
-                    height: "100%",
-                    background: "linear-gradient(to right, transparent, white)",
-                    zIndex: 2,
-                  }}
-                />
+                <div className="dr-photo-fade-right" />
                 {/* 하단 그라디언트 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "120px",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)",
-                    zIndex: 2,
-                  }}
-                />
+                <div className="dr-photo-fade-bottom" />
               </div>
 
               {/* 텍스트 상세 */}
@@ -288,17 +213,7 @@ function DoctorsSection() {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-baseline gap-3 flex-wrap" style={{marginTop: '23px'}}>
-                      <h3
-                        style={{
-                          color: "#1a1a1a",
-                          fontSize: '34px',
-                          fontWeight: 800,
-                          lineHeight: 1.15,
-                          letterSpacing: "-0.02em",
-                        }}
-                      >
-                        {doctor.name}
-                      </h3>
+                      <h3 className="dr-name-h3-desktop">{doctor.name}</h3>
                       <span
                         className="font-montserrat"
                         style={{ color: GOLD, fontSize: '18px', fontWeight: 100, letterSpacing: "0.05em" }}
@@ -307,32 +222,16 @@ function DoctorsSection() {
                       </span>
                     </div>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#C0392B",
-                      color: "white",
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      width: '55px',
-                      height: '55px',
-                      borderRadius: "6px",
-                      lineHeight: 1.3,
-                      textAlign: "center",
-                      flexShrink: 0,
-                    }}
-                  >
+                  <div className="dr-derm-badge dr-derm-badge-desktop">
                     {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>)}
                   </div>
                 </div>
 
                 {/* 골드 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
+                <div className="dr-gold-divider" style={{ background: `linear-gradient(to right, ${GOLD}33, transparent)` }} />
 
                 {/* 소개 */}
-                <div className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8, paddingBottom: '26px', fontSize: '15px' }}>
+                <div className="text-sm leading-relaxed dr-intro-desktop">
                   {doctor.intro && (Array.isArray(doctor.intro) ? (
                     doctor.intro.map((para, idx) => (
                       <p key={idx} style={{ margin: '0 0 1em 0', whiteSpace: 'normal', wordBreak: 'break-word' }}>{para}</p>
@@ -348,7 +247,7 @@ function DoctorsSection() {
                 </div>
 
                 {/* 전문 시술 태그 */}
-                <div style={{ marginBottom: "32px" }}>
+                <div className="mb-8">
                   <div className="flex items-center gap-2" style={{ marginBottom: "16px" }}>
                     <Zap size={18} style={{ color: GOLD }} />
                     <p
@@ -362,17 +261,8 @@ function DoctorsSection() {
                     {doctor.specialties.map((s) => (
                       <span
                         key={s}
-                        className="px-3 py-1.5 text-xs font-semibold"
-                        style={{
-                          background: GOLD_LIGHT,
-                          color: '#737373',
-                          fontWeight: 500,
-                          border: '1px solid #ffffff',
-                          borderRadius: "20px",
-                          paddingTop: '8px',
-                          height: '35px',
-                          textAlign: 'center',
-                        }}
+                        className="px-3 py-1.5 text-xs dr-specialty-chip-desktop"
+                        style={{ background: GOLD_LIGHT, color: '#737373' }}
                       >
                         {s}
                       </span>
@@ -381,7 +271,7 @@ function DoctorsSection() {
                 </div>
 
                 {/* 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}22, transparent)`, margin: "0 0 32px 0" }} />
+                <div className="dr-gold-divider" style={{ background: `linear-gradient(to right, ${GOLD}22, transparent)`, marginBottom: '32px' }} />
 
                 {/* 학력·경력·자격 - 항상 펼침 */}
                 <div>
@@ -400,7 +290,7 @@ function DoctorsSection() {
                       return (
                         <div
                           key={c.text}
-                          className="flex items-start gap-2.5 py-2"
+                          className="dr-credentials-item-desktop"
                           style={{ borderBottom: `1px solid ${GOLD}15` }}
                         >
                           <Icon size={14} style={{ color: GOLD, flexShrink: 0, marginTop: "3px" }} />
@@ -447,15 +337,8 @@ function DoctorsSection() {
                   >
                     {/* 썸네일 */}
                     <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        border: isActive ? `2px solid ${GOLD}` : "2px solid #e5e7eb",
-                        marginBottom: "6px",
-                        flexShrink: 0,
-                      }}
+                      className="dr-thumb-mobile"
+                      style={{ border: isActive ? `2px solid ${GOLD}` : "2px solid #e5e7eb" }}
                     >
                       <OptimizedImage
                         src={d.cardImage || d.image}
@@ -473,22 +356,14 @@ function DoctorsSection() {
                     </div>
 
                     <div
-                      style={{
-                        color: isActive ? "#1a1a1a" : "#9CA3AF",
-                        fontWeight: isActive ? 700 : 400,
-                        fontSize: "0.78rem",
-                        textAlign: "center",
-                      }}
+                      className="text-center text-[0.78rem]"
+                      style={{ color: isActive ? "#1a1a1a" : "#9CA3AF", fontWeight: isActive ? 700 : 400 }}
                     >
                       {d.name}
                     </div>
                     <div
-                      style={{
-                        color: isActive ? GOLD : "#C4C4C4",
-                        fontSize: "0.62rem",
-                        marginTop: "1px",
-                        textAlign: "center",
-                      }}
+                      className="text-center text-[0.62rem] mt-[1px]"
+                      style={{ color: isActive ? GOLD : "#C4C4C4" }}
                     >
                       {badgeLabel}
                     </div>
@@ -505,14 +380,7 @@ function DoctorsSection() {
               aria-labelledby={`doctor-mob-tab-${activeDoctor}`}
             >
               {/* 사진 */}
-              <div
-                style={{
-                  position: "relative",
-                  height: "clamp(320px, 70vw, 420px)",
-                  background: "#111",
-                  overflow: "hidden",
-                }}
-              >
+              <div className="dr-mob-photo-wrap">
                 {mergedDoctors.map((d) => (
                   <OptimizedImage
                     key={d.id}
@@ -521,32 +389,16 @@ function DoctorsSection() {
                     priority
                     usePicture={false}
                     onLoad={() => handleImageLoad(d.id)}
+                    className="dr-photo-img"
                     style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
                       objectPosition: d.mobileObjectPosition || "center 15%",
                       opacity: activeDoctor === d.id ? 1 : 0,
-                      transition: "opacity 0.5s ease",
                       zIndex: activeDoctor === d.id ? 1 : 0,
                     }}
                   />
                 ))}
                 {/* 하단 그라디언트 오버레이 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "100px",
-                    background: "linear-gradient(to top, white 0%, transparent 100%)",
-                    zIndex: 2,
-                  }}
-                />
+                <div className="dr-mob-photo-fade" />
               </div>
 
               {/* 텍스트 */}
@@ -554,39 +406,21 @@ function DoctorsSection() {
                 {/* 이름 헤더 */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 style={{ color: "#1a1a1a", fontSize: "1.3rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
-                      {doctor.name}
-                    </h3>
+                    <h3 className="dr-mob-name-h3">{doctor.name}</h3>
                     <p className="font-montserrat mt-0.5" style={{ color: GOLD, fontSize: "0.75rem", fontWeight: 400 }}>
                       {doctor.nameEn}
                     </p>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#C0392B",
-                      color: "white",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      width: "44px",
-                      height: "44px",
-                      borderRadius: "6px",
-                      lineHeight: 1.3,
-                      textAlign: "center",
-                      flexShrink: 0,
-                    }}
-                  >
+                  <div className="dr-derm-badge dr-derm-badge-mobile">
                     {t.doctors.dermBadge.split('\n').map((line, i) => i === 0 ? <span key={i}>{line}<br /></span> : <span key={i}>{line}</span>)}
                   </div>
                 </div>
 
                 {/* 골드 구분선 */}
-                <div style={{ height: "1px", background: `linear-gradient(to right, ${GOLD}33, transparent)`, margin: "0 0 20px 0" }} />
+                <div className="dr-gold-divider" style={{ background: `linear-gradient(to right, ${GOLD}33, transparent)` }} />
 
                 {/* 소개 */}
-                <div className="text-sm leading-relaxed" style={{ color: "#555", lineHeight: 1.8 }}>
+                <div className="text-sm leading-relaxed dr-intro-mobile">
                   {Array.isArray(doctor.intro) ? (
                     doctor.intro.map((para, idx) => (
                       <p key={idx} style={{ margin: '0 0 1em 0', whiteSpace: 'normal', wordBreak: 'break-word' }}>{para}</p>
@@ -605,13 +439,8 @@ function DoctorsSection() {
                     {doctor.specialties.map((s) => (
                       <span
                         key={s}
-                        className="px-3 py-1.5 text-xs font-semibold"
-                        style={{
-                          background: GOLD_LIGHT,
-                          color: "#8B6914",
-                          border: `1px solid ${GOLD}44`,
-                          borderRadius: "20px",
-                        }}
+                        className="px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile"
+                        style={{ background: GOLD_LIGHT, color: "#8B6914", border: `1px solid ${GOLD}44` }}
                       >
                         {s}
                       </span>
@@ -621,11 +450,8 @@ function DoctorsSection() {
 
                 {/* 학력·경력·자격 */}
                 <div
-                  style={{
-                    border: `1px solid ${GOLD}33`,
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                  }}
+                  className="dr-credentials-accordion"
+                  style={{ border: `1px solid ${GOLD}33` }}
                 >
                   <button type="button"
                     onClick={toggleCredentials}
@@ -659,8 +485,7 @@ function DoctorsSection() {
                         return (
                           <div
                             key={c.text}
-                            className="flex items-start gap-2 py-1.5 px-2 rounded-lg"
-                            style={{ background: "#FAFAFA" }}
+                            className="flex items-start gap-2 py-1.5 px-2 rounded-lg dr-credentials-item-mobile"
                           >
                             <Icon size={13} style={{ color: GOLD, flexShrink: 0, marginTop: "2px" }} />
                             <span className="text-xs leading-relaxed" style={{ color: "#4B5563" }}>
@@ -675,7 +500,7 @@ function DoctorsSection() {
 
                 {/* 스와이프 힌트 */}
                 <div className="flex flex-col items-center gap-2 pt-2">
-                  <p className="text-xs" style={{ color: "#9CA3AF" }}>
+                  <p className="text-xs dr-dot-hint">
                     {t.doctors.swipeHint}
                   </p>
                   <div className="flex justify-center gap-2">
@@ -685,14 +510,11 @@ function DoctorsSection() {
                         onClick={() => handleDoctorSelect(d.id)}
                         aria-label={(t.doctors.dotNavLabel ?? "").replace("{name}", doctors[d.id]?.name ?? String(d.id + 1))}
                         aria-current={activeDoctor === d.id ? "true" : undefined}
+                        className="border-none cursor-pointer rounded-[3px] transition-all duration-300"
                         style={{
                           width: activeDoctor === d.id ? "24px" : "6px",
                           height: "6px",
-                          borderRadius: "3px",
                           background: activeDoctor === d.id ? GOLD : "#D1D5DB",
-                          transition: "all 0.3s ease",
-                          border: "none",
-                          cursor: "pointer",
                         }}
                       />
                     ))}

@@ -1,6 +1,7 @@
 // SEO 상수 및 JSON-LD 헬퍼 함수 — SeoHead.tsx에서 분리 (STRUCT-SEO-1)
 // 기존 import 경로 유지: import { ... } from '@/components/SeoHead' (re-export됨)
-import { CLINIC_INFO, CLINIC_STATS, CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/constants";
+import { CLINIC_INFO, CLINIC_STATS } from "@/lib/constants";
+import { CLINIC_DOCTORS, CLINIC_PROCEDURES } from "@/lib/clinic-data";
 
 export type JsonLdSchema = Record<string, unknown>;
 

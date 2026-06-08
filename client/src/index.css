@@ -671,6 +671,224 @@
     animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
+  /* [R16-P0-1] Hero layout utility classes — replaces inline style magic numbers */
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .hero-content {
+    max-width: min(680px, 96vw);
+    padding-top: 141px;
+    padding-bottom: clamp(40px, 6vh, 100px);
+    padding-right: 35px;
+    padding-left: clamp(1.25rem, 6vw, 2rem);
+    box-sizing: border-box;
+    margin-top: -47px;
+  }
+  .hero-logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: clamp(0.25rem, 1.5vh, 1.75rem);
+  }
+  .hero-logo-img {
+    height: clamp(120px, 30vw, 220px);
+    width: clamp(120px, 30vw, 220px);
+    object-fit: contain;
+    display: block;
+    margin-top: -31px;
+  }
+  .hero-title {
+    color: #FFFFFF;
+    font-size: clamp(1.1rem, 4.2vw, 2.8rem);
+    margin-bottom: clamp(0.3rem, 1.2vh, 0.75rem);
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: clamp(0.04em, 1.5vw, 0.12em);
+    text-shadow: 0 3px 16px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.15);
+    line-height: 1.2;
+  }
+  .hero-subtitle {
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(0.85rem, 3vw, 1.45rem);
+    margin-bottom: clamp(0.2rem, 0.8vh, 0.5rem);
+    letter-spacing: 0.02em;
+  }
+
+  /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
+  .dr-section-bg { background: #faf7f0; }
+  .dr-panel-card {
+    background: white;
+    box-shadow: 0 20px 60px rgba(210,172,103,0.15), 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .dr-tab-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: linear-gradient(170deg, #ede0b8 0%, #dfc99a 60%, #d4b87a 100%);
+  }
+  .dr-brand-label {
+    color: #af9e74;
+    font-weight: 300;
+    font-size: 0.84rem;
+    letter-spacing: 0.3em;
+  }
+  .dr-brand-count {
+    color: #997d4d;
+    font-size: 1.26rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .dr-thumb-desktop {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border 0.3s ease;
+  }
+  .dr-thumb-mobile {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+  .dr-tab-name-desktop {
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    letter-spacing: 0.03em;
+  }
+  .dr-tab-badge-desktop {
+    font-weight: 400;
+    font-size: 0.86rem;
+    transition: color 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+  .dr-active-underline {
+    width: 20px;
+    height: 1.5px;
+    margin: 5px auto 0;
+    border-radius: 2px;
+  }
+  .dr-photo-panel {
+    width: 420px;
+    background: #111;
+    overflow: hidden;
+  }
+  .dr-photo-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+  }
+  .dr-photo-fade-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, white);
+    z-index: 2;
+  }
+  .dr-photo-fade-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    z-index: 2;
+  }
+  .dr-name-h3-desktop {
+    color: #1a1a1a;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .dr-derm-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #C0392B;
+    color: white;
+    font-weight: 700;
+    border-radius: 6px;
+    line-height: 1.3;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .dr-derm-badge-desktop { font-size: 15px; width: 55px; height: 55px; }
+  .dr-derm-badge-mobile  { font-size: 10px; width: 44px; height: 44px; }
+  .dr-gold-divider {
+    height: 1px;
+    margin: 0 0 20px 0;
+  }
+  .dr-intro-desktop {
+    color: #555;
+    line-height: 1.8;
+    padding-bottom: 26px;
+    font-size: 15px;
+  }
+  .dr-intro-mobile {
+    color: #555;
+    line-height: 1.8;
+  }
+  .dr-specialty-chip-desktop {
+    font-weight: 500;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    padding-top: 8px;
+    height: 35px;
+    text-align: center;
+  }
+  .dr-specialty-chip-mobile {
+    border-radius: 20px;
+  }
+  .dr-credentials-item-desktop {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .dr-mob-photo-wrap {
+    position: relative;
+    height: clamp(320px, 70vw, 420px);
+    background: #111;
+    overflow: hidden;
+  }
+  .dr-mob-photo-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, white 0%, transparent 100%);
+    z-index: 2;
+  }
+  .dr-mob-name-h3 {
+    color: #1a1a1a;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .dr-credentials-accordion {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dr-credentials-item-mobile {
+    background: #FAFAFA;
+  }
+  .dr-dot-hint { color: #9CA3AF; }
+
   /* Soft Glow animation for hero section ceiling light */
   @keyframes softGlow {
     0%   { opacity: 0.10; }

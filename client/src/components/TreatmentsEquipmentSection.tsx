@@ -10,12 +10,18 @@
  * 구조 개선 (Round-10):
  *   - filter/sort/scroll 로직 → useStaticTreatmentFilter hook으로 추출
  *   - 모바일/데스크탑 탭 중복 렌더 → CategoryTabList 컴포넌트로 통합
+ *
+ * [R16-P1-1] 개선:
+ *   - setSortBy/setFilterOpen deprecated setter → handleSortChange/toggleFilter 사용
+ *   - filter dropdown: Escape 키 닫기 + outside click 닫기 + aria-haspopup 추가
+ *   - 더보기 버튼 인라인 style → Tailwind conditional class
+ *   - 섹션 헤더 h2 style → Tailwind arbitrary value
+ *   - 카드 그리드 animation style → animate-card-fade class
  */
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { useRef } from "react";
 
 // ── 분리된 모듈 import ────────────────────────────────────────────────────────
 import { CATEGORIES, CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
@@ -36,6 +42,8 @@ export default function TreatmentsEquipmentSection() {
 
   const sectionRef = useSectionReveal(60);
   const sectionTopRef = useRef<HTMLDivElement>(null);
+  // [R16-P1-1] filter dropdown outside click 감지용
+  const filterRef = useRef<HTMLDivElement>(null);
 
   const {
     activeId,
@@ -44,9 +52,26 @@ export default function TreatmentsEquipmentSection() {
     filteredTreatments,
     tabContainerRef,
     handleTabChange,
-    setSortBy,
+    handleSortChange,
+    toggleFilter,
     setFilterOpen,
   } = useStaticTreatmentFilter();
+
+  // [R16-P1-1] Escape 키 + outside click으로 dropdown 닫기
+  const handleFilterKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape") setFilterOpen(false);
+  }, [setFilterOpen]);
+
+  useEffect(() => {
+    if (!filterOpen) return;
+    const handleOutside = (e: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
+        setFilterOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, [filterOpen, setFilterOpen]);
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">
@@ -58,7 +83,7 @@ export default function TreatmentsEquipmentSection() {
           <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
             TREATMENTS & EQUIPMENT
           </p>
-          <h2 className="mb-4 text-gray-800 font-extrabold" style={{ fontSize: "clamp(1.4rem, 5vw, 2.6rem)" }}>
+          <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
             {tr.title}
           </h2>
           <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[var(--color-gold-primary)] pt-2">
@@ -69,11 +94,13 @@ export default function TreatmentsEquipmentSection() {
         {/* 카테고리 탭 + 필터/정렬 */}
         <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
           <div className="flex justify-end gap-2 mb-4">
-            <div className="relative">
+            {/* [R16-P1-1] aria-haspopup + Escape + outside click */}
+            <div className="relative" ref={filterRef} onKeyDown={handleFilterKeyDown}>
               <button
                 type="button"
-                onClick={() => setFilterOpen(!filterOpen)}
+                onClick={toggleFilter}
                 aria-expanded={filterOpen}
+                aria-haspopup="listbox"
                 aria-label={tr.sortLabel}
                 className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-500 border border-gray-200"
               >
@@ -83,7 +110,11 @@ export default function TreatmentsEquipmentSection() {
                 {tr.sortLabel}
               </button>
               {filterOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200">
+                <div
+                  role="listbox"
+                  aria-label={tr.sortLabel}
+                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200"
+                >
                   {([
                     { value: "popular", label: tr.sortPopular },
                     { value: "name",    label: tr.sortName },
@@ -92,8 +123,9 @@ export default function TreatmentsEquipmentSection() {
                     <button
                       type="button"
                       key={opt.value}
-                      onClick={() => { setSortBy(opt.value); setFilterOpen(false); }}
-                      aria-pressed={sortBy === opt.value}
+                      role="option"
+                      aria-selected={sortBy === opt.value}
+                      onClick={() => { handleSortChange(opt.value); setFilterOpen(false); }}
                       className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-700 hover:bg-gray-50"}`}
                     >
                       {opt.label}
@@ -118,8 +150,7 @@ export default function TreatmentsEquipmentSection() {
         {CATEGORIES.find((c) => c.id === activeId) && (
             <div
               key={`content-${activeId}`}
-              className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)]"
-              style={{ animation: "cardFadeIn 0.4s ease both" }}
+              className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade"
             >
               <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
                 <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -155,12 +186,12 @@ export default function TreatmentsEquipmentSection() {
                         setShowAll(!showAll);
                       }}
                       aria-label={showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
-                      className="flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95"
-                      style={{
-                        background: showAll ? "white" : "var(--color-gold-primary)",
-                        color: showAll ? "var(--color-star-text-mid)" : "white",
-                        border: showAll ? "1.5px solid var(--color-gold-light)" : "none",
-                      }}
+                      className={[
+                        "flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
+                        showAll
+                          ? "bg-white text-[var(--color-star-text-mid)] border border-[1.5px] border-[var(--color-gold-light)]"
+                          : "bg-[var(--color-gold-primary)] text-white border-none",
+                      ].join(" ")}
                     >
                       {showAll ? (
                         <><ChevronUp size={16} />{tr.collapseBtn}</>

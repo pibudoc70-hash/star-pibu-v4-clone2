@@ -117,16 +117,10 @@ export default function ContactSection() {
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p
-            className="font-montserrat font-semibold text-sm tracking-widest mb-3"
-            style={{ color: "#81C7C9" }}
-          >
+          <p className="font-montserrat font-semibold text-sm tracking-widest mb-3 text-[var(--color-star-mint)]">
             {locationInfo}
           </p>
-          <h2
-            className="mb-4"
-            style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
-          >
+          <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
             {sectionTitle}
           </h2>
           <div className="star-divider mx-auto" />
@@ -138,8 +132,8 @@ export default function ContactSection() {
           {/* Map - 모바일에서 더 크게 */}
           <div
             ref={mapContainerRef}
-            className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg"
-            style={{ display: "flex", flexDirection: "column", height: mapHeight, minHeight: "300px" }}
+            className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg flex flex-col min-h-[300px]"
+            style={{ height: mapHeight }}
             aria-label={t.access.mapAriaLabel}
             data-popup-visible={markerPopupVisible}
           >

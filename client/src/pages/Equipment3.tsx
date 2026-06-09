@@ -262,12 +262,12 @@ export default function Equipment3() {
             {!isLoading && (
               <>
                 {/* 카테고리 탭 */}
-                <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
+                <div className="rounded-2xl px-4 py-6 mb-4 bg-white">
                   {/* 모바일: 2열 그리드 */}
                   <div
                     role="tablist"
                     aria-label="시술 카테고리"
-                    className="grid grid-cols-2 gap-2 sm:hidden mb-4"
+                    className="grid grid-cols-2 gap-3 sm:hidden mb-4"
                   >
                     {tabs.map((tab) => (
                       <CategoryTabButton

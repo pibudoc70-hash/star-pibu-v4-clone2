@@ -23,7 +23,7 @@ type FormData = {
   time: string; timeEn: string; timeJa: string; timeZh: string;
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
-  youtubeUrl: string; imageUrl: string; isActive: "0" | "1";
+  youtubeUrl: string; imageUrl: string; isActive: "0" | "1"; isBest: "0" | "1";
 };
 
 export default function AdminEquipment3Edit() {
@@ -67,6 +67,7 @@ export default function AdminEquipment3Edit() {
       sortOrder: String(item.sortOrder ?? 0),
       youtubeUrl: item.youtubeUrl ?? "", imageUrl: item.imageUrl ?? "",
       isActive: (item.isActive ?? "1") as "0" | "1",
+      isBest: (item.isBest ?? "0") as "0" | "1",
     });
   }, [item]);
 
@@ -120,6 +121,7 @@ export default function AdminEquipment3Edit() {
         youtubeUrl: form.youtubeUrl || undefined,
         imageUrl: form.imageUrl || undefined,
         isActive: form.isActive,
+        isBest: form.isBest,
       });
       alert("✅ 시술 정보가 수정되었습니다!");
       navigate("/admin/equipment3");
@@ -236,6 +238,17 @@ export default function AdminEquipment3Edit() {
                   <option value="1">활성 (공개)</option>
                   <option value="0">비활성 (숨김)</option>
                 </select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isBest"
+                  checked={form.isBest === "1"}
+                  onChange={(e) => setForm((prev) => prev ? { ...prev, isBest: e.target.checked ? "1" : "0" } : prev)}
+                  className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+                />
+                <Label htmlFor="isBest" className="font-semibold cursor-pointer">Best 시술에 추가</Label>
               </div>
             </CardContent>
           </Card>

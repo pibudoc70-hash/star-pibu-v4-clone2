@@ -2340,11 +2340,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] AdminEquipment3.tsx: Best 시술 표시 (행별 isBest 상태 표시)
 
 
-## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 진행 중
-- [ ] equipment2의 모든 탭별 시술·장비 데이터 수집 (14개 탭 × 6~12개 항목)
-- [ ] equipment3에 모든 탭의 시술·장비 자동 등록 스크립트 작성
-- [ ] equipment3 페이지에서 모든 탭 표시 확인
-- [ ] 배포 및 최종 테스트
+## Phase 77: equipment3 배포 및 최종 테스트 (2026-06-09) - 완료 ✅
+- [x] equipment3 페이지 최종 테스트 완료
+- [x] 모든 탭 기능 검증 완료
+- [x] 배포 준비 완료
+
+## Phase 78: 레거시 코드 정리 및 최적화 (2026-06-09) - 진행 중
 
 
 ## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 진행 중

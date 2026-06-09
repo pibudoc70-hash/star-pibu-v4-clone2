@@ -282,7 +282,7 @@ export default function Equipment3() {
             {!isLoading && (
               <>
                 {/* 카테고리 탭 */}
-                <div className="rounded-2xl px-4 py-6 mb-4 bg-white">
+                <div className="rounded-2xl px-4 py-6 mb-4 bg-white overflow-hidden">
                   {/* 모바일: 2열 그리드 */}
                   <div
                     role="tablist"
@@ -304,12 +304,12 @@ export default function Equipment3() {
                       />
                     ))}
                   </div>
-                  {/* 데스크탑: flex-wrap */}
+                  {/* 데스크탑: 가로 스크롤 */}
                   <div
                     ref={tabContainerRef}
                     role="tablist"
                     aria-label="시술 카테고리"
-                    className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4"
+                    className="hidden sm:flex sm:flex-nowrap gap-2 mt-2 mr-1 -mb-1 ml-4 overflow-x-auto pb-2 scrollbar-hide"
                   >
                     {tabs.map((tab) => (
                       <CategoryTabButton

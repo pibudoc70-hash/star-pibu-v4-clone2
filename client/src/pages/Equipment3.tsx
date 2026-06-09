@@ -2,52 +2,150 @@
  * Equipment3 - 시술·장비 소개 목록 페이지 (DB 연동)
  * URL: /equipment3 | /en/equipment3 | /ja/equipment3 | /zh/equipment3
  *
- * 관리자가 등록한 시술을 카드 형태로 표시.
- * 카드 클릭 시 /equipment3/:slug 개별 상세 페이지로 이동.
+ * equipment2와 동일한 탭+카드+모달 구조.
+ * - category 필드 기반 동적 탭 생성
+ * - TreatmentCard 컴포넌트(모달 포함) 재사용
+ * - CategoryTabList + CategoryTabButton 재사용
  */
-import { useLocation } from "wouter";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
-import OptimizedImage from "@/components/OptimizedImage";
-import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
-import { Loader } from "lucide-react";
+import ContactSection from "@/components/ContactSection";
+import { getLocalizedUrl } from "@/lib/localizedPath";
+import { Loader, ChevronDown, ChevronUp } from "lucide-react";
+import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
+import CategoryTabButton from "@/components/treatments/CategoryTabButton";
+import TreatmentCard from "@/components/treatments/TreatmentCard";
+import type { Treatment } from "@/components/treatments/TreatmentCard";
+import { Dna } from "lucide-react";
 
+// ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
+const INITIAL_SHOW = 6;
+
+// ── equipment3 item → TreatmentCard Treatment 타입 변환 헬퍼 ─────────────────
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toTreatment(item: Record<string, any>): Treatment {
+  return {
+    id: item.id,
+    categoryId: item.category ?? "stem_cell",
+    name: item.name ?? "",
+    nameEn: item.nameEn ?? "",
+    nameJa: item.nameJa ?? null,
+    nameZh: item.nameZh ?? null,
+    desc: item.desc ?? "",
+    descEn: item.descEn ?? null,
+    descJa: item.descJa ?? null,
+    descZh: item.descZh ?? null,
+    detail: item.detail ?? null,
+    detailEn: item.detailEn ?? null,
+    detailJa: item.detailJa ?? null,
+    detailZh: item.detailZh ?? null,
+    effect: item.effect ?? null,
+    effectEn: item.effectEn ?? null,
+    effectJa: item.effectJa ?? null,
+    effectZh: item.effectZh ?? null,
+    caution: item.caution ?? null,
+    cautionEn: item.cautionEn ?? null,
+    cautionJa: item.cautionJa ?? null,
+    cautionZh: item.cautionZh ?? null,
+    sessions: item.sessions ?? null,
+    sessionsEn: item.sessionsEn ?? null,
+    sessionsJa: item.sessionsJa ?? null,
+    sessionsZh: item.sessionsZh ?? null,
+    time: item.time ?? "",
+    timeEn: item.timeEn ?? null,
+    timeJa: item.timeJa ?? null,
+    timeZh: item.timeZh ?? null,
+    recovery: item.recovery ?? "",
+    recoveryEn: item.recoveryEn ?? null,
+    recoveryJa: item.recoveryJa ?? null,
+    recoveryZh: item.recoveryZh ?? null,
+    badge: item.badge ?? null,
+    badgeColor: item.badgeColor ?? null,
+    image: item.imageUrl ?? null,
+    images: item.images ?? null,
+    youtubeUrl: item.youtubeUrl ?? null,
+    modalImage: item.modalImage ?? null,
+    isActive: item.isActive ?? "1",
+    sortOrder: item.sortOrder ?? 0,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 export default function Equipment3() {
-  const [, setLocation] = useLocation();
   const { lang } = useLang();
   const { getText } = useLocalizedText();
 
-  const { data: items = [], isLoading } = trpc.equipment3.list.useQuery();
+  const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
 
-  const langPrefix = getLangPrefix(lang);
+  // ── 탭: category 필드 기반 동적 생성 ─────────────────────────────────────
+  const tabs = useMemo(() => {
+    const seen = new Set<string>();
+    const result: Array<{ id: string; label: string; labelEn: string; labelJa: string; labelZh: string }> = [];
+    for (const item of rawItems) {
+      const catId = item.category ?? "stem_cell";
+      if (!seen.has(catId)) {
+        seen.add(catId);
+        result.push({
+          id: catId,
+          label: item.category ?? "줄기세포 치료",
+          labelEn: item.categoryEn ?? "STEM CELL",
+          labelJa: item.categoryJa ?? "幹細胞治療",
+          labelZh: item.categoryZh ?? "干细胞治疗",
+        });
+      }
+    }
+    return result;
+  }, [rawItems]);
 
-  // ── 다국어 UI 레이블 ────────────────────────────────────────────────────────
-  const LABELS = {
-    pageTitle:   getText("시술·장비 소개",      "Treatments & Equipment",     "施術・機器のご案内",    "项目与设备介绍"),
-    pageDesc:    getText(
-      "부산 서면 스타피부과의 다양한 시술과 장비를 소개합니다.",
-      "Explore our wide range of treatments and equipment at Star Dermatology, Seomyeon, Busan.",
-      "釜山西面スター皮膚科の施術・機器をご紹介します。",
-      "介绍釜山西面STAR皮肤科的各种项目与设备。"
-    ),
-    loading:     getText("로딩 중...",           "Loading...",                 "読み込み中...",         "加载中..."),
-    empty:       getText(
-      "등록된 시술이 없습니다.",
-      "No treatments available yet.",
-      "施術情報がありません。",
-      "暂无项目信息。"
-    ),
-    detail:      getText("자세히 보기",          "Learn More",                 "詳しく見る",            "了解详情"),
-    book:        getText("예약하기",             "Book Now",                   "予約する",              "立即预约"),
-    time:        getText("시술 시간",            "Duration",                   "施術時間",              "施术时间"),
-    recovery:    getText("회복 기간",            "Recovery",                   "回復期間",              "恢复期"),
-    sessions:    getText("권장 횟수",            "Sessions",                   "推奨回数",              "建议次数"),
-  } as const;
+  const [activeId, setActiveId] = useState<string>("");
+  const [showAll, setShowAll] = useState(false);
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+
+  // 탭 목록이 로드되면 첫 번째 탭 자동 선택
+  useEffect(() => {
+    if (tabs.length > 0 && !activeId) {
+      setActiveId(tabs[0].id);
+    }
+  }, [tabs, activeId]);
+
+  const handleTabChange = useCallback((id: string) => {
+    setActiveId(id);
+    setShowAll(false);
+  }, []);
+
+  // 활성 탭 자동 스크롤
+  useEffect(() => {
+    const container = tabContainerRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>('[data-active="true"]');
+    if (!activeBtn) return;
+    const containerWidth = container.offsetWidth;
+    const btnLeft = activeBtn.offsetLeft;
+    const btnWidth = activeBtn.offsetWidth;
+    container.scrollTo({ left: btnLeft - containerWidth / 2 + btnWidth / 2, behavior: "smooth" });
+  }, [activeId]);
+
+  // 현재 탭 필터링
+  const filteredItems = useMemo(() => {
+    if (!activeId) return rawItems;
+    return rawItems.filter((item) => (item.category ?? "stem_cell") === activeId);
+  }, [rawItems, activeId]);
+
+  const displayedItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL_SHOW);
+
+  // ── 탭 레이블 헬퍼 ──────────────────────────────────────────────────────────
+  const getTabLabel = (tab: typeof tabs[number]) => {
+    if (lang === "en") return tab.labelEn;
+    if (lang === "ja") return tab.labelJa;
+    if (lang === "zh") return tab.labelZh;
+    return tab.label;
+  };
 
   // ── SEO ─────────────────────────────────────────────────────────────────────
   const pageUrl = getLocalizedUrl(lang, "/equipment3");
@@ -64,13 +162,28 @@ export default function Equipment3() {
     "介绍釜山西面STAR皮肤科的各种项目与设备。由皮肤科专科医生亲自操作。"
   );
 
+  const pageTitle = getText(
+    "시술·장비 소개",
+    "Treatments & Equipment",
+    "施術・機器のご案内",
+    "项目与设备介绍"
+  );
+  const pageSubtitle = getText(
+    "부산 서면 스타피부과의 다양한 시술과 장비를 소개합니다.",
+    "Explore our wide range of treatments and equipment at Star Dermatology, Seomyeon, Busan.",
+    "釜山西面スター皮膚科の施術・機器をご紹介します。",
+    "介绍釜山西面STAR皮肤科的各种项目与设备。"
+  );
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
       <SeoHead
         title={seoTitle}
         description={seoDesc}
         canonical={pageUrl}
         ogUrl={pageUrl}
+        ogImage={OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko}
+        ogSiteName={SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs(
           "/equipment3",
@@ -83,109 +196,136 @@ export default function Equipment3() {
 
       <Header />
 
-      {/* 히어로 헤더 */}
-      <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{LABELS.pageTitle}</h1>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto">{LABELS.pageDesc}</p>
-        </div>
-      </div>
+      <main className="pt-20">
+        <h1 className="sr-only">{pageTitle}</h1>
 
-      {/* 목록 */}
-      <main id="main-content" className="container mx-auto px-4 py-16">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-24">
-            <Loader className="animate-spin mr-3" size={32} />
-            <span className="text-gray-500">{LABELS.loading}</span>
-          </div>
-        ) : items.length === 0 ? (
-          <div className="text-center py-24 text-gray-500">
-            <p className="text-lg">{LABELS.empty}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {items.map((item) => {
-              const localName = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
-              const localDesc = getText(item.desc, item.descEn, item.descJa, item.descZh);
-              const localCategory = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
-              const detailPath = `${langPrefix}/equipment3/${item.slug}`;
+        <section className="py-16 sm:py-24 bg-white" aria-label={pageTitle}>
+          <div className="container">
+            {/* 섹션 헤더 */}
+            <div className="text-center mb-8 sm:mb-12">
+              <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
+                TREATMENTS & EQUIPMENT
+              </p>
+              <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
+                {pageTitle}
+              </h2>
+              <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[var(--color-gold-primary)] pt-2">
+                <span className="text-lg">{pageSubtitle}</span>
+              </p>
+            </div>
 
-              return (
-                <article
-                  key={item.id}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100"
-                  onClick={() => setLocation(detailPath)}
-                >
-                  {/* 이미지 */}
-                  <div className="relative h-56 bg-gray-100 overflow-hidden">
-                    {item.imageUrl ? (
-                      <OptimizedImage
-                        src={item.imageUrl}
-                        alt={localName}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        height={224}
+            {/* 로딩 */}
+            {isLoading && (
+              <div className="flex items-center justify-center py-24">
+                <Loader className="animate-spin mr-3" size={32} />
+              </div>
+            )}
+
+            {/* 탭 + 카드 */}
+            {!isLoading && (
+              <>
+                {/* 카테고리 탭 */}
+                <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
+                  {/* 모바일: 2열 그리드 */}
+                  <div
+                    role="tablist"
+                    aria-label="시술 카테고리"
+                    className="grid grid-cols-2 gap-2 sm:hidden mb-4"
+                  >
+                    {tabs.map((tab) => (
+                      <CategoryTabButton
+                        key={tab.id}
+                        id={tab.id}
+                        label={getTabLabel(tab)}
+                        isActive={activeId === tab.id}
+                        onClick={handleTabChange}
+                        icon={CATEGORY_ICON_MAP[tab.id] ?? Dna}
+                        size="sm"
+                        role="tab"
+                        aria-selected={activeId === tab.id}
+                        tabIndex={activeId === tab.id ? 0 : -1}
                       />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-                        <span className="text-slate-400 text-4xl font-light">✦</span>
-                      </div>
-                    )}
-                    {/* 뱃지 */}
-                    {item.badge && (
-                      <span
-                        className="absolute top-3 left-3 px-3 py-1 rounded-full text-white text-xs font-semibold"
-                        style={{ backgroundColor: item.badgeColor || "#4A6FA5" }}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
+                    ))}
                   </div>
+                  {/* 데스크탑: flex-wrap */}
+                  <div
+                    ref={tabContainerRef}
+                    role="tablist"
+                    aria-label="시술 카테고리"
+                    className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4"
+                  >
+                    {tabs.map((tab) => (
+                      <CategoryTabButton
+                        key={tab.id}
+                        id={tab.id}
+                        label={getTabLabel(tab)}
+                        isActive={activeId === tab.id}
+                        onClick={handleTabChange}
+                        icon={CATEGORY_ICON_MAP[tab.id] ?? Dna}
+                        size="md"
+                        role="tab"
+                        aria-selected={activeId === tab.id}
+                        tabIndex={activeId === tab.id ? 0 : -1}
+                      />
+                    ))}
+                  </div>
+                </div>
 
-                  {/* 콘텐츠 */}
-                  <div className="p-6">
-                    {localCategory && (
-                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                        {localCategory}
-                      </p>
-                    )}
-                    <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                      {localName}
-                    </h2>
-                    {localDesc && (
-                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
-                        {localDesc}
-                      </p>
-                    )}
-
-                    {/* 메타 정보 */}
-                    <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-5">
-                      {item.time && (
-                        <span className="flex items-center gap-1">
-                          <span className="text-slate-400">⏱</span>
-                          {LABELS.time}: {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
-                        </span>
+                {/* 카드 그리드 */}
+                {activeId && (
+                  <div className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade">
+                    <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
+                      {filteredItems.length === 0 ? (
+                        <div className="text-center py-16 text-gray-400">
+                          {getText("등록된 시술이 없습니다.", "No treatments available.", "施術情報がありません。", "暂无项目信息。")}
+                        </div>
+                      ) : (
+                        <div
+                          aria-live="polite"
+                          aria-atomic="false"
+                          className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                        >
+                          {displayedItems.map((item, i) => (
+                            <TreatmentCard
+                              key={item.id}
+                              item={toTreatment(item)}
+                              index={i}
+                              imgBg={CAT_IMG_BG[item.category ?? "stem_cell"] ?? "#F0F4FF"}
+                            />
+                          ))}
+                        </div>
                       )}
-                      {item.recovery && (
-                        <span className="flex items-center gap-1">
-                          <span className="text-slate-400">🔄</span>
-                          {LABELS.recovery}: {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
-                        </span>
+
+                      {/* 더보기 / 접기 */}
+                      {filteredItems.length > INITIAL_SHOW && (
+                        <div className="flex justify-center mt-16">
+                          <button
+                            type="button"
+                            onClick={() => setShowAll((v) => !v)}
+                            className={[
+                              "flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
+                              showAll
+                                ? "bg-white text-[var(--color-star-text-mid)] border border-[1.5px] border-[var(--color-gold-light)]"
+                                : "bg-[var(--color-gold-primary)] text-white border-none",
+                            ].join(" ")}
+                          >
+                            {showAll ? (
+                              <><ChevronUp size={16} />{getText("접기", "Show Less", "閉じる", "收起")}</>
+                            ) : (
+                              <><ChevronDown size={16} />{getText(`+${filteredItems.length - INITIAL_SHOW}개 더보기`, `+${filteredItems.length - INITIAL_SHOW} More`, `+${filteredItems.length - INITIAL_SHOW}件を表示`, `+${filteredItems.length - INITIAL_SHOW}个更多`)}</>
+                            )}
+                          </button>
+                        </div>
                       )}
                     </div>
-
-                    <button
-                      type="button"
-                      className="w-full py-2.5 rounded-xl bg-slate-800 text-white text-sm font-semibold hover:bg-slate-700 transition-colors"
-                      onClick={(e) => { e.stopPropagation(); setLocation(detailPath); }}
-                    >
-                      {LABELS.detail}
-                    </button>
                   </div>
-                </article>
-              );
-            })}
+                )}
+              </>
+            )}
           </div>
-        )}
+        </section>
+
+        <ContactSection />
       </main>
 
       <Footer />

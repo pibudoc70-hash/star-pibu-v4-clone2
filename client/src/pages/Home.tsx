@@ -46,79 +46,53 @@ export default function Home() {
   // 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
   // hash를 무시하고 상단으로 이동한다.
   useEffect(() => {
-    // 1순위: sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)
-    const sessionTarget = sessionStorage.getItem("__star_scroll_to");
-    if (sessionTarget) {
-      sessionStorage.removeItem("__star_scroll_to");
-      // URL에 hash가 있으면 제거
-      if (window.location.hash) {
-        history.replaceState(null, "", window.location.pathname);
-      }
-      const id = sessionTarget;
-      const scrollToElement = (el: Element) => {
-        const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-        const offset = header ? header.offsetHeight + 8 : 80;
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-      };
-      const existing = document.getElementById(id);
-      if (existing) { scrollToElement(existing); return; }
-      const observer = new MutationObserver(() => {
-        const el = document.getElementById(id);
-        if (el) { observer.disconnect(); clearTimeout(timeout); scrollToElement(el); }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-      const timeout = setTimeout(() => observer.disconnect(), 5000);
-      return () => { observer.disconnect(); clearTimeout(timeout); };
+    // [FIX v3] 완전 재작성 - 초기 진입 시 무조건 상단으로 이동
+    // URL hash는 일체 무시하고 sessionStorage만 사용
+    //
+    // 문제 원인:
+    // 1. useHeaderState에서 history.replaceState로 URL에 #events 등 hash 저장
+    // 2. 브라우저 scroll restoration이 이전 스크롤 위치 복원
+    // 3. Home.tsx의 hash 스크롤 useEffect가 이를 읽어 자동 스크롤
+    //
+    // 해결 방법:
+    // - 진입 시 URL hash를 즉시 제거하고 상단으로 이동
+    // - 다른 페이지에서 메뉴 클릭 시 sessionStorage로 스크롤 대상 전달
+
+    // URL에 hash가 있으면 즉시 제거 (어떤 경우든 hash를 URL에 남기지 않음)
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
     }
 
-    // 2순위: URL hash 처리 (직접 URL 입력 시)
-    const hash = window.location.hash;
-    if (!hash) return;
-
-    // 외부 직접 진입(navigate/reload)이나 새로고침 시에는 hash를 제거하고 상단 유지
-    // SPA 내부 이동(pushState)은 이 useEffect가 재실행되지 않음
-    const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-    const navType = navEntry?.type ?? "navigate";
-    if (navType === "navigate" || navType === "reload") {
-      // 외부 직접 진입: hash 제거 후 상단 유지
-      history.replaceState(null, "", window.location.pathname);
+    // sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)
+    const sessionTarget = sessionStorage.getItem("__star_scroll_to");
+    if (!sessionTarget) {
+      // 스크롤 대상이 없으면 상단으로 이동 (이미 ScrollToTop이 처리하지만 이중 보장)
+      window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
 
-    const id = hash.slice(1);
+    // sessionStorage에 스크롤 대상이 있으면 해당 섹션으로 스크롤
+    sessionStorage.removeItem("__star_scroll_to");
+    const id = sessionTarget;
 
     const scrollToElement = (el: Element) => {
-      // Bug Fix: 헤더 높이를 동적으로 계산 (scrolled 상태에 따라 60px 또는 72px)
       const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
       const offset = header ? header.offsetHeight + 8 : 80;
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
     };
 
-    // 이미 DOM에 있으면 즉시 스크롤
     const existing = document.getElementById(id);
-    if (existing) {
-      scrollToElement(existing);
-      return;
-    }
+    if (existing) { scrollToElement(existing); return; }
 
     // lazy 섹션이 마운트될 때까지 MutationObserver로 대기 (최대 5초)
     const observer = new MutationObserver(() => {
       const el = document.getElementById(id);
-      if (el) {
-        observer.disconnect();
-        clearTimeout(timeout);
-        scrollToElement(el);
-      }
+      if (el) { observer.disconnect(); clearTimeout(timeout); scrollToElement(el); }
     });
     observer.observe(document.body, { childList: true, subtree: true });
     const timeout = setTimeout(() => observer.disconnect(), 5000);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(timeout);
-    };
+    return () => { observer.disconnect(); clearTimeout(timeout); };
   }, []);
 
   return (

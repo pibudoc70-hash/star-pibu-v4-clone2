@@ -2253,12 +2253,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## AI 검색 최적화 (AIO) - 2026-06-08
 
-- [ ] llms.txt 생성 (AI 크롤러 전용 콘텐츠 파일)
-- [ ] llms-full.txt 생성 (전체 콘텐츠 상세 버전)
+- [x] llms.txt 업데이트 (AI 크롤러 전용 콘텐츠 파일)
+- [x] llms-full.txt 기존 콘텐츠 유지 (전체 콘텐츠 상세 버전)
 - [ ] FAQPage JSON-LD 스키마 강화 (홈·시술 페이지)
 - [ ] Physician JSON-LD 스키마 강화 (조시형 원장 상세)
-- [ ] robots.txt AI 크롤러 허용 정책 추가 (GPTBot, PerplexityBot, ClaudeBot 등)
-- [ ] sitemap.xml /research 페이지 추가
+- [x] robots.txt AI 크롤러 허용 정책 이미 추가됨 (GPTBot, PerplexityBot, ClaudeBot 등)
+- [x] sitemap.xml /research 페이지 이미 추가됨
 - [ ] meta description AI 인용 최적화
 
 ## Phase 71: SEO 최적화 - 공개 페이지 인덱싱 복구 (2026-06-09)

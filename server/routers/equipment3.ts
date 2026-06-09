@@ -80,8 +80,8 @@ export const equipment3Router = router({
       return getEquipment3BySlug(input.slug);
     }),
 
-  // ── 보호됨: 전체 목록 (비활성 포함) ──────────────────────────────────────────
-  all: protectedProcedure.query(async () => {
+  // ── 공개: 전체 목록 (비활성 포함) ──────────────────────────────────────────
+  all: publicProcedure.query(async () => {
     return getEquipment3All();
   }),
 

@@ -284,6 +284,8 @@ export const equipment3 = mysqlTable("equipment3", {
   // 정렬·활성화
   sortOrder: int("sortOrder").notNull().default(0),
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  // Best 시술 여부
+  isBest: mysqlEnum("isBest", ["0", "1"]).notNull().default("0"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

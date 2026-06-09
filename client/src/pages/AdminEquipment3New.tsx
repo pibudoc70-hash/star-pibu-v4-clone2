@@ -27,6 +27,7 @@ type FormData = {
   sortOrder: string;
   youtubeUrl: string;
   imageUrl: string;
+  isBest: boolean;
 };
 
 const INITIAL: FormData = {
@@ -40,7 +41,7 @@ const INITIAL: FormData = {
   time: "", timeEn: "", timeJa: "", timeZh: "",
   recovery: "", recoveryEn: "", recoveryJa: "", recoveryZh: "",
   slug: "", badge: "", badgeColor: "#4A6FA5", sortOrder: "0",
-  youtubeUrl: "", imageUrl: "",
+  youtubeUrl: "", imageUrl: "", isBest: false,
 };
 
 function toSlug(name: string) {
@@ -124,6 +125,7 @@ export default function AdminEquipment3New() {
         youtubeUrl: form.youtubeUrl || undefined,
         imageUrl: form.imageUrl || undefined,
         isActive: "1",
+        isBest: form.isBest ? "1" : "0",
       });
       alert("✅ 시술이 등록되었습니다!");
       navigate("/admin/equipment3");
@@ -152,6 +154,7 @@ export default function AdminEquipment3New() {
           {langs.map(({ code, suffix, placeholder }) => {
             const name = `${fieldKey}${suffix}`;
             const value = form[name as keyof FormData];
+            if (typeof value === 'boolean') return null; // isBest 같은 boolean 필드 제외
             return type === "textarea" ? (
               <div key={code}>
                 <Label className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
@@ -239,6 +242,17 @@ export default function AdminEquipment3New() {
                     <Input name="badgeColor" value={form.badgeColor} onChange={handleChange} className="flex-1" />
                   </div>
                 </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isBest"
+                  checked={form.isBest}
+                  onChange={(e) => setForm((prev) => ({ ...prev, isBest: e.target.checked }))}
+                  className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+                />
+                <Label htmlFor="isBest" className="font-semibold cursor-pointer">Best 시술에 추가</Label>
               </div>
             </CardContent>
           </Card>

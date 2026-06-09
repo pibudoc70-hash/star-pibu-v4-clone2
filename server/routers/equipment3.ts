@@ -64,6 +64,7 @@ const itemFieldsSchema = z.object({
   badgeColor: z.string().max(20).optional(),
   sortOrder: z.number().optional(),
   isActive: z.enum(["0", "1"]).optional(),
+  isBest: z.enum(["0", "1"]).optional(),
 });
 
 export const equipment3Router = router({
@@ -146,6 +147,7 @@ export const equipment3Router = router({
         badgeColor: input.badgeColor ?? "#4A6FA5",
         sortOrder: input.sortOrder ?? 0,
         isActive: input.isActive ?? "1",
+        isBest: input.isBest ?? "0",
       });
       return { success: true, id };
     }),

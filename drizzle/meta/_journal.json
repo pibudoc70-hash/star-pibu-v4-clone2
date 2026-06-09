@@ -127,6 +127,13 @@
       "when": 1781002048529,
       "tag": "0017_polite_kylun",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1781012822108,
+      "tag": "0018_stiff_red_wolf",
+      "breakpoints": true
     }
   ]
 }

@@ -8,6 +8,7 @@
  * - CategoryTabList + CategoryTabButton 재사용
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -16,64 +17,100 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import ContactSection from "@/components/ContactSection";
-import { getLocalizedUrl } from "@/lib/localizedPath";
-import { Loader, ChevronDown, ChevronUp } from "lucide-react";
+import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
+import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw } from "lucide-react";
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
-import TreatmentCard from "@/components/treatments/TreatmentCard";
-import type { Treatment } from "@/components/treatments/TreatmentCard";
+import OptimizedImage from "@/components/OptimizedImage";
 import { Dna } from "lucide-react";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 6;
 
-// ── equipment3 item → TreatmentCard Treatment 타입 변환 헬퍼 ─────────────────
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function toTreatment(item: Record<string, any>): Treatment {
-  return {
-    id: item.id,
-    categoryId: item.category ?? "stem_cell",
-    name: item.name ?? "",
-    nameEn: item.nameEn ?? "",
-    nameJa: item.nameJa ?? null,
-    nameZh: item.nameZh ?? null,
-    desc: item.desc ?? "",
-    descEn: item.descEn ?? null,
-    descJa: item.descJa ?? null,
-    descZh: item.descZh ?? null,
-    detail: item.detail ?? null,
-    detailEn: item.detailEn ?? null,
-    detailJa: item.detailJa ?? null,
-    detailZh: item.detailZh ?? null,
-    effect: item.effect ?? null,
-    effectEn: item.effectEn ?? null,
-    effectJa: item.effectJa ?? null,
-    effectZh: item.effectZh ?? null,
-    caution: item.caution ?? null,
-    cautionEn: item.cautionEn ?? null,
-    cautionJa: item.cautionJa ?? null,
-    cautionZh: item.cautionZh ?? null,
-    sessions: item.sessions ?? null,
-    sessionsEn: item.sessionsEn ?? null,
-    sessionsJa: item.sessionsJa ?? null,
-    sessionsZh: item.sessionsZh ?? null,
-    time: item.time ?? "",
-    timeEn: item.timeEn ?? null,
-    timeJa: item.timeJa ?? null,
-    timeZh: item.timeZh ?? null,
-    recovery: item.recovery ?? "",
-    recoveryEn: item.recoveryEn ?? null,
-    recoveryJa: item.recoveryJa ?? null,
-    recoveryZh: item.recoveryZh ?? null,
-    badge: item.badge ?? null,
-    badgeColor: item.badgeColor ?? null,
-    image: item.imageUrl ?? null,
-    images: item.images ?? null,
-    youtubeUrl: item.youtubeUrl ?? null,
-    modalImage: item.modalImage ?? null,
-    isActive: item.isActive ?? "1",
-    sortOrder: item.sortOrder ?? 0,
-  };
+// ── Equipment3 전용 카드 컴포넌트 (클릭 시 상세 페이지 이동) ─────────────────
+function Equipment3Card({
+  item,
+  index,
+  imgBg,
+  detailPath,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  item: Record<string, any>;
+  index: number;
+  imgBg: string;
+  detailPath: string;
+}) {
+  const [, setLocation] = useLocation();
+  const { getText } = useLocalizedText();
+
+  const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
+  const desc     = getText(item.desc, item.descEn, item.descJa, item.descZh);
+  const time     = getText(item.time, item.timeEn, item.timeJa, item.timeZh);
+  const recovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
+  const detail   = getText("자세히 보기", "Learn More", "詳しく見る", "了解详情");
+
+  return (
+    <div
+      className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+      style={{
+        animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
+        minHeight: "380px",
+        background: "#fff",
+      }}
+      onClick={() => setLocation(detailPath)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${name} ${detail}`}
+      onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}
+    >
+      {/* 이미지 */}
+      <div className="relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
+        {item.imageUrl ? (
+          <OptimizedImage
+            src={item.imageUrl}
+            alt={name}
+            className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+          />
+        ) : null}
+        {/* 뱃지 */}
+        {item.badge && (
+          <span
+            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold"
+            style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
+          >
+            {item.badge}
+          </span>
+        )}
+      </div>
+
+      {/* 카드 본문 */}
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "#1F2937" }}>
+          {name}
+        </h3>
+        <p className="text-xs line-clamp-2 mb-3 flex-1" style={{ color: "#6B7280" }}>
+          {desc}
+        </p>
+        {/* 메타 정보 */}
+        <div className="flex gap-3 text-xs mb-3" style={{ color: "#9CA3AF" }}>
+          {time && (
+            <span className="flex items-center gap-1">
+              <Clock size={12} />{time}
+            </span>
+          )}
+          {recovery && (
+            <span className="flex items-center gap-1">
+              <RefreshCw size={12} />{recovery}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "#d1ab67" }}>
+          <span>{detail}</span>
+          <span style={{ fontSize: 13 }}>›</span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -285,14 +322,19 @@ export default function Equipment3() {
                           aria-atomic="false"
                           className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                         >
-                          {displayedItems.map((item, i) => (
-                            <TreatmentCard
+                          {displayedItems.map((item, i) => {
+                              const langPrefix = getLangPrefix(lang);
+                              const detailPath = `${langPrefix}/equipment3/${item.slug}`;
+                              return (
+                            <Equipment3Card
                               key={item.id}
-                              item={toTreatment(item)}
+                              item={item}
                               index={i}
                               imgBg={CAT_IMG_BG[item.category ?? "stem_cell"] ?? "#F0F4FF"}
+                              detailPath={detailPath}
                             />
-                          ))}
+                              );
+                            })}
                         </div>
                       )}
 

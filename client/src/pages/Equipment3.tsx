@@ -304,12 +304,12 @@ export default function Equipment3() {
                       />
                     ))}
                   </div>
-                  {/* 데스크탑: 가로 스크롤 */}
+                  {/* 데스크탑: 2줄 래핑 */}
                   <div
                     ref={tabContainerRef}
                     role="tablist"
                     aria-label="시술 카테고리"
-                    className="hidden sm:flex sm:flex-nowrap gap-2 mt-2 mr-1 -mb-1 ml-4 overflow-x-auto pb-2 scrollbar-hide"
+                    className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4 pb-2"
                   >
                     {tabs.map((tab) => (
                       <CategoryTabButton

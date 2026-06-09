@@ -39,9 +39,29 @@ function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
 export default function Home() {
   // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
+  //
+  // [FIX] 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
+  // hash를 무시하고 상단으로 이동한다.
+  // SPA 내부 네비게이션(pushState/replaceState)에서만 hash 스크롤을 실행한다.
   useEffect(() => {
     const hash = window.location.hash;
     if (!hash) return;
+
+    // performance.getEntriesByType("navigation")[0].type 으로 진입 유형 판별
+    // "navigate" = 직접 URL 입력 / 외부 링크 / 새 탭
+    // "reload"   = 새로고침
+    // "back_forward" = 브라우저 뒤로/앞으로
+    // "prerender" = 사전 렌더링
+    // SPA 내부 이동(pushState)은 이 useEffect가 재실행되지 않으므로
+    // navigate/reload/back_forward 진입 시에는 hash를 제거하고 상단으로 이동한다.
+    const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const navType = navEntry?.type ?? "navigate";
+    if (navType === "navigate" || navType === "reload") {
+      // 외부 직접 진입: hash 제거 후 상단 유지
+      history.replaceState(null, "", window.location.pathname);
+      return;
+    }
+
     const id = hash.slice(1);
 
     const scrollToElement = (el: Element) => {

@@ -23,7 +23,7 @@
  * 예: CACHE_NAME = "star-pibu-__BUILD_HASH__"
  * vite.config.ts define: { __BUILD_HASH__: JSON.stringify(Date.now().toString(36)) }
  */
-const CACHE_NAME = "star-pibu-v3";
+const CACHE_NAME = "star-pibu-v5"; // v5: scroll-to-top fix (2026-06-09)
 
 /**
  * Patterns that must NEVER be cached.

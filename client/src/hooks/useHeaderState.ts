@@ -156,7 +156,8 @@ export function useHeaderState() {
         const offset = getHeaderOffset();
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: "smooth" });
-        history.replaceState(null, "", basePath + href);
+        // [FIX] URL에 hash를 저장하지 않음
+        // hash가 URL에 남으면 다음 방문 시 자동 스크롤이 발생함
       };
       const el = document.querySelector(href);
       if (el) { scrollToEl(el); return; }
@@ -175,7 +176,7 @@ export function useHeaderState() {
         pendingNavRef.current = null;
       }, 3000);
       pendingNavRef.current = { observer, timeout };
-      history.replaceState(null, "", basePath + href);
+      // [FIX] URL에 hash를 저장하지 않음 (lazy 섹션 대기 시에도 동일)
       return;
     }
     // 절대 경로 (/about, /foreign-guide 등) — wouter setLocation으로 SPA 라우팅

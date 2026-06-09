@@ -12,6 +12,13 @@ import "./index.css";
 // Core Web Vitals 모니터링
 import { initWebVitals } from './lib/webVitals';
 
+// [FIX] 브라우저 자동 스크롤 복원 비활성화
+// 브라우저가 이전 스크롤 위치를 기억해 자동 복원하는 기능을 끔
+// 이로 인해 홈 접속 시 이벤트 섹션으로 자동 이동되는 문제 해결
+if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 if (typeof window !== 'undefined') {
   window.addEventListener('load', () => {
     setTimeout(() => {

@@ -57,6 +57,21 @@ function MapLoadingFallback() {
 // /foreign-guide special-case:
 //   이 경로는 /en/foreign-guide 의 영어 alias 이므로 en으로 처리.
 //   LangContext / html[lang] / ForeignGuide.activeLang 이 모두 en 으로 일치하도록 보장.
+// [FIX] ScrollToTop: 라우트 변경 시 항상 페이지 상단으로 이동
+// 브라우저 scroll restoration이 비활성화되어도 SPA 라우트 전환 시 상단 이동 보장
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    // 라우트가 바뀔 때마다 즉시 상단으로 이동
+    // sessionStorage에 스크롤 대상이 있으면 Home.tsx가 처리하므로 여기서는 건드리지 않음
+    const sessionTarget = sessionStorage.getItem("__star_scroll_to");
+    if (!sessionTarget) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [location]);
+  return null;
+}
+
 function HtmlLangUpdater() {
   const [location] = useLocation();
   const { lang, setLang } = useLang();
@@ -84,6 +99,7 @@ function HtmlLangUpdater() {
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <ScrollToTop />
       <HtmlLangUpdater />
       <MapErrorBoundary>
         <Suspense fallback={<MapLoadingFallback />}>

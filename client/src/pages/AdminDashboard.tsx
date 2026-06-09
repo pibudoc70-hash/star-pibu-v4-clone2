@@ -113,6 +113,16 @@ export default function AdminDashboard() {
               {label}
             </button>
           ))}
+          {/* 시술·장비소개 3 관리 (별도 페이지) */}
+          <button
+            type="button"
+            onClick={() => navigate("/admin/equipment3")}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{ background: "transparent", color: "rgba(255,255,255,0.6)" }}
+          >
+            <Stethoscope size={16} />
+            시술·장비소개 3 관리
+          </button>
           {/* 유튜브 관리 (별도 페이지) */}
           <button
             type="button"

@@ -25,6 +25,11 @@ const Equipment2 = lazy(() => import("@/pages/Equipment2"));
 const Equipment2Detail = lazy(() => import("@/pages/Equipment2Detail"));
 const AdminEquipment2New = lazy(() => import("@/pages/AdminEquipment2New"));
 const AdminEquipment2Edit = lazy(() => import("@/pages/AdminEquipment2Edit"));
+const Equipment3 = lazy(() => import("@/pages/Equipment3"));
+const Equipment3Detail = lazy(() => import("@/pages/Equipment3Detail"));
+const AdminEquipment3 = lazy(() => import("@/pages/AdminEquipment3"));
+const AdminEquipment3New = lazy(() => import("@/pages/AdminEquipment3New"));
+const AdminEquipment3Edit = lazy(() => import("@/pages/AdminEquipment3Edit"));
 const TreatmentPage = lazy(() => import("@/pages/TreatmentPage"));
 const LandingEN = lazy(() => import("@/pages/LandingEN"));
 const LandingJA = lazy(() => import("@/pages/LandingJA"));
@@ -147,12 +152,20 @@ function Router() {
             <Route path={"/en/equipment2/:slug"} component={Equipment2Detail} />
             <Route path={"/ja/equipment2/:slug"} component={Equipment2Detail} />
             <Route path={"/zh/equipment2/:slug"} component={Equipment2Detail} />
+            <Route path={"/equipment3/:slug"} component={Equipment3Detail} />
+            <Route path={"/en/equipment3/:slug"} component={Equipment3Detail} />
+            <Route path={"/ja/equipment3/:slug"} component={Equipment3Detail} />
+            <Route path={"/zh/equipment3/:slug"} component={Equipment3Detail} />
 
             {/* Info / policy / list pages — add new info pages in this group */}
             <Route path={"/equipment2"} component={Equipment2} />
             <Route path={"/en/equipment2"} component={Equipment2} />
             <Route path={"/ja/equipment2"} component={Equipment2} />
             <Route path={"/zh/equipment2"} component={Equipment2} />
+            <Route path={"/equipment3"} component={Equipment3} />
+            <Route path={"/en/equipment3"} component={Equipment3} />
+            <Route path={"/ja/equipment3"} component={Equipment3} />
+            <Route path={"/zh/equipment3"} component={Equipment3} />
             {/* About: localized live — canonical/hreflangs 4개 언어 정렬 (PR-36) */}
             <Route path={"/about"} component={About} />
             <Route path={"/en/about"} component={About} />
@@ -190,6 +203,9 @@ function Router() {
             {/* Admin pages — specific routes (new/edit) before generic param */}
             <Route path={"/admin/equipment2/new"} component={AdminEquipment2New} />
             <Route path={"/admin/equipment2/:id/edit"} component={AdminEquipment2Edit} />
+            <Route path={"/admin/equipment3/new"} component={AdminEquipment3New} />
+            <Route path={"/admin/equipment3/:id/edit"} component={AdminEquipment3Edit} />
+            <Route path={"/admin/equipment3"} component={AdminEquipment3} />
             <Route path={"/admin/youtube"} component={AdminYouTube} />
             <Route path={"/admin"} component={AdminDashboard} />
 

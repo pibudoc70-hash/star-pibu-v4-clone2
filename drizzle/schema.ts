@@ -222,6 +222,74 @@ export const youtubeVideos = mysqlTable("youtubeVideos", {
 export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
 export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
 
+// ─────────────────────────────────────────────────────────────────────────────
+// equipment3: DB 연동 시술·장비 소개 (관리자 등록·수정·순서변경 → /equipment3/:slug)
+// ─────────────────────────────────────────────────────────────────────────────
+export const equipment3 = mysqlTable("equipment3", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 200 }).notNull().unique(),
+  // 시술명 (4개 언어)
+  name: varchar("name", { length: 200 }).notNull(),
+  nameEn: varchar("nameEn", { length: 200 }).notNull().default(""),
+  nameJa: varchar("nameJa", { length: 200 }).default(""),
+  nameZh: varchar("nameZh", { length: 200 }).default(""),
+  // 카테고리
+  category: varchar("category", { length: 100 }).notNull().default(""),
+  categoryEn: varchar("categoryEn", { length: 100 }).default(""),
+  categoryJa: varchar("categoryJa", { length: 100 }).default(""),
+  categoryZh: varchar("categoryZh", { length: 100 }).default(""),
+  // 짧은 설명 (카드 미리보기용)
+  desc: text("desc").notNull().default(""),
+  descEn: text("descEn").default(""),
+  descJa: text("descJa").default(""),
+  descZh: text("descZh").default(""),
+  // 상세 설명 (마크다운)
+  detail: text("detail").default(""),
+  detailEn: text("detailEn").default(""),
+  detailJa: text("detailJa").default(""),
+  detailZh: text("detailZh").default(""),
+  // 기대 효과
+  effect: text("effect").default(""),
+  effectEn: text("effectEn").default(""),
+  effectJa: text("effectJa").default(""),
+  effectZh: text("effectZh").default(""),
+  // 주의사항
+  caution: text("caution").default(""),
+  cautionEn: text("cautionEn").default(""),
+  cautionJa: text("cautionJa").default(""),
+  cautionZh: text("cautionZh").default(""),
+  // 권장 횟수
+  sessions: varchar("sessions", { length: 200 }).default(""),
+  sessionsEn: varchar("sessionsEn", { length: 200 }).default(""),
+  sessionsJa: varchar("sessionsJa", { length: 200 }).default(""),
+  sessionsZh: varchar("sessionsZh", { length: 200 }).default(""),
+  // 시술 시간
+  time: varchar("time", { length: 50 }).default(""),
+  timeEn: varchar("timeEn", { length: 50 }).default(""),
+  timeJa: varchar("timeJa", { length: 50 }).default(""),
+  timeZh: varchar("timeZh", { length: 50 }).default(""),
+  // 회복 기간
+  recovery: varchar("recovery", { length: 50 }).default(""),
+  recoveryEn: varchar("recoveryEn", { length: 50 }).default(""),
+  recoveryJa: varchar("recoveryJa", { length: 50 }).default(""),
+  recoveryZh: varchar("recoveryZh", { length: 50 }).default(""),
+  // 미디어
+  imageUrl: text("imageUrl"),
+  images: text("images").default("[]"),   // JSON 배열
+  youtubeUrl: text("youtubeUrl"),
+  modalImage: text("modalImage"),
+  // 뱃지
+  badge: varchar("badge", { length: 100 }).default(""),
+  badgeColor: varchar("badgeColor", { length: 20 }).default("#4A6FA5"),
+  // 정렬·활성화
+  sortOrder: int("sortOrder").notNull().default(0),
+  isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type Equipment3Item = typeof equipment3.$inferSelect;
+export type InsertEquipment3Item = typeof equipment3.$inferInsert;
+
 export const unavailableSlots = mysqlTable("unavailableSlots", {
   id: int("id").autoincrement().primaryKey(),
   date: varchar("date", { length: 10 }).notNull(),

@@ -349,6 +349,84 @@ export function buildBreadcrumbJsonLd(
 }
 
 /**
+ * LocalBusiness JSON-LD 스키마 생성 헬퍼 (지역 검색 최적화)
+ * Google Maps, Naver, Kakao 지역 검색 및 Google Local Services Ads에 활용
+ *
+ * [SRP-DI] 인자 주입 패턴 적용:
+ * - 기본값 = 현재 상수 (프로덕션 코드 동일하게 동작)
+ * - 테스트에서는 목(mock) 데이터를 주입하여 외부 의존성 격리 가능
+ */
+export function buildLocalBusinessJsonLd(
+  clinicInfo = CLINIC_INFO,
+  clinicStats = CLINIC_STATS,
+  seoClinicMeta = SEO_CLINIC_META,
+): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "MedicalBusiness"],
+    "@id": `${clinicInfo.url}/#local-business`,
+    name: clinicInfo.name,
+    alternateName: clinicInfo.legalName,
+    description: clinicInfo.description,
+    url: clinicInfo.url,
+    telephone: clinicInfo.telephone,
+    email: clinicInfo.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: clinicInfo.address.streetAddress,
+      addressLocality: clinicInfo.address.addressLocality,
+      addressRegion: clinicInfo.address.addressRegion,
+      postalCode: clinicInfo.address.postalCode,
+      addressCountry: clinicInfo.address.addressCountry,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: clinicInfo.geo.latitude,
+      longitude: clinicInfo.geo.longitude,
+    },
+    image: clinicInfo.image,
+    logo: {
+      "@type": "ImageObject",
+      url: clinicInfo.logo,
+      width: 200,
+      height: 200,
+    },
+    priceRange: clinicInfo.priceRange,
+    currenciesAccepted: clinicInfo.currenciesAccepted,
+    paymentAccepted: clinicInfo.paymentAccepted,
+    openingHoursSpecification: clinicInfo.openingHours.map((spec) => {
+      const [daysPart, timesPart] = spec.split(" ");
+      const [opens, closes] = timesPart.split("-");
+      const DAY_MAP: Record<string, string> = {
+        Mo: "Monday", Tu: "Tuesday", We: "Wednesday",
+        Th: "Thursday", Fr: "Friday", Sa: "Saturday", Su: "Sunday",
+      };
+      const days = daysPart.includes("-")
+        ? (() => {
+            const [startDay, endDay] = daysPart.split("-");
+            const order = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+            const si = order.indexOf(startDay);
+            const ei = order.indexOf(endDay);
+            return order.slice(si, ei + 1).map((d) => DAY_MAP[d] ?? d);
+          })()
+        : [DAY_MAP[daysPart] ?? daysPart];
+      return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
+    }),
+    areaServed: {
+      "@type": "City",
+      name: "Busan",
+    },
+    sameAs: [...clinicInfo.sameAs],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ...seoClinicMeta.aggregateRating,
+    },
+    medicalSpecialty: "Dermatology",
+    knowsAbout: [...seoClinicMeta.knowsAbout],
+  };
+}
+
+/**
  * FAQPage JSON-LD 스키마 생성 헬퍼 (AI 검색 최적화)
  * Google AI Overviews, ChatGPT, Perplexity에서 직접 인용되는 질문답변 스키마
  *

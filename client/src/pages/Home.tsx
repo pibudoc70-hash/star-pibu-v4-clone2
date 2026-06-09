@@ -9,7 +9,7 @@
  * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
 import { lazy, Suspense, useEffect } from "react";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
@@ -97,6 +97,7 @@ export default function Home() {
         hreflangs={COMMON_HREFLANGS}
         pageType="home"
         jsonLd={[
+          buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
             { name: "홈", url: "https://www.star-pibu.com/" },
           ]),

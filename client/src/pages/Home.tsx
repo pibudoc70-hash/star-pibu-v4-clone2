@@ -37,23 +37,47 @@ function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
 }
 
 export default function Home() {
-  // 다른 페이지에서 /#about 등으로 이동 시 해당 섹션으로 자동 스크롤
+  // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
   //
-  // [FIX] 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
+  // [FIX v2] URL hash 대신 sessionStorage(__star_scroll_to)를 사용해
+  // URL에 hash가 남지 않도록 한다. hash가 URL에 남으면 다음 방문 시
+  // 자동 스크롤이 발생하는 버그가 있었음.
+  // 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
   // hash를 무시하고 상단으로 이동한다.
-  // SPA 내부 네비게이션(pushState/replaceState)에서만 hash 스크롤을 실행한다.
   useEffect(() => {
+    // 1순위: sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)
+    const sessionTarget = sessionStorage.getItem("__star_scroll_to");
+    if (sessionTarget) {
+      sessionStorage.removeItem("__star_scroll_to");
+      // URL에 hash가 있으면 제거
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname);
+      }
+      const id = sessionTarget;
+      const scrollToElement = (el: Element) => {
+        const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+        const offset = header ? header.offsetHeight + 8 : 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      };
+      const existing = document.getElementById(id);
+      if (existing) { scrollToElement(existing); return; }
+      const observer = new MutationObserver(() => {
+        const el = document.getElementById(id);
+        if (el) { observer.disconnect(); clearTimeout(timeout); scrollToElement(el); }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      const timeout = setTimeout(() => observer.disconnect(), 5000);
+      return () => { observer.disconnect(); clearTimeout(timeout); };
+    }
+
+    // 2순위: URL hash 처리 (직접 URL 입력 시)
     const hash = window.location.hash;
     if (!hash) return;
 
-    // performance.getEntriesByType("navigation")[0].type 으로 진입 유형 판별
-    // "navigate" = 직접 URL 입력 / 외부 링크 / 새 탭
-    // "reload"   = 새로고침
-    // "back_forward" = 브라우저 뒤로/앞으로
-    // "prerender" = 사전 렌더링
-    // SPA 내부 이동(pushState)은 이 useEffect가 재실행되지 않으므로
-    // navigate/reload/back_forward 진입 시에는 hash를 제거하고 상단으로 이동한다.
+    // 외부 직접 진입(navigate/reload)이나 새로고침 시에는 hash를 제거하고 상단 유지
+    // SPA 내부 이동(pushState)은 이 useEffect가 재실행되지 않음
     const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
     const navType = navEntry?.type ?? "navigate";
     if (navType === "navigate" || navType === "reload") {

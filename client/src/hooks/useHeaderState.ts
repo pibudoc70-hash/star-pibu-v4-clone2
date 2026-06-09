@@ -144,9 +144,12 @@ export function useHeaderState() {
       }
       // 현재 페이지가 홈이 아닌 경우 홈으로 이동 후 해시 스크롤
       // (예: /about, /equipment2 등에서 EVENT 메뉴 클릭 시)
+      // [FIX] URL에 hash를 남기지 않고 sessionStorage로 스크롤 대상 전달
+      // hash가 URL에 남으면 다음 방문 시 Home.tsx useEffect가 자동 스크롤함
       if (!isHome) {
         const homePath = basePath === "/" ? "" : basePath;
-        setLocation(homePath + href);
+        sessionStorage.setItem("__star_scroll_to", href.slice(1));
+        setLocation(homePath || "/");
         return;
       }
       const scrollToEl = (el: Element) => {

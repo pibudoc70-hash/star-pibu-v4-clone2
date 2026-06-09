@@ -6,7 +6,7 @@
  *
  * 검사 대상:
  *   1. ForeignGuide SEO — ko hreflang 없음, x-default = /en/foreign-guide
- *   2. Email template — fallback host = https://www.star-pibu.com
+ *   2. Email template — fallback host = https://star-pibu.com
  *   3. Static sitemap — /foreign-guide alias 없음, localized URLs 있음,
  *                       /privacy 없음, /treatment/* 없음
  */
@@ -42,25 +42,25 @@ describe("ForeignGuide SEO hreflang 정책 (PR-44)", () => {
     expect(hreflangsBlock).not.toMatch(/hreflang:\s*["']ko["']/);
   });
 
-  it("en hreflang href = https://www.star-pibu.com/en/foreign-guide", () => {
+  it("en hreflang href = https://star-pibu.com/en/foreign-guide", () => {
     expect(foreignGuideSource).toMatch(
       /hreflang:\s*["']en["'][\s\S]*?href:\s*[`"'].*\/en\/foreign-guide[`"']/,
     );
   });
 
-  it("ja hreflang href = https://www.star-pibu.com/ja/foreign-guide", () => {
+  it("ja hreflang href = https://star-pibu.com/ja/foreign-guide", () => {
     expect(foreignGuideSource).toMatch(
       /hreflang:\s*["']ja["'][\s\S]*?href:\s*[`"'].*\/ja\/foreign-guide[`"']/,
     );
   });
 
-  it("zh hreflang href = https://www.star-pibu.com/zh/foreign-guide", () => {
+  it("zh hreflang href = https://star-pibu.com/zh/foreign-guide", () => {
     expect(foreignGuideSource).toMatch(
       /hreflang:\s*["']zh["'][\s\S]*?href:\s*[`"'].*\/zh\/foreign-guide[`"']/,
     );
   });
 
-  it("x-default href = https://www.star-pibu.com/en/foreign-guide", () => {
+  it("x-default href = https://star-pibu.com/en/foreign-guide", () => {
     expect(foreignGuideSource).toMatch(
       /hreflang:\s*["']x-default["'][\s\S]*?href:\s*[`"'].*\/en\/foreign-guide[`"']/,
     );
@@ -76,27 +76,26 @@ describe("ForeignGuide SEO hreflang 정책 (PR-44)", () => {
 // 2. Email template fallback host 정책 (PR-44)
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Email template fallback host 정책 (PR-44)", () => {
-  it("getReservationConfirmationEmail의 fallback host = https://www.star-pibu.com", () => {
-    // /my-reservations 링크의 fallback이 www 포함이어야 함
+  it("getReservationConfirmationEmail의 fallback host = https://star-pibu.com", () => {
+    // /my-reservations 링크의 fallback이 non-www이어야 함
     expect(emailSource).toMatch(
-      /VITE_OAUTH_PORTAL_URL.*\|\|.*['"]https:\/\/www\.star-pibu\.com['"].*\/my-reservations/,
+      /VITE_OAUTH_PORTAL_URL.*\|\|.*['"](https:\/\/star-pibu\.com)['"].*\/my-reservations/,
     );
   });
 
-  it("getAdminNotificationEmail의 fallback host = https://www.star-pibu.com", () => {
-    // /admin?tab=reservations 링크의 fallback이 www 포함이어야 함
+  it("getAdminNotificationEmail의 fallback host = https://star-pibu.com", () => {
+    // /admin?tab=reservations 링크의 fallback이 non-www이어야 함
     expect(emailSource).toMatch(
-      /VITE_OAUTH_PORTAL_URL.*\|\|.*['"]https:\/\/www\.star-pibu\.com['"].*\/admin\?tab=reservations/,
+      /VITE_OAUTH_PORTAL_URL.*\|\|.*['"](https:\/\/star-pibu\.com)['"].*\/admin\?tab=reservations/,
     );
   });
 
-  it("비-www fallback(https://star-pibu.com)이 없어야 한다", () => {
-    // 'https://star-pibu.com' (www 없음) 형태가 없어야 함
-    // 단, 'https://www.star-pibu.com'은 허용
-    const nonWwwMatches = emailSource.match(
-      /['"]https:\/\/star-pibu\.com['"]/g,
+  it("www fallback(https://www.star-pibu.com)이 없어야 한다 (non-www 정책)", () => {
+    // 'https://www.star-pibu.com' (www 포함) 형태가 없어야 함
+    const wwwMatches = emailSource.match(
+      /['"](https:\/\/www\.star-pibu\.com)['"]\s*/g,
     );
-    expect(nonWwwMatches).toBeNull();
+    expect(wwwMatches).toBeNull();
   });
 });
 
@@ -105,33 +104,33 @@ describe("Email template fallback host 정책 (PR-44)", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Static sitemap 정책 (PR-43)", () => {
   it("/foreign-guide alias URL이 <loc>에 없어야 한다", () => {
-    // <loc>https://www.star-pibu.com/foreign-guide</loc> 형태가 없어야 함
+    // <loc>https://star-pibu.com/foreign-guide</loc> 형태가 없어야 함
     expect(sitemapSource).not.toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/foreign-guide<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/foreign-guide<\/loc>/,
     );
   });
 
   it("/en/foreign-guide canonical URL이 <loc>에 있어야 한다", () => {
     expect(sitemapSource).toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/en\/foreign-guide<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/en\/foreign-guide<\/loc>/,
     );
   });
 
   it("/ja/foreign-guide canonical URL이 <loc>에 있어야 한다", () => {
     expect(sitemapSource).toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/ja\/foreign-guide<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/ja\/foreign-guide<\/loc>/,
     );
   });
 
   it("/zh/foreign-guide canonical URL이 <loc>에 있어야 한다", () => {
     expect(sitemapSource).toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/zh\/foreign-guide<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/zh\/foreign-guide<\/loc>/,
     );
   });
 
   it("/privacy URL이 <loc>에 없어야 한다 (noindex 정책)", () => {
     expect(sitemapSource).not.toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/privacy<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/privacy<\/loc>/,
     );
   });
 
@@ -139,15 +138,15 @@ describe("Static sitemap 정책 (PR-43)", () => {
     // /treatment/ (단수) 경로는 legacy bridge이므로 sitemap에 없어야 함
     // /treatments/ (복수)는 허용
     expect(sitemapSource).not.toMatch(
-      /<loc>https:\/\/www\.star-pibu\.com\/treatment\/[^<]+<\/loc>/,
+      /<loc>https:\/\/star-pibu\.com\/treatment\/[^<]+<\/loc>/,
     );
   });
 
-  it("모든 <loc> URL이 https://www.star-pibu.com으로 시작해야 한다", () => {
+  it("모든 <loc> URL이 https://star-pibu.com으로 시작해야 한다 (non-www 정책)", () => {
     const locMatches = sitemapSource.match(/<loc>(.*?)<\/loc>/g) ?? [];
     expect(locMatches.length).toBeGreaterThan(0);
     for (const loc of locMatches) {
-      expect(loc).toMatch(/^<loc>https:\/\/www\.star-pibu\.com/);
+      expect(loc).toMatch(/^<loc>https:\/\/star-pibu\.com/);
     }
   });
 });

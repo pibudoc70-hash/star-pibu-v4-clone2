@@ -55,7 +55,7 @@ export default function Directions() {
         title="오시는 길 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 오시는 길 안내. 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층. 서면역 5·7번 출구 도보 3분. 주차 가능."
         keywords="스타피부과 위치, 스타피부과 주소, 서면피부과 오시는길, 부산피부과 위치, 서면역 피부과"
-        canonical="https://www.star-pibu.com/directions"
+        canonical="https://star-pibu.com/directions"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
               pageType="treatment"

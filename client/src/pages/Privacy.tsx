@@ -4,11 +4,11 @@
  *
  * [PAGE LIFECYCLE] noindex live page (정책 확정: PR-38)
  * - route: /privacy, /en/privacy, /ja/privacy, /zh/privacy (App.tsx live)
- * - canonical: https://www.star-pibu.com/privacy (고정 — 법률 원문 ko 기준)
+ * - canonical: https://star-pibu.com/privacy (고정 — 법률 원문 ko 기준)
  * - noindex: true — 모든 route에서 색인 차단
  *   · 이유: 법률 문서 특성상 검색 유입 불필요, 다국어 번역 미제공
  *   · /en/privacy, /ja/privacy, /zh/privacy도 동일하게 noindex (ko 단일 콘텐츠)
- * - ogUrl: https://www.star-pibu.com/privacy (고정)
+ * - ogUrl: https://star-pibu.com/privacy (고정)
  * - hreflangs: 없음 (noindex 정책에서 hreflang 색인 신호 불필요)
  * - 번역 상태: 한국어 원문만 제공 (의료기관 법률 문서 특성상 ko 단일 운영)
  * - SEO 정책: noindex이므로 canonical 고정이 실질 SEO 영향 없음
@@ -148,8 +148,8 @@ export default function Privacy() {
       <SeoHead
         title="개인정보처리방침 | 부산 서면 스타피부과"
         description="스타피부과의원 개인정보처리방침입니다. 개인정보 보호법 제30조에 따라 개인정보의 처리 목적, 항목, 보유 기간 등을 안내합니다."
-        canonical="https://www.star-pibu.com/privacy"
-        ogUrl="https://www.star-pibu.com/privacy"
+        canonical="https://star-pibu.com/privacy"
+        ogUrl="https://star-pibu.com/privacy"
         noindex={true}
         pageType="admin"
       />

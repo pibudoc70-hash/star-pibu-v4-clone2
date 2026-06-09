@@ -6,13 +6,13 @@
  *
  * 사용 예:
  *   const pageUrl = getLocalizedUrl(lang, "/equipment2/" + slug);
- *   // ko → "https://www.star-pibu.com/equipment2/laser"
- *   // en → "https://www.star-pibu.com/en/equipment2/laser"
+ *   // ko → "https://star-pibu.com/equipment2/laser"
+ *   // en → "https://star-pibu.com/en/equipment2/laser"
  */
 
 import type { Lang } from "@/lib/i18n.types";
 
-export const SITE_ORIGIN = "https://www.star-pibu.com";
+export const SITE_ORIGIN = "https://star-pibu.com";
 
 /**
  * 언어 코드에 따른 URL 경로 접두사를 반환합니다.

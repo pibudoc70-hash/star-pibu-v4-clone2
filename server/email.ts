@@ -142,7 +142,7 @@ export function getReservationConfirmationEmail(data: {
               ✓ 예약 변경이나 취소가 필요하신 경우 051-818-2300으로 연락주세요.
             </p>
             
-            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://www.star-pibu.com'}/my-reservations" class="button">예약 상태 확인</a>
+            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://star-pibu.com'}/my-reservations" class="button">예약 상태 확인</a>
           </div>
           
           <div class="footer">
@@ -334,7 +334,7 @@ export function getAdminNotificationEmail(data: {
             
             <p>관리자 대시보드에서 예약을 확인하고 상태를 변경해주세요.</p>
             
-            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://www.star-pibu.com'}/admin?tab=reservations" class="button">관리자 대시보드 이동</a>
+            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://star-pibu.com'}/admin?tab=reservations" class="button">관리자 대시보드 이동</a>
           </div>
         </div>
       </body>

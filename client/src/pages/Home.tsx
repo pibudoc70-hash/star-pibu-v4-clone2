@@ -89,7 +89,7 @@ export default function Home() {
         title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
         description="부산 서면 스타피부과(서면로 74 아이온시티빌딩 4F)는 20년 이상 경력 피부과 전문의 3인이 울세라피·써마지 FLX·눈밑지방재배치·리주란힐러·피코레이저 등 50종 프리미엄 레이저를 직접 담당합니다. 영어·일본어·중국어 외국인 환자 진료 가능. 전화 051-818-2300."
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
-        canonical="https://www.star-pibu.com/"
+        canonical="https://star-pibu.com/"
         ogImage={OG_IMAGE_LOCALIZED.ko}
         ogSiteName={SITE_NAME_LOCALIZED.ko}
         ogLocale="ko_KR"
@@ -99,7 +99,7 @@ export default function Home() {
         jsonLd={[
           buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
-            { name: "홈", url: "https://www.star-pibu.com/" },
+            { name: "홈", url: "https://star-pibu.com/" },
           ]),
           buildFAQPageJsonLd([
             {
@@ -120,7 +120,7 @@ export default function Home() {
             },
             {
               question: "스타피부과에서 외국인 환자도 진료가 가능한가요?",
-              answer: "네, 영어·일본어·중국어 안내를 제공합니다. 외국인 환자 전용 안내 페이지(https://www.star-pibu.com/en/foreign-guide)를 참고하세요."
+              answer: "네, 영어·일본어·중국어 안내를 제공합니다. 외국인 환자 전용 안내 페이지(https://star-pibu.com/en/foreign-guide)를 참고하세요."
             },
             {
               question: "스타피부과는 어떤 시술을 전문으로 하나요?",

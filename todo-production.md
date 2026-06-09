@@ -43,10 +43,10 @@
 
 ### 1.4 canonical 태그 일치
 - [ ] 각 페이지의 canonical이 정확한 URL을 가리키는지 확인
-  - `/` → canonical="https://www.star-pibu.com/"
-  - `/en` → canonical="https://www.star-pibu.com/en"
-  - `/ja` → canonical="https://www.star-pibu.com/ja"
-  - `/zh` → canonical="https://www.star-pibu.com/zh"
+  - `/` → canonical="https://star-pibu.com/"
+  - `/en` → canonical="https://star-pibu.com/en"
+  - `/ja` → canonical="https://star-pibu.com/ja"
+  - `/zh` → canonical="https://star-pibu.com/zh"
 
 ### 1.5 view-source 검증
 - [ ] 각 언어 페이지 view-source에서 메타 태그 확인
@@ -101,7 +101,7 @@
     - description: 울쎄라 전용 설명
     - og:title, og:description, og:url, og:image
     - twitter:card, twitter:title, twitter:description
-    - canonical: https://www.star-pibu.com/treatments/ulthera
+    - canonical: https://star-pibu.com/treatments/ulthera
 
   - /treatments/thermage
     - title: "써마지 FLX | 부산 스타피부과 - 조시형 원장 공식 자문의"

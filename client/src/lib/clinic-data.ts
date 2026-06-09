@@ -17,7 +17,7 @@ export const CLINIC_DOCTORS = [
     nameEn: "Cho Si-hyung",
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
-    url: "https://www.star-pibu.com/#doctors",
+    url: "https://star-pibu.com/#doctors",
     sameAs: [] as string[],
     credentials: [
       "피부과 전문의",
@@ -34,7 +34,7 @@ export const CLINIC_DOCTORS = [
     nameEn: "Woo Hye-jin",
     jobTitle: "피부과 전문의",
     jobTitleEn: "Dermatologist, MD",
-    url: "https://www.star-pibu.com/#doctors",
+    url: "https://star-pibu.com/#doctors",
     sameAs: [] as string[],
     credentials: [
       "피부과 전문의",
@@ -50,7 +50,7 @@ export const CLINIC_DOCTORS = [
     nameEn: "Lee Gi-wook",
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
-    url: "https://www.star-pibu.com/#doctors",
+    url: "https://star-pibu.com/#doctors",
     sameAs: [] as string[],
     credentials: [
       "피부과 전문의",
@@ -68,7 +68,7 @@ export const CLINIC_PROCEDURES = [
   {
     name: "울쎄라피 프라임",
     nameEn: "Ultherapy Prime",
-    url: "https://www.star-pibu.com/treatments/ulthera",
+    url: "https://star-pibu.com/treatments/ulthera",
     description: "집속 초음파(HIFU)로 SMAS층까지 자극하는 FDA 승인 비수술 리프팅 시술. 시술 당일 일상 복귀 가능.",
     bodyLocation: "얼굴, 목, 데콜테",
     procedureType: "Noninvasive",
@@ -78,7 +78,7 @@ export const CLINIC_PROCEDURES = [
   {
     name: "써마지 FLX",
     nameEn: "Thermage FLX",
-    url: "https://www.star-pibu.com/treatments/thermage",
+    url: "https://star-pibu.com/treatments/thermage",
     description: "4세대 고주파(RF) 리프팅 장비. 콜라겐 재생 및 피부 탄력 개선. 조시형 원장 공식 자문의.",
     bodyLocation: "얼굴, 목, 눈가, 바디",
     procedureType: "Noninvasive",
@@ -88,7 +88,7 @@ export const CLINIC_PROCEDURES = [
   {
     name: "눈밑지방재배치",
     nameEn: "Under-eye Fat Repositioning",
-    url: "https://www.star-pibu.com/treatments/under-eye-fat",
+    url: "https://star-pibu.com/treatments/under-eye-fat",
     description: "4,000례 이상 경험. 눈밑 과잉 지방을 눈물고랑으로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선.",
     bodyLocation: "눈밑, 눈물고랑",
     procedureType: "Surgical",
@@ -98,7 +98,7 @@ export const CLINIC_PROCEDURES = [
   {
     name: "리주란힐러",
     nameEn: "Rejuran Healer",
-    url: "https://www.star-pibu.com",
+    url: "https://star-pibu.com",
     description: "연어 DNA(PN) 성분으로 피부 재생 및 탄력 개선. 피부 속부터 근본적인 재생을 유도하는 항노화 시술.",
     bodyLocation: "얼굴 전체",
     procedureType: "Minimally Invasive",
@@ -108,7 +108,7 @@ export const CLINIC_PROCEDURES = [
   {
     name: "피코레이저 토닝",
     nameEn: "Pico Laser Toning",
-    url: "https://www.star-pibu.com",
+    url: "https://star-pibu.com",
     description: "피코초 단위 레이저로 색소 분해 및 피부 톤 개선. 기미·잡티·모공 개선에 효과적.",
     bodyLocation: "얼굴 전체",
     procedureType: "Noninvasive",

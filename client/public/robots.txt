@@ -13,7 +13,7 @@ Disallow: /.git
 Disallow: /node_modules
 
 # Sitemap 위치
-Sitemap: https://www.star-pibu.com/sitemap.xml
+Sitemap: https://star-pibu.com/sitemap.xml
 
 # 크롤링 속도 제한
 Crawl-delay: 1
@@ -79,5 +79,5 @@ Allow: /
 Crawl-delay: 1
 
 # ── AI 크롤러 전용 콘텐츠 파일 ────────────────────────────────────
-# LLM 최적화 콘텐츠: https://www.star-pibu.com/llms.txt
-# 전체 상세 콘텐츠: https://www.star-pibu.com/llms-full.txt
+# LLM 최적화 콘텐츠: https://star-pibu.com/llms.txt
+# 전체 상세 콘텐츠: https://star-pibu.com/llms-full.txt

@@ -25,8 +25,8 @@ import {
 // BASE_URL / SITE_NAME 불변성
 // ─────────────────────────────────────────────────────────────────────────────
 describe("BASE_URL / SITE_NAME 상수", () => {
-  it("BASE_URL이 https://www.star-pibu.com 이어야 한다", () => {
-    expect(BASE_URL).toBe("https://www.star-pibu.com");
+  it("BASE_URL이 https://star-pibu.com 이어야 한다", () => {
+    expect(BASE_URL).toBe("https://star-pibu.com");
   });
 
   it("SITE_NAME이 비어있지 않아야 한다", () => {

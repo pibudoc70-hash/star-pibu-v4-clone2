@@ -261,7 +261,7 @@ describe("buildWebSiteJsonLd", () => {
 
   it("url 필드가 BASE_URL이어야 한다", () => {
     const schema = buildWebSiteJsonLd();
-    expect(schema["url"]).toBe("https://www.star-pibu.com");
+    expect(schema["url"]).toBe("https://star-pibu.com");
   });
 
   it("name 필드가 존재해야 한다", () => {
@@ -284,14 +284,14 @@ describe("buildBreadcrumbJsonLd", () => {
   });
 
   it("@type이 BreadcrumbList여야 한다", () => {
-    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://www.star-pibu.com/" }]);
+    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://star-pibu.com/" }]);
     expect(schema?.["@type"]).toBe("BreadcrumbList");
   });
 
   it("itemListElement 배열 길이가 입력 배열과 일치해야 한다", () => {
     const items = [
-      { name: "홈", url: "https://www.star-pibu.com/" },
-      { name: "시술", url: "https://www.star-pibu.com/treatments" },
+      { name: "홈", url: "https://star-pibu.com/" },
+      { name: "시술", url: "https://star-pibu.com/treatments" },
     ];
     const schema = buildBreadcrumbJsonLd(items);
     const list = schema?.["itemListElement"] as unknown[];
@@ -299,10 +299,10 @@ describe("buildBreadcrumbJsonLd", () => {
   });
 
   it("각 ListItem에 position, name, item 필드가 있어야 한다", () => {
-    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://www.star-pibu.com/" }]);
+    const schema = buildBreadcrumbJsonLd([{ name: "홈", url: "https://star-pibu.com/" }]);
     const item = (schema?.["itemListElement"] as Record<string, unknown>[])[0];
     expect(item["position"]).toBe(1);
     expect(item["name"]).toBe("홈");
-    expect(item["item"]).toBe("https://www.star-pibu.com/");
+    expect(item["item"]).toBe("https://star-pibu.com/");
   });
 });

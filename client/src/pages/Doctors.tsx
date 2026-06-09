@@ -39,7 +39,7 @@ export default function Doctors() {
         title="의료진 소개 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 의료진. 피부과 전문의 조시형 원장 외 전문 의료진이 직접 진료합니다. 20년 이상의 감방 시술 경험."
         keywords="스타피부과 의료진, 조시형 원장, 부산피부과 전문의, 서면피부과 의사, 피부과전문의"
-        canonical="https://www.star-pibu.com/doctors"
+        canonical="https://star-pibu.com/doctors"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
               pageType="treatment"

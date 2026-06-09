@@ -6,30 +6,30 @@
 
 ## 병원 기본 정보
 
-- [병원 소개](https://www.star-pibu.com/about): 스타피부과 연혁, 의료진 소개, 시설 안내
-- [오시는 길](https://www.star-pibu.com/directions): 부산 서면 위치, 교통편, 주차 안내
-- [비급여 진료안내](https://www.star-pibu.com/non-covered): 시술별 비급여 가격 공시
-- [연구 및 발표 활동](https://www.star-pibu.com/research): 조시형 원장 논문·학회 발표 목록
+- [병원 소개](https://star-pibu.com/about): 스타피부과 연혁, 의료진 소개, 시설 안내
+- [오시는 길](https://star-pibu.com/directions): 부산 서면 위치, 교통편, 주차 안내
+- [비급여 진료안내](https://star-pibu.com/non-covered): 시술별 비급여 가격 공시
+- [연구 및 발표 활동](https://star-pibu.com/research): 조시형 원장 논문·학회 발표 목록
 
 ## 주요 시술
 
-- [시술·장비 소개](https://www.star-pibu.com/equipment2): 50종 이상 프리미엄 레이저·시술 장비 안내
-- [울쎄라피 프라임](https://www.star-pibu.com/treatments/ulthera): FDA 승인 집속 초음파(HIFU) 비수술 리프팅
-- [써마지 FLX](https://www.star-pibu.com/treatments/thermage): 4세대 고주파(RF) 리프팅, 조시형 원장 공식 자문의
-- [눈밑지방재배치](https://www.star-pibu.com/treatments/under-eye-fat): 4,000례 이상 경험, 다크서클·눈밑 볼록함 동시 개선
+- [시술·장비 소개](https://star-pibu.com/equipment2): 50종 이상 프리미엄 레이저·시술 장비 안내
+- [울쎄라피 프라임](https://star-pibu.com/treatments/ulthera): FDA 승인 집속 초음파(HIFU) 비수술 리프팅
+- [써마지 FLX](https://star-pibu.com/treatments/thermage): 4세대 고주파(RF) 리프팅, 조시형 원장 공식 자문의
+- [눈밑지방재배치](https://star-pibu.com/treatments/under-eye-fat): 4,000례 이상 경험, 다크서클·눈밑 볼록함 동시 개선
 
 ## 외국인 환자 안내
 
-- [영어 안내](https://www.star-pibu.com/en/foreign-guide): English guide for international patients
-- [일본어 안내](https://www.star-pibu.com/ja/foreign-guide): 外国人患者向け日本語案内
-- [중국어 안내](https://www.star-pibu.com/zh/foreign-guide): 外国患者中文指南
+- [영어 안내](https://star-pibu.com/en/foreign-guide): English guide for international patients
+- [일본어 안내](https://star-pibu.com/ja/foreign-guide): 外国人患者向け日本語案内
+- [중국어 안내](https://star-pibu.com/zh/foreign-guide): 外国患者中文指南
 
 ## 이벤트·예약
 
-- [특별 이벤트](https://www.star-pibu.com/#events): 현재 진행 중인 할인 이벤트
+- [특별 이벤트](https://star-pibu.com/#events): 현재 진행 중인 할인 이벤트
 - 네이버 예약: https://booking.naver.com/booking/13/bizes/209080
 - 카카오톡 상담: https://pf.kakao.com/_HNyGC
 
 ## Optional
 
-- [개인정보처리방침](https://www.star-pibu.com/privacy): 개인정보 처리 방침 전문
+- [개인정보처리방침](https://star-pibu.com/privacy): 개인정보 처리 방침 전문

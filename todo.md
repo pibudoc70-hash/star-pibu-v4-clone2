@@ -2272,3 +2272,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] round4.regression.test.ts: 테스트 정책 업데이트 (공개 상세 페이지 → pagesRequiringMedical)
 - [x] pr46.regression.test.ts: 테스트 검증 업데이트 (pageType="treatment" 확인)
 - [x] 모든 테스트 통과 (1,222개 테스트)
+
+## Phase 72: SEO 마이그레이션 - canonical URL 통일 (2026-06-09)
+- [x] BASE_URL을 https://www.star-pibu.com → https://star-pibu.com (non-www)으로 변경 (Cloudflare 301 일치)
+- [x] CLINIC_INFO.url, CLINIC_INFO.logo non-www로 변경
+- [x] SITE_ORIGIN (localizedPath.ts) non-www로 변경
+- [x] clinic-data.ts URL 필드 non-www로 변경
+- [x] index.html: og:url, hreflang, 정적 canonical 추가 (non-www)
+- [x] sitemap.xml: 전체 URL non-www로 변경 + pico-laser, rosacea, ruby-pico-laser, ulthera-classic 슬러그 추가
+- [x] robots.txt: Sitemap URL non-www로 변경
+- [x] llms.txt, llms-full.txt URL non-www로 변경
+- [x] server/email.ts fallback URL non-www로 변경
+- [x] 10개 페이지 파일 canonical/breadcrumb URL non-www로 변경
+- [x] 테스트 파일 업데이트 (1,222개 전체 통과)
+- [x] SEO 마이그레이션 보고서 작성

@@ -43,7 +43,7 @@ export default function Facilities() {
         title="시설 안내 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 시설 안내. 프리미엄 진료실, 첨단 시술실, 전용 회복실 등 세계 최고 수준의 의료 장비를 갖춘 전문 시술 공간."
         keywords="스타피부과 시설, 서면피부과 시설, 부산피부과 시설, 스타피부과 내부, 스타피부과 장비"
-        canonical="https://www.star-pibu.com/facilities"
+        canonical="https://star-pibu.com/facilities"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
         pageType="treatment"

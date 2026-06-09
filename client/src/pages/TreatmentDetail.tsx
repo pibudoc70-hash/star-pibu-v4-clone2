@@ -402,8 +402,8 @@ export default function TreatmentDetail() {
         ogImage={treatment.image}
         canonical={
           NAME_TO_SLUG[treatment.name]
-            ? `https://www.star-pibu.com/treatments/${NAME_TO_SLUG[treatment.name]}`
-            : `https://www.star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`
+            ? `https://star-pibu.com/treatments/${NAME_TO_SLUG[treatment.name]}`
+            : `https://star-pibu.com/treatment/${encodeURIComponent(treatment.name)}`
         }
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={
@@ -426,7 +426,7 @@ export default function TreatmentDetail() {
             "provider": {
               "@type": "MedicalClinic",
               "name": "스타피부과",
-              "url": "https://www.star-pibu.com",
+              "url": "https://star-pibu.com",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "부산광역시 부산진구 서면",

@@ -84,8 +84,8 @@ export const CLINIC_STAT_UNIT_MAP = {
 export const CLINIC_INFO = {
   name: "스타피부과",
   legalName: "의료법인 스타피부과",
-  url: "https://www.star-pibu.com",
-  logo: "https://www.star-pibu.com/logo.png",
+  url: "https://star-pibu.com",
+  logo: "https://star-pibu.com/logo.png",
   // [R21-P1-7] 클리닉 대표 이미지 단일 소스: assetConfig.CLINIC_REPRESENTATIVE_IMAGE
   // 이미지 URL 변경 시 assetConfig.ts만 수정하면 자동 반영됨
   image: CLINIC_REPRESENTATIVE_IMAGE,

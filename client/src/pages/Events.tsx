@@ -51,7 +51,7 @@ export default function Events() {
         title="이벤트 · 안내 | 부산 서면 스타피부과"
         description="부산 서면 스타피부과 이벤트 안내. 시술 할인, 신규 이벤트, 진료 공지 등 최신 소식을 확인하세요."
         keywords="스타피부과 이벤트, 서면피부과 할인, 부산피부과 이벤트, 스타피부과 공지"
-        canonical="https://www.star-pibu.com/events"
+        canonical="https://star-pibu.com/events"
         ogLocale="ko_KR"
         hreflangs={COMMON_HREFLANGS}
         pageType="treatment"

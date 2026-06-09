@@ -19,7 +19,7 @@ export type JsonLdSchema = {
 };
 
 export const SITE_NAME = "부산 서면 스타피부과";
-export const BASE_URL = "https://www.star-pibu.com";
+export const BASE_URL = "https://star-pibu.com";
 
 /** 언어별 사이트명 (og:site_name, JSON-LD name 필드에 사용) */
 export const SITE_NAME_LOCALIZED: Record<string, string> = {

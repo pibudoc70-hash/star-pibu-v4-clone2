@@ -2330,3 +2330,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] client/src/App.tsx: equipment3 관련 라우트 6개 추가
 - [x] client/src/hooks/useHeaderState.ts: More 패널에 "시술·장비 소개" 메뉴 추가
 - [x] client/src/pages/AdminDashboard.tsx: 사이드바에 "시술·장비소개 3 관리" 버튼 추가
+
+
+## Phase 75: equipment3 Best 시술 기능 (2026-06-09) - 진행 중
+- [x] DB 스키마: equipment3 테이블에 isBest 필드 추가 (boolean, default 0)
+- [x] AdminEquipment3New.tsx: "Best 시술에 추가" 체크박스 추가
+- [x] AdminEquipment3Edit.tsx: "Best 시술에 추가" 체크박스 추가
+- [ ] Equipment3.tsx: Best 카테고리 필터링 로직 추가 (isBest=1인 항목만 표시)
+- [ ] AdminEquipment3.tsx: Best 시술 표시 (행별 isBest 상태 표시)
+- [ ] 테스트 및 배포

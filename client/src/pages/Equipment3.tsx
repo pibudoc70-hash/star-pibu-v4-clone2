@@ -120,10 +120,25 @@ export default function Equipment3() {
 
   const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
 
-  // ── 탭: category 필드 기반 동적 생성 ─────────────────────────────────────
+  // ── 탭: category 필드 기반 동적 생성 + Best 시술 탭 ─────────────────────────
   const tabs = useMemo(() => {
     const seen = new Set<string>();
     const result: Array<{ id: string; label: string; labelEn: string; labelJa: string; labelZh: string }> = [];
+    
+    // Best 시술 탭 (isBest=1인 항목이 있으면 추가)
+    const hasBest = rawItems.some((item) => String(item.isBest) === "1");
+    if (hasBest) {
+      result.push({
+        id: "best",
+        label: "Best 시술",
+        labelEn: "Best Treatments",
+        labelJa: "ベスト施術",
+        labelZh: "最佳项目",
+      });
+      seen.add("best");
+    }
+    
+    // 카테고리 탭
     for (const item of rawItems) {
       const catId = item.category ?? "stem_cell";
       if (!seen.has(catId)) {
@@ -171,6 +186,11 @@ export default function Equipment3() {
   // 현재 탭 필터링
   const filteredItems = useMemo(() => {
     if (!activeId) return rawItems;
+    if (activeId === "best") {
+      // Best 시술 탭: isBest=1의 항목만
+      return rawItems.filter((item) => String(item.isBest) === "1");
+    }
+    // 다른 카테고리 탭: category 필드로 필터링
     return rawItems.filter((item) => (item.category ?? "stem_cell") === activeId);
   }, [rawItems, activeId]);
 

@@ -213,6 +213,11 @@ export default function AdminEquipment3() {
                         {item.badge}
                       </Badge>
                     )}
+                    {String(item.isBest) === "1" && (
+                      <Badge style={{ backgroundColor: "#d1ab67", color: "#fff" }} className="text-xs">
+                        ★ Best
+                      </Badge>
+                    )}
                     <Badge variant={item.isActive === "1" ? "default" : "secondary"}>
                       {item.isActive === "1" ? "활성" : "비활성"}
                     </Badge>

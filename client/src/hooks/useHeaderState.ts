@@ -142,6 +142,13 @@ export function useHeaderState() {
         history.replaceState(null, "", basePath);
         return;
       }
+      // 현재 페이지가 홈이 아닌 경우 홈으로 이동 후 해시 스크롤
+      // (예: /about, /equipment2 등에서 EVENT 메뉴 클릭 시)
+      if (!isHome) {
+        const homePath = basePath === "/" ? "" : basePath;
+        setLocation(homePath + href);
+        return;
+      }
       const scrollToEl = (el: Element) => {
         const offset = getHeaderOffset();
         const top = el.getBoundingClientRect().top + window.scrollY - offset;

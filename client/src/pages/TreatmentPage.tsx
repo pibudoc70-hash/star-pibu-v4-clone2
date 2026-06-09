@@ -228,7 +228,7 @@ export default function TreatmentPage() {
         ogLocale={LANG_TO_OG_LOCALE[currentLang] ?? "ko_KR"}
         hreflangs={treatmentHreflangs}
         jsonLd={jsonLdArray ?? undefined}
-        pageType="admin"
+        pageType="treatment"
       />
 
       {/* ── 히어로 배너 ── */}

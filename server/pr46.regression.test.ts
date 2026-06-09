@@ -121,16 +121,16 @@ describe("Stat suffix source-of-truth (PR-46/47)", () => {
 describe("SeoHead includeClinicSchema=false (PR-46)", () => {
   // [PHASE-4] includeClinicSchema → includeMedicalSchema 마이그레이션 (2026-06-06)
   // 레거시 prop은 제거되었으므로 includeMedicalSchema={false}로 검증
-  it(`TreatmentPage에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
-    expect(treatmentPageSource).toContain('pageType="admin"');
+  it(`TreatmentPage에 pageType="treatment" 이 있어야 한다 (공개 상세 페이지 인덱싱)`, () => {
+    expect(treatmentPageSource).toContain('pageType="treatment"');
   });
 
   it(`TreatmentDetail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
     expect(treatmentDetailSource).toContain('pageType="admin"');
   });
 
-  it(`Equipment2Detail에 pageType="admin" 이 있어야 한다 (pageType 마이그레이션)`, () => {
-    expect(equipment2DetailSource).toContain('pageType="admin"');
+  it(`Equipment2Detail에 pageType="treatment" 이 있어야 한다 (공개 상세 페이지 인덱싱)`, () => {
+    expect(equipment2DetailSource).toContain('pageType="treatment"');
   });
 
   it("SeoHead 구현에서 includeMedicalSchema=false 시 MedicalBusiness 스키마가 제외되어야 한다 (STRUCT-SEO-2)", () => {

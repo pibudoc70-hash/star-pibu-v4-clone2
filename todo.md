@@ -2260,3 +2260,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] robots.txt AI 크롤러 허용 정책 추가 (GPTBot, PerplexityBot, ClaudeBot 등)
 - [ ] sitemap.xml /research 페이지 추가
 - [ ] meta description AI 인용 최적화
+
+## Phase 71: SEO 최적화 - 공개 페이지 인덱싱 복구 (2026-06-09)
+- [x] TreatmentPage.tsx: pageType="admin" → pageType="treatment" 변경 (공개 시술 상세)
+- [x] EventDetail.tsx: pageType="admin" → pageType="treatment" 변경 (공개 이벤트 상세)
+- [x] Equipment2Detail.tsx: pageType="admin" → pageType="treatment" 변경 (공개 장비 상세)
+- [x] index.html: Naver·Kakao·AI 검색 최적화 메타 태그 추가
+  * og:locale, og:locale:alternate (다국어 지원)
+  * kakao:title, kakao:description, kakao:image (카카오 검색 최적화)
+  * robots, googlebot, bingbot (AI 크롤러 허용)
+- [x] round4.regression.test.ts: 테스트 정책 업데이트 (공개 상세 페이지 → pagesRequiringMedical)
+- [x] pr46.regression.test.ts: 테스트 검증 업데이트 (pageType="treatment" 확인)
+- [x] 모든 테스트 통과 (1,222개 테스트)

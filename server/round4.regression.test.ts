@@ -145,15 +145,16 @@ describe("SeoHead pageType 명시 정책 (Round-4-F)", () => {
     "client/src/pages/ForeignGuide.tsx",
     "client/src/pages/NonCoveredGuide.tsx",
     "client/src/pages/Equipment2.tsx",
+    "client/src/pages/TreatmentPage.tsx",
+    "client/src/pages/EventDetail.tsx",
+    "client/src/pages/Equipment2Detail.tsx",
   ];
 
   const pagesExcludingMedical = [
-    "client/src/pages/Equipment2Detail.tsx",
     "client/src/pages/NotFound.tsx",
     "client/src/pages/Privacy.tsx",
     "client/src/pages/Reserve.tsx",
     "client/src/pages/TreatmentDetail.tsx",
-    "client/src/pages/TreatmentPage.tsx",
   ];
 
   for (const pagePath of pagesRequiringMedical) {

@@ -87,10 +87,10 @@ export default function EventDetail() {
         ogImage={ogImg}
         ogSiteName={siteName}
         ogLocale={ogLocale}
-        ogLocaleAlternates={(["ko_KR", "en_US", "ja_JP", "zh_CN"] as const).filter((l) => l !== ogLocale)}
+        ogLocaleAlternates={((["ko_KR", "en_US", "ja_JP", "zh_CN"] as const).filter((l) => l !== ogLocale))}
         ogType="article"
         hreflangs={buildHreflangs(koPath, `/en${koPath}`, `/ja${koPath}`, `/zh${koPath}`)}
-        pageType="admin"
+        pageType="treatment"
       />
       <Header />
 

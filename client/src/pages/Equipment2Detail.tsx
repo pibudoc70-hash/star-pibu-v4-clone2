@@ -177,7 +177,7 @@ export default function Equipment2Detail() {
           `/zh/equipment2/${slug}`
         )}
         jsonLd={jsonLd}
-        pageType="admin"
+        pageType="treatment"
       />
 
       {/* 헤더 */}

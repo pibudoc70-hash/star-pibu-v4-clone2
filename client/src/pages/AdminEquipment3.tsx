@@ -31,7 +31,7 @@ export default function AdminEquipment3() {
     }
   }
 
-  const { data: items = [], isLoading } = trpc.equipment3.all.useQuery();
+  const { data: items = [], isLoading, error } = trpc.equipment3.all.useQuery();
   const [reordering, setReordering] = useState(false);
 
   const deleteMutation = trpc.equipment3.delete.useMutation({
@@ -139,6 +139,11 @@ export default function AdminEquipment3() {
         {/* 목록 */}
         {isLoading ? (
           <div className="text-center py-20 text-gray-500">로딩 중...</div>
+        ) : error ? (
+          <div className="text-center py-20 text-red-500">
+            <p className="mb-4">⚠️ 데이터 로드 실패</p>
+            <p className="text-sm">{error.message}</p>
+          </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <p className="mb-4">등록된 시술이 없습니다.</p>

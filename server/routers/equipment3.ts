@@ -3,7 +3,7 @@
  * - 공개: list (활성 목록), bySlug (단건 조회)
  * - 관리자: all (전체 목록), create, update, delete, reorder, uploadImage
  */
-import { adminProcedure, publicProcedure, router } from "../_core/trpc";
+import { adminProcedure, publicProcedure, protectedProcedure, router } from "../_core/trpc";
 import {
   getEquipment3List,
   getEquipment3All,
@@ -80,8 +80,8 @@ export const equipment3Router = router({
       return getEquipment3BySlug(input.slug);
     }),
 
-  // ── 관리자: 전체 목록 (비활성 포함) ──────────────────────────────────────────
-  all: adminProcedure.query(async () => {
+  // ── 보호됨: 전체 목록 (비활성 포함) ──────────────────────────────────────────
+  all: protectedProcedure.query(async () => {
     return getEquipment3All();
   }),
 

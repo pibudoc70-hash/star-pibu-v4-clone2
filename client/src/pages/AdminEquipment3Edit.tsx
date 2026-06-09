@@ -23,7 +23,7 @@ type FormData = {
   time: string; timeEn: string; timeJa: string; timeZh: string;
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
-  youtubeUrl: string; imageUrl: string; isActive: "0" | "1"; isBest: "0" | "1";
+  youtubeUrl: string; imageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1";
 };
 
 export default function AdminEquipment3Edit() {
@@ -38,11 +38,14 @@ export default function AdminEquipment3Edit() {
   const [form, setForm] = useState<FormData | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [galleryUploading, setGalleryUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
   // 데이터 로드 후 폼 초기화
   useEffect(() => {
     if (!item) return;
+    const images = item.images ? JSON.parse(item.images) : [];
     setForm({
       name: item.name ?? "",
       nameEn: item.nameEn ?? "", nameJa: item.nameJa ?? "", nameZh: item.nameZh ?? "",
@@ -66,6 +69,7 @@ export default function AdminEquipment3Edit() {
       badge: item.badge ?? "", badgeColor: item.badgeColor ?? "#4A6FA5",
       sortOrder: String(item.sortOrder ?? 0),
       youtubeUrl: item.youtubeUrl ?? "", imageUrl: item.imageUrl ?? "",
+      images: Array.isArray(images) ? images : [],
       isActive: (item.isActive ?? "1") as "0" | "1",
       isBest: (item.isBest ?? "0") as "0" | "1",
     });
@@ -96,6 +100,31 @@ export default function AdminEquipment3Edit() {
     }
   }
 
+  async function handleGalleryImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert("이미지 파일 크기는 5MB 이하여야 합니다."); return; }
+    setGalleryUploading(true);
+    try {
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const base64 = ev.target?.result as string;
+        const result = await uploadMutation.mutateAsync({ base64, fileName: file.name, mimeType: file.type });
+        setForm((prev) => prev ? { ...prev, images: [...prev.images, result.url] } : prev);
+        setGalleryUploading(false);
+        if (galleryFileInputRef.current) galleryFileInputRef.current.value = "";
+      };
+      reader.readAsDataURL(file);
+    } catch {
+      alert("이미지 업로드에 실패했습니다.");
+      setGalleryUploading(false);
+    }
+  }
+
+  function removeGalleryImage(index: number) {
+    setForm((prev) => prev ? { ...prev, images: prev.images.filter((_, i) => i !== index) } : prev);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form) return;
@@ -120,6 +149,7 @@ export default function AdminEquipment3Edit() {
         sortOrder: parseInt(form.sortOrder) || 0,
         youtubeUrl: form.youtubeUrl || undefined,
         imageUrl: form.imageUrl || undefined,
+        images: JSON.stringify(form.images),
         isActive: form.isActive,
         isBest: form.isBest,
       });
@@ -301,6 +331,32 @@ export default function AdminEquipment3Edit() {
             </CardContent>
           </Card>
 
+          {/* 이미지 갤러리 */}
+          <Card>
+            <CardHeader><CardTitle>이미지 갤러리 (시술 사례)</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <input ref={galleryFileInputRef} type="file" accept="image/*" className="hidden" onChange={handleGalleryImageUpload} />
+              <button type="button" onClick={() => galleryFileInputRef.current?.click()} disabled={galleryUploading}
+                className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-500 transition w-full justify-center">
+                <Upload className="h-5 w-5" />
+                {galleryUploading ? "업로드 중..." : "갤러리 이미지 추가 (최대 5MB)"}
+              </button>
+              {form.images.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {form.images.map((imgUrl, idx) => (
+                    <div key={idx} className="relative">
+                      <img src={imgUrl} alt={`갤러리 ${idx + 1}`} className="w-full h-40 object-cover rounded-lg" />
+                      <button type="button" onClick={() => removeGalleryImage(idx)}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           {/* 미디어 */}
           <Card>
             <CardHeader><CardTitle>YouTube 영상</CardTitle></CardHeader>
@@ -308,6 +364,7 @@ export default function AdminEquipment3Edit() {
               <Label htmlFor="youtubeUrl">YouTube embed URL</Label>
               <Input id="youtubeUrl" name="youtubeUrl" value={form.youtubeUrl} onChange={handleChange}
                 placeholder="https://www.youtube.com/embed/..." className="mt-1" />
+              <p className="text-xs text-gray-400 mt-2">💡 YouTube URL 형식: https://www.youtube.com/embed/VIDEO_ID</p>
             </CardContent>
           </Card>
 

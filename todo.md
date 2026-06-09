@@ -2332,10 +2332,48 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] client/src/pages/AdminDashboard.tsx: 사이드바에 "시술·장비소개 3 관리" 버튼 추가
 
 
-## Phase 75: equipment3 Best 시술 기능 (2026-06-09) - 진행 중
+## Phase 75: equipment3 Best 시술 기능 (2026-06-09) - 완료
 - [x] DB 스키마: equipment3 테이블에 isBest 필드 추가 (boolean, default 0)
 - [x] AdminEquipment3New.tsx: "Best 시술에 추가" 체크박스 추가
 - [x] AdminEquipment3Edit.tsx: "Best 시술에 추가" 체크박스 추가
-- [ ] Equipment3.tsx: Best 카테고리 필터링 로직 추가 (isBest=1인 항목만 표시)
-- [ ] AdminEquipment3.tsx: Best 시술 표시 (행별 isBest 상태 표시)
-- [ ] 테스트 및 배포
+- [x] Equipment3.tsx: Best 카테고리 필터링 로직 추가 (isBest=1의 항목만 표시)
+- [x] AdminEquipment3.tsx: Best 시술 표시 (행별 isBest 상태 표시)
+
+
+## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 진행 중
+- [ ] equipment2의 모든 탭별 시술·장비 데이터 수집 (14개 탭 × 6~12개 항목)
+- [ ] equipment3에 모든 탭의 시술·장비 자동 등록 스크립트 작성
+- [ ] equipment3 페이지에서 모든 탭 표시 확인
+- [ ] 배포 및 최종 테스트
+
+
+## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 진행 중
+- [x] 리프팅·탄력 탭 12개 장비 등록 완료 (2026-06-09)
+  * 울써라피 프라임 (Ultherapy Prime)
+  * 써마지 FLX (Thermage FLX)
+  * XERF 세르프
+  * 울써라 (Ulthera)
+  * 프로파운드 (Profound)
+  * 텐써라 (Tense라)
+  * 버츄RF (Virtue RF)
+  * 슈링크 유니버스 (Shrink Universe)
+  * 온다 (Onda)
+  * 텐써마 (Tensema)
+  * BBL 스킨타이트 (BBL Skintight)
+  * 트리니티 리프팅 (Trinity Lifting)
+- [x] 나머지 13개 탭 데이터 수집 및 등록 완료 (2026-06-09)
+  * 색소·문신: 6개 장비
+  * 흉터·모공: 2개 장비
+  * 여드름: 3개 장비
+  * 홍조·혈관: 3개 장비
+  * 액취증·다한증: 1개 장비
+  * 손·발톱무좀: 1개 장비
+  * 건선·아토피: 1개 장비
+  * 눈밑지방재배치: 2개 장비
+  * 백반증: 2개 장비
+  * 볼륨·부스터: 3개 장비
+  * 보톡스·필러: 3개 장비
+  * Best 시술: 6개 장비
+  * 줄기세포 치료: 1개 장비
+- [x] equipment3 페이지에서 모든 탭 표시 확인 완료
+- [x] 총 52개 장비 데이터 등록 완료

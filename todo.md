@@ -2286,3 +2286,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 10개 페이지 파일 canonical/breadcrumb URL non-www로 변경
 - [x] 테스트 파일 업데이트 (1,222개 전체 통과)
 - [x] SEO 마이그레이션 보고서 작성
+
+## Phase 73: 연구 및 발표활동 다국어 번역 (2026-06-09)
+- [x] i18n.types.ts에 researchPage 타입 추가
+- [x] i18n.ko.ts 한국어 번역 데이터 추가
+- [x] i18n.en.ts 영어 번역 데이터 추가
+- [x] i18n.ja.ts 일본어 번역 데이터 추가
+- [x] i18n.zh.ts 중국어 번역 데이터 추가
+- [x] Research.tsx useLang() 훅 기반 다국어 지원으로 완전 리팩토링
+- [x] App.tsx에 /en/research, /ja/research, /zh/research 라우트 추가
+- [x] 1222개 테스트 전체 통과

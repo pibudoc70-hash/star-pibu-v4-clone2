@@ -384,5 +384,44 @@ export interface I18nContent {
     notFound: string;
     notFoundBack: string;
   };
+  researchPage: {
+    heroEyebrow: string;
+    heroTitle: string;
+    heroDesc: string;
+    statIntl: string;
+    statDomestic: string;
+    statCitations: string;
+    intlJournalTitle: string;
+    intlJournalSubtitle: string;
+    domesticJournalTitle: string;
+    domesticJournalSubtitle: string;
+    presentationsTitle: string;
+    presentationsSubtitle: string;
+    trainingsTitle: string;
+    trainingsSubtitle: string;
+    membershipsTitle: string;
+    membershipsSubtitle: string;
+    badgeIntl: string;
+    badgeDomestic: string;
+    badgeCitations: string;
+    pubmedLabel: string;
+    papers: Array<{
+      id: number;
+      title: string;
+      detail: string;
+    }>;
+    presentations: Array<{
+      id: number;
+      title: string;
+      event: string;
+      detail: string;
+    }>;
+    trainings: Array<{
+      id: number;
+      detail: string;
+      location: string;
+    }>;
+    memberships: string[];
+  };
 }
 

@@ -3,6 +3,7 @@
  * URL: /admin/equipment3
  *
  * 기능:
+ *  - 카테고리(탭) 순서 변경
  *  - 전체 시술 목록 표시 (비활성 포함)
  *  - 드래그 없이 ↑↓ 버튼으로 순서 변경
  *  - 활성/비활성 토글
@@ -22,6 +23,7 @@ import {
 export default function AdminEquipment3() {
   const [, navigate] = useLocation();
   const utils = trpc.useUtils();
+  const [categoryReordering, setCategoryReordering] = useState(false);
 
   function toast({ title, description, variant }: { title: string; description?: string; variant?: string }) {
     if (variant === "destructive") {
@@ -51,10 +53,65 @@ export default function AdminEquipment3() {
     onSuccess: () => {
       utils.equipment3.all.invalidate();
       setReordering(false);
+      setCategoryReordering(false);
       toast({ title: "순서 저장 완료" });
     },
     onError: (err) => toast({ title: "순서 저장 실패", description: err.message, variant: "destructive" }),
   });
+
+  // 카테고리별 그룹화
+  const categoriesMap = new Map<string, typeof items>();
+  items.forEach(item => {
+    const cat = item.category || "기타";
+    if (!categoriesMap.has(cat)) {
+      categoriesMap.set(cat, []);
+    }
+    categoriesMap.get(cat)!.push(item);
+  });
+
+  // 카테고리 순서 (첫 항목의 sortOrder 기준)
+  const categories = Array.from(categoriesMap.entries())
+    .map(([name, items]) => ({
+      name,
+      items,
+      sortOrder: Math.min(...items.map(i => i.sortOrder)),
+    }))
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  const [localCategoryOrder, setLocalCategoryOrder] = useState<typeof categories>([]);
+  const displayCategories = categoryReordering ? localCategoryOrder : categories;
+
+  function startCategoryReorder() {
+    setLocalCategoryOrder([...categories]);
+    setCategoryReordering(true);
+  }
+
+  function cancelCategoryReorder() {
+    setCategoryReordering(false);
+    setLocalCategoryOrder([]);
+  }
+
+  function moveCategoryItem(index: number, direction: "up" | "down") {
+    const arr = [...localCategoryOrder];
+    const target = direction === "up" ? index - 1 : index + 1;
+    if (target < 0 || target >= arr.length) return;
+    [arr[index], arr[target]] = [arr[target], arr[index]];
+    setLocalCategoryOrder(arr);
+  }
+
+  function saveCategoryOrder() {
+    const updates: Array<{ id: number; sortOrder: number }> = [];
+    let currentSortOrder = 0;
+    
+    localCategoryOrder.forEach(category => {
+      category.items.forEach(item => {
+        updates.push({ id: item.id, sortOrder: currentSortOrder });
+        currentSortOrder++;
+      });
+    });
+
+    reorderMutation.mutate({ items: updates });
+  }
 
   // 로컬 순서 상태 (순서 변경 편집 모드용)
   const [localOrder, setLocalOrder] = useState<typeof items>([]);
@@ -114,7 +171,14 @@ export default function AdminEquipment3() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            {reordering ? (
+            {categoryReordering ? (
+              <>
+                <Button variant="outline" size="sm" onClick={cancelCategoryReorder}>취소</Button>
+                <Button size="sm" onClick={saveCategoryOrder} disabled={reorderMutation.isPending}>
+                  {reorderMutation.isPending ? "저장 중..." : "탭 순서 저장"}
+                </Button>
+              </>
+            ) : reordering ? (
               <>
                 <Button variant="outline" size="sm" onClick={cancelReorder}>취소</Button>
                 <Button size="sm" onClick={saveOrder} disabled={reorderMutation.isPending}>
@@ -123,9 +187,13 @@ export default function AdminEquipment3() {
               </>
             ) : (
               <>
+                <Button variant="outline" size="sm" onClick={startCategoryReorder}>
+                  <GripVertical className="h-4 w-4 mr-1" />
+                  탭 순서 변경
+                </Button>
                 <Button variant="outline" size="sm" onClick={startReorder}>
                   <GripVertical className="h-4 w-4 mr-1" />
-                  순서 변경
+                  항목 순서 변경
                 </Button>
                 <Button size="sm" onClick={() => navigate("/admin/equipment3/new")}>
                   <Plus className="h-4 w-4 mr-1" />
@@ -136,15 +204,54 @@ export default function AdminEquipment3() {
           </div>
         </div>
 
+        {/* 카테고리 순서 관리 */}
+        {categoryReordering && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <h2 className="font-semibold text-blue-900 mb-3">탭(카테고리) 순서 변경</h2>
+            <p className="text-blue-800 text-sm mb-4">
+              ↑↓ 버튼으로 탭의 순서를 변경하세요. 변경 후 "탭 순서 저장" 버튼을 클릭하면 /equipment3 페이지에 반영됩니다.
+            </p>
+            <div className="space-y-2">
+              {displayCategories.map((category, idx) => (
+                <div key={category.name} className="bg-white rounded-lg p-3 flex items-center gap-3">
+                  <div className="flex flex-col gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => moveCategoryItem(idx, "up")}
+                      disabled={idx === 0}
+                      className="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveCategoryItem(idx, "down")}
+                      disabled={idx === displayCategories.length - 1}
+                      className="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <span className="text-gray-400 text-sm font-mono w-6 text-center shrink-0">
+                    {idx + 1}
+                  </span>
+                  <span className="font-semibold text-gray-900">{category.name}</span>
+                  <span className="text-gray-500 text-sm ml-auto">({category.items.length}개 항목)</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* 목록 */}
-        {isLoading ? (
+        {categoryReordering ? null : isLoading ? (
           <div className="text-center py-20 text-gray-500">로딩 중...</div>
         ) : error ? (
           <div className="text-center py-20 text-red-500">
             <p className="mb-4">⚠️ 데이터 로드 실패</p>
             <p className="text-sm">{error.message}</p>
           </div>
-        ) : items.length === 0 ? (
+        ) : !categoryReordering && items.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <p className="mb-4">등록된 시술이 없습니다.</p>
             <Button onClick={() => navigate("/admin/equipment3/new")}>
@@ -152,7 +259,7 @@ export default function AdminEquipment3() {
               첫 시술 등록하기
             </Button>
           </div>
-        ) : (
+        ) : !categoryReordering ? (
           <div className="space-y-3">
             {displayItems.map((item, idx) => (
               <div
@@ -272,12 +379,12 @@ export default function AdminEquipment3() {
               </div>
             ))}
           </div>
-        )}
+        ) : null}
 
         {/* 하단 안내 */}
-        {!reordering && items.length > 0 && (
+        {!reordering && !categoryReordering && items.length > 0 && (
           <p className="text-center text-gray-400 text-sm mt-6">
-            총 {items.length}개 시술 (활성: {items.filter(i => i.isActive === "1").length}개)
+            총 {items.length}개 시술 (활성: {items.filter(i => i.isActive === "1").length}개) | 탭(카테고리): {categories.length}개
           </p>
         )}
       </div>

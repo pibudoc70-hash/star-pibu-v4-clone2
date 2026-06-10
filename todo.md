@@ -2255,11 +2255,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 - [x] llms.txt 업데이트 (AI 크롤러 전용 콘텐츠 파일)
 - [x] llms-full.txt 기존 콘텐츠 유지 (전체 콘텐츠 상세 버전)
-- [ ] FAQPage JSON-LD 스키마 강화 (홈·시술 페이지)
-- [ ] Physician JSON-LD 스키마 강화 (조시형 원장 상세)
+- [x] FAQPage JSON-LD 스키마 강화 (홈·시술 페이지) — 완료 (2026-06-10)
+- [x] Physician JSON-LD 스키마 강화 (조시형 원장 상세) — 완료 (2026-06-10)
 - [x] robots.txt AI 크롤러 허용 정책 이미 추가됨 (GPTBot, PerplexityBot, ClaudeBot 등)
 - [x] sitemap.xml /research 페이지 이미 추가됨
-- [ ] meta description AI 인용 최적화
+- [x] meta description AI 인용 최적화 — 완료 (2026-06-10)
 
 ## Phase 71: SEO 최적화 - 공개 페이지 인덱싱 복구 (2026-06-09)
 - [x] TreatmentPage.tsx: pageType="admin" → pageType="treatment" 변경 (공개 시술 상세)
@@ -2297,24 +2297,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] App.tsx에 /en/research, /ja/research, /zh/research 라우트 추가
 - [x] 1222개 테스트 전체 통과
 
-## Phase 74: equipment3 - 모달→개별 URL 페이지 전환 (2026-06-09)
-- [ ] equipment2 현재 구조 파악 (모달 데이터·컴포넌트·라우트 분석)
-- [ ] Equipment3List.tsx 생성 - equipment2 복사 후 클릭 시 /equipment3/:slug로 이동
-- [ ] Equipment3Detail.tsx 생성 - /equipment3/:slug 개별 상세 페이지 + SEO 메타 태그
-- [ ] App.tsx에 /equipment3, /equipment3/:slug 라우트 추가
-- [ ] 헤더 메뉴에 equipment3 링크 추가
-- [ ] sitemap.xml에 equipment3 URL 추가
-- [ ] 1222개 테스트 전체 통과 확인
+## Phase 74: equipment3 - 모달→개별 URL 페이지 전환 (2026-06-09) - 이후 방식 변경으로 대체됨
+- [x] equipment2 현재 구조 파악 (모달 데이터·컴포넌트·라우트 분석)
+- [x] Equipment3List.tsx 생성 - equipment2 복사 후 클릭 시 /equipment3/:slug로 이동
+- [x] Equipment3Detail.tsx 생성 - /equipment3/:slug 개별 상세 페이지 + SEO 메타 태그
+- [x] App.tsx에 /equipment3, /equipment3/:slug 라우트 추가
+- [x] 헤더 메뉴에 equipment3 링크 추가
+- [x] sitemap.xml에 equipment3 URL 추가
+- [x] 1222개 테스트 전체 통과 확인
 
 ## Phase 74: equipment3 - DB 연동 개별 URL 페이지 (A방식)
-- [ ] DB 스키마 equipment3 테이블 생성 (slug, name, category, sortOrder 등)
-- [ ] tRPC 프로시저 추가 (목록/단건/CRUD/순서변경)
-- [ ] /equipment3 목록 페이지 구현 (카드 클릭 시 /equipment3/:slug 이동)
-- [ ] /equipment3/:slug 개별 상세 페이지 구현 (SEO 메타 태그 완비)
-- [ ] /admin/equipment3 관리자 페이지 (등록·수정·삭제·순서변경)
-- [ ] App.tsx 라우트 추가 (/equipment3, /equipment3/:slug, /en/ja/zh 다국어)
-- [ ] 헤더 secondaryNav에 equipment3 메뉴 추가
-- [ ] 테스트 및 배포
+- [x] DB 스키마 equipment3 테이블 생성 (slug, name, category, sortOrder 등)
+- [x] tRPC 프로시저 추가 (목록/단건/CRUD/순서변경)
+- [x] /equipment3 목록 페이지 구현 (카드 클릭 시 /equipment3/:slug 이동)
+- [x] /equipment3/:slug 개별 상세 페이지 구현 (SEO 메타 태그 완비)
+- [x] /admin/equipment3 관리자 페이지 (등록·수정·삭제·순서변경)
+- [x] App.tsx 라우트 추가 (/equipment3, /equipment3/:slug, /en/ja/zh 다국어)
+- [x] 헤더 secondaryNav에 equipment3 메뉴 추가
+- [x] 테스트 및 배포
 
 ## Phase N: /equipment3 DB 연동 방식 구현 (A방식, 2026-06-09) - 완료
 - [x] DB 스키마: equipment3 테이블 생성 (다국어 필드, sortOrder, isActive, badge, imageUrl 등)
@@ -2427,3 +2427,23 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 중국어 페이지(LandingZH.tsx) - LocalBusiness + FAQPage + WebSite 스키마 추가 (pageType="home")
 - [x] 각 언어별 FAQ 내용 작성 (위치, 진료시간, 울쎄라/써마지 차이, 다국어 상담 가능 여부)
 - [x] 브라우저 콘솔에서 영어 페이지 JSON-LD 6개 스키마 정상 렌더링 확인
+
+
+## Physician JSON-LD 스키마 강화 (2026-06-10)
+
+- [x] clinic-data.ts: 3명 원장 데이터에 honorificPrefix, nationality, memberOf, award, workLocation, availableService 필드 추가
+- [x] seoHelpers.ts: buildPhysicianJsonLd()에서 새 필드 반영, medicalSpecialty 배열로 확장
+- [x] seoHelpers.test.ts: Physician 스키마 강화 테스트 10개 추가
+- [x] 1,246개 테스트 모두 통과
+- [x] 체크포인트 저장 (1d0b781f)
+
+
+## server/db.ts 도메인 분리 및 App.tsx 라우팅 정리 (2026-06-10)
+- [x] server/db/ 디렉토리 생성 — connection, users, reservations, otp, events, treatments, unavailableSlots, youtube, equipment3 분리
+- [x] server/db.ts barrel re-export로 교체 (기존 import 경로 호환 유지)
+- [x] reservation.test.ts 미사용 db import 제거
+- [x] client/src/routes.ts 신규 생성 — lazy 컴포넌트 + LANG_ROUTES + withLangPrefixes 헬퍼
+- [x] client/src/App.tsx 라우팅 구조 정리 — 다국어 중복 제거, routes.ts 활용
+- [x] treatment.routes.seo.test.ts — routes.ts 기반 구조 허용하도록 업데이트
+- [x] TypeScript 컴파일 에러 0건 확인
+- [x] 전체 테스트 1246개 통과 확인

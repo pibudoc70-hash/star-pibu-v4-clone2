@@ -5,7 +5,6 @@
  * - 관리자 예약 관리
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { db } from "./db";
 import { createReservation, getReservationsByUserId, getAllReservations, updateReservationStatus, cancelReservation, getReservationStats } from "./db";
 
 describe("Reservation System", () => {

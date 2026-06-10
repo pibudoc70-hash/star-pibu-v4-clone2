@@ -248,6 +248,8 @@ export function buildClinicJsonLd(
       alternateName: doc.nameEn,
       jobTitle: doc.jobTitle,
       url: doc.url,
+      image: doc.image,
+      description: doc.description,
       worksFor: { "@id": `${clinicInfo.url}/#organization` },
       medicalSpecialty: {
         "@type": "MedicalSpecialty",
@@ -258,7 +260,17 @@ export function buildClinicJsonLd(
         "@type": "EducationalOccupationalCredential",
         credentialCategory: cred,
       })),
-    })),
+      ...(doc.sameAs.length > 0 && { sameAs: doc.sameAs }),
+      ...(doc.alumniOf && doc.alumniOf.length > 0 && { alumniOf: doc.alumniOf.map((school) => ({
+        "@type": "EducationalOrganization",
+        name: school.name,
+        url: school.url,
+      })) })
+    })).map((physician: Record<string, unknown>) => {
+      // undefined 필드 제거
+      Object.keys(physician).forEach(key => physician[key] === undefined && delete physician[key]);
+      return physician;
+    }),
     // [SRP-DI] 파라미터로 주입된 clinicProcedures 사용
     availableService: clinicProcedures.map((proc) => ({
       "@type": "MedicalProcedure",

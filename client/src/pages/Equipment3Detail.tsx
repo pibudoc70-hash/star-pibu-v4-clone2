@@ -316,22 +316,32 @@ export default function Equipment3Detail() {
         )}
 
         {/* YouTube 영상 */}
-        {item.youtubeUrl && (
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.video}</h2>
-            <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
-              <iframe
-                width="100%"
-                height="100%"
-                src={item.youtubeUrl}
-                title={localizedName}
-                style={{ border: "none" }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </section>
-        )}
+        {item.youtubeUrl && (() => {
+          const getEmbedUrl = (url: string) => {
+            if (!url) return '';
+            if (url.includes('/embed/')) return url;
+            const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+            if (videoIdMatch) return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+            return url;
+          };
+          const embedUrl = getEmbedUrl(item.youtubeUrl);
+          return (
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.video}</h2>
+              <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={embedUrl}
+                  title={localizedName}
+                  style={{ border: "none" }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </section>
+          );
+        })()}
 
         {/* 목록으로 돌아가기 */}
         <div className="mt-8">

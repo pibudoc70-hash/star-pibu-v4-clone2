@@ -25,24 +25,36 @@ export default function FAQSection() {
   /**
    * FAQ 스키마 생성 함수
    * 현재 선택된 장비의 Q&A를 JSON-LD 형식으로 변환
+   * (모든 탭의 FAQ를 포함하여 SEO 최적화)
    */
   const generateFAQSchema = () => {
-    const currentFAQ = (faq.items as FAQItem[])[openEquipment];
-    if (!currentFAQ || !currentFAQ.questions || currentFAQ.questions.length === 0) {
+    const allFAQItems = (faq.items as FAQItem[]);
+    if (!allFAQItems || allFAQItems.length === 0) {
+      return null;
+    }
+
+    // 모든 Q&A 수집
+    const allQuestions = allFAQItems
+      .filter(item => item.questions && item.questions.length > 0)
+      .flatMap((item: FAQItem) =>
+        item.questions.map((qa: FAQQuestion) => ({
+          "@type": "Question",
+          "name": qa.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": qa.a
+          }
+        }))
+      );
+
+    if (allQuestions.length === 0) {
       return null;
     }
 
     return {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": currentFAQ.questions.map((qa: FAQQuestion) => ({
-        "@type": "Question",
-        "name": qa.q,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": qa.a
-        }
-      }))
+      "mainEntity": allQuestions
     };
   };
 

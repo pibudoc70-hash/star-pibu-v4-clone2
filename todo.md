@@ -2378,3 +2378,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   * 줄기세포 치료: 1개 장비
 - [x] equipment3 페이지에서 모든 탭 표시 확인 완료
 - [x] 총 52개 장비 데이터 등록 완료
+
+
+## AI 검색 최적화 (AIO) 완료 - 2026-06-10
+
+- [x] FAQPage JSON-LD 스키마 강화 (모든 탭 FAQ 통합 렌더링)
+- [x] Physician JSON-LD 스키마 강화 (image, description, sameAs, alumniOf 필드 추가)
+- [x] clinic-data.ts 의사 데이터 확장 (이미지, 설명, 소셜 링크, 학력 기관 추가)
+- [x] seoHelpers.ts Physician 스키마 개선 (spread operator로 조건부 필드 포함)
+- [x] meta description AI 인용 최적화 검토 (홈페이지 meta description 이미 최적화됨)

@@ -18,7 +18,13 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
     url: "https://star-pibu.com/#doctors",
-    sameAs: [] as string[],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_01_2e3c0c6f.jpg",
+    description: "20년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 4,000례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.",
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu"
+    ],
     credentials: [
       "피부과 전문의",
       "부산대학병원 피부과 수련",
@@ -28,6 +34,10 @@ export const CLINIC_DOCTORS = [
       "미국 피부과 학회 정회원(AAD)",
     ],
     specialties: ["눈밑지방재배치", "리프팅", "울쎄라", "써마지", "흉터치료", "색소치료"],
+    alumniOf: [
+      { name: "부산대학교 의과대학", url: "https://med.pusan.ac.kr" },
+      { name: "인제대학교 의과대학", url: "https://med.inje.ac.kr" }
+    ],
   },
   {
     name: "우혜진",
@@ -35,7 +45,13 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의",
     jobTitleEn: "Dermatologist, MD",
     url: "https://star-pibu.com/#doctors",
-    sameAs: [] as string[],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_02_8e3c0c6f.jpg",
+    description: "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라, 써마지 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu"
+    ],
     credentials: [
       "피부과 전문의",
       "카톨릭의대 피부과 수련",
@@ -44,6 +60,9 @@ export const CLINIC_DOCTORS = [
       "미국 피부과 학회 정회원(AAD)",
     ],
     specialties: ["리프팅", "울쎄라", "써마지", "흉터치료", "색소치료", "피부질환"],
+    alumniOf: [
+      { name: "카톨릭대학교 의과대학", url: "https://med.catholic.ac.kr" }
+    ],
   },
   {
     name: "이기욱",
@@ -51,7 +70,13 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
     url: "https://star-pibu.com/#doctors",
-    sameAs: [] as string[],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_03_8e3c0c6f.jpg",
+    description: "고신대학교 의과대학 의학박사. 리프팅, 색소치료, 백반증 치료 등 다양한 피부질환 치료에 전문성을 갖추고 있습니다.",
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu"
+    ],
     credentials: [
       "피부과 전문의",
       "고신대학교 의과대학 의학박사",
@@ -60,6 +85,9 @@ export const CLINIC_DOCTORS = [
       "대한 피부과의사회 정회원",
     ],
     specialties: ["리프팅", "울쎄라", "써마지", "색소치료", "백반증", "피부질환"],
+    alumniOf: [
+      { name: "고신대학교 의과대학", url: "https://med.ksu.ac.kr" }
+    ],
   },
 ] as const;
 

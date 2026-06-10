@@ -90,9 +90,12 @@ export function useHeaderState() {
   const handleLangChange = (option: LangOption) => {
     setLangDropOpen(false);
     setLang(option.lang, true);
-    // [FIX] 언어 변경 시 hash를 제거하고 항상 상단으로 이동
-    // hash를 유지하면 브라우저가 자동으로 해당 섹션으로 스크롤함
-    // 예: 의료진 섹션 보다가 영어로 변경 → #doctors hash 유지 → 의료진 섹션으로 자동 스크롤
+    // [FIX v2] 언어 변경 시 완전히 상단으로 이동
+    // 1. scroll restoration 비활성화 (브라우저 자동 스크롤 방지)
+    // 2. 명시적으로 상단으로 스크롤
+    // 3. hash 제거하고 새 URL로 이동
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
     window.location.replace(buildLocalizedPath(option.lang));
   };
 

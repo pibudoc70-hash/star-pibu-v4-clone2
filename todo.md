@@ -2408,3 +2408,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   * 해결: useHeaderState.ts 라인 90-96 수정 (hash 제거하고 항상 상단으로 이동)
   * 테스트: 한국어 → 영어 변경 시 상단으로 이동 확인 ✅
   * 모든 테스트 통과 (1,222개)
+
+
+## 버그 수정 - 언어 변경 시 의료진 섹션 자동 스크롤 (2026-06-10)
+
+- [x] useHeaderState.ts handleLangChange 함수 수정
+  * history.scrollRestoration = "manual" 추가 (브라우저 자동 스크롤 복원 비활성화)
+  * window.scrollTo(0, 0) 추가 (명시적으로 상단으로 이동)
+  * window.location.replace()로 hash 제거하고 새 URL로 이동
+- [x] 모든 언어에서 테스트 완료 (한국어 → 영어 → 한국어)
+- [x] 모든 테스트 통과 (1,222개 테스트)

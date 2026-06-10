@@ -86,14 +86,7 @@ function Router() {
             {/* 이벤트 상세 */}
             <Route path="/events/:id" component={EventDetail} />
 
-            {/*
-             * TREATMENT DETAIL — 두 구조 공존 (PR-31)
-             * CANONICAL: /treatments/:slug (TreatmentPage) — 다국어 포함
-             * LEGACY BRIDGE: /treatment/:name (TreatmentRedirect) → /treatments/:slug 로 replace
-             *   - PR-32: 7개 시술 모두 slug 파일 완비
-             *   - PR-33: 미지정 slug → /404 redirect
-             *   - TreatmentDetail.tsx 는 참조용으로만 보존, 라우트 미연결
-             */}
+            {/* /treatment/:name → /treatments/:slug redirect (legacy URL 호환 브릿지) */}
             <Route path="/treatment/:name" component={TreatmentRedirect} />
 
             {/* 다국어 라우트 — LANG_ROUTES 배열 기반 자동 생성 */}

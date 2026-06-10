@@ -443,3 +443,84 @@ describe("buildOpeningHoursSpec — DRY 공통 헬퍼", () => {
     expect(clinicSpecs).toEqual(localSpecs);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// buildLocalBusinessJsonLd — 지역 검색 최적화 필드 검증
+// ─────────────────────────────────────────────────────────────────────────────
+describe("buildLocalBusinessJsonLd — 지역 검색 최적화 필드", () => {
+  it("hasMap 필드가 Google Maps URL 형식이어야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    expect(schema["hasMap"]).toMatch(/^https:\/\/maps\.google\.com\/\?q=/);
+  });
+
+  it("review 배열이 존재하고 Schema.org Review 타입이어야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const reviews = schema["review"] as Record<string, unknown>[];
+    expect(Array.isArray(reviews)).toBe(true);
+    expect(reviews.length).toBeGreaterThan(0);
+    expect(reviews[0]["@type"]).toBe("Review");
+    expect(reviews[0]["reviewBody"]).toBeTruthy();
+    expect(reviews[0]["datePublished"]).toBeTruthy();
+  });
+
+  it("amenityFeature 배열이 LocationFeatureSpecification 타입이어야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const features = schema["amenityFeature"] as Record<string, unknown>[];
+    expect(Array.isArray(features)).toBe(true);
+    expect(features.length).toBeGreaterThan(0);
+    expect(features[0]["@type"]).toBe("LocationFeatureSpecification");
+    expect(features[0]["name"]).toBeTruthy();
+    expect(features[0]["value"]).toBe(true);
+  });
+
+  it("areaServed 배열이 여러 지역을 포함해야 한다 (부산, 부산진구, 서면)", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const areas = schema["areaServed"] as Record<string, unknown>[];
+    expect(Array.isArray(areas)).toBe(true);
+    expect(areas.length).toBeGreaterThanOrEqual(3);
+    const names = areas.map((a) => a["name"]);
+    expect(names).toContain("Busan");
+    expect(names).toContain("Busanjin-gu");
+    expect(names).toContain("Seomyeon");
+  });
+
+  it("specialOpeningHoursSpecification 배열이 점심시간 정보를 포함해야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const special = schema["specialOpeningHoursSpecification"] as Record<string, unknown>[];
+    expect(Array.isArray(special)).toBe(true);
+    expect(special.length).toBeGreaterThan(0);
+    expect(special[0]["@type"]).toBe("OpeningHoursSpecification");
+    expect(special[0]["opens"]).toBe("13:00");
+    expect(special[0]["closes"]).toBe("14:00");
+  });
+
+  it("hasOfferCatalog가 OfferCatalog 타입이고 시술 목록을 포함해야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const catalog = schema["hasOfferCatalog"] as Record<string, unknown>;
+    expect(catalog["@type"]).toBe("OfferCatalog");
+    const items = catalog["itemListElement"] as Record<string, unknown>[];
+    expect(Array.isArray(items)).toBe(true);
+    expect(items.length).toBeGreaterThan(0);
+    expect(items[0]["@type"]).toBe("Offer");
+    const offered = items[0]["itemOffered"] as Record<string, unknown>;
+    expect(offered["@type"]).toBe("MedicalProcedure");
+    expect(offered["name"]).toBeTruthy();
+  });
+
+  it("review의 author가 Person 타입이어야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const reviews = schema["review"] as Record<string, unknown>[];
+    const author = reviews[0]["author"] as Record<string, unknown>;
+    expect(author["@type"]).toBe("Person");
+    expect(author["name"]).toBeTruthy();
+  });
+
+  it("review의 reviewRating이 Rating 타입이어야 한다", () => {
+    const schema = buildLocalBusinessJsonLd();
+    const reviews = schema["review"] as Record<string, unknown>[];
+    const rating = reviews[0]["reviewRating"] as Record<string, unknown>;
+    expect(rating["@type"]).toBe("Rating");
+    expect(rating["ratingValue"]).toBe("5");
+    expect(rating["bestRating"]).toBe("5");
+  });
+});

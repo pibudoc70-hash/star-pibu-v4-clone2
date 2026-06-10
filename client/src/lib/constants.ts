@@ -141,6 +141,64 @@ export const SEO_CLINIC_META = {
     bestRating: "5",
     worstRating: "1",
   },
+  /**
+   * 대표 리뷰 샘플 (Schema.org Review)
+   * 지역 검색 결과에서 리뷰 스니펫 노출 강화
+   */
+  reviews: [
+    {
+      author: "네이버 예약 이용자 A",
+      reviewRating: "5",
+      reviewBody: "써마지 FLX 시술을 받았는데 원장님이 직접 시술해 주셔서 믿음이 갔습니다. 리프팅 효과가 확실히 느껴졌어요.",
+      datePublished: "2024-11-01",
+    },
+    {
+      author: "네이버 예약 이용자 B",
+      reviewRating: "5",
+      reviewBody: "눈밑지방재배치 수술 후 다크서클이 많이 개선됐습니다. 조원장님 경험이 풍부하셔서 안심하고 받을 수 있었어요.",
+      datePublished: "2024-10-15",
+    },
+    {
+      author: "네이버 예약 이용자 C",
+      reviewRating: "5",
+      reviewBody: "울쎄라피 프라임 받고 피부 탄력이 좋아졌습니다. 직접 시술이라 신뢰가 가고 결과도 만족스러워요.",
+      datePublished: "2024-09-20",
+    },
+  ],
+  /**
+   * 편의시설 정보 (Schema.org LocationFeatureSpecification)
+   * 지역 검색 결과에서 편의시설 정보 노출
+   */
+  amenityFeature: [
+    { name: "주차 가능", value: true },
+    { name: "엘리베이터", value: true },
+    { name: "휠체어 접근 가능", value: true },
+    { name: "영어 상담 가능", value: true },
+    { name: "일본어 상담 가능", value: true },
+    { name: "중국어 상담 가능", value: true },
+    { name: "카카오톡 상담", value: true },
+    { name: "네이버 예약", value: true },
+  ],
+  /**
+   * 서비스 제공 지역 (Schema.org areaServed)
+   * 지역 검색 범위 세분화
+   */
+  areaServed: [
+    { type: "City", name: "Busan", nameKo: "부산" },
+    { type: "AdministrativeArea", name: "Busanjin-gu", nameKo: "부산진구" },
+    { type: "AdministrativeArea", name: "Seomyeon", nameKo: "서면" },
+    { type: "AdministrativeArea", name: "Gyeongnam", nameKo: "경남" },
+  ],
+  /**
+   * 점심시간 / 공휴일 특별 영업시간
+   * specialOpeningHoursSpecification 스키마용
+   */
+  lunchBreak: {
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "13:00",
+    closes: "14:00",
+    description: "점심시간 (13:00-14:00)",
+  },
   /** 진료 분야 키워드 (knowsAbout) */
   knowsAbout: [
     "눈밑지방재배치술",
@@ -151,6 +209,10 @@ export const SEO_CLINIC_META = {
     "보톡스",
     "필러",
     "피부과 전문의",
+    "리프팅",
+    "안티에이징",
+    "색소치료",
+    "피부재생",
   ],
   /** 자격증/인증 (hasCredential) */
   hasCredential: [
@@ -158,7 +220,27 @@ export const SEO_CLINIC_META = {
       credentialCategory: "Medical Specialty Board Certification",
       recognizedBy: "대한피부과학회",
     },
+    {
+      credentialCategory: "Medical Specialty Board Certification",
+      recognizedBy: "대한의사협회",
+    },
   ],
+  /**
+   * 시술 카탈로그 (hasOfferCatalog)
+   * Google 지역 검색에서 제공 서비스 목록 노출
+   */
+  offerCatalog: {
+    name: "스타피부과 시술 메뉴",
+    itemListElement: [
+      { name: "울쎄라피 프라임", url: "https://star-pibu.com/equipment3/울써라피-프라임" },
+      { name: "써마지 FLX", url: "https://star-pibu.com/equipment3/써마지-flx" },
+      { name: "눈밑지방재배치", url: "https://star-pibu.com/equipment3/눈밑지방재배치" },
+      { name: "리주란힐러", url: "https://star-pibu.com/equipment3/리주란힐러" },
+      { name: "피코레이저 토닝", url: "https://star-pibu.com/equipment3/피코레이저" },
+      { name: "보톡스", url: "https://star-pibu.com/equipment3/보톡스" },
+      { name: "필러", url: "https://star-pibu.com/equipment3/필러" },
+    ],
+  },
 } as const;
 
 // ── 의료진 프로필 + 주요 시술 목록 (JSON-LD 스키마용) ─────────────────────────

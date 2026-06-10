@@ -149,9 +149,9 @@ describe("D. SEO_CLINIC_META 단일 소스 정책 (P1-4)", () => {
 
   it("D-6: SEO_CLINIC_META는 as const로 선언되어 있다", () => {
     const src = readClient("lib/constants.ts");
-    // SEO_CLINIC_META 블록 이후 as const가 있어야 함
+    // SEO_CLINIC_META 블록 이후 as const가 있어야 함 (블록이 커졌으므로 충분한 범위 검색)
     const idx = src.indexOf("export const SEO_CLINIC_META");
-    const block = src.slice(idx, idx + 800);
+    const block = src.slice(idx, idx + 5000);
     expect(block).toMatch(/\} as const/);
   });
 });

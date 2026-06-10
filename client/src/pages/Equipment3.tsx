@@ -139,15 +139,18 @@ export default function Equipment3() {
     }
     
     // 카테고리 탭
+    // "Best 시술" 카테고리는 isBest 체크박스 기반 탭과 중복이므로 제외
+    const BEST_CATEGORY_LABELS = new Set(["best", "Best", "Best 시술", "best 시술", "BEST", "BEST 시술"]);
     for (const item of rawItems) {
       const catId = item.category ?? "stem_cell";
+      if (BEST_CATEGORY_LABELS.has(catId)) continue;
       if (!seen.has(catId)) {
         seen.add(catId);
         result.push({
           id: catId,
           label: item.category ?? "줄기세포 치료",
           labelEn: item.categoryEn ?? "STEM CELL",
-          labelJa: item.categoryJa ?? "幹細胞治療",
+          labelJa: item.categoryJa ?? "幹細胞治疗",
           labelZh: item.categoryZh ?? "干细胞治疗",
         });
       }

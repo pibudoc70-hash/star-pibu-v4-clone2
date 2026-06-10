@@ -147,6 +147,39 @@ export function buildHreflangs(
 }
 
 /**
+ * [DRY] openingHoursSpecification 파싱 공통 헬퍼
+ *
+ * 형식: "Mo-Fr 10:00-19:00" 또는 "Sa 09:30-15:00"
+ * buildClinicJsonLd / buildLocalBusinessJsonLd 두 곳에서 동일 로직이 중복되어 있었으므로
+ * 단일 함수로 추출하여 유지보수 위험 제거.
+ *
+ * @param openingHours  CLINIC_INFO.openingHours 배열 ("Day HH:MM-HH:MM" 형식)
+ * @returns Schema.org OpeningHoursSpecification 배열
+ */
+export function buildOpeningHoursSpec(
+  openingHours: readonly string[],
+): { "@type": string; dayOfWeek: string[]; opens: string; closes: string }[] {
+  const DAY_MAP: Record<string, string> = {
+    Mo: "Monday", Tu: "Tuesday", We: "Wednesday",
+    Th: "Thursday", Fr: "Friday", Sa: "Saturday", Su: "Sunday",
+  };
+  const DAY_ORDER = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+  return openingHours.map((spec) => {
+    const [daysPart, timesPart] = spec.split(" ");
+    const [opens, closes] = timesPart.split("-");
+    const days = daysPart.includes("-")
+      ? (() => {
+          const [startDay, endDay] = daysPart.split("-");
+          const si = DAY_ORDER.indexOf(startDay);
+          const ei = DAY_ORDER.indexOf(endDay);
+          return DAY_ORDER.slice(si, ei + 1).map((d) => DAY_MAP[d] ?? d);
+        })()
+      : [DAY_MAP[daysPart] ?? daysPart];
+    return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
+  });
+}
+
+/**
  * MedicalBusiness + LocalBusiness 통합 JSON-LD 스키마 생성
  * Google Rich Results에서 병원 정보 패널, 지식 그래프, 지도 결과에 활용됩니다.
  *
@@ -192,26 +225,8 @@ export function buildClinicJsonLd(
       latitude: clinicInfo.geo.latitude,
       longitude: clinicInfo.geo.longitude,
     },
-    // [R24-P1-4] clinicInfo.openingHours 기반 파싱 (하드코딩 제거)
-    openingHoursSpecification: clinicInfo.openingHours.map((spec) => {
-      // 형식: "Mo-Fr 10:00-19:00" 또는 "Sa 09:30-15:00"
-      const [daysPart, timesPart] = spec.split(" ");
-      const [opens, closes] = timesPart.split("-");
-      const DAY_MAP: Record<string, string> = {
-        Mo: "Monday", Tu: "Tuesday", We: "Wednesday",
-        Th: "Thursday", Fr: "Friday", Sa: "Saturday", Su: "Sunday",
-      };
-      const days = daysPart.includes("-")
-        ? (() => {
-            const [startDay, endDay] = daysPart.split("-");
-            const order = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-            const si = order.indexOf(startDay);
-            const ei = order.indexOf(endDay);
-            return order.slice(si, ei + 1).map((d) => DAY_MAP[d] ?? d);
-          })()
-        : [DAY_MAP[daysPart] ?? daysPart];
-      return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
-    }),
+    // [DRY] buildOpeningHoursSpec 공통 헬퍼 사용 (buildLocalBusinessJsonLd와 동일 로직 공유)
+    openingHoursSpecification: buildOpeningHoursSpec(clinicInfo.openingHours),
     priceRange: clinicInfo.priceRange,
     currenciesAccepted: clinicInfo.currenciesAccepted,
     paymentAccepted: clinicInfo.paymentAccepted,
@@ -406,24 +421,8 @@ export function buildLocalBusinessJsonLd(
     priceRange: clinicInfo.priceRange,
     currenciesAccepted: clinicInfo.currenciesAccepted,
     paymentAccepted: clinicInfo.paymentAccepted,
-    openingHoursSpecification: clinicInfo.openingHours.map((spec) => {
-      const [daysPart, timesPart] = spec.split(" ");
-      const [opens, closes] = timesPart.split("-");
-      const DAY_MAP: Record<string, string> = {
-        Mo: "Monday", Tu: "Tuesday", We: "Wednesday",
-        Th: "Thursday", Fr: "Friday", Sa: "Saturday", Su: "Sunday",
-      };
-      const days = daysPart.includes("-")
-        ? (() => {
-            const [startDay, endDay] = daysPart.split("-");
-            const order = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-            const si = order.indexOf(startDay);
-            const ei = order.indexOf(endDay);
-            return order.slice(si, ei + 1).map((d) => DAY_MAP[d] ?? d);
-          })()
-        : [DAY_MAP[daysPart] ?? daysPart];
-      return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
-    }),
+    // [DRY] buildOpeningHoursSpec 공통 헬퍼 사용 (buildClinicJsonLd와 동일 로직 공유)
+    openingHoursSpecification: buildOpeningHoursSpec(clinicInfo.openingHours),
     areaServed: {
       "@type": "City",
       name: "Busan",

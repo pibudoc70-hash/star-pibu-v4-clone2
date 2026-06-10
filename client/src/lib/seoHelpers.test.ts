@@ -17,6 +17,8 @@ import {
   buildClinicJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
+  buildLocalBusinessJsonLd,
+  buildOpeningHoursSpec,
   SEO_PRESETS,
   COMMON_HREFLANGS,
 } from "./seoHelpers";
@@ -386,5 +388,58 @@ describe("SEO_PRESETS — admin noindex 자동 정책", () => {
     const expectedKeys = ["home", "treatment", "default", "admin"];
     const actualKeys = Object.keys(SEO_PRESETS);
     expect(actualKeys.sort()).toEqual(expectedKeys.sort());
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// buildOpeningHoursSpec — [DRY] 공통 헬퍼 회귀 테스트
+// buildClinicJsonLd / buildLocalBusinessJsonLd 양쪽에서 사용하는 파싱 로직을 단일 함수로 추출한 것을 검증
+// ─────────────────────────────────────────────────────────────────────────────
+describe("buildOpeningHoursSpec — DRY 공통 헬퍼", () => {
+  it("연속 요일 범위(Mo-Fr)를 올바르게 파싱해야 한다", () => {
+    const result = buildOpeningHoursSpec(["Mo-Fr 10:00-19:00"]);
+    expect(result).toHaveLength(1);
+    const spec = result[0];
+    expect(spec["@type"]).toBe("OpeningHoursSpecification");
+    expect(spec.dayOfWeek).toEqual(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]);
+    expect(spec.opens).toBe("10:00");
+    expect(spec.closes).toBe("19:00");
+  });
+
+  it("단일 요일(Sa)을 올바르게 파싱해야 한다", () => {
+    const result = buildOpeningHoursSpec(["Sa 09:30-15:00"]);
+    expect(result).toHaveLength(1);
+    const spec = result[0];
+    expect(spec.dayOfWeek).toEqual(["Saturday"]);
+    expect(spec.opens).toBe("09:30");
+    expect(spec.closes).toBe("15:00");
+  });
+
+  it("여러 스펙을 한번에 처리해야 한다", () => {
+    const result = buildOpeningHoursSpec(["Mo-Fr 10:00-19:00", "Sa 09:30-15:00"]);
+    expect(result).toHaveLength(2);
+    expect(result[0].dayOfWeek).toContain("Monday");
+    expect(result[1].dayOfWeek).toContain("Saturday");
+  });
+
+  it("빈 배열을 전달하면 빈 배열을 반환해야 한다", () => {
+    const result = buildOpeningHoursSpec([]);
+    expect(result).toHaveLength(0);
+  });
+
+  it("readonly 배열도 수용해야 한다 (as const 사용 시)", () => {
+    const hours = ["Mo-Fr 10:00-19:00"] as const;
+    const result = buildOpeningHoursSpec(hours);
+    expect(result).toHaveLength(1);
+    expect(result[0].dayOfWeek).toContain("Monday");
+  });
+
+  it("buildClinicJsonLd와 buildLocalBusinessJsonLd가 동일한 openingHoursSpecification을 생성해야 한다", () => {
+    // 두 함수가 동일한 buildOpeningHoursSpec을 사용하므로 결과가 일치해야 함
+    const clinic = buildClinicJsonLd();
+    const local = buildLocalBusinessJsonLd();
+    const clinicSpecs = clinic["openingHoursSpecification"] as Record<string, unknown>[];
+    const localSpecs = local["openingHoursSpecification"] as Record<string, unknown>[];
+    expect(clinicSpecs).toEqual(localSpecs);
   });
 });

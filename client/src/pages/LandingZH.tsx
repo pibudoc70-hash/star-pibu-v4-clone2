@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -71,14 +71,21 @@ export default function LandingZH() {
         ogImage={OG_IMAGE_LOCALIZED.zh}
         ogSiteName={SITE_NAME_LOCALIZED.zh}
         jsonLd={[
+          buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
             { name: "首页", url: "https://star-pibu.com/zh" },
           ]),
+          buildFAQPageJsonLd([
+            { question: "STAR皮肤科在哪里？", answer: "STAR皮肤科位于釜山市釜山镇区西面路74号（ION City大厨4F）。乘釜山地铁1、2号线西面站步行5分钟。电话：+82-51-818-2300" },
+            { question: "诊疗时间是什么时候？", answer: "周一至周五 10:00–19:00，周六 09:30–15:00。周日及公假日休诊。" },
+            { question: "超声刀和热玛吉的区别是什么？", answer: "超声刀利用聚焦超声波（HIFU）刺激皮肤深层SMAS层，是FDA批准的非手术提拉项目。热玛吉FLX利用第4代高频电磁波（RF）能量再生胶原蛋白，两者原理不同，组合使用可产生协同效果。" },
+            { question: "可以用中文和医生沟通吗？", answer: "可以。STAR皮肤科提供英语、日语、中文的外国患者就诊服务。" },
+          ]),
         ]}
+        pageType="home"
         ogLocale="zh_CN"
         ogLocaleAlternates={["ko_KR", "en_US", "ja_JP"]}
         hreflangs={COMMON_HREFLANGS}
-        pageType="treatment"
       />
       {/* Fixed Header */}
       <Header />

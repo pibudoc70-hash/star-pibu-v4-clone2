@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -71,14 +71,21 @@ export default function LandingJA() {
         ogImage={OG_IMAGE_LOCALIZED.ja}
         ogSiteName={SITE_NAME_LOCALIZED.ja}
         jsonLd={[
+          buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
             { name: "ホーム", url: "https://star-pibu.com/ja" },
           ]),
+          buildFAQPageJsonLd([
+            { question: "スター皮膚科はどこにありますか？", answer: "スター皮膚科は釜山市釜山鎮区西面路74（IONシティビル4F）にあります。釜山地下鉄1・2号線西面駅から徒歩5分です。電話：+82-51-818-2300" },
+            { question: "診療時間はいつですか？", answer: "月曜日〜金曜日 10:00〜19:00、土曜日 09:30〜15:00。日曜日と祝日は休診です。" },
+            { question: "ウルセラピーとサーマジの違いは何ですか？", answer: "ウルセラピーは集束超音波（HIFU）で皮膚深部のSMAS層を刺激するFDA承認の非外科的リフティング施術です。サーマジFLXは第4世代高周波（RF）エネルギーでコラーゲンを再生させるリフティング機器です。両施術は作用原理が異なり、組み合わせることでシナジー効果が期待できます。" },
+            { question: "日本語での相談は可能ですか？", answer: "はい。スター皮膚科では英語・日本語・中国語での外国人患者様への対応が可能です。" },
+          ]),
         ]}
+        pageType="home"
         ogLocale="ja_JP"
         ogLocaleAlternates={["ko_KR", "en_US", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
-        pageType="treatment"
       />
       {/* Fixed Header */}
       <Header />

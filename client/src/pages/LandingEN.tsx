@@ -5,7 +5,7 @@
  */
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
@@ -59,14 +59,21 @@ export default function LandingEN() {
         ogImage={OG_IMAGE_LOCALIZED.en}
         ogSiteName={SITE_NAME_LOCALIZED.en}
         jsonLd={[
+          buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
             { name: "Home", url: "https://star-pibu.com/en" },
           ]),
+          buildFAQPageJsonLd([
+            { question: "Where is Star Dermatology located?", answer: "Star Dermatology is located at 74 Seomyeon-ro, Busanjin-gu, Busan (ION City Building, 4F). It is a 5-minute walk from Seomyeon Station on Busan Metro Lines 1 and 2. Phone: +82-51-818-2300" },
+            { question: "What are the clinic hours?", answer: "Monday–Friday 10:00–19:00, Saturday 09:30–15:00. Closed on Sundays and public holidays." },
+            { question: "What is the difference between Ultherapy and Thermage?", answer: "Ultherapy uses focused ultrasound (HIFU) to stimulate the deep SMAS layer, an FDA-approved non-surgical lifting procedure. Thermage FLX uses 4th-generation radiofrequency (RF) energy to regenerate collagen. The two work differently and can be combined for synergistic results." },
+            { question: "Is consultation available in English?", answer: "Yes. Star Dermatology provides consultations in English, Japanese, and Chinese for international patients." },
+          ]),
         ]}
+        pageType="home"
         ogLocale="en_US"
         ogLocaleAlternates={["ko_KR", "ja_JP", "zh_CN"]}
         hreflangs={COMMON_HREFLANGS}
-        pageType="treatment"
       />
       {/* [PROD-P2-3] 다국어 랜딩 페이지에도 MedicalBusiness 스키마 삽입 (Google 검색 결과 리치 스니펫) */}
       {/* Fixed Header */}

@@ -2418,3 +2418,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   * window.location.replace()로 hash 제거하고 새 URL로 이동
 - [x] 모든 언어에서 테스트 완료 (한국어 → 영어 → 한국어)
 - [x] 모든 테스트 통과 (1,222개 테스트)
+
+
+## 다국어 JSON-LD 스키마 보강 (2026-06-10)
+
+- [x] 영어 페이지(LandingEN.tsx) - LocalBusiness + FAQPage + WebSite 스키마 추가 (pageType="home")
+- [x] 일본어 페이지(LandingJA.tsx) - LocalBusiness + FAQPage + WebSite 스키마 추가 (pageType="home")
+- [x] 중국어 페이지(LandingZH.tsx) - LocalBusiness + FAQPage + WebSite 스키마 추가 (pageType="home")
+- [x] 각 언어별 FAQ 내용 작성 (위치, 진료시간, 울쎄라/써마지 차이, 다국어 상담 가능 여부)
+- [x] 브라우저 콘솔에서 영어 페이지 JSON-LD 6개 스키마 정상 렌더링 확인

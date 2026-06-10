@@ -50,7 +50,7 @@ export default function Equipment3Detail() {
     effect:    getText("기대 효과",         "Expected Results",              "期待できる効果",     "预期效果"),
     caution:   getText("주의사항",          "Precautions",                   "注意事項",           "注意事项"),
     gallery:   getText("시술 사례",         "Before & After",                "施術事例",           "施术案例"),
-    video:     getText("시술 영상",         "Treatment Video",               "施術動画",           "施术视频"),
+    video:     getText("가이드 영상",         "Guide Video",                   "ガイド動画",         "指南视频"),
     backList:  getText("목록으로 돌아가기",  "Back to list",                  "一覧に戻る",         "返回列表"),
     bodyLoc:   getText("피부",             "Skin",                          "皮膚",               "皮肤"),
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
@@ -315,7 +315,7 @@ export default function Equipment3Detail() {
           </section>
         )}
 
-        {/* YouTube 영상 */}
+        {/* YouTube 가이드 영상 */}
         {item.youtubeUrl && (() => {
           const getEmbedUrl = (url: string) => {
             if (!url) return '';

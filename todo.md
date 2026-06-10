@@ -2389,3 +2389,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] clinic-data.ts 의사 데이터 확장 (이미지, 설명, 소셜 링크, 학력 기관 추가)
 - [x] seoHelpers.ts Physician 스키마 개선 (spread operator로 조건부 필드 포함)
 - [x] meta description AI 인용 최적화 검토 (홈페이지 meta description 이미 최적화됨)
+
+
+## UI 텍스트 개선 (2026-06-10)
+
+- [x] Equipment3Detail.tsx YouTube 섹션 타이틀 변경 ("시술 영상" → "가이드 영상")
+  * 한국어: "가이드 영상"
+  * 영어: "Guide Video"
+  * 일본어: "ガイド動画"
+  * 중국어: "指南视频"

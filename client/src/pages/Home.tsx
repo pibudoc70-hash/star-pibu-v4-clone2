@@ -58,6 +58,18 @@ export default function Home() {
     // - 진입 시 URL hash를 즉시 제거하고 상단으로 이동
     // - 다른 페이지에서 메뉴 클릭 시 sessionStorage로 스크롤 대상 전달
 
+    // [FIX v4] 언어 변경 시 scroll restoration 무시
+    // sessionStorage에 "__star_force_scroll_top" 플래그가 있으면
+    // 브라우저의 scroll restoration을 무시하고 상단으로 이동
+    const forceScrollTop = sessionStorage.getItem("__star_force_scroll_top");
+    if (forceScrollTop) {
+      sessionStorage.removeItem("__star_force_scroll_top");
+      // 브라우저의 scroll restoration 무시
+      history.scrollRestoration = "manual";
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
+
     // URL에 hash가 있으면 즉시 제거 (어떤 경우든 hash를 URL에 남기지 않음)
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname + window.location.search);

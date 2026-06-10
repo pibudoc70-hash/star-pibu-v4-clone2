@@ -90,10 +90,15 @@ export function useHeaderState() {
   const handleLangChange = (option: LangOption) => {
     setLangDropOpen(false);
     setLang(option.lang, true);
-    // [FIX v2] 언어 변경 시 완전히 상단으로 이동
-    // 1. scroll restoration 비활성화 (브라우저 자동 스크롤 방지)
-    // 2. 명시적으로 상단으로 스크롤
-    // 3. hash 제거하고 새 URL로 이동
+    // [FIX v3] 언어 변경 시 완전히 상단으로 이동
+    // 문제: window.location.replace() 후 브라우저의 scroll restoration이
+    // 이전 스크롤 위치를 복원하므로 Home.tsx의 scrollTo가 무효화됨
+    //
+    // 해결책:
+    // 1. sessionStorage에 "force_scroll_top" 플래그 저장
+    // 2. Home.tsx에서 이 플래그를 감지하여 scroll restoration 무시
+    // 3. 명시적으로 상단으로 스크롤
+    sessionStorage.setItem("__star_force_scroll_top", "true");
     history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
     window.location.replace(buildLocalizedPath(option.lang));

@@ -2447,3 +2447,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] treatment.routes.seo.test.ts — routes.ts 기반 구조 허용하도록 업데이트
 - [x] TypeScript 컴파일 에러 0건 확인
 - [x] 전체 테스트 1246개 통과 확인
+
+## 구조 정비 — Router-Service-Repository 분리 (2026-06-11)
+- [x] server/services/reservation.service.ts 신규 생성 — 예약 비즈니스 로직 분리
+- [x] server/routers/reservation.ts — service 계층 위임으로 라우터 책임 축소
+- [x] README.md — 3계층 구조 아키텍처 메모 추가, treatments.ts 경로 수정
+- [x] TypeScript 컴파일 에러 0건 확인
+- [x] 전체 테스트 45개 파일 / 1246개 통과 확인

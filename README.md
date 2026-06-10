@@ -101,15 +101,17 @@ star-pibu-v4-clone/
 │   │   ├── equipment3.ts     # Equipment3 repository
 │   │   └── index.ts          # barrel re-export
 │   ├── db.ts                 # 하위 호환 barrel (→ server/db/index.ts)
-│   ├── routers/              # 도메인별 tRPC 라우터
+│   ├── routers/              # 도메인별 tRPC 라우터 (입력 파싱·권한 검사만)
 │   │   ├── admin.ts          # 관리자 전용 프로시저
 │   │   ├── equipment3.ts     # 시술·장비(DB 연동) 프로시저
 │   │   ├── events.ts         # 이벤트 프로시저
 │   │   ├── popup.ts          # 팝업 프로시저
 │   │   ├── reservation.ts    # 예약 프로시저
+│   │   ├── treatments.ts     # 시술(treatments) 프로시저
 │   │   └── youtube.ts        # YouTube 프로시저
 │   ├── routers.ts            # appRouter 조합 진입점
-│   ├── treatments-router.ts  # 시술(treatments) tRPC 라우터
+│   ├── services/             # 비즈니스 로직 계층
+│   │   └── reservation.service.ts  # 예약 생성·검증·알림 오케스트레이션
 │   ├── __tests__/            # 회귀·도메인 테스트 모음
 │   └── email.ts / sms.ts / storage.ts / otpCleanup.ts
 │
@@ -176,7 +178,9 @@ star-pibu-v4-clone/
 ## 아키텍처 메모
 
 - **tRPC-first**: 모든 클라이언트-서버 통신은 `server/routers.ts`에 정의된 tRPC 프로시저를 통한다. REST 엔드포인트를 직접 추가하지 않는다.
+- **3계층 구조**: Router(입력 파싱·권한) → Service(비즈니스 로직) → Repository(DB 쿼리). 단순 CRUD 도메인은 Router → Repository 직통이 허용된다.
 - **DB repository 패턴**: `server/db/` 디렉토리의 도메인별 파일에 쿼리 헬퍼를 작성하고, `server/db.ts` barrel을 통해 import한다.
+- **Service 계층**: 비즈니스 규칙이 있는 도메인(예약 날짜 검증, OTP 재확인, 이메일·알림 오케스트레이션)은 `server/services/` 에 분리한다. 단순 CRUD는 Service 없이 Router → Repository 직통으로 처리한다.
 - **인증**: `protectedProcedure`는 `ctx.user`를 주입하며, `adminProcedure`는 `role === "admin"` 검사를 추가한다.
 - **파일 스토리지**: 이미지·미디어는 S3에 업로드하고 DB에는 키/URL만 저장한다. `client/public/`에 미디어 파일을 넣지 않는다.
 - **wouter 패치**: `patches/wouter@3.7.1.patch`는 SPA 라우팅의 `Switch` 컴포넌트 동작을 수정한 pnpm patch다. `pnpm install` 시 자동 적용된다.

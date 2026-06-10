@@ -90,8 +90,10 @@ export function useHeaderState() {
   const handleLangChange = (option: LangOption) => {
     setLangDropOpen(false);
     setLang(option.lang, true);
-    const hash = window.location.hash;
-    window.location.replace(buildLocalizedPath(option.lang) + hash);
+    // [FIX] 언어 변경 시 hash를 제거하고 항상 상단으로 이동
+    // hash를 유지하면 브라우저가 자동으로 해당 섹션으로 스크롤함
+    // 예: 의료진 섹션 보다가 영어로 변경 → #doctors hash 유지 → 의료진 섹션으로 자동 스크롤
+    window.location.replace(buildLocalizedPath(option.lang));
   };
 
   const handleWechatClick = (e: React.MouseEvent) => {

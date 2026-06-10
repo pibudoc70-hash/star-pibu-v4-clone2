@@ -2398,3 +2398,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   * 영어: "Guide Video"
   * 일본어: "ガイド動画"
   * 중국어: "指南视频"
+
+
+## 버그 수정 (2026-06-10)
+
+- [x] 외국어 카테고리 변경 시 의료진 섹션으로 자동 스크롤 버그 수정
+  * 문제: 한국어 페이지에서 의료진 섹션 보다가 외국어로 변경 → 해당 섹션으로 자동 스크롤
+  * 원인: handleLangChange에서 window.location.hash 유지 → 브라우저 자동 스크롤
+  * 해결: useHeaderState.ts 라인 90-96 수정 (hash 제거하고 항상 상단으로 이동)
+  * 테스트: 한국어 → 영어 변경 시 상단으로 이동 확인 ✅
+  * 모든 테스트 통과 (1,222개)

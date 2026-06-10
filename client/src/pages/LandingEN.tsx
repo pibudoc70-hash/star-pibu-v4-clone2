@@ -26,7 +26,16 @@ import WelcomePopup from "@/components/WelcomePopup";
 export default function LandingEN() {
   // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/en) 기반으로 자동 처리
   // Scroll to hash section if present
+  // [FIX] 언어 변경 시 hash 스크롤 방지: sessionStorage 플래그 확인
   useEffect(() => {
+    // 언어 변경으로 인한 페이지 로드인 경우 hash 스크롤 무시
+    const forceTop = sessionStorage.getItem("__star_force_scroll_top");
+    if (forceTop) {
+      sessionStorage.removeItem("__star_force_scroll_top");
+      history.scrollRestoration = "manual";
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
     const hash = window.location.hash;
     if (!hash) return;
     const timer = setTimeout(() => {

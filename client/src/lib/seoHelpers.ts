@@ -256,32 +256,72 @@ export function buildClinicJsonLd(
       },
     })),
     // [SRP-DI] 파라미터로 주입된 clinicDoctors 사용
-    employee: clinicDoctors.map((doc) => ({
-      "@type": "Physician",
-      "@id": `${clinicInfo.url}/#physician-${doc.nameEn.toLowerCase().replace(/\s+/g, "-")}`,
-      name: doc.name,
-      alternateName: doc.nameEn,
-      jobTitle: doc.jobTitle,
-      url: doc.url,
-      image: doc.image,
-      description: doc.description,
-      worksFor: { "@id": `${clinicInfo.url}/#organization` },
-      medicalSpecialty: {
-        "@type": "MedicalSpecialty",
-        name: "Dermatology",
-      },
-      knowsAbout: [...doc.specialties],
-      hasCredential: doc.credentials.map((cred) => ({
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: cred,
-      })),
-      ...(doc.sameAs.length > 0 && { sameAs: doc.sameAs }),
-      ...(doc.alumniOf && doc.alumniOf.length > 0 && { alumniOf: doc.alumniOf.map((school) => ({
-        "@type": "EducationalOrganization",
-        name: school.name,
-        url: school.url,
-      })) })
-    })).map((physician: Record<string, unknown>) => {
+    employee: clinicDoctors.map((doc) => {
+      const d = doc as typeof doc & {
+        honorificPrefix?: string;
+        nationality?: string;
+        memberOf?: Array<{ name: string; url?: string }>;
+        award?: readonly string[];
+        workLocation?: { name: string; address: string };
+        availableService?: readonly string[];
+      };
+      const physician: Record<string, unknown> = {
+        "@type": "Physician",
+        "@id": `${clinicInfo.url}/#physician-${doc.nameEn.toLowerCase().replace(/\s+/g, "-")}`,
+        name: doc.name,
+        alternateName: doc.nameEn,
+        ...(d.honorificPrefix && { honorificPrefix: d.honorificPrefix }),
+        jobTitle: doc.jobTitle,
+        url: doc.url,
+        image: doc.image,
+        description: doc.description,
+        ...(d.nationality && { nationality: d.nationality }),
+        worksFor: { "@id": `${clinicInfo.url}/#organization` },
+        medicalSpecialty: [
+          { "@type": "MedicalSpecialty", name: "Dermatology" },
+          ...doc.specialties.map((s) => ({ "@type": "MedicalSpecialty", name: s })),
+        ],
+        knowsAbout: [...doc.specialties],
+        hasCredential: doc.credentials.map((cred) => ({
+          "@type": "EducationalOccupationalCredential",
+          credentialCategory: cred,
+        })),
+        ...(doc.sameAs.length > 0 && { sameAs: [...doc.sameAs] }),
+        ...(doc.alumniOf && doc.alumniOf.length > 0 && {
+          alumniOf: doc.alumniOf.map((school) => ({
+            "@type": "EducationalOrganization",
+            name: school.name,
+            ...(school.url && { url: school.url }),
+          }))
+        }),
+        ...(d.memberOf && d.memberOf.length > 0 && {
+          memberOf: d.memberOf.map((org) => ({
+            "@type": "MedicalOrganization",
+            name: org.name,
+            ...(org.url && { url: org.url }),
+          }))
+        }),
+        ...(d.award && d.award.length > 0 && { award: [...d.award] }),
+        ...(d.workLocation && {
+          workLocation: {
+            "@type": "Place",
+            name: d.workLocation.name,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: d.workLocation.address,
+              addressLocality: "부산광역시",
+              addressCountry: "KR",
+            },
+          }
+        }),
+        ...(d.availableService && d.availableService.length > 0 && {
+          availableService: d.availableService.map((svc) => ({
+            "@type": "MedicalProcedure",
+            name: svc,
+            provider: { "@id": `${clinicInfo.url}/#organization` },
+          }))
+        }),
+      };
       // undefined 필드 제거
       Object.keys(physician).forEach(key => physician[key] === undefined && delete physician[key]);
       return physician;

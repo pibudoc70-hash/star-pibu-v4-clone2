@@ -524,3 +524,113 @@ describe("buildLocalBusinessJsonLd — 지역 검색 최적화 필드", () => {
     expect(rating["bestRating"]).toBe("5");
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Physician 스키마 강화 테스트 (honorificPrefix, memberOf, award, workLocation, availableService)
+// ─────────────────────────────────────────────────────────────────────────────
+describe("Physician 스키마 강화 필드 검증", () => {
+  it("employee 배열에 3명의 Physician이 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    expect(employees).toHaveLength(3);
+    employees.forEach((emp) => expect(emp["@type"]).toBe("Physician"));
+  });
+
+  it("각 Physician에 honorificPrefix Dr.가 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      expect(emp["honorificPrefix"]).toBe("Dr.");
+    });
+  });
+
+  it("각 Physician에 nationality KR이 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      expect(emp["nationality"]).toBe("KR");
+    });
+  });
+
+  it("medicalSpecialty가 배열이고 Dermatology를 포함해야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const specialties = emp["medicalSpecialty"] as Record<string, unknown>[];
+      expect(Array.isArray(specialties)).toBe(true);
+      expect(specialties[0]["name"]).toBe("Dermatology");
+      expect(specialties.length).toBeGreaterThan(1);
+    });
+  });
+
+  it("각 Physician에 memberOf 배열이 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const memberOf = emp["memberOf"] as Record<string, unknown>[];
+      expect(Array.isArray(memberOf)).toBe(true);
+      expect(memberOf.length).toBeGreaterThan(0);
+      memberOf.forEach((org) => {
+        expect(org["@type"]).toBe("MedicalOrganization");
+        expect(org["name"]).toBeTruthy();
+      });
+    });
+  });
+
+  it("각 Physician에 award 배열이 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const award = emp["award"] as string[];
+      expect(Array.isArray(award)).toBe(true);
+      expect(award.length).toBeGreaterThan(0);
+    });
+  });
+
+  it("각 Physician에 workLocation이 Place 타입이어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const workLocation = emp["workLocation"] as Record<string, unknown>;
+      expect(workLocation["@type"]).toBe("Place");
+      const address = workLocation["address"] as Record<string, unknown>;
+      expect(address["@type"]).toBe("PostalAddress");
+      expect(address["addressCountry"]).toBe("KR");
+    });
+  });
+
+  it("각 Physician에 availableService 배열이 있어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const services = emp["availableService"] as Record<string, unknown>[];
+      expect(Array.isArray(services)).toBe(true);
+      expect(services.length).toBeGreaterThan(0);
+      services.forEach((svc) => {
+        expect(svc["@type"]).toBe("MedicalProcedure");
+        expect(svc["name"]).toBeTruthy();
+      });
+    });
+  });
+
+  it("조시형 원장의 @id가 올바른 형식이어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    const cho = employees.find((emp) => emp["name"] === "조시형");
+    expect(cho).toBeDefined();
+    expect(cho!["@id"]).toBe("https://star-pibu.com/#physician-cho-si-hyung");
+  });
+
+  it("alumniOf가 EducationalOrganization 타입이어야 한다", () => {
+    const schema = buildClinicJsonLd();
+    const employees = schema["employee"] as Record<string, unknown>[];
+    employees.forEach((emp) => {
+      const alumniOf = emp["alumniOf"] as Record<string, unknown>[];
+      expect(Array.isArray(alumniOf)).toBe(true);
+      alumniOf.forEach((school) => {
+        expect(school["@type"]).toBe("EducationalOrganization");
+        expect(school["name"]).toBeTruthy();
+      });
+    });
+  });
+});

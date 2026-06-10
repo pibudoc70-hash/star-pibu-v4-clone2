@@ -15,8 +15,10 @@ export const CLINIC_DOCTORS = [
   {
     name: "조시형",
     nameEn: "Cho Si-hyung",
+    honorificPrefix: "Dr.",
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
+    nationality: "KR",
     url: "https://star-pibu.com/#doctors",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_01_2e3c0c6f.jpg",
     description: "20년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 4,000례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.",
@@ -33,20 +35,37 @@ export const CLINIC_DOCTORS = [
       "써마지 FLX 공식 자문의",
       "미국 피부과 학회 정회원(AAD)",
     ],
-    specialties: ["눈밑지방재배치", "리프팅", "울쎄라", "써마지", "흉터치료", "색소치료"],
+    specialties: ["눈밑지방재배치", "리프팅", "울쎄라피 프라임", "써마지 FLX", "흉터치료", "색소치료", "피부노화", "안티에이징"],
     alumniOf: [
       { name: "부산대학교 의과대학", url: "https://med.pusan.ac.kr" },
       { name: "인제대학교 의과대학", url: "https://med.inje.ac.kr" }
     ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+      { name: "미국피부과학회(AAD)", url: "https://www.aad.org" },
+      { name: "부산경남울산피부과의사회" },
+    ],
+    award: [
+      "써마지 FLX 공식 자문의 위촉",
+      "눈밑지방재배치 4,000례 달성",
+    ],
+    workLocation: {
+      name: "스타피부과",
+      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층",
+    },
+    availableService: ["눈밑지방재배치", "울쎄라피 프라임", "써마지 FLX", "리주란힐러", "피코레이저", "흉터치료"],
   },
   {
     name: "우혜진",
     nameEn: "Woo Hye-jin",
+    honorificPrefix: "Dr.",
     jobTitle: "피부과 전문의",
     jobTitleEn: "Dermatologist, MD",
+    nationality: "KR",
     url: "https://star-pibu.com/#doctors",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_02_8e3c0c6f.jpg",
-    description: "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라, 써마지 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
+    description: "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라피 프라임, 써마지 FLX 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
     sameAs: [
       "https://www.youtube.com/@starpibu",
       "https://blog.naver.com/starpibu",
@@ -59,16 +78,31 @@ export const CLINIC_DOCTORS = [
       "대한 피부과 학회 정회원",
       "미국 피부과 학회 정회원(AAD)",
     ],
-    specialties: ["리프팅", "울쎄라", "써마지", "흉터치료", "색소치료", "피부질환"],
+    specialties: ["리프팅", "울쎄라피 프라임", "써마지 FLX", "흉터치료", "색소치료", "피부질환", "피부노화", "안티에이징"],
     alumniOf: [
       { name: "카톨릭대학교 의과대학", url: "https://med.catholic.ac.kr" }
     ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+      { name: "미국피부과학회(AAD)", url: "https://www.aad.org" },
+    ],
+    award: [
+      "카톨릭의대 피부과 외래교수 역임",
+    ],
+    workLocation: {
+      name: "스타피부과",
+      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층",
+    },
+    availableService: ["울쎄라피 프라임", "써마지 FLX", "리주란힐러", "피코레이저", "흉터치료", "색소치료"],
   },
   {
     name: "이기욱",
     nameEn: "Lee Gi-wook",
+    honorificPrefix: "Dr.",
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
+    nationality: "KR",
     url: "https://star-pibu.com/#doctors",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_03_8e3c0c6f.jpg",
     description: "고신대학교 의과대학 의학박사. 리프팅, 색소치료, 백반증 치료 등 다양한 피부질환 치료에 전문성을 갖추고 있습니다.",
@@ -84,10 +118,22 @@ export const CLINIC_DOCTORS = [
       "대한 피부과학회 정회원",
       "대한 피부과의사회 정회원",
     ],
-    specialties: ["리프팅", "울쎄라", "써마지", "색소치료", "백반증", "피부질환"],
+    specialties: ["리프팅", "울쎄라피 프라임", "써마지 FLX", "색소치료", "백반증", "피부질환", "피부노화", "안티에이징"],
     alumniOf: [
       { name: "고신대학교 의과대학", url: "https://med.ksu.ac.kr" }
     ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+    ],
+    award: [
+      "고신대학교 의과대학 피부과 외래교수 역임",
+    ],
+    workLocation: {
+      name: "스타피부과",
+      address: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층",
+    },
+    availableService: ["울쎄라피 프라임", "써마지 FLX", "리주란힐러", "피코레이저", "색소치료", "백반증 치료"],
   },
 ] as const;
 

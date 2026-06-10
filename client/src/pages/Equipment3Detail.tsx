@@ -9,7 +9,7 @@ import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead
 import { CLINIC_INFO } from "@/lib/constants";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
-import { useParams, useLocation } from "wouter";
+import { useParams, useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { Streamdown } from "streamdown";
@@ -31,6 +31,9 @@ export default function Equipment3Detail() {
   const { lang } = useLang();
   const { getText } = useLocalizedText();
   const slug = params.slug as string;
+  const search = useSearch();
+  // URL에 ?tab= 파라미터가 있으면 그 탭으로, 없으면 item.category로 복원
+  const tabFromUrl = new URLSearchParams(search).get("tab") ?? "";
 
   const { data: item, isLoading, isError } = trpc.equipment3.bySlug.useQuery(
     { slug },
@@ -56,6 +59,15 @@ export default function Equipment3Detail() {
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
   } as const;
 
+  // ── 목록 복귀 경로 헬퍼 ─────────────────────────────────────────────────────
+  const getBackPath = (category?: string) => {
+    const langPrefix = lang === "ko" ? "" : `/${lang}`;
+    const tabId = tabFromUrl || category || "";
+    return tabId
+      ? `${langPrefix}/equipment3?tab=${encodeURIComponent(tabId)}`
+      : `${langPrefix}/equipment3`;
+  };
+
   // ── 로딩 ────────────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
@@ -73,7 +85,7 @@ export default function Equipment3Detail() {
         <p className="text-red-600">{LABELS.error}</p>
         <button
           type="button"
-          onClick={() => setLocation("/equipment3")}
+          onClick={() => setLocation(getBackPath())}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           {LABELS.backList}
@@ -89,7 +101,7 @@ export default function Equipment3Detail() {
         <p className="text-gray-600">{LABELS.notFound}</p>
         <button
           type="button"
-          onClick={() => setLocation("/equipment3")}
+          onClick={() => setLocation(getBackPath())}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           {LABELS.backList}
@@ -347,7 +359,7 @@ export default function Equipment3Detail() {
         <div className="mt-8">
           <button
             type="button"
-            onClick={() => setLocation("/equipment3")}
+            onClick={() => setLocation(getBackPath(item.category))}
             className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition text-sm font-medium"
           >
             ← {LABELS.backList}

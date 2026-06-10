@@ -8,7 +8,7 @@
  * - CategoryTabList + CategoryTabButton 재사용
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -158,16 +158,23 @@ export default function Equipment3() {
     return result;
   }, [rawItems]);
 
+  const search = useSearch();
+  const urlTab = useMemo(() => new URLSearchParams(search).get("tab") ?? "", [search]);
   const [activeId, setActiveId] = useState<string>("");
   const [showAll, setShowAll] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);
 
-  // 탭 목록이 로드되면 첫 번째 탭 자동 선택
+  // 탭 목록이 로드되면 URL ?tab= 파라미터 또는 첫 번째 탭 자동 선택
   useEffect(() => {
-    if (tabs.length > 0 && !activeId) {
+    if (tabs.length === 0) return;
+    if (urlTab && tabs.some((t) => t.id === urlTab)) {
+      setActiveId(urlTab);
+    } else if (!activeId) {
       setActiveId(tabs[0].id);
     }
-  }, [tabs, activeId]);
+  // activeId는 의도적으로 제외 — URL 파라미터 변경 시에만 재실행
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabs, urlTab]);
 
   const handleTabChange = useCallback((id: string) => {
     setActiveId(id);
@@ -347,7 +354,7 @@ export default function Equipment3() {
                         >
                           {displayedItems.map((item, i) => {
                               const langPrefix = getLangPrefix(lang);
-                              const detailPath = `${langPrefix}/equipment3/${item.slug}`;
+                              const detailPath = `${langPrefix}/equipment3/${item.slug}?tab=${encodeURIComponent(activeId)}`;
                               return (
                             <Equipment3Card
                               key={item.id}

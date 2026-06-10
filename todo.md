@@ -2345,10 +2345,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 모든 탭 기능 검증 완료
 - [x] 배포 준비 완료
 
-## Phase 78: 레거시 코드 정리 및 최적화 (2026-06-09) - 진행 중
+## Phase 78: 레거시 코드 정리 및 최적화 (2026-06-10) - 완료
+- [x] equipment3 YouTube URL 저장 및 embed 기능 검증 완료
+- [x] AIO (AI 검색 최적화) 작업 완료
+- [x] 모든 테스트 통과 (1,222개)
 
-
-## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 진행 중
+## Phase 76: equipment3 모든 탭(14개)에 시술·장비 등록 (2026-06-09) - 완료
 - [x] 리프팅·탄력 탭 12개 장비 등록 완료 (2026-06-09)
   * 울써라피 프라임 (Ultherapy Prime)
   * 써마지 FLX (Thermage FLX)

@@ -64,10 +64,33 @@ export default function LandingEN() {
             { name: "Home", url: "https://star-pibu.com/en" },
           ]),
           buildFAQPageJsonLd([
+            /* ── Clinic Info ── */
             { question: "Where is Star Dermatology located?", answer: "Star Dermatology is located at 74 Seomyeon-ro, Busanjin-gu, Busan (ION City Building, 4F). It is a 5-minute walk from Seomyeon Station on Busan Metro Lines 1 and 2. Phone: +82-51-818-2300" },
             { question: "What are the clinic hours?", answer: "Monday–Friday 10:00–19:00, Saturday 09:30–15:00. Closed on Sundays and public holidays." },
-            { question: "What is the difference between Ultherapy and Thermage?", answer: "Ultherapy uses focused ultrasound (HIFU) to stimulate the deep SMAS layer, an FDA-approved non-surgical lifting procedure. Thermage FLX uses 4th-generation radiofrequency (RF) energy to regenerate collagen. The two work differently and can be combined for synergistic results." },
-            { question: "Is consultation available in English?", answer: "Yes. Star Dermatology provides consultations in English, Japanese, and Chinese for international patients." },
+            { question: "What treatments does Star Dermatology specialize in?", answer: "Star Dermatology offers over 50 premium laser and aesthetic procedures including Ultherapy Prime, Thermage FLX, under-eye fat repositioning, Rejuran Healer, Pico laser toning, pigmentation treatment, and acne care. All procedures are performed directly by board-certified dermatologists with over 20 years of experience." },
+            { question: "Is consultation available in English?", answer: "Yes. Star Dermatology provides consultations in English, Japanese, and Chinese for international patients. Visit our foreign patient guide at https://star-pibu.com/en/foreign-guide" },
+            /* ── Ultherapy Prime ── */
+            { question: "What is Ultherapy Prime?", answer: "Ultherapy Prime is an FDA-approved non-surgical lifting treatment that uses focused ultrasound (HIFU) technology to stimulate the deep SMAS layer of the skin. It delivers improved energy efficiency compared to the original Ultherapy, achieving effective lifting with fewer sessions." },
+            { question: "What is the difference between Ultherapy Prime and the original Ultherapy?", answer: "Ultherapy Prime is the next-generation version with enhanced energy delivery efficiency. While it uses the same HIFU principle, more precise ultrasound targeting allows for greater collagen regeneration with reduced discomfort during treatment." },
+            { question: "How long do Ultherapy results last?", answer: "Ultherapy results gradually appear over 2–3 months post-treatment and typically last 6 months to over a year. Results vary based on individual skin condition, age, and lifestyle. Annual maintenance sessions are recommended." },
+            { question: "Is there downtime after Ultherapy?", answer: "No, Ultherapy is a non-surgical procedure with no required downtime. Mild redness or swelling may occur immediately after treatment, but most patients can return to daily activities the same day." },
+            /* ── Thermage FLX ── */
+            { question: "What is Thermage FLX?", answer: "Thermage FLX is a 4th-generation radiofrequency (RF) skin tightening treatment that stimulates collagen production in deep skin layers. It improves skin elasticity, texture, pore size, and wrinkles. It is an FDA-cleared, safe device." },
+            { question: "Is Thermage FLX painful?", answer: "Thermage FLX features a built-in vibration comfort system that significantly reduces discomfort compared to previous Thermage models. Patients typically feel a warm sensation and mild tingling, which most find tolerable." },
+            { question: "How many Thermage FLX sessions are needed?", answer: "A single Thermage FLX session can produce visible results, with effects gradually appearing over 2–6 months. Maintenance sessions every 6 months to 1 year are recommended to sustain results." },
+            { question: "Can Ultherapy and Thermage be combined?", answer: "Yes. Ultherapy (HIFU) and Thermage FLX (RF) work through different mechanisms and can be combined for synergistic results. Ultherapy targets deep SMAS layer lifting while Thermage focuses on surface collagen regeneration, creating a more comprehensive lifting effect when used together." },
+            /* ── Under-Eye Fat Repositioning ── */
+            { question: "What is under-eye fat repositioning?", answer: "Under-eye fat repositioning is a procedure that redistributes excess fat beneath the eye to the sunken tear trough area, creating a natural under-eye contour without removing fat. Dr. Cho Si-hyeong at Star Dermatology has performed over 4,000 such procedures." },
+            { question: "What is the recovery time for under-eye fat repositioning?", answer: "Swelling typically subsides within 1–2 weeks, with full recovery taking 1–3 months. Avoid strenuous exercise and alcohol for the first week, and use diligent sun protection." },
+            /* ── Rejuran Healer ── */
+            { question: "What is Rejuran Healer?", answer: "Rejuran Healer is a skin regeneration treatment that injects polynucleotide (PDRN) derived from salmon DNA into the skin to improve hydration, elasticity, fine lines, and skin texture. It is ideal for those seeking natural skin improvement." },
+            { question: "How many Rejuran sessions are recommended?", answer: "Typically 3–4 initial sessions at 2–4 week intervals, followed by maintenance sessions every 3–6 months. The exact schedule varies based on individual skin condition and is best determined through a consultation." },
+            /* ── Pico Laser ── */
+            { question: "What is Pico laser toning?", answer: "Pico laser toning uses ultra-fast picosecond (one trillionth of a second) laser pulses to shatter melanin pigment into tiny particles, evening out skin tone. It effectively treats freckles, dark spots, pigmentation, enlarged pores, and skin texture with minimal thermal damage." },
+            { question: "What should I avoid after Pico laser treatment?", answer: "Apply sunscreen diligently after Pico laser treatment. Minimize skin irritation during cleansing for 1–2 days post-treatment. Avoid saunas, steam rooms, and intense exercise for about one week. Do not pick at any scabs that may form." },
+            /* ── General ── */
+            { question: "Are all procedures performed by board-certified dermatologists?", answer: "Yes. All procedures at Star Dermatology are performed directly by three board-certified dermatologists (Dr. Cho Si-hyeong, Dr. Woo Hye-jin, Dr. Lee Gi-wook), each with over 20 years of experience." },
+            { question: "How can I book a consultation?", answer: "You can book a consultation by phone (+82-51-818-2300), Naver reservation, or KakaoTalk channel (@starpibugwa). During your visit, our specialists will assess your skin condition and create a personalized treatment plan." },
           ]),
         ]}
         pageType="home"

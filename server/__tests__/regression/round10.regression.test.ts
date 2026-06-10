@@ -16,7 +16,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
-const ROOT = resolve(__dirname, "..");
+const ROOT = resolve(__dirname, "../../..");
 
 function src(relPath: string): string {
   return readFileSync(resolve(ROOT, relPath), "utf-8");

@@ -61,7 +61,7 @@ describe("HeroSection.tsx — scrollLabel 역참조 버그 수정 회귀 방지"
   });
 
   it("ko/en/ja/zh 모두 hero.scrollLabel 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../../client/src/lib/i18n");
     expect(i18n.ko.hero.scrollLabel).toBeTruthy();
     expect(i18n.en.hero.scrollLabel).toBeTruthy();
     expect(i18n.ja.hero.scrollLabel).toBeTruthy();
@@ -100,7 +100,7 @@ describe("DoctorsSection.tsx — lang === 'ko' specialties 분기 제거 회귀 
   it("en/ja/zh i18n에 doctors.list[0].specialties 값이 있어야 한다", async () => {
     // ko는 DoctorsSection.tsx 내 d.specialties 하드코딩 fallback 허용
     // en/ja/zh는 i18n 파일에 specialties 배열이 있어야 함
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../../client/src/lib/i18n");
     expect(i18n.en.doctors.list[0].specialties?.length).toBeGreaterThan(0);
     expect(i18n.ja.doctors.list[0].specialties?.length).toBeGreaterThan(0);
     expect(i18n.zh.doctors.list[0].specialties?.length).toBeGreaterThan(0);
@@ -146,7 +146,7 @@ describe("i18n.ts 분리 구조 검증 (STRUCT-I18N-1)", () => {
   });
 
   it("i18n 런타임 import가 정상 동작해야 한다 (ko/en/ja/zh 모두 로드)", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../../client/src/lib/i18n");
     expect(i18n.ko).toBeDefined();
     expect(i18n.en).toBeDefined();
     expect(i18n.ja).toBeDefined();

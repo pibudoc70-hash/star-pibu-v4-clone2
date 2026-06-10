@@ -5,11 +5,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // ─── DB 모킹 (vi.mock factory는 호이스팅되므로 외부 변수 참조 금지) ──────────
-vi.mock("./db", () => ({
+vi.mock("../db", () => ({
   getDb: vi.fn(),
 }));
 
-vi.mock("../drizzle/schema", () => ({
+vi.mock("../../drizzle/schema", () => ({
   guestOtps: { verified: "verified", expiresAt: "expiresAt", createdAt: "createdAt" },
 }));
 
@@ -19,13 +19,13 @@ vi.mock("drizzle-orm", () => ({
   eq: vi.fn((col, val) => ({ type: "eq", col, val })),
 }));
 
-vi.mock("./_core/logger", () => ({
+vi.mock("../_core/logger", () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
 }));
 
-import { getDb } from "./db";
-import { logger } from "./_core/logger";
-import { cleanupExpiredOtps } from "./otpCleanup";
+import { getDb } from "../db";
+import { logger } from "../_core/logger";
+import { cleanupExpiredOtps } from "../otpCleanup";
 
 // ─── DB 스텁 헬퍼 ─────────────────────────────────────────────────────────────
 function makeDb(rowsAffected: number) {

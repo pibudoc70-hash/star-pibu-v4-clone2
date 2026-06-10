@@ -10,7 +10,7 @@
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { TRPCClientError } from "@trpc/client";
-import { UNAUTHED_ERR_MSG } from "../shared/const";
+import { UNAUTHED_ERR_MSG } from "../../shared/const";
 
 // redirectToLoginIfUnauthorized 로직을 독립적으로 테스트하기 위해 인라인 구현
 function makeRedirectHandler() {

@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { treatmentsRouter } from "./treatments-router";
+import { treatmentsRouter } from "./routers/treatments";
 import { publicProcedure, router } from "./_core/trpc";
 import { reservationRouter, scheduleRouter } from "./routers/reservation";
 import { eventsRouter } from "./routers/events";

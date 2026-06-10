@@ -12,7 +12,7 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import { describe, it, expect } from "vitest";
 
-const ROOT = resolve(__dirname, "..");
+const ROOT = resolve(__dirname, "../../..");
 
 function src(rel: string) {
   return readFileSync(resolve(ROOT, rel), "utf-8");

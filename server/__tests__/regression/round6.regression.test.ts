@@ -14,7 +14,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-const ROOT = resolve(__dirname, "..");
+const ROOT = resolve(__dirname, "../../..");
 const read = (rel: string) => readFileSync(resolve(ROOT, rel), "utf-8");
 
 // ─────────────────────────────────────────────────────────────────────────────

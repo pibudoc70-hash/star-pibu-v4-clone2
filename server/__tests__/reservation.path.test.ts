@@ -6,7 +6,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { getReservationPath } from "../client/src/lib/reservationPath";
+import { getReservationPath } from "../../client/src/lib/reservationPath";
 
 describe("getReservationPath", () => {
   it("ko => /#reservation", () => {
@@ -32,7 +32,7 @@ describe("getReservationPath", () => {
 });
 
 describe("dead link audit: /reserve 참조 0건", () => {
-  const clientSrcRoot = join(__dirname, "../client/src");
+  const clientSrcRoot = join(__dirname, "../../client/src");
 
   const readSource = (relPath: string): string => {
     try {

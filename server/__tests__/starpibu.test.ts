@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { appRouter } from "./routers";
-import type { TrpcContext } from "./_core/context";
+import { appRouter } from "../routers";
+import type { TrpcContext } from "../_core/context";
 
 // ── 테스트용 컨텍스트 팩토리 ──────────────────────────────────────
 function makeCtx(role: "user" | "admin" = "user"): TrpcContext {

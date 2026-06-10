@@ -7,8 +7,8 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import { getEquipmentSeoText } from "../client/src/lib/equipmentSeoText";
-import type { Treatment } from "../shared/types";
+import { getEquipmentSeoText } from "../../client/src/lib/equipmentSeoText";
+import type { Treatment } from "../../shared/types";
 
 // 테스트용 최소 Treatment 픽스처
 const mockTreatment: Treatment = {
@@ -125,7 +125,7 @@ describe("getEquipmentSeoText", () => {
 });
 
 describe("Equipment2Detail.tsx 소스 파일 금지 문자열 검증", () => {
-  const filePath = resolve(__dirname, "../client/src/pages/Equipment2Detail.tsx");
+  const filePath = resolve(__dirname, "../../client/src/pages/Equipment2Detail.tsx");
   const source = readFileSync(filePath, "utf-8");
 
   for (const forbidden of FORBIDDEN) {

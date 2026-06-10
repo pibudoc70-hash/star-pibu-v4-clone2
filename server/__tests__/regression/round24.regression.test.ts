@@ -16,15 +16,19 @@ import { describe, it, expect } from "vitest";
 import * as fs from "fs";
 import * as path from "path";
 
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, "../../..");
 const readClient = (p: string) =>
   fs.readFileSync(path.join(ROOT, "client/src", p), "utf-8");
 const readServer = (p: string) =>
   fs.readFileSync(path.join(ROOT, "server", p), "utf-8");
+const readServerTests = (p: string) =>
+  fs.readFileSync(path.join(ROOT, "server/__tests__", p), "utf-8");
 const existsClient = (p: string) =>
   fs.existsSync(path.join(ROOT, "client/src", p));
 const existsServer = (p: string) =>
   fs.existsSync(path.join(ROOT, "server", p));
+const existsServerTests = (p: string) =>
+  fs.existsSync(path.join(ROOT, "server/__tests__", p));
 
 // ── A. useViewportTier 훅 분리 ──────────────────────────────────────────────
 describe("A. useViewportTier 훅 분리 (P0-2)", () => {
@@ -207,21 +211,21 @@ describe("F. constants/stats 연결 검증 (P1-5)", () => {
 // ── G. useStaticTreatmentFilter 단위 테스트 파일 존재 ───────────────────────
 describe("G. useStaticTreatmentFilter 단위 테스트 파일 존재 (P0-1)", () => {
   it("G-1: useStaticTreatmentFilter.test.ts 파일이 존재한다", () => {
-    expect(existsServer("useStaticTreatmentFilter.test.ts")).toBe(true);
+    expect(existsServerTests("useStaticTreatmentFilter.test.ts")).toBe(true);
   });
 
   it("G-2: useStaticTreatmentFilter.test.ts는 invalid fallback 테스트를 포함한다", () => {
-    const src = readServer("useStaticTreatmentFilter.test.ts");
+    const src = readServerTests("useStaticTreatmentFilter.test.ts");
     expect(src).toMatch(/invalid|fallback|unknown/i);
   });
 
   it("G-3: useStaticTreatmentFilter.test.ts는 closeFilter 테스트를 포함한다", () => {
-    const src = readServer("useStaticTreatmentFilter.test.ts");
+    const src = readServerTests("useStaticTreatmentFilter.test.ts");
     expect(src).toMatch(/closeFilter/);
   });
 
   it("G-4: useStaticTreatmentFilter.test.ts는 sort 테스트를 포함한다", () => {
-    const src = readServer("useStaticTreatmentFilter.test.ts");
+    const src = readServerTests("useStaticTreatmentFilter.test.ts");
     expect(src).toMatch(/sort/i);
   });
 });
@@ -229,21 +233,21 @@ describe("G. useStaticTreatmentFilter 단위 테스트 파일 존재 (P0-1)", ()
 // ── H. seoHead 단위 테스트 파일 존재 ────────────────────────────────────────
 describe("H. seoHead 단위 테스트 파일 존재 (P0-3)", () => {
   it("H-1: seoHead.test.ts 파일이 존재한다", () => {
-    expect(existsServer("seoHead.test.ts")).toBe(true);
+    expect(existsServerTests("seoHead.test.ts")).toBe(true);
   });
 
   it("H-2: seoHead.test.ts는 buildHreflangs 테스트를 포함한다", () => {
-    const src = readServer("seoHead.test.ts");
+    const src = readServerTests("seoHead.test.ts");
     expect(src).toMatch(/buildHreflangs/);
   });
 
   it("H-3: seoHead.test.ts는 SEO_PRESETS 테스트를 포함한다", () => {
-    const src = readServer("seoHead.test.ts");
+    const src = readServerTests("seoHead.test.ts");
     expect(src).toMatch(/SEO_PRESETS/);
   });
 
   it("H-4: seoHead.test.ts는 buildClinicJsonLd 테스트를 포함한다", () => {
-    const src = readServer("seoHead.test.ts");
+    const src = readServerTests("seoHead.test.ts");
     expect(src).toMatch(/buildClinicJsonLd/);
   });
 });

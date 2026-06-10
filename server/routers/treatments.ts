@@ -1,7 +1,7 @@
-import { adminProcedure, publicProcedure, router } from "./_core/trpc";
-import { getAllTreatmentCategories, getTreatmentsByCategory, getAllTreatments, getTreatmentById, getTreatmentBySlug, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "./db";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc";
+import { getAllTreatmentCategories, getTreatmentsByCategory, getAllTreatments, getTreatmentById, getTreatmentBySlug, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "../db";
 import { z } from "zod/v4";
-import { storagePut } from "./storage";
+import { storagePut } from "../storage";
 
 export const treatmentsRouter = router({
   // 공개: 모든 시술 카테고리 조회

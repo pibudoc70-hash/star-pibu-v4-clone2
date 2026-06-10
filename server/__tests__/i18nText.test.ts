@@ -3,8 +3,8 @@
  * pickLocalized / pickLocalizedFaq 헬퍼 단위 테스트
  */
 import { describe, it, expect } from "vitest";
-import { pickLocalized, pickLocalizedFaq } from "../client/src/lib/i18nText";
-import type { LocalizedString, LocalizedFaq } from "../client/src/lib/i18nText";
+import { pickLocalized, pickLocalizedFaq } from "../../client/src/lib/i18nText";
+import type { LocalizedString, LocalizedFaq } from "../../client/src/lib/i18nText";
 
 describe("pickLocalized", () => {
   const full: LocalizedString = {
@@ -102,7 +102,7 @@ describe("pickLocalizedFaq", () => {
 
 describe("treatments data integrity", () => {
   it("ulthera has all 4 languages in name", async () => {
-    const { ulthera } = await import("../client/src/data/treatments/ulthera");
+    const { ulthera } = await import("../../client/src/data/treatments/ulthera");
     expect(ulthera.name.ko).toBeTruthy();
     expect(ulthera.name.en).toBeTruthy();
     expect(ulthera.name.ja).toBeTruthy();
@@ -110,7 +110,7 @@ describe("treatments data integrity", () => {
   });
 
   it("thermage has all 4 languages in seoTitle", async () => {
-    const { thermage } = await import("../client/src/data/treatments/thermage");
+    const { thermage } = await import("../../client/src/data/treatments/thermage");
     expect(thermage.seoTitle.ko).toBeTruthy();
     expect(thermage.seoTitle.en).toBeTruthy();
     expect(thermage.seoTitle.ja).toBeTruthy();
@@ -118,7 +118,7 @@ describe("treatments data integrity", () => {
   });
 
   it("under-eye-fat has faq in all 4 languages", async () => {
-    const { underEyeFat } = await import("../client/src/data/treatments/under-eye-fat");
+    const { underEyeFat } = await import("../../client/src/data/treatments/under-eye-fat");
     expect(underEyeFat.faq?.ko?.length).toBeGreaterThan(0);
     expect(underEyeFat.faq?.en?.length).toBeGreaterThan(0);
     expect(underEyeFat.faq?.ja?.length).toBeGreaterThan(0);
@@ -126,7 +126,7 @@ describe("treatments data integrity", () => {
   });
 
   it("TREATMENT_DATA has 7 entries (PR-32: 4 new slugs added)", async () => {
-    const { TREATMENT_DATA } = await import("../client/src/data/treatments/index");
+    const { TREATMENT_DATA } = await import("../../client/src/data/treatments/index");
     // Original 3 (PR-24)
     expect(TREATMENT_DATA["ulthera"]).toBeDefined();
     expect(TREATMENT_DATA["thermage"]).toBeDefined();
@@ -140,7 +140,7 @@ describe("treatments data integrity", () => {
   });
 
   it("getTreatmentBySlug returns undefined for unknown slug", async () => {
-    const { getTreatmentBySlug } = await import("../client/src/data/treatments/index");
+    const { getTreatmentBySlug } = await import("../../client/src/data/treatments/index");
     expect(getTreatmentBySlug("unknown-slug")).toBeUndefined();
     expect(getTreatmentBySlug(undefined)).toBeUndefined();
   });
@@ -189,7 +189,7 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
   });
 
   it("i18n.ts 4개 언어 모두 mapViewLabel 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ko.access.mapViewLabel).toBeTruthy();
     expect(i18n.en.access.mapViewLabel).toBeTruthy();
     expect(i18n.ja.access.mapViewLabel).toBeTruthy();
@@ -197,7 +197,7 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
   });
 
   it("i18n.ts 4개 언어 모두 mapAddressShort 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ko.access.mapAddressShort).toBeTruthy();
     expect(i18n.en.access.mapAddressShort).toBeTruthy();
     expect(i18n.ja.access.mapAddressShort).toBeTruthy();
@@ -210,43 +210,43 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe("PR-QA-P1: i18n.zh.ts 오탈자 수정 회귀 방지", () => {
   it("zh cta_kakao가 '咋讯' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.zh.hero.cta_kakao).not.toContain("咋讯");
     expect(i18n.zh.hero.cta_kakao).toContain("咨询");
   });
 
   it("zh cta_reserve가 '咋讯' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.zh.hero.cta_reserve).not.toContain("咋讯");
   });
 
   it("zh hours.title이 '诊疗安内' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.zh.hours.title).not.toContain("安内");
     expect(i18n.zh.hours.title).toBe("诊疗时间");
   });
 
   it("zh equipmentConsultBtn이 '和设备和论' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.zh.treatments.equipmentConsultBtn).not.toContain("和设备和论");
     expect(i18n.zh.treatments.equipmentConsultBtn).toContain("咨询");
   });
 
   it("zh floatingCta.callAria가 '和论' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.zh.floatingCta.callAria).not.toContain("和论");
     expect(i18n.zh.floatingCta.callAria).toContain("咨询");
   });
 
   it("zh results.treatmentResults에 '珑点去除' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const items = i18n.zh.results.treatmentResults;
     const allImprovements = items.flatMap((item: { improvements: string[] }) => item.improvements).join(" ");
     expect(allImprovements).not.toContain("珑点去除");
   });
 
   it("zh results.treatmentResults에 '改善波山红' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const items = i18n.zh.results.treatmentResults;
     const allImprovements = items.flatMap((item: { improvements: string[] }) => item.improvements).join(" ");
     expect(allImprovements).not.toContain("改善波山红");
@@ -255,43 +255,43 @@ describe("PR-QA-P1: i18n.zh.ts 오탈자 수정 회귀 방지", () => {
 
 describe("PR-QA-P1: i18n.ja.ts 오탈자 수정 회귀 방지", () => {
   it("ja access.hoursNote가 '昂休み' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ja.access.hoursNote).not.toContain("昂休み");
     expect(i18n.ja.access.hoursNote).toContain("昼休み");
   });
 
   it("ja access.parkingLabel이 '驐車場' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ja.access.parkingLabel).not.toContain("驐車場");
     expect(i18n.ja.access.parkingLabel).toBe("駐車場");
   });
 
   it("ja footer.privacy가 '方针' 오탈자를 포함하지 않아야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ja.footer.privacy).not.toContain("方针");
     expect(i18n.ja.footer.privacy).toContain("方針");
   });
 
   it("ja doctors.careers에 '蔽山' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const allCareers = i18n.ja.doctors.list.flatMap((d: { careers: string[] }) => d.careers).join(" ");
     expect(allCareers).not.toContain("蔽山");
   });
 
   it("ja doctors.careers에 'スタ皮膚科' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const allCareers = i18n.ja.doctors.list.flatMap((d: { careers: string[] }) => d.careers).join(" ");
     expect(allCareers).not.toContain("スタ皮膚科");
   });
 
   it("ja reviews에 '膚トーン' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
     expect(allTexts).not.toContain("膚トーン");
   });
 
   it("ja reviews에 '膚の弾力' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
     expect(allTexts).not.toContain("膚の弾力");
   });
@@ -309,7 +309,7 @@ describe("PR-QA-P1: i18n doctors.teamLabel 추가 검증", () => {
   });
 
   it("4개 언어 모두 doctors.teamLabel 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ko.doctors.teamLabel).toBeTruthy();
     expect(i18n.en.doctors.teamLabel).toBeTruthy();
     expect(i18n.ja.doctors.teamLabel).toBeTruthy();
@@ -319,7 +319,7 @@ describe("PR-QA-P1: i18n doctors.teamLabel 추가 검증", () => {
 
 describe("PR-QA-P1: i18n access.mapAriaLabel/mapMarkerTitle 추가 검증", () => {
   it("4개 언어 모두 access.mapAriaLabel 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ko.access.mapAriaLabel).toBeTruthy();
     expect(i18n.en.access.mapAriaLabel).toBeTruthy();
     expect(i18n.ja.access.mapAriaLabel).toBeTruthy();
@@ -327,7 +327,7 @@ describe("PR-QA-P1: i18n access.mapAriaLabel/mapMarkerTitle 추가 검증", () =
   });
 
   it("4개 언어 모두 access.mapMarkerTitle 값이 있어야 한다", async () => {
-    const { i18n } = await import("../client/src/lib/i18n");
+    const { i18n } = await import("../../client/src/lib/i18n");
     expect(i18n.ko.access.mapMarkerTitle).toBeTruthy();
     expect(i18n.en.access.mapMarkerTitle).toBeTruthy();
     expect(i18n.ja.access.mapMarkerTitle).toBeTruthy();

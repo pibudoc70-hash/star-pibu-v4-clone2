@@ -15,7 +15,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-const root = resolve(__dirname, "..");
+const root = resolve(__dirname, "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf-8");
 
 // ─── A. HeroStatItem 인라인 style 교체 ───────────────────────────────────────

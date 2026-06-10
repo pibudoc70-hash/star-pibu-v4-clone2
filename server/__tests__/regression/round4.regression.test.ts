@@ -13,7 +13,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 
-const root = path.resolve(__dirname, "..");
+const root = path.resolve(__dirname, "../../..");
 
 // [R12] HeroSection 리팩토링으로 copiedLabel 로직이 hero/HeroActions.tsx로 이동
 // heroSource는 HeroSection + HeroActions 합산으로 검사

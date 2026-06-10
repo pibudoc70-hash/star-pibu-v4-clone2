@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { appRouter } from "./routers";
-import type { TrpcContext } from "./_core/context";
-import type { Event } from "../drizzle/schema";
+import { appRouter } from "../routers";
+import type { TrpcContext } from "../_core/context";
+import type { Event } from "../../drizzle/schema";
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
 

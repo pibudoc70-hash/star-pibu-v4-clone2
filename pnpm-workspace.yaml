@@ -8,3 +8,7 @@ overrides:
 
 ignoredBuiltDependencies:
   - puppeteer
+
+onlyBuiltDependencies:
+  - esbuild
+  - "@tailwindcss/oxide"

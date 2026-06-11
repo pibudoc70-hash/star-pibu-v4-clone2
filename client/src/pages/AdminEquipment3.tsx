@@ -10,7 +10,7 @@
  *  - 삭제
  *  - 신규 등록 / 수정 페이지로 이동
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -209,6 +209,7 @@ export default function AdminEquipment3() {
   const [localItems, setLocalItems] = useState<Item[]>([]);
   const [isDirty, setIsDirty] = useState(false);
   const [saving, setSaving] = useState(false);
+  const initializedRef = useRef(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -224,12 +225,23 @@ export default function AdminEquipment3() {
 
   const { data: items = [], isLoading, error } = trpc.equipment3.all.useQuery();
 
-  // 서버 데이터 → localItems 동기화 (저장 후 갱신)
+  // 서버 데이터 → localItems 동기화
+  // - 최초 로드 시 무조건 동기화
+  // - 저장 완료(isDirty=false로 리셋) 직후 서버 데이터로 갱신
   useEffect(() => {
+    if (items.length === 0) return;
+    if (!initializedRef.current) {
+      // 최초 1회 초기화
+      initializedRef.current = true;
+      setLocalItems(items as Item[]);
+      return;
+    }
+    // isDirty가 false일 때만 서버 데이터로 덮어씀 (저장 완료 후 갱신)
     if (!isDirty) {
       setLocalItems(items as Item[]);
     }
-  }, [items, isDirty]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   const deleteMutation = trpc.equipment3.delete.useMutation({
     onSuccess: () => {

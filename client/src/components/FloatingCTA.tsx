@@ -62,33 +62,35 @@ export default function FloatingCTA() {
         }}
       >
         <div className="flex items-stretch" style={{ minHeight: "58px" }}>
-          {/* Tertiary: 전화 — 좌측, 좁게, 아이콘 중심 */}
+          {/* Primary: 예약 — 좌측, 골드 */}
           <a
-            href={telHref}
-            className="flex flex-col items-center justify-center gap-0.5 text-xs font-medium"
+            href={reserveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 font-bold"
             style={{
-              width: "64px",
-              flexShrink: 0,
-              color: "rgba(255,255,255,0.7)",
-              borderRight: "1px solid rgba(255,255,255,0.08)",
+              background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
+              color: "white",
+              textShadow: "0 1px 3px rgba(0,0,0,0.25)",
               paddingTop: "10px",
               paddingBottom: "10px",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
+              borderRight: "1px solid rgba(255,255,255,0.15)",
             }}
-            aria-label={fc.callAria}
+            aria-label={fc.reserveAria}
           >
-            <Phone size={17} strokeWidth={1.8} />
-            <span style={{ fontSize: "0.65rem", marginTop: "2px", letterSpacing: "0.01em" }}>{fc.call}</span>
+            <Calendar size={18} strokeWidth={2} />
+            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.02em" }}>{fc.reserve}</span>
           </a>
 
-          {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙, 중간 너비 */}
+          {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙 */}
           <a
             href={chatUrl}
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
-            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold relative"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-semibold relative"
             style={{
-              flex: "1",
               background: chatBg,
               color: chatColor,
               borderRight: "1px solid rgba(255,255,255,0.08)",
@@ -98,7 +100,7 @@ export default function FloatingCTA() {
             aria-label={fc.kakaoAria}
           >
             <MessageCircle size={18} strokeWidth={1.8} />
-            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.01em" }}>
+            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.01em" }}>
               {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
             </span>
             {wechatCopied && isZH && (
@@ -108,25 +110,19 @@ export default function FloatingCTA() {
             )}
           </a>
 
-          {/* Primary: 예약 — 우측, 가장 넓게, 골드 강조 */}
+          {/* Tertiary: 전화 — 우측 */}
           <a
-            href={reserveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-0.5 font-bold"
+            href={telHref}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-medium"
             style={{
-              flex: "1.4",
-              background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
-              color: "white",
-              textShadow: "0 1px 3px rgba(0,0,0,0.25)",
+              color: "rgba(255,255,255,0.75)",
               paddingTop: "10px",
               paddingBottom: "10px",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
             }}
-            aria-label={fc.reserveAria}
+            aria-label={fc.callAria}
           >
-            <Calendar size={18} strokeWidth={2} />
-            <span style={{ fontSize: "0.75rem", marginTop: "2px", letterSpacing: "0.02em" }}>{fc.reserve}</span>
+            <Phone size={17} strokeWidth={1.8} />
+            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.01em" }}>{fc.call}</span>
           </a>
         </div>
       </div>

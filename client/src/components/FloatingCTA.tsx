@@ -50,68 +50,83 @@ export default function FloatingCTA() {
 
   return (
     <>
-      {/* ── 모바일 하단 바 ── */}
+      {/* ── 모바일 하단 바 (Primary/Secondary/Tertiary 위계) ── */}
+      {/* [M2] 예약(Primary) > 카카오(Secondary) > 전화(Tertiary) 위계 재정립 */}
       <div
         className="fixed bottom-0 left-0 right-0 z-40 md:hidden transition-transform duration-300"
         style={{
           transform: visible ? "translateY(0)" : "translateY(100%)",
-          background: "white",
-          boxShadow: "0 -4px 20px rgba(0,0,0,0.1)",
+          background: "#0a1228",
+          boxShadow: "0 -2px 24px rgba(0,0,0,0.22), 0 -1px 0 rgba(201,168,76,0.18)",
           paddingBottom: "max(env(safe-area-inset-bottom), 0px)",
         }}
       >
-        <div className="flex">
-          {/* 전화 */}
+        <div className="flex items-stretch" style={{ minHeight: "58px" }}>
+          {/* Tertiary: 전화 — 좌측, 좁게, 아이콘 중심 */}
           <a
             href={telHref}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold"
+            className="flex flex-col items-center justify-center gap-0.5 text-xs font-medium"
             style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
-              color: "white",
-              borderRight: "1px solid rgba(255,255,255,0.3)",
-              textShadow: "0 1px 2px rgba(0,0,0,0.2)",
-              minHeight: "52px",
+              width: "64px",
+              flexShrink: 0,
+              color: "rgba(255,255,255,0.7)",
+              borderRight: "1px solid rgba(255,255,255,0.08)",
+              paddingTop: "10px",
+              paddingBottom: "10px",
             }}
+            aria-label={fc.callAria}
           >
-            <Phone size={18} />
-            {fc.call}
+            <Phone size={17} strokeWidth={1.8} />
+            <span style={{ fontSize: "0.65rem", marginTop: "2px", letterSpacing: "0.01em" }}>{fc.call}</span>
           </a>
 
-          {/* 메신저 (카카오/LINE/WeChat) */}
+          {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙, 중간 너비 */}
           <a
             href={chatUrl}
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold relative"
+            className="flex flex-col items-center justify-center gap-0.5 text-xs font-semibold relative"
             style={{
+              flex: "1",
               background: chatBg,
               color: chatColor,
-              minHeight: "52px",
+              borderRight: "1px solid rgba(255,255,255,0.08)",
+              paddingTop: "10px",
+              paddingBottom: "10px",
             }}
+            aria-label={fc.kakaoAria}
           >
-            <MessageCircle size={18} />
-            {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
+            <MessageCircle size={18} strokeWidth={1.8} />
+            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.01em" }}>
+              {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
+            </span>
             {wechatCopied && isZH && (
-              <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
+              <span className="absolute -top-9 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
                 ID: {WECHAT_ID}
               </span>
             )}
           </a>
 
-          {/* 예약 (네이버/LINE) */}
+          {/* Primary: 예약 — 우측, 가장 넓게, 골드 강조 */}
           <a
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3.5 text-xs font-semibold text-white"
+            className="flex flex-col items-center justify-center gap-0.5 font-bold"
             style={{
-              background: reserveBg,
-              minHeight: "52px",
+              flex: "1.4",
+              background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
+              color: "white",
+              textShadow: "0 1px 3px rgba(0,0,0,0.25)",
+              paddingTop: "10px",
+              paddingBottom: "10px",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
             }}
+            aria-label={fc.reserveAria}
           >
-            <Calendar size={18} />
-            {fc.reserve}
+            <Calendar size={18} strokeWidth={2} />
+            <span style={{ fontSize: "0.75rem", marginTop: "2px", letterSpacing: "0.02em" }}>{fc.reserve}</span>
           </a>
         </div>
       </div>

@@ -749,6 +749,12 @@
     object-fit: cover;
     object-position: center center;
   }
+  /* [M1-P0] 모바일 hero 이미지 focal point — 상단 25% 앵커로 인물/공간 중심 보호 */
+  @media (max-width: 640px) {
+    .hero-bg-img {
+      object-position: center 25%;
+    }
+  }
   .hero-content {
     max-width: min(680px, 96vw);
     padding-top: 141px;
@@ -1245,10 +1251,10 @@
       box-sizing: border-box;
     }
 
-    /* 섹션 패딩 축소 */
+    /* 섹션 패딩 — 프리미엄 무드를 위한 상하 여백 확보 */
     section {
-      padding-top: 2.5rem !important;
-      padding-bottom: 2.5rem !important;
+      padding-top: 3.5rem !important;
+      padding-bottom: 3.5rem !important;
     }
 
     /* 컨테이너 좌우 패딩 */
@@ -1270,11 +1276,11 @@
       font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
     }
 
-    /* 그리드 갭 축소 */
-    .gap-8 { gap: 1.25rem !important; }
-    .gap-10 { gap: 1.5rem !important; }
-    .gap-12 { gap: 1.5rem !important; }
-    .gap-16 { gap: 2rem !important; }
+    /* 그리드 갭 — 카드 간 여백 확보로 프리미엄 무드 */
+    .gap-8 { gap: 1.5rem !important; }
+    .gap-10 { gap: 1.75rem !important; }
+    .gap-12 { gap: 1.75rem !important; }
+    .gap-16 { gap: 2.25rem !important; }
 
     /* 카드 패딩 축소 */
     .p-6 { padding: 1rem !important; }
@@ -1416,14 +1422,15 @@
     animation-delay: var(--stagger-out-delay, 0ms);
   }
 
-  /* Mobile padding for floating CTA */
+  /* Mobile padding for floating CTA — sticky CTA와 본문 충돌 방지 */
   @media (max-width: 768px) {
     main {
-      padding-bottom: 60px;
+      padding-bottom: 70px;
     }
   }
 
   /* ─── Hero Section 모바일 최적화 (375px ~ 640px) ─── */
+  /* [M1] 모바일 프리미엄 아트디렉션: 여백 확보, 타이포 절제, 통계 간격 정리 */
   @media (max-width: 640px) {
     /* Hero section - 화면 전체 채우기 */
     #home {
@@ -1431,26 +1438,67 @@
       min-height: 100dvh !important;
     }
 
-    /* Hero 콘텐츠 컨테이너 */
+    /* Hero 콘텐츠 컨테이너 — 상하 여백 확대로 숨 쉴 공간 확보 */
     #home > .relative.z-10 {
-      padding-top: clamp(68px, 9vh, 88px) !important;
-      padding-bottom: clamp(52px, 8vh, 68px) !important;
+      padding-top: clamp(72px, 10vh, 96px) !important;
+      padding-bottom: clamp(64px, 9vh, 80px) !important;
       max-width: 100% !important;
-      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
-      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
+      padding-left: clamp(1.5rem, 7vw, 2rem) !important;
+      padding-right: clamp(1.5rem, 7vw, 2rem) !important;
     }
 
+    /* 로고 — 모바일에서 과밀 방지, 적절한 크기 */
+    .hero-logo-img {
+      height: clamp(88px, 22vw, 120px) !important;
+      width: clamp(88px, 22vw, 120px) !important;
+      margin-top: -12px !important;
+    }
+    .hero-logo-wrap {
+      margin-bottom: clamp(0.5rem, 2vw, 0.875rem) !important;
+    }
     /* 로고 마진 축소 */
     #home > .relative.z-10 > .hero-fade:first-child {
-      margin-bottom: clamp(0.6rem, 2.5vw, 1rem) !important;
+      margin-bottom: clamp(0.5rem, 2vw, 0.875rem) !important;
     }
-    /* 병원명 h1 - 모바일에서 letter-spacing 축소 및 폰트 크기 최적화 */
+    /* 병원명 h1 — 2줄 이내, 절제된 크기 */
     #home h1 {
-      font-size: clamp(1.3rem, 7.5vw, 2rem) !important;
-      letter-spacing: 0.04em !important;
+      font-size: clamp(1.45rem, 8vw, 2.1rem) !important;
+      letter-spacing: 0.06em !important;
       word-break: keep-all !important;
       overflow-wrap: break-word !important;
       width: 100% !important;
+      margin-bottom: clamp(0.25rem, 1vh, 0.5rem) !important;
+    }
+    /* 슬로건 — 모바일에서 크기 절제 */
+    .hero-subtitle {
+      font-size: clamp(0.78rem, 3.2vw, 1rem) !important;
+      margin-bottom: clamp(0.15rem, 0.6vh, 0.4rem) !important;
+      letter-spacing: 0.01em !important;
+    }
+    /* 통계 스트립 — 모바일에서 간격 최적화 */
+    .hero-stats-row {
+      gap: clamp(0.75rem, 4vw, 1.5rem) !important;
+      padding-top: 18px !important;
+    }
+    .hero-stat-value {
+      font-size: clamp(1.1rem, 5.5vw, 1.6rem) !important;
+    }
+    .hero-stat-label {
+      font-size: clamp(0.58rem, 1.8vw, 0.72rem) !important;
+    }
+    /* CTA 버튼 wrap — 상단 여백 최적화 */
+    .hero-actions-wrap {
+      margin-top: 24px !important;
+    }
+    /* 전화 버튼 — 모바일 최적화 */
+    .hero-btn-phone {
+      font-size: 0.8rem !important;
+      padding: 0.6rem 1.1rem !important;
+    }
+    /* 예약/카카오 버튼 — 모바일 최적화 */
+    .hero-btn-action {
+      font-size: 0.8rem !important;
+      padding: 0.6rem 1rem !important;
     }
   }
 

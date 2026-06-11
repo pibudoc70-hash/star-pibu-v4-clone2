@@ -2454,3 +2454,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] README.md — 3계층 구조 아키텍처 메모 추가, treatments.ts 경로 수정
 - [x] TypeScript 컴파일 에러 0건 확인
 - [x] 전체 테스트 45개 파일 / 1246개 통과 확인
+
+## Phase M1: 모바일 UI/UX 프리미엄 개선 (2026-06-11)
+
+### 진단 결과 (P0/P1/P2)
+- P0: 모바일 Hero 신뢰 수치(12yrs/2325/29)가 데스크톱(20yrs/4000/50)과 다름 → 즉시 수정 필요
+- P0: 모바일 Hero 오버레이가 모바일 이미지에 최적화되지 않아 텍스트 가독성 저하
+- P0: 모바일 CTA 3개가 동일 위계로 나열 → 예약 Primary, 카카오 Secondary, 전화 Tertiary 재조정
+- P1: EventCard 모바일에서 이미지 완전 숨김 → 프리미엄 감각 저하
+- P1: 모바일 Hero 타이포/여백 과밀 → 숨 쉴 공간 부족
+- P2: 이벤트 카드 가격 정보가 시선 흐름 최상단에 위치 → 시술명/카피 우선 재배치
+
+### 수정 항목
+- [x] [P0] Hero 신뢰 수치 모바일/데스크톱 통일 (20yrs/4000+/50+) — CLINIC_STATS 단일 소스 사용 확인
+- [x] [P0] 모바일 Hero 오버레이 강도 조정 (하단 그라디언트 강화, focal point 보호)
+- [x] [P0] 모바일 Hero object-position 최적화 (center 25% 앙커)
+- [x] [P0] FloatingCTA 모바일 위계 재조정 (예약 Primary 골드, 카카오 Secondary, 전화 Tertiary 축소)
+- [x] [P1] EventCard 모바일 이미지 표시 (모바일/데스크톱 공통, 16:9 비율, 카드 상단 전체 너비)
+- [x] [P1] 모바일 Hero 콘텐츠 여백/간격 최적화 (로고 크기 축소, 통계 간격 정리)
+- [x] [P1] 모바일 Hero 타이포 절제 (h1 크기/letter-spacing, subtitle 크기 조정)
+- [x] [P2] EventCard 가격 정보 시선 흐름 재배치 (시술명 → 카피 → 가격 순서, 정상가 보조로 축소)
+- [x] [P2] 모바일 섹션 상하 여백 확대 (3.5rem)
+- [x] [P2] 이벤트 카드 간 세로 간격 확대 (gap-8 → 1.5rem)

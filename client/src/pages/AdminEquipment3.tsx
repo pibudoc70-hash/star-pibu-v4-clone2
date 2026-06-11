@@ -4,6 +4,7 @@
  *
  * 기능:
  *  - 카테고리(탭) 순서 변경
+ *  - 메뉴탭별 시술 필터링
  *  - 전체 시술 목록 표시 (비활성 포함)
  *  - 드래그 없이 ↑↓ 버튼으로 순서 변경
  *  - 활성/비활성 토글
@@ -24,6 +25,7 @@ export default function AdminEquipment3() {
   const [, navigate] = useLocation();
   const utils = trpc.useUtils();
   const [categoryReordering, setCategoryReordering] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("__all__");
 
   function toast({ title, description, variant }: { title: string; description?: string; variant?: string }) {
     if (variant === "destructive") {
@@ -71,10 +73,10 @@ export default function AdminEquipment3() {
 
   // 카테고리 순서 (첫 항목의 sortOrder 기준)
   const categories = Array.from(categoriesMap.entries())
-    .map(([name, items]) => ({
+    .map(([name, catItems]) => ({
       name,
-      items,
-      sortOrder: Math.min(...items.map(i => i.sortOrder)),
+      items: catItems,
+      sortOrder: Math.min(...catItems.map(i => i.sortOrder)),
     }))
     .sort((a, b) => a.sortOrder - b.sortOrder);
 
@@ -117,6 +119,11 @@ export default function AdminEquipment3() {
   const [localOrder, setLocalOrder] = useState<typeof items>([]);
   const displayItems = reordering ? localOrder : items;
 
+  // 탭 필터 적용된 항목
+  const filteredItems = activeTab === "__all__"
+    ? displayItems
+    : displayItems.filter(item => (item.category || "기타") === activeTab);
+
   function startReorder() {
     setLocalOrder([...items]);
     setReordering(true);
@@ -128,10 +135,14 @@ export default function AdminEquipment3() {
   }
 
   function moveItem(index: number, direction: "up" | "down") {
+    // filteredItems 기준 인덱스 → localOrder 기준 인덱스로 변환
     const arr = [...localOrder];
-    const target = direction === "up" ? index - 1 : index + 1;
-    if (target < 0 || target >= arr.length) return;
-    [arr[index], arr[target]] = [arr[target], arr[index]];
+    const item = filteredItems[index];
+    const globalIdx = arr.findIndex(i => i.id === item.id);
+    const targetItem = filteredItems[direction === "up" ? index - 1 : index + 1];
+    if (!targetItem) return;
+    const globalTarget = arr.findIndex(i => i.id === targetItem.id);
+    [arr[globalIdx], arr[globalTarget]] = [arr[globalTarget], arr[globalIdx]];
     setLocalOrder(arr);
   }
 
@@ -243,6 +254,48 @@ export default function AdminEquipment3() {
           </div>
         )}
 
+        {/* ── 메뉴 탭 필터 ── */}
+        {!categoryReordering && !isLoading && !error && items.length > 0 && (
+          <div className="mb-5">
+            <div className="flex flex-wrap gap-2">
+              {/* 전체 탭 */}
+              <button
+                type="button"
+                onClick={() => setActiveTab("__all__")}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                  activeTab === "__all__"
+                    ? "bg-gray-900 text-white border-gray-900"
+                    : "bg-white text-gray-600 border-gray-300 hover:border-gray-500 hover:text-gray-900"
+                }`}
+              >
+                전체
+                <span className={`ml-1.5 text-xs ${activeTab === "__all__" ? "text-gray-300" : "text-gray-400"}`}>
+                  {items.length}
+                </span>
+              </button>
+
+              {/* 카테고리별 탭 */}
+              {categories.map(cat => (
+                <button
+                  key={cat.name}
+                  type="button"
+                  onClick={() => setActiveTab(cat.name)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                    activeTab === cat.name
+                      ? "bg-blue-600 text-white border-blue-600"
+                      : "bg-white text-gray-600 border-gray-300 hover:border-blue-400 hover:text-blue-600"
+                  }`}
+                >
+                  {cat.name}
+                  <span className={`ml-1.5 text-xs ${activeTab === cat.name ? "text-blue-200" : "text-gray-400"}`}>
+                    {cat.items.length}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* 목록 */}
         {categoryReordering ? null : isLoading ? (
           <div className="text-center py-20 text-gray-500">로딩 중...</div>
@@ -251,7 +304,7 @@ export default function AdminEquipment3() {
             <p className="mb-4">⚠️ 데이터 로드 실패</p>
             <p className="text-sm">{error.message}</p>
           </div>
-        ) : !categoryReordering && items.length === 0 ? (
+        ) : items.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <p className="mb-4">등록된 시술이 없습니다.</p>
             <Button onClick={() => navigate("/admin/equipment3/new")}>
@@ -259,9 +312,13 @@ export default function AdminEquipment3() {
               첫 시술 등록하기
             </Button>
           </div>
-        ) : !categoryReordering ? (
+        ) : filteredItems.length === 0 ? (
+          <div className="text-center py-16 text-gray-400">
+            <p>이 카테고리에 등록된 시술이 없습니다.</p>
+          </div>
+        ) : (
           <div className="space-y-3">
-            {displayItems.map((item, idx) => (
+            {filteredItems.map((item, idx) => (
               <div
                 key={item.id}
                 className={`bg-white rounded-xl border p-4 flex items-center gap-4 transition-all ${
@@ -282,7 +339,7 @@ export default function AdminEquipment3() {
                     <button
                       type="button"
                       onClick={() => moveItem(idx, "down")}
-                      disabled={idx === displayItems.length - 1}
+                      disabled={idx === filteredItems.length - 1}
                       className="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
                     >
                       <ChevronDown className="h-4 w-4" />
@@ -379,12 +436,15 @@ export default function AdminEquipment3() {
               </div>
             ))}
           </div>
-        ) : null}
+        )}
 
         {/* 하단 안내 */}
         {!reordering && !categoryReordering && items.length > 0 && (
           <p className="text-center text-gray-400 text-sm mt-6">
-            총 {items.length}개 시술 (활성: {items.filter(i => i.isActive === "1").length}개) | 탭(카테고리): {categories.length}개
+            {activeTab === "__all__"
+              ? `총 ${items.length}개 시술 (활성: ${items.filter(i => i.isActive === "1").length}개) | 탭(카테고리): ${categories.length}개`
+              : `${activeTab} — ${filteredItems.length}개 시술 (활성: ${filteredItems.filter(i => i.isActive === "1").length}개)`
+            }
           </p>
         )}
       </div>

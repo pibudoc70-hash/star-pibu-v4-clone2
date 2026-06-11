@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Upload, X, Loader } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader, Languages, CheckCircle } from "lucide-react";
 
 type FormData = {
   name: string; nameEn: string; nameJa: string; nameZh: string;
@@ -34,11 +34,14 @@ export default function AdminEquipment3Edit() {
   const { data: item, isLoading } = trpc.equipment3.byId.useQuery({ id }, { enabled: !!id });
   const updateMutation = trpc.equipment3.update.useMutation();
   const uploadMutation = trpc.equipment3.uploadImage.useMutation();
+  const autoTranslateMutation = trpc.equipment3.autoTranslate.useMutation();
 
   const [form, setForm] = useState<FormData | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [galleryUploading, setGalleryUploading] = useState(false);
+  const [translating, setTranslating] = useState(false);
+  const [translateDone, setTranslateDone] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -78,6 +81,69 @@ export default function AdminEquipment3Edit() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target;
     setForm((prev) => prev ? { ...prev, [name]: value } : prev);
+    // 한국어 필드 변경 시 번역 완료 상태 초기화
+    const koFields = ["name","category","desc","detail","effect","caution","sessions","time","recovery"];
+    if (koFields.includes(name)) setTranslateDone(false);
+  }
+
+  /** 한국어 원문 기준 자동 번역 실행 */
+  async function handleAutoTranslate() {
+    if (!form) return;
+    setTranslating(true);
+    setTranslateDone(false);
+    try {
+      const result = await autoTranslateMutation.mutateAsync({
+        name: form.name,
+        category: form.category,
+        desc: form.desc,
+        detail: form.detail,
+        effect: form.effect,
+        caution: form.caution,
+        sessions: form.sessions,
+        time: form.time,
+        recovery: form.recovery,
+      });
+      const { en, ja, zh } = result.translations;
+      setForm((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          nameEn: en.name ?? prev.nameEn,
+          nameJa: ja.name ?? prev.nameJa,
+          nameZh: zh.name ?? prev.nameZh,
+          categoryEn: en.category ?? prev.categoryEn,
+          categoryJa: ja.category ?? prev.categoryJa,
+          categoryZh: zh.category ?? prev.categoryZh,
+          descEn: en.desc ?? prev.descEn,
+          descJa: ja.desc ?? prev.descJa,
+          descZh: zh.desc ?? prev.descZh,
+          detailEn: en.detail ?? prev.detailEn,
+          detailJa: ja.detail ?? prev.detailJa,
+          detailZh: zh.detail ?? prev.detailZh,
+          effectEn: en.effect ?? prev.effectEn,
+          effectJa: ja.effect ?? prev.effectJa,
+          effectZh: zh.effect ?? prev.effectZh,
+          cautionEn: en.caution ?? prev.cautionEn,
+          cautionJa: ja.caution ?? prev.cautionJa,
+          cautionZh: zh.caution ?? prev.cautionZh,
+          sessionsEn: en.sessions ?? prev.sessionsEn,
+          sessionsJa: ja.sessions ?? prev.sessionsJa,
+          sessionsZh: zh.sessions ?? prev.sessionsZh,
+          timeEn: en.time ?? prev.timeEn,
+          timeJa: ja.time ?? prev.timeJa,
+          timeZh: zh.time ?? prev.timeZh,
+          recoveryEn: en.recovery ?? prev.recoveryEn,
+          recoveryJa: ja.recovery ?? prev.recoveryJa,
+          recoveryZh: zh.recovery ?? prev.recoveryZh,
+        };
+      });
+      setTranslateDone(true);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "알 수 없는 오류";
+      alert(`❌ 자동 번역 실패: ${msg}`);
+    } finally {
+      setTranslating(false);
+    }
   }
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -197,14 +263,15 @@ export default function AdminEquipment3Edit() {
           {langs.map(({ code, suffix, placeholder }) => {
             const name = `${fieldKey}${suffix}`;
             const value = form![name as keyof FormData] as string;
+            const isKo = code === "ko";
             return type === "textarea" ? (
-              <div key={code}>
-                <Label className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
+              <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
+                <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
                 <Textarea name={name} value={value} onChange={handleChange} placeholder={placeholder} rows={rows} className="text-sm" />
               </div>
             ) : (
-              <div key={code}>
-                <Label className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
+              <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
+                <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
                 <Input name={name} value={value} onChange={handleChange} placeholder={placeholder} className="text-sm" />
               </div>
             );
@@ -223,6 +290,31 @@ export default function AdminEquipment3Edit() {
           </button>
           <h1 className="text-3xl font-bold">시술 수정</h1>
           <span className="text-gray-400 text-sm">ID: {id}</span>
+        </div>
+
+        {/* 자동 번역 배너 */}
+        <div className="mb-6 p-4 rounded-xl border bg-white flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <div className="flex items-center gap-2 flex-1">
+            <Languages className="h-5 w-5 text-indigo-500 shrink-0" />
+            <div>
+              <p className="text-sm font-semibold text-gray-800">AI 자동 번역</p>
+              <p className="text-xs text-gray-500">한국어 원문을 수정한 뒤 버튼을 클릭하면 영어·일본어·중국어가 자동으로 번역됩니다.</p>
+            </div>
+          </div>
+          <Button
+            type="button"
+            onClick={handleAutoTranslate}
+            disabled={translating}
+            className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white gap-2"
+          >
+            {translating ? (
+              <><Loader className="h-4 w-4 animate-spin" /> 번역 중...</>
+            ) : translateDone ? (
+              <><CheckCircle className="h-4 w-4" /> 번역 완료</>
+            ) : (
+              <><Languages className="h-4 w-4" /> 한국어 기준 자동 번역</>
+            )}
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

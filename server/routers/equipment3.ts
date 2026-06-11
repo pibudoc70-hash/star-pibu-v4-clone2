@@ -4,6 +4,7 @@
  * - 관리자: all (전체 목록), create, update, delete, reorder, uploadImage
  */
 import { adminProcedure, publicProcedure, protectedProcedure, router } from "../_core/trpc";
+import { invokeLLM } from "../_core/llm";
 import {
   getEquipment3List,
   getEquipment3All,
@@ -179,6 +180,85 @@ export const equipment3Router = router({
     .mutation(async ({ input }) => {
       await reorderEquipment3Items(input.items);
       return { success: true };
+    }),
+
+  // ── 관리자: 자동 번역 (LLM) ───────────────────────────────────────────────
+  autoTranslate: adminProcedure
+    .input(
+      z.object({
+        name: z.string().optional(),
+        category: z.string().optional(),
+        desc: z.string().optional(),
+        detail: z.string().optional(),
+        effect: z.string().optional(),
+        caution: z.string().optional(),
+        sessions: z.string().optional(),
+        time: z.string().optional(),
+        recovery: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      // 빈 문자열 제외하고 번역할 필드만 추출
+      const fieldsToTranslate: Record<string, string> = {};
+      const fieldKeys = ["name", "category", "desc", "detail", "effect", "caution", "sessions", "time", "recovery"] as const;
+      for (const key of fieldKeys) {
+        const val = input[key];
+        if (val && val.trim()) fieldsToTranslate[key] = val.trim();
+      }
+      if (Object.keys(fieldsToTranslate).length === 0) {
+        return { translations: { en: {}, ja: {}, zh: {} } };
+      }
+
+      const prompt = `You are a professional medical/dermatology translator for a Korean dermatology clinic (Star Dermatology, Busan, Korea).
+Translate the following Korean fields into English (en), Japanese (ja), and Chinese Simplified (zh).
+Return ONLY valid JSON with this exact structure:
+{
+  "en": { "fieldName": "translated string", ... },
+  "ja": { "fieldName": "translated string", ... },
+  "zh": { "fieldName": "translated string", ... }
+}
+Rules:
+- Keep medical brand names as-is (e.g. Ultherapy, Thermage FLX, AccuREP, HIFU, SMAS, FDA, RF)
+- Use accurate dermatology/medical terminology
+- Keep the same tone and length as the original
+- For "time" and "sessions" fields, keep numeric values and units accurate
+
+Fields to translate:
+${JSON.stringify(fieldsToTranslate, null, 2)}`;
+
+      const response = await invokeLLM({
+        messages: [
+          { role: "system", content: "You are a professional medical translator. Respond with valid JSON only, no markdown, no explanation." },
+          { role: "user", content: prompt },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "translations",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                en: { type: "object", additionalProperties: { type: "string" } },
+                ja: { type: "object", additionalProperties: { type: "string" } },
+                zh: { type: "object", additionalProperties: { type: "string" } },
+              },
+              required: ["en", "ja", "zh"],
+              additionalProperties: false,
+            },
+          },
+        },
+      });
+
+      const rawContent = response.choices?.[0]?.message?.content;
+      if (!rawContent) throw new Error("번역 응답이 없습니다.");
+      const content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
+      const parsed = JSON.parse(content) as {
+        en: Record<string, string>;
+        ja: Record<string, string>;
+        zh: Record<string, string>;
+      };
+      return { translations: parsed };
     }),
 
   // ── 관리자: 이미지 업로드 ─────────────────────────────────────────────────────

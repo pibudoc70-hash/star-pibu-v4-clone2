@@ -57,12 +57,12 @@ export function useHeaderState() {
     { label: t.nav.doctors,    href: "#doctors",    sectionId: "doctors"    },
     { label: "EVENT",          href: "#events",     sectionId: "events"     },
     { label: t.nav.about,      href: "/about",      sectionId: null         },
+    { label: t.nav.contact,    href: "#contact",    sectionId: "contact"    },
   ];
 
   // ── More 패널 항목 ─────────────────────────────────────────────────────────
   const secondaryNav: NavItem[] = [
     { label: t.nav.facility,    href: "#facility",    sectionId: "facility" },
-    { label: t.nav.contact,     href: "#contact",     sectionId: "contact"  },
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
     { label: t.nav.research,      href: "/research",      sectionId: null   },
     { label: "시술·장비 소개", href: "/equipment3", sectionId: null },

@@ -20,7 +20,6 @@ import FAQSection from "@/components/FAQSection";
 import ReservationSection from "@/components/ReservationSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 import WelcomePopup from "@/components/WelcomePopup";
 
 export default function LandingEN() {
@@ -155,7 +154,6 @@ export default function LandingEN() {
       </main>
 
       <Footer />
-      <FloatingCTA />
       <WelcomePopup />
     </div>
   );

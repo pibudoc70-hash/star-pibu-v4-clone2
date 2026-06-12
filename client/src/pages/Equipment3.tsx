@@ -15,7 +15,6 @@ import { useLocalizedText } from "@/hooks/useLocalizedText";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 import ContactSection from "@/components/ContactSection";
 import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
 import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw } from "lucide-react";
@@ -401,7 +400,6 @@ export default function Equipment3() {
       </main>
 
       <Footer />
-      <FloatingCTA />
     </div>
   );
 }

@@ -18,7 +18,6 @@ import { getReservationPath } from "@/lib/reservationPath";
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
   if (!raw) return fallback;
@@ -368,7 +367,6 @@ export default function Equipment3Detail() {
       </main>
 
       <Footer />
-      <FloatingCTA />
     </div>
   );
 }

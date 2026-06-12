@@ -19,7 +19,6 @@ import Header from "@/components/Header";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 
 export default function Equipment2() {
   const { lang } = useLang();
@@ -89,7 +88,6 @@ export default function Equipment2() {
       <Footer />
 
       {/* Floating CTA */}
-      <FloatingCTA />
     </div>
   );
 }

@@ -14,7 +14,6 @@
 import { useLang } from "@/contexts/LangContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
 import { ExternalLink, Info, ChevronRight } from "lucide-react";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { getLocalizedUrl } from "@/lib/localizedPath";
@@ -268,7 +267,6 @@ export default function NonCoveredGuide() {
         </div>
       </main>
       <Footer />
-      <FloatingCTA />
     </div>
   );
 }

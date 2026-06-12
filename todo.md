@@ -1818,6 +1818,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] STRUCT-8: client/src/components/header/DesktopNav.tsx — 데스크탑 네비게이션 분리 완료 (2026-06-12)
 - [x] STRUCT-9: client/src/components/header/MobileMenu.tsx — 모바일 메뉴 분리 완료 + 아이콘/섹션 레이블 UI 개선 (2026-06-12)
 - [x] STRUCT-10: client/src/components/header/LanguageSwitcher.tsx — 언어 선택기 분리 완료 (2026-06-12)
+- [x] FloatingCTA 제거 — 화면 우측 플로팅 전화/카카오/예약 버튼 전체 페이지에서 제거 (2026-06-12)
 - [x] STRUCT-11: Header.tsx 슬림화 (900줄 → 562줄, 37% 감소)
 - [x] STRUCT-TEST: 구조 분해 회귀 방지 테스트 업데이트 (content.test.tsx, lang.regression.test.ts, pr46.regression.test.ts)
 - [x] STRUCT-FIX: events.special.test.ts 타임아웃 5000ms → 10000ms 수정

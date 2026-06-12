@@ -1,4 +1,4 @@
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, gt } from "drizzle-orm";
 import { guestOtps } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "./connection";
@@ -15,6 +15,33 @@ export async function createGuestOtp(phone: string, code: string) {
   if (!db) throw new Error("DB not available");
   const expiresAt = Date.now() + 5 * 60 * 1000; // 5분
   await db.insert(guestOtps).values({ phone, code, expiresAt });
+}
+
+/**
+ * OTP 재발송 쿨다운 확인.
+ * 최근 cooldownMs 이내에 발급된 OTP가 있으면 true를 반환한다.
+ * @param phone 전화번호
+ * @param cooldownMs 쿨다운 시간 (기본 60초)
+ */
+export async function isOtpCooldown(
+  phone: string,
+  cooldownMs = 60 * 1000,
+): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  // OTP 만료 시간(5분) 기준으로 cooldownMs 이내 발급 여부 확인
+  const rows = await db
+    .select({ id: guestOtps.id })
+    .from(guestOtps)
+    .where(
+      and(
+        eq(guestOtps.phone, phone),
+        // expiresAt > (now + 5min - cooldownMs) 이면 cooldownMs 이내 발급
+        gt(guestOtps.expiresAt, Date.now() + 5 * 60 * 1000 - cooldownMs),
+      ),
+    )
+    .limit(1);
+  return rows.length > 0;
 }
 
 /** OTP 잠금 여부 확인 (lockedUntil 기준) */

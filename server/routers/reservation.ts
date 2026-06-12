@@ -10,7 +10,7 @@ import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
 import {
   getReservationsByUserId, cancelReservation,
   generateOtpCode, createGuestOtp, verifyGuestOtp,
-  getUnavailableSlots,
+  getUnavailableSlots, isOtpCooldown,
 } from "../db";
 import {
   createMemberReservation,
@@ -19,9 +19,6 @@ import {
 } from "../services/reservation.service";
 import { sendSMS, getOTPMessage } from "../sms";
 import { logger } from "../_core/logger";
-import { getDb } from "../db/connection";
-import { guestOtps as guestOtpsTable } from "../../drizzle/schema";
-import { eq, and, gt } from "drizzle-orm";
 
 export const reservationRouter = router({
   // 공개: 예약 불가 날짜 목록
@@ -71,20 +68,13 @@ export const reservationRouter = router({
   sendOtp: publicProcedure
     .input(z.object({ phone: z.string().min(9).max(20) }))
     .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (db) {
-        const cooldownMs = 60 * 1000;
-        const recentRows = await db
-          .select({ id: guestOtpsTable.id })
-          .from(guestOtpsTable)
-          .where(and(
-            eq(guestOtpsTable.phone, input.phone),
-            gt(guestOtpsTable.expiresAt, Date.now() + 5 * 60 * 1000 - cooldownMs),
-          ))
-          .limit(1);
-        if (recentRows.length > 0) {
-          throw new Error("인증번호는 60초 후에 다시 요청할 수 있습니다.");
-        }
+      // 쿨다운 체크: Repository 헬퍼에 위임 (라우터에서 직접 DB 호출 금지)
+      const onCooldown = await isOtpCooldown(input.phone);
+      if (onCooldown) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "인증번호는 60초 후에 다시 요청할 수 있습니다.",
+        });
       }
 
       const code = generateOtpCode();

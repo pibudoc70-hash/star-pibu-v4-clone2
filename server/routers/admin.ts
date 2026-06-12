@@ -5,14 +5,12 @@
 import { z } from "zod/v4";
 import { adminProcedure, router } from "../_core/trpc";
 import {
-  getDb,
-  getAllReservations, updateReservationStatus, getReservationStats,
+  getAllReservations, updateReservationStatus, getReservationStats, getReservationById,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
+  listUsers as dbListUsers, updateUserRole as dbUpdateUserRole, getUserStats,
 } from "../db";
 import { logger } from "../_core/logger";
-import { users, reservations as reservationsTable } from "../../drizzle/schema";
-import { desc, eq, count } from "drizzle-orm";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -22,45 +20,25 @@ export const adminRouter = router({
       pageSize: z.number().min(1).max(100).default(20),
     }))
     .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
-      const offset = (input.page - 1) * input.pageSize;
-      const [rows, totalRows] = await Promise.all([
-        db.select().from(users).orderBy(desc(users.createdAt)).limit(input.pageSize).offset(offset),
-        db.select({ count: count() }).from(users),
-      ]);
-      return { users: rows, total: totalRows[0]?.count ?? 0, page: input.page, pageSize: input.pageSize };
+      const result = await dbListUsers(input.page, input.pageSize);
+      return { ...result, page: input.page, pageSize: input.pageSize };
     }),
 
   // 회원 역할 변경
   updateUserRole: adminProcedure
     .input(z.object({ userId: z.number(), role: z.enum(["user", "admin"]) }))
     .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
-      await db.update(users).set({ role: input.role }).where(eq(users.id, input.userId));
+      await dbUpdateUserRole(input.userId, input.role);
       return { success: true };
     }),
 
   // 전체 통계
   stats: adminProcedure.query(async () => {
-    const db = await getDb();
-    if (!db) throw new Error("DB not available");
-    const [totalUsers, adminUsers] = await Promise.all([
-      db.select({ count: count() }).from(users),
-      db.select({ count: count() }).from(users).where(eq(users.role, "admin")),
+    const [userStats, reservationStats] = await Promise.all([
+      getUserStats(),
+      getReservationStats(),
     ]);
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    const allUsers = await db.select({ createdAt: users.createdAt }).from(users);
-    const recentSignups = allUsers.filter(u => u.createdAt && u.createdAt >= sevenDaysAgo).length;
-    const reservationStats = await getReservationStats();
-    return {
-      totalUsers: totalUsers[0]?.count ?? 0,
-      adminUsers: adminUsers[0]?.count ?? 0,
-      recentSignups,
-      reservations: reservationStats,
-    };
+    return { ...userStats, reservations: reservationStats };
   }),
 
   // 예약 목록 조회 (관리자)
@@ -83,15 +61,8 @@ export const adminRouter = router({
       sendAlimtalk: z.boolean().default(true),
     }))
     .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
-
-      const reservationRows = await db
-        .select()
-        .from(reservationsTable)
-        .where(eq(reservationsTable.id, input.id))
-        .limit(1);
-      const reservation = reservationRows[0];
+      // Repository 헬퍼로 예약 조회 (라우터에서 직접 DB 호출 금지)
+      const reservation = await getReservationById(input.id);
 
       await updateReservationStatus(input.id, input.status, input.adminNote);
 
@@ -103,9 +74,9 @@ export const adminRouter = router({
             logger.info("Email", "회원 예약 상태 변경 처리");
             // NOTE (PR-39): 예약 상태 변경 시 회원에게 이메일 발송 지점
             // 활성화 방법: server/email.ts의 TO ENABLE 절차 후 아래 코드 주석 해제
-            // const user = await db.select().from(users).where(eq(users.id, reservation.userId)).limit(1);
-            // if (user[0]?.email) {
-            //   await sendEmail(getReservationStatusEmail({ patientName: user[0].name, newStatus: input.status, email: user[0].email }));
+            // const user = await getUserById(reservation.userId);
+            // if (user?.email) {
+            //   await sendEmail(getReservationStatusEmail({ ... }));
             // }
           }
         } catch (emailErr) {

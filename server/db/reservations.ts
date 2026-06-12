@@ -2,6 +2,13 @@ import { eq, desc, and } from "drizzle-orm";
 import { InsertReservation, reservations } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
+export async function getReservationById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(reservations).where(eq(reservations.id, id)).limit(1);
+  return result[0] ?? undefined;
+}
+
 export async function createReservation(data: InsertReservation) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");

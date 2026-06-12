@@ -1,47 +1,28 @@
 /**
  * popup.ts — 팝업 이벤트 라우터 (공개 조회 + 관리자 CRUD + 이미지 업로드)
  * 분리 근거: server/routers.ts 914줄 → 기능 단위 모듈화 (Round-8 리팩터)
+ *
+ * [마감 라운드] DB 직접 접근 → db/popup.ts Repository 헬퍼로 이동.
+ * Router 책임: 입력 검증(zod) + 권한(adminProcedure) + 어댑터 역할만.
  */
 import { z } from "zod/v4";
 import { adminProcedure, publicProcedure, router } from "../_core/trpc";
-import { getDb } from "../db";
+import {
+  getActivePopups,
+  getAllPopups,
+  createPopup,
+  updatePopup,
+  deletePopup,
+} from "../db";
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
-import { popupEvents } from "../../drizzle/schema";
-import { eq, asc } from "drizzle-orm";
 
 export const popupRouter = router({
   // 공개: 활성화된 이벤트 목록 조회 (유효기간 자동 필터링)
-  list: publicProcedure.query(async () => {
-    const db = await getDb();
-    if (!db) return [];
-    const now = Date.now();
-    const rows = await db
-      .select()
-      .from(popupEvents)
-      .where(eq(popupEvents.isActive, "1"))
-      .orderBy(asc(popupEvents.sortOrder));
-    const filtered = rows.filter(r => {
-      if (r.startAt !== null && r.startAt !== undefined && now < r.startAt) return false;
-      if (r.endAt !== null && r.endAt !== undefined && now > r.endAt) return false;
-      return true;
-    });
-    return filtered.map(r => ({
-      ...r,
-      priceItems: (() => { try { return JSON.parse(r.priceItems ?? "[]"); } catch { return []; } })(),
-    }));
-  }),
+  list: publicProcedure.query(async () => getActivePopups()),
 
   // 관리자: 전체 목록 (비활성 포함)
-  adminList: adminProcedure.query(async () => {
-    const db = await getDb();
-    if (!db) return [];
-    const rows = await db.select().from(popupEvents).orderBy(asc(popupEvents.sortOrder));
-    return rows.map(r => ({
-      ...r,
-      priceItems: (() => { try { return JSON.parse(r.priceItems ?? "[]"); } catch { return []; } })(),
-    }));
-  }),
+  adminList: adminProcedure.query(async () => getAllPopups()),
 
   // 관리자: 이벤트 생성
   create: adminProcedure
@@ -62,26 +43,9 @@ export const popupRouter = router({
       endAt: z.number().nullable().optional(),
     }))
     .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
       try {
-        await db.insert(popupEvents).values({
-          tab: input.tab,
-          badge: input.badge,
-          title: input.title,
-          subtitle: input.subtitle,
-          desc: input.desc,
-          priceItems: JSON.stringify(input.priceItems),
-          note: input.note,
-          imageUrl: input.imageUrl,
-          accent: input.accent,
-          accentLight: input.accentLight,
-          sortOrder: input.sortOrder,
-          isActive: input.isActive,
-          startAt: input.startAt,
-          endAt: input.endAt,
-        });
-        return { success: true };
+        const { priceItems, ...rest } = input;
+        return createPopup({ ...rest, priceItems: JSON.stringify(priceItems) });
       } catch (error) {
         logger.error("Popup", "팝업 생성 오류", error);
         throw error;
@@ -108,24 +72,16 @@ export const popupRouter = router({
       endAt: z.number().nullable().optional(),
     }))
     .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
       const { id, priceItems, ...rest } = input;
-      const updateData: Record<string, unknown> = { ...rest };
-      if (priceItems !== undefined) updateData.priceItems = JSON.stringify(priceItems);
-      await db.update(popupEvents).set(updateData).where(eq(popupEvents.id, id));
-      return { success: true };
+      const data: Record<string, unknown> = { ...rest };
+      if (priceItems !== undefined) data.priceItems = JSON.stringify(priceItems);
+      return updatePopup(id, data as Parameters<typeof updatePopup>[1]);
     }),
 
   // 관리자: 이벤트 삭제
   delete: adminProcedure
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("DB not available");
-      await db.delete(popupEvents).where(eq(popupEvents.id, input.id));
-      return { success: true };
-    }),
+    .mutation(async ({ input }) => deletePopup(input.id)),
 
   // 관리자: 이미지 업로드 (base64 → S3)
   uploadImage: adminProcedure

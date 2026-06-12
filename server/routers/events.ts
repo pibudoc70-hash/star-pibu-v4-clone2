@@ -8,13 +8,11 @@ import {
   getAllEvents, getFeaturedEvents, getListEvents, getEventById,
   getSpecialEventsByLang, getAllEventsByLang,
   createEvent, updateEvent, deleteEvent, incrementEventViews,
+  getEventsByCategory, searchEvents,
 } from "../db";
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
-import { events } from "../../drizzle/schema";
 import type { InsertEvent } from "../../drizzle/schema";
-import { getDb } from "../db";
-import { eq, asc, desc } from "drizzle-orm";
 
 export const eventsRouter = router({
   // 공개: 모든 활성 이벤트 조회
@@ -72,23 +70,12 @@ export const eventsRouter = router({
   // 공개: 카테고리별 이벤트 조회
   listByCategory: publicProcedure
     .input(z.object({ category: z.string() }))
-    .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) return [];
-      const rows = await db.select().from(events).where(eq(events.isActive, "1")).orderBy(asc(events.sortOrder), desc(events.createdAt));
-      return rows.filter(e => e.category === input.category);
-    }),
+    .query(async ({ input }) => getEventsByCategory(input.category)),
 
   // 공개: 이벤트 검색
   search: publicProcedure
     .input(z.object({ query: z.string().min(1).max(100) }))
-    .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) return [];
-      const rows = await db.select().from(events).where(eq(events.isActive, "1")).orderBy(asc(events.sortOrder), desc(events.createdAt));
-      const query = input.query.toLowerCase();
-      return rows.filter(e => e.title.toLowerCase().includes(query) || e.desc.toLowerCase().includes(query));
-    }),
+    .query(async ({ input }) => searchEvents(input.query)),
 
   // 관리자: 이벤트 생성
   create: adminProcedure

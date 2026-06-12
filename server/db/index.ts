@@ -15,3 +15,4 @@ export * from "./treatments";
 export * from "./unavailableSlots";
 export * from "./youtube";
 export * from "./equipment3";
+export * from "./popup";

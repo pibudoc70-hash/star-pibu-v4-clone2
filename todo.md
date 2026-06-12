@@ -2486,3 +2486,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] [D1-4] 시술 카드 더 보기 버튼 텍스트 "{n}개 더 보기" → "더 보기" 로 수정
 - [x] [D1-5] FAQ 섹션 - 시술 탭과 질문 항목 시각적 위계 강화 (탭 더 크게, 질문 더 가볍게)
 - [x] [D1-6] 후기 섹션 - "더 많은 후기 보기" 링크를 버튼 스타일로 개선
+
+## 마감 라운드 — 구조 개선 (2026-06-12)
+
+- [x] P0: server/db/popup.ts 신규 생성 — popup router의 getDb() 직접 호출을 Repository 계층으로 이동
+- [x] P0: server/db/events.ts에 getEventsByCategory, searchEvents 헬퍼 추가 — events router listByCategory/search의 getDb() 직접 호출 제거
+- [x] P0: server/db/index.ts에 popup.ts re-export 추가
+- [x] P1: App.tsx 분리 STOP 판단 — 137줄, ScrollToTop/HtmlLangUpdater/Router 모두 단순 함수, 분리 실익 없음
+- [x] P2: server/services/reservation.service.test.ts 신규 작성 — validatePhone/validateReservationDate/cancelGuestReservationWithOtp 단위 테스트 12개
+- [x] P2: server/db/popup.test.ts 신규 작성 — 기간 필터/priceItems 파싱 단위 테스트
+- [x] P2: server/db/events.search.test.ts 신규 작성 — 카테고리 필터/키워드 검색 단위 테스트

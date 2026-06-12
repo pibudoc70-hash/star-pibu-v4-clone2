@@ -73,3 +73,32 @@ export async function getAllEventsByLang(lang: string) {
   if (!db) return [];
   return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.targetLang, lang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
+
+/** 카테고리별 이벤트 조회 */
+export async function getEventsByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const rows = await db
+    .select()
+    .from(events)
+    .where(eq(events.isActive, "1"))
+    .orderBy(asc(events.sortOrder), desc(events.createdAt));
+  return rows.filter((e) => e.category === category);
+}
+
+/** 이벤트 키워드 검색 (title + desc) */
+export async function searchEvents(query: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const rows = await db
+    .select()
+    .from(events)
+    .where(eq(events.isActive, "1"))
+    .orderBy(asc(events.sortOrder), desc(events.createdAt));
+  const q = query.toLowerCase();
+  return rows.filter(
+    (e) =>
+      e.title.toLowerCase().includes(q) ||
+      e.desc.toLowerCase().includes(q),
+  );
+}

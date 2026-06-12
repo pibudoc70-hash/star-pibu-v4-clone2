@@ -129,25 +129,25 @@ export default function FloatingCTA() {
 
       {/* ── 데스크톱 플로팅 버튼 (우측 하단, 세로 스택) ── */}
       <div
-        className="fixed right-4 bottom-8 z-40 hidden md:flex flex-col gap-3 transition-all duration-300"
+        className="fixed right-5 bottom-8 z-40 hidden md:flex flex-col gap-3 items-end transition-all duration-300"
         style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? "translateX(0)" : "translateX(80px)",
+          transform: visible ? "translateX(0)" : "translateX(100px)",
           pointerEvents: visible ? "auto" : "none",
         }}
       >
         {/* 전화 - 금색 그라디언트 */}
         <a
           href={telHref}
-          className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
+          className="flex items-center gap-2.5 pr-4 pl-3 h-12 rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl group"
           style={{
             background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
             boxShadow: "0 4px 16px rgba(201,168,76,0.45), 0 2px 8px rgba(0,0,0,0.15)",
           }}
           aria-label={fc.callAria}
-          title={fc.callAria}
         >
-          <Phone size={22} className="text-white" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }} />
+          <Phone size={18} className="text-white flex-shrink-0" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.3))" }} />
+          <span className="text-white text-xs font-semibold tracking-wide" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}>{fc.call}</span>
         </a>
 
         {/* 메신저 (카카오/LINE/WeChat) */}
@@ -157,15 +157,17 @@ export default function FloatingCTA() {
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
-            className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
+            className="flex items-center gap-2.5 pr-4 pl-3 h-12 rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl"
             style={{ background: chatBg }}
             aria-label={fc.kakaoAria}
-            title={fc.kakaoAria}
           >
-            <MessageCircle size={22} style={{ color: chatColor }} />
+            <MessageCircle size={18} style={{ color: chatColor }} className="flex-shrink-0" />
+            <span className="text-xs font-semibold tracking-wide" style={{ color: chatColor }}>
+              {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
+            </span>
           </a>
           {wechatCopied && isZH && (
-            <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
+            <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
               {t.access.copiedLabel}<br />
               <span className="font-bold">{WECHAT_ID}</span>
             </div>
@@ -177,12 +179,12 @@ export default function FloatingCTA() {
           href={reserveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-xl"
+          className="flex items-center gap-2.5 pr-4 pl-3 h-12 rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl"
           style={{ background: reserveBg }}
           aria-label={fc.reserveAria}
-          title={fc.reserveAria}
         >
-          <Calendar size={22} className="text-white" />
+          <Calendar size={18} className="text-white flex-shrink-0" />
+          <span className="text-white text-xs font-semibold tracking-wide">{fc.reserve}</span>
         </a>
       </div>
     </>

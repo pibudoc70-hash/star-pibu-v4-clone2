@@ -286,14 +286,22 @@ export default function ReviewsSection() {
         )}
 
         {/* More Reviews CTA */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-10">
           <a
             href="https://pcmap.place.naver.com/hospital/12020103/review/visitor?fromPanelNum=2&locale=ko&searchText=%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC&svcName=map_pcv5&timestamp=202603301414"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold underline underline-offset-4 transition-colors hover:opacity-70"
-            style={{ color: "#4A6FA5" }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-md"
+            style={{
+              background: "#fff",
+              color: "#1A4FA0",
+              border: "1.5px solid #B8D0F0",
+              boxShadow: "0 2px 8px rgba(26,79,160,0.08)",
+            }}
           >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
             {rv.moreReviews}
           </a>
         </div>

@@ -91,7 +91,7 @@ export default function FAQSection() {
           </div>
 
           {/* 장비 탭 */}
-          <div className="flex flex-wrap gap-2 justify-center mb-8">
+          <div className="flex flex-wrap gap-2.5 justify-center mb-10">
             {(faq.items as FAQItem[]).map((item: FAQItem, idx: number) => (
               <button type="button"
                 key={idx}
@@ -99,11 +99,11 @@ export default function FAQSection() {
                   setOpenEquipment(idx);
                   setOpenQuestion(null);
                 }}
-                className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+                className="rounded-full font-bold transition-all duration-200"
                 style={
                   openEquipment === idx
-                    ? { background: "#1A4FA0", color: "#fff", boxShadow: "0 2px 8px rgba(26,79,160,0.25)" }
-                    : { background: "#fff", color: "#1A4FA0", border: "1.5px solid #B8D0F0" }
+                    ? { background: "#1A4FA0", color: "#fff", fontSize: "0.95rem", padding: "10px 22px", boxShadow: "0 4px 14px rgba(26,79,160,0.3)", transform: "translateY(-1px)" }
+                    : { background: "#fff", color: "#4A6FA5", fontSize: "0.85rem", padding: "8px 18px", border: "1.5px solid #B8D0F0", fontWeight: 500 }
                 }
               >
                 {item.equipment}
@@ -121,7 +121,7 @@ export default function FAQSection() {
               >
                 {/* 질문 */}
                 <button type="button"
-                  className="w-full flex items-center justify-between px-6 py-5 text-left transition-colors duration-200 hover:bg-blue-50"
+                  className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors duration-200 hover:bg-blue-50"
                   style={{ background: openQuestion === qIdx ? "#EBF3FF" : "#fff" }}
                   onClick={() => setOpenQuestion(openQuestion === qIdx ? null : qIdx)}
                   aria-expanded={openQuestion === qIdx}
@@ -130,18 +130,18 @@ export default function FAQSection() {
                   <div className="flex items-start gap-3">
                     <HelpCircle
                       className="mt-0.5 shrink-0"
-                      size={18}
-                      style={{ color: "#1A4FA0" }}
+                      size={16}
+                      style={{ color: "#6A90C8" }}
                     />
-                    <span className="font-semibold text-sm md:text-base" style={{ color: "#0D2B5E" }}>
+                    <span className="font-medium text-sm" style={{ color: "#2A4A7E", lineHeight: 1.55 }}>
                       {qa.q}
                     </span>
                   </div>
-                  <span className="ml-4 shrink-0" style={{ color: "#1A4FA0" }}>
+                  <span className="ml-4 shrink-0" style={{ color: "#6A90C8" }}>
                     {openQuestion === qIdx ? (
-                      <ChevronUp size={18} />
+                      <ChevronUp size={16} />
                     ) : (
-                      <ChevronDown size={18} />
+                      <ChevronDown size={16} />
                     )}
                   </span>
                 </button>

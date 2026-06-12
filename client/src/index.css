@@ -804,9 +804,9 @@
     background: linear-gradient(170deg, #ede0b8 0%, #dfc99a 60%, #d4b87a 100%);
   }
   .dr-brand-label {
-    color: #af9e74;
-    font-weight: 300;
-    font-size: 0.84rem;
+    color: rgba(120, 90, 40, 0.45);
+    font-weight: 400;
+    font-size: 0.62rem;
     letter-spacing: 0.3em;
   }
   .dr-brand-count {
@@ -844,11 +844,12 @@
     letter-spacing: 0.05em;
   }
   .dr-active-underline {
-    width: 20px;
-    height: 1.5px;
-    margin: 5px auto 0;
+    width: 28px;
+    height: 2px;
+    margin: 6px auto 0;
     border-radius: 2px;
     background: var(--dr-gold);
+    box-shadow: 0 0 6px rgba(201,168,76,0.55);
   }
   .dr-photo-panel {
     width: 420px;
@@ -1051,22 +1052,26 @@
   }
   /* Desktop tab thumbnail border */
   .dr-thumb-border[data-active="true"] {
-    border: 2px solid var(--dr-gold);
+    border: 3px solid var(--dr-gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.22), 0 4px 12px rgba(201,168,76,0.28);
   }
   .dr-thumb-border[data-active="false"] {
-    border: 2px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
+    border: 2px solid color-mix(in srgb, var(--dr-gold) 18%, transparent);
+    opacity: 0.6;
   }
   /* Desktop tab name/badge color */
   .dr-tab-name-desktop[data-active="true"] {
-    color: var(--dr-tab-active-text);
-    font-weight: 700;
+    color: #3a2008;
+    font-weight: 800;
+    font-size: 1.05rem;
   }
   .dr-tab-name-desktop[data-active="false"] {
-    color: var(--dr-tab-inactive-text);
+    color: rgba(90, 60, 20, 0.45);
     font-weight: 500;
+    font-size: 1rem;
   }
-  .dr-tab-badge-desktop[data-active="true"] { color: var(--dr-tab-active-text); }
-  .dr-tab-badge-desktop[data-active="false"] { color: var(--dr-tab-inactive-text); }
+  .dr-tab-badge-desktop[data-active="true"] { color: rgba(58,32,8,0.7); font-size: 0.68rem; }
+  .dr-tab-badge-desktop[data-active="false"] { color: rgba(90,60,20,0.32); font-size: 0.65rem; }
   /* Active underline background merged into R16 class definition above */
   /* Desktop detail: name header margin */
   .dr-name-header { margin-top: 23px; }

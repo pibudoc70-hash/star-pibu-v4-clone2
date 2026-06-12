@@ -37,8 +37,13 @@ const hookSource = readFileSync(
   path.resolve(root, "client/src/hooks/useHeaderState.ts"),
   "utf8",
 );
+// 모바일 메뉴는 MobileMenu.tsx로 분리됨
+const mobileMenuSource = readFileSync(
+  path.resolve(root, "client/src/components/header/MobileMenu.tsx"),
+  "utf8",
+);
 // 두 파일을 합쳐서 검사 (어느 파일에 있든 패턴이 존재하면 통과)
-const combinedSource = headerSource + "\n" + hookSource;
+const combinedSource = headerSource + "\n" + hookSource + "\n" + mobileMenuSource;
 
 const footerSource = readFileSync(
   path.resolve(root, "client/src/components/Footer.tsx"),
@@ -119,21 +124,20 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
 describe("모바일 언어 버튼 — setLang + replace 패턴 일관성", () => {
   it("모바일 언어 버튼에서도 window.location.replace를 사용해야 한다", () => {
     // 모바일 언어 그리드 버튼 onClick 블록 확인
-    // langOptions.map 이후 onClick 핸들러에 replace가 있어야 함
-    const mobileBlock = headerSource.match(
+    // MobileMenu.tsx로 분리됨 — mobileMenuSource에서 검사
+    const mobileBlock = mobileMenuSource.match(
       /langOptions\.map\([\s\S]*?window\.location\.replace/,
     )?.[0] ?? "";
     expect(mobileBlock).toMatch(/window\.location\.replace/);
   });
 
   it("모바일 언어 버튼에서도 setLang을 closeMobileMenu 이전에 호출해야 한다", () => {
-    // 구조 분해 후: 모바일 버튼 onClick에서 closeMobileMenu 콜백 내부에 replace가 있어야 함
-    const firstMap = headerSource.indexOf("langOptions.map(");
-    const mapStart = headerSource.indexOf("langOptions.map(", firstMap + 1);
-    const mapEnd = headerSource.indexOf("{/* 모바일 CTA", mapStart);
+    // MobileMenu.tsx로 분리됨 — mobileMenuSource에서 검사
+    const mapStart = mobileMenuSource.indexOf("langOptions.map(");
+    const mapEnd = mobileMenuSource.indexOf("{/* 모바일 CTA", mapStart);
     const mobileBlock = mapStart > -1 && mapEnd > -1
-      ? headerSource.slice(mapStart, mapEnd)
-      : mapStart > -1 ? headerSource.slice(mapStart) : "";
+      ? mobileMenuSource.slice(mapStart, mapEnd)
+      : mapStart > -1 ? mobileMenuSource.slice(mapStart) : "";
     // closeMobileMenu 콜백 내부에 replace가 있어야 함
     expect(mobileBlock).toMatch(/closeMobileMenu\(\(\)/);
     expect(mobileBlock).toMatch(/window\.location\.replace/);

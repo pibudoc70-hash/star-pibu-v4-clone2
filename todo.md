@@ -2496,3 +2496,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P2: server/services/reservation.service.test.ts 신규 작성 — validatePhone/validateReservationDate/cancelGuestReservationWithOtp 단위 테스트 12개
 - [x] P2: server/db/popup.test.ts 신규 작성 — 기간 필터/priceItems 파싱 단위 테스트
 - [x] P2: server/db/events.search.test.ts 신규 작성 — 카테고리 필터/키워드 검색 단위 테스트
+
+## 줄기세포 치료 페이지 설명 보강 (2026-06-13)
+
+- [x] client/src/components/treatments/StemCellGuide.tsx 신규 생성 — 환자 친화적 안내 섹션 4개 블록
+  - 줄기세포 치료란? (자가세포 치료 / 피부 재생 원리 / 안전성과 지속성 카드 3개)
+  - SVF vs 지방배양줄기세포(ADSC) 비교 테이블 (8개 항목, 데스크탑 테이블 + 모바일 카드)
+  - 어떤 치료가 나에게 맞을까요? (선택 가이드 2열 카드)
+  - 치료 과정 5단계 타임라인
+  - 주의 안내 배너
+- [x] Equipment3.tsx에 StemCellGuide 삽입 — 줄기세포 치료 탭 활성 시에만 카드 그리드 위에 표시
+- [x] 다국어 지원: ko / en / ja / zh 전체 적용
+- [x] TypeScript 오류 0건 확인

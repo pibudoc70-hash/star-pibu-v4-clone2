@@ -22,6 +22,7 @@ import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import OptimizedImage from "@/components/OptimizedImage";
 import { Dna } from "lucide-react";
+import StemCellGuide from "@/components/treatments/StemCellGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 6;
@@ -336,6 +337,15 @@ export default function Equipment3() {
                     ))}
                   </div>
                 </div>
+
+                {/* 줄기세포 치료 탭 전용 안내 섹션 */}
+                {(activeId === "stem_cell" || activeId === "줄기세포 치료") && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <StemCellGuide />
+                    </div>
+                  </div>
+                )}
 
                 {/* 카드 그리드 */}
                 {activeId && (

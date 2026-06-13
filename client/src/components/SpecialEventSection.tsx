@@ -52,10 +52,44 @@ function SectionHeader({ lang }: { lang: string }) {
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
-    <div className="text-center mb-12 md:mb-16">
-      <p className="text-sm font-medium text-gold mb-2">FOR YOU</p>
-      <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">SPECIAL EVENT</h2>
-      <p className="text-lg text-gold">{subtitleMap[lang] ?? subtitleMap.ko}</p>
+    <div className="text-center mb-14 md:mb-20">
+      {/* eyebrow — 에디토리얼 스타일 */}
+      <p
+        className="font-medium mb-4"
+        style={{
+          color: "#C9A84C",
+          fontSize: "0.72rem",
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+        }}
+      >
+        FOR YOU
+      </p>
+      {/* 제목 — 절제된 폰트 웨이트 */}
+      <h2
+        className="text-navy mb-5"
+        style={{
+          fontSize: "clamp(1.8rem, 5vw, 2.8rem)",
+          fontWeight: 800,
+          letterSpacing: "0.06em",
+          lineHeight: 1.15,
+        }}
+      >
+        SPECIAL EVENT
+      </h2>
+      {/* 서브타이틀 — 더 어두운 톤 */}
+      <p
+        className="mx-auto"
+        style={{
+          color: "#9B8B6E",
+          fontSize: "clamp(0.88rem, 2.2vw, 1rem)",
+          lineHeight: 1.7,
+          maxWidth: "480px",
+          fontWeight: 400,
+        }}
+      >
+        {subtitleMap[lang] ?? subtitleMap.ko}
+      </p>
     </div>
   );
 }
@@ -115,13 +149,13 @@ export default function SpecialEventSection() {
   }
 
   return (
-    <section id="events" className="py-16 md:py-24 bg-white">
+    <section id="events" className="py-20 md:py-28" style={{ background: "#FAFAF7" }}>
       <div className="container">
         <SectionHeader lang={lang} />
         {(specialEvents as SpecialEvent[]).length === 0 ? (
           <EventEmptyState lang={lang} />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
             {(specialEvents as SpecialEvent[]).map((event) => (
               <EventCard
                 key={event.id}

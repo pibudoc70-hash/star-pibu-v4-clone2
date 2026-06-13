@@ -53,48 +53,39 @@ export function HeroActions({
   delays,
 }: HeroActionsProps) {
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center hero-actions-wrap">
-      {/* 전화 버튼 - 모바일에서 전체 너비 */}
+    <div className="flex flex-col items-center hero-actions-wrap">
+      {/* Primary: 예약 버튼 — 가장 눈에 띄엄, 전체 너비 */}
       <a
-        href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
-        className="hero-fade hero-btn-phone flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full sm:w-auto"
+        href={reserveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
         style={{ animationDelay: delays.ctaFirst }}
       >
-        <Phone size={14} />
-        {t.hero.cta_call}
+        <Calendar size={15} strokeWidth={2.2} />
+        {t.hero.cta_reserve}
       </a>
 
-      <div className="flex flex-row w-full sm:w-auto hero-actions-row">
-        {/* 예약 버튼 - 모바일에서 첫 번째 */}
-        <a
-          href={reserveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`hero-fade hero-btn-action flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center flex-1 sm:flex-none ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
-          style={{ animationDelay: delays.ctaSecond }}
-        >
-          <Calendar size={14} />
-          {t.hero.cta_reserve}
-        </a>
-
-        {/* 카카오/WeChat 버튼 */}
+      {/* Secondary + Tertiary: 같은 행, 좌우 동등 */}
+      <div className="flex flex-row w-full hero-actions-row">
+        {/* Secondary: 카카오/WeChat 버튼 */}
         <div
-          className="relative hero-fade flex-1 sm:flex-none"
-          style={{ animationDelay: delays.ctaPhone }}
+          className="relative hero-fade flex-1"
+          style={{ animationDelay: delays.ctaSecond }}
         >
           <a
             href={chatUrl}
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={onWechatClick}
-            className="hero-btn-action flex items-center gap-1.5 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
+            className="hero-btn-action flex items-center gap-1.5 rounded-full font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
             style={{
               background: chatBg,
               color: chatColor,
               boxShadow: chatShadow,
             }}
           >
-            <MessageCircle size={14} />
+            <MessageCircle size={14} strokeWidth={2} />
             {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
           </a>
           {wechatCopied && isZH && (
@@ -103,6 +94,16 @@ export function HeroActions({
             </div>
           )}
         </div>
+
+        {/* Tertiary: 전화 버튼 — 절제된 톤 */}
+        <a
+          href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
+          className="hero-fade hero-btn-phone flex items-center gap-1.5 rounded-full transition-all duration-300 justify-center flex-1"
+          style={{ animationDelay: delays.ctaPhone }}
+        >
+          <Phone size={13} strokeWidth={1.8} />
+          {t.hero.cta_call}
+        </a>
       </div>
     </div>
   );

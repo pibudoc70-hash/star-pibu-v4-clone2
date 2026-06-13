@@ -31,7 +31,8 @@ describe("A. HeroStatItem — 인라인 style → CSS 클래스 교체", () => {
   });
 
   it("A-3: hero-stat-label CSS 클래스 사용", () => {
-    expect(src).toContain('className="hero-stat-label"');
+    // tracking-widest 등 추가 클래스가 붙을 수 있으므로 포함 여부만 확인
+    expect(src).toMatch(/className="[^"]*hero-stat-label[^"]*"/);
   });
 
   it("A-4: isDone 조건부 스타일 → data-done attribute 사용", () => {

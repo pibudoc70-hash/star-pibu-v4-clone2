@@ -20,7 +20,7 @@ export function HeroDarkOverlay() {
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(10,18,40,0.72) 0%, rgba(10,18,40,0.38) 35%, rgba(10,18,40,0.42) 65%, rgba(10,18,40,0.80) 100%)",
+            "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
         }}
       />
       {/* 모바일 오버레이 — 텍스트 safe zone 강화 */}
@@ -29,7 +29,7 @@ export function HeroDarkOverlay() {
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(5,10,28,0.82) 0%, rgba(5,10,28,0.52) 30%, rgba(5,10,28,0.48) 60%, rgba(5,10,28,0.88) 100%)",
+            "linear-gradient(to bottom, rgba(4,8,22,0.88) 0%, rgba(4,8,22,0.55) 28%, rgba(4,8,22,0.50) 58%, rgba(4,8,22,0.92) 100%)",
         }}
       />
     </>
@@ -48,7 +48,7 @@ export function HeroVignette() {
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 40%, rgba(5,10,25,0.45) 100%)",
+            "radial-gradient(ellipse at center, transparent 35%, rgba(4,8,22,0.55) 100%)",
         }}
       />
       {/* 모바일 비네팅 — 상하 강화, 좌우 유지 */}
@@ -57,7 +57,7 @@ export function HeroVignette() {
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, rgba(5,10,25,0.55) 100%)",
+            "radial-gradient(ellipse 75% 55% at 50% 38%, transparent 22%, rgba(4,8,22,0.65) 100%)",
         }}
       />
     </>
@@ -79,7 +79,7 @@ export function HeroGoldGlow() {
         background:
           "radial-gradient(ellipse at 50% 0%, rgba(210,172,103,0.9) 0%, rgba(210,172,103,0.3) 45%, transparent 75%)",
         animation: "softGlow 10s ease-in-out infinite",
-        opacity: 0.15,
+        opacity: 0.22,
         mixBlendMode: "screen",
         willChange: "opacity",
       }}

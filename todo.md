@@ -2612,3 +2612,42 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 - [x] EventsSection.tsx — error 상태 미처리 수정 (isError 변수 추가, Error State UI 렌더링, Featured/List/Empty 조건에 !isError 추가)
 - [x] i18n.ko.ts — doctors.swipeHint "탭하여" → "스와이프하여" 수정 (모바일/데스크톱 CTA 불일치 해소)
+
+## 디자인 성숙도 개선 — 프리미엄 브랜드 사이트 수준 (2026-06-13)
+
+### P0 — 히어로 아트디렉션 / CTA 위계 / 신뢰 수치
+- [ ] 히어로 오버레이 깊이감 강화 — 모바일 전용 그라디언트 강도 상향, 데스크톱 중앙 focal point 비네팅 정교화
+- [ ] 히어로 골드 글로우 opacity 상향 (0.15 → 0.22) — 천장 조명 무드 강화
+- [ ] 히어로 통계 스트립 — 에디토리얼 스타일로 개선 (separator 라인, 라벨 letter-spacing, 값 크기 위계)
+- [ ] 히어로 CTA 위계 재설계 — Primary(예약) / Secondary(카카오) / Tertiary(전화) 명확히 분리
+- [ ] 히어로 모바일 — 로고 크기 최적화, 슬로건 간격 정리, CTA 버튼 크기 통일
+- [ ] FloatingCTA 데스크톱 — 예약을 Primary(최하단 강조), 전화를 Tertiary(최상단 절제)로 순서 재정렬
+- [ ] FloatingCTA 모바일 바 — 높이/패딩/폰트 크기 통일, 예약 버튼 Primary 강조 유지
+
+### P1 — 컬러/타이포/여백 / 이벤트 카드 / 섹션 리듬
+- [ ] 전역 섹션 여백 — py-16 → py-20/py-24 수준으로 상향, 섹션 간 리듬 통일
+- [ ] 섹션 헤더 타이포 — eyebrow letter-spacing 강화, 제목 font-weight 절제, 서브타이틀 색상 정제
+- [ ] 이벤트 카드 — 카드 상단 비주얼 여백 확대, 시술명/카피/가격/CTA 계층 재정리
+- [ ] 이벤트 카드 — "자세히 보기" 버튼을 카드 구조에 자연스럽게 통합 (기계적 버튼 느낌 제거)
+- [ ] 이벤트 카드 — 가격이 유일한 중심이 되지 않도록 시술 베네핏 카피 위계 강화
+
+### P2 — 잔여 UI 디테일
+- [ ] 아이콘/배지 크기 통일 — 섹션별 아이콘 strokeWidth 일관성
+- [ ] 보조 텍스트 톤 정리 — muted 색상 통일 (#6B7280 → rgba(107,114,128,0.85))
+- [ ] sticky CTA 본문 충돌 최소화 — 모바일 main padding-bottom 재검토
+
+## 디자인 성숙도 개선 — 프리미엄 브랜드 사이트 (2026-06-13)
+
+- [x] P0: 히어로 오버레이/비네팅 모바일 깊이감 강화 (HeroOverlays.tsx)
+- [x] P0: 히어로 통계 스트립 에디토리얼 스타일 (border-top 구분선, uppercase label)
+- [x] P0: CTA 위계 재설계 — Primary(예약 전체너비) / Secondary(카카오) / Tertiary(전화 절제)
+- [x] P0: 히어로 슬로건 font-weight 300, letter-spacing 정교화
+- [x] P1: 이벤트 카드 프리미엄 재설계 (오프화이트 배경, 3/2 이미지 비율, 골드 CTA)
+- [x] P1: SpecialEventSection 섹션 헤더 에디토리얼 eyebrow + 서브타이틀 어두운 톤
+- [x] P1: 섹션 여백 확대 (py-20 md:py-28, 카드 gap-10 md:gap-12)
+- [x] P1: star-divider 절제된 에디토리얼 1px 선으로 개선
+- [x] P1: 전역 section-eyebrow / section-title / section-subtitle 공통 클래스 추가
+- [x] P2: FloatingCTA 데스크톱 — Tertiary(전화 절제) / Secondary / Primary(예약 최하단) 순서
+- [x] P2: FloatingCTA 모바일 바 높이 60px 통일
+- [x] P2: 모바일 섹션 패딩 4rem 확보
+- [x] 회귀 테스트 A-3 regex 허용으로 수정 (tracking-widest 추가 클래스 허용)

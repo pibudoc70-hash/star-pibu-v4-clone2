@@ -35,7 +35,7 @@ export function HeroStatItem({
         <span className="hero-stat-unit">{unit}</span>
       </div>
       <div className="hero-stat-bar" data-done={String(isDone)} />
-      <div className="hero-stat-label">{label}</div>
+      <div className="hero-stat-label tracking-widest">{label}</div>
     </div>
   );
 }

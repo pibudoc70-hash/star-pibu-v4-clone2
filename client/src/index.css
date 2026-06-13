@@ -253,12 +253,13 @@
   }
 
   .star-divider {
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, #B8892A, #F5D78E, #C9A84C);
-    border-radius: 2px;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+    border-radius: 0;
     margin: 1rem 0;
-    box-shadow: 0 0 8px rgba(201,168,76,0.4);
+    box-shadow: none;
+    opacity: 0.7;
   }
 
   .treatment-card {
@@ -778,18 +779,19 @@
   }
   .hero-title {
     color: #FFFFFF;
-    font-size: clamp(1.1rem, 4.2vw, 2.8rem);
-    margin-bottom: clamp(0.3rem, 1.2vh, 0.75rem);
+    font-size: clamp(1.2rem, 4.5vw, 2.8rem);
+    margin-bottom: clamp(0.4rem, 1.4vh, 0.85rem);
     font-family: 'Noto Sans KR', sans-serif;
-    letter-spacing: clamp(0.04em, 1.5vw, 0.12em);
-    text-shadow: 0 3px 16px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.15);
-    line-height: 1.2;
+    letter-spacing: clamp(0.06em, 1.5vw, 0.14em);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 50px rgba(201,168,76,0.12);
+    line-height: 1.18;
   }
   .hero-subtitle {
-    color: rgba(255,255,255,0.9);
-    font-size: clamp(0.85rem, 3vw, 1.45rem);
-    margin-bottom: clamp(0.2rem, 0.8vh, 0.5rem);
-    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.82);
+    font-size: clamp(0.82rem, 2.8vw, 1.35rem);
+    margin-bottom: clamp(0.25rem, 0.9vh, 0.6rem);
+    letter-spacing: 0.04em;
+    font-weight: 300;
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
@@ -1258,8 +1260,8 @@
 
     /* 섹션 패딩 — 프리미엄 무드를 위한 상하 여백 확보 */
     section {
-      padding-top: 3.5rem !important;
-      padding-bottom: 3.5rem !important;
+      padding-top: 4rem !important;
+      padding-bottom: 4rem !important;
     }
 
     /* 컨테이너 좌우 패딩 */
@@ -1430,7 +1432,7 @@
   /* Mobile padding for floating CTA — sticky CTA와 본문 충돌 방지 */
   @media (max-width: 768px) {
     main {
-      padding-bottom: 70px;
+      padding-bottom: 68px;
     }
   }
 
@@ -1476,9 +1478,10 @@
     }
     /* 슬로건 — 모바일에서 크기 절제 */
     .hero-subtitle {
-      font-size: clamp(0.78rem, 3.2vw, 1rem) !important;
+      font-size: clamp(0.8rem, 3.2vw, 1rem) !important;
       margin-bottom: clamp(0.15rem, 0.6vh, 0.4rem) !important;
-      letter-spacing: 0.01em !important;
+      letter-spacing: 0.03em !important;
+      font-weight: 300 !important;
     }
     /* 통계 스트립 — 모바일에서 간격 최적화 */
     .hero-stats-row {
@@ -1493,17 +1496,25 @@
     }
     /* CTA 버튼 wrap — 상단 여백 최적화 */
     .hero-actions-wrap {
-      margin-top: 24px !important;
+      margin-top: 20px !important;
+      max-width: 100% !important;
     }
-    /* 전화 버튼 — 모바일 최적화 */
-    .hero-btn-phone {
-      font-size: 0.8rem !important;
-      padding: 0.6rem 1.1rem !important;
+    /* Primary 예약 버튼 — 모바일 전체 너비, 더 큰 패딩 */
+    .hero-btn-reserve,
+    .hero-btn-reserve-zh {
+      font-size: 0.88rem !important;
+      padding: 0.75rem 1.25rem !important;
     }
-    /* 예약/카카오 버튼 — 모바일 최적화 */
+    /* Secondary 카카오 버튼 — 모바일 최적화 */
     .hero-btn-action {
-      font-size: 0.8rem !important;
-      padding: 0.6rem 1rem !important;
+      font-size: 0.78rem !important;
+      padding: 0.6rem 0.9rem !important;
+      min-width: 0 !important;
+    }
+    /* Tertiary 전화 버튼 — 모바일 최적화 */
+    .hero-btn-phone {
+      font-size: 0.78rem !important;
+      padding: 0.6rem 0.9rem !important;
     }
   }
 
@@ -1714,47 +1725,58 @@
 }
 /* HeroActions container */
 .hero-actions-wrap {
-  gap: clamp(1rem, 1.5vw, 0.6rem);
-  margin-top: 42px;
-  max-width: 591px;
+  gap: 0.6rem;
+  margin-top: 36px;
+  max-width: 480px;
   width: 100%;
 }
 .hero-actions-row {
-  gap: clamp(0.4rem, 1.5vw, 0.6rem);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
-/* HeroActions: phone button */
+/* HeroActions: phone button — Tertiary (절제된 골드 테두리) */
 .hero-btn-phone {
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
-  color: #F5D78E;
-  border: 1.5px solid rgba(201, 168, 76, 0.55);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 12px rgba(201, 168, 76, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  font-size: clamp(0.7rem, 2.8vw, 0.85rem);
-  padding: clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
+  background: transparent;
+  color: rgba(245, 215, 142, 0.88);
+  border: 1px solid rgba(201, 168, 76, 0.38);
+  backdrop-filter: blur(6px);
+  box-shadow: none;
+  font-size: clamp(0.68rem, 2.6vw, 0.82rem);
+  padding: clamp(0.5rem, 1.6vw, 0.65rem) clamp(0.75rem, 2.8vw, 1.1rem);
   white-space: nowrap;
   max-width: min(100%, 320px);
-  padding-right: 19px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+.hero-btn-phone:hover {
+  border-color: rgba(201, 168, 76, 0.65);
+  opacity: 1;
+  background: rgba(201, 168, 76, 0.08);
 }
 /* HeroActions: reserve/chat button shared sizing */
 .hero-btn-action {
   font-size: clamp(0.7rem, 2.8vw, 0.85rem);
   padding: clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
   white-space: nowrap;
-  min-width: clamp(78px, 22vw, 130px);
+  min-width: clamp(82px, 22vw, 136px);
+  letter-spacing: 0.02em;
 }
-/* HeroActions: reserve button (Naver green) */
+/* HeroActions: reserve button — Primary (네이버 초록, 가장 눈에 띄엄) */
 .hero-btn-reserve {
   background: #03C75A;
   color: #ffffff;
-  box-shadow: 0 4px 18px rgba(3, 199, 90, 0.35);
+  box-shadow: 0 4px 20px rgba(3, 199, 90, 0.40);
   padding-top: 11px;
+  font-weight: 700;
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {
   background: #06C755;
   color: #ffffff;
-  box-shadow: 0 4px 18px rgba(3, 199, 90, 0.35);
+  box-shadow: 0 4px 20px rgba(3, 199, 90, 0.40);
   padding-top: 11px;
+  font-weight: 700;
 }
 /* focus-visible for hero CTA buttons */
 .hero-btn-phone:focus-visible,
@@ -1766,59 +1788,111 @@
   .hero-scroll-btn .animate-bounce { animation: none; }
 }
 
+/* ─── 섹션 헤더 공통 타이포 시스템 ─────────────────────────────────────────── */
+/* eyebrow: 섹션 제목 위 소문자 레이블 */
+.section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 1rem;
+  display: block;
+}
+/* section-title: 섹션 주제목 */
+.section-title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: #0D2B5E;
+  margin-bottom: 1.25rem;
+}
+/* section-subtitle: 섹션 부제목 */
+.section-subtitle {
+  font-size: clamp(0.88rem, 2.2vw, 1rem);
+  line-height: 1.7;
+  color: #9B8B6E;
+  font-weight: 400;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
 
-/* HeroStatItem */
+/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 */
 .hero-stat-value {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.2rem, 4.5vw, 2.2rem);
-  color: rgba(255, 255, 255, 0.97);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 4.8vw, 2.4rem);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   line-height: 1;
   transition: color 0.5s ease, text-shadow 0.5s ease;
   font-variant-numeric: tabular-nums;
   min-width: 2ch;
   display: inline-block;
-  text-align: right;
+  text-align: center;
+  letter-spacing: -0.02em;
 }
 .hero-stat-value[data-done="true"] {
-  color: #F5D78E;
-  text-shadow: 0 0 20px rgba(245, 215, 142, 0.65), 0 2px 10px rgba(0, 0, 0, 0.4);
+  color: #EDD98A;
+  text-shadow: 0 0 24px rgba(237, 217, 138, 0.55), 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 .hero-stat-unit {
-  font-size: 65%;
-  font-weight: 300;
-  opacity: 0.85;
+  font-size: 58%;
+  font-weight: 400;
+  opacity: 0.82;
+  letter-spacing: 0.01em;
+}
+/* 에디토리얼 구분선 — 통계 항목 사이 세로 선 */
+.hero-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.35), transparent);
+  align-self: center;
+  flex-shrink: 0;
 }
 .hero-stat-bar {
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
-  margin-top: 6px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.6), transparent);
+  margin-top: 8px;
   transform: scaleX(0);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center;
+  max-width: 48px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-stat-bar[data-done="true"] {
   transform: scaleX(1);
 }
 .hero-stat-label {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: clamp(0.62rem, 1.6vw, 0.78rem);
-  letter-spacing: 0.04em;
-  padding-top: 8px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: clamp(0.58rem, 1.4vw, 0.72rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-top: 10px;
+  font-weight: 400;
 }
 
 /* HeroStatsStrip */
 .hero-stats-wrap {
-  margin-bottom: clamp(1rem, 3vh, 2.5rem);
+  margin-bottom: clamp(1.25rem, 3.5vh, 2.75rem);
   width: 100%;
 }
 .hero-stats-row {
   display: flex;
   justify-content: center;
-  gap: clamp(1rem, 5vw, 3rem);
-  padding-top: 30px;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 5vw, 3.5rem);
+  padding-top: 32px;
+  /* 에디토리얼 상단 구분선 */
+  border-top: 1px solid rgba(201,168,76,0.18);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-stats-row-mobile {
   display: flex;

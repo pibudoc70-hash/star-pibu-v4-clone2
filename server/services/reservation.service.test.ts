@@ -131,8 +131,13 @@ describe("cancelGuestReservationWithOtp — OTP 실패 경로", () => {
       };
     });
     const { cancelGuestReservationWithOtp } = await import("./reservation.service");
-    await expect(
-      cancelGuestReservationWithOtp(1, "010-1234-5678", "000000"),
-    ).rejects.toThrow("인증번호가 올바르지 않거나 만료되었습니다.");
+    let caught: unknown;
+    try {
+      await cancelGuestReservationWithOtp(1, "010-1234-5678", "000000");
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.OTP_INVALID);
   });
 });

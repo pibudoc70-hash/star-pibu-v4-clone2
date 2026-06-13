@@ -2,6 +2,7 @@
  * treatments.service.test.ts — treatments.service 유스케이스 단위 테스트
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
 
 // ── 모킹 ─────────────────────────────────────────────────────────────────────
 vi.mock("../storage", () => ({
@@ -128,14 +129,18 @@ describe("uploadTreatmentImage", () => {
     // 6MB 상당의 base64 문자열 생성
     const oversizedBase64 = "A".repeat(6 * 1024 * 1024 * 4 / 3);
 
-    await expect(
-      uploadTreatmentImage({
+    let caught: unknown;
+    try {
+      await uploadTreatmentImage({
         base64: oversizedBase64,
         fileName: "big.jpg",
         mimeType: "image/jpeg",
-      }),
-    ).rejects.toThrow("이미지 파일 크기는 5MB 이하여야 합니다.");
-
+      });
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.VALIDATION);
     expect(mockStoragePut).not.toHaveBeenCalled();
   });
 

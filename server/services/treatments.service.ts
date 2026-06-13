@@ -10,6 +10,7 @@
  * 라우터는 zod 검증 + service 호출 + TRPCError 변환만 담당한다.
  */
 import { storagePut } from "../storage";
+import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
 
 // ─── 상수 ─────────────────────────────────────────────────────────────────────
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -117,7 +118,10 @@ export async function uploadTreatmentImage(
   const buffer = Buffer.from(base64Data, "base64");
 
   if (buffer.length > MAX_IMAGE_BYTES) {
-    throw new Error("이미지 파일 크기는 5MB 이하여야 합니다.");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.VALIDATION,
+      "이미지 파일 크기는 5MB 이하여야 합니다.",
+    );
   }
 
   const ext = mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "jpg";

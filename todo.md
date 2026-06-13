@@ -2546,3 +2546,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] GuestReservationForm.tsx — onError 핸들러를 parseOtpSendError / parseOtpVerifyError / parseReservationError로 교체
 - [x] MemberReservationForm.tsx — onError 핸들러를 parseReservationError로 교체
 - [x] client/src/components/reservation/errorMessages.test.ts 신규 작성 — 22개 단위 테스트 (parseTRPCError 13개 + parseOtpSendError 3개 + parseOtpVerifyError 3개 + parseReservationError 3개)
+
+## 마감 라운드 4차 — 에러 처리 규약 일관성 보강 (2026-06-13)
+- [x] P0: EXTRACT 판정 없음 — admin/treatments/reservation router 모든 항목 KEEP (단일 repository 1회 호출 어댑터 수준)
+- [x] P1: reservation.service.ts — verifyOtpForReservation OTP 유예 만료를 DomainError(OTP_EXPIRED)로 교체
+- [x] P1: reservation.service.ts — cancelGuestReservationWithOtp OTP 실패를 DomainError(OTP_INVALID)로 교체
+- [x] P1: treatments.service.ts — uploadTreatmentImage 5MB 초과를 DomainError(VALIDATION)으로 교체
+- [x] P1: equipment3.ts router — throw new Error 2개를 TRPCError(INTERNAL_SERVER_ERROR/BAD_REQUEST)로 교체
+- [x] P1: events.ts router — throw new Error 2개를 TRPCError(BAD_REQUEST/INTERNAL_SERVER_ERROR)로 교체
+- [x] P1: popup.ts router — throw new Error 1개를 TRPCError(BAD_REQUEST)로 교체
+- [x] P1: App.tsx 분리 STOP 판단 — 137줄, 보조 함수 3개 모두 단순, 분리 실익 없음
+- [x] P2: reservation.service.test.ts — cancelGuestReservationWithOtp에 DomainError(OTP_INVALID) 타입 검증 추가
+- [x] P2: treatments.service.test.ts — uploadTreatmentImage 5MB 초과에 DomainError(VALIDATION) 타입 검증 추가

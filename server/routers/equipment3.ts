@@ -17,6 +17,7 @@ import {
 } from "../db";
 import { z } from "zod/v4";
 import { storagePut } from "../storage";
+import { TRPCError } from "@trpc/server";
 
 // 공통 시술 필드 스키마 (생성/수정 공용)
 const itemFieldsSchema = z.object({
@@ -251,7 +252,7 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       });
 
       const rawContent = response.choices?.[0]?.message?.content;
-      if (!rawContent) throw new Error("번역 응답이 없습니다.");
+      if (!rawContent) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "번역 응답이 없습니다." });
       const content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
       const parsed = JSON.parse(content) as {
         en: Record<string, string>;
@@ -277,7 +278,7 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       const buffer = Buffer.from(base64Data, "base64");
 
       if (buffer.length > 5 * 1024 * 1024) {
-        throw new Error("이미지 파일 크기는 5MB 이하여야 합니다.");
+        throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
       }
 
       const ext =

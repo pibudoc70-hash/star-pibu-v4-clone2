@@ -181,7 +181,10 @@ export async function verifyOtpForReservation(phone: string, otpCode: string): P
       )
       .limit(1);
     if (rows.length === 0 || rows[0].expiresAt < Date.now() - OTP_GRACE_MS) {
-      throw new Error("인증이 만료되었습니다. 다시 인증해주세요.");
+      throw new DomainError(
+        DOMAIN_ERROR_CODES.OTP_EXPIRED,
+        "인증이 만료되었습니다. 다시 인증해주세요.",
+      );
     }
   }
 }
@@ -316,6 +319,9 @@ export async function cancelGuestReservationWithOtp(
   otpCode: string,
 ) {
   const ok = await verifyGuestOtp(phone, otpCode);
-  if (!ok) throw new Error("인증번호가 올바르지 않거나 만료되었습니다.");
+  if (!ok) throw new DomainError(
+    DOMAIN_ERROR_CODES.OTP_INVALID,
+    "인증번호가 올바르지 않거나 만료되었습니다.",
+  );
   await cancelGuestReservation(id, phone);
 }

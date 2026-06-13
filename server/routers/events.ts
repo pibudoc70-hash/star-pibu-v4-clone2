@@ -13,6 +13,7 @@ import {
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
 import type { InsertEvent } from "../../drizzle/schema";
+import { TRPCError } from "@trpc/server";
 
 export const eventsRouter = router({
   // 공개: 모든 활성 이벤트 조회
@@ -200,13 +201,13 @@ export const eventsRouter = router({
       try {
         const base64Data = input.fileData.split(',')[1] || input.fileData;
         const buffer = Buffer.from(base64Data, 'base64');
-        if (buffer.length > 5 * 1024 * 1024) throw new Error('File size exceeds 5MB');
+        if (buffer.length > 5 * 1024 * 1024) throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
         const fileKey = `events/${Date.now()}-${input.fileName}`;
         const { url } = await storagePut(fileKey, buffer, input.mimeType);
         return { success: true, url };
       } catch (error) {
         logger.error("ImageUpload", "이미지 업로드 오류", error);
-        throw new Error('Image upload failed');
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "이미지 업로드에 실패했습니다." });
       }
     }),
 });

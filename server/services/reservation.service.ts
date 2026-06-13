@@ -3,11 +3,13 @@
  *
  * 책임:
  *  - 예약 가능 여부 검증 (날짜·요일·전화번호 형식)
- *  - OTP 인증 완료 여부 확인 (verifyGuestOtp + verified 행 재확인)
+ *  - OTP 발송 유스케이스 (sendGuestReservationOtp)
+ *  - OTP 검증 및 lock 해석 유스케이스 (verifyGuestReservationOtp)
+ *  - OTP 인증 완료 여부 확인 (verifyOtpForReservation + verified 행 재확인)
  *  - 예약 생성 후 이메일·알림 발송 오케스트레이션
  *
  * 의존 방향: service → db/*, _core/*, email, sms
- * 라우터는 입력 파싱·권한 검사만 담당하고 이 service를 호출한다.
+ * 라우터는 입력 파싱·권한 검사·TRPCError 변환만 담당하고 이 service를 호출한다.
  */
 import { eq, and } from "drizzle-orm";
 import { guestOtps } from "../../drizzle/schema";
@@ -16,9 +18,13 @@ import {
   verifyGuestOtp,
   cancelGuestReservation,
   getUnavailableSlots,
+  generateOtpCode,
+  createGuestOtp,
+  isOtpCooldown,
 } from "../db";
 import { notifyOwner } from "../_core/notification";
 import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "../email";
+import { sendSMS, getOTPMessage } from "../sms";
 import { logger } from "../_core/logger";
 import { getDb } from "../db/connection";
 
@@ -59,6 +65,70 @@ export async function validateDateNotUnavailable(preferredDate: number): Promise
   const unavailableSlots = await getUnavailableSlots(undefined);
   if (unavailableSlots.some((s: { date: string }) => s.date === dateStr)) {
     throw new Error("해당 날짜는 예약이 불가합니다. 다른 날짜를 선택해주세요.");
+  }
+}
+
+// ─── OTP 발송 유스케이스 ──────────────────────────────────────────────────────
+export interface SendGuestReservationOtpResult {
+  success: true;
+  smsSent: boolean;
+}
+
+/**
+ * 비회원 예약 OTP 발송 유스케이스.
+ *
+ * 흐름: cooldown 체크 → OTP 코드 생성 → DB 저장 → SMS 발송 → 실패 로깅
+ *
+ * cooldown 위반 시 Error("OTP_COOLDOWN") 던짐 → 라우터가 TRPCError로 변환.
+ */
+export async function sendGuestReservationOtp(
+  phone: string,
+): Promise<SendGuestReservationOtpResult> {
+  const onCooldown = await isOtpCooldown(phone);
+  if (onCooldown) {
+    throw new Error("OTP_COOLDOWN");
+  }
+
+  const code = generateOtpCode();
+  await createGuestOtp(phone, code);
+
+  const message = getOTPMessage(code, 10);
+  const smsSent = await sendSMS({ phone, message });
+  if (!smsSent) logger.warn("OTP", "SMS 발송 실패");
+
+  return { success: true, smsSent };
+}
+
+// ─── OTP 검증 유스케이스 ──────────────────────────────────────────────────────
+export interface VerifyGuestReservationOtpResult {
+  verified: true;
+}
+
+/**
+ * 비회원 예약 OTP 검증 유스케이스.
+ *
+ * 흐름: OTP 검증 → lock 상태 해석 → 잠금 시 남은 시간 계산
+ *
+ * 에러 종류:
+ *  - Error("OTP_INVALID") — 코드 불일치 또는 만료
+ *  - Error("OTP_LOCKED:<remainMin>") — 시도 횟수 초과, 잠금 시간(분) 포함
+ */
+export async function verifyGuestReservationOtp(
+  phone: string,
+  code: string,
+): Promise<VerifyGuestReservationOtpResult> {
+  try {
+    const ok = await verifyGuestOtp(phone, code);
+    if (!ok) throw new Error("OTP_INVALID");
+    return { verified: true };
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("OTP_LOCKED:")) {
+      const lockedUntil = parseInt(err.message.split(":")[1], 10);
+      const remainMin = Math.ceil((lockedUntil - Date.now()) / 60000);
+      throw new Error(`OTP_LOCKED:${remainMin}`);
+    }
+    // OTP_INVALID 또는 기타 에러는 그대로 전파
+    throw err;
   }
 }
 

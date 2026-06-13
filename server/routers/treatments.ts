@@ -1,7 +1,7 @@
 import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import { getAllTreatmentCategories, getTreatmentsByCategory, getAllTreatments, getTreatmentById, getTreatmentBySlug, createTreatment, updateTreatment, deleteTreatment, getTreatmentsByBest } from "../db";
 import { z } from "zod/v4";
-import { storagePut } from "../storage";
+import { normalizeTreatmentCreatePayload, uploadTreatmentImage } from "../services/treatments.service";
 
 export const treatmentsRouter = router({
   // 공개: 모든 시술 카테고리 조회
@@ -103,62 +103,7 @@ export const treatmentsRouter = router({
       isActive: z.enum(["0", "1"]).optional(),
     }))
     .mutation(async ({ input }) => {
-      await createTreatment({
-        categoryId: input.categoryId,
-        name: input.name,
-        nameEn: input.nameEn,
-        nameJa: input.nameJa,
-        nameZh: input.nameZh,
-        desc: input.desc,
-        descEn: input.descEn,
-        descJa: input.descJa,
-        descZh: input.descZh,
-        time: input.time,
-        timeEn: input.timeEn,
-        timeJa: input.timeJa,
-        timeZh: input.timeZh,
-        recovery: input.recovery,
-        recoveryEn: input.recoveryEn,
-        recoveryJa: input.recoveryJa,
-        recoveryZh: input.recoveryZh,
-        slug: input.slug,
-        slugEn: input.slugEn,
-        slugJa: input.slugJa,
-        slugZh: input.slugZh,
-        badge: input.badge || "",
-        badgeEn: input.badgeEn,
-        badgeJa: input.badgeJa,
-        badgeZh: input.badgeZh,
-        badgeColor: input.badgeColor || "#4A6FA5",
-        image: input.image,
-        images: input.images || "",
-        imgBg: input.imgBg || "",
-        cardBannerImage: input.cardBannerImage,
-        detail: input.detail,
-        detailEn: input.detailEn,
-        detailJa: input.detailJa,
-        detailZh: input.detailZh,
-        caution: input.caution,
-        cautionEn: input.cautionEn,
-        cautionJa: input.cautionJa,
-        cautionZh: input.cautionZh,
-        sessions: input.sessions || "",
-        sessionsEn: input.sessionsEn,
-        sessionsJa: input.sessionsJa,
-        sessionsZh: input.sessionsZh,
-        effect: input.effect,
-        effectEn: input.effectEn,
-        effectJa: input.effectJa,
-        effectZh: input.effectZh,
-        related: input.related || "",
-        steps: input.steps || "",
-        youtubeUrl: input.youtubeUrl,
-        modalImage: input.modalImage,
-        best: input.best || "0",
-        section: input.section || "v1",
-        sortOrder: input.sortOrder || 0,
-        isActive: input.isActive || "1",
-      });
+      await createTreatment(normalizeTreatmentCreatePayload(input));
       return { success: true };
     }),
 
@@ -242,19 +187,6 @@ export const treatmentsRouter = router({
       mimeType: z.string().default("image/jpeg"),
     }))
     .mutation(async ({ input }) => {
-      const base64Data = input.base64.includes(",")
-        ? input.base64.split(",")[1]
-        : input.base64;
-      const buffer = Buffer.from(base64Data, "base64");
-
-      if (buffer.length > 5 * 1024 * 1024) {
-        throw new Error("이미지 파일 크기는 5MB 이하여야 합니다.");
-      }
-
-      const ext = input.mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "jpg";
-      const uniqueName = `treatments/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-
-      const { url } = await storagePut(uniqueName, buffer, input.mimeType);
-      return { url };
+      return uploadTreatmentImage(input);
     }),
 });

@@ -5,12 +5,12 @@
 import { z } from "zod/v4";
 import { adminProcedure, router } from "../_core/trpc";
 import {
-  getAllReservations, updateReservationStatus, getReservationStats, getReservationById,
+  getAllReservations, getReservationStats,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole, getUserStats,
 } from "../db";
-import { logger } from "../_core/logger";
+import { updateAdminReservationStatus } from "../services/admin.service";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -61,28 +61,7 @@ export const adminRouter = router({
       sendAlimtalk: z.boolean().default(true),
     }))
     .mutation(async ({ input }) => {
-      // Repository 헬퍼로 예약 조회 (라우터에서 직접 DB 호출 금지)
-      const reservation = await getReservationById(input.id);
-
-      await updateReservationStatus(input.id, input.status, input.adminNote);
-
-      if (reservation) {
-        try {
-          if (reservation.isGuest === "1") {
-            logger.info("Email", "비회원 예약 상태 변경 처리");
-          } else {
-            logger.info("Email", "회원 예약 상태 변경 처리");
-            // NOTE (PR-39): 예약 상태 변경 시 회원에게 이메일 발송 지점
-            // 활성화 방법: server/email.ts의 TO ENABLE 절차 후 아래 코드 주석 해제
-            // const user = await getUserById(reservation.userId);
-            // if (user?.email) {
-            //   await sendEmail(getReservationStatusEmail({ ... }));
-            // }
-          }
-        } catch (emailErr) {
-          logger.error("Email", "상태 변경 이메일 발송 중 오류", emailErr);
-        }
-      }
+      await updateAdminReservationStatus(input);
     }),
 
   // 예약 불가능 날짜 관리

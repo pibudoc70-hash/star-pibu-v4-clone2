@@ -2508,3 +2508,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Equipment3.tsx에 StemCellGuide 삽입 — 줄기세포 치료 탭 활성 시에만 카드 그리드 위에 표시
 - [x] 다국어 지원: ko / en / ja / zh 전체 적용
 - [x] TypeScript 오류 0건 확인
+
+## 마감 라운드 2차 — Router→Service→Repository 책임 분리 (2026-06-13)
+
+- [x] P0: admin.ts — updateReservationStatus 유스케이스를 admin.service.ts로 추출 (조회→상태변경→후처리 3단계 흐름)
+- [x] P0: treatments.ts — create payload 정규화를 normalizeTreatmentCreatePayload로, uploadImage를 uploadTreatmentImage로 treatments.service.ts에 추출
+- [x] P0: reservation.ts — sendOtp/verifyOtp 유스케이스를 sendGuestReservationOtp/verifyGuestReservationOtp로 reservation.service.ts에 추출
+- [x] P1: App.tsx 분리 STOP 판단 — 137줄, 보조 함수 3개 모두 단순, 분리 실익 없음
+- [x] P2: server/services/admin.service.test.ts 신규 작성 — 5개 단위 테스트
+- [x] P2: server/services/treatments.service.test.ts 신규 작성 — normalizeTreatmentCreatePayload 8개 + uploadTreatmentImage 5개
+- [x] P2: server/services/reservation.otp.service.test.ts 신규 작성 — sendGuestReservationOtp 3개 + verifyGuestReservationOtp 4개

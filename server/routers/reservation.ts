@@ -9,16 +9,15 @@ import { z } from "zod/v4";
 import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
 import {
   getReservationsByUserId, cancelReservation,
-  generateOtpCode, createGuestOtp, verifyGuestOtp,
-  getUnavailableSlots, isOtpCooldown,
+  getUnavailableSlots,
 } from "../db";
 import {
   createMemberReservation,
   createGuestReservation,
   cancelGuestReservationWithOtp,
+  sendGuestReservationOtp,
+  verifyGuestReservationOtp,
 } from "../services/reservation.service";
-import { sendSMS, getOTPMessage } from "../sms";
-import { logger } from "../_core/logger";
 
 export const reservationRouter = router({
   // 공개: 예약 불가 날짜 목록
@@ -68,23 +67,17 @@ export const reservationRouter = router({
   sendOtp: publicProcedure
     .input(z.object({ phone: z.string().min(9).max(20) }))
     .mutation(async ({ input }) => {
-      // 쿨다운 체크: Repository 헬퍼에 위임 (라우터에서 직접 DB 호출 금지)
-      const onCooldown = await isOtpCooldown(input.phone);
-      if (onCooldown) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "인증번호는 60초 후에 다시 요청할 수 있습니다.",
-        });
+      try {
+        return await sendGuestReservationOtp(input.phone);
+      } catch (err) {
+        if (err instanceof Error && err.message === "OTP_COOLDOWN") {
+          throw new TRPCError({
+            code: "TOO_MANY_REQUESTS",
+            message: "인증번호는 60초 후에 다시 요청할 수 있습니다.",
+          });
+        }
+        throw err;
       }
-
-      const code = generateOtpCode();
-      await createGuestOtp(input.phone, code);
-
-      const message = getOTPMessage(code, 10);
-      const smsSent = await sendSMS({ phone: input.phone, message });
-      if (!smsSent) logger.warn("OTP", "SMS 발송 실패");
-
-      return { success: true, smsSent };
     }),
 
   // OTP 검증
@@ -95,17 +88,19 @@ export const reservationRouter = router({
     }))
     .mutation(async ({ input }) => {
       try {
-        const ok = await verifyGuestOtp(input.phone, input.code);
-        if (!ok) throw new TRPCError({ code: "BAD_REQUEST", message: "인증번호가 올바르지 않거나 만료되었습니다." });
-        return { verified: true };
+        return await verifyGuestReservationOtp(input.phone, input.code);
       } catch (err) {
-        if (err instanceof Error && err.message.startsWith("OTP_LOCKED:")) {
-          const lockedUntil = parseInt(err.message.split(":")[1], 10);
-          const remainMin = Math.ceil((lockedUntil - Date.now()) / 60000);
-          throw new TRPCError({
-            code: "TOO_MANY_REQUESTS",
-            message: `인증 시도 횟수를 초과했습니다. ${remainMin}분 후 다시 시도해주세요.`,
-          });
+        if (err instanceof Error) {
+          if (err.message === "OTP_INVALID") {
+            throw new TRPCError({ code: "BAD_REQUEST", message: "인증번호가 올바르지 않거나 만료되었습니다." });
+          }
+          if (err.message.startsWith("OTP_LOCKED:")) {
+            const remainMin = err.message.split(":")[1];
+            throw new TRPCError({
+              code: "TOO_MANY_REQUESTS",
+              message: `인증 시도 횟수를 초과했습니다. ${remainMin}분 후 다시 시도해주세요.`,
+            });
+          }
         }
         throw err;
       }

@@ -5,12 +5,12 @@
 import { z } from "zod/v4";
 import { adminProcedure, router } from "../_core/trpc";
 import {
-  getAllReservations, getReservationStats,
+  getAllReservations,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
-  listUsers as dbListUsers, updateUserRole as dbUpdateUserRole, getUserStats,
+  listUsers as dbListUsers, updateUserRole as dbUpdateUserRole,
 } from "../db";
-import { updateAdminReservationStatus, normalizeYouTubeCreatePayload } from "../services/admin.service";
+import { updateAdminReservationStatus, normalizeYouTubeCreatePayload, getAdminStats } from "../services/admin.service";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -34,11 +34,7 @@ export const adminRouter = router({
 
   // 전체 통계
   stats: adminProcedure.query(async () => {
-    const [userStats, reservationStats] = await Promise.all([
-      getUserStats(),
-      getReservationStats(),
-    ]);
-    return { ...userStats, reservations: reservationStats };
+    return getAdminStats();
   }),
 
   // 예약 목록 조회 (관리자)

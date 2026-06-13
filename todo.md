@@ -2580,3 +2580,30 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - 기존 4개 테스트 유지 (scheduleRouter.unavailableDates, verifyOtp, createGuest 2개)
 - [x] TypeScript 검사 0건 확인
 - [x] 전체 테스트 56파일 1376개 통과 확인
+
+## 마감 라운드 6차 — 선별적 유스케이스 추출 + 테스트 보강 (2026-06-13)
+
+### KEEP/TRIM/EXTRACT 판정표
+
+| 항목 | 판정 | 근거 |
+|---|---|---|
+| admin.stats (getUserStats + getReservationStats 조합) | **EXTRACT** | 두 개의 독립 DB 조회를 Promise.all로 조합하는 유스케이스 — service 단위 테스트가 자연스럽고 재사용 가치 있음 |
+| admin.listUsers | KEEP | 단일 DB 호출 + page/pageSize 응답 shaping — pass-through service 금지 원칙 적용 |
+| admin.listReservations | KEEP | 단일 DB 호출 + page/pageSize 응답 shaping — pass-through service 금지 원칙 적용 |
+| admin.updateUserRole | KEEP | 단일 DB 호출 1회, 가공 없음 |
+| admin.unavailableSlots.create/update | KEEP | reason 기본값 처리가 zod optional로 이미 처리됨, 별도 정책 없음 |
+| admin.youtube.update | KEEP | 단순 partial update, 정규화 정책 없음 |
+| reservation.myReservations | KEEP | 단일 DB 호출 1회 + 인증 진입점 — pass-through service 금지 원칙 적용 |
+| reservation.cancel | KEEP | 단일 DB 호출 1회 + 인증 진입점 — pass-through service 금지 원칙 적용 |
+| reservation.unavailableDates / scheduleRouter.unavailableDates | KEEP | 두 경로 모두 동일 DB 함수 1회 호출 — 중복은 라우팅 호환성 유지 목적, service 추출 실익 없음 |
+| treatments.update | KEEP | create 수준의 기본값 정책 없음 (모든 필드 optional partial update) |
+| treatments.byCategory/all/best/byId/bySlug/delete | KEEP | 단순 조회/단순 CRUD |
+| App.tsx | KEEP | 137줄, 보조 함수 3개 단순, 분리 실익 없음 |
+
+### 실제 변경 파일
+
+- [x] `server/services/admin.service.ts` — `getAdminStats()` 유스케이스 추가 (getUserStats + getReservationStats 병렬 조합)
+- [x] `server/routers/admin.ts` — `stats` 프로시저를 `getAdminStats()` service 위임으로 교체, 불필요 import 제거
+- [x] `server/services/admin.service.test.ts` — `getAdminStats` 단위 테스트 4개 추가 (총 9개)
+- [x] TypeScript 검사 0건 확인
+- [x] 전체 테스트 56파일 1380개 통과 확인

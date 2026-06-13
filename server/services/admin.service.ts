@@ -4,11 +4,12 @@
  * 책임:
  *  - 예약 상태 변경 유스케이스 (조회 → 상태변경 → 후처리 오케스트레이션)
  *  - YouTube 영상 생성 payload 정규화 (normalizeYouTubeCreatePayload)
+ *  - 관리자 통계 조합 유스케이스 (getAdminStats)
  *
  * 의존 방향: service → db/*, _core/*
  * 라우터는 입력 파싱·권한 검사·TRPCError 변환만 담당하고 이 service를 호출한다.
  */
-import { getReservationById, updateReservationStatus } from "../db";
+import { getReservationById, updateReservationStatus, getUserStats, getReservationStats } from "../db";
 import { logger } from "../_core/logger";
 
 export interface UpdateAdminReservationStatusInput {
@@ -50,6 +51,35 @@ export async function updateAdminReservationStatus(
       logger.error("Email", "상태 변경 이메일 발송 중 오류", emailErr);
     }
   }
+}
+
+// ─── 관리자 통계 조합 유스케이스 ──────────────────────────────────────────────
+export interface AdminStats {
+  totalUsers: number;
+  adminUsers: number;
+  recentSignups: number;
+  reservations: {
+    total: number;
+    pending: number;
+    confirmed: number;
+    completed: number;
+    cancelled: number;
+  };
+}
+
+/**
+ * 관리자 대시보드 통계 조합 유스케이스.
+ *
+ * 흐름: 회원 통계 + 예약 통계를 병렬로 조회하여 하나의 응답으로 조합.
+ * 두 개의 독립 DB 조회를 Promise.all로 병렬 실행하므로 router에서 직접 조합하는
+ * 것보다 service 계층에서 관리하는 것이 테스트 및 재사용 면에서 유리하다.
+ */
+export async function getAdminStats(): Promise<AdminStats> {
+  const [userStats, reservationStats] = await Promise.all([
+    getUserStats(),
+    getReservationStats(),
+  ]);
+  return { ...userStats, reservations: reservationStats };
 }
 
 // ─── YouTube 영상 생성 payload 정규화 ─────────────────────────────────────────

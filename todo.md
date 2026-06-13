@@ -2567,3 +2567,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Events.tsx — 에러 시 토스트 알림 + 재시도 버튼 표시
 - [x] WelcomePopup.tsx — 에러 시 조용히 팝업 숨김 (콘솔 경고만, 사용자 경험 방해 없음)
 - [x] client/src/lib/errorMessages.test.ts 신규 — 14개 단위 테스트
+
+## 마감 라운드 5차 — 테스트 보강 (2026-06-13)
+
+- [x] P0: admin/reservation/treatments router 전체 KEEP 판정 — 이전 라운드에서 실제 가치 있는 추출 모두 완료, 추가 EXTRACT 항목 없음
+- [x] P1: reservation.test.ts 보강 — 9개 테스트 추가
+  - reservationRouter.unavailableDates — scheduleRouter와 동일 동작 (중복 경로 일관성)
+  - reservationRouter.myReservations — 인증된 사용자 예약 목록 반환
+  - reservationRouter.myReservations — 비인증 사용자 UNAUTHORIZED
+  - reservationRouter.cancel — 인증된 사용자 취소 성공
+  - reservationRouter.cancel — 비인증 사용자 UNAUTHORIZED
+  - 기존 4개 테스트 유지 (scheduleRouter.unavailableDates, verifyOtp, createGuest 2개)
+- [x] TypeScript 검사 0건 확인
+- [x] 전체 테스트 56파일 1376개 통과 확인

@@ -19,23 +19,31 @@
  *   - Treat the SeoHead canonical below as an active SEO signal
  *     (canonical is preserved for reference only; page is not live)
  */
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import { trpc } from '@/lib/trpc';
-import { Loader2, Calendar, Eye } from 'lucide-react';
-import { useState } from 'react';
+import { Loader2, Calendar, Eye, RefreshCw } from 'lucide-react';
 import { Link } from 'wouter';
 import OptimizedImage from '@/components/OptimizedImage';
+import { parseEventListError } from '@/lib/errorMessages';
 
 export default function Events() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
 
-  const { data: allEvents, isLoading } = trpc.events.list.useQuery();
+  const { data: allEvents, isLoading, error, refetch } = trpc.events.list.useQuery();
   const events = selectedCategory
     ? allEvents?.filter((e) => e.category === selectedCategory)
     : allEvents;
+
+  // 에러 발생 시 토스트 알림
+  useEffect(() => {
+    if (!error) return;
+    toast.error(parseEventListError(error, lang), { duration: 5000 });
+  }, [error, lang]);
 
   const categories = [
     { value: undefined, label: t.events.filterAll },
@@ -89,6 +97,18 @@ export default function Events() {
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <Loader2 className="animate-spin text-amber-500" size={40} />
+            </div>
+          ) : error && (!events || events.length === 0) ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <p className="text-gray-500 text-base">{parseEventListError(error, lang)}</p>
+              <button
+                type="button"
+                onClick={() => void refetch()}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-amber-500 hover:bg-amber-600 transition-colors"
+              >
+                <RefreshCw size={15} />
+                {{ ko: "다시 시도", en: "Retry", ja: "再試行", zh: "重试" }[lang] ?? "다시 시도"}
+              </button>
             </div>
           ) : events && events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

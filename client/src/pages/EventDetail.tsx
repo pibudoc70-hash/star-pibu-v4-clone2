@@ -4,6 +4,7 @@
  * 이벤트 상세 페이지 - /events/:id (DB 연동)
  */
 import { useEffect } from "react";
+import { toast } from "sonner";
 import { useParams, useLocation } from "wouter";
 import { ArrowLeft, Calendar, Eye, Tag, Zap, Sparkles, Bell, MessageCircle, Phone, MapPin, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -12,6 +13,7 @@ import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_LOCALE, buildHreflangs } from "@/components/SeoHead";
+import { parseEventError } from "@/lib/errorMessages";
 
 const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
 
@@ -36,6 +38,16 @@ export default function EventDetail() {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [params.id]);
 
+  // 에러 발생 시 토스트 알림 — NOT_FOUND는 별도 화면, 그 외는 토스트
+  useEffect(() => {
+    if (!error) return;
+    const trpcCode = (error.data as { code?: string } | undefined)?.code ?? "";
+    const isNotFound = trpcCode === "NOT_FOUND" || (error.message ?? "").includes("NOT_FOUND");
+    if (!isNotFound) {
+      toast.error(parseEventError(error, lang), { duration: 5000 });
+    }
+  }, [error, lang]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F7FA]">
@@ -45,7 +57,14 @@ export default function EventDetail() {
     );
   }
 
-  if (!event || error) {
+  // NOT_FOUND: 전용 안내 화면
+  const isNotFoundError = (() => {
+    if (!error) return false;
+    const trpcCode = (error.data as { code?: string } | undefined)?.code ?? "";
+    return trpcCode === "NOT_FOUND" || (error.message ?? "").includes("NOT_FOUND");
+  })();
+
+  if (isNotFoundError || (!event && !isLoading)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F7FA]">
         <p className="text-[#4A6FA5] text-lg font-semibold mb-4">{ed.notFound}</p>
@@ -58,6 +77,8 @@ export default function EventDetail() {
       </div>
     );
   }
+
+  if (!event) return null;
 
   const accentColor = event.accent ?? "#4A6FA5";
   const accentDark = event.accentDark ?? "#2D4A7A";

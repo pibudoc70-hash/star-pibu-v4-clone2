@@ -2558,3 +2558,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P1: App.tsx 분리 STOP 판단 — 137줄, 보조 함수 3개 모두 단순, 분리 실익 없음
 - [x] P2: reservation.service.test.ts — cancelGuestReservationWithOtp에 DomainError(OTP_INVALID) 타입 검증 추가
 - [x] P2: treatments.service.test.ts — uploadTreatmentImage 5MB 초과에 DomainError(VALIDATION) 타입 검증 추가
+
+## 팝업·이벤트 에러 UI 개선 (2026-06-13)
+
+- [x] client/src/lib/errorMessages.ts 신규 — 공통 에러 메시지 유틸리티 (parseEventError / parseEventListError / parsePopupError)
+- [x] EventDetail.tsx — NOT_FOUND는 전용 화면 유지, 그 외 에러는 토스트 알림 + 페이지 유지
+- [x] SpecialEventSection.tsx — 에러 시 토스트 알림 + 재시도 버튼 표시
+- [x] Events.tsx — 에러 시 토스트 알림 + 재시도 버튼 표시
+- [x] WelcomePopup.tsx — 에러 시 조용히 팝업 숨김 (콘솔 경고만, 사용자 경험 방해 없음)
+- [x] client/src/lib/errorMessages.test.ts 신규 — 14개 단위 테스트

@@ -105,7 +105,7 @@ export default function WelcomePopup() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
-  const { data: events, isLoading } = trpc.popup.list.useQuery(undefined, {
+  const { data: events, isLoading, error } = trpc.popup.list.useQuery(undefined, {
     staleTime: 5 * 60 * 1000,
   });
 
@@ -116,8 +116,16 @@ export default function WelcomePopup() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // 팡업 에러: 사용자 경험을 방해하지 않도록 조용히 숨김 (콘솔 경고만)
+  useEffect(() => {
+    if (error) {
+      console.warn("[WelcomePopup] 팡업 데이터 로드 실패:", error.message);
+    }
+  }, [error]);
+
   useEffect(() => {
     if (isLoading) return;
+    if (error) return; // 에러 시 팡업 표시 안 함
     if (!events || events.length === 0) return;
     const dismissed = localStorage.getItem("star-popup-v2-dismissed");
     if (!dismissed) {

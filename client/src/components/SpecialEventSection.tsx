@@ -13,12 +13,15 @@
  * - Empty State 렌더링
  * - EventCard 목록 렌더링
  */
-import { Sparkles } from "lucide-react";
+import { useEffect } from "react";
+import { Sparkles, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedEvent, type SpecialEvent } from "@/hooks/useLocalizedEvent";
 import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
+import { parseEventListError } from "@/lib/errorMessages";
 
 // ── Empty State ───────────────────────────────────────────────────────────────
 function EventEmptyState({ lang }: { lang: string }) {
@@ -61,7 +64,13 @@ function SectionHeader({ lang }: { lang: string }) {
 export default function SpecialEventSection() {
   const { lang, t } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
-  const { data: specialEvents = [], isLoading } = trpc.events.special.useQuery({ lang });
+  const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery({ lang });
+
+  // 에러 발생 시 토스트 알림
+  useEffect(() => {
+    if (!error) return;
+    toast.error(parseEventListError(error, lang), { duration: 5000 });
+  }, [error, lang]);
 
   if (isLoading) {
     return (
@@ -71,6 +80,35 @@ export default function SpecialEventSection() {
           <p className="text-center text-lg text-gold">
             {t.events.loading}
           </p>
+        </div>
+      </section>
+    );
+  }
+
+  // 에러 상태: 재시도 버튼 표시
+  if (error && (specialEvents as SpecialEvent[]).length === 0) {
+    const retryLabel: Record<string, string> = {
+      ko: "다시 시도",
+      en: "Retry",
+      ja: "再試行",
+      zh: "重试",
+    };
+    return (
+      <section id="events" className="py-16 md:py-24 bg-white">
+        <div className="container">
+          <SectionHeader lang={lang} />
+          <div className="text-center py-16 flex flex-col items-center gap-4">
+            <p className="text-base text-gray-500">{parseEventListError(error, lang)}</p>
+            <button
+              type="button"
+              onClick={() => void refetch()}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-colors"
+              style={{ backgroundColor: "#C9A84C" }}
+            >
+              <RefreshCw size={15} />
+              {retryLabel[lang] ?? retryLabel.ko}
+            </button>
+          </div>
         </div>
       </section>
     );

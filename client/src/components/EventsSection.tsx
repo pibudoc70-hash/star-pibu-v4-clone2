@@ -51,8 +51,8 @@ export default function EventsSection() {
   const [filteredList, setFilteredList] = useState<Event[]>([]);
 
   // tRPC 쿼리
-  const { data: featuredData, isLoading: featuredLoading } = trpc.events.featured.useQuery();
-  const { data: listData, isLoading: listLoading } = trpc.events.listEvents.useQuery();
+  const { data: featuredData, isLoading: featuredLoading, error: featuredError } = trpc.events.featured.useQuery();
+  const { data: listData, isLoading: listLoading, error: listError } = trpc.events.listEvents.useQuery();
 
   // 언어 변경 시 activeCategory 리셋
   useEffect(() => {
@@ -86,6 +86,7 @@ export default function EventsSection() {
     dbActiveCategory === "전체" || dbActiveCategory === "이벤트" || dbActiveCategory === "신규시술";
 
   const isLoading = featuredLoading || listLoading;
+  const isError = !isLoading && (!!featuredError || !!listError);
 
   const filterTabs = [
     ev_t.filterAll,
@@ -141,8 +142,15 @@ export default function EventsSection() {
           </div>
         )}
 
+        {/* ── Error State ── */}
+        {isError && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">{ev_t.empty}</p>
+          </div>
+        )}
+
         {/* ── Featured 이벤트 카드 (상단) ── */}
-        {!isLoading && showFeatured && featuredData && featuredData.length > 0 && (
+        {!isLoading && !isError && showFeatured && featuredData && featuredData.length > 0 && (
           <div
             className="grid gap-6 mb-8"
             style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))" }}
@@ -227,7 +235,7 @@ export default function EventsSection() {
         )}
 
         {/* ── 일반 이벤트/공지 리스트 (하단) ── */}
-        {!isLoading && filteredList.length > 0 && (
+        {!isLoading && !isError && filteredList.length > 0 && (
           <div className="space-y-4">
             {filteredList.map((ev) => (
               <div
@@ -283,7 +291,7 @@ export default function EventsSection() {
         )}
 
         {/* ── Empty State ── */}
-        {!isLoading && filteredList.length === 0 && (!showFeatured || !featuredData || featuredData.length === 0) && (
+        {!isLoading && !isError && filteredList.length === 0 && (!showFeatured || !featuredData || featuredData.length === 0) && (
           <div className="text-center py-12">
             <p className="text-gray-500">{ev_t.empty}</p>
           </div>

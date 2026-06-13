@@ -4,26 +4,26 @@ import { getDb } from "./connection";
 
 export async function getEquipment3List(): Promise<Equipment3Item[]> {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) throw new Error("DB not available");
   return db.select().from(equipment3).where(eq(equipment3.isActive, "1")).orderBy(asc(equipment3.sortOrder));
 }
 
 export async function getEquipment3All(): Promise<Equipment3Item[]> {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) throw new Error("DB not available");
   return db.select().from(equipment3).orderBy(asc(equipment3.sortOrder));
 }
 
 export async function getEquipment3BySlug(slug: string): Promise<Equipment3Item | undefined> {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) throw new Error("DB not available");
   const rows = await db.select().from(equipment3).where(eq(equipment3.slug, slug)).limit(1);
   return rows[0];
 }
 
 export async function getEquipment3ById(id: number): Promise<Equipment3Item | undefined> {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) throw new Error("DB not available");
   const rows = await db.select().from(equipment3).where(eq(equipment3.id, id)).limit(1);
   return rows[0];
 }

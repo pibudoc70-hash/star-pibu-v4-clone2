@@ -82,8 +82,8 @@ export const equipment3Router = router({
       return getEquipment3BySlug(input.slug);
     }),
 
-  // ── 공개: 전체 목록 (비활성 포함) ──────────────────────────────────────────
-  all: publicProcedure.query(async () => {
+  // ── 관리자: 전체 목록 (비활성 포함) — 관리자 전용으로 변경
+  all: adminProcedure.query(async () => {
     return getEquipment3All();
   }),
 

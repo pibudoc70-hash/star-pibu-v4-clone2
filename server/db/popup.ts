@@ -35,7 +35,7 @@ function withParsedPriceItems(row: PopupRow) {
 /** 공개: 현재 활성 팝업 목록 (기간 필터 포함) */
 export async function getActivePopups() {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) throw new Error("DB not available");
   const now = Date.now();
   const rows = await db
     .select()
@@ -54,7 +54,7 @@ export async function getActivePopups() {
 /** 관리자: 전체 목록 (비활성 포함) */
 export async function getAllPopups() {
   const db = await getDb();
-  if (!db) return [];
+  if (!db) throw new Error("DB not available");
   const rows = await db
     .select()
     .from(popupEvents)

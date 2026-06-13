@@ -1,4 +1,4 @@
-import { eq, desc, asc, and } from "drizzle-orm";
+import { eq, desc, asc, and, like, or } from "drizzle-orm";
 import { InsertEvent, events } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
@@ -90,15 +90,15 @@ export async function getEventsByCategory(category: string) {
 export async function searchEvents(query: string) {
   const db = await getDb();
   if (!db) return [];
-  const rows = await db
+  const pattern = `%${query}%`;
+  return db
     .select()
     .from(events)
-    .where(eq(events.isActive, "1"))
+    .where(
+      and(
+        eq(events.isActive, "1"),
+        or(like(events.title, pattern), like(events.desc, pattern)),
+      ),
+    )
     .orderBy(asc(events.sortOrder), desc(events.createdAt));
-  const q = query.toLowerCase();
-  return rows.filter(
-    (e) =>
-      e.title.toLowerCase().includes(q) ||
-      e.desc.toLowerCase().includes(q),
-  );
 }

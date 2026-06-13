@@ -2607,3 +2607,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] `server/services/admin.service.test.ts` — `getAdminStats` 단위 테스트 4개 추가 (총 9개)
 - [x] TypeScript 검사 0건 확인
 - [x] 전체 테스트 56파일 1380개 통과 확인
+
+## UI 버그 수정 (2026-06-13)
+
+- [x] EventsSection.tsx — error 상태 미처리 수정 (isError 변수 추가, Error State UI 렌더링, Featured/List/Empty 조건에 !isError 추가)
+- [x] i18n.ko.ts — doctors.swipeHint "탭하여" → "스와이프하여" 수정 (모바일/데스크톱 CTA 불일치 해소)

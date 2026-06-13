@@ -323,5 +323,11 @@ export async function cancelGuestReservationWithOtp(
     DOMAIN_ERROR_CODES.OTP_INVALID,
     "인증번호가 올바르지 않거나 만료되었습니다.",
   );
-  await cancelGuestReservation(id, phone);
+  const affected = await cancelGuestReservation(id, phone);
+  if (affected === 0) {
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.RESERVATION_NOT_FOUND,
+      "해당 예약을 찾을 수 없거나 이미 취소된 예약입니다.",
+    );
+  }
 }

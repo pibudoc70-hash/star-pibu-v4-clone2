@@ -2518,3 +2518,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P2: server/services/admin.service.test.ts 신규 작성 — 5개 단위 테스트
 - [x] P2: server/services/treatments.service.test.ts 신규 작성 — normalizeTreatmentCreatePayload 8개 + uploadTreatmentImage 5개
 - [x] P2: server/services/reservation.otp.service.test.ts 신규 작성 — sendGuestReservationOtp 3개 + verifyGuestReservationOtp 4개
+
+## OTP 타이머 UI 추가 (2026-06-13)
+
+- [x] client/src/components/reservation/useOtpTimer.ts 신규 작성 — 3분 카운트다운 훅 (hasStarted 플래그로 초기/만료 상태 구분)
+- [x] constants.ts — ko/en/ja/zh 4개 언어에 otpTimerLabel, otpExpiredMsg, otpResend, otpResending 레이블 추가
+- [x] GuestReservationForm.tsx — Step 2(verify)에 타이머 카드(MM:SS + 프로그레스 바 + 색상 변화) 삽입, 만료 시 입력 비활성화 + 재발송 버튼 강조
+- [x] useOtpTimer.test.ts 신규 작성 — 9개 단위 테스트 (초기 상태, start, 경과, 만료, reset, 재시작)

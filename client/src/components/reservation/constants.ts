@@ -47,6 +47,10 @@ export const FORM_LABELS = {
     otpSentError: "OTP 발송 실패: ",
     otpVerifiedMsg: "인증되었습니다.",
     otpVerifyError: "인증 실패: ",
+    otpTimerLabel: "유효 시간",
+    otpExpiredMsg: "인증번호가 만료되었습니다. 다시 발송해주세요.",
+    otpResend: "재발송",
+    otpResending: "재발송 중...",
   },
   en: {
     patientName: "Patient Name *",
@@ -89,6 +93,10 @@ export const FORM_LABELS = {
     otpSentError: "Failed to send OTP: ",
     otpVerifiedMsg: "Verified successfully.",
     otpVerifyError: "Verification failed: ",
+    otpTimerLabel: "Time remaining",
+    otpExpiredMsg: "The verification code has expired. Please request a new one.",
+    otpResend: "Resend",
+    otpResending: "Sending...",
   },
   ja: {
     patientName: "お名前 *",
@@ -131,6 +139,10 @@ export const FORM_LABELS = {
     otpSentError: "OTP送信失敗: ",
     otpVerifiedMsg: "認証されました。",
     otpVerifyError: "認証失敗: ",
+    otpTimerLabel: "有効時間",
+    otpExpiredMsg: "認証コードの有効期限が切れました。再送信してください。",
+    otpResend: "再送信",
+    otpResending: "送信中...",
   },
   zh: {
     patientName: "患者姓名 *",
@@ -173,6 +185,10 @@ export const FORM_LABELS = {
     otpSentError: "OTP发送失败: ",
     otpVerifiedMsg: "验证成功。",
     otpVerifyError: "验证失败: ",
+    otpTimerLabel: "有效时间",
+    otpExpiredMsg: "验证码已过期，请重新发送。",
+    otpResend: "重新发送",
+    otpResending: "发送中...",
   },
 } as const;
 

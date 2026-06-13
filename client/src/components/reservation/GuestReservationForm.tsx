@@ -1,13 +1,15 @@
 /**
  * 비회원 예약 폼 (OTP 3단계: info → verify → confirm)
+ * - Step 2(verify)에 남은 유효 시간 타이머 UI 추가
  */
 import { useState } from "react";
-import { AlertCircle, Phone, Send } from "lucide-react";
+import { AlertCircle, Clock, Phone, RefreshCw, Send } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useLang } from "@/contexts/LangContext";
 import { FORM_LABELS, CATEGORIES, TREATMENTS_BY_CATEGORY } from "./constants";
 import { formatPhoneNumber, useReservationHelpers } from "./useReservationHelpers";
+import { useOtpTimer } from "./useOtpTimer";
 
 interface Props {
   onSuccess?: () => void;
@@ -34,17 +36,26 @@ export function GuestReservationForm({ onSuccess }: Props) {
   const lbl = FORM_LABELS[lang as keyof typeof FORM_LABELS] ?? FORM_LABELS.ko;
   const isKo = lang === "ko";
   const { isAvailableDate, getAvailableTimes, tomorrowStr } = useReservationHelpers();
+  const timer = useOtpTimer();
 
   const [step, setStep] = useState<"info" | "verify" | "confirm">("info");
   const [form, setForm] = useState(EMPTY_GUEST_FORM);
 
   const sendOtpMutation = trpc.reservation.sendOtp.useMutation({
-    onSuccess: () => { toast.success(lbl.otpSentMsg); setStep("verify"); },
+    onSuccess: () => {
+      toast.success(lbl.otpSentMsg);
+      timer.start();
+      setStep("verify");
+    },
     onError: (err) => toast.error(lbl.otpSentError + err.message),
   });
 
   const verifyOtpMutation = trpc.reservation.verifyOtp.useMutation({
-    onSuccess: () => { toast.success(lbl.otpVerifiedMsg); setStep("confirm"); },
+    onSuccess: () => {
+      toast.success(lbl.otpVerifiedMsg);
+      timer.reset();
+      setStep("confirm");
+    },
     onError: (err) => toast.error(lbl.otpVerifyError + err.message),
   });
 
@@ -52,6 +63,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
     onSuccess: () => {
       toast.success(lbl.successMsg);
       setForm(EMPTY_GUEST_FORM);
+      timer.reset();
       setStep("info");
       onSuccess?.();
     },
@@ -65,9 +77,16 @@ export function GuestReservationForm({ onSuccess }: Props) {
     await sendOtpMutation.mutateAsync({ phone: form.phone });
   };
 
+  const handleResendOtp = async () => {
+    if (!form.phone) return;
+    setForm({ ...form, otpCode: "" });
+    await sendOtpMutation.mutateAsync({ phone: form.phone });
+  };
+
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.otpCode) { toast.error(lbl.otpLabel); return; }
+    if (timer.isExpired) { toast.error(lbl.otpExpiredMsg); return; }
     await verifyOtpMutation.mutateAsync({ phone: form.phone, code: form.otpCode });
   };
 
@@ -90,6 +109,12 @@ export function GuestReservationForm({ onSuccess }: Props) {
   };
 
   const phoneInvalid = !!form.phone && !KO_PHONE_RE.test(form.phone);
+
+  // 타이머 색상: 60초 이하 → 빨간색, 60~120초 → 주황색, 120초 이상 → 파란색
+  const timerColor =
+    timer.remaining <= 60 ? "#EF4444" :
+    timer.remaining <= 120 ? "#F97316" :
+    "#0284C7";
 
   return (
     <div className="space-y-6">
@@ -127,26 +152,98 @@ export function GuestReservationForm({ onSuccess }: Props) {
 
       {/* Step 2: OTP 검증 */}
       {step === "verify" && (
-        <form onSubmit={handleVerifyOtp} className="space-y-6">
-          <div className="bg-[#DBEAFE] border border-[#93C5FD] rounded-lg p-4 flex gap-3">
-            <AlertCircle size={20} className="text-[#0284C7] flex-shrink-0" />
-            <p className="text-sm text-[#0C4A6E]">{lbl.otpVerifyMsg}</p>
+        <form onSubmit={handleVerifyOtp} className="space-y-5">
+          {/* 안내 배너 */}
+          {!timer.isExpired ? (
+            <div className="bg-[#DBEAFE] border border-[#93C5FD] rounded-lg p-4 flex gap-3">
+              <AlertCircle size={20} className="text-[#0284C7] flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-[#0C4A6E]">{lbl.otpVerifyMsg}</p>
+            </div>
+          ) : (
+            <div className="bg-[#FEF2F2] border border-[#FCA5A5] rounded-lg p-4 flex gap-3">
+              <AlertCircle size={20} className="text-[#DC2626] flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-[#7F1D1D]">{lbl.otpExpiredMsg}</p>
+            </div>
+          )}
+
+          {/* 타이머 영역 */}
+          <div className="rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="flex items-center gap-1.5 text-sm font-medium text-[#374151]">
+                <Clock size={15} style={{ color: timerColor }} />
+                {lbl.otpTimerLabel}
+              </span>
+              <span
+                className="text-xl font-mono font-bold tabular-nums"
+                style={{ color: timerColor }}
+              >
+                {timer.isExpired ? "00:00" : timer.formatted}
+              </span>
+            </div>
+
+            {/* 프로그레스 바 */}
+            <div className="h-2 w-full rounded-full bg-[#E5E7EB] overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-1000 ease-linear"
+                style={{
+                  width: `${timer.isExpired ? 0 : timer.progress}%`,
+                  background: timerColor,
+                }}
+              />
+            </div>
           </div>
+
+          {/* OTP 입력 */}
           <div>
             <label htmlFor="guest-otp-code" className={labelCls}>{lbl.otpLabel}</label>
-            <input id="guest-otp-code" type="text" value={form.otpCode}
+            <input
+              id="guest-otp-code"
+              type="text"
+              value={form.otpCode}
               onChange={(e) => setForm({ ...form, otpCode: e.target.value })}
-              placeholder={lbl.otpPlaceholder} maxLength={6}
-              className={`${inputCls} text-center text-2xl tracking-widest`} />
+              placeholder={lbl.otpPlaceholder}
+              maxLength={6}
+              disabled={timer.isExpired}
+              className={`${inputCls} text-center text-2xl tracking-widest ${
+                timer.isExpired ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+            />
           </div>
-          <button type="submit" disabled={verifyOtpMutation.isPending}
+
+          {/* 인증 버튼 */}
+          <button
+            type="submit"
+            disabled={verifyOtpMutation.isPending || timer.isExpired}
             className="w-full py-3 rounded-lg font-semibold text-white transition-colors"
-            style={{ background: verifyOtpMutation.isPending ? "#D1D5DB" : "#4A6FA5" }}>
+            style={{
+              background: verifyOtpMutation.isPending || timer.isExpired ? "#D1D5DB" : "#4A6FA5",
+            }}
+          >
             {verifyOtpMutation.isPending ? lbl.otpVerifying : lbl.otpVerify}
           </button>
-          <button type="button"
-            onClick={() => { setStep("info"); setForm({ ...form, otpCode: "" }); }}
-            className="w-full py-2 rounded-lg font-semibold text-[#4A6FA5] border border-[#4A6FA5] transition-colors hover:bg-[#F3F4F6]">
+
+          {/* 재발송 버튼 (만료 시 강조, 미만료 시 서브) */}
+          <button
+            type="button"
+            onClick={handleResendOtp}
+            disabled={sendOtpMutation.isPending}
+            className={`w-full py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+              timer.isExpired
+                ? "text-white"
+                : "text-[#4A6FA5] border border-[#4A6FA5] hover:bg-[#F3F4F6]"
+            }`}
+            style={timer.isExpired ? { background: "#4A6FA5" } : {}}
+          >
+            <RefreshCw size={15} className={sendOtpMutation.isPending ? "animate-spin" : ""} />
+            {sendOtpMutation.isPending ? lbl.otpResending : lbl.otpResend}
+          </button>
+
+          {/* 번호 다시 입력 */}
+          <button
+            type="button"
+            onClick={() => { timer.reset(); setStep("info"); setForm({ ...form, otpCode: "" }); }}
+            className="w-full py-2 rounded-lg font-semibold text-[#6B7280] border border-[#D1D5DB] transition-colors hover:bg-[#F3F4F6] text-sm"
+          >
             {lbl.reenter}
           </button>
         </form>
@@ -249,6 +346,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
 
           <button type="button"
             onClick={() => {
+              timer.reset();
               setStep("info");
               setForm({ ...EMPTY_GUEST_FORM, phone: form.phone });
             }}

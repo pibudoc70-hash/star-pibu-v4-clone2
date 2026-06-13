@@ -3,6 +3,7 @@
  *
  * 책임:
  *  - 예약 상태 변경 유스케이스 (조회 → 상태변경 → 후처리 오케스트레이션)
+ *  - YouTube 영상 생성 payload 정규화 (normalizeYouTubeCreatePayload)
  *
  * 의존 방향: service → db/*, _core/*
  * 라우터는 입력 파싱·권한 검사·TRPCError 변환만 담당하고 이 service를 호출한다.
@@ -49,4 +50,37 @@ export async function updateAdminReservationStatus(
       logger.error("Email", "상태 변경 이메일 발송 중 오류", emailErr);
     }
   }
+}
+
+// ─── YouTube 영상 생성 payload 정규화 ─────────────────────────────────────────
+export interface YouTubeCreateInput {
+  title: string;
+  videoId: string;
+  type: "video" | "shorts";
+  sortOrder?: number;
+}
+
+export interface YouTubeCreatePayload {
+  title: string;
+  videoId: string;
+  type: "video" | "shorts";
+  sortOrder: number;
+  isActive: "1";
+}
+
+/**
+ * YouTube 영상 생성 payload 정규화.
+ *
+ * 기본값 정책:
+ *  - sortOrder: 미지정 시 0
+ *  - isActive: 항상 "1" (생성 시 즉시 활성화)
+ */
+export function normalizeYouTubeCreatePayload(input: YouTubeCreateInput): YouTubeCreatePayload {
+  return {
+    title: input.title,
+    videoId: input.videoId,
+    type: input.type,
+    sortOrder: input.sortOrder ?? 0,
+    isActive: "1",
+  };
 }

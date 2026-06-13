@@ -4,7 +4,6 @@
  * 책임: 입력 파싱, 권한 검사, HTTP 에러 변환
  * 비즈니스 로직은 server/services/reservation.service.ts 에 위임한다.
  */
-import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
 import {
@@ -18,6 +17,7 @@ import {
   sendGuestReservationOtp,
   verifyGuestReservationOtp,
 } from "../services/reservation.service";
+import { mapDomainErrorToTRPC } from "../shared/errors";
 
 export const reservationRouter = router({
   // 공개: 예약 불가 날짜 목록
@@ -70,13 +70,7 @@ export const reservationRouter = router({
       try {
         return await sendGuestReservationOtp(input.phone);
       } catch (err) {
-        if (err instanceof Error && err.message === "OTP_COOLDOWN") {
-          throw new TRPCError({
-            code: "TOO_MANY_REQUESTS",
-            message: "인증번호는 60초 후에 다시 요청할 수 있습니다.",
-          });
-        }
-        throw err;
+        throw mapDomainErrorToTRPC(err);
       }
     }),
 
@@ -90,19 +84,7 @@ export const reservationRouter = router({
       try {
         return await verifyGuestReservationOtp(input.phone, input.code);
       } catch (err) {
-        if (err instanceof Error) {
-          if (err.message === "OTP_INVALID") {
-            throw new TRPCError({ code: "BAD_REQUEST", message: "인증번호가 올바르지 않거나 만료되었습니다." });
-          }
-          if (err.message.startsWith("OTP_LOCKED:")) {
-            const remainMin = err.message.split(":")[1];
-            throw new TRPCError({
-              code: "TOO_MANY_REQUESTS",
-              message: `인증 시도 횟수를 초과했습니다. ${remainMin}분 후 다시 시도해주세요.`,
-            });
-          }
-        }
-        throw err;
+        throw mapDomainErrorToTRPC(err);
       }
     }),
 

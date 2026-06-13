@@ -1,7 +1,9 @@
 /**
  * reservation.otp.service.test.ts — OTP 발송/검증 유스케이스 단위 테스트
+ * DomainError 기반 에러 규약 검증 포함
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
 
 vi.mock("../db", () => ({
   isOtpCooldown: vi.fn(),
@@ -73,9 +75,11 @@ describe("sendGuestReservationOtp", () => {
     expect(result).toEqual({ success: true, smsSent: true });
   });
 
-  it("cooldown 중이면 Error('OTP_COOLDOWN')를 던진다", async () => {
+  it("cooldown 중이면 DomainError(OTP_COOLDOWN)를 던진다", async () => {
     mockIsOtpCooldown.mockResolvedValue(true as never);
-    await expect(sendGuestReservationOtp("01012345678")).rejects.toThrow("OTP_COOLDOWN");
+    const err = await sendGuestReservationOtp("01012345678").catch((e) => e);
+    expect(err).toBeInstanceOf(DomainError);
+    expect((err as DomainError).code).toBe(DOMAIN_ERROR_CODES.OTP_COOLDOWN);
     expect(mockSendSMS).not.toHaveBeenCalled();
   });
 
@@ -98,27 +102,25 @@ describe("verifyGuestReservationOtp", () => {
     expect(result).toEqual({ verified: true });
   });
 
-  it("OTP 불일치 시 Error('OTP_INVALID')를 던진다", async () => {
+  it("OTP 불일치 시 DomainError(OTP_INVALID)를 던진다", async () => {
     mockVerifyGuestOtp.mockResolvedValue(false as never);
-    await expect(verifyGuestReservationOtp("01012345678", "000000")).rejects.toThrow("OTP_INVALID");
+    const err = await verifyGuestReservationOtp("01012345678", "000000").catch((e) => e);
+    expect(err).toBeInstanceOf(DomainError);
+    expect((err as DomainError).code).toBe(DOMAIN_ERROR_CODES.OTP_INVALID);
   });
 
-  it("OTP 잠금 시 Error('OTP_LOCKED:<remainMin>')를 던진다", async () => {
+  it("OTP 잠금 시 DomainError(OTP_LOCKED)를 던진다", async () => {
     const futureTs = Date.now() + 5 * 60 * 1000;
     mockVerifyGuestOtp.mockRejectedValue(new Error(`OTP_LOCKED:${futureTs}`) as never);
-    await expect(verifyGuestReservationOtp("01012345678", "111111")).rejects.toThrow(/^OTP_LOCKED:\d+$/);
+    const err = await verifyGuestReservationOtp("01012345678", "111111").catch((e) => e);
+    expect(err).toBeInstanceOf(DomainError);
+    expect((err as DomainError).code).toBe(DOMAIN_ERROR_CODES.OTP_LOCKED);
   });
 
-  it("잠금 에러의 remainMin이 양수 정수다", async () => {
+  it("잠금 에러의 remainMin이 양수이고 meta에 포함된다", async () => {
     const futureTs = Date.now() + 3 * 60 * 1000;
     mockVerifyGuestOtp.mockRejectedValue(new Error(`OTP_LOCKED:${futureTs}`) as never);
-    let thrownMessage = "";
-    try {
-      await verifyGuestReservationOtp("01012345678", "111111");
-    } catch (err) {
-      if (err instanceof Error) thrownMessage = err.message;
-    }
-    const remainMin = parseInt(thrownMessage.split(":")[1], 10);
-    expect(remainMin).toBeGreaterThan(0);
+    const err = await verifyGuestReservationOtp("01012345678", "111111").catch((e) => e);
+    expect((err as DomainError).meta?.remainMin).toBeGreaterThan(0);
   });
 });

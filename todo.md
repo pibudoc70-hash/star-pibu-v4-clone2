@@ -2525,3 +2525,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] constants.ts — ko/en/ja/zh 4개 언어에 otpTimerLabel, otpExpiredMsg, otpResend, otpResending 레이블 추가
 - [x] GuestReservationForm.tsx — Step 2(verify)에 타이머 카드(MM:SS + 프로그레스 바 + 색상 변화) 삽입, 만료 시 입력 비활성화 + 재발송 버튼 강조
 - [x] useOtpTimer.test.ts 신규 작성 — 9개 단위 테스트 (초기 상태, start, 경과, 만료, reset, 재시작)
+
+## 마감 라운드 3차 — 에러 규약 표준화 + 잔여 유스케이스 추출 (2026-06-13)
+
+- [x] P0: server/shared/errors.ts 신규 생성 — DomainError 클래스 + DOMAIN_ERROR_CODES + mapDomainErrorToTRPC 헬퍼
+- [x] P0: reservation.service.ts — OTP_COOLDOWN/OTP_INVALID/OTP_LOCKED 문자열 에러를 DomainError로 교체
+- [x] P0: reservation.service.ts — validatePhone/validateReservationDate도 DomainError 사용
+- [x] P0: reservation.ts router — catch 블록을 mapDomainErrorToTRPC로 단순화
+- [x] P0: admin.service.ts — normalizeYouTubeCreatePayload 헬퍼 추가
+- [x] P0: admin.ts router — youtube.create에서 normalizeYouTubeCreatePayload 사용
+- [x] P0: treatments.ts — create/update 중복 payload 스키마를 treatmentPayloadShape로 추출 (60줄 중복 제거)
+- [x] P1: App.tsx 분리 STOP 판단 — 137줄, 보조 함수 3개 모두 단순, 분리 실익 없음
+- [x] P2: server/shared/errors.test.ts 신규 작성 — DomainError 11개 + mapDomainErrorToTRPC 12개 + normalizeYouTubeCreatePayload 3개
+- [x] P2: reservation.service.test.ts — DomainError 타입 검증 테스트 4개 추가
+- [x] P2: reservation.otp.service.test.ts — DomainError 기반으로 전체 업데이트

@@ -22,6 +22,7 @@ import {
   createGuestOtp,
   isOtpCooldown,
 } from "../db";
+import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
 import { notifyOwner } from "../_core/notification";
 import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "../email";
 import { sendSMS, getOTPMessage } from "../sms";
@@ -46,16 +47,25 @@ export function validateReservationDate(preferredDate: number): void {
     preferredDateObj.getDate(),
   );
   if (dateOnly < koTomorrow) {
-    throw new Error("당일 예약은 불가합니다. 내일 이후 날짜를 선택해주세요.");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.RESERVATION_DATE_INVALID,
+      "당일 예약은 불가합니다. 내일 이후 날짜를 선택해주세요.",
+    );
   }
   if (preferredDateObj.getDay() === 0) {
-    throw new Error("일요일은 예약이 불가합니다.");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.RESERVATION_DATE_INVALID,
+      "일요일은 예약이 불가합니다.",
+    );
   }
 }
 
 export function validatePhone(phone: string): void {
   if (!PHONE_REGEX.test(phone)) {
-    throw new Error("올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 또는 01012345678 형식)");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.VALIDATION,
+      "올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 또는 01012345678 형식)",
+    );
   }
 }
 
@@ -64,7 +74,10 @@ export async function validateDateNotUnavailable(preferredDate: number): Promise
   const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const unavailableSlots = await getUnavailableSlots(undefined);
   if (unavailableSlots.some((s: { date: string }) => s.date === dateStr)) {
-    throw new Error("해당 날짜는 예약이 불가합니다. 다른 날짜를 선택해주세요.");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.RESERVATION_DATE_UNAVAILABLE,
+      "해당 날짜는 예약이 불가합니다. 다른 날짜를 선택해주세요.",
+    );
   }
 }
 
@@ -86,7 +99,10 @@ export async function sendGuestReservationOtp(
 ): Promise<SendGuestReservationOtpResult> {
   const onCooldown = await isOtpCooldown(phone);
   if (onCooldown) {
-    throw new Error("OTP_COOLDOWN");
+    throw new DomainError(
+      DOMAIN_ERROR_CODES.OTP_COOLDOWN,
+      "인증번호는 60초 후에 다시 요청할 수 있습니다.",
+    );
   }
 
   const code = generateOtpCode();
@@ -119,15 +135,25 @@ export async function verifyGuestReservationOtp(
 ): Promise<VerifyGuestReservationOtpResult> {
   try {
     const ok = await verifyGuestOtp(phone, code);
-    if (!ok) throw new Error("OTP_INVALID");
+    if (!ok) {
+      throw new DomainError(
+        DOMAIN_ERROR_CODES.OTP_INVALID,
+        "인증번호가 올바르지 않거나 만료되었습니다.",
+      );
+    }
     return { verified: true };
   } catch (err) {
+    // repository가 던지는 문자열 기반 OTP_LOCKED 에러를 DomainError로 변환
     if (err instanceof Error && err.message.startsWith("OTP_LOCKED:")) {
       const lockedUntil = parseInt(err.message.split(":")[1], 10);
       const remainMin = Math.ceil((lockedUntil - Date.now()) / 60000);
-      throw new Error(`OTP_LOCKED:${remainMin}`);
+      throw new DomainError(
+        DOMAIN_ERROR_CODES.OTP_LOCKED,
+        `인증 시도 횟수를 초과했습니다. ${remainMin}분 후 다시 시도해주세요.`,
+        { remainMin },
+      );
     }
-    // OTP_INVALID 또는 기타 에러는 그대로 전파
+    // DomainError는 그대로 전파
     throw err;
   }
 }

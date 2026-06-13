@@ -10,7 +10,7 @@ import {
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole, getUserStats,
 } from "../db";
-import { updateAdminReservationStatus } from "../services/admin.service";
+import { updateAdminReservationStatus, normalizeYouTubeCreatePayload } from "../services/admin.service";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -111,13 +111,7 @@ export const adminRouter = router({
         type: z.enum(["video", "shorts"]),
         sortOrder: z.number().optional(),
       }))
-      .mutation(async ({ input }) => createYouTubeVideo({
-        title: input.title,
-        videoId: input.videoId,
-        type: input.type,
-        sortOrder: input.sortOrder || 0,
-        isActive: "1",
-      })),
+      .mutation(async ({ input }) => createYouTubeVideo(normalizeYouTubeCreatePayload(input))),
 
     update: adminProcedure
       .input(z.object({

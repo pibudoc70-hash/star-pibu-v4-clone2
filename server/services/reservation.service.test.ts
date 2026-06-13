@@ -10,6 +10,7 @@
  * 통합 테스트 영역이므로 여기서는 순수 검증 로직만 단위 테스트한다.
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
+import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
 import {
   validatePhone,
   validateReservationDate,
@@ -39,6 +40,13 @@ describe("validatePhone", () => {
 
   it("자릿수 부족(010-123-456)은 거부한다", () => {
     expect(() => validatePhone("010-123-456")).toThrow("올바른 휴대폰 번호 형식");
+  });
+
+  it("유효하지 않은 번호는 DomainError(VALIDATION)를 던진다", () => {
+    let caught: unknown;
+    try { validatePhone("abc"); } catch (e) { caught = e; }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.VALIDATION);
   });
 });
 
@@ -87,6 +95,25 @@ describe("validateReservationDate", () => {
     // 2026-06-20 KST 12:00 사용: UTC에서 getDay()=6 (토요일)
     const saturday = new Date("2026-06-20T12:00:00+09:00").getTime();
     expect(() => validateReservationDate(saturday)).not.toThrow();
+    vi.useRealTimers();
+  });
+
+  it("일요일 날짜는 DomainError(RESERVATION_DATE_INVALID)를 던진다", () => {
+    const sunday = new Date("2026-06-21T12:00:00+09:00").getTime();
+    let caught: unknown;
+    try { validateReservationDate(sunday); } catch (e) { caught = e; }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.RESERVATION_DATE_INVALID);
+  });
+
+  it("당일 날짜는 DomainError(RESERVATION_DATE_INVALID)를 던진다", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-06-15T10:00:00+09:00"));
+    const today = new Date("2026-06-15T00:00:00+09:00").getTime();
+    let caught: unknown;
+    try { validateReservationDate(today); } catch (e) { caught = e; }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.RESERVATION_DATE_INVALID);
     vi.useRealTimers();
   });
 });

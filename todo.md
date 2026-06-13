@@ -2539,3 +2539,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P2: server/shared/errors.test.ts 신규 작성 — DomainError 11개 + mapDomainErrorToTRPC 12개 + normalizeYouTubeCreatePayload 3개
 - [x] P2: reservation.service.test.ts — DomainError 타입 검증 테스트 4개 추가
 - [x] P2: reservation.otp.service.test.ts — DomainError 기반으로 전체 업데이트
+
+## 예약 화면 에러 메시지 UI 개선 (2026-06-13)
+
+- [x] client/src/components/reservation/errorMessages.ts 신규 생성 — parseTRPCError / parseOtpSendError / parseOtpVerifyError / parseReservationError 유틸리티 + 4개 언어 DomainError 코드별 친절 메시지
+- [x] GuestReservationForm.tsx — onError 핸들러를 parseOtpSendError / parseOtpVerifyError / parseReservationError로 교체
+- [x] MemberReservationForm.tsx — onError 핸들러를 parseReservationError로 교체
+- [x] client/src/components/reservation/errorMessages.test.ts 신규 작성 — 22개 단위 테스트 (parseTRPCError 13개 + parseOtpSendError 3개 + parseOtpVerifyError 3개 + parseReservationError 3개)

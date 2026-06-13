@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useLang } from "@/contexts/LangContext";
 import { FORM_LABELS, CATEGORIES, TREATMENTS_BY_CATEGORY } from "./constants";
 import { formatPhoneNumber, useReservationHelpers } from "./useReservationHelpers";
+import { parseReservationError, type Lang } from "./errorMessages";
 
 interface Props {
   onSuccess?: () => void;
@@ -34,13 +35,15 @@ export function MemberReservationForm({ onSuccess }: Props) {
     notes: "",
   });
 
+  const currentLang = (lang as Lang) ?? "ko";
+
   const createReservationMutation = trpc.reservation.create.useMutation({
     onSuccess: () => {
       toast.success(lbl.successMsg);
       setForm({ patientName: user?.name ?? "", phone: "", treatmentCategory: "", treatmentName: "", preferredDate: "", preferredTime: "10:00", notes: "" });
       onSuccess?.();
     },
-    onError: (err) => toast.error(lbl.errorMsg + err.message),
+    onError: (err) => toast.error(parseReservationError(err, currentLang)),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

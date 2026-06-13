@@ -10,6 +10,7 @@ import { useLang } from "@/contexts/LangContext";
 import { FORM_LABELS, CATEGORIES, TREATMENTS_BY_CATEGORY } from "./constants";
 import { formatPhoneNumber, useReservationHelpers } from "./useReservationHelpers";
 import { useOtpTimer } from "./useOtpTimer";
+import { parseOtpSendError, parseOtpVerifyError, parseReservationError, type Lang } from "./errorMessages";
 
 interface Props {
   onSuccess?: () => void;
@@ -41,13 +42,15 @@ export function GuestReservationForm({ onSuccess }: Props) {
   const [step, setStep] = useState<"info" | "verify" | "confirm">("info");
   const [form, setForm] = useState(EMPTY_GUEST_FORM);
 
+  const currentLang = (lang as Lang) ?? "ko";
+
   const sendOtpMutation = trpc.reservation.sendOtp.useMutation({
     onSuccess: () => {
       toast.success(lbl.otpSentMsg);
       timer.start();
       setStep("verify");
     },
-    onError: (err) => toast.error(lbl.otpSentError + err.message),
+    onError: (err) => toast.error(parseOtpSendError(err, currentLang)),
   });
 
   const verifyOtpMutation = trpc.reservation.verifyOtp.useMutation({
@@ -56,7 +59,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
       timer.reset();
       setStep("confirm");
     },
-    onError: (err) => toast.error(lbl.otpVerifyError + err.message),
+    onError: (err) => toast.error(parseOtpVerifyError(err, currentLang)),
   });
 
   const createGuestMutation = trpc.reservation.createGuest.useMutation({
@@ -67,7 +70,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
       setStep("info");
       onSuccess?.();
     },
-    onError: (err) => toast.error(lbl.errorMsg + err.message),
+    onError: (err) => toast.error(parseReservationError(err, currentLang)),
   });
 
   const handleSendOtp = async (e: React.FormEvent) => {

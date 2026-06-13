@@ -90,7 +90,7 @@ export default function Footer() {
 
 
   return (
-    <footer style={{ background: "#0F1A30" }}>
+    <footer style={{ background: "#1A1410" }}>
 
       {/* ── Brand bar — 로고 + 슬로건 + SNS 아이콘 한 줄 정렬 ── */}
       <div
@@ -108,10 +108,11 @@ export default function Footer() {
           <div>
             <h3
               style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
                 fontSize: "18px",
                 fontWeight: "700",
-                letterSpacing: "0.12em",
-                color: "#C9A84C",
+                letterSpacing: "0.08em",
+                color: "var(--brand-gold, #C4A882)",
                 marginBottom: "4px",
               }}
             >

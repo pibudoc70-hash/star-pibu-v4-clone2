@@ -98,18 +98,8 @@ export default function ReviewsSection() {
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p
-            className="font-montserrat font-semibold text-sm tracking-widest mb-3"
-            style={{ color: "#81C7C9" }}
-          >
-            {rv.eyebrow}
-          </p>
-          <h2
-            className="mb-4"
-            style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
-          >
-            {rv.sectionTitle}
-          </h2>
+          <span className="section-eyebrow">{rv.eyebrow}</span>
+          <h2 className="section-title mb-4">{rv.sectionTitle}</h2>
           <div className="star-divider mx-auto mb-4" />
           <div className="flex justify-center items-center gap-2">
             <div className="flex gap-0.5">
@@ -145,7 +135,7 @@ export default function ReviewsSection() {
                 {reviews.map((r, idx) => (
                   <div key={idx} className="w-full flex-shrink-0 px-1">
                     <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
-                      <Quote size={28} style={{ color: "#EEF7F7", marginBottom: "0.5rem" }} />
+                      <Quote size={28} style={{ color: 'var(--brand-gold-pale, #EDE8E0)', marginBottom: "0.5rem" }} />
                       <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
                         "{r.text}"
                       </p>
@@ -259,7 +249,7 @@ export default function ReviewsSection() {
               <button type="button"
                 onClick={goPrev}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
-                style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--brand-gold, #C4A882)', border: '1px solid var(--brand-gold-pale, #E8E0D5)' }}
               >
                 <ChevronLeft size={18} />
               </button>
@@ -277,7 +267,7 @@ export default function ReviewsSection() {
               <button type="button"
                 onClick={goNext}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
-                style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--brand-gold, #C4A882)', border: '1px solid var(--brand-gold-pale, #E8E0D5)' }}
               >
                 <ChevronRight size={18} />
               </button>

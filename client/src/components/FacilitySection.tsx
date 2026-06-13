@@ -118,21 +118,11 @@ export default function FacilitySection() {
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 reveal-heading">
-          <p
-            className="font-montserrat font-semibold text-sm tracking-widest mb-3"
-            style={{ color: "#C9A961" }}
-          >
-            {fc.sectionTitle}
-          </p>
-          <h2
-            className="mb-4"
-            style={{ color: "#1F2937", fontSize: "clamp(1.8rem, 5vw, 2.8rem)", fontWeight: 800 }}
-          >
-            {fc.sectionSubtitle}
-          </h2>
+          <span className="section-eyebrow">{fc.sectionTitle}</span>
+          <h2 className="section-title mb-4">{fc.sectionSubtitle}</h2>
           <div className="star-divider mx-auto mb-6" />
           {fc.highlights[0] && (
-            <p className="text-sm" style={{ color: "#6B7280" }}>
+            <p className="section-subtitle">
               {fc.highlights.map((h) => h.label).join(" · ")}
             </p>
           )}

@@ -101,16 +101,12 @@ export default function ContactSection() {
   const sectionTitle = t.access.sectionTitle ?? "";
 
   return (
-    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 star-section-alt">
+    <section ref={sectionRef} id="contact" className="py-16 sm:py-24" style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}>
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p className="font-montserrat font-semibold text-sm tracking-widest mb-3 text-[var(--color-star-mint)]">
-            {locationInfo}
-          </p>
-          <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
-            {sectionTitle}
-          </h2>
+          <span className="section-eyebrow text-[var(--color-star-mint)]">{locationInfo}</span>
+          <h2 className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)] mb-4">{sectionTitle}</h2>
           <div className="star-divider mx-auto" />
         </div>
 

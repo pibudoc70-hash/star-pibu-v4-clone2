@@ -101,19 +101,10 @@ export default function EventsSection() {
       <div className="container">
         {/* ── Section Header ── */}
         <div className="text-center mb-8 sm:mb-12">
-          <p className="text-sm font-semibold tracking-widest mb-3" style={{ color: "#81C7C9" }}>
-            {ev_t.eyebrow}
-          </p>
-          <h2
-            className="mb-4"
-            style={{ color: "#1F2937", fontSize: "clamp(1.4rem, 5vw, 2.6rem)", fontWeight: 800 }}
-          >
-            {ev_t.sectionTitle}
-          </h2>
+          <span className="section-eyebrow">{ev_t.eyebrow}</span>
+          <h2 className="section-title mb-4">{ev_t.sectionTitle}</h2>
           <div className="star-divider mx-auto mb-4" />
-          <p className="text-sm" style={{ color: "#6B7280" }}>
-            {ev_t.sectionSubtitle}
-          </p>
+          <p className="section-subtitle">{ev_t.sectionSubtitle}</p>
         </div>
 
         {/* ── Filter Tabs ── */}
@@ -134,11 +125,21 @@ export default function EventsSection() {
           ))}
         </div>
 
-        {/* ── Loading State ── */}
+        {/* ── Loading State — Skeleton UI ── */}
         {isLoading && (
-          <div className="flex justify-center items-center py-12">
-            <Loader2 className="animate-spin mr-2" size={24} />
-            <span className="text-gray-600">{ev_t.loading}</span>
+          <div className="grid gap-6 mb-8" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }}>
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: "#F5F0EB", minHeight: 220 }}>
+                <div className="animate-pulse">
+                  <div style={{ height: 140, background: "linear-gradient(90deg, #EDE8E0 25%, #F0EAE0 50%, #EDE8E0 75%)", backgroundSize: "200% 100%" }} />
+                  <div className="p-5 space-y-3">
+                    <div style={{ height: 14, width: "60%", background: "#E8E0D5", borderRadius: 4 }} />
+                    <div style={{ height: 10, width: "80%", background: "#EDE8E0", borderRadius: 4 }} />
+                    <div style={{ height: 10, width: "45%", background: "#EDE8E0", borderRadius: 4 }} />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 

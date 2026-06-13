@@ -29,31 +29,26 @@ export default function PhilosophySection() {
   const rightRef = useScrollReveal<HTMLDivElement>();
 
   return (
-    <section id="about" className="py-16 sm:py-24 bg-white overflow-hidden">
+    <section id="about" className="py-16 sm:py-24 overflow-hidden" style={{ background: 'var(--brand-bg, #FAF8F5)' }}>
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           {/* Left: Text */}
           <div ref={leftRef} className="reveal-left">
-            <p
-              className="font-montserrat text-sm tracking-widest mb-3"
-              style={{ color: '#d2ac67', fontWeight: 100 }}
-            >
-              {t.about.label}
-            </p>
+            <span className="section-eyebrow">{t.about.label}</span>
             <h2
               className="mb-2 leading-tight"
-              style={{ color: "#1F2937", fontSize: "clamp(1.5rem, 5vw, 2.8rem)", fontWeight: 800 }}
+              style={{ color: "var(--brand-text, #2C2C2C)", fontSize: "clamp(1.5rem, 5vw, 2.8rem)", fontWeight: 800 }}
             >
               {t.about.title}
             </h2>
             <p
-              className="mb-6 font-montserrat"
-              style={{ color: "#d2ac67", fontSize: "clamp(1rem, 3vw, 1.6rem)", letterSpacing: "0.05em", fontWeight: 500 }}
+              className="mb-6 font-serif"
+              style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)", letterSpacing: "0.12em", fontWeight: 400 }}
             >
               STAR DERMATOLOGY
             </p>
-            <p className="leading-relaxed mb-8" style={{ color: "#6B7280", fontSize: '15px', fontWeight: '400' }}>
+            <p className="leading-relaxed mb-8" style={{ color: "var(--brand-text-mid, #666666)", fontSize: '15px', fontWeight: '400' }}>
               {t.about.desc}
             </p>
 
@@ -78,15 +73,15 @@ export default function PhilosophySection() {
                       <Icon size={24} style={{ color: '#d1ab67', opacity: 0.85 }} strokeWidth={1.5} />
                     </div>
                     <div
-                      className="font-montserrat font-extrabold text-lg sm:text-2xl mb-1"
-                      style={{ color: '#d1ab67' }}
+                      className="font-serif font-bold text-lg sm:text-2xl mb-1"
+                      style={{ color: 'var(--brand-gold, #C4A882)' }}
                     >
                       {numMain}
                       <span style={{ fontSize: '70%', fontWeight: 400, opacity: 0.8 }}>
                         {numSuffix}
                       </span>
                     </div>
-                    <div className="leading-tight" style={{ color: "#6B7280", fontSize: 'clamp(10px, 2.5vw, 13px)', wordBreak: 'keep-all' }}>
+                    <div className="leading-tight" style={{ color: "var(--brand-text-mid, #666666)", fontSize: 'clamp(10px, 2.5vw, 13px)', wordBreak: 'keep-all' }}>
                       {s.label}
                     </div>
                   </div>

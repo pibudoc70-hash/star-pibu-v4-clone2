@@ -72,22 +72,13 @@ export default function FAQSection() {
       )}
 
       {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
-      <section id="faq" className="py-16 md:py-24" style={{ background: "#F0F7FF" }}>
+      <section id="faq" className="py-16 md:py-24" style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* 섹션 헤더 */}
           <div className="text-center mb-14">
-            <span
-              className="inline-block text-xs font-bold tracking-widest uppercase mb-3 px-4 py-1.5 rounded-full"
-              style={{ background: "#E0EDFF", color: "#1A4FA0" }}
-            >
-              FAQ
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4" style={{ color: "#0D2B5E" }}>
-              {faq.sectionTitle}
-            </h2>
-            <p className="text-base md:text-lg" style={{ color: "#4A6FA5" }}>
-              {faq.sectionSubtitle}
-            </p>
+            <span className="section-eyebrow">FAQ</span>
+            <h2 className="section-title mb-4">{faq.sectionTitle}</h2>
+            <p className="section-subtitle">{faq.sectionSubtitle}</p>
           </div>
 
           {/* 장비 탭 */}

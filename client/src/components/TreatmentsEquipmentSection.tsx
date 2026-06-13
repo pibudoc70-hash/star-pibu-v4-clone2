@@ -157,21 +157,15 @@ export default function TreatmentsEquipmentSection() {
   }, [scrollToTopAndFocus]);
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 bg-white" aria-label={tr.label} role="region">
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: 'var(--brand-bg, #FAF8F5)' }} aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
-            TREATMENTS & EQUIPMENT
-          </p>
-          <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
-            {tr.title}
-          </h2>
-          <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[var(--color-gold-primary)] pt-2">
-            <span className="text-lg">{tr.subtitle}</span>
-          </p>
+          <span className="section-eyebrow text-[12px]">TREATMENTS &amp; EQUIPMENT</span>
+          <h2 className="section-title mb-4">{tr.title}</h2>
+          <p className="section-subtitle">{tr.subtitle}</p>
         </div>
 
         {/* 카테고리 탭 + 필터/정렬 */}

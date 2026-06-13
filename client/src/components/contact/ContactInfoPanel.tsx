@@ -55,9 +55,9 @@ export default function ContactInfoPanel({
       style={{ transitionDelay: "0.15s" }}
     >
       {/* Address + 복사 버튼 */}
-      <div className="p-3 sm:p-4 rounded-xl bg-white">
+      <div className="p-3 sm:p-4 rounded-xl" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid var(--brand-gold-pale, #F0EAE0)' }}>
         <div className="flex items-stretch gap-3">
-          <MapPin size={20} className="text-[var(--color-star-mint)] flex-shrink-0 mt-0.5" />
+          <MapPin size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
               {addressLabel}
@@ -100,9 +100,9 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Phone */}
-      <div className="p-3 sm:p-4 rounded-xl bg-white">
+      <div className="p-3 sm:p-4 rounded-xl" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid var(--brand-gold-pale, #F0EAE0)' }}>
         <div className="flex items-center gap-3">
-          <Phone size={20} className="text-[var(--color-star-mint)] flex-shrink-0" />
+          <Phone size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0" />
           <div>
             <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
               {phoneLabel}
@@ -118,9 +118,9 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Hours */}
-      <div className="p-3 sm:p-4 rounded-xl bg-white">
+      <div className="p-3 sm:p-4 rounded-xl" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid var(--brand-gold-pale, #F0EAE0)' }}>
         <div className="flex items-stretch gap-3">
-          <Clock size={20} className="text-[var(--color-star-mint)] flex-shrink-0 mt-0.5" />
+          <Clock size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="font-bold text-sm mb-3 text-[var(--color-star-text)]">
               {hoursLabel}
@@ -138,7 +138,7 @@ export default function ContactInfoPanel({
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-3 p-2 rounded-lg bg-[var(--color-star-mint-pale)] text-[var(--color-star-navy)]">
+            <p className="text-xs mt-3 p-2 rounded-lg" style={{ background: 'var(--brand-gold-pale, #F0EAE0)', color: 'var(--brand-text, #2C2C2C)' }}>
               {hoursNote}
             </p>
           </div>
@@ -146,9 +146,9 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Transit & Parking */}
-      <div className="p-3 sm:p-4 rounded-xl bg-white">
+      <div className="p-3 sm:p-4 rounded-xl" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid var(--brand-gold-pale, #F0EAE0)' }}>
         <div className="flex items-stretch gap-3">
-          <Train size={20} className="text-[var(--color-star-mint)] flex-shrink-0 mt-0.5" />
+          <Train size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-sm mb-2 text-[var(--color-star-text)]">
               {transitLabel}

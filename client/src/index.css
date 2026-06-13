@@ -4,10 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /* 
- * STAR 피부과 디자인 시스템 - 모던 클리니컬 엣지
- * 컬러: 민트-네이비 듀오톤 (#F8FAFC, #81C7C9, #4A6FA5, #1F2937)
- * 폰트: Noto Sans KR (한국어) + Montserrat (영문/숫자)
- * 철학: 미니멀 + 감성적, 이미지 60% / 텍스트 40%
+ * STAR 피부과 디자인 시스템 — 프리미엄 브랜드 에디션
+ * 컬러: 웜 뉴트럴 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
+ * 폰트: Playfair Display (serif 브랜드) + Noto Sans KR (한국어) + Montserrat (숫자/EN)
+ * 철학: 별 / 빛 / 20년의 안목 / 정제된 따뜻함 / 전문의의 깊이
  */
 
 @theme inline {
@@ -48,27 +48,46 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Star Dermatology Custom Colors */
-  --color-star-mint: #81C7C9;
-  --color-star-mint-light: #A7DADC;
-  --color-star-mint-pale: #EEF7F7;
-  --color-star-navy: #4A6FA5;
-  --color-star-navy-dark: #2D4A7A;
-  --color-star-bg: #F8FAFC;
-  --color-star-text: #1F2937;
-  --color-star-text-mid: #6B7280;
+  /* ── Star Dermatology Brand Color System (Premium Edition) ── */
+  /* Primary Accent — 절제된 웜 골드 */
+  --brand-gold: #C4A882;
+  --brand-gold-light: #D9C4A8;
+  --brand-gold-pale: #F0EAE0;
+  --brand-gold-deep: #A8895E;
+  /* Brand Backgrounds */
+  --brand-bg: #FAF8F5;
+  --brand-bg-alt: #F5F0EB;
+  --brand-bg-warm: #EDE8E0;
+  /* Brand Text */
+  --brand-text: #2C2C2C;
+  --brand-text-mid: #666666;
+  --brand-text-muted: #999999;
+  --brand-text-light: #BBBBBB;
+  /* Brand Contrast (footer/overlay) */
+  --brand-dark: #232323;
+  --brand-dark-mid: #2C2C2C;
+  /* Functional Colors (유지) */
   --color-star-kakao: #FEE500;
   --color-star-naver: #03C75A;
-  /* About Section Gold Colors */
-  --color-gold-primary: #C9A961;
-  --color-gold-light: #E8DCC8;
-  --color-gold-pale: #F5F1ED;
-  /* DoctorsSection Gold Tokens (doctors-data.ts 동기화) */
-  --dr-gold: #d2ac67;
-  --dr-gold-light: #f9f3e8;
-  --dr-gold-mid: #e8d5a3;
+  /* Legacy aliases — 기존 컴포넌트 호환성 유지 */
+  --color-star-mint: #C4A882;
+  --color-star-mint-light: #D9C4A8;
+  --color-star-mint-pale: #F0EAE0;
+  --color-star-navy: #2C2C2C;
+  --color-star-navy-dark: #1a1a1a;
+  --color-star-bg: #FAF8F5;
+  --color-star-text: #2C2C2C;
+  --color-star-text-mid: #666666;
+  /* Gold Tokens (통합) */
+  --color-gold-primary: #C4A882;
+  --color-gold-light: #D9C4A8;
+  --color-gold-pale: #F0EAE0;
+  /* DoctorsSection Gold Tokens */
+  --dr-gold: #C4A882;
+  --dr-gold-light: #F0EAE0;
+  --dr-gold-mid: #D9C4A8;
   /* DoctorsSection Text Tokens */
-  --dr-text-dark: #1a1a1a;
+  --dr-text-dark: #2C2C2C;
   --dr-text-mid: #555;
   --dr-text-muted: #666;
   --dr-text-gray: #4B5563;
@@ -78,29 +97,34 @@
   /* DoctorsSection Tab Active Tokens */
   --dr-tab-active-text: #2c1f08;
   --dr-tab-inactive-text: #5a3e16;
+  /* Font Family Tokens */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
 }
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.99 0.002 240);
-  --foreground: oklch(0.2 0.015 240);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.015 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.015 240);
-  --primary: oklch(0.48 0.09 220);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.95 0.01 200);
-  --secondary-foreground: oklch(0.3 0.02 220);
-  --muted: oklch(0.96 0.005 220);
-  --muted-foreground: oklch(0.55 0.015 220);
-  --accent: oklch(0.78 0.06 195);
-  --accent-foreground: oklch(0.15 0.02 220);
+  /* 브랜드 웜 뉴트럴 팔레트 */
+  --background: oklch(0.985 0.006 75);    /* #FAF8F5 웸 화이트 */
+  --foreground: oklch(0.22 0.008 40);     /* #2C2C2C 진한 차콜 */
+  --card: oklch(0.975 0.008 70);          /* #F5F0EB 오프화이트 */
+  --card-foreground: oklch(0.22 0.008 40);
+  --popover: oklch(0.985 0.006 75);
+  --popover-foreground: oklch(0.22 0.008 40);
+  --primary: oklch(0.68 0.07 65);         /* #C4A882 브랜드 골드 */
+  --primary-foreground: oklch(0.15 0.01 40);
+  --secondary: oklch(0.94 0.012 70);      /* #EDE8E0 웸 베이지 */
+  --secondary-foreground: oklch(0.25 0.01 40);
+  --muted: oklch(0.93 0.01 70);
+  --muted-foreground: oklch(0.5 0.01 50); /* #666666 */
+  --accent: oklch(0.68 0.07 65);          /* 골드 액센트 */
+  --accent-foreground: oklch(0.15 0.01 40);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.91 0.008 220);
-  --input: oklch(0.91 0.008 220);
-  --ring: oklch(0.48 0.09 220);
+  --border: oklch(0.87 0.015 70);         /* 웸 베이지 구분선 */
+  --input: oklch(0.87 0.015 70);
+  --ring: oklch(0.68 0.07 65);            /* 골드 포커스 */
   --chart-1: oklch(0.78 0.06 195);
   --chart-2: oklch(0.65 0.08 200);
   --chart-3: oklch(0.52 0.09 210);
@@ -163,6 +187,13 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 800;
+  }
+  /* Playfair Display 유틸리티 클래스 */
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
@@ -1762,19 +1793,24 @@
   min-width: clamp(82px, 22vw, 136px);
   letter-spacing: 0.02em;
 }
-/* HeroActions: reserve button — Primary (네이버 초록, 가장 눈에 띄엄) */
+/* HeroActions: reserve button — Primary (브랜드 골드, 가장 눈에 띄는 CTA) */
 .hero-btn-reserve {
-  background: #03C75A;
-  color: #ffffff;
-  box-shadow: 0 4px 20px rgba(3, 199, 90, 0.40);
+  background: var(--brand-gold, #C4A882);
+  color: #1a1a1a;
+  box-shadow: 0 4px 24px rgba(196, 168, 130, 0.45);
   padding-top: 11px;
   font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.hero-btn-reserve:hover {
+  background: var(--brand-gold-deep, #A8895E);
+  box-shadow: 0 6px 32px rgba(196, 168, 130, 0.6);
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {
-  background: #06C755;
-  color: #ffffff;
-  box-shadow: 0 4px 20px rgba(3, 199, 90, 0.40);
+  background: var(--brand-gold, #C4A882);
+  color: #1a1a1a;
+  box-shadow: 0 4px 24px rgba(196, 168, 130, 0.45);
   padding-top: 11px;
   font-weight: 700;
 }
@@ -1791,28 +1827,28 @@
 /* ─── 섹션 헤더 공통 타이포 시스템 ─────────────────────────────────────────── */
 /* eyebrow: 섹션 제목 위 소문자 레이블 */
 .section-eyebrow {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #C9A84C;
-  margin-bottom: 1rem;
+  color: var(--brand-gold, #C4A882);
+  margin-bottom: 0.875rem;
   display: block;
 }
 /* section-title: 섹션 주제목 */
 .section-title {
   font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   line-height: 1.15;
-  color: #0D2B5E;
+  color: var(--brand-text, #2C2C2C);
   margin-bottom: 1.25rem;
 }
 /* section-subtitle: 섹션 부제목 */
 .section-subtitle {
   font-size: clamp(0.88rem, 2.2vw, 1rem);
   line-height: 1.7;
-  color: #9B8B6E;
+  color: var(--brand-text-mid, #666666);
   font-weight: 400;
   max-width: 480px;
   margin-left: auto;
@@ -1821,11 +1857,11 @@
 
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
 
-/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 */
+/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Playfair Display serif 숫자) */
 .hero-stat-value {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: clamp(1.4rem, 4.8vw, 2.4rem);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 5vw, 2.6rem);
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   line-height: 1;
@@ -1834,7 +1870,7 @@
   min-width: 2ch;
   display: inline-block;
   text-align: center;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .hero-stat-value[data-done="true"] {
   color: #EDD98A;

@@ -2651,3 +2651,32 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P2: FloatingCTA 모바일 바 높이 60px 통일
 - [x] P2: 모바일 섹션 패딩 4rem 확보
 - [x] 회귀 테스트 A-3 regex 허용으로 수정 (tracking-widest 추가 클래스 허용)
+
+## 전체 브랜드 리디자인 — 프리미엄 피부과 브랜드 경험 (2026-06-14)
+
+### P0 — 반드시 우선 개선
+- [ ] Playfair Display serif 폰트 Google Fonts CDN 추가 (index.html)
+- [ ] 브랜드 컬러 토큰 전면 교체 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
+- [ ] 히어로 카피 방향 개선 (Label: BUSAN SEOMYEON DERMATOLOGY, 슬로건 정제)
+- [ ] 히어로 통계 스트립 에디토리얼 스타일 강화 (serif 숫자, 절제된 라벨)
+- [ ] 히어로 오버레이 모바일 별도 아트디렉션 (깊이감 강화)
+- [ ] CTA 위계 재설계 (Primary 예약 전체너비, Secondary 카카오, Tertiary 전화)
+- [ ] FloatingCTA 모바일 바 브랜드 톤 정렬
+- [ ] "로딩 중..." skeleton UI 교체 (EventsSection)
+
+### P1 — 강하게 권장
+- [ ] PhilosophySection 브랜드 스토리 에디토리얼 재설계 ("20년의 안목" 강화)
+- [ ] Stats Interlude 정제 (3개 핵심 수치만, serif 숫자)
+- [ ] DoctorsSection 프리미엄 톤 개선 (탭 골드 절제, 배지 상업성 감소)
+- [ ] EventCard 프리미엄 재설계 (가격 비강조, 시술 제안 톤)
+- [ ] TreatmentsSection 비주얼 우선 구조 (hover 고급 효과)
+- [ ] ContactSection 고급 안내판 톤 (골드 라인, 차콜 텍스트)
+- [ ] Footer 브랜드 마감 (차콜 배경, 절제된 골드 포인트)
+- [ ] 전역 여백/그리드 시스템 (desktop 120px / mobile 80px)
+- [ ] 공통 section-eyebrow / section-title / section-subtitle 클래스 전체 적용
+
+### P2 — 자산/정책 확인 후 적용
+- [ ] 자연광 의료진 사진 교체 (자산 확보 시)
+- [ ] Before & After 섹션 (정책 확인 후)
+- [ ] 20 Years Timeline 섹션 (연혁 자산 확보 시)
+- [ ] 5초 루프 영상 히어로 (영상 자산 확보 시)

@@ -123,7 +123,7 @@ export default function YouTubeSection() {
 
   const closeModal = useCallback(() => setSelectedVideo(null), []);
 
-  // S1-T4: 로딩 상태 — i18n 문자열 사용
+  // S1-T4: 로딩 상태 — shimmer 스켈레톤 UI
   if (isLoading) {
     return (
       <section
@@ -131,12 +131,25 @@ export default function YouTubeSection() {
         aria-label={yt.loadingLabel}
         aria-busy="true"
       >
-        <div className="container mx-auto px-4 text-center">
-          <div
-            className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-300 mx-auto"
-            role="status"
-            aria-label={yt.loadingLabel}
-          />
+        <div className="container">
+          {/* 섹션 헤더 스켈레톤 */}
+          <div className="text-center flex flex-col items-center mb-12" aria-hidden="true">
+            <div className="skeleton-shimmer rounded-sm h-3 w-20 mb-4" />
+            <div className="skeleton-shimmer rounded-md h-8 w-56 mb-4" />
+            <div className="skeleton-shimmer rounded-md h-4 w-72" />
+          </div>
+          {/* 영상 카드 그리드 스켈레톤 */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" aria-hidden="true">
+            {[0,1,2,3,4,5,6,7].map((i) => (
+              <div key={i} className="rounded-xl overflow-hidden">
+                <div className="skeleton-shimmer" style={{ aspectRatio: '16/9' }} />
+                <div className="p-3 space-y-2">
+                  <div className="skeleton-shimmer rounded h-4 w-full" />
+                  <div className="skeleton-shimmer rounded h-3 w-2/3" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );

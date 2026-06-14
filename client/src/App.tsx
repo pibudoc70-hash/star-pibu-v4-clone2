@@ -20,16 +20,36 @@ import {
 
 function PageLoader() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+    <div
+      className="flex flex-col items-center justify-center min-h-screen"
+      style={{ background: 'var(--brand-bg, #FAF8F5)' }}
+      aria-busy="true"
+      aria-label="페이지 로딩 중"
+    >
+      {/* 브랜드 로고 스켈레톤 */}
+      <div className="flex flex-col items-center gap-4 mb-12" aria-hidden="true">
+        <div className="skeleton-shimmer rounded-full" style={{ width: 64, height: 64 }} />
+        <div className="skeleton-shimmer rounded" style={{ width: 160, height: 24 }} />
+        <div className="skeleton-shimmer rounded" style={{ width: 220, height: 14 }} />
+      </div>
+      {/* Hero 영역 스켈레톤 */}
+      <div className="w-full max-w-lg px-8 flex flex-col gap-3" aria-hidden="true">
+        <div className="skeleton-shimmer rounded" style={{ height: 14, width: '40%' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: 52, width: '90%' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: 14, width: '70%' }} />
+        <div className="flex gap-3 mt-4">
+          <div className="skeleton-shimmer rounded-full" style={{ height: 44, width: 140 }} />
+          <div className="skeleton-shimmer rounded-full" style={{ height: 44, width: 100 }} />
+        </div>
+      </div>
     </div>
   );
 }
 
 function MapLoadingFallback() {
   return (
-    <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-2xl">
-      <p className="text-gray-500">지도를 불러오는 중입니다...</p>
+    <div className="w-full h-[500px] rounded-2xl overflow-hidden" aria-hidden="true">
+      <div className="skeleton-shimmer w-full h-full" />
     </div>
   );
 }

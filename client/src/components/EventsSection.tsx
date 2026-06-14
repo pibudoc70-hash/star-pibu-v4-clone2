@@ -125,18 +125,16 @@ export default function EventsSection() {
           ))}
         </div>
 
-        {/* ── Loading State — Skeleton UI ── */}
+        {/* ── Loading State — Shimmer Skeleton UI ── */}
         {isLoading && (
-          <div className="grid gap-6 mb-8" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }}>
+          <div className="grid gap-6 mb-8" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }} aria-hidden="true">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: "#F5F0EB", minHeight: 220 }}>
-                <div className="animate-pulse">
-                  <div style={{ height: 140, background: "linear-gradient(90deg, #EDE8E0 25%, #F0EAE0 50%, #EDE8E0 75%)", backgroundSize: "200% 100%" }} />
-                  <div className="p-5 space-y-3">
-                    <div style={{ height: 14, width: "60%", background: "#E8E0D5", borderRadius: 4 }} />
-                    <div style={{ height: 10, width: "80%", background: "#EDE8E0", borderRadius: 4 }} />
-                    <div style={{ height: 10, width: "45%", background: "#EDE8E0", borderRadius: 4 }} />
-                  </div>
+              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: "#F5F0EB" }}>
+                <div className="skeleton-shimmer" style={{ height: 160 }} />
+                <div className="p-5 space-y-3">
+                  <div className="skeleton-shimmer rounded" style={{ height: 12, width: '55%' }} />
+                  <div className="skeleton-shimmer rounded" style={{ height: 18, width: '85%' }} />
+                  <div className="skeleton-shimmer rounded" style={{ height: 11, width: '45%' }} />
                 </div>
               </div>
             ))}

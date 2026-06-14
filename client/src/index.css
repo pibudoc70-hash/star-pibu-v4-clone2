@@ -1576,25 +1576,25 @@
 
     /* ▶ 5. 로고 크기 절제 */
     .hero-logo-img {
-      height: clamp(60px, 15vw, 80px) !important;
-      width: clamp(60px, 15vw, 80px) !important;
+      height: clamp(90px, 22vw, 120px) !important;
+      width: clamp(90px, 22vw, 120px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.4rem, 1.2vw, 0.6rem) !important;
+      margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
     }
 
     /* ▶ 6. 병원명 h1 — Cormorant Garamond 명조 프리미엄 */
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(2.8rem, 13vw, 3.8rem) !important;
+      font-size: clamp(3.4rem, 16vw, 4.8rem) !important;
       font-weight: 400 !important;
       letter-spacing: 0.02em !important;
       line-height: 1.1 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem) !important;
+      margin-bottom: clamp(0.5rem, 1.5vh, 0.9rem) !important;
       color: #ffffff !important;
       text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.5) !important;
     }

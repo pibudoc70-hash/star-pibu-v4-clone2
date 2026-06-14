@@ -147,7 +147,7 @@ export const ko: I18nContent = {
     dermBadge: "피부과\n전문의",
     specialtyTitle: "전문 시술",
     credentialsTitle: "학력 · 경력 · 자격",
-    swipeHint: "← 스와이프하여 의료진 보기 →",
+    swipeHint: "의료진 소개 보기",
     teamLabel: "의료팀",
     selectDoctorLabel: "{name} 의사 선택",
     expandCredentialsLabel: "학력·경력·자격 펼치기",

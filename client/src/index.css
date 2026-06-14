@@ -101,6 +101,7 @@
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Noto Sans KR', sans-serif;
   --font-display: 'Playfair Display', Georgia, serif;
+  --font-serif-kr: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
 }
 
 :root {
@@ -826,7 +827,7 @@
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
-  .dr-section-bg { background: #faf7f0; }
+  .dr-section-bg { background: var(--brand-bg, #FAF8F5); }
   .dr-panel-card {
     background: white;
     box-shadow: 0 20px 60px rgba(210,172,103,0.15), 0 4px 20px rgba(0,0,0,0.06);
@@ -1029,16 +1030,18 @@
     font-weight: 300;
   }
   .dr-section-title {
-    color: var(--dr-text-dark);
-    font-size: clamp(1.6rem, 5vw, 2.8rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    color: var(--brand-text, #2C2C2C);
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-family: 'Noto Serif KR', serif;
   }
   .dr-section-tagline {
-    color: var(--dr-gold);
-    font-size: 18px;
+    color: var(--brand-text-mid, #666666);
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
     margin: 13px auto 0;
     max-width: 577px;
+    font-style: italic;
   }
   /* Panel border */
   .dr-panel-border {
@@ -1835,14 +1838,16 @@
   margin-bottom: 0.875rem;
   display: block;
 }
-/* section-title: 섹션 주제목 */
+/* section-title: 섹션 주제목 — Noto Serif KR 브랜드 감성 */
 .section-title {
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
+  font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   color: var(--brand-text, #2C2C2C);
   margin-bottom: 1.25rem;
+  word-break: keep-all;
 }
 /* section-subtitle: 섹션 부제목 */
 .section-subtitle {

@@ -2680,3 +2680,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] Before & After 섹션 (정책 확인 후)
 - [ ] 20 Years Timeline 섹션 (연혁 자산 확보 시)
 - [ ] 5초 루프 영상 히어로 (영상 자산 확보 시)
+
+## 전체 브랜드 리디자인 라운드 2 (2026-06-14)
+
+- [x] Noto Serif KR 폰트 추가 — 섹션 타이틀용
+- [x] index.css section-title에 Noto Serif KR 적용
+- [x] ResultsSection 브랜드 컬러 토큰으로 교체, 시술명 Noto Serif KR 적용
+- [x] PhilosophySection h2 Noto Serif KR + "20년의 안목" 서사 강화
+- [x] EventCard 시술명 Noto Serif KR, 카드 배경 brand-bg-alt, CTA 절제된 테두리 버튼
+- [x] DoctorsSection 섹션 헤더 Noto Serif KR + 배경 brand-bg 통일 + 태그라인 이탤릭
+- [x] i18n.ko.ts swipeHint "의료진 소개 보기" 절제된 표현으로 교체

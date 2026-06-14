@@ -12,13 +12,19 @@ import { useClinicStats } from "@/hooks/useClinicStats";
 import { STAR_COLORS } from "../../../shared/colors";
 
 const statIcons = [Award, Star, TrendingUp, Users];
-const { navy, mint, dark, gray, muted, bgNavy, bgMint } = STAR_COLORS;
-const statColors = [navy, mint, navy, mint];
-const statBgs = [bgNavy, bgMint, bgNavy, bgMint];
+const { dark, gray, muted } = STAR_COLORS;
+/* 브랜드 웜 뉴트럴 컬러 시스템 */
+const brandGold = '#C4A882';
+const brandGoldPale = '#F0EAE0';
+const brandGoldDeep = '#A8895E';
+const brandBg = '#FAF8F5';
+const brandBgAlt = '#F5F0EB';
+const statColors = [brandGold, brandGoldDeep, brandGold, brandGoldDeep];
+const statBgs = [brandBgAlt, brandBg, brandBgAlt, brandBg];
 const whyIcons = [Shield, Heart, Sparkles];
-const whyColors = [navy, mint, navy];
-const treatmentAccents = [navy, mint, navy, mint, navy, mint];
-const treatmentBgs = [bgNavy, bgMint, bgNavy, bgMint, bgNavy, bgMint];
+const whyColors = [brandGold, brandGoldDeep, brandGold];
+const treatmentAccents = [brandGold, brandGoldDeep, brandGold, brandGoldDeep, brandGold, brandGoldDeep];
+const treatmentBgs = [brandBgAlt, brandBg, brandBgAlt, brandBg, brandBgAlt, brandBg];
 
 function ResultsSection() {
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 100 → 60;
@@ -35,28 +41,19 @@ function ResultsSection() {
   const countValues = [countValue1, countValue2, countValue3, `1:${clinicStats.ratio.value}`];
 
   return (
-    <section ref={sectionRef} id="results" className="py-16 sm:py-24 bg-white relative overflow-hidden">
-      {/* 배경 장식 요소 */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-teal-50 rounded-full opacity-30 -mr-48 -mt-48 blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-teal-50 to-blue-50 rounded-full opacity-20 -ml-40 -mb-40 blur-3xl" />
+    <section ref={sectionRef} id="results" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FAF8F5' }}>
+      {/* 배경 장식 — 절제된 웜 글로우 */}
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-20 -mr-48 -mt-48 blur-3xl" style={{ background: 'radial-gradient(ellipse, #F0EAE0, transparent)' }} />
+      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-15 -ml-40 -mb-40 blur-3xl" style={{ background: 'radial-gradient(ellipse, #EDE8E0, transparent)' }} />
 
       <div className="container relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 reveal-heading">
-          <p
-            className="font-montserrat font-semibold text-sm tracking-widest mb-3 inline-block px-4 py-2 rounded-full"
-            style={{ color: "#81C7C9", backgroundColor: "rgba(129, 199, 201, 0.1)" }}
-          >
-            ✨ RESULTS & STATISTICS
-          </p>
-          <h2
-            className="mb-4"
-            style={{ color: dark, fontSize: "clamp(1.8rem, 6vw, 3rem)", fontWeight: 900, letterSpacing: "-0.5px" }}
-          >
+          <span className="section-eyebrow">RESULTS &amp; STATISTICS</span>
+          <h2 className="section-title">
             {r.sectionTitle}
           </h2>
-          <div className="star-divider mx-auto mb-6" />
-          <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: gray, lineHeight: 1.6 }}>
+          <p className="section-subtitle">
             {r.sectionSubtitle}
           </p>
         </div>
@@ -69,27 +66,29 @@ function ResultsSection() {
             return (
               <div
                 key={i}
-                className="reveal-card group p-8 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 bg-white hover:bg-gradient-to-br hover:from-white"
+                className="reveal-card group p-8 rounded-2xl transition-all duration-300"
                 style={{
                   transitionDelay: `${i * 0.1}s`,
-                  borderColor: `${color}20`,
+                  background: '#FFFFFF',
+                  border: `1px solid rgba(196,168,130,0.18)`,
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
                 }}
               >
                 <div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
-                  style={{ backgroundColor: `${color}15` }}
+                  className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300"
+                  style={{ backgroundColor: brandGoldPale }}
                 >
-                  <Icon size={32} style={{ color }} />
+                  <Icon size={28} style={{ color: brandGoldDeep }} />
                 </div>
-                <h3 className="text-lg font-bold mb-2" style={{ color: dark }}>
+                <h3 className="text-base font-bold mb-2" style={{ color: dark, fontFamily: "'Noto Serif KR', serif" }}>
                   {item.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: gray }}>
                   {item.desc}
                 </p>
                 <div
-                  className="mt-4 h-1 w-12 rounded-full group-hover:w-full transition-all duration-300"
-                  style={{ backgroundColor: color }}
+                  className="mt-5 h-px w-10 group-hover:w-full transition-all duration-500"
+                  style={{ backgroundColor: `rgba(196,168,130,0.4)` }}
                 />
               </div>
             );
@@ -118,14 +117,14 @@ function ResultsSection() {
                 />
                 <div className="relative z-10">
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
-                    style={{ background: `${color}18` }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300"
+                    style={{ background: brandGoldPale }}
                   >
-                    <Icon size={24} style={{ color }} />
+                    <Icon size={22} style={{ color: brandGoldDeep }} />
                   </div>
                   <div
                     className="font-montserrat font-bold mb-2 group-hover:scale-105 transition-transform duration-300"
-                    style={{ fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color }}
+                    style={{ fontSize: "clamp(1.7rem, 4.5vw, 2.2rem)", color: brandGoldDeep }}
                   >
                     {countValues[i]}
                   </div>
@@ -169,15 +168,15 @@ function ResultsSection() {
                     style={{ borderBottom: `1px solid ${accentColor}22` }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-base" style={{ color: dark }}>
+                      <h4 className="font-bold text-base" style={{ color: dark, fontFamily: "'Noto Serif KR', serif" }}>
                         {tr.treatment}
                       </h4>
                       {isHighlight && (
                         <span
-                          className="text-xs font-bold px-3 py-1 rounded-full text-white flex items-center gap-1"
-                          style={{ background: accentColor }}
+                          className="text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1"
+                          style={{ background: brandGoldPale, color: brandGoldDeep }}
                         >
-                          <Sparkles size={12} /> 인기
+                          <Sparkles size={11} /> 인기
                         </span>
                       )}
                     </div>
@@ -206,24 +205,24 @@ function ResultsSection() {
 
         {/* Notices */}
         <div
-          className="rounded-2xl p-6 sm:p-8 border-2"
-          style={{ background: "#F0F9FF", borderColor: "#0EA5E9" }}
+          className="rounded-xl p-6 sm:p-8"
+          style={{ background: '#F5F0EB', border: '1px solid rgba(196,168,130,0.2)' }}
         >
           <div className="flex gap-3 mb-4">
             <div
-              className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ background: "#0EA5E9" }}
+              className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ background: brandGoldPale }}
             >
-              <CheckCircle size={20} style={{ color: "white" }} />
+              <CheckCircle size={18} style={{ color: brandGoldDeep }} />
             </div>
-            <span className="font-bold text-base" style={{ color: "#0C4A6E" }}>
+            <span className="font-semibold text-sm" style={{ color: '#2C2C2C' }}>
               {r.disclaimer}
             </span>
           </div>
-          <ul className="space-y-3 text-sm sm:text-base" style={{ color: "#0369A1" }}>
+          <ul className="space-y-2.5 text-sm" style={{ color: '#666666' }}>
             {r.notices.map((notice, i) => (
               <li key={i} className="flex gap-3 items-start">
-                <span style={{ color: "#0EA5E9", fontWeight: "bold" }}>•</span>
+                <span style={{ color: brandGold, fontWeight: 'bold', flexShrink: 0 }}>·</span>
                 <span>{notice}</span>
               </li>
             ))}

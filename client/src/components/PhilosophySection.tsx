@@ -35,18 +35,18 @@ export default function PhilosophySection() {
 
           {/* Left: Text */}
           <div ref={leftRef} className="reveal-left">
-            <span className="section-eyebrow">{t.about.label}</span>
+            <span className="section-eyebrow">OUR PHILOSOPHY</span>
             <h2
-              className="mb-2 leading-tight"
-              style={{ color: "var(--brand-text, #2C2C2C)", fontSize: "clamp(1.5rem, 5vw, 2.8rem)", fontWeight: 800 }}
+              className="mb-3 leading-tight"
+              style={{ color: "var(--brand-text, #2C2C2C)", fontSize: "clamp(1.6rem, 4.5vw, 2.6rem)", fontWeight: 600, fontFamily: "'Noto Serif KR', serif", wordBreak: 'keep-all' }}
             >
               {t.about.title}
             </h2>
             <p
-              className="mb-6 font-serif"
-              style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)", letterSpacing: "0.12em", fontWeight: 400 }}
+              className="mb-2 font-montserrat"
+              style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(0.75rem, 2vw, 0.9rem)", letterSpacing: "0.18em", fontWeight: 500 }}
             >
-              STAR DERMATOLOGY
+              20년의 안목, 한결같은 신뢰
             </p>
             <p className="leading-relaxed mb-8" style={{ color: "var(--brand-text-mid, #666666)", fontSize: '15px', fontWeight: '400' }}>
               {t.about.desc}
@@ -115,7 +115,7 @@ export default function PhilosophySection() {
                         {v.title.slice(1)}
                       </span>
                     </div>
-                    <div className="text-xs leading-relaxed mt-1" style={{ color: "#9CA3AF" }}>
+                    <div className="text-xs leading-relaxed mt-1" style={{ color: "#666666" }}>
                       {v.desc}
                     </div>
                   </div>

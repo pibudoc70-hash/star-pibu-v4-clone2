@@ -38,9 +38,10 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
       <h3
         className="font-bold leading-tight mb-2"
         style={{
-          color: "#C9A84C",
-          fontSize: "clamp(1rem, 3.2vw, 1.2rem)",
-          letterSpacing: "0.01em",
+          color: "#2C2C2C",
+          fontSize: "clamp(1rem, 3.2vw, 1.15rem)",
+          letterSpacing: "-0.01em",
+          fontFamily: "'Noto Serif KR', serif",
         }}
       >
         {getLocalizedText(event, "title")}
@@ -82,8 +83,8 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         <span
           className="font-bold"
           style={{
-            color: "#C9A84C",
-            fontSize: "clamp(1.25rem, 4vw, 1.55rem)",
+            color: "#A8895E",
+            fontSize: "clamp(1.15rem, 3.5vw, 1.4rem)",
             letterSpacing: "-0.01em",
           }}
         >
@@ -133,9 +134,9 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
     <div
       className="flex flex-col rounded-2xl overflow-hidden"
       style={{
-        background: "#FDFCF9",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.03)",
-        border: "1px solid rgba(201,168,76,0.12)",
+        background: "#F5F0EB",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03)",
+        border: "1px solid rgba(196,168,130,0.18)",
       }}
     >
       {/* 이미지 — 더 넓은 비율로 비주얼 임팩트 강화 */}
@@ -181,12 +182,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 자세히 보기`}
-            className="mt-auto w-full py-3 font-semibold transition-all duration-300 text-white rounded-xl hover:opacity-92 hover:-translate-y-0.5"
+            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5"
             style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #E8C96A 50%, #B8892A 100%)",
-              fontSize: "0.85rem",
-              letterSpacing: "0.04em",
-              boxShadow: "0 3px 14px rgba(201,168,76,0.28)",
+              background: "transparent",
+              border: "1px solid rgba(196,168,130,0.5)",
+              color: "#A8895E",
+              fontSize: "0.82rem",
+              letterSpacing: "0.06em",
+              fontWeight: 500,
             }}
           >
             {event.cta}

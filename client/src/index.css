@@ -1536,10 +1536,10 @@
       align-items: center !important;
     }
 
-    /* ▶ 2. 콘텐츠 컨테이너 — 전체 높이 채우기, center (버튼 제거 후) */
+    /* ▶ 2. 콘텐츠 컨테이너 — 전체 높이 채우기, 중앙보다 약간 위 배치 */
     #home > .relative.z-10 {
-      padding-top: clamp(72px, 10vh, 96px) !important;
-      padding-bottom: clamp(32px, 5vh, 56px) !important;
+      padding-top: clamp(64px, 9vh, 88px) !important;
+      padding-bottom: clamp(80px, 14vh, 120px) !important;
       max-width: 100% !important;
       padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
       padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
@@ -1570,8 +1570,8 @@
 
     /* ▶ 5. 로고 크기 절제 */
     .hero-logo-img {
-      height: clamp(68px, 17vw, 90px) !important;
-      width: clamp(68px, 17vw, 90px) !important;
+      height: clamp(60px, 15vw, 80px) !important;
+      width: clamp(60px, 15vw, 80px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
@@ -1582,41 +1582,42 @@
     #home h1, .hero-title {
       font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif !important;
       font-style: normal !important;
-      font-size: clamp(2.2rem, 11vw, 3rem) !important;
+      font-size: clamp(2.4rem, 12vw, 3.2rem) !important;
       font-weight: 900 !important;
       letter-spacing: -0.01em !important;
       line-height: 1.1 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(0.25rem, 1vh, 0.5rem) !important;
+      margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem) !important;
       color: #ffffff !important;
       text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.5) !important;
     }
 
     /* ▶ 7. 슬로건 — 대비 강화 */
     .hero-subtitle {
-      font-size: clamp(0.7rem, 2.8vw, 0.85rem) !important;
-      margin-bottom: clamp(0.1rem, 0.5vh, 0.35rem) !important;
-      letter-spacing: 0.25em !important;
+      font-size: clamp(0.72rem, 3vw, 0.88rem) !important;
+      margin-bottom: clamp(0.6rem, 1.8vh, 1rem) !important;
+      letter-spacing: 0.22em !important;
       font-weight: 400 !important;
-      color: rgba(255,255,255,0.88) !important;
+      color: rgba(255,255,255,0.9) !important;
       text-shadow: 0 1px 12px rgba(0,0,0,0.7) !important;
     }
 
     /* ▶ 8. 통계 스트립 */
     .hero-stats-row {
-      gap: clamp(0.75rem, 4vw, 1.5rem) !important;
-      padding-top: 12px !important;
+      gap: clamp(1rem, 5vw, 2rem) !important;
+      padding-top: clamp(0.75rem, 2vh, 1.25rem) !important;
     }
     .hero-stat-value {
-      font-size: clamp(1.15rem, 5.5vw, 1.6rem) !important;
+      font-size: clamp(1.3rem, 6.5vw, 1.8rem) !important;
       text-shadow: 0 1px 12px rgba(0,0,0,0.6) !important;
     }
     .hero-stat-label {
-      font-size: clamp(0.62rem, 1.9vw, 0.75rem) !important;
+      font-size: clamp(0.65rem, 2vw, 0.78rem) !important;
       color: rgba(255, 255, 255, 0.95) !important;
       font-weight: 500 !important;
       text-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
+      margin-top: 2px !important;
     }
 
     /* ▶ 9. CTA wrap — 하단 그룹 내부 */
@@ -2582,16 +2583,25 @@
 ═══════════════════════════════════════════════════════════════ */
 .mobile-bottom-cta {
   display: flex;
+  align-items: stretch;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 9000;
-  height: 52px;
+  height: calc(48px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #0d0d0d;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  background: #111111;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.4);
+}
+
+/* 카카오 버튼 래퍼 — flex: 1로 동일 너비 */
+.mobile-bottom-btn-wrap {
+  flex: 1;
+  display: flex;
+  position: relative;
+  border-right: 1px solid rgba(255,255,255,0.10);
 }
 
 .mobile-bottom-btn {
@@ -2600,16 +2610,17 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  font-size: 0.72rem;
+  font-size: 0.73rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
   transition: opacity 0.15s;
   color: #ffffff;
-  border-right: 1px solid rgba(255,255,255,0.08);
+  border-right: 1px solid rgba(255,255,255,0.10);
 }
 
-.mobile-bottom-btn:last-child {
+.mobile-bottom-btn:last-child,
+.mobile-bottom-btn-wrap:last-child .mobile-bottom-btn {
   border-right: none;
 }
 
@@ -2624,10 +2635,11 @@
   font-weight: 700;
 }
 
-/* 전화 — Tertiary 반투명 */
+/* 전화 — 딥 네이비 블루 */
 .mobile-bottom-btn--phone {
-  background: transparent;
-  color: rgba(255,255,255,0.85);
+  background: #1e3a5f;
+  color: #e8f0fe;
+  font-weight: 600;
 }
 
 /* 데스크톱에서 완전히 숨김 */
@@ -2640,7 +2652,7 @@
 /* 모바일에서 하단 고정 바 높이만큼 body 하단 패딩 추가 (콘텐츠 가림 방지) */
 @media (max-width: 640px) {
   body {
-    padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
   }
 
   /* Hero 섹션 모바일 CTA 버튼 그룹 숨김 */

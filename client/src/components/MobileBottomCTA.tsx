@@ -3,7 +3,7 @@
  *
  * 네이버 예약 | 카카오 상담 | 전화 세 버튼을 얇은 바 형태로 화면 최하단에 고정.
  * - 데스크톱(641px+)에서는 완전히 숨김
- * - 높이: 52px (내용을 가리지 않을 정도로 얇게)
+ * - 세 버튼 모두 동일한 높이(flex: 1)로 통일
  * - 안전 영역(safe-area-inset-bottom) 대응
  */
 import { Calendar, MessageCircle, Phone } from "lucide-react";
@@ -50,8 +50,8 @@ export default function MobileBottomCTA() {
         <span>{t.hero.cta_reserve}</span>
       </a>
 
-      {/* 카카오/위챗 — Secondary */}
-      <div className="relative">
+      {/* 카카오/위챗 — Secondary: relative 래퍼를 flex: 1로 */}
+      <div className="mobile-bottom-btn-wrap">
         <a
           href={chatUrl}
           target={isZH ? undefined : "_blank"}
@@ -71,7 +71,7 @@ export default function MobileBottomCTA() {
         )}
       </div>
 
-      {/* 전화 — Tertiary */}
+      {/* 전화 — 슬레이트 블루 계열 */}
       <a
         href={phoneHref}
         className="mobile-bottom-btn mobile-bottom-btn--phone"

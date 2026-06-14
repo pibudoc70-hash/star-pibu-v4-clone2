@@ -2972,3 +2972,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] FAQ→문의→예약→위치/연락정보 흐름 정리
 - [ ] ONLINE RESERVATION 배열 고급화
 - [ ] 주소/진료시간/교통/주차 정보 가독성 개선
+
+## Phase N+3: 외국어 홈페이지 전수 검수 및 다국어 번역 수정 (2026-06-15)
+- [x] useLocalizedText.ts - ja/zh 폴백을 ko 대신 en으로 변경 (외국인 환자에게 한국어보다 영어가 이해하기 쉬움)
+- [x] treatments-data.ts - 29개 시술 항목에 nameJa/nameZh 번역 추가
+- [x] TreatmentCardMedia.tsx - badge getText 다국어 지원 추가 (badgeEn/badgeJa/badgeZh 필드 활용)
+- [x] treatment.ts 타입 - badgeEn/badgeJa/badgeZh 필드 추가
+- [x] i18n.ja.ts - hero.subtitle 일본어 번역 수정
+- [x] i18n.zh.ts - hero.subtitle 중국어 번역 수정
+- [x] index.css - 영어 hero-title 모바일 font-size 축소 (한 줄 표시)
+- [x] DoctorTabButton.tsx - 데스크톱 의사 이름 white-space: nowrap 추가

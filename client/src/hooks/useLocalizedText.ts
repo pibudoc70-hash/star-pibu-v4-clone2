@@ -30,9 +30,11 @@ export function useLocalizedText() {
     zh?: string | null
   ): string => {
     const base = ko ?? "";
-    if (lang === "en") return en || base;
-    if (lang === "ja") return ja || base;
-    if (lang === "zh") return zh || base;
+    const enFallback = en || base;
+    if (lang === "en") return enFallback;
+    // ja/zh: 해당 번역이 없으면 한국어보다 영어를 폴백으로 사용 (외국인 환자에게 한국어보다 영어가 이해하기 쉽음)
+    if (lang === "ja") return ja || enFallback;
+    if (lang === "zh") return zh || enFallback;
     return base;
   };
 

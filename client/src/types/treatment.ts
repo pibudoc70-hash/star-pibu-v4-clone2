@@ -22,6 +22,9 @@ export interface Treatment {
   recoveryJa?: string;
   recoveryZh?: string;
   badge?: string | null;
+  badgeEn?: string | null;
+  badgeJa?: string | null;
+  badgeZh?: string | null;
   badgeColor?: string;
   image: string;
   images?: string[];          // 복수 이미지 (나란히 표시)

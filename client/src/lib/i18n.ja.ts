@@ -15,7 +15,7 @@ export const ja: I18nContent = {
   },
   hero: {
     title: "スター皮膚科",
-    subtitle: "Where Experience, Trust, and Science Meet",
+    subtitle: "経験・信頼・科学が出会う場所",
     badge: "Since 2006",
     floor: "釜山西面 アイオンシティビル 4F 受付・診療 | 2F 幹細胞研究センター",
     cta_call: "+82-51-818-2300",

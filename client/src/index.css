@@ -216,6 +216,12 @@
     white-space: nowrap !important;
     overflow: visible !important;
   }
+  /* 영어 hero-title: 영어는 한국어보다 길어서 모바일에서 줄바꿈 방지 */
+  body.font-lang-en .hero-title {
+    font-size: clamp(2.2rem, 10vw, 6rem) !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+  }
   /* Montserrat는 영문/숫자 전용이므로 언어 무관하게 유지 */
   body.font-lang-ko .font-montserrat,
   body.font-lang-ja .font-montserrat,

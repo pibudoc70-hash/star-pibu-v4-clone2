@@ -5,9 +5,10 @@
  * - cardBannerImage: 전체 너비 배너 이미지
  * - images (복수): 분할 레이아웃 (flex)
  * - image (단수): 단일 이미지 (hover scale)
- * - badge: 절대 위치 배지 (--card-accent CSS variable 사용)
+ * - badge: 절대 위치 배지 (--card-accent CSS variable 사용, 다국어 지원)
  */
 import OptimizedImage from "@/components/OptimizedImage";
+import { useLocalizedText } from "@/hooks/useLocalizedText";
 import type { Treatment } from "@/types/treatment";
 
 interface TreatmentCardMediaProps {
@@ -16,6 +17,11 @@ interface TreatmentCardMediaProps {
 }
 
 export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
+  const { getText } = useLocalizedText();
+  const localizedBadge = item.badge
+    ? getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh)
+    : null;
+
   return (
     <div
       className={[
@@ -51,12 +57,12 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
         />
       )}
-      {item.badge && (
+      {localizedBadge && (
         <span
           className="absolute top-2 left-2 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow bg-[var(--card-accent)]"
           style={item.badgeColor ? { "--card-accent": item.badgeColor } as React.CSSProperties : undefined}
         >
-          {item.badge}
+          {localizedBadge}
         </span>
       )}
     </div>

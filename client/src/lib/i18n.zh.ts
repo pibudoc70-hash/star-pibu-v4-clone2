@@ -15,7 +15,7 @@ export const zh: I18nContent = {
   },
   hero: {
     title: "STAR皮肤科",
-    subtitle: "Where Experience, Trust, and Science Meet",
+    subtitle: "经验、信赖与科学的交汇",
     badge: "Since 2006",
     floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
     cta_call: "+82-51-818-2300",

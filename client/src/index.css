@@ -1234,7 +1234,22 @@
   .dr-credentials-text-mobile { color: var(--dr-text-gray); }
   /* Mobile tab list border */
   .dr-mob-tablist-border {
-    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+  }
+  /* Mobile slider arrow button */
+  .dr-slider-arrow {
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .dr-slider-arrow:hover {
+    background: rgba(196, 168, 130, 0.6);
+    transform: scale(1.08);
+  }
+  .dr-slider-arrow:active {
+    transform: scale(0.95);
   }
   /* Mobile tab button: active/inactive */
   .dr-mob-tab-btn[data-active="true"] {

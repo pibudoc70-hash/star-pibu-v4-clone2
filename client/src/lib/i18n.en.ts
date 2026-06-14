@@ -15,7 +15,7 @@ export const en: I18nContent = {
   },
   hero: {
     title: "STAR Dermatology",
-    subtitle: "Where Natural Beauty Begins",
+    subtitle: "Where Experience, Trust, and Science Meet",
     badge: "Since 2006",
     floor: "Busan Seomyeon ION City Bldg. 4F Reception & Treatment | 2F Stem Cell Research Center",
     cta_call: "+82-51-818-2300",

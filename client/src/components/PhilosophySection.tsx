@@ -255,7 +255,7 @@ export default function PhilosophySection() {
                   </p>
                   <p
                     style={{
-                      fontFamily: "'Playfair Display', Georgia, serif",
+                      fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
                       fontSize: "1.6rem",
                       fontWeight: 700,
                       color: "#EDD98A",

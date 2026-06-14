@@ -6,7 +6,7 @@
 /* 
  * STAR 피부과 디자인 시스템 — 프리미엄 브랜드 에디션
  * 컬러: 웜 뉴트럴 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
- * 폰트: Playfair Display (serif 브랜드) + Noto Sans KR (한국어) + Montserrat (숫자/EN)
+ * 폰트: Black Han Sans (헤딩) + Noto Sans KR (본문) + Montserrat (숫자/EN) — 전체 고딕 시스템
  * 철학: 별 / 빛 / 20년의 안목 / 정제된 따뜻함 / 전문의의 깊이
  */
 
@@ -99,8 +99,8 @@
   --dr-tab-inactive-text: #5a3e16;
   /* Font Family Tokens — 브랜드 타이포 시스템 */
   --font-display: 'Black Han Sans', 'Noto Sans KR', sans-serif; /* Hero/브랜드 헤드라인 */
-  --font-serif: 'Playfair Display', Georgia, serif;                         /* 수치/영문 serif */
-  --font-serif-kr: 'Noto Serif KR', 'Noto Serif', Georgia, serif;           /* 섹션 타이틀 */
+  --font-serif: 'Montserrat', 'Noto Sans KR', sans-serif;                   /* 수치/영문 (고딕으로 교체) */
+  --font-serif-kr: 'Black Han Sans', 'Noto Sans KR', sans-serif;            /* 섹션 타이틀 (고딕으로 교체) */
   --font-sans: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 — Noto Sans KR 우선 */
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
   --font-body: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 */
@@ -195,13 +195,13 @@
   }
   /* 폰트 유틸리티 클래스 */
   .font-display {
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   }
   .font-serif {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   }
   .font-serif-kr {
-    font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   }
   .font-body {
     font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
@@ -864,14 +864,15 @@
     text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.15);
   }
   .hero-subtitle {
-    color: rgba(255,255,255,0.72);
-    font-size: clamp(0.72rem, 2vw, 0.95rem);
+    color: rgba(255,255,255,0.82);
+    font-size: clamp(0.78rem, 1.8vw, 1.05rem);
     margin-bottom: clamp(0.3rem, 1vh, 0.7rem);
-    letter-spacing: 0.3em;
-    font-weight: 300;
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    text-shadow: 0 1px 12px rgba(0,0,0,0.35);
+    letter-spacing: 0.12em;
+    font-weight: 400;
+    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+    text-transform: none;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.45);
+    word-break: keep-all;
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
@@ -1081,16 +1082,16 @@
   .dr-section-title {
     color: var(--brand-text, #2C2C2C);
     font-size: clamp(1.6rem, 5vw, 2.6rem);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    font-family: 'Noto Serif KR', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   }
   .dr-section-tagline {
     color: var(--brand-text-mid, #666666);
     font-size: clamp(0.85rem, 2.5vw, 1rem);
     margin: 13px auto 0;
     max-width: 577px;
-    font-style: italic;
+    font-style: normal;
   }
   /* Panel border */
   .dr-panel-border {
@@ -1595,12 +1596,13 @@
 
     /* ▶ 7. 슬로건 — 대비 강화 */
     .hero-subtitle {
-      font-size: clamp(0.72rem, 3vw, 0.88rem) !important;
+      font-size: clamp(0.75rem, 3.2vw, 0.92rem) !important;
       margin-bottom: clamp(0.6rem, 1.8vh, 1rem) !important;
-      letter-spacing: 0.22em !important;
+      letter-spacing: 0.08em !important;
       font-weight: 400 !important;
-      color: rgba(255,255,255,0.9) !important;
+      color: rgba(255,255,255,0.92) !important;
       text-shadow: 0 1px 12px rgba(0,0,0,0.7) !important;
+      text-transform: none !important;
     }
 
     /* ▶ 8. 통계 스트립 */
@@ -1947,11 +1949,11 @@
   margin-bottom: 0.875rem;
   display: block;
 }
-/* section-title: 섹션 주제목 — Noto Serif KR 브랜드 감성 */
+/* section-title: 섹션 주제목 — Black Han Sans 고딕 */
 .section-title {
-  font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
+  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.18;
   color: var(--brand-text, #2C2C2C);
@@ -1973,9 +1975,9 @@
 
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
 
-/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Playfair Display serif 숫자) */
+/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Montserrat 고딕 숫자) */
 .hero-stat-value {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   font-weight: 700;
   font-size: clamp(1.5rem, 5vw, 2.6rem);
   color: rgba(255, 255, 255, 0.95);
@@ -2156,7 +2158,7 @@
 
 /* ── PhilosophySection 인라인 스타일 보조 클래스 */
 .philosophy-stat-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   font-weight: 700;
   color: #EDD98A;
   line-height: 1;

@@ -80,7 +80,7 @@ function ResultsSection() {
                 >
                   <Icon size={28} style={{ color: brandGoldDeep }} />
                 </div>
-                <h3 className="text-base font-bold mb-2" style={{ color: dark, fontFamily: "'Noto Serif KR', serif" }}>
+                <h3 className="text-base font-bold mb-2" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                   {item.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: gray }}>
@@ -168,7 +168,7 @@ function ResultsSection() {
                     style={{ borderBottom: `1px solid ${accentColor}22` }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-base" style={{ color: dark, fontFamily: "'Noto Serif KR', serif" }}>
+                      <h4 className="font-bold text-base" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                         {tr.treatment}
                       </h4>
                       {isHighlight && (

@@ -111,7 +111,7 @@ export default function Footer() {
           <div>
             <h3
               style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
+                fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
                 fontSize: "18px",
                 fontWeight: "700",
                 letterSpacing: "0.08em",

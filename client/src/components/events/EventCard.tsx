@@ -41,7 +41,7 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
           color: "#2C2C2C",
           fontSize: "clamp(1rem, 3.2vw, 1.15rem)",
           letterSpacing: "-0.01em",
-          fontFamily: "'Noto Serif KR', serif",
+          fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
         }}
       >
         {getLocalizedText(event, "title")}

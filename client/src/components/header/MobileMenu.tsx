@@ -128,7 +128,7 @@ export default function MobileMenu({
             flexShrink: 0,
           }}
         >
-          <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--brand-gold, #C4A882)", letterSpacing: "0.08em", fontFamily: "'Playfair Display', Georgia, serif" }}>
+          <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--brand-gold, #C4A882)", letterSpacing: "0.08em", fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
             STAR DERMATOLOGY
           </span>
           <button

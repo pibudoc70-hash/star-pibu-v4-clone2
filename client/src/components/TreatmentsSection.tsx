@@ -586,7 +586,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
           <p className="text-xs font-semibold mb-1 font-montserrat" style={{ color: "var(--brand-gold, #C4A882)", letterSpacing: '0.08em' }}>
             {t.nameEn}
           </p>
-          <h3 className="text-lg font-bold mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', serif" }}>
+          <h3 className="text-lg font-bold mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
           {t.name}
         </h3>
         <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B7280" }}>
@@ -726,7 +726,7 @@ export default function TreatmentsSection() {
               color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
               fontWeight: 600,
-              fontFamily: "'Noto Serif KR', serif",
+              fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
             }}
           >
             스타피부과 대표 시술
@@ -783,7 +783,7 @@ export default function TreatmentsSection() {
                 <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "var(--brand-gold, #C4A882)" }}>
                   LIFTING & TIGHTENING
                 </p>
-                <h3 className="text-xl font-bold mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', serif" }}>
+                <h3 className="text-xl font-bold mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                   리프팅·탄력 시술 라인업
                 </h3>
                 <p className="text-sm" style={{ color: "#6B7280" }}>

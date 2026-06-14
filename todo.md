@@ -2906,3 +2906,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 카드 padding/gap 24px 기준 통일
 - [ ] 카드 UI 개선 (시술/장비/이벤트/후기/의료진)
 - [ ] 신뢰 요소 모바일 재배치
+
+## Phase N: Hero 슬로건 변경 + 전체 고딕체 전환 (2026-06-14)
+- [x] Hero 슬로건 4개 언어 모두 "Where Experience, Trust, and Science Meet"으로 변경 (ko/en/ja/zh)
+- [x] hero-subtitle CSS 스타일 영문 슬로건에 맞게 조정 (letter-spacing 0.12em, text-transform: none)
+- [x] 모바일 hero-subtitle CSS도 영문 슬로건에 맞게 조정
+- [x] index.css 폰트 토큰 serif → sans-serif 교체 (--font-serif, --font-serif-kr)
+- [x] index.css 유틸리티 클래스 .font-display, .font-serif, .font-serif-kr 고딕으로 교체
+- [x] index.css section-title, dr-section-title, hero-stat-value, philosophy-stat-num 고딕으로 교체
+- [x] Footer.tsx, MobileMenu.tsx Playfair Display → Montserrat 교체
+- [x] PhilosophySection.tsx, ResultsStatisticsSection.tsx Playfair Display → Montserrat 교체
+- [x] ResultsSection.tsx, TreatmentsSection.tsx, EquipmentSection.tsx, EventCard.tsx, ReservationSection.tsx Noto Serif KR → Black Han Sans 교체
+- [x] index.html Google Fonts 로딩에서 Cormorant Garamond, Playfair Display, Noto Serif KR 제거

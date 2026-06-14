@@ -167,10 +167,40 @@
   body.font-lang-ja,
   body.font-lang-ja * {
     font-family: 'Noto Sans JP', sans-serif !important;
+    line-height: 1.75 !important;
   }
   body.font-lang-zh,
   body.font-lang-zh * {
     font-family: 'Noto Sans SC', sans-serif !important;
+    line-height: 1.75 !important;
+  }
+  /* 중국어/일본어 h1~h6: Noto Serif KR 대신 각 언어 폰트로 통일 */
+  body.font-lang-ja h1, body.font-lang-ja h2, body.font-lang-ja h3,
+  body.font-lang-ja h4, body.font-lang-ja h5, body.font-lang-ja h6 {
+    font-family: 'Noto Sans JP', sans-serif !important;
+    line-height: 1.4 !important;
+  }
+  body.font-lang-zh h1, body.font-lang-zh h2, body.font-lang-zh h3,
+  body.font-lang-zh h4, body.font-lang-zh h5, body.font-lang-zh h6 {
+    font-family: 'Noto Sans SC', sans-serif !important;
+    line-height: 1.4 !important;
+  }
+  /* 중국어/일본어 section-title, section-subtitle 라인하이트 통일 */
+  body.font-lang-zh .section-title,
+  body.font-lang-zh .section-subtitle,
+  body.font-lang-zh .section-eyebrow,
+  body.font-lang-zh .dr-section-title,
+  body.font-lang-zh .dr-section-eyebrow {
+    font-family: 'Noto Sans SC', sans-serif !important;
+    line-height: 1.5 !important;
+  }
+  body.font-lang-ja .section-title,
+  body.font-lang-ja .section-subtitle,
+  body.font-lang-ja .section-eyebrow,
+  body.font-lang-ja .dr-section-title,
+  body.font-lang-ja .dr-section-eyebrow {
+    font-family: 'Noto Sans JP', sans-serif !important;
+    line-height: 1.5 !important;
   }
   /* Montserrat는 영문/숫자 전용이므로 언어 무관하게 유지 */
   body.font-lang-ko .font-montserrat,

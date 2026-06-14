@@ -2907,6 +2907,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 카드 UI 개선 (시술/장비/이벤트/후기/의료진)
 - [ ] 신뢰 요소 모바일 재배치
 
+## Phase N+1: 중국어/일본어 폰트 줄 높이 불일치 수정 (2026-06-15)
+- [x] PhilosophySection.tsx - 일본어 타이틀 white-space: nowrap 추가 (スター皮膚科について 한 줄 표시)
+- [x] index.css - 중국어/일본어 body/* 전체 line-height: 1.75 명시적 설정
+- [x] index.css - 중국어/일본어 h1~h6에 각 언어 폰트 + line-height: 1.4 오버라이드
+- [x] index.css - 중국어/일본어 section-title/subtitle/eyebrow에 각 언어 폰트 + line-height: 1.5 오버라이드
+
 ## Phase N: Hero 슬로건 변경 + 전체 고딕체 전환 (2026-06-14)
 - [x] Hero 슬로건 4개 언어 모두 "Where Experience, Trust, and Science Meet"으로 변경 (ko/en/ja/zh)
 - [x] hero-subtitle CSS 스타일 영문 슬로건에 맞게 조정 (letter-spacing 0.12em, text-transform: none)

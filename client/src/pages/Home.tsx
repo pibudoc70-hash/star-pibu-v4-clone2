@@ -27,6 +27,7 @@ const FacilitySection = lazy(() => import("@/components/FacilitySection"));
 const ReviewsSection = lazy(() => import("@/components/ReviewsSection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
+const ConsultationFormSection = lazy(() => import("@/components/ConsultationFormSection"));
 const ReservationSection = lazy(() => import("@/components/ReservationSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 
@@ -335,7 +336,12 @@ export default function Home() {
           </Suspense>
         </div>
 
-        {/* 9-2. Reservation — 미니멀 크림 */}
+        {/* 9-2. ConsultationForm — 프리미엄 상담 폼 */}
+        <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
+          <ConsultationFormSection />
+        </Suspense>
+
+        {/* 9-3. Reservation — 미니멀 크림 */}
         <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
           <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
             <ReservationSection />

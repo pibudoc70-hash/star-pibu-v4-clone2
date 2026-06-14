@@ -9,6 +9,7 @@ import { popupRouter } from "./routers/popup";
 import { adminRouter } from "./routers/admin";
 import { youtubeRouter } from "./routers/youtube";
 import { equipment3Router } from "./routers/equipment3";
+import { consultationRouter } from "./routers/consultation";
 
 export const appRouter = router({
   system: systemRouter,
@@ -28,6 +29,7 @@ export const appRouter = router({
   admin: adminRouter,
   youtube: youtubeRouter,
   equipment3: equipment3Router,
+  consultation: consultationRouter,
 });
 
 export type AppRouter = typeof appRouter;

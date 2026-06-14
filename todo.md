@@ -2774,3 +2774,30 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] HeroSection 신뢰 수치 동기화 확인 완료 (useClinicStats 훅으로 20년+/4,000례+/50종+ 통일)
 - [x] TypeScript 오류 0건 확인
 - [x] 전체 테스트 56파일 1,380개 통과 확인
+
+## 프리미엄 상담 폼 구현 (2026-06-14)
+
+### P0 — DB + 백엔드
+- [ ] drizzle/schema.ts에 consultationRequests 테이블 추가
+- [ ] pnpm drizzle-kit generate 후 webdev_execute_sql 적용
+- [ ] server/db.ts에 consultation DB 헬퍼 추가
+- [ ] server/routers/consultation.ts 생성 (submitConsultation, rate limit, Turnstile 검증, 오너 알림)
+- [ ] server/routers.ts에 consultationRouter 등록
+
+### P1 — 프론트엔드
+- [ ] client/src/components/ConsultationFormSection.tsx 생성 (메인 폼)
+- [ ] i18n.types.ts에 consultation 타입 추가
+- [ ] i18n.ko.ts / i18n.en.ts / i18n.ja.ts / i18n.zh.ts에 consultation 번역 추가
+- [ ] Home.tsx에 ConsultationFormSection 마운트 (FAQSection과 ReservationSection 사이)
+- [ ] index.css에 상담 폼 전용 CSS 추가
+
+### P2 — 스팸 방지 + 시크릿
+- [ ] Cloudflare Turnstile 시크릿 키 설정 (TURNSTILE_SECRET_KEY)
+- [ ] VITE_TURNSTILE_SITE_KEY 설정
+- [ ] honeypot 필드 구현 (website 필드)
+- [ ] IP + 연락처 기반 rate limit (10분 3회)
+
+### P3 — 테스트 + 검증
+- [ ] server/__tests__/consultation.test.ts 작성
+- [ ] TypeScript 오류 0건 확인
+- [ ] 전체 테스트 통과 확인

@@ -301,3 +301,29 @@ export const unavailableSlots = mysqlTable("unavailableSlots", {
 });
 export type UnavailableSlot = typeof unavailableSlots.$inferSelect;
 export type InsertUnavailableSlot = typeof unavailableSlots.$inferInsert;
+
+// ── 프리미엄 상담 폼 ──────────────────────────────────────────────────────────
+export const consultationRequests = mysqlTable("consultationRequests", {
+  id: int("id").autoincrement().primaryKey(),
+  // 기본 정보
+  name: varchar("name", { length: 100 }).notNull(),
+  phone: varchar("phone", { length: 20 }).notNull(),
+  concern: varchar("concern", { length: 200 }).notNull(),  // 희망 시술 또는 고민 부위
+  message: text("message").notNull(),                       // 상담 내용
+  privacyAgreed: varchar("privacyAgreed", { length: 1 }).notNull().default("1"),
+  // 스팸 방지
+  ipAddress: varchar("ipAddress", { length: 45 }),          // IPv4/IPv6
+  turnstileVerified: varchar("turnstileVerified", { length: 1 }).notNull().default("0"),
+  // 상태
+  status: mysqlEnum("status", ["pending", "contacted", "done", "spam"]).notNull().default("pending"),
+  // 메타
+  lang: varchar("lang", { length: 5 }).default("ko"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  // rate limit 조회용 복합 인덱스
+  ipCreatedIdx: index("idx_consultation_ip_created").on(table.ipAddress, table.createdAt),
+  phoneCreatedIdx: index("idx_consultation_phone_created").on(table.phone, table.createdAt),
+}));
+export type ConsultationRequest = typeof consultationRequests.$inferSelect;
+export type InsertConsultationRequest = typeof consultationRequests.$inferInsert;

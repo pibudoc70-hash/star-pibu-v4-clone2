@@ -423,5 +423,36 @@ export interface I18nContent {
     }>;
     memberships: string[];
   };
+  consultation: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    namePlaceholder: string;
+    nameLabel: string;
+    phonePlaceholder: string;
+    phoneLabel: string;
+    concernLabel: string;
+    concernPlaceholder: string;
+    messagePlaceholder: string;
+    messageLabel: string;
+    privacyLabel: string;
+    privacyLink: string;
+    submitBtn: string;
+    submitting: string;
+    successTitle: string;
+    successDesc: string;
+    successNote: string;
+    resetBtn: string;
+    errorRequired: string;
+    errorPhone: string;
+    errorMessage: string;
+    errorPrivacy: string;
+    errorRateLimit: string;
+    errorGeneric: string;
+    quickTitle: string;
+    quickPlaceholder: string;
+    quickBtn: string;
+    concerns: string[];
+  };
 }
 

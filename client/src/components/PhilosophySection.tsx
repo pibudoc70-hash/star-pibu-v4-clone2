@@ -83,6 +83,98 @@ export default function PhilosophySection() {
         </div>
       </div>
 
+      {/* ── 20년 마일스톤 타임라인 스트립 ── */}
+      <div
+        style={{
+          background: "var(--brand-bg-alt, #F5F0EB)",
+          borderTop: "1px solid rgba(196,168,130,0.12)",
+          borderBottom: "1px solid rgba(196,168,130,0.12)",
+          padding: "clamp(2rem, 5vw, 3rem) 0",
+          overflow: "hidden",
+        }}
+      >
+        <div className="container">
+          <p
+            className="text-center font-montserrat mb-6 sm:mb-8"
+            style={{
+              color: "rgba(196,168,130,0.65)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+            }}
+          >
+            OUR JOURNEY
+          </p>
+          <div
+            className="grid grid-cols-2 sm:grid-cols-4 gap-0"
+            style={{ borderTop: "1px solid rgba(196,168,130,0.15)" }}
+          >
+            {[
+              { year: "2006", label: "서면 개원", sub: "부산 서면에서 시작" },
+              { year: "2010", label: "레이저 전문화", sub: "프리미엄 장비 도입" },
+              { year: "2016", label: "10주년", sub: "누적 환자 10,000명+" },
+              { year: "2026", label: "20주년", sub: "한결같은 신뢰" },
+            ].map((m, idx, arr) => (
+              <div
+                key={m.year}
+                style={{
+                  padding: "clamp(1.25rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.5rem)",
+                  borderRight: idx < arr.length - 1 ? "1px solid rgba(196,168,130,0.15)" : "none",
+                  position: "relative",
+                }}
+              >
+                {/* 타임라인 닷 */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-5px",
+                    left: "clamp(1rem, 2.5vw, 1.5rem)",
+                    width: "9px",
+                    height: "9px",
+                    borderRadius: "50%",
+                    background: idx === arr.length - 1 ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.35)",
+                    border: "1px solid rgba(196,168,130,0.5)",
+                  }}
+                />
+                <p
+                  className="font-montserrat"
+                  style={{
+                    color: "var(--brand-gold, #C4A882)",
+                    fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
+                    fontWeight: 600,
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  {m.year}
+                </p>
+                <p
+                  style={{
+                    color: "var(--brand-text, #2C2C2C)",
+                    fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
+                    fontWeight: 500,
+                    marginBottom: "0.2rem",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {m.label}
+                </p>
+                <p
+                  style={{
+                    color: "var(--brand-text-mid, #666666)",
+                    fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {m.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── 라이트 섹션 — 브랜드 서사 + 이미지 ── */}
       <section id="about" className="py-16 sm:py-24 overflow-hidden" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
         <div className="container">

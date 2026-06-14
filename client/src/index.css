@@ -1576,8 +1576,8 @@
 
     /* ▶ 5. 로고 크기 절제 */
     .hero-logo-img {
-      height: clamp(90px, 22vw, 120px) !important;
-      width: clamp(90px, 22vw, 120px) !important;
+      height: clamp(104px, 25vw, 138px) !important;
+      width: clamp(104px, 25vw, 138px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
@@ -1588,7 +1588,7 @@
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(3.4rem, 16vw, 4.8rem) !important;
+      font-size: clamp(3.9rem, 18.5vw, 5.5rem) !important;
       font-weight: 400 !important;
       letter-spacing: 0.02em !important;
       line-height: 1.1 !important;

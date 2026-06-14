@@ -40,14 +40,17 @@ export default function Header() {
         role="banner"
         aria-label="사이트 헤더"
         style={{
-          height: scrolled ? "58px" : "76px",
-          background: scrolled ? "rgba(255,255,255,0.96)" : "rgba(255,255,255,0.88)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          height: scrolled ? "60px" : "80px",
+          background: scrolled
+            ? "rgba(250,248,245,0.97)"
+            : "rgba(0,0,0,0)",
+          backdropFilter: scrolled ? "blur(24px) saturate(200%)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(200%)" : "none",
           borderBottom: scrolled
-            ? "1px solid rgba(201,168,76,0.20)"
-            : "1px solid rgba(255,255,255,0.4)",
-          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.06)" : "none",
+            ? "1px solid rgba(196,168,130,0.18)"
+            : "1px solid rgba(255,255,255,0.0)",
+          boxShadow: scrolled ? "0 2px 32px rgba(0,0,0,0.07)" : "none",
+          transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
         }}
       >
         <div
@@ -66,9 +69,11 @@ export default function Header() {
               style={{
                 fontSize: "15px",
                 fontWeight: "700",
-                color: "#C9A84C",
-                letterSpacing: "0.08em",
-                transition: "opacity 0.2s",
+                color: scrolled ? "#C4A882" : "rgba(255,255,255,0.95)",
+                letterSpacing: "0.12em",
+                fontFamily: "'Montserrat', sans-serif",
+                transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
+                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.4)",
               }}
             >
               STAR DERMATOLOGY
@@ -84,6 +89,7 @@ export default function Header() {
             moreRef={moreRef}
             isActive={isActive}
             handleNavClick={handleNavClick}
+            scrolled={scrolled}
             chatUrl={chatUrl}
             reserveUrl={reserveUrl}
             chatBg={chatBg}

@@ -551,7 +551,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             background: "linear-gradient(to top, rgba(31,41,55,0.94) 0%, rgba(31,41,55,0.6) 55%, transparent 100%)",
           }}
         >
-          <p className="text-xs font-semibold mb-0.5 font-montserrat" style={{ color: "#81C7C9" }}>
+          <p className="text-xs font-semibold mb-0.5 font-montserrat" style={{ color: "rgba(196,168,130,0.85)" }}>
             {t.nameEn}
           </p>
           <p className="text-sm font-bold text-white mb-1 leading-snug">{t.name}</p>
@@ -583,10 +583,10 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
 
       {/* 내용 */}
       <div className="p-5">
-        <p className="text-xs font-semibold mb-1 font-montserrat" style={{ color: "#81C7C9" }}>
-          {t.nameEn}
-        </p>
-        <h3 className="text-lg font-bold mb-2" style={{ color: "#1F2937" }}>
+          <p className="text-xs font-semibold mb-1 font-montserrat" style={{ color: "var(--brand-gold, #C4A882)", letterSpacing: '0.08em' }}>
+            {t.nameEn}
+          </p>
+          <h3 className="text-lg font-bold mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', serif" }}>
           {t.name}
         </h3>
         <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B7280" }}>
@@ -602,7 +602,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             <RefreshCw size={12} />
             회복 {t.recovery}
           </div>
-          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "#4A6FA5" }}>
+          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
             <Sparkles size={12} />
             {price}
           </div>
@@ -612,7 +612,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
           <a
             href={`/treatment/${encodeURIComponent(t.name)}`}
             className="flex-1 flex items-center justify-center gap-1 text-sm font-semibold transition-all hover:gap-2 py-2 px-3 rounded-lg"
-            style={{ color: "white", background: "#4A6FA5" }}
+            style={{ color: "white", background: "var(--brand-gold, #C4A882)" }}
           >
             상세 정보
             <ArrowRight size={14} />
@@ -622,7 +622,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-1 text-sm font-semibold transition-all hover:gap-2 py-2 px-3 rounded-lg"
-            style={{ color: "#4A6FA5", border: "1px solid #4A6FA5" }}
+            style={{ color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.4)", background: 'transparent' }}
           >
             상담 문의
             <MessageCircle size={14} />
@@ -715,19 +715,18 @@ export default function TreatmentsSection() {
   const sectionRef = useSectionReveal(60);
 
   return (
-    <section ref={sectionRef} id="treatments-legacy" className="py-24 bg-white">
+    <section ref={sectionRef} id="treatments-legacy" className="py-24" style={{ background: 'var(--brand-bg, #FAF8F5)' }}>
       <div className="container">
         {/* 헤더 */}
         <div className="text-center mb-12 reveal-heading">
-          <p className="text-sm font-semibold tracking-widest mb-3" style={{ color: "#81C7C9" }}>
-            시술 안내
-          </p>
+          <span className="section-eyebrow">TREATMENTS</span>
           <h2
             className="mb-4"
             style={{
-              color: "#1F2937",
+              color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 800,
+              fontWeight: 600,
+              fontFamily: "'Noto Serif KR', serif",
             }}
           >
             스타피부과 대표 시술
@@ -747,8 +746,8 @@ export default function TreatmentsSection() {
               className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
               style={
                 activeTab === tab.id
-                  ? { background: "#4A6FA5", color: "white", border: "1px solid #4A6FA5" }
-                  : { background: "#F8FAFC", color: "#6B7280", border: "1px solid #E5F4F4" }
+                  ? { background: "var(--brand-gold, #C4A882)", color: "white", border: "1px solid var(--brand-gold, #C4A882)" }
+                  : { background: "rgba(196,168,130,0.06)", color: "var(--brand-text-mid, #666)", border: "1px solid rgba(196,168,130,0.2)" }
               }
             >
               {tab.label}
@@ -776,15 +775,15 @@ export default function TreatmentsSection() {
             <div
               className="rounded-2xl p-6 mb-8 flex flex-wrap items-center gap-4"
               style={{
-                background: "linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 100%)",
-                border: "1px solid #C7D2FE",
+                background: "linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, var(--brand-bg, #FAF8F5) 100%)",
+                border: "1px solid rgba(196,168,130,0.25)",
               }}
             >
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "#4A6FA5" }}>
+                <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "var(--brand-gold, #C4A882)" }}>
                   LIFTING & TIGHTENING
                 </p>
-                <h3 className="text-xl font-bold mb-1" style={{ color: "#1F2937" }}>
+                <h3 className="text-xl font-bold mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', serif" }}>
                   리프팅·탄력 시술 라인업
                 </h3>
                 <p className="text-sm" style={{ color: "#6B7280" }}>
@@ -798,7 +797,7 @@ export default function TreatmentsSection() {
                 <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#C8860A" }}>
                   울쎄라피 정품
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#4A6FA5" }}>
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "var(--brand-gold, #C4A882)" }}>
                   11종 장비
                 </span>
               </div>
@@ -833,7 +832,8 @@ export default function TreatmentsSection() {
             href="https://pf.kakao.com/_HNyGC"
             target="_blank"
             rel="noopener noreferrer"
-            className="star-navy-btn inline-flex"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"
+            style={{ background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 4px 14px rgba(196,168,130,0.3)" }}
           >
             전체 시술 상담하기
             <ArrowRight size={16} />

@@ -143,7 +143,7 @@ export default function ReviewsSection() {
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <StarRating rating={r.rating} />
-                            <span className="text-xs font-semibold" style={{ color: "#4A6FA5" }}>
+                            <span className="text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
                               {r.treatment}
                             </span>
                           </div>
@@ -170,7 +170,7 @@ export default function ReviewsSection() {
             <button type="button"
               onClick={() => { goPrev(); startAuto(); }}
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
-              style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              style={{ background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.3)" }}
               aria-label={rv.prevLabel}
             >
               <ChevronLeft size={16} />
@@ -178,7 +178,7 @@ export default function ReviewsSection() {
             <button type="button"
               onClick={() => { goNext(); startAuto(); }}
               className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
-              style={{ background: "white", color: "#4A6FA5", border: "1px solid #81C7C9" }}
+              style={{ background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.3)" }}
               aria-label={rv.nextLabel}
             >
               <ChevronRight size={16} />
@@ -193,7 +193,7 @@ export default function ReviewsSection() {
                   style={{
                     width: i === current ? "22px" : "7px",
                     height: "7px",
-                    background: i === current ? "#4A6FA5" : "#C7E8E9",
+                    background: i === current ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.25)",
                   }}
                   aria-label={`${i + 1}`}
                 />
@@ -214,7 +214,7 @@ export default function ReviewsSection() {
                   style={{ transitionDelay: `${i * 0.1}s` }}
                 >
                   <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
-                    <Quote size={28} style={{ color: "#EEF7F7", marginBottom: "0.5rem" }} />
+                    <Quote size={28} style={{ color: "rgba(196,168,130,0.25)", marginBottom: "0.5rem" }} />
                     <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
                       "{r.text}"
                     </p>
@@ -222,7 +222,7 @@ export default function ReviewsSection() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <StarRating rating={r.rating} />
-                          <span className="text-xs font-semibold" style={{ color: "#4A6FA5" }}>
+                          <span className="text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
                             {r.treatment}
                           </span>
                         </div>
@@ -259,7 +259,7 @@ export default function ReviewsSection() {
                     key={i}
                     onClick={() => setCurrent(i)}
                     className="w-2.5 h-2.5 rounded-full transition-all"
-                    style={{ background: i === current ? "#4A6FA5" : "#C7E8E9" }}
+                    style={{ background: i === current ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.25)" }}
                     aria-label={`${i + 1}`}
                   />
                 ))}

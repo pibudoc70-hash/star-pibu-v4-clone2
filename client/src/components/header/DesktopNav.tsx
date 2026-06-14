@@ -1,6 +1,7 @@
 /**
  * DesktopNav — 데스크탑 1차 메뉴 + More 드롭다운 + 예약 CTA
  * Header.tsx에서 분리 추출 (2026-06-12)
+ * [Premium Redesign] 투명 헤더 대응 — scrolled prop으로 텍스트 컬러 전환
  */
 import { MoreHorizontal } from "lucide-react";
 import type { RefObject } from "react";
@@ -14,6 +15,7 @@ interface DesktopNavProps {
   moreRef: RefObject<HTMLDivElement | null>;
   isActive: (href: string, sectionId: string | null) => boolean;
   handleNavClick: (href: string) => void;
+  scrolled?: boolean;
   // CTA
   chatUrl: string;
   reserveUrl: string;
@@ -36,6 +38,7 @@ export default function DesktopNav({
   moreRef,
   isActive,
   handleNavClick,
+  scrolled = false,
   chatUrl,
   reserveUrl,
   chatBg,
@@ -48,6 +51,14 @@ export default function DesktopNav({
   ctaReserve,
   copiedLabel,
 }: DesktopNavProps) {
+  // 투명 헤더일 때는 흰색, 스크롤 후에는 다크 텍스트
+  const navTextColor = scrolled ? "#3a3a3a" : "rgba(255,255,255,0.92)";
+  const navActiveColor = scrolled ? "#C4A882" : "#EDD98A";
+  const navMutedColor = scrolled ? "#777" : "rgba(255,255,255,0.65)";
+  const underlineColor = scrolled
+    ? "linear-gradient(90deg, #C4A882, #D9C4A8)"
+    : "linear-gradient(90deg, #EDD98A, #F5E4A8)";
+
   return (
     <>
       {/* 1차 메뉴 */}
@@ -64,14 +75,16 @@ export default function DesktopNav({
               type="button"
               key={item.label}
               onClick={() => handleNavClick(item.href)}
-              className="relative whitespace-nowrap transition-colors duration-200"
+              className="relative whitespace-nowrap transition-colors duration-300"
               style={{
-                color: active ? "#111" : "#555",
+                color: active ? navActiveColor : navTextColor,
                 fontSize: "13.5px",
                 fontWeight: active ? "600" : "400",
                 letterSpacing: "0.005em",
                 padding: "8px 18px",
                 background: "transparent",
+                textShadow: scrolled ? "none" : "0 1px 6px rgba(0,0,0,0.35)",
+                transition: "color 0.4s cubic-bezier(0.16,1,0.3,1)",
               }}
               aria-current={active ? "page" : undefined}
             >
@@ -85,7 +98,7 @@ export default function DesktopNav({
                   transform: "translateX(-50%)",
                   width: active ? "18px" : "0px",
                   height: "2px",
-                  background: "linear-gradient(90deg, #C9A84C, #F5D78E)",
+                  background: underlineColor,
                   borderRadius: "2px",
                   transition: "width 0.22s cubic-bezier(0.4,0,0.2,1)",
                   display: "block",
@@ -100,13 +113,14 @@ export default function DesktopNav({
           <button
             type="button"
             onClick={() => setMoreOpen(!moreOpen)}
-            className="flex items-center gap-1 whitespace-nowrap transition-colors duration-200"
+            className="flex items-center gap-1 whitespace-nowrap transition-colors duration-300"
             style={{
-              color: moreOpen ? "#111" : "#888",
+              color: moreOpen ? navActiveColor : navMutedColor,
               fontSize: "13px",
               padding: "8px 14px",
               background: "transparent",
               letterSpacing: "0.01em",
+              textShadow: scrolled ? "none" : "0 1px 6px rgba(0,0,0,0.35)",
             }}
             aria-expanded={moreOpen}
             aria-haspopup="true"
@@ -123,10 +137,11 @@ export default function DesktopNav({
                 position: "absolute",
                 top: "calc(100% + 8px)",
                 right: "0",
-                background: "white",
-                border: "1px solid rgba(0,0,0,0.08)",
+                background: "rgba(250,248,245,0.98)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(196,168,130,0.15)",
                 borderRadius: "14px",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.10)",
+                boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
                 minWidth: "160px",
                 overflow: "hidden",
                 zIndex: 200,
@@ -141,14 +156,20 @@ export default function DesktopNav({
                     key={item.label}
                     role="menuitem"
                     onClick={() => handleNavClick(item.href)}
-                    className="w-full text-left transition-colors hover:bg-gray-50"
+                    className="w-full text-left transition-colors"
                     style={{
                       display: "block",
                       padding: "11px 18px",
                       fontSize: "13.5px",
-                      color: active ? "#C9A84C" : "#333",
+                      color: active ? "#C4A882" : "#333",
                       fontWeight: active ? "600" : "400",
                       letterSpacing: "-0.01em",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "rgba(196,168,130,0.08)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "transparent";
                     }}
                   >
                     {item.label}
@@ -193,14 +214,15 @@ export default function DesktopNav({
           href={reserveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center font-semibold text-white transition-all duration-200 whitespace-nowrap hover:-translate-y-px"
+          className="flex items-center font-semibold transition-all duration-200 whitespace-nowrap hover:-translate-y-px"
           style={{
-            background: "linear-gradient(135deg, #03C75A 0%, #02a84a 100%)",
+            background: "linear-gradient(135deg, #C4A882 0%, #A8895E 100%)",
+            color: "#1a1a1a",
             fontSize: "12.5px",
             padding: "7px 18px",
             borderRadius: "100px",
             letterSpacing: "0.01em",
-            boxShadow: "0 2px 12px rgba(3,199,90,0.25)",
+            boxShadow: "0 2px 16px rgba(196,168,130,0.35)",
           }}
         >
           {ctaReserve}

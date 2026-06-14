@@ -344,22 +344,23 @@ export default function EquipmentSection() {
       });
 
   return (
-    <section ref={sectionRef} id="equipment" className="py-12 sm:py-16 md:py-24" style={{ background: "#EEF7F7" }}>
+    <section ref={sectionRef} id="equipment" className="py-12 sm:py-16 md:py-24" style={{ background: "var(--brand-bg-alt, #F5F0EB)" }}>
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-10 md:mb-14 reveal-heading">
           <p
             className="text-sm font-semibold tracking-widest mb-3 font-montserrat"
-            style={{ color: "#4A6FA5" }}
+            style={{ color: "var(--brand-gold, #C4A882)" }}
           >
             PREMIUM LASER EQUIPMENT
           </p>
           <h2
             className="mb-4"
             style={{
-              color: "#1F2937",
+              color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 800,
+              fontWeight: 700,
+              fontFamily: "'Noto Serif KR', serif",
             }}
           >
             스타의 장비소개
@@ -369,8 +370,8 @@ export default function EquipmentSection() {
             style={{
               width: "48px",
               height: "3px",
-              background: "linear-gradient(90deg, #81C7C9, #4A6FA5)",
-              borderRadius: "2px",
+              background: "linear-gradient(90deg, transparent, #C4A882, transparent)",
+              borderRadius: "0",
             }}
           />
           <p className="text-sm max-w-xl mx-auto" style={{ color: "#6B7280" }}>
@@ -388,14 +389,14 @@ export default function EquipmentSection() {
               style={
                 activeCategory === cat
                   ? {
-                      background: "#4A6FA5",
+                      background: "var(--brand-gold, #C4A882)",
                       color: "#ffffff",
-                      border: "1px solid #4A6FA5",
+                      border: "1px solid var(--brand-gold, #C4A882)",
                     }
                   : {
-                      background: "#ffffff",
-                      color: "#4A6FA5",
-                      border: "1px solid #A7DADC",
+                      background: "var(--brand-bg, #FAF8F5)",
+                      color: "var(--brand-text-mid, #666666)",
+                      border: "1px solid rgba(196,168,130,0.25)",
                     }
               }
             >

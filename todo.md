@@ -2690,3 +2690,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] EventCard 시술명 Noto Serif KR, 카드 배경 brand-bg-alt, CTA 절제된 테두리 버튼
 - [x] DoctorsSection 섹션 헤더 Noto Serif KR + 배경 brand-bg 통일 + 태그라인 이탤릭
 - [x] i18n.ko.ts swipeHint "의료진 소개 보기" 절제된 표현으로 교체
+
+## 프리미엄 디자인 전면 적용 — 10년차 웹디자이너 기준 (2026-06-14)
+
+- [x] 헤더 투명 → frosted glass 스크롤 전환 (Header.tsx, DesktopNav.tsx)
+- [x] 로고 Playfair Display serif 적용
+- [x] 히어로 타이포 강화 (hero-title 크기 상향, hero-subtitle 에디토리얼)
+- [x] PhilosophySection 다크/라이트 교차 패턴, 브랜드 서사 강화
+- [x] TreatmentsSection 브랜드 골드 컬러 통일, 리프팅 배너 교체
+- [x] ReviewsSection 다크 교차 배경, 브랜드 골드 통일
+- [x] MobileMenu 웜 아이보리 배경, 예약 CTA 골드 그라디언트
+- [x] EquipmentSection 브랜드 골드 필터 탭, 섹션 배경 교체
+- [x] EventsSection 카테고리 탭 브랜드 골드 교체
+- [x] FAQSection 탭/아코디언/CTA 브랜드 웜 뉴트럴 통일
+- [x] ReservationSection 아이콘/버튼 브랜드 골드 교체
+- [x] ContactSection section-eyebrow 브랜드 통일
+- [x] 전체 잔여 navy/mint 컬러 브랜드 골드로 교체 완료
+- [x] TypeScript 오류 0건 확인
+- [x] 전체 테스트 1,380개 통과 확인

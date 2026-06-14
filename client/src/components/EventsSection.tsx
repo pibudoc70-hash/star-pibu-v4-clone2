@@ -116,8 +116,8 @@ export default function EventsSection() {
               className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
               style={
                 activeCategory === category
-                  ? { background: "#4A6FA5", color: "white", boxShadow: "0 2px 8px rgba(74,111,165,0.35)" }
-                  : { background: "white", color: "#6B7280", border: "1px solid #E5F4F4" }
+                  ? { background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 2px 8px rgba(196,168,130,0.35)" }
+                  : { background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-text-mid, #666666)", border: "1px solid rgba(196,168,130,0.2)" }
               }
             >
               {category}

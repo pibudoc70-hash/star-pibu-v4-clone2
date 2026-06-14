@@ -37,7 +37,7 @@ export default function ReservationSection() {
         {/* 섹션 제목 */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Calendar size={24} style={{ color: "#4A6FA5" }} />
+            <Calendar size={24} style={{ color: "var(--brand-gold, #C4A882)" }} />
             <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937]">{r.sectionTitle}</h2>
           </div>
           <p className="text-lg text-[#6B7280]">
@@ -83,7 +83,7 @@ export default function ReservationSection() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="px-6 py-2 rounded-lg font-semibold text-white transition-colors hover:opacity-90"
-                style={{ background: "#4A6FA5" }}
+                style={{ background: "var(--brand-gold, #C4A882)" }}
               >
                 {lang === 'ko' ? '예약 안내 확인' : lang === 'en' ? 'View Booking Guide' : lang === 'ja' ? '予約案内を確認' : '查看预约说明'}
               </button>

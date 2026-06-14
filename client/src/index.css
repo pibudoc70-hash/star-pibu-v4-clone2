@@ -383,11 +383,11 @@
   .cat-tab-btn[data-active="true"] .cat-tab-icon { color: #ffffff; }
 
   .review-card {
-    background: white;
+    background: var(--brand-bg, #FAF8F5);
     border-radius: 1rem;
     padding: 1.5rem;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-    border-left: 4px solid #81C7C9;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--brand-gold, #C4A882);
   }
 
   /* ═══════════════════════════════════════════════
@@ -519,9 +519,10 @@
   /* Header scroll effect */
   .header-scrolled {
     height: 64px !important;
-    background: rgba(255,255,255,0.98) !important;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important;
+    background: rgba(250,248,245,0.97) !important;
+    backdrop-filter: blur(16px) saturate(1.2);
+    box-shadow: 0 1px 24px rgba(0,0,0,0.07) !important;
+    border-bottom: 1px solid rgba(196,168,130,0.12);
   }
 
   /* Mobile menu */
@@ -789,9 +790,9 @@
     }
   }
   .hero-content {
-    max-width: min(680px, 96vw);
-    padding-top: 141px;
-    padding-bottom: clamp(40px, 6vh, 100px);
+    max-width: min(720px, 96vw);
+    padding-top: 160px;
+    padding-bottom: clamp(60px, 8vh, 120px);
     padding-right: 35px;
     padding-left: clamp(1.25rem, 6vw, 2rem);
     box-sizing: border-box;
@@ -803,27 +804,32 @@
     margin-bottom: clamp(0.25rem, 1.5vh, 1.75rem);
   }
   .hero-logo-img {
-    height: clamp(120px, 30vw, 220px);
-    width: clamp(120px, 30vw, 220px);
+    height: clamp(100px, 22vw, 180px);
+    width: clamp(100px, 22vw, 180px);
     object-fit: contain;
     display: block;
     margin-top: -31px;
+    filter: drop-shadow(0 4px 24px rgba(0,0,0,0.3));
   }
   .hero-title {
     color: #FFFFFF;
-    font-size: clamp(1.2rem, 4.5vw, 2.8rem);
+    font-size: clamp(2rem, 7vw, 4.2rem);
     margin-bottom: clamp(0.4rem, 1.4vh, 0.85rem);
-    font-family: 'Noto Sans KR', sans-serif;
-    letter-spacing: clamp(0.06em, 1.5vw, 0.14em);
-    text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 50px rgba(201,168,76,0.12);
-    line-height: 1.18;
+    font-family: 'Noto Serif KR', 'Noto Sans KR', sans-serif;
+    letter-spacing: clamp(0.12em, 2vw, 0.22em);
+    text-shadow: 0 2px 32px rgba(0,0,0,0.55), 0 0 80px rgba(196,168,130,0.18);
+    line-height: 1.12;
+    font-weight: 600;
   }
   .hero-subtitle {
-    color: rgba(255,255,255,0.82);
-    font-size: clamp(0.82rem, 2.8vw, 1.35rem);
+    color: rgba(255,255,255,0.78);
+    font-size: clamp(0.78rem, 2.2vw, 1.1rem);
     margin-bottom: clamp(0.25rem, 0.9vh, 0.6rem);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.22em;
     font-weight: 300;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.4);
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */

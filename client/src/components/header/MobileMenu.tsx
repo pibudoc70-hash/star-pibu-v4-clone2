@@ -86,7 +86,7 @@ export default function MobileMenu({
         style={{
           position: "fixed",
           inset: 0,
-          background: "rgba(0,0,0,0.45)",
+          background: "rgba(0,0,0,0.6)",
           zIndex: 998,
           opacity: menuVisible ? 1 : 0,
           transition: "opacity 0.25s ease",
@@ -107,7 +107,7 @@ export default function MobileMenu({
           right: 0,
           width: "min(88vw, 360px)",
           height: "100dvh",
-          background: "white",
+          background: "#FAF8F5",
           zIndex: 999,
           display: "flex",
           flexDirection: "column",
@@ -128,7 +128,7 @@ export default function MobileMenu({
             flexShrink: 0,
           }}
         >
-          <span style={{ fontSize: "14px", fontWeight: "700", color: "#C9A84C", letterSpacing: "0.08em" }}>
+          <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--brand-gold, #C4A882)", letterSpacing: "0.08em", fontFamily: "'Playfair Display', Georgia, serif" }}>
             STAR DERMATOLOGY
           </span>
           <button
@@ -388,11 +388,11 @@ export default function MobileMenu({
             rel="noopener noreferrer"
             className="flex items-center justify-center font-semibold text-sm text-white transition-opacity hover:opacity-90"
             style={{
-              background: "linear-gradient(135deg, #03C75A 0%, #02a84a 100%)",
+              background: "linear-gradient(135deg, #C4A882 0%, #A8895E 100%)",
               padding: "14px",
               borderRadius: "14px",
               letterSpacing: "0.01em",
-              boxShadow: "0 4px 16px rgba(3,199,90,0.22)",
+              boxShadow: "0 4px 16px rgba(196,168,130,0.3)",
             }}
           >
             {t.hero.cta_reserve}

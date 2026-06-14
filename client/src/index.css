@@ -101,9 +101,10 @@
   --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif; /* Hero/브랜드 헤드라인 */
   --font-serif: 'Playfair Display', Georgia, serif;                         /* 수치/영문 serif */
   --font-serif-kr: 'Noto Serif KR', 'Noto Serif', Georgia, serif;           /* 섹션 타이틀 */
-  --font-sans: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 */
+  --font-sans: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 — Noto Sans KR 우선 */
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
-  --font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+  --font-body: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 */
+  --font-heading-kr: 'Black Han Sans', 'Noto Sans KR', sans-serif;          /* 한글 헤딩 */
 }
 
 :root {
@@ -153,7 +154,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -161,7 +162,7 @@
   /* 언어별 폰트 통일 */
   body.font-lang-ko,
   body.font-lang-ko * {
-    font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif !important;
+    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif !important;
   }
   body.font-lang-ja,
   body.font-lang-ja * {
@@ -189,8 +190,8 @@
     @apply cursor-pointer;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
-    font-weight: 600;
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-weight: 400; /* Black Han Sans는 단일 weight */
   }
   /* 폰트 유틸리티 클래스 */
   .font-display {
@@ -203,7 +204,10 @@
     font-family: 'Noto Serif KR', 'Noto Serif', Georgia, serif;
   }
   .font-body {
-    font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
+  }
+  .font-heading-kr {
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
   }
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
@@ -829,8 +833,8 @@
     max-width: min(720px, 96vw);
     padding-top: clamp(100px, 18vh, 160px);
     padding-bottom: clamp(60px, 8vh, 120px);
-    padding-right: 35px;
     padding-left: clamp(1.25rem, 6vw, 2rem);
+    padding-right: clamp(1.25rem, 6vw, 2rem); /* 좌우 대칭 패딩 */
     box-sizing: border-box;
     margin-top: -47px;
   }
@@ -1863,6 +1867,8 @@
   margin-top: 36px;
   max-width: 480px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-actions-row {
   gap: 0.5rem;

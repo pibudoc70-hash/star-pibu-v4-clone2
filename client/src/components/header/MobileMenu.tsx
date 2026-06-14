@@ -388,11 +388,11 @@ export default function MobileMenu({
             rel="noopener noreferrer"
             className="flex items-center justify-center font-semibold text-sm text-white transition-opacity hover:opacity-90"
             style={{
-              background: "linear-gradient(135deg, #C4A882 0%, #A8895E 100%)",
+              background: "#03C75A",
               padding: "14px",
               borderRadius: "14px",
               letterSpacing: "0.01em",
-              boxShadow: "0 4px 16px rgba(196,168,130,0.3)",
+              boxShadow: "0 4px 16px rgba(3,199,90,0.3)",
             }}
           >
             {t.hero.cta_reserve}

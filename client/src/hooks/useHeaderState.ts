@@ -277,11 +277,20 @@ export function useHeaderState() {
   }, [langDropOpen]);
 
   // 스크롤 감지
+  // 서브 페이지(!isHome)에서는 항상 scrolled=true (헤더 배경 항상 불투명)
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(true);
+      return;
+    }
+    setScrolled(window.scrollY > 50);
+  }, [isHome]);
+
   useEffect(() => {
     const sectionIds = ["home", "events", "doctors", "treatments", "about", "facility", "contact"];
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
       if (!isHome) return;
+      setScrolled(window.scrollY > 50);
       const offset = 100;
       let current = "home";
       for (const id of sectionIds) {
@@ -293,7 +302,7 @@ export function useHeaderState() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]);
+  }, [isHome]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!isHome) setActiveSection("");

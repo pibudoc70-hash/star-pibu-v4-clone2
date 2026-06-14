@@ -62,15 +62,15 @@ export default function FloatingCTA() {
         }}
       >
         <div className="flex items-stretch" style={{ minHeight: "56px" }}>
-          {/* Primary: 예약 — 좌측, 골드 */}
+          {/* Primary: 예약 — 좌측, 네이버 초록 */}
           <a
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 font-bold"
             style={{
-              background: "linear-gradient(160deg, #D4B87A 0%, #C9A84C 40%, #A8892A 100%)",
-              color: "#1a1208",
+              background: "#03C75A",
+              color: "#ffffff",
               textShadow: "none",
               paddingTop: "10px",
               paddingBottom: "10px",

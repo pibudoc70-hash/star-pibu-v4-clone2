@@ -2853,3 +2853,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ### P2 — 브랜드 스토리 강화
 - [x] PhilosophySection.tsx — 20년 서사 타임라인/히스토리 표현 강화
+
+## 네이버 예약 버튼 #03C75A 교체 + 헤더 시인성 수정 (2026-06-14)
+- [x] DesktopNav.tsx — 예약 버튼 #03C75A 적용
+- [x] MobileMenu.tsx — 예약 버튼 #03C75A 적용
+- [x] FloatingCTA.tsx — 모바일 바 + 데스크톱 reserveBg = "#03C75A" 적용
+- [x] index.css .hero-btn-reserve — #03C75A 적용 (hover: #02a84c)
+- [x] WelcomePopup.tsx — 388줄, 511줄 두 예약 버튼 모두 #03C75A 확인 완료
+- [x] GuestReservationForm.tsx — 폼 submit/OTP 버튼 #4A6FA5 → 브랜드 골드 교체, focus ring 교체
+- [x] MemberReservationForm.tsx — 폼 submit 버튼 #4A6FA5 → 브랜드 골드 교체, focus ring 교체
+- [x] useHeaderState.ts — 서브 페이지에서 scrolled=true 강제 설정 (헤더 시인성 수정)
+- [x] TypeScript 오류 0건, 전체 테스트 57파일 1394개 통과

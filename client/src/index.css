@@ -1844,16 +1844,16 @@
 }
 /* HeroActions: reserve button — Primary (브랜드 골드, 가장 눈에 띄는 CTA) */
 .hero-btn-reserve {
-  background: var(--brand-gold, #C4A882);
-  color: #1a1a1a;
-  box-shadow: 0 4px 24px rgba(196, 168, 130, 0.45);
+  background: #03C75A;
+  color: #ffffff;
+  box-shadow: 0 4px 24px rgba(3, 199, 90, 0.45);
   padding-top: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 .hero-btn-reserve:hover {
-  background: var(--brand-gold-deep, #A8895E);
-  box-shadow: 0 6px 32px rgba(196, 168, 130, 0.6);
+  background: #02a84c;
+  box-shadow: 0 6px 32px rgba(3, 199, 90, 0.6);
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {

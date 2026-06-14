@@ -16,7 +16,7 @@ interface Props {
   onSuccess?: () => void;
 }
 
-const inputCls = "w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A6FA5]";
+const inputCls = "w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4A882]";
 const labelCls = "block text-sm font-semibold text-[#1F2937] mb-2";
 
 const EMPTY_GUEST_FORM = {
@@ -138,12 +138,12 @@ export function GuestReservationForm({ onSuccess }: Props) {
                   onChange={(e) => setForm({ ...form, phone: formatPhoneNumber(e.target.value) })}
                   placeholder={lbl.phonePlaceholder}
                   className={`flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                    phoneInvalid ? "border-[#EF4444] focus:ring-[#EF4444]" : "border-[#E5E7EB] focus:ring-[#4A6FA5]"
+                    phoneInvalid ? "border-[#EF4444] focus:ring-[#EF4444]" : "border-[#E5E7EB] focus:ring-[#C4A882]"
                   }`} />
                 <button type="submit"
                   disabled={sendOtpMutation.isPending || phoneInvalid}
                   className="px-6 py-2 rounded-lg font-semibold text-white transition-colors"
-                  style={{ background: sendOtpMutation.isPending || phoneInvalid ? "#D1D5DB" : "#4A6FA5" }}>
+                  style={{ background: sendOtpMutation.isPending || phoneInvalid ? "#D1D5DB" : "var(--brand-gold, #C4A882)", color: sendOtpMutation.isPending || phoneInvalid ? "#6B7280" : "#1a1a1a" }}>
                   {sendOtpMutation.isPending ? lbl.otpSending : lbl.otpSend}
                 </button>
               </div>
@@ -219,7 +219,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
             disabled={verifyOtpMutation.isPending || timer.isExpired}
             className="w-full py-3 rounded-lg font-semibold text-white transition-colors"
             style={{
-              background: verifyOtpMutation.isPending || timer.isExpired ? "#D1D5DB" : "#4A6FA5",
+              background: verifyOtpMutation.isPending || timer.isExpired ? "#D1D5DB" : "var(--brand-gold, #C4A882)",
             }}
           >
             {verifyOtpMutation.isPending ? lbl.otpVerifying : lbl.otpVerify}
@@ -233,9 +233,9 @@ export function GuestReservationForm({ onSuccess }: Props) {
             className={`w-full py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
               timer.isExpired
                 ? "text-white"
-                : "text-[#4A6FA5] border border-[#4A6FA5] hover:bg-[#F3F4F6]"
+                : "border hover:bg-[#F9F7F4]"
             }`}
-            style={timer.isExpired ? { background: "#4A6FA5" } : {}}
+            style={timer.isExpired ? { background: "var(--brand-gold, #C4A882)", color: "#1a1a1a" } : {}}
           >
             <RefreshCw size={15} className={sendOtpMutation.isPending ? "animate-spin" : ""} />
             {sendOtpMutation.isPending ? lbl.otpResending : lbl.otpResend}
@@ -269,7 +269,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                   isKo && form.phone && !KO_PHONE_RE.test(form.phone)
                     ? "border-[#EF4444] focus:ring-[#EF4444]"
-                    : "border-[#E5E7EB] focus:ring-[#4A6FA5]"
+                    : "border-[#E5E7EB] focus:ring-[#C4A882]"
                 }`} />
               {isKo && form.phone && !KO_PHONE_RE.test(form.phone) && (
                 <p className="text-sm text-[#EF4444]">{lbl.phoneInvalid}</p>
@@ -342,7 +342,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
 
           <button type="submit" disabled={createGuestMutation.isPending}
             className="w-full py-3 rounded-lg font-semibold text-white transition-colors flex items-center justify-center gap-2"
-            style={{ background: createGuestMutation.isPending ? "#D1D5DB" : "#4A6FA5" }}>
+            style={{ background: createGuestMutation.isPending ? "#D1D5DB" : "var(--brand-gold, #C4A882)", color: createGuestMutation.isPending ? "#6B7280" : "#1a1a1a" }}>
             <Send size={16} />
             {createGuestMutation.isPending ? lbl.submitting : lbl.submit}
           </button>
@@ -353,7 +353,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
               setStep("info");
               setForm({ ...EMPTY_GUEST_FORM, phone: form.phone });
             }}
-            className="w-full py-2 rounded-lg font-semibold text-[#4A6FA5] border border-[#4A6FA5] transition-colors hover:bg-[#F3F4F6]">
+            className="w-full py-2 rounded-lg font-semibold border transition-colors hover:bg-[#F9F7F4]" style={{ color: "var(--brand-gold-deep, #A8895E)", borderColor: "var(--brand-gold, #C4A882)" }}>
             {lbl.restart}
           </button>
         </form>

@@ -90,7 +90,10 @@ export default function Footer() {
 
 
   return (
-    <footer style={{ background: "#1A1410" }}>
+    <footer
+      style={{ background: "#1A1410" }}
+      className="footer-root"
+    >
 
       {/* ── Brand bar — 로고 + 슬로건 + SNS 아이콘 한 줄 정렬 ── */}
       <div

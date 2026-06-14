@@ -37,14 +37,12 @@ export default function ResultsStatisticsSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+      <div className="container">
         {/* 제목 */}
         <div className="text-center mb-12">
-          <p className="text-sm md:text-base font-medium mb-2" style={{ color: '#D1AB67' }}>
-            RESULTS & STATISTICS
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <span className="section-eyebrow">RESULTS & STATISTICS</span>
+          <h2 className="section-title">
             {r.sectionTitle}
           </h2>
         </div>
@@ -55,7 +53,7 @@ export default function ResultsStatisticsSection() {
             <div
               key={doctor.id}
               className="rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
-              style={{ background: '#F5F1ED' }}
+              style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}
             >
               {/* 의료진 사진 */}
               <div className="relative h-64 md:h-72 overflow-hidden bg-gray-200">
@@ -68,7 +66,7 @@ export default function ResultsStatisticsSection() {
 
               {/* 타이틀 및 설명 */}
               <div className="p-4 sm:p-6 text-center w-full">
-                <p className="font-semibold mb-3" style={{ color: '#D1AB67', fontSize: '24px' }}>
+                <p className="font-semibold mb-3" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontSize: '1.1rem', letterSpacing: '0.01em' }}>
                   {doctor.title}
                 </p>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed break-words whitespace-pre-wrap text-center">
@@ -85,7 +83,7 @@ export default function ResultsStatisticsSection() {
             <div
               key={index}
               className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-lg"
-              style={{ background: '#F5F1ED' }}
+              style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}
             >
               {/* 아이콘 */}
               <div className="flex justify-center mb-4">
@@ -95,14 +93,14 @@ export default function ResultsStatisticsSection() {
               </div>
 
               {/* 숫자 */}
-              <p className="font-extrabold text-2xl sm:text-3xl mb-2" style={{ color: '#D1AB67' }}>
+              <p className="font-extrabold text-2xl sm:text-3xl mb-2" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontFamily: "'Playfair Display', Georgia, serif" }}>
                 {stat.number}
                 {/* [PROD-P3-2] fontSize 70% → 65%: HeroSection unit 표시와 통일 */}
                 {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}
               </p>
 
               {/* 라벨 - [MOB-4] 영어 20자 라벨이 2열 그리드에서 카드 높이 불균형 방지: break-words 추가 */}
-              <p className="text-xs sm:text-sm font-medium break-words" style={{ color: '#6B7280' }}>
+              <p className="text-xs sm:text-sm font-medium break-words" style={{ color: 'var(--brand-text-mid, #666666)' }}>
                 {stat.label}
               </p>
 

@@ -60,7 +60,7 @@ export default function PhilosophySection() {
                 className="text-center flex flex-col items-center"
                 style={{
                   padding: "clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1.5rem)",
-                  borderRight: idx < 2 ? "1px solid rgba(196,168,130,0.12)" : "none",
+                  borderRight: idx < 2 ? "1px solid rgba(196,168,130,0.15)" : "none",
                 }}
               >
                 <s.Icon
@@ -68,33 +68,13 @@ export default function PhilosophySection() {
                   style={{ color: "rgba(196,168,130,0.5)", marginBottom: "0.75rem" }}
                   strokeWidth={1.2}
                 />
-                <div
-                  style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontSize: "clamp(2rem, 6vw, 3.5rem)",
-                    fontWeight: 700,
-                    color: "#EDD98A",
-                    lineHeight: 1,
-                    letterSpacing: "-0.02em",
-                    textShadow: "0 0 40px rgba(237,217,138,0.25)",
-                  }}
-                >
+                <div className="philosophy-stat-num" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
                   {s.num}
                   <span style={{ fontSize: "55%", fontWeight: 300, opacity: 0.75, letterSpacing: "0.02em" }}>
                     {s.suffix}
                   </span>
                 </div>
-                <div
-                  style={{
-                    color: "rgba(255,255,255,0.45)",
-                    fontSize: "clamp(0.6rem, 1.8vw, 0.72rem)",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    marginTop: "0.6rem",
-                    wordBreak: "keep-all",
-                    lineHeight: 1.4,
-                  }}
-                >
+                <div className="philosophy-stat-label">
                   {s.label}
                 </div>
               </div>
@@ -111,35 +91,13 @@ export default function PhilosophySection() {
             {/* Left: Text */}
             <div ref={leftRef} className="reveal-left">
               <span className="section-eyebrow">OUR PHILOSOPHY</span>
-              <h2
-                className="mb-4 leading-tight"
-                style={{
-                  color: "var(--brand-text, #2C2C2C)",
-                  fontSize: "clamp(1.8rem, 4.5vw, 2.8rem)",
-                  fontWeight: 600,
-                  fontFamily: "'Noto Serif KR', serif",
-                  wordBreak: "keep-all",
-                  letterSpacing: "-0.01em",
-                }}
-              >
+              <h2 className="section-title mb-4">
                 {t.about.title}
               </h2>
-              <p
-                className="mb-2 font-montserrat"
-                style={{
-                  color: "var(--brand-gold, #C4A882)",
-                  fontSize: "clamp(0.72rem, 1.8vw, 0.85rem)",
-                  letterSpacing: "0.2em",
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                }}
-              >
+              <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>
                 20년의 안목, 한결같은 신뢰
               </p>
-              <p
-                className="leading-relaxed mb-10"
-                style={{ color: "var(--brand-text-mid, #666666)", fontSize: "15px", lineHeight: 1.85 }}
-              >
+              <p className="section-subtitle leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
                 {t.about.desc}
               </p>
 
@@ -148,12 +106,7 @@ export default function PhilosophySection() {
                 {t.about.values.map((v) => (
                   <div
                     key={v.letter}
-                    className="flex items-start gap-3 p-4 transition-all duration-300 hover:-translate-y-0.5 cursor-default"
-                    style={{
-                      borderLeft: "2px solid rgba(196,168,130,0.3)",
-                      background: "rgba(196,168,130,0.04)",
-                      borderRadius: "0 8px 8px 0",
-                    }}
+                    className="philosophy-value-card flex items-start gap-3 cursor-default"
                   >
                     <div className="min-w-0">
                       <div

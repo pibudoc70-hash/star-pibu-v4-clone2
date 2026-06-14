@@ -17,6 +17,7 @@ import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
+import FloatingCTA from "@/components/FloatingCTA";
 
 // 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
 const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevicesSection"));
@@ -353,6 +354,7 @@ export default function Home() {
       <Footer />
 
       {/* Floating CTA - Always Visible */}
+      <FloatingCTA />
 
       {/* Welcome Popup */}
       <WelcomePopup />

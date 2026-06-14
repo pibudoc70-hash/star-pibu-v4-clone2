@@ -2722,3 +2722,37 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Home.tsx SectionFallback 빈 div → 브랜드 골드 pulse skeleton UI 교체
 - [x] TypeScript 오류 0건 확인
 - [x] 전체 테스트 1,380개 통과 확인
+
+## 디자인 고도화 — 12년 시니어 웹디자이너 기준 (2026-06-14)
+
+### P0 — 즉시 수정 (모바일 UX + 신뢰 수치 동기화)
+- [ ] HeroSection 모바일 아트디렉션 재설계 (이미지 focal point, text safe zone, 배경 그라디언트 보정)
+- [x] HeroSection 모바일 CTA 위계 강화 (Primary 네이버예약 전체너비, Secondary 카카오, Tertiary 전화 — 44px 이상 터치 영역)
+- [x] HeroSection 신뢰 수치 모바일 가독성 개선 (숫자 대비, 보조 텍스트 가독성)
+- [ ] HeroSection 데스크톱/모바일 신뢰 수치 동기화 확인 (20년+, 4,000례+, 50종+)
+- [ ] 전체 모바일 여백 시스템 정리 (section padding 80px, grid gap 24px)
+- [ ] 타이포 계층 정리 (hero-title / section-title / body / caption 위계 명확화)
+- [x] FloatingCTA 모바일 — 본문 콘텐츠와 시각적 충돌 방지, 터치 영역 44px 이상
+
+### P1 — 권장 수정 (카드 + 신뢰 섹션 + 브랜드 서사)
+- [ ] SpecialEventSection 이벤트 카드 — 가격표/광고 인상 줄이기, 프리미엄 제안형 정제
+- [ ] TreatmentsSection 카드 — 모바일 card density 낮추기, 읽기 흐름 우선
+- [ ] DoctorsSection 모바일 — 나열형 → 품격 있는 구성, 경력/자격 가독성 개선
+- [ ] ReviewsSection — 과도한 상업성 제거, 정제된 신뢰 표현
+- [x] PhilosophySection — “20년의 안목” 브랜드 서사 강화, 숫자보다 의미 우선
+
+### P2 — 선택 수정 (연혁/지도/마이크로 인터랙션)
+- [ ] ContactSection 운영시간/지도 프레젠테이션 고급화
+- [ ] scroll reveal 인터랙션 정리 (opacity + translateY, 0.6~0.8s)
+
+### 이번 세션 추가 완료 (2026-06-14)
+- [x] FloatingCTA Home.tsx 마운트 (누락 수정)
+- [x] FloatingCTA 예약 버튼 골드 그라디언트 정제 + 터치 44px
+- [x] TreatmentsEquipmentSection 정렬 드롭다운 blue → 브랜드 골드
+- [x] ResultsStatisticsSection gray 배경 → 브랜드 토큰, 섹션 헤더 공통 클래스, 타이포 정제
+- [x] PhilosophySection 인라인 스타일 → 공통 클래스 (philosophy-stat-num/label/value-card)
+- [x] PhilosophySection h2 → section-title, 서브라벨 → section-eyebrow
+- [x] Footer 모바일 하단 여백 (FloatingCTA 바 가림 방지)
+- [x] Hero 모바일 stat 라벨 대비 강화 (rgba 0.52 → 0.72)
+- [x] Hero 모바일 CTA 버튼 min-height 44px 확보
+- [x] TypeScript 오류 0건, 테스트 56파일 1380개 전체 통과

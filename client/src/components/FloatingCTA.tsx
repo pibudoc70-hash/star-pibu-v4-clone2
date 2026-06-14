@@ -61,7 +61,7 @@ export default function FloatingCTA() {
           paddingBottom: "max(env(safe-area-inset-bottom), 0px)",
         }}
       >
-        <div className="flex items-stretch" style={{ minHeight: "60px" }}>
+        <div className="flex items-stretch" style={{ minHeight: "56px" }}>
           {/* Primary: 예약 — 좌측, 골드 */}
           <a
             href={reserveUrl}
@@ -69,18 +69,19 @@ export default function FloatingCTA() {
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 font-bold"
             style={{
-              background: "linear-gradient(135deg, #C9A84C 0%, #F5D78E 50%, #B8892A 100%)",
-              color: "white",
-              textShadow: "0 1px 3px rgba(0,0,0,0.25)",
+              background: "linear-gradient(160deg, #D4B87A 0%, #C9A84C 40%, #A8892A 100%)",
+              color: "#1a1208",
+              textShadow: "none",
               paddingTop: "10px",
               paddingBottom: "10px",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.15)",
-              borderRight: "1px solid rgba(255,255,255,0.15)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18)",
+              borderRight: "1px solid rgba(255,255,255,0.12)",
+              minHeight: "56px",
             }}
             aria-label={fc.reserveAria}
           >
             <Calendar size={18} strokeWidth={2} />
-            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.02em" }}>{fc.reserve}</span>
+            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.03em", fontWeight: 700 }}>{fc.reserve}</span>
           </a>
 
           {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙 */}
@@ -96,6 +97,7 @@ export default function FloatingCTA() {
               borderRight: "1px solid rgba(255,255,255,0.08)",
               paddingTop: "10px",
               paddingBottom: "10px",
+              minHeight: "56px",
             }}
             aria-label={fc.kakaoAria}
           >
@@ -115,9 +117,10 @@ export default function FloatingCTA() {
             href={telHref}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-medium"
             style={{
-              color: "rgba(255,255,255,0.75)",
+              color: "rgba(255,255,255,0.72)",
               paddingTop: "10px",
               paddingBottom: "10px",
+              minHeight: "56px",
             }}
             aria-label={fc.callAria}
           >

@@ -203,7 +203,8 @@ export default function TreatmentsEquipmentSection() {
                       role="option"
                       aria-selected={sortBy === opt.value}
                       onClick={() => { handleSortChange(opt.value); closeFilter(); }}
-                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "bg-blue-50 text-blue-600 font-medium" : "text-gray-700 hover:bg-gray-50"}`}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
+                      style={sortBy === opt.value ? { background: "rgba(196,168,130,0.12)", color: "var(--brand-gold-deep, #A8895E)" } : undefined}
                     >
                       {opt.label}
                     </button>

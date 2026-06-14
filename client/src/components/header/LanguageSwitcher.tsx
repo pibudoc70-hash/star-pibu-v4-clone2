@@ -6,6 +6,14 @@ import { Globe, ChevronDown } from "lucide-react";
 import type { RefObject } from "react";
 import type { LangOption } from "@/hooks/useHeaderState";
 
+/** 언어 코드 → 표시 텍스트 매핑 */
+const LANG_CODE_LABEL: Record<string, string> = {
+  ko: "KO",
+  en: "EN",
+  ja: "JA",
+  zh: "ZH",
+};
+
 interface LanguageSwitcherProps {
   lang: string;
   langOptions: LangOption[];
@@ -52,7 +60,9 @@ export default function LanguageSwitcher({
         aria-haspopup="listbox"
       >
         <Globe size={12} style={{ color: "#999" }} />
-        <span>{currentLangOption.flag}</span>
+        <span style={{ fontWeight: 600, letterSpacing: "0.04em", fontSize: "11.5px", color: "#444" }}>
+          {LANG_CODE_LABEL[currentLangOption.lang] ?? currentLangOption.lang.toUpperCase()}
+        </span>
         <ChevronDown
           size={11}
           style={{
@@ -98,7 +108,25 @@ export default function LanguageSwitcher({
                 background: option.lang === lang ? "rgba(201,168,76,0.05)" : "transparent",
               }}
             >
-              <span style={{ fontSize: "15px" }}>{option.flag}</span>
+              {/* 언어 코드 배지 */}
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "28px",
+                  height: "20px",
+                  borderRadius: "4px",
+                  background: option.lang === lang ? "rgba(201,168,76,0.12)" : "rgba(0,0,0,0.05)",
+                  fontSize: "10.5px",
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  color: option.lang === lang ? "#C9A84C" : "#666",
+                  flexShrink: 0,
+                }}
+              >
+                {LANG_CODE_LABEL[option.lang] ?? option.lang.toUpperCase()}
+              </span>
               <span>{option.label}</span>
               {option.lang === lang && (
                 <span style={{ marginLeft: "auto", color: "#C9A84C", fontSize: "11px" }}>✓</span>

@@ -1564,6 +1564,8 @@
     .hero-cta-group {
       flex: 0 0 auto !important;
       width: 100% !important;
+      padding-top: clamp(1.5rem, 4vh, 2.5rem) !important;
+      padding-bottom: clamp(1rem, 3vh, 1.75rem) !important;
     }
 
     /* ▶ 5. 로고 크기 절제 */

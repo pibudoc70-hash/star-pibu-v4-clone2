@@ -320,7 +320,7 @@ export default function MobileMenu({
                     window.location.replace(buildLocalizedPath(option.lang) + hash);
                   });
                 }}
-                className="flex flex-col items-center gap-1 transition-all"
+                className="flex flex-col items-center gap-1.5 transition-all"
                 style={{
                   padding: "12px 4px",
                   borderRadius: "12px",
@@ -328,7 +328,24 @@ export default function MobileMenu({
                   border: option.lang === lang ? "1.5px solid #C9A84C" : "1.5px solid transparent",
                 }}
               >
-                <span style={{ fontSize: "20px" }}>{option.flag}</span>
+                {/* 언어 코드 배지 (국기 대체) */}
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "36px",
+                    height: "24px",
+                    borderRadius: "6px",
+                    background: option.lang === lang ? "rgba(201,168,76,0.15)" : "rgba(0,0,0,0.07)",
+                    fontSize: "12px",
+                    fontWeight: 800,
+                    letterSpacing: "0.05em",
+                    color: option.lang === lang ? "#C9A84C" : "#555",
+                  }}
+                >
+                  {option.lang.toUpperCase()}
+                </span>
                 <span
                   style={{
                     fontSize: "10px",

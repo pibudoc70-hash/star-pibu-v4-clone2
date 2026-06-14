@@ -2864,3 +2864,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] MemberReservationForm.tsx — 폼 submit 버튼 #4A6FA5 → 브랜드 골드 교체, focus ring 교체
 - [x] useHeaderState.ts — 서브 페이지에서 scrolled=true 강제 설정 (헤더 시인성 수정)
 - [x] TypeScript 오류 0건, 전체 테스트 57파일 1394개 통과
+
+## 전체 디자인 개선 (2026-06-14)
+
+### [P0] 모바일 Hero 수정
+- [ ] 모바일 Hero 상단 128px 크림색 여백 제거 (SECTION 태그 원인 파악 및 수정)
+- [ ] STAR DERMATOLOGY 텍스트 가시성 개선 (다크 배경 위 흰색 텍스트 그림자 강화)
+- [ ] 모바일 Hero 콘텐츠 위치 최적화 (padding-top 조정, 잘림 방지)
+- [ ] 모바일 Hero focal point 재조정 (object-position)
+- [ ] 모바일 CTA 위계 명확화 (네이버예약 Primary, 카카오 Secondary, 전화 Tertiary)
+
+### [P0] CTA 시스템 정비
+- [ ] Primary/Secondary/Tertiary CTA 위계 통일
+- [ ] sticky 모바일 CTA 바 고급화
+- [ ] 버튼 스타일 시스템 통일 (border, radius, spacing)
+
+### [P1] 여백 시스템 + 타이포 계층
+- [ ] 섹션 간 간격 통일 (mobile 80px / desktop 120px)
+- [ ] 제목/설명/캡션/수치 hierarchy 명확화
+- [ ] 모바일 줄바꿈, 본문 길이, 섹션 밀도 정리

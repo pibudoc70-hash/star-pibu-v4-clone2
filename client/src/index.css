@@ -797,6 +797,20 @@
   }
 
   /* [R16-P0-1] Hero layout utility classes — replaces inline style magic numbers */
+  /* 모바일에서 body 배경(크림색)이 Hero 위에 비치지 않도록 Hero 섹션 자체에 다크 배경 지정 */
+  #home {
+    background: #040816;
+  }
+  /* sonner 알림 컨테이너 section 태그가 레이아웃 플로우에서 128px 공간을 차지하는 문제 수정 */
+  section[aria-live="polite"][aria-label*="Notifications"] {
+    padding: 0 !important;
+    position: fixed !important;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  section[aria-live="polite"][aria-label*="Notifications"] > * {
+    pointer-events: auto;
+  }
   .hero-bg-img {
     position: absolute;
     inset: 0;
@@ -813,7 +827,7 @@
   }
   .hero-content {
     max-width: min(720px, 96vw);
-    padding-top: 160px;
+    padding-top: clamp(100px, 18vh, 160px);
     padding-bottom: clamp(60px, 8vh, 120px);
     padding-right: 35px;
     padding-left: clamp(1.25rem, 6vw, 2rem);
@@ -1517,8 +1531,8 @@
 
     /* Hero 콘텐츠 컨테이너 — 상하 여백 확대로 숨 쉴 공간 확보 */
     #home > .relative.z-10 {
-      padding-top: clamp(72px, 10vh, 96px) !important;
-      padding-bottom: clamp(64px, 9vh, 80px) !important;
+      padding-top: clamp(80px, 10vh, 96px) !important;
+      padding-bottom: clamp(80px, 11vh, 100px) !important;
       max-width: 100% !important;
       padding-left: clamp(1.5rem, 7vw, 2rem) !important;
       padding-right: clamp(1.5rem, 7vw, 2rem) !important;
@@ -1526,9 +1540,9 @@
 
     /* 로고 — 모바일에서 과밀 방지, 적절한 크기 */
     .hero-logo-img {
-      height: clamp(88px, 22vw, 120px) !important;
-      width: clamp(88px, 22vw, 120px) !important;
-      margin-top: -12px !important;
+      height: clamp(80px, 20vw, 110px) !important;
+      width: clamp(80px, 20vw, 110px) !important;
+      margin-top: 0 !important;
     }
     .hero-logo-wrap {
       margin-bottom: clamp(0.5rem, 2vw, 0.875rem) !important;
@@ -1601,8 +1615,8 @@
   /* ─── Hero Section 소형 모바일 최적화 (360px 이하) ─── */
   @media (max-width: 360px) {
     #home > .relative.z-10 {
-      padding-top: 68px !important;
-      padding-bottom: 52px !important;
+      padding-top: 52px !important;
+      padding-bottom: 44px !important;
     }
   }
 }
@@ -1994,7 +2008,7 @@
 .hero-floor-mobile {
   position: absolute;
   z-index: 20;
-  top: 22px;
+  top: clamp(60px, 9vh, 80px);
   left: 50%;
   transform: translateX(-50%);
   color: rgba(255, 255, 255, 0.85);

@@ -73,7 +73,7 @@ export default function Header() {
                 letterSpacing: "0.12em",
                 fontFamily: "'Montserrat', sans-serif",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
-                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.4)",
+                textShadow: scrolled ? "none" : "0 2px 12px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)",
               }}
             >
               STAR DERMATOLOGY
@@ -127,7 +127,8 @@ export default function Header() {
                 color: scrolled ? "#C4A882" : "rgba(255,255,255,0.92)",
                 borderRadius: "10px",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
-                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.4)",
+                textShadow: scrolled ? "none" : "0 2px 12px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)",
+                filter: scrolled ? "none" : "drop-shadow(0 1px 4px rgba(0,0,0,0.5))",
               }}
               onClick={() => openMobileMenu()}
               aria-label="메뉴 열기"

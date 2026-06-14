@@ -179,7 +179,8 @@ export default function TreatmentsEquipmentSection() {
                 aria-expanded={filterOpen}
                 aria-haspopup="listbox"
                 aria-label={tr.sortLabel}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-500 border border-gray-200"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                style={{ background: "rgba(196,168,130,0.08)", color: "var(--brand-text-mid, #666666)", border: "1px solid rgba(196,168,130,0.2)" }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -190,7 +191,8 @@ export default function TreatmentsEquipmentSection() {
                 <div
                   role="listbox"
                   aria-label={tr.sortLabel}
-                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 border border-gray-200"
+                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10"
+                  style={{ border: "1px solid rgba(196,168,130,0.2)" }}
                 >
                   {([
                     { value: "popular", label: tr.sortPopular },
@@ -203,8 +205,11 @@ export default function TreatmentsEquipmentSection() {
                       role="option"
                       aria-selected={sortBy === opt.value}
                       onClick={() => { handleSortChange(opt.value); closeFilter(); }}
-                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
-                      style={sortBy === opt.value ? { background: "rgba(196,168,130,0.12)", color: "var(--brand-gold-deep, #A8895E)" } : undefined}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "font-semibold" : "hover:bg-gray-50"}`}
+                      style={sortBy === opt.value
+                        ? { background: "rgba(196,168,130,0.12)", color: "var(--brand-gold-deep, #A8895E)" }
+                        : { color: "var(--brand-text, #2C2C2C)" }
+                      }
                     >
                       {opt.label}
                     </button>

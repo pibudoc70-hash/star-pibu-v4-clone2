@@ -56,7 +56,7 @@ export default function ResultsStatisticsSection() {
               style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}
             >
               {/* 의료진 사진 */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-200">
+              <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
                 <OptimizedImage
                   src={doctor.image}
                   alt={doctor.title}
@@ -69,7 +69,7 @@ export default function ResultsStatisticsSection() {
                 <p className="font-semibold mb-3" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontSize: '1.1rem', letterSpacing: '0.01em' }}>
                   {doctor.title}
                 </p>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed break-words whitespace-pre-wrap text-center">
+                <p className="text-xs sm:text-sm leading-relaxed break-words whitespace-pre-wrap text-center" style={{ color: 'var(--brand-text-mid, #666666)' }}>
                   {doctor.description}
                 </p>
               </div>
@@ -105,7 +105,7 @@ export default function ResultsStatisticsSection() {
               </p>
 
               {/* 설명 */}
-              <p className="text-xs break-words" style={{ color: '#9CA3AF', marginTop: '0.5rem' }}>
+              <p className="text-xs break-words" style={{ color: 'var(--brand-text-muted, #999999)', marginTop: '0.5rem' }}>
                 {stat.description}
               </p>
             </div>

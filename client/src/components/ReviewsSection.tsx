@@ -107,8 +107,8 @@ export default function ReviewsSection() {
                 <Star key={i} size={18} fill="#FEE500" style={{ color: "#FEE500" }} />
               ))}
             </div>
-            <span className="font-montserrat font-bold text-lg" style={{ color: "#1F2937" }}>4.9</span>
-            <span className="text-sm" style={{ color: "#6B7280" }}>/ 5.0 · {rv.ratingSource}</span>
+            <span className="font-montserrat font-bold text-lg" style={{ color: "var(--brand-text, #2C2C2C)" }}>4.9</span>
+            <span className="text-sm" style={{ color: "var(--brand-text-mid, #666666)" }}>/ 5.0 · {rv.ratingSource}</span>
           </div>
         </div>
 
@@ -136,7 +136,7 @@ export default function ReviewsSection() {
                   <div key={idx} className="w-full flex-shrink-0 px-1">
                     <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
                       <Quote size={28} style={{ color: 'var(--brand-gold-pale, #EDE8E0)', marginBottom: "0.5rem" }} />
-                      <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--brand-text, #2C2C2C)" }}>
                         "{r.text}"
                       </p>
                       <div className="flex items-center justify-between">
@@ -147,15 +147,15 @@ export default function ReviewsSection() {
                               {r.treatment}
                             </span>
                           </div>
-                          <div className="text-xs" style={{ color: "#9CA3AF" }}>
+                          <div className="text-xs" style={{ color: "var(--brand-text-muted, #999999)" }}>
                             {r.name}
                           </div>
                         </div>
                         <span
                           className="text-xs px-2 py-1 rounded-full font-semibold"
                           style={{
-                            background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#E8F9EF" : "#FFFDE7",
-                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#03C75A" : "#F59E0B",
+                            background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
+                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
                           }}
                         >
                           {r.platform}
@@ -215,7 +215,7 @@ export default function ReviewsSection() {
                 >
                   <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
                     <Quote size={28} style={{ color: "rgba(196,168,130,0.25)", marginBottom: "0.5rem" }} />
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: "#374151" }}>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--brand-text, #2C2C2C)" }}>
                       "{r.text}"
                     </p>
                     <div className="flex items-center justify-between">
@@ -226,15 +226,15 @@ export default function ReviewsSection() {
                             {r.treatment}
                           </span>
                         </div>
-                        <div className="text-xs" style={{ color: "#9CA3AF" }}>
+                        <div className="text-xs" style={{ color: "var(--brand-text-muted, #999999)" }}>
                           {r.name}
                         </div>
                       </div>
                       <span
                         className="text-xs px-2 py-1 rounded-full font-semibold"
                         style={{
-                          background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#E8F9EF" : "#FFFDE7",
-                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#03C75A" : "#F59E0B",
+                          background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
+                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
                         }}
                       >
                         {r.platform}
@@ -281,12 +281,12 @@ export default function ReviewsSection() {
             href="https://pcmap.place.naver.com/hospital/12020103/review/visitor?fromPanelNum=2&locale=ko&searchText=%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC&svcName=map_pcv5&timestamp=202603301414"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold transition-all hover:scale-105 hover:shadow-md"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-md"
             style={{
-              background: "#fff",
-              color: "#1A4FA0",
-              border: "1.5px solid #B8D0F0",
-              boxShadow: "0 2px 8px rgba(26,79,160,0.08)",
+              background: "var(--brand-bg, #FAF8F5)",
+              color: "var(--brand-text, #2C2C2C)",
+              border: "1.5px solid var(--brand-gold-pale, #E8E0D5)",
+              boxShadow: "0 2px 8px rgba(196,168,130,0.12)",
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

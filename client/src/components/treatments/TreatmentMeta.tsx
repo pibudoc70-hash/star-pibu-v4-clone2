@@ -25,13 +25,13 @@ export function TreatmentMeta({
 }: TreatmentMetaProps) {
   return (
     <div className="p-3">
-      <h3 className="font-bold text-slate-800 text-sm leading-tight mb-1">
+      <h3 className="font-bold text-sm leading-tight mb-1" style={{ color: 'var(--brand-text, #2C2C2C)' }}>
         {name}
       </h3>
-      <p className="text-xs text-slate-500 line-clamp-2 mb-2">
+      <p className="text-xs line-clamp-2 mb-2" style={{ color: 'var(--brand-text-mid, #666666)' }}>
         {desc}
       </p>
-      <div className="flex items-center gap-3 text-[10px] text-slate-400">
+      <div className="flex items-center gap-3 text-[10px]" style={{ color: 'var(--brand-text-muted, #999999)' }}>
         <span className="flex items-center gap-0.5">
           <Clock size={10} />
           {time}

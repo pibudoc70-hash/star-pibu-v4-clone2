@@ -51,7 +51,7 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
       <p
         className="leading-relaxed mb-3"
         style={{
-          color: "#6B7280",
+          color: "var(--brand-text-mid, #666666)",
           fontSize: "clamp(0.78rem, 2.2vw, 0.88rem)",
           lineHeight: "1.6",
         }}
@@ -63,7 +63,7 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
       {priceRows.length > 0 ? (
         <p
           className="font-medium mb-4"
-          style={{ color: "#4B5563", fontSize: "0.82rem", letterSpacing: "0.02em" }}
+          style={{ color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem", letterSpacing: "0.02em" }}
         >
           {priceRows[0].label}
         </p>
@@ -71,9 +71,9 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         event.productName && (
           <p
             className="font-medium mb-4"
-            style={{ color: "#4B5563", fontSize: "0.82rem", letterSpacing: "0.02em" }}
-          >
-            {getLocalizedText(event, "productName")}
+          style={{ color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem", letterSpacing: "0.02em" }}
+        >
+          {getLocalizedText(event, "productName")}
           </p>
         )
       )}
@@ -83,8 +83,8 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         <span
           className="font-bold"
           style={{
-            color: "#A8895E",
-            fontSize: "clamp(1.15rem, 3.5vw, 1.4rem)",
+            color: "var(--brand-gold-deep, #A8895E)",
+            fontSize: "clamp(1rem, 3vw, 1.2rem)",
             letterSpacing: "-0.01em",
           }}
         >
@@ -92,7 +92,7 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         </span>
         <span
           className="line-through"
-          style={{ color: "#C4C4C4", fontSize: "0.78rem", fontWeight: 400 }}
+          style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.78rem", fontWeight: 400 }}
         >
           {displayPrice.normalPrice.toLocaleString()}원
         </span>
@@ -134,8 +134,8 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
     <div
       className="flex flex-col rounded-2xl overflow-hidden"
       style={{
-        background: "#F5F0EB",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03)",
+        background: "var(--brand-bg, #FAF8F5)",
+        boxShadow: "0 2px 20px rgba(196,168,130,0.10), 0 1px 4px rgba(0,0,0,0.04)",
         border: "1px solid rgba(196,168,130,0.18)",
       }}
     >
@@ -217,12 +217,12 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             <div className="mb-4 space-y-3">
               {priceRows.slice(1).map((row, idx) => (
                 <div key={idx} className="flex items-start justify-between gap-4">
-                  <p className="text-xs font-semibold" style={{ color: "#4B5563" }}>{row.label}</p>
+                  <p className="text-xs font-semibold" style={{ color: "var(--brand-text-mid, #666666)" }}>{row.label}</p>
                   <div className="flex items-baseline gap-2 flex-shrink-0">
-                    <p className="font-bold" style={{ color: "#C9A84C", fontSize: "1rem" }}>
+                    <p className="font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)", fontSize: "0.95rem" }}>
                       {row.discountPrice.toLocaleString()}원
                     </p>
-                    <p className="line-through" style={{ color: "#C4C4C4", fontSize: "0.72rem" }}>
+                    <p className="line-through" style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.72rem" }}>
                       {row.normalPrice.toLocaleString()}원
                     </p>
                   </div>
@@ -234,14 +234,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           {/* 상세 설명 */}
           {event.desc && (
             <div className="mb-3">
-              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "#6B7280" }}>{event.desc}</p>
+              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)" }}>{event.desc}</p>
             </div>
           )}
 
           {/* 내용 */}
           {event.content && (
             <div className="mb-4">
-              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "#6B7280" }}>{event.content}</p>
+              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)" }}>{event.content}</p>
             </div>
           )}
 
@@ -259,7 +259,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             <a
               href={phoneHref}
               className="flex-1 px-4 py-2.5 font-medium rounded-xl transition-all duration-200 text-center hover:opacity-85"
-              style={{ backgroundColor: "#F5F0E8", color: "#6B7280", fontSize: "0.82rem" }}
+              style={{ backgroundColor: "var(--brand-bg-alt, #F5F0EB)", color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem" }}
             >
               {phoneLabel}
             </a>

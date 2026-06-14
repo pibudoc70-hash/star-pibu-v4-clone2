@@ -2756,3 +2756,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Hero 모바일 stat 라벨 대비 강화 (rgba 0.52 → 0.72)
 - [x] Hero 모바일 CTA 버튼 min-height 44px 확보
 - [x] TypeScript 오류 0건, 테스트 56파일 1380개 전체 통과
+
+### 디자인 고도화 2차 완료 (2026-06-14)
+- [x] ReviewsSection — 더보기 CTA blue → 브랜드 골드 토큰, 카드 텍스트/이름/플랫폼 배지 브랜드 토큰 통일
+- [x] TreatmentsEquipmentSection — 정렬 드롭다운/드롭다운 패널/선택 상태 gray → 브랜드 골드 토큰
+- [x] EventCard — 가격 강조 완화(할인가 크기 축소), 카드 배경/텍스트/배지 브랜드 토큰 통일
+- [x] TreatmentMeta — slate 계열 색상 → 브랜드 토큰 (시술명/설명/메타 아이콘)
+- [x] PhilosophySection — S.T.A.R. 값 카드 인라인 gray → 브랜드 토큰
+- [x] ResultsStatisticsSection — gray-600/#9CA3AF → 브랜드 토큰, 이미지 배경 브랜드 토큰
+- [x] TypeScript 오류 0건 확인
+- [x] 전체 테스트 56파일 1,380개 통과 확인

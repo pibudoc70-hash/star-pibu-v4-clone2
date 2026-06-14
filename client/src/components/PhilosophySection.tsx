@@ -112,14 +112,14 @@ export default function PhilosophySection() {
                       <div
                         className="font-montserrat font-bold mb-1 flex items-baseline gap-0"
                       >
-                        <span style={{ color: "#C4A882", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 700, lineHeight: 1 }}>
+                        <span style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 700, lineHeight: 1 }}>
                           {v.title[0]}
                         </span>
-                        <span style={{ color: "#9CA3AF", fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 300 }}>
+                        <span style={{ color: "var(--brand-text-mid, #666666)", fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 300 }}>
                           {v.title.slice(1)}
                         </span>
                       </div>
-                      <div className="text-xs leading-relaxed" style={{ color: "#777", lineHeight: 1.6 }}>
+                      <div className="text-xs leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)", lineHeight: 1.6 }}>
                         {v.desc}
                       </div>
                     </div>

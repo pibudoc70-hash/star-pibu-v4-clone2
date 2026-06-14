@@ -90,7 +90,7 @@ export default function FAQSection() {
                   setOpenEquipment(idx);
                   setOpenQuestion(null);
                 }}
-                className="rounded-full font-bold transition-all duration-200"
+                className="rounded-full font-normal transition-all duration-200"
                 style={
                   openEquipment === idx
                     ? { background: "var(--brand-gold, #C4A882)", color: "#fff", fontSize: "0.95rem", padding: "10px 22px", boxShadow: "0 4px 14px rgba(196,168,130,0.3)", transform: "translateY(-1px)" }
@@ -146,7 +146,7 @@ export default function FAQSection() {
                   >
                     <div className="flex gap-3">
                       <span
-                        className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold mt-0.5"
+                        className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-normal mt-0.5"
                         style={{ background: "var(--brand-gold, #C4A882)", color: "#fff" }}
                       >
                         A
@@ -166,7 +166,7 @@ export default function FAQSection() {
               href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-normal text-sm transition-all hover:scale-105 hover:shadow-lg"
               style={{ background: chatBg, color: chatColor }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">

@@ -37,7 +37,7 @@ export function CharReveal({
         {text.split("").map((char, i) => (
           <span
             key={i}
-            className="hero-char font-semibold"
+            className="hero-char font-normal"
             style={{ "--delay": `${startDelay + i * charGap}ms` } as React.CSSProperties}
           >
             {char === " " ? "\u00A0" : char}

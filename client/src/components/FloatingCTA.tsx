@@ -67,7 +67,7 @@ export default function FloatingCTA() {
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 font-bold"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 font-normal"
             style={{
               background: "#03C75A",
               color: "#ffffff",
@@ -81,7 +81,7 @@ export default function FloatingCTA() {
             aria-label={fc.reserveAria}
           >
             <Calendar size={18} strokeWidth={2} />
-            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.03em", fontWeight: 700 }}>{fc.reserve}</span>
+            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.03em", fontWeight: 400 }}>{fc.reserve}</span>
           </a>
 
           {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙 */}
@@ -90,7 +90,7 @@ export default function FloatingCTA() {
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-semibold relative"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal relative"
             style={{
               background: chatBg,
               color: chatColor,
@@ -115,7 +115,7 @@ export default function FloatingCTA() {
           {/* Tertiary: 전화 — 우측 */}
           <a
             href={telHref}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-medium"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal"
             style={{
               color: "rgba(255,255,255,0.72)",
               paddingTop: "10px",
@@ -155,7 +155,7 @@ export default function FloatingCTA() {
           aria-label={fc.callAria}
         >
           <Phone size={14} style={{ color: "rgba(196,168,130,0.8)", flexShrink: 0 }} />
-          <span style={{ color: "rgba(196,168,130,0.8)", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.05em", fontFamily: "'Montserrat', sans-serif" }}>{fc.call}</span>
+          <span style={{ color: "rgba(196,168,130,0.8)", fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.05em", fontFamily: "'Montserrat', sans-serif" }}>{fc.call}</span>
         </a>
 
         {/* Secondary: 메신저 (카카오/LINE/WeChat) */}
@@ -170,14 +170,14 @@ export default function FloatingCTA() {
             aria-label={fc.kakaoAria}
           >
             <MessageCircle size={16} style={{ color: chatColor }} className="flex-shrink-0" />
-            <span className="text-xs font-semibold tracking-wide" style={{ color: chatColor }}>
+            <span className="text-xs font-normal tracking-wide" style={{ color: chatColor }}>
               {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
             </span>
           </a>
           {wechatCopied && isZH && (
             <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
               {t.access.copiedLabel}<br />
-              <span className="font-bold">{WECHAT_ID}</span>
+              <span className="font-normal">{WECHAT_ID}</span>
             </div>
           )}
         </div>
@@ -195,7 +195,7 @@ export default function FloatingCTA() {
           aria-label={fc.reserveAria}
         >
           <Calendar size={17} className="text-white flex-shrink-0" />
-          <span className="text-white text-sm font-bold tracking-wide">{fc.reserve}</span>
+          <span className="text-white text-sm font-normal tracking-wide">{fc.reserve}</span>
         </a>
       </div>
     </>

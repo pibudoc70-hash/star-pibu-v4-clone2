@@ -349,7 +349,7 @@ export default function EquipmentSection() {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-10 md:mb-14 reveal-heading">
           <p
-            className="text-sm font-semibold tracking-widest mb-3 font-montserrat"
+            className="text-sm font-normal tracking-widest mb-3 font-montserrat"
             style={{ color: "var(--brand-gold, #C4A882)" }}
           >
             PREMIUM LASER EQUIPMENT
@@ -447,14 +447,14 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
         >
           {/* 브랜드명 */}
           <p
-            className="text-xs font-semibold tracking-widest mb-2 uppercase font-montserrat"
+            className="text-xs font-normal tracking-widest mb-2 uppercase font-montserrat"
             style={{ color: tone.tagText, opacity: 0.9 }}
           >
             {eq.brand}
           </p>
           {/* 한글 장비명 */}
           <h3
-            className="font-semibold leading-tight mb-3"
+            className="font-normal leading-tight mb-3"
             style={{
               color: "#ffffff",
               fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)",
@@ -465,7 +465,7 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           </h3>
           {/* 치료 분류 태그 */}
           <span
-            className="inline-block px-3 py-1 rounded-full text-xs font-semibold w-fit"
+            className="inline-block px-3 py-1 rounded-full text-xs font-normal w-fit"
             style={{
               background: tone.tag,
               color: tone.tagText,
@@ -518,7 +518,7 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           href="https://pf.kakao.com/_HNyGC"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-xs font-semibold"
+          className="inline-flex items-center gap-1 text-xs font-normal"
           style={{ color: "rgba(255,255,255,0.85)" }}
           onClick={(e) => e.stopPropagation()}
         >

@@ -66,7 +66,7 @@ export default function ResultsStatisticsSection() {
 
               {/* 타이틀 및 설명 */}
               <div className="p-4 sm:p-6 text-center w-full">
-                <p className="font-semibold mb-3" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontSize: '1.1rem', letterSpacing: '0.01em' }}>
+                <p className="font-normal mb-3" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontSize: '1.1rem', letterSpacing: '0.01em' }}>
                   {doctor.title}
                 </p>
                 <p className="text-xs sm:text-sm leading-relaxed break-words whitespace-pre-wrap text-center" style={{ color: 'var(--brand-text-mid, #666666)' }}>
@@ -93,7 +93,7 @@ export default function ResultsStatisticsSection() {
               </div>
 
               {/* 숫자 */}
-              <p className="font-semibold text-2xl sm:text-3xl mb-2" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
+              <p className="font-normal text-2xl sm:text-3xl mb-2" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
                 {stat.number}
                 {/* [PROD-P3-2] fontSize 70% → 65%: HeroSection unit 표시와 통일 */}
                 {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}

@@ -123,12 +123,12 @@ function ResultsSection() {
                     <Icon size={22} style={{ color: brandGoldDeep }} />
                   </div>
                   <div
-                    className="font-montserrat font-semibold mb-2 group-hover:scale-105 transition-transform duration-300"
+                    className="font-montserrat font-normal mb-2 group-hover:scale-105 transition-transform duration-300"
                     style={{ fontSize: "clamp(1.7rem, 4.5vw, 2.2rem)", color: brandGoldDeep }}
                   >
                     {countValues[i]}
                   </div>
-                  <div className="font-semibold text-sm mb-1" style={{ color: dark }}>
+                  <div className="font-normal text-sm mb-1" style={{ color: dark }}>
                     {s.label}
                   </div>
                   <div className="text-xs" style={{ color: muted }}>
@@ -173,14 +173,14 @@ function ResultsSection() {
                       </h4>
                       {isHighlight && (
                         <span
-                          className="text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1"
+                          className="text-xs font-normal px-3 py-1 rounded-full flex items-center gap-1"
                           style={{ background: brandGoldPale, color: brandGoldDeep }}
                         >
                           <Sparkles size={11} /> 인기
                         </span>
                       )}
                     </div>
-                    <p className="text-xs font-semibold" style={{ color: accentColor }}>
+                    <p className="text-xs font-normal" style={{ color: accentColor }}>
                       ⏱️ {tr.period}
                     </p>
                   </div>
@@ -215,7 +215,7 @@ function ResultsSection() {
             >
               <CheckCircle size={18} style={{ color: brandGoldDeep }} />
             </div>
-            <span className="font-semibold text-sm" style={{ color: '#2C2C2C' }}>
+            <span className="font-normal text-sm" style={{ color: '#2C2C2C' }}>
               {r.disclaimer}
             </span>
           </div>

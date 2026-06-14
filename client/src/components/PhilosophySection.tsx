@@ -141,7 +141,7 @@ export default function PhilosophySection() {
                   style={{
                     color: "var(--brand-gold, #C4A882)",
                     fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
-                    fontWeight: 600,
+                    fontWeight: 400,
                     letterSpacing: "-0.02em",
                     lineHeight: 1,
                     marginBottom: "0.4rem",
@@ -153,7 +153,7 @@ export default function PhilosophySection() {
                   style={{
                     color: "var(--brand-text, #2C2C2C)",
                     fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
-                    fontWeight: 500,
+                    fontWeight: 300,
                     marginBottom: "0.2rem",
                     lineHeight: 1.3,
                   }}
@@ -202,9 +202,9 @@ export default function PhilosophySection() {
                   >
                     <div className="min-w-0">
                       <div
-                        className="font-montserrat font-bold mb-1 flex items-baseline gap-0"
+                        className="font-montserrat font-normal mb-1 flex items-baseline gap-0"
                       >
-                        <span style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 700, lineHeight: 1 }}>
+                        <span style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 400, lineHeight: 1 }}>
                           {v.title[0]}
                         </span>
                         <span style={{ color: "var(--brand-text-mid, #666666)", fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 300 }}>
@@ -257,7 +257,7 @@ export default function PhilosophySection() {
                     style={{
                       fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
                       fontSize: "1.6rem",
-                      fontWeight: 700,
+                      fontWeight: 400,
                       color: "#EDD98A",
                       lineHeight: 1,
                       letterSpacing: "-0.02em",

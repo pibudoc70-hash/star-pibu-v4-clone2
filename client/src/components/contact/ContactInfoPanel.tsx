@@ -59,7 +59,7 @@ export default function ContactInfoPanel({
         <div className="flex items-stretch gap-3">
           <MapPin size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
+            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
               {addressLabel}
             </p>
             <p className="text-sm text-[var(--color-star-text-mid)]">
@@ -68,7 +68,7 @@ export default function ContactInfoPanel({
             <button
               type="button"
               onClick={onCopyAddress}
-              className="mt-2 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
+              className="mt-2 flex items-center gap-1.5 text-xs font-normal px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
               style={{
                 background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "var(--brand-gold-pale, #F0EAE0)",
                 color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "var(--brand-text, #2C2C2C)",
@@ -104,12 +104,12 @@ export default function ContactInfoPanel({
         <div className="flex items-center gap-3">
           <Phone size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0" />
           <div>
-            <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
+            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
               {phoneLabel}
             </p>
             <a
               href={phoneHref}
-              className="font-montserrat font-bold text-lg transition-colors hover:opacity-70 text-[var(--color-star-navy)]"
+              className="font-montserrat font-normal text-lg transition-colors hover:opacity-70 text-[var(--color-star-navy)]"
             >
               {phoneDisplay}
             </a>
@@ -122,7 +122,7 @@ export default function ContactInfoPanel({
         <div className="flex items-stretch gap-3">
           <Clock size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div className="flex-1">
-            <p className="font-bold text-sm mb-3 text-[var(--color-star-text)]">
+            <p className="font-normal text-sm mb-3 text-[var(--color-star-text)]">
               {hoursLabel}
             </p>
             <div className="space-y-1.5">
@@ -130,7 +130,7 @@ export default function ContactInfoPanel({
                 <div key={h.day} className="flex justify-between text-sm">
                   <span className="text-[var(--color-star-text-mid)]">{h.day}</span>
                   <span
-                    className="font-semibold"
+                    className="font-normal"
                     style={{ color: h.time === closedLabel ? "#EF4444" : "var(--color-star-text)" }}
                   >
                     {h.time}
@@ -150,7 +150,7 @@ export default function ContactInfoPanel({
         <div className="flex items-stretch gap-3">
           <Train size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-bold text-sm mb-2 text-[var(--color-star-text)]">
+            <p className="font-normal text-sm mb-2 text-[var(--color-star-text)]">
               {transitLabel}
             </p>
             <p className="text-sm text-[var(--color-star-text-mid)]">
@@ -161,7 +161,7 @@ export default function ContactInfoPanel({
         <div className="flex items-stretch gap-3 mt-3">
           <Car size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
+            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
               {parkingLabel}
             </p>
             <p className="text-sm text-[var(--color-star-text-mid)]">
@@ -178,7 +178,7 @@ export default function ContactInfoPanel({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${kakaoMapLabel} (새 탭에서 열림)`}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-kakao)] text-[#3C1E1E] min-w-[120px]"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-normal transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-kakao)] text-[#3C1E1E] min-w-[120px]"
         >
           <MapPin size={14} />
           {kakaoMapLabel}
@@ -188,7 +188,7 @@ export default function ContactInfoPanel({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${naverMapLabel} (새 탭에서 열림)`}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-naver)] text-white min-w-[120px]"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-normal transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-naver)] text-white min-w-[120px]"
         >
           <MapPin size={14} />
           {naverMapLabel}

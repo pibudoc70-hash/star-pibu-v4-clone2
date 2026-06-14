@@ -59,7 +59,7 @@ export function HeroActions({
         href={reserveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
+        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
         style={{ animationDelay: delays.ctaFirst }}
       >
         <Calendar size={15} strokeWidth={2.2} />
@@ -78,7 +78,7 @@ export function HeroActions({
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={onWechatClick}
-            className="hero-btn-action flex items-center gap-1.5 rounded-full font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
+            className="hero-btn-action flex items-center gap-1.5 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full"
             style={{
               background: chatBg,
               color: chatColor,

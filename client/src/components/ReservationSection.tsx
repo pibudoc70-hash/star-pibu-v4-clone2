@@ -97,20 +97,20 @@ export default function ReservationSection() {
                 }}
               >
                 <p
-                  className="text-sm font-semibold mb-2"
+                  className="text-sm font-normal mb-2"
                   style={{ color: "var(--brand-gold-deep, #A8895E)" }}
                 >
                   {lang === 'ko' ? '예약 안내' : lang === 'en' ? 'Booking Guide' : lang === 'ja' ? '予約のご案内' : '预约说明'}
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)", wordBreak: "keep-all" }}>
                   {lang === 'ko' ? (
-                    <>현재 상태는 <span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
+                    <>현재 상태는 <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
                   ) : lang === 'en' ? (
-                    <>Your status is currently <span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>confirmed</span>. We will notify you by phone.</>
+                    <>Your status is currently <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>confirmed</span>. We will notify you by phone.</>
                   ) : lang === 'ja' ? (
-                    <>現在の状態は<span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>予約申請中</span>です。スタッフが確認後、予約が<span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>確定</span>されます。電話でご連絡いたします。</>
+                    <>現在の状態は<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>予約申請中</span>です。スタッフが確認後、予約が<span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>確定</span>されます。電話でご連絡いたします。</>
                   ) : (
-                    <>当前状态为<span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>待确认</span>。工作人员确认后，预约将<span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>确定</span>。我们将致电通知您。</>
+                    <>当前状态为<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>待确认</span>。工作人员确认后，预约将<span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>确定</span>。我们将致电通知您。</>
                   )}
                 </p>
               </div>
@@ -120,7 +120,7 @@ export default function ReservationSection() {
                   setShowSuccess(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="px-8 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
+                className="px-8 py-3 rounded-lg font-normal text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
                 style={{
                   background: "linear-gradient(135deg, var(--brand-gold, #C4A882) 0%, var(--brand-gold-dark, #9a7a3a) 100%)",
                   boxShadow: "0 4px 16px rgba(196,168,130,0.35)",
@@ -153,7 +153,7 @@ export default function ReservationSection() {
             >
               <div className="text-3xl mb-3">{item.icon}</div>
               <h4
-                className="font-semibold mb-2"
+                className="font-normal mb-2"
                 style={{ color: "var(--brand-text, #2C2C2C)", fontSize: "0.9375rem" }}
               >
                 {item.title}

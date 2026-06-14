@@ -113,7 +113,7 @@ export default function Footer() {
               style={{
                 fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
                 fontSize: "18px",
-                fontWeight: "700",
+                fontWeight: "400",
                 letterSpacing: "0.08em",
                 color: "var(--brand-gold, #C4A882)",
                 marginBottom: "4px",
@@ -173,7 +173,7 @@ export default function Footer() {
           <p
             style={{
               fontSize: "10px",
-              fontWeight: "700",
+              fontWeight: "400",
               letterSpacing: "0.12em",
               color: "rgba(255,255,255,0.35)",
               marginBottom: "14px",
@@ -203,7 +203,7 @@ export default function Footer() {
           <p
             style={{
               fontSize: "10px",
-              fontWeight: "700",
+              fontWeight: "400",
               letterSpacing: "0.12em",
               color: "rgba(255,255,255,0.35)",
               marginBottom: "14px",
@@ -233,7 +233,7 @@ export default function Footer() {
           <p
             style={{
               fontSize: "10px",
-              fontWeight: "700",
+              fontWeight: "400",
               letterSpacing: "0.12em",
               color: "rgba(255,255,255,0.35)",
               marginBottom: "14px",
@@ -246,7 +246,7 @@ export default function Footer() {
             <a
               href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
               className="transition-colors hover:text-white"
-              style={{ fontSize: "15px", fontWeight: "600", color: "rgba(255,255,255,0.8)", letterSpacing: "0.02em" }}
+              style={{ fontSize: "15px", fontWeight: "400", color: "rgba(255,255,255,0.8)", letterSpacing: "0.02em" }}
             >
               {t.footer.tel}
             </a>

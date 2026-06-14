@@ -113,7 +113,7 @@ export default function EventsSection() {
             <button type="button"
               key={category}
               onClick={() => setActiveCategory(category)}
-              className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+              className="px-5 py-2 rounded-full text-sm font-normal transition-all duration-200"
               style={
                 activeCategory === category
                   ? { background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 2px 8px rgba(196,168,130,0.35)" }
@@ -176,14 +176,14 @@ export default function EventsSection() {
                   <div className="flex items-center gap-2 mb-3">
                     {ev.badge && (
                       <span
-                        className="px-3 py-1 rounded-full text-xs font-bold text-white"
+                        className="px-3 py-1 rounded-full text-xs font-normal text-white"
                         style={{ backgroundColor: ev.badgeColor }}
                       >
                         {ev.badge}
                       </span>
                     )}
                     {ev.hot === "1" && (
-                      <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-red-500">
+                      <span className="px-3 py-1 rounded-full text-xs font-normal text-white bg-red-500">
                         🔥 HOT
                       </span>
                     )}
@@ -199,7 +199,7 @@ export default function EventsSection() {
                     </div>
                     <div>
                       <h3
-                        className="text-lg sm:text-xl font-bold mb-1"
+                        className="text-lg sm:text-xl font-normal mb-1"
                         style={{ color: ev.accent }}
                       >
                         {ev.title}
@@ -222,7 +222,7 @@ export default function EventsSection() {
                       <span>{ev.date}</span>
                     </div>
                     <button type="button"
-                      className="flex items-center gap-1 px-4 py-2 rounded-lg font-semibold text-white transition-all group-hover:gap-2"
+                      className="flex items-center gap-1 px-4 py-2 rounded-lg font-normal text-white transition-all group-hover:gap-2"
                       style={{ backgroundColor: ev.accent }}
                     >
                       {ev_t.viewDetail}
@@ -256,7 +256,7 @@ export default function EventsSection() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <h3
-                          className="font-bold text-base sm:text-lg"
+                          className="font-normal text-base sm:text-lg"
                           style={{ color: ev.accent }}
                         >
                           {ev.title}

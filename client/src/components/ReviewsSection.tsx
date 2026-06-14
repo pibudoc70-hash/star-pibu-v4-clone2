@@ -107,7 +107,7 @@ export default function ReviewsSection() {
                 <Star key={i} size={18} fill="#FEE500" style={{ color: "#FEE500" }} />
               ))}
             </div>
-            <span className="font-montserrat font-bold text-lg" style={{ color: "var(--brand-text, #2C2C2C)" }}>4.9</span>
+            <span className="font-montserrat font-normal text-lg" style={{ color: "var(--brand-text, #2C2C2C)" }}>4.9</span>
             <span className="text-sm" style={{ color: "var(--brand-text-mid, #666666)" }}>/ 5.0 · {rv.ratingSource}</span>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function ReviewsSection() {
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <StarRating rating={r.rating} />
-                            <span className="text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                            <span className="text-xs font-normal" style={{ color: "var(--brand-gold, #C4A882)" }}>
                               {r.treatment}
                             </span>
                           </div>
@@ -152,7 +152,7 @@ export default function ReviewsSection() {
                           </div>
                         </div>
                         <span
-                          className="text-xs px-2 py-1 rounded-full font-semibold"
+                          className="text-xs px-2 py-1 rounded-full font-normal"
                           style={{
                             background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
                             color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
@@ -222,7 +222,7 @@ export default function ReviewsSection() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <StarRating rating={r.rating} />
-                          <span className="text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                          <span className="text-xs font-normal" style={{ color: "var(--brand-gold, #C4A882)" }}>
                             {r.treatment}
                           </span>
                         </div>
@@ -231,7 +231,7 @@ export default function ReviewsSection() {
                         </div>
                       </div>
                       <span
-                        className="text-xs px-2 py-1 rounded-full font-semibold"
+                        className="text-xs px-2 py-1 rounded-full font-normal"
                         style={{
                           background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
                           color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
@@ -281,7 +281,7 @@ export default function ReviewsSection() {
             href="https://pcmap.place.naver.com/hospital/12020103/review/visitor?fromPanelNum=2&locale=ko&searchText=%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC&svcName=map_pcv5&timestamp=202603301414"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-md"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-normal transition-all hover:scale-105 hover:shadow-md"
             style={{
               background: "var(--brand-bg, #FAF8F5)",
               color: "var(--brand-text, #2C2C2C)",

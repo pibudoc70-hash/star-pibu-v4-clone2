@@ -155,7 +155,7 @@ export default function FacilitySection() {
               {/* Content Overlay - Title Only */}
               <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3
-                  className="font-semibold"
+                  className="font-normal"
                   style={{ color: "#FFFFFF", fontSize: "0.95rem" }}
                 >
                   {img.label}
@@ -204,7 +204,7 @@ export default function FacilitySection() {
             <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
               <div className="max-w-2xl">
                 <h3
-                  className="text-2xl sm:text-4xl font-bold"
+                  className="text-2xl sm:text-4xl font-normal"
                   style={{ color: "#FFFFFF" }}
                 >
                   {galleryImages[currentIndex].label}
@@ -336,7 +336,7 @@ export default function FacilitySection() {
 
               {/* Title */}
               <div className="text-center mt-4">
-                <h3 className="text-white text-xl font-semibold">
+                <h3 className="text-white text-xl font-normal">
                   {galleryImages[lightboxIndex].label}
                 </h3>
               </div>

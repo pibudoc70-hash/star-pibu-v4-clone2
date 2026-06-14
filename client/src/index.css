@@ -2009,17 +2009,14 @@
   position: absolute;
   z-index: 20;
   top: clamp(60px, 9vh, 80px);
-  left: 50%;
-  transform: translateX(-50%);
+  right: clamp(12px, 4vw, 20px);
   color: rgba(255, 255, 255, 0.85);
   font-size: 10px;
   letter-spacing: 0.03em;
-  white-space: normal;
-  word-break: keep-all;
+  white-space: nowrap;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-  text-align: center;
-  width: 90vw;
-  line-height: 1.4;
+  text-align: right;
+  line-height: 1.55;
 }
 .hero-floor-desktop {
   position: absolute;

@@ -819,10 +819,10 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* [M1-P0] 모바일 hero 이미지 focal point — 상단 20% 앵커로 인물/공간 중심 보호 */
+  /* [P0] 모바일 hero 이미지 focal point — 30% 앵커로 클리닉 공간감 강화 */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: center 20%;
+      object-position: center 30%;
     }
   }
   .hero-content {
@@ -1523,29 +1523,30 @@
   /* ─── Hero Section 모바일 최적화 (375px ~ 640px) ─── */
   /* [M1] 모바일 프리미엄 아트디렉션: 여백 확보, 타이포 절제, 통계 간격 정리 */
   @media (max-width: 640px) {
-    /* Hero section - 화면 전체 채우기 */
+    /* [P0] Hero section - 모바일에서는 콘텐츠 높이로 자연스럽게 맞춰서 하단 빈 공간 제거 */
     #home {
-      min-height: 100svh !important;
-      min-height: 100dvh !important;
+      min-height: auto !important;
+      height: auto !important;
+      justify-content: flex-start !important;
     }
 
-    /* Hero 콘텐츠 컨테이너 — 상하 여백 확대로 숨 쉴 공간 확보 */
+    /* [P0] Hero 콘텐츠 컨테이너 — 상단 헤더 확보 + 하단 여유 여백 */
     #home > .relative.z-10 {
-      padding-top: clamp(80px, 10vh, 96px) !important;
-      padding-bottom: clamp(80px, 11vh, 100px) !important;
+      padding-top: clamp(72px, 9vh, 88px) !important;
+      padding-bottom: clamp(48px, 7vh, 72px) !important;
       max-width: 100% !important;
       padding-left: clamp(1.5rem, 7vw, 2rem) !important;
       padding-right: clamp(1.5rem, 7vw, 2rem) !important;
     }
 
-    /* 로고 — 모바일에서 과밀 방지, 적절한 크기 */
+    /* [P0] 로고 — 모바일에서 과밀 방지, 적절한 크기 */
     .hero-logo-img {
-      height: clamp(80px, 20vw, 110px) !important;
-      width: clamp(80px, 20vw, 110px) !important;
+      height: clamp(72px, 18vw, 96px) !important;
+      width: clamp(72px, 18vw, 96px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.5rem, 2vw, 0.875rem) !important;
+      margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem) !important;
     }
     /* 로고 마진 축소 */
     #home > .relative.z-10 > .hero-fade:first-child {
@@ -1571,44 +1572,50 @@
       letter-spacing: 0.25em !important;
       font-weight: 300 !important;
     }
-    /* 통계 스트립 — 모바일에서 간격 최적화 */
+    /* [P0] 통계 스트립 — 모바일에서 간격 최적화 */
     .hero-stats-row {
       gap: clamp(0.75rem, 4vw, 1.5rem) !important;
-      padding-top: 18px !important;
+      padding-top: 14px !important;
     }
     .hero-stat-value {
       font-size: clamp(1.1rem, 5.5vw, 1.6rem) !important;
     }
+    /* [P0] stat 라벨 — WCAG AA 4.5:1 대비 확보 */
     .hero-stat-label {
-      font-size: clamp(0.58rem, 1.8vw, 0.72rem) !important;
-      color: rgba(255, 255, 255, 0.78) !important;
+      font-size: clamp(0.6rem, 1.9vw, 0.75rem) !important;
+      color: rgba(255, 255, 255, 0.92) !important;
       font-weight: 500 !important;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.45) !important;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
     }
-    /* CTA 버튼 wrap — 상단 여백 최적화 */
+    /* [P0] CTA 버튼 wrap — 상단 여백 최소화, 전체 너비 */
     .hero-actions-wrap {
-      margin-top: 20px !important;
+      margin-top: 16px !important;
       max-width: 100% !important;
     }
-    /* Primary 예약 버튼 — 모바일 전체 너비, 터치 영역 44px 이상 */
+    /* [P0] Primary 예약 버튼 — 모바일 전체 너비, 터치 영역 48px, 강한 존재감 */
     .hero-btn-reserve,
     .hero-btn-reserve-zh {
-      font-size: 0.88rem !important;
-      padding: 0.78rem 1.25rem !important;
-      min-height: 44px !important;
+      font-size: 0.9rem !important;
+      padding: 0.85rem 1.25rem !important;
+      min-height: 48px !important;
+      letter-spacing: 0.05em !important;
     }
-    /* Secondary 카카오 버튼 — 모바일 최적화, 터치 영역 44px */
+    /* [P0] Secondary/Tertiary 버튼 — 모바일 최적화, 터치 영역 44px */
     .hero-btn-action {
-      font-size: 0.78rem !important;
-      padding: 0.65rem 0.9rem !important;
+      font-size: 0.8rem !important;
+      padding: 0.68rem 0.9rem !important;
       min-width: 0 !important;
       min-height: 44px !important;
     }
-    /* Tertiary 전화 버튼 — 모바일 최적화, 터치 영역 44px */
+    /* [P0] Tertiary 전화 버튼 — 대비 강화, 반투명 배경 추가 */
     .hero-btn-phone {
-      font-size: 0.78rem !important;
-      padding: 0.65rem 0.9rem !important;
+      font-size: 0.8rem !important;
+      padding: 0.68rem 0.9rem !important;
       min-height: 44px !important;
+      background: rgba(255,255,255,0.08) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      border: 1px solid rgba(255,255,255,0.25) !important;
+      opacity: 1 !important;
     }
   }
 

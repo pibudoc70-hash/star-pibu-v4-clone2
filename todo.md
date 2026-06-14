@@ -2883,3 +2883,26 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 섹션 간 간격 통일 (mobile 80px / desktop 120px)
 - [ ] 제목/설명/캡션/수치 hierarchy 명확화
 - [ ] 모바일 줄바꿈, 본문 길이, 섹션 밀도 정리
+
+## 모바일 디자인 개선 (2026-06-14 지시서 기반)
+
+### [P0] Hero 비율 재설계
+- [ ] 모바일 Hero 높이 비율 재조정 (과도하게 세로로 긴 문제 해결)
+- [ ] 배경 이미지 focal point 재조정 (object-position 최적화)
+- [ ] Hero 콘텐츠 수직 간격 재설계 (로고/카피/수치/CTA breathing room)
+- [ ] Hero 상단/하단 불필요한 빈 어두운 영역 제거
+
+### [P0] Hero CTA 위계 재정비
+- [ ] Primary(네이버예약) / Secondary(카카오) / Tertiary(전화) 시각적 구분 강화
+- [ ] 버튼 대비 강화 (배경에 묻히지 않게)
+- [ ] 버튼 최소 44px 높이 보장
+
+### [P0] 모바일 텍스트 대비/가독성
+- [ ] Hero 보조 텍스트(stat 라벨, 서브카피) 대비 강화 (WCAG AA 4.5:1)
+- [ ] 반투명 텍스트 어두운 배경 위 가독성 개선
+
+### [P1] 모바일 전체 여백/리듬
+- [ ] 섹션 top/bottom spacing 80px 기준 통일
+- [ ] 카드 padding/gap 24px 기준 통일
+- [ ] 카드 UI 개선 (시술/장비/이벤트/후기/의료진)
+- [ ] 신뢰 요소 모바일 재배치

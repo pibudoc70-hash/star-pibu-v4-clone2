@@ -554,7 +554,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
           <p className="text-xs font-semibold mb-0.5 font-montserrat" style={{ color: "rgba(196,168,130,0.85)" }}>
             {t.nameEn}
           </p>
-          <p className="text-sm font-bold text-white mb-1 leading-snug">{t.name}</p>
+          <p className="text-sm font-medium text-white mb-1 leading-snug">{t.name}</p>
           <p className="text-xs leading-relaxed mb-2" style={{ color: "rgba(255,255,255,0.82)" }}>
             {t.desc}
           </p>
@@ -586,7 +586,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
           <p className="text-xs font-semibold mb-1 font-montserrat" style={{ color: "var(--brand-gold, #C4A882)", letterSpacing: '0.08em' }}>
             {t.nameEn}
           </p>
-          <h3 className="text-lg font-bold mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
+          <h3 className="text-lg font-medium mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
           {t.name}
         </h3>
         <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B7280" }}>
@@ -725,7 +725,7 @@ export default function TreatmentsSection() {
             style={{
               color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 600,
+              fontWeight: 500,
               fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
             }}
           >
@@ -743,7 +743,7 @@ export default function TreatmentsSection() {
             <button type="button"
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+              className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
               style={
                 activeTab === tab.id
                   ? { background: "var(--brand-gold, #C4A882)", color: "white", border: "1px solid var(--brand-gold, #C4A882)" }
@@ -783,7 +783,7 @@ export default function TreatmentsSection() {
                 <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "var(--brand-gold, #C4A882)" }}>
                   LIFTING & TIGHTENING
                 </p>
-                <h3 className="text-xl font-bold mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
+                <h3 className="text-xl font-medium mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                   리프팅·탄력 시술 라인업
                 </h3>
                 <p className="text-sm" style={{ color: "#6B7280" }}>
@@ -791,13 +791,13 @@ export default function TreatmentsSection() {
                 </p>
               </div>
               <div className="flex gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#9C5FA5" }}>
+                <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "#9C5FA5" }}>
                   써마지 자문의
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#C8860A" }}>
+                <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "#C8860A" }}>
                   울쎄라피 정품
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: "var(--brand-gold, #C4A882)" }}>
+                <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "var(--brand-gold, #C4A882)" }}>
                   11종 장비
                 </span>
               </div>
@@ -832,7 +832,7 @@ export default function TreatmentsSection() {
             href="https://pf.kakao.com/_HNyGC"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 hover:shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-all hover:scale-105 hover:shadow-lg"
             style={{ background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 4px 14px rgba(196,168,130,0.3)" }}
           >
             전체 시술 상담하기

@@ -359,7 +359,7 @@ export default function EquipmentSection() {
             style={{
               color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 700,
+              fontWeight: 500,
               fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
             }}
           >
@@ -385,7 +385,7 @@ export default function EquipmentSection() {
             <button type="button"
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+              className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
               style={
                 activeCategory === cat
                   ? {
@@ -454,7 +454,7 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           </p>
           {/* 한글 장비명 */}
           <h3
-            className="font-black leading-tight mb-3"
+            className="font-semibold leading-tight mb-3"
             style={{
               color: "#ffffff",
               fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)",

@@ -80,7 +80,7 @@ function ResultsSection() {
                 >
                   <Icon size={28} style={{ color: brandGoldDeep }} />
                 </div>
-                <h3 className="text-base font-bold mb-2" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
+                <h3 className="text-base font-medium mb-2" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                   {item.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: gray }}>
@@ -123,7 +123,7 @@ function ResultsSection() {
                     <Icon size={22} style={{ color: brandGoldDeep }} />
                   </div>
                   <div
-                    className="font-montserrat font-bold mb-2 group-hover:scale-105 transition-transform duration-300"
+                    className="font-montserrat font-semibold mb-2 group-hover:scale-105 transition-transform duration-300"
                     style={{ fontSize: "clamp(1.7rem, 4.5vw, 2.2rem)", color: brandGoldDeep }}
                   >
                     {countValues[i]}
@@ -143,7 +143,7 @@ function ResultsSection() {
         {/* Treatment Results Grid */}
         <div className="mb-12">
           <h3
-            className="text-center font-bold mb-10"
+            className="text-center font-medium mb-10"
             style={{ color: dark, fontSize: "clamp(1.3rem, 4vw, 1.6rem)" }}
           >
             {r.treatmentResultsTitle}
@@ -168,7 +168,7 @@ function ResultsSection() {
                     style={{ borderBottom: `1px solid ${accentColor}22` }}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-bold text-base" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
+                      <h4 className="font-medium text-base" style={{ color: dark, fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}>
                         {tr.treatment}
                       </h4>
                       {isHighlight && (

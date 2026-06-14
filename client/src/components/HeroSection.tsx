@@ -118,7 +118,7 @@ export default function HeroSection() {
         </div>
 
         {/* 병원명: 글자별 charReveal */}
-        <h1 className="font-bold hero-title">
+        <h1 className="font-medium hero-title">
           <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
 

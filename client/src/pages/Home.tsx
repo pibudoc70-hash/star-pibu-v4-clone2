@@ -12,6 +12,7 @@ import { lazy, Suspense, useEffect } from "react";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import MobileBottomCTA from "@/components/MobileBottomCTA";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
@@ -270,6 +271,7 @@ export default function Home() {
       <main>
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
+        <MobileBottomCTA />
 
         {/* 2. SPECIAL EVENT — 순수 흰색, 상단 여백 증가로 허로 이후 숨 포인트 */}
         <div style={{ background: "#FFFFFF" }}>

@@ -133,27 +133,29 @@ export default function FloatingCTA() {
       {/* ── 데스크톱 플로팅 버튼 (우측 하단, 세로 스택) ── */}
       {/* 순서: 위 = Tertiary(전화), 중간 = Secondary(메신저), 아래 = Primary(예약) */}
       <div
-        className="fixed right-5 bottom-8 z-40 hidden md:flex flex-col gap-2.5 items-end transition-all duration-300"
+        className="fixed right-5 bottom-8 z-40 hidden md:flex flex-col gap-3 items-end transition-all duration-500"
         style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? "translateX(0)" : "translateX(100px)",
+          transform: visible ? "translateX(0)" : "translateX(120px)",
           pointerEvents: visible ? "auto" : "none",
+          transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        {/* Tertiary: 전화 — 절제된 톤, 최상단 */}
+        {/* Tertiary: 전화 — 최소화, 절제된 톤 */}
         <a
           href={telHref}
-          className="flex items-center gap-2 pr-4 pl-3 h-10 rounded-full transition-all hover:scale-105 group"
+          className="flex items-center gap-2 pr-4 pl-3 h-9 rounded-full transition-all duration-300 hover:scale-105"
           style={{
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(201,168,76,0.30)",
-            backdropFilter: "blur(8px)",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+            background: "rgba(12,18,40,0.72)",
+            border: "1px solid rgba(196,168,130,0.25)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06)",
           }}
           aria-label={fc.callAria}
         >
-          <Phone size={15} style={{ color: "rgba(245,215,142,0.85)", flexShrink: 0 }} />
-          <span style={{ color: "rgba(245,215,142,0.85)", fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.04em" }}>{fc.call}</span>
+          <Phone size={14} style={{ color: "rgba(196,168,130,0.8)", flexShrink: 0 }} />
+          <span style={{ color: "rgba(196,168,130,0.8)", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.05em", fontFamily: "'Montserrat', sans-serif" }}>{fc.call}</span>
         </a>
 
         {/* Secondary: 메신저 (카카오/LINE/WeChat) */}

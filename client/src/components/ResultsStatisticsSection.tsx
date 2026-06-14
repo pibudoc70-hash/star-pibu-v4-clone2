@@ -52,8 +52,8 @@ export default function ResultsStatisticsSection() {
           {doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
-              style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}
+              className="rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+              style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04)', border: '1px solid rgba(196,168,130,0.15)' }}
             >
               {/* 의료진 사진 */}
               <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
@@ -82,12 +82,12 @@ export default function ResultsStatisticsSection() {
           {statistics.map((stat, index) => (
             <div
               key={index}
-              className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:shadow-lg"
-              style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}
+              className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1"
+              style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 12px rgba(0,0,0,0.05)', border: '1px solid rgba(196,168,130,0.15)' }}
             >
               {/* 아이콘 */}
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid rgba(196,168,130,0.2)' }}>
                   {stat.icon}
                 </div>
               </div>

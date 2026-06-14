@@ -32,60 +32,102 @@ export default function ReservationSection() {
   ];
 
   return (
-    <section id="reservation" className="py-20 px-4" style={{ background: "#F8FAFC" }}>
+    <section
+      id="reservation"
+      className="py-20 px-4"
+      style={{ background: "var(--brand-bg, #FAF8F5)", position: "relative" }}
+    >
+      {/* 상단 구분선 */}
+      <div style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "1px",
+        background: "linear-gradient(90deg, transparent, rgba(196,168,130,0.3), transparent)"
+      }} />
+
       <div className="max-w-4xl mx-auto">
         {/* 섹션 제목 */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Calendar size={24} style={{ color: "var(--brand-gold, #C4A882)" }} />
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937]">{r.sectionTitle}</h2>
+        <div className="text-center mb-12">
+          <span className="section-eyebrow">ONLINE RESERVATION</span>
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Calendar size={22} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <h2 className="section-title" style={{ margin: 0 }}>{r.sectionTitle}</h2>
           </div>
-          <p className="text-lg text-[#6B7280]">
+          <p className="section-subtitle" style={{ maxWidth: "480px", margin: "0 auto" }}>
             {r.sectionSubtitle}
           </p>
         </div>
 
         {/* 예약 폼 또는 성공 메시지 */}
-        {/* [MOB-3] 모바일 p-8(32px) → p-4(16px): 320px 화면에서 폼 좌우 여백 확보 */}
-        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 md:p-12 border border-[#E5E7EB]">
+        <div
+          className="rounded-2xl p-4 sm:p-8 md:p-10"
+          style={{
+            background: "#fff",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 32px rgba(196,168,130,0.10), 0 0 0 1px rgba(196,168,130,0.12)",
+          }}
+        >
           {showSuccess ? (
-            <div className="text-center py-12">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#D1FAE5" }}>
-                  <CheckCircle size={32} style={{ color: "#059669" }} />
+            <div className="text-center py-10">
+              {/* 성공 아이콘 */}
+              <div className="flex justify-center mb-5">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(196,168,130,0.12)", border: "1px solid rgba(196,168,130,0.3)" }}
+                >
+                  <CheckCircle size={32} style={{ color: "var(--brand-gold, #C4A882)" }} />
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-[#1F2937] mb-4">
-                {lang === 'ko' ? '예약 신청이 완료되었습니다!' : lang === 'en' ? 'Reservation Request Submitted!' : lang === 'ja' ? '予約申請が完了しました！' : '预约申请已提交！'}
+              <h3
+                className="text-2xl font-bold mb-3"
+                style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', Georgia, serif" }}
+              >
+                {lang === 'ko' ? '예약 신청이 완료되었습니다' : lang === 'en' ? 'Reservation Request Submitted' : lang === 'ja' ? '予約申請が完了しました' : '预约申请已提交'}
               </h3>
-              <p className="text-[#6B7280] mb-4">
+              <p style={{ color: "var(--brand-text-mid, #666666)", marginBottom: "1rem", wordBreak: "keep-all" }}>
                 {lang === 'ko' ? '예약 신청이 완료되었습니다. 빠른 시간 내에 전화로 연락드리겠습니다.' : lang === 'en' ? 'Your reservation request has been submitted. We will contact you by phone shortly.' : lang === 'ja' ? '予約申請が完了しました。早急にお電話でご連絡いたします。' : '预约申请已提交。我们将尽快致电联系您。'}
               </p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
-                <p className="text-sm text-[#1F2937] font-semibold mb-2">
-                  {lang === 'ko' ? '📋 예약 안내' : lang === 'en' ? '📋 Booking Guide' : lang === 'ja' ? '📋 予約のご案内' : '📋 预约说明'}
+              {/* 예약 안내 박스 — 브랜드 골드 톤 */}
+              <div
+                className="rounded-xl p-4 mb-6 text-left"
+                style={{
+                  background: "rgba(196,168,130,0.07)",
+                  border: "1px solid rgba(196,168,130,0.22)",
+                }}
+              >
+                <p
+                  className="text-sm font-semibold mb-2"
+                  style={{ color: "var(--brand-gold-deep, #A8895E)" }}
+                >
+                  {lang === 'ko' ? '예약 안내' : lang === 'en' ? 'Booking Guide' : lang === 'ja' ? '予約のご案内' : '预约说明'}
                 </p>
-                <p className="text-sm text-[#6B7280] leading-relaxed">
+                <p className="text-sm leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)", wordBreak: "keep-all" }}>
                   {lang === 'ko' ? (
-                    <>현재 상태는 <span className="font-semibold text-[#1F2937]">예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-semibold text-[#059669]">확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
+                    <>현재 상태는 <span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
                   ) : lang === 'en' ? (
-                    <>Your status is currently <span className="font-semibold text-[#1F2937]">Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-semibold text-[#059669]">confirmed</span>. We will notify you by phone.</>
+                    <>Your status is currently <span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>confirmed</span>. We will notify you by phone.</>
                   ) : lang === 'ja' ? (
-                    <>現在の状態は<span className="font-semibold text-[#1F2937]">予約申請中</span>です。スタッフが確認後、予約が<span className="font-semibold text-[#059669]">確定</span>されます。電話でご連絡いたします。</>
+                    <>現在の状態は<span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>予約申請中</span>です。スタッフが確認後、予約が<span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>確定</span>されます。電話でご連絡いたします。</>
                   ) : (
-                    <>当前状态为<span className="font-semibold text-[#1F2937]">待确认</span>。工作人员确认后，预约将<span className="font-semibold text-[#059669]">确定</span>。我们将致电通知您。</>
+                    <>当前状态为<span className="font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>待确认</span>。工作人员确认后，预约将<span className="font-semibold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>确定</span>。我们将致电通知您。</>
                   )}
                 </p>
               </div>
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => {
                   setShowSuccess(false);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="px-6 py-2 rounded-lg font-semibold text-white transition-colors hover:opacity-90"
-                style={{ background: "var(--brand-gold, #C4A882)" }}
+                className="px-8 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, var(--brand-gold, #C4A882) 0%, var(--brand-gold-dark, #9a7a3a) 100%)",
+                  boxShadow: "0 4px 16px rgba(196,168,130,0.35)",
+                  minHeight: "44px",
+                }}
               >
-                {lang === 'ko' ? '예약 안내 확인' : lang === 'en' ? 'View Booking Guide' : lang === 'ja' ? '予約案内を確認' : '查看预约说明'}
+                {lang === 'ko' ? '처음으로 돌아가기' : lang === 'en' ? 'Back to Top' : lang === 'ja' ? 'トップへ戻る' : '返回首页'}
               </button>
             </div>
           ) : (
@@ -97,13 +139,31 @@ export default function ReservationSection() {
           )}
         </div>
 
-        {/* 예약 안내 */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 예약 안내 3개 항목 */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {infoItems.map((item, idx) => (
-            <div key={idx} className="text-center">
-              <div className="text-4xl mb-3">{item.icon}</div>
-              <h4 className="font-bold text-[#1F2937] mb-2">{item.title}</h4>
-              <p className="text-sm text-[#6B7280]">{item.description}</p>
+            <div
+              key={idx}
+              className="text-center p-5 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
+              style={{
+                background: "var(--brand-bg-alt, #F5F0EB)",
+                border: "1px solid rgba(196,168,130,0.15)",
+                boxShadow: "0 1px 8px rgba(0,0,0,0.04)",
+              }}
+            >
+              <div className="text-3xl mb-3">{item.icon}</div>
+              <h4
+                className="font-semibold mb-2"
+                style={{ color: "var(--brand-text, #2C2C2C)", fontSize: "0.9375rem" }}
+              >
+                {item.title}
+              </h4>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--brand-text-mid, #666666)", wordBreak: "keep-all" }}
+              >
+                {item.description}
+              </p>
             </div>
           ))}
         </div>

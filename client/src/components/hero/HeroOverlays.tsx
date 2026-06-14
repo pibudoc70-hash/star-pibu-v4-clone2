@@ -23,13 +23,13 @@ export function HeroDarkOverlay() {
             "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
         }}
       />
-      {/* 모바일 오버레이 — 텍스트 safe zone 강화 */}
+      {/* 모바일 오버레이 — 텍스트 대비 강화 (상단 진하게, 중간 적절한 투명도) */}
       <div
         aria-hidden="true"
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(4,8,22,0.88) 0%, rgba(4,8,22,0.55) 28%, rgba(4,8,22,0.50) 58%, rgba(4,8,22,0.92) 100%)",
+            "linear-gradient(to bottom, rgba(4,8,22,0.92) 0%, rgba(4,8,22,0.65) 30%, rgba(4,8,22,0.52) 62%, rgba(4,8,22,0.95) 100%)",
         }}
       />
     </>
@@ -79,7 +79,7 @@ export function HeroGoldGlow() {
         background:
           "radial-gradient(ellipse at 50% 0%, rgba(210,172,103,0.9) 0%, rgba(210,172,103,0.3) 45%, transparent 75%)",
         animation: "softGlow 10s ease-in-out infinite",
-        opacity: 0.22,
+        opacity: 0.28,
         mixBlendMode: "screen",
         willChange: "opacity",
       }}

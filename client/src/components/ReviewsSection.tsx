@@ -210,7 +210,6 @@ export default function ReviewsSection() {
               {visible.map((r, i) => (
                 <div
                   key={i}
-                  className="reveal-card"
                   style={{ transitionDelay: `${i * 0.1}s` }}
                 >
                   <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>

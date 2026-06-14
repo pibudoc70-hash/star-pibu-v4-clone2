@@ -348,9 +348,9 @@
     pointer-events: none;
   }
   .treatment-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(196,168,130,0.16), 0 6px 16px rgba(0,0,0,0.06);
-    border-color: rgba(196,168,130,0.35);
+    transform: translateY(-8px);
+    box-shadow: 0 24px 56px rgba(196,168,130,0.2), 0 8px 20px rgba(0,0,0,0.08);
+    border-color: rgba(196,168,130,0.42);
   }
   .treatment-card:hover::before {
     background: linear-gradient(90deg, transparent, rgba(196,168,130,0.6), transparent);
@@ -419,17 +419,18 @@
 
   .review-card {
     background: var(--brand-bg, #FAF8F5);
-    border-radius: 0.875rem;
-    padding: 1.5rem;
+    border-radius: 1rem;
+    padding: 1.75rem;
     box-shadow: 0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04);
     border: 1px solid rgba(196,168,130,0.18);
-    border-top: 2px solid rgba(196,168,130,0.55);
-    transition: box-shadow 0.28s ease, border-color 0.28s ease;
+    border-top: 2px solid rgba(196,168,130,0.6);
+    transition: box-shadow 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
   }
   .review-card:hover {
-    box-shadow: 0 8px 28px rgba(196,168,130,0.14), 0 2px 8px rgba(0,0,0,0.06);
-    border-color: rgba(196,168,130,0.32);
-    border-top-color: rgba(196,168,130,0.72);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(196,168,130,0.16), 0 4px 12px rgba(0,0,0,0.06);
+    border-color: rgba(196,168,130,0.35);
+    border-top-color: rgba(196,168,130,0.8);
   }
 
   /* ═══════════════════════════════════════════════
@@ -856,21 +857,21 @@
     /* Cormorant Garamond — 프리미엄 명조 브랜드 선언 */
     font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
     font-style: normal;
-    font-size: clamp(2.8rem, 9vw, 5.5rem);
+    font-size: clamp(3.2rem, 9.5vw, 6rem);
     font-weight: 400;
-    letter-spacing: 0.02em;
-    line-height: 1.08;
-    margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
-    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.15);
+    letter-spacing: 0.03em;
+    line-height: 1.06;
+    margin-bottom: clamp(0.6rem, 1.8vh, 1.2rem);
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.18);
   }
   .hero-subtitle {
-    color: rgba(255,255,255,0.82);
-    font-size: clamp(0.78rem, 1.8vw, 1.05rem);
-    margin-bottom: clamp(0.3rem, 1vh, 0.7rem);
-    letter-spacing: 0.12em;
-    font-weight: 400;
+    color: rgba(255,255,255,0.78);
+    font-size: clamp(0.72rem, 1.5vw, 0.92rem);
+    margin-bottom: clamp(0.4rem, 1.2vh, 0.9rem);
+    letter-spacing: 0.22em;
+    font-weight: 300;
     font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
-    text-transform: none;
+    text-transform: uppercase;
     text-shadow: 0 1px 12px rgba(0,0,0,0.45);
     word-break: keep-all;
   }
@@ -879,7 +880,7 @@
   .dr-section-bg { background: var(--brand-bg, #FAF8F5); }
   .dr-panel-card {
     background: white;
-    box-shadow: 0 20px 60px rgba(210,172,103,0.15), 0 4px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 24px 72px rgba(196,168,130,0.18), 0 6px 24px rgba(0,0,0,0.07);
   }
   .dr-tab-sidebar {
     width: 220px;
@@ -968,10 +969,11 @@
   }
   .dr-name-h3-desktop {
     color: #1a1a1a;
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
     font-size: 34px;
     font-weight: 400;
     line-height: 1.15;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
   .dr-derm-badge {
     display: flex;
@@ -1588,7 +1590,7 @@
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(3.9rem, 18.5vw, 5.5rem) !important;
+      font-size: clamp(2.8rem, 13vw, 3.8rem) !important;
       font-weight: 400 !important;
       letter-spacing: 0.02em !important;
       line-height: 1.1 !important;
@@ -1601,13 +1603,13 @@
 
     /* ▶ 7. 슬로건 — 대비 강화 */
     .hero-subtitle {
-      font-size: clamp(0.75rem, 3.2vw, 0.92rem) !important;
+      font-size: clamp(0.62rem, 2.8vw, 0.78rem) !important;
+      letter-spacing: 0.16em !important;
+      text-transform: uppercase !important;
+      font-weight: 300 !important;
       margin-bottom: clamp(0.6rem, 1.8vh, 1rem) !important;
-      letter-spacing: 0.08em !important;
-      font-weight: 400 !important;
-      color: rgba(255,255,255,0.92) !important;
+      color: rgba(255,255,255,0.88) !important;
       text-shadow: 0 1px 12px rgba(0,0,0,0.7) !important;
-      text-transform: none !important;
     }
 
     /* ▶ 8. 통계 스트립 */
@@ -1961,22 +1963,22 @@
 /* section-title: 섹션 주제목 — Noto Serif KR 명조 존재감 */
 .section-title {
   font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
-  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-size: clamp(1.9rem, 4.8vw, 3rem);
   font-weight: 400;
   letter-spacing: -0.01em;
-  line-height: 1.22;
+  line-height: 1.2;
   color: var(--brand-text, #2C2C2C);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   word-break: keep-all;
 }
 /* section-subtitle: 섹션 부제목 — Pretendard 고딕 본문 */
 .section-subtitle {
   font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
-  font-size: clamp(0.875rem, 2.2vw, 1rem);
-  line-height: 1.8;
+  font-size: clamp(0.875rem, 2vw, 0.975rem);
+  line-height: 1.9;
   color: var(--brand-text-mid, #666666);
   font-weight: 300;
-  max-width: 520px;
+  max-width: 560px;
   margin-left: auto;
   margin-right: auto;
   letter-spacing: 0.01em;
@@ -1988,7 +1990,7 @@
 .hero-stat-value {
   font-family: 'Cormorant Garamond', 'Montserrat', serif;
   font-weight: 400;
-  font-size: clamp(1.5rem, 5vw, 2.6rem);
+  font-size: clamp(1.8rem, 5.5vw, 3rem);
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   line-height: 1;
@@ -2032,12 +2034,13 @@
   transform: scaleX(1);
 }
 .hero-stat-label {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: clamp(0.58rem, 1.4vw, 0.72rem);
-  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(0.58rem, 1.2vw, 0.7rem);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
   padding-top: 10px;
-  font-weight: 500;
+  font-weight: 400;
   text-shadow: 0 1px 4px rgba(0,0,0,0.35);
 }
 
@@ -2205,7 +2208,7 @@
 /* 섹션 래퍼 */
 .consultation-section {
   background: var(--brand-bg);
-  padding: 80px 0 96px;
+  padding: 100px 0 120px;
   position: relative;
 }
 .consultation-section::before {
@@ -2229,12 +2232,12 @@
   max-width: 640px;
   margin: 0 auto;
   background: #fff;
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
   box-shadow:
-    0 1px 3px rgba(0,0,0,0.06),
-    0 8px 32px rgba(196,168,130,0.10),
-    0 0 0 1px rgba(196,168,130,0.12);
+    0 2px 4px rgba(0,0,0,0.04),
+    0 12px 48px rgba(196,168,130,0.14),
+    0 0 0 1px rgba(196,168,130,0.14);
 }
 
 /* 행 레이아웃 (이름 + 연락처) */
@@ -2601,11 +2604,12 @@
   left: 0;
   right: 0;
   z-index: 9000;
-  height: calc(48px + env(safe-area-inset-bottom, 0px));
+  height: calc(54px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #111111;
-  border-top: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.4);
+  background: #1a1a1a;
+  border-top: 1px solid rgba(196,168,130,0.18);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
 }
 
 /* 카카오 버튼 래퍼 — flex: 1로 동일 너비 */
@@ -2622,13 +2626,15 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  font-size: 0.73rem;
+  font-size: 0.72rem;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.04em;
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   text-decoration: none;
-  transition: opacity 0.15s;
+  transition: opacity 0.18s, background 0.18s;
   color: #ffffff;
-  border-right: 1px solid rgba(255,255,255,0.10);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  min-height: 44px;
 }
 
 .mobile-bottom-btn:last-child,
@@ -2645,13 +2651,18 @@
   background: #03C75A;
   color: #ffffff;
   font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.mobile-bottom-btn--reserve:active {
+  background: #02a84c;
 }
 
-/* 전화 — 딥 네이비 블루 */
+/* 전화 — 절제된 다크 */
 .mobile-bottom-btn--phone {
-  background: #1e3a5f;
-  color: #e8f0fe;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.88);
   font-weight: 400;
+  border-right: none;
 }
 
 /* 데스크톱에서 완전히 숨김 */
@@ -2664,7 +2675,7 @@
 /* 모바일에서 하단 고정 바 높이만큼 body 하단 패딩 추가 (콘텐츠 가림 방지) */
 @media (max-width: 640px) {
   body {
-    padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px));
   }
 
   /* Hero 섹션 모바일 CTA 버튼 그룹 숨김 */

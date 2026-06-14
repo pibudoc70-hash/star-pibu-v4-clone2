@@ -29,14 +29,14 @@ function EventEmptyState({ lang }: { lang: string }) {
     <div className="text-center py-16 flex flex-col items-center gap-4">
       <div
         className="flex items-center justify-center w-16 h-16 rounded-full mb-2"
-        style={{ background: "linear-gradient(135deg, #f6efe0 0%, #ede0c4 100%)" }}
+        style={{ background: "linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, rgba(196,168,130,0.2) 100%)" }}
       >
-        <Sparkles size={28} style={{ color: "#C9A84C" }} strokeWidth={1.5} />
+        <Sparkles size={28} style={{ color: "var(--brand-gold, #C4A882)" }} strokeWidth={1.5} />
       </div>
-      <p className="text-lg font-medium" style={{ color: "#4B5563" }}>
+      <p className="text-lg font-medium" style={{ color: "var(--brand-text, #2C2C2C)" }}>
         {i18n[lang as keyof typeof i18n]?.events.specialEmptyTitle}
       </p>
-      <p className="text-sm" style={{ color: "#9CA3AF" }}>
+      <p className="text-sm" style={{ color: "var(--brand-text-mid, #666666)" }}>
         {i18n[lang as keyof typeof i18n]?.events.specialEmptyDesc}
       </p>
     </div>
@@ -53,43 +53,31 @@ function SectionHeader({ lang }: { lang: string }) {
   };
   return (
     <div className="text-center mb-14 md:mb-20">
-      {/* eyebrow — 에디토리얼 스타일 */}
-      <p
-        className="font-medium mb-4"
-        style={{
-          color: "#C9A84C",
-          fontSize: "0.72rem",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-        }}
-      >
-        FOR YOU
-      </p>
-      {/* 제목 — 절제된 폰트 웨이트 */}
-      <h2
-        className="text-navy mb-5"
-        style={{
-          fontSize: "clamp(1.8rem, 5vw, 2.8rem)",
-          fontWeight: 800,
-          letterSpacing: "0.06em",
-          lineHeight: 1.15,
-        }}
-      >
-        SPECIAL EVENT
-      </h2>
-      {/* 서브타이틀 — 더 어두운 톤 */}
-      <p
-        className="mx-auto"
-        style={{
-          color: "#9B8B6E",
-          fontSize: "clamp(0.88rem, 2.2vw, 1rem)",
-          lineHeight: 1.7,
-          maxWidth: "480px",
-          fontWeight: 400,
-        }}
-      >
+      {/* eyebrow — 공통 클래스 적용 */}
+      <span className="section-eyebrow font-montserrat">FOR YOU</span>
+      {/* 제목 — section-title 공통 클래스 */}
+      <h2 className="section-title">SPECIAL EVENT</h2>
+      {/* 서브타이틀 — section-subtitle 공통 클래스 */}
+      <p className="section-subtitle">
         {subtitleMap[lang] ?? subtitleMap.ko}
       </p>
+    </div>
+  );
+}
+
+// ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
+function EventCardSkeleton() {
+  return (
+    <div className="rounded-2xl overflow-hidden animate-pulse" style={{ background: "var(--brand-bg-alt, #F5F0EB)" }}>
+      {/* 이미지 영역 */}
+      <div className="h-48 w-full" style={{ background: "rgba(196,168,130,0.15)" }} />
+      {/* 텍스트 영역 */}
+      <div className="p-5 flex flex-col gap-3">
+        <div className="h-3 w-16 rounded-full" style={{ background: "rgba(196,168,130,0.25)" }} />
+        <div className="h-5 w-4/5 rounded" style={{ background: "rgba(196,168,130,0.2)" }} />
+        <div className="h-4 w-3/5 rounded" style={{ background: "rgba(196,168,130,0.15)" }} />
+        <div className="h-4 w-2/5 rounded mt-1" style={{ background: "rgba(196,168,130,0.2)" }} />
+      </div>
     </div>
   );
 }
@@ -108,12 +96,14 @@ export default function SpecialEventSection() {
 
   if (isLoading) {
     return (
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
         <div className="container">
           <SectionHeader lang={lang} />
-          <p className="text-center text-lg text-gold">
-            {t.events.loading}
-          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+            <EventCardSkeleton />
+            <EventCardSkeleton />
+            <EventCardSkeleton />
+          </div>
         </div>
       </section>
     );
@@ -128,16 +118,16 @@ export default function SpecialEventSection() {
       zh: "重试",
     };
     return (
-      <section id="events" className="py-16 md:py-24 bg-white">
+      <section id="events" className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="text-center py-16 flex flex-col items-center gap-4">
-            <p className="text-base text-gray-500">{parseEventListError(error, lang)}</p>
+            <p className="text-base" style={{ color: "var(--brand-text-mid, #666666)" }}>{parseEventListError(error, lang)}</p>
             <button
               type="button"
               onClick={() => void refetch()}
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: "#C9A84C" }}
+              style={{ backgroundColor: "var(--brand-gold, #C4A882)" }}
             >
               <RefreshCw size={15} />
               {retryLabel[lang] ?? retryLabel.ko}
@@ -149,7 +139,7 @@ export default function SpecialEventSection() {
   }
 
   return (
-    <section id="events" className="py-20 md:py-28" style={{ background: "#FAFAF7" }}>
+    <section id="events" className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
       <div className="container">
         <SectionHeader lang={lang} />
         {(specialEvents as SpecialEvent[]).length === 0 ? (

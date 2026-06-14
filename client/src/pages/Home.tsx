@@ -29,10 +29,46 @@ const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ReservationSection = lazy(() => import("@/components/ReservationSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 
-/** 섹션 로딩 중 표시할 최소 스켈레톤 */
+/** 섹션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선 */
 // S2-T4: CLS 감소 — 서스펜스 폴백에 min-h 지정으로 레이아웃 시프트 방지
 function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
-  return <div className={`${minH} py-16 md:py-24`} aria-hidden="true" />;
+  return (
+    <div
+      className={`${minH} py-16 md:py-24 flex flex-col items-center justify-center gap-6`}
+      aria-hidden="true"
+      style={{ background: "var(--brand-bg, #FAF8F5)" }}
+    >
+      {/* 섹션 헤더 skeleton */}
+      <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+        <div
+          className="h-2.5 w-16 rounded-full animate-pulse"
+          style={{ background: "rgba(196,168,130,0.25)" }}
+        />
+        <div
+          className="h-6 w-48 rounded animate-pulse"
+          style={{ background: "rgba(196,168,130,0.2)" }}
+        />
+        <div
+          className="h-4 w-64 rounded animate-pulse"
+          style={{ background: "rgba(196,168,130,0.15)" }}
+        />
+      </div>
+      {/* 콘텐츠 skeleton 행 */}
+      <div className="flex gap-4 w-full max-w-2xl justify-center">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="flex-1 h-32 rounded-xl animate-pulse"
+            style={{
+              background: "rgba(196,168,130,0.12)",
+              animationDelay: `${i * 0.12}s`,
+              maxWidth: "200px",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {

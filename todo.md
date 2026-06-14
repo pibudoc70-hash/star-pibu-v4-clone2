@@ -2616,25 +2616,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 디자인 성숙도 개선 — 프리미엄 브랜드 사이트 수준 (2026-06-13)
 
 ### P0 — 히어로 아트디렉션 / CTA 위계 / 신뢰 수치
-- [ ] 히어로 오버레이 깊이감 강화 — 모바일 전용 그라디언트 강도 상향, 데스크톱 중앙 focal point 비네팅 정교화
-- [ ] 히어로 골드 글로우 opacity 상향 (0.15 → 0.22) — 천장 조명 무드 강화
-- [ ] 히어로 통계 스트립 — 에디토리얼 스타일로 개선 (separator 라인, 라벨 letter-spacing, 값 크기 위계)
-- [ ] 히어로 CTA 위계 재설계 — Primary(예약) / Secondary(카카오) / Tertiary(전화) 명확히 분리
-- [ ] 히어로 모바일 — 로고 크기 최적화, 슬로건 간격 정리, CTA 버튼 크기 통일
-- [ ] FloatingCTA 데스크톱 — 예약을 Primary(최하단 강조), 전화를 Tertiary(최상단 절제)로 순서 재정렬
-- [ ] FloatingCTA 모바일 바 — 높이/패딩/폰트 크기 통일, 예약 버튼 Primary 강조 유지
+- [x] 히어로 오버레이 깊이감 강화 — 모바일 전용 그라디언트 강도 상향, 데스크톱 중앙 focal point 비네팅 정교화
+- [x] 히어로 골드 글로우 opacity 상향 (0.15 → 0.22) — 천장 조명 무드 강화
+- [x] 히어로 통계 스트립 — 에디토리얼 스타일로 개선 (separator 라인, 라벨 letter-spacing, 값 크기 위계)
+- [x] 히어로 CTA 위계 재설계 — Primary(예약) / Secondary(카카오) / Tertiary(전화) 명확히 분리
+- [x] 히어로 모바일 — 로고 크기 최적화, 슬로건 간격 정리, CTA 버튼 크기 통일
+- [x] FloatingCTA 데스크톱 — 예약을 Primary(최하단 강조), 전화를 Tertiary(최상단 절제)로 순서 재정렬
+- [x] FloatingCTA 모바일 바 — 높이/패딩/폰트 크기 통일, 예약 버튼 Primary 강조 유지
 
 ### P1 — 컬러/타이포/여백 / 이벤트 카드 / 섹션 리듬
-- [ ] 전역 섹션 여백 — py-16 → py-20/py-24 수준으로 상향, 섹션 간 리듬 통일
-- [ ] 섹션 헤더 타이포 — eyebrow letter-spacing 강화, 제목 font-weight 절제, 서브타이틀 색상 정제
-- [ ] 이벤트 카드 — 카드 상단 비주얼 여백 확대, 시술명/카피/가격/CTA 계층 재정리
-- [ ] 이벤트 카드 — "자세히 보기" 버튼을 카드 구조에 자연스럽게 통합 (기계적 버튼 느낌 제거)
-- [ ] 이벤트 카드 — 가격이 유일한 중심이 되지 않도록 시술 베네핏 카피 위계 강화
+- [x] 전역 섹션 여백 — py-16 → py-20/py-24 수준으로 상향, 섹션 간 리듬 통일
+- [x] 섹션 헤더 타이포 — eyebrow letter-spacing 강화, 제목 font-weight 절제, 서브타이틀 색상 정제
+- [x] 이벤트 카드 — 카드 상단 비주얼 여백 확대, 시술명/카피/가격/CTA 계층 재정리
+- [x] 이벤트 카드 — "자세히 보기" 버튼을 카드 구조에 자연스럽게 통합 (기계적 버튼 느낌 제거)
+- [x] 이벤트 카드 — 가격이 유일한 중심이 되지 않도록 시술 베네핏 카피 위계 강화
 
 ### P2 — 잔여 UI 디테일
-- [ ] 아이콘/배지 크기 통일 — 섹션별 아이콘 strokeWidth 일관성
-- [ ] 보조 텍스트 톤 정리 — muted 색상 통일 (#6B7280 → rgba(107,114,128,0.85))
-- [ ] sticky CTA 본문 충돌 최소화 — 모바일 main padding-bottom 재검토
+- [x] 아이콘/배지 크기 통일 — 섹션별 아이콘 strokeWidth 일관성
+- [x] 보조 텍스트 톤 정리 — muted 색상 통일 (#6B7280 → rgba(107,114,128,0.85))
+- [x] sticky CTA 본문 충돌 최소화 — 모바일 main padding-bottom 재검토
 
 ## 디자인 성숙도 개선 — 프리미엄 브랜드 사이트 (2026-06-13)
 
@@ -2655,25 +2655,25 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 전체 브랜드 리디자인 — 프리미엄 피부과 브랜드 경험 (2026-06-14)
 
 ### P0 — 반드시 우선 개선
-- [ ] Playfair Display serif 폰트 Google Fonts CDN 추가 (index.html)
-- [ ] 브랜드 컬러 토큰 전면 교체 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
-- [ ] 히어로 카피 방향 개선 (Label: BUSAN SEOMYEON DERMATOLOGY, 슬로건 정제)
-- [ ] 히어로 통계 스트립 에디토리얼 스타일 강화 (serif 숫자, 절제된 라벨)
-- [ ] 히어로 오버레이 모바일 별도 아트디렉션 (깊이감 강화)
-- [ ] CTA 위계 재설계 (Primary 예약 전체너비, Secondary 카카오, Tertiary 전화)
-- [ ] FloatingCTA 모바일 바 브랜드 톤 정렬
-- [ ] "로딩 중..." skeleton UI 교체 (EventsSection)
+- [x] Playfair Display serif 폰트 Google Fonts CDN 추가 (index.html)
+- [x] 브랜드 컬러 토큰 전면 교체 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
+- [x] 히어로 카피 방향 개선 (Label: BUSAN SEOMYEON DERMATOLOGY, 슬로건 정제)
+- [x] 히어로 통계 스트립 에디토리얼 스타일 강화 (serif 숫자, 절제된 라벨)
+- [x] 히어로 오버레이 모바일 별도 아트디렉션 (깊이감 강화)
+- [x] CTA 위계 재설계 (Primary 예약 전체너비, Secondary 카카오, Tertiary 전화)
+- [x] FloatingCTA 모바일 바 브랜드 톤 정렬
+- [x] "로딩 중..." skeleton UI 교체 (EventsSection)
 
 ### P1 — 강하게 권장
-- [ ] PhilosophySection 브랜드 스토리 에디토리얼 재설계 ("20년의 안목" 강화)
-- [ ] Stats Interlude 정제 (3개 핵심 수치만, serif 숫자)
-- [ ] DoctorsSection 프리미엄 톤 개선 (탭 골드 절제, 배지 상업성 감소)
-- [ ] EventCard 프리미엄 재설계 (가격 비강조, 시술 제안 톤)
-- [ ] TreatmentsSection 비주얼 우선 구조 (hover 고급 효과)
-- [ ] ContactSection 고급 안내판 톤 (골드 라인, 차콜 텍스트)
-- [ ] Footer 브랜드 마감 (차콜 배경, 절제된 골드 포인트)
-- [ ] 전역 여백/그리드 시스템 (desktop 120px / mobile 80px)
-- [ ] 공통 section-eyebrow / section-title / section-subtitle 클래스 전체 적용
+- [x] PhilosophySection 브랜드 스토리 에디토리얼 재설계 ("20년의 안목" 강화)
+- [x] Stats Interlude 정제 (3개 핵심 수치만, serif 숫자)
+- [x] DoctorsSection 프리미엄 톤 개선 (탭 골드 절제, 배지 상업성 감소)
+- [x] EventCard 프리미엄 재설계 (가격 비강조, 시술 제안 톤)
+- [x] TreatmentsSection 비주얼 우선 구조 (hover 고급 효과)
+- [x] ContactSection 고급 안내판 톤 (골드 라인, 차콜 텍스트)
+- [x] Footer 브랜드 마감 (차콜 배경, 절제된 골드 포인트)
+- [x] 전역 여백/그리드 시스템 (desktop 120px / mobile 80px)
+- [x] 공통 section-eyebrow / section-title / section-subtitle 클래스 전체 적용
 
 ### P2 — 자산/정책 확인 후 적용
 - [ ] 자연광 의료진 사진 교체 (자산 확보 시)
@@ -2706,5 +2706,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ReservationSection 아이콘/버튼 브랜드 골드 교체
 - [x] ContactSection section-eyebrow 브랜드 통일
 - [x] 전체 잔여 navy/mint 컬러 브랜드 골드로 교체 완료
+- [x] TypeScript 오류 0건 확인
+- [x] 전체 테스트 1,380개 통과 확인
+
+## 프리미엄 디자인 마무리 — 미완료 항목 완성 (2026-06-14)
+- [x] SpecialEventSection.tsx SectionHeader 인라인 스타일 → section-eyebrow/section-title/section-subtitle 공통 클래스 교체
+- [x] SpecialEventSection.tsx 섹션 배경 #FAFAF7 → var(--brand-bg) 브랜드 토큰으로 교체
+- [x] SpecialEventSection.tsx 로딩 상태 단순 텍스트 → skeleton UI (EventCardSkeleton 3개) 교체
+- [x] index.css star-mint-btn — 구 민트 #81C7C9 → 브랜드 골드 var(--brand-gold) 교체
+- [x] index.css star-navy-btn — 구 네이비 #4A6FA5 → 브랜드 차콜 var(--brand-text) 교체
+- [x] index.css mobile-menu-panel — background: white → var(--brand-bg) 교체
+- [x] index.css floating-cta — background: white → var(--brand-bg) 교체
+- [x] index.css pulse-soft 애니메이션 — 구 네이비 rgba → 브랜드 골드 rgba 교체
+- [x] EquipmentSection.tsx EquipmentCard 호버 오버레이 카카오 링크 색상 #A7DADC → rgba(255,255,255,0.85) 교체
+- [x] Home.tsx SectionFallback 빈 div → 브랜드 골드 pulse skeleton UI 교체
 - [x] TypeScript 오류 0건 확인
 - [x] 전체 테스트 1,380개 통과 확인

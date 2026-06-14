@@ -235,9 +235,10 @@
     font-family: 'Montserrat', sans-serif;
   }
 
+  /* 브랜드 골드 버튼 (구 star-mint-btn — 브랜드 토큰으로 교체) */
   .star-mint-btn {
-    background-color: #81C7C9;
-    color: white;
+    background-color: var(--brand-gold, #C4A882);
+    color: #1a1a1a;
     font-weight: 600;
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
@@ -247,13 +248,14 @@
     gap: 0.5rem;
   }
   .star-mint-btn:hover {
-    background-color: #6BB8BA;
+    background-color: var(--brand-gold-deep, #A8895E);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(129, 199, 201, 0.4);
+    box-shadow: 0 8px 24px rgba(196, 168, 130, 0.4);
   }
 
+  /* 브랜드 차콜 버튼 (구 star-navy-btn — 브랜드 토큰으로 교체) */
   .star-navy-btn {
-    background-color: #4A6FA5;
+    background-color: var(--brand-text, #2C2C2C);
     color: white;
     font-weight: 600;
     padding: 0.75rem 1.5rem;
@@ -264,9 +266,9 @@
     gap: 0.5rem;
   }
   .star-navy-btn:hover {
-    background-color: #3A5A8F;
+    background-color: var(--brand-dark, #232323);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(74, 111, 165, 0.4);
+    box-shadow: 0 8px 24px rgba(44, 44, 44, 0.35);
   }
 
   /* [FM-P1-2] 0.7s → 0.55s: 스크롤 시 레이아웃 시프트 감소 */
@@ -540,7 +542,7 @@
     right: 0;
     height: 100%;
     width: 280px;
-    background: white;
+    background: var(--brand-bg, #FAF8F5);
     z-index: 50;
     transform: translateX(100%);
     transition: transform 0.3s ease;
@@ -560,9 +562,9 @@
     display: flex;
     gap: 0.75rem;
     padding: 0.75rem 1.5rem;
-    background: white;
+    background: var(--brand-bg, #FAF8F5);
     border-radius: 3rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   }
 
   /* Popup overlay */
@@ -1266,10 +1268,10 @@
     100% { opacity: 0.10; }
   }
 
-  /* Pulse animation for CTA */
+  /* Pulse animation for CTA — 브랜드 골드 포커스 글로우 */
   @keyframes pulse-soft {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.3); }
-    50% { box-shadow: 0 0 0 12px rgba(74, 111, 165, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196, 168, 130, 0.35); }
+    50% { box-shadow: 0 0 0 12px rgba(196, 168, 130, 0); }
   }
 
   .star-navy-btn:focus {
@@ -1359,6 +1361,7 @@
       overflow: hidden !important;
     }
 
+    /* 버튼 텍스트 줄바꿈 방지 (너무 좁아지는 경우) */
     /* 버튼 텍스트 줄바꿈 방지 (너무 좁아지는 경우) */
     .star-mint-btn, .star-navy-btn {
       font-size: 0.85rem !important;
@@ -1689,7 +1692,7 @@
   /* [FM-P3-2] pulse-soft (CTA 버튼 포커스 글로우) 비활성화 */
   .star-navy-btn:focus {
     animation: none !important;
-    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.5) !important;
   }
 
   /* animate-bounce (스크롤 인디케이터 화살표) 비활성화 */

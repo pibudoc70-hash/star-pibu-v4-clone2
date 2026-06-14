@@ -519,7 +519,7 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 text-xs font-semibold"
-          style={{ color: "#A7DADC" }}
+          style={{ color: "rgba(255,255,255,0.85)" }}
           onClick={(e) => e.stopPropagation()}
         >
           카카오 상담 →

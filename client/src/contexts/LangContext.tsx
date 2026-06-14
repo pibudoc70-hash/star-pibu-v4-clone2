@@ -28,6 +28,10 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     document.documentElement.lang =
       lang === "ja" ? "ja" : lang === "zh" ? "zh" : lang === "en" ? "en" : "ko";
+    // body에 font-lang-* 클래스 설정 (index.css 언어별 폰트/줄높이 CSS 활성화)
+    const body = document.body;
+    body.classList.remove("font-lang-ko", "font-lang-ja", "font-lang-zh", "font-lang-en");
+    body.classList.add(`font-lang-${lang}`);
   }, [lang]);
 
   return (

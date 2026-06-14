@@ -2913,6 +2913,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] index.css - 중국어/일본어 h1~h6에 각 언어 폰트 + line-height: 1.4 오버라이드
 - [x] index.css - 중국어/일본어 section-title/subtitle/eyebrow에 각 언어 폰트 + line-height: 1.5 오버라이드
 
+## Phase N+2: 일본어 타이틀 줄바꾸 및 중국어 줄높이 불일치 수정 (2026-06-15)
+- [x] LangContext.tsx - body에 font-lang-* 클래스 설정 코드 추가 (기존에는 documentElement.lang만 설정하고 body 클래스는 설정하지 않아 CSS 규칙이 적용되지 않았던 문제 해결)
+- [x] index.html - Noto Sans JP, Noto Sans SC 폰트 로딩 추가
+- [x] index.css - 일본어 section-title white-space: nowrap 전역 CSS 적용 (body.font-lang-ja .section-title)
+- [x] index.css - 일본어 모바일 section-title 폰트 크기 조정하여 한 줄 표시 보장
+- [x] index.css - 중국어 p/span/div/li 요소에 line-height: 1.75 명시적 적용
+
 ## Phase N: Hero 슬로건 변경 + 전체 고딕체 전환 (2026-06-14)
 - [x] Hero 슬로건 4개 언어 모두 "Where Experience, Trust, and Science Meet"으로 변경 (ko/en/ja/zh)
 - [x] hero-subtitle CSS 스타일 영문 슬로건에 맞게 조정 (letter-spacing 0.12em, text-transform: none)

@@ -194,6 +194,15 @@
     font-family: 'Noto Sans SC', sans-serif !important;
     line-height: 1.5 !important;
   }
+  /* 중국어 한자 줄 높이 불일치 해결 — 모든 텍스트 요소에 일관된 line-height 적용 */
+  body.font-lang-zh p,
+  body.font-lang-zh span,
+  body.font-lang-zh div,
+  body.font-lang-zh li,
+  body.font-lang-zh td,
+  body.font-lang-zh th {
+    line-height: 1.75 !important;
+  }
   body.font-lang-ja .section-title,
   body.font-lang-ja .section-subtitle,
   body.font-lang-ja .section-eyebrow,
@@ -201,6 +210,11 @@
   body.font-lang-ja .dr-section-eyebrow {
     font-family: 'Noto Sans JP', sans-serif !important;
     line-height: 1.5 !important;
+  }
+  /* 일본어 PhilosophySection 타이틀 한 줄 표시 대응 */
+  body.font-lang-ja .section-title {
+    white-space: nowrap !important;
+    overflow: visible !important;
   }
   /* Montserrat는 영문/숫자 전용이므로 언어 무관하게 유지 */
   body.font-lang-ko .font-montserrat,
@@ -2228,6 +2242,12 @@
   .section-title {
     font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
     margin-bottom: 1rem;
+  }
+  /* 모바일 일본어 section-title: nowrap 유지하면서 폰트 크기 조정하여 한 줄 표시 */
+  body.font-lang-ja .section-title {
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem) !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
   }
   .section-eyebrow {
     font-size: 0.6rem;

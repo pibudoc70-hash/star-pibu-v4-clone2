@@ -105,7 +105,7 @@ export default function ContactSection() {
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <span className="section-eyebrow text-[var(--color-star-mint)]">{locationInfo}</span>
+          <span className="section-eyebrow">{locationInfo}</span>
           <h2 className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)] mb-4">{sectionTitle}</h2>
           <div className="star-divider mx-auto" />
         </div>

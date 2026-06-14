@@ -2726,24 +2726,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 디자인 고도화 — 12년 시니어 웹디자이너 기준 (2026-06-14)
 
 ### P0 — 즉시 수정 (모바일 UX + 신뢰 수치 동기화)
-- [ ] HeroSection 모바일 아트디렉션 재설계 (이미지 focal point, text safe zone, 배경 그라디언트 보정)
+- [x] HeroSection 모바일 아트디렉션 재설계 (이미지 focal point, text safe zone, 배경 그라디언트 보정)
 - [x] HeroSection 모바일 CTA 위계 강화 (Primary 네이버예약 전체너비, Secondary 카카오, Tertiary 전화 — 44px 이상 터치 영역)
 - [x] HeroSection 신뢰 수치 모바일 가독성 개선 (숫자 대비, 보조 텍스트 가독성)
-- [ ] HeroSection 데스크톱/모바일 신뢰 수치 동기화 확인 (20년+, 4,000례+, 50종+)
-- [ ] 전체 모바일 여백 시스템 정리 (section padding 80px, grid gap 24px)
-- [ ] 타이포 계층 정리 (hero-title / section-title / body / caption 위계 명확화)
+- [x] HeroSection 데스크톱/모바일 신뢰 수치 동기화 확인 (20년+, 4,000례+, 50종+)
+- [x] 전체 모바일 여백 시스템 정리 (section padding 80px, grid gap 24px)
+- [x] 타이포 계층 정리 (hero-title / section-title / body / caption 위계 명확화)
 - [x] FloatingCTA 모바일 — 본문 콘텐츠와 시각적 충돌 방지, 터치 영역 44px 이상
 
 ### P1 — 권장 수정 (카드 + 신뢰 섹션 + 브랜드 서사)
-- [ ] SpecialEventSection 이벤트 카드 — 가격표/광고 인상 줄이기, 프리미엄 제안형 정제
-- [ ] TreatmentsSection 카드 — 모바일 card density 낮추기, 읽기 흐름 우선
-- [ ] DoctorsSection 모바일 — 나열형 → 품격 있는 구성, 경력/자격 가독성 개선
-- [ ] ReviewsSection — 과도한 상업성 제거, 정제된 신뢰 표현
+- [x] SpecialEventSection 이벤트 카드 — 가격표/광고 인상 줄이기, 프리미엄 제안형 정제
+- [x] TreatmentsSection 카드 — 모바일 card density 낮추기, 읽기 흐름 우선
+- [x] DoctorsSection 모바일 — 나열형 → 품격 있는 구성, 경력/자격 가독성 개선
+- [x] ReviewsSection — 과도한 상업성 제거, 정제된 신뢰 표현
 - [x] PhilosophySection — “20년의 안목” 브랜드 서사 강화, 숫자보다 의미 우선
 
 ### P2 — 선택 수정 (연혁/지도/마이크로 인터랙션)
-- [ ] ContactSection 운영시간/지도 프레젠테이션 고급화
-- [ ] scroll reveal 인터랙션 정리 (opacity + translateY, 0.6~0.8s)
+- [x] ContactSection 운영시간/지도 프레젠테이션 고급화 (구 민트 색상 → 브랜드 골드 토큰, 복사 버튼 정제)
+- [x] scroll reveal 인터랙션 정리 (opacity + translateY, 0.6~0.8s)
 
 ### 이번 세션 추가 완료 (2026-06-14)
 - [x] FloatingCTA Home.tsx 마운트 (누락 수정)

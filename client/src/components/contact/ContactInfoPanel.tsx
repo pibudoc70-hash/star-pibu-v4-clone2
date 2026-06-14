@@ -70,9 +70,9 @@ export default function ContactInfoPanel({
               onClick={onCopyAddress}
               className="mt-2 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
               style={{
-                background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "var(--color-star-mint-pale)",
-                color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "var(--color-star-navy)",
-                border: `1px solid ${copied ? "#03C75A33" : copyFailed ? "#EF444433" : "color-mix(in srgb, var(--color-star-mint) 20%, transparent)"}`,
+                background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "var(--brand-gold-pale, #F0EAE0)",
+                color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "var(--brand-text, #2C2C2C)",
+                border: `1px solid ${copied ? "#03C75A33" : copyFailed ? "#EF444433" : "color-mix(in srgb, var(--brand-gold, #C4A882) 25%, transparent)"}`,
               }}
             >
               {copied ? (
@@ -159,7 +159,7 @@ export default function ContactInfoPanel({
           </div>
         </div>
         <div className="flex items-stretch gap-3 mt-3">
-          <Car size={20} className="text-[var(--color-star-mint)] flex-shrink-0 mt-0.5" />
+          <Car size={20} style={{ color: 'var(--brand-gold, #C4A882)' }} className="flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-sm mb-1 text-[var(--color-star-text)]">
               {parkingLabel}

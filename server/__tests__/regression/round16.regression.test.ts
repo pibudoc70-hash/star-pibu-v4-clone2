@@ -199,8 +199,8 @@ describe("D. EquipmentTreatmentCard: CSS custom property 기반 스타일", () =
 describe("E. ContactSection: 인라인 style 제거 + CSS 변수 토큰", () => {
   const contactSrc = readClient("components/ContactSection.tsx");
 
-  it("E-1: locationInfo 단락에 text-[var(--color-star-mint)] 클래스가 사용되어야 한다", () => {
-    expect(contactSrc).toContain("text-[var(--color-star-mint)]");
+  it("E-1: locationInfo 단락에 section-eyebrow 클래스가 사용되어야 한다 (구 민트 색상 → 브랜드 골드 토큰으로 교체)", () => {
+    expect(contactSrc).toContain("section-eyebrow");
   });
 
   it("E-2: h2 섹션 타이틀에 font-extrabold 클래스가 사용되어야 한다", () => {

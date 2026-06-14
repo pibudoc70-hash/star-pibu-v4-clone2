@@ -1174,6 +1174,7 @@
     font-size: 18px;
     font-weight: 100;
     letter-spacing: 0.05em;
+    white-space: nowrap;
   }
   /* Gold divider backgrounds */
   .dr-gold-divider-strong {
@@ -1267,6 +1268,7 @@
     color: var(--dr-gold);
     font-size: 0.75rem;
     font-weight: 400;
+    white-space: nowrap;
   }
   /* Mobile specialty title */
   .dr-mob-specialty-title {

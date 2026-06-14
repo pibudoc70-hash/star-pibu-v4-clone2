@@ -2766,3 +2766,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ResultsStatisticsSection — gray-600/#9CA3AF → 브랜드 토큰, 이미지 배경 브랜드 토큰
 - [x] TypeScript 오류 0건 확인
 - [x] 전체 테스트 56파일 1,380개 통과 확인
+
+### 디자인 고도화 3차 완료 (2026-06-14)
+- [x] scroll reveal 인터랙션 정리: blur 제거 (성능 개선), 0.7s spring easing, translateY 32px 프리미엄 무드
+- [x] DoctorsSection 모바일 가독성 개선: intro 텍스트 대비 강화, credentials 배경 브랜드 토큰, dot-nav 브랜드 골드
+- [x] Hero 모바일 focal point 개선: center 25% → center 20% (인물/공간 중심 보호)
+- [x] HeroSection 신뢰 수치 동기화 확인 완료 (useClinicStats 훅으로 20년+/4,000례+/50종+ 통일)
+- [x] TypeScript 오류 0건 확인
+- [x] 전체 테스트 56파일 1,380개 통과 확인

@@ -1588,7 +1588,7 @@
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(3.9rem, 18.5vw, 5.5rem) !important;
+      font-size: clamp(2.8rem, 13vw, 3.8rem) !important;
       font-weight: 400 !important;
       letter-spacing: 0.02em !important;
       line-height: 1.1 !important;

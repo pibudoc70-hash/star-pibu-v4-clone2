@@ -348,9 +348,9 @@
     pointer-events: none;
   }
   .treatment-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 24px 56px rgba(196,168,130,0.2), 0 8px 20px rgba(0,0,0,0.08);
-    border-color: rgba(196,168,130,0.42);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(196,168,130,0.18), 0 6px 16px rgba(0,0,0,0.07);
+    border-color: rgba(196,168,130,0.38);
   }
   .treatment-card:hover::before {
     background: linear-gradient(90deg, transparent, rgba(196,168,130,0.6), transparent);
@@ -419,18 +419,18 @@
 
   .review-card {
     background: var(--brand-bg, #FAF8F5);
-    border-radius: 1rem;
-    padding: 1.75rem;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04);
-    border: 1px solid rgba(196,168,130,0.18);
-    border-top: 2px solid rgba(196,168,130,0.6);
-    transition: box-shadow 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
+    border-radius: 1.125rem;
+    padding: 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.03);
+    border: 1px solid rgba(196,168,130,0.15);
+    border-top: 2px solid rgba(196,168,130,0.5);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
   .review-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(196,168,130,0.16), 0 4px 12px rgba(0,0,0,0.06);
-    border-color: rgba(196,168,130,0.35);
-    border-top-color: rgba(196,168,130,0.8);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 44px rgba(196,168,130,0.15), 0 4px 14px rgba(0,0,0,0.06);
+    border-color: rgba(196,168,130,0.3);
+    border-top-color: rgba(196,168,130,0.7);
   }
 
   /* ═══════════════════════════════════════════════
@@ -1549,139 +1549,152 @@
     }
   }
 
-  /* ─── Hero Section 모바일 근본 재설계 (375px ~ 640px) ─── */
+  /* ─── Hero Section 모바일 전용 설계 (375px ~ 640px) ─── */
+  /* 원칙: 데스크톱 축소판이 아닌 모바일 전용 경험 */
   @media (max-width: 640px) {
-    /* ▶ 1. Hero section — 화면 전체 100dvh, 콘텐츠 상하 분리 */
+    /* ▶ 1. Hero section — 화면 전체 100dvh */
     #home {
       min-height: 100svh !important;
       min-height: 100dvh !important;
       height: 100svh !important;
       height: 100dvh !important;
-      justify-content: center !important;
+      justify-content: space-between !important;
       align-items: center !important;
     }
 
-    /* ▶ 2. 콘텐츠 컨테이너 — 전체 높이 채우기, 중앙보다 약간 위 배치 */
+    /* ▶ 2. 콘텐츠 컨테이너 — space-between으로 상단/하단 자연 분리 */
     #home > .relative.z-10 {
-      padding-top: clamp(64px, 9vh, 88px) !important;
-      padding-bottom: clamp(80px, 14vh, 120px) !important;
+      padding-top: clamp(72px, 11vh, 100px) !important;
+      padding-bottom: clamp(24px, 5vh, 48px) !important;
       max-width: 100% !important;
-      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
-      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
+      padding-left: clamp(1.5rem, 7vw, 2rem) !important;
+      padding-right: clamp(1.5rem, 7vw, 2rem) !important;
       flex: 1 1 auto !important;
       align-self: stretch !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: center !important;
+      justify-content: space-between !important;
       align-items: center !important;
     }
 
-    /* ▶ 3. 상단 콘텐츠 그룹 — 로고+텍스트+통계, 중앙 배치 */
+    /* ▶ 3. 상단 콘텐츠 그룹 — 로고+텍스트+통계 */
     .hero-top-group {
       flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      justify-content: center !important;
+      justify-content: flex-start !important;
+      gap: 0 !important;
     }
 
-    /* ▶ 4. 하단 CTA 그룹 — 자연스럽게 하단 */
+    /* ▶ 4. 하단 CTA 그룹 — 화면 하단 고정 느낌 */
     .hero-cta-group {
       flex: 0 0 auto !important;
       width: 100% !important;
-      padding-top: clamp(1.5rem, 4vh, 2.5rem) !important;
-      padding-bottom: clamp(1rem, 3vh, 1.75rem) !important;
+      padding-top: clamp(1.25rem, 3.5vh, 2rem) !important;
+      padding-bottom: clamp(0.5rem, 2vh, 1rem) !important;
     }
 
-    /* ▶ 5. 로고 크기 절제 */
+    /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
     .hero-logo-img {
-      height: clamp(104px, 25vw, 138px) !important;
-      width: clamp(104px, 25vw, 138px) !important;
+      height: clamp(80px, 20vw, 110px) !important;
+      width: clamp(80px, 20vw, 110px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
+      margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem) !important;
     }
 
-    /* ▶ 6. 병원명 h1 — Cormorant Garamond 명조 프리미엄 */
+    /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(2.8rem, 13vw, 3.8rem) !important;
+      font-size: clamp(3rem, 14vw, 4.2rem) !important;
       font-weight: 400 !important;
-      letter-spacing: 0.02em !important;
-      line-height: 1.1 !important;
+      letter-spacing: 0.03em !important;
+      line-height: 1.08 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(0.5rem, 1.5vh, 0.9rem) !important;
+      margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem) !important;
       color: #ffffff !important;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.5) !important;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.75), 0 0 48px rgba(0,0,0,0.4) !important;
     }
 
-    /* ▶ 7. 슬로건 — 대비 강화 */
+    /* ▶ 7. 슬로건 — 절제된 오버라인 스타일 */
     .hero-subtitle {
-      font-size: clamp(0.62rem, 2.8vw, 0.78rem) !important;
-      letter-spacing: 0.16em !important;
+      font-size: clamp(0.58rem, 2.4vw, 0.72rem) !important;
+      letter-spacing: 0.2em !important;
       text-transform: uppercase !important;
       font-weight: 300 !important;
-      margin-bottom: clamp(0.6rem, 1.8vh, 1rem) !important;
-      color: rgba(255,255,255,0.88) !important;
-      text-shadow: 0 1px 12px rgba(0,0,0,0.7) !important;
+      margin-bottom: clamp(0.75rem, 2.2vh, 1.2rem) !important;
+      color: rgba(255,255,255,0.72) !important;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
+      font-family: 'Montserrat', sans-serif !important;
     }
 
-    /* ▶ 8. 통계 스트립 */
+    /* ▶ 8. 통계 스트립 — 간결하고 읽기 쉽게 */
     .hero-stats-row {
-      gap: clamp(1rem, 5vw, 2rem) !important;
-      padding-top: clamp(0.75rem, 2vh, 1.25rem) !important;
+      gap: clamp(1.25rem, 6vw, 2.5rem) !important;
+      padding-top: clamp(0.85rem, 2.2vh, 1.4rem) !important;
+      border-top: 1px solid rgba(201,168,76,0.2) !important;
+      max-width: 100% !important;
     }
     .hero-stat-value {
-      font-family: 'Cormorant Garamond', 'Montserrat', serif !important;
-      font-size: clamp(1.5rem, 7vw, 2rem) !important;
-      text-shadow: 0 1px 12px rgba(0,0,0,0.6) !important;
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: clamp(1.6rem, 7.5vw, 2.2rem) !important;
+      font-weight: 400 !important;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.5) !important;
     }
     .hero-stat-label {
       font-family: 'Montserrat', sans-serif !important;
-      font-size: clamp(0.6rem, 1.8vw, 0.72rem) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
+      font-size: clamp(0.56rem, 1.6vw, 0.68rem) !important;
+      color: rgba(255, 255, 255, 0.82) !important;
       font-weight: 400 !important;
-      letter-spacing: 0.2em !important;
-      text-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
-      margin-top: 4px !important;
+      letter-spacing: 0.18em !important;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
+      margin-top: 3px !important;
+    }
+    .hero-stat-divider {
+      height: 28px !important;
     }
 
-    /* ▶ 9. CTA wrap — 하단 그룹 내부 */
+    /* ▶ 9. CTA wrap */
     .hero-actions-wrap {
       margin-top: 0 !important;
       max-width: 100% !important;
-      gap: 0.5rem !important;
+      gap: 0.55rem !important;
     }
 
-    /* ▶ 10. Primary 예약 버튼 */
+    /* ▶ 10. Primary 예약 버튼 — 가장 강한 존재감 */
     .hero-btn-reserve,
     .hero-btn-reserve-zh {
-      font-size: 0.92rem !important;
-      padding: 0.88rem 1.25rem !important;
-      min-height: 50px !important;
-      letter-spacing: 0.05em !important;
+      font-size: 0.9rem !important;
+      padding: 0.95rem 1.5rem !important;
+      min-height: 52px !important;
+      letter-spacing: 0.06em !important;
+      border-radius: 999px !important;
     }
 
-    /* ▶ 11. Secondary/Tertiary 버튼 */
+    /* ▶ 11. Secondary/Tertiary 버튼 — 동등 크기 */
     .hero-btn-action {
-      font-size: 0.82rem !important;
-      padding: 0.7rem 0.9rem !important;
+      font-size: 0.8rem !important;
+      padding: 0.72rem 1rem !important;
       min-width: 0 !important;
       min-height: 46px !important;
+      border-radius: 999px !important;
     }
 
-    /* ▶ 12. Tertiary 전화 버튼 — 화이트 테두리 + 반투명 */
+    /* ▶ 12. Tertiary 전화 버튼 — 절제된 존재감 */
     .hero-btn-phone {
-      font-size: 0.82rem !important;
-      padding: 0.7rem 0.9rem !important;
+      font-size: 0.8rem !important;
+      padding: 0.72rem 1rem !important;
       min-height: 46px !important;
-      background: rgba(255,255,255,0.1) !important;
-      color: rgba(255, 255, 255, 0.97) !important;
-      border: 1.5px solid rgba(255,255,255,0.3) !important;
+      background: rgba(255,255,255,0.08) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      border: 1px solid rgba(255,255,255,0.22) !important;
+      border-radius: 999px !important;
       opacity: 1 !important;
+      backdrop-filter: blur(8px) !important;
     }
   }
 
@@ -1895,57 +1908,60 @@
 }
 /* HeroActions container */
 .hero-actions-wrap {
-  gap: 0.6rem;
-  margin-top: 36px;
-  max-width: 480px;
+  gap: 0.65rem;
+  margin-top: 40px;
+  max-width: 420px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 .hero-actions-row {
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  gap: 0.55rem;
+  margin-top: 0;
 }
-/* HeroActions: phone button — Tertiary (절제된 골드 테두리) */
+/* HeroActions: phone button — Tertiary (절제된 반투명 화이트) */
 .hero-btn-phone {
-  background: transparent;
-  color: rgba(245, 215, 142, 0.88);
-  border: 1px solid rgba(201, 168, 76, 0.38);
-  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
   box-shadow: none;
-  font-size: clamp(0.68rem, 2.6vw, 0.82rem);
-  padding: clamp(0.5rem, 1.6vw, 0.65rem) clamp(0.75rem, 2.8vw, 1.1rem);
+  font-size: clamp(0.68rem, 2.4vw, 0.8rem);
+  padding: clamp(0.52rem, 1.6vw, 0.68rem) clamp(0.8rem, 2.8vw, 1.15rem);
   white-space: nowrap;
   max-width: min(100%, 320px);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  opacity: 0.9;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  opacity: 1;
+  font-family: 'Montserrat', sans-serif;
 }
 .hero-btn-phone:hover {
-  border-color: rgba(201, 168, 76, 0.65);
-  opacity: 1;
-  background: rgba(201, 168, 76, 0.08);
+  border-color: rgba(255,255,255,0.38);
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.95);
 }
 /* HeroActions: reserve/chat button shared sizing */
 .hero-btn-action {
-  font-size: clamp(0.7rem, 2.8vw, 0.85rem);
-  padding: clamp(0.55rem, 1.8vw, 0.7rem) clamp(0.8rem, 3vw, 1.2rem);
+  font-size: clamp(0.7rem, 2.6vw, 0.83rem);
+  padding: clamp(0.55rem, 1.8vw, 0.72rem) clamp(0.85rem, 3vw, 1.25rem);
   white-space: nowrap;
-  min-width: clamp(82px, 22vw, 136px);
-  letter-spacing: 0.02em;
+  min-width: clamp(90px, 24vw, 148px);
+  letter-spacing: 0.03em;
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
 }
-/* HeroActions: reserve button — Primary (브랜드 골드, 가장 눈에 띄는 CTA) */
+/* HeroActions: reserve button — Primary (네이버 예약 그린, 가장 눈에 띄는 CTA) */
 .hero-btn-reserve {
   background: #03C75A;
   color: #ffffff;
-  box-shadow: 0 4px 24px rgba(3, 199, 90, 0.45);
-  padding-top: 11px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  box-shadow: 0 4px 20px rgba(3, 199, 90, 0.4);
+  padding-top: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
 }
 .hero-btn-reserve:hover {
-  background: #02a84c;
-  box-shadow: 0 6px 32px rgba(3, 199, 90, 0.6);
+  background: #02b852;
+  box-shadow: 0 6px 28px rgba(3, 199, 90, 0.55);
+  transform: translateY(-1px);
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {
@@ -1966,39 +1982,40 @@
 }
 
 /* ─── 섹션 헤더 공통 타이포 시스템 ─────────────────────────────────────────── */
-/* eyebrow: 섹션 제목 위 소문자 레이블 */
+/* eyebrow: 영문 오버라인 — Montserrat, 골드, 넓은 자간 */
 .section-eyebrow {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.63rem;
   font-weight: 400;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--brand-gold, #C4A882);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
   display: block;
+  opacity: 0.88;
 }
-/* section-title: 섹션 주제목 — Noto Serif KR 명조 존재감 */
+/* section-title: 한글 주제목 — Noto Serif KR 명조, 존재감 */
 .section-title {
   font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
-  font-size: clamp(1.9rem, 4.8vw, 3rem);
+  font-size: clamp(1.7rem, 4.2vw, 2.6rem);
   font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
   color: var(--brand-text, #2C2C2C);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   word-break: keep-all;
 }
-/* section-subtitle: 섹션 부제목 — Pretendard 고딕 본문 */
+/* section-subtitle: 설명문 — 고딕 가독성, 저대비 회색 */
 .section-subtitle {
   font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
-  font-size: clamp(0.875rem, 2vw, 0.975rem);
-  line-height: 1.9;
+  font-size: clamp(0.83rem, 1.7vw, 0.93rem);
+  line-height: 1.95;
   color: var(--brand-text-mid, #666666);
   font-weight: 300;
-  max-width: 560px;
+  max-width: 520px;
   margin-left: auto;
   margin-right: auto;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.018em;
 }
 
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
@@ -2172,6 +2189,24 @@
 @media (max-width: 640px) {
   .treatment-card {
     border-radius: 0.875rem !important;
+  }
+  /* 모바일 리뷰 카드: 패딩 조정, 정보 밀도 낙춤 */
+  .review-card {
+    padding: 1.5rem 1.25rem;
+  }
+  /* 모바일 섹션 타이틀 크기 조정 */
+  .section-title {
+    font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
+    margin-bottom: 1rem;
+  }
+  .section-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    margin-bottom: 0.7rem;
+  }
+  .section-subtitle {
+    font-size: clamp(0.8rem, 3.5vw, 0.88rem);
+    line-height: 1.85;
   }
 }
 

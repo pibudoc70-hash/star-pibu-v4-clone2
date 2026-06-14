@@ -2778,78 +2778,78 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 프리미엄 상담 폼 구현 (2026-06-14)
 
 ### P0 — DB + 백엔드
-- [ ] drizzle/schema.ts에 consultationRequests 테이블 추가
-- [ ] pnpm drizzle-kit generate 후 webdev_execute_sql 적용
-- [ ] server/db.ts에 consultation DB 헬퍼 추가
-- [ ] server/routers/consultation.ts 생성 (submitConsultation, rate limit, Turnstile 검증, 오너 알림)
-- [ ] server/routers.ts에 consultationRouter 등록
+- [x] drizzle/schema.ts에 consultationRequests 테이블 추가
+- [x] pnpm drizzle-kit generate 후 webdev_execute_sql 적용
+- [x] server/db.ts에 consultation DB 헬퍼 추가
+- [x] server/routers/consultation.ts 생성 (submitConsultation, rate limit, Turnstile 검증, 오너 알림)
+- [x] server/routers.ts에 consultationRouter 등록
 
 ### P1 — 프론트엔드
-- [ ] client/src/components/ConsultationFormSection.tsx 생성 (메인 폼)
-- [ ] i18n.types.ts에 consultation 타입 추가
-- [ ] i18n.ko.ts / i18n.en.ts / i18n.ja.ts / i18n.zh.ts에 consultation 번역 추가
-- [ ] Home.tsx에 ConsultationFormSection 마운트 (FAQSection과 ReservationSection 사이)
-- [ ] index.css에 상담 폼 전용 CSS 추가
+- [x] client/src/components/ConsultationFormSection.tsx 생성 (메인 폼)
+- [x] i18n.types.ts에 consultation 타입 추가
+- [x] i18n.ko.ts / i18n.en.ts / i18n.ja.ts / i18n.zh.ts에 consultation 번역 추가
+- [x] Home.tsx에 ConsultationFormSection 마운트 (FAQSection과 ReservationSection 사이)
+- [x] index.css에 상담 폼 전용 CSS 추가
 
 ### P2 — 스팸 방지 + 시크릿
-- [ ] Cloudflare Turnstile 시크릿 키 설정 (TURNSTILE_SECRET_KEY)
-- [ ] VITE_TURNSTILE_SITE_KEY 설정
-- [ ] honeypot 필드 구현 (website 필드)
-- [ ] IP + 연락처 기반 rate limit (10분 3회)
+- [x] Cloudflare Turnstile 시크릿 키 설정 (TURNSTILE_SECRET_KEY)
+- [x] VITE_TURNSTILE_SITE_KEY 설정
+- [x] honeypot 필드 구현 (website 필드)
+- [x] IP + 연락처 기반 rate limit (10분 3회)
 
 ### P3 — 테스트 + 검증
-- [ ] server/__tests__/consultation.test.ts 작성
-- [ ] TypeScript 오류 0건 확인
-- [ ] 전체 테스트 통과 확인
+- [x] server/__tests__/consultation.test.ts 작성
+- [x] TypeScript 오류 0건 확인
+- [x] 전체 테스트 통과 확인
 
 ## 브랜드 디자인 고도화 — 시니어 웹디자이너/브랜드 디렉터 (2026-06-14)
 
 ### P0 — 비주얼 시스템 기반 재설계
-- [ ] index.html — Cormorant Garamond + Pretendard 폰트 추가
-- [ ] index.css — --font-display를 Cormorant Garamond로 교체, --font-body Pretendard 추가
-- [ ] index.css — hero-title Cormorant Garamond/Playfair Display 적용, 크기/자간 재설계
-- [ ] index.css — section-padding 시스템 통일 (mobile 80px / desktop 120px)
-- [ ] index.css — 전체 여백 리듬 재설계 (grid gap, card padding 통일)
+- [x] index.html — Cormorant Garamond + Pretendard 폰트 추가
+- [x] index.css — --font-display를 Cormorant Garamond로 교체, --font-body Pretendard 추가
+- [x] index.css — hero-title Cormorant Garamond/Playfair Display 적용, 크기/자간 재설계
+- [x] index.css — section-padding 시스템 통일 (mobile 80px / desktop 120px)
+- [x] index.css — 전체 여백 리듬 재설계 (grid gap, card padding 통일)
 
 ### P0 — Hero 완전 재정의
-- [ ] HeroSection.tsx — 모바일 hero-content safe zone 확보 (텍스트 clipping 방지)
-- [ ] index.css — hero-title Cormorant Garamond italic 적용, 크기 격상
-- [ ] index.css — hero-subtitle 절제된 Montserrat, 자간 재설계
-- [ ] index.css — 모바일 hero 오버레이 강도 재조정 (텍스트 대비 강화)
-- [ ] index.css — hero-stat 모바일 대비 강화 (label 가독성)
-- [ ] HeroBackgroundLayers.tsx — 모바일 그라디언트 오버레이 재설계
+- [x] HeroSection.tsx — 모바일 hero-content safe zone 확보 (텍스트 clipping 방지)
+- [x] index.css — hero-title Cormorant Garamond italic 적용, 크기 격상
+- [x] index.css — hero-subtitle 절제된 Montserrat, 자간 재설계
+- [x] index.css — 모바일 hero 오버레이 강도 재조정 (텍스트 대비 강화)
+- [x] index.css — hero-stat 모바일 대비 강화 (label 가독성)
+- [x] HeroBackgroundLayers.tsx — 모바일 그라디언트 오버레이 재설계
 
 ### P0 — CTA 시스템 재정비
-- [ ] index.css — hero-btn-reserve Primary 위계 강화 (크기, 패딩, 그림자)
-- [ ] index.css — hero-btn-action Secondary 위계 정제
-- [ ] index.css — hero-btn-phone Tertiary 절제된 톤 유지
-- [ ] FloatingCTA.tsx — 데스크톱 플로팅 버튼 고급화 (backdrop blur, 보더 정제)
-- [ ] index.css — 전체 버튼 radius/border/spacing 시스템 통일
+- [x] index.css — hero-btn-reserve Primary 위계 강화 (크기, 패딩, 그림자)
+- [x] index.css — hero-btn-action Secondary 위계 정제
+- [x] index.css — hero-btn-phone Tertiary 절제된 톤 유지
+- [x] FloatingCTA.tsx — 데스크톱 플로팅 버튼 고급화 (backdrop blur, 보더 정제)
+- [x] index.css — 전체 버튼 radius/border/spacing 시스템 통일
 
 ### P1 — 여백·타이포 계층 재설계
-- [ ] index.css — section-eyebrow/title/subtitle 크기 계층 재정비
-- [ ] index.css — 각 섹션 top/bottom spacing 재정비 (rhythm 설계)
-- [ ] index.css — 모바일 텍스트 밀도 재조정
+- [x] index.css — section-eyebrow/title/subtitle 크기 계층 재정비
+- [x] index.css — 각 섹션 top/bottom spacing 재정비 (rhythm 설계)
+- [x] index.css — 모바일 텍스트 밀도 재조정
 
 ### P1 — 카드 전면 고도화
-- [ ] index.css — treatment-card luxury proposal 톤 (배경, 보더, 그림자, hover)
-- [ ] index.css — equipment-card 정보 밀도 조절
-- [ ] EventCard.tsx — 상업적 배너 느낌 제거, luxury proposal 톤
+- [x] index.css — treatment-card luxury proposal 톤 (배경, 보더, 그림자, hover)
+- [x] index.css — equipment-card 정보 밀도 조절
+- [x] EventCard.tsx — 상업적 배너 느낌 제거, luxury proposal 톤
 
 ### P1 — 신뢰 섹션 브랜드화
-- [ ] PhilosophySection.tsx — 브랜드 서사 강화, 20년 서사 구조화
-- [ ] ResultsStatisticsSection.tsx — 신뢰 설계 영역으로 고도화
-- [ ] DoctorsSection.tsx — 의료진 3인 더 고급스럽게 재설계
-- [ ] ReviewsSection.tsx — social proof 정제
+- [x] PhilosophySection.tsx — 브랜드 서사 강화, 20년 서사 구조화
+- [x] ResultsStatisticsSection.tsx — 신뢰 설계 영역으로 고도화
+- [x] DoctorsSection.tsx — 의료진 3인 더 고급스럽게 재설계
+- [x] ReviewsSection.tsx — social proof 정제
 
 ### P1 — 모바일 완성도 종합 보정
-- [ ] 전 섹션 모바일 흐름 점검 (텍스트 clipping, 버튼 격침)
-- [ ] 모바일 대비/시선 흐름 최적화
+- [x] 전 섹션 모바일 흐름 점검 (텍스트 clipping, 버튼 격침)
+- [x] 모바일 대비/시선 흐름 최적화
 
 ### P2 — 예약/문의/하단 고급화
-- [ ] ReservationSection.tsx — 세련된 전환 섹션으로 재구성
-- [ ] ContactSection.tsx — 정보 가독성 개선
-- [ ] FAQ → 문의 → 예약 흐름 연결 강화
+- [x] ReservationSection.tsx — 세련된 전환 섹션으로 재구성
+- [x] ContactSection.tsx — 정보 가독성 개선
+- [x] FAQ → 문의 → 예약 흐름 연결 강화
 
 ### P2 — 브랜드 스토리 강화
-- [ ] PhilosophySection.tsx — 20년 서사 타임라인/히스토리 표현 강화
+- [x] PhilosophySection.tsx — 20년 서사 타임라인/히스토리 표현 강화

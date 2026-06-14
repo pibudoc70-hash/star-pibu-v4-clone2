@@ -98,7 +98,7 @@
   --dr-tab-active-text: #2c1f08;
   --dr-tab-inactive-text: #5a3e16;
   /* Font Family Tokens — 브랜드 타이포 시스템 */
-  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif; /* Hero/브랜드 헤드라인 */
+  --font-display: 'Black Han Sans', 'Noto Sans KR', sans-serif; /* Hero/브랜드 헤드라인 */
   --font-serif: 'Playfair Display', Georgia, serif;                         /* 수치/영문 serif */
   --font-serif-kr: 'Noto Serif KR', 'Noto Serif', Georgia, serif;           /* 섹션 타이틀 */
   --font-sans: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 — Noto Sans KR 우선 */
@@ -853,13 +853,13 @@
   }
   .hero-title {
     color: #FFFFFF;
-    /* Cormorant Garamond italic — 브랜드 선언 감성 */
-    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-    font-style: italic;
+    /* Black Han Sans 고딕 — 강렬하고 현대적인 브랜드 선언 */
+    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-style: normal;
     font-size: clamp(2.4rem, 8vw, 5rem);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    line-height: 1.08;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
     margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
     text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.15);
   }
@@ -1580,11 +1580,11 @@
 
     /* ▶ 6. 병원명 h1 — 선명한 화이트, 강한 그림자 */
     #home h1, .hero-title {
-      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif !important;
-      font-style: italic !important;
+      font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif !important;
+      font-style: normal !important;
       font-size: clamp(2.2rem, 11vw, 3rem) !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.02em !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.01em !important;
       line-height: 1.1 !important;
       word-break: keep-all !important;
       width: 100% !important;

@@ -6,7 +6,7 @@
 /* 
  * STAR 피부과 디자인 시스템 — 프리미엄 브랜드 에디션
  * 컬러: 웜 뉴트럴 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)
- * 폰트: Black Han Sans (헤딩) + Noto Sans KR (본문) + Montserrat (숫자/EN) — 전체 고딕 시스템
+ * 폰트: Cormorant Garamond (Hero/브랜드) + Noto Serif KR (섹션타이틀) + Pretendard (본문) + Montserrat (수치/EN) — 명조xd7고딕 하이브리드
  * 철학: 별 / 빛 / 20년의 안목 / 정제된 따뜻함 / 전문의의 깊이
  */
 
@@ -97,14 +97,14 @@
   /* DoctorsSection Tab Active Tokens */
   --dr-tab-active-text: #2c1f08;
   --dr-tab-inactive-text: #5a3e16;
-  /* Font Family Tokens — 브랜드 타이포 시스템 */
-  --font-display: 'Black Han Sans', 'Noto Sans KR', sans-serif; /* Hero/브랜드 헤드라인 */
-  --font-serif: 'Montserrat', 'Noto Sans KR', sans-serif;                   /* 수치/영문 (고딕으로 교체) */
-  --font-serif-kr: 'Black Han Sans', 'Noto Sans KR', sans-serif;            /* 섹션 타이틀 (고딕으로 교체) */
-  --font-sans: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 — Noto Sans KR 우선 */
+  /* Font Family Tokens — 브랜드 타이포 시스템 (5단계 계층) */
+  --font-display: 'Cormorant Garamond', 'Noto Serif KR', serif;             /* Hero/브랜드 헤드라인 — 명조체 존재감 */
+  --font-serif: 'Cormorant Garamond', 'Noto Serif KR', serif;               /* 수치/영문 에디토리얼 */
+  --font-serif-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;            /* 섹션 타이틀 — 한글 명조 */
+  --font-sans: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 — Pretendard 우선 */
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
-  --font-body: 'Noto Sans KR', 'Pretendard Variable', sans-serif;           /* 본문 */
-  --font-heading-kr: 'Black Han Sans', 'Noto Sans KR', sans-serif;          /* 한글 헤딩 */
+  --font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 */
+  --font-heading-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;          /* 한글 섹션 헤딩 */
 }
 
 :root {
@@ -190,27 +190,27 @@
     @apply cursor-pointer;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
-    font-weight: 400; /* Black Han Sans는 단일 weight */
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
+    font-weight: 400;
   }
-  /* 폰트 유틸리티 클래스 */
+  /* 폰트 유틸리티 클래스 — 브랜드 타이포 5단계 */
   .font-display {
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-family: 'Cormorant Garamond', 'Noto Serif KR', serif; /* Hero/브랜드 헤드라인 */
   }
   .font-serif {
-    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+    font-family: 'Cormorant Garamond', 'Noto Serif KR', serif; /* 에디토리얼 명조 */
   }
   .font-serif-kr {
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; /* 한글 섹션 타이틀 */
   }
   .font-body {
-    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
+    font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif; /* 본문 */
   }
   .font-heading-kr {
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; /* 한글 섹션 헤딩 */
   }
   .font-montserrat {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif; /* 영문/숫자 */
   }
 }
 
@@ -853,13 +853,13 @@
   }
   .hero-title {
     color: #FFFFFF;
-    /* Black Han Sans 고딕 — 강렬하고 현대적인 브랜드 선언 */
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    /* Cormorant Garamond — 프리미엄 명조 브랜드 선언 */
+    font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
     font-style: normal;
-    font-size: clamp(2.4rem, 8vw, 5rem);
+    font-size: clamp(2.8rem, 9vw, 5.5rem);
     font-weight: 400;
-    letter-spacing: -0.01em;
-    line-height: 1.05;
+    letter-spacing: 0.02em;
+    line-height: 1.08;
     margin-bottom: clamp(0.5rem, 1.6vh, 1rem);
     text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.15);
   }
@@ -1076,15 +1076,20 @@
   /* [R17-P0-3] DoctorsSection 추가 CSS 클래스 — 인라인 style 교체 */
   /* Section header */
   .dr-section-eyebrow {
+    font-family: 'Montserrat', sans-serif;
     color: var(--dr-gold);
-    font-weight: 300;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    font-size: 0.68rem;
+    text-transform: uppercase;
   }
   .dr-section-title {
     color: var(--brand-text, #2C2C2C);
     font-size: clamp(1.6rem, 5vw, 2.6rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.22;
+    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
   }
   .dr-section-tagline {
     color: var(--brand-text-mid, #666666);
@@ -1579,13 +1584,13 @@
       margin-bottom: clamp(0.4rem, 1.2vw, 0.6rem) !important;
     }
 
-    /* ▶ 6. 병원명 h1 — 선명한 화이트, 강한 그림자 */
+    /* ▶ 6. 병원명 h1 — Cormorant Garamond 명조 프리미엄 */
     #home h1, .hero-title {
-      font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif !important;
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(2.4rem, 12vw, 3.2rem) !important;
-      font-weight: 700 !important;
-      letter-spacing: -0.01em !important;
+      font-size: clamp(2.8rem, 13vw, 3.8rem) !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.02em !important;
       line-height: 1.1 !important;
       word-break: keep-all !important;
       width: 100% !important;
@@ -1611,15 +1616,18 @@
       padding-top: clamp(0.75rem, 2vh, 1.25rem) !important;
     }
     .hero-stat-value {
-      font-size: clamp(1.3rem, 6.5vw, 1.8rem) !important;
+      font-family: 'Cormorant Garamond', 'Montserrat', serif !important;
+      font-size: clamp(1.5rem, 7vw, 2rem) !important;
       text-shadow: 0 1px 12px rgba(0,0,0,0.6) !important;
     }
     .hero-stat-label {
-      font-size: clamp(0.65rem, 2vw, 0.78rem) !important;
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: clamp(0.6rem, 1.8vw, 0.72rem) !important;
       color: rgba(255, 255, 255, 0.95) !important;
-      font-weight: 500 !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.2em !important;
       text-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
-      margin-top: 2px !important;
+      margin-top: 4px !important;
     }
 
     /* ▶ 9. CTA wrap — 하단 그룹 내부 */
@@ -1941,33 +1949,34 @@
 /* ─── 섹션 헤더 공통 타이포 시스템 ─────────────────────────────────────────── */
 /* eyebrow: 섹션 제목 위 소문자 레이블 */
 .section-eyebrow {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--brand-gold, #C4A882);
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.75rem;
   display: block;
 }
-/* section-title: 섹션 주제목 — Black Han Sans 고딕 */
+/* section-title: 섹션 주제목 — Noto Serif KR 명조 존재감 */
 .section-title {
-  font-family: 'Black Han Sans', 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
   font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.18;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.22;
   color: var(--brand-text, #2C2C2C);
   margin-bottom: 1.25rem;
   word-break: keep-all;
 }
-/* section-subtitle: 섹션 부제목 */
+/* section-subtitle: 섹션 부제목 — Pretendard 고딕 본문 */
 .section-subtitle {
   font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
   font-size: clamp(0.875rem, 2.2vw, 1rem);
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--brand-text-mid, #666666);
-  font-weight: 400;
-  max-width: 480px;
+  font-weight: 300;
+  max-width: 520px;
   margin-left: auto;
   margin-right: auto;
   letter-spacing: 0.01em;
@@ -1975,9 +1984,9 @@
 
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
 
-/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Montserrat 고딕 숫자) */
+/* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Cormorant Garamond 명조 숫자) */
 .hero-stat-value {
-  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-family: 'Cormorant Garamond', 'Montserrat', serif;
   font-weight: 400;
   font-size: clamp(1.5rem, 5vw, 2.6rem);
   color: rgba(255, 255, 255, 0.95);
@@ -2158,22 +2167,23 @@
 
 /* ── PhilosophySection 인라인 스타일 보조 클래스 */
 .philosophy-stat-num {
-  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-family: 'Cormorant Garamond', 'Montserrat', serif;
   font-weight: 400;
   color: #EDD98A;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-shadow: 0 0 40px rgba(237,217,138,0.25);
 }
 .philosophy-stat-label {
+  font-family: 'Montserrat', sans-serif;
   color: rgba(255,255,255,0.70);
   font-size: clamp(0.6rem, 1.8vw, 0.72rem);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   margin-top: 0.6rem;
   word-break: keep-all;
   line-height: 1.4;
-  font-weight: 500;
+  font-weight: 400;
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .philosophy-value-card {

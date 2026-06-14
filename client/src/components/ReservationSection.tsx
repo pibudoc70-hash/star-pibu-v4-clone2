@@ -81,7 +81,7 @@ export default function ReservationSection() {
               </div>
               <h3
                 className="text-2xl font-medium mb-3"
-                style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif" }}
+                style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif", fontWeight: 400 }}
               >
                 {lang === 'ko' ? '예약 신청이 완료되었습니다' : lang === 'en' ? 'Reservation Request Submitted' : lang === 'ja' ? '予約申請が完了しました' : '预约申请已提交'}
               </h3>

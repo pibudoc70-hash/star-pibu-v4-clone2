@@ -2918,3 +2918,44 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] PhilosophySection.tsx, ResultsStatisticsSection.tsx Playfair Display → Montserrat 교체
 - [x] ResultsSection.tsx, TreatmentsSection.tsx, EquipmentSection.tsx, EventCard.tsx, ReservationSection.tsx Noto Serif KR → Black Han Sans 교체
 - [x] index.html Google Fonts 로딩에서 Cormorant Garamond, Playfair Display, Noto Serif KR 제거
+
+## 배열·타이포그래피 중심 디자인 개선 (pasted_content_22 지시서 2026-06-14)
+
+### [P0] 타이포그래피 시스템 재정립
+- [x] 브랜드 헤드라인/Hero: Playfair Display 또는 Cormorant Garamond 복원
+- [x] 섹션 타이틀: Noto Serif KR 복원
+- [x] 본문: Pretendard 또는 Noto Sans KR 300~500 적용
+- [x] 영문 오버라인 스타일 통일 (size/tracking/weight/margin-bottom)
+- [x] 타이포 계층 5단계 시스템 정립
+
+### [P0] Hero 섹션 배열·비율 재설계
+- [ ] 모바일 Hero 높이·비율 재조정
+- [ ] Hero 내부 배열 재설계: 로고→메인카피→서브카피→신뢰수치→CTA 위계 명확화
+- [ ] 각 요소 사이 수직 간격 정교화
+- [ ] 상단 신뢰 수치와 중간 섹션 수치 정합성 확인
+
+### [P0] 섹션 헤더 패턴 통일 및 리듬
+- [ ] 오버라인+제목+설명문 패턴 전 섹션 통일
+- [ ] section padding: mobile 80px / desktop 120px 기준 적용
+- [ ] grid gap: mobile 24px / desktop 40px 기준 적용
+- [ ] 섹션 간 강약 리듬 조절
+
+### [P1] 카드형 섹션 배열·정보 위계
+- [ ] 시술/장비/이벤트/후기 카드 정보 위계 재정리
+- [ ] 카드 높이·패딩·타이틀 크기·설명문 길이 통일감 정리
+- [ ] 이벤트 카드 가격표 느낌 제거
+- [ ] 후기 카드 행간·폭 개선
+
+### [P1] 모바일 타이포·배열 보강
+- [ ] 모바일 제목 2줄 이내 우선 처리
+- [ ] 작은 회색 텍스트 대비 강화 (contrast 4.5:1 이상)
+- [ ] 모바일 카드 1카드 1메시지 단순화
+
+### [P1] 신뢰 섹션 정리
+- [ ] 수치 섹션 제목-수치-설명 위계 강화
+- [ ] Journey/Timeline 브랜드 자산처럼 다듬기
+
+### [P2] 하단 전환 섹션
+- [ ] FAQ→문의→예약→위치/연락정보 흐름 정리
+- [ ] ONLINE RESERVATION 배열 고급화
+- [ ] 주소/진료시간/교통/주차 정보 가독성 개선

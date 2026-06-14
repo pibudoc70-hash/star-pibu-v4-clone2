@@ -359,8 +359,8 @@ export default function EquipmentSection() {
             style={{
               color: "var(--brand-text, #2C2C2C)",
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 500,
-              fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
+              fontWeight: 400,
+              fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif",
             }}
           >
             스타의 장비소개

@@ -36,12 +36,12 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
     <div className="flex flex-col">
       {/* 시술명 — 브랜드 골드, 절제된 크기 */}
       <h3
-        className="font-bold leading-tight mb-2"
+        className="font-normal leading-tight mb-2"
         style={{
           color: "#2C2C2C",
           fontSize: "clamp(1rem, 3.2vw, 1.15rem)",
           letterSpacing: "-0.01em",
-          fontFamily: "'Black Han Sans', 'Noto Sans KR', sans-serif",
+          fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif",
         }}
       >
         {getLocalizedText(event, "title")}

@@ -2084,6 +2084,7 @@
   display: inline-block;
   text-align: center;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 .hero-stat-value[data-done="true"] {
   color: #EDD98A;
@@ -2833,4 +2834,28 @@
 
 .content-appear {
   animation: content-appear 0.35s ease-out both;
+}
+
+/* ─── 일본어/중국어 Hero 통계 수치 줄바꿈 방지 ─────────────────────────────── */
+/* 일본어: 皮膚科専門医経歴, クマ取り施術数, プレミアムレーザー機器 등 긴 라벨 */
+body.font-lang-ja .hero-stat-label,
+body.font-lang-zh .hero-stat-label {
+  font-family: 'Noto Sans JP', 'Noto Sans SC', sans-serif !important;
+  font-size: clamp(0.5rem, 1.0vw, 0.62rem) !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+/* 모바일에서도 일본어/중국어 라벨 줄바꿈 방지 */
+@media (max-width: 639px) {
+  body.font-lang-ja .hero-stat-label,
+  body.font-lang-zh .hero-stat-label {
+    font-size: clamp(0.48rem, 1.8vw, 0.58rem) !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
+  }
+  body.font-lang-ja .hero-stat-value,
+  body.font-lang-zh .hero-stat-value {
+    white-space: nowrap !important;
+  }
 }

@@ -1520,110 +1520,143 @@
     }
   }
 
-  /* ─── Hero Section 모바일 최적화 (375px ~ 640px) ─── */
-  /* [M1] 모바일 프리미엄 아트디렉션: 여백 확보, 타이포 절제, 통계 간격 정리 */
+  /* ─── Hero Section 모바일 근본 재설계 (375px ~ 640px) ─── */
   @media (max-width: 640px) {
-    /* [P0] Hero section - 모바일에서는 콘텐츠 높이로 자연스럽게 맞춰서 하단 빈 공간 제거 */
+    /* ▶ 1. Hero section — 화면 전체 100dvh, 콘텐츠 상하 분리 */
     #home {
-      min-height: auto !important;
-      height: auto !important;
-      justify-content: flex-start !important;
+      min-height: 100svh !important;
+      min-height: 100dvh !important;
+      height: 100svh !important;
+      height: 100dvh !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
 
-    /* [P0] Hero 콘텐츠 컨테이너 — 상단 헤더 확보 + 하단 여유 여백 */
+    /* ▶ 2. 콘텐츠 컨테이너 — 전체 높이 채우기, space-between */
     #home > .relative.z-10 {
-      padding-top: clamp(72px, 9vh, 88px) !important;
-      padding-bottom: clamp(48px, 7vh, 72px) !important;
+      padding-top: clamp(64px, 8vh, 80px) !important;
+      padding-bottom: clamp(24px, 4vh, 40px) !important;
       max-width: 100% !important;
-      padding-left: clamp(1.5rem, 7vw, 2rem) !important;
-      padding-right: clamp(1.5rem, 7vw, 2rem) !important;
+      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
+      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
+      flex: 1 1 auto !important;
+      align-self: stretch !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
     }
 
-    /* [P0] 로고 — 모바일에서 과밀 방지, 적절한 크기 */
+    /* ▶ 3. 상단 콘텐츠 그룹 — 로고+텍스트+통계, 렬더링 후 나머지 공간 점유 */
+    .hero-top-group {
+      flex: 1 1 auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* ▶ 4. 하단 CTA 그룹 — 자연스럽게 하단 */
+    .hero-cta-group {
+      flex: 0 0 auto !important;
+      width: 100% !important;
+    }
+
+    /* ▶ 5. 로고 크기 절제 */
     .hero-logo-img {
-      height: clamp(72px, 18vw, 96px) !important;
-      width: clamp(72px, 18vw, 96px) !important;
+      height: clamp(68px, 17vw, 90px) !important;
+      width: clamp(68px, 17vw, 90px) !important;
       margin-top: 0 !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem) !important;
+      margin-bottom: clamp(0.4rem, 1.2vw, 0.6rem) !important;
     }
-    /* 로고 마진 축소 */
-    #home > .relative.z-10 > .hero-fade:first-child {
-      margin-bottom: clamp(0.5rem, 2vw, 0.875rem) !important;
-    }
-    /* 병원명 h1 — Cormorant Garamond italic, 2줄 이내 */
+
+    /* ▶ 6. 병원명 h1 — 선명한 화이트, 강한 그림자 */
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif !important;
       font-style: italic !important;
-      font-size: clamp(2rem, 10vw, 2.8rem) !important;
-      font-weight: 500 !important;
+      font-size: clamp(2.2rem, 11vw, 3rem) !important;
+      font-weight: 600 !important;
       letter-spacing: 0.02em !important;
       line-height: 1.1 !important;
       word-break: keep-all !important;
-      overflow-wrap: break-word !important;
       width: 100% !important;
-      margin-bottom: clamp(0.3rem, 1.2vh, 0.6rem) !important;
+      margin-bottom: clamp(0.25rem, 1vh, 0.5rem) !important;
+      color: #ffffff !important;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.5) !important;
     }
-    /* 슬로건 — 모바일에서 크기 절제 */
+
+    /* ▶ 7. 슬로건 — 대비 강화 */
     .hero-subtitle {
-      font-size: clamp(0.68rem, 2.8vw, 0.88rem) !important;
-      margin-bottom: clamp(0.15rem, 0.6vh, 0.4rem) !important;
+      font-size: clamp(0.7rem, 2.8vw, 0.85rem) !important;
+      margin-bottom: clamp(0.1rem, 0.5vh, 0.35rem) !important;
       letter-spacing: 0.25em !important;
-      font-weight: 300 !important;
+      font-weight: 400 !important;
+      color: rgba(255,255,255,0.88) !important;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.7) !important;
     }
-    /* [P0] 통계 스트립 — 모바일에서 간격 최적화 */
+
+    /* ▶ 8. 통계 스트립 */
     .hero-stats-row {
       gap: clamp(0.75rem, 4vw, 1.5rem) !important;
-      padding-top: 14px !important;
+      padding-top: 12px !important;
     }
     .hero-stat-value {
-      font-size: clamp(1.1rem, 5.5vw, 1.6rem) !important;
+      font-size: clamp(1.15rem, 5.5vw, 1.6rem) !important;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.6) !important;
     }
-    /* [P0] stat 라벨 — WCAG AA 4.5:1 대비 확보 */
     .hero-stat-label {
-      font-size: clamp(0.6rem, 1.9vw, 0.75rem) !important;
-      color: rgba(255, 255, 255, 0.92) !important;
+      font-size: clamp(0.62rem, 1.9vw, 0.75rem) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
       font-weight: 500 !important;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
     }
-    /* [P0] CTA 버튼 wrap — 상단 여백 최소화, 전체 너비 */
+
+    /* ▶ 9. CTA wrap — 하단 그룹 내부 */
     .hero-actions-wrap {
-      margin-top: 16px !important;
+      margin-top: 0 !important;
       max-width: 100% !important;
+      gap: 0.5rem !important;
     }
-    /* [P0] Primary 예약 버튼 — 모바일 전체 너비, 터치 영역 48px, 강한 존재감 */
+
+    /* ▶ 10. Primary 예약 버튼 */
     .hero-btn-reserve,
     .hero-btn-reserve-zh {
-      font-size: 0.9rem !important;
-      padding: 0.85rem 1.25rem !important;
-      min-height: 48px !important;
+      font-size: 0.92rem !important;
+      padding: 0.88rem 1.25rem !important;
+      min-height: 50px !important;
       letter-spacing: 0.05em !important;
     }
-    /* [P0] Secondary/Tertiary 버튼 — 모바일 최적화, 터치 영역 44px */
+
+    /* ▶ 11. Secondary/Tertiary 버튼 */
     .hero-btn-action {
-      font-size: 0.8rem !important;
-      padding: 0.68rem 0.9rem !important;
+      font-size: 0.82rem !important;
+      padding: 0.7rem 0.9rem !important;
       min-width: 0 !important;
-      min-height: 44px !important;
+      min-height: 46px !important;
     }
-    /* [P0] Tertiary 전화 버튼 — 대비 강화, 반투명 배경 추가 */
+
+    /* ▶ 12. Tertiary 전화 버튼 — 화이트 테두리 + 반투명 */
     .hero-btn-phone {
-      font-size: 0.8rem !important;
-      padding: 0.68rem 0.9rem !important;
-      min-height: 44px !important;
-      background: rgba(255,255,255,0.08) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-      border: 1px solid rgba(255,255,255,0.25) !important;
+      font-size: 0.82rem !important;
+      padding: 0.7rem 0.9rem !important;
+      min-height: 46px !important;
+      background: rgba(255,255,255,0.1) !important;
+      color: rgba(255, 255, 255, 0.97) !important;
+      border: 1.5px solid rgba(255,255,255,0.3) !important;
       opacity: 1 !important;
     }
   }
 
-  /* ─── Hero Section 소형 모바일 최적화 (360px 이하) ─── */
+  /* ─── Hero Section 소형 모바일 (360px 이하) ─── */
   @media (max-width: 360px) {
     #home > .relative.z-10 {
-      padding-top: 52px !important;
-      padding-bottom: 44px !important;
+      padding-top: 56px !important;
+      padding-bottom: 20px !important;
+    }
+    #home h1, .hero-title {
+      font-size: clamp(1.9rem, 10vw, 2.4rem) !important;
     }
   }
 }

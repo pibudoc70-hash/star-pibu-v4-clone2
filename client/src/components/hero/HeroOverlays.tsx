@@ -23,13 +23,13 @@ export function HeroDarkOverlay() {
             "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
         }}
       />
-      {/* 모바일 오버레이 — 텍스트 대비 강화 (상단 진하게, 중간 적절한 투명도) */}
+      {/* 모바일 오버레이 — 텍스트 대비 최대화 */}
       <div
         aria-hidden="true"
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(4,8,22,0.92) 0%, rgba(4,8,22,0.65) 30%, rgba(4,8,22,0.52) 62%, rgba(4,8,22,0.95) 100%)",
+            "linear-gradient(to bottom, rgba(4,8,22,0.90) 0%, rgba(4,8,22,0.75) 25%, rgba(4,8,22,0.65) 50%, rgba(4,8,22,0.78) 75%, rgba(4,8,22,0.95) 100%)",
         }}
       />
     </>
@@ -57,7 +57,7 @@ export function HeroVignette() {
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "radial-gradient(ellipse 75% 55% at 50% 38%, transparent 22%, rgba(4,8,22,0.65) 100%)",
+            "radial-gradient(ellipse 80% 60% at 50% 40%, transparent 15%, rgba(4,8,22,0.55) 100%)",
         }}
       />
     </>

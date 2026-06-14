@@ -99,8 +99,10 @@ export default function HeroSection() {
       {/* [R12-P1-1] 층별 안내 서브컴포넌트 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />
 
-      {/* 콘텐츠 */}
+      {/* 콘텐츠 — 모바일: space-between으로 상단(로고/텍스트/통계)와 하단(CTA) 분리 */}
       <div className="relative z-10 text-center flex flex-col items-center w-full hero-content">
+        {/* 상단 콘텐츠 그룹: 로고 + 텍스트 + 통계 */}
+        <div className="hero-top-group flex flex-col items-center w-full">
         {/* 로고 */}
         <div className="hero-fade hero-logo-wrap">
           <div className="relative">
@@ -153,6 +155,10 @@ export default function HeroSection() {
           ]}
         />
 
+        </div>{/* /hero-top-group */}
+
+        {/* 하단 CTA 그룹 — 모바일에서는 화면 하단에 자연스럽게 위치 */}
+        <div className="hero-cta-group w-full">
         {/* [R12-P1-1] CTA 버튼 그룹 서브컴포넌트 */}
         <HeroActions
           lang={lang}
@@ -171,6 +177,7 @@ export default function HeroSection() {
             ctaPhone: HERO_DELAYS.ctaPhone,
           }}
         />
+        </div>{/* /hero-cta-group */}
       </div>
 
       {/* [R12-P1-1] 스크롤 인디케이터 서브컴포넌트 */}

@@ -122,10 +122,12 @@ export default function Header() {
               ref={hamburgerRef}
               className="flex items-center justify-center transition-colors"
               style={{
-                width: "40px",
-                height: "40px",
-                color: "#1F2937",
+                width: "44px",
+                height: "44px",
+                color: scrolled ? "#C4A882" : "rgba(255,255,255,0.92)",
                 borderRadius: "10px",
+                transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
+                textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.4)",
               }}
               onClick={() => openMobileMenu()}
               aria-label="메뉴 열기"

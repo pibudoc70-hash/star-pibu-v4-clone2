@@ -73,7 +73,7 @@ export default function FAQSection() {
 
       {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
       <section id="faq" className="py-16 md:py-24" style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="container max-w-4xl">
           {/* 섹션 헤더 */}
           <div className="text-center mb-14">
             <span className="section-eyebrow">FAQ</span>
@@ -112,7 +112,7 @@ export default function FAQSection() {
               >
                 {/* 질문 */}
                 <button type="button"
-                  className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors duration-200 hover:bg-blue-50"
+                  className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors duration-200"
                   style={{ background: openQuestion === qIdx ? "var(--brand-bg-alt, #F5F0EB)" : "var(--brand-bg, #FAF8F5)" }}
                   onClick={() => setOpenQuestion(openQuestion === qIdx ? null : qIdx)}
                   aria-expanded={openQuestion === qIdx}

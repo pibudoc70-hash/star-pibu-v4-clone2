@@ -1567,6 +1567,9 @@
     }
     .hero-stat-label {
       font-size: clamp(0.58rem, 1.8vw, 0.72rem) !important;
+      color: rgba(255, 255, 255, 0.78) !important;
+      font-weight: 500 !important;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45) !important;
     }
     /* CTA 버튼 wrap — 상단 여백 최적화 */
     .hero-actions-wrap {
@@ -1955,12 +1958,13 @@
   transform: scaleX(1);
 }
 .hero-stat-label {
-  color: rgba(255, 255, 255, 0.52);
+  color: rgba(255, 255, 255, 0.72);
   font-size: clamp(0.58rem, 1.4vw, 0.72rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding-top: 10px;
-  font-weight: 400;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.35);
 }
 
 /* HeroStatsStrip */
@@ -2100,13 +2104,15 @@
   text-shadow: 0 0 40px rgba(237,217,138,0.25);
 }
 .philosophy-stat-label {
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.70);
   font-size: clamp(0.6rem, 1.8vw, 0.72rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 0.6rem;
   word-break: keep-all;
   line-height: 1.4;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .philosophy-value-card {
   border-left: 2px solid rgba(196,168,130,0.3);

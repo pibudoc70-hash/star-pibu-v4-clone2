@@ -135,7 +135,7 @@ export default function MobileMenu({
             type="button"
             onClick={() => closeMobileMenu()}
             className="flex items-center justify-center"
-            style={{ width: "36px", height: "36px", borderRadius: "10px", color: "#555" }}
+            style={{ width: "44px", height: "44px", borderRadius: "10px", color: "#666", flexShrink: 0 }}
             aria-label="메뉴 닫기"
           >
             <X size={20} />
@@ -179,7 +179,7 @@ export default function MobileMenu({
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    padding: "13px 24px",
+                    padding: "14px 24px",
                   fontSize: "15px",
                   fontWeight: active ? "700" : "500",
                   color: active ? "#C9A84C" : "#1F2937",
@@ -252,7 +252,7 @@ export default function MobileMenu({
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    padding: "11px 24px",
+                    padding: "13px 24px",
                     fontSize: "14px",
                     fontWeight: active ? "700" : "400",
                     color: active ? "#C9A84C" : "#555",
@@ -322,7 +322,7 @@ export default function MobileMenu({
                 }}
                 className="flex flex-col items-center gap-1 transition-all"
                 style={{
-                  padding: "10px 4px",
+                  padding: "12px 4px",
                   borderRadius: "12px",
                   background: option.lang === lang ? "rgba(201,168,76,0.08)" : "rgba(0,0,0,0.03)",
                   border: option.lang === lang ? "1.5px solid #C9A84C" : "1.5px solid transparent",
@@ -346,7 +346,7 @@ export default function MobileMenu({
         {/* ── 모바일 CTA ── */}
         <div
           style={{
-            padding: "16px 24px 32px",
+            padding: "16px 24px max(32px, env(safe-area-inset-bottom, 32px))",
             borderTop: "1px solid rgba(0,0,0,0.06)",
             display: "flex",
             flexDirection: "column",

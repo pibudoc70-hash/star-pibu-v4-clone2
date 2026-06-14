@@ -290,10 +290,10 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
         {/* 헤더 */}
         <div
           className="flex items-center justify-between px-5 py-2.5 flex-shrink-0"
-          style={{ background: "#1F2937" }}
+          style={{ background: "var(--brand-text, #2C2C2C)" }}
         >
           <div className="flex items-center gap-2">
-            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
+            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "var(--brand-gold, #C4A882)" }}>STAR</span>
             <span id="welcome-popup-title-mobile" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
           <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10" aria-label={wp.dismiss}>
@@ -422,9 +422,9 @@ function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTo
         style={{ maxWidth: "520px", borderRadius: "20px", background: "#ffffff" }}
       >
         {/* 헤더 */}
-        <div className="flex items-center justify-between px-6 py-3" style={{ background: "#1F2937" }}>
+        <div className="flex items-center justify-between px-6 py-3" style={{ background: "var(--brand-text, #2C2C2C)" }}>
           <div className="flex items-center gap-2">
-            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "#81C7C9" }}>STAR</span>
+            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "var(--brand-gold, #C4A882)" }}>STAR</span>
             <span id="welcome-popup-title-desktop" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
           </div>
           <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/10 hover:scale-110 active:scale-95" aria-label={wp.dismiss}>

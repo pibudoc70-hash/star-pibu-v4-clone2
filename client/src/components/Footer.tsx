@@ -51,8 +51,7 @@ export default function Footer() {
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top, behavior: "smooth" });
-      // URL 해시 업데이트 (popstate 방지)
-      history.replaceState(null, "", basePath + href);
+      // [FIX] URL에 hash를 남기지 않음 — 다음 방문 시 자동 스크롤 방지
     } else {
       // lazy 섹션이 아직 DOM에 없으면 MutationObserver로 대기
       const observer = new MutationObserver(() => {
@@ -62,12 +61,12 @@ export default function Footer() {
           clearTimeout(timeout);
           const top2 = lazyEl.getBoundingClientRect().top + window.scrollY - headerOffset;
           window.scrollTo({ top: top2, behavior: "smooth" });
-          history.replaceState(null, "", basePath + href);
+          // [FIX] URL에 hash를 남기지 않음
         }
       });
       observer.observe(document.body, { childList: true, subtree: true });
       const timeout = setTimeout(() => observer.disconnect(), 3000);
-      history.replaceState(null, "", basePath + href);
+      // [FIX] URL에 hash를 남기지 않음
     }
   };
 

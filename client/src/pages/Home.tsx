@@ -107,9 +107,10 @@ export default function Home() {
       return;
     }
 
-    // URL에 hash가 있으면 즉시 제거 (어떤 경우든 hash를 URL에 남기지 않음)
+    // URL에 hash가 있으면 즉시 제거 + 상단으로 이동 (어떤 경우든 hash를 URL에 남기지 않음)
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname + window.location.search);
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
 
     // sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)

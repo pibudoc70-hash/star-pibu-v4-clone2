@@ -1647,8 +1647,8 @@
 
     /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
     .hero-logo-img {
-      height: clamp(96px, 24vw, 130px) !important;
-      width: clamp(96px, 24vw, 130px) !important;
+      height: clamp(125px, 31vw, 169px) !important;
+      width: clamp(125px, 31vw, 169px) !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }

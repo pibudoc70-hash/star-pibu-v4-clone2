@@ -1647,13 +1647,13 @@
 
     /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
     .hero-logo-img {
-      height: clamp(72px, 18vw, 100px) !important;
-      width: clamp(72px, 18vw, 100px) !important;
+      height: clamp(96px, 24vw, 130px) !important;
+      width: clamp(96px, 24vw, 130px) !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem) !important;
+      margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
     }
 
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
@@ -1667,7 +1667,7 @@
       line-height: 1.08 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(0.5rem, 1.5vh, 0.9rem) !important;
+      margin-bottom: clamp(1.5rem, 4vh, 2.5rem) !important;
       color: #ffffff !important;
       text-shadow:
         0 2px 8px rgba(0,0,0,0.95),

@@ -1612,13 +1612,13 @@
       align-items: center !important;
     }
 
-    /* ▶ 2. 콘텐츠 컨테이너 — 중앙 정렬 */
+    /* ▶ 2. 콘텐츠 컨테이너 — 중앙 정렬, 상하단 여백 조정 */
     #home > .relative.z-10 {
-      padding-top: clamp(80px, 14vh, 120px) !important;
-      padding-bottom: clamp(60px, 8vh, 100px) !important;
+      padding-top: clamp(72px, 12vh, 110px) !important;
+      padding-bottom: clamp(48px, 7vh, 88px) !important;
       max-width: 100% !important;
-      padding-left: clamp(1.5rem, 7vw, 2rem) !important;
-      padding-right: clamp(1.5rem, 7vw, 2rem) !important;
+      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
+      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
       flex: 1 1 auto !important;
       align-self: stretch !important;
       display: flex !important;
@@ -1641,110 +1641,136 @@
     .hero-cta-group {
       flex: 0 0 auto !important;
       width: 100% !important;
-      padding-top: clamp(1.5rem, 4vh, 2.5rem) !important;
+      padding-top: clamp(1.25rem, 3.5vh, 2rem) !important;
       padding-bottom: 0 !important;
     }
 
     /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
     .hero-logo-img {
-      height: clamp(80px, 20vw, 110px) !important;
-      width: clamp(80px, 20vw, 110px) !important;
+      height: clamp(72px, 18vw, 100px) !important;
+      width: clamp(72px, 18vw, 100px) !important;
       margin-top: 0 !important;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }
     .hero-logo-wrap {
       margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem) !important;
     }
 
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
+    /* 텍스트 그림자를 강화해 배경과 명확한 대비 확보 */
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(3rem, 14vw, 4.2rem) !important;
+      font-size: clamp(2.8rem, 13vw, 4rem) !important;
       font-weight: 400 !important;
       letter-spacing: 0.03em !important;
       line-height: 1.08 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem) !important;
+      margin-bottom: clamp(0.5rem, 1.5vh, 0.9rem) !important;
       color: #ffffff !important;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.75), 0 0 48px rgba(0,0,0,0.4) !important;
+      text-shadow:
+        0 2px 8px rgba(0,0,0,0.95),
+        0 4px 24px rgba(0,0,0,0.8),
+        0 8px 48px rgba(0,0,0,0.5) !important;
     }
 
-    /* ▶ 7. 슬로건 — 절제된 오버라인 스타일 */
+    /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
+    /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
     .hero-subtitle {
-      font-size: clamp(0.58rem, 2.4vw, 0.72rem) !important;
-      letter-spacing: 0.2em !important;
+      font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
+      letter-spacing: 0.14em !important;
       text-transform: uppercase !important;
-      font-weight: 300 !important;
-      margin-bottom: clamp(0.75rem, 2.2vh, 1.2rem) !important;
-      color: rgba(255,255,255,0.72) !important;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
+      font-weight: 400 !important;
+      margin-bottom: clamp(0.85rem, 2.5vh, 1.4rem) !important;
+      color: rgba(255,255,255,0.92) !important;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,0.95),
+        0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Montserrat', sans-serif !important;
     }
 
-    /* ▶ 8. 통계 스트립 — 간결하고 읽기 쉽게 */
+    /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */
+    /* 반투명 배경 패널 + 강한 그림자로 배경과 명확한 분리 */
     .hero-stats-row {
-      gap: clamp(1.25rem, 6vw, 2.5rem) !important;
-      padding-top: clamp(0.85rem, 2.2vh, 1.4rem) !important;
-      border-top: 1px solid rgba(201,168,76,0.2) !important;
+      gap: clamp(1.5rem, 7vw, 3rem) !important;
+      padding: clamp(0.9rem, 2.5vh, 1.25rem) clamp(1.25rem, 5vw, 2rem) !important;
+      border-top: 1px solid rgba(201,168,76,0.35) !important;
+      border-bottom: none !important;
       max-width: 100% !important;
+      background: rgba(4, 8, 22, 0.52) !important;
+      border-radius: 14px !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35) !important;
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.6rem, 7.5vw, 2.2rem) !important;
+      font-size: clamp(1.7rem, 8vw, 2.4rem) !important;
       font-weight: 400 !important;
-      text-shadow: 0 1px 12px rgba(0,0,0,0.5) !important;
+      color: #ffffff !important;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,0.9),
+        0 2px 16px rgba(0,0,0,0.7) !important;
+      white-space: nowrap !important;
     }
     .hero-stat-label {
-      font-family: 'Montserrat', sans-serif !important;
-      font-size: clamp(0.56rem, 1.6vw, 0.68rem) !important;
-      color: rgba(255, 255, 255, 0.82) !important;
-      font-weight: 400 !important;
-      letter-spacing: 0.18em !important;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.6) !important;
-      margin-top: 3px !important;
+      font-family: 'Noto Sans KR', sans-serif !important;
+      font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.04em !important;
+      text-shadow:
+        0 1px 3px rgba(0,0,0,1),
+        0 2px 10px rgba(0,0,0,0.9) !important;
+      margin-top: 4px !important;
+      white-space: nowrap !important;
     }
     .hero-stat-divider {
-      height: 28px !important;
+      height: 32px !important;
+      background: rgba(201,168,76,0.4) !important;
     }
 
     /* ▶ 9. CTA wrap */
     .hero-actions-wrap {
       margin-top: 0 !important;
       max-width: 100% !important;
-      gap: 0.55rem !important;
+      gap: 0.6rem !important;
     }
 
     /* ▶ 10. Primary 예약 버튼 — 가장 강한 존재감 */
     .hero-btn-reserve,
     .hero-btn-reserve-zh {
-      font-size: 0.9rem !important;
-      padding: 0.95rem 1.5rem !important;
-      min-height: 52px !important;
+      font-size: 0.92rem !important;
+      padding: 1rem 1.75rem !important;
+      min-height: 54px !important;
       letter-spacing: 0.06em !important;
       border-radius: 999px !important;
+      font-weight: 600 !important;
     }
 
-    /* ▶ 11. Secondary/Tertiary 버튼 — 동등 크기 */
+    /* ▶ 11. Secondary 버튼 — 충분한 터치 타겟 */
     .hero-btn-action {
-      font-size: 0.8rem !important;
-      padding: 0.72rem 1rem !important;
+      font-size: 0.82rem !important;
+      padding: 0.78rem 1.1rem !important;
       min-width: 0 !important;
-      min-height: 46px !important;
+      min-height: 48px !important;
       border-radius: 999px !important;
+      font-weight: 500 !important;
     }
 
     /* ▶ 12. Tertiary 전화 버튼 — 절제된 존재감 */
     .hero-btn-phone {
-      font-size: 0.8rem !important;
-      padding: 0.72rem 1rem !important;
-      min-height: 46px !important;
-      background: rgba(255,255,255,0.08) !important;
-      color: rgba(255, 255, 255, 0.9) !important;
-      border: 1px solid rgba(255,255,255,0.22) !important;
+      font-size: 0.82rem !important;
+      padding: 0.78rem 1.1rem !important;
+      min-height: 48px !important;
+      background: rgba(255,255,255,0.1) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      border: 1px solid rgba(255,255,255,0.3) !important;
       border-radius: 999px !important;
       opacity: 1 !important;
       backdrop-filter: blur(8px) !important;
+      font-weight: 500 !important;
     }
   }
 
@@ -1755,7 +1781,10 @@
       padding-bottom: 20px !important;
     }
     #home h1, .hero-title {
-      font-size: clamp(1.9rem, 10vw, 2.4rem) !important;
+      font-size: clamp(2.2rem, 11vw, 2.8rem) !important;
+    }
+    .hero-stat-label {
+      font-size: clamp(0.6rem, 2.5vw, 0.72rem) !important;
     }
   }
 }
@@ -2203,37 +2232,7 @@
   }
 }
 
-/* ── Hero 모바일 stat 라벨 대비 강화 — WCAG AA 준수 */
-@media (max-width: 640px) {
-  .hero-stat-label {
-    color: rgba(255, 255, 255, 0.97) !important;
-    font-size: clamp(0.72rem, 3vw, 0.9rem) !important;
-    letter-spacing: 0.06em !important;
-    font-weight: 500 !important;
-    text-shadow:
-      0 1px 3px rgba(0,0,0,1),
-      0 2px 10px rgba(0,0,0,0.9),
-      0 4px 20px rgba(0,0,0,0.7) !important;
-  }
-  .hero-stat-value {
-    font-size: clamp(1.25rem, 6.5vw, 1.75rem) !important;
-    text-shadow:
-      0 1px 4px rgba(0,0,0,0.9),
-      0 2px 16px rgba(0,0,0,0.7) !important;
-  }
-  /* 통계 수치 구분선 강화 */
-  .hero-stats-row {
-    border-top-color: rgba(201,168,76,0.28) !important;
-  }
-  /* 통계 영역 전체에 반투명 배경 패널 추가 */
-  .hero-stats-row {
-    background: rgba(0, 0, 0, 0.28) !important;
-    border-radius: 12px !important;
-    padding: clamp(0.75rem, 2.5vw, 1rem) clamp(1rem, 4vw, 1.5rem) !important;
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
-  }
-}
+/* ── Hero 모바일 stat 라벨 대비 강화 — 위 모바일 Hero 섹션 CSS에 통합됨 */
 
 /* ── 섹션 패딩 시스템 통일 — 80px mobile / 120px desktop */
 /* 기존 py-16(64px)/py-24(96px) → 80px/120px 기준으로 보정 */

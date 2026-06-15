@@ -8,7 +8,7 @@
  */
 
 /** 상단/하단 다크 그라디언트 오버레이
- * 모바일: 텍스트 safe zone 확보를 위해 상단/하단 더 강하게
+ * 모바일: 상단(네비 아래) + 하단(CTA 위) 강하게, 중간은 배경 이미지 살림
  * 데스크톱: 기존 값 유지
  */
 export function HeroDarkOverlay() {
@@ -23,13 +23,13 @@ export function HeroDarkOverlay() {
             "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
         }}
       />
-      {/* 모바일 오버레이 — 텍스트 대비 최대화 */}
+      {/* 모바일 오버레이 — 상단 강하게(헤더 아래 텍스트 보호) + 중간 투명(배경 이미지 살림) + 하단 강하게(CTA 배경) */}
       <div
         aria-hidden="true"
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(4,8,22,0.90) 0%, rgba(4,8,22,0.75) 25%, rgba(4,8,22,0.65) 50%, rgba(4,8,22,0.78) 75%, rgba(4,8,22,0.95) 100%)",
+            "linear-gradient(to bottom, rgba(4,8,22,0.88) 0%, rgba(4,8,22,0.62) 18%, rgba(4,8,22,0.38) 42%, rgba(4,8,22,0.50) 65%, rgba(4,8,22,0.85) 100%)",
         }}
       />
     </>
@@ -37,7 +37,7 @@ export function HeroDarkOverlay() {
 }
 
 /** 좌우 비네팅 — 사진 중앙 집중
- * 모바일: 상하 비네팅 강화로 focal point 보호
+ * 모바일: 좌우 비네팅으로 시선 중앙 집중
  */
 export function HeroVignette() {
   return (
@@ -51,13 +51,13 @@ export function HeroVignette() {
             "radial-gradient(ellipse at center, transparent 35%, rgba(4,8,22,0.55) 100%)",
         }}
       />
-      {/* 모바일 비네팅 — 상하 강화, 좌우 유지 */}
+      {/* 모바일 비네팅 — 좌우 강화, 중앙 투명 */}
       <div
         aria-hidden="true"
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, transparent 15%, rgba(4,8,22,0.55) 100%)",
+            "radial-gradient(ellipse 70% 55% at 50% 38%, transparent 20%, rgba(4,8,22,0.45) 100%)",
         }}
       />
     </>

@@ -28,9 +28,9 @@ export const en: I18nContent = {
     title: "Welcome to STAR Dermatology",
     desc: "Since our founding in 2006, STAR Dermatology in Busan's Seomyeon district has provided personalized 1:1 consultations led directly by board-certified dermatologists. With over 50 original laser devices and specialists with 20+ years of experience, we deliver outstanding results tailored to each patient.",
     stats: [
-      { num: "20yrs+", label: "Dermatology Experience" },
-      { num: "4,000+", label: "Under-Eye Fat Repositioning" },
-      { num: "50+", label: "Premium Laser Devices" },
+      { num: "20yrs+", label: "Derm. Career" },
+      { num: "4,000+", label: "Eye-Bag Cases" },
+      { num: "50+", label: "Laser Devices" },
     ],
     values: [
       { letter: "S", title: "Special Guest", desc: "Every patient is our most special guest. We practice personalized 1:1 consultations that truly listen to each individual's concerns." },

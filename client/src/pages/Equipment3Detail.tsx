@@ -337,10 +337,10 @@ export default function Equipment3Detail() {
           };
           const embedUrl = getEmbedUrl(item.youtubeUrl);
           return (
-            <section className="mb-12">
-              <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.video}</h2>
+            <section className="mt-4 mb-16 py-8 border-t border-b border-gray-100">
+              <h2 className="text-2xl font-bold mb-8 text-center">{LABELS.video}</h2>
               <div className="md:w-4/5 md:mx-auto">
-                <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+                <div className="aspect-video rounded-xl overflow-hidden shadow-xl">
                   <iframe
                     width="100%"
                     height="100%"

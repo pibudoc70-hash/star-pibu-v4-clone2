@@ -210,55 +210,59 @@ export const equipment3Router = router({
         return { translations: { en: {}, ja: {}, zh: {} } };
       }
 
+      // 필드 목록 — 번역할 키 순서 고정
+      const fieldList = Object.keys(fieldsToTranslate);
+
       const prompt = `You are a professional medical/dermatology translator for a Korean dermatology clinic (Star Dermatology, Busan, Korea).
-Translate the following Korean fields into English (en), Japanese (ja), and Chinese Simplified (zh).
-Return ONLY valid JSON with this exact structure:
+Translate ALL of the following Korean fields into English (en), Japanese (ja), and Chinese Simplified (zh).
+You MUST include ALL fields in every language object — do not skip any field.
+Return ONLY valid JSON with this exact structure (include every field listed below):
 {
-  "en": { "fieldName": "translated string", ... },
-  "ja": { "fieldName": "translated string", ... },
-  "zh": { "fieldName": "translated string", ... }
+  "en": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} },
+  "ja": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} },
+  "zh": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} }
 }
 Rules:
-- Keep medical brand names as-is (e.g. Ultherapy, Thermage FLX, AccuREP, HIFU, SMAS, FDA, RF)
+- Keep medical brand names as-is (e.g. Ultherapy, Thermage FLX, AccuREP, HIFU, SMAS, FDA, RF, XERF)
 - Use accurate dermatology/medical terminology
 - Keep the same tone and length as the original
-- For "time" and "sessions" fields, keep numeric values and units accurate
+- For "time", "sessions", "recovery" fields, keep numeric values and units accurate
+- NEVER omit any field — every field must appear in en, ja, and zh
 
 Fields to translate:
 ${JSON.stringify(fieldsToTranslate, null, 2)}`;
 
       const response = await invokeLLM({
         messages: [
-          { role: "system", content: "You are a professional medical translator. Respond with valid JSON only, no markdown, no explanation." },
+          { role: "system", content: "You are a professional medical translator. Respond with valid JSON only, no markdown, no explanation. Include ALL requested fields in your response." },
           { role: "user", content: prompt },
         ],
-        response_format: {
-          type: "json_schema",
-          json_schema: {
-            name: "translations",
-            strict: true,
-            schema: {
-              type: "object",
-              properties: {
-                en: { type: "object", additionalProperties: { type: "string" } },
-                ja: { type: "object", additionalProperties: { type: "string" } },
-                zh: { type: "object", additionalProperties: { type: "string" } },
-              },
-              required: ["en", "ja", "zh"],
-              additionalProperties: false,
-            },
-          },
-        },
       });
 
       const rawContent = response.choices?.[0]?.message?.content;
       if (!rawContent) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "번역 응답이 없습니다." });
-      const content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
-      const parsed = JSON.parse(content) as {
-        en: Record<string, string>;
-        ja: Record<string, string>;
-        zh: Record<string, string>;
-      };
+
+      // JSON 파싱 — 마크다운 코드블록 제거 후 파싱
+      let content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
+      content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+
+      let parsed: { en: Record<string, string>; ja: Record<string, string>; zh: Record<string, string> };
+      try {
+        parsed = JSON.parse(content);
+      } catch {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "번역 결과 JSON 파싱 실패: " + content.slice(0, 200) });
+      }
+
+      // 누락 필드 보완 — LLM이 일부 필드를 생략한 경우 빈 문자열로 채움
+      for (const lang of ["en", "ja", "zh"] as const) {
+        if (!parsed[lang] || typeof parsed[lang] !== "object") parsed[lang] = {};
+        for (const key of fieldList) {
+          if (typeof parsed[lang][key] !== "string") {
+            parsed[lang][key] = "";
+          }
+        }
+      }
+
       return { translations: parsed };
     }),
 

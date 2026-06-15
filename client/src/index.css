@@ -1122,6 +1122,8 @@
   }
   .dr-credentials-item-mobile {
     background: var(--brand-bg, #FAF8F5);
+    border: 1px solid color-mix(in srgb, var(--dr-gold) 12%, transparent);
+    transition: background 0.15s ease;
   }
   .dr-dot-hint { color: var(--dr-text-inactive); }
 
@@ -1273,7 +1275,8 @@
   .dr-credentials-icon-mobile {
     color: var(--dr-gold);
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 4px;
+    opacity: 0.85;
   }
   /* Credentials text */
   .dr-credentials-text-desktop {
@@ -1281,7 +1284,12 @@
     line-height: 1.6;
     font-size: 13px;
   }
-  .dr-credentials-text-mobile { color: var(--dr-text-gray); }
+  .dr-credentials-text-mobile {
+    color: var(--dr-text-gray);
+    font-size: 13.5px;
+    line-height: 1.9;
+    letter-spacing: 0.015em;
+  }
   /* Mobile tab list border */
   .dr-mob-tablist-border {
     border-top: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);

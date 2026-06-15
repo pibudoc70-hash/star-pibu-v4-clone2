@@ -74,16 +74,16 @@ export function DoctorCredentials({
         </div>
       </button>
       {expanded && (
-        <div className="px-4 py-4 grid grid-cols-1 gap-2">
+        <div className="px-4 py-6 grid grid-cols-1 gap-4">
           {doctor.credentials.map((c) => {
             const Icon = c.icon;
             return (
               <div
                 key={c.text}
-                className="flex items-start gap-2 py-1.5 px-2 rounded-lg dr-credentials-item-mobile"
+                className="flex items-start gap-3 py-4 px-4 rounded-xl dr-credentials-item-mobile"
               >
-                <Icon size={13} className="dr-credentials-icon-mobile" />
-                <span className="text-xs leading-relaxed dr-credentials-text-mobile">
+                <Icon size={15} className="dr-credentials-icon-mobile" />
+                <span className="dr-credentials-text-mobile">
                   {c.text}
                 </span>
               </div>

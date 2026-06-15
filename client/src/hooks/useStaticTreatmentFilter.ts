@@ -89,6 +89,8 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);
+  /** 초기 마운트 시 scrollIntoView 실행 방지 — 탭 전환 시에만 스크롤 */
+  const isInitialMount = useRef(true);
 
   /** 카테고리 + 정렬 필터링 */
   const filteredTreatments = useMemo(() => {
@@ -102,6 +104,13 @@ export function useStaticTreatmentFilter(defaultTab = "best"): UseStaticTreatmen
    * scrollIntoView({ inline: "center" })는 브라우저가 직접 계산하므로 더 안정적.
    */
   useEffect(() => {
+    // 초기 마운트 시에는 실행 안 함 — 탭 전환 시에만 탭 중앙 정렬 스크롤
+    // 초기 실행 시 scrollIntoView({ block: "nearest" })가 treatments 섹션으로
+    // 페이지 전체를 스크롤시키는 버그 방지
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     const container = tabContainerRef.current;
     if (!container) return;
     const activeBtn = container.querySelector<HTMLButtonElement>('[data-active="true"]');

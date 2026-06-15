@@ -2206,17 +2206,32 @@
 /* ── Hero 모바일 stat 라벨 대비 강화 — WCAG AA 준수 */
 @media (max-width: 640px) {
   .hero-stat-label {
-    color: rgba(255, 255, 255, 0.72) !important;
-    font-size: clamp(0.62rem, 2vw, 0.76rem) !important;
-    letter-spacing: 0.08em !important;
+    color: rgba(255, 255, 255, 0.97) !important;
+    font-size: clamp(0.72rem, 3vw, 0.9rem) !important;
+    letter-spacing: 0.06em !important;
+    font-weight: 500 !important;
+    text-shadow:
+      0 1px 3px rgba(0,0,0,1),
+      0 2px 10px rgba(0,0,0,0.9),
+      0 4px 20px rgba(0,0,0,0.7) !important;
   }
   .hero-stat-value {
     font-size: clamp(1.25rem, 6.5vw, 1.75rem) !important;
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55) !important;
+    text-shadow:
+      0 1px 4px rgba(0,0,0,0.9),
+      0 2px 16px rgba(0,0,0,0.7) !important;
   }
   /* 통계 수치 구분선 강화 */
   .hero-stats-row {
     border-top-color: rgba(201,168,76,0.28) !important;
+  }
+  /* 통계 영역 전체에 반투명 배경 패널 추가 */
+  .hero-stats-row {
+    background: rgba(0, 0, 0, 0.28) !important;
+    border-radius: 12px !important;
+    padding: clamp(0.75rem, 2.5vw, 1rem) clamp(1rem, 4vw, 1.5rem) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
   }
 }
 

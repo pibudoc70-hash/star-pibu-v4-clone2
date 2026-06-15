@@ -339,16 +339,18 @@ export default function Equipment3Detail() {
           return (
             <section className="mb-12">
               <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.video}</h2>
-              <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={embedUrl}
-                  title={localizedName}
-                  style={{ border: "none" }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <div className="md:w-4/5 md:mx-auto">
+                <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={embedUrl}
+                    title={localizedName}
+                    style={{ border: "none" }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </section>
           );

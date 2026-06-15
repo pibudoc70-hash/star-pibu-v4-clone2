@@ -12,6 +12,7 @@ import {
 } from "../db";
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
+import { withCache, invalidateCache } from "../_core/cache";
 import type { InsertEvent } from "../../drizzle/schema";
 import { TRPCError } from "@trpc/server";
 
@@ -25,12 +26,12 @@ export const eventsRouter = router({
   // 공개: 일반 이벤트/공지 조회
   listEvents: publicProcedure.query(async () => getListEvents()),
 
-  // 공개: SPECIAL EVENT 조회 (언어 파라미터 지원)
+  // 공개: SPECIAL EVENT 조회 (언어 파라미터 지원) — 2분 캐시
   special: publicProcedure
     .input(z.object({ lang: z.string().default("ko") }).optional())
     .query(async ({ input }) => {
       const lang = input?.lang ?? "ko";
-      return getSpecialEventsByLang(lang);
+      return withCache(`events:special:${lang}`, () => getSpecialEventsByLang(lang));
     }),
 
   // 공개: 언어별 일반 이벤트 조회
@@ -125,6 +126,7 @@ export const eventsRouter = router({
     .mutation(async ({ input }) => {
       const { priceRows, ...rest } = input;
       await createEvent({ ...rest, priceRows: JSON.stringify(priceRows || []) } as InsertEvent);
+      invalidateCache("events:");
       return { success: true };
     }),
 
@@ -179,6 +181,7 @@ export const eventsRouter = router({
       const updateData: Partial<InsertEvent> = { ...data };
       if (priceRows !== undefined) updateData.priceRows = JSON.stringify(priceRows);
       await updateEvent(id, updateData);
+      invalidateCache("events:");
       return { success: true };
     }),
 
@@ -187,6 +190,7 @@ export const eventsRouter = router({
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input }) => {
       await deleteEvent(input.id);
+      invalidateCache("events:");
       return { success: true };
     }),
 

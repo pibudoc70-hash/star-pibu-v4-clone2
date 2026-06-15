@@ -11,6 +11,7 @@ import {
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole,
 } from "../db";
 import { updateAdminReservationStatus, normalizeYouTubeCreatePayload, getAdminStats } from "../services/admin.service";
+import { invalidateCache } from "../_core/cache";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -107,7 +108,11 @@ export const adminRouter = router({
         type: z.enum(["video", "shorts"]),
         sortOrder: z.number().optional(),
       }))
-      .mutation(async ({ input }) => createYouTubeVideo(normalizeYouTubeCreatePayload(input))),
+      .mutation(async ({ input }) => {
+        const result = await createYouTubeVideo(normalizeYouTubeCreatePayload(input));
+        invalidateCache("youtube:");
+        return result;
+      }),
 
     update: adminProcedure
       .input(z.object({
@@ -120,13 +125,16 @@ export const adminRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;
-        return updateYouTubeVideo(id, data);
+        const result = await updateYouTubeVideo(id, data);
+        invalidateCache("youtube:");
+        return result;
       }),
 
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deleteYouTubeVideo(input.id);
+        invalidateCache("youtube:");
         return { success: true };
       }),
   }),

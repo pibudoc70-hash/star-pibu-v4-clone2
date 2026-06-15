@@ -16,11 +16,14 @@ import {
 } from "../db";
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
+import { withCache, invalidateCache } from "../_core/cache";
 import { TRPCError } from "@trpc/server";
 
 export const popupRouter = router({
-  // 공개: 활성화된 이벤트 목록 조회 (유효기간 자동 필터링)
-  list: publicProcedure.query(async () => getActivePopups()),
+  // 공개: 활성화된 이벤트 목록 조회 (유효기간 자동 필터링) — 2분 캐시
+  list: publicProcedure.query(async () =>
+    withCache("popup:list", () => getActivePopups())
+  ),
 
   // 관리자: 전체 목록 (비활성 포함)
   adminList: adminProcedure.query(async () => getAllPopups()),
@@ -46,7 +49,9 @@ export const popupRouter = router({
     .mutation(async ({ input }) => {
       try {
         const { priceItems, ...rest } = input;
-        return createPopup({ ...rest, priceItems: JSON.stringify(priceItems) });
+        const result = await createPopup({ ...rest, priceItems: JSON.stringify(priceItems) });
+        invalidateCache("popup:");
+        return result;
       } catch (error) {
         logger.error("Popup", "팝업 생성 오류", error);
         throw error;
@@ -76,13 +81,19 @@ export const popupRouter = router({
       const { id, priceItems, ...rest } = input;
       const data: Record<string, unknown> = { ...rest };
       if (priceItems !== undefined) data.priceItems = JSON.stringify(priceItems);
-      return updatePopup(id, data as Parameters<typeof updatePopup>[1]);
+      const result = await updatePopup(id, data as Parameters<typeof updatePopup>[1]);
+      invalidateCache("popup:");
+      return result;
     }),
 
   // 관리자: 이벤트 삭제
   delete: adminProcedure
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => deletePopup(input.id)),
+    .mutation(async ({ input }) => {
+      const result = await deletePopup(input.id);
+      invalidateCache("popup:");
+      return result;
+    }),
 
   // 관리자: 이미지 업로드 (base64 → S3)
   uploadImage: adminProcedure

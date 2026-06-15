@@ -27,7 +27,18 @@ if (typeof window !== 'undefined') {
   });
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // 5분간 캐시 유지 — 페이지 이동/포커스 시 불필요한 재요청 방지
+      staleTime: 5 * 60 * 1000,
+      // 창 포커스 시 자동 재요청 비활성화 (병원 사이트는 실시간 데이터 불필요)
+      refetchOnWindowFocus: false,
+      // 재시도 1회로 제한 (기본 3회 → 실패 시 빠른 에러 표시)
+      retry: 1,
+    },
+  },
+});
 
 // S1-T1: redirect 중복 방지 플래그 — QueryCache + MutationCache 두 곳에서 동시에 발화해도 한 번만 실행
 let isRedirecting = false;

@@ -74,7 +74,9 @@ export const popupEvents = mysqlTable("popupEvents", {
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  isActiveIdx: index("popupEvents_isActive_idx").on(table.isActive),
+}));
 export type PopupEvent = typeof popupEvents.$inferSelect;
 export type InsertPopupEvent = typeof popupEvents.$inferInsert;
 
@@ -125,7 +127,13 @@ export const events = mysqlTable("events", {
   productNameZh: varchar("productNameZh", { length: 200 }).default(""),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  // 성능 최적화: 자주 사용되는 WHERE 조건 커럼 인덱스
+  isActiveIdx: index("events_isActive_idx").on(table.isActive),
+  isActiveSpecialIdx: index("events_isActive_special_idx").on(table.isActive, table.isSpecialEvent),
+  isActiveLangIdx: index("events_isActive_lang_idx").on(table.isActive, table.targetLang),
+  sortOrderIdx: index("events_sortOrder_idx").on(table.sortOrder),
+}));
 export type Event = typeof events.$inferSelect;
 export type InsertEvent = typeof events.$inferInsert;
 
@@ -218,7 +226,10 @@ export const youtubeVideos = mysqlTable("youtubeVideos", {
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  isActiveIdx: index("youtubeVideos_isActive_idx").on(table.isActive),
+  typeIsActiveIdx: index("youtubeVideos_type_isActive_idx").on(table.type, table.isActive),
+}));
 export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
 export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
 

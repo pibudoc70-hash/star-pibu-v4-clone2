@@ -15,9 +15,9 @@ import HeroSection from "@/components/HeroSection";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import DoctorsSection from "@/components/DoctorsSection";
-import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
+const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEquipmentSection"));
 import Footer from "@/components/Footer";
-import WelcomePopup from "@/components/WelcomePopup";
+const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));
 
 // 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
 const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevicesSection"));
@@ -285,7 +285,9 @@ export default function Home() {
 
         {/* 4. Treatments + Equipment — 순수 흰색, 콘텐츠 밀도 높음 */}
         <div style={{ background: "#FFFFFF" }}>
-          <TreatmentsEquipmentSection />
+          <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
+            <TreatmentsEquipmentSection />
+          </Suspense>
         </div>
 
         {/* 5. Management Devices — 열린 어두운 배경으로 시각적 리듬 전환 */}
@@ -360,8 +362,10 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Welcome Popup */}
-      <WelcomePopup />
+      {/* Welcome Popup — lazy loaded, 초기 번들에서 제외 */}
+      <Suspense fallback={null}>
+        <WelcomePopup />
+      </Suspense>
     </div>
   );
 }

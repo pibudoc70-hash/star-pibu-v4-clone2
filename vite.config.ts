@@ -190,6 +190,10 @@ export default defineConfig({
           if (id.includes("streamdown")) {
             return "vendor-streamdown";
           }
+          // treatments-data (317KB) — lazy 코드스플리팅으로 분리된 시술 데이터
+          if (id.includes("data/treatments")) {
+            return "data-treatments";
+          }
           // 나머지 node_modules는 Rollup 기본 청킹에 맡김
         },
       },

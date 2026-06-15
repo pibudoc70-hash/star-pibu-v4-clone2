@@ -141,6 +141,13 @@
       "when": 1781416660198,
       "tag": "0019_ordinary_exodus",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1781533330338,
+      "tag": "0020_lazy_blazing_skull",
+      "breakpoints": true
     }
   ]
 }

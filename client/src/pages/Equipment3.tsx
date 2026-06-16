@@ -17,7 +17,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
-import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw } from "lucide-react";
+import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X } from "lucide-react";
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -189,6 +189,18 @@ export default function Equipment3() {
   const showAll = activeId ? expandedTabs.has(activeId) : false;
   const tabContainerRef = useRef<HTMLDivElement>(null);
 
+  // ── 검색 상태 ────────────────────────────────────────────────────────────────
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // 탭 전환 시 검색어 초기화
+  const handleTabChange = useCallback((id: string) => {
+    setActiveId(id);
+    setSearchQuery("");
+    const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
+    window.history.replaceState(null, "", window.location.pathname + newSearch);
+  }, []);
+
   // 탭 목록이 로드되면 URL ?tab= 파라미터 또는 첫 번째 탭 자동 선택
   useEffect(() => {
     if (tabs.length === 0) return;
@@ -201,13 +213,7 @@ export default function Equipment3() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabs, urlTab]);
 
-  const handleTabChange = useCallback((id: string) => {
-    setActiveId(id);
-    // 탭 변경 시 showAll은 해당 탭의 sessionStorage 상태를 따름 (별도 리셋 없음)
-    // URL ?tab= 파라미터를 동기화하여 뒤로가기 시 올바른 탭으로 복귀
-    const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
-    window.history.replaceState(null, "", window.location.pathname + newSearch);
-  }, []);
+  // (handleTabChange는 위 검색 상태 블록에서 정의됨)
 
   const handleShowMore = useCallback(() => {
     if (!activeId) return;
@@ -238,17 +244,32 @@ export default function Equipment3() {
   }, [activeId]);
 
   // 현재 탭 필터링
-  const filteredItems = useMemo(() => {
+  const tabFilteredItems = useMemo(() => {
     if (!activeId) return rawItems;
     if (activeId === "best") {
-      // Best 시술 탭: isBest=1의 항목만
       return rawItems.filter((item) => String(item.isBest) === "1");
     }
-    // 다른 카테고리 탭: category 필드로 필터링
     return rawItems.filter((item) => (item.category ?? "stem_cell") === activeId);
   }, [rawItems, activeId]);
 
-  const displayedItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL_SHOW);
+  // 검색어 필터링 (이름·설명·뱃지 대상, 현재 언어 우선)
+  const filteredItems = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return tabFilteredItems;
+    return tabFilteredItems.filter((item) => {
+      const name = [
+        item.name, item.nameEn, item.nameJa, item.nameZh,
+      ].filter(Boolean).join(" ").toLowerCase();
+      const desc = [
+        item.desc, item.descEn, item.descJa, item.descZh,
+      ].filter(Boolean).join(" ").toLowerCase();
+      const badge = (item.badge ?? "").toLowerCase();
+      return name.includes(q) || desc.includes(q) || badge.includes(q);
+    });
+  }, [tabFilteredItems, searchQuery]);
+
+  // 검색 중일 때는 항상 전체 표시, 아닐 때는 더보기 상태 적용
+  const displayedItems = (searchQuery.trim() || showAll) ? filteredItems : filteredItems.slice(0, INITIAL_SHOW);
 
   // ── 탭 레이블 헬퍼 ──────────────────────────────────────────────────────────
   const getTabLabel = (tab: typeof tabs[number]) => {
@@ -382,6 +403,59 @@ export default function Equipment3() {
                   </div>
                 </div>
 
+                {/* 검색창 */}
+                <div className="mb-4">
+                  <div
+                    className="relative flex items-center rounded-2xl bg-white shadow-sm border border-gray-100 overflow-hidden"
+                    style={{ transition: "box-shadow 0.2s" }}
+                  >
+                    <span className="pl-4 pr-2 text-gray-400 flex-shrink-0">
+                      <Search size={18} />
+                    </span>
+                    <input
+                      ref={searchInputRef}
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={getText(
+                        "시술명 또는 특징으로 검색",
+                        "Search by name or feature",
+                        "施術名または特徴で検索",
+                        "按名称或特征搜索"
+                      )}
+                      aria-label={getText(
+                        "시술 검색",
+                        "Search treatments",
+                        "施術を検索",
+                        "搜索项目"
+                      )}
+                      className="flex-1 py-3.5 pr-4 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                      style={{ minWidth: 0 }}
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
+                        className="pr-4 pl-2 text-gray-400 hover:text-gray-600 flex-shrink-0 transition-colors"
+                        aria-label={getText("검색어 지우기", "Clear search", "検索をクリア", "清除搜索")}
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+                  </div>
+                  {/* 검색 결과 수 표시 */}
+                  {searchQuery.trim() && (
+                    <p className="mt-2 text-xs text-gray-400 pl-1">
+                      {getText(
+                        `"${searchQuery}" 검색 결과 ${filteredItems.length}건`,
+                        `${filteredItems.length} result${filteredItems.length !== 1 ? "s" : ""} for "${searchQuery}"`,
+                        `「${searchQuery}」の検索結果 ${filteredItems.length}件`,
+                        `"${searchQuery}" 的搜索结果 ${filteredItems.length} 条`
+                      )}
+                    </p>
+                  )}
+                </div>
+
                 {/* 줄기세포 치료 탭 전용 안내 섹션 */}
                 {(activeId === "stem_cell" || activeId === "줄기세포 치료") && (
                   <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
@@ -396,8 +470,32 @@ export default function Equipment3() {
                   <div className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade">
                     <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
                       {filteredItems.length === 0 ? (
-                        <div className="text-center py-16 text-gray-400">
-                          {getText("등록된 시술이 없습니다.", "No treatments available.", "施術情報がありません。", "暂无项目信息。")}
+                        <div className="text-center py-16">
+                          {searchQuery.trim() ? (
+                            <>
+                              <Search size={36} className="mx-auto mb-3 text-gray-300" />
+                              <p className="text-gray-400 text-sm">
+                                {lang === "en"
+                                  ? `No results found for "${searchQuery}".`
+                                  : lang === "ja"
+                                  ? `「${searchQuery}」に該当する施術がありません。`
+                                  : lang === "zh"
+                                  ? `未找到与"${searchQuery}"相关的项目。`
+                                  : `"${searchQuery}"에 해당하는 시술이 없습니다.`}
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() => setSearchQuery("")}
+                                className="mt-3 text-xs text-[var(--color-gold-primary)] underline underline-offset-2"
+                              >
+                                {getText("검색어 초기화", "Clear search", "検索をリセット", "重置搜索")}
+                              </button>
+                            </>
+                          ) : (
+                            <p className="text-gray-400">
+                              {getText("등록된 시술이 없습니다.", "No treatments available.", "施術情報がありません。", "暂无项目信息。")}
+                            </p>
+                          )}
                         </div>
                       ) : (
                         <div
@@ -421,8 +519,8 @@ export default function Equipment3() {
                         </div>
                       )}
 
-                      {/* 더보기 / 접기 */}
-                      {filteredItems.length > INITIAL_SHOW && (
+                      {/* 더보기 / 접기 — 검색 중에는 숨김 */}
+                      {!searchQuery.trim() && tabFilteredItems.length > INITIAL_SHOW && (
                         <div className="flex justify-center mt-16">
                           <button
                             type="button"

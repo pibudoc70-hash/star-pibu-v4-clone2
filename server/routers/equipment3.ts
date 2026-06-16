@@ -59,6 +59,7 @@ const itemFieldsSchema = z.object({
   recoveryJa: z.string().max(50).optional(),
   recoveryZh: z.string().max(50).optional(),
   imageUrl: z.string().optional(),
+  bgImageUrl: z.string().optional(),    // 배경 전용 이미지 (텍스트 오버레이용)
   images: z.string().optional(),       // JSON 배열 문자열
   youtubeUrl: z.string().optional(),
   modalImage: z.string().optional(),
@@ -142,6 +143,7 @@ export const equipment3Router = router({
         recoveryJa: input.recoveryJa ?? "",
         recoveryZh: input.recoveryZh ?? "",
         imageUrl: input.imageUrl ?? null,
+        bgImageUrl: input.bgImageUrl ?? null,
         images: input.images ?? "[]",
         youtubeUrl: input.youtubeUrl ?? null,
         modalImage: input.modalImage ?? null,

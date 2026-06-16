@@ -1,0 +1,1 @@
+ALTER TABLE `equipment3` ADD `bgImageUrl` text;

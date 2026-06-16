@@ -218,9 +218,54 @@ export default function Equipment3Detail() {
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
-          {/* 이미지 */}
+          {/* 이미지 — bgImageUrl 있으면 배경+CSS 텍스트 오버레이, 없으면 기존 방식 */}
           <div>
-            {item.imageUrl ? (
+            {item.bgImageUrl ? (
+              /* ── 배경+텍스트 오버레이 방식 ── */
+              <div
+                className="relative w-full rounded-2xl shadow-lg overflow-hidden"
+                style={{ aspectRatio: "16/8" }}
+              >
+                {/* 배경 이미지 */}
+                <img
+                  src={item.bgImageUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* 반투명 어두운 레이어 — 밝은 배경에서 텍스트 가독성 확보 */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+                {/* 텍스트 오버레이 */}
+                <div className="relative z-10 flex flex-col justify-center h-full px-8 py-6">
+                  {/* 브랜드/영문 소제목 */}
+                  {item.nameEn && (
+                    <p
+                      className="text-sm font-semibold tracking-[0.25em] uppercase mb-2"
+                      style={{ color: "rgba(255,255,255,0.9)", textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
+                    >
+                      {item.nameEn}
+                    </p>
+                  )}
+                  {/* 메인 시술명 */}
+                  <h2
+                    className="text-4xl md:text-5xl font-black leading-tight"
+                    style={{ color: "#fff", textShadow: "0 2px 16px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.4)" }}
+                  >
+                    {localizedName}
+                  </h2>
+                  {/* 서브 태그라인 — 카테고리 활용 */}
+                  {localizedCategory && (
+                    <p
+                      className="mt-3 text-base font-semibold tracking-wide"
+                      style={{ color: "rgba(255,255,255,0.95)", textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
+                    >
+                      ［ {localizedCategory} ］
+                    </p>
+                  )}
+                </div>
+              </div>
+            ) : item.imageUrl ? (
+              /* ── 기존 방식: 이미지 그대로 표시 ── */
               <OptimizedImage
                 src={item.imageUrl}
                 alt={localizedName}

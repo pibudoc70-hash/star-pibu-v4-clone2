@@ -286,6 +286,7 @@ export const equipment3 = mysqlTable("equipment3", {
   recoveryZh: varchar("recoveryZh", { length: 50 }).default(""),
   // 미디어
   imageUrl: text("imageUrl"),
+  bgImageUrl: text("bgImageUrl"),          // 배경 전용 이미지 (텍스트 오버레이용)
   images: text("images").default("[]"),   // JSON 배열
   youtubeUrl: text("youtubeUrl"),
   modalImage: text("modalImage"),

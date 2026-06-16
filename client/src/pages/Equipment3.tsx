@@ -179,6 +179,9 @@ export default function Equipment3() {
   const handleTabChange = useCallback((id: string) => {
     setActiveId(id);
     setShowAll(false);
+    // URL ?tab= 파라미터를 동기화하여 뒤로가기 시 올바른 탭으로 복귀
+    const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
+    window.history.replaceState(null, "", window.location.pathname + newSearch);
   }, []);
 
   // 활성 탭 자동 스크롤

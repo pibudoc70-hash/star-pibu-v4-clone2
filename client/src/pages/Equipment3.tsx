@@ -65,6 +65,7 @@ function Equipment3Card({
 }) {
   const [, setLocation] = useLocation();
   const { getText } = useLocalizedText();
+  const { lang } = useLang();  // 현재 언어 감지
 
   const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
   const desc     = getText(item.desc, item.descEn, item.descJa, item.descZh);
@@ -87,19 +88,57 @@ function Equipment3Card({
       aria-label={`${name} ${detail}`}
       onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}
     >
-      {/* 이미지 */}
+      {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어: bgImageUrl+텍스트 오버레이 */}
       <div className="relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
-        {item.imageUrl ? (
+        {lang !== "ko" && item.bgImageUrl ? (
+          /* ── 비한국어: 배경+텍스트 오버레이 ── */
+          <>
+            <img
+              src={item.bgImageUrl}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+            />
+            {/* 반투명 어두운 그라디언트 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+            {/* 텍스트 오버레이 */}
+            <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 py-3">
+              {item.nameEn && (
+                <p
+                  className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1"
+                  style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
+                >
+                  {item.nameEn}
+                </p>
+              )}
+              <h3
+                className="text-xl font-black leading-tight"
+                style={{ color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+              >
+                {name}
+              </h3>
+              {catLabel && (
+                <p
+                  className="mt-1 text-xs font-semibold"
+                  style={{ color: "rgba(255,255,255,0.9)", textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
+                >
+                  ［ {catLabel} ］
+                </p>
+              )}
+            </div>
+          </>
+        ) : item.imageUrl ? (
+          /* ── 한국어 또는 bgImageUrl 없음: 기존 이미지 ── */
           <OptimizedImage
             src={item.imageUrl}
             alt={name}
             className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
           />
         ) : null}
-        {/* 뱃지 */}
+        {/* 뉵지 */}
         {item.badge && (
           <span
-            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold"
+            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
             style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
           >
             {item.badge}
@@ -108,7 +147,7 @@ function Equipment3Card({
         {/* 검색 결과에서 카테고리 태그 표시 */}
         {showCategory && catLabel && (
           <span
-            className="absolute top-3 right-3 px-2 py-0.5 rounded-full text-xs font-medium"
+            className="absolute top-3 right-3 px-2 py-0.5 rounded-full text-xs font-medium z-20"
             style={{ background: "rgba(0,0,0,0.45)", color: "#fff", backdropFilter: "blur(4px)" }}
           >
             {catLabel}

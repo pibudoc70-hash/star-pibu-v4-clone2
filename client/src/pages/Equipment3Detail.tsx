@@ -218,10 +218,10 @@ export default function Equipment3Detail() {
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
-          {/* 이미지 — bgImageUrl 있으면 배경+CSS 텍스트 오버레이, 없으면 기존 방식 */}
+          {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>
-            {item.bgImageUrl ? (
-              /* ── 배경+텍스트 오버레이 방식 ── */
+            {lang !== "ko" && item.bgImageUrl ? (
+              /* ── 비한국어: 배경+텍스트 오버레이 ── */
               <div
                 className="relative w-full rounded-2xl shadow-lg overflow-hidden"
                 style={{ aspectRatio: "16/8" }}
@@ -265,7 +265,7 @@ export default function Equipment3Detail() {
                 </div>
               </div>
             ) : item.imageUrl ? (
-              /* ── 기존 방식: 이미지 그대로 표시 ── */
+              /* ── 한국어 또는 bgImageUrl 없음: 기존 이미지 그대로 표시 ── */
               <OptimizedImage
                 src={item.imageUrl}
                 alt={localizedName}

@@ -23,7 +23,7 @@ type FormData = {
   time: string; timeEn: string; timeJa: string; timeZh: string;
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
-  youtubeUrl: string; imageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1";
+  youtubeUrl: string; imageUrl: string; bgImageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1";
 };
 
 export default function AdminEquipment3Edit() {
@@ -39,10 +39,12 @@ export default function AdminEquipment3Edit() {
   const [form, setForm] = useState<FormData | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingBg, setUploadingBg] = useState(false);
   const [galleryUploading, setGalleryUploading] = useState(false);
   const [translating, setTranslating] = useState(false);
   const [translateDone, setTranslateDone] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bgFileInputRef = useRef<HTMLInputElement>(null);
   const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
   // 데이터 로드 후 폼 초기화
@@ -71,7 +73,7 @@ export default function AdminEquipment3Edit() {
       slug: item.slug ?? "",
       badge: item.badge ?? "", badgeColor: item.badgeColor ?? "#4A6FA5",
       sortOrder: String(item.sortOrder ?? 0),
-      youtubeUrl: item.youtubeUrl ?? "", imageUrl: item.imageUrl ?? "",
+      youtubeUrl: item.youtubeUrl ?? "", imageUrl: item.imageUrl ?? "", bgImageUrl: item.bgImageUrl ?? "",
       images: Array.isArray(images) ? images : [],
       isActive: (item.isActive ?? "1") as "0" | "1",
       isBest: (item.isBest ?? "0") as "0" | "1",
@@ -169,6 +171,26 @@ export default function AdminEquipment3Edit() {
     }
   }
 
+
+  async function handleBgImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert("이미지 파일 크기는 5MB 이하여야 합니다."); return; }
+    setUploadingBg(true);
+    try {
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const base64 = ev.target?.result as string;
+        const result = await uploadMutation.mutateAsync({ base64, fileName: file.name, mimeType: file.type });
+        setForm((prev) => prev ? { ...prev, bgImageUrl: result.url } : prev);
+        setUploadingBg(false);
+      };
+      reader.readAsDataURL(file);
+    } catch {
+      alert("배경 이미지 업로드에 실패했습니다.");
+      setUploadingBg(false);
+    }
+  }
   async function handleGalleryImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -218,6 +240,7 @@ export default function AdminEquipment3Edit() {
         sortOrder: parseInt(form.sortOrder) || 0,
         youtubeUrl: form.youtubeUrl || undefined,
         imageUrl: form.imageUrl || undefined,
+        bgImageUrl: form.bgImageUrl || undefined,
         images: JSON.stringify(form.images),
         isActive: form.isActive,
         isBest: form.isBest,
@@ -380,27 +403,73 @@ export default function AdminEquipment3Edit() {
 
           {/* 이미지 */}
           <Card>
-            <CardHeader><CardTitle>대표 이미지</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-              {form.imageUrl ? (
-                <div className="relative inline-block">
-                  <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover" />
-                  <button type="button" onClick={() => setForm((p) => p ? { ...p, imageUrl: "" } : p)}
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
-                    <X className="h-4 w-4" />
-                  </button>
+            <CardHeader><CardTitle>이미지 설정</CardTitle></CardHeader>
+            <CardContent className="space-y-6">
+              {/* ── 대표 이미지 (한국어용) ── */}
+              <div className="space-y-3">
+                <div>
+                  <Label className="font-semibold text-base">대표 이미지 <span className="text-xs font-normal text-gray-500">(한국어 페이지에 표시)</span></Label>
+                  <p className="text-xs text-gray-400 mt-0.5">한국어 목록 카드 및 상세 페이지에 표시되는 메인 이미지입니다.</p>
                 </div>
-              ) : (
-                <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
-                  className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-500 transition w-full justify-center">
-                  <Upload className="h-5 w-5" />
-                  {uploading ? "업로드 중..." : "이미지 업로드 (최대 5MB)"}
-                </button>
-              )}
-              <div>
-                <Label className="text-sm text-gray-500">또는 이미지 URL 직접 입력</Label>
-                <Input name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." className="mt-1" />
+                <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                {form.imageUrl ? (
+                  <div className="relative inline-block">
+                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" />
+                    <button type="button" onClick={() => setForm((p) => p ? { ...p, imageUrl: "" } : p)}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
+                    className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-500 transition w-full justify-center">
+                    <Upload className="h-5 w-5" />
+                    {uploading ? "업로드 중..." : "대표 이미지 업로드 (최대 5MB)"}
+                  </button>
+                )}
+                <div>
+                  <Label className="text-xs text-gray-500">또는 URL 직접 입력</Label>
+                  <Input name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." className="mt-1" />
+                </div>
+              </div>
+
+              <hr className="border-dashed" />
+
+              {/* ── 배경 이미지 (다국어용) ── */}
+              <div className="space-y-3">
+                <div>
+                  <Label className="font-semibold text-base">배경 이미지 <span className="text-xs font-normal text-gray-500">(영어·일본어·중국어 페이지에 표시)</span></Label>
+                  <p className="text-xs text-gray-400 mt-0.5">한글 텍스트를 제거한 배경 전용 이미지입니다. 등록 시 외국어 페이지에서 시술명이 해당 언어 텍스트로 자동 오버레이됩니다.</p>
+                </div>
+                <input ref={bgFileInputRef} type="file" accept="image/*" className="hidden" onChange={handleBgImageUpload} />
+                {form.bgImageUrl ? (
+                  <div className="relative inline-block">
+                    <img src={form.bgImageUrl} alt="배경 이미지" className="h-48 rounded-xl object-cover border" />
+                    <button type="button" onClick={() => setForm((p) => p ? { ...p, bgImageUrl: "" } : p)}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                      <X className="h-4 w-4" />
+                    </button>
+                    {/* 오버레이 미리보기 */}
+                    <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 flex flex-col justify-center px-4 py-3">
+                        <p className="text-[9px] font-semibold tracking-widest uppercase text-white/80">TREATMENT NAME</p>
+                        <p className="text-lg font-black text-white" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}>{form.name || "시술명 오버레이"}</p>
+                        <p className="text-xs font-semibold text-white/90">［ {form.categoryEn || "Category"} ］</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button type="button" onClick={() => bgFileInputRef.current?.click()} disabled={uploadingBg}
+                    className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-amber-300 rounded-xl text-amber-600 hover:border-amber-500 hover:text-amber-700 transition w-full justify-center bg-amber-50">
+                    <Upload className="h-5 w-5" />
+                    {uploadingBg ? "업로드 중..." : "배경 이미지 업로드 (텍스트 제거 버전, 최대 5MB)"}
+                  </button>
+                )}
+                <div>
+                  <Label className="text-xs text-gray-500">또는 URL 직접 입력</Label>
+                  <Input name="bgImageUrl" value={form.bgImageUrl} onChange={handleChange} placeholder="https://..." className="mt-1" />
+                </div>
               </div>
             </CardContent>
           </Card>

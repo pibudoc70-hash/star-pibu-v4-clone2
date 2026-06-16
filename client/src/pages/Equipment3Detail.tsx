@@ -11,11 +11,11 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { Loader } from "lucide-react";
+import { Loader, MessageCircle, Calendar } from "lucide-react";
 import { Streamdown } from "streamdown";
 import OptimizedImage from "@/components/OptimizedImage";
-import { getReservationPath } from "@/lib/reservationPath";
 import { getLocalizedUrl } from "@/lib/localizedPath";
+import { useChatConfig } from "@/hooks/useChatConfig";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -29,6 +29,7 @@ export default function Equipment3Detail() {
   const [, setLocation] = useLocation();
   const { lang } = useLang();
   const { getText } = useLocalizedText();
+  const { chatUrl, reserveUrl, chatBg, chatColor } = useChatConfig();
   const slug = params.slug as string;
   const search = useSearch();
   // URL에 ?tab= 파라미터가 있으면 그 탭으로, 없으면 item.category로 복원
@@ -268,13 +269,40 @@ export default function Equipment3Detail() {
               )}
             </div>
 
-            <button
-              type="button"
-              onClick={() => { window.location.href = getReservationPath(lang); }}
-              className="w-full bg-slate-800 text-white py-3.5 rounded-xl font-semibold hover:bg-slate-700 transition"
-            >
-              {LABELS.book}
-            </button>
+            {/* CTA 버튼 — 카카오톡 상담 + 네이버 예약 */}
+            <div className="flex gap-3">
+              {/* 카카오톡/LINE/위챗 상담 */}
+              <a
+                href={chatUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition hover:opacity-90 hover:scale-[1.02] shadow-sm"
+                style={{ background: chatBg, color: chatColor }}
+              >
+                <MessageCircle size={17} strokeWidth={2} />
+                <span>
+                  {lang === "zh" ? getText("", "", "", "微信咨询") :
+                   lang === "ja" ? getText("", "", "LINE相談", "") :
+                   lang === "en" ? getText("", "KakaoTalk", "", "") :
+                   "카카오톡 상담"}
+                </span>
+              </a>
+              {/* 네이버 예약 */}
+              <a
+                href={reserveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition hover:opacity-90 hover:scale-[1.02] shadow-sm bg-[#03C75A] text-white"
+              >
+                <Calendar size={17} strokeWidth={2} />
+                <span>
+                  {lang === "en" ? "Naver Booking" :
+                   lang === "ja" ? "ネイバー予約" :
+                   lang === "zh" ? "Naver预约" :
+                   "네이버 예약"}
+                </span>
+              </a>
+            </div>
           </div>
         </div>
 

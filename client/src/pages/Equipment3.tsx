@@ -54,12 +54,14 @@ function Equipment3Card({
   index,
   imgBg,
   detailPath,
+  showCategory = false,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: Record<string, any>;
   index: number;
   imgBg: string;
   detailPath: string;
+  showCategory?: boolean;
 }) {
   const [, setLocation] = useLocation();
   const { getText } = useLocalizedText();
@@ -69,6 +71,7 @@ function Equipment3Card({
   const time     = getText(item.time, item.timeEn, item.timeJa, item.timeZh);
   const recovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
   const detail   = getText("자세히 보기", "Learn More", "詳しく見る", "了解详情");
+  const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
 
   return (
     <div
@@ -100,6 +103,15 @@ function Equipment3Card({
             style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
           >
             {item.badge}
+          </span>
+        )}
+        {/* 검색 결과에서 카테고리 태그 표시 */}
+        {showCategory && catLabel && (
+          <span
+            className="absolute top-3 right-3 px-2 py-0.5 rounded-full text-xs font-medium"
+            style={{ background: "rgba(0,0,0,0.45)", color: "#fff", backdropFilter: "blur(4px)" }}
+          >
+            {catLabel}
           </span>
         )}
       </div>
@@ -243,7 +255,7 @@ export default function Equipment3() {
     container.scrollTo({ left: btnLeft - containerWidth / 2 + btnWidth / 2, behavior: "smooth" });
   }, [activeId]);
 
-  // 현재 탭 필터링
+  // 현재 탭 필터링 (검색 없을 때 사용)
   const tabFilteredItems = useMemo(() => {
     if (!activeId) return rawItems;
     if (activeId === "best") {
@@ -252,11 +264,13 @@ export default function Equipment3() {
     return rawItems.filter((item) => (item.category ?? "stem_cell") === activeId);
   }, [rawItems, activeId]);
 
-  // 검색어 필터링 (이름·설명·뱃지 대상, 현재 언어 우선)
+  // 검색어 필터링: 검색 중에는 전체(rawItems) 대상, 아닐 때는 탭 필터 결과
+  const isSearching = searchQuery.trim().length > 0;
   const filteredItems = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return tabFilteredItems;
-    return tabFilteredItems.filter((item) => {
+    // 전체 rawItems에서 검색
+    return rawItems.filter((item) => {
       const name = [
         item.name, item.nameEn, item.nameJa, item.nameZh,
       ].filter(Boolean).join(" ").toLowerCase();
@@ -264,12 +278,15 @@ export default function Equipment3() {
         item.desc, item.descEn, item.descJa, item.descZh,
       ].filter(Boolean).join(" ").toLowerCase();
       const badge = (item.badge ?? "").toLowerCase();
-      return name.includes(q) || desc.includes(q) || badge.includes(q);
+      const cat = [
+        item.category, item.categoryEn, item.categoryJa, item.categoryZh,
+      ].filter(Boolean).join(" ").toLowerCase();
+      return name.includes(q) || desc.includes(q) || badge.includes(q) || cat.includes(q);
     });
-  }, [tabFilteredItems, searchQuery]);
+  }, [rawItems, tabFilteredItems, searchQuery]);
 
-  // 검색 중일 때는 항상 전체 표시, 아닐 때는 더보기 상태 적용
-  const displayedItems = (searchQuery.trim() || showAll) ? filteredItems : filteredItems.slice(0, INITIAL_SHOW);
+  // 검색 중이면 항상 전체 표시, 아닐 때는 더보기 상태 적용
+  const displayedItems = (isSearching || showAll) ? filteredItems : filteredItems.slice(0, INITIAL_SHOW);
 
   // ── 탭 레이블 헬퍼 ──────────────────────────────────────────────────────────
   const getTabLabel = (tab: typeof tabs[number]) => {
@@ -418,10 +435,10 @@ export default function Equipment3() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder={getText(
-                        "시술명 또는 특징으로 검색",
-                        "Search by name or feature",
-                        "施術名または特徴で検索",
-                        "按名称或特征搜索"
+                        "전체 시술·장비 검색 (이름, 특징, 카테고리)",
+                        "Search all treatments & equipment",
+                        "全施術・機器を検索",
+                        "搜索全部项目与设备"
                       )}
                       aria-label={getText(
                         "시술 검색",
@@ -444,20 +461,20 @@ export default function Equipment3() {
                     )}
                   </div>
                   {/* 검색 결과 수 표시 */}
-                  {searchQuery.trim() && (
+                  {isSearching && (
                     <p className="mt-2 text-xs text-gray-400 pl-1">
                       {getText(
-                        `"${searchQuery}" 검색 결과 ${filteredItems.length}건`,
-                        `${filteredItems.length} result${filteredItems.length !== 1 ? "s" : ""} for "${searchQuery}"`,
-                        `「${searchQuery}」の検索結果 ${filteredItems.length}件`,
-                        `"${searchQuery}" 的搜索结果 ${filteredItems.length} 条`
+                        `전체 시술·장비 검색 — "${searchQuery}" 결과 ${filteredItems.length}건`,
+                        `All treatments search — ${filteredItems.length} result${filteredItems.length !== 1 ? "s" : ""} for "${searchQuery}"`,
+                        `全施術検索 — 「${searchQuery}」 ${filteredItems.length}件`,
+                        `全部搜索 — "${searchQuery}" ${filteredItems.length} 条`
                       )}
                     </p>
                   )}
                 </div>
 
-                {/* 줄기세포 치료 탭 전용 안내 섹션 */}
-                {(activeId === "stem_cell" || activeId === "줄기세포 치료") && (
+                {/* 줄기세포 치료 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && (activeId === "stem_cell" || activeId === "줄기세포 치료") && (
                   <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
                     <div className="px-5 pt-6 pb-2">
                       <StemCellGuide />
@@ -465,8 +482,8 @@ export default function Equipment3() {
                   </div>
                 )}
 
-                {/* 카드 그리드 */}
-                {activeId && (
+                {/* 카드 그리드 — 검색 중에는 탭에 관계없이 표시 */}
+                {(activeId || isSearching) && (
                   <div className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade">
                     <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
                       {filteredItems.length === 0 ? (
@@ -505,7 +522,9 @@ export default function Equipment3() {
                         >
                           {displayedItems.map((item, i) => {
                               const langPrefix = getLangPrefix(lang);
-                              const detailPath = `${langPrefix}/equipment3/${item.slug}?tab=${encodeURIComponent(activeId)}`;
+                              // 검색 중에는 해당 아이템의 실제 카테고리를 tab으로 사용
+                              const tabForPath = isSearching ? (item.category ?? "") : activeId;
+                              const detailPath = `${langPrefix}/equipment3/${item.slug}?tab=${encodeURIComponent(tabForPath)}`;
                               return (
                             <Equipment3Card
                               key={item.id}
@@ -513,6 +532,7 @@ export default function Equipment3() {
                               index={i}
                               imgBg={CAT_IMG_BG[item.category ?? "stem_cell"] ?? "#F0F4FF"}
                               detailPath={detailPath}
+                              showCategory={isSearching}
                             />
                               );
                             })}

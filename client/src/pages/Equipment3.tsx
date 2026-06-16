@@ -25,7 +25,28 @@ import { Dna } from "lucide-react";
 import StemCellGuide from "@/components/treatments/StemCellGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
-const INITIAL_SHOW = 6;
+const INITIAL_SHOW = 9;
+
+// ── sessionStorage 키 헬퍼 ────────────────────────────────────────────────────
+const SESSION_KEY = "equipment3_expanded_tabs";
+
+function getExpandedTabs(): Set<string> {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return new Set();
+    return new Set(JSON.parse(raw) as string[]);
+  } catch {
+    return new Set();
+  }
+}
+
+function setExpandedTabs(tabs: Set<string>): void {
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(Array.from(tabs)));
+  } catch {
+    // sessionStorage 사용 불가 환경에서는 무시
+  }
+}
 
 // ── Equipment3 전용 카드 컴포넌트 (클릭 시 상세 페이지 이동) ─────────────────
 function Equipment3Card({
@@ -161,7 +182,11 @@ export default function Equipment3() {
   const search = useSearch();
   const urlTab = useMemo(() => new URLSearchParams(search).get("tab") ?? "", [search]);
   const [activeId, setActiveId] = useState<string>("");
-  const [showAll, setShowAll] = useState(false);
+  // sessionStorage에서 초기 expanded 탭 목록 복원
+  const [expandedTabs, setExpandedTabsState] = useState<Set<string>>(() => getExpandedTabs());
+
+  // 현재 탭이 expanded 상태인지 여부
+  const showAll = activeId ? expandedTabs.has(activeId) : false;
   const tabContainerRef = useRef<HTMLDivElement>(null);
 
   // 탭 목록이 로드되면 URL ?tab= 파라미터 또는 첫 번째 탭 자동 선택
@@ -178,11 +203,27 @@ export default function Equipment3() {
 
   const handleTabChange = useCallback((id: string) => {
     setActiveId(id);
-    setShowAll(false);
+    // 탭 변경 시 showAll은 해당 탭의 sessionStorage 상태를 따름 (별도 리셋 없음)
     // URL ?tab= 파라미터를 동기화하여 뒤로가기 시 올바른 탭으로 복귀
     const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
     window.history.replaceState(null, "", window.location.pathname + newSearch);
   }, []);
+
+  const handleShowMore = useCallback(() => {
+    if (!activeId) return;
+    setExpandedTabsState((prev) => {
+      const next = new Set(prev);
+      if (next.has(activeId)) {
+        // 접기: 해당 탭 제거
+        next.delete(activeId);
+      } else {
+        // 더보기: 해당 탭 추가
+        next.add(activeId);
+      }
+      setExpandedTabs(next);
+      return next;
+    });
+  }, [activeId]);
 
   // 활성 탭 자동 스크롤
   useEffect(() => {
@@ -385,7 +426,7 @@ export default function Equipment3() {
                         <div className="flex justify-center mt-16">
                           <button
                             type="button"
-                            onClick={() => setShowAll((v) => !v)}
+                            onClick={handleShowMore}
                             className={[
                               "flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
                               showAll

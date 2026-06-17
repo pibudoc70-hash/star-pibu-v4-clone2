@@ -246,13 +246,13 @@ export default function AdminEquipment3New() {
               {/* 카테고리 선택 — 탭 메뉴 방식 */}
               <div className="space-y-2">
                 <Label className="font-semibold">카테고리</Label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 w-full">
                   {CATEGORY_OPTIONS.map((cat) => (
                     <button
                       key={cat.id}
                       type="button"
                       onClick={() => setForm((prev) => ({ ...prev, category: cat.label, categoryEn: cat.labelEn, categoryJa: cat.labelJa, categoryZh: cat.labelZh }))}
-                      className={`px-3 py-2 rounded-full text-sm font-medium transition ${
+                      className={`px-3 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                         form.category === cat.label
                           ? "bg-blue-600 text-white"
                           : "bg-gray-200 text-gray-700 hover:bg-gray-300"

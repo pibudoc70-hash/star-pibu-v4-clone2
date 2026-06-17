@@ -14,6 +14,7 @@ export const zh: I18nContent = {
     research: "研究及学术活动",
     equipment3: "项目与设备介绍",
     equipment2: "主要项目与设备",
+    notice: "公告",
   },
   hero: {
     title: "STAR皮肤科",

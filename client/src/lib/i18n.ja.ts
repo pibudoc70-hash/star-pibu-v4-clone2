@@ -14,6 +14,7 @@ export const ja: I18nContent = {
     research: "研究・発表活動",
     equipment3: "施術・機器のご案内",
     equipment2: "主要施術・機器",
+    notice: "お知らせ",
   },
   hero: {
     title: "スター皮膚科",

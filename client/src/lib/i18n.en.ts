@@ -14,6 +14,7 @@ export const en: I18nContent = {
     research: "Research & Presentations",
     equipment3: "Treatments & Equipment",
     equipment2: "Main Treatments & Equipment",
+    notice: "Notice",
   },
   hero: {
     title: "STAR Dermatology",

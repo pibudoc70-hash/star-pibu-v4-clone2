@@ -231,7 +231,25 @@ export const youtubeVideos = mysqlTable("youtubeVideos", {
   typeIsActiveIdx: index("youtubeVideos_type_isActive_idx").on(table.type, table.isActive),
 }));
 export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
-export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
+export type InsertYouTubeVideo = typeof youtubeVideos.$inferSelect;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 공지사항 게시판
+// ─────────────────────────────────────────────────────────────────────────────
+export const notices = mysqlTable("notices", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 300 }).notNull(),
+  content: text("content").notNull(),
+  isPinned: mysqlEnum("isPinned", ["0", "1"]).notNull().default("0"),
+  views: int("views").notNull().default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  isPinnedIdx: index("notices_isPinned_idx").on(table.isPinned),
+  createdAtIdx: index("notices_createdAt_idx").on(table.createdAt),
+}));
+export type Notice = typeof notices.$inferSelect;
+export type InsertNotice = typeof notices.$inferInsert;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // equipment3: DB 연동 시술·장비 소개 (관리자 등록·수정·순서변경 → /equipment3/:slug)

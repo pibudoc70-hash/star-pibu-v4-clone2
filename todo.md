@@ -2997,3 +2997,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] LandingZH.tsx - ReservationSection을 isAdmin 조건부 렌더링으로 변경
 - [x] TypeScript 오류 없음 확인
 - [x] 체크포인트 저장
+
+## Phase N+6: 공지사항 게시판 신규 구현 (2026-06-18)
+- [ ] drizzle/schema.ts에 notices 테이블 추가 (id, title, content, isPinned, createdAt, updatedAt)
+- [ ] pnpm drizzle-kit generate 실행 후 SQL 마이그레이션 적용
+- [ ] server/db.ts에 notices 쿼리 헬퍼 추가
+- [ ] server/routers.ts에 notice 라우터 추가 (list, getById, create, update, delete)
+- [ ] client/src/pages/Notice.tsx 공지사항 목록 페이지 구현 (일반 방문자용)
+- [ ] client/src/pages/NoticeDetail.tsx 공지사항 상세 페이지 구현
+- [ ] client/src/pages/NoticeAdmin.tsx 관리자 작성/수정/삭제 페이지 구현
+- [ ] App.tsx에 /notice, /notice/:id, /admin/notice 라우트 등록
+- [ ] i18n 파일에 notice 관련 번역 키 추가 (ko/en/ja/zh)
+- [ ] useHeaderState.ts 드롭다운 메뉴에 공지사항 링크 추가
+- [ ] 체크포인트 저장

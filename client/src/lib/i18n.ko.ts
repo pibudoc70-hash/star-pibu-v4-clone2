@@ -14,6 +14,7 @@ export const ko: I18nContent = {
     research: "연구 및 발표 활동",
     equipment3: "시술·장비 소개",
     equipment2: "주요 시술 및 장비",
+    notice: "공지사항",
   },
   hero: {
     title: "스타피부과",

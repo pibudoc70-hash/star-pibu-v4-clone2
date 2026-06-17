@@ -44,6 +44,9 @@ export const pages = {
   AdminEquipment3New: () => import("@/pages/AdminEquipment3New"),
   AdminEquipment3Edit:() => import("@/pages/AdminEquipment3Edit"),
   NotFound:           () => import("@/pages/NotFound"),
+  Notice:             () => import("@/pages/Notice"),
+  NoticeDetail:       () => import("@/pages/NoticeDetail"),
+  NoticeEdit:         () => import("@/pages/NoticeEdit"),
 } as const;
 
 // ─── Lazy components ──────────────────────────────────────────────────────────
@@ -72,6 +75,9 @@ export const LandingEN          = lazy(pages.LandingEN);
 export const LandingJA          = lazy(pages.LandingJA);
 export const LandingZH          = lazy(pages.LandingZH);
 export const Research           = lazy(pages.Research);
+export const Notice             = lazy(pages.Notice);
+export const NoticeDetail       = lazy(pages.NoticeDetail);
+export const NoticeEdit         = lazy(pages.NoticeEdit);
 
 // ─── 다국어 경로 헬퍼 ─────────────────────────────────────────────────────────
 
@@ -104,4 +110,5 @@ export const LANG_ROUTES: LangRoute[] = [
   { path: "research",          component: Research },
   { path: "privacy",           component: Privacy },
   { path: "non-covered",       component: NonCoveredGuide },
+  { path: "notice",            component: Notice },
 ];

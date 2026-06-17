@@ -13,6 +13,7 @@ import {
   About, Equipment2, Equipment2Detail, AdminEquipment2New, AdminEquipment2Edit,
   Equipment3, Equipment3Detail, AdminEquipment3, AdminEquipment3New, AdminEquipment3Edit,
   TreatmentPage, LandingEN, LandingJA, LandingZH, Research,
+  Notice, NoticeDetail, NoticeEdit,
   LANG_ROUTES, withLangPrefixes,
 } from "./routes";
 
@@ -94,32 +95,45 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <ScrollToTop />
       <HtmlLangUpdater />
-      <MapErrorBoundary>
-        <Suspense fallback={<MapLoadingFallback />}>
-          <Switch>
-            {/* 홈 / 언어별 루트 */}
-            <Route path="/"    component={Home} />
-            <Route path="/en"  component={LandingEN} />
-            <Route path="/ja"  component={LandingJA} />
-            <Route path="/zh"  component={LandingZH} />
+      <Switch>
+        {/* 공지사항 — MapErrorBoundary 밖에서 렌더링 (AlertDialog 훅 충돌 방지) */}
+        <Route path="/notice/new"         component={() => <NoticeEdit id="new" />} />
+        <Route path="/notice/:id/edit"    component={({ params }) => <NoticeEdit id={params.id} />} />
+        <Route path="/notice/:id"         component={({ params }) => <NoticeDetail id={params.id} />} />
+        <Route path="/notice"             component={Notice} />
+        {(["en", "ja", "zh"] as const).map(l => [
+          <Route key={`${l}-notice-new`}    path={`/${l}/notice/new`}         component={() => <NoticeEdit id="new" />} />,
+          <Route key={`${l}-notice-edit`}   path={`/${l}/notice/:id/edit`}    component={({ params }) => <NoticeEdit id={params.id} />} />,
+          <Route key={`${l}-notice-detail`} path={`/${l}/notice/:id`}         component={({ params }) => <NoticeDetail id={params.id} />} />,
+          <Route key={`${l}-notice`}        path={`/${l}/notice`}             component={Notice} />,
+        ])}
+        <Route>
+          <MapErrorBoundary>
+            <Suspense fallback={<MapLoadingFallback />}>
+              <Switch>
+                {/* 홈 / 언어별 루트 */}
+                <Route path="/"    component={Home} />
+                <Route path="/en"  component={LandingEN} />
+                <Route path="/ja"  component={LandingJA} />
+                <Route path="/zh"  component={LandingZH} />
 
-            {/* 이벤트 상세 */}
-            <Route path="/events/:id" component={EventDetail} />
+                {/* 이벤트 상세 */}
+                <Route path="/events/:id" component={EventDetail} />
 
-            {/* /treatment/:name → /treatments/:slug redirect (legacy URL 호환 브릿지) */}
-            <Route path="/treatment/:name" component={TreatmentRedirect} />
+                {/* /treatment/:name → /treatments/:slug redirect (legacy URL 호환 브릿지) */}
+                <Route path="/treatment/:name" component={TreatmentRedirect} />
 
-            {/* 다국어 라우트 — LANG_ROUTES 배열 기반 자동 생성 */}
-            {LANG_ROUTES.flatMap(({ path, component: Comp }) =>
-              withLangPrefixes(path).map(fullPath => (
-                <Route key={fullPath} path={fullPath} component={Comp} />
-              ))
-            )}
+                {/* 다국어 라우트 — LANG_ROUTES 배열 기반 자동 생성 */}
+                {LANG_ROUTES.flatMap(({ path, component: Comp }) =>
+                  withLangPrefixes(path).map(fullPath => (
+                    <Route key={fullPath} path={fullPath} component={Comp} />
+                  ))
+                )}
 
-            {/* 사용자 페이지 */}
-            <Route path="/my-reservations" component={MyReservations} />
+                {/* 사용자 페이지 */}
+                <Route path="/my-reservations" component={MyReservations} />
 
-            {/* 관리자 페이지 — 구체적 경로(new/edit)를 파라미터 경로보다 먼저 선언 */}
+                {/* 관리자 페이지 — 구체적 경로(new/edit)를 파라미터 경로보다 먼저 선언 */}
             <Route path="/admin/equipment2/new"        component={AdminEquipment2New} />
             <Route path="/admin/equipment2/:id/edit"   component={AdminEquipment2Edit} />
             <Route path="/admin/equipment3/new"        component={AdminEquipment3New} />
@@ -128,12 +142,14 @@ function Router() {
             <Route path="/admin/youtube"               component={AdminYouTube} />
             <Route path="/admin"                       component={AdminDashboard} />
 
-            {/* 폴백 — 반드시 마지막 */}
-            <Route path="/404" component={NotFound} />
-            <Route component={NotFound} />
-          </Switch>
-        </Suspense>
-      </MapErrorBoundary>
+                {/* 폴백 — 반드시 마지막 */}
+                <Route path="/404" component={NotFound} />
+                <Route component={NotFound} />
+              </Switch>
+            </Suspense>
+          </MapErrorBoundary>
+        </Route>
+      </Switch>
     </Suspense>
   );
 }

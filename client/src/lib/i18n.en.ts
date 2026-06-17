@@ -12,6 +12,8 @@ export const en: I18nContent = {
     contact: "Directions",
     foreignGuide: "Foreign Patient Guide",
     research: "Research & Presentations",
+    equipment3: "Treatments & Equipment",
+    equipment2: "Main Treatments & Equipment",
   },
   hero: {
     title: "STAR Dermatology",

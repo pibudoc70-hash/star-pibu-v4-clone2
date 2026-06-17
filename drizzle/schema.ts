@@ -252,6 +252,22 @@ export type Notice = typeof notices.$inferSelect;
 export type InsertNotice = typeof notices.$inferInsert;
 
 // ─────────────────────────────────────────────────────────────────────────────
+// notice_images: 공지사항 첨부 이미지
+// ─────────────────────────────────────────────────────────────────────────────
+export const noticeImages = mysqlTable("notice_images", {
+  id: int("id").autoincrement().primaryKey(),
+  noticeId: int("noticeId").notNull(),
+  fileKey: varchar("fileKey", { length: 500 }).notNull(),
+  url: varchar("url", { length: 1000 }).notNull(),
+  sortOrder: int("sortOrder").notNull().default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  noticeIdIdx: index("noticeImages_noticeId_idx").on(table.noticeId),
+}));
+export type NoticeImage = typeof noticeImages.$inferSelect;
+export type InsertNoticeImage = typeof noticeImages.$inferInsert;
+
+// ─────────────────────────────────────────────────────────────────────────────
 // equipment3: DB 연동 시술·장비 소개 (관리자 등록·수정·순서변경 → /equipment3/:slug)
 // ─────────────────────────────────────────────────────────────────────────────
 export const equipment3 = mysqlTable("equipment3", {

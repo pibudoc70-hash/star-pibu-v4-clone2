@@ -122,25 +122,38 @@ export default function Notice() {
                       href={`${langPrefix}/notice/${notice.id}`}
                       className="flex-1 min-w-0 cursor-pointer"
                     >
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        {notice.isPinned === "1" && (
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] px-1.5 py-0 border-amber-400 text-amber-600"
-                          >
-                            {lang === "ja" ? "固定" : lang === "zh" ? "置顶" : lang === "en" ? "Pinned" : "고정"}
-                          </Badge>
+                      <div className="flex items-start gap-3">
+                        {/* 썸네일 이미지 */}
+                        {(notice as any).thumbnail && (
+                          <img
+                            src={(notice as any).thumbnail}
+                            alt={notice.title}
+                            className="w-16 h-16 rounded-lg object-cover shrink-0 border border-gray-100"
+                            loading="lazy"
+                          />
                         )}
-                        <span className="font-medium text-gray-800 group-hover:text-[#2D4A7B] transition-colors line-clamp-1">
-                          {notice.title}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
-                        <span>{formatDate(notice.createdAt)}</span>
-                        <span className="flex items-center gap-1">
-                          <Eye size={11} />
-                          {notice.views}
-                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            {notice.isPinned === "1" && (
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] px-1.5 py-0 border-amber-400 text-amber-600"
+                              >
+                                {lang === "ja" ? "固定" : lang === "zh" ? "置顶" : lang === "en" ? "Pinned" : "고정"}
+                              </Badge>
+                            )}
+                            <span className="font-medium text-gray-800 group-hover:text-[#2D4A7B] transition-colors line-clamp-1">
+                              {notice.title}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
+                            <span>{formatDate(notice.createdAt)}</span>
+                            <span className="flex items-center gap-1">
+                              <Eye size={11} />
+                              {notice.views}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </Link>
 

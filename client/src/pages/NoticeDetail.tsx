@@ -144,6 +144,31 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
             {notice.content}
           </div>
 
+          {/* 첨부 이미지 갤러리 */}
+          {notice.images && notice.images.length > 0 && (
+            <div className="mt-8 space-y-4">
+              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">첨부 이미지</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {notice.images.map((img, idx) => (
+                  <a
+                    key={img.id}
+                    href={img.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <img
+                      src={img.url}
+                      alt={`공지사항 이미지 ${idx + 1}`}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* 목록으로 버튼 */}
           <div className="mt-12 pt-6 border-t border-gray-200">
             <Link href={`${langPrefix}/notice`}>

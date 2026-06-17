@@ -3010,3 +3010,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] i18n 파일에 notice 관련 번역 키 추가 (ko/en/ja/zh)
 - [ ] useHeaderState.ts 드롭다운 메뉴에 공지사항 링크 추가
 - [ ] 체크포인트 저장
+
+## Phase N+7: 공지사항 이미지 업로드 기능
+- [x] notice_images 테이블 추가 (DB 스키마)
+- [x] 이미지 업로드 tRPC 라우터 구현 (S3 storagePut)
+- [x] NoticeEdit 이미지 업로드 UI (드래그앤드롭, 미리보기, 삭제)
+- [x] NoticeDetail 이미지 표시
+- [x] Notice 목록 썸네일 표시

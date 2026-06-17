@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 interface NoticeEditProps {
@@ -78,13 +77,17 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
     }
   };
 
-  // 관리자가 아니면 목록으로 리다이렉트
-  if (!isAdmin) {
-    navigate(`${langPrefix}/notice`);
-    return null;
-  }
+  // 관리자가 아니면 목록으로 리다이렉트 (useEffect 안에서 처리)
+  useEffect(() => {
+    if (user !== undefined && !isAdmin) {
+      navigate(`${langPrefix}/notice`);
+    }
+  }, [user, isAdmin, navigate, langPrefix]);
 
   const isLoading = createMutation.isPending || updateMutation.isPending;
+
+  // 아직 인증 확인 중이거나 관리자가 아니면 빈 화면
+  if (user === undefined || !isAdmin) return null;
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
@@ -147,14 +150,27 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
 
             {/* 고정 여부 */}
             <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
-              <Switch
-                id="notice-pinned"
-                checked={isPinned}
-                onCheckedChange={setIsPinned}
-              />
-              <Label htmlFor="notice-pinned" className="cursor-pointer text-sm text-gray-700">
+              <button
+                type="button"
+                role="switch"
+                aria-checked={isPinned}
+                onClick={() => setIsPinned(!isPinned)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  isPinned ? 'bg-amber-500 focus:ring-amber-500' : 'bg-gray-200 focus:ring-gray-400'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                    isPinned ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+              <label
+                onClick={() => setIsPinned(!isPinned)}
+                className="cursor-pointer text-sm text-gray-700"
+              >
                 상단 고정 (중요 공지사항에 사용)
-              </Label>
+              </label>
             </div>
 
             {/* 버튼 */}

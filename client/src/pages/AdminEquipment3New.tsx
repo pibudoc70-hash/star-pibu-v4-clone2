@@ -68,10 +68,6 @@ export default function AdminEquipment3New() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
-    // IME 조합 중에는 상태 업데이트 무시 (한글 입력 중 불완전한 글자 저장 방지)
-    if ((e as any).nativeEvent?.isComposing) {
-      return;
-    }
     setForm((prev) => {
       const updated = { ...prev, [name]: value };
       // name 변경 시 slug 자동 생성 (slug가 비어있을 때만)

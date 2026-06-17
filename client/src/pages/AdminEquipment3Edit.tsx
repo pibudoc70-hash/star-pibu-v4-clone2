@@ -82,10 +82,6 @@ export default function AdminEquipment3Edit() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target;
-    // IME 조합 중에는 상태 업데이트 무시 (한글 입력 중 불완전한 글자 저장 방지)
-    if ((e as any).nativeEvent?.isComposing) {
-      return;
-    }
     setForm((prev) => prev ? { ...prev, [name]: value } : prev);
     // 한국어 필드 변경 시 번역 완료 상태 초기화
     const koFields = ["name","category","desc","detail","effect","caution","sessions","time","recovery"];

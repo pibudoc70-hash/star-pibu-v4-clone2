@@ -14,15 +14,20 @@ import { ArrowLeft, Upload, X, Loader, Languages, CheckCircle } from "lucide-rea
 
 // 카테고리 목록 (Equipment3와 동일)
 const CATEGORY_OPTIONS = [
-  { id: "lifting-elasticity", label: "리프팅·탄력", labelEn: "Lifting & Firming", labelJa: "リフティング・弾力", labelZh: "提升和紧致" },
-  { id: "skin-whitening", label: "색소·미백", labelEn: "Pigmentation & Whitening", labelJa: "色素・美白", labelZh: "色素和美白" },
-  { id: "skin-care", label: "피부관리", labelEn: "Skincare", labelJa: "スキンケア", labelZh: "皮肤护理" },
-  { id: "acne-scar", label: "여드름·흉터", labelEn: "Acne & Scars", labelJa: "ニキビ・傷跡", labelZh: "痤疮和疤痕" },
-  { id: "hair-removal", label: "제모", labelEn: "Hair Removal", labelJa: "脱毛", labelZh: "脱毛" },
-  { id: "body-contouring", label: "바디·윤곽", labelEn: "Body Contouring", labelJa: "ボディ・輪郭", labelZh: "身体轮廓" },
-  { id: "anti-aging", label: "건선·아토피", labelEn: "Anti-Aging", labelJa: "アンチエイジング", labelZh: "抗衰老" },
-  { id: "vascular-lesions", label: "혈관·혈색", labelEn: "Vascular & Redness", labelJa: "血管・赤み", labelZh: "血管和红润" },
-  { id: "tattoo-removal", label: "문신제거", labelEn: "Tattoo Removal", labelJa: "タトゥー除去", labelZh: "纹身去除" },
+  { id: "best-시술", label: "Best 시술", labelEn: "Best Treatments", labelJa: "ベスト施術", labelZh: "最佳项目" },
+  { id: "건선-아토피", label: "건선·아토피", labelEn: "Psoriasis & Atopy", labelJa: "乾癬・アトピー", labelZh: "银屑病·特应性" },
+  { id: "눈밑지방재배치", label: "눈밑지방재배치", labelEn: "Under-eye Fat Repositioning", labelJa: "目の下の脂肪再配置", labelZh: "眼底脂肪重置" },
+  { id: "리프팅-탄력", label: "리프팅·탄력", labelEn: "Lifting & Elasticity", labelJa: "リフティング・弾力", labelZh: "提拉·弹力" },
+  { id: "백반증", label: "백반증", labelEn: "Vitiligo", labelJa: "白斑", labelZh: "白癜风" },
+  { id: "보톡스-필러", label: "보톡스·필러", labelEn: "Botox & Filler", labelJa: "ボトックス", labelZh: "肉毒素·填充" },
+  { id: "볼륨-부스터", label: "볼륨·부스터", labelEn: "Volume & Booster", labelJa: "ボリューム", labelZh: "填充·提升" },
+  { id: "색소-문신", label: "색소·문신", labelEn: "Pigmentation·Tattoo", labelJa: "色素・タトゥー", labelZh: "色素·纹身" },
+  { id: "손-발톱무좀", label: "손·발톱무좀", labelEn: "Nail Fungus", labelJa: "爪水虫", labelZh: "灰指甲" },
+  { id: "액취증-다한증", label: "액취증·다한증", labelEn: "Osmidrosis · Hyperhidrosis", labelJa: "腋臭症・多汗症", labelZh: "狐臭·多汗症" },
+  { id: "여드름", label: "여드름", labelEn: "Acne", labelJa: "ニキビ", labelZh: "痤疮" },
+  { id: "줄기세포-치료", label: "줄기세포 치료", labelEn: "Stem Cell Therapy", labelJa: "幹細胞治療", labelZh: "干细胞治疗" },
+  { id: "홍조-혈관", label: "홍조·혈관", labelEn: "Rosacea & Vascular", labelJa: "赤ら顔・血管", labelZh: "红血丝·血管" },
+  { id: "흉터-모공", label: "흉터·모공", labelEn: "Scars·Pores", labelJa: "傷跡・毛穴", labelZh: "疤痕·毛孔" },
 ];
 
 type FormData = {

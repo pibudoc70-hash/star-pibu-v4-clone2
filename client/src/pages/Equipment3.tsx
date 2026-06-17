@@ -440,7 +440,7 @@ export default function Equipment3() {
                     ref={tabContainerRef}
                     role="tablist"
                     aria-label="시술 카테고리"
-                    className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4 pb-2"
+                    className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4 pb-2 w-full overflow-x-auto px-0 scrollbar-hide"
                   >
                     {tabs.map((tab) => (
                       <CategoryTabButton

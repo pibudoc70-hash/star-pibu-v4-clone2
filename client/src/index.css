@@ -457,7 +457,7 @@
     outline-offset: 2px;
   }
   .cat-tab-btn-sm { padding: 10px 16px; font-size: 0.875rem; }
-  .cat-tab-btn-md { padding: 6px 14px; font-size: 0.85rem; }
+  .cat-tab-btn-md { padding: 8px 16px; font-size: 0.875rem; }
   /* Icon wrapper */
   .cat-tab-icon {
     display: flex;

@@ -12,6 +12,19 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Upload, X, Loader, Languages, CheckCircle } from "lucide-react";
 
+// 카테고리 목록 (Equipment3와 동일)
+const CATEGORY_OPTIONS = [
+  { id: "lifting-elasticity", label: "리프팅·탄력", labelEn: "Lifting & Firming", labelJa: "リフティング・弾力", labelZh: "提升和紧致" },
+  { id: "skin-whitening", label: "색소·미백", labelEn: "Pigmentation & Whitening", labelJa: "色素・美白", labelZh: "色素和美白" },
+  { id: "skin-care", label: "피부관리", labelEn: "Skincare", labelJa: "スキンケア", labelZh: "皮肤护理" },
+  { id: "acne-scar", label: "여드름·흉터", labelEn: "Acne & Scars", labelJa: "ニキビ・傷跡", labelZh: "痤疮和疤痕" },
+  { id: "hair-removal", label: "제모", labelEn: "Hair Removal", labelJa: "脱毛", labelZh: "脱毛" },
+  { id: "body-contouring", label: "바디·윤곽", labelEn: "Body Contouring", labelJa: "ボディ・輪郭", labelZh: "身体轮廓" },
+  { id: "anti-aging", label: "건선·아토피", labelEn: "Anti-Aging", labelJa: "アンチエイジング", labelZh: "抗衰老" },
+  { id: "vascular-lesions", label: "혈관·혈색", labelEn: "Vascular & Redness", labelJa: "血管・赤み", labelZh: "血管和红润" },
+  { id: "tattoo-removal", label: "문신제거", labelEn: "Tattoo Removal", labelJa: "タトゥー除去", labelZh: "纹身去除" },
+];
+
 type FormData = {
   name: string; nameEn: string; nameJa: string; nameZh: string;
   category: string; categoryEn: string; categoryJa: string; categoryZh: string;
@@ -349,7 +362,29 @@ export default function AdminEquipment3Edit() {
             <CardHeader><CardTitle>기본 정보</CardTitle></CardHeader>
             <CardContent className="space-y-5">
               <MultiLangField label="시술명 *" fieldKey="name" />
-              <MultiLangField label="카테고리" fieldKey="category" />
+              
+              {/* 카테고리 선택 — 탭 메뉴 방식 */}
+              {form && (
+                <div className="space-y-2">
+                  <Label className="font-semibold">카테고리</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {CATEGORY_OPTIONS.map((cat) => (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => setForm((prev) => prev ? { ...prev, category: cat.label, categoryEn: cat.labelEn, categoryJa: cat.labelJa, categoryZh: cat.labelZh } : null)}
+                        className={`px-3 py-2 rounded-full text-sm font-medium transition ${
+                          form.category === cat.label
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                      >
+                        {cat.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>

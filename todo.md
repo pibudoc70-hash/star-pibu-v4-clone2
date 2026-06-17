@@ -2989,3 +2989,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 영어 페이지(/en/equipment3) 탭 카테고리 영문 표시 확인
 - [x] 일본어 페이지(/ja/equipment3) 탭 카테고리 일본어 표시 확인
 - [x] 중국어 페이지(/zh/equipment3) 탭 카테고리 중국어 표시 확인
+
+## Phase N+5: 온라인 상담신청·예약 섹션 관리자 전용 숨김 처리 (2026-06-17)
+- [x] Home.tsx - ConsultationFormSection, ReservationSection을 isAdmin 조건부 렌더링으로 변경
+- [x] LandingEN.tsx - ReservationSection을 isAdmin 조건부 렌더링으로 변경
+- [x] LandingJA.tsx - ReservationSection을 isAdmin 조건부 렌더링으로 변경
+- [x] LandingZH.tsx - ReservationSection을 isAdmin 조건부 렌더링으로 변경
+- [x] TypeScript 오류 없음 확인
+- [x] 체크포인트 저장

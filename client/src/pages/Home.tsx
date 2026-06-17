@@ -9,6 +9,7 @@
  * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
  */
 import { lazy, Suspense, useEffect } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -74,6 +75,9 @@ function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
 }
 
 export default function Home() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
+
   // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
   //
@@ -340,17 +344,21 @@ export default function Home() {
           </Suspense>
         </div>
 
-        {/* 9-2. ConsultationForm — 프리미엄 상담 폼 */}
-        <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
-          <ConsultationFormSection />
-        </Suspense>
-
-        {/* 9-3. Reservation — 미니멀 크림 */}
-        <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
-          <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
-            <ReservationSection />
+        {/* 9-2. ConsultationForm — 관리자 전용 표시 */}
+        {isAdmin && (
+          <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
+            <ConsultationFormSection />
           </Suspense>
-        </div>
+        )}
+
+        {/* 9-3. Reservation — 관리자 전용 표시 */}
+        {isAdmin && (
+          <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
+            <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
+              <ReservationSection />
+            </Suspense>
+          </div>
+        )}
 
         {/* 10. Location & Contact — 다크 네이비 마무리 */}
         <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>

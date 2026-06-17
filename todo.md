@@ -2982,3 +2982,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] i18n.zh.ts - hero.subtitle 중국어 번역 수정
 - [x] index.css - 영어 hero-title 모바일 font-size 축소 (한 줄 표시)
 - [x] DoctorTabButton.tsx - 데스크톱 의사 이름 white-space: nowrap 추가
+
+## Phase N+4: 다국어 Equipment3 탭 카테고리 표시 문제 수정 (2026-06-17)
+- [x] Equipment3.tsx에 CATEGORY_TRANS 폴백 맵 추가 (15개 카테고리 영/일/중 번역)
+- [x] 탭 생성 로직에서 DB 번역이 비어있을 때 CATEGORY_TRANS 폴백 사용하도록 수정
+- [x] 영어 페이지(/en/equipment3) 탭 카테고리 영문 표시 확인
+- [x] 일본어 페이지(/ja/equipment3) 탭 카테고리 일본어 표시 확인
+- [x] 중국어 페이지(/zh/equipment3) 탭 카테고리 중국어 표시 확인

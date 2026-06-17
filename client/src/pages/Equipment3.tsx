@@ -27,6 +27,25 @@ import StemCellGuide from "@/components/treatments/StemCellGuide";
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 9;
 
+// ── 카테고리 번역 폴백 맵 (DB에 번역이 없을 때 사용) ─────────────────────────
+const CATEGORY_TRANS: Record<string, { en: string; ja: string; zh: string }> = {
+  "Best 시술":     { en: "Best Treatments",           ja: "ベスト施術",         zh: "最佳项目" },
+  "리프팅·탄력":   { en: "Lifting & Elasticity",       ja: "リフティング・弾力",  zh: "提升·弹力" },
+  "눈밑지방재배치": { en: "Under-eye Fat Repositioning", ja: "目の下の脂肪再配置",  zh: "眼袋脂肪重置" },
+  "백반증":        { en: "Vitiligo",                   ja: "白斑症",             zh: "白癜风" },
+  "색소·문신":     { en: "Pigmentation·Tattoo",        ja: "色素・タトゥー",      zh: "色素·纹身" },
+  "홍조·혈관":     { en: "Rosacea·Vascular",           ja: "紅潮・血管",          zh: "红斑·血管" },
+  "여드름":        { en: "Acne",                       ja: "ニキビ",             zh: "痤疮" },
+  "액취증·다한증": { en: "Osmidrosis·Hyperhidrosis",   ja: "腋臭症・多汗症",      zh: "腋臭·多汗症" },
+  "손·발톱무좀":   { en: "Nail Fungus",                ja: "爪水虫",             zh: "灰指甲" },
+  "건선·아토피":   { en: "Psoriasis·Atopy",            ja: "乾癬・アトピー",      zh: "银屑病·特应性" },
+  "볼륨·부스터":   { en: "Volume·Booster",             ja: "ボリューム・ブースター", zh: "填充·促进" },
+  "보톡스·필러":   { en: "Botox·Filler",               ja: "ボトックス・フィラー",  zh: "肉毒素·填充" },
+  "줄기세포 치료": { en: "Stem Cell Therapy",          ja: "幹細胞治療",          zh: "干细胞治疗" },
+  "흉터·모공":     { en: "Scar·Pores",                 ja: "傷跡・毛穴",          zh: "疤痕·毛孔" },
+  "피부관리":      { en: "Skin Care",                  ja: "スキンケア",           zh: "皮肤护理" },
+};
+
 // ── sessionStorage 키 헬퍼 ────────────────────────────────────────────────────
 const SESSION_KEY = "equipment3_expanded_tabs";
 
@@ -218,12 +237,13 @@ export default function Equipment3() {
       if (BEST_CATEGORY_LABELS.has(catId)) continue;
       if (!seen.has(catId)) {
         seen.add(catId);
+        const fallback = CATEGORY_TRANS[catId] ?? { en: catId, ja: catId, zh: catId };
         result.push({
           id: catId,
-          label: item.category ?? "줄기세포 치료",
-          labelEn: item.categoryEn ?? "STEM CELL",
-          labelJa: item.categoryJa ?? "幹細胞治疗",
-          labelZh: item.categoryZh ?? "干细胞治疗",
+          label: item.category ?? catId,
+          labelEn: (item.categoryEn && item.categoryEn.trim()) ? item.categoryEn : fallback.en,
+          labelJa: (item.categoryJa && item.categoryJa.trim()) ? item.categoryJa : fallback.ja,
+          labelZh: (item.categoryZh && item.categoryZh.trim()) ? item.categoryZh : fallback.zh,
         });
       }
     }

@@ -31,6 +31,7 @@ const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ConsultationFormSection = lazy(() => import("@/components/ConsultationFormSection"));
 const ReservationSection = lazy(() => import("@/components/ReservationSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
+import RecentNoticesSection from "@/components/RecentNoticesSection";
 
 /** 섹션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선 */
 // S2-T4: CLS 감소 — 서스펜스 폴백에 min-h 지정으로 레이아웃 시프트 방지
@@ -345,6 +346,9 @@ export default function Home() {
         </div>
 
         {/* 9-2. ConsultationForm — 관리자 전용 표시 */}
+        {/* 최근 공지사항 섹션 */}
+        <RecentNoticesSection lang="ko" />
+
         {isAdmin && (
           <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
             <ConsultationFormSection />

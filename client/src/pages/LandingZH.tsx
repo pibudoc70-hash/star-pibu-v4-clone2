@@ -20,6 +20,7 @@ import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
 import ReservationSection from "@/components/ReservationSection";
 import ContactSection from "@/components/ContactSection";
+import RecentNoticesSection from "@/components/RecentNoticesSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 
@@ -167,6 +168,9 @@ export default function LandingZH() {
         <div style={{ background: "#F5F1ED" }}>
           <ContactSection />
         </div>
+
+        {/* 최근 공지사항 섹션 */}
+        <RecentNoticesSection lang="zh" />
       </main>
 
       <Footer />

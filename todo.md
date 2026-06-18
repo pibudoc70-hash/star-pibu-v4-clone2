@@ -3017,3 +3017,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] NoticeEdit 이미지 업로드 UI (드래그앤드롭, 미리보기, 삭제)
 - [x] NoticeDetail 이미지 표시
 - [x] Notice 목록 썸네일 표시
+
+## Phase N+8: 메인 페이지 공지사항 섹션 추가
+- [ ] RecentNoticesSection 컴포넌트 작성 (썸네일+제목+날짜, 최근 3개)
+- [ ] Home.tsx (한국어 메인)에 섹션 삽입
+- [ ] LandingEN.tsx (영어 메인)에 섹션 삽입
+- [ ] LandingJA.tsx (일본어 메인)에 섹션 삽입
+- [ ] LandingZH.tsx (중국어 메인)에 섹션 삽입
+- [ ] 체크포인트 저장

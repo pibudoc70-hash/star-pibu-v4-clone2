@@ -139,13 +139,15 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
         border: "1px solid rgba(196,168,130,0.18)",
       }}
     >
-      {/* 이미지 — 더 넓은 비율로 비주얼 임팩트 강화 */}
+      {/* 이미지 — PC: 항상 표시 / 모바일: 확장 시에만 표시 */}
       {event.imageUrl && (
         <div
-          className="overflow-hidden bg-gray-100"
+          className={`overflow-hidden bg-gray-100 ${
+            isExpanded ? "block" : "hidden md:block"
+          }`}
           style={{
             aspectRatio: "3/2",
-            borderRadius: "1rem 1rem 0 0",
+            borderRadius: isExpanded ? "1rem 1rem 0 0" : "1rem 1rem 0 0",
           }}
         >
           <OptimizedImage

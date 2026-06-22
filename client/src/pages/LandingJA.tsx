@@ -4,7 +4,6 @@
  * Strategy: Uses same components as Home.tsx, forces lang="ja" on mount
  */
 import { useEffect } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
@@ -18,15 +17,12 @@ import FacilitySection from "@/components/FacilitySection";
 import ReviewsSection from "@/components/ReviewsSection";
 import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
-import ReservationSection from "@/components/ReservationSection";
 import ContactSection from "@/components/ContactSection";
 import RecentNoticesSection from "@/components/RecentNoticesSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 
 export default function LandingJA() {
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
 
   // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/ja) 기반으로 자동 처리
   // Scroll to hash section if present (MutationObserver 패턴 사용 — lazy 섹션 대응)
@@ -160,11 +156,6 @@ export default function LandingJA() {
           <FAQSection />
         </div>
 
-        {isAdmin && (
-          <div style={{ background: "#FFFFFF" }}>
-            <ReservationSection />
-          </div>
-        )}
 
         <div style={{ background: "#F5F1ED" }}>
           <ContactSection />

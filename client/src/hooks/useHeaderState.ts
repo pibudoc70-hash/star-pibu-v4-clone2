@@ -66,7 +66,6 @@ export function useHeaderState() {
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
     { label: t.nav.research,      href: "/research",      sectionId: null   },
     { label: t.nav.equipment3, href: "/equipment3", sectionId: null },
-    ...(isAdmin ? [{ label: t.nav.equipment2, href: "/equipment2", sectionId: null }] : []),
     { label: t.nav.notice, href: "/notice", sectionId: null },
   ];
 

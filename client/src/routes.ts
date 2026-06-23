@@ -101,9 +101,7 @@ export interface LangRoute {
 
 export const LANG_ROUTES: LangRoute[] = [
   { path: "treatments/:slug",  component: TreatmentPage },
-  { path: "equipment2/:slug",  component: Equipment2Detail },
   { path: "equipment3/:slug",  component: Equipment3Detail },
-  { path: "equipment2",        component: Equipment2 },
   { path: "equipment3",        component: Equipment3 },
   { path: "about",             component: About },
   { path: "foreign-guide",     component: ForeignGuide },

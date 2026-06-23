@@ -147,7 +147,6 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
           {/* 첨부 이미지 갤러리 */}
           {notice.images && notice.images.length > 0 && (
             <div className="mt-8 space-y-4">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">첨부 이미지</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {notice.images.map((img, idx) => (
                   <a

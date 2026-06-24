@@ -202,7 +202,7 @@ export const ja: I18nContent = {
     title: "外国人患者様へ",
     subtitle: "スター皮膚科は外国人患者様を歓迎いたします",
     steps: [
-      { step: "01", title: "ご予約", desc: "LINEまたはお電話でご予約ください。日本語でのお問い合わせはLINE（@star2006derm）をご利用ください。" },
+      { step: "01", title: "ご予約", desc: "OTOMOを通じてご予約ください。日本語でのお問い合わせはOTOMO（https://otomo-busan.com/star）をご利用ください。" },
       { step: "02", title: "ご来院", desc: "西面駅5・7番出口から徒歩3分。アイオンシティビル4階です。" },
       { step: "03", title: "カウンセリング・施術", desc: "専門医が直接お肌の状態を診断し、最適な施術をご提案いたします。" },
       { step: "04", title: "アフターケア", desc: "施術後のケア方法をご案内いたします。帰国後もオンライン相談が可能です。" },

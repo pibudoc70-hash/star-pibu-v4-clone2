@@ -73,15 +73,15 @@ export function useChatConfig(): ChatConfig {
   const phoneHref = isKO ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`;
   const phoneDisplay = isKO ? CLINIC_TEL : CLINIC_TEL_INTL;
 
-  const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? CHAT_URLS.lineJA : CHAT_URLS.kakao;
+  const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? "https://otomo-busan.com/star" : CHAT_URLS.kakao;
   const reserveUrl = isZH
     ? CHAT_URLS.lineZH
     : isJA
     ? CHAT_URLS.lineJA
     : CHAT_URLS.naver;
 
-  const chatBg = isZH ? CHAT_STYLES.wechat.bg : isJA ? CHAT_STYLES.line.bg : CHAT_STYLES.kakao.bg;
-  const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? CHAT_STYLES.line.color : CHAT_STYLES.kakao.color;
+  const chatBg = isZH ? CHAT_STYLES.wechat.bg : isJA ? "#4A6FA5" : CHAT_STYLES.kakao.bg;
+  const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? "#FFFFFF" : CHAT_STYLES.kakao.color;
 
   return {
     phoneHref,

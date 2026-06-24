@@ -22,8 +22,8 @@ export const ja: I18nContent = {
     badge: "Since 2006",
     floor: "釜山西面 アイオンシティビル 4F 受付・診療 | 2F 幹細胞研究センター",
     cta_call: "+82-51-818-2300",
-    cta_kakao: "カカオ相談",
-    cta_reserve: "LINE予約",
+    cta_kakao: "OTOMO 相談",
+    cta_reserve: "OTOMO 相談",
     scrollLabel: "スクロール",
   },
   about: {

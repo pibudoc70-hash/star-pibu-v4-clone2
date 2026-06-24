@@ -211,9 +211,11 @@
     font-family: 'Noto Sans JP', sans-serif !important;
     line-height: 1.5 !important;
   }
-  /* 일본어 PhilosophySection 타이틀 한 줄 표시 대응 */
+  /* [UX개선] 일본어 section-title: nowrap 제거 → 자연스러운 줄바꿈 허용 */
   body.font-lang-ja .section-title {
-    white-space: nowrap !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    line-height: 1.4 !important;
     overflow: visible !important;
   }
   /* 영어 hero-title: 영어는 한국어보다 길어서 모바일에서 줄바꿈 방지 */
@@ -1601,11 +1603,7 @@
   }
 
   /* Mobile padding for floating CTA — sticky CTA와 본문 충돌 방지 */
-  @media (max-width: 768px) {
-    main {
-      padding-bottom: 68px;
-    }
-  }
+  /* [UX개선] main padding-bottom 제거 — body의 padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px)) 하나로 통일 */
 
   /* ─── Hero Section 모바일 전용 설계 (375px ~ 640px) ─── */
   /* 원칙: 데스크톱 축소판이 아닌 모바일 전용 경험 */
@@ -1701,7 +1699,7 @@
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */
     /* 반투명 배경 패널 + 강한 그림자로 배경과 명확한 분리 */
     .hero-stats-row {
-      gap: clamp(1.5rem, 7vw, 3rem) !important;
+      gap: clamp(1rem, 5vw, 2rem) !important;
       padding: clamp(0.9rem, 2.5vh, 1.25rem) clamp(1.25rem, 5vw, 2rem) !important;
       border-top: 1px solid rgba(201,168,76,0.35) !important;
       border-bottom: none !important;
@@ -1711,6 +1709,7 @@
       backdrop-filter: blur(8px) !important;
       -webkit-backdrop-filter: blur(8px) !important;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35) !important;
+      flex-wrap: wrap !important;
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
@@ -1724,7 +1723,7 @@
     }
     .hero-stat-label {
       font-family: 'Noto Sans KR', sans-serif !important;
-      font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
+      font-size: clamp(0.65rem, 2.2vw, 0.75rem) !important;
       color: rgba(255, 255, 255, 0.95) !important;
       font-weight: 500 !important;
       letter-spacing: 0.04em !important;
@@ -1732,11 +1731,16 @@
         0 1px 3px rgba(0,0,0,1),
         0 2px 10px rgba(0,0,0,0.9) !important;
       margin-top: 4px !important;
-      white-space: nowrap !important;
+      white-space: normal !important;
     }
     .hero-stat-divider {
       height: 32px !important;
       background: rgba(201,168,76,0.4) !important;
+    }
+    /* [UX개선] 통계 아이템 flex-basis: 30% — 2+1 줄 배치 허용 */
+    .hero-stats-row > * {
+      flex-basis: 30% !important;
+      min-width: 0 !important;
     }
 
     /* ▶ 9. CTA wrap */
@@ -2272,11 +2276,15 @@
     font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
     margin-bottom: 1rem;
   }
-  /* 모바일 일본어 section-title: nowrap 유지하면서 폰트 크기 조정하여 한 줄 표시 */
-  body.font-lang-ja .section-title {
-    font-size: clamp(1.1rem, 4.5vw, 1.6rem) !important;
-    white-space: nowrap !important;
+  /* [UX개선] 모바일 일본어/중국어 section-title: 자연스러운 줄바꿈 허용 + font-size 통일 */
+  body.font-lang-ja .section-title,
+  body.font-lang-zh .section-title {
+    font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    line-height: 1.4 !important;
     overflow: visible !important;
+    margin-bottom: 1.5rem !important;
   }
   .section-eyebrow {
     font-size: 0.6rem;
@@ -2879,5 +2887,46 @@ body.font-lang-zh .hero-stat-label {
   body.font-lang-ja .hero-stat-value,
   body.font-lang-zh .hero-stat-value {
     white-space: nowrap !important;
+  }
+}
+
+/* ─── [UX개선] TreatmentsEquipmentSection 모바일 필터 바텀시트 ─── */
+.treatment-filter-btn {
+  min-height: 44px;
+}
+
+/* 모바일 딤 오버레이 */
+.treatment-filter-overlay {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .treatment-filter-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 7999;
+  }
+
+  .treatment-filter-dropdown {
+    position: fixed !important;
+    bottom: calc(54px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 20px 24px 32px !important;
+    background: #fff !important;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12) !important;
+    z-index: 8000 !important;
+    min-width: unset !important;
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .treatment-filter-dropdown button {
+    padding: 14px 16px !important;
+    font-size: 1rem !important;
   }
 }

@@ -1,7 +1,10 @@
 /**
  * ReviewsSection - 실제 후기
  * 디자인: 연민트 배경, 슬라이더 형태 후기 카드
- * 모바일: 가로 스와이프 슬라이더 (터치 스와이프 + 자동 슬라이드)
+ * 모바일: 가로 스와이프 슬라이더 (터치 스와이프, 수동 조작)
+ *   [UX개선] 자동 슬라이드(Auto-play) 제거 — 텍스트 읽기 방해 방지
+ *   [UX개선] 화살표 버튼 제거 — dot 네비게이션만 유지
+ *   [UX개선] Peeking 디자인 — 다음 카드 살짝 노출로 스와이프 어포던스 제공
  * 데스크톱: 3열 그리드 (페이지네이션)
  */
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -39,7 +42,6 @@ export default function ReviewsSection() {
 
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
-  const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goNext = useCallback(() => {
     setCurrent((c) => (c + 1) % totalPages);
@@ -48,19 +50,6 @@ export default function ReviewsSection() {
   const goPrev = useCallback(() => {
     setCurrent((c) => (c - 1 + totalPages) % totalPages);
   }, [totalPages]);
-
-  const startAuto = useCallback(() => {
-    if (!isMobile) return;
-    if (autoTimer.current) clearInterval(autoTimer.current);
-    autoTimer.current = setInterval(goNext, 4000);
-  }, [isMobile, goNext]);
-
-  useEffect(() => {
-    startAuto();
-    return () => {
-      if (autoTimer.current) clearInterval(autoTimer.current);
-    };
-  }, [startAuto]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,7 +64,6 @@ export default function ReviewsSection() {
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
-    if (autoTimer.current) clearInterval(autoTimer.current);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -88,7 +76,6 @@ export default function ReviewsSection() {
     }
     touchStartX.current = null;
     touchStartY.current = null;
-    startAuto();
   };
 
   const visible = reviews.slice(current * perPage, current * perPage + perPage);
@@ -121,20 +108,25 @@ export default function ReviewsSection() {
             tabIndex={0}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            // S2-T5: 방향키 지원 — ArrowLeft/ArrowRight
+            // 방향키 지원 — ArrowLeft/ArrowRight
             onKeyDown={(e) => {
-              if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); startAuto(); }
-              if (e.key === "ArrowRight") { e.preventDefault(); goNext(); startAuto(); }
+              if (e.key === "ArrowLeft") { e.preventDefault(); goPrev(); }
+              if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
             }}
           >
+            {/* [UX개선] overflow: visible + 카드 너비 calc(100% - 40px) → Peeking 효과 */}
             <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-400 ease-in-out"
-                style={{ transform: `translateX(-${current * 100}%)` }}
+                style={{ transform: `translateX(calc(-${current * 100}% - ${current * 0}px))` }}
               >
                 {reviews.map((r, idx) => (
-                  <div key={idx} className="w-full flex-shrink-0 px-1">
-                    <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
+                  <div
+                    key={idx}
+                    className="flex-shrink-0 px-1"
+                    style={{ width: "calc(100% - 32px)", marginRight: "20px" }}
+                  >
+                    <div className="review-card w-full" style={{ minWidth: 0 }}>
                       <Quote size={28} style={{ color: 'var(--brand-gold-pale, #EDE8E0)', marginBottom: "0.5rem" }} />
                       <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--brand-text, #2C2C2C)" }}>
                         "{r.text}"
@@ -167,28 +159,12 @@ export default function ReviewsSection() {
               </div>
             </div>
 
-            <button type="button"
-              onClick={() => { goPrev(); startAuto(); }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
-              style={{ background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.3)" }}
-              aria-label={rv.prevLabel}
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button type="button"
-              onClick={() => { goNext(); startAuto(); }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 w-8 h-8 rounded-full flex items-center justify-center shadow-md"
-              style={{ background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.3)" }}
-              aria-label={rv.nextLabel}
-            >
-              <ChevronRight size={16} />
-            </button>
-
+            {/* [UX개선] 화살표 버튼 제거 — dot 네비게이션만 유지 */}
             <div className="flex justify-center gap-2 mt-5">
               {reviews.map((_, i) => (
                 <button type="button"
                   key={i}
-                  onClick={() => { setCurrent(i); startAuto(); }}
+                  onClick={() => setCurrent(i)}
                   className="rounded-full transition-all duration-300"
                   style={{
                     width: i === current ? "22px" : "7px",

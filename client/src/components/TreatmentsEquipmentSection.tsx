@@ -45,7 +45,7 @@ import EmptyResultView from "@/components/treatments/EmptyResultView";
 // ─────────────────────────────────────────────────────────────────────────────
 // [R22-P0-2] 3단계 breakpoint 정책 (Tailwind sm/md 동기화)
 // ─────────────────────────────────────────────────────────────────────────────
-const MOBILE_SHOW  = 3;     // < 640px: 3개
+const MOBILE_SHOW  = 6;     // < 640px: 6개 [UX개선]
 const TABLET_SHOW  = 4;     // 640px ~ 767px: 4개 (태블릿 세로)
 const DESKTOP_SHOW = 6;     // >= 768px: 6개
 
@@ -158,6 +158,14 @@ export default function TreatmentsEquipmentSection() {
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: 'var(--brand-bg, #FAF8F5)' }} aria-label={tr.label} role="region">
+      {/* [UX개선] 모바일 필터 오픈 시 딥 오버레이 */}
+      {filterOpen && (
+        <div
+          className="treatment-filter-overlay"
+          onClick={closeFilter}
+          aria-hidden="true"
+        />
+      )}
       <div className="container">
         <div ref={sectionTopRef} />
 
@@ -179,7 +187,7 @@ export default function TreatmentsEquipmentSection() {
                 aria-expanded={filterOpen}
                 aria-haspopup="listbox"
                 aria-label={tr.sortLabel}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors treatment-filter-btn"
                 style={{ background: "rgba(196,168,130,0.08)", color: "var(--brand-text-mid, #666666)", border: "1px solid rgba(196,168,130,0.2)" }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,7 +199,7 @@ export default function TreatmentsEquipmentSection() {
                 <div
                   role="listbox"
                   aria-label={tr.sortLabel}
-                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10"
+                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 treatment-filter-dropdown"
                   style={{ border: "1px solid rgba(196,168,130,0.2)" }}
                 >
                   {([

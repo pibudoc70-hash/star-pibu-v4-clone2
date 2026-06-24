@@ -448,11 +448,24 @@ export default function ForeignGuide() {
             {activeLang === "ja" ? "ご予約・お問い合わせ" : activeLang === "zh" ? "预约与咨询" : "Book Your Appointment"}
           </h2>
           <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
-            {activeLang === "ja"
-              ? "OTOMOを通じてご利用ください。"
-              : activeLang === "zh"
-              ? "欢迎随时联系我们，我们提供中文咨询服务。"
-              : "Contact us anytime. We offer consultation services in English."}
+            {activeLang === "ja" ? (
+              <>
+                OTOMOを通じてご利用ください。日本語でのお問い合わせは
+                <a
+                  href="https://otomo-busan.com/star"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#4A6FA5", textDecoration: "underline", fontWeight: "600" }}
+                >
+                  OTOMO
+                </a>
+                をご利用ください。
+              </>
+            ) : activeLang === "zh" ? (
+              "欢迎随时联系我们，我们提供中文咨询服务。"
+            ) : (
+              "Contact us anytime. We offer consultation services in English."
+            )}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
@@ -463,15 +476,27 @@ export default function ForeignGuide() {
               <Phone size={16} />
               {"+82-51-818-2300"}
             </a>
-            <a
-              href="https://pf.kakao.com/_HNyGC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
-              style={{ background: "#FEE500", color: "#1F2937" }}
-            >
-              KakaoTalk
-            </a>
+            {activeLang === "ja" ? (
+              <a
+                href="https://otomo-busan.com/star"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
+                style={{ background: "#4A6FA5", color: "white" }}
+              >
+                🇯🇵 OTOMO 相談
+              </a>
+            ) : (
+              <a
+                href="https://pf.kakao.com/_HNyGC"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
+                style={{ background: "#FEE500", color: "#1F2937" }}
+              >
+                KakaoTalk
+              </a>
+            )}
             {activeLang === "ja" && (
               <a
                 href="https://otomo-busan.com/star"

@@ -449,7 +449,7 @@ export default function ForeignGuide() {
           </h2>
           <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
             {activeLang === "ja"
-              ? "お気軽にお問い合わせください。日本語対応はOTOMOをご利用ください。"
+              ? "OTOMOを通じてご利用ください。"
               : activeLang === "zh"
               ? "欢迎随时联系我们，我们提供中文咨询服务。"
               : "Contact us anytime. We offer consultation services in English."}
@@ -474,13 +474,13 @@ export default function ForeignGuide() {
             </a>
             {activeLang === "ja" && (
               <a
-                href="https://otomo-busan.com/star/"
+                href="https://otomo-busan.com/star"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5 border"
-                style={{ background: "white", color: "#4A6FA5", borderColor: "#4A6FA5" }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
+                style={{ background: "#4A6FA5", color: "white" }}
               >
-                🇯🇵 OTOMO 日本語予約
+                🇯🇵 OTOMO で予約
               </a>
             )}
             {activeLang === "en" && (

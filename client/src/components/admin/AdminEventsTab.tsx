@@ -1,6 +1,6 @@
 /**
- * AdminEventsTab - 이벤트 관리 탭
- * AdminDashboard.tsx에서 분리 (P1-2)
+ * AdminEventsTab - 이벤트 관리 탭 (언어별 탭 구조)
+ * 각 언어(한국어, 일본어, 영어, 중국어)별로 독립적으로 이벤트를 관리할 수 있습니다.
  */
 import { useState, useEffect } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
@@ -32,6 +32,17 @@ interface CurrentUser {
 interface Props {
   currentUser: CurrentUser;
 }
+
+type TargetLang = "ko" | "en" | "ja" | "zh";
+
+const LANG_LABELS: Record<TargetLang, string> = {
+  ko: "한국어",
+  en: "English",
+  ja: "日本語",
+  zh: "中文",
+};
+
+const LANG_TABS: TargetLang[] = ["ko", "en", "ja", "zh"];
 
 const EMPTY_EVENT_FORM: EventFormState = {
   type: "이벤트",
@@ -174,6 +185,7 @@ function SortableEventItem({
 }
 
 export default function AdminEventsTab({ currentUser }: Props) {
+  const [activeLang, setActiveLang] = useState<TargetLang>("ko");
   const [eventForm, setEventForm] = useState<EventFormState | null>(null);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
   const [sortedEventsList, setSortedEventsList] = useState<EventListItem[]>([]);
@@ -181,9 +193,13 @@ export default function AdminEventsTab({ currentUser }: Props) {
   const [translating, setTranslating] = useState<string | null>(null);
   const utils = trpc.useUtils();
 
-  const { data: eventsList } = trpc.events.list.useQuery(undefined, {
-    enabled: currentUser.role === "admin",
-  });
+  // 언어별 이벤트 목록 조회
+  const { data: eventsList } = trpc.events.listByLang.useQuery(
+    { lang: activeLang },
+    {
+      enabled: currentUser.role === "admin",
+    }
+  );
 
   useEffect(() => {
     if (eventsList) setSortedEventsList([...eventsList]);
@@ -196,7 +212,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
   const createEventMutation = trpc.events.create.useMutation({
     onSuccess: () => {
-      utils.events.list.invalidate();
+      utils.events.listByLang.invalidate({ lang: activeLang });
       toast.success("이벤트가 추가되었습니다.");
       setEventForm(null);
     },
@@ -205,7 +221,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
   const updateEventMutation = trpc.events.update.useMutation({
     onSuccess: () => {
-      utils.events.list.invalidate();
+      utils.events.listByLang.invalidate({ lang: activeLang });
       toast.success("이벤트가 수정되었습니다.");
       setEventForm(null);
       setEditingEventId(null);
@@ -215,7 +231,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
   const deleteEventMutation = trpc.events.delete.useMutation({
     onSuccess: () => {
-      utils.events.list.invalidate();
+      utils.events.listByLang.invalidate({ lang: activeLang });
       toast.success("이벤트가 삭제되었습니다.");
     },
     onError: () => toast.error("삭제에 실패했습니다."),
@@ -317,7 +333,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
         discountPrice: eventForm.discountPrice ?? 0,
         priceRows: Array.isArray(eventForm.priceRows) ? eventForm.priceRows : [],
         anesthesiaFee: eventForm.anesthesiaFee ?? "",
-        targetLang: eventForm.targetLang ?? "ko",
+        targetLang: activeLang,
         titleEn: eventForm.titleEn ?? "",
         titleJa: eventForm.titleJa ?? "",
         titleZh: eventForm.titleZh ?? "",
@@ -336,12 +352,32 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
   return (
     <div className="flex-1 flex flex-col">
+      {/* 언어 탭 */}
       <div className="px-8 py-6 border-b border-[#E5E7EB] flex items-center justify-between">
-        <h2 className="text-xl font-bold text-[#1F2937]">이벤트 관리</h2>
+        <div className="flex gap-2">
+          {LANG_TABS.map((lang) => (
+            <button
+              key={lang}
+              type="button"
+              onClick={() => {
+                setActiveLang(lang);
+                setEventForm(null);
+                setEditingEventId(null);
+              }}
+              className="px-4 py-2 rounded-lg font-semibold transition-all text-sm"
+              style={{
+                background: activeLang === lang ? "#4A6FA5" : "#E5E7EB",
+                color: activeLang === lang ? "white" : "#6B7280",
+              }}
+            >
+              {LANG_LABELS[lang]}
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           onClick={() => {
-            setEventForm({ ...EMPTY_EVENT_FORM });
+            setEventForm({ ...EMPTY_EVENT_FORM, targetLang: activeLang });
             setEditingEventId(null);
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
@@ -358,7 +394,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
           {eventForm && (
             <div className="bg-white border-2 border-[#4A6FA5] rounded-xl p-6 space-y-4 mb-6">
               <h3 className="font-bold text-[#1F2937]">
-                {editingEventId ? "이벤트 수정" : "새 이벤트 추가"}
+                {editingEventId ? "이벤트 수정" : "새 이벤트 추가"} ({LANG_LABELS[activeLang]})
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <input
@@ -376,6 +412,13 @@ export default function AdminEventsTab({ currentUser }: Props) {
                   className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                 />
               </div>
+              <textarea
+                placeholder="설명"
+                value={eventForm.desc}
+                onChange={(e) => setEventForm({ ...eventForm, desc: e.target.value })}
+                className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                rows={3}
+              />
               <textarea
                 placeholder="내용 (상세 설명, 선택사항)"
                 value={eventForm.content}
@@ -418,81 +461,67 @@ export default function AdminEventsTab({ currentUser }: Props) {
                         ],
                       })
                     }
-                    className="text-xs px-3 py-1 rounded-lg bg-[#4A6FA5] text-white hover:bg-[#3A5A95] transition-colors"
+                    className="text-xs px-2 py-1 rounded bg-[#4A6FA5] text-white"
                   >
-                    + 가격 행 추가
+                    + 행 추가
                   </button>
                 </div>
-                {(eventForm.priceRows || []).length > 0 ? (
-                  <div className="space-y-2 bg-[#F9FAFB] p-4 rounded-lg">
-                    {(eventForm.priceRows || []).map((row: PriceRow, idx: number) => (
-                      <div key={idx} className="grid grid-cols-4 gap-2 items-end">
-                        <input
-                          type="text"
-                          placeholder="상품명"
-                          value={row.label || ""}
-                          onChange={(e) => {
-                            const rows = [...(eventForm.priceRows || [])];
-                            rows[idx] = { ...rows[idx], label: e.target.value };
-                            setEventForm({ ...eventForm, priceRows: rows });
-                          }}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                        <input
-                          type="number"
-                          placeholder="정상가 (원)"
-                          value={row.normalPrice || ""}
-                          onChange={(e) => {
-                            const rows = [...(eventForm.priceRows || [])];
-                            rows[idx] = { ...rows[idx], normalPrice: parseInt(e.target.value) || 0 };
-                            setEventForm({ ...eventForm, priceRows: rows });
-                          }}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                        <input
-                          type="number"
-                          placeholder="할인가 (원)"
-                          value={row.discountPrice || ""}
-                          onChange={(e) => {
-                            const rows = [...(eventForm.priceRows || [])];
-                            rows[idx] = {
-                              ...rows[idx],
-                              discountPrice: parseInt(e.target.value) || 0,
-                            };
-                            setEventForm({ ...eventForm, priceRows: rows });
-                          }}
-                          className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                        />
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setEventForm({
-                              ...eventForm,
-                              priceRows: (eventForm.priceRows || []).filter(
-                                (_: PriceRow, i: number) => i !== idx
-                              ),
-                            })
-                          }
-                          className="px-3 py-2 text-red-600 hover:text-red-700 font-semibold text-sm"
-                        >
-                          삭제
-                        </button>
-                      </div>
-                    ))}
+                {(eventForm.priceRows || []).map((row: PriceRow, idx: number) => (
+                  <div key={idx} className="grid grid-cols-4 gap-2">
+                    <input
+                      type="text"
+                      placeholder="항목명"
+                      value={row.label}
+                      onChange={(e) => {
+                        const newRows = [...(eventForm.priceRows || [])];
+                        newRows[idx] = { ...row, label: e.target.value };
+                        setEventForm({ ...eventForm, priceRows: newRows });
+                      }}
+                      className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                    />
+                    <input
+                      type="number"
+                      placeholder="정가"
+                      value={row.normalPrice}
+                      onChange={(e) => {
+                        const newRows = [...(eventForm.priceRows || [])];
+                        newRows[idx] = { ...row, normalPrice: parseInt(e.target.value) || 0 };
+                        setEventForm({ ...eventForm, priceRows: newRows });
+                      }}
+                      className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                    />
+                    <input
+                      type="number"
+                      placeholder="할인가"
+                      value={row.discountPrice}
+                      onChange={(e) => {
+                        const newRows = [...(eventForm.priceRows || [])];
+                        newRows[idx] = { ...row, discountPrice: parseInt(e.target.value) || 0 };
+                        setEventForm({ ...eventForm, priceRows: newRows });
+                      }}
+                      className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newRows = eventForm.priceRows?.filter((_: PriceRow, i: number) => i !== idx) || [];
+                        setEventForm({ ...eventForm, priceRows: newRows });
+                      }}
+                      className="px-3 py-2 bg-red-100 text-red-600 rounded-lg text-sm"
+                    >
+                      삭제
+                    </button>
                   </div>
-                ) : (
-                  <p className="text-xs text-[#9CA3AF] italic">
-                    가격 행을 추가하려면 위의 "+ 가격 행 추가" 버튼을 클릭하세요.
-                  </p>
-                )}
+                ))}
               </div>
 
               {/* 이미지 업로드 */}
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-[#1F2937]">이미지 업로드</label>
+                <label className="text-sm font-semibold text-[#1F2937]">이미지</label>
                 <input
                   type="file"
                   accept="image/*"
+                  disabled={imageUploading}
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
@@ -528,7 +557,6 @@ export default function AdminEventsTab({ currentUser }: Props) {
                     }
                   }}
                   className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                  disabled={imageUploading}
                 />
                 {eventForm.imageUrl && (
                   <div className="mt-2">
@@ -590,163 +618,35 @@ export default function AdminEventsTab({ currentUser }: Props) {
                 />
               </div>
 
-              {/* 다국어 설정 */}
-              <div className="border border-[#E5E7EB] rounded-xl p-4 space-y-4 bg-[#F9FAFB]">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-[#1F2937]">국제 노출 설정</h4>
-                  <div className="flex gap-2">
-                    {(["en", "ja", "zh"] as const).map((lang) => (
-                      <button
-                        key={lang}
-                        type="button"
-                        disabled={translating === lang}
-                        onClick={() => handleAutoTranslate(lang)}
-                        className="px-3 py-1 text-xs font-semibold rounded-full border transition-colors"
-                        style={{
-                          background: translating === lang ? "#E5E7EB" : "#4A6FA5",
-                          color: translating === lang ? "#9CA3AF" : "#fff",
-                          borderColor: "#4A6FA5",
-                        }}
-                      >
-                        {translating === lang ? "번역중..." : `AI ${lang.toUpperCase()} 번역`}
-                      </button>
-                    ))}
+              {/* 다국어 설정 (다른 언어 필드) */}
+              {activeLang === "ko" && (
+                <div className="border border-[#E5E7EB] rounded-xl p-4 space-y-4 bg-[#F9FAFB]">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-[#1F2937]">다국어 번역</h4>
+                    <div className="flex gap-2">
+                      {(["en", "ja", "zh"] as const).map((lang) => (
+                        <button
+                          key={lang}
+                          type="button"
+                          disabled={translating === lang}
+                          onClick={() => handleAutoTranslate(lang)}
+                          className="px-3 py-1 text-xs font-semibold rounded-full border transition-colors"
+                          style={{
+                            background: translating === lang ? "#E5E7EB" : "#4A6FA5",
+                            color: translating === lang ? "#9CA3AF" : "#fff",
+                            borderColor: "#4A6FA5",
+                          }}
+                        >
+                          {translating === lang ? "번역중..." : `AI ${lang.toUpperCase()} 번역`}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-[#6B7280]">노출 언어</label>
-                  <select
-                    value={eventForm.targetLang || "ko"}
-                    onChange={(e) => setEventForm({ ...eventForm, targetLang: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm bg-white"
-                  >
-                    <option value="ko">한국어 (한국어 페이지)</option>
-                    <option value="en">영어 (English 페이지)</option>
-                    <option value="ja">일본어 (日本語 페이지)</option>
-                    <option value="zh">중국어 (中文 페이지)</option>
-                  </select>
                   <p className="text-xs text-[#9CA3AF]">
-                    선택한 언어 페이지에만 노출됩니다. AI 번역 버튼으로 자동 번역 후 수정 가능합니다.
+                    한국어로 작성 후 AI 번역 버튼을 클릭하면 자동으로 다국어 필드가 채워집니다.
                   </p>
                 </div>
-                {(eventForm.targetLang === "en" || eventForm.titleEn) && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-blue-600">
-                      한국어 원본 편집 후 AI EN 번역 버튼 클릭 → 영어 필드 자동 입력
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="영어 제목 (EN Title)"
-                      value={eventForm.titleEn || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, titleEn: e.target.value })}
-                      className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="영어 부제목 (EN Subtitle)"
-                      value={eventForm.subtitleEn || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, subtitleEn: e.target.value })}
-                      className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm"
-                    />
-                    <textarea
-                      placeholder="영어 설명 (EN Description)"
-                      value={eventForm.descEn || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, descEn: e.target.value })}
-                      className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm"
-                      rows={2}
-                    />
-                    {eventForm.productName && (
-                      <input
-                        type="text"
-                        placeholder="영어 시술명 (EN Product Name)"
-                        value={eventForm.productNameEn || ""}
-                        onChange={(e) =>
-                          setEventForm({ ...eventForm, productNameEn: e.target.value })
-                        }
-                        className="w-full px-3 py-2 border border-blue-200 rounded-lg text-sm"
-                      />
-                    )}
-                  </div>
-                )}
-                {(eventForm.targetLang === "ja" || eventForm.titleJa) && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-red-600">
-                      한국어 원본 편집 후 AI JA 번역 버튼 클릭 → 일본어 필드 자동 입력
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="일본어 제목 (JA Title)"
-                      value={eventForm.titleJa || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, titleJa: e.target.value })}
-                      className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="일본어 부제목 (JA Subtitle)"
-                      value={eventForm.subtitleJa || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, subtitleJa: e.target.value })}
-                      className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm"
-                    />
-                    <textarea
-                      placeholder="일본어 설명 (JA Description)"
-                      value={eventForm.descJa || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, descJa: e.target.value })}
-                      className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm"
-                      rows={2}
-                    />
-                    {eventForm.productName && (
-                      <input
-                        type="text"
-                        placeholder="일본어 시술명 (JA Product Name)"
-                        value={eventForm.productNameJa || ""}
-                        onChange={(e) =>
-                          setEventForm({ ...eventForm, productNameJa: e.target.value })
-                        }
-                        className="w-full px-3 py-2 border border-red-200 rounded-lg text-sm"
-                      />
-                    )}
-                  </div>
-                )}
-                {(eventForm.targetLang === "zh" || eventForm.titleZh) && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-yellow-600">
-                      한국어 원본 편집 후 AI ZH 번역 버튼 클릭 → 중국어 필드 자동 입력
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="중국어 제목 (ZH Title)"
-                      value={eventForm.titleZh || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, titleZh: e.target.value })}
-                      className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="중국어 부제목 (ZH Subtitle)"
-                      value={eventForm.subtitleZh || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, subtitleZh: e.target.value })}
-                      className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm"
-                    />
-                    <textarea
-                      placeholder="중국어 설명 (ZH Description)"
-                      value={eventForm.descZh || ""}
-                      onChange={(e) => setEventForm({ ...eventForm, descZh: e.target.value })}
-                      className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm"
-                      rows={2}
-                    />
-                    {eventForm.productName && (
-                      <input
-                        type="text"
-                        placeholder="중국어 시술명 (ZH Product Name)"
-                        value={eventForm.productNameZh || ""}
-                        onChange={(e) =>
-                          setEventForm({ ...eventForm, productNameZh: e.target.value })
-                        }
-                        className="w-full px-3 py-2 border border-yellow-200 rounded-lg text-sm"
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
+              )}
 
               <div className="flex items-center gap-2">
                 <input
@@ -801,50 +701,47 @@ export default function AdminEventsTab({ currentUser }: Props) {
                       event={event}
                       onEdit={() => {
                         const formData: EventFormState = {
-                          type: (event.type as EventFormState["type"]) ?? "이벤트",
-                          title: (event.title as string) ?? "",
-                          subtitle: (event.subtitle as string) ?? "",
-                          desc: (event.desc as string) ?? "",
-                          content: (event.content as string) ?? "",
-                          date: (event.date as string) ?? "",
-                          badge: (event.badge as string) ?? "",
-                          badgeColor: (event.badgeColor as string) ?? "#4A6FA5",
-                          accent: (event.accent as string) ?? "#4A6FA5",
-                          accentDark: (event.accentDark as string) ?? "#2D4A7A",
-                          accentBg: (event.accentBg as string) ?? "#EEF3FA",
-                          iconBg: (event.iconBg as string) ?? "#E0EBF7",
-                          iconType: (event.iconType as string) ?? "tag",
-                          tag: (event.tag as string) ?? "",
-                          hot: ((event.hot as string) ?? "0") as "0" | "1",
-                          cta: (event.cta as string) ?? "자세히 보기",
-                          views: (event.views as number) ?? 0,
-                          isFeatured: ((event.isFeatured as string) ?? "0") as "0" | "1",
-                          sortOrder: (event.sortOrder as number) ?? 0,
-                          isActive: ((event.isActive as string) ?? "1") as "0" | "1",
-                          category: (event.category as string) ?? "이벤트",
-                          imageUrl: (event.imageUrl as string) ?? "",
-                          productName: (event.productName as string) ?? "",
-                          normalPrice: (event.normalPrice as number) ?? 0,
-                          discountPrice: (event.discountPrice as number) ?? 0,
-                          priceRows:
-                            typeof event.priceRows === "string"
-                              ? JSON.parse(event.priceRows || "[]")
-                              : (event.priceRows as PriceRow[]) || [],
-                          isSpecialEvent: ((event.isSpecialEvent as string) ?? "0") as "0" | "1",
-                          anesthesiaFee: (event.anesthesiaFee as string) ?? "",
-                          targetLang: (event.targetLang as string) ?? "ko",
-                          titleEn: (event.titleEn as string) ?? "",
-                          titleJa: (event.titleJa as string) ?? "",
-                          titleZh: (event.titleZh as string) ?? "",
-                          subtitleEn: (event.subtitleEn as string) ?? "",
-                          subtitleJa: (event.subtitleJa as string) ?? "",
-                          subtitleZh: (event.subtitleZh as string) ?? "",
-                          descEn: (event.descEn as string) ?? "",
-                          descJa: (event.descJa as string) ?? "",
-                          descZh: (event.descZh as string) ?? "",
-                          productNameEn: (event.productNameEn as string) ?? "",
-                          productNameJa: (event.productNameJa as string) ?? "",
-                          productNameZh: (event.productNameZh as string) ?? "",
+                          type: event.type || "이벤트",
+                          title: event.title,
+                          subtitle: event.subtitle || "",
+                          desc: event.desc || "",
+                          content: (event.content as string) || "",
+                          date: event.date,
+                          badge: (event.badge as string) || "",
+                          badgeColor: (event.badgeColor as string) || "#4A6FA5",
+                          accent: (event.accent as string) || "#4A6FA5",
+                          accentDark: (event.accentDark as string) || "#2D4A7B",
+                          accentBg: (event.accentBg as string) || "#EEF3FA",
+                          iconBg: (event.iconBg as string) || "#E0EBF7",
+                          iconType: (event.iconType as string) || "tag",
+                          tag: (event.tag as string) || "",
+                          hot: (event.hot as "0" | "1") || "0",
+                          cta: (event.cta as string) || "자세히 보기",
+                          views: event.views || 0,
+                          isFeatured: (event.isFeatured as "0" | "1") || "0",
+                          sortOrder: event.sortOrder || 0,
+                          isActive: (event.isActive as "0" | "1") || "1",
+                          category: event.category || "이벤트",
+                          imageUrl: event.imageUrl || "",
+                          productName: event.productName || "",
+                          normalPrice: (event.normalPrice as number) || 0,
+                          discountPrice: (event.discountPrice as number) || 0,
+                          priceRows: (typeof event.priceRows === 'string' ? JSON.parse(event.priceRows) : event.priceRows) || [],
+                          isSpecialEvent: (event.isSpecialEvent as "0" | "1") || "0",
+                          anesthesiaFee: event.anesthesiaFee || "",
+                          targetLang: event.targetLang || "ko",
+                          titleEn: event.titleEn || "",
+                          titleJa: event.titleJa || "",
+                          titleZh: event.titleZh || "",
+                          subtitleEn: event.subtitleEn || "",
+                          subtitleJa: event.subtitleJa || "",
+                          subtitleZh: event.subtitleZh || "",
+                          descEn: event.descEn || "",
+                          descJa: event.descJa || "",
+                          descZh: event.descZh || "",
+                          productNameEn: event.productNameEn || "",
+                          productNameJa: event.productNameJa || "",
+                          productNameZh: event.productNameZh || "",
                         };
                         setEventForm(formData);
                         setEditingEventId(event.id);
@@ -861,7 +758,9 @@ export default function AdminEventsTab({ currentUser }: Props) {
             </DndContext>
           ) : (
             <div className="text-center py-12">
-              <p className="text-[#6B7280]">이벤트가 없습니다.</p>
+              <p className="text-[#9CA3AF] text-sm">
+                {LANG_LABELS[activeLang]} 언어로 등록된 이벤트가 없습니다.
+              </p>
             </div>
           )}
         </div>

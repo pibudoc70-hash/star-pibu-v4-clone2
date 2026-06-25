@@ -24,6 +24,7 @@ const EMPTY_FORM: PopupFormState = {
   desc: "",
   note: "",
   imageUrl: "",
+  clickUrl: "",
   accent: "#4A6FA5",
   accentLight: "#EEF4FF",
   sortOrder: 0,
@@ -118,6 +119,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
       desc: ev.desc ?? "",
       note: ev.note,
       imageUrl: ev.imageUrl ?? "",
+      clickUrl: ev.clickUrl ?? "",
       accent: ev.accent,
       accentLight: ev.accentLight,
       sortOrder: ev.sortOrder,
@@ -394,6 +396,17 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   onChange={(e) => setPopupForm((f) => f && { ...f, imageUrl: e.target.value })}
                   placeholder="또는 URL 직접 입력 (https://...)"
                 />
+              </div>
+              {/* 클릭 URL */}
+              <div>
+                <label className="text-xs font-semibold text-[#374151] mb-1 block">클릭 시 이동 URL</label>
+                <input
+                  className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
+                  value={popupForm.clickUrl}
+                  onChange={(e) => setPopupForm((f) => f && { ...f, clickUrl: e.target.value })}
+                  placeholder="https://example.com"
+                />
+                <p className="text-xs text-[#9CA3AF] mt-1">이미지를 클릭했을 때 이동할 URL을 입력하세요.</p>
               </div>
               {/* 가격 항목 */}
               <div>

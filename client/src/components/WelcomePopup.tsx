@@ -1,107 +1,28 @@
 /**
- * WelcomePopup - STAR 피부과 첫 방문 이벤트 팝업
+ * WelcomePopup - STAR 피부과 팝업 이벤트
  *
- * 반응형:
- * - 모바일(~479px): 화면 하단 바텀 시트, 드래그 닫기, 이미지 비율 유동 높이
- * - 태블릿/데스크톱(480px+): 중앙 모달, 좌우 2단 레이아웃
+ * 변경사항:
+ * - 이미지만 표시하고 클릭 시 clickUrl로 이동
+ * - 모달 형태 제거, 간단한 이미지 클릭 형태로 변경
+ * - 모바일/데스크톱 반응형 유지
  */
 import { useState, useEffect, useRef, useCallback } from "react";
-import { X, MessageCircle, Phone, Calendar } from "lucide-react";
+import { X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { useLang } from "@/contexts/LangContext";
-import { useChatConfig } from "@/hooks/useChatConfig";
-import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 import OptimizedImage from "@/components/OptimizedImage";
-
-interface PriceItem {
-  label: string;
-  original: string;
-  price: string;
-}
 
 interface PopupEvent {
   id: number;
-  tab: string;
-  badge: string;
-  title: string;
-  subtitle: string;
-  desc: string | null;
-  priceItems: PriceItem[];
-  note: string;
   imageUrl: string | null;
-  accent: string;
-  accentLight: string;
-  sortOrder: number;
+  clickUrl: string | null;
   isActive: "0" | "1";
-}
-
-// ── 드래그 훅 ─────────────────────────────────────────────────────────────────
-function useDragToClose(onClose: () => void, threshold = 80) {
-  const startY = useRef<number | null>(null);
-  const currentY = useRef<number>(0);
-  const sheetRef = useRef<HTMLDivElement>(null);
-
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    startY.current = e.touches[0].clientY;
-    currentY.current = 0;
-    if (sheetRef.current) {
-      sheetRef.current.style.transition = "none";
-    }
-  }, []);
-
-  const onTouchMove = useCallback((e: React.TouchEvent) => {
-    if (startY.current === null) return;
-    const delta = e.touches[0].clientY - startY.current;
-    if (delta < 0) return; // 위로 드래그 무시
-    currentY.current = delta;
-    if (sheetRef.current) {
-      sheetRef.current.style.transform = `translateY(${delta}px)`;
-      // 드래그 거리에 따라 투명도 감소
-      sheetRef.current.style.opacity = String(Math.max(0.4, 1 - delta / 300));
-    }
-  }, []);
-
-  const onTouchEnd = useCallback(() => {
-    if (sheetRef.current) {
-      sheetRef.current.style.transition = "";
-      sheetRef.current.style.transform = "";
-      sheetRef.current.style.opacity = "";
-    }
-    if (currentY.current >= threshold) {
-      onClose();
-    }
-    startY.current = null;
-    currentY.current = 0;
-  }, [onClose, threshold]);
-
-  return { sheetRef, onTouchStart, onTouchMove, onTouchEnd };
-}
-
-// ── 이미지 자연 비율 높이 훅 ──────────────────────────────────────────────────
-function useNaturalImageHeight(src: string | null, maxH = 300, minH = 140) {
-  const [height, setHeight] = useState(160);
-  useEffect(() => {
-    if (!src) return;
-    const img = new Image();
-    img.onload = () => {
-      const ratio = img.naturalHeight / img.naturalWidth;
-      // 컨테이너 너비를 320px 기준으로 비율 계산
-      const computed = Math.round(320 * ratio);
-      setHeight(Math.min(maxH, Math.max(minH, computed)));
-    };
-    img.src = src;
-  }, [src, maxH, minH]);
-  return height;
 }
 
 export default function WelcomePopup() {
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
-  const [tabKey, setTabKey] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // A11y: focus trap + ESC 닫기용 ref
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
@@ -116,7 +37,6 @@ export default function WelcomePopup() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // 팡업 에러: 사용자 경험을 방해하지 않도록 조용히 숨김 (콘솔 경고만)
   useEffect(() => {
     if (error) {
       console.warn("[WelcomePopup] 팡업 데이터 로드 실패:", error.message);
@@ -125,7 +45,7 @@ export default function WelcomePopup() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (error) return; // 에러 시 팡업 표시 안 함
+    if (error) return;
     if (!events || events.length === 0) return;
     const dismissed = localStorage.getItem("star-popup-v2-dismissed");
     if (!dismissed) {
@@ -148,16 +68,13 @@ export default function WelcomePopup() {
   useEffect(() => {
     if (visible) {
       document.body.style.overflow = "hidden";
-      // A11y: 팝업 열릴 때 이전 포커스 저장
       lastFocusedRef.current = document.activeElement as HTMLElement;
-      // 닫기 버튼에 포커스 (rAF로 렌더 후)
       requestAnimationFrame(() => {
         const btn = dialogRef.current?.querySelector<HTMLElement>('button[aria-label]');
         btn?.focus();
       });
     } else {
       document.body.style.overflow = "";
-      // A11y: 팝업 닫힐 때 이전 포커스 복원
       requestAnimationFrame(() => {
         lastFocusedRef.current?.focus();
         lastFocusedRef.current = null;
@@ -166,27 +83,13 @@ export default function WelcomePopup() {
     return () => { document.body.style.overflow = ""; };
   }, [visible]);
 
-  // A11y: focus trap — Tab/Shift+Tab을 모달 내부로 제한
   useEffect(() => {
     if (!visible || !dialogRef.current) return;
-    const getFocusable = () =>
-      dialogRef.current!.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-    const onTab = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
-      const focusable = getFocusable();
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-      } else {
-        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss();
     };
-    document.addEventListener('keydown', onTab);
-    return () => document.removeEventListener('keydown', onTab);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
   }, [visible]);
 
   const triggerClose = useCallback((callback?: () => void) => {
@@ -200,16 +103,6 @@ export default function WelcomePopup() {
 
   const dismiss = useCallback(() => triggerClose(), [triggerClose]);
 
-  // A11y: ESC 키로 팝업 닫기 (WCAG 2.1 SC 2.1.2) — dismiss 선언 후에 등록
-  useEffect(() => {
-    if (!visible) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') dismiss();
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [visible, dismiss]);
-
   const dismissToday = () =>
     triggerClose(() => {
       const expiry = new Date();
@@ -217,62 +110,48 @@ export default function WelcomePopup() {
       localStorage.setItem("star-popup-v2-dismissed", expiry.toISOString());
     });
 
-  const handleTabChange = (i: number) => {
-    setActiveTab(i);
-    setTabKey((k) => k + 1);
-  };
-
   if (!visible || !events || events.length === 0) return null;
 
-  const safeTab = activeTab < events.length ? activeTab : 0;
-  const ev = events[safeTab] as PopupEvent;
+  // 첫 번째 활성 팝업 이벤트 찾기
+  const ev = events.find((e: PopupEvent) => e.isActive === "1" && e.imageUrl) as PopupEvent | undefined;
+  if (!ev) return null;
+
+  const handleImageClick = () => {
+    if (ev.clickUrl) {
+      window.open(ev.clickUrl, '_blank');
+    }
+    dismiss();
+  };
 
   return isMobile
-    ? <MobilePopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} dialogRef={dialogRef} />
-    : <DesktopPopup ev={ev} events={events} safeTab={safeTab} closing={closing} tabKey={tabKey} dismiss={dismiss} dismissToday={dismissToday} handleTabChange={handleTabChange} dialogRef={dialogRef} />;
-}
-
-// ── 공통 props ────────────────────────────────────────────────────────────────
-interface PopupProps {
-  ev: PopupEvent;
-  events: PopupEvent[];
-  safeTab: number;
-  closing: boolean;
-  tabKey: number;
-  dismiss: () => void;
-  dismissToday: () => void;
-  handleTabChange: (i: number) => void;
-  dialogRef: React.RefObject<HTMLDivElement | null>;
+    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} />
+    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} />;
 }
 
 // ── 모바일 팝업 ───────────────────────────────────────────────────────────────
-function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange, dialogRef }: PopupProps) {
-  const imgHeight = useNaturalImageHeight(ev.imageUrl);
-  const { sheetRef, onTouchStart, onTouchMove, onTouchEnd } = useDragToClose(dismiss);
-  const { t, lang } = useLang();
-  const wp = t.welcomePopup;
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
-  const messengerLabel = wp.cta_kakao;
-  const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
-  const telDisplay = isZH || isJA ? CLINIC_TEL_INTL : CLINIC_TEL;
+interface PopupProps {
+  ev: PopupEvent;
+  closing: boolean;
+  dismiss: () => void;
+  dismissToday: () => void;
+  handleImageClick: () => void;
+  dialogRef: React.RefObject<HTMLDivElement | null>;
+}
 
+function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef }: PopupProps) {
   return (
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
       style={{ alignItems: "flex-end", padding: 0 }}
       onClick={dismiss}
-      // S1-T6: 오버레이 자체는 presentation — 실제 dialog role은 내부 div에 부여
     >
       <div
-        ref={(el) => { (sheetRef as React.MutableRefObject<HTMLDivElement | null>).current = el; (dialogRef as React.MutableRefObject<HTMLDivElement | null>).current = el; }}
+        ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="welcome-popup-title-mobile"
+        aria-label="팝업 이벤트"
         className={`popup-modal-mobile${closing ? " closing" : ""} w-full overflow-hidden shadow-2xl`}
         onClick={(e) => e.stopPropagation()}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
         style={{
           borderRadius: "20px 20px 0 0",
           background: "#ffffff",
@@ -282,119 +161,35 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
           willChange: "transform",
         }}
       >
-        {/* 드래그 핸들 */}
-        <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
-          <div className="w-10 h-1 rounded-full" style={{ background: "#D1D5DB" }} />
-        </div>
-
-        {/* 헤더 */}
-        <div
-          className="flex items-center justify-between px-5 py-2.5 flex-shrink-0"
-          style={{ background: "var(--brand-text, #2C2C2C)" }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "var(--brand-gold, #C4A882)" }}>STAR</span>
-            <span id="welcome-popup-title-mobile" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
-          </div>
-          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10" aria-label={wp.dismiss}>
-            <X size={15} className="text-white/70" />
+        {/* 닫기 버튼 */}
+        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0">
+          <span className="text-sm font-semibold text-gray-700">팝업 이벤트</span>
+          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-gray-100" aria-label="닫기">
+            <X size={18} className="text-gray-600" />
           </button>
         </div>
 
-        {/* 탭 */}
-        <div className="flex flex-shrink-0" style={{ borderBottom: "1px solid #E5E7EB" }}>
-          {events.map((e: PopupEvent, i: number) => (
-            <button type="button"
-              key={e.id}
-              onClick={() => handleTabChange(i)}
-              className="flex-1 py-2.5 text-xs font-semibold transition-all duration-200"
-              style={safeTab === i
-                ? { color: ev.accent, borderBottom: `2px solid ${ev.accent}`, background: ev.accentLight }
-                : { color: "#9CA3AF", borderBottom: "2px solid transparent" }}
-            >
-              {e.tab}
-            </button>
-          ))}
+        {/* 이미지 */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden">
+          <button
+            type="button"
+            onClick={handleImageClick}
+            className="w-full h-full flex items-center justify-center cursor-pointer hover:opacity-95 transition-opacity"
+            aria-label="팝업 이미지 클릭"
+          >
+            <OptimizedImage
+              src={ev.imageUrl || ""}
+              alt="팝업 이벤트 이미지"
+              className="w-full h-full object-contain"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+          </button>
         </div>
 
-        {/* 스크롤 가능한 본문 */}
-        <div key={tabKey} className="popup-tab-content flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
-          {/* 이미지 - 비율에 따라 높이 유동 */}
-          {ev.imageUrl && (
-            <div
-              className="w-full flex items-center justify-center transition-all duration-300"
-              style={{
-                height: `${imgHeight}px`,
-                background: `linear-gradient(160deg, ${ev.accentLight} 0%, #ffffff 100%)`,
-                borderBottom: "1px solid #F3F4F6",
-              }}
-            >
-              <OptimizedImage
-                src={ev.imageUrl}
-                alt={ev.title}
-                className="h-full object-contain py-3"
-                style={{ maxWidth: "240px" }}
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-              />
-            </div>
-          )}
-
-          {/* 텍스트 + 가격표 */}
-          <div className="px-5 pt-4 pb-2">
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3" style={{ background: ev.accentLight, color: ev.accent }}>
-              {ev.badge}
-            </span>
-            <h2 className="font-extrabold leading-tight mb-1" style={{ color: "#1F2937", fontSize: "1.35rem" }}>
-              {ev.title}
-            </h2>
-            <p className="text-xs font-semibold tracking-widest mb-3 font-montserrat" style={{ color: ev.accent }}>
-              {ev.subtitle}
-            </p>
-            {ev.desc && (
-              <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B7280", whiteSpace: "pre-line" }}>
-                {ev.desc}
-              </p>
-            )}
-            <div className="space-y-2 mb-2">
-              {ev.priceItems.map((item: PriceItem, i: number) => (
-                <div key={i} className="flex items-center justify-between px-4 py-2.5 rounded-xl" style={{ background: ev.accentLight }}>
-                  <span className="text-sm font-semibold" style={{ color: "#374151" }}>{item.label}</span>
-                  <div className="text-right">
-                    {item.original && <span className="text-xs line-through mr-2" style={{ color: "#9CA3AF" }}>{item.original}</span>}
-                    <span className="text-sm font-extrabold" style={{ color: ev.accent }}>{item.price}</span>
-                  </div>
-                </div>
-              ))}
-              <p className="text-xs pl-1" style={{ color: "#9CA3AF" }}>{ev.note}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA 버튼 (하단 고정) */}
-        <div className="px-5 pt-3 pb-3 flex flex-col gap-2 flex-shrink-0" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
-            className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center"
-            style={{ background: chatBg, color: chatColor }}>
-            <MessageCircle size={16} />{messengerLabel}
-          </a>
-          <div className="flex gap-2">
-            <a href={telHref}
-              className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center"
-              style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />{telDisplay}
-            </a>
-            <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
-              className="flex-1 flex items-center gap-1.5 py-2.5 px-3 rounded-full font-semibold text-xs justify-center text-white"
-              style={{ background: "#03C75A" }}>
-              <Calendar size={13} />{wp.cta_reserve}
-            </a>
-          </div>
-        </div>
-
-        {/* 하단 푸터 */}
-        <div className="flex items-center justify-between px-5 py-2.5 flex-shrink-0" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <button type="button" onClick={dismissToday} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
-          <button type="button" onClick={dismiss} className="text-xs" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
+        {/* 하단 버튼 */}
+        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0 border-t border-gray-200">
+          <button type="button" onClick={dismissToday} className="text-xs text-gray-500 hover:text-gray-700">오늘 보지 않기</button>
+          <button type="button" onClick={dismiss} className="text-xs text-gray-500 hover:text-gray-700">닫기</button>
         </div>
       </div>
     </div>
@@ -402,124 +197,53 @@ function MobilePopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissTod
 }
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
-function DesktopPopup({ ev, events, safeTab, closing, tabKey, dismiss, dismissToday, handleTabChange, dialogRef }: PopupProps) {
-  const { t, lang } = useLang();
-  const wp = t.welcomePopup;
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
-  const messengerLabel = wp.cta_kakao;
-  const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
-  const telDisplay = isZH || isJA ? CLINIC_TEL_INTL : CLINIC_TEL;
-
+function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef }: PopupProps) {
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="welcome-popup-title-desktop"
-        className={`popup-modal relative w-full overflow-hidden shadow-2xl${closing ? " closing" : ""}`}
+        aria-label="팝업 이벤트"
+        className={`popup-modal relative overflow-hidden shadow-2xl${closing ? " closing" : ""}`}
         onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: "520px", borderRadius: "20px", background: "#ffffff" }}
+        style={{
+          maxWidth: "600px",
+          maxHeight: "700px",
+          borderRadius: "20px",
+          background: "#ffffff",
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
-        {/* 헤더 */}
-        <div className="flex items-center justify-between px-6 py-3" style={{ background: "var(--brand-text, #2C2C2C)" }}>
-          <div className="flex items-center gap-2">
-            <span className="font-montserrat font-extrabold text-sm tracking-widest" style={{ color: "var(--brand-gold, #C4A882)" }}>STAR</span>
-            <span id="welcome-popup-title-desktop" className="text-white text-xs font-medium opacity-70">{wp.title}</span>
-          </div>
-          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:bg-white/10 hover:scale-110 active:scale-95" aria-label={wp.dismiss}>
-            <X size={15} className="text-white/70" />
+        {/* 닫기 버튼 */}
+        <div className="absolute top-4 right-4 z-10">
+          <button type="button" onClick={dismiss} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all" aria-label="닫기">
+            <X size={18} className="text-gray-600" />
           </button>
         </div>
 
-        {/* 탭 */}
-        <div className="flex" style={{ borderBottom: "1px solid #E5E7EB" }}>
-          {events.map((e: PopupEvent, i: number) => (
-            <button type="button" key={e.id} onClick={() => handleTabChange(i)}
-              className="flex-1 py-2.5 text-xs font-semibold transition-all duration-250"
-              style={safeTab === i
-                ? { color: ev.accent, borderBottom: `2px solid ${ev.accent}`, background: ev.accentLight }
-                : { color: "#9CA3AF", borderBottom: "2px solid transparent", background: "transparent" }}>
-              {e.tab}
-            </button>
-          ))}
+        {/* 이미지 */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden">
+          <button
+            type="button"
+            onClick={handleImageClick}
+            className="w-full h-full flex items-center justify-center cursor-pointer hover:opacity-95 transition-opacity"
+            aria-label="팝업 이미지 클릭"
+          >
+            <OptimizedImage
+              src={ev.imageUrl || ""}
+              alt="팝업 이벤트 이미지"
+              className="w-full h-full object-contain"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+          </button>
         </div>
 
-        {/* 본문 (좌우 2단) */}
-        <div key={tabKey} className="popup-tab-content flex" style={{ minHeight: "300px" }}>
-          <div className="flex-1 p-6 flex flex-col justify-between">
-            <div>
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3" style={{ background: ev.accentLight, color: ev.accent }}>
-                {ev.badge}
-              </span>
-              <h2 className="font-extrabold leading-tight mb-1" style={{ color: "#1F2937", fontSize: "1.5rem" }}>{ev.title}</h2>
-              <p className="text-xs font-semibold tracking-widest mb-3 font-montserrat" style={{ color: ev.accent }}>{ev.subtitle}</p>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: "#6B7280", whiteSpace: "pre-line" }}>{ev.desc}</p>
-            </div>
-            <div className="space-y-2">
-              {ev.priceItems.map((item: PriceItem, i: number) => (
-                <div key={i} className="flex items-center justify-between px-4 py-2.5 rounded-xl" style={{ background: ev.accentLight }}>
-                  <span className="text-sm font-semibold" style={{ color: "#374151" }}>{item.label}</span>
-                  <div className="text-right">
-                    {item.original && <span className="text-xs line-through mr-2" style={{ color: "#9CA3AF" }}>{item.original}</span>}
-                    <span className="text-sm font-extrabold" style={{ color: ev.accent }}>{item.price}</span>
-                  </div>
-                </div>
-              ))}
-              <p className="text-xs pl-1" style={{ color: "#9CA3AF" }}>{ev.note}</p>
-            </div>
-          </div>
-          {ev.imageUrl && (
-            <div className="flex-shrink-0 flex items-center justify-center"
-              style={{
-                width: "200px",
-                minHeight: "300px",
-                background: `linear-gradient(160deg, ${ev.accentLight} 0%, #ffffff 100%)`,
-                borderLeft: "1px solid #F3F4F6",
-              }}>
-              <OptimizedImage
-                src={ev.imageUrl}
-                alt={ev.title}
-                style={{
-                  width: ev.tab.includes("세르프") ? "204px" : "168px",
-                  height: "auto",
-                  maxHeight: ev.tab.includes("세르프") ? "387px" : "320px",
-                  objectFit: "contain",
-                  padding: "12px 8px",
-                  transition: "transform 0.3s ease",
-                  display: "block",
-                }}
-                className="ds-img-zoom"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-            </div>
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="px-6 pb-4 pt-2 flex flex-col gap-2.5">
-          <a href={chatUrl} target="_blank" rel="noopener noreferrer" onClick={dismiss}
-            className="flex items-center gap-2 py-3 px-6 rounded-full font-bold text-sm justify-center transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
-            style={{ background: chatBg, color: chatColor }}>
-            <MessageCircle size={16} />{messengerLabel}
-          </a>
-          <div className="flex gap-2">
-            <a href={telHref}
-              className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-80"
-              style={{ background: "#F3F4F6", color: "#374151" }}>
-              <Phone size={13} />{telDisplay}
-            </a>
-            <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" onClick={dismiss}
-              className="flex-1 flex items-center gap-1.5 py-2.5 px-4 rounded-full font-semibold text-xs justify-center transition-all duration-200 hover:opacity-90 text-white"
-              style={{ background: "#03C75A" }}>
-              <Calendar size={13} />{wp.cta_reserve}
-            </a>
-          </div>
-        </div>
-
-        {/* 푸터 */}
-        <div className="flex items-center justify-between px-6 py-3" style={{ borderTop: "1px solid #F3F4F6" }}>
-          <button type="button" onClick={dismissToday} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismissToday}</button>
-          <button type="button" onClick={dismiss} className="text-xs transition-colors duration-150 hover:opacity-60" style={{ color: "#9CA3AF" }}>{wp.dismiss}</button>
+        {/* 하단 버튼 */}
+        <div className="flex items-center justify-between px-6 py-4 flex-shrink-0 border-t border-gray-200">
+          <button type="button" onClick={dismissToday} className="text-xs text-gray-500 hover:text-gray-700 transition-colors">오늘 보지 않기</button>
+          <button type="button" onClick={dismiss} className="text-xs text-gray-500 hover:text-gray-700 transition-colors">닫기</button>
         </div>
       </div>
     </div>

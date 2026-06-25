@@ -30,6 +30,7 @@ export interface PopupEventItem {
   desc: string;
   note: string;
   imageUrl: string | null;
+  clickUrl: string | null;
   accent: string;
   accentLight: string;
   sortOrder: number;
@@ -48,6 +49,7 @@ export interface PopupFormState {
   desc: string;
   note: string;
   imageUrl: string;
+  clickUrl: string;
   accent: string;
   accentLight: string;
   sortOrder: number;

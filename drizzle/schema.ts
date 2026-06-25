@@ -66,6 +66,7 @@ export const popupEvents = mysqlTable("popupEvents", {
   priceItems: text("priceItems").notNull().default("[]"),
   note: varchar("note", { length: 200 }).notNull().default(""),
   imageUrl: text("imageUrl"),
+  clickUrl: text("clickUrl"),
   accent: varchar("accent", { length: 20 }).notNull().default("#4A6FA5"),
   accentLight: varchar("accentLight", { length: 20 }).notNull().default("#EEF4FF"),
   startAt: bigint("startAt", { mode: "number" }),

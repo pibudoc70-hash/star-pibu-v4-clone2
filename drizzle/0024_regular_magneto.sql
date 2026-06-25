@@ -1,0 +1,1 @@
+ALTER TABLE `popupEvents` ADD `clickUrl` text;

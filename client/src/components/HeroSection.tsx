@@ -85,7 +85,7 @@ export default function HeroSection() {
         <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
         <img
           src={HERO_IMAGES.desktopJpg}
-          alt=""
+          alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
           fetchPriority="high"
           loading="eager"
           decoding="sync"

@@ -33,15 +33,8 @@ export const popupRouter = router({
     .input(z.object({
       tab: z.string().min(1).max(50),
       badge: z.string().max(100).default(""),
-      title: z.string().min(1).max(100),
-      subtitle: z.string().max(100).default(""),
-      desc: z.string().default(""),
-      priceItems: z.array(z.object({ label: z.string(), original: z.string().default(""), price: z.string() })).default([]),
-      note: z.string().max(200).default(""),
       imageUrl: z.string().default(""),
       clickUrl: z.string().default(""),
-      accent: z.string().max(20).default("#4A6FA5"),
-      accentLight: z.string().max(20).default("#EEF4FF"),
       sortOrder: z.number().default(0),
       isActive: z.enum(["0", "1"]).default("1"),
       startAt: z.number().nullable().optional(),
@@ -49,12 +42,11 @@ export const popupRouter = router({
     }))
     .mutation(async ({ input }) => {
       try {
-        const { priceItems, ...rest } = input;
-        const result = await createPopup({ ...rest, priceItems: JSON.stringify(priceItems) });
+        const result = await createPopup({ ...input, title: input.badge || "Event", subtitle: "", desc: "", note: "", priceItems: "[]" });
         invalidateCache("popup:");
         return result;
       } catch (error) {
-        logger.error("Popup", "팝업 생성 오류", error);
+        logger.error("Popup", "팩업 생성 오류", error);
         throw error;
       }
     }),
@@ -65,25 +57,21 @@ export const popupRouter = router({
       id: z.number(),
       tab: z.string().min(1).max(50).optional(),
       badge: z.string().max(100).optional(),
-      title: z.string().min(1).max(100).optional(),
-      subtitle: z.string().max(100).optional(),
-      desc: z.string().optional(),
-      priceItems: z.array(z.object({ label: z.string(), original: z.string().default(""), price: z.string() })).optional(),
-      note: z.string().max(200).optional(),
       imageUrl: z.string().optional(),
       clickUrl: z.string().optional(),
-      accent: z.string().max(20).optional(),
-      accentLight: z.string().max(20).optional(),
       sortOrder: z.number().optional(),
       isActive: z.enum(["0", "1"]).optional(),
       startAt: z.number().nullable().optional(),
       endAt: z.number().nullable().optional(),
     }))
     .mutation(async ({ input }) => {
-      const { id, priceItems, ...rest } = input;
-      const data: Record<string, unknown> = { ...rest };
-      if (priceItems !== undefined) data.priceItems = JSON.stringify(priceItems);
-      const result = await updatePopup(id, data as Parameters<typeof updatePopup>[1]);
+      const { id, ...rest } = input;
+      const updateData: any = { ...rest };
+      // title이 없으면 badge를 title로 사용
+      if (!updateData.title && updateData.badge) {
+        updateData.title = updateData.badge;
+      }
+      const result = await updatePopup(id, updateData as Parameters<typeof updatePopup>[1]);
       invalidateCache("popup:");
       return result;
     }),

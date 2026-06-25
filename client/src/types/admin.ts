@@ -44,17 +44,10 @@ export interface PopupEventItem {
 export interface PopupFormState {
   tab: string;
   badge: string;
-  title: string;
-  subtitle: string;
-  desc: string;
-  note: string;
   imageUrl: string;
   clickUrl: string;
-  accent: string;
-  accentLight: string;
   sortOrder: number;
   isActive: "0" | "1";
-  priceItems: { label: string; original: string; price: string }[];
   startAt: number | null;
   endAt: number | null;
 }

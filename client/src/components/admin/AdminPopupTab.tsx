@@ -19,17 +19,10 @@ interface Props {
 const EMPTY_FORM: PopupFormState = {
   tab: "",
   badge: "",
-  title: "",
-  subtitle: "",
-  desc: "",
-  note: "",
   imageUrl: "",
   clickUrl: "",
-  accent: "#4A6FA5",
-  accentLight: "#EEF4FF",
   sortOrder: 0,
   isActive: "1",
-  priceItems: [{ label: "", original: "", price: "" }],
   startAt: null,
   endAt: null,
 };
@@ -114,17 +107,10 @@ export default function AdminPopupTab({ currentUser }: Props) {
     setPopupForm({
       tab: ev.tab,
       badge: ev.badge,
-      title: ev.title,
-      subtitle: ev.subtitle,
-      desc: ev.desc ?? "",
-      note: ev.note,
       imageUrl: ev.imageUrl ?? "",
       clickUrl: ev.clickUrl ?? "",
-      accent: ev.accent,
-      accentLight: ev.accentLight,
       sortOrder: ev.sortOrder,
       isActive: ev.isActive,
-      priceItems: ev.priceItems?.length ? ev.priceItems : [{ label: "", original: "", price: "" }],
       startAt: ev.startAt ?? null,
       endAt: ev.endAt ?? null,
     });
@@ -303,36 +289,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">제목 *</label>
-                  <input
-                    className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                    value={popupForm.title}
-                    onChange={(e) => setPopupForm((f) => f && { ...f, title: e.target.value })}
-                    placeholder="세르프 리프팅"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">영문 부제목</label>
-                  <input
-                    className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                    value={popupForm.subtitle}
-                    onChange={(e) => setPopupForm((f) => f && { ...f, subtitle: e.target.value })}
-                    placeholder="XERF Lifting"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-[#374151] mb-1 block">설명</label>
-                <textarea
-                  className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm resize-none"
-                  rows={3}
-                  value={popupForm.desc}
-                  onChange={(e) => setPopupForm((f) => f && { ...f, desc: e.target.value })}
-                  placeholder="이벤트 설명 (줄바꿈 가능)"
-                />
-              </div>
+
               {/* 이미지 업로드 */}
               <div>
                 <label className="text-xs font-semibold text-[#374151] mb-1 block">이미지</label>
@@ -408,139 +365,16 @@ export default function AdminPopupTab({ currentUser }: Props) {
                 />
                 <p className="text-xs text-[#9CA3AF] mt-1">이미지를 클릭했을 때 이동할 URL을 입력하세요.</p>
               </div>
-              {/* 가격 항목 */}
               <div>
-                <label className="text-xs font-semibold text-[#374151] mb-1 block">가격 항목</label>
-                {(popupForm.priceItems || []).map((item, i) => (
-                  <div key={i} className="flex gap-2 mb-2">
-                    <input
-                      className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs"
-                      value={item.label}
-                      onChange={(e) =>
-                        setPopupForm((f) => {
-                          if (!f) return f;
-                          const p = [...f.priceItems];
-                          p[i] = { ...p[i], label: e.target.value };
-                          return { ...f, priceItems: p };
-                        })
-                      }
-                      placeholder="300샷"
-                    />
-                    <input
-                      className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs"
-                      value={item.original}
-                      onChange={(e) =>
-                        setPopupForm((f) => {
-                          if (!f) return f;
-                          const p = [...f.priceItems];
-                          p[i] = { ...p[i], original: e.target.value };
-                          return { ...f, priceItems: p };
-                        })
-                      }
-                      placeholder="원가(선택)"
-                    />
-                    <input
-                      className="flex-1 border border-[#E5E7EB] rounded-lg px-2 py-1.5 text-xs"
-                      value={item.price}
-                      onChange={(e) =>
-                        setPopupForm((f) => {
-                          if (!f) return f;
-                          const p = [...f.priceItems];
-                          p[i] = { ...p[i], price: e.target.value };
-                          return { ...f, priceItems: p };
-                        })
-                      }
-                      placeholder="80만원"
-                    />
-                    {popupForm.priceItems.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setPopupForm((f) => {
-                            if (!f) return f;
-                            return { ...f, priceItems: f.priceItems.filter((_, j) => j !== i) };
-                          })
-                        }
-                        className="text-red-400 hover:text-red-600 px-1"
-                      >
-                        &times;
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() =>
-                    setPopupForm((f) =>
-                      f
-                        ? { ...f, priceItems: [...f.priceItems, { label: "", original: "", price: "" }] }
-                        : f
-                    )
+                <label className="text-xs font-semibold text-[#374151] mb-1 block">표시 순서</label>
+                <input
+                  type="number"
+                  className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
+                  value={popupForm.sortOrder}
+                  onChange={(e) =>
+                    setPopupForm((f) => f && { ...f, sortOrder: Number(e.target.value) })
                   }
-                  className="text-xs text-[#4A9FA5] hover:underline"
-                >
-                  + 가격 항목 추가
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">하단 노트</label>
-                  <input
-                    className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                    value={popupForm.note}
-                    onChange={(e) => setPopupForm((f) => f && { ...f, note: e.target.value })}
-                    placeholder="* VAT 포함"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">표시 순서</label>
-                  <input
-                    type="number"
-                    className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                    value={popupForm.sortOrder}
-                    onChange={(e) =>
-                      setPopupForm((f) => f && { ...f, sortOrder: Number(e.target.value) })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">강조색 (hex)</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="color"
-                      className="w-10 h-9 rounded border border-[#E5E7EB] cursor-pointer"
-                      value={popupForm.accent}
-                      onChange={(e) => setPopupForm((f) => f && { ...f, accent: e.target.value })}
-                    />
-                    <input
-                      className="flex-1 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                      value={popupForm.accent}
-                      onChange={(e) => setPopupForm((f) => f && { ...f, accent: e.target.value })}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">배경색 (hex)</label>
-                  <div className="flex gap-2">
-                    <input
-                      type="color"
-                      className="w-10 h-9 rounded border border-[#E5E7EB] cursor-pointer"
-                      value={popupForm.accentLight}
-                      onChange={(e) =>
-                        setPopupForm((f) => f && { ...f, accentLight: e.target.value })
-                      }
-                    />
-                    <input
-                      className="flex-1 border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
-                      value={popupForm.accentLight}
-                      onChange={(e) =>
-                        setPopupForm((f) => f && { ...f, accentLight: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
+                />
               </div>
               {/* 유효기간 설정 */}
               <div className="grid grid-cols-2 gap-3">

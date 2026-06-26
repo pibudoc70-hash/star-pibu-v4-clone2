@@ -12,12 +12,16 @@ import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader, MessageCircle, Calendar } from "lucide-react";
-import { Streamdown } from "streamdown";
+import { lazy, Suspense } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+// Lazy load Streamdown to avoid bundling it in the initial page load
+const Streamdown = lazy(() => import("streamdown").then(m => ({ default: m.Streamdown })));
 
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
   if (!raw) return fallback;
@@ -356,7 +360,9 @@ export default function Equipment3Detail() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
             <div className="prose max-w-none">
-              <Streamdown>{localizedDetail}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
+                <Streamdown>{localizedDetail}</Streamdown>
+              </Suspense>
             </div>
           </section>
         )}
@@ -366,7 +372,9 @@ export default function Equipment3Detail() {
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
             <div className="prose max-w-none">
-              <Streamdown>{localizedEffect}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
+                <Streamdown>{localizedEffect}</Streamdown>
+              </Suspense>
             </div>
           </section>
         )}
@@ -376,7 +384,9 @@ export default function Equipment3Detail() {
           <section className="mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
             <h2 className="text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
             <div className="prose max-w-none text-amber-900">
-              <Streamdown>{localizedCaution}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
+                <Streamdown>{localizedCaution}</Streamdown>
+              </Suspense>
             </div>
           </section>
         )}

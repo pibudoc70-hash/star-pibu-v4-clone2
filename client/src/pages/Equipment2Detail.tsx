@@ -15,10 +15,13 @@ import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
-import { Streamdown } from "streamdown";
+import { lazy, Suspense } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getReservationPath } from "@/lib/reservationPath";
 import { getLocalizedUrl } from "@/lib/localizedPath";
+
+// Lazy load Streamdown to avoid bundling it in the initial page load
+const Streamdown = lazy(() => import("streamdown").then(m => ({ default: m.Streamdown })));
 
 // safe JSON parser
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
@@ -248,7 +251,9 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">{LABELS.overview}</h2>
             <div className="prose max-w-none">
-              <Streamdown>{localizedDetail}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
+                <Streamdown>{localizedDetail}</Streamdown>
+              </Suspense>
             </div>
           </div>
         )}
@@ -258,7 +263,9 @@ export default function Equipment2Detail() {
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">{LABELS.effect}</h2>
             <div className="prose max-w-none">
-              <Streamdown>{localizedEffect}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
+                <Streamdown>{localizedEffect}</Streamdown>
+              </Suspense>
             </div>
           </div>
         )}
@@ -284,7 +291,9 @@ export default function Equipment2Detail() {
           <div className="mb-12 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
             <h2 className="text-xl font-bold text-yellow-900 mb-4">{LABELS.caution}</h2>
             <div className="prose max-w-none text-yellow-900">
-              <Streamdown>{localizedCaution}</Streamdown>
+              <Suspense fallback={<div className="animate-pulse bg-yellow-200 h-24 rounded" />}>
+                <Streamdown>{localizedCaution}</Streamdown>
+              </Suspense>
             </div>
           </div>
         )}

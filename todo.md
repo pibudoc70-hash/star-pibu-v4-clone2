@@ -3042,3 +3042,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - 영어 (en): 0개
   - 중국어 (zh): 0개
 - [x] 최종 테스트 및 체크포인트 저장
+
+## Phase 69: 성능 최적화 - 초기 번들 최소화 (2026-06-26)
+- [x] ComponentShowcase.tsx 삭제 (dead code - AIChatBox만 사용)
+- [x] Equipment2Detail.tsx: streamdown 동적 import + React.lazy() + Suspense
+- [x] Equipment3Detail.tsx: streamdown 동적 import + React.lazy() + Suspense
+- [x] vite.config.ts 최적화: cssCodeSplit: true, target: "es2020", minify: "terser"
+- [x] 초기 번들에서 streamdown/katex 제외 (lazy loading으로 전환)
+- [x] 개발 서버 정상 작동 확인
+- [x] 최종 체크포인트 저장

@@ -3560,3 +3560,183 @@ body.font-lang-zh .hero-stat-label {
     border-radius: 4px;
   }
 }
+
+
+/* ── 스크롤 기반 애니메이션 시스템 ── */
+/* [Scroll Animation] Intersection Observer 기반 페이드인 효과 */
+
+/* 애니메이션 정의 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 기본 상태: 보이지 않음 */
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 애니메이션 활성화 상태 */
+.scroll-fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 페이드인만 (이동 없음) */
+.scroll-fade {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.scroll-fade.is-visible {
+  opacity: 1;
+}
+
+/* 좌측에서 슬라이드 */
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-slide-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 우측에서 슬라이드 */
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-slide-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 스테이거 효과 (자식 요소들이 순차적으로 나타남) */
+.scroll-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 각 자식에 지연 시간 추가 */
+.scroll-stagger.is-visible > :nth-child(1) { transition-delay: 0.1s; }
+.scroll-stagger.is-visible > :nth-child(2) { transition-delay: 0.2s; }
+.scroll-stagger.is-visible > :nth-child(3) { transition-delay: 0.3s; }
+.scroll-stagger.is-visible > :nth-child(4) { transition-delay: 0.4s; }
+.scroll-stagger.is-visible > :nth-child(5) { transition-delay: 0.5s; }
+.scroll-stagger.is-visible > :nth-child(6) { transition-delay: 0.6s; }
+
+/* 빠른 페이드인 (0.4s) */
+.scroll-fade-in-fast {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out,
+              transform 0.4s ease-out;
+}
+
+.scroll-fade-in-fast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 느린 페이드인 (0.8s) */
+.scroll-fade-in-slow {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scroll-fade-in-slow.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 모바일 최적화: 애니메이션 감소 설정 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade-in,
+  .scroll-fade,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-stagger > *,
+  .scroll-fade-in-fast,
+  .scroll-fade-in-slow {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 모바일에서 애니메이션 지연 시간 단축 */
+@media (max-width: 768px) {
+  .scroll-fade-in,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-fade-in-slow {
+    transition-duration: 0.5s;
+  }
+
+  .scroll-stagger > * {
+    transition-duration: 0.5s;
+  }
+
+  .scroll-stagger.is-visible > :nth-child(1) { transition-delay: 0.05s; }
+  .scroll-stagger.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+  .scroll-stagger.is-visible > :nth-child(3) { transition-delay: 0.15s; }
+  .scroll-stagger.is-visible > :nth-child(4) { transition-delay: 0.2s; }
+  .scroll-stagger.is-visible > :nth-child(5) { transition-delay: 0.25s; }
+  .scroll-stagger.is-visible > :nth-child(6) { transition-delay: 0.3s; }
+}

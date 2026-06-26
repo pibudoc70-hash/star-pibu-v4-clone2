@@ -19,7 +19,7 @@ export const ko: I18nContent = {
   hero: {
     title: "스타피부과",
     subtitle: "Where Experience, Trust, and Science Meet",
-    subtitleKo: "풍부한 경험, 깊은 신뢰, 그리고 과학의 만남",
+    subtitleKo: "풍부한 경험, 깊은 신뢰,\n그리고 과학의 만남",
     badge: "Since 2006",
     floor: "부산 서면 아이온시티빌딩 4층 접수·진료 | 2층 줄기세포 연구센터",
     cta_call: "051-818-2300",

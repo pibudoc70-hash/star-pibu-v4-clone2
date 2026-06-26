@@ -1773,6 +1773,7 @@
       -webkit-backdrop-filter: blur(8px) !important;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35) !important;
       flex-wrap: wrap !important;
+      margin-bottom: clamp(0.4rem, 1vh, 0.6rem) !important;
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
@@ -1808,7 +1809,7 @@
 
     /* ▶ 9. CTA wrap */
     .hero-actions-wrap {
-      margin-top: 0 !important;
+      margin-top: clamp(0.3rem, 0.8vh, 0.5rem) !important;
       max-width: 100% !important;
       gap: 0.6rem !important;
     }

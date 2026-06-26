@@ -1732,22 +1732,27 @@
 
     /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
     /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
+    /* 영문과 한글 슬로건이 같은 자리에 위치 (겹침) + 30% 크기 확대 */
     .hero-subtitle {
-      font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+      font-size: clamp(1.1rem, 4.55vw, 1.3rem) !important;
       letter-spacing: 0.14em !important;
       text-transform: uppercase !important;
       font-weight: 400 !important;
-      margin-bottom: clamp(0.6rem, 2vh, 1rem) !important;
+      margin-bottom: 0 !important;
       color: rgba(255,255,255,0.92) !important;
       text-shadow:
         0 1px 4px rgba(0,0,0,0.95),
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Montserrat', sans-serif !important;
       line-height: 1.4 !important;
+      width: auto !important;
+      white-space: nowrap !important;
+      opacity: 0 !important;
+      animation: heroSubtitleFadeInOut 4s ease-in-out 0.5s forwards !important;
     }
     /* 한글 슬로건 - 모바일 전용 */
     .hero-subtitle-ko {
-      font-size: clamp(0.8rem, 3.2vw, 0.95rem) !important;
+      font-size: clamp(1.04rem, 4.16vw, 1.235rem) !important;
       letter-spacing: 0.06em !important;
       font-weight: 400 !important;
       margin-bottom: clamp(0.8rem, 2.5vh, 1.2rem) !important;
@@ -1760,6 +1765,23 @@
       white-space: pre-line !important;
       word-break: keep-all !important;
       max-width: 100% !important;
+      opacity: 0 !important;
+      animation: heroSubtitleKoFadeInOut 4s ease-in-out 2.5s forwards !important;
+    }
+
+    /* 슬로건 페이드인/아웃 애니메이션 */
+    @keyframes heroSubtitleFadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      60% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes heroSubtitleKoFadeInOut {
+      0% { opacity: 0; }
+      60% { opacity: 0; }
+      70% { opacity: 1; }
+      100% { opacity: 1; }
     }
 
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */

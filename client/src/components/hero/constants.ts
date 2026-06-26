@@ -14,18 +14,18 @@
  * - 애니메이션 타이밍 변경 시 이 파일만 수정하면 됨
  */
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663478405399/QdQ7tySKssCV8bdRzPPxg4";
 
 /** 히어로 배경 이미지 URL 모음 */
 export const HERO_IMAGES = {
-  /** 데스크톱 배경 (WebP, min-width: 641px) */
-  desktopWebp: `${CDN}/hero-bg-new-desktop_2f8a8ccf.webp`,
-  /** 데스크톱 배경 (JPEG 폴백) */
-  desktopJpg: `${CDN}/hero-bg-new-desktop.jpg`,
-  /** 모바일 세로 배경 (WebP, max-width: 640px) */
-  mobilePortraitWebp: `${CDN}/hero-mobile-new-mobile_f9bea0c7.webp`,
-  /** 모바일 세로 배경 (JPEG 폴백) */
-  mobilePortraitJpg: `${CDN}/hero-mobile-new-mobile.jpg`,
+  /** 데스크톱 배경 (WebP, min-width: 641px) - 고급스러운 의료 클리닉 인테리어 */
+  desktopWebp: `${CDN}/hero-bg-dermatology-desktop-Fz82KozygkHD93U42Cw9N6.webp`,
+  /** 데스크톱 배경 (PNG 폴백) */
+  desktopJpg: `${CDN}/hero-bg-dermatology-desktop-XRC65gtyzCpKwfmodCjyRp.png`,
+  /** 모바일 세로 배경 (WebP, max-width: 640px) - 세로 최적화 의료 배경 */
+  mobilePortraitWebp: `${CDN}/hero-bg-dermatology-mobile-AQgDapqTVG9rASLsqQpkVW.webp`,
+  /** 모바일 세로 배경 (PNG 폴백) */
+  mobilePortraitJpg: `${CDN}/hero-bg-dermatology-mobile-g6b66BdHT6SYEDmSRza6Hr.png`,
 } as const;
 
 /** 스타피부과 AI 로고 이미지 URL */

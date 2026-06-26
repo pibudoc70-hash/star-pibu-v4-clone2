@@ -826,34 +826,24 @@
   }
 
   /* [R21-P0-1] 모바일 히어로 순차 페이드인/아웃 애니메이션 */
-  @keyframes mobileHeroLogoSeq {
-    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-    10% { opacity: 1; transform: scale(1) translateY(0); }
-    50% { opacity: 1; transform: scale(1) translateY(0); }
-    75% { opacity: 0; transform: scale(0.9) translateY(20px); }
-    100% { opacity: 0; transform: scale(0.9) translateY(20px); }
+  @keyframes mobileHeroLogoFade {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
-  @keyframes mobileHeroTitleSeq {
-    0% { opacity: 0; transform: translateY(16px) rotateX(40deg); }
-    25% { opacity: 0; transform: translateY(16px) rotateX(40deg); }
-    35% { opacity: 1; transform: translateY(0) rotateX(0deg); }
-    65% { opacity: 1; transform: translateY(0) rotateX(0deg); }
-    82% { opacity: 0; transform: translateY(16px) rotateX(40deg); }
-    100% { opacity: 0; transform: translateY(16px) rotateX(40deg); }
+  @keyframes mobileHeroSubtitleEnFade {
+    0% { opacity: 0; transform: translateY(15px); }
+    5% { opacity: 1; transform: translateY(0); }
+    65% { opacity: 1; transform: translateY(0); }
+    75% { opacity: 0; transform: translateY(-15px); }
+    100% { opacity: 0; transform: translateY(-15px); }
   }
 
-  @keyframes mobileHeroSubtitleSeq {
-    0% { opacity: 0; transform: translateY(22px) scale(0.92); }
-    50% { opacity: 0; transform: translateY(22px) scale(0.92); }
-    60% { opacity: 1; transform: translateY(0) scale(1); }
-    85% { opacity: 1; transform: translateY(0) scale(1); }
-    100% { opacity: 0; transform: translateY(22px) scale(0.92); }
-  }
-
-  @keyframes mobileHeroFinalAppear {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+  @keyframes mobileHeroSubtitleKoFade {
+    0% { opacity: 0; transform: translateY(15px); }
+    70% { opacity: 0; transform: translateY(15px); }
+    75% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   /* [FM-P1-4] wordReveal 0.65s → 0.55s: 히어로 스로건 단어별 등장 속도 개선 */
@@ -884,30 +874,30 @@
     animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* [R21-P0-1] 모바일 전용 순차 애니메이션 - 로고→병원명→슬로건 순차 페이드인/아웃 */
+  /* [R22-P0-1] 모바일 전용 애니메이션: 로고 페이드인 + 영문/한글 슬로건 순차 페이드인/아웃 */
   @media (max-width: 640px) {
     .hero-logo-wrap {
-      animation: mobileHeroLogoSeq 6s ease-in-out 0s forwards !important;
+      animation: mobileHeroLogoFade 0.8s ease-out 0s forwards !important;
     }
 
     .hero-title {
-      animation: mobileHeroTitleSeq 6s ease-in-out 0s forwards !important;
+      display: none !important;
     }
 
     .hero-subtitle {
-      animation: mobileHeroSubtitleSeq 6s ease-in-out 0s forwards !important;
+      animation: mobileHeroSubtitleEnFade 4s ease-in-out 0s forwards !important;
     }
 
     .hero-subtitle-ko {
-      animation: mobileHeroSubtitleSeq 6s ease-in-out 0s forwards !important;
+      animation: mobileHeroSubtitleKoFade 4s ease-in-out 0s forwards !important;
     }
 
-    /* 최종 표시: 6초 후 모든 요소 다시 나타남 */
+    /* 최종 표시: 4초 후 모든 요소 다시 나타남 */
     .hero-stats-wrap,
     .hero-floor-mobile,
     .hero-actions-wrap,
     .hero-scroll-btn {
-      animation: mobileHeroFinalAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) 6s forwards !important;
+      animation: mobileHeroFinalAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) 4s forwards !important;
     }
   }
 
@@ -1712,8 +1702,8 @@
 
     /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
     .hero-logo-img {
-      height: clamp(125px, 31vw, 169px) !important;
-      width: clamp(125px, 31vw, 169px) !important;
+      height: clamp(163px, 40vw, 220px) !important;
+      width: clamp(163px, 40vw, 220px) !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }

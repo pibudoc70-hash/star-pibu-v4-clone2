@@ -1696,7 +1696,7 @@
     .hero-cta-group {
       flex: 0 0 auto !important;
       width: 100% !important;
-      padding-top: clamp(1.25rem, 3.5vh, 2rem) !important;
+      padding-top: clamp(0.6rem, 1.5vh, 0.9rem) !important;
       padding-bottom: 0 !important;
     }
 
@@ -1733,29 +1733,30 @@
     /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
     /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
     .hero-subtitle {
-      font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
+      font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
       letter-spacing: 0.14em !important;
       text-transform: uppercase !important;
       font-weight: 400 !important;
-      margin-bottom: clamp(0.85rem, 2.5vh, 1.4rem) !important;
+      margin-bottom: clamp(0.6rem, 2vh, 1rem) !important;
       color: rgba(255,255,255,0.92) !important;
       text-shadow:
         0 1px 4px rgba(0,0,0,0.95),
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Montserrat', sans-serif !important;
+      line-height: 1.4 !important;
     }
     /* 한글 슬로건 - 모바일 전용 */
     .hero-subtitle-ko {
-      font-size: clamp(0.65rem, 2.6vw, 0.78rem) !important;
+      font-size: clamp(0.8rem, 3.2vw, 0.95rem) !important;
       letter-spacing: 0.06em !important;
       font-weight: 400 !important;
-      margin-bottom: clamp(1.2rem, 3.5vh, 1.8rem) !important;
+      margin-bottom: clamp(0.8rem, 2.5vh, 1.2rem) !important;
       color: rgba(255,255,255,0.88) !important;
       text-shadow:
         0 1px 4px rgba(0,0,0,0.95),
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Noto Serif KR', serif !important;
-      line-height: 1.5 !important;
+      line-height: 1.6 !important;
     }
 
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */

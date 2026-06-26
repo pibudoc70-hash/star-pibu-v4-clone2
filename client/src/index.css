@@ -1732,17 +1732,17 @@
 
     /* ▶ 6.5 모바일 병원명 + 영문 서브텍스트 */
     .hero-title-mobile {
-      font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
+      font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
       font-weight: 600 !important;
       color: #ffffff !important;
-      margin-bottom: 0.15rem !important;
+      margin-bottom: 0.25rem !important;
       letter-spacing: 0.05em !important;
       text-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
       font-family: 'Noto Serif KR', serif !important;
     }
 
     .hero-subtitle-mobile {
-      font-size: clamp(0.65rem, 2.5vw, 0.85rem) !important;
+      font-size: clamp(0.65rem, 2.2vw, 0.75rem) !important;
       font-weight: 300 !important;
       color: rgba(255,255,255,0.75) !important;
       letter-spacing: 0.12em !important;
@@ -1808,8 +1808,8 @@
     /* ▶ 8. 통계 스트립 — 높이 축소 및 간격 조정 */
     /* 반투명 배경 패널 + 강한 그림자로 배경과 명확한 분리 */
     .hero-stats-row {
-      gap: clamp(0.8rem, 4vw, 1.5rem) !important;
-      padding: clamp(0.7rem, 1.8vh, 0.9rem) clamp(1rem, 4vw, 1.5rem) !important;
+      gap: clamp(0.9rem, 4vw, 1.5rem) !important;
+      padding: clamp(0.9rem, 2.2vh, 1.25rem) clamp(1.25rem, 4vw, 1.5rem) !important;
       border-top: 1px solid rgba(201,168,76,0.35) !important;
       border-bottom: none !important;
       max-width: 100% !important;
@@ -1819,11 +1819,11 @@
       -webkit-backdrop-filter: blur(8px) !important;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35) !important;
       flex-wrap: wrap !important;
-      margin-bottom: clamp(0.3rem, 0.8vh, 0.5rem) !important;
+      margin-bottom: clamp(0.6rem, 1.2vh, 0.9rem) !important;
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.05rem, 4.8vw, 1.4rem) !important;
+      font-size: clamp(1.19rem, 5.6vw, 1.68rem) !important;
       font-weight: 400 !important;
       color: #ffffff !important;
       text-shadow:
@@ -1833,7 +1833,7 @@
     }
     .hero-stat-label {
       font-family: 'Noto Sans KR', sans-serif !important;
-      font-size: clamp(0.6rem, 2vw, 0.7rem) !important;
+      font-size: clamp(0.65rem, 2.2vw, 0.75rem) !important;
       color: rgba(255, 255, 255, 0.95) !important;
       font-weight: 500 !important;
       letter-spacing: 0.04em !important;

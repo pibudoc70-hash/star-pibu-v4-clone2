@@ -131,7 +131,7 @@ function HeroSection() {
         </p>
         
         {/* 모바일: 병원명만 표시 (로고 아래 영어는 이미 있음) */}
-        <div className="md:hidden flex flex-col items-center gap-1">
+        <div className="md:hidden flex flex-col items-center gap-1 mb-8">
           {/* 한글 병원명 - 메인 */}
           <p className="hero-title-mobile font-medium text-white text-center">
             스타피부과

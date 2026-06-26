@@ -117,20 +117,28 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* 병원명: 글자별 charReveal */}
-        <h1 className="font-medium hero-title">
+        {/* 병원명: 글자별 charReveal (데스크톱만) */}
+        <h1 className="font-medium hero-title hidden md:block">
           <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
+        {/* 모바일: 순차 페이드인/아웃 애니메이션 */}
+        <h1 className="font-medium hero-title md:hidden">
+          {t.hero.title}
+        </h1>
 
-        {/* 슬로건: 단어별 wordReveal */}
-        <p className="font-light hero-subtitle">
+        {/* 슬로건: 단어별 wordReveal (데스크톱만) */}
+        <p className="font-light hero-subtitle hidden md:block">
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
+        </p>
+        {/* 모바일: 순차 페이드인/아웃 애니메이션 */}
+        <p className="font-light hero-subtitle md:hidden">
+          {t.hero.subtitle}
         </p>
 
         {/* 한글 슬로건: 모바일 전용 (md: 숨김) */}
         {t.hero.subtitleKo && (
           <p className="font-light hero-subtitle-ko md:hidden">
-            <WordReveal text={t.hero.subtitleKo} startDelay={1300} wordGap={85} />
+            {t.hero.subtitleKo}
           </p>
         )}
 

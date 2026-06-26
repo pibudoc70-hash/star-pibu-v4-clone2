@@ -72,7 +72,7 @@ export default function FAQSection() {
       )}
 
       {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
-      <section id="faq" className="py-16 md:py-24" style={{ background: 'var(--brand-bg-alt, #F5F0EB)' }}>
+      <section id="faq" className="py-16 md:py-24 faq-section-bg">
         <div className="container max-w-4xl">
           {/* 섹션 헤더 */}
           <div className="text-center mb-14">
@@ -90,12 +90,7 @@ export default function FAQSection() {
                   setOpenEquipment(idx);
                   setOpenQuestion(null);
                 }}
-                className="rounded-full font-normal transition-all duration-200"
-                style={
-                  openEquipment === idx
-                    ? { background: "var(--brand-gold, #C4A882)", color: "#fff", fontSize: "0.95rem", padding: "10px 22px", boxShadow: "0 4px 14px rgba(196,168,130,0.3)", transform: "translateY(-1px)" }
-                    : { background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-text-mid, #666)", fontSize: "0.85rem", padding: "8px 18px", border: "1.5px solid rgba(196,168,130,0.3)", fontWeight: 500 }
-                }
+                className={`faq-tab-btn ${openEquipment === idx ? "faq-tab-btn--active" : ""}`}
               >
                 {item.equipment}
               </button>
@@ -103,32 +98,29 @@ export default function FAQSection() {
           </div>
 
           {/* Q&A 아코디언 */}
-          <div className="rounded-2xl overflow-hidden shadow-sm" style={{ border: "1.5px solid rgba(196,168,130,0.2)" }}>
+          <div className="rounded-2xl overflow-hidden shadow-sm faq-accordion-wrap">
             {(faq.items[openEquipment]?.questions as FAQQuestion[])?.map((qa: FAQQuestion, qIdx: number) => (
               <div
                 key={qIdx}
-                className="border-b last:border-b-0"
-                style={{ borderColor: "rgba(196,168,130,0.15)" }}
+                className="faq-accordion-item border-b last:border-b-0"
               >
                 {/* 질문 */}
                 <button type="button"
-                  className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors duration-200"
-                  style={{ background: openQuestion === qIdx ? "var(--brand-bg-alt, #F5F0EB)" : "var(--brand-bg, #FAF8F5)" }}
+                  className={`faq-question-btn ${openQuestion === qIdx ? "faq-question-btn--open" : ""}`}
                   onClick={() => setOpenQuestion(openQuestion === qIdx ? null : qIdx)}
                   aria-expanded={openQuestion === qIdx}
                   aria-controls={`faq-answer-${openEquipment}-${qIdx}`}
                 >
                   <div className="flex items-start gap-3">
                     <HelpCircle
-                      className="mt-0.5 shrink-0"
+                      className="mt-0.5 shrink-0 text-brand-gold"
                       size={16}
-                      style={{ color: "var(--brand-gold, #C4A882)" }}
                     />
-                    <span className="font-medium text-sm" style={{ color: "var(--brand-text, #2C2C2C)", lineHeight: 1.55 }}>
+                    <span className="font-medium text-sm faq-question-text">
                       {qa.q}
                     </span>
                   </div>
-                  <span className="ml-4 shrink-0" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                  <span className="ml-4 shrink-0 text-brand-gold">
                     {openQuestion === qIdx ? (
                       <ChevronUp size={16} />
                     ) : (
@@ -141,13 +133,11 @@ export default function FAQSection() {
                 {openQuestion === qIdx && (
                   <div
                     id={`faq-answer-${openEquipment}-${qIdx}`}
-                    className="px-6 pb-5 pt-1 text-sm md:text-base leading-relaxed"
-                    style={{ color: "var(--brand-text-mid, #555)", background: "var(--brand-bg-alt, #F5F0EB)" }}
+                    className="px-6 pb-5 pt-1 text-sm md:text-base leading-relaxed faq-answer-panel"
                   >
                     <div className="flex gap-3">
                       <span
-                        className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-normal mt-0.5"
-                        style={{ background: "var(--brand-gold, #C4A882)", color: "#fff" }}
+                        className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-normal mt-0.5 faq-answer-badge"
                       >
                         A
                       </span>
@@ -161,7 +151,7 @@ export default function FAQSection() {
 
           {/* 하단 CTA */}
           <div className="mt-10 text-center">
-            <p className="text-sm mb-4" style={{ color: "var(--brand-text-mid, #666)" }}>{faqCtaDesc}</p>
+            <p className="text-sm mb-4 text-brand-mid">{faqCtaDesc}</p>
             <a
               href={chatUrl}
               target="_blank"

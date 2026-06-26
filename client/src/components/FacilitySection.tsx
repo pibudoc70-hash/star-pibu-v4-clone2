@@ -136,8 +136,7 @@ export default function FacilitySection() {
             <button type="button"
               key={i}
               onClick={(e) => openLightbox(i, e.currentTarget)}
-              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left"
-              style={{ aspectRatio: "16/9" }}
+              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer text-left facility-grid-thumb"
               aria-label={`${img.label} ${fc.zoomHint}`}
             >
               <OptimizedImage
@@ -149,14 +148,12 @@ export default function FacilitySection() {
               />
               {/* Dark Overlay */}
               <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
+                className="absolute inset-0 facility-dark-overlay"
               />
               {/* Content Overlay - Title Only */}
               <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3
-                  className="font-normal"
-                  style={{ color: "#FFFFFF", fontSize: "0.95rem" }}
+                  className="font-normal facility-img-label"
                 >
                   {img.label}
                 </h3>
@@ -169,8 +166,7 @@ export default function FacilitySection() {
         <div className="md:hidden reveal-card">
           {/* Carousel Container */}
           <div
-            className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl w-full"
-            style={{ aspectRatio: "16/9", minHeight: "300px" }}
+            className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl w-full facility-carousel-wrap"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onTouchStart={handleTouchStart}
@@ -182,7 +178,7 @@ export default function FacilitySection() {
                 <div
                   key={i}
                   className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-                  style={{ opacity: i === currentIndex ? 1 : 0 }}
+                  style={{ opacity: i === currentIndex ? 1 : 0 } as React.CSSProperties}
                 >
                     <OptimizedImage
                       src={img.srcJPG}
@@ -193,8 +189,7 @@ export default function FacilitySection() {
                     />
                   {/* Dark Overlay */}
                   <div
-                    className="absolute inset-0"
-                    style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%)" }}
+                    className="absolute inset-0 facility-dark-overlay"
                   />
                 </div>
               ))}
@@ -204,8 +199,7 @@ export default function FacilitySection() {
             <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
               <div className="max-w-2xl">
                 <h3
-                  className="text-2xl sm:text-4xl font-normal"
-                  style={{ color: "#FFFFFF" }}
+                  className="text-2xl sm:text-4xl font-normal text-white"
                 >
                   {galleryImages[currentIndex].label}
                 </h3>
@@ -215,12 +209,7 @@ export default function FacilitySection() {
             {/* Navigation Buttons */}
             <button type="button"
               onClick={goPrev}
-              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.2)",
-              }}
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto facility-nav-btn"
               aria-label={fc.prevSlideLabel}
             >
               <ChevronLeft size={24} className="text-white" />
@@ -228,12 +217,7 @@ export default function FacilitySection() {
 
             <button type="button"
               onClick={goNext}
-              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.2)",
-              }}
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto facility-nav-btn"
               aria-label={fc.nextSlideLabel}
             >
               <ChevronRight size={24} className="text-white" />
@@ -242,12 +226,7 @@ export default function FacilitySection() {
             {/* Play/Pause Button */}
             <button type="button"
               onClick={() => setIsAutoPlay(!isAutoPlay)}
-              className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto"
-              style={{
-                background: "rgba(255,255,255,0.15)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.2)",
-              }}
+              className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 pointer-events-auto facility-nav-btn"
               aria-label={isAutoPlay ? fc.pauseAutoplayLabel : fc.playAutoplayLabel}
             >
               {isAutoPlay ? (

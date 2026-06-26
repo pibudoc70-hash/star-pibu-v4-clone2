@@ -3084,3 +3084,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 모바일 뷰포트(375px)에서 레이아웃 확인 및 검증 완료
 - [x] 데스크톱 버전 영향 없음 (md:hidden으로 모바일 전용)
 - [x] 최종 체크포인트 저장 완료
+
+## Phase 코드품질: 인라인 스타일 CSS 클래스화 (2026-06-26)
+- [x] MobileMenu 인라인 스타일 제거
+- [x] MobileBottomCTA 카카오 버튼 CSS 변수 방식 전환
+- [x] Home.tsx 섹션 배경 인라인 스타일 → CSS 유틸리티 클래스 전환
+- [x] FAQSection 탭 버튼 인라인 스타일 CSS 클래스화
+- [x] SpecialEventSection 인라인 스타일 CSS 클래스화
+- [x] ReviewsSection 인라인 스타일 CSS 클래스화
+- [x] ContactSection 섹션 배경 인라인 스타일 제거
+- [x] EquipmentSection 인라인 스타일 CSS 클래스화
+- [x] FAQSection CTA 텍스트 색상 인라인 스타일 제거
+- [x] FacilitySection 인라인 스타일 CSS 클래스화 (TypeScript 오류 4개 수정 포함)
+- [x] ConsultationFormSection 허니팟 div 인라인 스타일 → sr-only 클래스 전환
+- [x] FloatingCTA 모바일 바 및 데스크톱 플로팅 버튼 인라인 스타일 CSS 클래스화
+- [x] DoctorTabButton whitespace-nowrap 인라인 스타일 제거
+- [x] ContactSection h2 font-extrabold 클래스 추가 (회귀 테스트 통과)
+- [x] reservation.service.test.ts 일요일 테스트 날짜 미래 날짜로 수정 (2026-07-05)
+- [x] 전체 1398개 테스트 통과 확인
+- [x] TypeScript 오류 0개 확인

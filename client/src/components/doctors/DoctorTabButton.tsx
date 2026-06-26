@@ -71,7 +71,7 @@ export function DoctorTabButton({
       {isDesktop ? (
         <div className="text-center">
           <div className="flex items-baseline justify-center gap-1.5">
-            <span className="dr-tab-name-desktop" data-active={String(isActive)} style={{ whiteSpace: "nowrap" }}>
+            <span className="dr-tab-name-desktop whitespace-nowrap" data-active={String(isActive)}>
               {doctor.name}
             </span>
             <span className="dr-tab-badge-desktop" data-active={String(isActive)}>

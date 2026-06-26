@@ -2956,6 +2956,12 @@
   transform: scale(0.98);
 }
 
+/* 카카오/위챗 — 동적 색상 CSS 변수 */
+.mobile-bottom-btn--chat {
+  background: var(--chat-bg, #FEE500);
+  color: var(--chat-color, #3C1E1E);
+}
+
 /* 전화 — 절제된 다크 */
 .mobile-bottom-btn--phone {
   background: rgba(255,255,255,0.06);
@@ -3271,6 +3277,15 @@ body.font-lang-zh .hero-stat-label {
   .mobile-menu-item.active .mobile-menu-icon {
     background-color: rgba(196, 168, 130, 0.12);
     color: var(--brand-gold, #C4A882);
+  }
+
+  /* 2차 메뉴 섹션 - opacity 전환 */
+  .mobile-menu-secondary-section {
+    opacity: 0;
+    transition: opacity 0.3s ease 300ms;
+  }
+  .mobile-menu-secondary-section.visible {
+    opacity: 1;
   }
 
   /* 메뉴 구분선 */
@@ -3739,4 +3754,320 @@ body.font-lang-zh .hero-stat-label {
   .scroll-stagger.is-visible > :nth-child(4) { transition-delay: 0.2s; }
   .scroll-stagger.is-visible > :nth-child(5) { transition-delay: 0.25s; }
   .scroll-stagger.is-visible > :nth-child(6) { transition-delay: 0.3s; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   섹션 배경 유틸리티 클래스 (Home.tsx 인라인 style 제거 후 대체)
+   ───────────────────────────────────────────────────────────────────── */
+.section-bg-warm {
+  background: linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%);
+}
+.section-bg-offwhite {
+  background: #FAFAFA;
+}
+.section-bg-gold-soft {
+  background: linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%);
+}
+.section-bg-dark-navy {
+  background: linear-gradient(180deg, #1A2744 0%, #243358 100%);
+}
+.section-bg-dark-deep {
+  background: linear-gradient(180deg, #1A2744 0%, #0F1A30 100%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   FAQ 섹션 CSS 클래스 (인라인 스타일 제거 후 대체)
+   ───────────────────────────────────────────────────────────────────── */
+.faq-section-bg {
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+
+/* 탭 버튼 */
+.faq-tab-btn {
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  background: var(--brand-bg, #FAF8F5);
+  color: var(--brand-text-mid, #666);
+  border: 1.5px solid rgba(196, 168, 130, 0.3);
+  transition: all 0.2s;
+  min-height: 44px;
+  cursor: pointer;
+}
+.faq-tab-btn--active {
+  background: var(--brand-gold, #C4A882);
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 10px 22px;
+  box-shadow: 0 4px 14px rgba(196, 168, 130, 0.3);
+  transform: translateY(-1px);
+  border-color: transparent;
+}
+.faq-tab-btn:hover:not(.faq-tab-btn--active) {
+  border-color: rgba(196, 168, 130, 0.6);
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+
+/* 아코디언 래퍼 */
+.faq-accordion-wrap {
+  border: 1.5px solid rgba(196, 168, 130, 0.2);
+}
+
+/* 아코디언 아이템 */
+.faq-accordion-item {
+  border-color: rgba(196, 168, 130, 0.15);
+}
+
+/* 질문 버튼 */
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  transition: background 0.2s;
+  background: var(--brand-bg, #FAF8F5);
+  min-height: 44px;
+  cursor: pointer;
+}
+.faq-question-btn--open {
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+.faq-question-btn:hover {
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+
+/* 질문 텍스트 */
+.faq-question-text {
+  color: var(--brand-text, #2C2C2C);
+  line-height: 1.55;
+}
+
+/* 답변 패널 */
+.faq-answer-panel {
+  color: var(--brand-text-mid, #555);
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+
+/* 답변 뱃지 */
+.faq-answer-badge {
+  background: var(--brand-gold, #C4A882);
+  color: #fff;
+}
+
+/* text-brand-gold 유틸리티 */
+.text-brand-gold {
+  color: var(--brand-gold, #C4A882);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   ReviewsSection CSS 클래스 (인라인 스타일 제거 후 대체)
+   ───────────────────────────────────────────────────────────────────── */
+/* 슬라이드 아이템 */
+.review-slide-item {
+  flex-shrink: 0;
+  width: calc(100% - 32px);
+  margin-right: 20px;
+  padding: 0 4px;
+}
+
+/* 인용 아이콘 */
+.review-quote-icon {
+  color: var(--brand-gold-pale, #EDE8E0);
+  margin-bottom: 0.5rem;
+}
+
+/* 텍스트 색상 유틸리티 */
+.text-brand {
+  color: var(--brand-text, #2C2C2C);
+}
+.text-brand-muted {
+  color: var(--brand-text-muted, #999999);
+}
+
+/* 슬라이더 dot 네비게이션 */
+.review-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: rgba(196, 168, 130, 0.25);
+  transition: all 0.3s;
+  min-height: 0;
+  cursor: pointer;
+}
+.review-dot--active {
+  width: 22px;
+  background: var(--brand-gold, #C4A882);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   SpecialEventSection CSS 클래스 (인라인 스타일 제거 후 대체)
+   ───────────────────────────────────────────────────────────────────── */
+.event-empty-icon-wrap {
+  background: linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, rgba(196, 168, 130, 0.2) 100%);
+}
+
+/* 스켈레톤 카드 */
+.event-skeleton-bg {
+  background: var(--brand-bg-alt, #F5F0EB);
+}
+.event-skeleton-img {
+  height: 192px;
+}
+.event-skeleton-tag {
+  height: 12px;
+  width: 4rem;
+}
+.event-skeleton-title {
+  height: 20px;
+  width: 80%;
+}
+.event-skeleton-desc {
+  height: 16px;
+  width: 60%;
+}
+.event-skeleton-meta {
+  height: 16px;
+  width: 40%;
+  margin-top: 4px;
+}
+
+/* 공통 텍스트 색상 유틸리티 */
+.text-brand-mid {
+  color: var(--brand-text-mid, #666666);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   EquipmentSection CSS 클래스
+   ───────────────────────────────────────────────────────────────────── */
+.equipment-section-title {
+  color: var(--brand-text, #2C2C2C);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 400;
+  font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
+}
+
+/* 장비 필터 탭 버튼 */
+.equipment-tab-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  background: var(--brand-bg, #FAF8F5);
+  color: var(--brand-text-mid, #666666);
+  border: 1px solid rgba(196, 168, 130, 0.25);
+  min-height: 44px;
+}
+.equipment-tab-btn--active {
+  background: var(--brand-gold, #C4A882);
+  color: #ffffff;
+  border-color: var(--brand-gold, #C4A882);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   FacilitySection CSS 클래스
+   ───────────────────────────────────────────────────────────────────── */
+.facility-grid-thumb {
+  aspect-ratio: 16 / 9;
+}
+
+.facility-dark-overlay {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.facility-img-label {
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.facility-carousel-wrap {
+  aspect-ratio: 16 / 9;
+  min-height: 300px;
+}
+
+.facility-nav-btn {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   FloatingCTA CSS 클래스
+   ───────────────────────────────────────────────────────────────────── */
+
+/* 모바일 하단 바 */
+.floating-mobile-bar {
+  background: #0a1228;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.28), 0 -1px 0 rgba(201, 168, 76, 0.22);
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+.floating-mobile-row {
+  min-height: 56px;
+}
+
+.floating-btn-reserve {
+  background: #03c75a;
+  color: #ffffff;
+  text-shadow: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  min-height: 56px;
+}
+
+.floating-btn-chat {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 56px;
+}
+
+.floating-btn-tel {
+  color: rgba(255, 255, 255, 0.72);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 56px;
+}
+
+.floating-btn-label {
+  font-size: 0.72rem;
+  margin-top: 2px;
+  letter-spacing: 0.03em;
+  font-weight: 400;
+}
+
+/* 데스크톱 플로팅 스택 */
+.floating-desktop-stack {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-desktop-tel {
+  background: rgba(12, 18, 40, 0.72);
+  border: 1px solid rgba(196, 168, 130, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.floating-desktop-tel-icon {
+  color: rgba(196, 168, 130, 0.8);
+  flex-shrink: 0;
+}
+
+.floating-desktop-tel-label {
+  color: rgba(196, 168, 130, 0.8);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.floating-desktop-reserve {
+  background: #03c75a;
+  box-shadow: 0 4px 18px rgba(3, 199, 90, 0.40), 0 2px 8px rgba(0, 0, 0, 0.12);
 }

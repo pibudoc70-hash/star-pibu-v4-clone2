@@ -118,28 +118,27 @@ export default function ReviewsSection() {
             <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-400 ease-in-out"
-                style={{ transform: `translateX(calc(-${current * 100}% - ${current * 0}px))` }}
+                style={{ transform: `translateX(-${current * 100}%)` }}
               >
                 {reviews.map((r, idx) => (
                   <div
                     key={idx}
-                    className="flex-shrink-0 px-1"
-                    style={{ width: "calc(100% - 32px)", marginRight: "20px" }}
+                    className="review-slide-item"
                   >
-                    <div className="review-card w-full" style={{ minWidth: 0 }}>
-                      <Quote size={28} style={{ color: 'var(--brand-gold-pale, #EDE8E0)', marginBottom: "0.5rem" }} />
-                      <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--brand-text, #2C2C2C)" }}>
+                    <div className="review-card w-full min-w-0">
+                      <Quote size={28} className="review-quote-icon" />
+                      <p className="text-sm leading-relaxed mb-4 text-brand">
                         "{r.text}"
                       </p>
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <StarRating rating={r.rating} />
-                            <span className="text-xs font-normal" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                            <span className="text-xs font-normal text-brand-gold">
                               {r.treatment}
                             </span>
                           </div>
-                          <div className="text-xs" style={{ color: "var(--brand-text-muted, #999999)" }}>
+                          <div className="text-xs text-brand-muted">
                             {r.name}
                           </div>
                         </div>
@@ -165,18 +164,13 @@ export default function ReviewsSection() {
                 <button type="button"
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width: i === current ? "22px" : "7px",
-                    height: "7px",
-                    background: i === current ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.25)",
-                  }}
+                  className={i === current ? "review-dot review-dot--active" : "review-dot"}
                   aria-label={`${i + 1}`}
                 />
               ))}
             </div>
 
-            <p className="text-center text-xs mt-3" style={{ color: "#9CA3AF" }}>
+            <p className="text-center text-xs mt-3 text-gray-400">
               {rv.swipeHint}
             </p>
           </div>
@@ -186,22 +180,22 @@ export default function ReviewsSection() {
               {visible.map((r, i) => (
                 <div
                   key={i}
-                  style={{ transitionDelay: `${i * 0.1}s` }}
+                  style={{ transitionDelay: `${i * 0.1}s` } as React.CSSProperties}
                 >
-                  <div className="review-card flex-shrink-0 w-full" style={{ minWidth: 0 }}>
-                    <Quote size={28} style={{ color: "rgba(196,168,130,0.25)", marginBottom: "0.5rem" }} />
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--brand-text, #2C2C2C)" }}>
+                  <div className="review-card flex-shrink-0 w-full min-w-0">
+                    <Quote size={28} className="review-quote-icon" />
+                    <p className="text-sm leading-relaxed mb-4 text-brand">
                       "{r.text}"
                     </p>
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <StarRating rating={r.rating} />
-                          <span className="text-xs font-normal" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                          <span className="text-xs font-normal text-brand-gold">
                             {r.treatment}
                           </span>
                         </div>
-                        <div className="text-xs" style={{ color: "var(--brand-text-muted, #999999)" }}>
+                        <div className="text-xs text-brand-muted">
                           {r.name}
                         </div>
                       </div>

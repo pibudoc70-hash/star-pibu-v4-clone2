@@ -47,41 +47,21 @@ export default function FloatingCTA() {
 
   const fc = t.floatingCta;
 
-  // 예약 버튼 색상 (LINE/네이버 모두 초록)
-  const reserveBg = "#03C75A";
-
   return (
     <>
       {/* ── 모바일 하단 바 (항상 고정) ── */}
-      <div
-        className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
-        style={{
-          background: "#0a1228",
-          boxShadow: "0 -6px 24px rgba(0,0,0,0.28), 0 -1px 0 rgba(201,168,76,0.22)",
-          paddingBottom: "max(env(safe-area-inset-bottom), 0px)",
-        }}
-      >
-        <div className="flex items-stretch" style={{ minHeight: "56px" }}>
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden floating-mobile-bar">
+        <div className="flex items-stretch floating-mobile-row">
           {/* Primary: 예약 — 좌측, 네이버 초록 */}
           <a
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 font-normal"
-            style={{
-              background: "#03C75A",
-              color: "#ffffff",
-              textShadow: "none",
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18)",
-              borderRight: "1px solid rgba(255,255,255,0.12)",
-              minHeight: "56px",
-            }}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 font-normal floating-btn-reserve"
             aria-label={fc.reserveAria}
           >
             <Calendar size={18} strokeWidth={2} />
-            <span style={{ fontSize: "0.72rem", marginTop: "2px", letterSpacing: "0.03em", fontWeight: 400 }}>{fc.reserve}</span>
+            <span className="floating-btn-label">{fc.reserve}</span>
           </a>
 
           {/* Secondary: 메신저 (카카오/LINE/WeChat) — 중앙 */}
@@ -90,19 +70,12 @@ export default function FloatingCTA() {
             target={isZH ? undefined : "_blank"}
             rel="noopener noreferrer"
             onClick={handleWechatClick}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal relative"
-            style={{
-              background: chatBg,
-              color: chatColor,
-              borderRight: "1px solid rgba(255,255,255,0.08)",
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              minHeight: "56px",
-            }}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal relative floating-btn-chat"
+            style={{ background: chatBg, color: chatColor }}
             aria-label={fc.kakaoAria}
           >
             <MessageCircle size={18} strokeWidth={1.8} />
-            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.01em" }}>
+            <span className="floating-btn-label">
               {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
             </span>
             {wechatCopied && isZH && (
@@ -115,17 +88,11 @@ export default function FloatingCTA() {
           {/* Tertiary: 전화 — 우측 */}
           <a
             href={telHref}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal"
-            style={{
-              color: "rgba(255,255,255,0.72)",
-              paddingTop: "10px",
-              paddingBottom: "10px",
-              minHeight: "56px",
-            }}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal floating-btn-tel"
             aria-label={fc.callAria}
           >
             <Phone size={17} strokeWidth={1.8} />
-            <span style={{ fontSize: "0.73rem", marginTop: "2px", letterSpacing: "0.01em" }}>{fc.call}</span>
+            <span className="floating-btn-label">{fc.call}</span>
           </a>
         </div>
       </div>
@@ -133,29 +100,21 @@ export default function FloatingCTA() {
       {/* ── 데스크톱 플로팅 버튼 (우측 하단, 세로 스택) ── */}
       {/* 순서: 위 = Tertiary(전화), 중간 = Secondary(메신저), 아래 = Primary(예약) */}
       <div
-        className="fixed right-5 bottom-8 z-40 hidden md:flex flex-col gap-3 items-end transition-all duration-500"
+        className="fixed right-5 bottom-8 z-40 hidden md:flex flex-col gap-3 items-end transition-all duration-500 floating-desktop-stack"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(120px)",
           pointerEvents: visible ? "auto" : "none",
-          transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         {/* Tertiary: 전화 — 최소화, 절제된 톤 */}
         <a
           href={telHref}
-          className="flex items-center gap-2 pr-4 pl-3 h-9 rounded-full transition-all duration-300 hover:scale-105"
-          style={{
-            background: "rgba(12,18,40,0.72)",
-            border: "1px solid rgba(196,168,130,0.25)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06)",
-          }}
+          className="flex items-center gap-2 pr-4 pl-3 h-9 rounded-full transition-all duration-300 hover:scale-105 floating-desktop-tel"
           aria-label={fc.callAria}
         >
-          <Phone size={14} style={{ color: "rgba(196,168,130,0.8)", flexShrink: 0 }} />
-          <span style={{ color: "rgba(196,168,130,0.8)", fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.05em", fontFamily: "'Montserrat', sans-serif" }}>{fc.call}</span>
+          <Phone size={14} className="floating-desktop-tel-icon flex-shrink-0" />
+          <span className="floating-desktop-tel-label">{fc.call}</span>
         </a>
 
         {/* Secondary: 메신저 (카카오/LINE/WeChat) */}
@@ -187,11 +146,7 @@ export default function FloatingCTA() {
           href={reserveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2.5 pr-5 pl-4 h-12 rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-          style={{
-            background: reserveBg,
-            boxShadow: "0 4px 18px rgba(3,199,90,0.40), 0 2px 8px rgba(0,0,0,0.12)",
-          }}
+          className="flex items-center gap-2.5 pr-5 pl-4 h-12 rounded-full transition-all hover:scale-105 floating-desktop-reserve"
           aria-label={fc.reserveAria}
         >
           <Calendar size={17} className="text-white flex-shrink-0" />

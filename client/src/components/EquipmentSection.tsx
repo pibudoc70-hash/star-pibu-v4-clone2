@@ -344,37 +344,22 @@ export default function EquipmentSection() {
       });
 
   return (
-    <section ref={sectionRef} id="equipment" className="py-12 sm:py-16 md:py-24" style={{ background: "var(--brand-bg-alt, #F5F0EB)" }}>
+    <section ref={sectionRef} id="equipment" className="py-12 sm:py-16 md:py-24 faq-section-bg">
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-10 md:mb-14 reveal-heading">
           <p
-            className="text-sm font-normal tracking-widest mb-3 font-montserrat"
-            style={{ color: "var(--brand-gold, #C4A882)" }}
+            className="text-sm font-normal tracking-widest mb-3 font-montserrat text-brand-gold"
           >
             PREMIUM LASER EQUIPMENT
           </p>
           <h2
-            className="mb-4"
-            style={{
-              color: "var(--brand-text, #2C2C2C)",
-              fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-              fontWeight: 400,
-              fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif",
-            }}
+            className="mb-4 equipment-section-title"
           >
             스타의 장비소개
           </h2>
-          <div
-            className="mx-auto mb-6"
-            style={{
-              width: "48px",
-              height: "3px",
-              background: "linear-gradient(90deg, transparent, #C4A882, transparent)",
-              borderRadius: "0",
-            }}
-          />
-          <p className="text-sm max-w-xl mx-auto" style={{ color: "#6B7280" }}>
+          <div className="mx-auto mb-6 star-divider" />
+          <p className="text-sm max-w-xl mx-auto text-gray-500">
             2006년 개원 이래 50여 종의 프리미엄 레이저 장비를 도입하여 최상의 치료 결과를 제공합니다.
           </p>
         </div>
@@ -385,20 +370,7 @@ export default function EquipmentSection() {
             <button type="button"
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
-              style={
-                activeCategory === cat
-                  ? {
-                      background: "var(--brand-gold, #C4A882)",
-                      color: "#ffffff",
-                      border: "1px solid var(--brand-gold, #C4A882)",
-                    }
-                  : {
-                      background: "var(--brand-bg, #FAF8F5)",
-                      color: "var(--brand-text-mid, #666666)",
-                      border: "1px solid rgba(196,168,130,0.25)",
-                    }
-              }
+              className={`equipment-tab-btn${activeCategory === cat ? ' equipment-tab-btn--active' : ''}`}
             >
               {cat}
             </button>
@@ -418,7 +390,7 @@ export default function EquipmentSection() {
 
         {/* Footer Note */}
         <div className="text-center mt-14">
-          <p className="text-xs" style={{ color: "#9CA3AF" }}>
+          <p className="text-xs text-gray-400">
             * 장비 구성은 업데이트될 수 있습니다. 자세한 내용은 내원 상담을 통해 확인하세요.
           </p>
         </div>
@@ -433,11 +405,8 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl group cursor-pointer card-fade-in ds-card-lift"
-      style={{
-        background: tone.bg,
-        ...style,
-      }}
+        className="relative overflow-hidden rounded-2xl group cursor-pointer card-fade-in ds-card-lift"
+      style={{ background: tone.bg, ...style } as React.CSSProperties}
     >
       {/* 데스크톱: 좌우 레이아웃 / 모바일: 상하 레이아웃 */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:min-h-[160px]">
@@ -511,15 +480,14 @@ function EquipmentCard({ eq, style }: { eq: Equipment; style?: React.CSSProperti
           background: "linear-gradient(to top, rgba(15,30,60,0.88) 0%, rgba(15,30,60,0.4) 60%, transparent 100%)",
         }}
       >
-        <p className="text-xs leading-relaxed mb-2" style={{ color: "rgba(255,255,255,0.9)" }}>
+        <p className="text-xs leading-relaxed mb-2 text-white/90">
           {eq.desc}
         </p>
         <a
           href="https://pf.kakao.com/_HNyGC"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-xs font-normal"
-          style={{ color: "rgba(255,255,255,0.85)" }}
+          className="inline-flex items-center gap-1 text-xs font-normal text-white/85"
           onClick={(e) => e.stopPropagation()}
         >
           카카오 상담 →

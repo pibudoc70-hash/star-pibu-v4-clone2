@@ -278,20 +278,20 @@ export default function Home() {
         <MobileBottomCTA />
 
         {/* 2. SPECIAL EVENT — 순수 흰색, 상단 여백 증가로 허로 이후 숨 포인트 */}
-        <div style={{ background: "#FFFFFF" }}>
+        <div className="bg-white">
           <SpecialEventSection />
         </div>
 
         {/* 3. Doctors — 따뜻한 크림 오프화이트, 시각적 질감 전환 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
+          <div className="section-bg-warm">
             <DoctorsSection />
           </div>
         </ScrollAnimationWrapper>
 
         {/* 4. Treatments + Equipment — 순수 흰색, 콘텐츠 밀도 높음 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "#FFFFFF" }}>
+          <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
@@ -300,7 +300,7 @@ export default function Home() {
 
         {/* 5. Management Devices — 열린 어두운 배경으로 시각적 리듬 전환 */}
         <ScrollAnimationWrapper animationType="fade-in-slow">
-          <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #243358 100%)" }}>
+          <div className="section-bg-dark-navy">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
               <ManagementDevicesSection />
             </Suspense>
@@ -309,7 +309,7 @@ export default function Home() {
 
         {/* 6. Philosophy — 미니멀 흰색, 여백 강조 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "#FAFAFA" }}>
+          <div className="section-bg-offwhite">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <PhilosophySection />
             </Suspense>
@@ -318,7 +318,7 @@ export default function Home() {
 
         {/* 6-2. Results & Statistics — 연한 골드 톤 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%)" }}>
+          <div className="section-bg-gold-soft">
             <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
               <ResultsStatisticsSection />
             </Suspense>
@@ -327,7 +327,7 @@ export default function Home() {
 
         {/* 7. Facility Gallery — 순수 흰색, 이미지 중심 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "#FFFFFF" }}>
+          <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
               <FacilitySection />
             </Suspense>
@@ -336,7 +336,7 @@ export default function Home() {
 
         {/* 8. Patient Reviews — 연한 웸아이보리 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" }}>
+          <div className="section-bg-warm">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
               <ReviewsSection />
             </Suspense>
@@ -345,7 +345,7 @@ export default function Home() {
 
         {/* 8-2. YouTube Channel — 어두운 에디토리얼 톤 */}
         <ScrollAnimationWrapper animationType="fade-in-slow">
-          <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
+          <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <YouTubeSection />
             </Suspense>
@@ -354,7 +354,7 @@ export default function Home() {
 
         {/* 9. FAQ — 순수 흰색 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "#FFFFFF" }}>
+          <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <FAQSection />
             </Suspense>
@@ -369,7 +369,7 @@ export default function Home() {
 
         {/* 10. Location & Contact — 다크 네이비 마무리 */}
         <ScrollAnimationWrapper animationType="fade-in-slow">
-          <div style={{ background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }}>
+          <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <ContactSection />
             </Suspense>

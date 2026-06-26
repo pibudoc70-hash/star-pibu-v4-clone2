@@ -292,13 +292,7 @@ export default function ConsultationFormSection() {
             {/* Honeypot — 절대 표시하지 않음, 스크린리더도 무시 */}
             <div
               aria-hidden="true"
-              style={{
-                position: "absolute",
-                left: "-9999px",
-                width: "1px",
-                height: "1px",
-                overflow: "hidden",
-              }}
+              className="sr-only"
             >
               <label htmlFor="cf-website">Website</label>
               <input

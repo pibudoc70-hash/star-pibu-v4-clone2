@@ -57,8 +57,8 @@ export default function MobileBottomCTA() {
           target={isZH ? undefined : "_blank"}
           rel="noopener noreferrer"
           onClick={handleChatClick}
-          className="mobile-bottom-btn"
-          style={{ background: chatBg, color: chatColor }}
+          className="mobile-bottom-btn mobile-bottom-btn--chat"
+          style={{ "--chat-bg": chatBg, "--chat-color": chatColor } as React.CSSProperties}
           aria-label={t.hero.cta_kakao}
         >
           <MessageCircle size={14} strokeWidth={2} />

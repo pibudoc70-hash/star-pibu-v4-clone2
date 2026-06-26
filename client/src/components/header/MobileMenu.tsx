@@ -187,8 +187,8 @@ export default function MobileMenu({
                     <Icon size={15} />
                   </span>
                 )}
-                <span style={{ flex: 1 }}>{item.label}</span>
-                <ChevronRight size={14} style={{ flexShrink: 0 }} />
+                <span className="flex-1 min-w-0">{item.label}</span>
+                <ChevronRight size={14} className="shrink-0" />
               </button>
             );
           })}
@@ -196,7 +196,7 @@ export default function MobileMenu({
 
         {/* ── 2차 메뉴 구분선 + 섹션 ── */}
         {secondaryNav.length > 0 && (
-          <div className={menuVisible ? "visible" : ""} style={{ opacity: menuVisible ? 1 : 0, transition: "opacity 0.3s ease 300ms" }}>
+          <div className={`mobile-menu-secondary-section ${menuVisible ? "visible" : ""}`}>
             <div className="mobile-menu-divider" />
             <p className="mobile-menu-section-label">MORE</p>
             {secondaryNav.map((item, idx) => {
@@ -214,8 +214,8 @@ export default function MobileMenu({
                       <Icon size={13} />
                     </span>
                   )}
-                  <span style={{ flex: 1 }}>{item.label}</span>
-                  <ChevronRight size={13} style={{ flexShrink: 0 }} />
+                  <span className="flex-1 min-w-0">{item.label}</span>
+                  <ChevronRight size={13} className="shrink-0" />
                 </button>
               );
             })}

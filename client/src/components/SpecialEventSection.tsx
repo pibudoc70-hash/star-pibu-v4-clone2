@@ -28,15 +28,14 @@ function EventEmptyState({ lang }: { lang: string }) {
   return (
     <div className="text-center py-16 flex flex-col items-center gap-4">
       <div
-        className="flex items-center justify-center w-16 h-16 rounded-full mb-2"
-        style={{ background: "linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, rgba(196,168,130,0.2) 100%)" }}
+        className="flex items-center justify-center w-16 h-16 rounded-full mb-2 event-empty-icon-wrap"
       >
-        <Sparkles size={28} style={{ color: "var(--brand-gold, #C4A882)" }} strokeWidth={1.5} />
+        <Sparkles size={28} className="text-brand-gold" strokeWidth={1.5} />
       </div>
-      <p className="text-lg font-medium" style={{ color: "var(--brand-text, #2C2C2C)" }}>
+      <p className="text-lg font-medium text-brand">
         {i18n[lang as keyof typeof i18n]?.events.specialEmptyTitle}
       </p>
-      <p className="text-sm" style={{ color: "var(--brand-text-mid, #666666)" }}>
+      <p className="text-sm text-brand-mid">
         {i18n[lang as keyof typeof i18n]?.events.specialEmptyDesc}
       </p>
     </div>
@@ -68,15 +67,15 @@ function SectionHeader({ lang }: { lang: string }) {
 // ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
 function EventCardSkeleton() {
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: "var(--brand-bg-alt, #F5F0EB)" }} aria-hidden="true">
+    <div className="rounded-2xl overflow-hidden event-skeleton-bg" aria-hidden="true">
       {/* 이미지 영역 */}
-      <div className="skeleton-shimmer" style={{ height: 192 }} />
+      <div className="skeleton-shimmer event-skeleton-img" />
       {/* 텍스트 영역 */}
       <div className="p-5 flex flex-col gap-3">
-        <div className="skeleton-shimmer rounded-full" style={{ height: 12, width: '4rem' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: 20, width: '80%' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: 16, width: '60%' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: 16, width: '40%', marginTop: 4 }} />
+        <div className="skeleton-shimmer rounded-full event-skeleton-tag" />
+        <div className="skeleton-shimmer rounded event-skeleton-title" />
+        <div className="skeleton-shimmer rounded event-skeleton-desc" />
+        <div className="skeleton-shimmer rounded event-skeleton-meta" />
       </div>
     </div>
   );
@@ -96,7 +95,7 @@ export default function SpecialEventSection() {
 
   if (isLoading) {
     return (
-      <section className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+      <section className="py-20 md:py-28 section-bg-offwhite">
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
@@ -118,16 +117,16 @@ export default function SpecialEventSection() {
       zh: "重试",
     };
     return (
-      <section id="events" className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+      <section id="events" className="py-20 md:py-28 section-bg-offwhite">
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="text-center py-16 flex flex-col items-center gap-4">
-            <p className="text-base" style={{ color: "var(--brand-text-mid, #666666)" }}>{parseEventListError(error, lang)}</p>
+            <p className="text-base text-brand-mid">{parseEventListError(error, lang)}</p>
             <button
               type="button"
               onClick={() => void refetch()}
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: "var(--brand-gold, #C4A882)" }}
+              style={{ backgroundColor: "var(--brand-gold, #C4A882)" } as React.CSSProperties}
             >
               <RefreshCw size={15} />
               {retryLabel[lang] ?? retryLabel.ko}
@@ -139,7 +138,7 @@ export default function SpecialEventSection() {
   }
 
   return (
-    <section id="events" className="py-20 md:py-28" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+    <section id="events" className="py-20 md:py-28 section-bg-offwhite">
       <div className="container">
         <SectionHeader lang={lang} />
         {(specialEvents as SpecialEvent[]).length === 0 ? (

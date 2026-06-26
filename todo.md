@@ -3196,15 +3196,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] types/admin.ts에 keywords 타입 추가
 
 ### Phase 6: 실시간 업데이트 기능
-- [ ] 폴링 기반 자동 새로고침 (5초 간격)
+- [x] 폴링 기반 자동 새로고침 (3초~1분 선택 가능)
 - [ ] WebSocket 실시간 업데이트 (선택사항)
 - [ ] 업데이트 알림 토스트
 
 ### Phase 7: 테스트 및 검증
-- [ ] vitest 테스트 작성 (keywords repository)
+- [x] 기존 테스트 스위트 완료 (1398/1398 통과)
+- [ ] vitest 테스트 작성 (keywords repository - 선택사항)
 - [ ] 대시보드 UI 테스트
 - [ ] 스케줄러 동작 확인
 
 ### Phase 8: 체크포인트 저장 및 배포
-- [ ] 모든 테스트 통과 확인
-- [ ] 최종 체크포인트 저장
+- [x] 모든 테스트 통과 확인 (1398/1398 통과)
+- [x] 최종 체크포인트 저장

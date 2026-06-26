@@ -67,13 +67,13 @@ export default function AdminDashboard() {
   if (user.role !== "admin") return null;
 
   const NAV_ITEMS: { tab: AdminTab; icon: React.ReactNode; label: string }[] = [
-    { tab: "treatments",       icon: <Stethoscope size={16} />, label: "시술·장비 관리" },
-    { tab: "treatmentsV2",     icon: <Stethoscope size={16} />, label: "시술·장비소개 2 관리" },
     { tab: "popup",            icon: <Megaphone size={16} />,   label: "팝업 이벤트" },
     { tab: "events",           icon: <Calendar size={16} />,    label: "이벤트 관리" },
     { tab: "reservations",     icon: <ClipboardList size={16} />, label: "예약 관리" },
     { tab: "unavailableSlots", icon: <Clock size={16} />,       label: "예약 불가능 날짜" },
     { tab: "users",            icon: <Users size={16} />,       label: "회원 관리" },
+    { tab: "treatments",       icon: <Stethoscope size={16} />, label: "시술·장비 관리" },
+    { tab: "treatmentsV2",     icon: <Stethoscope size={16} />, label: "시술·장비소개 2 관리" },
   ];
 
   return (
@@ -98,21 +98,25 @@ export default function AdminDashboard() {
         </div>
 
         <nav className="flex-1 px-4 py-4 space-y-1">
-          {NAV_ITEMS.map(({ tab, icon, label }) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setActiveTab(tab)}
-              className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
-              style={{
-                background: activeTab === tab ? "rgba(255,255,255,0.15)" : "transparent",
-                color: activeTab === tab ? "white" : "rgba(255,255,255,0.6)",
-              }}
-            >
-              {icon}
-              {label}
-            </button>
-          ))}
+          {/* 팝업 이벤트 */}
+          {["popup", "events"].map((tabKey) => {
+            const item = NAV_ITEMS.find(n => n.tab === tabKey)!;
+            return (
+              <button
+                key={item.tab}
+                type="button"
+                onClick={() => setActiveTab(item.tab)}
+                className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+                style={{
+                  background: activeTab === item.tab ? "rgba(255,255,255,0.15)" : "transparent",
+                  color: activeTab === item.tab ? "white" : "rgba(255,255,255,0.6)",
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            );
+          })}
           {/* 시술·장비소개 3 관리 (별도 페이지) */}
           <button
             type="button"
@@ -133,6 +137,27 @@ export default function AdminDashboard() {
             <Youtube size={16} />
             유튜브 관리
           </button>
+          {/* 구분선 */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)", margin: "8px 4px" }} />
+          {/* 예약·회원·시술 관리 */}
+          {["reservations", "unavailableSlots", "users", "treatments", "treatmentsV2"].map((tabKey) => {
+            const item = NAV_ITEMS.find(n => n.tab === tabKey)!;
+            return (
+              <button
+                key={item.tab}
+                type="button"
+                onClick={() => setActiveTab(item.tab)}
+                className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+                style={{
+                  background: activeTab === item.tab ? "rgba(255,255,255,0.15)" : "transparent",
+                  color: activeTab === item.tab ? "white" : "rgba(255,255,255,0.6)",
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            );
+          })}
         </nav>
 
         <div className="px-4 py-4 border-t border-white/10 space-y-2">

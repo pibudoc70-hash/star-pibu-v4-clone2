@@ -18,3 +18,4 @@ export * from "./equipment3";
 export * from "./popup";
 export * from "./consultation";
 export * from "./notices";
+export * from "./keywords";

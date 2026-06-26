@@ -3153,3 +3153,46 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TypeScript 오류 0개
 - [x] 전체 테스트 1398/1398 통과 (100%)
 - [x] 모바일 환경에서 체감 로딩 속도 향상
+
+## Phase 키워드트렌드: 최신 키워드 트렌드 자동 새로고침 대시보드 [진행중]
+
+### Phase 2: DB 스키마 설계
+- [x] keywordTrends 테이블 생성 (keyword, searchVolume, trendScore, category, source, collectedAt)
+- [x] 인덱스 설계 (keyword, category, collectedAt, category+collectedAt)
+- [x] 마이그레이션 실행
+
+### Phase 3: 백엔드 API 구현
+- [x] server/db/keywords.ts 작성 (repository 함수)
+  - [x] saveKeywordTrend: 키워드 트렌드 저장
+  - [x] getLatestKeywordTrends: 최신 트렌드 조회
+  - [x] getKeywordTrendsByDate: 날짜 범위별 조회
+  - [x] getTopTrendingKeywords: 상위 트렌드 조회
+  - [x] deleteOldKeywordTrends: 오래된 데이터 삭제
+- [x] server/db/index.ts에 keywords export 추가
+
+### Phase 4: 자동 새로고침 스케줄러
+- [ ] Manus Heartbeat 설정 (매일 자정 또는 정시마다 실행)
+- [ ] 키워드 수집 로직 구현 (Google Trends API 또는 모의 데이터)
+- [ ] 트렌드 점수 계산 로직 (증감률 계산)
+- [ ] 스케줄러 테스트
+
+### Phase 5: 관리자 대시보드 UI
+- [ ] KeywordTrendsDashboard.tsx 컴포넌트 작성
+- [ ] 트렌드 차트 (Recharts 또는 Chart.js)
+- [ ] 카테고리별 필터링
+- [ ] 실시간 업데이트 표시
+- [ ] AdminDashboard.tsx에 탭 추가
+
+### Phase 6: 실시간 업데이트 기능
+- [ ] 폴링 기반 자동 새로고침 (5초 간격)
+- [ ] WebSocket 실시간 업데이트 (선택사항)
+- [ ] 업데이트 알림 토스트
+
+### Phase 7: 테스트 및 검증
+- [ ] vitest 테스트 작성 (keywords repository)
+- [ ] 대시보드 UI 테스트
+- [ ] 스케줄러 동작 확인
+
+### Phase 8: 체크포인트 저장 및 배포
+- [ ] 모든 테스트 통과 확인
+- [ ] 최종 체크포인트 저장

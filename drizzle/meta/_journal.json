@@ -176,6 +176,13 @@
       "when": 1782352857707,
       "tag": "0024_regular_magneto",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1782488018971,
+      "tag": "0025_fixed_zaran",
+      "breakpoints": true
     }
   ]
 }

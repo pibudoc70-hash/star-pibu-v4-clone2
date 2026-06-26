@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint, index } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint, index, real } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -374,3 +374,28 @@ export const consultationRequests = mysqlTable("consultationRequests", {
 }));
 export type ConsultationRequest = typeof consultationRequests.$inferSelect;
 export type InsertConsultationRequest = typeof consultationRequests.$inferInsert;
+
+
+// ── 키워드 트렌드 대시보드 ──────────────────────────────────────────────────────
+export const keywordTrends = mysqlTable("keywordTrends", {
+  id: int("id").autoincrement().primaryKey(),
+  keyword: varchar("keyword", { length: 100 }).notNull(),
+  searchVolume: int("searchVolume").notNull().default(0), // 검색량 (상대값 0-100)
+  trendScore: real("trendScore").notNull().default(0), // 트렌드 점수 (증감률 %)
+  category: varchar("category", { length: 50 }).default("general"), // 카테고리 (treatment, equipment, etc)
+  source: varchar("source", { length: 50 }).default("google"),      // 데이터 소스 (google, naver, etc)
+  collectedAt: timestamp("collectedAt").defaultNow().notNull(),      // 수집 시간
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  // 키워드별 최신 트렌드 조회
+  keywordIdx: index("keywordTrends_keyword_idx").on(table.keyword),
+  // 카테고리별 트렌드 조회
+  categoryIdx: index("keywordTrends_category_idx").on(table.category),
+  // 수집 시간별 조회 (최신 데이터 먼저)
+  collectedAtIdx: index("keywordTrends_collectedAt_idx").on(table.collectedAt),
+  // 복합 인덱스: 카테고리 + 수집 시간 (대시보드 조회 최적화)
+  categoryCollectedIdx: index("keywordTrends_category_collected_idx").on(table.category, table.collectedAt),
+}));
+export type KeywordTrend = typeof keywordTrends.$inferSelect;
+export type InsertKeywordTrend = typeof keywordTrends.$inferInsert;

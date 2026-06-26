@@ -3240,3 +3240,138 @@ body.font-lang-zh .hero-stat-label {
     top: -40px;
     left: 0;
   }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE UX PHASE 2~6 개선 (2026-06-26)
+   - Phase 2: Hero 첫 화면 비율/정보 위계 보완
+   - Phase 3: 섹션 헤더/신뢰 지표 일관성 강화
+   - Phase 4: CTA 시스템 위계 보완
+   - Phase 5: MobileBottomCTA 안전 영역 강화
+   - Phase 6: 타이포그래피/터치 UX 표준화
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Phase 2: Hero 보완 — 통계 수치 가독성 강화 ── */
+@media (max-width: 640px) {
+  /* Hero 통계 아이템 최소 터치 영역 확보 */
+  .hero-stats-row > * {
+    min-height: 44px;
+  }
+
+  /* Hero 슬로건 줄바꿈 허용 */
+  .hero-subtitle {
+    white-space: normal !important;
+    word-break: keep-all !important;
+  }
+}
+
+/* ── Phase 3: 섹션 헤더 일관성 — 모바일 패딩/마진 통일 ── */
+@media (max-width: 640px) {
+  /* 섹션 eyebrow 모바일 마진 통일 */
+  .section-eyebrow {
+    margin-bottom: 0.6rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+  }
+
+  /* section-title 모바일 줄바꿈 허용 — 텍스트 잘림 방지 */
+  .section-title {
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* section-subtitle 모바일 최대 너비 해제 */
+  .section-subtitle {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* PhilosophySection 신뢰 지표 스트립 — 모바일 패딩 최적화 */
+  .philosophy-value-card {
+    padding: 0.875rem !important;
+  }
+}
+
+/* ── Phase 4: CTA 시스템 — 버튼 위계 강화 ── */
+@media (max-width: 640px) {
+  /* Primary CTA — 네이버 예약 버튼 강조 */
+  .hero-btn-reserve {
+    box-shadow: 0 4px 20px rgba(3, 199, 90, 0.35) !important;
+  }
+
+  /* MobileBottomCTA Primary — 네이버 초록 강조 유지 */
+  .mobile-bottom-btn--reserve {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* 전화 버튼 — 터치 타겟 44px 이상 보장 */
+  .mobile-bottom-btn--phone {
+    min-height: 44px;
+  }
+}
+
+/* ── Phase 5: MobileBottomCTA 안전 영역 강화 ── */
+/* iOS 홈 인디케이터 영역 추가 대응 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-bottom-cta {
+    height: calc(54px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* 모바일에서 footer 하단 여백 — MobileBottomCTA 가림 방지 */
+@media (max-width: 640px) {
+  footer.footer-root {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom, 12px)) !important;
+  }
+}
+
+/* ── Phase 6: 타이포그래피/터치 UX 표준화 ── */
+@media (max-width: 640px) {
+  /* iOS 폼 줌 방지 — 모든 input/select/textarea 16px 이상 */
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: max(1rem, 16px) !important;
+  }
+
+  /* 터치 타겟 — 모든 버튼/링크 최소 44px 높이 */
+  button:not(.mobile-menu-close-btn):not([aria-hidden="true"]),
+  [role="button"] {
+    min-height: 44px;
+  }
+
+  /* 본문 텍스트 가독성 — 최소 14px */
+  p, li, span:not(.section-eyebrow) {
+    font-size: max(0.875rem, 14px);
+  }
+
+  /* 카드 내부 텍스트 밀도 낮추기 */
+  .review-card p {
+    line-height: 1.9 !important;
+  }
+
+  /* 링크 터치 타겟 확보 */
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* 인라인 링크는 예외 — 줄 내 링크는 높이 제한 불필요 */
+  p a, li a {
+    min-height: unset;
+    display: inline;
+  }
+}
+
+/* ── 모바일 접근성 — focus-visible 링 통일 ── */
+@media (max-width: 640px) {
+  :focus-visible {
+    outline: 2px solid var(--brand-gold, #C4A882);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}

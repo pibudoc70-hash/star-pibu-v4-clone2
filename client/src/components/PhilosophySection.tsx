@@ -183,7 +183,7 @@ export default function PhilosophySection() {
             {/* Left: Text */}
             <div ref={leftRef} className="reveal-left">
               <span className="section-eyebrow">OUR PHILOSOPHY</span>
-              <h2 className="section-title mb-4" style={{ whiteSpace: "nowrap" }}>
+              <h2 className="section-title mb-4">
                 {t.about.title}
               </h2>
               <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>

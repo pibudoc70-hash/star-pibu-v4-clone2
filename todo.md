@@ -3061,3 +3061,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] P1: MobileBottomCTA 충돌 및 하단 여백 개선
 - [ ] P2: 모바일 타이포그래피/터치 UX 표준화
 - [ ] 모바일 375px 기준 전체 검증 및 최종 보고
+
+## Phase 70: 모바일 UX/UI 전면 개선 (2026-06-26)
+- [x] Phase 70-1: MobileMenu 전면 개선 (CSS 클래스화, scroll lock, focus trap, ESC 닫기)
+- [x] Phase 70-2: 모바일 Hero 첫 화면 비율/정보 위계 개선 (통계 터치 영역, 슬로건 줄바꿈)
+- [x] Phase 70-3: 섹션 헤더 일관성 강화 (section-title nowrap 제거, eyebrow 패딩 통일)
+- [x] Phase 70-4: CTA 시스템 위계 강화 (Primary/Secondary/Tertiary 버튼 스타일)
+- [x] Phase 70-5: MobileBottomCTA safe-area 강화, footer 하단 여백 개선
+- [x] Phase 70-6: 타이포그래피/터치 UX 표준화 (iOS 줌 방지, 44px 터치 타겟, focus-visible 통일)

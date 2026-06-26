@@ -1776,7 +1776,7 @@
       font-size: clamp(1.04rem, 4.16vw, 1.235rem) !important;
       letter-spacing: 0.06em !important;
       font-weight: 400 !important;
-      margin-bottom: clamp(0.8rem, 2.5vh, 1.2rem) !important;
+      margin-bottom: clamp(1.5rem, 4vh, 2rem) !important;
       color: rgba(255,255,255,0.88) !important;
       text-shadow:
         0 1px 4px rgba(0,0,0,0.95),

@@ -905,27 +905,37 @@
     filter: drop-shadow(0 4px 24px rgba(0,0,0,0.3));
   }
   .hero-title {
-    color: #FFFFFF;
+    /* 골드 컬러 — 프리미엄 브랜드 강조 (CharReveal span 호환) */
+    color: #F0D078;
     /* Cormorant Garamond — 프리미엄 명조 브랜드 선언 */
     font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
     font-style: normal;
-    font-size: clamp(3.2rem, 9.5vw, 6rem);
-    font-weight: 400;
-    letter-spacing: 0.03em;
+    font-size: clamp(4rem, 11vw, 7.5rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
     line-height: 1.06;
     margin-bottom: clamp(0.6rem, 1.8vh, 1.2rem);
-    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.18);
+    text-shadow: 0 2px 20px rgba(196,168,80,0.5), 0 0 60px rgba(240,200,80,0.25);
   }
   .hero-subtitle {
-    color: rgba(255,255,255,0.78);
-    font-size: clamp(0.72rem, 1.5vw, 0.92rem);
+    color: rgba(255,255,255,0.85);
+    font-size: clamp(0.6rem, 0.95vw, 0.8rem);
     margin-bottom: clamp(0.4rem, 1.2vh, 0.9rem);
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     font-weight: 300;
     font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
     text-transform: uppercase;
     text-shadow: 0 1px 12px rgba(0,0,0,0.45);
-    word-break: keep-all;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    max-width: none !important;
+    width: max-content !important;
+    display: block !important;
+  }
+  .hero-subtitle > span,
+  .hero-subtitle > span > span {
+    white-space: nowrap !important;
+    display: inline !important;
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
@@ -1667,25 +1677,25 @@
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(2.8rem, 13vw, 4rem) !important;
-      font-weight: 400 !important;
-      letter-spacing: 0.03em !important;
+      font-size: clamp(3.4rem, 15vw, 5rem) !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.04em !important;
       line-height: 1.08 !important;
       word-break: keep-all !important;
       width: 100% !important;
       margin-bottom: clamp(1.5rem, 4vh, 2.5rem) !important;
-      color: #ffffff !important;
+      /* 골드 컬러 — 모바일에서도 프리미엄 강조 (CharReveal 호환) */
+      color: #F0D078 !important;
       text-shadow:
-        0 2px 8px rgba(0,0,0,0.95),
-        0 4px 24px rgba(0,0,0,0.8),
-        0 8px 48px rgba(0,0,0,0.5) !important;
+        0 2px 8px rgba(196,168,80,0.6),
+        0 4px 24px rgba(196,168,80,0.3) !important;
     }
 
     /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
     /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
     .hero-subtitle {
-      font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
-      letter-spacing: 0.14em !important;
+      font-size: clamp(0.6rem, 2.4vw, 0.76rem) !important;
+      letter-spacing: 0.12em !important;
       text-transform: uppercase !important;
       font-weight: 400 !important;
       margin-bottom: clamp(0.85rem, 2.5vh, 1.4rem) !important;
@@ -1694,6 +1704,8 @@
         0 1px 4px rgba(0,0,0,0.95),
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Montserrat', sans-serif !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
     }
 
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */

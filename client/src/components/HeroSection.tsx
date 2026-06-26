@@ -115,18 +115,13 @@ export default function HeroSection() {
               className="hero-logo-img"
             />
           </div>
-          {/* 로고 아래 텍스트: 한글 병원명 + 영문 서브텍스트 */}
-          <div className="text-center mt-2">
-            <div className="hero-logo-text-ko">{t.hero.title}</div>
-            <div className="hero-logo-text-en">dermatologic clinic</div>
-          </div>
         </div>
 
-        {/* 병원명: 글자별 charReveal (데스크톱만 - 로고 아래 텍스트로 대체됨) */}
+        {/* 병원명: 글자별 charReveal (데스크톱만) */}
         <h1 className="font-medium hero-title hidden md:block">
           <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
-        {/* 모바일: 병원명 로고 아래에 표시 */}
+        {/* 모바일: 병원명 숨김 */}
 
         {/* 슬로건: 단어별 wordReveal (데스크톱만) */}
         <p className="font-light hero-subtitle hidden md:block">

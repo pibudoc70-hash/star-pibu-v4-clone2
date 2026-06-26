@@ -1730,6 +1730,27 @@
         0 8px 48px rgba(0,0,0,0.5) !important;
     }
 
+    /* ▶ 6.5 모바일 병원명 + 영문 서브텍스트 */
+    .hero-title-mobile {
+      font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      margin-bottom: 0.25rem !important;
+      letter-spacing: 0.05em !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
+      font-family: 'Noto Serif KR', serif !important;
+    }
+
+    .hero-subtitle-mobile {
+      font-size: clamp(0.65rem, 2.5vw, 0.85rem) !important;
+      font-weight: 300 !important;
+      color: rgba(255,255,255,0.75) !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5) !important;
+      font-family: 'Montserrat', sans-serif !important;
+    }
+
     /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
     /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
     /* 영문과 한글 슬로건이 같은 자리에 위치 (겹침) + 30% 크기 확대 */

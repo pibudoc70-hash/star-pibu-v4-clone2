@@ -127,16 +127,17 @@ export default function HeroSection() {
         <p className="font-light hero-subtitle hidden md:block">
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
-        {/* 모바일: 순차 페이드인/아웃 애니메이션 (영문과 한글 겹침) */}
-        <div className="relative md:hidden" style={{position: 'relative', height: '0', overflow: 'visible'}}>
-          <p className="font-light hero-subtitle" style={{position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', textAlign: 'center'}}>
-            {t.hero.subtitle}
+        
+        {/* 모바일: 병원명 + 영문 서브텍스트 */}
+        <div className="md:hidden flex flex-col items-center gap-1">
+          {/* 한글 병원명 - 메인 */}
+          <p className="hero-title-mobile font-medium text-white text-center">
+            스타피부과
           </p>
-          {t.hero.subtitleKo && (
-            <p className="font-light hero-subtitle-ko" style={{position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', textAlign: 'center'}}>
-              {t.hero.subtitleKo}
-            </p>
-          )}
+          {/* 영문 서브텍스트*/}
+          <p className="hero-subtitle-mobile font-light text-white text-center">
+            STAR DERMATOLOGY CLINIC
+          </p>
         </div>
 
         {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}

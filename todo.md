@@ -3069,3 +3069,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Phase 70-4: CTA 시스템 위계 강화 (Primary/Secondary/Tertiary 버튼 스타일)
 - [x] Phase 70-5: MobileBottomCTA safe-area 강화, footer 하단 여백 개선
 - [x] Phase 70-6: 타이포그래피/터치 UX 표준화 (iOS 줌 방지, 44px 터치 타겟, focus-visible 통일)
+
+## Phase 50: 모바일 히어로 섹션 재설계 (2026-06-26)
+- [x] HeroSection.tsx 수정: 로고 아래 "스타피부과" (메인) + "STAR DERMATOLOGY CLINIC" (서브) 추가
+- [x] index.css 수정: .hero-title-mobile과 .hero-subtitle-mobile CSS 클래스 추가
+- [x] 모바일 뷰포트(375px)에서 레이아웃 확인 및 검증 완료
+- [x] 데스크톱 버전 영향 없음 (md:hidden으로 모바일 전용)
+- [x] 최종 테스트 및 체크포인트 저장 예정

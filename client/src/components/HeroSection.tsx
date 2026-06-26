@@ -128,15 +128,11 @@ export default function HeroSection() {
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
         
-        {/* 모바일: 병원명 + 영문 서브텍스트 */}
+        {/* 모바일: 병원명만 표시 (로고 아래 영어는 이미 있음) */}
         <div className="md:hidden flex flex-col items-center gap-1">
           {/* 한글 병원명 - 메인 */}
           <p className="hero-title-mobile font-medium text-white text-center">
             스타피부과
-          </p>
-          {/* 영문 서브텍스트*/}
-          <p className="hero-subtitle-mobile font-light text-white text-center">
-            STAR DERMATOLOGY CLINIC
           </p>
         </div>
 

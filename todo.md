@@ -3076,3 +3076,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 모바일 뷰포트(375px)에서 레이아웃 확인 및 검증 완료
 - [x] 데스크톱 버전 영향 없음 (md:hidden으로 모바일 전용)
 - [x] 최종 테스트 및 체크포인트 저장 예정
+
+## Phase 50: 모바일 히어로 섹션 재설계 (2026-06-26) - 완료
+- [x] HeroSection.tsx 수정: 로고 아래 "스타피부과" (메인) 추가
+- [x] 중복 제거: "스타피부과" 아래 "STAR DERMATOLOGY CLINIC" 제거 (로고 아래 영어만 유지)
+- [x] index.css 수정: .hero-title-mobile CSS 클래스 유지
+- [x] 모바일 뷰포트(375px)에서 레이아웃 확인 및 검증 완료
+- [x] 데스크톱 버전 영향 없음 (md:hidden으로 모바일 전용)
+- [x] 최종 체크포인트 저장 완료

@@ -84,10 +84,10 @@ export default function ReviewsSection() {
     <section ref={sectionRef} id="reviews" className="py-16 sm:py-24 star-section-alt">
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-12 reveal-heading">
+        <div className="section-header-block reveal-heading">
           <span className="section-eyebrow">{rv.eyebrow}</span>
-          <h2 className="section-title mb-4">{rv.sectionTitle}</h2>
-          <div className="star-divider mx-auto mb-4" />
+          <h2 className="section-title">{rv.sectionTitle}</h2>
+          <div className="star-divider mx-auto" />
           <div className="flex justify-center items-center gap-2">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -250,13 +250,7 @@ export default function ReviewsSection() {
             href="https://pcmap.place.naver.com/hospital/12020103/review/visitor?fromPanelNum=2&locale=ko&searchText=%EC%8A%A4%ED%83%80%ED%94%BC%EB%B6%80%EA%B3%BC&svcName=map_pcv5&timestamp=202603301414"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-normal transition-all hover:scale-105 hover:shadow-md"
-            style={{
-              background: "var(--brand-bg, #FAF8F5)",
-              color: "var(--brand-text, #2C2C2C)",
-              border: "1.5px solid var(--brand-gold-pale, #E8E0D5)",
-              boxShadow: "0 2px 8px rgba(196,168,130,0.12)",
-            }}
+            className="btn-ghost-mobile"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />

@@ -51,11 +51,12 @@ function SectionHeader({ lang }: { lang: string }) {
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
-    <div className="text-center mb-14 md:mb-20">
+    <div className="section-header-block">
       {/* eyebrow — 공통 클래스 적용 */}
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       {/* 제목 — section-title 공통 클래스 */}
       <h2 className="section-title">SPECIAL EVENT</h2>
+      <div className="star-divider mx-auto" />
       {/* 서브타이틀 — section-subtitle 공통 클래스 */}
       <p className="section-subtitle">
         {subtitleMap[lang] ?? subtitleMap.ko}

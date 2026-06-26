@@ -3103,3 +3103,36 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] reservation.service.test.ts 일요일 테스트 날짜 미래 날짜로 수정 (2026-07-05)
 - [x] 전체 1398개 테스트 통과 확인
 - [x] TypeScript 오류 0개 확인
+
+## Phase 모바일디자인: 프리미엄 모바일 UX 개선 (2026-06-26)
+### P0: 섹션 리듬 + 타이포그래피
+- [x] index.css: 섹션 헤더 문법 통일 (section-header-block 클래스 + eyebrow/title/subtitle 간격 정비)
+- [x] index.css: 섹션 상하 여백 리듬 재정리 (py-20 md:py-28 → 64px/96px 통일 시스템)
+- [x] index.css: 모바일 타이포 스케일 정교화 (제목/부제/설명/숫자/캐프션/버튼)
+- [x] index.css: 회색 보조 텍스트 대비 보정 (WCAG AA)
+- [x] SpecialEventSection: section-header-block + star-divider 적용
+- [x] ResultsStatisticsSection: section-header-block + star-divider 적용
+- [x] ReviewsSection: section-header-block 적용 + More Reviews CTA 개선
+- [x] FAQSection: section-header-block + star-divider 적용
+- [x] ContactSection: section-header-block 적용
+- [x] ManagementDevicesSection: 섹션 헤더 토큰 클래스 적용
+- [x] YouTubeSection: 섹션 헤더 토큰 클래스 적용
+- [x] star-section-alt 배경색 민트(#EEF7F7) → 브랜드 웹 뉴트럴(#FAF8F5) 교체
+
+### P0: CTA 위계 재설계
+- [x] MobileBottomCTA: Primary/Secondary/Utility 역할 명확화, 높이·radius·폰트 통일
+- [x] 본문 CTA 버튼 스타일 통일 (btn-primary-mobile, btn-secondary-mobile, btn-ghost-mobile 클래스)
+- [x] 하단 고정 바 safe-area 및 콘텐츠 가림 방지 확인
+
+### P1: 카드 UI 일관성
+- [x] index.css: 카드 radius/padding/border/shadow/bg 통일 시스템
+- [x] index.css: 모바일 카드 밀도 개선 (후기/FAQ/이벤트)
+
+### P1: 신뢰지표 강화
+- [x] ResultsStatisticsSection: section-header-block + star-divider 적용
+- [x] ContactSection 마지막 스크롤 인상 강화 (ContactSection::after 그라데이션 라인)
+
+### P2: 인터랙션 디테일
+- [x] 터치 영역 44×44px 이상 확보 (faq-question-btn, review-dot, mobile-bottom-btn 등)
+- [x] hover → active/focus-visible 중심 전환 (@media hover:none)
+- [x] 스크롤 애니메이션 강도·빈도 절제 (translateY 32px→16px, 스타거 딜레이 단축)

@@ -40,11 +40,10 @@ export default function ResultsStatisticsSection() {
     <section className="py-16 md:py-24" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
       <div className="container">
         {/* 제목 */}
-        <div className="text-center mb-12">
+        <div className="section-header-block">
           <span className="section-eyebrow">RESULTS & STATISTICS</span>
-          <h2 className="section-title">
-            {r.sectionTitle}
-          </h2>
+          <h2 className="section-title">{r.sectionTitle}</h2>
+          <div className="star-divider mx-auto" />
         </div>
 
         {/* 의료진 카드 */}

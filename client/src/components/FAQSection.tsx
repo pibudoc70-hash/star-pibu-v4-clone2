@@ -75,9 +75,10 @@ export default function FAQSection() {
       <section id="faq" className="py-16 md:py-24 faq-section-bg">
         <div className="container max-w-4xl">
           {/* 섹션 헤더 */}
-          <div className="text-center mb-14">
+          <div className="section-header-block">
             <span className="section-eyebrow">FAQ</span>
-            <h2 className="section-title mb-4">{faq.sectionTitle}</h2>
+            <h2 className="section-title">{faq.sectionTitle}</h2>
+            <div className="star-divider mx-auto" />
             <p className="section-subtitle">{faq.sectionSubtitle}</p>
           </div>
 

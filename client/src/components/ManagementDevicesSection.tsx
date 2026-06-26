@@ -323,17 +323,15 @@ export default function ManagementDevicesSection() {
     <section className="py-12 sm:py-20" style={{ background: "#FDFAF6" }}>
       <div className="container">
         {/* 섹션 헤더 */}
-        <div className="text-center mb-8 sm:mb-12">
-          <p
-            className="text-xs sm:text-sm tracking-widest uppercase mb-2"
-            style={{ color: "#d1ab67", fontFamily: "Montserrat, sans-serif" }}
-          >
+        <div className="section-header-block">
+          <span className="section-eyebrow management-devices-eyebrow">
             MANAGEMENT DEVICES
-          </p>
-          <h2 className="text-2xl sm:text-4xl font-bold mb-3" style={{ color: "#1A2B4A" }}>
+          </span>
+          <h2 className="section-title management-devices-title">
             {md.sectionTitle}
           </h2>
-          <p className="text-sm sm:text-base" style={{ color: "#d1ab67" }}>
+          <div className="star-divider mx-auto" />
+          <p className="section-subtitle" style={{ color: 'var(--brand-gold-deep, #A8895E)' }}>
             {md.sectionSubtitle}
           </p>
         </div>

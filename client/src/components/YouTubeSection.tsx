@@ -188,14 +188,15 @@ export default function YouTubeSection() {
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         {/* 섹션 제목 */}
-        <div className="text-center mb-12">
-          <p className="text-sm md:text-base font-medium mb-2" style={{ color: '#D1AB67' }}>
+        <div className="section-header-block">
+          <span className="section-eyebrow youtube-section-eyebrow">
             YOUTUBE CHANNEL
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          </span>
+          <h2 className="section-title youtube-section-title">
             {yt.sectionTitle}
           </h2>
-          <p className="text-sm md:text-base text-gray-600">
+          <div className="star-divider mx-auto" />
+          <p className="section-subtitle">
             {yt.sectionSubtitle}
           </p>
         </div>

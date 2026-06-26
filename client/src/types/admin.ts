@@ -15,7 +15,8 @@ export type AdminTab =
   | "treatmentsV2"
   | "reservations"
   | "unavailableSlots"
-  | "youtube";
+  | "youtube"
+  | "keywords";
 
 // ── 예약 필터 ──────────────────────────────────────────────────────────────────
 export type ReservationFilter = "all" | "member" | "guest";

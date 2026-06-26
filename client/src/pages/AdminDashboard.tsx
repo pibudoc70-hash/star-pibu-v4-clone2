@@ -22,6 +22,7 @@ import AdminPopupTab from "@/components/admin/AdminPopupTab";
 import AdminEventsTab from "@/components/admin/AdminEventsTab";
 import AdminReservationsTab from "@/components/admin/AdminReservationsTab";
 import AdminUnavailableSlotsTab from "@/components/admin/AdminUnavailableSlotsTab";
+import { KeywordTrendsDashboard } from "@/components/KeywordTrendsDashboard";
 
 const TAB_META: Record<AdminTab, { label: string; desc: string }> = {
   treatments:      { label: "시술·장비 관리",       desc: "시술 및 장비 정보를 추가·수정·삭제합니다" },
@@ -32,6 +33,7 @@ const TAB_META: Record<AdminTab, { label: string; desc: string }> = {
   unavailableSlots:{ label: "예약 불가능 날짜",      desc: "특정 날짜를 예약 불가능하도록 설정합니다" },
   users:           { label: "회원 관리",             desc: "가입 회원 목록 및 역할 관리" },
   youtube:          { label: "유튜브 관리",            desc: "유튜브 영상을 추가·수정·삭제합니다" },
+  keywords:        { label: "키워드 트렌드 대시보드", desc: "최신 검색 트렌드를 모니터링합니다" },
 };
 
 export default function AdminDashboard() {
@@ -74,6 +76,7 @@ export default function AdminDashboard() {
     { tab: "users",            icon: <Users size={16} />,       label: "회원 관리" },
     { tab: "treatments",       icon: <Stethoscope size={16} />, label: "시술·장비 관리" },
     { tab: "treatmentsV2",     icon: <Stethoscope size={16} />, label: "시술·장비소개 2 관리" },
+    { tab: "keywords",         icon: <TrendingUp size={16} />,  label: "키워드 트렌드" },
   ];
 
   return (
@@ -226,6 +229,7 @@ export default function AdminDashboard() {
           {activeTab === "events"           && <AdminEventsTab currentUser={user} />}
           {activeTab === "reservations"     && <AdminReservationsTab currentUser={user} />}
           {activeTab === "unavailableSlots" && <AdminUnavailableSlotsTab currentUser={user} />}
+          {activeTab === "keywords"         && <KeywordTrendsDashboard />}
         </div>
       </div>
     </div>

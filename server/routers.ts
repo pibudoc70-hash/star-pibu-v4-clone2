@@ -11,6 +11,7 @@ import { youtubeRouter } from "./routers/youtube";
 import { equipment3Router } from "./routers/equipment3";
 import { consultationRouter } from "./routers/consultation";
 import { noticesRouter } from "./routers/notices";
+import { keywordsRouter } from "./routers/keywords";
 
 export const appRouter = router({
   system: systemRouter,
@@ -32,6 +33,7 @@ export const appRouter = router({
   equipment3: equipment3Router,
   consultation: consultationRouter,
   notices: noticesRouter,
+  keywords: keywordsRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -3169,6 +3169,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - [x] getTopTrendingKeywords: 상위 트렌드 조회
   - [x] deleteOldKeywordTrends: 오래된 데이터 삭제
 - [x] server/db/index.ts에 keywords export 추가
+- [x] server/routers/keywords.ts 작성 (tRPC 라우터)
+  - [x] getLatest: 최신 키워드 트렌드 조회
+  - [x] getTopTrending: 상위 트렌딩 키워드 조회
+  - [x] getByDateRange: 날짜 범위별 조회
+  - [x] save: 키워드 트렌드 저장
+  - [x] deleteOld: 오래된 데이터 삭제
+- [x] server/routers.ts에 keywordsRouter 추가
 
 ### Phase 4: 자동 새로고침 스케줄러
 - [ ] Manus Heartbeat 설정 (매일 자정 또는 정시마다 실행)
@@ -3177,11 +3184,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 스케줄러 테스트
 
 ### Phase 5: 관리자 대시보드 UI
-- [ ] KeywordTrendsDashboard.tsx 컴포넌트 작성
-- [ ] 트렌드 차트 (Recharts 또는 Chart.js)
-- [ ] 카테고리별 필터링
-- [ ] 실시간 업데이트 표시
-- [ ] AdminDashboard.tsx에 탭 추가
+- [x] KeywordTrendsDashboard.tsx 컴포넌트 작성
+  - [x] 통계 카드 (총 모니터링 키워드, 상위 트렌딩, 평균 검색량)
+  - [x] 검색량 차트 (Bar Chart)
+  - [x] 트렌드 변화율 차트 (Line Chart)
+  - [x] 카테고리 분포 (Pie Chart)
+  - [x] 최신 키워드 리스트
+- [x] 카테고리별 필터링
+- [x] 자동 새로고침 기능 (5초, 10초, 30초, 1분 선택 가능)
+- [x] AdminDashboard.tsx에 keywords 탭 추가
+- [x] types/admin.ts에 keywords 타입 추가
 
 ### Phase 6: 실시간 업데이트 기능
 - [ ] 폴링 기반 자동 새로고침 (5초 간격)

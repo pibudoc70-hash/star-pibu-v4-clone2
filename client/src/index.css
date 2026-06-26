@@ -1661,40 +1661,40 @@
       padding-bottom: 0 !important;
     }
 
-    /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
+    /* ▶ 5. 로고 — 모바일에서 작게 유지, 병원명 텍스트에 집중 */
     .hero-logo-img {
-      height: clamp(125px, 31vw, 169px) !important;
-      width: clamp(125px, 31vw, 169px) !important;
+      height: clamp(80px, 20vw, 110px) !important;
+      width: clamp(80px, 20vw, 110px) !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
+      margin-bottom: clamp(0.4rem, 1.5vw, 0.7rem) !important;
     }
 
-    /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
-    /* 텍스트 그림자를 강화해 배경과 명확한 대비 확보 */
+    /* ▶ 6. 병원명 h1 — 시인성 최우선, 크게 키워 임팩트 강화 */
     #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
-      font-size: clamp(3.4rem, 15vw, 5rem) !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.04em !important;
-      line-height: 1.08 !important;
+      font-size: clamp(4.2rem, 19vw, 6rem) !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.05em !important;
+      line-height: 1.05 !important;
       word-break: keep-all !important;
       width: 100% !important;
-      margin-bottom: clamp(1.5rem, 4vh, 2.5rem) !important;
+      margin-bottom: clamp(1rem, 3vh, 1.8rem) !important;
       /* 골드 컬러 — 모바일에서도 프리미엄 강조 (CharReveal 호환) */
       color: #F0D078 !important;
       text-shadow:
-        0 2px 8px rgba(196,168,80,0.6),
-        0 4px 24px rgba(196,168,80,0.3) !important;
+        0 2px 12px rgba(196,168,80,0.7),
+        0 4px 32px rgba(196,168,80,0.4),
+        0 0 60px rgba(240,200,80,0.2) !important;
     }
 
     /* ▶ 7. 슬로건 — 가독성 중심 재설계 */
     /* 글자 크기 확대 + 대비 강화 + 연소간 조절 */
     .hero-subtitle {
-      font-size: clamp(0.6rem, 2.4vw, 0.76rem) !important;
+      font-size: clamp(0.55rem, 2.2vw, 0.7rem) !important;
       letter-spacing: 0.12em !important;
       text-transform: uppercase !important;
       font-weight: 400 !important;

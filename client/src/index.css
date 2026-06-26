@@ -1757,6 +1757,9 @@
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Noto Serif KR', serif !important;
       line-height: 1.6 !important;
+      white-space: pre-line !important;
+      word-break: keep-all !important;
+      max-width: 100% !important;
     }
 
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */

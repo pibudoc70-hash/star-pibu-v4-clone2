@@ -1711,6 +1711,30 @@
       margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
     }
 
+    /* 로고 아래 텍스트: 한글 병원명 + 영문 서브텍스트 */
+    .hero-logo-text-ko {
+      font-family: 'Noto Serif KR', serif !important;
+      font-size: clamp(1.2rem, 5vw, 1.5rem) !important;
+      font-weight: 400 !important;
+      color: #ffffff !important;
+      letter-spacing: 0.02em !important;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,0.95),
+        0 2px 12px rgba(0,0,0,0.8) !important;
+      margin-bottom: 0.3rem !important;
+    }
+    .hero-logo-text-en {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: clamp(0.6rem, 2.2vw, 0.75rem) !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.08em !important;
+      color: rgba(255,255,255,0.85) !important;
+      text-transform: uppercase !important;
+      text-shadow:
+        0 1px 3px rgba(0,0,0,0.95),
+        0 2px 8px rgba(0,0,0,0.8) !important;
+    }
+
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
     /* 텍스트 그림자를 강화해 배경과 명확한 대비 확보 */
     #home h1, .hero-title {

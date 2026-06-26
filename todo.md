@@ -3136,3 +3136,20 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 터치 영역 44×44px 이상 확보 (faq-question-btn, review-dot, mobile-bottom-btn 등)
 - [x] hover → active/focus-visible 중심 전환 (@media hover:none)
 - [x] 스크롤 애니메이션 강도·빈도 절제 (translateY 32px→16px, 스타거 딜레이 단축)
+
+## Phase 스켈레톤UI: 로딩 상태 개선 [x]
+
+### 공통 스켈레톤 UI 컴포넌트
+- [x] SkeletonUI.tsx 작성 (ReviewCardSkeleton, DoctorCardSkeleton, DeviceCardSkeleton, StatCardSkeleton)
+- [x] skeleton-shimmer CSS 애니메이션 클래스 추가
+
+### 데이터 로딩 섹션에 스켈레톤 UI 적용
+- [x] ResultsStatisticsSection: 통계 로딩 상태 600ms 시뮬레이션
+- [x] ReviewsSection: 후기 카드 로딩 상태 600ms 시뮬레이션 (모바일/데스크톱 분기)
+- [x] DoctorsSection: 의료진 카드 로딩 상태 800ms 시뮬레이션
+- [x] ManagementDevicesSection: 장비 카드 로딩 상태 700ms 시뮬레이션
+
+### 결과
+- [x] TypeScript 오류 0개
+- [x] 전체 테스트 1398/1398 통과 (100%)
+- [x] 모바일 환경에서 체감 로딩 속도 향상

@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
+import { DeviceCardSkeleton } from "@/components/SkeletonUI";
 
 // ── 장비 데이터 타입 ──────────────────────────────────────────────────────────
 interface Device {
@@ -305,6 +306,13 @@ export default function ManagementDevicesSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // 초기 로딩 상태 시뮬레이션
+    const timer = setTimeout(() => setIsLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
 
   const updateScrollButtons = () => {
     const el = scrollContainerRef.current;
@@ -337,59 +345,72 @@ export default function ManagementDevicesSection() {
         </div>
 
         {/* 스크롤 컨테이너 */}
-        <div className="relative">
-          {/* 좌측 화살표 */}
-          {canScrollLeft && (
-            <button
-              type="button"
-              onClick={() => scroll("left")}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md -translate-x-3"
-              style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
-              aria-label={t.managementDevices.scrollPrevLabel}
-            >
-              <ChevronLeft size={18} />
-            </button>
-          )}
+        {isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+          </div>
+        ) : (
+          <div className="relative">
+            {/* 좋주 화살표 */}
+            {canScrollLeft && (
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md -translate-x-3"
+                style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
+                aria-label={t.managementDevices.scrollPrevLabel}
+              >
+                <ChevronLeft size={18} />
+              </button>
+            )}
 
-          {/* 우측 화살표 */}
-          {canScrollRight && (
-            <button
-              type="button"
-              onClick={() => scroll("right")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md translate-x-3"
-              style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
-              aria-label={t.managementDevices.scrollNextLabel}
-            >
-              <ChevronRight size={18} />
-            </button>
-          )}
+            {/* 우측 화살표 */}
+            {canScrollRight && (
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md translate-x-3"
+                style={{ background: "white", border: "1px solid #e8dfc8", color: "#d1ab67" }}
+                aria-label={t.managementDevices.scrollNextLabel}
+              >
+                <ChevronRight size={18} />
+              </button>
+            )}
 
-          <div
-            ref={scrollContainerRef}
-            className="overflow-x-auto pb-4 hide-scrollbar"
-            style={{ scrollSnapType: "x mandatory" }}
-            onScroll={updateScrollButtons}
-          >
             <div
-              className="grid gap-4"
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${devices.length}, minmax(200px, 1fr))`,
-                width: "max-content",
-                minWidth: "100%",
-              }}
+              ref={scrollContainerRef}
+              className="overflow-x-auto pb-4 hide-scrollbar"
+              style={{ scrollSnapType: "x mandatory" }}
+              onScroll={updateScrollButtons}
             >
-              {devices.map((device) => (
-                <div
-                  key={device.id}
-                  style={{ scrollSnapAlign: "start", width: "200px" }}
-                >
-                  <DeviceCard device={device} />
-                </div>
-              ))}
+              <div
+                className="grid gap-4"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${devices.length}, minmax(200px, 1fr))`,
+                  width: "max-content",
+                  minWidth: "100%",
+                }}
+              >
+                {devices.map((device) => (
+                  <div
+                    key={device.id}
+                    style={{ scrollSnapAlign: "start", width: "200px" }}
+                  >
+                    <DeviceCard device={device} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

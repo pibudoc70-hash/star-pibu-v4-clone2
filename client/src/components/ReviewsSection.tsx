@@ -11,6 +11,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
+import { ReviewCardSkeleton } from "@/components/SkeletonUI";
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -34,6 +35,7 @@ export default function ReviewsSection() {
 
   const reviews = rv.items;
   const [current, setCurrent] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" && window.innerWidth < 768
   );
@@ -42,6 +44,12 @@ export default function ReviewsSection() {
 
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+
+  useEffect(() => {
+    // 초기 로딩 상태 시뮬레이션
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const goNext = useCallback(() => {
     setCurrent((c) => (c + 1) % totalPages);
@@ -100,7 +108,19 @@ export default function ReviewsSection() {
         </div>
 
         {/* 모바일: 스와이프 슬라이더 / 데스크톱: 3열 그리드 */}
-        {isMobile ? (
+        {isLoading ? (
+          isMobile ? (
+            <div className="space-y-4">
+              <ReviewCardSkeleton />
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-5 mb-8">
+              <ReviewCardSkeleton />
+              <ReviewCardSkeleton />
+              <ReviewCardSkeleton />
+            </div>
+          )
+        ) : isMobile ? (
           <div
             className="relative"
             role="region"
@@ -214,7 +234,7 @@ export default function ReviewsSection() {
               ))}
             </div>
 
-            <div className="flex justify-center items-center gap-4">
+            <div className="flex items-center justify-between gap-4">
               <button type="button"
                 onClick={goPrev}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
@@ -222,7 +242,7 @@ export default function ReviewsSection() {
               >
                 <ChevronLeft size={18} />
               </button>
-              <div className="flex gap-2">
+              <div className="flex justify-center gap-2">
                 {Array.from({ length: totalPages }).map((_, i) => (
                   <button type="button"
                     key={i}

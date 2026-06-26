@@ -1,8 +1,17 @@
+import { useState, useEffect } from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 import { useClinicStats } from '@/hooks/useClinicStats';
+import { DoctorCardSkeleton, StatisticCardSkeleton } from '@/components/SkeletonUI';
 
 export default function ResultsStatisticsSection() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // 초기 로딩 상태 시뮬레이션 (실제로는 데이터 페칭 완료 후 false)
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
   const { t } = useLang();
   const r = t.results;
   const clinicStats = useClinicStats();
@@ -48,7 +57,14 @@ export default function ResultsStatisticsSection() {
 
         {/* 의료진 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {doctors.map((doctor) => (
+          {isLoading ? (
+            <>
+              <DoctorCardSkeleton />
+              <DoctorCardSkeleton />
+              <DoctorCardSkeleton />
+            </>
+          ) : (
+            doctors.map((doctor) => (
             <div
               key={doctor.id}
               className="rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
@@ -73,12 +89,21 @@ export default function ResultsStatisticsSection() {
                 </p>
               </div>
             </div>
-          ))}
+          ))
+          )}
         </div>
 
         {/* 통계 섹션 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {statistics.map((stat, index) => (
+          {isLoading ? (
+            <>
+              <StatisticCardSkeleton />
+              <StatisticCardSkeleton />
+              <StatisticCardSkeleton />
+              <StatisticCardSkeleton />
+            </>
+          ) : (
+            statistics.map((stat, index) => (
             <div
               key={index}
               className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1"
@@ -108,7 +133,8 @@ export default function ResultsStatisticsSection() {
                 {stat.description}
               </p>
             </div>
-          ))}
+          ))
+          )}
         </div>
       </div>
     </section>

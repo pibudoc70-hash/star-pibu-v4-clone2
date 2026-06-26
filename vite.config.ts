@@ -170,7 +170,6 @@ export default defineConfig({
     emptyOutDir: true,
     cssCodeSplit: true,
     target: "es2020",
-    minify: "terser",
     rollupOptions: {
       output: {
         manualChunks: (id) => {

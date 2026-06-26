@@ -13,8 +13,10 @@ import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, b
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
-import SpecialEventSection from "@/components/SpecialEventSection";
-import DoctorsSection from "@/components/DoctorsSection";
+// [P1-OPT] SpecialEventSection, DoctorsSection을 lazy import로 전환
+// 폴드 아래 섹션이므로 초기 로딩 시 필요 없음
+const SpecialEventSection = lazy(() => import("@/components/SpecialEventSection"));
+const DoctorsSection = lazy(() => import("@/components/DoctorsSection"));
 const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEquipmentSection"));
 import Footer from "@/components/Footer";
 const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));

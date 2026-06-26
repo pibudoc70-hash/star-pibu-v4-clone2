@@ -23,7 +23,7 @@
  * [R18-P0-2] 배경 레이어 추상화:
  * - HeroBackgroundLayers: HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립
  */
-import { useRef, useState } from "react";
+import { useRef, useState, memo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -43,7 +43,9 @@ import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/con
 // 신규 코드는 hero/constants.ts에서 직접 import하세요
 export { HERO_DELAYS } from "@/components/hero/constants";
 
-export default function HeroSection() {
+// [P1-OPT] React.memo로 memoization 적용
+// Hero 섮션은 부모 업데이트 시 단순 리렌더링 방지
+function HeroSection() {
   const { t, lang } = useLang();
   const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
   const chatUrl = isZH ? "#" : rawChatUrl;
@@ -197,3 +199,6 @@ export default function HeroSection() {
     </section>
   );
 }
+
+// [P1-OPT] React.memo로 memoization 내보내
+export default memo(HeroSection);

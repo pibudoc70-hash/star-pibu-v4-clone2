@@ -197,6 +197,18 @@ export default defineConfig({
           if (id.includes("data/treatments")) {
             return "data-treatments";
           }
+          // [P1-OPT] 관리자 페이지 청크 분리
+          if (id.includes("pages/Admin")) {
+            return "page-admin";
+          }
+          // [P1-OPT] 시술/장비 페이지 청크 분리
+          if (id.includes("pages/Treatment") || id.includes("pages/Equipment")) {
+            return "page-treatments-equipment";
+          }
+          // [P1-OPT] 랜딩 페이지 청크 분리
+          if (id.includes("pages/Landing")) {
+            return "page-landings";
+          }
           // 나머지 node_modules는 Rollup 기본 청킹에 맡김
         },
       },

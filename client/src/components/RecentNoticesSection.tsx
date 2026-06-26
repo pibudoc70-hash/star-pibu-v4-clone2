@@ -2,6 +2,7 @@
  * RecentNoticesSection.tsx
  * 메인 페이지에서 최근 공지사항 3개를 제목 리스트로 보여주는 섹션
  */
+import { memo } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Bell, ChevronRight, Pin } from "lucide-react";
@@ -25,7 +26,7 @@ const LABELS = {
   zh: { section: "公告", more: "查看全部", pinned: "置顶", noNotice: "暂无公告。" },
 };
 
-export default function RecentNoticesSection({ lang }: Props) {
+function RecentNoticesSection({ lang }: Props) {
   const { data: allNotices = [], isLoading } = trpc.notices.list.useQuery();
   const langPrefix = lang === "ko" ? "" : `/${lang}`;
   const labels = LABELS[lang];
@@ -102,3 +103,6 @@ export default function RecentNoticesSection({ lang }: Props) {
     </section>
   );
 }
+
+// [P1-OPT] React.memo로 memoization 내보내
+export default memo(RecentNoticesSection);

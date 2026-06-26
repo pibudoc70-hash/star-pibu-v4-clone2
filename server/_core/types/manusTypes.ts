@@ -70,4 +70,9 @@ export interface GetUserInfoWithJwtResponse {
   loginMethod?: string | null;
   /** Server may return a list of registered platforms (e.g. ["REGISTERED_PLATFORM_EMAIL"]) */
   platforms?: string[];
+  /**
+   * Cron-only field. Populated by bizserver when `openId` is a cron identity
+   * (i.e. starts with the `cron_` prefix); blank for real users.
+   */
+  taskUid?: string | null;
 }

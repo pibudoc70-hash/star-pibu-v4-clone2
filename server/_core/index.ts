@@ -9,6 +9,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startOtpCleanupScheduler } from "../otpCleanup";
+import { collectKeywordTrendsHandler } from "./scheduled";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -43,6 +44,9 @@ async function startServer() {
   // removed because it only contained fragment URLs (#about, #doctors, etc.) and
   // was shadowing the comprehensive static sitemap.xml.
   // Source of truth: client/public/sitemap.xml
+  // Heartbeat 스케줄러 핸들러
+  app.post("/api/scheduled/collectKeywordTrends", collectKeywordTrendsHandler);
+
   // tRPC API
   app.use(
     "/api/trpc",

@@ -4,6 +4,8 @@
  */
 import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
+import { useKeywordTrendsWebSocket } from "@/hooks/useKeywordTrendsWebSocket";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,9 +15,30 @@ import { AlertCircle, TrendingUp, Activity, Zap } from "lucide-react";
 const COLORS = ["#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#3b82f6", "#f97316"];
 
 export function KeywordTrendsDashboard() {
+  const { user } = useAuth();
   const [category, setCategory] = useState<string | undefined>();
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState(5000); // 5초
+  const [wsConnected, setWsConnected] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+
+  // WebSocket 연결
+  const { isConnected } = useKeywordTrendsWebSocket(
+    (update) => {
+      console.log("[Dashboard] Keyword update received:", update);
+      setLastUpdate(new Date());
+      refetchLatest();
+    },
+    (stats) => {
+      console.log("[Dashboard] Statistics update received:", stats);
+      setLastUpdate(new Date());
+    },
+    user?.role === "admin"
+  );
+
+  useEffect(() => {
+    setWsConnected(isConnected);
+  }, [isConnected]);
 
   // 최신 트렌드 조회
   const { data: latestTrends, isLoading: isLoadingLatest, refetch: refetchLatest } = trpc.keywords.getLatest.useQuery(

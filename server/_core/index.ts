@@ -10,6 +10,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startOtpCleanupScheduler } from "../otpCleanup";
 import { collectKeywordTrendsHandler } from "./scheduled";
+import { initializeWebSocketServer } from "./websocket";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -73,6 +74,8 @@ async function startServer() {
     console.log(`Server running on http://localhost:${port}/`);
     // P2-1: 만료된 OTP 레코드 정리 스케줄러 (6시간 간격)
     startOtpCleanupScheduler();
+    // WebSocket 서버 초기화
+    initializeWebSocketServer(server);
   });
 }
 

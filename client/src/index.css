@@ -1700,15 +1700,15 @@
       padding-bottom: 0 !important;
     }
 
-    /* ▶ 5. 로고 — 적절한 존재감, 과하지 않게 */
+    /* ▶ 5. 로고 — 높이 축소로 첫 화면 비율 개선 */
     .hero-logo-img {
-      height: clamp(163px, 40vw, 220px) !important;
-      width: clamp(163px, 40vw, 220px) !important;
+      height: clamp(110px, 28vw, 150px) !important;
+      width: clamp(110px, 28vw, 150px) !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5)) !important;
     }
     .hero-logo-wrap {
-      margin-bottom: clamp(0.6rem, 2vw, 1rem) !important;
+      margin-bottom: clamp(0.4rem, 1.2vw, 0.6rem) !important;
     }
 
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
@@ -1732,10 +1732,10 @@
 
     /* ▶ 6.5 모바일 병원명 + 영문 서브텍스트 */
     .hero-title-mobile {
-      font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
+      font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
       font-weight: 600 !important;
       color: #ffffff !important;
-      margin-bottom: 0.25rem !important;
+      margin-bottom: 0.15rem !important;
       letter-spacing: 0.05em !important;
       text-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
       font-family: 'Noto Serif KR', serif !important;
@@ -1805,11 +1805,11 @@
       100% { opacity: 1; }
     }
 
-    /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */
+    /* ▶ 8. 통계 스트립 — 높이 축소 및 간격 조정 */
     /* 반투명 배경 패널 + 강한 그림자로 배경과 명확한 분리 */
     .hero-stats-row {
-      gap: clamp(1rem, 5vw, 2rem) !important;
-      padding: clamp(0.9rem, 2.5vh, 1.25rem) clamp(1.25rem, 5vw, 2rem) !important;
+      gap: clamp(0.8rem, 4vw, 1.5rem) !important;
+      padding: clamp(0.7rem, 1.8vh, 0.9rem) clamp(1rem, 4vw, 1.5rem) !important;
       border-top: 1px solid rgba(201,168,76,0.35) !important;
       border-bottom: none !important;
       max-width: 100% !important;
@@ -1819,11 +1819,11 @@
       -webkit-backdrop-filter: blur(8px) !important;
       box-shadow: 0 4px 24px rgba(0,0,0,0.35) !important;
       flex-wrap: wrap !important;
-      margin-bottom: clamp(0.4rem, 1vh, 0.6rem) !important;
+      margin-bottom: clamp(0.3rem, 0.8vh, 0.5rem) !important;
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.19rem, 5.6vw, 1.68rem) !important;
+      font-size: clamp(1.05rem, 4.8vw, 1.4rem) !important;
       font-weight: 400 !important;
       color: #ffffff !important;
       text-shadow:
@@ -1833,14 +1833,14 @@
     }
     .hero-stat-label {
       font-family: 'Noto Sans KR', sans-serif !important;
-      font-size: clamp(0.65rem, 2.2vw, 0.75rem) !important;
+      font-size: clamp(0.6rem, 2vw, 0.7rem) !important;
       color: rgba(255, 255, 255, 0.95) !important;
       font-weight: 500 !important;
       letter-spacing: 0.04em !important;
       text-shadow:
         0 1px 3px rgba(0,0,0,1),
         0 2px 10px rgba(0,0,0,0.9) !important;
-      margin-top: 4px !important;
+      margin-top: 2px !important;
       white-space: normal !important;
     }
     .hero-stat-divider {
@@ -1853,42 +1853,58 @@
       min-width: 0 !important;
     }
 
-    /* ▶ 9. CTA wrap */
+    /* ▶ 9. CTA wrap — 간격 축소 */
     .hero-actions-wrap {
-      margin-top: clamp(0.3rem, 0.8vh, 0.5rem) !important;
+      margin-top: clamp(0.2rem, 0.6vh, 0.4rem) !important;
       max-width: 100% !important;
-      gap: 0.6rem !important;
+      gap: 0.5rem !important;
     }
 
-    /* ▶ 10. Primary 예약 버튼 — 가장 강한 존재감 */
-    .hero-btn-reserve,
-    .hero-btn-reserve-zh {
-      font-size: 0.92rem !important;
-      padding: 1rem 1.75rem !important;
-      min-height: 54px !important;
-      letter-spacing: 0.06em !important;
+    /* ▶ 10. Primary 예약 버튼 — 노랑/녁은 녹색 로 단순화 */
+    .hero-btn-reserve {
+      font-size: 0.9rem !important;
+      padding: 0.9rem 1.5rem !important;
+      min-height: 50px !important;
+      letter-spacing: 0.05em !important;
       border-radius: 999px !important;
       font-weight: 600 !important;
+      background: #1a7a4a !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 16px rgba(26, 122, 74, 0.3) !important;
+    }
+    .hero-btn-reserve-zh {
+      font-size: 0.9rem !important;
+      padding: 0.9rem 1.5rem !important;
+      min-height: 50px !important;
+      letter-spacing: 0.05em !important;
+      border-radius: 999px !important;
+      font-weight: 600 !important;
+      background: #1a7a4a !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 16px rgba(26, 122, 74, 0.3) !important;
     }
 
-    /* ▶ 11. Secondary 버튼 — 충분한 터치 타겟 */
+    /* ▶ 11. Secondary 버튼 — 노랑/노랑 및 단순화 */
     .hero-btn-action {
-      font-size: 0.82rem !important;
-      padding: 0.78rem 1.1rem !important;
+      font-size: 0.85rem !important;
+      padding: 0.8rem 1.2rem !important;
       min-width: 0 !important;
       min-height: 48px !important;
       border-radius: 999px !important;
       font-weight: 500 !important;
+      background: #f7d642 !important;
+      color: #1a1a1a !important;
+      box-shadow: 0 4px 16px rgba(247, 214, 66, 0.25) !important;
     }
 
-    /* ▶ 12. Tertiary 전화 버튼 — 절제된 존재감 */
+    /* ▶ 12. Tertiary 전화 버튼 — 절제된 회색 및 테두리 */
     .hero-btn-phone {
-      font-size: 0.82rem !important;
-      padding: 0.78rem 1.1rem !important;
+      font-size: 0.85rem !important;
+      padding: 0.8rem 1.2rem !important;
       min-height: 48px !important;
-      background: rgba(255,255,255,0.1) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-      border: 1px solid rgba(255,255,255,0.3) !important;
+      background: rgba(255,255,255,0.08) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      border: 1px solid rgba(255,255,255,0.25) !important;
       border-radius: 999px !important;
       opacity: 1 !important;
       backdrop-filter: blur(8px) !important;
@@ -3163,7 +3179,24 @@ body.font-lang-zh .hero-stat-label {
     transition: all 0.2s ease;
     opacity: 0;
     transform: translateX(20px);
+    min-height: 44px;
   }
+  /* 애니메이션 지연 클래스 (Primary Nav) */
+  .mobile-menu-item-delay-0 { transition-delay: 100ms; }
+  .mobile-menu-item-delay-1 { transition-delay: 140ms; }
+  .mobile-menu-item-delay-2 { transition-delay: 180ms; }
+  .mobile-menu-item-delay-3 { transition-delay: 220ms; }
+  .mobile-menu-item-delay-4 { transition-delay: 260ms; }
+  .mobile-menu-item-delay-5 { transition-delay: 300ms; }
+  /* Secondary Nav 항목 */
+  .mobile-menu-item-secondary {
+    font-size: 14px;
+  }
+  /* 애니메이션 지연 클래스 (Secondary Nav) */
+  .mobile-menu-item-delay-secondary-0 { transition-delay: 320ms; }
+  .mobile-menu-item-delay-secondary-1 { transition-delay: 355ms; }
+  .mobile-menu-item-delay-secondary-2 { transition-delay: 390ms; }
+  .mobile-menu-item-delay-secondary-3 { transition-delay: 425ms; }
   .mobile-menu-item.visible {
     opacity: 1;
     transform: translateX(0);
@@ -3194,6 +3227,12 @@ body.font-lang-zh .hero-stat-label {
     flex-shrink: 0;
     color: #888;
     transition: all 0.2s ease;
+    min-width: 30px;
+  }
+  .mobile-menu-icon-secondary {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
   }
   .mobile-menu-item.active .mobile-menu-icon {
     background-color: rgba(196, 168, 130, 0.12);
@@ -3298,6 +3337,7 @@ body.font-lang-zh .hero-stat-label {
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    min-height: 48px;
   }
   .mobile-menu-cta-primary:hover {
     opacity: 0.9;
@@ -3321,15 +3361,16 @@ body.font-lang-zh .hero-stat-label {
     text-decoration: none;
     border: none;
     cursor: pointer;
-    background-color: var(--brand-gold, #C4A882);
-    color: var(--brand-text, #2C2C2C);
+    background-color: #1a7a4a;
+    color: #ffffff;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(196, 168, 130, 0.3);
+    box-shadow: 0 4px 16px rgba(26, 122, 74, 0.3);
+    min-height: 48px;
   }
   .mobile-menu-cta-secondary:hover {
-    background-color: var(--brand-gold-deep, #A8895E);
+    background-color: #155a38;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(196, 168, 130, 0.4);
+    box-shadow: 0 6px 20px rgba(26, 122, 74, 0.4);
   }
   .mobile-menu-cta-secondary:focus-visible {
     outline: 2px solid var(--brand-text, #2C2C2C);

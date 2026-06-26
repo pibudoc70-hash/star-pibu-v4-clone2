@@ -180,10 +180,7 @@ export default function MobileMenu({
                 type="button"
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className={`mobile-menu-item ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
-                style={{
-                  transitionDelay: `${100 + idx * 40}ms`,
-                }}
+                className={`mobile-menu-item mobile-menu-item-delay-${idx} ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
               >
                 {Icon && (
                   <span className="mobile-menu-icon">
@@ -210,14 +207,10 @@ export default function MobileMenu({
                   type="button"
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
-                  className={`mobile-menu-item ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
-                  style={{
-                    fontSize: "14px",
-                    transitionDelay: `${320 + idx * 35}ms`,
-                  }}
+                  className={`mobile-menu-item mobile-menu-item-secondary mobile-menu-item-delay-secondary-${idx} ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
                 >
                   {Icon && (
-                    <span className="mobile-menu-icon" style={{ width: "26px", height: "26px", borderRadius: "7px" }}>
+                    <span className="mobile-menu-icon mobile-menu-icon-secondary">
                       <Icon size={13} />
                     </span>
                   )}
@@ -265,6 +258,8 @@ export default function MobileMenu({
                 background: chatBg,
                 color: chatColor,
               }}
+              data-chat-bg={chatBg}
+              data-chat-color={chatColor}
             >
               {t.hero.cta_kakao}
             </a>

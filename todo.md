@@ -3051,3 +3051,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 초기 번들에서 streamdown/katex 제외 (lazy loading으로 전환)
 - [x] 개발 서버 정상 작동 확인
 - [x] 최종 체크포인트 저장
+
+## Phase 70: 모바일 UX/UI 전면 개선 (시니어 디자이너 관점)
+
+- [x] P0: MobileMenu 전면 개선 - CSS 클래스화, scroll lock, focus trap, ESC 닫기, 브랜드 컬러 통일
+- [ ] P0: 모바일 Hero 첫 화면 비율과 정보 위계 개선
+- [ ] P1: 신뢰 지표/카드/섹션 헤더 일관성 강화
+- [ ] P1: CTA 시스템 정리 (Primary/Secondary/Utility 위계)
+- [ ] P1: MobileBottomCTA 충돌 및 하단 여백 개선
+- [ ] P2: 모바일 타이포그래피/터치 UX 표준화
+- [ ] 모바일 375px 기준 전체 검증 및 최종 보고

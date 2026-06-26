@@ -232,7 +232,7 @@ export const youtubeVideos = mysqlTable("youtubeVideos", {
   typeIsActiveIdx: index("youtubeVideos_type_isActive_idx").on(table.type, table.isActive),
 }));
 export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
-export type InsertYouTubeVideo = typeof youtubeVideos.$inferSelect;
+export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 공지사항 게시판

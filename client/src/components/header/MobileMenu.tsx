@@ -1,15 +1,15 @@
 /**
  * MobileMenu — 모바일 전체 화면 오버레이 메뉴
- * Header.tsx에서 분리 추출 (2026-06-12)
- *
- * 개선 사항:
- * - 1차/2차 메뉴 시각적 구분 (구분선 + 섹션 레이블)
- * - 메뉴 항목 아이콘 추가 (각 nav item에 Lucide 아이콘)
- * - 언어 선택 그리드 개선 (카드 스타일 강화)
- * - CTA 버튼 스타일 강화 (그라디언트, 아이콘)
+ * P0 개선사항:
+ * - 인라인 스타일 → CSS 클래스 기반으로 전환
+ * - 하드코딩 컬러 → 브랜드 CSS 변수로 통일
+ * - Body scroll lock 구현
+ * - Focus trap 구현 (Tab 키 제어)
+ * - ESC 키 닫기 구현
  */
 import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical } from "lucide-react";
 import type { RefObject } from "react";
+import { useEffect } from "react";
 import type { NavItem, LangOption } from "@/hooks/useHeaderState";
 import type { Lang } from "@/lib/i18n";
 
@@ -76,6 +76,64 @@ export default function MobileMenu({
   t,
   mobileMenuRef,
 }: MobileMenuProps) {
+  // Scroll lock 및 Focus trap 관리
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    // Scroll lock: body에 overflow: hidden 추가
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.classList.add("menu-open");
+    document.body.style.setProperty("--scrollbar-width", `${scrollbarWidth}px`);
+
+    // ESC 키 닫기
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMobileMenu();
+      }
+    };
+
+    // Focus trap: Tab 키 제어
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !mobileMenuRef.current) return;
+
+      const focusableElements = mobileMenuRef.current.querySelectorAll(
+        "button, a[href], input, [tabindex]:not([tabindex='-1'])"
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleTabKey);
+
+    // 메뉴 열 때 첫 포커스 요소로 이동
+    if (menuVisible && mobileMenuRef.current) {
+      const closeBtn = mobileMenuRef.current.querySelector(".mobile-menu-close-btn") as HTMLElement;
+      closeBtn?.focus();
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleTabKey);
+      document.body.classList.remove("menu-open");
+      document.body.style.removeProperty("--scrollbar-width");
+    };
+  }, [mobileOpen, menuVisible, closeMobileMenu, mobileMenuRef]);
+
   if (!mobileOpen) return null;
 
   return (
@@ -83,14 +141,7 @@ export default function MobileMenu({
       {/* 딤 배경 */}
       <div
         onClick={() => closeMobileMenu()}
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.6)",
-          zIndex: 998,
-          opacity: menuVisible ? 1 : 0,
-          transition: "opacity 0.25s ease",
-        }}
+        className={`mobile-menu-overlay ${menuVisible ? "visible" : ""}`}
         aria-hidden="true"
       />
 
@@ -101,41 +152,15 @@ export default function MobileMenu({
         role="dialog"
         aria-modal="true"
         aria-label="모바일 메뉴"
-        style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          width: "min(88vw, 360px)",
-          height: "100dvh",
-          background: "#FAF8F5",
-          zIndex: 999,
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-          transform: menuVisible && !menuClosing ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1)",
-          boxShadow: "-8px 0 40px rgba(0,0,0,0.12)",
-        }}
+        className={`mobile-menu-panel ${menuVisible && !menuClosing ? "visible" : ""}`}
       >
         {/* ── 헤더 ── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "20px 24px 16px",
-            borderBottom: "1px solid rgba(0,0,0,0.06)",
-            flexShrink: 0,
-          }}
-        >
-          <span style={{ fontSize: "14px", fontWeight: "700", color: "var(--brand-gold, #C4A882)", letterSpacing: "0.08em", fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
-            STAR DERMATOLOGY
-          </span>
+        <div className="mobile-menu-header">
+          <span className="mobile-menu-header-title">STAR DERMATOLOGY</span>
           <button
             type="button"
             onClick={() => closeMobileMenu()}
-            className="flex items-center justify-center"
-            style={{ width: "44px", height: "44px", borderRadius: "10px", color: "#666", flexShrink: 0 }}
+            className="mobile-menu-close-btn"
             aria-label="메뉴 닫기"
           >
             <X size={20} />
@@ -143,71 +168,30 @@ export default function MobileMenu({
         </div>
 
         {/* ── 1차 메뉴 ── */}
-        <nav
-          style={{
-            padding: "12px 0 8px",
-            opacity: menuVisible ? 1 : 0,
-            transition: "opacity 0.3s ease 100ms",
-          }}
-          aria-label="모바일 메인 네비게이션"
-        >
+        <nav className={`mobile-menu-nav ${menuVisible ? "visible" : ""}`} aria-label="모바일 메인 네비게이션">
           {/* 섹션 레이블 */}
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "700",
-              letterSpacing: "0.12em",
-              color: "#bbb",
-              textTransform: "uppercase",
-              padding: "0 24px",
-              marginBottom: "4px",
-            }}
-          >
-            MENU
-          </p>
+          <p className="mobile-menu-section-label">MENU</p>
 
           {primaryNav.map((item, idx) => {
             const active = isActive(item.href, item.sectionId ?? null);
-              const Icon = NAV_ICONS[item.href];
-              return (
-                <button
-                  type="button"
-                  key={item.label}
-                  onClick={() => handleNavClick(item.href)}
-                  className="w-full text-left transition-colors"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "14px 24px",
-                  fontSize: "15px",
-                  fontWeight: active ? "700" : "500",
-                  color: active ? "#C9A84C" : "#1F2937",
-                  borderLeft: active ? "3px solid #C9A84C" : "3px solid transparent",
-                  background: active ? "rgba(201,168,76,0.04)" : "transparent",
-                  opacity: menuVisible ? 1 : 0,
-                  transform: menuVisible ? "translateX(0)" : "translateX(20px)",
-                  transition: `opacity 0.3s ease ${100 + idx * 40}ms, transform 0.3s ease ${100 + idx * 40}ms`,
+            const Icon = NAV_ICONS[item.href];
+            return (
+              <button
+                type="button"
+                key={item.label}
+                onClick={() => handleNavClick(item.href)}
+                className={`mobile-menu-item ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
+                style={{
+                  transitionDelay: `${100 + idx * 40}ms`,
                 }}
               >
                 {Icon && (
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "30px",
-                      height: "30px",
-                      borderRadius: "8px",
-                      background: active ? "rgba(201,168,76,0.12)" : "rgba(0,0,0,0.04)",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={15} style={{ color: active ? "#C9A84C" : "#888" }} />
+                  <span className="mobile-menu-icon">
+                    <Icon size={15} />
                   </span>
                 )}
                 <span style={{ flex: 1 }}>{item.label}</span>
-                <ChevronRight size={14} style={{ color: active ? "#C9A84C" : "#ccc", flexShrink: 0 }} />
+                <ChevronRight size={14} style={{ flexShrink: 0 }} />
               </button>
             );
           })}
@@ -215,30 +199,9 @@ export default function MobileMenu({
 
         {/* ── 2차 메뉴 구분선 + 섹션 ── */}
         {secondaryNav.length > 0 && (
-          <div
-            style={{
-              opacity: menuVisible ? 1 : 0,
-              transition: "opacity 0.3s ease 300ms",
-            }}
-          >
-            <div
-              style={{
-                margin: "4px 24px 0",
-                borderTop: "1px solid rgba(0,0,0,0.06)",
-              }}
-            />
-            <p
-              style={{
-                fontSize: "10px",
-                fontWeight: "700",
-                letterSpacing: "0.12em",
-                color: "#bbb",
-                textTransform: "uppercase",
-                padding: "12px 24px 4px",
-              }}
-            >
-              MORE
-            </p>
+          <div className={menuVisible ? "visible" : ""} style={{ opacity: menuVisible ? 1 : 0, transition: "opacity 0.3s ease 300ms" }}>
+            <div className="mobile-menu-divider" />
+            <p className="mobile-menu-section-label">MORE</p>
             {secondaryNav.map((item, idx) => {
               const active = isActive(item.href, item.sectionId ?? null);
               const Icon = NAV_ICONS[item.href];
@@ -247,40 +210,19 @@ export default function MobileMenu({
                   type="button"
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
-                  className="w-full text-left transition-colors"
+                  className={`mobile-menu-item ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "13px 24px",
                     fontSize: "14px",
-                    fontWeight: active ? "700" : "400",
-                    color: active ? "#C9A84C" : "#555",
-                    borderLeft: active ? "3px solid #C9A84C" : "3px solid transparent",
-                    background: active ? "rgba(201,168,76,0.04)" : "transparent",
-                    opacity: menuVisible ? 1 : 0,
-                    transform: menuVisible ? "translateX(0)" : "translateX(20px)",
-                    transition: `opacity 0.3s ease ${320 + idx * 35}ms, transform 0.3s ease ${320 + idx * 35}ms`,
+                    transitionDelay: `${320 + idx * 35}ms`,
                   }}
                 >
                   {Icon && (
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "26px",
-                        height: "26px",
-                        borderRadius: "7px",
-                        background: active ? "rgba(201,168,76,0.12)" : "rgba(0,0,0,0.03)",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Icon size={13} style={{ color: active ? "#C9A84C" : "#aaa" }} />
+                    <span className="mobile-menu-icon" style={{ width: "26px", height: "26px", borderRadius: "7px" }}>
+                      <Icon size={13} />
                     </span>
                   )}
                   <span style={{ flex: 1 }}>{item.label}</span>
-                  <ChevronRight size={13} style={{ color: active ? "#C9A84C" : "#ddd", flexShrink: 0 }} />
+                  <ChevronRight size={13} style={{ flexShrink: 0 }} />
                 </button>
               );
             })}
@@ -288,28 +230,9 @@ export default function MobileMenu({
         )}
 
         {/* ── 언어 선택 ── */}
-        <div
-          style={{
-            padding: "20px 24px",
-            borderTop: "1px solid rgba(0,0,0,0.06)",
-            marginTop: "auto",
-            opacity: menuVisible ? 1 : 0,
-            transition: "opacity 0.3s ease 420ms",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "700",
-              letterSpacing: "0.12em",
-              color: "#bbb",
-              textTransform: "uppercase",
-              marginBottom: "12px",
-            }}
-          >
-            LANGUAGE
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px" }}>
+        <div className={`mobile-menu-lang-section ${menuVisible ? "visible" : ""}`}>
+          <p className="mobile-menu-section-label">LANGUAGE</p>
+          <div className="mobile-menu-lang-grid">
             {langOptions.map((option) => (
               <button
                 type="button"
@@ -320,81 +243,33 @@ export default function MobileMenu({
                     window.location.replace(buildLocalizedPath(option.lang) + hash);
                   });
                 }}
-                className="flex flex-col items-center gap-1.5 transition-all"
-                style={{
-                  padding: "12px 4px",
-                  borderRadius: "12px",
-                  background: option.lang === lang ? "rgba(201,168,76,0.08)" : "rgba(0,0,0,0.03)",
-                  border: option.lang === lang ? "1.5px solid #C9A84C" : "1.5px solid transparent",
-                }}
+                className={`mobile-menu-lang-btn ${option.lang === lang ? "active" : ""}`}
               >
-                {/* 언어 코드 배지 (국기 대체) */}
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "36px",
-                    height: "24px",
-                    borderRadius: "6px",
-                    background: option.lang === lang ? "rgba(201,168,76,0.15)" : "rgba(0,0,0,0.07)",
-                    fontSize: "12px",
-                    fontWeight: 800,
-                    letterSpacing: "0.05em",
-                    color: option.lang === lang ? "#C9A84C" : "#555",
-                  }}
-                >
-                  {option.lang.toUpperCase()}
-                </span>
-                <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: option.lang === lang ? 700 : 500,
-                    color: option.lang === lang ? "#C9A84C" : "#666",
-                  }}
-                >
-                  {option.label}
-                </span>
+                <span className="mobile-menu-lang-badge">{option.lang.toUpperCase()}</span>
+                <span>{option.label}</span>
               </button>
             ))}
           </div>
         </div>
 
         {/* ── 모바일 CTA ── */}
-        <div
-          style={{
-            padding: "16px 24px max(32px, env(safe-area-inset-bottom, 32px))",
-            borderTop: "1px solid rgba(0,0,0,0.06)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            flexShrink: 0,
-            opacity: menuVisible ? 1 : 0,
-            transition: "opacity 0.3s ease 460ms",
-          }}
-        >
+        <div className={`mobile-menu-cta-section ${menuVisible ? "visible" : ""}`}>
           <div className="relative">
             <a
               href={chatUrl}
               target={lang === "zh" ? undefined : "_blank"}
               rel="noopener noreferrer"
               onClick={handleWechatClick}
-              className="flex items-center justify-center font-semibold text-sm w-full transition-opacity hover:opacity-90"
+              className="mobile-menu-cta-primary"
               style={{
                 background: chatBg,
                 color: chatColor,
-                padding: "14px",
-                borderRadius: "14px",
-                letterSpacing: "0.01em",
               }}
             >
               {t.hero.cta_kakao}
             </a>
             {wechatCopied && lang === "zh" && (
-              <div
-                className="absolute bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg"
-                style={{ top: "-40px", left: "0", zIndex: 50 }}
-              >
+              <div className="mobile-menu-wechat-toast">
                 {t.access.copiedLabel}: <span className="font-bold">{WECHAT_ID}</span>
               </div>
             )}
@@ -403,14 +278,7 @@ export default function MobileMenu({
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center font-semibold text-sm text-white transition-opacity hover:opacity-90"
-            style={{
-              background: "#03C75A",
-              padding: "14px",
-              borderRadius: "14px",
-              letterSpacing: "0.01em",
-              boxShadow: "0 4px 16px rgba(3,199,90,0.3)",
-            }}
+            className="mobile-menu-cta-secondary"
           >
             {t.hero.cta_reserve}
           </a>

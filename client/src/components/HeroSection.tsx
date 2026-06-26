@@ -127,6 +127,13 @@ export default function HeroSection() {
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
 
+        {/* 한글 슬로건: 모바일 전용 (md: 숨김) */}
+        {t.hero.subtitleKo && (
+          <p className="font-light hero-subtitle-ko md:hidden">
+            <WordReveal text={t.hero.subtitleKo} startDelay={1300} wordGap={85} />
+          </p>
+        )}
+
         {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}
         <HeroStatsStrip
           statsRef={statsRef}

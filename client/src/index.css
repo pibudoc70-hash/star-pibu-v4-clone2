@@ -1696,6 +1696,19 @@
         0 2px 12px rgba(0,0,0,0.8) !important;
       font-family: 'Montserrat', sans-serif !important;
     }
+    /* 한글 슬로건 - 모바일 전용 */
+    .hero-subtitle-ko {
+      font-size: clamp(0.65rem, 2.6vw, 0.78rem) !important;
+      letter-spacing: 0.06em !important;
+      font-weight: 400 !important;
+      margin-bottom: clamp(1.2rem, 3.5vh, 1.8rem) !important;
+      color: rgba(255,255,255,0.88) !important;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,0.95),
+        0 2px 12px rgba(0,0,0,0.8) !important;
+      font-family: 'Noto Serif KR', serif !important;
+      line-height: 1.5 !important;
+    }
 
     /* ▶ 8. 통계 스트립 — 시인성 중심 재설계 */
     /* 반투명 배경 패널 + 강한 그림자로 배경과 명확한 분리 */

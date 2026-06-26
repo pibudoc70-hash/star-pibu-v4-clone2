@@ -49,6 +49,7 @@ export interface I18nContent {
   hero: {
     title: string;
     subtitle: string;
+    subtitleKo?: string;
     badge: string;
     floor: string;
     cta_call: string;

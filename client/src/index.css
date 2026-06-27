@@ -874,6 +874,18 @@
     animation: heroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
+  /* 헤드카피 페이드업 애니메이션 */
+  @keyframes heroSubtitleFadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* 영문/한글 교차 텍스트 애니메이션 */
   @keyframes heroSubtitleToggle {
     0% {

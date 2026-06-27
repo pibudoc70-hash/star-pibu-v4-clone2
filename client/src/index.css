@@ -928,6 +928,16 @@
   @media (max-width: 640px) {
     .hero-bg-img {
       object-position: center 30%;
+      animation: heroMobileSlide 15s ease-in-out forwards;
+    }
+  }
+  
+  @keyframes heroMobileSlide {
+    0% {
+      object-position: left 30%;
+    }
+    100% {
+      object-position: right 30%;
     }
   }
   .hero-content {

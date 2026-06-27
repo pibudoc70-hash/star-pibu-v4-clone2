@@ -328,24 +328,26 @@ export default function ManagementDevicesSection() {
   };
 
   return (
-    <section className="py-12 sm:py-20" style={{ background: "#FDFAF6" }}>
-      <div className="container">
-        {/* 섹션 헤더 */}
-        <div className="section-header-block">
-          <span className="section-eyebrow management-devices-eyebrow">
-            MANAGEMENT DEVICES
-          </span>
-          <h2 className="section-title management-devices-title">
-            {md.sectionTitle}
-          </h2>
-          <div className="star-divider mx-auto" />
-          <p className="section-subtitle" style={{ color: 'var(--brand-gold-deep, #A8895E)' }}>
-            {md.sectionSubtitle}
-          </p>
-        </div>
+    <>
+      {/* 관리 장비 섹션 */}
+      <section className="py-12 sm:py-20" style={{ background: "#FDFAF6" }}>
+        <div className="container">
+          {/* 섹션 헤더 */}
+            <div className="section-header-block">
+              <span className="section-eyebrow management-devices-eyebrow">
+                MANAGEMENT DEVICES
+              </span>
+              <h2 className="section-title management-devices-title">
+                {md.sectionTitle}
+              </h2>
+              <div className="star-divider mx-auto" />
+              <p className="section-subtitle" style={{ color: 'var(--brand-gold-deep, #A8895E)' }}>
+                {md.sectionSubtitle}
+              </p>
+            </div>
 
-        {/* 스크롤 컨테이너 */}
-        {isLoading ? (
+            {/* 스크롤 컨른테이너 */}
+            {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             <DeviceCardSkeleton />
             <DeviceCardSkeleton />
@@ -413,5 +415,6 @@ export default function ManagementDevicesSection() {
         )}
       </div>
     </section>
+    </>
   );
 }

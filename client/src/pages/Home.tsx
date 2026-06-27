@@ -308,10 +308,10 @@ export default function Home() {
         </ScrollAnimationWrapper>
 
         {/* 5-2. Premium Interlude — 브랜드 헤드카피 */}
-        <div style={{ background: "linear-gradient(135deg, #1a1410 0%, #2a1f14 50%, #1a1410 100%)", padding: "clamp(3rem, 8vw, 5rem) 0" }}>
+        <div style={{ background: "#1a1410", padding: "clamp(3rem, 8vw, 5rem) 0", minHeight: "200px", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div className="container">
             <div className="text-center">
-              <h2 className="font-serif-kr text-white" style={{ fontSize: "clamp(1.5rem, 4.5vw, 2.25rem)", lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: 300 }}>
+              <h2 style={{ color: "#ffffff", fontSize: "clamp(1.5rem, 4.5vw, 2.25rem)", lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: 300, fontFamily: "'Noto Serif KR', serif" }}>
                 <span style={{ display: "block", marginBottom: "0.75rem" }}>Where Experience,</span>
                 <span style={{ display: "block" }}>Trust, and Science Meet</span>
               </h2>

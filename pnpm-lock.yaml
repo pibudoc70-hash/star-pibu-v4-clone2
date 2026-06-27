@@ -124,9 +124,6 @@ importers:
       '@trpc/server':
         specifier: ^11.6.0
         version: 11.17.0(typescript@5.9.3)
-      '@types/ws':
-        specifier: ^8.18.1
-        version: 8.18.1
       axios:
         specifier: ^1.12.0
         version: 1.17.0
@@ -223,9 +220,6 @@ importers:
       wouter:
         specifier: 3.7.1
         version: 3.7.1(patch_hash=4e16e6ff3fde7d6c1024d3e0c8605dc9eb6afb690d0d49958c2f449091813072)(react@19.2.7)
-      ws:
-        specifier: ^8.21.0
-        version: 8.21.0
       xlsx:
         specifier: ^0.18.5
         version: 0.18.5
@@ -266,6 +260,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.17)
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
       '@vitejs/plugin-react':
         specifier: ^5.0.4
         version: 5.2.0(vite@7.3.5(@types/node@24.13.2)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.22.4))
@@ -323,6 +320,9 @@ importers:
       vitest:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@24.13.2)(@vitest/ui@4.1.8)(jsdom@29.1.1)(lightningcss@1.32.0)
+      ws:
+        specifier: ^8.21.0
+        version: 8.21.0
 
 packages:
 

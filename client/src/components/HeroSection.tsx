@@ -76,24 +76,26 @@ function HeroSection() {
       id="home"
       className="relative flex flex-col items-center justify-center overflow-hidden min-h-svh"
     >
-      {/* LCP 최적화: <picture> 태그 */}
-      <picture
-        aria-hidden="true"
-        className="absolute inset-0 block pointer-events-none"
-      >
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
-        <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
-        <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
-        <img
-          src={HERO_IMAGES.desktopJpg}
-          alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
-          fetchPriority="high"
-          loading="eager"
-          decoding="sync"
-          className="hero-bg-img"
-        />
-      </picture>
+      {/* LCP 최적화: <picture> 태그 + 모바일 애니메이션 래퍼 */}
+      <div className="absolute inset-0 block pointer-events-none overflow-hidden">
+        <picture
+          aria-hidden="true"
+          className="absolute inset-0 block w-full h-full"
+        >
+          <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
+          <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
+          <img
+            src={HERO_IMAGES.desktopJpg}
+            alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+            className="hero-bg-img"
+          />
+        </picture>
+      </div>
 
       {/* [R18-P0-2] 배경 레이어 조립 → HeroBackgroundLayers로 추상화 */}
       <HeroBackgroundLayers />

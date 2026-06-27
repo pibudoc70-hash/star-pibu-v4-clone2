@@ -833,16 +833,16 @@
 
   @keyframes mobileHeroSubtitleEnFade {
     0% { opacity: 0; transform: translateY(15px); }
-    2% { opacity: 1; transform: translateY(0); }
-    48% { opacity: 1; transform: translateY(0); }
-    50% { opacity: 0; transform: translateY(-15px); }
+    5% { opacity: 1; transform: translateY(0); }
+    65% { opacity: 1; transform: translateY(0); }
+    75% { opacity: 0; transform: translateY(-15px); }
     100% { opacity: 0; transform: translateY(-15px); }
   }
 
   @keyframes mobileHeroSubtitleKoFade {
     0% { opacity: 0; transform: translateY(15px); }
-    50% { opacity: 0; transform: translateY(15px); }
-    52% { opacity: 1; transform: translateY(0); }
+    70% { opacity: 0; transform: translateY(15px); }
+    75% { opacity: 1; transform: translateY(0); }
     100% { opacity: 1; transform: translateY(0); }
   }
 
@@ -885,11 +885,11 @@
     }
 
     .hero-subtitle {
-      opacity: 1 !important;
+      animation: mobileHeroSubtitleEnFade 4s ease-in-out 0s forwards !important;
     }
 
     .hero-subtitle-ko {
-      display: none !important;
+      animation: mobileHeroSubtitleKoFade 4s ease-in-out 0s forwards !important;
     }
 
     /* 최종 표시: 4초 후 모든 요소 다시 나타남 */

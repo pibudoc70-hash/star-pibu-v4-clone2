@@ -140,10 +140,9 @@ function HeroSection() {
           </p>
         </div>
 
-        {/* 헤드카피 - 모바일에만 표시, 영문만 고정 표시 */}
-        <div className="md:hidden flex flex-col items-center justify-center gap-2 mb-8 w-full" style={{ minHeight: "clamp(3rem, 8vw, 4rem)" }}>
-          {/* 영문 헤드카피 */}
-          <p className="hero-subtitle font-light text-white text-center" style={{ fontSize: "clamp(1.05rem, 3vw, 1.2rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
+        {/* 헤드카피 - 모바일에만 표시 */}
+        <div className="md:hidden flex flex-col items-center gap-2 mb-8">
+          <p className="font-light text-white text-center" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
             <span style={{ display: "block" }}>Where Experience,</span>
             <span style={{ display: "block" }}>Trust, and Science Meet</span>
           </p>

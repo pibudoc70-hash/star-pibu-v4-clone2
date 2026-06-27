@@ -928,7 +928,7 @@
   @media (max-width: 640px) {
     .hero-bg-img {
       object-position: center 30%;
-      animation: heroMobileSlide 15s ease-in-out forwards;
+      animation: heroMobileSlide 30s ease-in-out forwards;
     }
   }
   

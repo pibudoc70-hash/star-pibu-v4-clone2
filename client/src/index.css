@@ -885,11 +885,11 @@
     }
 
     .hero-subtitle {
-      animation: mobileHeroSubtitleEnFade 4s ease-in-out 0s forwards !important;
+      animation: mobileHeroSubtitleEnFade 4s ease-in-out 0s infinite !important;
     }
 
     .hero-subtitle-ko {
-      animation: mobileHeroSubtitleKoFade 4s ease-in-out 0s forwards !important;
+      animation: mobileHeroSubtitleKoFade 4s ease-in-out 0s infinite !important;
     }
 
     /* 최종 표시: 4초 후 모든 요소 다시 나타남 */

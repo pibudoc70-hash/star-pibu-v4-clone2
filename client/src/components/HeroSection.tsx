@@ -212,40 +212,50 @@ function HeroSection() {
 // 영문/한글 텍스트 교체 컴포넌트
 const HeroSubtitleToggle = () => {
   const [isKorean, setIsKorean] = useState(false);
-  const [key, setKey] = useState(0); // 애니메이션 재트리거용 key
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsKorean((prev) => !prev);
-      setKey((prev) => prev + 1); // 애니메이션 재시작
-    }, 4000); // 4초마다 교체
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const baseStyle = {
+    fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+    letterSpacing: "-0.01em",
+    lineHeight: "1.5",
+    position: "absolute" as const,
+    width: "100%",
+    transition: "opacity 0.5s ease-in-out",
+  };
+
   return (
-    <p
-      key={key}
-      className="hero-subtitle-toggle font-light text-white text-center"
-      style={{
-        fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
-        letterSpacing: "-0.01em",
-        lineHeight: "1.5",
-        animation: "heroSubtitleFadeUp 0.5s ease-out forwards",
-      }}
-    >
-      {!isKorean ? (
-        <>
-          <span style={{ display: "block" }}>Where Experience,</span>
-          <span style={{ display: "block" }}>Trust, and Science Meet</span>
-        </>
-      ) : (
-        <>
-          <span style={{ display: "block" }}>풍부한 경험,</span>
-          <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
-        </>
-      )}
-    </p>
+    <div style={{ position: "relative", width: "100%", minHeight: "3em" }}>
+      <p
+        className="hero-subtitle-en font-light text-white text-center"
+        style={{
+          ...baseStyle,
+          opacity: isKorean ? 0 : 1,
+          pointerEvents: isKorean ? "none" : "auto",
+        }}
+      >
+        <span style={{ display: "block" }}>Where Experience,</span>
+        <span style={{ display: "block" }}>Trust, and Science Meet</span>
+      </p>
+
+      <p
+        className="hero-subtitle-ko font-light text-white text-center"
+        style={{
+          ...baseStyle,
+          opacity: isKorean ? 1 : 0,
+          pointerEvents: isKorean ? "auto" : "none",
+        }}
+      >
+        <span style={{ display: "block" }}>풍부한 경험,</span>
+        <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
+      </p>
+    </div>
   );
 };
 

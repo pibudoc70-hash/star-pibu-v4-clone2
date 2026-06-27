@@ -934,7 +934,7 @@
   
   @keyframes heroMobileSlide {
     0% {
-      object-position: 25% 30%;
+      object-position: 50% 30%;
     }
     100% {
       object-position: right 30%;

@@ -84,8 +84,8 @@ function HeroSection() {
         >
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
           <img
             src={HERO_IMAGES.desktopJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"

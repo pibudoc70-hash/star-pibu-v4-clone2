@@ -141,10 +141,17 @@ function HeroSection() {
         </div>
 
         {/* 헤드카피 - 모바일에만 표시 */}
-        <div className="md:hidden flex flex-col items-center gap-2 mb-8">
-          <p className="font-light text-white text-center" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
+        {/* 헤드카피 - 영문/한글 교차 페이드 */}
+        <div className="md:hidden flex flex-col items-center gap-2 mb-8 relative" style={{ minHeight: "clamp(2.5rem, 6vw, 3rem)" }}>
+          {/* 영문 헤드카피 */}
+          <p className="hero-subtitle font-light text-white text-center absolute inset-x-0" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
             <span style={{ display: "block" }}>Where Experience,</span>
             <span style={{ display: "block" }}>Trust, and Science Meet</span>
+          </p>
+          {/* 한글 헤드카피 */}
+          <p className="hero-subtitle-ko font-light text-white text-center absolute inset-x-0" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
+            <span style={{ display: "block" }}>풍부한 경험,</span>
+            <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
           </p>
         </div>
 

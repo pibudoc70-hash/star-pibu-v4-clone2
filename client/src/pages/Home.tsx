@@ -308,18 +308,16 @@ export default function Home() {
         </ScrollAnimationWrapper>
 
         {/* 5-2. Premium Interlude — 브랜드 헤드카피 */}
-        <ScrollAnimationWrapper animationType="fade-in">
-          <div style={{ background: "linear-gradient(135deg, #1a1410 0%, #2a1f14 50%, #1a1410 100%)", padding: "clamp(4rem, 10vw, 6rem) 0" }}>
-            <div className="container">
-              <div className="text-center">
-                <h2 className="font-serif-kr text-white" style={{ fontSize: "clamp(1.75rem, 5vw, 2.5rem)", lineHeight: "1.3", letterSpacing: "-0.02em", fontWeight: 300 }}>
-                  <span style={{ display: "block", marginBottom: "0.5rem" }}>Where Experience,</span>
-                  <span style={{ display: "block" }}>Trust, and Science Meet</span>
-                </h2>
-              </div>
+        <div style={{ background: "linear-gradient(135deg, #1a1410 0%, #2a1f14 50%, #1a1410 100%)", padding: "clamp(3rem, 8vw, 5rem) 0" }}>
+          <div className="container">
+            <div className="text-center">
+              <h2 className="font-serif-kr text-white" style={{ fontSize: "clamp(1.5rem, 4.5vw, 2.25rem)", lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: 300 }}>
+                <span style={{ display: "block", marginBottom: "0.75rem" }}>Where Experience,</span>
+                <span style={{ display: "block" }}>Trust, and Science Meet</span>
+              </h2>
             </div>
           </div>
-        </ScrollAnimationWrapper>
+        </div>
 
         {/* 6. Philosophy — 미니멀 흰색, 여백 강조 */}
         <ScrollAnimationWrapper animationType="fade-in">

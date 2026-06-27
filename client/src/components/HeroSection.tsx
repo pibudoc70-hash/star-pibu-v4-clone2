@@ -133,10 +133,18 @@ function HeroSection() {
         </p>
         
         {/* 모바일: 병원명만 표시 (로고 아래 영어는 이미 있음) */}
-        <div className="md:hidden flex flex-col items-center gap-1 mb-8">
+        <div className="md:hidden flex flex-col items-center gap-1 mb-4">
           {/* 한글 병원명 - 메인 */}
           <p className="hero-title-mobile font-medium text-white text-center">
             스타피부과
+          </p>
+        </div>
+
+        {/* 헤드카피 - 모바일에만 표시 */}
+        <div className="md:hidden flex flex-col items-center gap-2 mb-8">
+          <p className="font-light text-white text-center" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
+            <span style={{ display: "block" }}>Where Experience,</span>
+            <span style={{ display: "block" }}>Trust, and Science Meet</span>
           </p>
         </div>
 

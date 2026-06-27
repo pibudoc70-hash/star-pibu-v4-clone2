@@ -23,7 +23,7 @@
  * [R18-P0-2] 배경 레이어 추상화:
  * - HeroBackgroundLayers: HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립
  */
-import { useRef, useState, memo } from "react";
+import { useRef, useState, memo, useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -141,18 +141,9 @@ function HeroSection() {
         </div>
 
         {/* 헤드카피 - 모바일에만 표시 */}
-        {/* 헤드카피 - 영문/한글 교차 페이드 */}
-        <div className="md:hidden flex flex-col items-center gap-2 mb-8 relative" style={{ minHeight: "clamp(2.5rem, 6vw, 3rem)" }}>
-          {/* 영문 헤드카피 */}
-          <p className="hero-subtitle font-light text-white text-center absolute inset-x-0" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
-            <span style={{ display: "block" }}>Where Experience,</span>
-            <span style={{ display: "block" }}>Trust, and Science Meet</span>
-          </p>
-          {/* 한글 헤드카피 */}
-          <p className="hero-subtitle-ko font-light text-white text-center absolute inset-x-0" style={{ fontSize: "clamp(0.875rem, 2.5vw, 1rem)", letterSpacing: "-0.01em", lineHeight: "1.5" }}>
-            <span style={{ display: "block" }}>풍부한 경험,</span>
-            <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
-          </p>
+        {/* 헤드카피 - 영문/한글 교차 텍스트 */}
+        <div className="md:hidden flex flex-col items-center gap-2 mb-8">
+          <HeroSubtitleToggle />
         </div>
 
         {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}
@@ -218,4 +209,41 @@ function HeroSection() {
 }
 
 // [P1-OPT] React.memo로 memoization 내보내
+// 영문/한글 텍스트 교체 컴포넌트
+const HeroSubtitleToggle = () => {
+  const [isKorean, setIsKorean] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsKorean((prev) => !prev);
+    }, 4000); // 4초마다 교체
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <p
+      className="hero-subtitle-toggle font-light text-white text-center"
+      style={{
+        fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+        letterSpacing: "-0.01em",
+        lineHeight: "1.5",
+        transition: "opacity 0.5s ease-in-out",
+      }}
+    >
+      {!isKorean ? (
+        <>
+          <span style={{ display: "block" }}>Where Experience,</span>
+          <span style={{ display: "block" }}>Trust, and Science Meet</span>
+        </>
+      ) : (
+        <>
+          <span style={{ display: "block" }}>풍부한 경험,</span>
+          <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
+        </>
+      )}
+    </p>
+  );
+};
+
 export default memo(HeroSection);

@@ -212,10 +212,12 @@ function HeroSection() {
 // 영문/한글 텍스트 교체 컴포넌트
 const HeroSubtitleToggle = () => {
   const [isKorean, setIsKorean] = useState(false);
+  const [key, setKey] = useState(0); // 애니메이션 재트리거용 key
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsKorean((prev) => !prev);
+      setKey((prev) => prev + 1); // 애니메이션 재시작
     }, 4000); // 4초마다 교체
 
     return () => clearInterval(interval);
@@ -223,12 +225,13 @@ const HeroSubtitleToggle = () => {
 
   return (
     <p
+      key={key}
       className="hero-subtitle-toggle font-light text-white text-center"
       style={{
         fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
         letterSpacing: "-0.01em",
         lineHeight: "1.5",
-        transition: "opacity 0.5s ease-in-out",
+        animation: "heroSubtitleFadeUp 0.5s ease-out forwards",
       }}
     >
       {!isKorean ? (

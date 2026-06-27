@@ -13,8 +13,8 @@
  * - Empty State 렌더링
  * - EventCard 목록 렌더링
  */
-import { useEffect } from "react";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sparkles, RefreshCw, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -87,6 +87,19 @@ export default function SpecialEventSection() {
   const { lang, t } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
   const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery({ lang });
+  const [showMore, setShowMore] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const visibleCount = isMobile && !showMore ? 2 : specialEvents.length;
+  const visibleEvents = (specialEvents as SpecialEvent[]).slice(0, visibleCount);
+  const hasMoreEvents = isMobile && (specialEvents as SpecialEvent[]).length > 2;
 
   // 에러 발생 시 토스트 알림
   useEffect(() => {
@@ -145,15 +158,39 @@ export default function SpecialEventSection() {
         {(specialEvents as SpecialEvent[]).length === 0 ? (
           <EventEmptyState lang={lang} />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
-            {(specialEvents as SpecialEvent[]).map((event) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                getLocalizedText={getLocalizedText}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+              {visibleEvents.map((event) => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  getLocalizedText={getLocalizedText}
+                />
+              ))}
+            </div>
+            {hasMoreEvents && (
+              <div className="flex justify-center mt-10">
+                <button
+                  type="button"
+                  onClick={() => setShowMore(!showMore)}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-all hover:scale-105"
+                  style={{ backgroundColor: "var(--brand-gold, #C4A882)" } as React.CSSProperties}
+                >
+                  {showMore ? (
+                    <>
+                      {lang === "ko" ? "접기" : lang === "en" ? "Show Less" : lang === "ja" ? "閉じる" : "隐藏"}
+                      <ChevronDown size={18} className="rotate-180" />
+                    </>
+                  ) : (
+                    <>
+                      {lang === "ko" ? "더보기" : lang === "en" ? "Show More" : lang === "ja" ? "もっと見る" : "更多"}
+                      <ChevronDown size={18} />
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

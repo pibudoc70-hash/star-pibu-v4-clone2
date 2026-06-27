@@ -23,6 +23,7 @@ const EventDetail = lazy(() => import("./pages/EventDetail"));
 const TreatmentRedirect = lazy(() => import("./pages/TreatmentRedirect"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminYouTube = lazy(() => import("./pages/AdminYouTube"));
+const AdminNotices = lazy(() => import("./pages/AdminNotices"));
 const MyReservations = lazy(() => import("./pages/MyReservations"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("./pages/NonCoveredGuide"));
@@ -166,6 +167,7 @@ function Router() {
             <Route path="/admin/equipment3/:id/edit"   component={AdminEquipment3Edit} />
             <Route path="/admin/equipment3"            component={AdminEquipment3} />
             <Route path="/admin/youtube"               component={AdminYouTube} />
+            <Route path="/admin/notices"               component={AdminNotices} />
             <Route path="/admin"                       component={AdminDashboard} />
 
                 {/* 폴백 — 반드시 마지막 */}

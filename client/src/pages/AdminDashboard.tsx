@@ -140,6 +140,16 @@ export default function AdminDashboard() {
             <Youtube size={16} />
             유튜브 관리
           </button>
+          {/* 공지사항 관리 (별도 페이지) */}
+          <button
+            type="button"
+            onClick={() => navigate("/admin/notices")}
+            className="w-full px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all text-sm font-semibold"
+            style={{ background: "transparent", color: "rgba(255,255,255,0.6)" }}
+          >
+            <ClipboardList size={16} />
+            공지사항 관리
+          </button>
           {/* 구분선 */}
           <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)", margin: "8px 4px" }} />
           {/* 예약·회원·시술 관리 */}

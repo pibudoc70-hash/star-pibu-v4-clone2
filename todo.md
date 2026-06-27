@@ -3209,3 +3209,80 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### Phase 8: 체크포인트 저장 및 배포
 - [x] 모든 테스트 통과 확인 (1398/1398 통과)
 - [x] 최종 체크포인트 저장
+
+
+## Phase 131: 공지사항 기능 구현 (2026-06-28)
+
+### Phase 131-1: 데이터베이스 스키마 설계 및 마이그레이션
+- [ ] notices 테이블 생성 (id, title, content, createdAt, updatedAt, isActive)
+- [ ] Drizzle ORM 스키마 정의 (drizzle/schema.ts)
+- [ ] 마이그레이션 SQL 생성 및 적용 (webdev_execute_sql)
+
+### Phase 131-2: 서버 API 구현 (CRUD 라우터)
+- [ ] server/db.ts에 공지사항 CRUD 함수 추가
+  - getNotices() - 전체 목록 조회
+  - getNoticeById() - 상세 조회
+  - createNotice() - 등록
+  - updateNotice() - 수정
+  - deleteNotice() - 삭제
+- [ ] server/routers.ts에 공지사항 라우터 추가
+  - notices.list (public)
+  - notices.getById (public)
+  - notices.create (admin)
+  - notices.update (admin)
+  - notices.delete (admin)
+
+### Phase 131-3: 관리자 공지사항 관리 페이지 구현
+- [ ] AdminNotices.tsx 페이지 생성
+- [ ] 공지사항 목록 테이블 (등록일, 제목, 상태, 수정/삭제 버튼)
+- [ ] 공지사항 등록 폼 (제목, 내용, 활성화 여부)
+- [ ] 공지사항 수정 폼
+- [ ] App.tsx에 /admin/notices 라우트 추가
+
+### Phase 131-4: 공지사항 목록 페이지 구현
+- [ ] NoticesPage.tsx 생성 (/notices)
+- [ ] 공지사항 목록 표시 (최신순 정렬)
+- [ ] 페이지네이션 또는 무한 스크롤
+- [ ] 각 공지사항 클릭 시 상세 페이지로 이동
+
+### Phase 131-5: 공지사항 상세 페이지 구현
+- [ ] NoticeDetail.tsx 생성 (/notices/:id)
+- [ ] 공지사항 제목, 내용, 등록일 표시
+- [ ] 목록으로 돌아가기 버튼
+- [ ] SEO 메타 태그 설정
+
+### Phase 131-6: 메인 페이지 최근 공지사항 섹션 추가
+- [ ] NoticesSection.tsx 컴포넌트 생성
+- [ ] 최근 공지사항 3-5개 표시
+- [ ] "더보기" 버튼으로 전체 목록 페이지 이동
+- [ ] Home.tsx에 섹션 추가
+
+### Phase 131-7: 다국어(i18n) 지원 추가
+- [ ] i18n.ts에 공지사항 관련 문구 추가 (한/영/일/중)
+  - 섹션 제목, 버튼, 레이블, 플레이스홀더
+- [ ] AdminNotices.tsx 다국어 적용
+- [ ] NoticesPage.tsx 다국어 적용
+- [ ] NoticeDetail.tsx 다국어 적용
+
+### Phase 131-8: 테스트 및 최종 검수
+- [ ] 공지사항 CRUD 기능 테스트
+- [ ] 관리자 페이지 접근 권한 확인
+- [ ] 다국어 표시 확인
+- [ ] 메인 페이지 공지사항 섹션 표시 확인
+- [ ] 최종 체크포인트 저장
+
+
+## Phase 131: 공지사항 기능 구현 ✅ (완료)
+- [x] 데이터베이스 스키마 확인 (notices, noticeImages 테이블 이미 존재)
+- [x] 서버 DB 함수 확인 (CRUD 완전 구현: getAllNotices, getNoticeById, createNotice, updateNotice, deleteNotice 등)
+- [x] tRPC 라우터 확인 (공개/관리자 라우터 완전 구현)
+- [x] 공지사항 목록 페이지 확인 (Notice.tsx 이미 구현)
+- [x] 공지사항 상세 페이지 확인 (NoticeDetail.tsx 이미 구현)
+- [x] 공지사항 수정 페이지 확인 (NoticeEdit.tsx 이미 구현)
+- [x] 메인 페이지 최근 공지사항 섹션 확인 (RecentNoticesSection.tsx 이미 구현)
+- [x] AdminNotices.tsx 관리자 공지사항 관리 페이지 생성
+- [x] App.tsx에 /admin/notices 라우트 추가
+- [x] AdminDashboard.tsx에 공지사항 관리 네비게이션 버튼 추가
+- [x] 다국어 지원 확인 (한글/영문/일본어/중국어 완벽 지원)
+- [x] vitest 테스트 작성 및 실행 (15개 테스트 모두 통과)
+- [x] 최종 체크포인트 저장

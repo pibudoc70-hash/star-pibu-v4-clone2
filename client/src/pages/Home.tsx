@@ -280,7 +280,7 @@ export default function Home() {
             deferMount=false: Hero 스크롤 직후 바로 보이므로 선로딩 유지
             단, Suspense로 감싸 코드 스플리팅 유지 */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[640px]" />}>
             <SpecialEventSection />
           </Suspense>
         </div>

@@ -70,10 +70,11 @@
     <!-- [P0-FONT-1] preconnect: 첫 렌더에 필요한 폰트 서버 연결 선점 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- [P0-FONT-2] 동기 로드: Montserrat만 (Hero subtitle + MobileBottomCTA에서 즉시 필요)
+    <!-- [P0-FONT-2] 동기 로드: Montserrat 400만 (hero-stat-value fallback + below-fold 섹션)
+         weight 500은 실제 사용 없음 확인 → 제거하여 요청 크기 감소
          Noto Serif KR은 폴드 아래 섹션 타이틀에만 사용 → 비동기로 전환
          Pretendard가 한국어 본문 전체를 커버하므로 Noto Serif KR 동기 로드 불필요 -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet" />
     <!-- [P0-FONT-3] 비동기 로드: Cormorant Garamond + Noto Serif KR 통합
          Hero 타이틀은 Cormorant Garamond primary → Noto Serif KR은 fallback
          폴드 아래 섹션 타이틀(Noto Serif KR)은 스크롤 후 필요 → 비동기 OK -->
@@ -82,8 +83,8 @@
     <!-- [P0-FONT-4] 다국어 폰트: 비동기 로드 (필요시에만) -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" /></noscript>
-    <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable subset, 동기 로드) -->
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable subset, 동기 로드)
+         preload as=style 제거: 바로 뒤에 stylesheet가 있어 중복 요청 방지 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />

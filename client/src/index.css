@@ -4053,7 +4053,8 @@ body.font-lang-zh .hero-stat-label {
   background: var(--brand-bg-alt, #F5F0EB);
 }
 .event-skeleton-img {
-  height: 192px;
+  /* aspect-ratio 3/2 기준 실제 높이 ~240px에 맞게 조정 (CLS 최소화) */
+  height: 240px;
 }
 .event-skeleton-tag {
   height: 12px;
@@ -4066,6 +4067,11 @@ body.font-lang-zh .hero-stat-label {
 .event-skeleton-desc {
   height: 16px;
   width: 60%;
+}
+.event-skeleton-desc-2 {
+  height: 16px;
+  width: 75%;
+  margin-top: 4px;
 }
 .event-skeleton-meta {
   height: 16px;

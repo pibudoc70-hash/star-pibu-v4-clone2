@@ -3009,7 +3009,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] App.tsx에 /notice, /notice/:id, /admin/notice 라우트 등록
 - [ ] i18n 파일에 notice 관련 번역 키 추가 (ko/en/ja/zh)
 - [ ] useHeaderState.ts 드롭다운 메뉴에 공지사항 링크 추가
-- [ ] 체크포인트 저장
+- [x] 체크포인트 저장 (e406a74f)
 
 ## Phase N+7: 공지사항 이미지 업로드 기능
 - [x] notice_images 테이블 추가 (DB 스키마)
@@ -3313,3 +3313,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run build
 - [ ] 체크포인트 저장
 - [ ] 종합 보고서 작성
+
+## 마감 이슈 후속 수정 (2026-06-28)
+- [x] Montserrat weight 500 제거 (400만 유지 - 실제 사용 없음 확인)
+- [x] Pretendard preload as=style 중복 제거 (stylesheet만 유지)
+- [x] event-skeleton-img 높이 192→240px 조정 (aspect-ratio 3/2 근사)
+- [x] EventCardSkeleton에 desc-2 라인 추가 (실제 카드 텍스트 구조 근사)
+- [x] SpecialEventSection SectionFallback minH 400→640px 조정
+- [x] 모바일/데스크톱 데이터 동기화 검증 완료 (CLINIC_STATS 단일 소스 확인)
+- [x] vendor-trpc, vendor-icons, vendor-react 모두 Home 첫 진입 필수 확인 (제거 불가)

@@ -76,6 +76,7 @@ function EventCardSkeleton() {
         <div className="skeleton-shimmer rounded-full event-skeleton-tag" />
         <div className="skeleton-shimmer rounded event-skeleton-title" />
         <div className="skeleton-shimmer rounded event-skeleton-desc" />
+        <div className="skeleton-shimmer rounded event-skeleton-desc-2" />
         <div className="skeleton-shimmer rounded event-skeleton-meta" />
       </div>
     </div>

@@ -196,9 +196,10 @@ export function buildClinicJsonLd(
 ): JsonLdSchema {
   return {
     "@context": "https://schema.org",
-    "@type": ["MedicalBusiness", "LocalBusiness"],
+    "@type": ["MedicalBusiness", "MedicalClinic", "LocalBusiness"],
     "@id": `${clinicInfo.url}/#organization`,
     name: clinicInfo.name,
+    alternateName: clinicInfo.legalName,
     legalName: clinicInfo.legalName,
     url: clinicInfo.url,
     logo: {
@@ -227,6 +228,16 @@ export function buildClinicJsonLd(
     },
     // [DRY] buildOpeningHoursSpec 공통 헬퍼 사용 (buildLocalBusinessJsonLd와 동일 로직 공유)
     openingHoursSpecification: buildOpeningHoursSpec(clinicInfo.openingHours),
+    // 점심시간 특별 영업시간 (지역 검색 최적화)
+    specialOpeningHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: seoClinicMeta.lunchBreak.dayOfWeek,
+        opens: seoClinicMeta.lunchBreak.opens,
+        closes: seoClinicMeta.lunchBreak.closes,
+        description: seoClinicMeta.lunchBreak.description,
+      },
+    ],
     priceRange: clinicInfo.priceRange,
     currenciesAccepted: clinicInfo.currenciesAccepted,
     paymentAccepted: clinicInfo.paymentAccepted,
@@ -247,6 +258,44 @@ export function buildClinicJsonLd(
       ...seoClinicMeta.aggregateRating,
     },
     knowsAbout: [...seoClinicMeta.knowsAbout],
+    // 서비스 제공 지역 세분화 (지역 검색 범위 확장)
+    areaServed: seoClinicMeta.areaServed.map((area) => ({
+      "@type": area.type,
+      name: area.name,
+      alternateName: area.nameKo,
+    })),
+    // 대표 리뷰 샘플 (리뷰 스니펫 노출 강화)
+    review: seoClinicMeta.reviews.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.author },
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: r.reviewRating,
+        bestRating: "5",
+        worstRating: "1",
+      },
+      reviewBody: r.reviewBody,
+      datePublished: r.datePublished,
+    })),
+    // 편의시설 정보 (주차, 엘리베이터, 다국어 상담 등)
+    amenityFeature: seoClinicMeta.amenityFeature.map((f) => ({
+      "@type": "LocationFeatureSpecification",
+      name: f.name,
+      value: f.value,
+    })),
+    // 시술 카탈로그 (제공 서비스 목록)
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: seoClinicMeta.offerCatalog.name,
+      itemListElement: seoClinicMeta.offerCatalog.itemListElement.map((item) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalProcedure",
+          name: item.name,
+          url: item.url,
+        },
+      })),
+    },
     hasCredential: seoClinicMeta.hasCredential.map((cred) => ({
       "@type": "EducationalOccupationalCredential",
       credentialCategory: cred.credentialCategory,

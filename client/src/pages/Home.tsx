@@ -121,11 +121,20 @@ function SectionFallback({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl px-4">
         {[0, 1, 2, 3].map((i) => (
           <div key={i} className="rounded-2xl overflow-hidden"
-            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.08}s` }}>
+            style={{
+              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
+              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+            }}>
             {/* 이미지 영역 — 정사각형 비율 */}
             <div className={`${s} w-full`} style={{ aspectRatio: '1/1', animationDelay: `${i * 0.08}s` }} />
             {/* 텍스트 영역 */}
             <div className="p-3 flex flex-col gap-2">
+              {/* 배지 라벨 — 골드 픽스드 */}
+              <div style={{
+                height: '10px', width: '2.8rem', borderRadius: '999px',
+                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+              }} />
               <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.12}s` }} />
             </div>
@@ -139,8 +148,17 @@ function SectionFallback({
       <div className="flex flex-col gap-2 w-full max-w-2xl px-4">
         {[0, 1, 2, 3, 4].map((i) => (
           <div key={i} className="rounded-xl flex items-center gap-3 px-4"
-            style={{ height: '56px', background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.08}s` }}>
-            <div className={`h-3 w-3 rounded-full flex-shrink-0 ${s}`} style={{ animationDelay: `${i * 0.08}s` }} />
+            style={{
+              height: '56px',
+              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
+              boxShadow: isDark ? 'none' : '0 1px 6px rgba(0,0,0,0.05)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+            }}>
+            {/* Q 아이콘 힌트 — 골드 픽스드 */}
+            <div style={{
+              width: '12px', height: '12px', borderRadius: '50%', flexShrink: 0,
+              background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+            }} />
             <div className={`h-3.5 rounded flex-1 ${s}`} style={{ width: `${60 + (i % 3) * 10}%`, animationDelay: `${i * 0.08 + 0.05}s` }} />
           </div>
         ))}
@@ -148,12 +166,18 @@ function SectionFallback({
     );
   } else if (layout === "gallery") {
     // 갤러리 (Facility): 메인 + 서브 2장 구조
+    // gallery는 이미지 자체가 카드이므로 border/shadow를 shimmer 위에 overlay로 처리
+    const galleryCardStyle = {
+      boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.08)',
+      outline: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+      outlineOffset: '-1px',
+    };
     content = (
       <div className="flex gap-3 w-full max-w-4xl px-4" style={{ height: '300px' }}>
-        <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0s', minWidth: 0 }} />
+        <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0s', minWidth: 0, ...galleryCardStyle }} />
         <div className="flex flex-col gap-3" style={{ width: '38%', flexShrink: 0 }}>
-          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.1s' }} />
-          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.2s' }} />
+          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.1s', ...galleryCardStyle }} />
+          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.2s', ...galleryCardStyle }} />
         </div>
       </div>
     );
@@ -163,8 +187,16 @@ function SectionFallback({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
         {[0, 1, 2, 3].map((i) => (
           <div key={i} className="rounded-2xl p-5 flex flex-col items-center gap-3"
-            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.1}s` }}>
-            <div className={`h-10 w-10 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1}s` }} />
+            style={{
+              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
+              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+            }}>
+            {/* 아이콘 원 — 골드 픽스드 힌트 */}
+            <div style={{
+              width: '40px', height: '40px', borderRadius: '50%',
+              background: isDark ? 'rgba(196,168,130,0.18)' : 'rgba(196,168,130,0.22)',
+            }} />
             <div className={`h-7 w-16 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
             <div className={`h-3 w-14 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
           </div>
@@ -177,9 +209,17 @@ function SectionFallback({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
         {[0, 1, 2, 3].map((i) => (
           <div key={i} className="rounded-xl overflow-hidden"
-            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.12}s` }}>
+            style={{
+              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
+              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+            }}>
             <div className={`${s} w-full`} style={{ aspectRatio: '4/3', animationDelay: `${i * 0.12}s` }} />
             <div className="p-3 flex flex-col gap-2">
+              <div style={{
+                height: '10px', width: '2.8rem', borderRadius: '999px',
+                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+              }} />
               <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.12}s` }} />
             </div>

@@ -9,7 +9,7 @@
  *   → 초기 로드 시 폴드 아래 섹션의 JS 실행/API 호출 비용 제거
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -31,7 +31,7 @@ const ReviewsSection = lazy(() => import("@/components/ReviewsSection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
-import RecentNoticesSection from "@/components/RecentNoticesSection";
+const RecentNoticesSection = lazy(() => import("@/components/RecentNoticesSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 
 /** 섹션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선 */
@@ -76,7 +76,24 @@ function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
   );
 }
 
+/** WelcomePopup을 첫 렌더 후 idle 시점에 마운트 — 초기 query 비용 제거 */
+function useIdleMount(delayMs = 2000): boolean {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // requestIdleCallback 지원 시 idle에 마운트, 미지원 시 delayMs 후 마운트
+    if (typeof requestIdleCallback !== 'undefined') {
+      const id = requestIdleCallback(() => setMounted(true), { timeout: delayMs });
+      return () => cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(() => setMounted(true), delayMs);
+      return () => clearTimeout(id);
+    }
+  }, [delayMs]);
+  return mounted;
+}
+
 export default function Home() {
+  const popupReady = useIdleMount(2000);
 
   // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
@@ -388,10 +405,13 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Welcome Popup — lazy loaded, 초기 번들에서 제외 */}
-      <Suspense fallback={null}>
-        <WelcomePopup />
-      </Suspense>
+      {/* Welcome Popup — lazy loaded + idle mount: 초기 번들/query 비용 제거
+           첫 렌더 후 2초 idle 시점에 마운트하여 LCP/FID에 영향 없음 */}
+      {popupReady && (
+        <Suspense fallback={null}>
+          <WelcomePopup />
+        </Suspense>
+      )}
     </div>
   );
 }

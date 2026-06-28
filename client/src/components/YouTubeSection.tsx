@@ -23,6 +23,24 @@ import { trpc } from '@/lib/trpc';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 
+/** viewport 진입 시점에 합성 후 enabled=true 리턴 — 마운트 즉시 API 호출 방지 */
+function useVisibleFetch(rootMargin = '200px 0px'): [React.RefObject<HTMLElement>, boolean] {
+  const ref = useRef<HTMLElement>(null!);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (visible) return;
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { rootMargin }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [visible, rootMargin]);
+  return [ref, visible];
+}
+
 interface YouTubeVideo {
   id: number;
   title: string;
@@ -37,8 +55,14 @@ export default function YouTubeSection() {
   const { t } = useLang();
   const yt = t.youtube;
 
+  // [P0-OPT] viewport 진입 후에만 API fetch 활성화 — 첫 렌더 시 query 비용 제거
+  const [sectionRef, isVisible] = useVisibleFetch('300px 0px');
+
   // S1-T4: tRPC 직접 사용 — 이중 state 제거
-  const { data: allVideos, isLoading, isError, refetch } = trpc.youtube.getAll.useQuery();
+  const { data: allVideos, isLoading, isError, refetch } = trpc.youtube.getAll.useQuery(
+    undefined,
+    { enabled: isVisible, staleTime: 10 * 60 * 1000 }
+  );
 
   // 파생 상태 — useEffect + 중간 state 불필요
   const videos = (allVideos ?? []).filter((v) => v.type === 'video') as YouTubeVideo[];
@@ -127,6 +151,7 @@ export default function YouTubeSection() {
   if (isLoading) {
     return (
       <section
+        ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
         className="py-16 md:py-24 bg-white"
         aria-label={yt.loadingLabel}
         aria-busy="true"
@@ -159,6 +184,7 @@ export default function YouTubeSection() {
   if (isError) {
     return (
       <section
+        ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
         className="py-16 md:py-24 bg-white"
         aria-label={yt.errorLabel}
       >
@@ -185,7 +211,7 @@ export default function YouTubeSection() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         {/* 섹션 제목 */}
         <div className="section-header-block">

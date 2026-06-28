@@ -78,82 +78,99 @@ function SectionFallback({
     </div>
   );
 
-  // 레이아웃별 콘텐츠
+  // 레이아웃별 콘텐츠 — content-first preview state (실제 카드 구조 반영)
   let content: React.ReactNode;
   if (layout === "cards-3") {
-    // 3열 카드 그리드 (이미지 + 텍스트 카드)
+    // 3열 카드 그리드: 이미지 영역 + 텍스트 라인 (이벤트/의료진/시술 카드 구조)
     content = (
-      <div className="flex gap-4 w-full max-w-4xl justify-center flex-wrap px-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
         {[0, 1, 2].map((i) => (
-          <div key={i} className={`rounded-2xl overflow-hidden ${s}`}
-            style={{ animationDelay: `${i * 0.1}s`, width: 'calc(33% - 1rem)', minWidth: '200px', height: '280px', flexShrink: 0 }} />
+          <div key={i} className="rounded-2xl overflow-hidden"
+            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.1}s` }}>
+            {/* 이미지 영역 — aspect-ratio 3/2 */}
+            <div className={`${s} w-full`} style={{ aspectRatio: '3/2', animationDelay: `${i * 0.1}s` }} />
+            {/* 텍스트 영역 */}
+            <div className="p-4 flex flex-col gap-2.5">
+              <div className={`h-3 w-14 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
+              <div className={`h-5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
+              <div className={`h-3.5 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.15}s` }} />
+              <div className={`h-3.5 w-2/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.2}s` }} />
+            </div>
+          </div>
         ))}
       </div>
     );
   } else if (layout === "cards-4") {
-    // 4열 카드 그리드
+    // 4열 카드 그리드: 이미지 영역 + 텍스트 2줄 (관리 장비 카드 구조)
     content = (
-      <div className="flex gap-3 w-full max-w-4xl justify-center flex-wrap px-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl px-4">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className={`rounded-2xl overflow-hidden ${s}`}
-            style={{ animationDelay: `${i * 0.08}s`, width: 'calc(25% - 0.75rem)', minWidth: '160px', height: '220px', flexShrink: 0 }} />
+          <div key={i} className="rounded-2xl overflow-hidden"
+            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.08}s` }}>
+            {/* 이미지 영역 — 정사각형 비율 */}
+            <div className={`${s} w-full`} style={{ aspectRatio: '1/1', animationDelay: `${i * 0.08}s` }} />
+            {/* 텍스트 영역 */}
+            <div className="p-3 flex flex-col gap-2">
+              <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.06}s` }} />
+              <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.12}s` }} />
+            </div>
+          </div>
         ))}
       </div>
     );
   } else if (layout === "list") {
-    // 목록형 (FAQ, 공지사항)
+    // 목록형 (FAQ): 아코디언 행 구조
     content = (
-      <div className="flex flex-col gap-3 w-full max-w-2xl px-4">
+      <div className="flex flex-col gap-2 w-full max-w-2xl px-4">
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className={`h-14 rounded-xl ${s}`}
-            style={{ animationDelay: `${i * 0.08}s` }} />
+          <div key={i} className="rounded-xl flex items-center gap-3 px-4"
+            style={{ height: '56px', background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.08}s` }}>
+            <div className={`h-3 w-3 rounded-full flex-shrink-0 ${s}`} style={{ animationDelay: `${i * 0.08}s` }} />
+            <div className={`h-3.5 rounded flex-1 ${s}`} style={{ width: `${60 + (i % 3) * 10}%`, animationDelay: `${i * 0.08 + 0.05}s` }} />
+          </div>
         ))}
       </div>
     );
   } else if (layout === "gallery") {
-    // 갤러리 (Facility)
+    // 갤러리 (Facility): 메인 + 서브 2장 구조
     content = (
-      <div className="flex gap-3 w-full max-w-4xl justify-center flex-wrap px-4">
-        <div className={`rounded-2xl ${s}`} style={{ width: '55%', minWidth: '240px', height: '300px', animationDelay: '0s' }} />
-        <div className="flex flex-col gap-3" style={{ width: '40%', minWidth: '160px' }}>
-          {[0, 1].map((i) => (
-            <div key={i} className={`rounded-2xl ${s}`}
-              style={{ height: '140px', animationDelay: `${(i + 1) * 0.1}s` }} />
-          ))}
+      <div className="flex gap-3 w-full max-w-4xl px-4" style={{ height: '300px' }}>
+        <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0s', minWidth: 0 }} />
+        <div className="flex flex-col gap-3" style={{ width: '38%', flexShrink: 0 }}>
+          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.1s' }} />
+          <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.2s' }} />
         </div>
       </div>
     );
   } else if (layout === "stats") {
-    // 통계 카드 (Philosophy)
+    // 통계 카드 (ResultsStatistics): 수치 + 라벨 카드 4개
     content = (
-      <div className="flex gap-4 w-full max-w-2xl justify-center flex-wrap px-4">
-        {[0, 1, 2].map((i) => (
-          <div key={i} className="flex flex-col items-center gap-2"
-            style={{ width: 'calc(33% - 1rem)', minWidth: '120px' }}>
-            <div className={`h-12 w-12 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1}s` }} />
-            <div className={`h-8 w-20 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
-            <div className={`h-3 w-16 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="rounded-2xl p-5 flex flex-col items-center gap-3"
+            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.1}s` }}>
+            <div className={`h-10 w-10 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1}s` }} />
+            <div className={`h-7 w-16 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
+            <div className={`h-3 w-14 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
           </div>
         ))}
       </div>
     );
   } else {
-    // default: 범용 카드 2행
+    // default: 범용 카드 그리드
     content = (
-      <>
-        <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className={`h-36 rounded-xl ${s}`}
-              style={{ animationDelay: `${i * 0.12}s`, width: 'calc(25% - 0.75rem)', minWidth: '140px', flexShrink: 0 }} />
-          ))}
-        </div>
-        <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className={`h-24 rounded-xl ${s}`}
-              style={{ animationDelay: `${(i + 4) * 0.12}s`, width: 'calc(33% - 0.75rem)', minWidth: '160px', flexShrink: 0 }} />
-          ))}
-        </div>
-      </>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="rounded-xl overflow-hidden"
+            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.12}s` }}>
+            <div className={`${s} w-full`} style={{ aspectRatio: '4/3', animationDelay: `${i * 0.12}s` }} />
+            <div className="p-3 flex flex-col gap-2">
+              <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.06}s` }} />
+              <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.12}s` }} />
+            </div>
+          </div>
+        ))}
+      </div>
     );
   }
 
@@ -474,7 +491,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-deep">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" variant="dark" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[400px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
               <YouTubeSection />
             </Suspense>
           </div>
@@ -495,7 +512,7 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <Suspense fallback={<SectionFallback minH="min-h-[300px]" layout="list" />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[300px]" layout="list" bg="#FAF8F5" />}>
             <RecentNoticesSection lang="ko" />
           </Suspense>
         </ScrollAnimationWrapper>
@@ -505,7 +522,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-deep">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
               <ContactSection />
             </Suspense>
           </div>

@@ -66,7 +66,7 @@ function DeviceCard({ device }: { device: ManagementDevice }) {
           </h3>
           <span
             className="tracking-wide uppercase mt-1 text-xs"
-            style={{ color: "var(--brand-gold, #C4A882)", fontWeight: 100, fontSize: "10px" }}
+            style={{ color: "var(--brand-gold, #C4A882)", fontWeight: 200, fontSize: "10px" }}
           >
             {device.nameEn}
           </span>

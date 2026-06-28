@@ -54,14 +54,18 @@ function SectionFallback({
   minH = "min-h-[320px]",
   variant = "light",
   layout = "default",
+  bg,
 }: {
   minH?: string;
   variant?: "light" | "dark";
   layout?: "cards-3" | "cards-4" | "list" | "gallery" | "stats" | "default";
+  bg?: string;
 } = {}) {
   const isDark = variant === "dark";
   const s = isDark ? "skeleton-shimmer--dark" : "skeleton-shimmer";
-  const bgStyle = isDark
+  const bgStyle = bg
+    ? { background: bg }
+    : isDark
     ? { background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }
     : { background: "var(--brand-bg, #FAF8F5)" };
 
@@ -383,7 +387,7 @@ export default function Home() {
             deferMount=false: Hero 스크롤 직후 바로 보이므로 선로딩 유지
             단, Suspense로 감싸 코드 스플리팅 유지 */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback minH="min-h-[640px]" layout="cards-3" />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[640px]" layout="cards-3" bg="#ffffff" />}>
             <SpecialEventSection />
           </Suspense>
         </div>
@@ -393,7 +397,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[520px]" layout="cards-3" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[520px]" layout="cards-3" bg="linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" />}>
               <DoctorsSection />
             </Suspense>
           </div>
@@ -404,7 +408,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[720px]" layout="cards-3" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[720px]" layout="cards-3" bg="#ffffff" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>
@@ -415,7 +419,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-navy">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" layout="cards-4" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" layout="cards-4" bg="linear-gradient(180deg, #1A2744 0%, #243358 100%)" />}>
               <ManagementDevicesSection />
             </Suspense>
           </div>
@@ -426,7 +430,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-offwhite">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" layout="stats" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[400px]" layout="stats" bg="#FAFAFA" />}>
               <PhilosophySection />
             </Suspense>
           </div>
@@ -437,7 +441,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-gold-soft">
-            <Suspense fallback={<SectionFallback minH="min-h-[440px]" layout="cards-3" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[440px]" layout="cards-3" bg="linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%)" />}>
               <ResultsStatisticsSection />
             </Suspense>
           </div>
@@ -448,7 +452,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" bg="#ffffff" />}>
               <FacilitySection />
             </Suspense>
           </div>
@@ -459,7 +463,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[480px]" layout="cards-3" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[480px]" layout="cards-3" bg="linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" />}>
               <ReviewsSection />
             </Suspense>
           </div>
@@ -481,7 +485,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="list" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="list" bg="#ffffff" />}>
               <FAQSection />
             </Suspense>
           </div>

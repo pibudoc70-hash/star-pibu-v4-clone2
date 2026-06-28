@@ -3393,3 +3393,31 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 링크 복사 후 2초간 "복사됨" 피드백 표시
 - [x] 카드 클릭 이벤트와 공유 버튼 클릭 이벤트 충돌 방지 (stopPropagation)
 - [x] pnpm run build 성공
+
+## 마감 후속 수정 (2026-06-28)
+
+### [P0] below-the-fold 완성도 개선
+- [x] SectionFallback 배경색을 실제 섹션 배경과 일치시키기 (색상 점프 제거)
+- [x] ReviewsSection isLoading=false 고정 → skeleton 분기 코드 정리
+- [x] SpecialEventSection EventCardSkeleton 높이 안정화 (이미 aspect-ratio 16/9 적용됨 — 추가 조치 불필요)
+
+### [P0] 데이터 source of truth 점검
+- [x] Hero 통계 수치와 ResultsStatisticsSection 수치 동일 소스 참조 확인 문서화 (useClinicStats 단일 소스)
+
+### [P0] Home 잔여 preload 점검
+- [x] Noto Serif KR wght@300 실제 사용 여부 확인 후 제거 (300 미사용 확인 → wght@400;600으로 변경)
+- [x] vendor-trpc, vendor-icons manualChunks 유지 근거 검토 (tRPC/icons 분리 청크 유지 — 공유 의존성 최적화)
+
+### [P1] 폰트 경량화
+- [x] Noto Serif KR wght@300 제거 (index.html wght@400;600으로 변경 완료)
+- [x] Cormorant Garamond 실제 사용 위치 재확인 (Hero title font-display, section-title fallback — 유지)
+
+### [P1] 공통 UI/토큰 정리
+- [x] FloatingCTA / MobileBottomCTA 버튼 높이/간격/대비 마감 (전화 버튼 0.75→0.88 대비 개선)
+- [x] 작은 텍스트 가독성 (section-subtitle font-weight 300→400 개선, brand-text-mid #666666 유지)
+- [x] CTA 위계/경쟁 관계 점검 (MobileBottomCTA reserve flex:1.2 Primary 강조 유지)
+
+### [P1] 시맨틱/A11y/CLS 마감
+- [x] Map/YouTube/이벤트 영역 height 안정화 (SectionFallback bg 일치로 색상 점프 제거)
+- [x] 이미지 alt 의미 있는 텍스트로 보강 (기존 alt 모두 의미 있는 텍스트 확인)
+- [x] pnpm run build 성공

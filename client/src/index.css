@@ -2387,7 +2387,7 @@
   font-size: clamp(0.83rem, 1.7vw, 0.93rem);
   line-height: 1.95;
   color: var(--brand-text-mid, #666666);
-  font-weight: 300;
+  font-weight: 400; /* 300 → 400: Pretendard 300은 너무 얇아 가독성 저하 */
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
@@ -4353,9 +4353,9 @@ body.font-lang-zh .hero-stat-label {
     font-weight: 500 !important;
   }
   /* Utility — 전화 */
-  .mobile-bottom-btn--phone {
+   .mobile-bottom-btn--phone {
     background: rgba(255, 255, 255, 0.05) !important;
-    color: rgba(255, 255, 255, 0.75) !important;
+    color: rgba(255, 255, 255, 0.88) !important; /* 0.75 → 0.88: WCAG AA 대비 개선 */
     font-size: 0.72rem !important;
     font-weight: 400 !important;
   }

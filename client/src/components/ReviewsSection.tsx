@@ -11,7 +11,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { ReviewCardSkeleton } from "@/components/SkeletonUI";
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -35,7 +34,6 @@ export default function ReviewsSection() {
 
   const reviews = rv.items;
   const [current, setCurrent] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" && window.innerWidth < 768
   );
@@ -105,19 +103,7 @@ export default function ReviewsSection() {
         </div>
 
         {/* 모바일: 스와이프 슬라이더 / 데스크톱: 3열 그리드 */}
-        {isLoading ? (
-          isMobile ? (
-            <div className="space-y-4">
-              <ReviewCardSkeleton />
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 gap-5 mb-8">
-              <ReviewCardSkeleton />
-              <ReviewCardSkeleton />
-              <ReviewCardSkeleton />
-            </div>
-          )
-        ) : isMobile ? (
+        {isMobile ? (
           <div
             className="relative"
             role="region"

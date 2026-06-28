@@ -96,9 +96,10 @@
          300/500/600/italic은 실제 사용 없음 → 제거하여 Google Fonts 요청 크기 ~60% 감소
          Noto Serif KR: 폴드 아래 섹션 타이틀에만 사용 → 비동기 로드 유지 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional" rel="stylesheet" />
-    <!-- Noto Serif KR + 추가 weight 비동기 로드 (below-fold 섹션 타이틀) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=optional" /></noscript>
+    <!-- Noto Serif KR 비동기 로드 (below-fold 섹션 타이틀)
+         실제 사용 weight: 400(섹션타이틀), 600(모바일 hero-title) — 300/500 미사용 확인 후 제거 -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional" /></noscript>
     <!-- [P0-FONT-4] 다국어 폰트: 비동기 로드 (필요시에만) -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=optional" /></noscript>

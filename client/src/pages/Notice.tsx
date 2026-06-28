@@ -23,7 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -65,6 +65,10 @@ export default function Notice() {
       <SeoHead
         title={`${pageTitle} | STAR DERMATOLOGY`}
         description={pageSubtitle}
+        canonical={`https://star-pibu.com${langPrefix}/notice`}
+        ogUrl={`https://star-pibu.com${langPrefix}/notice`}
+        ogLocale={LANG_TO_OG_LOCALE[lang as keyof typeof LANG_TO_OG_LOCALE] ?? "ko_KR"}
+        hreflangs={buildHreflangs("/notice")}
         noindex={false}
       />
       <Header />

@@ -12,7 +12,7 @@ import { useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, buildBreadcrumbJsonLd, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED, BASE_URL } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
@@ -400,6 +400,10 @@ export default function Equipment3() {
           "/zh/equipment3"
         )}
         pageType="treatment"
+        jsonLd={[buildBreadcrumbJsonLd([
+          { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈", url: BASE_URL + "/" },
+          { name: lang === "en" ? "Treatments & Equipment" : lang === "ja" ? "施術・機器" : lang === "zh" ? "项目与设备" : "시술 및 장비", url: pageUrl },
+        ])]}
       />
 
       <Header />

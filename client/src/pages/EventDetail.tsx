@@ -12,7 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
-import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_LOCALE, buildHreflangs } from "@/components/SeoHead";
+import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_LOCALE, buildHreflangs, buildEventJsonLd, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import { parseEventError } from "@/lib/errorMessages";
 
 const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
@@ -112,6 +112,21 @@ export default function EventDetail() {
         ogType="article"
         hreflangs={buildHreflangs(koPath, `/en${koPath}`, `/ja${koPath}`, `/zh${koPath}`)}
         pageType="treatment"
+        jsonLd={[
+          buildEventJsonLd({
+            name: eventTitle,
+            description: String(eventDesc).slice(0, 300),
+            url: `${BASE_URL}${lang === "ko" ? koPath : `/${lang}${koPath}`}`,
+            ...(ogImg && { image: ogImg }),
+            startDate: (event as Record<string, unknown>).startDate as string | undefined,
+            endDate: (event as Record<string, unknown>).endDate as string | undefined,
+          }),
+          buildBreadcrumbJsonLd([
+            { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈", url: BASE_URL + "/" },
+            { name: lang === "en" ? "Events" : lang === "ja" ? "イベント" : lang === "zh" ? "活动" : "이벤트", url: `${BASE_URL}/events` },
+            { name: eventTitle, url: `${BASE_URL}${koPath}` },
+          ]),
+        ]}
       />
       <Header />
 

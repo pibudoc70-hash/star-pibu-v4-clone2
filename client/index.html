@@ -46,10 +46,26 @@
     <meta property="kakao:title" content="부산 서면 스타피부과 | 피부과 전문의 울쎼라 써마지 리프팅" />
     <meta property="kakao:description" content="부산 서면 스타피부과 - 20년 경력 피부과 전문의가 직접 진료하는 울쎼라, 써마지, 눈밑지방재배치 전문 클리닉" />
     <meta property="kakao:image" content="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp" />
-    <!-- AI 검색 최적화 (ChatGPT, Perplexity, Claude) -->
+    <!-- AI 검색 최적화 (ChatGPT, Perplexity, Claude, Gemini) -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <!-- AI 크롤러 명시적 허용 (robots.txt와 이중 선언으로 신뢰도 강화) -->
+    <meta name="GPTBot" content="index, follow" />
+    <meta name="ClaudeBot" content="index, follow" />
+    <meta name="PerplexityBot" content="index, follow" />
+    <meta name="Google-Extended" content="index, follow" />
+    <!-- AI 검색 최적화 콘텐츠 파일 링크 -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-optimized content" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM-optimized full content" />
+    <!-- 비즈니스 정보 명시 (AI 검색 엔티티 인식 강화) -->
+    <meta name="geo.region" content="KR-26" />
+    <meta name="geo.placename" content="부산광역시 부산진구 서면" />
+    <meta name="geo.position" content="35.1575;129.0596" />
+    <meta name="ICBM" content="35.1575, 129.0596" />
+    <!-- 의료 기관 분류 (AI 검색 카테고리 인식) -->
+    <meta name="classification" content="Health, Medical, Dermatology" />
+    <meta name="category" content="피부과, 피부과의원, 의료기관" />
     <!-- [PROD-P1-2] LCP 최적화: 히어로 배경 이미지 preload + fetchpriority="high" -->
     <!-- fetchpriority="high": 브라우저가 다른 리소스보다 이 이미지를 먼저 다운로드하도록 지시 -->
     <link rel="preload" as="image" type="image/webp"

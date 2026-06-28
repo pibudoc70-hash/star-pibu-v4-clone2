@@ -16,7 +16,7 @@
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from '@/components/SeoHead';
+import SeoHead, { buildHreflangs, buildBreadcrumbJsonLd, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED, BASE_URL } from '@/components/SeoHead';
 import { getLocalizedUrl } from '@/lib/localizedPath';
 
 export default function About() {
@@ -83,6 +83,10 @@ export default function About() {
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}
         pageType="treatment"
+        jsonLd={[buildBreadcrumbJsonLd([
+          { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈", url: BASE_URL + "/" },
+          { name: lang === "en" ? "About" : lang === "ja" ? "クリニック紹介" : lang === "zh" ? "关于我们" : "병원 소개", url: pageUrl },
+        ])]}
       />
       {/* 피부과 소개 섹션 - About Us */}
       <section className="py-16 md:py-24 bg-white">

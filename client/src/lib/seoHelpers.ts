@@ -572,3 +572,146 @@ export const SEO_PRESETS = {
   admin: { includeMedicalSchema: false, includeWebSiteSchema: false },
 } satisfies Record<SeoPageType, SeoPreset>;
 
+
+// ── 추가 JSON-LD 헬퍼 (AI 검색 최적화) ───────────────────────────────────────
+
+/**
+ * Person/Physician JSON-LD 스키마 생성 헬퍼
+ * 의료진 페이지에서 개별 의사 정보를 구조화하여 AI 검색 인용 강화
+ */
+export function buildPersonListJsonLd(
+  doctors: typeof CLINIC_DOCTORS,
+): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "스타피부과 의료진",
+    description: "부산 서면 스타피부과 피부과 전문의 소개",
+    numberOfItems: doctors.length,
+    itemListElement: doctors.map((doc, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Physician",
+        "@id": `${BASE_URL}/#doctor-${index + 1}`,
+        name: doc.name,
+        alternateName: doc.nameEn,
+        honorificPrefix: (doc as Record<string, unknown>).honorificPrefix ?? "Dr.",
+        jobTitle: doc.jobTitle,
+        description: doc.description,
+        image: doc.image,
+        url: doc.url,
+        sameAs: [...(doc.sameAs ?? [])],
+        worksFor: {
+          "@type": "MedicalBusiness",
+          "@id": `${BASE_URL}/#organization`,
+          name: "부산 서면 스타피부과",
+          url: BASE_URL,
+        },
+        hasCredential: (doc.credentials ?? []).map((cred: string) => ({
+          "@type": "EducationalOccupationalCredential",
+          credentialCategory: cred,
+        })),
+        knowsAbout: [...(doc.specialties ?? [])],
+        alumniOf: (doc.alumniOf ?? []).map((school: { name: string; url?: string }) => ({
+          "@type": "EducationalOrganization",
+          name: school.name,
+          ...(school.url && { url: school.url }),
+        })),
+        memberOf: ((doc as Record<string, unknown>).memberOf as Array<{ name: string; url?: string }> ?? []).map((org) => ({
+          "@type": "MedicalOrganization",
+          name: org.name,
+          ...(org.url && { url: org.url }),
+        })),
+      },
+    })),
+  };
+}
+
+/**
+ * VideoObject JSON-LD 스키마 생성 헬퍼
+ * YouTube 영상을 구조화하여 Google Video 검색 노출 강화
+ */
+export function buildVideoObjectListJsonLd(
+  videos: { title: string; videoId: string; description?: string }[],
+): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "스타피부과 YouTube 영상",
+    description: "부산 서면 스타피부과 시술 안내 및 원장 강의 영상",
+    itemListElement: videos.map((v, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "VideoObject",
+        name: v.title,
+        description: v.description ?? `스타피부과 ${v.title} 영상`,
+        thumbnailUrl: `https://img.youtube.com/vi/${v.videoId}/maxresdefault.jpg`,
+        uploadDate: "2024-01-01",
+        contentUrl: `https://www.youtube.com/watch?v=${v.videoId}`,
+        embedUrl: `https://www.youtube.com/embed/${v.videoId}`,
+        publisher: {
+          "@type": "Organization",
+          "@id": `${BASE_URL}/#organization`,
+          name: "부산 서면 스타피부과",
+          logo: {
+            "@type": "ImageObject",
+            url: `${BASE_URL}/favicon.png`,
+          },
+        },
+      },
+    })),
+  };
+}
+
+/**
+ * Event JSON-LD 스키마 생성 헬퍼
+ * 이벤트/프로모션 페이지에서 Google 이벤트 검색 결과 노출 강화
+ */
+export function buildEventJsonLd(event: {
+  name: string;
+  description: string;
+  startDate?: string;
+  endDate?: string;
+  url: string;
+  image?: string;
+}): JsonLdSchema {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.name,
+    description: event.description,
+    startDate: event.startDate ?? new Date().toISOString().split("T")[0],
+    ...(event.endDate && { endDate: event.endDate }),
+    url: event.url,
+    ...(event.image && { image: event.image }),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: "부산 서면 스타피부과",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "서면로 74 아이온시티빌딩 4층",
+        addressLocality: "부산진구",
+        addressRegion: "부산",
+        postalCode: "47296",
+        addressCountry: "KR",
+      },
+    },
+    organizer: {
+      "@type": "MedicalBusiness",
+      "@id": `${BASE_URL}/#organization`,
+      name: "부산 서면 스타피부과",
+      url: BASE_URL,
+      telephone: "+82-51-818-7007",
+    },
+    offers: {
+      "@type": "Offer",
+      url: event.url,
+      availability: "https://schema.org/InStock",
+      validFrom: event.startDate ?? new Date().toISOString().split("T")[0],
+    },
+  };
+}

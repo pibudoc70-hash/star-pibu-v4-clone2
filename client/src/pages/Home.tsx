@@ -10,7 +10,7 @@
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
 import { lazy, Suspense, useEffect, useState } from "react";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildVideoObjectListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
@@ -348,10 +348,26 @@ export default function Home() {
               question: "리쥬란힐러는 몇 회 시술해야 효과가 있나요?",
               answer: "리쥬란힐러는 보통 2~4주 간격으로 3~4회 기본 시술 후 3~6개월 간격으로 유지 시술을 권장합니다. 개인 피부 상태에 따라 시술 횟수와 간격이 달라질 수 있으며, 시술 전 전문의 상담을 통해 맞춤 계획을 세우는 것이 좋습니다."
             },
+                    ]),
+          buildVideoObjectListJsonLd([
+            {
+              title: "울쎄라피 프라임 시술 안내 | 부산 서면 스타피부과",
+              videoId: "PLACEHOLDER_ULTHERAPY",
+              description: "울쎄라피 프라임 HIFU 리프팅 시술 효과와 과정을 스타피부과 전문의가 직접 설명합니다.",
+            },
+            {
+              title: "써마지 FLX 시술 안내 | 부산 서면 스타피부과",
+              videoId: "PLACEHOLDER_THERMAGE",
+              description: "4세대 고주파 써마지 FLX 리프팅 시술 효과와 과정을 스타피부과 전문의가 직접 설명합니다.",
+            },
+            {
+              title: "눈밑지방재배치 시술 안내 | 부산 서면 스타피부과",
+              videoId: "PLACEHOLDER_EYEBAG",
+              description: "눈밑지방재배치 수술 효과와 회복 과정을 스타피부과 전문의가 직접 설명합니다.",
+            },
           ]),
         ]}
       />
-
       {/* Fixed Header */}
       <Header />
 

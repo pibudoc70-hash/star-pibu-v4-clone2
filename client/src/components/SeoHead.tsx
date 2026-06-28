@@ -37,6 +37,9 @@ export {
   buildBreadcrumbJsonLd,
   buildFAQPageJsonLd,
   buildLocalBusinessJsonLd,
+  buildPersonListJsonLd,
+  buildVideoObjectListJsonLd,
+  buildEventJsonLd,
   SEO_PRESETS,
 } from "@/lib/seoHelpers";
 

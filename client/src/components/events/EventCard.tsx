@@ -36,9 +36,8 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
     <div className="flex flex-col">
       {/* 시술명 — 브랜드 골드, 절제된 크기 */}
       <h3
-        className="font-normal leading-tight mb-2"
+        className="font-normal leading-tight mb-2 text-[var(--brand-text,#2C2C2C)]"
         style={{
-          color: "#2C2C2C",
           fontSize: "clamp(1rem, 3.2vw, 1.15rem)",
           letterSpacing: "-0.01em",
           fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif",
@@ -179,11 +178,10 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 자세히 보기`}
-            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5"
+            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5 text-[var(--brand-gold-deep,#A8895E)]"
             style={{
               background: "transparent",
               border: "1px solid rgba(196,168,130,0.5)",
-              color: "#A8895E",
               fontSize: "0.82rem",
               letterSpacing: "0.06em",
               fontWeight: 500,
@@ -269,8 +267,8 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 접기`}
-            className="w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
-            style={{ background: "transparent", color: "#C4C4C4", border: "1px solid rgba(201,168,76,0.12)", fontSize: "0.78rem", letterSpacing: "0.04em" }}
+            className="w-full py-2.5 font-medium rounded-xl transition-colors text-sm text-[var(--brand-text-light,#BBBBBB)]"
+            style={{ background: "transparent", border: "1px solid rgba(201,168,76,0.12)", fontSize: "0.78rem", letterSpacing: "0.04em" }}
           >
             접기
           </button>

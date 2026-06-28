@@ -176,7 +176,7 @@ export default function PhilosophySection() {
       </div>
 
       {/* ── 라이트 섹션 — 브랜드 서사 + 이미지 ── */}
-      <section id="about" className="py-16 sm:py-24 overflow-hidden" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+      <section id="about" className="py-16 sm:py-24 overflow-hidden" style={{ background: "var(--brand-bg, #FAF8F5)" }} aria-label="클리닉 철학 및 소개">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
 

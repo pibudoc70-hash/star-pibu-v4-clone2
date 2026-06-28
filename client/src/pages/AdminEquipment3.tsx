@@ -131,7 +131,7 @@ function SortableItem({
             </Badge>
           )}
           {String(item.isBest) === "1" && (
-            <Badge style={{ backgroundColor: "#d1ab67", color: "#fff" }} className="text-xs">
+            <Badge variant="best" className="text-xs">
               ★ Best
             </Badge>
           )}

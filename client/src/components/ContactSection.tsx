@@ -110,7 +110,7 @@ export default function ContactSection() {
   const sectionTitle = t.access.sectionTitle ?? "";
 
   return (
-    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg">
+    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg" aria-label="오시는 방법 및 연락체어">
       <div className="container">
         {/* Section Header */}
         <div className="section-header-block reveal-heading">

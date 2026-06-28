@@ -140,8 +140,8 @@ export default function Notice() {
                           <div className="flex items-center gap-2 flex-wrap mb-1">
                             {notice.isPinned === "1" && (
                               <Badge
-                                variant="outline"
-                                className="text-[10px] px-1.5 py-0 border-amber-400 text-amber-600"
+                                variant="gold-outline"
+                                className="text-[10px] px-1.5 py-0"
                               >
                                 {lang === "ja" ? "固定" : lang === "zh" ? "置顶" : lang === "en" ? "Pinned" : "고정"}
                               </Badge>

@@ -10,6 +10,7 @@ import { useLocation } from "wouter";
 import { Calendar, Bell, ArrowRight, Tag, Zap, Sparkles, ChevronRight, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
+import { Badge } from "@/components/ui/badge";
 
 interface Event {
   id: number;
@@ -97,7 +98,7 @@ export default function EventsSection() {
   ];
 
   return (
-    <section id="events-legacy" className="py-16 sm:py-24 star-section-alt">
+    <section id="events-legacy" className="py-16 sm:py-24 star-section-alt" aria-label="이벤트 및 공지사항">
       <div className="container">
         {/* ── Section Header ── */}
         <div className="text-center mb-8 sm:mb-12">
@@ -129,7 +130,7 @@ export default function EventsSection() {
         {isLoading && (
           <div className="grid gap-6 mb-8" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))" }} aria-hidden="true">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: "#F5F0EB" }}>
+              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: "var(--brand-bg-alt, #F5F0EB)" }}>
                 <div className="skeleton-shimmer" style={{ height: 160 }} />
                 <div className="p-5 space-y-3">
                   <div className="skeleton-shimmer rounded" style={{ height: 12, width: '55%' }} />
@@ -173,17 +174,17 @@ export default function EventsSection() {
                   {/* Badge + Hot */}
                   <div className="flex items-center gap-2 mb-3">
                     {ev.badge && (
-                      <span
-                        className="px-3 py-1 rounded-full text-xs font-normal text-white"
-                        style={{ backgroundColor: ev.badgeColor }}
+                      <Badge
+                        className="rounded-full text-xs font-normal"
+                        style={{ backgroundColor: ev.badgeColor, color: "#fff", border: "none" }}
                       >
                         {ev.badge}
-                      </span>
+                      </Badge>
                     )}
                     {ev.hot === "1" && (
-                      <span className="px-3 py-1 rounded-full text-xs font-normal text-white bg-red-500">
+                      <Badge variant="destructive" className="rounded-full text-xs font-normal">
                         🔥 HOT
-                      </span>
+                      </Badge>
                     )}
                   </div>
 
@@ -202,14 +203,14 @@ export default function EventsSection() {
                       >
                         {ev.title}
                       </h3>
-                      <p className="text-sm" style={{ color: "#6B7280" }}>
+                      <p className="text-sm text-[var(--brand-text-mid,#666666)]">
                         {ev.subtitle}
                       </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm mb-4" style={{ color: "#4B5563" }}>
+                  <p className="text-sm mb-4 text-[var(--brand-text,#2C2C2C)]">
                     {ev.desc}
                   </p>
 

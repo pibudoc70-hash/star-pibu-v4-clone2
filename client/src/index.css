@@ -54,6 +54,7 @@
   --brand-gold-light: #D9C4A8;
   --brand-gold-pale: #F0EAE0;
   --brand-gold-deep: #A8895E;
+  --brand-gold-dark: #7A5C35;
   /* Brand Backgrounds */
   --brand-bg: #FAF8F5;
   --brand-bg-alt: #F5F0EB;
@@ -3126,39 +3127,6 @@
   .hero-cta-group {
     display: none !important;
   }
-}
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   SKELETON SHIMMER — 브랜드 컬러 기반 로딩 애니메이션
-   #FAF8F5(배경) → #EDE8E0(shimmer 하이라이트) → #FAF8F5
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-@keyframes skeleton-shimmer {
-  0%   { background-position: -600px 0; }
-  100% { background-position: 600px 0; }
-}
-
-.skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    #EDE8E0 0%,
-    #F5F0E8 40%,
-    #EDE8E0 80%
-  );
-  background-size: 1200px 100%;
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-}
-
-/* 다크 배경 위 스켈레톤 (의료진 섹션 등) */
-.skeleton-shimmer-dark {
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.06) 0%,
-    rgba(255,255,255,0.14) 40%,
-    rgba(255,255,255,0.06) 80%
-  );
-  background-size: 1200px 100%;
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
 }
 
 /* 스켈레톤 → 콘텐츠 전환 fade */

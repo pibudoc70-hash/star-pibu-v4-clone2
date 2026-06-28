@@ -40,7 +40,7 @@ export default function ResultsStatisticsSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24" style={{ background: "var(--brand-bg, #FAF8F5)" }}>
+    <section id="results-statistics" className="py-16 md:py-24" style={{ background: "var(--brand-bg, #FAF8F5)" }} aria-label="시술 결과 실적">
       <div className="container">
         {/* 제목 */}
         <div className="section-header-block">
@@ -61,8 +61,7 @@ export default function ResultsStatisticsSection() {
             doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
-              style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04)', border: '1px solid rgba(196,168,130,0.15)' }}
+              className="rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 card"
             >
               {/* 의료진 사진 */}
               <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
@@ -75,10 +74,10 @@ export default function ResultsStatisticsSection() {
 
               {/* 타이틀 및 설명 */}
               <div className="p-4 sm:p-6 text-center w-full">
-                <p className="font-normal mb-3" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontSize: '1.1rem', letterSpacing: '0.01em' }}>
+                <p className="font-normal mb-3 text-[var(--brand-gold-deep,#A8895E)]" style={{ fontSize: '1.1rem', letterSpacing: '0.01em' }}>
                   {doctor.title}
                 </p>
-                <p className="text-xs sm:text-sm leading-relaxed break-words whitespace-pre-wrap text-center" style={{ color: 'var(--brand-text-mid, #666666)' }}>
+                <p className="text-xs sm:text-sm leading-relaxed break-words whitespace-pre-wrap text-center text-[var(--brand-text-mid,#666666)]">
                   {doctor.description}
                 </p>
               </div>
@@ -100,30 +99,29 @@ export default function ResultsStatisticsSection() {
             statistics.map((stat, index) => (
             <div
               key={index}
-              className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1"
-              style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 12px rgba(0,0,0,0.05)', border: '1px solid rgba(196,168,130,0.15)' }}
+              className="text-center p-4 sm:p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 card"
             >
               {/* 아이콘 */}
               <div className="flex justify-center mb-4">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid rgba(196,168,130,0.2)' }}>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center" style={{ background: 'var(--brand-bg, #FAF8F5)', border: '1px solid rgba(var(--brand-gold-rgb,196,168,130),0.2)' }}>
                   {stat.icon}
                 </div>
               </div>
 
               {/* 숫자 */}
-              <p className="font-normal text-2xl sm:text-3xl mb-2" style={{ color: '#7A5C35', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
+              <p className="font-normal text-2xl sm:text-3xl mb-2" style={{ color: 'var(--brand-gold-dark, #7A5C35)', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
                 {stat.number}
                 {/* [PROD-P3-2] fontSize 70% → 65%: HeroSection unit 표시와 통일 */}
                 {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}
               </p>
 
               {/* 라벨 - [MOB-4] 영어 20자 라벨이 2열 그리드에서 카드 높이 불균형 방지: break-words 추가 */}
-              <p className="text-xs sm:text-sm font-medium break-words" style={{ color: 'var(--brand-text-mid, #666666)' }}>
+              <p className="text-xs sm:text-sm font-medium break-words text-[var(--brand-text-mid,#666666)]">
                 {stat.label}
               </p>
 
               {/* 설명 */}
-              <p className="text-xs break-words" style={{ color: '#666666', marginTop: '0.5rem' }}>
+              <p className="text-xs break-words text-[var(--brand-text-mid,#666666)]" style={{ marginTop: '0.5rem' }}>
                 {stat.description}
               </p>
             </div>

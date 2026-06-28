@@ -86,7 +86,7 @@ export default function ReviewsSection() {
   const visible = reviews.slice(current * perPage, current * perPage + perPage);
 
   return (
-    <section ref={sectionRef} id="reviews" className="py-16 sm:py-24 star-section-alt">
+    <section ref={sectionRef} id="reviews" className="py-16 sm:py-24 star-section-alt" aria-label="환자 후기">
       <div className="container">
         {/* Section Header */}
         <div className="section-header-block reveal-heading">
@@ -99,8 +99,8 @@ export default function ReviewsSection() {
                 <Star key={i} size={18} fill="#FEE500" style={{ color: "#FEE500" }} />
               ))}
             </div>
-            <span className="font-montserrat font-normal text-lg" style={{ color: "var(--brand-text, #2C2C2C)" }}>4.9</span>
-            <span className="text-sm" style={{ color: "var(--brand-text-mid, #666666)" }}>/ 5.0 · {rv.ratingSource}</span>
+            <span className="font-montserrat font-normal text-lg text-[var(--brand-text,#2C2C2C)]">4.9</span>
+            <span className="text-sm text-[var(--brand-text-mid,#666666)]">/ 5.0 · {rv.ratingSource}</span>
           </div>
         </div>
 

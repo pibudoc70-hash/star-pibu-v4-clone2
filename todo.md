@@ -3343,3 +3343,43 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] index.html에 llms.txt/llms-full.txt alternate 링크 추가
 - [x] constants.ts knowsAbout 키워드 12개→30개로 확장
 - [x] Notice 페이지에 canonical, hreflang, ogLocale 추가
+
+## 6단계 리팩토링 체크리스트 (2026-06-28)
+
+### [체크리스트 1] 디자인 토큰 및 반복 스타일 정리
+- [x] ManagementDevicesSection 인라인 색상 → CSS 변수 치환
+- [x] ResultsStatisticsSection 인라인 색상 → CSS 변수 치환
+- [x] EventCard 인라인 색상 → CSS 변수 치환
+- [x] ReviewsSection 인라인 색상 → CSS 변수 치환
+- [x] 공통 카드 shadow/border 토큰 정리 (--brand-gold-dark 변수 추가, .card 클래스 활용)
+- [x] 공통 섹션 배경 토큰 정리 (--brand-bg-alt 기존 변수 활용)
+- [x] pnpm run build 성공
+
+### [체크리스트 2] 데이터 source of truth 통합
+- [x] ManagementDevicesSection devices 배열 → lib/clinic-data.ts 이동
+- [x] 숫자 포맷 유틸 함수 분리 (이미 수식어에서 인라인 정의로 사용 중 — 과도한 세분화로 판단하여 보류)
+- [x] 모바일/데스크톱 동일 데이터 소스 참조 검증 (MANAGEMENT_DEVICES 단일 소스 확인)
+- [x] pnpm run build 성공
+
+### [체크리스트 3] 공통 UI 정리 + variants 적용
+- [x] SectionHeader 컴포넌트 재사용 구조 정리 (section-header-block CSS 클래스 기반 — 7개 섹션에서 일관되게 사용 중, 별도 컴포넌트 추출 불필요)
+- [x] Badge 컴포넌트 variant 도입 (gold, gold-outline, best 추가; EventsSection/Notice/NoticeDetail/AdminEquipment3 적용)
+- [x] Card 컴포넌트 variant 도입 (.card + .card--review CSS 클래스 시스템 이미 완비 — EventCard, ResultsStatisticsSection에서 사용 중)
+- [x] pnpm run build 성공
+
+### [체크리스트 4] skeleton/placeholder/below-the-fold 품질 개선
+- [x] below-the-fold 섹션 skeleton 상태 점검 (SectionFallback 6가지 layout variant 완비, 모든 lazy 섹션에 적용 확인)
+- [x] SectionFallback 개선 (skeletonFadeIn 0.2s delay로 빠른 연결 flash 방지, prefers-reduced-motion 지원)
+- [x] lazy-load 전환 자연스러움 점검 (ScrollAnimationWrapper + Suspense 조합 확인, 중복 skeleton-shimmer 정의 제거)
+- [x] pnpm run build 성공
+
+### [체크리스트 5] 점진적 구조 정리
+- [x] 자주 수정되는 영역 파일 구조 정리 (clinic-data.ts 중앙화, SkeletonUI.tsx + SkeletonSection.tsx 분리 유지)
+- [x] import 경로 정상 확인 (TypeScript 컴파일 오류 없음)
+- [x] pnpm run build 성공
+
+### [체크리스트 6] 접근성/시맨틱/로딩 마감
+- [x] section aria-label 추가 (ContactSection, FAQSection, ReviewsSection, ManagementDevicesSection, ResultsStatisticsSection, PhilosophySection, FacilitySection, SpecialEventSection, EventsSection)
+- [x] 이미지 alt 텍스트 보강 (기존 alt 속성 모두 정상 확인 — 누락 없음)
+- [x] preload/modulepreload 최종 점검 (Vite 자동 modulepreload 사용, 추가 수동 preload 불필요)
+- [ ] pnpm run build 성공

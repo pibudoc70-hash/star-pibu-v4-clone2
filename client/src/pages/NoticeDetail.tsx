@@ -112,7 +112,7 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
           <div className="flex items-center justify-between flex-wrap gap-3 mb-6 pb-4 border-b border-gray-200">
             <div className="flex items-center gap-2">
               {notice.isPinned === "1" && (
-                <Badge variant="outline" className="text-[11px] border-amber-400 text-amber-600 flex items-center gap-1">
+                <Badge variant="gold-outline" className="text-[11px] flex items-center gap-1">
                   <Pin size={10} />
                   {pinnedLabel}
                 </Badge>

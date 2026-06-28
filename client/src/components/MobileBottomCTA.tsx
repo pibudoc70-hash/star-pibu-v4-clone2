@@ -46,7 +46,7 @@ export default function MobileBottomCTA() {
         className="mobile-bottom-btn mobile-bottom-btn--reserve"
         aria-label={t.hero.cta_reserve}
       >
-        <Calendar size={14} strokeWidth={2.2} />
+        <Calendar size={14} strokeWidth={2} />
         <span>{t.hero.cta_reserve}</span>
       </a>
 
@@ -71,13 +71,13 @@ export default function MobileBottomCTA() {
         )}
       </div>
 
-      {/* 전화 — 슬레이트 블루 계열 */}
+      {/* 전화 — 브랜드 골드 톤 */}
       <a
         href={phoneHref}
         className="mobile-bottom-btn mobile-bottom-btn--phone"
         aria-label={t.hero.cta_call}
       >
-        <Phone size={14} strokeWidth={1.8} />
+        <Phone size={14} strokeWidth={2} />
         <span>{t.hero.cta_call}</span>
       </a>
     </div>

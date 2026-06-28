@@ -74,7 +74,7 @@ export default function FloatingCTA() {
             style={{ background: chatBg, color: chatColor }}
             aria-label={fc.kakaoAria}
           >
-            <MessageCircle size={18} strokeWidth={1.8} />
+            <MessageCircle size={18} strokeWidth={2} />
             <span className="floating-btn-label">
               {wechatCopied && isZH ? t.access.copiedLabel : fc.kakao}
             </span>
@@ -91,7 +91,7 @@ export default function FloatingCTA() {
             className="flex-1 flex flex-col items-center justify-center gap-0.5 text-xs font-normal floating-btn-tel"
             aria-label={fc.callAria}
           >
-            <Phone size={17} strokeWidth={1.8} />
+            <Phone size={17} strokeWidth={2} />
             <span className="floating-btn-label">{fc.call}</span>
           </a>
         </div>

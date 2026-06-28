@@ -9,7 +9,8 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-const FILE = resolve(__dirname, "ManagementDevicesSection.tsx");
+// [REFACTOR] devices 배열이 ManagementDevicesSection.tsx → lib/clinic-data.ts 로 이동됨 (6단계 리팩토링 체크리스트 2)
+const FILE = resolve(__dirname, "../lib/clinic-data.ts");
 const source = readFileSync(FILE, "utf-8");
 
 // Device 객체 블록 파싱

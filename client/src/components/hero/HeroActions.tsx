@@ -101,7 +101,7 @@ export function HeroActions({
           className="hero-fade hero-btn-phone flex items-center gap-1.5 rounded-full transition-all duration-300 justify-center flex-1"
           style={{ animationDelay: delays.ctaPhone }}
         >
-          <Phone size={13} strokeWidth={1.8} />
+          <Phone size={13} strokeWidth={2} />
           {t.hero.cta_call}
         </a>
       </div>

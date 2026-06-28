@@ -51,13 +51,14 @@ export default function DesktopNav({
   ctaReserve,
   copiedLabel,
 }: DesktopNavProps) {
-  // 투명 헤더일 때는 흰색, 스크롤 후에는 다크 텍스트
-  const navTextColor = scrolled ? "#3a3a3a" : "rgba(255,255,255,0.92)";
+  // 투명 헤더일 때는 흰색(대비 강화), 스크롤 후에는 다크 텍스트
+  const navTextColor = scrolled ? "#2a2a2a" : "rgba(255,255,255,0.96)";
   const navActiveColor = scrolled ? "#C4A882" : "#EDD98A";
-  const navMutedColor = scrolled ? "#777" : "rgba(255,255,255,0.65)";
+  const navMutedColor = scrolled ? "#666" : "rgba(255,255,255,0.75)";
   const underlineColor = scrolled
     ? "linear-gradient(90deg, #C4A882, #D9C4A8)"
     : "linear-gradient(90deg, #EDD98A, #F5E4A8)";
+  const textShadowVal = scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.55), 0 0 24px rgba(0,0,0,0.25)";
 
   return (
     <>
@@ -83,7 +84,7 @@ export default function DesktopNav({
                 letterSpacing: "0.005em",
                 padding: "8px 18px",
                 background: "transparent",
-                textShadow: scrolled ? "none" : "0 1px 6px rgba(0,0,0,0.35)",
+                textShadow: textShadowVal,
                 transition: "color 0.4s cubic-bezier(0.16,1,0.3,1)",
               }}
               aria-current={active ? "page" : undefined}
@@ -120,7 +121,7 @@ export default function DesktopNav({
               padding: "8px 14px",
               background: "transparent",
               letterSpacing: "0.01em",
-              textShadow: scrolled ? "none" : "0 1px 6px rgba(0,0,0,0.35)",
+              textShadow: textShadowVal,
             }}
             aria-expanded={moreOpen}
             aria-haspopup="true"

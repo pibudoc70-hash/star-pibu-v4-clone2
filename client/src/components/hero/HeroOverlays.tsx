@@ -23,13 +23,14 @@ export function HeroDarkOverlay() {
             "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
         }}
       />
-      {/* 모바일 오버레이 — 상단 강하게(헤더 아래 텍스트 보호) + 중간 투명(배경 이미지 살림) + 하단 강하게(CTA 배경) */}
+      {/* 모바일 오버레이 — 상단 강하게 + 중간 투명 + 하단 강하게
+           밀딩 방지: 0.38→0.50 급격 전환 제거 → 6단계 완만한 전환 */}
       <div
         aria-hidden="true"
         className="absolute inset-0 md:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(4,8,22,0.88) 0%, rgba(4,8,22,0.62) 18%, rgba(4,8,22,0.38) 42%, rgba(4,8,22,0.50) 65%, rgba(4,8,22,0.85) 100%)",
+            "linear-gradient(to bottom, rgba(4,8,22,0.88) 0%, rgba(4,8,22,0.60) 15%, rgba(4,8,22,0.34) 38%, rgba(4,8,22,0.34) 55%, rgba(4,8,22,0.68) 78%, rgba(4,8,22,0.88) 100%)",
         }}
       />
     </>

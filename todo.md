@@ -2872,11 +2872,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] STAR DERMATOLOGY 텍스트 가시성 개선 (다크 배경 위 흰색 텍스트 그림자 강화)
 - [ ] 모바일 Hero 콘텐츠 위치 최적화 (padding-top 조정, 잘림 방지)
 - [ ] 모바일 Hero focal point 재조정 (object-position)
-- [ ] 모바일 CTA 위계 명확화 (네이버예약 Primary, 카카오 Secondary, 전화 Tertiary)
+- [x] 모바일 CTA 위계 명확화 (네이버예약 Primary, 카카오 Secondary, 전화 Tertiary)
 
 ### [P0] CTA 시스템 정비
-- [ ] Primary/Secondary/Tertiary CTA 위계 통일
-- [ ] sticky 모바일 CTA 바 고급화
+- [x] Primary/Secondary/Tertiary CTA 위계 통일
+- [x] sticky 모바일 CTA 바 고급화
 - [ ] 버튼 스타일 시스템 통일 (border, radius, spacing)
 
 ### [P1] 여백 시스템 + 타이포 계층
@@ -3298,7 +3298,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P1 작업 3: 섹션 패딩 시스템 검증 (py-20, py-28 이미 통일됨) 
 - [x] P1 작업 4: 색상 토큰 정리 (CSS 변수 중심, 동적 스타일은 인라인 유지) 
 - [ ] P2 작업: 레거시 코드 정리
-- [ ] 폰트 로딩 최적화
+- [x] 폰트 로딩 최적화
 - [ ] 최종 검증 및 보고
 
 ## Phase 5-6: 텍스트 대비/가독성 마감 + 최종 검증 (2026-06-28 재개)
@@ -3427,3 +3427,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ManagementDevicesSection 장비 영문명 fontWeight 100 → 200 (가독성 개선)
 - [x] RecentNoticesSection SectionFallback bg="#FAF8F5" 추가 (배경색 일치)
 - [x] pnpm run build 성공 (TypeScript 오류 0건)
+
+## Phase 완성도 마감: 브랜드 정리 & 품질 개선 (2026-06-28)
+- [x] 모바일 하단 CTA 브랜드 정리: gap:1px, border-radius:14px 14px 0 0, 전화 버튼 골드 톤
+- [x] 아이콘 strokeWidth 통일: MobileBottomCTA, HeroActions, FloatingCTA 모두 2로 통일
+- [x] Hero 모바일 배경 밴딩 개선: 0.38→0.50 급격 전환 제거, 6단계 완만한 그라디언트
+- [x] DesktopNav 가독성 보정: 투명 헤더 rgba(255,255,255,0.96), textShadow 강화
+- [x] HeroActions 전화 CTA 골드 톤: rgba(196,168,130,0.35) 테두리, rgba(196,168,130,0.90) 텍스트
+- [x] hero-btn-phone 모바일 오버라이드 골드 톤 통일
+- [x] floating-btn-tel 배경/색상 mobile-bottom-btn--phone과 동일하게 통일
+- [x] preload 최종 점검: Hero 이미지 2개 + 폰트 비동기 preload 이미 최적화됨
+- [x] pnpm run build 검증
+- [x] 1413개 테스트 전체 통과 (ManagementDevicesSection 테스트 경로 수정, i18n.ko.ts 오타 수정 포함)
+- [x] 체크포인트 저장

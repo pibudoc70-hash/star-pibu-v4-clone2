@@ -265,11 +265,9 @@ export default function Home() {
           </Suspense>
         </div>
 
-        {/* 3. Doctors — deferMount: 뷰포트 300px 전에 마운트 */}
+        {/* 3. Doctors */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="400px"
         >
           <div className="section-bg-warm">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
@@ -278,11 +276,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 4. Treatments + Equipment — deferMount: 무거운 데이터 섹션 */}
+        {/* 4. Treatments + Equipment */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="600px"
         >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
@@ -291,11 +287,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 5. Management Devices — deferMount */}
+        {/* 5. Management Devices */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
-          deferMount
-          minHeight="480px"
         >
           <div className="section-bg-dark-navy">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
@@ -304,11 +298,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 6. Philosophy — deferMount */}
+        {/* 6. Philosophy */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="400px"
         >
           <div className="section-bg-offwhite">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
@@ -317,11 +309,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 6-2. Results & Statistics — deferMount */}
+        {/* 6-2. Results & Statistics */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="320px"
         >
           <div className="section-bg-gold-soft">
             <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
@@ -330,11 +320,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 7. Facility Gallery — deferMount */}
+        {/* 7. Facility Gallery */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="560px"
         >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
@@ -343,11 +331,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 8. Patient Reviews — deferMount */}
+        {/* 8. Patient Reviews */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="480px"
         >
           <div className="section-bg-warm">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
@@ -356,11 +342,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 8-2. YouTube Channel — deferMount */}
+        {/* 8-2. YouTube Channel */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
-          deferMount
-          minHeight="400px"
         >
           <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
@@ -369,11 +353,9 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 9. FAQ — deferMount */}
+        {/* 9. FAQ */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="400px"
         >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
@@ -382,22 +364,18 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 최근 공지사항 섹션 — deferMount */}
+        {/* 최근 공지사항 섹션 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
-          deferMount
-          minHeight="300px"
         >
           <Suspense fallback={<SectionFallback minH="min-h-[300px]" />}>
             <RecentNoticesSection lang="ko" />
           </Suspense>
         </ScrollAnimationWrapper>
 
-        {/* 10. Location & Contact — deferMount */}
+        {/* 10. Location & Contact */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
-          deferMount
-          minHeight="400px"
         >
           <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>

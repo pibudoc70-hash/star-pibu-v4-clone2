@@ -3322,3 +3322,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SpecialEventSection SectionFallback minH 400→640px 조정
 - [x] 모바일/데스크톱 데이터 동기화 검증 완료 (CLINIC_STATS 단일 소스 확인)
 - [x] vendor-trpc, vendor-icons, vendor-react 모두 Home 첫 진입 필수 확인 (제거 불가)
+
+## 마감 이슈 최종 수정 (2026-06-28 세션2)
+- [x] HeroSection 카운트업 duration 1400→900ms 단축 (중간값 3,280/3,105/41/39 노출 시간 최소화)
+- [x] Cormorant Garamond 동기 로드 weight 400만으로 최적화 (300/500/600/italic 제거)
+- [x] Noto Serif KR 비동기 로드로 분리 (below-fold 섹션 타이틀)
+- [x] SectionFallback layout 타입별 skeleton 개선 (cards-3/cards-4/list/gallery/stats)
+- [x] 모바일/데스크톱 수치 동기화 최종 검증 완료
+- [x] pnpm run check/test/build 모두 통과

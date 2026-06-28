@@ -67,9 +67,10 @@ function HeroSection() {
 
   const statsRef = useRef<HTMLDivElement>(null);
   const clinicStats = useClinicStats();
-  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 2000, "", 0, statsRef, lang);
-  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 2000, "", 0, statsRef, lang);
-  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 2000, "", 0, statsRef, lang);
+  // [PERF] duration 1400→900ms: 750ms 시점에 97% 완료 → 중간값(3,280/3,105/41/39) 노출 시간 최소화
+  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, statsRef, lang);
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 900, "", 0, statsRef, lang);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 900, "", 0, statsRef, lang);
 
   return (
     <section

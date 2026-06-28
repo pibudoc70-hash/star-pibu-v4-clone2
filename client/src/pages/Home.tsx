@@ -39,42 +39,127 @@ import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
  * variant="light": 밝은 배경 섹션 (기본값)
  * 200ms 지연 후 opacity 1로 전환 → 빠른 연결에서 skeleton flash 방지
  */
-function SectionFallback({ minH = "min-h-[320px]", variant = "light" }: { minH?: string; variant?: "light" | "dark" } = {}) {
+/**
+ * SectionFallback — Suspense fallback skeleton
+ * layout: 섹션 실제 레이아웃에 맞는 skeleton 형태
+ *   'cards-3'  : 3열 카드 그리드 (SpecialEvent, Doctors, ResultsStatistics)
+ *   'cards-4'  : 4열 카드 그리드 (ManagementDevices)
+ *   'list'     : 목록형 (FAQ, Notices)
+ *   'gallery'  : 갤러리 (Facility)
+ *   'stats'    : 통계 카드 (Philosophy)
+ *   'default'  : 범용 (기본값)
+ */
+function SectionFallback({
+  minH = "min-h-[320px]",
+  variant = "light",
+  layout = "default",
+}: {
+  minH?: string;
+  variant?: "light" | "dark";
+  layout?: "cards-3" | "cards-4" | "list" | "gallery" | "stats" | "default";
+} = {}) {
   const isDark = variant === "dark";
-  const shimmerClass = isDark ? "skeleton-shimmer--dark" : "skeleton-shimmer";
-  const bgStyle = isDark ? { background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" } : { background: "var(--brand-bg, #FAF8F5)" };
+  const s = isDark ? "skeleton-shimmer--dark" : "skeleton-shimmer";
+  const bgStyle = isDark
+    ? { background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }
+    : { background: "var(--brand-bg, #FAF8F5)" };
+
+  // 섹션 헤더 (공통)
+  const header = (
+    <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+      <div className={`h-2.5 w-16 rounded-full ${s}`} />
+      <div className={`h-6 w-48 rounded ${s}`} style={{ animationDelay: "0.1s" }} />
+      <div className={`h-4 w-64 rounded ${s}`} style={{ animationDelay: "0.2s" }} />
+    </div>
+  );
+
+  // 레이아웃별 콘텐츠
+  let content: React.ReactNode;
+  if (layout === "cards-3") {
+    // 3열 카드 그리드 (이미지 + 텍스트 카드)
+    content = (
+      <div className="flex gap-4 w-full max-w-4xl justify-center flex-wrap px-4">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className={`rounded-2xl overflow-hidden ${s}`}
+            style={{ animationDelay: `${i * 0.1}s`, width: 'calc(33% - 1rem)', minWidth: '200px', height: '280px', flexShrink: 0 }} />
+        ))}
+      </div>
+    );
+  } else if (layout === "cards-4") {
+    // 4열 카드 그리드
+    content = (
+      <div className="flex gap-3 w-full max-w-4xl justify-center flex-wrap px-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className={`rounded-2xl overflow-hidden ${s}`}
+            style={{ animationDelay: `${i * 0.08}s`, width: 'calc(25% - 0.75rem)', minWidth: '160px', height: '220px', flexShrink: 0 }} />
+        ))}
+      </div>
+    );
+  } else if (layout === "list") {
+    // 목록형 (FAQ, 공지사항)
+    content = (
+      <div className="flex flex-col gap-3 w-full max-w-2xl px-4">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} className={`h-14 rounded-xl ${s}`}
+            style={{ animationDelay: `${i * 0.08}s` }} />
+        ))}
+      </div>
+    );
+  } else if (layout === "gallery") {
+    // 갤러리 (Facility)
+    content = (
+      <div className="flex gap-3 w-full max-w-4xl justify-center flex-wrap px-4">
+        <div className={`rounded-2xl ${s}`} style={{ width: '55%', minWidth: '240px', height: '300px', animationDelay: '0s' }} />
+        <div className="flex flex-col gap-3" style={{ width: '40%', minWidth: '160px' }}>
+          {[0, 1].map((i) => (
+            <div key={i} className={`rounded-2xl ${s}`}
+              style={{ height: '140px', animationDelay: `${(i + 1) * 0.1}s` }} />
+          ))}
+        </div>
+      </div>
+    );
+  } else if (layout === "stats") {
+    // 통계 카드 (Philosophy)
+    content = (
+      <div className="flex gap-4 w-full max-w-2xl justify-center flex-wrap px-4">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="flex flex-col items-center gap-2"
+            style={{ width: 'calc(33% - 1rem)', minWidth: '120px' }}>
+            <div className={`h-12 w-12 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1}s` }} />
+            <div className={`h-8 w-20 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
+            <div className={`h-3 w-16 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
+          </div>
+        ))}
+      </div>
+    );
+  } else {
+    // default: 범용 카드 2행
+    content = (
+      <>
+        <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className={`h-36 rounded-xl ${s}`}
+              style={{ animationDelay: `${i * 0.12}s`, width: 'calc(25% - 0.75rem)', minWidth: '140px', flexShrink: 0 }} />
+          ))}
+        </div>
+        <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className={`h-24 rounded-xl ${s}`}
+              style={{ animationDelay: `${(i + 4) * 0.12}s`, width: 'calc(33% - 0.75rem)', minWidth: '160px', flexShrink: 0 }} />
+          ))}
+        </div>
+      </>
+    );
+  }
+
   return (
     <div
       className={`section-fallback ${minH} py-16 md:py-24 flex flex-col items-center justify-center gap-6`}
       aria-hidden="true"
       style={bgStyle}
     >
-      {/* 셉션 헤더 skeleton */}
-      <div className="flex flex-col items-center gap-3 w-full max-w-sm">
-        <div className={`h-2.5 w-16 rounded-full ${shimmerClass}`} />
-        <div className={`h-6 w-48 rounded ${shimmerClass}`} style={{ animationDelay: "0.1s" }} />
-        <div className={`h-4 w-64 rounded ${shimmerClass}`} style={{ animationDelay: "0.2s" }} />
-      </div>
-      {/* 콘텐츠 skeleton 행 — 4개 카드로 실제 레이아웃 근사 */}
-      <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
-        {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className={`h-36 rounded-xl ${shimmerClass}`}
-            style={{ animationDelay: `${i * 0.12}s`, width: 'calc(25% - 0.75rem)', minWidth: '140px', flexShrink: 0 }}
-          />
-        ))}
-      </div>
-      {/* 두 번째 콘텐츠 행 */}
-      <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
-        {[0, 1, 2].map((i) => (
-          <div
-            key={i}
-            className={`h-24 rounded-xl ${shimmerClass}`}
-            style={{ animationDelay: `${(i + 4) * 0.12}s`, width: 'calc(33% - 0.75rem)', minWidth: '160px', flexShrink: 0 }}
-          />
-        ))}
-      </div>
+      {header}
+      {content}
     </div>
   );
 }
@@ -280,7 +365,7 @@ export default function Home() {
             deferMount=false: Hero 스크롤 직후 바로 보이므로 선로딩 유지
             단, Suspense로 감싸 코드 스플리팅 유지 */}
         <div className="bg-white">
-          <Suspense fallback={<SectionFallback minH="min-h-[640px]" />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[640px]" layout="cards-3" />}>
             <SpecialEventSection />
           </Suspense>
         </div>
@@ -290,7 +375,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[520px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[520px]" layout="cards-3" />}>
               <DoctorsSection />
             </Suspense>
           </div>
@@ -301,7 +386,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[720px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[720px]" layout="cards-3" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>
@@ -312,7 +397,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-navy">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" layout="cards-4" />}>
               <ManagementDevicesSection />
             </Suspense>
           </div>
@@ -323,7 +408,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-offwhite">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[400px]" layout="stats" />}>
               <PhilosophySection />
             </Suspense>
           </div>
@@ -334,7 +419,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-gold-soft">
-            <Suspense fallback={<SectionFallback minH="min-h-[440px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[440px]" layout="cards-3" />}>
               <ResultsStatisticsSection />
             </Suspense>
           </div>
@@ -345,7 +430,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" />}>
               <FacilitySection />
             </Suspense>
           </div>
@@ -356,7 +441,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[480px]" layout="cards-3" />}>
               <ReviewsSection />
             </Suspense>
           </div>
@@ -378,7 +463,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="list" />}>
               <FAQSection />
             </Suspense>
           </div>
@@ -388,7 +473,7 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <Suspense fallback={<SectionFallback minH="min-h-[300px]" />}>
+          <Suspense fallback={<SectionFallback minH="min-h-[300px]" layout="list" />}>
             <RecentNoticesSection lang="ko" />
           </Suspense>
         </ScrollAnimationWrapper>

@@ -68,16 +68,16 @@ function SectionHeader({ lang }: { lang: string }) {
 // ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
 function EventCardSkeleton() {
   return (
-    <div className="rounded-2xl overflow-hidden event-skeleton-bg" aria-hidden="true">
-      {/* 이미지 영역 */}
-      <div className="skeleton-shimmer event-skeleton-img" />
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', boxShadow: '0 2px 20px rgba(0,0,0,0.08)', border: '1px solid rgba(196,168,130,0.12)' }} aria-hidden="true">
+      {/* 이미지 영역 — aspect-ratio 3/2 유지로 CLS 방지 */}
+      <div className="skeleton-shimmer w-full" style={{ aspectRatio: '3/2' }} />
       {/* 텍스트 영역 */}
       <div className="p-5 flex flex-col gap-3">
-        <div className="skeleton-shimmer rounded-full event-skeleton-tag" />
-        <div className="skeleton-shimmer rounded event-skeleton-title" />
-        <div className="skeleton-shimmer rounded event-skeleton-desc" />
-        <div className="skeleton-shimmer rounded event-skeleton-desc-2" />
-        <div className="skeleton-shimmer rounded event-skeleton-meta" />
+        <div className="skeleton-shimmer rounded-full" style={{ height: '12px', width: '4rem' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '20px', width: '80%' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '60%' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '75%', marginTop: '2px' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '40%', marginTop: '2px' }} />
       </div>
     </div>
   );

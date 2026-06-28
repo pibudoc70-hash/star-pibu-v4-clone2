@@ -4141,7 +4141,7 @@ body.font-lang-zh .hero-stat-label {
 }
 
 .floating-btn-tel {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(196, 168, 130, 0.95);
   padding-top: 10px;
   padding-bottom: 10px;
   min-height: 56px;
@@ -4168,12 +4168,12 @@ body.font-lang-zh .hero-stat-label {
 }
 
 .floating-desktop-tel-icon {
-  color: rgba(196, 168, 130, 0.8);
+  color: rgba(196, 168, 130, 1.0);
   flex-shrink: 0;
 }
 
 .floating-desktop-tel-label {
-  color: rgba(196, 168, 130, 0.8);
+  color: rgba(196, 168, 130, 1.0);
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -4352,12 +4352,12 @@ body.font-lang-zh .hero-stat-label {
     font-size: 0.72rem !important;
     font-weight: 500 !important;
   }
-  /* Utility — 전화 */
-   .mobile-bottom-btn--phone {
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: rgba(255, 255, 255, 0.88) !important; /* 0.75 → 0.88: WCAG AA 대비 개선 */
+  /* Utility — 전화 (브랜드 골드 톤) */
+  .mobile-bottom-btn--phone {
+    background: rgba(196, 168, 130, 0.08) !important;
+    color: rgba(196, 168, 130, 0.95) !important; /* 브랜드 골드 — 전화 버튼 존재감 강화 */
     font-size: 0.72rem !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
   }
   /* 버튼 아이콘 + 텍스트 간격 통일 */
   .mobile-bottom-btn {

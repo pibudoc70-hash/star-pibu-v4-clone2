@@ -3421,3 +3421,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Map/YouTube/이벤트 영역 height 안정화 (SectionFallback bg 일치로 색상 점프 제거)
 - [x] 이미지 alt 의미 있는 텍스트로 보강 (기존 alt 모두 의미 있는 텍스트 확인)
 - [x] pnpm run build 성공
+
+### [최종 마감 수정] 이번 작업 추가 완료
+- [x] ResultsStatisticsSection SVG 아이콘 하드코딩 #D1AB67 → currentColor + CSS 변수(--brand-gold) 상속
+- [x] ManagementDevicesSection 장비 영문명 fontWeight 100 → 200 (가독성 개선)
+- [x] RecentNoticesSection SectionFallback bg="#FAF8F5" 추가 (배경색 일치)
+- [x] pnpm run build 성공 (TypeScript 오류 0건)

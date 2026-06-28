@@ -364,6 +364,13 @@ export const ja: I18nContent = {
     featured: "主推イベント",
     specialEmptyTitle: "スペシャルイベントを準備中です。",
     specialEmptyDesc: "近日中に新しいご案内をお届けします。カカオトークまたはお電話にてお問い合わせください。",
+    shareTitle: "イベントをシェア",
+    shareLink: "リンクをコピー",
+    shareCopied: "コピー完了!",
+    shareKakao: "カカオトーク",
+    shareLine: "LINE",
+    shareTwitter: "X (ツイッター)",
+    shareFacebook: "Facebook",
   },
   managementDevices: {
     scrollPrevLabel: "前へ",

@@ -11,6 +11,7 @@ import { Calendar, Bell, ArrowRight, Tag, Zap, Sparkles, ChevronRight, Loader2 }
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { Badge } from "@/components/ui/badge";
+import EventShareButton from "@/components/EventShareButton";
 
 interface Event {
   id: number;
@@ -214,19 +215,23 @@ export default function EventsSection() {
                     {ev.desc}
                   </p>
 
-                  {/* Date + CTA */}
+                  {/* Date + CTA + Share */}
                   <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: ev.accentBg }}>
                     <div className="flex items-center gap-2 text-xs" style={{ color: ev.accent }}>
                       <Calendar size={16} />
                       <span>{ev.date}</span>
                     </div>
-                    <button type="button"
-                      className="flex items-center gap-1 px-4 py-2 rounded-lg font-normal text-white transition-all group-hover:gap-2"
-                      style={{ backgroundColor: ev.accent }}
-                    >
-                      {ev_t.viewDetail}
-                      <ArrowRight size={16} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
+                      <button type="button"
+                        className="flex items-center gap-1 px-4 py-2 rounded-lg font-normal text-white transition-all group-hover:gap-2"
+                        style={{ backgroundColor: ev.accent }}
+                        onClick={(e) => { e.stopPropagation(); navigate(`/events/${ev.id}`); }}
+                      >
+                        {ev_t.viewDetail}
+                        <ArrowRight size={16} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -279,11 +284,14 @@ export default function EventsSection() {
                     </div>
                   </div>
 
-                  {/* Right: Arrow */}
-                  <ChevronRight
-                    size={20}
-                    className="flex-shrink-0 text-gray-500 group-hover:text-gray-600 group-hover:translate-x-1 transition-all"
-                  />
+                  {/* Right: Share + Arrow */}
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
+                    <ChevronRight
+                      size={20}
+                      className="text-gray-500 group-hover:text-gray-600 group-hover:translate-x-1 transition-all"
+                    />
+                  </div>
                 </div>
               </div>
             ))}

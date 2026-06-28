@@ -364,6 +364,13 @@ export const zh: I18nContent = {
     featured: "主推活动",
     specialEmptyTitle: "特别优惠活动正在准备中。",
     specialEmptyDesc: "即将推出新优惠，敬请期待。如需和询，请通过KakaoTalk或电话与我们联系。",
+    shareTitle: "分享此活动",
+    shareLink: "复制链接",
+    shareCopied: "已复制!",
+    shareKakao: "KakaoTalk",
+    shareLine: "LINE",
+    shareTwitter: "X (推特)",
+    shareFacebook: "Facebook",
   },
   managementDevices: {
     scrollPrevLabel: "上一个",

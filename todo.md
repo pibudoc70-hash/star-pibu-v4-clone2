@@ -3382,4 +3382,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] section aria-label 추가 (ContactSection, FAQSection, ReviewsSection, ManagementDevicesSection, ResultsStatisticsSection, PhilosophySection, FacilitySection, SpecialEventSection, EventsSection)
 - [x] 이미지 alt 텍스트 보강 (기존 alt 속성 모두 정상 확인 — 누락 없음)
 - [x] preload/modulepreload 최종 점검 (Vite 자동 modulepreload 사용, 추가 수동 preload 불필요)
-- [ ] pnpm run build 성공
+- [x] pnpm run build 성공
+
+## 이벤트 카드 공유 기능 (2026-06-28)
+- [x] i18n 4개 언어에 share 관련 번역 키 추가 (shareLink, shareCopied, shareKakao, shareLine, shareTwitter, shareFacebook, shareTitle)
+- [x] EventShareButton 공통 컴포넌트 생성 (링크 복사, 카카오톡, LINE, 트위터/X, 페이스북)
+- [x] Featured 이벤트 카드에 공유 버튼 추가
+- [x] 일반 이벤트 리스트 카드에 공유 버튼 추가
+- [x] 공유 URL: window.location.origin + /events/{id} 형식
+- [x] 링크 복사 후 2초간 "복사됨" 피드백 표시
+- [x] 카드 클릭 이벤트와 공유 버튼 클릭 이벤트 충돌 방지 (stopPropagation)
+- [x] pnpm run build 성공

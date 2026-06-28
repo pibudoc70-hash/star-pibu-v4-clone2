@@ -294,6 +294,14 @@ export interface I18nContent {
     specialEmptyTitle: string;
     /** SPECIAL EVENT 섹션 empty state 설명 */
     specialEmptyDesc: string;
+    /** 공유 버튼 관련 */
+    shareTitle: string;
+    shareLink: string;
+    shareCopied: string;
+    shareKakao: string;
+    shareLine: string;
+    shareTwitter: string;
+    shareFacebook: string;
   };
   managementDevices: {
     /** 스크롤 이전 버튼 aria-label */

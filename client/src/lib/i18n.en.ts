@@ -364,6 +364,13 @@ export const en: I18nContent = {
     featured: "Featured Event",
     specialEmptyTitle: "Special promotions are being prepared.",
     specialEmptyDesc: "New offers coming soon. Contact us via KakaoTalk or phone for inquiries.",
+    shareTitle: "Share this event",
+    shareLink: "Copy link",
+    shareCopied: "Copied!",
+    shareKakao: "KakaoTalk",
+    shareLine: "LINE",
+    shareTwitter: "X (Twitter)",
+    shareFacebook: "Facebook",
   },
   managementDevices: {
     scrollPrevLabel: "Previous",

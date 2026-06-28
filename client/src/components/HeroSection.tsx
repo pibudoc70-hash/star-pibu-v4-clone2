@@ -82,12 +82,14 @@ function HeroSection() {
           aria-hidden="true"
           className="absolute inset-0 block w-full h-full"
         >
+          {/* 데스크톱: 대형 이미지 */}
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
+          {/* 모바일: 모바일 최적화 이미지 */}
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
-            src={HERO_IMAGES.desktopJpg}
+            src={HERO_IMAGES.mobilePortraitJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
             fetchPriority="high"
             loading="eager"

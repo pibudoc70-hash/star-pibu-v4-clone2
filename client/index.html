@@ -66,14 +66,20 @@
     <link rel="alternate" hreflang="ja" href="https://star-pibu.com/ja" />
     <link rel="alternate" hreflang="zh" href="https://star-pibu.com/zh" />
     <link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" />
-    <!-- Google Fonts: 브랜드 타이포 시스템 — Cormorant Garamond(Hero/브랜드) + Noto Serif KR(섹션타이틀) + Noto Sans KR(본문) + Montserrat(수치/EN) -->
+    <!-- Google Fonts: 브랜드 타이포 시스템 최적화 -->
+    <!-- [P0-FONT-1] preconnect 단계적 로드: 첫 번째 요청만 preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- 한국어 필수 폰트: 렌더링 중단 없이 빠르게 로드 -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;500&family=Montserrat:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet" />
-    <!-- Noto Sans JP / Noto Sans SC — 일본어·중국어 폰트: 비동기 로드로 초기 렌더링 연장 방지 -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" /></noscript>
+    <!-- [P0-FONT-2] 모바일 첫 렌더에 필수: Noto Serif KR(섹션타이틀) + Montserrat(수치) 만 동기 로드 -->
+    <!-- Cormorant Garamond(Hero)는 이미 로드되어 있고, Noto Sans KR은 Pretendard로 대체 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- [P0-FONT-3] 보조 폰트: 비동기 로드로 초기 렌더링 연장 방지 -->
+    <!-- Cormorant Garamond(Hero italic/light) + Noto Serif KR(light/bold) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;500&display=swap" /></noscript>
+    <!-- [P0-FONT-4] 다국어 폰트: 비동기 로드 (필요시에만) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap" /></noscript>
     <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable subset) -->
     <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />

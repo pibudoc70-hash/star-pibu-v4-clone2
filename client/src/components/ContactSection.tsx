@@ -20,13 +20,14 @@
  *            - data-popup-visible: CSS에서 미사용 → 제거
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { MapView } from "@/components/Map";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
 import { useClinicMap } from "@/hooks/useClinicMap";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
 
 // 모듈 상수로 선언 — 리렌더링마다 새 객체가 생성되어 MapView에
@@ -49,6 +50,14 @@ export default function ContactSection() {
 
   // CONTACT-P3-B: 지도 높이 계산 로직을 useMapHeight 커스텀 훅으로 분리
   const { mapHeight, isMobile, infoPanelRef, mapInstanceRef } = useMapHeight();
+
+  // [P0-MAP-LAZY] Map lazy mount: viewport 진입 시에만 MapView 렌더링
+  // 모바일 홈페이지 초기 로드 시 지도 스크립트 로드 방지 (~100KB 감소)
+  const { ref: mapContainerRef, isVisible: shouldRenderMap } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '100px', // 100px 전에 미리 로드 시작
+    triggerOnce: true,
+  });
 
   // [R18-P1-6] onMapReady 콜백 로직 → useClinicMap 훅으로 캡슐화
   // [R21-P0-3] markerPopupVisible 상태 소유권 → useClinicMap 훅으로 이전
@@ -114,19 +123,29 @@ export default function ContactSection() {
           className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-5"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
         >
           {/* Map - 모바일에서 더 크게 */}
-          {/* [R21-P0-3] mapContainerRef 제거 (MapView에 전달되지 않는 불필요한 ref) */}
-          {/* [R21-P0-3] data-popup-visible 제거 (CSS에서 미사용) */}
+          {/* [P0-MAP-LAZY] 지도 컨드: viewport 진입 시에만 MapView 렌더링 */}
           <div
+            ref={mapContainerRef}
             className="reveal-left lg:col-span-3 rounded-2xl overflow-hidden shadow-lg flex flex-col min-h-[300px]"
             style={{ height: mapHeight }}
             aria-label={t.access.mapAriaLabel}
           >
-            <MapView
-              className="w-full h-full"
-              initialCenter={STAR_LOCATION}
-              initialZoom={17}
-              onMapReady={handleMapReady}
-            />
+            {/* [P0-MAP-LAZY] shouldRenderMap 플래그로 조건부 렌더링 */}
+            {shouldRenderMap ? (
+              <MapView
+                className="w-full h-full"
+                initialCenter={STAR_LOCATION}
+                initialZoom={17}
+                onMapReady={handleMapReady}
+              />
+            ) : (
+              // 지도 로드 전 placeholder
+              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-sm text-gray-500">지도 로드 중...</div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* [R15-P1-2] Info Panel → ContactInfoPanel 서브컴포넌트로 분리 */}

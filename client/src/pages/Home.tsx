@@ -10,7 +10,8 @@
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
 import { lazy, Suspense, useEffect, useState } from "react";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildVideoObjectListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildVideoObjectListJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import { CLINIC_DOCTORS } from "@/lib/clinic-data";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
@@ -349,6 +350,7 @@ export default function Home() {
               answer: "리쥬란힐러는 보통 2~4주 간격으로 3~4회 기본 시술 후 3~6개월 간격으로 유지 시술을 권장합니다. 개인 피부 상태에 따라 시술 횟수와 간격이 달라질 수 있으며, 시술 전 전문의 상담을 통해 맞춤 계획을 세우는 것이 좋습니다."
             },
                     ]),
+          buildPersonListJsonLd(CLINIC_DOCTORS),
           buildVideoObjectListJsonLd([
             {
               title: "울쎄라피 프라임 시술 안내 | 부산 서면 스타피부과",

@@ -3330,3 +3330,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SectionFallback layout 타입별 skeleton 개선 (cards-3/cards-4/list/gallery/stats)
 - [x] 모바일/데스크톱 수치 동기화 최종 검증 완료
 - [x] pnpm run check/test/build 모두 통과
+
+## Phase SEO-AI: SEO 및 AI 검색 최적화 (2026-06-28)
+- [x] seoHelpers.ts에 buildPersonJsonLd, buildVideoObjectListJsonLd, buildEventJsonLd 헬퍼 추가
+- [x] About 페이지에 BreadcrumbList 스키마 추가
+- [x] Equipment3 페이지에 BreadcrumbList 스키마 추가
+- [x] EventDetail 페이지에 Event + BreadcrumbList 스키마 추가
+- [x] Home 페이지에 VideoObject 스키마 추가
+- [x] llms.txt에 FAQ 섹션 추가 (8개 Q&A)
+- [x] index.html에 AI 크롤러 메타 시그널 추가 (GPTBot, ClaudeBot, PerplexityBot, Google-Extended)
+- [x] index.html에 geo.region, geo.position, classification 메타 태그 추가
+- [x] index.html에 llms.txt/llms-full.txt alternate 링크 추가
+- [x] constants.ts knowsAbout 키워드 12개→30개로 확장
+- [x] Notice 페이지에 canonical, hreflang, ogLocale 추가

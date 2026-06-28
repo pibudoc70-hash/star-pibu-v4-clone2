@@ -150,8 +150,8 @@ export default function FAQSection() {
             ))}
           </div>
 
-          {/* 하단 CTA */}
-          <div className="mt-10 text-center">
+          {/* 하단 CTA — 모바일 640px 이하에서 숨김 (MobileBottomCTA와 충돌 방지) */}
+          <div className="hidden md:block mt-10 text-center">
             <p className="text-sm mb-4 text-brand-mid">{faqCtaDesc}</p>
             <a
               href={chatUrl}

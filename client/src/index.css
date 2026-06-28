@@ -2278,6 +2278,85 @@
 }
 
 /* ─── 섹션 헤더 공통 타이포 시스템 ─────────────────────────────────────────── */
+/* ─── 통합 카드 시스템 (Card System) ─────────────────────────────────────────── */
+
+/* .card: 기본 카드 스타일 통합 */
+.card {
+  background: var(--brand-bg, #FAF8F5);
+  border: 1px solid rgba(196, 168, 130, 0.15);
+  border-radius: 0.875rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.32s ease;
+  position: relative;
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0), transparent);
+  transition: background 0.32s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.875rem;
+  background: linear-gradient(160deg, rgba(196, 168, 130, 0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(196, 168, 130, 0.18), 0 6px 16px rgba(0, 0, 0, 0.07);
+  border-color: rgba(196, 168, 130, 0.38);
+}
+
+.card:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.6), transparent);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card:active {
+  transform: translateY(-3px);
+  transition-duration: 0.12s;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--brand-gold, #C4A882);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-gold, #C4A882) 20%, transparent);
+}
+
+/* .card--review: 리뷰 카드 변형 (높은 패딩, 상단 강조 테두리) */
+.card--review {
+  border-radius: 1.125rem;
+  padding: 2rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
+  border-top: 2px solid rgba(196, 168, 130, 0.5);
+}
+
+.card--review:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 44px rgba(196, 168, 130, 0.15), 0 4px 14px rgba(0, 0, 0, 0.06);
+  border-top-color: rgba(196, 168, 130, 0.7);
+}
+
 /* eyebrow: 영문 오버라인 — Montserrat, 골드, 넓은 자간 */
 .section-eyebrow {
   font-family: 'Montserrat', sans-serif;

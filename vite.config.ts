@@ -170,6 +170,10 @@ export default defineConfig({
     emptyOutDir: true,
     cssCodeSplit: true,
     target: "es2020",
+    // [P0-OPT] 모바일 첫 로딩 최적화: 홈에서 불필요한 청크 preload 제거
+    // Vite는 모든 manualChunks를 자동으로 modulepreload하므로,
+    // 홈페이지에서 사용하지 않는 청크는 manualChunks에서 제외하여
+    // 불필요한 preload 링크 생성 방지
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -197,18 +201,24 @@ export default defineConfig({
           if (id.includes("data/treatments")) {
             return "data-treatments";
           }
-          // [P1-OPT] 관리자 페이지 청크 분리
-          if (id.includes("pages/Admin")) {
-            return "page-admin";
-          }
-          // [P1-OPT] 시술/장비 페이지 청크 분리
-          if (id.includes("pages/Treatment") || id.includes("pages/Equipment")) {
-            return "page-treatments-equipment";
-          }
-          // [P1-OPT] 랜딩 페이지 청크 분리
-          if (id.includes("pages/Landing")) {
-            return "page-landings";
-          }
+          // [P0-OPT] 관리자 페이지 청크 분리 제거
+          // 이유: 모바일 홈에서 불필요한 1.2MB 청크 preload 방지
+          // 관리자 페이지 접근 시 동적 import로 로드됨
+          // if (id.includes("pages/Admin")) {
+          //   return "page-admin";
+          // }
+          
+          // [P0-OPT] 시술/장비 페이지 청크 분리 제거
+          // 이유: 홈페이지에서 사용하지 않는 149KB 청크 preload 방지
+          // if (id.includes("pages/Treatment") || id.includes("pages/Equipment")) {
+          //   return "page-treatments-equipment";
+          // }
+          
+          // [P0-OPT] 랜딩 페이지 청크 분리 제거
+          // 이유: 홈페이지에서 사용하지 않는 682KB 청크 preload 방지
+          // if (id.includes("pages/Landing")) {
+          //   return "page-landings";
+          // }
           // 나머지 node_modules는 Rollup 기본 청킹에 맡김
         },
       },

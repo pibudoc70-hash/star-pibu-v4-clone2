@@ -285,7 +285,9 @@ export default function Home() {
         {/* 3. Doctors — 따뜻한 크림 오프화이트, 시각적 질감 전환 */}
         <ScrollAnimationWrapper animationType="fade-in">
           <div className="section-bg-warm">
-            <DoctorsSection />
+            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+              <DoctorsSection />
+            </Suspense>
           </div>
         </ScrollAnimationWrapper>
 
@@ -365,7 +367,9 @@ export default function Home() {
 
         {/* 최근 공지사항 섹션 */}
         <ScrollAnimationWrapper animationType="fade-in">
-          <RecentNoticesSection lang="ko" />
+          <Suspense fallback={<SectionFallback minH="min-h-[300px]" />}>
+            <RecentNoticesSection lang="ko" />
+          </Suspense>
         </ScrollAnimationWrapper>
 
 

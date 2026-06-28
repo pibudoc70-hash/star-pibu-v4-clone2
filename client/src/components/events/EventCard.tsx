@@ -132,12 +132,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
 
   return (
     <div
-      className="flex flex-col rounded-2xl overflow-hidden"
-      style={{
-        background: "var(--brand-bg, #FAF8F5)",
-        boxShadow: "0 2px 20px rgba(196,168,130,0.10), 0 1px 4px rgba(0,0,0,0.04)",
-        border: "1px solid rgba(196,168,130,0.18)",
-      }}
+      className="flex flex-col overflow-hidden card"
     >
       {/* 이미지 — PC: 항상 표시 / 모바일: 확장 시에만 표시 */}
       {event.imageUrl && (
@@ -247,8 +242,8 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             </div>
           )}
 
-          {/* 상담 버튼 */}
-          <div className="flex gap-2.5 mb-3">
+          {/* 상담 버튼 — 모바일 640px 이하에서 숨김 (MobileBottomCTA와 충돌 방지) */}
+          <div className="hidden md:flex gap-2.5 mb-3">
             <a
               href={chatUrl}
               target="_blank"

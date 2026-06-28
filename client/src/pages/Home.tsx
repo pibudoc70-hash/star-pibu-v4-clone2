@@ -34,41 +34,44 @@ const ContactSection = lazy(() => import("@/components/ContactSection"));
 const RecentNoticesSection = lazy(() => import("@/components/RecentNoticesSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 
-/** 섹션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선 */
-// S2-T4: CLS 감소 — 서스펜스 폴백에 min-h 지정으로 레이아웃 시프트 방지
-function SectionFallback({ minH = "min-h-[320px]" }: { minH?: string } = {}) {
+/** 셉션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선
+ * variant="dark": 어두운 배경 섹션(ManagementDevices, YouTube, Contact)
+ * variant="light": 밝은 배경 섹션 (기본값)
+ * 200ms 지연 후 opacity 1로 전환 → 빠른 연결에서 skeleton flash 방지
+ */
+function SectionFallback({ minH = "min-h-[320px]", variant = "light" }: { minH?: string; variant?: "light" | "dark" } = {}) {
+  const isDark = variant === "dark";
+  const shimmerClass = isDark ? "skeleton-shimmer--dark" : "skeleton-shimmer";
+  const bgStyle = isDark ? { background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" } : { background: "var(--brand-bg, #FAF8F5)" };
   return (
     <div
-      className={`${minH} py-16 md:py-24 flex flex-col items-center justify-center gap-6`}
+      className={`section-fallback ${minH} py-16 md:py-24 flex flex-col items-center justify-center gap-6`}
       aria-hidden="true"
-      style={{ background: "var(--brand-bg, #FAF8F5)" }}
+      style={bgStyle}
     >
-      {/* 섹션 헤더 skeleton */}
+      {/* 셉션 헤더 skeleton */}
       <div className="flex flex-col items-center gap-3 w-full max-w-sm">
-        <div
-          className="h-2.5 w-16 rounded-full animate-pulse"
-          style={{ background: "rgba(196,168,130,0.25)" }}
-        />
-        <div
-          className="h-6 w-48 rounded animate-pulse"
-          style={{ background: "rgba(196,168,130,0.2)" }}
-        />
-        <div
-          className="h-4 w-64 rounded animate-pulse"
-          style={{ background: "rgba(196,168,130,0.15)" }}
-        />
+        <div className={`h-2.5 w-16 rounded-full ${shimmerClass}`} />
+        <div className={`h-6 w-48 rounded ${shimmerClass}`} style={{ animationDelay: "0.1s" }} />
+        <div className={`h-4 w-64 rounded ${shimmerClass}`} style={{ animationDelay: "0.2s" }} />
       </div>
-      {/* 콘텐츠 skeleton 행 */}
-      <div className="flex gap-4 w-full max-w-2xl justify-center">
+      {/* 콘텐츠 skeleton 행 — 4개 카드로 실제 레이아웃 근사 */}
+      <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className={`h-36 rounded-xl ${shimmerClass}`}
+            style={{ animationDelay: `${i * 0.12}s`, width: 'calc(25% - 0.75rem)', minWidth: '140px', flexShrink: 0 }}
+          />
+        ))}
+      </div>
+      {/* 두 번째 콘텐츠 행 */}
+      <div className="flex gap-3 w-full max-w-3xl justify-center flex-wrap px-4">
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="flex-1 h-32 rounded-xl animate-pulse"
-            style={{
-              background: "rgba(196,168,130,0.12)",
-              animationDelay: `${i * 0.12}s`,
-              maxWidth: "200px",
-            }}
+            className={`h-24 rounded-xl ${shimmerClass}`}
+            style={{ animationDelay: `${(i + 4) * 0.12}s`, width: 'calc(33% - 0.75rem)', minWidth: '160px', flexShrink: 0 }}
           />
         ))}
       </div>
@@ -287,7 +290,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[520px]" />}>
               <DoctorsSection />
             </Suspense>
           </div>
@@ -298,7 +301,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[720px]" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>
@@ -309,7 +312,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-navy">
-            <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" />}>
               <ManagementDevicesSection />
             </Suspense>
           </div>
@@ -331,7 +334,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-gold-soft">
-            <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[440px]" />}>
               <ResultsStatisticsSection />
             </Suspense>
           </div>
@@ -364,7 +367,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-deep">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[400px]" variant="dark" />}>
               <YouTubeSection />
             </Suspense>
           </div>
@@ -375,7 +378,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="bg-white">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
               <FAQSection />
             </Suspense>
           </div>
@@ -395,7 +398,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-deep">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" />}>
               <ContactSection />
             </Suspense>
           </div>

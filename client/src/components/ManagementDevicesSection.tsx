@@ -291,7 +291,7 @@ function DeviceCard({ device }: { device: Device }) {
 
       {/* 설명 텍스트 (왼쪽 정렬) */}
       <div className="px-4 pb-4 md:pb-5">
-        <p className="text-xs leading-relaxed line-clamp-3" style={{ color: "#6B7280", textAlign: "left" }}>
+        <p className="text-xs leading-relaxed line-clamp-3" style={{ color: "#555555", textAlign: "left" }}>
           {displayDesc}
         </p>
       </div>

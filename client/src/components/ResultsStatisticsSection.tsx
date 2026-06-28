@@ -111,7 +111,7 @@ export default function ResultsStatisticsSection() {
               </div>
 
               {/* 숫자 */}
-              <p className="font-normal text-2xl sm:text-3xl mb-2" style={{ color: 'var(--brand-gold-deep, #A8895E)', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
+              <p className="font-normal text-2xl sm:text-3xl mb-2" style={{ color: '#7A5C35', fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif" }}>
                 {stat.number}
                 {/* [PROD-P3-2] fontSize 70% → 65%: HeroSection unit 표시와 통일 */}
                 {stat.unit && <span style={{ fontSize: '65%' }} className="ml-1">{stat.unit}</span>}
@@ -123,7 +123,7 @@ export default function ResultsStatisticsSection() {
               </p>
 
               {/* 설명 */}
-              <p className="text-xs break-words" style={{ color: 'var(--brand-text-muted, #999999)', marginTop: '0.5rem' }}>
+              <p className="text-xs break-words" style={{ color: '#666666', marginTop: '0.5rem' }}>
                 {stat.description}
               </p>
             </div>

@@ -163,7 +163,7 @@ export default function ReviewsSection() {
                           className="text-xs px-2 py-1 rounded-full font-normal"
                           style={{
                             background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
-                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
+                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#027A37" : "var(--brand-gold-deep, #A8895E)",
                           }}
                         >
                           {r.platform}
@@ -220,7 +220,7 @@ export default function ReviewsSection() {
                         className="text-xs px-2 py-1 rounded-full font-normal"
                         style={{
                           background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
-                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#03C75A" : "var(--brand-gold-deep, #A8895E)",
+                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#027A37" : "var(--brand-gold-deep, #A8895E)",
                         }}
                       >
                         {r.platform}

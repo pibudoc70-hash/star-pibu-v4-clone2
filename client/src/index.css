@@ -61,7 +61,7 @@
   /* Brand Text */
   --brand-text: #2C2C2C;
   --brand-text-mid: #666666;
-  --brand-text-muted: #999999;
+  --brand-text-muted: #666666; /* [A11Y] #999999 → #666666: WCAG AA 4.5:1+ */
   --brand-text-light: #BBBBBB;
   /* Brand Contrast (footer/overlay) */
   --brand-dark: #232323;
@@ -4023,7 +4023,7 @@ body.font-lang-zh .hero-stat-label {
   color: var(--brand-text, #2C2C2C);
 }
 .text-brand-muted {
-  color: var(--brand-text-muted, #999999);
+  color: var(--brand-text-muted, #666666);
 }
 
 /* 슬라이더 dot 네비게이션 */
@@ -4298,7 +4298,7 @@ body.font-lang-zh .hero-stat-label {
   .text-brand-muted,
   [style*="color: var(--brand-text-muted"],
   [style*="color: #999"] {
-    color: #777777 !important; /* #999 → #777 (대비 개선) */
+    color: #666666 !important; /* [A11Y] #999 → #666 (WCAG AA 4.5:1+ 달성) */
   }
   /* 카드 내부 설명 텍스트 */
   .text-xs {
@@ -4814,5 +4814,58 @@ body.font-lang-zh .hero-stat-label {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Section Fallback Skeleton — lazy loading 품질 보정
+   ───────────────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* 빠른 연결에서 skeleton flash 방지: 200ms 후 opacity 1 */
+@keyframes skeletonFadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.section-fallback {
+  animation: skeletonFadeIn 0.15s ease 0.2s both;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(196,168,130,0.12) 25%,
+    rgba(196,168,130,0.22) 50%,
+    rgba(196,168,130,0.12) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton-shimmer--dark {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.06) 25%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* prefers-reduced-motion: shimmer 비활성화 */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer,
+  .skeleton-shimmer--dark {
+    animation: none !important;
+    background: rgba(196,168,130,0.15) !important;
+  }
+  .section-fallback {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

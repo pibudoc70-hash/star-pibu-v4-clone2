@@ -3300,3 +3300,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] P2 작업: 레거시 코드 정리
 - [ ] 폰트 로딩 최적화
 - [ ] 최종 검증 및 보고
+
+## Phase 5-6: 텍스트 대비/가독성 마감 + 최종 검증 (2026-06-28 재개)
+- [x] ManagementDevicesSection 카드 설명 텍스트 #6B7280 → #555555 (4.30→6.63:1)
+- [x] ResultsStatisticsSection 통계 카드 숫자 #A8895E → #7A5C35 (2.90→5.44:1)
+- [x] ResultsStatisticsSection 통계 카드 설명 #999999 → #666666 (2.52→5.07:1)
+- [x] ReviewsSection 작성자명 text-brand-muted → #666666 (2.69→5.42:1)
+- [x] ReviewsSection 네이버 뱃지 텍스트 #03C75A → #027A37 (2.13→5.16:1)
+- [x] 콘텐츠 동기화 검증 (CLINIC_STATS → HeroSection, ResultsStatisticsSection 동일 수치)
+- [x] pnpm run check
+- [x] pnpm run test
+- [x] pnpm run build
+- [ ] 체크포인트 저장
+- [ ] 종합 보고서 작성

@@ -189,14 +189,13 @@ export default defineConfig({
           if (id.includes("lucide-react")) {
             return "vendor-icons";
           }
-          // KaTeX (수식 렌더링 — 대형 패키지)
-          if (id.includes("katex")) {
-            return "vendor-katex";
-          }
-          // S3-T2: streamdown (마크다운 스트리밍 렌더러 — 독립 청크로 분리)
-          if (id.includes("streamdown")) {
-            return "vendor-streamdown";
-          }
+          // [P0-OPT] KaTeX + streamdown: manualChunks에서 제거
+          // 이유: Home 첫 진입에서 modulepreload 대상이 되어 291KB gzip 선로드 발생
+          // katex (88KB gzip): AI 채팅/관리자 페이지에서만 사용
+          // streamdown (203KB gzip): AI 채팅 페이지에서만 사용
+          // → Rollup 기본 청킹에 맡기면 사용 페이지에서만 dynamic import로 로드됨
+          // if (id.includes("katex")) { return "vendor-katex"; }
+          // if (id.includes("streamdown")) { return "vendor-streamdown"; }
           // treatments-data (317KB) — lazy 코드스플리팅으로 분리된 시술 데이터
           if (id.includes("data/treatments")) {
             return "data-treatments";

@@ -3440,3 +3440,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run build 검증
 - [x] 1413개 테스트 전체 통과 (ManagementDevicesSection 테스트 경로 수정, i18n.ko.ts 오타 수정 포함)
 - [x] 체크포인트 저장
+
+## Phase 최종 마감: below-the-fold 완성도 & 브랜드 마감 (2026-06-28)
+- [x] skeleton shimmer 속도/대비 개선 (1.6s→1.4s, 골드 강도 소폭 상향)
+- [x] SectionFallback cards-3 카드 외곽 배경 불투명도 강화 (0.85→0.96, 골드 border 추가)
+- [x] SectionFallback 헤더 라벨 바 색상 브랜드 골드 톤으로 통일 (픽스드 색상)
+- [x] SectionFallback role="presentation" 보강
+- [x] 모바일 CTA 전화 버튼 배경 강화 (rgba(196,168,130,0.10)→0.18) + 텍스트 밝기 보정
+- [x] 모바일 CTA border-top 골드 강도 상향 (0.25→0.32) + box-shadow 개선
+- [x] preload 최종 확인: vendor-trpc/vendor-icons 유지 근거 문서화 (주석)
+- [x] section-subtitle 가독성 점검 (색상 #666666→5a5a5a)
+- [x] section-eyebrow 가독성 개선 (0.63rem→0.65rem, opacity 0.88→0.95)
+- [x] --brand-text-mid CSS 변수 업데이트
+- [x] pnpm run build 성공 (157.1kb)
+- [x] pnpm test 1413개 전체 통과
+- [x] 체크포인트 저장

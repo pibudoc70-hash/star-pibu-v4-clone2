@@ -69,10 +69,16 @@ function SectionFallback({
     ? { background: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" }
     : { background: "var(--brand-bg, #FAF8F5)" };
 
-  // 섹션 헤더 (공통)
+  // 섹션 헤더 (공통) — 라벨 바는 골드 톤 픽스드 색상으로 브랜드 일관성 확보
   const header = (
     <div className="flex flex-col items-center gap-3 w-full max-w-sm">
-      <div className={`h-2.5 w-16 rounded-full ${s}`} />
+      {/* 라벨 바 — 골드 톤 픽스드 (shimmer 아님) */}
+      <div
+        style={{
+          height: '10px', width: '4rem', borderRadius: '999px',
+          background: isDark ? 'rgba(196,168,130,0.35)' : 'rgba(196,168,130,0.42)',
+        }}
+      />
       <div className={`h-6 w-48 rounded ${s}`} style={{ animationDelay: "0.1s" }} />
       <div className={`h-4 w-64 rounded ${s}`} style={{ animationDelay: "0.2s" }} />
     </div>
@@ -86,12 +92,21 @@ function SectionFallback({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
         {[0, 1, 2].map((i) => (
           <div key={i} className="rounded-2xl overflow-hidden"
-            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.85)', animationDelay: `${i * 0.1}s` }}>
+            style={{
+              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
+              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+            }}>
             {/* 이미지 영역 — aspect-ratio 3/2 */}
             <div className={`${s} w-full`} style={{ aspectRatio: '3/2', animationDelay: `${i * 0.1}s` }} />
             {/* 텍스트 영역 */}
             <div className="p-4 flex flex-col gap-2.5">
-              <div className={`h-3 w-14 rounded-full ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
+              {/* 배지 라벨 — 골드 픽스드 */}
+              <div style={{
+                height: '12px', width: '3.5rem', borderRadius: '999px',
+                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+                animationDelay: `${i * 0.1 + 0.05}s`,
+              }} />
               <div className={`h-5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
               <div className={`h-3.5 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.15}s` }} />
               <div className={`h-3.5 w-2/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.2}s` }} />
@@ -178,6 +193,7 @@ function SectionFallback({
     <div
       className={`section-fallback ${minH} py-16 md:py-24 flex flex-col items-center justify-center gap-6`}
       aria-hidden="true"
+      role="presentation"
       style={bgStyle}
     >
       {header}

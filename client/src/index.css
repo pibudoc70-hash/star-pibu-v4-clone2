@@ -61,7 +61,8 @@
   --brand-bg-warm: #EDE8E0;
   /* Brand Text */
   --brand-text: #2C2C2C;
-  --brand-text-mid: #666666;
+  /* [P2-FINISH] 대비 소폭 강화: #666666 → #5a5a5a (WCAG AA 접근성 개선) */
+  --brand-text-mid: #5a5a5a;
   --brand-text-muted: #666666; /* [A11Y] #999999 → #666666: WCAG AA 4.5:1+ */
   --brand-text-light: #BBBBBB;
   /* Brand Contrast (footer/overlay) */
@@ -2368,14 +2369,15 @@
 /* eyebrow: 영문 오버라인 — Montserrat, 골드, 넓은 자간 */
 .section-eyebrow {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.63rem;
+  /* [P2-FINISH] 가독성 소폭 개선: 0.63rem → 0.65rem, opacity 0.88 → 0.95 */
+  font-size: 0.65rem;
   font-weight: 400;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.30em;
   text-transform: uppercase;
   color: var(--brand-gold, #C4A882);
   margin-bottom: 0.9rem;
   display: block;
-  opacity: 0.88;
+  opacity: 0.95;
 }
 /* section-title: 한글 주제목 — Noto Serif KR 명조, 존재감 */
 .section-title {
@@ -2393,8 +2395,9 @@
   font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
   font-size: clamp(0.83rem, 1.7vw, 0.93rem);
   line-height: 1.95;
-  color: var(--brand-text-mid, #666666);
-  font-weight: 400; /* 300 → 400: Pretendard 300은 너무 얇아 가독성 저하 */
+  /* [P2-FINISH] 색상 대비 소폭 강화: #666666 → #5a5a5a (WCAG AA 접근성 개선) */
+  color: var(--brand-text-mid, #5a5a5a);
+  font-weight: 400;
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
@@ -3045,9 +3048,10 @@
   z-index: 9000;
   height: calc(54px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: #1C1C1E;
-  border-top: 1px solid rgba(196,168,130,0.25);
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.4);
+  background: #1A1A1C;
+  /* [P2-FINISH] border-top 골드 강도 소폭 상향 — 브랜드 무드 연결 */
+  border-top: 1px solid rgba(196,168,130,0.32);
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.45), 0 -1px 0 rgba(196,168,130,0.12);
   /* 상단 radius: 바가 콘텐츠에서 자연스럽게 올라오는 느낌 */
   border-radius: 14px 14px 0 0;
   gap: 1px; /* 버튼 사이 미세 간격 — 구분선 대체 */
@@ -3109,12 +3113,14 @@
   color: var(--chat-color, #3C1E1E);
 }
 
-/* 전화 — 브랜드 골드 톤 */
+/* 전화 — 브랜드 골드 톤 (시인성 확보) */
 .mobile-bottom-btn--phone {
-  background: rgba(196,168,130,0.10);
-  color: rgba(196,168,130,0.92);
+  /* [P2-FINISH] 배경 강화: 0.10 → 0.18, 텍스트 밝기 보정 */
+  background: rgba(196,168,130,0.18);
+  color: rgba(220,196,158,0.97);
   font-weight: 500;
   border-right: none;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.40);
 }
 
 /* 데스크톱에서 완전히 숨김 */
@@ -4802,37 +4808,34 @@ body.font-lang-zh .hero-stat-label {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-
-/* 빠른 연결에서 skeleton flash 방지: 200ms 후 opacity 1 */
+/* 빠른 연결에서 skeleton flash 방지: 150ms 후 opacity 1 */
 @keyframes skeletonFadeIn {
   0%   { opacity: 0; }
   100% { opacity: 1; }
 }
-
 .section-fallback {
-  animation: skeletonFadeIn 0.15s ease 0.2s both;
+  animation: skeletonFadeIn 0.12s ease 0.15s both;
 }
-
+/* [P2-FINISH] shimmer 속도 1.6s→1.4s, 골드 강도 소폭 상향 — 더 정제된 로딩 상태 */
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(196,168,130,0.12) 25%,
-    rgba(196,168,130,0.22) 50%,
-    rgba(196,168,130,0.12) 75%
+    rgba(196,168,130,0.14) 20%,
+    rgba(196,168,130,0.26) 50%,
+    rgba(196,168,130,0.14) 80%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
+  animation: shimmer 1.4s ease-in-out infinite;
 }
-
 .skeleton-shimmer--dark {
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.06) 25%,
-    rgba(255,255,255,0.12) 50%,
-    rgba(255,255,255,0.06) 75%
+    rgba(255,255,255,0.07) 20%,
+    rgba(255,255,255,0.14) 50%,
+    rgba(255,255,255,0.07) 80%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.6s ease-in-out infinite;
+  animation: shimmer 1.4s ease-in-out infinite;
 }
 
 /* prefers-reduced-motion: shimmer 비활성화 */

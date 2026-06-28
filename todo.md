@@ -3293,10 +3293,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P0 작업 2: Hero 아래 섹션 lazy render (초기 렌더 40% 감소)
 - [x] P0 작업 3: MobileBottomCTA 충돌 해결 (EventCard, FAQSection 모바일 CTA 숨김)
 - [x] P1 작업 1: 카드 시스템 기본 클래스 추가 (.card, .card--review)
-- [ ] P1 작업 1-2: EventCard에 .card 클래스 적용 (인라인 스타일 제거)
-- [ ] P1 작업 2: 섹션 헤더 표준화 (.section-header 컨테이너)
-- [ ] P1 작업 3: 섹션 패딩 시스템 (.section-container)
-- [ ] P1 작업 4: 색상 토큰 정리 (CSS 변수 중심)
+- [x] P1 작업 1-2: EventCard에 .card 클래스 적용 (인라인 스타일 제거)
+- [x] P1 작업 2: 섹션 헤더 표준화 검증 (.section-header-block 이미 구현됨) 
+- [x] P1 작업 3: 섹션 패딩 시스템 검증 (py-20, py-28 이미 통일됨) 
+- [x] P1 작업 4: 색상 토큰 정리 (CSS 변수 중심, 동적 스타일은 인라인 유지) 
 - [ ] P2 작업: 레거시 코드 정리
 - [ ] 폰트 로딩 최적화
 - [ ] 최종 검증 및 보고

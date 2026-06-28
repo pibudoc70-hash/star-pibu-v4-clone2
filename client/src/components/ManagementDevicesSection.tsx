@@ -306,13 +306,7 @@ export default function ManagementDevicesSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // 초기 로딩 상태 시뮬레이션
-    const timer = setTimeout(() => setIsLoading(false), 700);
-    return () => clearTimeout(timer);
-  }, []);
+  const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 700ms 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
 
   const updateScrollButtons = () => {
     const el = scrollContainerRef.current;

@@ -5,13 +5,7 @@ import { useClinicStats } from '@/hooks/useClinicStats';
 import { DoctorCardSkeleton, StatisticCardSkeleton } from '@/components/SkeletonUI';
 
 export default function ResultsStatisticsSection() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // 초기 로딩 상태 시뮬레이션 (실제로는 데이터 페칭 완료 후 false)
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
+  const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 800ms 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
   const { t } = useLang();
   const r = t.results;
   const clinicStats = useClinicStats();

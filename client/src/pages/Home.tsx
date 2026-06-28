@@ -4,9 +4,10 @@
  * TreatmentsSection + EquipmentSection → TreatmentsEquipmentSection 통합
  *
  * 성능 최적화:
- * - 폴드 위 섹션(Hero, SpecialEvent, Doctors, Treatments): eager import
- * - 폴드 아래 섹션: React.lazy + Suspense로 코드 스플리팅
- * - 배경색: inline style → CSS 유틸리티 클래스 (bg-white / bg-[#F5F1ED])
+ * - 폴드 위 섹션(Hero, SpecialEvent): eager import + 즉시 마운트
+ * - 폴드 아래 섹션: React.lazy + Suspense + deferMount (뷰포트 근처에서만 마운트)
+ *   → 초기 로드 시 폴드 아래 섹션의 JS 실행/API 호출 비용 제거
+ *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
 import { lazy, Suspense, useEffect } from "react";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
@@ -242,28 +243,6 @@ export default function Home() {
               question: "리쥬란힐러는 몇 회 시술해야 효과가 있나요?",
               answer: "리쥬란힐러는 보통 2~4주 간격으로 3~4회 기본 시술 후 3~6개월 간격으로 유지 시술을 권장합니다. 개인 피부 상태에 따라 시술 횟수와 간격이 달라질 수 있으며, 시술 전 전문의 상담을 통해 맞춤 계획을 세우는 것이 좋습니다."
             },
-            /* ── 피코레이저 ── */
-            {
-              question: "피코레이저 토닝이란 무엇인가요?",
-              answer: "피코레이저 토닝은 피코초(1조분의 1초) 단위의 초고속 레이저로 멜라닌 색소를 미세하게 분쇄하여 피부 톤을 균일하게 개선하는 시술입니다. 기미, 잡티, 색소침착, 모공 축소, 피부결 개선에 효과적이며 열 손상이 적어 안전합니다."
-            },
-            {
-              question: "피코레이저 시술 후 주의사항은 무엇인가요?",
-              answer: "피코레이저 시술 후 자외선 차단제를 철저히 사용해야 합니다. 시술 후 1~2일간 세안 시 자극을 최소화하고, 사우나·찜질방·격렬한 운동은 1주일 정도 삼가는 것이 좋습니다. 딱지가 생긴 경우 억지로 떼지 않도록 주의하세요."
-            },
-            /* ── 기타 ── */
-            {
-              question: "스타피부과는 피부과 전문의가 직접 시술하나요?",
-              answer: "네, 스타피부과는 20년 이상 경력의 피부과 전문의 3인(조시형·우혜진·이기욱 원장)이 모든 시술을 직접 담당합니다. 전문의 직접 시술로 안전하고 정확한 결과를 보장합니다."
-            },
-            {
-              question: "시술 전 상담은 어떻게 받을 수 있나요?",
-              answer: "전화(051-818-2300), 네이버 예약, 카카오톡 채널(@스타피부과)을 통해 상담 예약이 가능합니다. 방문 상담 시 피부 상태를 직접 확인하고 맞춤 시술 계획을 안내해 드립니다."
-            },
-            {
-              question: "비급여 진료비는 어디서 확인할 수 있나요?",
-              answer: "스타피부과 비급여 진료비는 홈페이지 비급여 진료안내 페이지(https://star-pibu.com/non-covered-guide)에서 확인하실 수 있습니다. 시술별 정확한 가격은 상담 후 안내해 드립니다."
-            },
           ]),
         ]}
       />
@@ -277,13 +256,21 @@ export default function Home() {
         <HeroSection />
         <MobileBottomCTA />
 
-        {/* 2. SPECIAL EVENT — 순수 흰색, 상단 여백 증가로 허로 이후 숨 포인트 */}
+        {/* 2. SPECIAL EVENT — 순수 흰색, Hero 바로 아래 (즉시 마운트 + Suspense)
+            deferMount=false: Hero 스크롤 직후 바로 보이므로 선로딩 유지
+            단, Suspense로 감싸 코드 스플리팅 유지 */}
         <div className="bg-white">
-          <SpecialEventSection />
+          <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
+            <SpecialEventSection />
+          </Suspense>
         </div>
 
-        {/* 3. Doctors — 따뜻한 크림 오프화이트, 시각적 질감 전환 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 3. Doctors — deferMount: 뷰포트 300px 전에 마운트 */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="400px"
+        >
           <div className="section-bg-warm">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <DoctorsSection />
@@ -291,8 +278,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 4. Treatments + Equipment — 순수 흰색, 콘텐츠 밀도 높음 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 4. Treatments + Equipment — deferMount: 무거운 데이터 섹션 */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="600px"
+        >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
               <TreatmentsEquipmentSection />
@@ -300,8 +291,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 5. Management Devices — 열린 어두운 배경으로 시각적 리듬 전환 */}
-        <ScrollAnimationWrapper animationType="fade-in-slow">
+        {/* 5. Management Devices — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in-slow"
+          deferMount
+          minHeight="480px"
+        >
           <div className="section-bg-dark-navy">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
               <ManagementDevicesSection />
@@ -309,10 +304,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-
-
-        {/* 6. Philosophy — 미니멀 흰색, 여백 강조 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 6. Philosophy — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="400px"
+        >
           <div className="section-bg-offwhite">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <PhilosophySection />
@@ -320,8 +317,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 6-2. Results & Statistics — 연한 골드 톤 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 6-2. Results & Statistics — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="320px"
+        >
           <div className="section-bg-gold-soft">
             <Suspense fallback={<SectionFallback minH="min-h-[320px]" />}>
               <ResultsStatisticsSection />
@@ -329,8 +330,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 7. Facility Gallery — 순수 흰색, 이미지 중심 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 7. Facility Gallery — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="560px"
+        >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" />}>
               <FacilitySection />
@@ -338,8 +343,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 8. Patient Reviews — 연한 웸아이보리 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 8. Patient Reviews — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="480px"
+        >
           <div className="section-bg-warm">
             <Suspense fallback={<SectionFallback minH="min-h-[480px]" />}>
               <ReviewsSection />
@@ -347,8 +356,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 8-2. YouTube Channel — 어두운 에디토리얼 톤 */}
-        <ScrollAnimationWrapper animationType="fade-in-slow">
+        {/* 8-2. YouTube Channel — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in-slow"
+          deferMount
+          minHeight="400px"
+        >
           <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <YouTubeSection />
@@ -356,8 +369,12 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 9. FAQ — 순수 흰색 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 9. FAQ — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="400px"
+        >
           <div className="bg-white">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <FAQSection />
@@ -365,16 +382,23 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 최근 공지사항 섹션 */}
-        <ScrollAnimationWrapper animationType="fade-in">
+        {/* 최근 공지사항 섹션 — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in"
+          deferMount
+          minHeight="300px"
+        >
           <Suspense fallback={<SectionFallback minH="min-h-[300px]" />}>
             <RecentNoticesSection lang="ko" />
           </Suspense>
         </ScrollAnimationWrapper>
 
-
-        {/* 10. Location & Contact — 다크 네이비 마무리 */}
-        <ScrollAnimationWrapper animationType="fade-in-slow">
+        {/* 10. Location & Contact — deferMount */}
+        <ScrollAnimationWrapper
+          animationType="fade-in-slow"
+          deferMount
+          minHeight="400px"
+        >
           <div className="section-bg-dark-deep">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" />}>
               <ContactSection />

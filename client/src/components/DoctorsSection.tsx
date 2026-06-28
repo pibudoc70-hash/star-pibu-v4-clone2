@@ -1,21 +1,15 @@
 // DoctorsSection - 의료진 소개 (조립자 역할)
-import React, { memo, useState, useEffect } from "react";
+// [P1-PERF] isLoading 상태 완전 제거: deferMount로 뷰포트 근처에서만 마운트되므로
+//           내부 가짜 타이머/스켈레톤 불필요. 마운트 즉시 콘텐츠 렌더링.
+import React, { memo } from "react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useDoctorViewModel } from "@/hooks/useDoctorViewModel";
 import { DoctorDesktopLayout } from "./doctors/DoctorDesktopLayout";
 import { DoctorMobileLayout } from "./doctors/DoctorMobileLayout";
-import { DoctorCardSkeleton } from "@/components/SkeletonUI";
 
 function DoctorsSection() {
   const { t } = useLang();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // 초기 로딩 상태 시뮬레이션
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
 
   const {
     mergedDoctors,
@@ -54,21 +48,13 @@ function DoctorsSection() {
         </div>
 
         {/* ── 메인 패널 ── */}
-        {isLoading ? (
-          <div className="rounded-3xl overflow-hidden dr-panel-card dr-panel-border p-6 sm:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <DoctorCardSkeleton />
-              <DoctorCardSkeleton />
-            </div>
-          </div>
-        ) : (
-          <div
-            className="rounded-3xl overflow-hidden dr-panel-card dr-panel-border"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            {/* 데스크톱 레이아웃 (lg 이상) */}
-            <DoctorDesktopLayout
+        <div
+          className="rounded-3xl overflow-hidden dr-panel-card dr-panel-border"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* 데스크톱 레이아웃 (lg 이상) */}
+          <DoctorDesktopLayout
             mergedDoctors={mergedDoctors}
             doctor={doctor}
             activeDoctor={activeDoctor}
@@ -79,8 +65,8 @@ function DoctorsSection() {
             onImageLoad={handleImageLoad}
           />
 
-            {/* 모바일 레이아웃 (lg 미만) */}
-            <DoctorMobileLayout
+          {/* 모바일 레이아웃 (lg 미만) */}
+          <DoctorMobileLayout
             mergedDoctors={mergedDoctors}
             doctor={doctor}
             activeDoctor={activeDoctor}
@@ -92,8 +78,7 @@ function DoctorsSection() {
             onImageLoad={handleImageLoad}
             onToggleCredentials={toggleCredentials}
           />
-          </div>
-        )}
+        </div>
       </div>
     </section>
   );

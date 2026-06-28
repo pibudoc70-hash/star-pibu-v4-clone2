@@ -35,7 +35,7 @@ export default function ReviewsSection() {
 
   const reviews = rv.items;
   const [current, setCurrent] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" && window.innerWidth < 768
   );
@@ -45,11 +45,8 @@ export default function ReviewsSection() {
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
-  useEffect(() => {
-    // 초기 로딩 상태 시뮬레이션
-    const timer = setTimeout(() => setIsLoading(false), 600);
-    return () => clearTimeout(timer);
-  }, []);
+  // [P1-PERF] 제거: 600ms 가짜 로딩 타이머 — 로컬 데이터이므로 즉시 렌더 가능
+  // deferMount가 뷰포트 근처에서만 마운트를 보장하므로 내부 딜레이 불필요
 
   const goNext = useCallback(() => {
     setCurrent((c) => (c + 1) % totalPages);

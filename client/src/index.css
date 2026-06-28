@@ -3038,9 +3038,9 @@
   height: calc(54px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: #1a1a1a;
-  border-top: 1px solid rgba(196,168,130,0.18);
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
-  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(196,168,130,0.22);
+  /* [P2-PERF] backdrop-filter 제거: 배경색이 불투명하므로 GPU 합성 레이어 불필요 */
+  /* box-shadow 단순화: 얼은 상단 테두리로 대체 */
 }
 
 /* 카카오 버튼 래퍼 — flex: 1로 동일 너비 */
@@ -3062,7 +3062,8 @@
   letter-spacing: 0.04em;
   font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   text-decoration: none;
-  transition: opacity 0.18s, background 0.18s, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* [P2-PERF] transition 경량화: transform 제거, opacity만 유지 */
+  transition: opacity 0.15s ease, background 0.15s ease;
   color: #ffffff;
   border-right: 1px solid rgba(255,255,255,0.08);
   min-height: 44px;
@@ -3077,9 +3078,9 @@
 }
 
 .mobile-bottom-btn:active {
-  opacity: 0.85;
-  transform: scale(0.98);
-  transition: opacity 0.12s, transform 0.12s, background 0.12s;
+  opacity: 0.82;
+  /* [P2-PERF] transform scale 제거: 합성 레이어 생성 방지 */
+  transition: opacity 0.1s ease, background 0.1s ease;
 }
 
 /* 네이버 예약 — Primary 초록 */
@@ -3091,7 +3092,7 @@
 }
 .mobile-bottom-btn--reserve:active {
   background: #02a84c;
-  transform: scale(0.98);
+  /* [P2-PERF] transform scale 제거 */
 }
 
 /* 카카오/위챗 — 동적 색상 CSS 변수 */

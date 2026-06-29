@@ -89,12 +89,14 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         >
           {displayPrice.discountPrice.toLocaleString()}원
         </span>
-        <span
-          className="line-through"
-          style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.78rem", fontWeight: 400 }}
-        >
-          {displayPrice.normalPrice.toLocaleString()}원
-        </span>
+        {displayPrice.normalPrice > 0 && (
+          <span
+            className="line-through"
+            style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.78rem", fontWeight: 400 }}
+          >
+            {displayPrice.normalPrice.toLocaleString()}원
+          </span>
+        )}
       </div>
     </div>
   );
@@ -217,9 +219,11 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
                     <p className="font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)", fontSize: "0.95rem" }}>
                       {row.discountPrice.toLocaleString()}원
                     </p>
-                    <p className="line-through" style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.72rem" }}>
-                      {row.normalPrice.toLocaleString()}원
-                    </p>
+                    {row.normalPrice > 0 && (
+                      <p className="line-through" style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.72rem" }}>
+                        {row.normalPrice.toLocaleString()}원
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}

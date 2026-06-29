@@ -1888,13 +1888,19 @@
     }
     .hero-stat-value {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.19rem, 5.6vw, 1.68rem) !important;
+      /* [P4-FINAL] 1.19->1.22 소폭 상향 — 숫자 위계 강화 */
+      font-size: clamp(1.22rem, 5.8vw, 1.72rem) !important;
+      line-height: 1 !important;
       font-weight: 400 !important;
       color: #ffffff !important;
       text-shadow:
         0 1px 4px rgba(0,0,0,0.9),
         0 2px 16px rgba(0,0,0,0.7) !important;
       white-space: nowrap !important;
+    }
+    .hero-stat-value[data-done="true"] {
+      color: #F0DE96 !important;
+      text-shadow: 0 0 24px rgba(237,217,138,0.65), 0 1px 8px rgba(0,0,0,0.70) !important;
     }
     .hero-stat-label {
       font-family: 'Noto Sans KR', sans-serif !important;
@@ -1905,10 +1911,10 @@
       text-shadow:
         0 1px 3px rgba(0,0,0,1),
         0 2px 10px rgba(0,0,0,0.9) !important;
-      /* [P2-FINISH] margin-top 2px → 4px: 숫자와 라벨 사이 리듬 개선 */
-      margin-top: 4px !important;
+      /* [P4-FINAL] margin-top 4px -> 5px, line-height 1.3 -> 1.35 — 라벨 위계 개선 */
+      margin-top: 5px !important;
       white-space: normal !important;
-      line-height: 1.3 !important;
+      line-height: 1.35 !important;
     }
     .hero-stat-divider {
       height: 32px !important;
@@ -2433,8 +2439,9 @@
   white-space: nowrap;
 }
 .hero-stat-value[data-done="true"] {
-  color: #EDD98A;
-  text-shadow: 0 0 24px rgba(237, 217, 138, 0.55), 0 2px 12px rgba(0, 0, 0, 0.45);
+  /* [P4-FINAL] 골드 완료 상태 강화 — 더 선명한 존재감 */
+  color: #F0DE96;
+  text-shadow: 0 0 28px rgba(237, 217, 138, 0.70), 0 2px 12px rgba(0, 0, 0, 0.50);
 }
 .hero-stat-unit {
   font-size: 58%;
@@ -2458,7 +2465,8 @@
   transform: scaleX(0);
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center;
-  max-width: 48px;
+  /* [P4-FINAL] max-width 48px → 56px — 데스크톱 존재감 강화 */
+  max-width: 56px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2488,8 +2496,8 @@
   align-items: flex-start;
   gap: clamp(1.5rem, 5vw, 3.5rem);
   padding-top: 32px;
-  /* [P3-FINAL] 에디토리얼 상단 구분선 골드 0.18 → 0.30 */
-  border-top: 1px solid rgba(201,168,76,0.30);
+  /* [P4-FINAL] 에디토리얼 상단 구분선 골드 0.30 → 0.42 — 데스크톱 그루핑 강화 */
+  border-top: 1px solid rgba(201,168,76,0.42);
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
@@ -4218,19 +4226,23 @@ body.font-lang-zh .hero-stat-label {
 }
 
 .floating-btn-tel {
-  /* mobile-bottom-btn--phone과 동일한 골드 톤 적용 */
-  background: rgba(196,168,130,0.10);
-  color: rgba(196,168,130,0.92);
+  /* [P4-FINAL] mobile-bottom-btn--phone과 완전 통일: 0.10→0.28, 완전 불투명 텍스트, 샤도우 */
+  background: rgba(196,168,130,0.28);
+  color: rgba(232,212,180,1.0);
   padding-top: 10px;
   padding-bottom: 10px;
   min-height: 56px;
+  font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.65), 0 0 12px rgba(0,0,0,0.30);
+  box-shadow: inset 0 1px 0 rgba(232,212,180,0.12);
 }
 
 .floating-btn-label {
   font-size: 0.72rem;
   margin-top: 2px;
-  letter-spacing: 0.03em;
-  font-weight: 400;
+  letter-spacing: 0.04em;
+  /* [P4-FINAL] font-weight 400→500 — mobile-bottom-btn과 통일 */
+  font-weight: 500;
 }
 
 /* 데스크톱 플로팅 스택 */

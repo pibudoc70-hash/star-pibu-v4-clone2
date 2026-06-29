@@ -175,7 +175,22 @@ export default function YouTubeSection() {
                   boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
                 }}
               >
-                <div className="skeleton-shimmer" style={{ aspectRatio: '16/9', animationDelay: `${i * 0.06}s` }} />
+                <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                  <div className="skeleton-shimmer absolute inset-0" style={{ animationDelay: `${i * 0.06}s` }} />
+                  {/* 하단 그라디언트 오버레이 */}
+                  <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.18) 100%)',
+                    pointerEvents: 'none',
+                  }} />
+                  {/* 중앙 play 버튼 힌트 — 실제 유튜브 아이콘 위치 반영 */}
+                  <div style={{
+                    position: 'absolute', top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '26px', height: '26px', borderRadius: '50%',
+                    background: 'rgba(196,168,130,0.42)',
+                  }} />
+                </div>
                 <div className="p-2.5 md:p-3 flex flex-col gap-1.5">
                   {/* 유튜브 아이콘 힌트 — 골드 픽스드 */}
                   <div style={{ height: '9px', width: '2rem', borderRadius: '999px', background: 'rgba(196,168,130,0.30)', flexShrink: 0 }} />

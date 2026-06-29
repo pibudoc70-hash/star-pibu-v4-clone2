@@ -117,8 +117,24 @@ export function DoctorCardSkeleton() {
       style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
       aria-hidden="true"
     >
-      {/* 이미지 영역 */}
-      <div className="relative h-64 md:h-72 skeleton-shimmer" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }} />
+      {/* 이미지 영역 — 그라디언트 오버레이 + 인물 실루엣 힌트 */}
+      <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
+        <div className="skeleton-shimmer absolute inset-0" />
+        {/* 하단 그라디언트 오버레이 */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.12) 100%)',
+          pointerEvents: 'none',
+        }} />
+        {/* 인물 실루엣 힌트 — 의사 카드 구조 반영 */}
+        <div style={{
+          position: 'absolute', bottom: 0, left: '50%',
+          transform: 'translateX(-50%)',
+          width: '52%', height: '72%',
+          background: 'rgba(196,168,130,0.09)',
+          borderRadius: '50% 50% 0 0',
+        }} />
+      </div>
 
       {/* 정보 영역 */}
       <div className="p-4 sm:p-6 text-center">
@@ -149,8 +165,24 @@ export function DeviceCardSkeleton() {
       style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
       aria-hidden="true"
     >
-      {/* 이미지 영역 */}
-      <div className="relative h-48 md:h-56 skeleton-shimmer" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }} />
+      {/* 이미지 영역 — 그라디언트 오버레이 */}
+      <div className="relative h-48 md:h-56 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
+        <div className="skeleton-shimmer absolute inset-0" />
+        {/* 하단 그라디언트 오버레이 */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.12) 100%)',
+          pointerEvents: 'none',
+        }} />
+        {/* 장비 실루엣 힌트 — 중앙 원형 */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '40%', height: '50%',
+          background: 'rgba(196,168,130,0.09)',
+          borderRadius: '8px',
+        }} />
+      </div>
 
       {/* 정보 영역 */}
       <div className="p-4 sm:p-5">

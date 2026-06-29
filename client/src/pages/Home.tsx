@@ -100,8 +100,24 @@ function SectionFallback({
               boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
-            {/* 이미지 영역 — aspect-ratio 3/2 */}
-            <div className={`${s} w-full`} style={{ aspectRatio: '3/2', animationDelay: `${i * 0.1}s` }} />
+            {/* 이미지 영역 — aspect-ratio 3/2 + 그라디언트 오버레이 + 가격 배지 힌트 */}
+            <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3/2' }}>
+              <div className={`${s} absolute inset-0`} style={{ animationDelay: `${i * 0.1}s` }} />
+              {/* 하단 그라디언트 오버레이 — 실제 카드 분위기 반영 */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: isDark
+                  ? 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.25) 100%)'
+                  : 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.10) 100%)',
+                pointerEvents: 'none',
+              }} />
+              {/* 가격 배지 힌트 — 우상단 */}
+              <div style={{
+                position: 'absolute', top: '10px', right: '10px',
+                height: '20px', width: '52px', borderRadius: '999px',
+                background: isDark ? 'rgba(196,168,130,0.30)' : 'rgba(196,168,130,0.38)',
+              }} />
+            </div>
             {/* 텍스트 영역 */}
             <div className="p-4 flex flex-col gap-2">
               {/* 배지 라벨 — 골드 픽스드 */}
@@ -129,8 +145,17 @@ function SectionFallback({
               boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
-            {/* 이미지 영역 — 정사각형 비율 */}
-            <div className={`${s} w-full`} style={{ aspectRatio: '1/1', animationDelay: `${i * 0.08}s` }} />
+            {/* 이미지 영역 — 정사각형 비율 + 그라디언트 오버레이 */}
+            <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1/1' }}>
+              <div className={`${s} absolute inset-0`} style={{ animationDelay: `${i * 0.08}s` }} />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: isDark
+                  ? 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.20) 100%)'
+                  : 'linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.08) 100%)',
+                pointerEvents: 'none',
+              }} />
+            </div>
             {/* 텍스트 영역 — 모바일 p-2.5, 데스크톱 p-3 */}
             <div className="p-2.5 md:p-3 flex flex-col gap-1.5 md:gap-2">
               {/* 배지 라벨 — 골드 픽스드 */}

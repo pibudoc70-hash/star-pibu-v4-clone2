@@ -78,16 +78,34 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
       }}
       aria-hidden="true"
     >
-      {/* 이미지 영역 — aspect-ratio 3/2 유지로 CLS 방지 */}
-      <div className="skeleton-shimmer w-full" style={{ aspectRatio: '3/2' }} />
+      {/* 이미지 영역 — aspect-ratio 3/2 유지로 CLS 방지, 그라디언트 오버레이로 사실감 강화 */}
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3/2' }}>
+        <div className="skeleton-shimmer absolute inset-0" />
+        {/* 하단 그라디언트 오버레이 — 실제 이미지 카드처럼 자연스러운 페이드 */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.22) 100%)',
+          pointerEvents: 'none',
+        }} />
+        {/* 이미지 좌하단 배지 힌트 — 실제 이벤트 배지 위치 반영 */}
+        <div style={{
+          position: 'absolute', bottom: '10px', left: '12px',
+          height: '22px', width: '4rem', borderRadius: '4px',
+          background: 'rgba(196,168,130,0.55)',
+        }} />
+      </div>
       {/* 텍스트 영역 */}
       <div className="p-4 md:p-5 flex flex-col gap-2.5">
         {/* 배지 라벨 — 골드 픽스드 (브랜드 힌트) */}
         <div style={{ height: '11px', width: '3.2rem', borderRadius: '999px', background: 'rgba(196,168,130,0.35)' }} />
+        {/* 제목 — 한 줄 중심 */}
         <div className="skeleton-shimmer rounded" style={{ height: '19px', width: '80%', animationDelay: `${index * 0.08 + 0.06}s` }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '60%', animationDelay: `${index * 0.08 + 0.12}s` }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '72%', animationDelay: `${index * 0.08 + 0.16}s` }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '40%', animationDelay: `${index * 0.08 + 0.20}s` }} />
+        {/* 가격 힌트 — 정가/할인가 구조 반영 */}
+        <div className="flex items-center gap-2 mt-0.5">
+          <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '3rem', animationDelay: `${index * 0.08 + 0.12}s` }} />
+          <div style={{ height: '13px', width: '3.5rem', borderRadius: '4px', background: 'rgba(196,168,130,0.30)' }} />
+        </div>
+        <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '55%', animationDelay: `${index * 0.08 + 0.16}s` }} />
       </div>
     </div>
   );

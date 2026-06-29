@@ -3483,3 +3483,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] preload 최종 점검: vendor-react/trpc/icons 모두 첫 렌더 필수 → 유지
 - [x] pnpm run build 성공 (157.1kb)
 - [x] pnpm test 1413개 전체 통과
+
+## Phase 최종 마감 v4: 시니어 FE+UX 관점 전면 마감 (2026-06-29)
+- [x] SectionFallback skeleton — 이미지 영역 그라디언트 오버레이 + 더 사실적인 카드 비율 개선
+- [x] SpecialEventSection EventCardSkeleton — 이미지 영역 그라디언트 + 가격/배지 힌트 강화
+- [x] YouTubeSection skeleton — 썸네일 영역 play 버튼 힌트 원형 추가
+- [x] SkeletonUI DoctorCardSkeleton — 이미지 영역 인물 실루엣 힌트 그라디언트 추가
+- [x] SkeletonUI DeviceCardSkeleton — 이미지 영역 장비 힌트 그라디언트 추가
+- [x] 모바일 지표 카드 (hero-stats-row) — 숫자/라벨 위계 추가 다듬기
+- [x] 모바일 CTA — border-top 강도, divider 1px 정렬, icon strokeWidth 통일 재확인
+- [x] 데스크톱 Hero — hero-stat-value/label grouping 소폭 개선
+- [x] 수치 문구 source of truth 최종 확인 (4,000례+ 단일 소스 확인 완료)
+- [x] preload 최종 점검 (vendor-* modulepreload Vite 자동 주입 방식 확인 완료)
+- [x] 공통 UI 중복 스타일 최소 범위 정리
+- [x] pnpm run build 성공
+- [x] pnpm test 전체 통과 (1413개)
+- [ ] 체크포인트 저장

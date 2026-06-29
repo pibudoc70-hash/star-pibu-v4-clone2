@@ -10,6 +10,10 @@
  * 화면 렌더링용 의사 데이터는 client/src/lib/doctors-data.ts를 사용한다.
  */
 
+// [P4-FINAL] 순환 참조 방지 — constants.ts가 이 파일을 re-export하므로 직접 정의
+// 수치 변경 시 constants.ts의 CLINIC_STATS와 함께 이 값도 동기화할 것
+const _STATS = { yearsExperience: 20, eyeBagCases: 4000, laserTypes: 50 } as const;
+
 // ── 의사 데이터 (JSON-LD MedicalOrganization.employee 스키마용) ─────────────────
 export const CLINIC_DOCTORS = [
   {
@@ -21,7 +25,7 @@ export const CLINIC_DOCTORS = [
     nationality: "KR",
     url: "https://star-pibu.com/#doctors",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_01_2e3c0c6f.jpg",
-    description: "20년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 4,000례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.",
+    description: `${_STATS.yearsExperience}년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 ${_STATS.eyeBagCases.toLocaleString('ko-KR')}례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.`,
     sameAs: [
       "https://www.youtube.com/@starpibu",
       "https://blog.naver.com/starpibu",
@@ -48,7 +52,7 @@ export const CLINIC_DOCTORS = [
     ],
     award: [
       "써마지 FLX 공식 자문의 위촉",
-      "눈밑지방재배치 4,000례 달성",
+      `눈밑지방재배치 ${_STATS.eyeBagCases.toLocaleString('ko-KR')}례 달성`,
     ],
     workLocation: {
       name: "스타피부과",
@@ -163,7 +167,7 @@ export const CLINIC_PROCEDURES = [
     name: "눈밑지방재배치",
     nameEn: "Under-eye Fat Repositioning",
     url: "https://star-pibu.com/treatments/under-eye-fat",
-    description: "4,000례 이상 경험. 눈밑 과잉 지방을 눈물고랑으로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선.",
+    description: `${_STATS.eyeBagCases.toLocaleString('ko-KR')}례 이상 경험. 눈밑 과잉 지방을 눈물고랑으로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선.`,
     bodyLocation: "눈밑, 눈물고랑",
     procedureType: "Surgical",
     followup: "1회 (반영구적 효과)",

@@ -21,6 +21,7 @@ import ContactSection from "@/components/ContactSection";
 import RecentNoticesSection from "@/components/RecentNoticesSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
+import MobileBottomCTA from "@/components/MobileBottomCTA";
 
 export default function LandingEN() {
   // 언어 설정은 App.tsx의 HtmlLangUpdater가 URL(/en) 기반으로 자동 처리
@@ -154,6 +155,7 @@ export default function LandingEN() {
       </main>
 
       <Footer />
+      <MobileBottomCTA />
       <WelcomePopup />
     </div>
   );

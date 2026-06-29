@@ -21,6 +21,7 @@ import ContactSection from "@/components/ContactSection";
 import RecentNoticesSection from "@/components/RecentNoticesSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
+import MobileBottomCTA from "@/components/MobileBottomCTA";
 
 export default function LandingJA() {
 
@@ -166,6 +167,7 @@ export default function LandingJA() {
       </main>
 
       <Footer />
+      <MobileBottomCTA />
       <WelcomePopup />
     </div>
   );

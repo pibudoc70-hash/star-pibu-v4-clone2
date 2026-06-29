@@ -71,16 +71,17 @@ function SectionFallback({
 
   // 섹션 헤더 (공통) — 라벨 바는 골드 톤 픽스드 색상으로 브랜드 일관성 확보
   const header = (
-    <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+    <div className="flex flex-col items-center gap-2.5 w-full px-4" style={{ maxWidth: '28rem' }}>
       {/* 라벨 바 — 골드 톤 픽스드 (shimmer 아님) */}
       <div
         style={{
-          height: '10px', width: '4rem', borderRadius: '999px',
+          height: '9px', width: '3.5rem', borderRadius: '999px',
           background: isDark ? 'rgba(196,168,130,0.35)' : 'rgba(196,168,130,0.42)',
         }}
       />
-      <div className={`h-6 w-48 rounded ${s}`} style={{ animationDelay: "0.1s" }} />
-      <div className={`h-4 w-64 rounded ${s}`} style={{ animationDelay: "0.2s" }} />
+      {/* 제목 — 모바일에서 w-full로 잘림 방지 */}
+      <div className={`h-6 rounded ${s}`} style={{ width: 'min(12rem, 75%)', animationDelay: "0.1s" }} />
+      <div className={`h-4 rounded ${s}`} style={{ width: 'min(16rem, 90%)', animationDelay: "0.2s" }} />
     </div>
   );
 
@@ -88,10 +89,12 @@ function SectionFallback({
   let content: React.ReactNode;
   if (layout === "cards-3") {
     // 3열 카드 그리드: 이미지 영역 + 텍스트 라인 (이벤트/의료진/시술 카드 구조)
+    // 모바일: 1열 + 카드 1장만 표시(답답함 방지), 데스크톱: 3열
     content = (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-4xl px-5 md:px-4">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="rounded-2xl overflow-hidden"
+          // 모바일에서는 첫 번째 카드만 표시 (좁은 화면에서 3장 나열 불필요)
+          <div key={i} className={`rounded-2xl overflow-hidden${i > 0 ? ' hidden md:block' : ''}`}
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
@@ -100,12 +103,11 @@ function SectionFallback({
             {/* 이미지 영역 — aspect-ratio 3/2 */}
             <div className={`${s} w-full`} style={{ aspectRatio: '3/2', animationDelay: `${i * 0.1}s` }} />
             {/* 텍스트 영역 */}
-            <div className="p-4 flex flex-col gap-2.5">
+            <div className="p-4 flex flex-col gap-2">
               {/* 배지 라벨 — 골드 픽스드 */}
               <div style={{
-                height: '12px', width: '3.5rem', borderRadius: '999px',
+                height: '11px', width: '3rem', borderRadius: '999px',
                 background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
-                animationDelay: `${i * 0.1 + 0.05}s`,
               }} />
               <div className={`h-5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
               <div className={`h-3.5 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.15}s` }} />
@@ -117,25 +119,26 @@ function SectionFallback({
     );
   } else if (layout === "cards-4") {
     // 4열 카드 그리드: 이미지 영역 + 텍스트 2줄 (관리 장비 카드 구조)
+    // 모바일: 2열 유지, gap/padding 축소로 답답함 완화
     content = (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl px-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-4xl px-5 md:px-4">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="rounded-2xl overflow-hidden"
+          <div key={i} className="rounded-xl md:rounded-2xl overflow-hidden"
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
-              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
             {/* 이미지 영역 — 정사각형 비율 */}
             <div className={`${s} w-full`} style={{ aspectRatio: '1/1', animationDelay: `${i * 0.08}s` }} />
-            {/* 텍스트 영역 */}
-            <div className="p-3 flex flex-col gap-2">
+            {/* 텍스트 영역 — 모바일 p-2.5, 데스크톱 p-3 */}
+            <div className="p-2.5 md:p-3 flex flex-col gap-1.5 md:gap-2">
               {/* 배지 라벨 — 골드 픽스드 */}
               <div style={{
-                height: '10px', width: '2.8rem', borderRadius: '999px',
+                height: '9px', width: '2.4rem', borderRadius: '999px',
                 background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
               }} />
-              <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.06}s` }} />
+              <div className={`h-3.5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.12}s` }} />
             </div>
           </div>
@@ -144,22 +147,23 @@ function SectionFallback({
     );
   } else if (layout === "list") {
     // 목록형 (FAQ): 아코디언 행 구조
+    // 모바일: 행 높이 52px, gap 1.5, px-5로 여백 확보
     content = (
-      <div className="flex flex-col gap-2 w-full max-w-2xl px-4">
+      <div className="flex flex-col gap-1.5 md:gap-2 w-full max-w-2xl px-5 md:px-4">
         {[0, 1, 2, 3, 4].map((i) => (
           <div key={i} className="rounded-xl flex items-center gap-3 px-4"
             style={{
-              height: '56px',
+              height: '52px',
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 1px 6px rgba(0,0,0,0.05)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
             {/* Q 아이콘 힌트 — 골드 픽스드 */}
             <div style={{
-              width: '12px', height: '12px', borderRadius: '50%', flexShrink: 0,
+              width: '11px', height: '11px', borderRadius: '50%', flexShrink: 0,
               background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
             }} />
-            <div className={`h-3.5 rounded flex-1 ${s}`} style={{ width: `${60 + (i % 3) * 10}%`, animationDelay: `${i * 0.08 + 0.05}s` }} />
+            <div className={`h-3 rounded flex-1 ${s}`} style={{ width: `${60 + (i % 3) * 10}%`, animationDelay: `${i * 0.08 + 0.05}s` }} />
           </div>
         ))}
       </div>
@@ -167,15 +171,17 @@ function SectionFallback({
   } else if (layout === "gallery") {
     // 갤러리 (Facility): 메인 + 서브 2장 구조
     // gallery는 이미지 자체가 카드이므로 border/shadow를 shimmer 위에 overlay로 처리
+    // 모바일: height 220px, 서브 패널 숨김 → 메인 1장만 표시
     const galleryCardStyle = {
       boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.08)',
       outline: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
       outlineOffset: '-1px',
     };
     content = (
-      <div className="flex gap-3 w-full max-w-4xl px-4" style={{ height: '300px' }}>
-        <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0s', minWidth: 0, ...galleryCardStyle }} />
-        <div className="flex flex-col gap-3" style={{ width: '38%', flexShrink: 0 }}>
+      <div className="flex gap-3 w-full max-w-4xl px-5 md:px-4" style={{ height: 'clamp(200px, 40vw, 300px)' }}>
+        <div className={`rounded-xl md:rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0s', minWidth: 0, ...galleryCardStyle }} />
+        {/* 서브 패널 — 모바일에서 숨김 (좁은 화면에서 너무 좁아짐) */}
+        <div className="hidden md:flex flex-col gap-3" style={{ width: '38%', flexShrink: 0 }}>
           <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.1s', ...galleryCardStyle }} />
           <div className={`rounded-2xl flex-1 ${s}`} style={{ animationDelay: '0.2s', ...galleryCardStyle }} />
         </div>
@@ -183,44 +189,45 @@ function SectionFallback({
     );
   } else if (layout === "stats") {
     // 통계 카드 (ResultsStatistics): 수치 + 라벨 카드 4개
+    // 모바일: 2열, p-4로 패딩 축소, 아이콘 원 32px
     content = (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-3xl px-5 md:px-4">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="rounded-2xl p-5 flex flex-col items-center gap-3"
+          <div key={i} className="rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col items-center gap-2 md:gap-3"
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
-              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
-            {/* 아이콘 원 — 골드 픽스드 힌트 */}
+            {/* 아이콘 원 — 골드 픽스드 힌트, 모바일 32px */}
             <div style={{
-              width: '40px', height: '40px', borderRadius: '50%',
+              width: 'clamp(28px, 7vw, 40px)', height: 'clamp(28px, 7vw, 40px)', borderRadius: '50%',
               background: isDark ? 'rgba(196,168,130,0.18)' : 'rgba(196,168,130,0.22)',
             }} />
-            <div className={`h-7 w-16 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.05}s` }} />
-            <div className={`h-3 w-14 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
+            <div className={`h-6 md:h-7 rounded ${s}`} style={{ width: 'clamp(3rem, 8vw, 4rem)', animationDelay: `${i * 0.1 + 0.05}s` }} />
+            <div className={`h-3 rounded ${s}`} style={{ width: 'clamp(2.5rem, 7vw, 3.5rem)', animationDelay: `${i * 0.1 + 0.1}s` }} />
           </div>
         ))}
       </div>
     );
   } else {
-    // default: 범용 카드 그리드
+    // default: 범용 카드 그리드 — 모바일 gap/padding 최적화
     content = (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-3xl px-5 md:px-4">
         {[0, 1, 2, 3].map((i) => (
           <div key={i} className="rounded-xl overflow-hidden"
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
-              boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
+              boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
               border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
             }}>
             <div className={`${s} w-full`} style={{ aspectRatio: '4/3', animationDelay: `${i * 0.12}s` }} />
-            <div className="p-3 flex flex-col gap-2">
+            <div className="p-2.5 md:p-3 flex flex-col gap-1.5 md:gap-2">
               <div style={{
-                height: '10px', width: '2.8rem', borderRadius: '999px',
+                height: '9px', width: '2.4rem', borderRadius: '999px',
                 background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
               }} />
-              <div className={`h-4 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.06}s` }} />
+              <div className={`h-3.5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.12}s` }} />
             </div>
           </div>

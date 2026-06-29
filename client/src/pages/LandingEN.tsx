@@ -4,6 +4,8 @@
  * Strategy: Uses same components as Home.tsx, forces lang="en" on mount
  */
 import { useEffect } from "react";
+import { CLINIC_STATS } from "../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
@@ -80,7 +82,7 @@ export default function LandingEN() {
             { question: "How many Thermage FLX sessions are needed?", answer: "A single Thermage FLX session can produce visible results, with effects gradually appearing over 2–6 months. Maintenance sessions every 6 months to 1 year are recommended to sustain results." },
             { question: "Can Ultherapy and Thermage be combined?", answer: "Yes. Ultherapy (HIFU) and Thermage FLX (RF) work through different mechanisms and can be combined for synergistic results. Ultherapy targets deep SMAS layer lifting while Thermage focuses on surface collagen regeneration, creating a more comprehensive lifting effect when used together." },
             /* ── Under-Eye Fat Repositioning ── */
-            { question: "What is under-eye fat repositioning?", answer: "Under-eye fat repositioning is a procedure that redistributes excess fat beneath the eye to the sunken tear trough area, creating a natural under-eye contour without removing fat. Dr. Cho Si-hyeong at Star Dermatology has performed over 4,000 such procedures." },
+            { question: "What is under-eye fat repositioning?", answer: `Under-eye fat repositioning is a procedure that redistributes excess fat beneath the eye to the sunken tear trough area, creating a natural under-eye contour without removing fat. Dr. Cho Si-hyeong at Star Dermatology has performed over ${_n} such procedures.` },
             { question: "What is the recovery time for under-eye fat repositioning?", answer: "Swelling typically subsides within 1–2 weeks, with full recovery taking 1–3 months. Avoid strenuous exercise and alcohol for the first week, and use diligent sun protection." },
             /* ── Rejuran Healer ── */
             { question: "What is Rejuran Healer?", answer: "Rejuran Healer is a skin regeneration treatment that injects polynucleotide (PDRN) derived from salmon DNA into the skin to improve hydration, elasticity, fine lines, and skin texture. It is ideal for those seeking natural skin improvement." },

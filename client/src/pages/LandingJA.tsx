@@ -4,6 +4,8 @@
  * Strategy: Uses same components as Home.tsx, forces lang="ja" on mount
  */
 import { useEffect } from "react";
+import { CLINIC_STATS } from "../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
@@ -93,7 +95,7 @@ export default function LandingJA() {
             { question: "サーマジFLXは何回施術すればよいですか？", answer: "サーマジFLXは1回の施術で効果を実感でき、効果は施術後2～6か月かけて徐々に現れます。維持のために6か月～1年間隔での再施術をお勧めします。" },
             { question: "ウルセラピーとサーマジを一緒に受けられますか？", answer: "はい。ウルセラピー（HIFU）とサーマジFLX（RF）は作用原理が異なり、並行施術でシナジー効果が期待できます。ウルセラピーはSMAS層リフティングに、サーマジは皮膚表層のコラーゲン再生に特化しており、両方を受けることでより立体的なリフティング効果が期待できます。" },
             /* ── 目の下脂肪再配置 ── */
-            { question: "目の下脂肪再配置術とは何ですか？", answer: "目の下脂肪再配置術は、目の下の余分な脂肪を除去せずに、こけた洺や溝部分に再配置して自然な目元ラインを形成する施術です。スター皮膚科の趙時形院長は4,000例以上の施術経験を持っています。" },
+            { question: "目の下脂肪再配置術とは何ですか？", answer: `目の下脂肪再配置術は、目の下の余分な脂肪を除去せずに、こけた洺や溝部分に再配置して自然な目元ラインを形成する施術です。スター皮膚科の趙時形院長は${_n}例以上の施術経験を持っています。` },
             { question: "目の下脂肪再配置術の回復期間はどのくらいかかりますか？", answer: "腕れは通常1～2週間で大部分引き、完全回復までは1～3か月かかります。施術後1週間は激しい運動と飲酒を遣け、紫外線対策に注意してください。" },
             /* ── リジュランヒーラー ── */
             { question: "リジュランヒーラーとは何ですか？", answer: "リジュランヒーラーは、サーモンから抽出したポリヌクレオタイド（PDRN）成分を皮膚に注入して皮膚再生と弾力改善を助ける施術です。皮膚の保湿、弾力向上、小ジワ改善、テクスチャー整紏に効果があります。" },

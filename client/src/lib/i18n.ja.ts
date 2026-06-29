@@ -1,5 +1,7 @@
 // 일본어(ja) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-4)
 import type { I18nContent } from "./i18n.types";
+import { CLINIC_STATS, STAT_UNITS } from "./constants";
+const _n_ja = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 export const ja: I18nContent = {
   nav: {
@@ -33,7 +35,7 @@ export const ja: I18nContent = {
     desc: "釜山・西面交差点の前に位置するスター皮膚科は、2006年に開設して以来、患者様のご期待に応え、皆様に美しさと最高の診療結果をお届けするため、日々努力を重ねております。皮膚科専門医としての使命を持って、継続的に最新のレーザー機器を導入し、患者一人一人の肌タイプに最適化された診療システムを構築しています。",
     stats: [
       { num: "20年+", label: "専門医経歴" },
-      { num: "4,000+", label: "クマ取り施術" },
+      { num: `${_n_ja}${STAT_UNITS.cases.ja}`, label: "クマ取り施術" },
       { num: "50+", label: "レーザー機器" },
     ],
     values: [

@@ -1,5 +1,7 @@
 // 중국어(zh) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-5)
 import type { I18nContent } from "./i18n.types";
+import { CLINIC_STATS, STAT_UNITS } from "./constants";
+const _n_zh = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 export const zh: I18nContent = {
   nav: {
@@ -33,7 +35,7 @@ export const zh: I18nContent = {
     desc: "STAR皮肤科位于釜山西面十字路口前，自2006年开业以来，始终以患者为中心，致力于提供最优质的医疗服务。作为皮肤科专科医生，我们持续研究各类皮肤疾病，不断引进最新激光设备，为每位患者构建个性化的诊疗方案。",
     stats: [
       { num: "20年+", label: "专科医经历" },
-      { num: "4,000+", label: "眼袋案例" },
+      { num: `${_n_zh}${STAT_UNITS.cases.zh}`, label: "眼袋案例" },
       { num: "50+", label: "激光设备" },
     ],
     values: [

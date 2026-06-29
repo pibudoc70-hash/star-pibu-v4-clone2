@@ -31,6 +31,8 @@
  *   - Remove the noindex without completing the migration steps above
  */
 import { useRoute } from "wouter";
+import { CLINIC_STATS } from "../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import { ArrowLeft, Clock, RefreshCw, DollarSign, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -184,14 +186,14 @@ const getAllTreatments = () => {
       name: "눈밑지방재배치",
       nameEn: "Under-eye Fat Repositioning",
       category: "눈밑·성형",
-      desc: "4,000례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 절개 없이 자연스러운 결과.",
+      desc: `${_n}례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 절개 없이 자연스러운 결과.`,
       time: "30~60분",
       recovery: "3~7일",
       price: "상담 후 결정",
       badge: "BEST",
       image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=300&fit=crop",
       effect: "다크서클 개선, 눈밑 볼록함 완화, 피로한 인상 개선, 눈가 윤곽 정리, 자연스러운 결과",
-      detailedDesc: "눈밑지방재배치는 절개 없이 눈밑 지방을 재배치하여 다크서클과 볼록함을 동시에 개선합니다. 스타피부과의 대표 시술로 4,000례 이상의 경험을 보유하고 있습니다.",
+      detailedDesc: `눈밑지방재배치는 절개 없이 눈밑 지방을 재배치하여 다크서클과 볼록함을 동시에 개선합니다. 스타피부과의 대표 시술로 ${_n}례 이상의 경험을 보유하고 있습니다.`,
       faqs: [
         {
           question: "시술 중 통증이 있나요?",

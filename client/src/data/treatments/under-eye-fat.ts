@@ -1,4 +1,7 @@
 import type { TreatmentI18n } from "./index";
+// [v6-FINAL] source of truth: CLINIC_STATS.eyeBagCases 단일 소스 참조
+import { CLINIC_STATS } from "../../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 const CDN2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
 
@@ -32,17 +35,17 @@ export const underEyeFat: TreatmentI18n = {
   cardBannerImage: `${CDN2}/눈밑지방_4c0b8a51.png`,
 
   desc: {
-    ko: "4,000례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선. 지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.",
-    en: "With over 4,000 cases of experience, this procedure simultaneously improves dark circles and under-eye puffiness by repositioning fat to create a natural under-eye contour — Star Dermatology's signature treatment.",
-    ja: "4,000例以上の経験でクマと目の下のふくらみを同時に改善。脂肪を再配置して自然な目の下のラインを作るスター皮膚科の代表施術。",
-    zh: "凭借4,000例以上的丰富经验，同时改善黑眼圈和眼下膨出。通过脂肪重置打造自然眼下轮廓，是STAR皮肤科的招牌施术。",
+    ko: `${_n}례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선. 지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.`,
+    en: `With over ${_n} cases of experience, this procedure simultaneously improves dark circles and under-eye puffiness by repositioning fat to create a natural under-eye contour — Star Dermatology's signature treatment.`,
+    ja: `${_n}例以上の経験でクマと目の下のふくらみを同時に改善。脂肪を再配置して自然な目の下のラインを作るスター皮膚科の代表施術。`,
+    zh: `凭借${_n}例以上的丰富经验，同时改善黑眼圈和眼下膨出。通过脂肪重置打造自然眼下轮廓，是STAR皮肤科的招牌施术。`,
   },
 
   detail: {
-    ko: "눈밑지방재배치술은 눈 아래 과잉 축적된 지방을 제거하지 않고 꺼진 눈물고랑(tear trough) 부위로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선하는 시술입니다. 스타피부과는 4,000례 이상의 풍부한 시술 경험을 보유하고 있으며, 절개를 최소화하여 흉터 위험을 낮춥니다. 지방을 제거하지 않고 재배치하는 방식이므로 시술 후 지방 공동이나 외관 변형이 거의 없고, 자연스러운 눈밑 라인을 기대할 수 있습니다.",
-    en: "Under-eye fat repositioning does not remove excess fat beneath the eyes — instead, it repositions the fat into the sunken tear trough area to simultaneously improve dark circles and under-eye puffiness. Star Dermatology has performed over 4,000 cases and uses minimal incisions to reduce scarring risk. Because the fat is repositioned rather than removed, there is virtually no hollow appearance or contour deformity after the procedure, and a natural under-eye line can be expected.",
-    ja: "目の下脂肪再配置術は、目の下に過剰に蓄積した脂肪を除去せず、くぼんだ涙溝（ tear trough）部位に再配置することで、クマと目の下のふくらみを同時に改善する施術です。スター皮膚科は4,000例以上の豊富な施術経験を持ち、切開を最小限に抑えて傷跡リスクを低減します。脂肪を除去せず再配置する方式のため、施術後の脂肪空洞や外観変形がほとんどなく、自然な目の下のラインが期待できます。",
-    zh: "眼下脂肪重置术并不切除眼下多余脂肪，而是将其重新填充至凹陷的泪沟区域，从而同时改善黑眼圈和眼下膨出。STAR皮肤科拥有4,000例以上的丰富施术经验，采用最小化切口降低疤痕风险。由于是重置而非切除脂肪，术后几乎不会出现脂肪空洞或外观变形，可期待自然的眼下轮廓。",
+    ko: `눈밑지방재배치술은 눈 아래 과잉 축적된 지방을 제거하지 않고 꺼진 눈물고랑(tear trough) 부위로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선하는 시술입니다. 스타피부과는 ${_n}례 이상의 풍부한 시술 경험을 보유하고 있으며, 절개를 최소화하여 흉터 위험을 낮춥니다. 지방을 제거하지 않고 재배치하는 방식이므로 시술 후 지방 공동이나 외관 변형이 거의 없고, 자연스러운 눈밑 라인을 기대할 수 있습니다.`,
+    en: `Under-eye fat repositioning does not remove excess fat beneath the eyes — instead, it repositions the fat into the sunken tear trough area to simultaneously improve dark circles and under-eye puffiness. Star Dermatology has performed over ${_n} cases and uses minimal incisions to reduce scarring risk. Because the fat is repositioned rather than removed, there is virtually no hollow appearance or contour deformity after the procedure, and a natural under-eye line can be expected.`,
+    ja: `目の下脂肪再配置術は、目の下に過剰に蓄積した脂肪を除去せず、くぼんだ涙溝（ tear trough）部位に再配置することで、クマと目の下のふくらみを同時に改善する施術です。スター皮膚科は${_n}例以上の豊富な施術経験を持ち、切開を最小限に抑えて傷跡リスクを低減します。脂肪を除去せず再配置する方式のため、施術後の脂肪空洞や外観変形がほとんどなく、自然な目の下のラインが期待できます。`,
+    zh: `眼下脂肪重置术并不切除眼下多余脂肪，而是将其重新填充至凹陷的泪沟区域，从而同时改善黑眼圈和眼下膨出。STAR皮肤科拥有${_n}例以上的丰富施术经验，采用最小化切口降低疤痕风险。由于是重置而非切除脂肪，术后几乎不会出现脂肪空洞或外观变形，可期待自然的眼下轮廓。`,
   },
 
   effect: {
@@ -90,17 +93,17 @@ export const underEyeFat: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "눈밑지방재배치 | 부산 서면 스타피부과 - 4,000례 이상 경험",
-    en: "Under-eye Fat Repositioning | Star Dermatology Seomyeon Busan – 4,000+ Cases",
-    ja: "目の下脂肪再配置 | 釜山西面 スター皮膚科 – 4,000例以上の経験",
-    zh: "眼下脂肪重置术 | 釜山西面 STAR 皮肤科 – 4,000例以上经验",
+    ko: `눈밑지방재배치 | 부산 서면 스타피부과 - ${_n}례 이상 경험`,
+    en: `Under-eye Fat Repositioning | Star Dermatology Seomyeon Busan – ${_n}+ Cases`,
+    ja: `目の下脂肪再配置 | 釜山西面 スター皮膚科 – ${_n}例以上の経験`,
+    zh: `眼下脂肪重置术 | 釜山西面 STAR 皮肤科 – ${_n}例以上经验`,
   },
 
   seoDescription: {
-    ko: "부산 서면 스타피부과의 눈밑지방재배치 시술 안내. 4,000례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 피부과 전문의 직접 시술.",
-    en: "Under-eye fat repositioning at Star Dermatology, Seomyeon, Busan. Over 4,000 cases of experience. Star Dermatology's signature procedure that simultaneously improves dark circles and under-eye puffiness. Performed directly by board-certified dermatologists.",
-    ja: "釜山西面スター皮膚科の目の下脂肪再配置施術案内。4,000例以上の豊富な経験。クマと目の下のふくらみを同時に改善するスター皮膚科の代表施術。皮膚科専門医が直接施術。",
-    zh: "釜山西面STAR皮肤科眼下脂肪重置术介绍。拥有4,000例以上丰富经验。同时改善黑眼圈和眼下膨出的招牌施术，由皮肤科专科医生亲自操作。",
+    ko: `부산 서면 스타피부과의 눈밑지방재배치 시술 안내. ${_n}례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 피부과 전문의 직접 시술.`,
+    en: `Under-eye fat repositioning at Star Dermatology, Seomyeon, Busan. Over ${_n} cases of experience. Star Dermatology's signature procedure that simultaneously improves dark circles and under-eye puffiness. Performed directly by board-certified dermatologists.`,
+    ja: `釜山西面スター皮膚科の目の下脂肪再配置施術案内。${_n}例以上の豊富な経験。クマと目の下のふくらみを同時に改善するスター皮膚科の代表施術。皮膚科専門医が直接施術。`,
+    zh: `釜山西面STAR皮肤科眼下脂肪重置术介绍。拥有${_n}例以上丰富经验。同时改善黑眼圈和眼下膨出的招牌施术，由皮肤科专科医生亲自操作。`,
   },
 
   seoKeywords: {

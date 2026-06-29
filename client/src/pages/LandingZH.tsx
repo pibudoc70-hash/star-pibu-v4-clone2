@@ -4,6 +4,8 @@
  * Strategy: Uses same components as Home.tsx, forces lang="zh" on mount
  */
 import { useEffect } from "react";
+import { CLINIC_STATS } from "../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
@@ -93,7 +95,7 @@ export default function LandingZH() {
             { question: "热玛吉FLX需要做几次？", answer: "热玛吉FLX一次治疗即可看到效果，效果在治疗后2～6个月内逐渐显现。建议每6个月至1年进行一次维持治疗。" },
             { question: "超声刀和热玛吉可以同时做吗？", answer: "可以。超声刀（HIFU）和热玛吉FLX（RF）作用原理不同，联合使用可产生协同效果。超声刀专注于SMAS层提拉，热玛吉专注于皮肤表层胶原蛋白再生，两者结合可实现更立体的提拉效果。" },
             /* ── 眼下脂肪重置术 ── */
-            { question: "眼下脂肪重置术是什么？", answer: "眼下脂肪重置术是将眼下多余脂肪不加切除地重新分配到凹陷的泪沟部位，形成自然眼下轮廓的手术。STAR皮肤科赵时形院长拥有4000例以上的手术经验。" },
+            { question: "眼下脂肪重置术是什么？", answer: `眼下脂肪重置术是将眼下多余脂肪不加切除地重新分配到凹陷的泪沟部位，形成自然眼下轮廓的手术。STAR皮肤科赵时形院长拥有${_n}例以上的手术经验。` },
             { question: "眼下脂肪重置术的恢复期需要多久？", answer: "肿胀通常在1～2周内大部分消退，完全恢复需要在1～3个月。术后1周内避免剧烈运动和饮酒，并注意防晒。" },
             /* ── 丽婴兰水光针 ── */
             { question: "丽婴兰水光针是什么？", answer: "丽婴兰水光针是将从鲑鱼提取的多核苷酸（PDRN）成分注入皮肤，促进皮肤再生和弹力改善的项目。具有保湿、增弹、淡化细纹、改善肤质的效果。" },

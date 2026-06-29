@@ -1,3 +1,5 @@
+import { CLINIC_STATS } from "../../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 /**
  * treatments-data.ts
  * 시술 카테고리별 정적 데이터.
@@ -487,14 +489,14 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameJa: "目の下の脂肪再配置",
       nameZh: "眼下脂肪重置",
       cardBannerImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/눈밑지방_4c0b8a51.png",
-      desc: "4,000례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선.\n지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.", descEn: "Specialized treatment for under-eye fat repositioning and dark circle improvement. Our doctors perform the procedure directly for natural, vibrant eyes.", descJa: "目の下の脂肪再配置とクマ改善の専門施術。スター皮膚科の院長が直接執刀し、自然で生き生きとした目元を作ります。", descZh: "眼袋脂肪重置及黑眼圈改善专项治疗。由院长亲自操作，打造自然有神的眼部轮廓。",
+      desc: `${_n}례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선.\n지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.`, descEn: "Specialized treatment for under-eye fat repositioning and dark circle improvement. Our doctors perform the procedure directly for natural, vibrant eyes.", descJa: "目の下の脂肪再配置とクマ改善の専門施術。スター皮膚科の院長が直接執刀し、自然で生き生きとした目元を作ります。", descZh: "眼袋脂肪重置及黑眼圈改善专项治疗。由院长亲自操作，打造自然有神的眼部轮廓。",
       time: "30~60분", timeEn: "30~60min", timeJa: "30~60分", timeZh: "30~60分钟", recovery: "3~7일", recoveryEn: "3–7 days", recoveryJa: "3〜7日", recoveryZh: "3~7天",
       badge: "BEST", badgeEn: "BEST", badgeJa: "BEST", badgeZh: "BEST", badgeColor: "#4A6FA5",
       image: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF.webp", best: true,
-      detail: "눈밑지방재배치술은 눈 아래 과잉 축적된 지방을 제거하지 않고 꺼진 눈물고랑(tear trough) 부위로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선하는 시술입니다. 스타피부과는 4,000례 이상의 풍부한 시술 경험을 보유하고 있으며, 절개를 최소화하여 흉터 위험을 낮춥니다. 지방을 제거하지 않고 재배치하는 방식이므로 시술 후 지방 공동이나 외관 변형이 거의 없고, 자연스러운 눈밑 라인을 기대할 수 있습니다.",
-      detailEn: "Under-eye fat repositioning is a procedure that improves dark circles and under-eye puffiness simultaneously by repositioning excess accumulated fat under the eyes to the sunken tear trough area rather than removing it. Star Dermatology has extensive experience with over 4,000 procedures and minimizes incisions to reduce scarring risk. Since fat is repositioned rather than removed, there is almost no fat cavity or appearance change after treatment, and a natural under-eye line can be expected.",
-      detailJa: "目の下脂肪再配置術は目の下に過剰に蓄積された脂肪を除去せず、くぼんだ涙袋（ティアトラフ）部位に再配置してクマと目の下の膨らみを同時に改善する施術です。スター皮膚科は4,000例以上の豊富な施術経験を持ち、切開を最小化して傷跡リスクを低減します。脂肪を除去せず再配置する方式のため、施術後の脂肪空洞や外観変形がほとんどなく、自然な目の下ラインが期待できます。",
-      detailZh: "眼袋脂肪重置术是将眼下过度积累的脂肪不是去除，而是重置到凹陷的泪沟部位，同时改善黑眼圈和眼袋的手术。星皮肤科拥有4,000例以上的丰富手术经验，最大限度减少切口以降低疤痕风险。由于是重置而非去除脂肪，术后几乎没有脂肪空洞或外观变形，可期待自然的眼下轮廓。",
+      detail: "눈밑지방재배치술은 눈 아래 과잉 축적된 지방을 제거하지 않고 꺼진 눈물고랑(tear trough) 부위로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선하는 시술입니다. 스타피부과는 ${_n}례 이상의 풍부한 시술 경험을 보유하고 있으며, 절개를 최소화하여 흉터 위험을 낮춥니다. 지방을 제거하지 않고 재배치하는 방식이므로 시술 후 지방 공동이나 외관 변형이 거의 없고, 자연스러운 눈밑 라인을 기대할 수 있습니다.",
+      detailEn: "Under-eye fat repositioning is a procedure that improves dark circles and under-eye puffiness simultaneously by repositioning excess accumulated fat under the eyes to the sunken tear trough area rather than removing it. Star Dermatology has extensive experience with over ${_n} procedures and minimizes incisions to reduce scarring risk. Since fat is repositioned rather than removed, there is almost no fat cavity or appearance change after treatment, and a natural under-eye line can be expected.",
+      detailJa: "目の下脂肪再配置術は目の下に過剰に蓄積された脂肪を除去せず、くぼんだ涙袋（ティアトラフ）部位に再配置してクマと目の下の膨らみを同時に改善する施術です。スター皮膚科は${_n}例以上の豊富な施術経験を持ち、切開を最小化して傷跡リスクを低減します。脂肪を除去せず再配置する方式のため、施術後の脂肪空洞や外観変形がほとんどなく、自然な目の下ラインが期待できます。",
+      detailZh: "眼袋脂肪重置术是将眼下过度积累的脂肪不是去除，而是重置到凹陷的泪沟部位，同时改善黑眼圈和眼袋的手术。星皮肤科拥有${_n}例以上的丰富手术经验，最大限度减少切口以降低疤痕风险。由于是重置而非去除脂肪，术后几乎没有脂肪空洞或外观变形，可期待自然的眼下轮廓。",
       caution: "시술 후 3~7일간 붓기와 멍이 나타날 수 있으며, 완전한 결과 확인까지 4~8주가 소요됩니다. 시술 후 1주일간 격렬한 운동과 음주를 피하고, 엎드려 자는 자세를 삼가세요. 눈을 비비거나 강하게 누르는 행동을 피하고, 선글라스 착용으로 자외선을 차단하세요.",
       sessions: "1회 (반영구적 효과)",      effect: "다크서클 개선, 눈밑 볼록함 해소, 눈물고랑 음영 완화, 자연스러운 눈밑 라인, 피로해 보이는 인상 개선",
       sessionsEn: "1 session (semi-permanent effect)",

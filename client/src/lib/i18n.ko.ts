@@ -1,5 +1,7 @@
 // 한국어(ko) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-2)
 import type { I18nContent } from "./i18n.types";
+import { CLINIC_STATS, STAT_UNITS } from "./constants";
+const _n_ko = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 export const ko: I18nContent = {
   nav: {
@@ -33,7 +35,7 @@ export const ko: I18nContent = {
     desc: "2006년 부산 서면에서 문을 연 스타피부과는 지난 20여 년간 오직 고객의 피부만을 고민해 왔습니다. 세계적인 프리미엄 레이저 장비와 검증된 치료 프로토콜을 통해 의료 서비스의 질을 높였으며, 교수출신 피부과전문의의 20년 이상 풍부한 임상 경험의 노하우를 바탕으로 최상의 결과를 약속드립니다.",
     stats: [
       { num: "20년+", label: "피부과전문의 경력" },
-      { num: "4,000례+", label: "눈밑지방재배치술" },
+      { num: `${_n_ko}${STAT_UNITS.cases.ko}`, label: "눈밑지방재배치술" },
       { num: "50종+", label: "프리미엄 레이저" },
     ],
     values: [

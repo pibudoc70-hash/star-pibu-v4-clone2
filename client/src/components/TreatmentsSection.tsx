@@ -4,6 +4,8 @@
  * 리프팅·탄력: 3그룹 분류 (써마지FLX / 울쎄라피 그룹 / 기타 리프팅 장비)
  */
 import { useState } from "react";
+import { CLINIC_STATS } from "../lib/constants";
+const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import { ArrowRight, Clock, RefreshCw, Sparkles, ChevronDown, ChevronUp, MessageCircle } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -247,7 +249,7 @@ const otherTreatments = [
     best: true,
     name: "눈밑지방재배치",
     nameEn: "Under-eye Fat Repositioning",
-    desc: "4,000례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 절개 없이 자연스러운 결과.",
+    desc: `${_n}례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 절개 없이 자연스러운 결과.`,
     time: "30~60분",
     recovery: "3~7일",
     price: "상담 후 결정",

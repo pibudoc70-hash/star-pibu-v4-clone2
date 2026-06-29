@@ -1,5 +1,7 @@
 // 영어(en) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-3)
 import type { I18nContent } from "./i18n.types";
+import { CLINIC_STATS, STAT_UNITS } from "./constants";
+const _n_en = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 export const en: I18nContent = {
   nav: {
@@ -33,7 +35,7 @@ export const en: I18nContent = {
     desc: "Since our founding in 2006, STAR Dermatology in Busan's Seomyeon district has provided personalized 1:1 consultations led directly by board-certified dermatologists. With over 50 original laser devices and specialists with 20+ years of experience, we deliver outstanding results tailored to each patient.",
     stats: [
       { num: "20yrs+", label: "Derm. Career" },
-      { num: "4,000+", label: "Eye-Bag Cases" },
+      { num: `${_n_en}${STAT_UNITS.cases.en}`, label: "Eye-Bag Cases" },
       { num: "50+", label: "Laser Devices" },
     ],
     values: [

@@ -66,18 +66,28 @@ function SectionHeader({ lang }: { lang: string }) {
 }
 
 // ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
-function EventCardSkeleton() {
+function EventCardSkeleton({ index = 0 }: { index?: number }) {
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', boxShadow: '0 2px 20px rgba(0,0,0,0.08)', border: '1px solid rgba(196,168,130,0.12)' }} aria-hidden="true">
+    // [P2-FINISH] 모바일에서는 첫 번째 카드만 표시 — 답답함 방지
+    <div
+      className={`rounded-2xl overflow-hidden${index > 0 ? ' hidden md:block' : ''}`}
+      style={{
+        background: '#ffffff',
+        boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
+        border: '1px solid rgba(196,168,130,0.20)',
+      }}
+      aria-hidden="true"
+    >
       {/* 이미지 영역 — aspect-ratio 3/2 유지로 CLS 방지 */}
       <div className="skeleton-shimmer w-full" style={{ aspectRatio: '3/2' }} />
       {/* 텍스트 영역 */}
-      <div className="p-5 flex flex-col gap-3">
-        <div className="skeleton-shimmer rounded-full" style={{ height: '12px', width: '4rem' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '20px', width: '80%' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '60%' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '75%', marginTop: '2px' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '15px', width: '40%', marginTop: '2px' }} />
+      <div className="p-4 md:p-5 flex flex-col gap-2.5">
+        {/* 배지 라벨 — 골드 픽스드 (브랜드 힌트) */}
+        <div style={{ height: '11px', width: '3.2rem', borderRadius: '999px', background: 'rgba(196,168,130,0.35)' }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '19px', width: '80%', animationDelay: `${index * 0.08 + 0.06}s` }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '60%', animationDelay: `${index * 0.08 + 0.12}s` }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '72%', animationDelay: `${index * 0.08 + 0.16}s` }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '40%', animationDelay: `${index * 0.08 + 0.20}s` }} />
       </div>
     </div>
   );
@@ -114,9 +124,9 @@ export default function SpecialEventSection() {
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
-            <EventCardSkeleton />
-            <EventCardSkeleton />
-            <EventCardSkeleton />
+            <EventCardSkeleton index={0} />
+            <EventCardSkeleton index={1} />
+            <EventCardSkeleton index={2} />
           </div>
         </div>
       </section>

@@ -3455,3 +3455,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run build 성공 (157.1kb)
 - [x] pnpm test 1413개 전체 통과
 - [x] 체크포인트 저장
+
+## Phase 최종 마감 v2: below-the-fold 체감 품질 + CTA 브랜드 톤 + 지표 카드 밀도 (2026-06-29)
+- [x] 모바일 hero-stats-row flex-basis 30% → 28% — 세 번째 카드 밀림 방지
+- [x] 모바일 hero-stats-row 패딩 상하/좌우 분리 — 세로 여유감 확보
+- [x] 모바일 hero-stat-label margin-top 2px → 4px, line-height 1.3 추가
+- [x] 데스크톱 hero-btn-phone font-weight 400→500, border 강화, box-shadow 강화
+- [x] 모바일 CTA 전화 버튼 background 0.18→0.22, 텍스트 색상 증밝
+- [x] SpecialEventSection EventCardSkeleton 배지 골드 픽스드, border 강화, 모바일 1장만 표시
+- [x] SectionFallback 전 레이아웃 모바일 전용 스타일 미세 조정
+- [x] preload 최종 점검: vendor-react/trpc/icons 모두 첫 화면 필수 — 유지
+- [x] pnpm run build 성공 + pnpm test 1413개 전체 통과

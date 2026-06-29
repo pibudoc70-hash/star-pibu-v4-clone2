@@ -3024,7 +3024,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] LandingEN.tsx (영어 메인)에 섹션 삽입
 - [ ] LandingJA.tsx (일본어 메인)에 섹션 삽입
 - [ ] LandingZH.tsx (중국어 메인)에 섹션 삽입
-- [ ] 체크포인트 저장
+- [x] 체크포인트 저장 (d8083ee2)
 
 ## Phase 68: 관리자 이벤트 관리 - 언어별 탭 구조 구현 (2026-06-24)
 - [x] AdminEventsTab 컴포넌트 리팩토링 - 언어별 탭 구조 추가

@@ -62,7 +62,7 @@ export function HeroActions({
         className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
         style={{ animationDelay: delays.ctaFirst }}
       >
-        <Calendar size={15} strokeWidth={2.2} />
+        <Calendar size={15} strokeWidth={2} />
         {t.hero.cta_reserve}
       </a>
 
@@ -101,7 +101,7 @@ export function HeroActions({
           className="hero-fade hero-btn-phone flex items-center gap-1.5 rounded-full transition-all duration-300 justify-center flex-1"
           style={{ animationDelay: delays.ctaPhone }}
         >
-          <Phone size={13} strokeWidth={2} />
+          <Phone size={14} strokeWidth={2} />
           {t.hero.cta_call}
         </a>
       </div>

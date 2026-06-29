@@ -3074,7 +3074,7 @@
   box-shadow: 0 -2px 20px rgba(0,0,0,0.45), 0 -1px 0 rgba(196,168,130,0.12);
   /* 상단 radius: 바가 콘텐츠에서 자연스럽게 올라오는 느낌 */
   border-radius: 14px 14px 0 0;
-  gap: 1px; /* 버튼 사이 미세 간격 — 구분선 대체 */
+  gap: 0; /* 구분선은 border-right로 처리 */
   overflow: hidden;
 }
 
@@ -3160,6 +3160,8 @@
   color: #ffffff;
   font-weight: 500;
   letter-spacing: 0.05em;
+  /* [v5-FINAL] 명시적 골드 구분선 — gap 방식보다 프리미엄 */
+  border-right: 1px solid rgba(196,168,130,0.22);
 }
 .mobile-bottom-btn--reserve:active {
   background: #02a84c;
@@ -3173,6 +3175,8 @@
 .mobile-bottom-btn--chat {
   background: var(--chat-bg, #FEE500);
   color: var(--chat-color, #3C1E1E);
+  /* [v5-FINAL] 명시적 골드 구분선 */
+  border-right: 1px solid rgba(196,168,130,0.22);
 }
 /* 카카오 리플: 어두운 갈색 반투명 (노란 배경 위에서 자연스럽게) */
 .mobile-bottom-btn--chat::after {

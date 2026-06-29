@@ -3,6 +3,11 @@
  * 운영자가 쉽게 수정 가능한 다국어 번역 데이터 구조
  * ko / en / ja / zh 언어별로 관리
  */
+// [v5-FINAL] source of truth: 수치 변경 시 constants.ts의 CLINIC_STATS만 수정하면 전체 반영
+// constants.ts → equipmentTranslations.ts는 단방향 참조 (순환 참조 없음)
+import { CLINIC_STATS } from "./constants";
+// 눈밑지방재배치 시술 건수 — 4개 언어 공통 사용
+const _eyeBagCases = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
 export interface EquipmentText {
   title: string;
@@ -72,7 +77,7 @@ export const equipmentTranslations: EquipmentTranslations = {
     },
     undereye: {
       title: "눈밑지방재배치",
-      desc1: "4,000례 이상의 경험을 바탕으로 다크서클과 눈밑 부음을 동시 개선",
+      desc1: `${_eyeBagCases}례 이상의 경험을 바탕으로 다크서클과 눈밑 부음을 동시 개선`,
       desc2: "지방을 재배치하여 자연스럽고 매끄러운 눈밑 라인 형성",
     },
     lunchtime: {
@@ -179,7 +184,7 @@ export const equipmentTranslations: EquipmentTranslations = {
     },
     undereye: {
       title: "Under-Eye Fat Repositioning",
-      desc1: "Backed by 4,000+ cases, this signature treatment improves both dark circles and under-eye bulging",
+      desc1: `Backed by ${_eyeBagCases}+ cases, this signature treatment improves both dark circles and under-eye bulging`,
       desc2: "Fat is repositioned to create a smoother, more natural under-eye contour",
     },
     lunchtime: {
@@ -286,7 +291,7 @@ export const equipmentTranslations: EquipmentTranslations = {
     },
     undereye: {
       title: "目の下の脂肪再配置",
-      desc1: "4,000件以上の経験をもとに、クマと目の下のふくらみを同時に改善",
+      desc1: `${_eyeBagCases}件以上の経験をもとに、クマと目の下のふくらみを同時に改善`,
       desc2: "脂肪を再配置し、自然でなめらかな目元ラインをつくる代表施術です",
     },
     lunchtime: {
@@ -393,7 +398,7 @@ export const equipmentTranslations: EquipmentTranslations = {
     },
     undereye: {
       title: "眼下脂肪重置",
-      desc1: "基于4,000例以上经验，同时改善黑眼圈与眼下膨隆",
+      desc1: `基于${_eyeBagCases}例以上经验，同时改善黑眼圈与眼下膨隆`,
       desc2: "通过脂肪重新定位，打造更自然平整的眼下轮廓",
     },
     lunchtime: {

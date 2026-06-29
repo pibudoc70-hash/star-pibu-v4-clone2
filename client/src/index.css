@@ -2447,7 +2447,8 @@
 .hero-stat-divider {
   width: 1px;
   height: 36px;
-  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.35), transparent);
+  /* [P3-FINAL] 골드 강도 0.35 → 0.50 */
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.50), transparent);
   align-self: center;
   flex-shrink: 0;
 }
@@ -2466,14 +2467,15 @@
   transform: scaleX(1);
 }
 .hero-stat-label {
-  color: rgba(255, 255, 255, 0.78);
+  /* [P3-FINAL] 데스크톱 라벨 대비 0.78 → 0.88, 텍스트 사도우 강화 */
+  color: rgba(255, 255, 255, 0.88);
   font-size: clamp(0.58rem, 1.2vw, 0.7rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   padding-top: 10px;
   font-weight: 400;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.50), 0 0 12px rgba(0,0,0,0.25);
 }
 
 /* HeroStatsStrip */
@@ -2487,8 +2489,8 @@
   align-items: flex-start;
   gap: clamp(1.5rem, 5vw, 3.5rem);
   padding-top: 32px;
-  /* 에디토리얼 상단 구분선 */
-  border-top: 1px solid rgba(201,168,76,0.18);
+  /* [P3-FINAL] 에디토리얼 상단 구분선 골드 0.18 → 0.30 */
+  border-top: 1px solid rgba(201,168,76,0.30);
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
@@ -3126,12 +3128,14 @@
 
 /* 전화 — 브랜드 골드 톤 (시인성 확보) */
 .mobile-bottom-btn--phone {
-  /* [P2-FINISH2] 배경 0.18 → 0.22 강화, 텍스트 색상 증밝 */
-  background: rgba(196,168,130,0.22);
-  color: rgba(228,206,170,0.98);
+  /* [P3-FINAL] 배경 0.22 → 0.28 강화, 텍스트 완전 불투명, 샄도우 강화 */
+  background: rgba(196,168,130,0.28);
+  color: rgba(232,212,180,1.0);
   font-weight: 500;
   border-right: none;
-  text-shadow: 0 1px 5px rgba(0,0,0,0.50), 0 0 10px rgba(0,0,0,0.25);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.65), 0 0 12px rgba(0,0,0,0.30);
+  /* 내부 골드 하이라이트 라인 */
+  box-shadow: inset 0 1px 0 rgba(232,212,180,0.12);
 }
 
 /* 데스크톱에서 완전히 숨김 */
@@ -4374,12 +4378,14 @@ body.font-lang-zh .hero-stat-label {
     font-size: 0.72rem !important;
     font-weight: 500 !important;
   }
-  /* Utility — 전화 (브랜드 골드 톤) */
+  /* Utility — 전화 (브랜드 골드 톤, 기본 CSS와 통일) */
   .mobile-bottom-btn--phone {
-    background: rgba(196, 168, 130, 0.10) !important;
-    color: rgba(196, 168, 130, 0.92) !important;
+    /* [P3-FINAL] 0.10 → 0.28으로 기본 CSS와 동일하게 강화 */
+    background: rgba(196, 168, 130, 0.28) !important;
+    color: rgba(232, 212, 180, 1.0) !important;
     font-size: 0.72rem !important;
     font-weight: 500 !important;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.65), 0 0 12px rgba(0,0,0,0.30) !important;
   }
   /* 버튼 아이콘 + 텍스트 간격 통일 */
   .mobile-bottom-btn {

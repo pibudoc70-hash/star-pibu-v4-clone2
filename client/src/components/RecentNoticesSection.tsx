@@ -62,11 +62,14 @@ function RecentNoticesSection({ lang }: Props) {
 
         {/* 리스트 */}
         {isLoading ? (
-          <div className="space-y-3">
+          // [P3-FINAL] animate-pulse bg-gray-200 → skeleton-shimmer + 골드 픽스드 힌트
+          <div className="space-y-2.5" aria-hidden="true">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="flex items-center gap-3 animate-pulse">
-                <div className="h-3 bg-gray-200 rounded w-2/3" />
-                <div className="h-3 bg-gray-100 rounded w-16 ml-auto" />
+              <div key={i} className="flex items-center gap-2.5 py-2.5 border-b" style={{ borderColor: 'rgba(196,168,130,0.10)' }}>
+                {/* 핀 아이콘 힌트 — 골드 픽스드 */}
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0, background: 'rgba(196,168,130,0.32)' }} />
+                <div className="skeleton-shimmer rounded flex-1" style={{ height: '12px', width: `${55 + i * 10}%`, animationDelay: `${i * 0.08}s` }} />
+                <div className="skeleton-shimmer rounded" style={{ height: '11px', width: '3rem', flexShrink: 0, animationDelay: `${i * 0.08 + 0.05}s` }} />
               </div>
             ))}
           </div>

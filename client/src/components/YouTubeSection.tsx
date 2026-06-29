@@ -164,13 +164,23 @@ export default function YouTubeSection() {
             <div className="skeleton-shimmer rounded-md h-4 w-72" />
           </div>
           {/* 영상 카드 그리드 스켈레톤 */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" aria-hidden="true">
+          {/* [P3-FINAL] 모바일 4장만 표시(i>3 hidden md:block), 카드 외곽 골드 border 추가 */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4" aria-hidden="true">
             {[0,1,2,3,4,5,6,7].map((i) => (
-              <div key={i} className="rounded-xl overflow-hidden">
-                <div className="skeleton-shimmer" style={{ aspectRatio: '16/9' }} />
-                <div className="p-3 space-y-2">
-                  <div className="skeleton-shimmer rounded h-4 w-full" />
-                  <div className="skeleton-shimmer rounded h-3 w-2/3" />
+              <div
+                key={i}
+                className={`rounded-xl overflow-hidden${i > 3 ? ' hidden md:block' : ''}`}
+                style={{
+                  border: '1px solid rgba(196,168,130,0.16)',
+                  boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
+                }}
+              >
+                <div className="skeleton-shimmer" style={{ aspectRatio: '16/9', animationDelay: `${i * 0.06}s` }} />
+                <div className="p-2.5 md:p-3 flex flex-col gap-1.5">
+                  {/* 유튜브 아이콘 힌트 — 골드 픽스드 */}
+                  <div style={{ height: '9px', width: '2rem', borderRadius: '999px', background: 'rgba(196,168,130,0.30)', flexShrink: 0 }} />
+                  <div className="skeleton-shimmer rounded" style={{ height: '14px', width: '90%', animationDelay: `${i * 0.06 + 0.05}s` }} />
+                  <div className="skeleton-shimmer rounded" style={{ height: '12px', width: '65%', animationDelay: `${i * 0.06 + 0.10}s` }} />
                 </div>
               </div>
             ))}

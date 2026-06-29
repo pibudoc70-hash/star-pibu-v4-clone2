@@ -3466,3 +3466,20 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] SectionFallback 전 레이아웃 모바일 전용 스타일 미세 조정
 - [x] preload 최종 점검: vendor-react/trpc/icons 모두 첫 화면 필수 — 유지
 - [x] pnpm run build 성공 + pnpm test 1413개 전체 통과
+
+## Phase 최종 마감 v3: below-the-fold preview-first + CTA 브랜드 톤 + 지표 가독성
+
+- [x] YouTubeSection skeleton — 카드 외곽 골드 border, 배지 골드 픽스드, 모바일 4장만 표시, animationDelay 순차
+- [x] RecentNoticesSection skeleton — animate-pulse bg-gray-200 → skeleton-shimmer + 골드 픽스드 핀 힌트 + 브랜드 border
+- [x] SkeletonUI.tsx StatisticCardSkeleton — 아이콘 원 골드 픽스드(shimmer 제거), border 0.15→0.20, shadow 강화
+- [x] SkeletonUI.tsx ReviewCardSkeleton — 별점 원형 골드 픽스드(shimmer 제거), border 0.15→0.20, shadow 강화
+- [x] SkeletonUI.tsx DoctorCardSkeleton — 전문의 배지 골드 픽스드 추가, border 0.15→0.20, shadow 강화
+- [x] SkeletonUI.tsx DeviceCardSkeleton — 장비 카테고리 배지 골드 픽스드 추가, border 0.15→0.20, shadow 강화
+- [x] 모바일 CTA 전화 버튼 배경 0.22→0.28 강화, 텍스트 완전 불투명, text-shadow 강화, inset 골드 하이라이트
+- [x] 모바일 CTA 리뉴얼 오버라이드 CSS도 동일하게 통일 (0.10→0.28)
+- [x] 데스크톱 hero-stat-label 대비 0.78→0.88, text-shadow 강화
+- [x] 데스크톱 hero-stat-divider 골드 강도 0.35→0.50
+- [x] 데스크톱 hero-stats-row border-top 골드 0.18→0.30
+- [x] preload 최종 점검: vendor-react/trpc/icons 모두 첫 렌더 필수 → 유지
+- [x] pnpm run build 성공 (157.1kb)
+- [x] pnpm test 1413개 전체 통과

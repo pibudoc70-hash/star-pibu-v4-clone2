@@ -196,10 +196,13 @@ export default defineConfig({
           // → Rollup 기본 청킹에 맡기면 사용 페이지에서만 dynamic import로 로드됨
           // if (id.includes("katex")) { return "vendor-katex"; }
           // if (id.includes("streamdown")) { return "vendor-streamdown"; }
-          // treatments-data (317KB) — lazy 코드스플리팅으로 분리된 시술 데이터
-          if (id.includes("data/treatments")) {
-            return "data-treatments";
-          }
+          // [P0-OPT] treatments-data: manualChunks에서 제거
+          // 이유: Home 첫 진입에서 modulepreload 대상이 되어 396KB gzip 선로드 발생
+          // treatments-data (396KB gzip): 시술 페이지에서만 사용
+          // → Rollup 기본 청킹에 맡기면 사용 페이지에서만 dynamic import로 로드됨
+          // if (id.includes("data/treatments")) {
+          //   return "data-treatments";
+          // }
           // [P0-OPT] 관리자 페이지 청크 분리 제거
           // 이유: 모바일 홈에서 불필요한 1.2MB 청크 preload 방지
           // 관리자 페이지 접근 시 동적 import로 로드됨

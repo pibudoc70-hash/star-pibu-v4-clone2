@@ -118,7 +118,7 @@ export function DoctorCardSkeleton() {
       aria-hidden="true"
     >
       {/* 이미지 영역 — 그라디언트 오버레이 + 인물 실루엣 힌트 */}
-      <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
+      <div className="relative overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)', aspectRatio: '1/1.2' }}>
         <div className="skeleton-shimmer absolute inset-0" />
         {/* 하단 그라디언트 오버레이 */}
         <div style={{
@@ -166,7 +166,7 @@ export function DeviceCardSkeleton() {
       aria-hidden="true"
     >
       {/* 이미지 영역 — 그라디언트 오버레이 */}
-      <div className="relative h-48 md:h-56 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
+      <div className="relative overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)', aspectRatio: '16/10' }}>
         <div className="skeleton-shimmer absolute inset-0" />
         {/* 하단 그라디언트 오버레이 */}
         <div style={{

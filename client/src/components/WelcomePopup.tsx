@@ -142,7 +142,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
   return (
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
-      style={{ alignItems: "flex-start", padding: 0, paddingTop: "10%" }}
+      style={{ alignItems: "flex-start", padding: 0, paddingTop: "15%" }}
       onClick={dismiss}
     >
       <div
@@ -161,18 +161,8 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           willChange: "transform",
         }}
       >
-        {/* 이미지 (X 버튼 포함) */}
+        {/* 이미지 */}
         <div className="flex-1 flex items-center justify-center overflow-hidden relative">
-          {/* X 버튼 - 이미지 위에 절대 위치 */}
-          <button
-            type="button"
-            onClick={dismiss}
-            className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all"
-            aria-label="닫기"
-          >
-            <X size={20} className="text-gray-700" />
-          </button>
-
           <button
             type="button"
             onClick={handleImageClick}

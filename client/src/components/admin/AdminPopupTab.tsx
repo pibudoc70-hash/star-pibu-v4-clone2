@@ -250,23 +250,13 @@ export default function AdminPopupTab({ currentUser }: Props) {
       {popupForm && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.5)" }}
+          style={{ background: "rgba(0,0,0,0.5)", paddingTop: "5%" }}
         >
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-[#E5E7EB] flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-[#E5E7EB]">
               <h2 className="font-bold text-[#1F2937]">
                 {popupEditId !== null ? "이벤트 수정" : "새 이벤트 추가"}
               </h2>
-              <button
-                type="button"
-                onClick={() => {
-                  setPopupForm(null);
-                  setPopupEditId(null);
-                }}
-                className="text-[#9CA3AF] hover:text-[#374151] text-xl leading-none"
-              >
-                &times;
-              </button>
             </div>
             <div className="px-6 py-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">

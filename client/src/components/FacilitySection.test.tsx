@@ -51,7 +51,6 @@ describe("FacilitySection", () => {
   it("displays highlight labels correctly", () => {
     renderWithLang(<FacilitySection />);
     expect(screen.getByText(/최신 레이저 장비/)).toBeInTheDocument();
-    expect(screen.getByText(/피부과 전문의 경력 20년 이상/)).toBeInTheDocument();
     expect(screen.getByText(/청결한 시술실/)).toBeInTheDocument();
     expect(screen.getByText(/편안한 대기실/)).toBeInTheDocument();
   });

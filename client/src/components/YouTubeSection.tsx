@@ -147,6 +147,18 @@ export default function YouTubeSection() {
 
   const closeModal = useCallback(() => setSelectedVideo(null), []);
 
+  // 디버깅 로그
+  useEffect(() => {
+    console.log('[YouTubeSection Debug]', {
+      isLoading,
+      isError,
+      allVideos: allVideos?.length ?? 0,
+      videos: videos.length,
+      shorts: shorts.length,
+      isVisible,
+    });
+  }, [isLoading, isError, allVideos, videos, shorts, isVisible]);
+
   // S1-T4: 로딩 상태 — shimmer 스켈레톤 UI
   if (isLoading) {
     return (
@@ -230,9 +242,11 @@ export default function YouTubeSection() {
     );
   }
 
-  // 빈 상태
+  // 빈 상태 — 디버깅: 임시로 렌더 (데이터 로드 확인용)
   if (!videos.length && !shorts.length) {
-    return null;
+    console.warn('[YouTubeSection] No videos or shorts found!');
+    // 임시: 빈 상태에서도 섹션 렌더 (디버깅용)
+    // return null;
   }
 
   return (

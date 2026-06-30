@@ -142,7 +142,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
   return (
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
-      style={{ alignItems: "flex-end", padding: 0 }}
+      style={{ alignItems: "flex-start", padding: 0, paddingTop: "10%" }}
       onClick={dismiss}
     >
       <div
@@ -153,17 +153,16 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
         className={`popup-modal-mobile${closing ? " closing" : ""} w-full overflow-hidden shadow-2xl`}
         onClick={(e) => e.stopPropagation()}
         style={{
-          borderRadius: "20px 20px 0 0",
+          borderRadius: "20px",
           background: "#ffffff",
-          maxHeight: "92dvh",
+          maxHeight: "80dvh",
           display: "flex",
           flexDirection: "column",
           willChange: "transform",
         }}
       >
-        {/* 닫기 버튼 */}
-        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0">
-          <span className="text-sm font-semibold text-gray-700">팝업 이벤트</span>
+        {/* 닫기 버튼만 표시 */}
+        <div className="flex items-center justify-end px-5 py-3 flex-shrink-0">
           <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-gray-100" aria-label="닫기">
             <X size={18} className="text-gray-600" />
           </button>

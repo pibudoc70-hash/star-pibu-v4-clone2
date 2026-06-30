@@ -321,7 +321,6 @@ export const ko: I18nContent = {
     sectionSubtitle: "최신 의료 장비와 쾌적한 환경",
     highlights: [
       { label: "최신 레이저 장비" },
-      { label: "피부과 전문의 경력 20년 이상" },
       { label: "청결한 시술실" },
       { label: "편안한 대기실" },
     ],

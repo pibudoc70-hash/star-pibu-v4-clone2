@@ -372,16 +372,21 @@ export default function YouTubeSection() {
       {selectedVideo && (
         <div
           ref={modalRef}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 z-50 p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby={MODAL_TITLE_ID}
           onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           {/* P1-C: 단일 브랜치 렌더 — duplicate id 제거 */}
           {selectedVideo.type === 'video' ? (
             /* 일반 영상: 가로 모달 */
-            <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden">
+            <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
               {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
               <button
                 type="button"
@@ -416,7 +421,7 @@ export default function YouTubeSection() {
             </div>
           ) : (
             /* 쇼츠: 세로 모달 */
-            <div className="relative w-full max-w-sm h-[80vh] md:h-auto md:max-h-[90vh] bg-black rounded-2xl overflow-hidden flex flex-col">
+            <div className="relative w-full max-w-sm bg-black rounded-2xl overflow-hidden flex flex-col" style={{ height: 'min(80vh, calc(100vh - 2rem))', maxHeight: 'calc(100vh - 2rem)' }}>
               {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
               <button
                 type="button"

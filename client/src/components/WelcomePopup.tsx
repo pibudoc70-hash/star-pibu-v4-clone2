@@ -161,15 +161,18 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           willChange: "transform",
         }}
       >
-        {/* 닫기 버튼만 표시 */}
-        <div className="flex items-center justify-end px-5 py-3 flex-shrink-0">
-          <button type="button" onClick={dismiss} className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-gray-100" aria-label="닫기">
-            <X size={18} className="text-gray-600" />
+        {/* 이미지 (X 버튼 포함) */}
+        <div className="flex-1 flex items-center justify-center overflow-hidden relative">
+          {/* X 버튼 - 이미지 위에 절대 위치 */}
+          <button
+            type="button"
+            onClick={dismiss}
+            className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all"
+            aria-label="닫기"
+          >
+            <X size={20} className="text-gray-700" />
           </button>
-        </div>
 
-        {/* 이미지 */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden">
           <button
             type="button"
             onClick={handleImageClick}

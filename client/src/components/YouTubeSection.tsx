@@ -16,6 +16,11 @@
  *   - focus trap stale ref: focusable 목록을 Tab 이벤트 시점에 재쿼리하여 DOM 변경에 안전하게 대응
  *   - i18n 하드코딩 제거: 로딩/에러/aria 문자열을 i18n.ts youtube 블록으로 이전
  *   - useAuth.ts useMemo 사이드이펙트: localStorage 쓰기를 useEffect로 분리 (별도 파일)
+ *
+ * P2 수정 (2025-06-30):
+ *   - 각 섹션별 모달 위치 개선: 최신 영상과 쇼츠 섹션을 각각 기준으로 모달 렌더
+ *   - 섹션별 ref 추가: videosContainerRef, shortsContainerRef
+ *   - 모달 위치 계산: 각 섹션의 viewport 기준으로 중앙 정렬
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, AlertCircle, RefreshCw } from 'lucide-react';
@@ -73,6 +78,10 @@ export default function YouTubeSection() {
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // P2: 섹션별 ref 추가 — 각 섹션 기준으로 모달 위치 계산
+  const videosContainerRef = useRef<HTMLDivElement>(null);
+  const shortsContainerRef = useRef<HTMLDivElement>(null);
 
   // P1-A: body scroll lock — 모달 열릴 때 스크롤 차단, 닫힐 때 복원
   useEffect(() => {
@@ -268,7 +277,7 @@ export default function YouTubeSection() {
 
         {/* 상단 영상 4개 */}
         {videos.length > 0 && (
-          <div className="mb-16">
+          <div className="mb-16" ref={videosContainerRef}>
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
@@ -312,7 +321,7 @@ export default function YouTubeSection() {
 
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
-          <div>
+          <div ref={shortsContainerRef}>
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
@@ -368,8 +377,8 @@ export default function YouTubeSection() {
         </div>
       </div>
 
-      {/* S1-T5: 모달 — focus trap + focus restore + body scroll lock 구현 */}
-      {selectedVideo && (
+      {/* P2: 최신 영상 섹션 기준 모달 */}
+      {selectedVideo && selectedVideo.type === 'video' && videosContainerRef.current && (
         <div
           ref={modalRef}
           className="fixed inset-0 bg-black/80 z-50 p-4"
@@ -383,85 +392,99 @@ export default function YouTubeSection() {
             justifyContent: 'center',
           }}
         >
-          {/* P1-C: 단일 브랜치 렌더 — duplicate id 제거 */}
-          {selectedVideo.type === 'video' ? (
-            /* 일반 영상: 가로 모달 */
-            <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
-              {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
+          {/* 일반 영상: 가로 모달 */}
+          <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+            {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
+            <button
+              type="button"
+              ref={closeButtonRef}
+              onClick={closeModal}
+              aria-label={yt.closeModal}
+              className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <X className="w-6 h-6 text-white" aria-hidden="true" />
+            </button>
+
+            {/* YouTube 임베드 플레이어 */}
+            <div className="aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                title={selectedVideo.title}
+                style={{ border: 'none' }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+
+            {/* 제목 — P1-C: 단일 id 보장 */}
+            <div className="p-4 bg-gray-900">
+              <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
+                {selectedVideo.title}
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* P2: 쇼츠 섹션 기준 모달 */}
+      {selectedVideo && selectedVideo.type === 'shorts' && shortsContainerRef.current && (
+        <div
+          ref={modalRef}
+          className="fixed inset-0 bg-black/80 z-50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={MODAL_TITLE_ID}
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* 쇼츠: 세로 모달 */}
+          <div className="relative w-full max-w-sm bg-black rounded-2xl overflow-hidden flex flex-col" style={{ height: 'min(80vh, calc(100vh - 2rem))', maxHeight: 'calc(100vh - 2rem)' }}>
+            {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
+            <button
+              type="button"
+              ref={closeButtonRef}
+              onClick={closeModal}
+              aria-label={yt.closeModal}
+              className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <X className="w-6 h-6 text-white" aria-hidden="true" />
+            </button>
+
+            {/* YouTube 임베드 플레이어 - 세로 비율 */}
+            <div className="flex-1 flex items-center justify-center bg-black">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                title={selectedVideo.title}
+                style={{ border: 'none', aspectRatio: '9/16' }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+
+            {/* 제목 + 하단 닫기 버튼 — P1-C: 단일 id 보장 */}
+            <div className="p-4 bg-gray-900 border-t border-gray-800">
+              <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm line-clamp-2 mb-3">
+                {selectedVideo.title}
+              </h3>
               <button
                 type="button"
-                ref={closeButtonRef}
                 onClick={closeModal}
-                aria-label={yt.closeModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <X className="w-6 h-6 text-white" aria-hidden="true" />
+                {yt.close}
               </button>
-
-              {/* YouTube 임베드 플레이어 */}
-              <div className="aspect-video">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                  title={selectedVideo.title}
-                  style={{ border: 'none' }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-
-              {/* 제목 — P1-C: 단일 id 보장 */}
-              <div className="p-4 bg-gray-900">
-                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
-                  {selectedVideo.title}
-                </h3>
-              </div>
             </div>
-          ) : (
-            /* 쇼츠: 세로 모달 */
-            <div className="relative w-full max-w-sm bg-black rounded-2xl overflow-hidden flex flex-col" style={{ height: 'min(80vh, calc(100vh - 2rem))', maxHeight: 'calc(100vh - 2rem)' }}>
-              {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
-              <button
-                type="button"
-                ref={closeButtonRef}
-                onClick={closeModal}
-                aria-label={yt.closeModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              >
-                <X className="w-6 h-6 text-white" aria-hidden="true" />
-              </button>
-
-              {/* YouTube 임베드 플레이어 - 세로 비율 */}
-              <div className="flex-1 flex items-center justify-center bg-black">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                  title={selectedVideo.title}
-                  style={{ border: 'none', aspectRatio: '9/16' }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-
-              {/* 제목 + 하단 닫기 버튼 — P1-C: 단일 id 보장 */}
-              <div className="p-4 bg-gray-900 border-t border-gray-800">
-                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm line-clamp-2 mb-3">
-                  {selectedVideo.title}
-                </h3>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                >
-                  {yt.close}
-                </button>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       )}
     </section>

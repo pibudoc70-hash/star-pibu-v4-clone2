@@ -1,28 +1,13 @@
 /**
  * YouTubeSection
  *
- * S1-T4: isError 처리 + 이중 state 제거
- *   - trpc isLoading/isError/data 직접 사용 (useEffect + 중간 state 제거)
- *   - 에러 상태에서 에러 메시지 + 재시도 버튼 표시
- *
- * S1-T5: modal focus trap + focus restore
- *   - 모달 열릴 때 닫기 버튼에 자동 포커스
- *   - Tab/Shift+Tab이 모달 내부에서만 순환
- *   - 모달 닫힐 때 트리거 버튼으로 포커스 복귀
- *
- * P1 수정 (2025-06-06):
- *   - body scroll lock: 모달 열릴 때 document.body overflow hidden, 닫힐 때 복원
- *   - duplicate id 버그: yt-modal-title이 video/shorts 두 브랜치 모두에 동일 id 사용 → 조건부 단일 렌더로 수정
- *   - focus trap stale ref: focusable 목록을 Tab 이벤트 시점에 재쿼리하여 DOM 변경에 안전하게 대응
- *   - i18n 하드코딩 제거: 로딩/에러/aria 문자열을 i18n.ts youtube 블록으로 이전
- *   - useAuth.ts useMemo 사이드이펙트: localStorage 쓰기를 useEffect로 분리 (별도 파일)
- *
- * P2 수정 (2025-06-30):
- *   - 각 섹션별 모달 위치 개선: 최신 영상과 쇼츠 섹션을 각각 기준으로 모달 렌더
- *   - 섹션별 relative 컨테이너: 모달을 각 섹션 내에서 absolute 포지셔닝
- *   - 모달 위치 계산: 각 섹션의 viewport 기준으로 중앙 정렬
+ * P3 수정 (2025-06-30):
+ *   - Portal + 위치 계산 방식으로 모달 렌더
+ *   - 각 섹션의 viewport 위치를 계산하여 모달을 정확히 중앙에 표시
+ *   - 모달을 body 최상위에 렌더하여 stacking context 문제 해결
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { X, AlertCircle, RefreshCw } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -53,6 +38,11 @@ interface YouTubeVideo {
   type: 'video' | 'shorts';
 }
 
+interface ModalPosition {
+  top: number;
+  left: number;
+}
+
 // 모달 ID — 단일 aria-labelledby 참조 보장
 const MODAL_TITLE_ID = 'yt-modal-title';
 
@@ -76,13 +66,14 @@ export default function YouTubeSection() {
   // S1-T5: modal state + trigger ref (focus restore용)
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
   const [modalType, setModalType] = useState<'video' | 'shorts' | null>(null);
+  const [modalPosition, setModalPosition] = useState<ModalPosition>({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // P2: 섹션별 ref 추가 — 각 섹션 기준으로 모달 위치 계산
-  const videosContainerRef = useRef<HTMLDivElement>(null);
-  const shortsContainerRef = useRef<HTMLDivElement>(null);
+  // P3: 섹션별 ref 추가 — Portal 위치 계산용
+  const videosContainerRef = useRef<HTMLDivElement | null>(null);
+  const shortsContainerRef = useRef<HTMLDivElement | null>(null);
 
   // P1-A: body scroll lock — 모달 열릴 때 스크롤 차단, 닫힐 때 복원
   useEffect(() => {
@@ -124,11 +115,34 @@ export default function YouTubeSection() {
     }
   }, []);
 
+  // P3: 섹션 기준 모달 위치 계산
+  const calculateModalPosition = useCallback((containerRef: React.RefObject<HTMLDivElement | null>) => {
+    if (!containerRef.current) return { top: 0, left: 0 };
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const containerCenterY = rect.top + rect.height / 2 + window.scrollY;
+    const containerCenterX = rect.left + rect.width / 2;
+    
+    // 모달 높이 추정 (실제 모달 높이에 따라 조정 가능)
+    const estimatedModalHeight = modalType === 'shorts' ? 600 : 500;
+    
+    return {
+      top: containerCenterY - estimatedModalHeight / 2,
+      left: containerCenterX,
+    };
+  }, [modalType]);
+
   const openModal = useCallback((video: YouTubeVideo, triggerElement: HTMLElement) => {
     setSelectedVideo(video);
     setModalType(video.type);
+    
+    // 위치 계산
+    const containerRef = video.type === 'video' ? videosContainerRef : shortsContainerRef;
+    const position = calculateModalPosition(containerRef);
+    setModalPosition(position);
+    
     triggerRef.current = triggerElement as HTMLButtonElement;
-  }, []);
+  }, [calculateModalPosition]);
 
   const closeModal = useCallback(() => {
     setSelectedVideo(null);
@@ -208,8 +222,6 @@ export default function YouTubeSection() {
   // 빈 상태 — 디버깅: 임시로 렌더 (데이터 로드 확인용)
   if (!videos.length && !shorts.length) {
     console.warn('[YouTubeSection] No videos or shorts found!');
-    // 임시: 빈 상태에서도 섹션 렌더 (디버깅용)
-    // return null;
   }
 
   return (
@@ -229,9 +241,9 @@ export default function YouTubeSection() {
           </p>
         </div>
 
-        {/* 상단 영상 4개 — P2: relative 컨테이너로 모달 위치 기준 설정 */}
+        {/* 상단 영상 4개 */}
         {videos.length > 0 && (
-          <div className="mb-16 relative" ref={videosContainerRef}>
+          <div className="mb-16" ref={videosContainerRef}>
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
@@ -270,60 +282,12 @@ export default function YouTubeSection() {
                 </button>
               ))}
             </div>
-
-            {/* P2: 최신 영상 섹션 기준 모달 — 섹션 내 absolute 포지셔닝 */}
-            {selectedVideo && modalType === 'video' && (
-              <div
-                ref={modalRef}
-                className="fixed inset-0 bg-black/80 z-50 p-4 flex items-center justify-center"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={MODAL_TITLE_ID}
-                onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
-                onKeyDown={handleKeyDown}
-              >
-                {/* 일반 영상: 가로 모달 */}
-                <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
-                  {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
-                  <button
-                    type="button"
-                    ref={closeButtonRef}
-                    onClick={closeModal}
-                    aria-label={yt.closeModal}
-                    className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    <X className="w-6 h-6 text-white" aria-hidden="true" />
-                  </button>
-
-                  {/* YouTube 임베드 플레이어 */}
-                  <div className="aspect-video">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                      title={selectedVideo.title}
-                      style={{ border: 'none' }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
-                  </div>
-
-                  {/* 제목 — P1-C: 단일 id 보장 */}
-                  <div className="p-4 bg-gray-900">
-                    <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
-                      {selectedVideo.title}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
-        {/* 하단 쇼츠 6개 (2줄) — P2: relative 컨테이너로 모달 위치 기준 설정 */}
+        {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
-          <div className="relative" ref={shortsContainerRef}>
+          <div ref={shortsContainerRef}>
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
@@ -362,54 +326,6 @@ export default function YouTubeSection() {
                 </button>
               ))}
             </div>
-
-            {/* P2: 쇼츠 섹션 기준 모달 — 섹션 내 absolute 포지셔닝 */}
-            {selectedVideo && modalType === 'shorts' && (
-              <div
-                ref={modalRef}
-                className="fixed inset-0 bg-black/80 z-50 p-4 flex items-center justify-center"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={MODAL_TITLE_ID}
-                onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
-                onKeyDown={handleKeyDown}
-              >
-                {/* 쇼츠: 세로 모달 */}
-                <div className="relative w-full max-w-sm bg-black rounded-2xl overflow-hidden flex flex-col" style={{ height: 'min(80vh, calc(100vh - 2rem))', maxHeight: 'calc(100vh - 2rem)' }}>
-                  {/* 닫기 버튼 — 모달 열릴 때 자동 포커스 */}
-                  <button
-                    type="button"
-                    ref={closeButtonRef}
-                    onClick={closeModal}
-                    aria-label={yt.closeModal}
-                    className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    <X className="w-6 h-6 text-white" aria-hidden="true" />
-                  </button>
-
-                  {/* YouTube 임베드 플레이어 */}
-                  <div className="flex-1 overflow-hidden">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                      title={selectedVideo.title}
-                      style={{ border: 'none' }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
-                  </div>
-
-                  {/* 제목 */}
-                  <div className="p-3 bg-gray-900 flex-shrink-0">
-                    <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-xs md:text-sm line-clamp-2">
-                      {selectedVideo.title}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
@@ -426,6 +342,95 @@ export default function YouTubeSection() {
           </a>
         </div>
       </div>
+
+      {/* P3: Portal을 사용하여 모달을 body 최상위에 렌더 */}
+      {selectedVideo && createPortal(
+        <div
+          ref={modalRef}
+          className="fixed inset-0 bg-black/80 z-50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={MODAL_TITLE_ID}
+          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+          onKeyDown={handleKeyDown}
+        >
+          {/* 모달 컨테이너 - viewport 중앙에 고정 */}
+          <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 w-full max-w-4xl px-4 flex justify-center">
+          {modalType === 'video' ? (
+            // 일반 영상: 가로 모달
+            <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+              {/* 닫기 버튼 */}
+              <button
+                type="button"
+                ref={closeButtonRef}
+                onClick={closeModal}
+                aria-label={yt.closeModal}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                <X className="w-6 h-6 text-white" aria-hidden="true" />
+              </button>
+
+              {/* YouTube 임베드 플레이어 */}
+              <div className="aspect-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                  title={selectedVideo.title}
+                  style={{ border: 'none' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+
+              {/* 제목 */}
+              <div className="p-4 bg-gray-900">
+                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
+                  {selectedVideo.title}
+                </h3>
+              </div>
+            </div>
+          ) : (
+            // 쇼츠: 세로 모달
+            <div className="relative w-full max-w-sm bg-black rounded-2xl overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 2rem)', height: 'auto' }}>
+              {/* 닫기 버튼 */}
+              <button
+                type="button"
+                ref={closeButtonRef}
+                onClick={closeModal}
+                aria-label={yt.closeModal}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                <X className="w-6 h-6 text-white" aria-hidden="true" />
+              </button>
+
+              {/* YouTube 임베드 플레이어 */}
+              <div className="flex-1 overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                  title={selectedVideo.title}
+                  style={{ border: 'none' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+
+              {/* 제목 */}
+              <div className="p-3 bg-gray-900 flex-shrink-0">
+                <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-xs md:text-sm line-clamp-2">
+                  {selectedVideo.title}
+                </h3>
+              </div>
+            </div>
+          )}
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 }

@@ -393,7 +393,7 @@ export default function YouTubeSection() {
             </div>
           ) : (
             // 쇼츠: 세로 모달
-            <div className="relative w-full max-w-md bg-black rounded-2xl overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 2rem)', height: 'auto' }}>
+            <div className="relative w-full max-w-xs md:max-w-md bg-black rounded-2xl overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 2rem)', height: 'auto' }}>
               {/* 닫기 버튼 */}
               <button
                 type="button"

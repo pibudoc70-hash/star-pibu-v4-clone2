@@ -406,7 +406,7 @@ export default function YouTubeSection() {
               </button>
 
               {/* YouTube 임베드 플레이어 */}
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1 overflow-hidden" style={{ aspectRatio: '9/16' }}>
                 <iframe
                   width="100%"
                   height="100%"

@@ -1,11 +1,11 @@
 /**
- * EventTableMobile - 모바일 전용 이벤트 테이블
- * 
- * 시술명 + 가격을 한 줄 테이블로 표시
- * 각 행의 "상세보기" 버튼 클릭 시 모달에서 상세 정보 표시
+ * EventTableMobile - 모바일 전용 이벤트 카드
+ *
+ * 하나의 카드 안에 모든 시술 목록을 표시
+ * 각 시술 행의 "상세보기" 버튼 클릭 시 모달에서 상세 정보 표시
  */
 import { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, X, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -22,21 +22,16 @@ interface EventDetailModalProps {
   onClose: () => void;
 }
 
-// ── 상세 정보 모달 ────────────────────────────────────────────────────────────
+// ── 상세 정보 모달 ─────────────────────────────────────────────────────────────
 function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModalProps) {
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
-  
+
   if (!event) return null;
 
-  // priceRows 파싱
   let priceRows: PriceRow[] = [];
   if (event.priceRows) {
-    try {
-      priceRows = JSON.parse(event.priceRows) as PriceRow[];
-    } catch {
-      // JSON 파싱 실패 시 빈 배열 유지
-    }
+    try { priceRows = JSON.parse(event.priceRows) as PriceRow[]; } catch { /* noop */ }
   }
 
   const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
@@ -44,26 +39,32 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
   const phoneLabel = lang === "ko" ? "051-818-2300" : "+82-51-818-2300";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white w-full md:max-w-2xl rounded-t-3xl md:rounded-2xl max-h-[90vh] overflow-y-auto">
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="bg-white w-full rounded-t-3xl max-h-[88vh] overflow-y-auto">
+        {/* 핸들 바 */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-gray-300" />
+        </div>
+
         {/* 헤더 */}
-        <div className="sticky top-0 flex items-center justify-between p-5 md:p-6 border-b border-gray-200 bg-white rounded-t-3xl md:rounded-t-2xl">
-          <h3 className="text-lg md:text-xl font-semibold text-gray-900">
+        <div className="sticky top-0 flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white">
+          <h3 className="text-base font-bold text-gray-900 leading-tight">
             {getLocalizedText(event, "title")}
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
             aria-label="닫기"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X size={16} className="text-gray-600" />
           </button>
         </div>
 
         {/* 콘텐츠 */}
-        <div className="p-5 md:p-6 space-y-5">
+        <div className="p-5 space-y-4">
           {/* 이미지 */}
           {event.imageUrl && (
             <div className="rounded-xl overflow-hidden bg-gray-100" style={{ aspectRatio: "3/2" }}>
@@ -79,79 +80,77 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
           )}
 
           {/* 한 줄 카피 */}
-          <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+          <p className="text-sm text-gray-600 leading-relaxed">
             {getLocalizedText(event, "subtitle")}
           </p>
 
           {/* 상세 설명 */}
           {event.desc && (
-            <div>
-              <p className="text-xs md:text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-                {event.desc}
-              </p>
-            </div>
+            <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
+              {event.desc}
+            </p>
           )}
-
-          {/* 추가 콘텐츠 */}
           {event.content && (
-            <div>
-              <p className="text-xs md:text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-                {event.content}
-              </p>
-            </div>
+            <p className="text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">
+              {event.content}
+            </p>
           )}
 
           {/* 가격 정보 */}
-          <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-            <h4 className="font-semibold text-sm text-gray-900">가격 정보</h4>
-            {priceRows.length > 0 ? (
-              priceRows.map((row, idx) => (
-                <div key={idx} className="flex items-center justify-between">
-                  <span className="text-xs md:text-sm text-gray-600">{row.label}</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-sm md:text-base" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
-                      {row.discountPrice.toLocaleString()}원
+          <div className="rounded-xl overflow-hidden border border-gray-100">
+            <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">가격 안내</span>
+            </div>
+            <div className="divide-y divide-gray-100">
+              {priceRows.length > 0 ? (
+                priceRows.map((row, idx) => (
+                  <div key={idx} className="flex items-center justify-between px-4 py-3">
+                    <span className="text-xs text-gray-600">{row.label}</span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="font-bold text-sm" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                        {row.discountPrice.toLocaleString()}원
+                      </span>
+                      {row.normalPrice > 0 && (
+                        <span className="line-through text-xs text-gray-400">
+                          {row.normalPrice.toLocaleString()}원
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-between px-4 py-3">
+                  <span className="text-xs text-gray-600">{event.productName || "시술"}</span>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-bold text-sm" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                      {event.discountPrice.toLocaleString()}원
                     </span>
-                    {row.normalPrice > 0 && (
+                    {event.normalPrice > 0 && (
                       <span className="line-through text-xs text-gray-400">
-                        {row.normalPrice.toLocaleString()}원
+                        {event.normalPrice.toLocaleString()}원
                       </span>
                     )}
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="flex items-center justify-between">
-                <span className="text-xs md:text-sm text-gray-600">{event.productName || "시술"}</span>
-                <div className="flex items-baseline gap-2">
-                  <span className="font-bold text-sm md:text-base" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
-                    {event.discountPrice.toLocaleString()}원
-                  </span>
-                  {event.normalPrice > 0 && (
-                    <span className="line-through text-xs text-gray-400">
-                      {event.normalPrice.toLocaleString()}원
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* CTA 버튼 */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-2 pb-2">
             <a
               href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 px-4 py-3 font-semibold rounded-lg transition-all text-center text-sm"
+              className="flex-1 px-4 py-3 font-semibold rounded-xl text-center text-sm"
               style={{ background: chatBg, color: chatColor }}
             >
               {chatLabel}
             </a>
             <a
               href={phoneHref}
-              className="flex-1 px-4 py-3 font-medium rounded-lg transition-all text-center text-sm"
-              style={{ backgroundColor: "var(--brand-bg-alt, #F5F0EB)", color: "var(--brand-text-mid, #666666)" }}
+              className="flex-1 px-4 py-3 font-medium rounded-xl text-center text-sm border border-gray-200"
+              style={{ color: "var(--brand-text-mid, #666666)" }}
             >
               {phoneLabel}
             </a>
@@ -162,64 +161,86 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
   );
 }
 
-// ── 메인 테이블 컴포넌트 ────────────────────────────────────────────────────────────
+// ── 메인 카드 컴포넌트 ─────────────────────────────────────────────────────────
 export default function EventTableMobile({ events, getLocalizedText }: EventTableMobileProps) {
   const [selectedEvent, setSelectedEvent] = useState<SpecialEvent | null>(null);
 
   return (
     <>
-      {/* 테이블 */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b-2 border-gray-300">
-              <th className="text-left py-3 px-4 font-semibold text-gray-900">시술명</th>
-              <th className="text-right py-3 px-4 font-semibold text-gray-900">가격</th>
-              <th className="text-center py-3 px-2 font-semibold text-gray-900 w-12"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => {
-              // priceRows 파싱
-              let priceRows: PriceRow[] = [];
-              if (event.priceRows) {
-                try {
-                  priceRows = JSON.parse(event.priceRows) as PriceRow[];
-                } catch {
-                  // JSON 파싱 실패 시 빈 배열 유지
-                }
-              }
+      {/* 하나의 카드 안에 모든 시술 목록 */}
+      <div
+        className="rounded-2xl overflow-hidden border"
+        style={{
+          borderColor: "var(--brand-gold-light, #E8D9C4)",
+          background: "var(--brand-bg-card, #FDFAF7)",
+        }}
+      >
+        {/* 카드 헤더 */}
+        <div
+          className="flex items-center gap-2 px-5 py-4 border-b"
+          style={{
+            borderColor: "var(--brand-gold-light, #E8D9C4)",
+            background: "linear-gradient(135deg, rgba(196,168,130,0.12) 0%, rgba(196,168,130,0.04) 100%)",
+          }}
+        >
+          <Sparkles size={14} style={{ color: "var(--brand-gold, #C4A882)" }} />
+          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--brand-gold, #C4A882)" }}>
+            Special Event
+          </span>
+        </div>
 
-              const displayPrice =
-                priceRows.length > 0
-                  ? priceRows[0].discountPrice
-                  : event.discountPrice;
+        {/* 시술 목록 */}
+        <div className="divide-y" style={{ borderColor: "var(--brand-gold-light, #E8D9C4)" }}>
+          {events.map((event) => {
+            let priceRows: PriceRow[] = [];
+            if (event.priceRows) {
+              try { priceRows = JSON.parse(event.priceRows) as PriceRow[]; } catch { /* noop */ }
+            }
+            const displayPrice =
+              priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
+            const normalPrice =
+              priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
 
-              return (
-                <tr
-                  key={event.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="py-4 px-4 text-gray-900 font-medium">
+            return (
+              <div
+                key={event.id}
+                className="flex items-center gap-3 px-5 py-4 active:bg-gray-50 transition-colors"
+              >
+                {/* 시술명 */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
                     {getLocalizedText(event, "title")}
-                  </td>
-                  <td className="py-4 px-4 text-right font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
-                    {displayPrice.toLocaleString()}원
-                  </td>
-                  <td className="py-4 px-2 text-center">
-                    <button
-                      onClick={() => setSelectedEvent(event)}
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-200 transition-colors"
-                      aria-label={`${getLocalizedText(event, "title")} 상세보기`}
-                    >
-                      <ChevronRight size={18} className="text-gray-600" />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                  </p>
+                  <div className="flex items-baseline gap-1.5 mt-0.5">
+                    <span className="text-sm font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                      {displayPrice.toLocaleString()}원
+                    </span>
+                    {normalPrice > 0 && (
+                      <span className="line-through text-xs text-gray-400">
+                        {normalPrice.toLocaleString()}원
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* 상세보기 버튼 */}
+                <button
+                  onClick={() => setSelectedEvent(event)}
+                  className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-all active:scale-95"
+                  style={{
+                    borderColor: "var(--brand-gold-light, #E8D9C4)",
+                    color: "var(--brand-gold-deep, #A8895E)",
+                    background: "rgba(196,168,130,0.08)",
+                  }}
+                  aria-label={`${getLocalizedText(event, "title")} 자세히 보기`}
+                >
+                  상세
+                  <ChevronRight size={12} />
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* 상세 정보 모달 */}

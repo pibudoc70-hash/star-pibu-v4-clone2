@@ -188,7 +188,7 @@ export default function SpecialEventSection() {
           <EventEmptyState lang={lang} />
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 items-start">
               {visibleEvents.map((event) => (
                 <EventCard
                   key={event.id}

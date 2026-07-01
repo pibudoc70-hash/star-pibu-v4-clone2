@@ -159,7 +159,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
 
       {/* 축소 상태 */}
       {!isExpanded ? (
-        <div className="flex flex-col flex-1" style={{ padding: "1.5rem 1.5rem 1.25rem" }}>
+        <div className="flex flex-col flex-1" style={{ padding: "1rem 1.25rem 0.875rem" }}>
           <EventCardHeader
             event={event}
             priceRows={priceRows}

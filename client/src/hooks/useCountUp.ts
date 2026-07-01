@@ -31,13 +31,20 @@ export function useCountUp(
   triggerRef?: React.RefObject<Element | null>,
   lang?: string
 ): { value: string; isDone: boolean } {
-  const [displayValue, setDisplayValue] = useState("0");
+  // [P0-FIX] SSR/초기 렌더링에서 최종값을 바로 표시 (0값 제거)
+  // 클라이언트 하이드레이션 후 애니메이션 시작 시 0부터 카운팅
+  const numericValue =
+    typeof targetValue === "number"
+      ? targetValue
+      : parseInt(String(targetValue).replace(/[^0-9]/g, ""), 10);
+  const locale = lang ? (LANG_TO_LOCALE[lang] ?? "ko-KR") : "ko-KR";
+  const initialDisplayValue = isNaN(numericValue) ? String(targetValue) : numericValue.toLocaleString(locale);
+  
+  const [displayValue, setDisplayValue] = useState(initialDisplayValue);
   const [isDone, setIsDone] = useState(false);
   const rafRef = useRef<number | null>(null);
   const delayTimerRef = useRef<NodeJS.Timeout | null>(null);
   const hasAnimatedRef = useRef(false);
-
-  const locale = lang ? (LANG_TO_LOCALE[lang] ?? "ko-KR") : "ko-KR";
 
   useEffect(() => {
     const numericValue =
@@ -51,8 +58,9 @@ export function useCountUp(
       return;
     }
 
-    // 초기값 명시적으로 0 설정
-    setDisplayValue("0");
+    // [P0-FIX] 초기값: 최종값으로 설정 (0 아님)
+    // 애니메이션 시작 시 0부터 카운팅하여 최종값까지 도달
+    setDisplayValue(numericValue.toLocaleString(locale));
     setIsDone(false);
 
     const startAnimation = () => {
@@ -68,6 +76,7 @@ export function useCountUp(
 
           // easeOutQuad: 선형에 가깝고 끝에서 자연스럽게 마무리
           const eased = easeOutQuad(rawProgress);
+          // [P0-FIX] 0부터 시작하여 최종값까지 카운팅
           const currentValue = Math.round(numericValue * eased);
 
           // 천 단위 콤마 포맷 (locale-aware)

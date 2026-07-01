@@ -107,14 +107,15 @@ export default function FloatingCTA() {
           pointerEvents: visible ? "auto" : "none",
         }}
       >
-        {/* Tertiary: 전화 — 최소화, 절제된 톤 */}
+        {/* Tertiary: 전화 — 높이 통일, 존재감 강화 */}
         <a
           href={telHref}
-          className="flex items-center gap-2 pr-4 pl-3 h-9 rounded-full transition-all duration-300 hover:scale-105 floating-desktop-tel"
+          className="flex items-center gap-2.5 pr-4 pl-3 h-11 rounded-full shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg floating-desktop-tel"
+          style={{ background: "rgba(196,168,130,0.15)", borderLeft: "2px solid rgba(196,168,130,0.4)" }}
           aria-label={fc.callAria}
         >
-          <Phone size={14} className="floating-desktop-tel-icon flex-shrink-0" />
-          <span className="floating-desktop-tel-label">{fc.call}</span>
+          <Phone size={15} className="floating-desktop-tel-icon flex-shrink-0 text-yellow-600" />
+          <span className="floating-desktop-tel-label text-xs font-normal tracking-wide text-yellow-700">{fc.call}</span>
         </a>
 
         {/* Secondary: 메신저 (카카오/LINE/WeChat) */}
@@ -141,16 +142,16 @@ export default function FloatingCTA() {
           )}
         </div>
 
-        {/* Primary: 예약 — 가장 눈에 띄엄, 최하단 */}
+        {/* Primary: 예약 — 높이 통일 (h-11), 최하단 */}
         <a
           href={reserveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2.5 pr-5 pl-4 h-12 rounded-full transition-all hover:scale-105 floating-desktop-reserve"
+          className="flex items-center gap-2.5 pr-5 pl-4 h-11 rounded-full shadow-md transition-all hover:scale-105 hover:shadow-lg floating-desktop-reserve"
           aria-label={fc.reserveAria}
         >
-          <Calendar size={17} className="text-white flex-shrink-0" />
-          <span className="text-white text-sm font-normal tracking-wide">{fc.reserve}</span>
+          <Calendar size={16} className="text-white flex-shrink-0" />
+          <span className="text-white text-xs font-normal tracking-wide">{fc.reserve}</span>
         </a>
       </div>
     </>

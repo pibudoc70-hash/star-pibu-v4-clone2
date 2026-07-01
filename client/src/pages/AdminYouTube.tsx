@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Plus, Trash2, Edit2 } from 'lucide-react';
+import { Plus, Trash2, Edit2, Video, Zap } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useLocation } from 'wouter';
@@ -14,10 +14,13 @@ interface YouTubeVideo {
   isActive: string;
 }
 
+type TabType = 'all' | 'video' | 'shorts';
+
 export default function AdminYouTube() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<TabType>('all');
   const [formData, setFormData] = useState({
     title: '',
     videoId: '',
@@ -95,11 +98,66 @@ export default function AdminYouTube() {
       type: video.type,
       sortOrder: video.sortOrder,
     });
+    // 수정 시 해당 타입 탭으로 자동 전환
+    setActiveTab(video.type);
   };
 
   const handleCancel = () => {
     setEditingId(null);
     setFormData({ title: '', videoId: '', type: 'video', sortOrder: 0 });
+  };
+
+  // 탭별 필터링
+  const filteredVideos = (videos as YouTubeVideo[]).filter((v) => {
+    if (activeTab === 'all') return true;
+    return v.type === activeTab;
+  });
+
+  const videoCount = (videos as YouTubeVideo[]).filter((v) => v.type === 'video').length;
+  const shortsCount = (videos as YouTubeVideo[]).filter((v) => v.type === 'shorts').length;
+
+  const tabs: { key: TabType; label: string; count: number; icon: React.ReactNode; color: string }[] = [
+    {
+      key: 'all',
+      label: '전체',
+      count: (videos as YouTubeVideo[]).length,
+      icon: null,
+      color: 'blue',
+    },
+    {
+      key: 'video',
+      label: '일반 영상',
+      count: videoCount,
+      icon: <Video size={15} />,
+      color: 'indigo',
+    },
+    {
+      key: 'shorts',
+      label: '쇼츠',
+      count: shortsCount,
+      icon: <Zap size={15} />,
+      color: 'rose',
+    },
+  ];
+
+  const tabActiveClass = (key: TabType, color: string) => {
+    if (activeTab !== key) return 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300';
+    const colorMap: Record<string, string> = {
+      blue: 'border-blue-600 text-blue-600',
+      indigo: 'border-indigo-600 text-indigo-600',
+      rose: 'border-rose-500 text-rose-500',
+    };
+    return colorMap[color] ?? 'border-blue-600 text-blue-600';
+  };
+
+  const badgeClass = (key: TabType, color: string) => {
+    if (activeTab !== key) return 'bg-gray-100 text-gray-500';
+    const colorMap: Record<string, string> = {
+      blue: 'bg-blue-100 text-blue-700',
+      indigo: 'bg-indigo-100 text-indigo-700',
+      rose: 'bg-rose-100 text-rose-600',
+    };
+    return colorMap[color] ?? 'bg-blue-100 text-blue-700';
   };
 
   return (
@@ -204,8 +262,29 @@ export default function AdminYouTube() {
 
         {/* 영상 목록 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* 탭 헤더 */}
+          <div className="border-b border-gray-200 px-6">
+            <nav className="-mb-px flex gap-6" aria-label="영상 타입 탭">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`flex items-center gap-1.5 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${tabActiveClass(tab.key, tab.color)}`}
+                >
+                  {tab.icon}
+                  {tab.label}
+                  <span className={`ml-1 rounded-full px-2 py-0.5 text-xs font-semibold ${badgeClass(tab.key, tab.color)}`}>
+                    {tab.count}
+                  </span>
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {/* 테이블 */}
           <table className="w-full">
-            <thead className="bg-gray-100 border-b">
+            <thead className="bg-gray-50 border-b">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                   제목
@@ -213,60 +292,76 @@ export default function AdminYouTube() {
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                   영상 ID
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 w-24">
                   타입
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                  정렬 순서
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 w-20">
+                  정렬
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 w-32">
                   작업
                 </th>
               </tr>
             </thead>
             <tbody>
-              {videos.map((video: YouTubeVideo) => (
-                <tr key={video.id} className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {video.title}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {video.videoId}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {video.type === 'video' ? '일반 영상' : '쇼츠'}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {video.sortOrder}
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <div className="flex gap-2">
-                      <button type="button"
-                        onClick={() => handleEdit(video)}
-                        className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-                      >
-                        <Edit2 size={16} />
-                        수정
-                      </button>
-                      <button type="button"
-                        onClick={() => {
-                          if (
-                            confirm(
-                              '정말 이 영상을 삭제하시겠습니까?'
-                            )
-                          ) {
-                            deleteMutation.mutate({ id: video.id });
-                          }
-                        }}
-                        className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
-                      >
-                        <Trash2 size={16} />
-                        삭제
-                      </button>
-                    </div>
+              {filteredVideos.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-gray-400 text-sm">
+                    {activeTab === 'all' ? '등록된 영상이 없습니다.' :
+                     activeTab === 'video' ? '등록된 일반 영상이 없습니다.' :
+                     '등록된 쇼츠가 없습니다.'}
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredVideos.map((video) => (
+                  <tr key={video.id} className="border-b hover:bg-gray-50">
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {video.title}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500 font-mono">
+                      {video.videoId}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      {video.type === 'video' ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">
+                          <Video size={11} />
+                          일반
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-600">
+                          <Zap size={11} />
+                          쇼츠
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {video.sortOrder}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <div className="flex gap-2">
+                        <button type="button"
+                          onClick={() => handleEdit(video)}
+                          className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                        >
+                          <Edit2 size={14} />
+                          수정
+                        </button>
+                        <button type="button"
+                          onClick={() => {
+                            if (confirm('정말 이 영상을 삭제하시겠습니까?')) {
+                              deleteMutation.mutate({ id: video.id });
+                            }
+                          }}
+                          className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200"
+                        >
+                          <Trash2 size={14} />
+                          삭제
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

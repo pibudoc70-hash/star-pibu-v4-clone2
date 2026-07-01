@@ -21,6 +21,7 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedEvent, type SpecialEvent } from "@/hooks/useLocalizedEvent";
 import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
+import EventTableMobile from "@/components/events/EventTableMobile";
 import { parseEventListError } from "@/lib/errorMessages";
 
 // ── Empty State ───────────────────────────────────────────────────────────────
@@ -188,7 +189,18 @@ export default function SpecialEventSection() {
           <EventEmptyState lang={lang} />
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
+        ) : (
+          <>
+            {/* 모바일: 테이블 형식 */}
+            <div className="md:hidden">
+              <EventTableMobile
+                events={specialEvents as SpecialEvent[]}
+                getLocalizedText={getLocalizedText}
+              />
+            </div>
+
+            {/* 데스크톱: 카드 그리드 */}
+            <div className="hidden md:grid grid-cols-3 gap-12 items-start">
               {visibleEvents.map((event) => (
                 <EventCard
                   key={event.id}
@@ -198,7 +210,7 @@ export default function SpecialEventSection() {
               ))}
             </div>
             {hasMoreEvents && (
-              <div className="flex justify-center mt-10">
+              <div className="hidden md:flex justify-center mt-10">
                 <button
                   type="button"
                   onClick={() => setShowMore(!showMore)}
@@ -219,6 +231,7 @@ export default function SpecialEventSection() {
                 </button>
               </div>
             )}
+          </>
           </>
         )}
       </div>

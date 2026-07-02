@@ -19,6 +19,25 @@ import { logger } from "../_core/logger";
 import { withCache, invalidateCache } from "../_core/cache";
 import { TRPCError } from "@trpc/server";
 
+/** 팝업 다국어 필드 공통 zod 스키마 */
+const popupI18nFields = {
+  titleEn: z.string().max(100).default(""),
+  titleJa: z.string().max(100).default(""),
+  titleZh: z.string().max(100).default(""),
+  subtitleEn: z.string().max(100).default(""),
+  subtitleJa: z.string().max(100).default(""),
+  subtitleZh: z.string().max(100).default(""),
+  descEn: z.string().optional(),
+  descJa: z.string().optional(),
+  descZh: z.string().optional(),
+  badgeEn: z.string().max(100).default(""),
+  badgeJa: z.string().max(100).default(""),
+  badgeZh: z.string().max(100).default(""),
+  noteEn: z.string().max(200).default(""),
+  noteJa: z.string().max(200).default(""),
+  noteZh: z.string().max(200).default(""),
+};
+
 export const popupRouter = router({
   // 공개: 활성화된 이벤트 목록 조회 (유효기간 + 언어 필터링) — 2분 캐시
   list: publicProcedure
@@ -38,21 +57,32 @@ export const popupRouter = router({
     .input(z.object({
       tab: z.string().min(1).max(50),
       badge: z.string().max(100).default(""),
+      title: z.string().max(100).default(""),
+      subtitle: z.string().max(100).default(""),
+      desc: z.string().default(""),
+      note: z.string().max(200).default(""),
+      priceItems: z.string().default("[]"),
       imageUrl: z.string().default(""),
       clickUrl: z.string().default(""),
+      accent: z.string().max(20).default("#4A6FA5"),
+      accentLight: z.string().max(20).default("#EEF4FF"),
       sortOrder: z.number().default(0),
       isActive: z.enum(["0", "1"]).default("1"),
       startAt: z.number().nullable().optional(),
       endAt: z.number().nullable().optional(),
       targetLang: z.enum(["all", "ko", "en", "ja", "zh"]).default("all"),
+      ...popupI18nFields,
     }))
     .mutation(async ({ input }) => {
       try {
-        const result = await createPopup({ ...input, title: input.badge || "Event", subtitle: "", desc: "", note: "", priceItems: "[]" });
+        const result = await createPopup({
+          ...input,
+          title: input.title || input.badge || "Event",
+        });
         invalidateCache("popup:");
         return result;
       } catch (error) {
-        logger.error("Popup", "팩업 생성 오류", error);
+        logger.error("Popup", "팝업 생성 오류", error);
         throw error;
       }
     }),
@@ -63,13 +93,35 @@ export const popupRouter = router({
       id: z.number(),
       tab: z.string().min(1).max(50).optional(),
       badge: z.string().max(100).optional(),
+      title: z.string().max(100).optional(),
+      subtitle: z.string().max(100).optional(),
+      desc: z.string().optional(),
+      note: z.string().max(200).optional(),
+      priceItems: z.string().optional(),
       imageUrl: z.string().optional(),
       clickUrl: z.string().optional(),
+      accent: z.string().max(20).optional(),
+      accentLight: z.string().max(20).optional(),
       sortOrder: z.number().optional(),
       isActive: z.enum(["0", "1"]).optional(),
       startAt: z.number().nullable().optional(),
       endAt: z.number().nullable().optional(),
       targetLang: z.enum(["all", "ko", "en", "ja", "zh"]).optional(),
+      titleEn: z.string().max(100).optional(),
+      titleJa: z.string().max(100).optional(),
+      titleZh: z.string().max(100).optional(),
+      subtitleEn: z.string().max(100).optional(),
+      subtitleJa: z.string().max(100).optional(),
+      subtitleZh: z.string().max(100).optional(),
+      descEn: z.string().optional(),
+      descJa: z.string().optional(),
+      descZh: z.string().optional(),
+      badgeEn: z.string().max(100).optional(),
+      badgeJa: z.string().max(100).optional(),
+      badgeZh: z.string().max(100).optional(),
+      noteEn: z.string().max(200).optional(),
+      noteJa: z.string().max(200).optional(),
+      noteZh: z.string().max(200).optional(),
     }))
     .mutation(async ({ input }) => {
       const { id, ...rest } = input;

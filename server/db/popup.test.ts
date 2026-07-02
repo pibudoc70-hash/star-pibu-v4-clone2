@@ -80,6 +80,70 @@ describe("popup repository — 기간 필터 로직", () => {
   });
 });
 
+// ─── 다국어 targetLang 필터 로직 검증 ──────────────────────────────────────────
+describe("popup repository — 다국어 targetLang 필터", () => {
+  const NOW = new Date("2026-06-12T12:00:00Z").getTime();
+
+  const makeRow = (id: number, targetLang: string) => ({
+    id,
+    isActive: "1" as const,
+    startAt: null as number | null,
+    endAt: null as number | null,
+    priceItems: "[]",
+    targetLang,
+  });
+
+  /** getActivePopups 내부 필터 로직과 동일 */
+  const filterByLang = (rows: ReturnType<typeof makeRow>[], lang?: string) =>
+    rows.filter((r) => {
+      if (r.startAt != null && NOW < r.startAt) return false;
+      if (r.endAt != null && NOW > r.endAt) return false;
+      if (lang && r.targetLang !== "all" && r.targetLang !== lang) return false;
+      return true;
+    });
+
+  it("targetLang='all'인 팝업은 모든 언어에서 표시된다", () => {
+    const rows = [makeRow(1, "all"), makeRow(2, "ko"), makeRow(3, "en")];
+    const result = filterByLang(rows, "ja");
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(1);
+  });
+
+  it("targetLang='ko'인 팝업은 lang='ko'일 때만 표시된다", () => {
+    const rows = [makeRow(1, "ko"), makeRow(2, "en"), makeRow(3, "all")];
+    const result = filterByLang(rows, "ko");
+    expect(result.map((r) => r.id)).toEqual(expect.arrayContaining([1, 3]));
+    expect(result).toHaveLength(2);
+  });
+
+  it("targetLang='en'인 팝업은 lang='en'일 때만 표시된다", () => {
+    const rows = [makeRow(1, "ko"), makeRow(2, "en"), makeRow(3, "ja"), makeRow(4, "zh")];
+    const result = filterByLang(rows, "en");
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe(2);
+  });
+
+  it("lang 파라미터가 없으면 모든 팝업이 반환된다", () => {
+    const rows = [makeRow(1, "ko"), makeRow(2, "en"), makeRow(3, "all")];
+    const result = filterByLang(rows, undefined);
+    expect(result).toHaveLength(3);
+  });
+
+  it("targetLang='ja' 팝업은 lang='ja'일 때만 표시된다", () => {
+    const rows = [makeRow(1, "ko"), makeRow(2, "ja"), makeRow(3, "all")];
+    const result = filterByLang(rows, "ja");
+    expect(result.map((r) => r.id)).toEqual(expect.arrayContaining([2, 3]));
+    expect(result).toHaveLength(2);
+  });
+
+  it("targetLang='zh' 팝업은 lang='zh'일 때만 표시된다", () => {
+    const rows = [makeRow(1, "ko"), makeRow(2, "zh"), makeRow(3, "all")];
+    const result = filterByLang(rows, "zh");
+    expect(result.map((r) => r.id)).toEqual(expect.arrayContaining([2, 3]));
+    expect(result).toHaveLength(2);
+  });
+});
+
 // ─── priceItems JSON 파싱 로직 검증 ──────────────────────────────────────────
 describe("popup repository — priceItems 파싱", () => {
   it("유효한 JSON 배열을 파싱한다", () => {

@@ -40,19 +40,58 @@ export interface PopupEventItem {
   startAt: number | null;
   endAt: number | null;
   targetLang: "all" | "ko" | "en" | "ja" | "zh";
+  // 다국어 콘텐츠 필드
+  titleEn?: string | null;
+  titleJa?: string | null;
+  titleZh?: string | null;
+  subtitleEn?: string | null;
+  subtitleJa?: string | null;
+  subtitleZh?: string | null;
+  descEn?: string | null;
+  descJa?: string | null;
+  descZh?: string | null;
+  badgeEn?: string | null;
+  badgeJa?: string | null;
+  badgeZh?: string | null;
+  noteEn?: string | null;
+  noteJa?: string | null;
+  noteZh?: string | null;
 }
 
-// ── 팝업 폼 상태 ──────────────────────────────────────────────────────────────
+// ── 팝업 폼 상태 ──────────────────────────────────────────────────────────────────────────────────
 export interface PopupFormState {
   tab: string;
   badge: string;
+  title: string;
+  subtitle: string;
+  desc: string;
+  note: string;
+  priceItems: string;
   imageUrl: string;
   clickUrl: string;
+  accent: string;
+  accentLight: string;
   sortOrder: number;
   isActive: "0" | "1";
   startAt: number | null;
   endAt: number | null;
   targetLang: "all" | "ko" | "en" | "ja" | "zh";
+  // 다국어 콘텐츠 필드
+  titleEn: string;
+  titleJa: string;
+  titleZh: string;
+  subtitleEn: string;
+  subtitleJa: string;
+  subtitleZh: string;
+  descEn: string;
+  descJa: string;
+  descZh: string;
+  badgeEn: string;
+  badgeJa: string;
+  badgeZh: string;
+  noteEn: string;
+  noteJa: string;
+  noteZh: string;
 }
 
 // ── 이벤트 목록 아이템 (trpc.events.list 반환 타입과 일치) ──────────────────────

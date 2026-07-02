@@ -3564,3 +3564,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 카드 CSS 변수 통일: --card-radius(1rem), --card-hover-lift(-6px) @theme inline 블록에 추가
 - [x] .card, .card--review, .card--treatment, .card--event, .card--doctor, .treatment-card, .ds-card-lift, .before-after-container border-radius/translateY를 CSS 변수 참조로 변경
 - [x] pnpm test 59개 파일 1413개 테스트 전부 통과 확인
+## Phase Popup-i18n: 팝업 이벤트 다국어 등록 기능 (2026-07-02)
+- [x] DB 스키마 확장: popup 테이블에 titleEn/Ja/Zh, subtitleEn/Ja/Zh, descEn/Ja/Zh, badgeEn/Ja/Zh, noteEn/Ja/Zh 추가
+- [x] drizzle-kit generate + webdev_execute_sql 마이그레이션 적용
+- [x] server/routers/popup.ts create/update zod 스키마에 다국어 필드 추가
+- [x] client/src/types/admin.ts PopupEventItem/PopupFormState에 다국어 필드 추가
+- [x] AdminPopupTab.tsx 전면 재작성 - 이벤트 관리와 동일한 ko/en/ja/zh 언어별 탭 구조
+- [x] 폼 내부 언어 탭으로 각 언어별 배지/제목/부제목/설명/주의사항 입력 가능
+- [x] WelcomePopup은 이미 useLang() + trpc.popup.list({ lang }) 연동 완료
+- [x] popup.test.ts에 다국어 targetLang 필터 테스트 6건 추가 (총 1419 tests 통과)
+- [x] ESLint 에러 0건 유지

@@ -303,7 +303,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   ))}
                 </select>
                 <p className="text-xs text-[#9CA3AF] mt-1">
-                  "전체 언어"를 선택하면 모든 언어 페이지에 표시됩니다.
+                  &quot;전체 언어&quot;를 선택하면 모든 언어 페이지에 표시됩니다.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3">

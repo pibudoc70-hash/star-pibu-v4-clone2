@@ -131,7 +131,7 @@ export default function ReviewsSection() {
                     <div className="review-card card card--review w-full min-w-0">
                       <Quote size={28} className="review-quote-icon" />
                       <p className="text-sm leading-relaxed mb-4 text-brand">
-                        "{r.text}"
+                        {`"${r.text}"`}
                       </p>
                       <div className="flex items-center justify-between">
                         <div>
@@ -188,7 +188,7 @@ export default function ReviewsSection() {
                   <div className="review-card card card--review flex-shrink-0 w-full min-w-0">
                     <Quote size={28} className="review-quote-icon" />
                     <p className="text-sm leading-relaxed mb-4 text-brand">
-                      "{r.text}"
+                      {`"${r.text}"`}
                     </p>
                     <div className="flex items-center justify-between">
                       <div>

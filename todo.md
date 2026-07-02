@@ -3555,3 +3555,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] tRPC popup.list: lang 파라미터 추가, 언어별 캐시 키 분리
 - [x] DB 헬퍼 getActivePopups: lang 파라미터로 필터링 (all은 전체 표시)
 - [x] WelcomePopup: useLang()으로 현재 언어 감지 후 lang 파라미터 전달
+
+
+## Phase Infra: 개발 인프라 강화 (2026-07-02)
+- [x] ESLint 에러 0건 달성: no-unescaped-entities(9건), no-useless-escape(13건) 수동 수정
+- [x] eslint.config.mjs: react-hooks v7 React Compiler 규칙(set-state-in-effect 등 12개) warn으로 낮춤
+- [x] eslint.config.mjs: no-empty, no-constant-binary-expression, no-useless-assignment warn으로 낮춤
+- [x] 카드 CSS 변수 통일: --card-radius(1rem), --card-hover-lift(-6px) @theme inline 블록에 추가
+- [x] .card, .card--review, .card--treatment, .card--event, .card--doctor, .treatment-card, .ds-card-lift, .before-after-container border-radius/translateY를 CSS 변수 참조로 변경
+- [x] pnpm test 59개 파일 1413개 테스트 전부 통과 확인

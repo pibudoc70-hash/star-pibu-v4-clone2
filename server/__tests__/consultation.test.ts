@@ -79,7 +79,7 @@ describe("상담 폼 입력 유효성 검증", () => {
   it("이름이 비어있으면 유효성 검사에 실패해야 한다", () => {
     const schema = z.object({
       name: z.string().min(1, "이름을 입력해주세요").max(50),
-      phone: z.string().min(9).max(20).regex(/^[0-9\-\s\+\(\)]+$/),
+      phone: z.string().min(9).max(20).regex(/^[0-9\-\s+()]+$/),
       concern: z.string().min(1).max(200),
       message: z.string().min(5).max(2000),
       privacyAgreed: z.boolean().refine((v: boolean) => v === true),
@@ -98,7 +98,7 @@ describe("상담 폼 입력 유효성 검증", () => {
   });
 
   it("연락처 형식이 잘못되면 유효성 검사에 실패해야 한다", () => {
-    const phoneSchema = z.string().min(9).max(20).regex(/^[0-9\-\s\+\(\)]+$/);
+    const phoneSchema = z.string().min(9).max(20).regex(/^[0-9\-\s+()]+$/);
     expect(phoneSchema.safeParse("abc-def-ghij").success).toBe(false);
     expect(phoneSchema.safeParse("010-1234-5678").success).toBe(true);
   });

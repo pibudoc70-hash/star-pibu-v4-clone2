@@ -57,7 +57,7 @@ const submitSchema = z.object({
     .string()
     .min(9, "연락처를 입력해주세요")
     .max(20)
-    .regex(/^[0-9\-\s\+\(\)]+$/, "올바른 연락처 형식이 아닙니다"),
+    .regex(/^[0-9\-\s+()]+$/, "올바른 연락처 형식이 아닙니다"),
   concern: z.string().min(1, "희망 시술 또는 고민 부위를 선택해주세요").max(200),
   message: z.string().min(5, "상담 내용을 5자 이상 입력해주세요").max(2000),
   privacyAgreed: z.boolean().refine((v) => v === true, "개인정보 수집에 동의해주세요"),
@@ -95,7 +95,7 @@ export const consultationRouter = router({
       }
 
       // 3. Rate limit — 연락처
-      const phoneNorm = input.phone.replace(/[\s\-\(\)]/g, "");
+      const phoneNorm = input.phone.replace(/[\s\-()]/g, "");
       const phoneCount = await countConsultationByPhone(phoneNorm, RATE_WINDOW_MS);
       if (phoneCount >= MAX_BY_PHONE) {
         throw new TRPCError({

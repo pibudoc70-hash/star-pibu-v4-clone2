@@ -103,6 +103,9 @@
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
   --font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 */
   --font-heading-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;          /* 한글 섹션 헤딩 */
+  /* ── Card Design Tokens ── */
+  --card-radius: 1rem;          /* 카드 공통 border-radius */
+  --card-hover-lift: -6px;      /* 카드 hover translateY */
 }
 
 :root {
@@ -364,7 +367,7 @@
 
   .treatment-card {
     background: var(--brand-bg, #FAF8F5); /* 웹 화이트 → 브랜드 웹 뉴트랄 */
-    border-radius: 0.875rem;
+    border-radius: var(--card-radius, 1rem);
     overflow: hidden;
     box-shadow: 0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04);
     transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
@@ -391,14 +394,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 0.875rem;
+    border-radius: var(--card-radius, 1rem);
     background: linear-gradient(160deg, color-mix(in srgb, var(--color-gold-primary) 3%, transparent) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.32s ease;
     pointer-events: none;
   }
   .treatment-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(var(--card-hover-lift, -6px));
     box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0,0,0,0.07);
     border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
   }
@@ -409,7 +412,7 @@
     opacity: 1;
   }
   .treatment-card:active {
-    transform: translateY(-3px);
+    transform: translateY(calc(var(--card-hover-lift, -6px) / 2));
     transition-duration: 0.12s;
   }
   /* [R17-P1-2] focus-visible 링: 키보드 네비게이션 시리는 시각적 포커스 표시 */
@@ -589,7 +592,7 @@
   .before-after-container {
     position: relative;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: var(--card-radius, 1rem);
     cursor: ew-resize;
   }
 
@@ -2188,7 +2191,7 @@
   box-shadow: 0 4px 20px rgba(31, 58, 95, 0.15);
 }
 .ds-card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 2px));
   box-shadow: 0 16px 48px rgba(31, 58, 95, 0.3);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2305,7 +2308,7 @@
 .card {
   background: var(--brand-bg, #FAF8F5);
   border: 1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
-  border-radius: 0.875rem;
+  border-radius: var(--card-radius, 1rem);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04);
   transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
@@ -2332,7 +2335,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 0.875rem;
+  border-radius: var(--card-radius, 1rem);
   background: linear-gradient(160deg, color-mix(in srgb, var(--color-gold-primary) 3%, transparent) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.32s ease;
@@ -2340,7 +2343,7 @@
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(var(--card-hover-lift, -6px));
   box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07);
   border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
 }
@@ -2354,7 +2357,7 @@
 }
 
 .card:active {
-  transform: translateY(-3px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) / 2));
   transition-duration: 0.12s;
 }
 
@@ -2366,14 +2369,14 @@
 
 /* .card--review: 리뷰 카드 변형 (높은 패딩, 상단 강조 테두리) */
 .card--review {
-  border-radius: 1.125rem;
+  border-radius: calc(var(--card-radius, 1rem) + 0.125rem);
   padding: 2rem;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
   border-top: 2px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent);
 }
 
 .card--review:hover {
-  transform: translateY(-5px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 1px));
   box-shadow: 0 16px 44px color-mix(in srgb, var(--color-gold-primary) 15%, transparent), 0 4px 14px rgba(0, 0, 0, 0.06);
   border-top-color: color-mix(in srgb, var(--color-gold-primary) 70%, transparent);
 }
@@ -2385,24 +2388,24 @@
   backface-visibility: hidden;
 }
 .card--treatment:hover {
-  transform: translateY(-6px);
+  transform: translateY(var(--card-hover-lift, -6px));
   box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07);
   border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
 }
 /* .card--event: 이벤트 카드 변형 (오프화이트 배경, 넓은 radius) */
 .card--event {
   background: var(--brand-bg-alt, #F5F0EB);
-  border-radius: 1.25rem;
+  border-radius: calc(var(--card-radius, 1rem) + 0.25rem);
   overflow: hidden;
 }
 .card--event:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 2px));
   box-shadow: 0 16px 40px color-mix(in srgb, var(--color-gold-primary) 16%, transparent), 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 /* .card--doctor: 의사 카드 변형 (dr-panel-card 별칭 — 하위 호환) */
 .card--doctor {
   background: white;
-  border-radius: 1.5rem;
+  border-radius: calc(var(--card-radius, 1rem) + 0.5rem);
   overflow: hidden;
   box-shadow: 0 24px 72px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.07);
 }

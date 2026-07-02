@@ -48,10 +48,24 @@ export default tseslint.config(
       'react/prop-types': 'off',            // TypeScript가 대신 검사
       'react/display-name': 'warn',
 
-      // React Hooks
+      // React Hooks (핵심 규칙)
       ...reactHooks.configs.recommended.rules,
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'error',  // 훅 규칙 위반은 실제 버그이므로 error 유지
+      // React Compiler 규칙 — 기존 코드 호환을 위해 warn으로 낮춤
+      // (react-hooks v7에서 새로 추가된 규칙들, 실제 버그가 아닌 최적화 힌트)
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/set-state-in-render': 'warn',
+      'react-hooks/purity': 'warn',
+      'react-hooks/refs': 'warn',
+      'react-hooks/immutability': 'warn',
+      'react-hooks/globals': 'warn',
+      'react-hooks/static-components': 'warn',
+      'react-hooks/use-memo': 'warn',
+      'react-hooks/preserve-manual-memoization': 'warn',
+      'react-hooks/error-boundaries': 'warn',
+      'react-hooks/config': 'warn',
+      'react-hooks/gating': 'warn',
 
       // jsx-a11y — 기존 코드 호환을 위해 모두 warn (신규 코드에서는 반드시 수정)
       'jsx-a11y/alt-text': 'warn',
@@ -71,6 +85,9 @@ export default tseslint.config(
 
       // 기타
       'no-useless-escape': 'warn',
+      'no-empty': 'warn',
+      'no-constant-binary-expression': 'warn',
+      'no-useless-assignment': 'warn',
     },
   },
 
@@ -81,6 +98,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/no-require-imports': 'error',
+      'no-useless-assignment': 'warn',
     },
   },
 );

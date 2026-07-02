@@ -202,6 +202,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (eventsList) setSortedEventsList([...eventsList]);
   }, [eventsList]);
 

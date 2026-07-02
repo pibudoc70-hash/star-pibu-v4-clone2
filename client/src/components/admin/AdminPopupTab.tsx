@@ -28,6 +28,9 @@ const EMPTY_FORM: PopupFormState = {
 };
 
 export default function AdminPopupTab({ currentUser }: Props) {
+  // Date.now()를 렌더 중 직접 호출하면 'Cannot call impure function during render' 에러 발생
+  // useState 초기값으로 한 번만 코스를 실행하여 안정적으로 사용
+  const [now] = useState(() => Date.now());
   const [popupForm, setPopupForm] = useState<PopupFormState | null>(null);
   const [popupEditId, setPopupEditId] = useState<number | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
@@ -192,11 +195,11 @@ export default function AdminPopupTab({ currentUser }: Props) {
                 </p>
                 {(ev.endAt || ev.startAt) && (
                   <p className="text-xs mt-0.5">
-                    {ev.endAt && Date.now() > ev.endAt ? (
+                    {ev.endAt && now > ev.endAt ? (
                       <span className="text-red-500 font-semibold">
                         ⚠️ 기간 만료 ({new Date(ev.endAt).toLocaleDateString("ko-KR")})
                       </span>
-                    ) : ev.startAt && Date.now() < ev.startAt ? (
+                    ) : ev.startAt && now < ev.startAt ? (
                       <span className="text-amber-500 font-semibold">
                         ⏳ {new Date(ev.startAt).toLocaleDateString("ko-KR")} 시작
                       </span>
@@ -424,12 +427,12 @@ export default function AdminPopupTab({ currentUser }: Props) {
                       표시 기간:{" "}
                       <strong>{new Date(popupForm.startAt).toLocaleDateString("ko-KR")}</strong> ~{" "}
                       <strong>{new Date(popupForm.endAt).toLocaleDateString("ko-KR")}</strong>
-                      {Date.now() > popupForm.endAt && (
+                      {now > popupForm.endAt && (
                         <span className="ml-2 text-red-500 font-semibold">
                           ⚠️ 기간 만료 (팝업에 표시 안 됨)
                         </span>
                       )}
-                      {Date.now() < popupForm.startAt && (
+                      {now < popupForm.startAt && (
                         <span className="ml-2 text-amber-500 font-semibold">
                           ⏳ 시작 전 (팝업에 표시 안 됨)
                         </span>
@@ -439,7 +442,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
                     <>
                       종료일:{" "}
                       <strong>{new Date(popupForm.endAt).toLocaleDateString("ko-KR")}</strong>
-                      {Date.now() > popupForm.endAt && (
+                      {now > popupForm.endAt && (
                         <span className="ml-2 text-red-500 font-semibold">⚠️ 기간 만료</span>
                       )}
                     </>

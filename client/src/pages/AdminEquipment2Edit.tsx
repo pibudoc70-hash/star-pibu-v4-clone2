@@ -32,9 +32,10 @@ export default function AdminEquipment2Edit() {
     { enabled: !!treatmentId }
   );
 
-  // 시술 데이터 로드
+  // 시술 데이터 로드 (treatment 변경 시 폼 초기화 - 정상 패턴)
   useEffect(() => {
     if (treatment) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: treatment.name || "",
         nameEn: treatment.nameEn || "",

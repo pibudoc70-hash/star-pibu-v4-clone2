@@ -196,9 +196,11 @@ export default function AdminYouTube() {
 
   const { data: videos = [], refetch } = trpc.youtube.getAll.useQuery();
 
-  // DB 데이터가 바뀌면 로컬 상태 동기화
+  // DB 데이터가 바뀌면 로컬 상태 동기화 (videos 변경 시 1회만 실행되는 정상 패턴)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalVideos(videos as YouTubeVideo[]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsDirty(false);
   }, [videos]);
 

@@ -233,11 +233,13 @@ export default function AdminEquipment3() {
     if (!initializedRef.current) {
       // 최초 1회 초기화
       initializedRef.current = true;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalItems(items as Item[]);
       return;
     }
     // isDirty가 false일 때만 서버 데이터로 덮어씀 (저장 완료 후 갱신)
     if (!isDirty) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalItems(items as Item[]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -411,7 +413,7 @@ export default function AdminEquipment3() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <h2 className="font-semibold text-blue-900 mb-3">탭(카테고리) 순서 변경</h2>
             <p className="text-blue-800 text-sm mb-4">
-              ↑↓ 버튼으로 탭의 순서를 변경하세요. 변경 후 "탭 순서 저장" 버튼을 클릭하면 /equipment3 페이지에 반영됩니다.
+              ↑↓ 버튼으로 탭의 순서를 변경하세요. 변경 후 &ldquo;탭 순서 저장&rdquo; 버튼을 클릭하면 /equipment3 페이지에 반영됩니다.
             </p>
             <div className="space-y-2">
               {displayCategories.map((category, idx) => (

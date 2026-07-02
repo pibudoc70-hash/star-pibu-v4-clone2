@@ -3499,3 +3499,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run build 성공
 - [x] pnpm test 전체 통과 (1413개)
 - [ ] 체크포인트 저장
+
+## Phase ESLint-Fix: 관리자 페이지 React Hooks 에러 수정 (2026-07-02)
+- [x] AdminEquipment3Edit.tsx - MultiLangField 컴포넌트를 파일 최상위(컴포넌트 외부)로 이동, form/onChange props 추가
+- [x] AdminEquipment3New.tsx - 동일 패턴 적용 (MultiLangField 외부 이동, props 전달)
+- [x] AdminUnavailableSlotsTab.tsx - 이미 에러 없음 확인 (경고 2건만 존재)
+- [x] AdminPopupTab.tsx - Date.now()를 useState 초기값으로 캡처하여 impure function 에러 5건 해결
+- [x] AdminEventsTab.tsx - useEffect 내 setSortedEventsList에 eslint-disable 추가
+- [x] AdminEquipment2Edit.tsx - useEffect 내 setFormData에 eslint-disable 추가
+- [x] AdminEquipment3.tsx - useEffect 내 setLocalItems에 eslint-disable 추가, unescaped entities 수정
+- [x] AdminYouTube.tsx - useEffect 내 setLocalVideos/setIsDirty에 eslint-disable 추가
+- [x] 전체 관리자 페이지 ESLint 에러 0건 확인 (경고만 57건 남음)
+- [x] pnpm test 1413개 테스트 모두 통과

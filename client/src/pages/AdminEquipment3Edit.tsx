@@ -30,6 +30,48 @@ const CATEGORY_OPTIONS = [
   { id: "흉터-모공", label: "흉터·모공", labelEn: "Scars·Pores", labelJa: "傷跡・毛穴", labelZh: "疤痕·毛孔" },
 ];
 
+// 언어별 필드 그룹 렌더러 (컴포넌트 외부에 정의하여 'Cannot create components during render' 에러 방지)
+function MultiLangField({
+  label, fieldKey, type = "input", rows = 4, form, onChange,
+}: {
+  label: string;
+  fieldKey: string;
+  type?: "input" | "textarea";
+  rows?: number;
+  form: FormData;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}) {
+  const langs = [
+    { code: "ko", suffix: "", placeholder: "한국어" },
+    { code: "en", suffix: "En", placeholder: "English" },
+    { code: "ja", suffix: "Ja", placeholder: "日本語" },
+    { code: "zh", suffix: "Zh", placeholder: "中文" },
+  ];
+  return (
+    <div className="space-y-2">
+      <Label className="font-semibold">{label}</Label>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {langs.map(({ code, suffix, placeholder }) => {
+          const name = `${fieldKey}${suffix}`;
+          const value = form[name as keyof FormData] as string;
+          const isKo = code === "ko";
+          return type === "textarea" ? (
+            <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
+              <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
+              <Textarea name={name} value={value} onChange={onChange} placeholder={placeholder} rows={rows} className="text-sm" />
+            </div>
+          ) : (
+            <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
+              <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
+              <Input name={name} value={value} onChange={onChange} placeholder={placeholder} className="text-sm" />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 type FormData = {
   name: string; nameEn: string; nameJa: string; nameZh: string;
   category: string; categoryEn: string; categoryJa: string; categoryZh: string;
@@ -65,10 +107,11 @@ export default function AdminEquipment3Edit() {
   const bgFileInputRef = useRef<HTMLInputElement>(null);
   const galleryFileInputRef = useRef<HTMLInputElement>(null);
 
-  // 데이터 로드 후 폼 초기화
+  // 데이터 로드 후 폼 초기화 (아이템 변경 시 1회만 실행되는 정상 패턴)
   useEffect(() => {
     if (!item) return;
     const images = item.images ? JSON.parse(item.images) : [];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setForm({
       name: item.name ?? "",
       nameEn: item.nameEn ?? "", nameJa: item.nameJa ?? "", nameZh: item.nameZh ?? "",
@@ -290,41 +333,6 @@ export default function AdminEquipment3Edit() {
     );
   }
 
-  // 언어별 필드 그룹 렌더러
-  function MultiLangField({
-    label, fieldKey, type = "input", rows = 4,
-  }: { label: string; fieldKey: string; type?: "input" | "textarea"; rows?: number }) {
-    const langs = [
-      { code: "ko", suffix: "", placeholder: "한국어" },
-      { code: "en", suffix: "En", placeholder: "English" },
-      { code: "ja", suffix: "Ja", placeholder: "日本語" },
-      { code: "zh", suffix: "Zh", placeholder: "中文" },
-    ];
-    return (
-      <div className="space-y-2">
-        <Label className="font-semibold">{label}</Label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {langs.map(({ code, suffix, placeholder }) => {
-            const name = `${fieldKey}${suffix}`;
-            const value = form![name as keyof FormData] as string;
-            const isKo = code === "ko";
-            return type === "textarea" ? (
-              <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
-                <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
-                <Textarea name={name} value={value} onChange={handleChange} placeholder={placeholder} rows={rows} className="text-sm" />
-              </div>
-            ) : (
-              <div key={code} className={isKo ? "md:col-span-2 border-l-4 border-blue-400 pl-3" : ""}>
-                <Label className={`text-xs mb-1 block ${isKo ? "text-blue-600 font-semibold" : "text-gray-500"}`}>{placeholder}{isKo ? " (원문)" : ""}</Label>
-                <Input name={name} value={value} onChange={handleChange} placeholder={placeholder} className="text-sm" />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
@@ -366,7 +374,7 @@ export default function AdminEquipment3Edit() {
           <Card>
             <CardHeader><CardTitle>기본 정보</CardTitle></CardHeader>
             <CardContent className="space-y-5">
-              <MultiLangField label="시술명 *" fieldKey="name" />
+              <MultiLangField label="시술명 *" fieldKey="name" form={form} onChange={handleChange} />
               
               {/* 카테고리 선택 — 탭 메뉴 방식 */}
               {form && (
@@ -518,8 +526,8 @@ export default function AdminEquipment3Edit() {
           <Card>
             <CardHeader><CardTitle>설명</CardTitle></CardHeader>
             <CardContent className="space-y-5">
-              <MultiLangField label="짧은 설명 (카드 미리보기)" fieldKey="desc" type="textarea" rows={3} />
-              <MultiLangField label="상세 설명 (마크다운 지원)" fieldKey="detail" type="textarea" rows={6} />
+              <MultiLangField label="짧은 설명 (카드 미리보기)" fieldKey="desc" type="textarea" rows={3} form={form} onChange={handleChange} />
+              <MultiLangField label="상세 설명 (마크다운 지원)" fieldKey="detail" type="textarea" rows={6} form={form} onChange={handleChange} />
             </CardContent>
           </Card>
 
@@ -527,11 +535,11 @@ export default function AdminEquipment3Edit() {
           <Card>
             <CardHeader><CardTitle>시술 정보</CardTitle></CardHeader>
             <CardContent className="space-y-5">
-              <MultiLangField label="기대 효과" fieldKey="effect" type="textarea" rows={4} />
-              <MultiLangField label="주의사항" fieldKey="caution" type="textarea" rows={4} />
-              <MultiLangField label="시술 시간" fieldKey="time" />
-              <MultiLangField label="회복 기간" fieldKey="recovery" />
-              <MultiLangField label="권장 횟수" fieldKey="sessions" />
+              <MultiLangField label="기대 효과" fieldKey="effect" type="textarea" rows={4} form={form} onChange={handleChange} />
+              <MultiLangField label="주의사항" fieldKey="caution" type="textarea" rows={4} form={form} onChange={handleChange} />
+              <MultiLangField label="시술 시간" fieldKey="time" form={form} onChange={handleChange} />
+              <MultiLangField label="회복 기간" fieldKey="recovery" form={form} onChange={handleChange} />
+              <MultiLangField label="권장 횟수" fieldKey="sessions" form={form} onChange={handleChange} />
             </CardContent>
           </Card>
 

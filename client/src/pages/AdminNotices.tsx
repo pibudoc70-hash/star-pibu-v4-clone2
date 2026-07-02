@@ -137,10 +137,11 @@ export default function AdminNotices() {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="notice-title" className="block text-sm font-medium text-gray-700 mb-1">
                   제목
                 </label>
                 <input
+                  id="notice-title"
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -154,10 +155,11 @@ export default function AdminNotices() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="notice-content" className="block text-sm font-medium text-gray-700 mb-1">
                   내용
                 </label>
                 <textarea
+                  id="notice-content"
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-64"
@@ -213,7 +215,7 @@ export default function AdminNotices() {
                 </tr>
               </thead>
               <tbody>
-                {notices.map((notice: any) => (
+                {notices.map((notice: Notice) => (
                   <tr key={notice.id} className="border-b hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm text-gray-900">
                       <div className="flex items-center gap-2">

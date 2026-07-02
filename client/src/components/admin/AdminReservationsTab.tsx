@@ -167,10 +167,11 @@ export default function AdminReservationsTab({ currentUser }: Props) {
                           <td colSpan={8} className="px-6 py-4">
                             <div className="space-y-3">
                               <div>
-                                <label className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
+                                <label htmlFor={`admin-note-${reservation.id}`} className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider">
                                   관리자 메모
                                 </label>
                                 <textarea
+                                  id={`admin-note-${reservation.id}`}
                                   value={
                                     reservationNotes[reservation.id] ??
                                     reservation.adminNote ??

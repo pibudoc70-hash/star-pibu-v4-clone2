@@ -90,8 +90,9 @@ function MultiLangField({
           if (typeof value === 'boolean') return null; // isBest 같은 boolean 필드 제외
           return type === "textarea" ? (
             <div key={code}>
-              <Label className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
+              <Label htmlFor={name} className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
               <Textarea
+                id={name}
                 name={name}
                 value={value}
                 onChange={onChange}
@@ -102,8 +103,9 @@ function MultiLangField({
             </div>
           ) : (
             <div key={code}>
-              <Label className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
+              <Label htmlFor={name} className="text-xs text-gray-500 mb-1 block">{placeholder}</Label>
               <Input
+                id={name}
                 name={name}
                 value={value}
                 onChange={onChange}
@@ -168,7 +170,7 @@ export default function AdminEquipment3New() {
         setUploading(false);
       };
       reader.readAsDataURL(file);
-    } catch (err) {
+    } catch {
       alert("이미지 업로드에 실패했습니다.");
       setUploading(false);
     }
@@ -191,7 +193,7 @@ export default function AdminEquipment3New() {
         setUploadingBg(false);
       };
       reader.readAsDataURL(file);
-    } catch (err) {
+    } catch {
       alert("배경 이미지 업로드에 실패했습니다.");
       setUploadingBg(false);
     }

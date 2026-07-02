@@ -60,10 +60,15 @@ function PreviewModal({ video, onClose }: { video: YouTubeVideo; onClose: () => 
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" role="button" tabIndex={0} onClick={onClose} onKeyDown={(e) => e.key === "Escape" && onClose()}>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
         className={`relative bg-black rounded-xl shadow-2xl overflow-hidden ${isShorts ? 'w-[360px]' : 'w-[800px] max-w-[95vw]'}`}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 bg-gray-900">
           <div className="flex items-center gap-2 min-w-0">
@@ -200,7 +205,6 @@ export default function AdminYouTube() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalVideos(videos as YouTubeVideo[]);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsDirty(false);
   }, [videos]);
 
@@ -339,23 +343,23 @@ export default function AdminYouTube() {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">{editingId ? '영상 수정' : '새 영상 추가'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">제목</label>
-                <input type="text" value={formData.title}
+                <label htmlFor="youtube-title" className="block text-sm font-medium text-gray-700 mb-1">제목</label>
+                <input id="youtube-title" type="text" value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="영상 제목을 입력하세요" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">YouTube 영상 ID</label>
-                <input type="text" value={formData.videoId}
+                <label htmlFor="youtube-video-id" className="block text-sm font-medium text-gray-700 mb-1">YouTube 영상 ID</label>
+                <input id="youtube-video-id" type="text" value={formData.videoId}
                   onChange={(e) => setFormData({ ...formData, videoId: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="예: dQw4w9WgXcQ" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">타입</label>
-                  <select value={formData.type}
+                  <label htmlFor="youtube-type" className="block text-sm font-medium text-gray-700 mb-1">타입</label>
+                  <select id="youtube-type" value={formData.type}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value as 'video' | 'shorts' })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="video">일반 영상</option>
@@ -363,8 +367,8 @@ export default function AdminYouTube() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">정렬 순서</label>
-                  <input type="number" value={formData.sortOrder}
+                  <label htmlFor="youtube-sort-order" className="block text-sm font-medium text-gray-700 mb-1">정렬 순서</label>
+                  <input id="youtube-sort-order" type="number" value={formData.sortOrder}
                     onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                 </div>

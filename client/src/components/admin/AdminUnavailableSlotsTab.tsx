@@ -69,8 +69,9 @@ export default function AdminUnavailableSlotsTab({ currentUser }: Props) {
             <h3 className="font-semibold text-[#1F2937] mb-4">예약 불가능 날짜 추가</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-[#1F2937] mb-2">날짜 *</label>
+                <label htmlFor="unavailable-date" className="block text-sm font-semibold text-[#1F2937] mb-2">날짜 *</label>
                 <input
+                  id="unavailable-date"
                   type="date"
                   value={form.date}
                   onChange={(e) => setForm({ ...form, date: e.target.value })}
@@ -78,10 +79,11 @@ export default function AdminUnavailableSlotsTab({ currentUser }: Props) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-[#1F2937] mb-2">
+                <label htmlFor="unavailable-reason" className="block text-sm font-semibold text-[#1F2937] mb-2">
                   사유 (선택)
                 </label>
                 <input
+                  id="unavailable-reason"
                   type="text"
                   placeholder="예: 의료 회의, 시설 점검 등"
                   value={form.reason}

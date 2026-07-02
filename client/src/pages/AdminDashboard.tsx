@@ -11,7 +11,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import {
-  Users, TrendingUp, ChevronLeft, ChevronRight,
+  Users, TrendingUp,
   Crown, LogOut, Home, RefreshCw, Calendar, Clock,
   CheckCircle, ClipboardList, Megaphone, Stethoscope, Youtube,
 } from "lucide-react";
@@ -49,6 +49,7 @@ export default function AdminDashboard() {
         navigate("/");
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, isAuthenticated, user]);
 
   const { data: stats, refetch: refetchStats } = trpc.admin.stats.useQuery(undefined, {

@@ -56,7 +56,7 @@ type Item = {
 function SortableItem({
   item,
   idx,
-  isDragging,
+  isDragging: _isDragging,
   onToggleActive,
   onEdit,
   onDelete,
@@ -233,7 +233,6 @@ export default function AdminEquipment3() {
     if (!initializedRef.current) {
       // 최초 1회 초기화
       initializedRef.current = true;
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalItems(items as Item[]);
       return;
     }

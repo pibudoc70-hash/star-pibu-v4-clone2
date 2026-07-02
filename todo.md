@@ -3511,3 +3511,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] AdminYouTube.tsx - useEffect 내 setLocalVideos/setIsDirty에 eslint-disable 추가
 - [x] 전체 관리자 페이지 ESLint 에러 0건 확인 (경고만 57건 남음)
 - [x] pnpm test 1413개 테스트 모두 통과
+
+## Phase A11y-Fix: 관리자 페이지 jsx-a11y 접근성 경고 57건 수정 (2026-07-02)
+- [x] label-has-associated-control: AdminEquipment2Edit/New, AdminEquipment3New, AdminNotices, AdminEventsTab, AdminPopupTab, AdminReservationsTab, AdminUnavailableSlotsTab, AdminYouTube
+- [x] click-events-have-key-events / no-static-element-interactions: AdminEventsTab, AdminYouTube
+- [x] no-noninteractive-element-interactions: AdminEquipment2Edit/New, AdminYouTube
+- [x] unused eslint-disable 지시문 정리: AdminEquipment3, AdminYouTube
+- [x] 기타 경고: 미사용 변수(ChevronLeft/Right, user, isDragging, err), any 타입, exhaustive-deps
+- [x] 최종 결과: 에러 0건, 경고 0건, 테스트 1413개 전체 통과

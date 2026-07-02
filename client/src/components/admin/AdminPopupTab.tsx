@@ -264,8 +264,9 @@ export default function AdminPopupTab({ currentUser }: Props) {
             <div className="px-6 py-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">탭 레이블 *</label>
+                  <label htmlFor="popup-tab" className="text-xs font-semibold text-[#374151] mb-1 block">탭 레이블 *</label>
                   <input
+                    id="popup-tab"
                     className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                     value={popupForm.tab}
                     onChange={(e) => setPopupForm((f) => f && { ...f, tab: e.target.value })}
@@ -273,8 +274,9 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">배지</label>
+                  <label htmlFor="popup-badge" className="text-xs font-semibold text-[#374151] mb-1 block">배지</label>
                   <input
+                    id="popup-badge"
                     className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                     value={popupForm.badge}
                     onChange={(e) => setPopupForm((f) => f && { ...f, badge: e.target.value })}
@@ -285,7 +287,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
 
               {/* 이미지 업로드 */}
               <div>
-                <label className="text-xs font-semibold text-[#374151] mb-1 block">이미지</label>
+                <span className="text-xs font-semibold text-[#374151] mb-1 block">이미지</span>
                 {popupForm.imageUrl && (
                   <div className="relative mb-2 inline-block">
                     <img
@@ -349,8 +351,9 @@ export default function AdminPopupTab({ currentUser }: Props) {
               </div>
               {/* 클릭 URL */}
               <div>
-                <label className="text-xs font-semibold text-[#374151] mb-1 block">클릭 시 이동 URL</label>
+                <label htmlFor="popup-click-url" className="text-xs font-semibold text-[#374151] mb-1 block">클릭 시 이동 URL</label>
                 <input
+                  id="popup-click-url"
                   className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                   value={popupForm.clickUrl}
                   onChange={(e) => setPopupForm((f) => f && { ...f, clickUrl: e.target.value })}
@@ -359,8 +362,9 @@ export default function AdminPopupTab({ currentUser }: Props) {
                 <p className="text-xs text-[#9CA3AF] mt-1">이미지를 클릭했을 때 이동할 URL을 입력하세요.</p>
               </div>
               <div>
-                <label className="text-xs font-semibold text-[#374151] mb-1 block">표시 순서</label>
+                <label htmlFor="popup-sort-order" className="text-xs font-semibold text-[#374151] mb-1 block">표시 순서</label>
                 <input
+                  id="popup-sort-order"
                   type="number"
                   className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                   value={popupForm.sortOrder}
@@ -372,10 +376,11 @@ export default function AdminPopupTab({ currentUser }: Props) {
               {/* 유효기간 설정 */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">
+                  <label htmlFor="popup-start-at" className="text-xs font-semibold text-[#374151] mb-1 block">
                     시작일 <span className="font-normal text-[#9CA3AF]">(비워두면 즉시 시작)</span>
                   </label>
                   <input
+                    id="popup-start-at"
                     type="date"
                     className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                     value={
@@ -396,10 +401,11 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#374151] mb-1 block">
+                  <label htmlFor="popup-end-at" className="text-xs font-semibold text-[#374151] mb-1 block">
                     종료일 <span className="font-normal text-[#9CA3AF]">(비워두면 무기한)</span>
                   </label>
                   <input
+                    id="popup-end-at"
                     type="date"
                     className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm"
                     value={

@@ -106,30 +106,60 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
                 priceRows.map((row, idx) => (
                   <div key={idx} className="flex items-center justify-between px-4 py-3">
                     <span className="text-xs text-gray-600">{row.label}</span>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
-                        {row.discountPrice.toLocaleString()}원
-                      </span>
-                      {row.normalPrice > 0 && (
-                        <span className="line-through text-xs text-gray-400">
-                          {row.normalPrice.toLocaleString()}원
+                    <div className="flex items-center gap-1.5 flex-wrap justify-end">
+                      <div className="flex items-baseline gap-1">
+                        <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
+                          {row.discountPrice.toLocaleString()}원
                         </span>
-                      )}
+                        {row.normalPrice > 0 && (
+                          <span className="line-through text-xs text-gray-400">
+                            {row.normalPrice.toLocaleString()}원
+                          </span>
+                        )}
+                      </div>
+                      <span
+                        className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
+                        style={{
+                          fontSize: "0.62rem",
+                          letterSpacing: "0.04em",
+                          color: "var(--color-gold-dark, #7A5C35)",
+                          background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+                          border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        VAT 포함
+                      </span>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-xs text-gray-600">{event.productName || "시술"}</span>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
-                      {event.discountPrice.toLocaleString()}원
-                    </span>
-                    {event.normalPrice > 0 && (
-                      <span className="line-through text-xs text-gray-400">
-                        {event.normalPrice.toLocaleString()}원
+                  <div className="flex items-center gap-1.5 flex-wrap justify-end">
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
+                        {event.discountPrice.toLocaleString()}원
                       </span>
-                    )}
+                      {event.normalPrice > 0 && (
+                        <span className="line-through text-xs text-gray-400">
+                          {event.normalPrice.toLocaleString()}원
+                        </span>
+                      )}
+                    </div>
+                    <span
+                      className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
+                      style={{
+                        fontSize: "0.62rem",
+                        letterSpacing: "0.04em",
+                        color: "var(--color-gold-dark, #7A5C35)",
+                        background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      VAT 포함
+                    </span>
                   </div>
                 </div>
               )}
@@ -211,15 +241,30 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   <p className="text-sm font-semibold text-gray-900 truncate">
                     {getLocalizedText(event, "title")}
                   </p>
-                  <div className="flex items-baseline gap-1.5 mt-0.5">
-                    <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>
-                      {displayPrice.toLocaleString()}원
-                    </span>
-                    {normalPrice > 0 && (
-                      <span className="line-through text-xs text-gray-400">
-                        {normalPrice.toLocaleString()}원
+                  <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>
+                        {displayPrice.toLocaleString()}원
                       </span>
-                    )}
+                      {normalPrice > 0 && (
+                        <span className="line-through text-xs text-gray-400">
+                          {normalPrice.toLocaleString()}원
+                        </span>
+                      )}
+                    </div>
+                    <span
+                      className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
+                      style={{
+                        fontSize: "0.6rem",
+                        letterSpacing: "0.04em",
+                        color: "var(--color-gold-dark, #7A5C35)",
+                        background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      VAT 포함
+                    </span>
                   </div>
                 </div>
 

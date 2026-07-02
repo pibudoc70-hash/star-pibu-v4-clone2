@@ -224,7 +224,7 @@ export function useHeaderState() {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeMobileMenu(); };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [mobileOpen]);
 
   // 모바일 메뉴 포커스 트랩
@@ -302,7 +302,7 @@ export function useHeaderState() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isHome]);  
 
   useEffect(() => {
     if (!isHome) setActiveSection("");

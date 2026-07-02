@@ -3,6 +3,8 @@
  * pickLocalized / pickLocalizedFaq 헬퍼 단위 테스트
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import nodePath from "node:path";
 import { pickLocalized, pickLocalizedFaq } from "../../client/src/lib/i18nText";
 import type { LocalizedString, LocalizedFaq } from "../../client/src/lib/i18nText";
 
@@ -150,8 +152,8 @@ describe("treatments data integrity", () => {
 // Step 2 회귀 방지: inline lang 삼항 제거 검증
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
   const root = process.cwd();
 
   it("EquipmentTreatmentCard.tsx에 time/recovery 필드 inline lang 삼항이 없어야 한다", () => {
@@ -299,8 +301,8 @@ describe("PR-QA-P1: i18n.ja.ts 오탈자 수정 회귀 방지", () => {
 
 describe("PR-QA-P1: i18n doctors.teamLabel 추가 검증", () => {
   it("i18n.types.ts에 doctors.teamLabel 필드가 정의되어야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/lib/i18n.types.ts"),
       "utf8",
@@ -337,8 +339,8 @@ describe("PR-QA-P1: i18n access.mapAriaLabel/mapMarkerTitle 추가 검증", () =
 
 describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
   it("useCountUp.ts에 locale 파라미터가 있어야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/hooks/useCountUp.ts"),
       "utf8",
@@ -349,8 +351,8 @@ describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
   });
 
   it("HeroSection.tsx가 useCountUp에 lang을 전달해야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/HeroSection.tsx"),
       "utf8",
@@ -359,8 +361,8 @@ describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
   });
 
   it("ResultsSection.tsx가 useCountUp에 lang을 전달해야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/ResultsSection.tsx"),
       "utf8",
@@ -371,8 +373,8 @@ describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
 
 describe("PR-QA-P1: YouTubeSection ?? fallback 제거 검증", () => {
   it("YouTubeSection.tsx에 i18n 키에 대한 ?? 한국어 fallback이 없어야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/YouTubeSection.tsx"),
       "utf8",
@@ -384,8 +386,8 @@ describe("PR-QA-P1: YouTubeSection ?? fallback 제거 검증", () => {
 
 describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증", () => {
   it("DoctorsSection.tsx에 aria-label 한국어 하드코딩이 없어야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/DoctorsSection.tsx"),
       "utf8",
@@ -395,8 +397,8 @@ describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증
   });
 
   it("DoctorsSection.tsx에 'Medical Team' 하드코딩 문자열이 없어야 한다", () => {
-    const { readFileSync } = require("node:fs");
-    const nodePath = require("node:path");
+    // readFileSync via top-level import (see below)
+    // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/DoctorsSection.tsx"),
       "utf8",
@@ -409,8 +411,8 @@ describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증
 // ─── Round-2 Senior Review Regression Tests ──────────────────────────────────
 
 describe("Round-2 P1: FAQSection ctaLabel/ctaDesc i18n 키 적용 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("FAQSection.tsx에 lang 삼항 ctaLabel/ctaDesc 하드코딩이 없어야 한다", () => {
     const src = readFileSync(
@@ -447,8 +449,8 @@ describe("Round-2 P1: FAQSection ctaLabel/ctaDesc i18n 키 적용 검증", () =>
 });
 
 describe("Round-2 P1: TreatmentCard lang 삼항 제거 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("TreatmentCard.tsx에 lang 삼항 ctaLabel 하드코딩이 없어야 한다", () => {
     const src = readFileSync(
@@ -484,8 +486,8 @@ describe("Round-2 P1: TreatmentCard lang 삼항 제거 검증", () => {
 });
 
 describe("Round-2 P1: EquipmentPanel fallback 제거 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("EquipmentPanel.tsx에 한국어 ?? fallback이 없어야 한다", () => {
     const src = readFileSync(
@@ -519,8 +521,8 @@ describe("Round-2 P1: EquipmentPanel fallback 제거 검증", () => {
 });
 
 describe("Round-2 P1: HeroSection scrollLabel fallback 제거 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("HeroSection.tsx에 scrollLabel ?? 'Scroll' fallback이 없어야 한다", () => {
     const src = readFileSync(
@@ -541,8 +543,8 @@ describe("Round-2 P1: HeroSection scrollLabel fallback 제거 검증", () => {
 });
 
 describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("ContactSection.tsx에 mapAriaLabel 한국어 fallback이 없어야 한다", () => {
     const src = readFileSync(
@@ -562,8 +564,8 @@ describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거
   });
 });
 describe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("Privacy.tsx SeoHead에 pageType=\"admin\"이 명시되어야 한다", () => {
     const src = readFileSync(
@@ -590,8 +592,8 @@ describe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () =>
   });
 });
 describe("1: i18n.ja.ts modalConsultBtn LINE 수정 검증", () => {
-  const { readFileSync } = require("node:fs");
-  const nodePath = require("node:path");
+  // readFileSync via top-level import (see below)
+  // nodePath via top-level import (see below)
 
   it("i18n.ja.ts treatments.modalConsultBtn이 LINE 기반이어야 한다", () => {
     const src = readFileSync(

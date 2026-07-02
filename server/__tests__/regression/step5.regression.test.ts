@@ -49,14 +49,14 @@ describe("handleNavClick — setLocation SPA 라우팅 + basePath 조합 버그 
     // 절대 경로 이동 시 window.location.href = ... 를 사용하면 전체 리로드 발생
     // wouter setLocation으로 SPA 라우팅해야 함
     const fnBlock = hookSource.match(
-      /const handleNavClick[\s\S]*?\n  };/,
+      /const handleNavClick[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     expect(fnBlock).not.toMatch(/window\.location\.href\s*=/);
   });
 
   it("handleNavClick에서 setLocation을 사용해야 한다 (SPA 라우팅)", () => {
     const fnBlock = hookSource.match(
-      /const handleNavClick[\s\S]*?\n  };/,
+      /const handleNavClick[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     expect(fnBlock).toContain("setLocation(");
   });
@@ -64,7 +64,7 @@ describe("handleNavClick — setLocation SPA 라우팅 + basePath 조합 버그 
   it("handleNavClick에서 basePath === '/' 조건 분기가 있어야 한다 (//about 버그 방지)", () => {
     // basePath가 "/" 일 때 href("/about") 앞에 붙이면 "//about" 이 되는 버그 방지
     const fnBlock = hookSource.match(
-      /const handleNavClick[\s\S]*?\n  };/,
+      /const handleNavClick[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     // basePath === "/" 조건 분기가 있어야 함
     expect(fnBlock).toMatch(/basePath\s*===\s*["']\/["']/);
@@ -74,7 +74,7 @@ describe("handleNavClick — setLocation SPA 라우팅 + basePath 조합 버그 
     // `${basePath}${href}` 단독 사용은 "//about" 버그를 유발함
     // 반드시 basePath === "/" 조건 분기 후에만 사용해야 함
     const fnBlock = hookSource.match(
-      /const handleNavClick[\s\S]*?\n  };/,
+      /const handleNavClick[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     // 조건 없이 basePath + href 단순 연결 패턴이 없어야 함
     // (삼항 연산자 또는 if/else 내에서만 허용)
@@ -125,10 +125,8 @@ describe("Map.tsx — i18n 키 사용 회귀 방지 (Step2 수정)", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 describe("EquipmentTreatmentCard.tsx — getText 훅 사용 회귀 방지 (Step4 분리)", () => {
   // Step 4 리팩토링: 인라인 TreatmentCard 함수가 EquipmentTreatmentCard.tsx로 분리됨
-  const { readFileSync: readFS } = require("node:fs");
-  const nodePath2 = require("node:path");
-  const equipCardSource = readFS(
-    nodePath2.resolve(process.cwd(), "client/src/components/treatments/EquipmentTreatmentCard.tsx"),
+  const equipCardSource = readFileSync(
+    path.resolve(process.cwd(), "client/src/components/treatments/EquipmentTreatmentCard.tsx"),
     "utf8",
   );
 

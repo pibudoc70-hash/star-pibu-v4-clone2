@@ -57,7 +57,7 @@ describe("buildLocalizedPath — window.location.pathname 기반 경로 계산",
   it("buildLocalizedPath 내부에서 window.location.pathname을 사용해야 한다", () => {
     // 구조 분해 후 useHeaderState.ts에 위치 — combinedSource로 검사
     const fnBlock = combinedSource.match(
-      /const buildLocalizedPath[\s\S]*?^  };/m,
+      /const buildLocalizedPath[\s\S]*?^ {2}};/m,
     )?.[0] ?? combinedSource.match(
       /const buildLocalizedPath[\s\S]*?\n};/,
     )?.[0] ?? "";
@@ -67,7 +67,7 @@ describe("buildLocalizedPath — window.location.pathname 기반 경로 계산",
   it("buildLocalizedPath 내부에서 wouter location 변수를 직접 사용하지 않아야 한다", () => {
     // 구조 분해 후 useHeaderState.ts에 위치
     const fnBlock = hookSource.match(
-      /const buildLocalizedPath = \(targetLang[\s\S]*?\n  };/,
+      /const buildLocalizedPath = \(targetLang[\s\S]*?\n {2}};/,
     )?.[0] ?? hookSource.match(
       /const buildLocalizedPath = \(targetLang[\s\S]*?\n};/,
     )?.[0] ?? "";
@@ -90,7 +90,7 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
   it("handleLangChange에서 setLang을 window.location.replace 이전에 호출해야 한다", () => {
     // 구조 분해 후 useHeaderState.ts에 위치
     const fnBlock = hookSource.match(
-      /const handleLangChange[\s\S]*?\n  };/,
+      /const handleLangChange[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     const setLangPos = fnBlock.indexOf("setLang(");
     const replacePos = fnBlock.indexOf("window.location.replace");
@@ -102,7 +102,7 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
 
   it("handleLangChange에서 window.location.href 대신 window.location.replace를 사용해야 한다", () => {
     const fnBlock = hookSource.match(
-      /const handleLangChange[\s\S]*?\n  };/,
+      /const handleLangChange[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     expect(fnBlock).toMatch(/window\.location\.replace/);
     // href 직접 할당은 없어야 함
@@ -111,7 +111,7 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
 
   it("handleLangChange에서 setLang의 persist 인자가 true여야 한다 (사용자 명시 선택)", () => {
     const fnBlock = hookSource.match(
-      /const handleLangChange[\s\S]*?\n  };/,
+      /const handleLangChange[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     // setLang(option.lang, true) 또는 setLang(option.lang) (default=true)
     expect(fnBlock).toMatch(/setLang\(option\.lang(?:,\s*true)?\)/);

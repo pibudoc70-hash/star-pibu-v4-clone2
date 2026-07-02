@@ -60,7 +60,7 @@ export default function EquipmentTreatmentCard({
       {/* [R19-P1-5] div → button 요소 전환 (WAI-ARIA 네이티브 시맨틱) */}
       <button
         type="button"
-        className="treatment-card group cursor-pointer animate-card-fade w-full text-left"
+        className="treatment-card card card--treatment group cursor-pointer animate-card-fade w-full text-left"
         style={cardStyle}
         onClick={() => setOpen(true)}
         aria-label={`${localizedName} ${tr.modalDetailBtn}`}

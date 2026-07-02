@@ -63,7 +63,7 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
       style={{
         background: '#ffffff',
         boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
-        border: '1px solid rgba(196,168,130,0.20)',
+        border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)',
       }}
       aria-hidden="true"
     >
@@ -77,15 +77,15 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
         <div style={{
           position: 'absolute', bottom: '10px', left: '12px',
           height: '22px', width: '4rem', borderRadius: '4px',
-          background: 'rgba(196,168,130,0.55)',
+          background: 'color-mix(in srgb, var(--color-gold-primary) 55%, transparent)',
         }} />
       </div>
       <div className="p-4 md:p-5 flex flex-col gap-2.5">
-        <div style={{ height: '11px', width: '3.2rem', borderRadius: '999px', background: 'rgba(196,168,130,0.35)' }} />
+        <div style={{ height: '11px', width: '3.2rem', borderRadius: '999px', background: 'color-mix(in srgb, var(--color-gold-primary) 35%, transparent)' }} />
         <div className="skeleton-shimmer rounded" style={{ height: '19px', width: '80%', animationDelay: `${index * 0.08 + 0.06}s` }} />
         <div className="flex items-center gap-2 mt-0.5">
           <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '3rem', animationDelay: `${index * 0.08 + 0.12}s` }} />
-          <div style={{ height: '13px', width: '3.5rem', borderRadius: '4px', background: 'rgba(196,168,130,0.30)' }} />
+          <div style={{ height: '13px', width: '3.5rem', borderRadius: '4px', background: 'color-mix(in srgb, var(--color-gold-primary) 30%, transparent)' }} />
         </div>
         <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '55%', animationDelay: `${index * 0.08 + 0.16}s` }} />
       </div>
@@ -139,7 +139,7 @@ export default function SpecialEventSection() {
               type="button"
               onClick={() => void refetch()}
               className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: "var(--brand-gold, #C4A882)" } as React.CSSProperties}
+              style={{ backgroundColor: "var(--color-gold-primary)" } as React.CSSProperties}
             >
               <RefreshCw size={15} />
               {retryLabel[lang] ?? retryLabel.ko}
@@ -188,7 +188,7 @@ export default function SpecialEventSection() {
                   type="button"
                   onClick={() => setShowMore(!showMore)}
                   className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-all hover:scale-105"
-                  style={{ backgroundColor: "var(--brand-gold, #C4A882)" } as React.CSSProperties}
+                  style={{ backgroundColor: "var(--color-gold-primary)" } as React.CSSProperties}
                 >
                   {showMore ? (
                     <>

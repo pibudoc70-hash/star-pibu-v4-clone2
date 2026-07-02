@@ -53,10 +53,10 @@ export default function DesktopNav({
 }: DesktopNavProps) {
   // 투명 헤더일 때는 흰색(대비 강화), 스크롤 후에는 다크 텍스트
   const navTextColor = scrolled ? "#2a2a2a" : "rgba(255,255,255,0.96)";
-  const navActiveColor = scrolled ? "#C4A882" : "#EDD98A";
+  const navActiveColor = scrolled ? "var(--color-gold-primary)" : "#EDD98A";
   const navMutedColor = scrolled ? "#666" : "rgba(255,255,255,0.75)";
   const underlineColor = scrolled
-    ? "linear-gradient(90deg, #C4A882, #D9C4A8)"
+    ? `linear-gradient(90deg, var(--color-gold-primary), var(--color-gold-light))`
     : "linear-gradient(90deg, #EDD98A, #F5E4A8)";
   const textShadowVal = scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.55), 0 0 24px rgba(0,0,0,0.25)";
 
@@ -140,7 +140,7 @@ export default function DesktopNav({
                 right: "0",
                 background: "rgba(250,248,245,0.98)",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(196,168,130,0.15)",
+                border: "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)",
                 borderRadius: "14px",
                 boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
                 minWidth: "160px",
@@ -162,12 +162,12 @@ export default function DesktopNav({
                       display: "block",
                       padding: "11px 18px",
                       fontSize: "13.5px",
-                      color: active ? "#C4A882" : "#333",
+                      color: active ? "var(--color-gold-primary)" : "#333",
                       fontWeight: active ? "600" : "400",
                       letterSpacing: "-0.01em",
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = "rgba(196,168,130,0.08)";
+                      (e.currentTarget as HTMLButtonElement).style.background = "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLButtonElement).style.background = "transparent";

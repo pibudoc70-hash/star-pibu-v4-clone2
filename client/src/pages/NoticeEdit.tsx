@@ -237,10 +237,10 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
           style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
         >
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Bell size={18} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <Bell size={18} style={{ color: "var(--color-gold-primary)" }} />
             <span
               className="text-xs tracking-[0.2em] uppercase font-medium"
-              style={{ color: "var(--brand-gold, #C4A882)" }}
+              style={{ color: "var(--color-gold-primary)" }}
             >
               NOTICE
             </span>
@@ -418,7 +418,7 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
                 type="submit"
                 disabled={isLoading}
                 className="flex items-center gap-2"
-                style={{ background: "var(--brand-gold, #C4A882)", color: "#fff" }}
+                style={{ background: "var(--color-gold-primary)", color: "#fff" }}
               >
                 {isLoading ? (
                   <Loader2 size={15} className="animate-spin" />

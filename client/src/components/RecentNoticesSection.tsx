@@ -42,10 +42,10 @@ function RecentNoticesSection({ lang }: Props) {
         {/* 섹션 헤더 */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Bell size={15} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <Bell size={15} style={{ color: "var(--color-gold-primary)" }} />
             <span
               className="text-xs tracking-[0.15em] uppercase font-semibold"
-              style={{ color: "var(--brand-gold, #C4A882)" }}
+              style={{ color: "var(--color-gold-primary)" }}
             >
               {labels.section}
             </span>
@@ -53,7 +53,7 @@ function RecentNoticesSection({ lang }: Props) {
           <Link
             href={`${langPrefix}/notice`}
             className="flex items-center gap-0.5 text-xs font-medium transition-colors hover:opacity-70"
-            style={{ color: "var(--brand-gold, #C4A882)" }}
+            style={{ color: "var(--color-gold-primary)" }}
           >
             {labels.more}
             <ChevronRight size={13} />
@@ -65,9 +65,9 @@ function RecentNoticesSection({ lang }: Props) {
           // [P3-FINAL] animate-pulse bg-gray-200 → skeleton-shimmer + 골드 픽스드 힌트
           <div className="space-y-2.5" aria-hidden="true">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="flex items-center gap-2.5 py-2.5 border-b" style={{ borderColor: 'rgba(196,168,130,0.10)' }}>
+              <div key={i} className="flex items-center gap-2.5 py-2.5 border-b" style={{ borderColor: 'color-mix(in srgb, var(--color-gold-primary) 10%, transparent)' }}>
                 {/* 핀 아이콘 힌트 — 골드 픽스드 */}
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0, background: 'rgba(196,168,130,0.32)' }} />
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', flexShrink: 0, background: 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)' }} />
                 <div className="skeleton-shimmer rounded flex-1" style={{ height: '12px', width: `${55 + i * 10}%`, animationDelay: `${i * 0.08}s` }} />
                 <div className="skeleton-shimmer rounded" style={{ height: '11px', width: '3rem', flexShrink: 0, animationDelay: `${i * 0.08 + 0.05}s` }} />
               </div>
@@ -86,7 +86,7 @@ function RecentNoticesSection({ lang }: Props) {
                     <Pin
                       size={12}
                       className="shrink-0"
-                      style={{ color: "var(--brand-gold, #C4A882)" }}
+                      style={{ color: "var(--color-gold-primary)" }}
                     />
                   )}
                   {/* 제목 */}

@@ -188,7 +188,7 @@ export default function TreatmentsEquipmentSection() {
                 aria-haspopup="listbox"
                 aria-label={tr.sortLabel}
                 className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors treatment-filter-btn"
-                style={{ background: "rgba(196,168,130,0.08)", color: "var(--brand-text-mid, #666666)", border: "1px solid rgba(196,168,130,0.2)" }}
+                style={{ background: "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)", color: "var(--brand-text-mid, #666666)", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)" }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -200,7 +200,7 @@ export default function TreatmentsEquipmentSection() {
                   role="listbox"
                   aria-label={tr.sortLabel}
                   className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 treatment-filter-dropdown"
-                  style={{ border: "1px solid rgba(196,168,130,0.2)" }}
+                  style={{ border: "1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)" }}
                 >
                   {([
                     { value: "popular", label: tr.sortPopular },
@@ -215,7 +215,7 @@ export default function TreatmentsEquipmentSection() {
                       onClick={() => { handleSortChange(opt.value); closeFilter(); }}
                       className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${sortBy === opt.value ? "font-semibold" : "hover:bg-gray-50"}`}
                       style={sortBy === opt.value
-                        ? { background: "rgba(196,168,130,0.12)", color: "var(--brand-gold-deep, #A8895E)" }
+                        ? { background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)", color: "var(--color-gold-deep)" }
                         : { color: "var(--brand-text, #2C2C2C)" }
                       }
                     >

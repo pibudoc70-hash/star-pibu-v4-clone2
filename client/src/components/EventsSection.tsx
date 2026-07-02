@@ -118,8 +118,8 @@ export default function EventsSection() {
               className="px-5 py-2 rounded-full text-sm font-normal transition-all duration-200"
               style={
                 activeCategory === category
-                  ? { background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 2px 8px rgba(196,168,130,0.35)" }
-                  : { background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-text-mid, #666666)", border: "1px solid rgba(196,168,130,0.2)" }
+                  ? { background: "var(--color-gold-primary)", color: "white", boxShadow: "0 2px 8px color-mix(in srgb, var(--color-gold-primary) 35%, transparent)" }
+                  : { background: "var(--brand-bg, #FAF8F5)", color: "var(--brand-text-mid, #666666)", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)" }
               }
             >
               {category}

@@ -41,14 +41,14 @@ function DeviceCard({ device }: { device: ManagementDevice }) {
       }}
     >
       {/* 상단 금선 */}
-      <div className="h-1 w-full" style={{ background: "var(--brand-gold, #C4A882)" }} />
+      <div className="h-1 w-full" style={{ background: "var(--color-gold-primary)" }} />
 
       {/* 이미지 + 타이틀 가로 레이아웃 */}
       <div className="flex gap-3 px-4 py-4 md:py-5">
         {/* 원형 아이콘 */}
         <div
           className="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
-          style={{ background: "var(--brand-bg-warm, #EDE8E0)", border: "2px solid var(--brand-gold, #C4A882)" }}
+          style={{ background: "var(--brand-bg-warm, #EDE8E0)", border: "2px solid var(--color-gold-primary)" }}
         >
           <OptimizedImage
             src={imgUrl}
@@ -66,7 +66,7 @@ function DeviceCard({ device }: { device: ManagementDevice }) {
           </h3>
           <span
             className="tracking-wide uppercase mt-1 text-xs"
-            style={{ color: "var(--brand-gold, #C4A882)", fontWeight: 200, fontSize: "10px" }}
+            style={{ color: "var(--color-gold-primary)", fontWeight: 200, fontSize: "10px" }}
           >
             {device.nameEn}
           </span>
@@ -119,7 +119,7 @@ export default function ManagementDevicesSection() {
                 {md.sectionTitle}
               </h2>
               <div className="star-divider mx-auto" />
-              <p className="section-subtitle text-[var(--brand-gold-deep,#A8895E)]">
+              <p className="section-subtitle text-[var(--color-gold-deep)]">
                 {md.sectionSubtitle}
               </p>
             </div>
@@ -144,7 +144,7 @@ export default function ManagementDevicesSection() {
                 type="button"
                 onClick={() => scroll("left")}
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md -translate-x-3"
-                style={{ background: "white", border: "1px solid rgba(196,168,130,0.35)", color: "var(--brand-gold, #C4A882)" }}
+                style={{ background: "white", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 35%, transparent)", color: "var(--color-gold-primary)" }}
                 aria-label={t.managementDevices.scrollPrevLabel}
               >
                 <ChevronLeft size={18} />
@@ -157,7 +157,7 @@ export default function ManagementDevicesSection() {
                 type="button"
                 onClick={() => scroll("right")}
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full shadow-md translate-x-3"
-                style={{ background: "white", border: "1px solid rgba(196,168,130,0.35)", color: "var(--brand-gold, #C4A882)" }}
+                style={{ background: "white", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 35%, transparent)", color: "var(--color-gold-primary)" }}
                 aria-label={t.managementDevices.scrollNextLabel}
               >
                 <ChevronRight size={18} />

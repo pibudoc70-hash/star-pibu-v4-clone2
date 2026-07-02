@@ -14,7 +14,7 @@ import { STAR_COLORS } from "../../../shared/colors";
 const statIcons = [Award, Star, TrendingUp, Users];
 const { dark, gray, muted } = STAR_COLORS;
 /* 브랜드 웜 뉴트럴 컬러 시스템 */
-const brandGold = '#C4A882';
+const brandGold = 'var(--color-gold-primary)';
 const brandGoldPale = '#F0EAE0';
 const brandGoldDeep = '#A8895E';
 const brandBg = '#FAF8F5';
@@ -70,7 +70,7 @@ function ResultsSection() {
                 style={{
                   transitionDelay: `${i * 0.1}s`,
                   background: '#FFFFFF',
-                  border: `1px solid rgba(196,168,130,0.18)`,
+                  border: `1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent)`,
                   boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
                 }}
               >
@@ -88,7 +88,7 @@ function ResultsSection() {
                 </p>
                 <div
                   className="mt-5 h-px w-10 group-hover:w-full transition-all duration-500"
-                  style={{ backgroundColor: `rgba(196,168,130,0.4)` }}
+                  style={{ backgroundColor: `color-mix(in srgb, var(--color-gold-primary) 40%, transparent)` }}
                 />
               </div>
             );
@@ -206,7 +206,7 @@ function ResultsSection() {
         {/* Notices */}
         <div
           className="rounded-xl p-6 sm:p-8"
-          style={{ background: '#F5F0EB', border: '1px solid rgba(196,168,130,0.2)' }}
+          style={{ background: '#F5F0EB', border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)' }}
         >
           <div className="flex gap-3 mb-4">
             <div

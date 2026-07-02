@@ -343,7 +343,7 @@ export default function TreatmentCard({
     <>
       {/* 카드 */}
       <div
-        className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+        className="treatment-card card card--treatment group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
         style={{
           animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
           minHeight: "380px",

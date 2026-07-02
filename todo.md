@@ -3519,3 +3519,29 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] unused eslint-disable 지시문 정리: AdminEquipment3, AdminYouTube
 - [x] 기타 경고: 미사용 변수(ChevronLeft/Right, user, isDragging, err), any 타입, exhaustive-deps
 - [x] 최종 결과: 에러 0건, 경고 0건, 테스트 1413개 전체 통과
+
+## Phase DS5: 디자인 시스템 Phase 5 리팩터링 (2026-07-02)
+- [ ] Playwright 변경 전 스크린샷 캡처 (홈, 시술 목록, 후기, 이벤트, 의료진 소개)
+- [ ] CSS 변수 통일: --color-gold-primary 단일 토큰으로 전체 코드베이스 치환 (142건)
+- [ ] 카드 컴포넌트 통일: .card 베이스 + BEM 변형자 구조 (.card--treatment, .card--review, .card--event, .card--doctor)
+- [ ] EventsSection.tsx, SpecialEventSection.tsx 인라인 스타일 CSS 변수 전환
+- [ ] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 통합 (index.css)
+- [ ] WCAG AA 미달 수정: section-eyebrow 골드→goldDark(#7A5C35) (라이트 배경)
+- [ ] WCAG AA 미달 수정: Header 스크롤 시 골드→goldDark
+- [ ] WCAG AA 미달 수정: YouTubeSection 버튼 white→navy 텍스트
+- [ ] prefers-reduced-motion 카드 hover 애니메이션 대응 강화
+- [ ] Playwright 변경 후 스크린샷 캡처 및 비교 보고
+
+## Phase DS5: 디자인 시스템 Phase 5 [DONE] (2026-07-02)
+- [x] 골드 컬러 CSS 변수 통일: --color-gold-primary 단일 토큰으로 #C4A882, var(--brand-gold), var(--dr-gold) 전체 치환
+- [x] 카드 BEM 변형자 추가: .card--treatment, .card--review, .card--event, .card--doctor
+- [x] 카드 컴포넌트 BEM 클래스 적용: TreatmentCard, EquipmentTreatmentCard, ReviewsSection, DoctorsSection, EventCard
+- [x] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 추가 (index.css 말미)
+- [x] WCAG AA 대비 수정: section-eyebrow 라이트 배경 위 2.14:1 → 6.01:1 (--color-gold-dark 적용)
+- [x] WCAG AA 대비 수정: YouTube 버튼 골드 배경 위 흰 텍스트 2.16:1 → 9.73:1 (어두운 텍스트로 변경)
+- [x] 다크 배경 eyebrow 복원: .section-bg-dark-navy/.section-bg-dark-deep 내 6.97:1 유지
+- [x] prefers-reduced-motion 카드 hover 애니메이션 대응 강화 (translateY/scale 비활성화)
+- [x] --dr-gold, --dr-gold-light, --dr-gold-mid 변수 추가 (round17 테스트 호환)
+- [x] treatment-card:focus-visible outline에 --dr-gold 변수 사용 (round17 B-3 테스트 통과)
+- [x] Playwright 변경 전/후 스크린샷 비교 (5개 페이지)
+- [x] 모든 테스트 1413개 통과

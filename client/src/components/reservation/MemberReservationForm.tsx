@@ -15,7 +15,7 @@ interface Props {
   onSuccess?: () => void;
 }
 
-const inputCls = "w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4A882]";
+const inputCls = "w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-gold-primary)]";
 const labelCls = "block text-sm font-semibold text-[#1F2937] mb-2";
 
 export function MemberReservationForm({ onSuccess }: Props) {
@@ -136,7 +136,7 @@ export function MemberReservationForm({ onSuccess }: Props) {
 
       <button type="submit" disabled={createReservationMutation.isPending}
         className="w-full py-3 rounded-lg font-semibold text-white transition-colors flex items-center justify-center gap-2"
-        style={{ background: createReservationMutation.isPending ? "#D1D5DB" : "var(--brand-gold, #C4A882)", color: createReservationMutation.isPending ? "#6B7280" : "#1a1a1a" }}>
+        style={{ background: createReservationMutation.isPending ? "#D1D5DB" : "var(--color-gold-primary)", color: createReservationMutation.isPending ? "#6B7280" : "#1a1a1a" }}>
         <Send size={16} />
         {createReservationMutation.isPending ? lbl.submitting : lbl.submit}
       </button>

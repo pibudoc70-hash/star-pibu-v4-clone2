@@ -82,7 +82,7 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
         <span
           className="font-bold"
           style={{
-            color: "var(--brand-gold-deep, #A8895E)",
+            color: "var(--color-gold-deep)",
             fontSize: "clamp(1rem, 3vw, 1.2rem)",
             letterSpacing: "-0.01em",
           }}
@@ -133,7 +133,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
 
   return (
     <div
-      className="flex flex-col overflow-hidden card"
+      className="flex flex-col overflow-hidden card card--event"
     >
       {/* 이미지 — PC: 항상 표시 / 모바일: 확장 시에만 표시 */}
       {event.imageUrl && (
@@ -180,10 +180,10 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 자세히 보기`}
-            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5 text-[var(--brand-gold-deep,#A8895E)]"
+            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5 text-[var(--color-gold-deep)]"
             style={{
               background: "transparent",
-              border: "1px solid rgba(196,168,130,0.5)",
+              border: "1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent)",
               fontSize: "0.82rem",
               letterSpacing: "0.06em",
               fontWeight: 500,
@@ -216,7 +216,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
                 <div key={idx} className="flex items-start justify-between gap-4">
                   <p className="text-xs font-semibold" style={{ color: "var(--brand-text-mid, #666666)" }}>{row.label}</p>
                   <div className="flex items-baseline gap-2 flex-shrink-0">
-                    <p className="font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)", fontSize: "0.95rem" }}>
+                    <p className="font-bold" style={{ color: "var(--color-gold-deep)", fontSize: "0.95rem" }}>
                       {row.discountPrice.toLocaleString()}원
                     </p>
                     {row.normalPrice > 0 && (

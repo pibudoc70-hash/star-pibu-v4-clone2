@@ -107,7 +107,7 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
                   <div key={idx} className="flex items-center justify-between px-4 py-3">
                     <span className="text-xs text-gray-600">{row.label}</span>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="font-bold text-sm" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                      <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
                         {row.discountPrice.toLocaleString()}원
                       </span>
                       {row.normalPrice > 0 && (
@@ -122,7 +122,7 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-xs text-gray-600">{event.productName || "시술"}</span>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="font-bold text-sm" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                    <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>
                       {event.discountPrice.toLocaleString()}원
                     </span>
                     {event.normalPrice > 0 && (
@@ -171,7 +171,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
       <div
         className="rounded-2xl overflow-hidden border"
         style={{
-          borderColor: "var(--brand-gold-light, #E8D9C4)",
+          borderColor: "var(--color-gold-light)",
           background: "var(--brand-bg-card, #FDFAF7)",
         }}
       >
@@ -179,18 +179,18 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
         <div
           className="flex items-center gap-2 px-5 py-4 border-b"
           style={{
-            borderColor: "var(--brand-gold-light, #E8D9C4)",
-            background: "linear-gradient(135deg, rgba(196,168,130,0.12) 0%, rgba(196,168,130,0.04) 100%)",
+            borderColor: "var(--color-gold-light)",
+            background: "linear-gradient(135deg, color-mix(in srgb, var(--color-gold-primary) 12%, transparent) 0%, color-mix(in srgb, var(--color-gold-primary) 4%, transparent) 100%)",
           }}
         >
-          <Sparkles size={14} style={{ color: "var(--brand-gold, #C4A882)" }} />
-          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--brand-gold, #C4A882)" }}>
+          <Sparkles size={14} style={{ color: "var(--color-gold-primary)" }} />
+          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--color-gold-primary)" }}>
             Special Event
           </span>
         </div>
 
         {/* 시술 목록 */}
-        <div className="divide-y" style={{ borderColor: "var(--brand-gold-light, #E8D9C4)" }}>
+        <div className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
           {events.map((event) => {
             let priceRows: PriceRow[] = [];
             if (event.priceRows) {
@@ -212,7 +212,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                     {getLocalizedText(event, "title")}
                   </p>
                   <div className="flex items-baseline gap-1.5 mt-0.5">
-                    <span className="text-sm font-bold" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>
+                    <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>
                       {displayPrice.toLocaleString()}원
                     </span>
                     {normalPrice > 0 && (
@@ -228,9 +228,9 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   onClick={() => setSelectedEvent(event)}
                   className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-all active:scale-95"
                   style={{
-                    borderColor: "var(--brand-gold-light, #E8D9C4)",
-                    color: "var(--brand-gold-deep, #A8895E)",
-                    background: "rgba(196,168,130,0.08)",
+                    borderColor: "var(--color-gold-light)",
+                    color: "var(--color-gold-deep)",
+                    background: "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)",
                   }}
                   aria-label={`${getLocalizedText(event, "title")} 자세히 보기`}
                 >

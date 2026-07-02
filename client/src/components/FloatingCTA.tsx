@@ -111,7 +111,7 @@ export default function FloatingCTA() {
         <a
           href={telHref}
           className="flex items-center gap-2.5 pr-4 pl-3 h-11 rounded-full shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg floating-desktop-tel"
-          style={{ background: "rgba(196,168,130,0.15)", borderLeft: "2px solid rgba(196,168,130,0.4)" }}
+          style={{ background: "color-mix(in srgb, var(--color-gold-primary) 15%, transparent)", borderLeft: "2px solid color-mix(in srgb, var(--color-gold-primary) 40%, transparent)" }}
           aria-label={fc.callAria}
         >
           <Phone size={15} className="floating-desktop-tel-icon flex-shrink-0 text-yellow-600" />

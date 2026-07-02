@@ -80,10 +80,10 @@ export default function Notice() {
           style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
         >
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Bell size={20} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <Bell size={20} style={{ color: "var(--color-gold-primary)" }} />
             <span
               className="text-xs tracking-[0.2em] uppercase font-medium"
-              style={{ color: "var(--brand-gold, #C4A882)" }}
+              style={{ color: "var(--color-gold-primary)" }}
             >
               NOTICE
             </span>
@@ -100,7 +100,7 @@ export default function Notice() {
               <Button
                 onClick={() => navigate(`${langPrefix}/notice/new`)}
                 className="flex items-center gap-2"
-                style={{ background: "var(--brand-gold, #C4A882)", color: "#fff" }}
+                style={{ background: "var(--color-gold-primary)", color: "#fff" }}
               >
                 <Plus size={16} />
                 {writeLabel}
@@ -118,7 +118,7 @@ export default function Notice() {
                   <div className="flex items-start gap-3 py-5 hover:bg-white/60 rounded-lg px-3 transition-colors">
                     {/* 고정 아이콘 */}
                     {notice.isPinned === "1" && (
-                      <Pin size={15} className="mt-1 shrink-0" style={{ color: "var(--brand-gold, #C4A882)" }} />
+                      <Pin size={15} className="mt-1 shrink-0" style={{ color: "var(--color-gold-primary)" }} />
                     )}
 
                     {/* 본문 */}

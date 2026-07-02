@@ -518,7 +518,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
 
   return (
     <div
-      className="treatment-card group"
+      className="treatment-card card card--treatment group"
       style={{ animation: `cardFadeIn 0.35s ease ${Math.min(i * 0.06, 0.4)}s both` }}
     >
       {/* 이미지 영역 */}
@@ -553,7 +553,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             background: "linear-gradient(to top, rgba(31,41,55,0.94) 0%, rgba(31,41,55,0.6) 55%, transparent 100%)",
           }}
         >
-          <p className="text-xs font-semibold mb-0.5 font-montserrat" style={{ color: "rgba(196,168,130,0.85)" }}>
+          <p className="text-xs font-semibold mb-0.5 font-montserrat" style={{ color: "color-mix(in srgb, var(--color-gold-primary) 85%, transparent)" }}>
             {t.nameEn}
           </p>
           <p className="text-sm font-medium text-white mb-1 leading-snug">{t.name}</p>
@@ -585,7 +585,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
 
       {/* 내용 */}
       <div className="p-5">
-          <p className="text-xs font-normal mb-1 font-montserrat" style={{ color: "var(--brand-gold, #C4A882)", letterSpacing: '0.22em' }}>
+          <p className="text-xs font-normal mb-1 font-montserrat" style={{ color: "var(--color-gold-primary)", letterSpacing: '0.22em' }}>
             {t.nameEn}
           </p>
           <h3 className="text-lg font-normal mb-2" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif" }}>
@@ -604,7 +604,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             <RefreshCw size={12} />
             회복 {t.recovery}
           </div>
-          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "var(--brand-gold, #C4A882)" }}>
+          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "var(--color-gold-primary)" }}>
             <Sparkles size={12} />
             {price}
           </div>
@@ -614,7 +614,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
           <a
             href={`/treatment/${encodeURIComponent(t.name)}`}
             className="flex-1 flex items-center justify-center gap-1 text-sm font-semibold transition-all hover:gap-2 py-2 px-3 rounded-lg"
-            style={{ color: "white", background: "var(--brand-gold, #C4A882)" }}
+            style={{ color: "white", background: "var(--color-gold-primary)" }}
           >
             상세 정보
             <ArrowRight size={14} />
@@ -624,7 +624,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-1 text-sm font-semibold transition-all hover:gap-2 py-2 px-3 rounded-lg"
-            style={{ color: "var(--brand-gold, #C4A882)", border: "1px solid rgba(196,168,130,0.4)", background: 'transparent' }}
+            style={{ color: "var(--color-gold-primary)", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 40%, transparent)", background: 'transparent' }}
           >
             상담 문의
             <MessageCircle size={14} />
@@ -748,8 +748,8 @@ export default function TreatmentsSection() {
               className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
               style={
                 activeTab === tab.id
-                  ? { background: "var(--brand-gold, #C4A882)", color: "white", border: "1px solid var(--brand-gold, #C4A882)" }
-                  : { background: "rgba(196,168,130,0.06)", color: "var(--brand-text-mid, #666)", border: "1px solid rgba(196,168,130,0.2)" }
+                  ? { background: "var(--color-gold-primary)", color: "white", border: "1px solid var(--color-gold-primary)" }
+                  : { background: "color-mix(in srgb, var(--color-gold-primary) 6%, transparent)", color: "var(--brand-text-mid, #666)", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)" }
               }
             >
               {tab.label}
@@ -778,11 +778,11 @@ export default function TreatmentsSection() {
               className="rounded-2xl p-6 mb-8 flex flex-wrap items-center gap-4"
               style={{
                 background: "linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, var(--brand-bg, #FAF8F5) 100%)",
-                border: "1px solid rgba(196,168,130,0.25)",
+                border: "1px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent)",
               }}
             >
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "var(--brand-gold, #C4A882)" }}>
+                <p className="text-xs font-semibold tracking-wider mb-1" style={{ color: "var(--color-gold-primary)" }}>
                   LIFTING & TIGHTENING
                 </p>
                 <h3 className="text-xl font-normal mb-1" style={{ color: "var(--brand-text, #2C2C2C)", fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif" }}>
@@ -799,7 +799,7 @@ export default function TreatmentsSection() {
                 <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "#C8860A" }}>
                   울쎄라피 정품
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "var(--brand-gold, #C4A882)" }}>
+                <span className="px-3 py-1 rounded-full text-xs font-medium text-white" style={{ background: "var(--color-gold-primary)" }}>
                   11종 장비
                 </span>
               </div>
@@ -835,7 +835,7 @@ export default function TreatmentsSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-all hover:scale-105 hover:shadow-lg"
-            style={{ background: "var(--brand-gold, #C4A882)", color: "white", boxShadow: "0 4px 14px rgba(196,168,130,0.3)" }}
+            style={{ background: "var(--color-gold-primary)", color: "white", boxShadow: "0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent)" }}
           >
             전체 시술 상담하기
             <ArrowRight size={16} />

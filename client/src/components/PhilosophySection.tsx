@@ -41,7 +41,7 @@ export default function PhilosophySection() {
           <p
             className="text-center font-montserrat mb-8 sm:mb-12"
             style={{
-              color: "rgba(196,168,130,0.7)",
+              color: "color-mix(in srgb, var(--color-gold-primary) 70%, transparent)",
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
@@ -60,12 +60,12 @@ export default function PhilosophySection() {
                 className="text-center flex flex-col items-center"
                 style={{
                   padding: "clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1.5rem)",
-                  borderRight: idx < 2 ? "1px solid rgba(196,168,130,0.15)" : "none",
+                  borderRight: idx < 2 ? "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" : "none",
                 }}
               >
                 <s.Icon
                   size={20}
-                  style={{ color: "rgba(196,168,130,0.5)", marginBottom: "0.75rem" }}
+                  style={{ color: "color-mix(in srgb, var(--color-gold-primary) 50%, transparent)", marginBottom: "0.75rem" }}
                   strokeWidth={1.2}
                 />
                 <div className="philosophy-stat-num" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
@@ -87,8 +87,8 @@ export default function PhilosophySection() {
       <div
         style={{
           background: "var(--brand-bg-alt, #F5F0EB)",
-          borderTop: "1px solid rgba(196,168,130,0.12)",
-          borderBottom: "1px solid rgba(196,168,130,0.12)",
+          borderTop: "1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+          borderBottom: "1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
           padding: "clamp(2rem, 5vw, 3rem) 0",
           overflow: "hidden",
         }}
@@ -97,7 +97,7 @@ export default function PhilosophySection() {
           <p
             className="text-center font-montserrat mb-6 sm:mb-8"
             style={{
-              color: "rgba(196,168,130,0.65)",
+              color: "color-mix(in srgb, var(--color-gold-primary) 65%, transparent)",
               fontSize: "0.6rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
@@ -107,7 +107,7 @@ export default function PhilosophySection() {
           </p>
           <div
             className="grid grid-cols-2 sm:grid-cols-4 gap-0"
-            style={{ borderTop: "1px solid rgba(196,168,130,0.15)" }}
+            style={{ borderTop: "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" }}
           >
             {[
               { year: "2006", label: "서면 개원", sub: "부산 서면에서 시작" },
@@ -119,7 +119,7 @@ export default function PhilosophySection() {
                 key={m.year}
                 style={{
                   padding: "clamp(1.25rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.5rem)",
-                  borderRight: idx < arr.length - 1 ? "1px solid rgba(196,168,130,0.15)" : "none",
+                  borderRight: idx < arr.length - 1 ? "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" : "none",
                   position: "relative",
                 }}
               >
@@ -132,14 +132,14 @@ export default function PhilosophySection() {
                     width: "9px",
                     height: "9px",
                     borderRadius: "50%",
-                    background: idx === arr.length - 1 ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.35)",
-                    border: "1px solid rgba(196,168,130,0.5)",
+                    background: idx === arr.length - 1 ? "var(--color-gold-primary)" : "color-mix(in srgb, var(--color-gold-primary) 35%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent)",
                   }}
                 />
                 <p
                   className="font-montserrat"
                   style={{
-                    color: "var(--brand-gold, #C4A882)",
+                    color: "var(--color-gold-primary)",
                     fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
                     fontWeight: 400,
                     letterSpacing: "-0.02em",
@@ -204,7 +204,7 @@ export default function PhilosophySection() {
                       <div
                         className="font-montserrat font-normal mb-1 flex items-baseline gap-0"
                       >
-                        <span style={{ color: "var(--brand-gold, #C4A882)", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 400, lineHeight: 1 }}>
+                        <span style={{ color: "var(--color-gold-primary)", fontSize: "clamp(14px, 4vw, 18px)", fontWeight: 400, lineHeight: 1 }}>
                           {v.title[0]}
                         </span>
                         <span style={{ color: "var(--brand-text-mid, #666666)", fontSize: "clamp(11px, 3vw, 14px)", fontWeight: 300 }}>
@@ -236,14 +236,14 @@ export default function PhilosophySection() {
                     zIndex: 20,
                     background: "rgba(26,20,16,0.75)",
                     backdropFilter: "blur(12px)",
-                    border: "1px solid rgba(196,168,130,0.3)",
+                    border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
                     borderRadius: "8px",
                     padding: "10px 16px",
                   }}
                 >
                   <p
                     style={{
-                      color: "rgba(196,168,130,0.9)",
+                      color: "color-mix(in srgb, var(--color-gold-primary) 90%, transparent)",
                       fontSize: "0.6rem",
                       letterSpacing: "0.25em",
                       textTransform: "uppercase",

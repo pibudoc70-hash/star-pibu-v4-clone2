@@ -95,10 +95,10 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
           style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
         >
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Bell size={18} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <Bell size={18} style={{ color: "var(--color-gold-primary)" }} />
             <span
               className="text-xs tracking-[0.2em] uppercase font-medium"
-              style={{ color: "var(--brand-gold, #C4A882)" }}
+              style={{ color: "var(--color-gold-primary)" }}
             >
               NOTICE
             </span>

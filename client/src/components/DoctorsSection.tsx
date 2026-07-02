@@ -49,7 +49,7 @@ function DoctorsSection() {
 
         {/* ── 메인 패널 ── */}
         <div
-          className="rounded-3xl overflow-hidden dr-panel-card dr-panel-border"
+          className="rounded-3xl overflow-hidden dr-panel-card card card--doctor dr-panel-border"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >

@@ -18,12 +18,12 @@ export function StatisticCardSkeleton() {
     <div
       className="text-center p-4 sm:p-6 rounded-2xl"
       // [P3-FINAL] border 0.15 → 0.20, shadow 강화
-      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
+      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)' }}
       aria-hidden="true"
     >
       {/* 아이콘 영역 — 골드 픽스드 원형 힌트 */}
       <div className="flex justify-center mb-4">
-        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full" style={{ background: 'rgba(196,168,130,0.22)' }} />
+        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full" style={{ background: 'color-mix(in srgb, var(--color-gold-primary) 22%, transparent)' }} />
       </div>
 
       {/* 숫자 영역 */}
@@ -47,13 +47,13 @@ export function ReviewCardSkeleton() {
     <div
       className="rounded-2xl p-5 sm:p-6 flex flex-col gap-4"
       // [P3-FINAL] border 0.15 → 0.20, shadow 강화
-      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
+      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)' }}
       aria-hidden="true"
     >
       {/* 별점 영역 — 골드 픽스드 원형 힌트 */}
       <div className="flex gap-1">
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className="w-4 h-4 rounded-full" style={{ background: 'rgba(196,168,130,0.30)' }} />
+          <div key={i} className="w-4 h-4 rounded-full" style={{ background: 'color-mix(in srgb, var(--color-gold-primary) 30%, transparent)' }} />
         ))}
       </div>
 
@@ -84,7 +84,7 @@ export function FAQItemSkeleton() {
   return (
     <div
       className="rounded-xl overflow-hidden border"
-      style={{ borderColor: 'rgba(196,168,130,0.2)', background: 'var(--brand-bg-alt, #F5F0EB)' }}
+      style={{ borderColor: 'color-mix(in srgb, var(--color-gold-primary) 20%, transparent)', background: 'var(--brand-bg-alt, #F5F0EB)' }}
       aria-hidden="true"
     >
       {/* 질문 버튼 영역 */}
@@ -96,7 +96,7 @@ export function FAQItemSkeleton() {
       </div>
 
       {/* 답변 영역 (초기 숨김) */}
-      <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t space-y-2" style={{ borderColor: 'rgba(196,168,130,0.1)' }}>
+      <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t space-y-2" style={{ borderColor: 'color-mix(in srgb, var(--color-gold-primary) 10%, transparent)' }}>
         <div className="h-3 skeleton-shimmer rounded w-full" />
         <div className="h-3 skeleton-shimmer rounded w-5/6" />
         <div className="h-3 skeleton-shimmer rounded w-4/5" />
@@ -114,7 +114,7 @@ export function DoctorCardSkeleton() {
     <div
       className="rounded-2xl overflow-hidden"
       // [P3-FINAL] border 0.15 → 0.20, shadow 강화
-      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
+      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)' }}
       aria-hidden="true"
     >
       {/* 이미지 영역 — 그라디언트 오버레이 + 인물 실루엣 힌트 */}
@@ -131,7 +131,7 @@ export function DoctorCardSkeleton() {
           position: 'absolute', bottom: 0, left: '50%',
           transform: 'translateX(-50%)',
           width: '52%', height: '72%',
-          background: 'rgba(196,168,130,0.09)',
+          background: 'color-mix(in srgb, var(--color-gold-primary) 9%, transparent)',
           borderRadius: '50% 50% 0 0',
         }} />
       </div>
@@ -139,7 +139,7 @@ export function DoctorCardSkeleton() {
       {/* 정보 영역 */}
       <div className="p-4 sm:p-6 text-center">
         {/* 전문의 표시 힌트 — 골드 픽스드 배지 */}
-        <div style={{ height: '10px', width: '3rem', borderRadius: '999px', background: 'rgba(196,168,130,0.32)', margin: '0 auto 10px' }} />
+        <div style={{ height: '10px', width: '3rem', borderRadius: '999px', background: 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)', margin: '0 auto 10px' }} />
         {/* 이름 */}
         <div className="h-5 skeleton-shimmer rounded mb-3 w-2/3 mx-auto" />
 
@@ -162,7 +162,7 @@ export function DeviceCardSkeleton() {
     <div
       className="rounded-2xl overflow-hidden"
       // [P3-FINAL] border 0.15 → 0.20, shadow 강화
-      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid rgba(196,168,130,0.20)' }}
+      style={{ background: 'var(--brand-bg-alt, #F5F0EB)', boxShadow: '0 2px 14px rgba(0,0,0,0.06)', border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)' }}
       aria-hidden="true"
     >
       {/* 이미지 영역 — 그라디언트 오버레이 */}
@@ -179,7 +179,7 @@ export function DeviceCardSkeleton() {
           position: 'absolute', top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '40%', height: '50%',
-          background: 'rgba(196,168,130,0.09)',
+          background: 'color-mix(in srgb, var(--color-gold-primary) 9%, transparent)',
           borderRadius: '8px',
         }} />
       </div>
@@ -187,7 +187,7 @@ export function DeviceCardSkeleton() {
       {/* 정보 영역 */}
       <div className="p-4 sm:p-5">
         {/* 장비 카테고리 힌트 — 골드 픽스드 배지 */}
-        <div style={{ height: '9px', width: '2.5rem', borderRadius: '999px', background: 'rgba(196,168,130,0.32)', marginBottom: '8px' }} />
+        <div style={{ height: '9px', width: '2.5rem', borderRadius: '999px', background: 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)', marginBottom: '8px' }} />
         {/* 제목 */}
         <div className="h-5 skeleton-shimmer rounded mb-3 w-3/4" />
 

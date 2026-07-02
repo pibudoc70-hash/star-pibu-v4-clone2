@@ -73,10 +73,28 @@ export const popupEvents = mysqlTable("popupEvents", {
   endAt: bigint("endAt", { mode: "number" }),
   sortOrder: int("sortOrder").notNull().default(0),
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh"]).notNull().default("all"),
+  // 다국어 콘텐츠 필드 (이벤트 관리와 동일한 구조)
+  titleEn: varchar("titleEn", { length: 100 }).default(""),
+  titleJa: varchar("titleJa", { length: 100 }).default(""),
+  titleZh: varchar("titleZh", { length: 100 }).default(""),
+  subtitleEn: varchar("subtitleEn", { length: 100 }).default(""),
+  subtitleJa: varchar("subtitleJa", { length: 100 }).default(""),
+  subtitleZh: varchar("subtitleZh", { length: 100 }).default(""),
+  descEn: text("descEn"),
+  descJa: text("descJa"),
+  descZh: text("descZh"),
+  badgeEn: varchar("badgeEn", { length: 100 }).default(""),
+  badgeJa: varchar("badgeJa", { length: 100 }).default(""),
+  badgeZh: varchar("badgeZh", { length: 100 }).default(""),
+  noteEn: varchar("noteEn", { length: 200 }).default(""),
+  noteJa: varchar("noteJa", { length: 200 }).default(""),
+  noteZh: varchar("noteZh", { length: 200 }).default(""),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   isActiveIdx: index("popupEvents_isActive_idx").on(table.isActive),
+  targetLangIdx: index("popupEvents_targetLang_idx").on(table.targetLang),
 }));
 export type PopupEvent = typeof popupEvents.$inferSelect;
 export type InsertPopupEvent = typeof popupEvents.$inferInsert;
@@ -243,11 +261,16 @@ export const notices = mysqlTable("notices", {
   content: text("content").notNull(),
   isPinned: mysqlEnum("isPinned", ["0", "1"]).notNull().default("0"),
   views: int("views").notNull().default(0),
+  /** 표시 대상 언어: all=전체, ko/en/ja/zh=해당 언어 페이지만 */
+  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh"]).notNull().default("all"),
+  /** 원문 언어 (LLM 번역 시 원본 공지 ID 참조) */
+  sourceNoticeId: int("sourceNoticeId"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   isPinnedIdx: index("notices_isPinned_idx").on(table.isPinned),
   createdAtIdx: index("notices_createdAt_idx").on(table.createdAt),
+  targetLangIdx: index("notices_targetLang_idx").on(table.targetLang),
 }));
 export type Notice = typeof notices.$inferSelect;
 export type InsertNotice = typeof notices.$inferInsert;

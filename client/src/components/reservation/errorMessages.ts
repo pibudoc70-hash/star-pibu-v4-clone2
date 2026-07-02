@@ -18,7 +18,7 @@ export type Lang = "ko" | "en" | "ja" | "zh";
 // ─── 에러 코드 → 다국어 메시지 매핑 ──────────────────────────────────────────
 const DOMAIN_ERROR_MESSAGES: Record<string, Record<Lang, string>> = {
   // OTP 관련
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+   
   OTP_COOLDOWN: {
     ko: "인증번호를 너무 자주 요청했습니다. 잠시 후(약 60초) 다시 시도해 주세요.",
     en: "You've requested too many codes. Please wait about 60 seconds and try again.",

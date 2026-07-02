@@ -114,7 +114,7 @@ export default function Footer() {
                 fontSize: "18px",
                 fontWeight: "400",
                 letterSpacing: "0.08em",
-                color: "var(--brand-gold, #C4A882)",
+                color: "var(--color-gold-primary)",
                 marginBottom: "4px",
               }}
             >

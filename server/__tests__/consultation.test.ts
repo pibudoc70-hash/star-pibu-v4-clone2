@@ -8,6 +8,7 @@
  * - 정상 제출 흐름 검증
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { z } from "zod/v4";
 
 // ── 환경 변수 설정 (테스트 키) ────────────────────────────────────────────────
 process.env.TURNSTILE_SECRET_KEY = "1x0000000000000000000000000000000AA";
@@ -76,10 +77,9 @@ describe("Turnstile 시크릿 키 환경 검증", () => {
 // ── 입력 유효성 검증 ──────────────────────────────────────────────────────────
 describe("상담 폼 입력 유효성 검증", () => {
   it("이름이 비어있으면 유효성 검사에 실패해야 한다", () => {
-    const { z } = require("zod/v4");
     const schema = z.object({
       name: z.string().min(1, "이름을 입력해주세요").max(50),
-      phone: z.string().min(9).max(20).regex(/^[0-9\-\s\+\(\)]+$/),
+      phone: z.string().min(9).max(20).regex(/^[0-9\-\s+()]+$/),
       concern: z.string().min(1).max(200),
       message: z.string().min(5).max(2000),
       privacyAgreed: z.boolean().refine((v: boolean) => v === true),
@@ -98,21 +98,18 @@ describe("상담 폼 입력 유효성 검증", () => {
   });
 
   it("연락처 형식이 잘못되면 유효성 검사에 실패해야 한다", () => {
-    const { z } = require("zod/v4");
-    const phoneSchema = z.string().min(9).max(20).regex(/^[0-9\-\s\+\(\)]+$/);
+    const phoneSchema = z.string().min(9).max(20).regex(/^[0-9\-\s+()]+$/);
     expect(phoneSchema.safeParse("abc-def-ghij").success).toBe(false);
     expect(phoneSchema.safeParse("010-1234-5678").success).toBe(true);
   });
 
   it("상담 내용이 5자 미만이면 유효성 검사에 실패해야 한다", () => {
-    const { z } = require("zod/v4");
     const msgSchema = z.string().min(5, "5자 이상").max(2000);
     expect(msgSchema.safeParse("짧음").success).toBe(false);
     expect(msgSchema.safeParse("충분히 긴 상담 내용입니다").success).toBe(true);
   });
 
   it("개인정보 동의가 false이면 유효성 검사에 실패해야 한다", () => {
-    const { z } = require("zod/v4");
     const privacySchema = z.boolean().refine((v: boolean) => v === true, "동의 필요");
     expect(privacySchema.safeParse(false).success).toBe(false);
     expect(privacySchema.safeParse(true).success).toBe(true);

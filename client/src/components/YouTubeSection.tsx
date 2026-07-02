@@ -208,8 +208,8 @@ export default function YouTubeSection() {
           <button
             type="button"
             onClick={() => refetch()}
-            className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold text-white transition-all hover:shadow-lg"
-            style={{ background: '#D1AB67' }}
+            className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
+            style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
           >
             <RefreshCw size={16} aria-hidden="true" />
             {yt.retry}
@@ -252,7 +252,7 @@ export default function YouTubeSection() {
                   key={video.id}
                   onClick={(e) => openModal(video, e.currentTarget)}
                   aria-label={`${video.title} ${yt.playVideo}`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
@@ -268,7 +268,7 @@ export default function YouTubeSection() {
                     {/* 플레이 버튼 오버레이 */}
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
                       <div className="absolute bottom-3 left-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/60 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-5 md:border-l-7 border-l-transparent border-r-0 border-t-3 md:border-t-4 border-t-transparent border-b-3 md:border-b-4 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
+                        <div className="w-0 h-0 border-l-5 md:border-l-7 border-l-transparent border-r-0 border-t-3 md:border-t-4 border-t-transparent border-b-3 md:border-b-4 border-b-transparent" style={{ borderLeftColor: 'var(--color-gold-primary)' }} />
                       </div>
                     </div>
                   </div>
@@ -296,7 +296,7 @@ export default function YouTubeSection() {
                   key={short.id}
                   onClick={(e) => openModal(short, e.currentTarget)}
                   aria-label={`${short.title} ${yt.playShorts}`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-[9/16] bg-gray-200 overflow-hidden">
@@ -312,7 +312,7 @@ export default function YouTubeSection() {
                     {/* 플레이 버튼 오버레이 */}
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
                       <div className="absolute bottom-2 left-2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/90 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-4 border-l-transparent border-r-0 border-t-3 border-t-transparent border-b-3 border-b-transparent" style={{ borderLeftColor: '#D1AB67' }} />
+                        <div className="w-0 h-0 border-l-4 border-l-transparent border-r-0 border-t-3 border-t-transparent border-b-3 border-b-transparent" style={{ borderLeftColor: 'var(--color-gold-primary)' }} />
                       </div>
                     </div>
                   </div>
@@ -335,8 +335,8 @@ export default function YouTubeSection() {
             href="https://www.youtube.com/@starpibu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D1AB67]"
-            style={{ background: '#D1AB67', color: 'white' }}
+            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+            style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
           >
             {yt.visitChannel}
           </a>

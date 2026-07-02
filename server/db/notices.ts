@@ -1,15 +1,18 @@
-import { asc, desc, eq, inArray } from "drizzle-orm";
+import { asc, desc, eq, inArray, or } from "drizzle-orm";
 import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
-/** 공지사항 목록 (고정글 먼저, 최신순) */
-export async function getAllNotices() {
+/** 공지사항 목록 (고정글 먼저, 최신순, 언어 필터 지원) */
+export async function getAllNotices(lang?: string) {
   const db = await getDb();
   if (!db) return [];
-  return db
+  const rows = await db
     .select()
     .from(notices)
     .orderBy(desc(notices.isPinned), desc(notices.createdAt));
+  if (!lang) return rows;
+  // 언어 필터: all이거나 현재 언어와 일치하는 항목만
+  return rows.filter((r) => r.targetLang === "all" || r.targetLang === lang);
 }
 
 /** 공지사항 단건 조회 */

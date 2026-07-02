@@ -19,10 +19,10 @@ const badgeVariants = cva(
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         gold:
           "border-transparent text-white [a&]:hover:opacity-90"
-          + " bg-[var(--brand-gold,#C4A882)]",
+          + " bg-[var(--color-gold-primary)]",
         "gold-outline":
-          "border-[var(--brand-gold,#C4A882)] text-[var(--brand-gold,#C4A882)]"
-          + " bg-transparent [a&]:hover:bg-[var(--brand-gold,#C4A882)]/10",
+          "border-[var(--color-gold-primary)] text-[var(--color-gold-primary)]"
+          + " bg-transparent [a&]:hover:bg-[var(--color-gold-primary)]/10",
         best:
           "border-transparent bg-[#d1ab67] text-white [a&]:hover:opacity-90",
       },

@@ -32,8 +32,8 @@ function withParsedPriceItems(row: PopupRow) {
   return { ...row, priceItems: parsePriceItems(row.priceItems) };
 }
 
-/** 공개: 현재 활성 팝업 목록 (기간 필터 포함) */
-export async function getActivePopups() {
+/** 공개: 현재 활성 팝업 목록 (기간 필터 + 언어 필터 포함) */
+export async function getActivePopups(lang?: string) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");
   const now = Date.now();
@@ -46,6 +46,8 @@ export async function getActivePopups() {
     .filter((r) => {
       if (r.startAt != null && now < r.startAt) return false;
       if (r.endAt != null && now > r.endAt) return false;
+      // 언어 필터: targetLang이 'all'이거나 현재 언어와 일치하는 항목만 표시
+      if (lang && r.targetLang !== "all" && r.targetLang !== lang) return false;
       return true;
     })
     .map(withParsedPriceItems);

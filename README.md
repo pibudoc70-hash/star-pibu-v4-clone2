@@ -122,8 +122,9 @@ star-pibu-v4-clone/
 ├── shared/                   # 클라이언트·서버 공유 타입 및 상수
 │   └── const.ts, navConfig.ts 등
 │
-├── scripts/                  # 일회성 데이터 마이그레이션·시딩 스크립트
-│   └── migrate-*.mjs, seed-*.mjs 등
+├── scripts/                  # 일회성 데이터 마이그레이션·시딩 스크립트 (playwright 사용 스크래핑 포함)
+│   └── migrate-*.mjs, seed-*.mjs, extract-*.mjs 등
+│   ⚠️  playwright는 scripts/ 데이터 스크래핑 전용으로만 사용하며 E2E 테스트 목적으로 사용하지 않는다. puppeteer는 미사용으로 확인되어 제거되었다.
 │
 ├── patches/                  # pnpm patch (wouter SPA 라우팅 수정)
 │   └── wouter@3.7.1.patch

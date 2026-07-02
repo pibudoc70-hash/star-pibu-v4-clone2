@@ -44,7 +44,7 @@ export default function ReservationSection() {
         left: 0,
         right: 0,
         height: "1px",
-        background: "linear-gradient(90deg, transparent, rgba(196,168,130,0.3), transparent)"
+        background: "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 30%, transparent), transparent)"
       }} />
 
       <div className="max-w-4xl mx-auto">
@@ -52,7 +52,7 @@ export default function ReservationSection() {
         <div className="text-center mb-12">
           <span className="section-eyebrow">ONLINE RESERVATION</span>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Calendar size={22} style={{ color: "var(--brand-gold, #C4A882)" }} />
+            <Calendar size={22} style={{ color: "var(--color-gold-primary)" }} />
             <h2 className="section-title" style={{ margin: 0 }}>{r.sectionTitle}</h2>
           </div>
           <p className="section-subtitle" style={{ maxWidth: "480px", margin: "0 auto" }}>
@@ -65,7 +65,7 @@ export default function ReservationSection() {
           className="rounded-2xl p-4 sm:p-8 md:p-10"
           style={{
             background: "#fff",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 32px rgba(196,168,130,0.10), 0 0 0 1px rgba(196,168,130,0.12)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 32px color-mix(in srgb, var(--color-gold-primary) 10%, transparent), 0 0 0 1px color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
           }}
         >
           {showSuccess ? (
@@ -74,9 +74,9 @@ export default function ReservationSection() {
               <div className="flex justify-center mb-5">
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{ background: "rgba(196,168,130,0.12)", border: "1px solid rgba(196,168,130,0.3)" }}
+                  style={{ background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)", border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)" }}
                 >
-                  <CheckCircle size={32} style={{ color: "var(--brand-gold, #C4A882)" }} />
+                  <CheckCircle size={32} style={{ color: "var(--color-gold-primary)" }} />
                 </div>
               </div>
               <h3
@@ -92,25 +92,25 @@ export default function ReservationSection() {
               <div
                 className="rounded-xl p-4 mb-6 text-left"
                 style={{
-                  background: "rgba(196,168,130,0.07)",
-                  border: "1px solid rgba(196,168,130,0.22)",
+                  background: "color-mix(in srgb, var(--color-gold-primary) 7%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent)",
                 }}
               >
                 <p
                   className="text-sm font-normal mb-2"
-                  style={{ color: "var(--brand-gold-deep, #A8895E)" }}
+                  style={{ color: "var(--color-gold-deep)" }}
                 >
                   {lang === 'ko' ? '예약 안내' : lang === 'en' ? 'Booking Guide' : lang === 'ja' ? '予約のご案内' : '预约说明'}
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)", wordBreak: "keep-all" }}>
                   {lang === 'ko' ? (
-                    <>현재 상태는 <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
+                    <>현재 상태는 <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>예약 신청</span>입니다. 병원 관리자가 확인 후 예약이 <span className="font-normal" style={{ color: "var(--color-gold-deep)" }}>확정</span>됩니다. 확정 여부는 전화로 안내드리겠습니다.</>
                   ) : lang === 'en' ? (
-                    <>Your status is currently <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>confirmed</span>. We will notify you by phone.</>
+                    <>Your status is currently <span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>Pending</span>. Once confirmed by our staff, your reservation will be <span className="font-normal" style={{ color: "var(--color-gold-deep)" }}>confirmed</span>. We will notify you by phone.</>
                   ) : lang === 'ja' ? (
-                    <>現在の状態は<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>予約申請中</span>です。スタッフが確認後、予約が<span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>確定</span>されます。電話でご連絡いたします。</>
+                    <>現在の状態は<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>予約申請中</span>です。スタッフが確認後、予約が<span className="font-normal" style={{ color: "var(--color-gold-deep)" }}>確定</span>されます。電話でご連絡いたします。</>
                   ) : (
-                    <>当前状态为<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>待确认</span>。工作人员确认后，预约将<span className="font-normal" style={{ color: "var(--brand-gold-deep, #A8895E)" }}>确定</span>。我们将致电通知您。</>
+                    <>当前状态为<span className="font-normal" style={{ color: "var(--brand-text, #2C2C2C)" }}>待确认</span>。工作人员确认后，预约将<span className="font-normal" style={{ color: "var(--color-gold-deep)" }}>确定</span>。我们将致电通知您。</>
                   )}
                 </p>
               </div>
@@ -122,8 +122,8 @@ export default function ReservationSection() {
                 }}
                 className="px-8 py-3 rounded-lg font-normal text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
                 style={{
-                  background: "linear-gradient(135deg, var(--brand-gold, #C4A882) 0%, var(--brand-gold-dark, #9a7a3a) 100%)",
-                  boxShadow: "0 4px 16px rgba(196,168,130,0.35)",
+                  background: "linear-gradient(135deg, var(--color-gold-primary) 0%, var(--color-gold-dark) 100%)",
+                  boxShadow: "0 4px 16px color-mix(in srgb, var(--color-gold-primary) 35%, transparent)",
                   minHeight: "44px",
                 }}
               >
@@ -147,7 +147,7 @@ export default function ReservationSection() {
               className="text-center p-5 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 background: "var(--brand-bg-alt, #F5F0EB)",
-                border: "1px solid rgba(196,168,130,0.15)",
+                border: "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)",
                 boxShadow: "0 1px 8px rgba(0,0,0,0.04)",
               }}
             >

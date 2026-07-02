@@ -23,7 +23,7 @@ export default function AdminEquipment2New() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const createTreatment = trpc.treatments.create.useMutation();
-  const { data: user } = trpc.auth.me.useQuery();
+  const { data: _user } = trpc.auth.me.useQuery();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -89,8 +89,8 @@ export default function AdminEquipment2New() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">시술명 *</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="name">시술명 *</label>
+                  <Input id="name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -101,8 +101,8 @@ export default function AdminEquipment2New() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">영문명 *</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="nameEn">영문명 *</label>
+                  <Input id="nameEn"
                     type="text"
                     name="nameEn"
                     value={formData.nameEn}
@@ -113,8 +113,8 @@ export default function AdminEquipment2New() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">카테고리 ID *</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="categoryId">카테고리 ID *</label>
+                  <Input id="categoryId"
                     type="text"
                     name="categoryId"
                     value={formData.categoryId}
@@ -125,8 +125,8 @@ export default function AdminEquipment2New() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">URL 슬러그</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="slug">URL 슬러그</label>
+                  <Input id="slug"
                     type="text"
                     name="slug"
                     value={formData.slug}
@@ -145,8 +145,8 @@ export default function AdminEquipment2New() {
               <h2 className="text-xl font-semibold border-b pb-2">설명</h2>
 
               <div>
-                <label className="block text-sm font-medium mb-2">짧은 설명 (한 줄) *</label>
-                <Input
+                <label className="block text-sm font-medium mb-2" htmlFor="desc">짧은 설명 (한 줄) *</label>
+                <Input id="desc"
                   type="text"
                   name="desc"
                   value={formData.desc}
@@ -157,8 +157,8 @@ export default function AdminEquipment2New() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">상세 설명</label>
-                <Textarea
+                <label className="block text-sm font-medium mb-2" htmlFor="detail">상세 설명</label>
+                <Textarea id="detail"
                   name="detail"
                   value={formData.detail}
                   onChange={handleChange}
@@ -174,8 +174,8 @@ export default function AdminEquipment2New() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">시술 시간</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="time">시술 시간</label>
+                  <Input id="time"
                     type="text"
                     name="time"
                     value={formData.time}
@@ -185,8 +185,8 @@ export default function AdminEquipment2New() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">회복 기간</label>
-                  <Input
+                  <label className="block text-sm font-medium mb-2" htmlFor="recovery">회복 기간</label>
+                  <Input id="recovery"
                     type="text"
                     name="recovery"
                     value={formData.recovery}
@@ -202,8 +202,8 @@ export default function AdminEquipment2New() {
               <h2 className="text-xl font-semibold border-b pb-2">이미지</h2>
 
               <div>
-                <label className="block text-sm font-medium mb-2">이미지 URL</label>
-                <Input
+                <label className="block text-sm font-medium mb-2" htmlFor="image">이미지 URL</label>
+                <Input id="image"
                   type="url"
                   name="image"
                   value={formData.image}
@@ -219,7 +219,8 @@ export default function AdminEquipment2New() {
                       className="max-w-xs h-auto rounded-md"
                       loading="lazy"
                       decoding="async"
-                      onError={() => alert("이미지를 불러올 수 없습니다.")}
+                      role="presentation"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                     />
                   </div>
                 )}

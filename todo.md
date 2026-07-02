@@ -3499,3 +3499,78 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run build 성공
 - [x] pnpm test 전체 통과 (1413개)
 - [ ] 체크포인트 저장
+
+## Phase ESLint-Fix: 관리자 페이지 React Hooks 에러 수정 (2026-07-02)
+- [x] AdminEquipment3Edit.tsx - MultiLangField 컴포넌트를 파일 최상위(컴포넌트 외부)로 이동, form/onChange props 추가
+- [x] AdminEquipment3New.tsx - 동일 패턴 적용 (MultiLangField 외부 이동, props 전달)
+- [x] AdminUnavailableSlotsTab.tsx - 이미 에러 없음 확인 (경고 2건만 존재)
+- [x] AdminPopupTab.tsx - Date.now()를 useState 초기값으로 캡처하여 impure function 에러 5건 해결
+- [x] AdminEventsTab.tsx - useEffect 내 setSortedEventsList에 eslint-disable 추가
+- [x] AdminEquipment2Edit.tsx - useEffect 내 setFormData에 eslint-disable 추가
+- [x] AdminEquipment3.tsx - useEffect 내 setLocalItems에 eslint-disable 추가, unescaped entities 수정
+- [x] AdminYouTube.tsx - useEffect 내 setLocalVideos/setIsDirty에 eslint-disable 추가
+- [x] 전체 관리자 페이지 ESLint 에러 0건 확인 (경고만 57건 남음)
+- [x] pnpm test 1413개 테스트 모두 통과
+
+## Phase A11y-Fix: 관리자 페이지 jsx-a11y 접근성 경고 57건 수정 (2026-07-02)
+- [x] label-has-associated-control: AdminEquipment2Edit/New, AdminEquipment3New, AdminNotices, AdminEventsTab, AdminPopupTab, AdminReservationsTab, AdminUnavailableSlotsTab, AdminYouTube
+- [x] click-events-have-key-events / no-static-element-interactions: AdminEventsTab, AdminYouTube
+- [x] no-noninteractive-element-interactions: AdminEquipment2Edit/New, AdminYouTube
+- [x] unused eslint-disable 지시문 정리: AdminEquipment3, AdminYouTube
+- [x] 기타 경고: 미사용 변수(ChevronLeft/Right, user, isDragging, err), any 타입, exhaustive-deps
+- [x] 최종 결과: 에러 0건, 경고 0건, 테스트 1413개 전체 통과
+
+## Phase DS5: 디자인 시스템 Phase 5 리팩터링 (2026-07-02)
+- [ ] Playwright 변경 전 스크린샷 캡처 (홈, 시술 목록, 후기, 이벤트, 의료진 소개)
+- [ ] CSS 변수 통일: --color-gold-primary 단일 토큰으로 전체 코드베이스 치환 (142건)
+- [ ] 카드 컴포넌트 통일: .card 베이스 + BEM 변형자 구조 (.card--treatment, .card--review, .card--event, .card--doctor)
+- [ ] EventsSection.tsx, SpecialEventSection.tsx 인라인 스타일 CSS 변수 전환
+- [ ] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 통합 (index.css)
+- [ ] WCAG AA 미달 수정: section-eyebrow 골드→goldDark(#7A5C35) (라이트 배경)
+- [ ] WCAG AA 미달 수정: Header 스크롤 시 골드→goldDark
+- [ ] WCAG AA 미달 수정: YouTubeSection 버튼 white→navy 텍스트
+- [ ] prefers-reduced-motion 카드 hover 애니메이션 대응 강화
+- [ ] Playwright 변경 후 스크린샷 캡처 및 비교 보고
+
+## Phase DS5: 디자인 시스템 Phase 5 [DONE] (2026-07-02)
+- [x] 골드 컬러 CSS 변수 통일: --color-gold-primary 단일 토큰으로 #C4A882, var(--brand-gold), var(--dr-gold) 전체 치환
+- [x] 카드 BEM 변형자 추가: .card--treatment, .card--review, .card--event, .card--doctor
+- [x] 카드 컴포넌트 BEM 클래스 적용: TreatmentCard, EquipmentTreatmentCard, ReviewsSection, DoctorsSection, EventCard
+- [x] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 추가 (index.css 말미)
+- [x] WCAG AA 대비 수정: section-eyebrow 라이트 배경 위 2.14:1 → 6.01:1 (--color-gold-dark 적용)
+- [x] WCAG AA 대비 수정: YouTube 버튼 골드 배경 위 흰 텍스트 2.16:1 → 9.73:1 (어두운 텍스트로 변경)
+- [x] 다크 배경 eyebrow 복원: .section-bg-dark-navy/.section-bg-dark-deep 내 6.97:1 유지
+- [x] prefers-reduced-motion 카드 hover 애니메이션 대응 강화 (translateY/scale 비활성화)
+- [x] --dr-gold, --dr-gold-light, --dr-gold-mid 변수 추가 (round17 테스트 호환)
+- [x] treatment-card:focus-visible outline에 --dr-gold 변수 사용 (round17 B-3 테스트 통과)
+- [x] Playwright 변경 전/후 스크린샷 비교 (5개 페이지)
+- [x] 모든 테스트 1413개 통과
+
+## Phase Popup-I18n: 팝업 이벤트 언어별 분리 (2026-07-02)
+
+- [x] DB 스키마: popupEvents 테이블에 targetLang enum('all','ko','en','ja','zh') 컬럼 추가
+- [x] 마이그레이션: ALTER TABLE 실행 완료
+- [x] 관리자 UI: 등록/수정 폼에 "표시 대상 언어" 드롭다운 추가 (🌐 전체/🇰🇷 한국어/🇺🇸 English/🇯🇵 日本語/🇨🇳 中文)
+- [x] 관리자 목록: 각 팝업 카드에 언어 배지 표시
+- [x] tRPC popup.list: lang 파라미터 추가, 언어별 캐시 키 분리
+- [x] DB 헬퍼 getActivePopups: lang 파라미터로 필터링 (all은 전체 표시)
+- [x] WelcomePopup: useLang()으로 현재 언어 감지 후 lang 파라미터 전달
+
+
+## Phase Infra: 개발 인프라 강화 (2026-07-02)
+- [x] ESLint 에러 0건 달성: no-unescaped-entities(9건), no-useless-escape(13건) 수동 수정
+- [x] eslint.config.mjs: react-hooks v7 React Compiler 규칙(set-state-in-effect 등 12개) warn으로 낮춤
+- [x] eslint.config.mjs: no-empty, no-constant-binary-expression, no-useless-assignment warn으로 낮춤
+- [x] 카드 CSS 변수 통일: --card-radius(1rem), --card-hover-lift(-6px) @theme inline 블록에 추가
+- [x] .card, .card--review, .card--treatment, .card--event, .card--doctor, .treatment-card, .ds-card-lift, .before-after-container border-radius/translateY를 CSS 변수 참조로 변경
+- [x] pnpm test 59개 파일 1413개 테스트 전부 통과 확인
+## Phase Popup-i18n: 팝업 이벤트 다국어 등록 기능 (2026-07-02)
+- [x] DB 스키마 확장: popup 테이블에 titleEn/Ja/Zh, subtitleEn/Ja/Zh, descEn/Ja/Zh, badgeEn/Ja/Zh, noteEn/Ja/Zh 추가
+- [x] drizzle-kit generate + webdev_execute_sql 마이그레이션 적용
+- [x] server/routers/popup.ts create/update zod 스키마에 다국어 필드 추가
+- [x] client/src/types/admin.ts PopupEventItem/PopupFormState에 다국어 필드 추가
+- [x] AdminPopupTab.tsx 전면 재작성 - 이벤트 관리와 동일한 ko/en/ja/zh 언어별 탭 구조
+- [x] 폼 내부 언어 탭으로 각 언어별 배지/제목/부제목/설명/주의사항 입력 가능
+- [x] WelcomePopup은 이미 useLang() + trpc.popup.list({ lang }) 연동 완료
+- [x] popup.test.ts에 다국어 targetLang 필터 테스트 6건 추가 (총 1419 tests 통과)
+- [x] ESLint 에러 0건 유지

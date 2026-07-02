@@ -148,7 +148,7 @@ export default function EventShareButton({ eventId, eventTitle, size = "md" }: E
         style={{
           background: "var(--brand-bg-alt, #F5F0EB)",
           color: "var(--brand-text-mid, #666666)",
-          border: "1px solid rgba(196,168,130,0.25)",
+          border: "1px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent)",
         }}
         aria-label={ev_t.shareTitle}
         aria-expanded={open}
@@ -167,7 +167,7 @@ export default function EventShareButton({ eventId, eventTitle, size = "md" }: E
           className="absolute z-50 bottom-full mb-2 left-0 min-w-[220px] rounded-xl shadow-xl border p-3"
           style={{
             background: "#fff",
-            borderColor: "rgba(196,168,130,0.2)",
+            borderColor: "color-mix(in srgb, var(--color-gold-primary) 20%, transparent)",
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -195,11 +195,11 @@ export default function EventShareButton({ eventId, eventTitle, size = "md" }: E
           >
             <span
               className="flex items-center justify-center w-8 h-8 rounded-full flex-shrink-0"
-              style={{ background: copied ? "var(--brand-gold, #C4A882)" : "var(--brand-bg-alt, #F5F0EB)" }}
+              style={{ background: copied ? "var(--color-gold-primary)" : "var(--brand-bg-alt, #F5F0EB)" }}
             >
               {copied
                 ? <Check size={15} color="#fff" />
-                : <Link2 size={15} style={{ color: "var(--brand-gold, #C4A882)" }} />
+                : <Link2 size={15} style={{ color: "var(--color-gold-primary)" }} />
               }
             </span>
             <span>{copied ? ev_t.shareCopied : ev_t.shareLink}</span>

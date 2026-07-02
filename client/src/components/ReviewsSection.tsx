@@ -128,10 +128,10 @@ export default function ReviewsSection() {
                     key={idx}
                     className="review-slide-item"
                   >
-                    <div className="review-card w-full min-w-0">
+                    <div className="review-card card card--review w-full min-w-0">
                       <Quote size={28} className="review-quote-icon" />
                       <p className="text-sm leading-relaxed mb-4 text-brand">
-                        "{r.text}"
+                        {`"${r.text}"`}
                       </p>
                       <div className="flex items-center justify-between">
                         <div>
@@ -148,8 +148,8 @@ export default function ReviewsSection() {
                         <span
                           className="text-xs px-2 py-1 rounded-full font-normal"
                           style={{
-                            background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
-                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#027A37" : "var(--brand-gold-deep, #A8895E)",
+                            background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "rgba(3,199,90,0.08)" : "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+                            color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" || r.platform === "Naver" ? "#027A37" : "var(--color-gold-deep)",
                           }}
                         >
                           {r.platform}
@@ -185,10 +185,10 @@ export default function ReviewsSection() {
                   key={i}
                   style={{ transitionDelay: `${i * 0.1}s` } as React.CSSProperties}
                 >
-                  <div className="review-card flex-shrink-0 w-full min-w-0">
+                  <div className="review-card card card--review flex-shrink-0 w-full min-w-0">
                     <Quote size={28} className="review-quote-icon" />
                     <p className="text-sm leading-relaxed mb-4 text-brand">
-                      "{r.text}"
+                      {`"${r.text}"`}
                     </p>
                     <div className="flex items-center justify-between">
                       <div>
@@ -205,8 +205,8 @@ export default function ReviewsSection() {
                       <span
                         className="text-xs px-2 py-1 rounded-full font-normal"
                         style={{
-                          background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "rgba(3,199,90,0.08)" : "rgba(196,168,130,0.12)",
-                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#027A37" : "var(--brand-gold-deep, #A8895E)",
+                          background: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "rgba(3,199,90,0.08)" : "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
+                          color: r.platform === "네이버" || r.platform === "Naver" || r.platform === "ネイバー" ? "#027A37" : "var(--color-gold-deep)",
                         }}
                       >
                         {r.platform}
@@ -221,7 +221,7 @@ export default function ReviewsSection() {
               <button type="button"
                 onClick={goPrev}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
-                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--brand-gold, #C4A882)', border: '1px solid var(--brand-gold-pale, #E8E0D5)' }}
+                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--color-gold-primary)', border: '1px solid var(--color-gold-pale)' }}
               >
                 <ChevronLeft size={18} />
               </button>
@@ -231,7 +231,7 @@ export default function ReviewsSection() {
                     key={i}
                     onClick={() => setCurrent(i)}
                     className="w-2.5 h-2.5 rounded-full transition-all"
-                    style={{ background: i === current ? "var(--brand-gold, #C4A882)" : "rgba(196,168,130,0.25)" }}
+                    style={{ background: i === current ? "var(--color-gold-primary)" : "color-mix(in srgb, var(--color-gold-primary) 25%, transparent)" }}
                     aria-label={`${i + 1}`}
                   />
                 ))}
@@ -239,7 +239,7 @@ export default function ReviewsSection() {
               <button type="button"
                 onClick={goNext}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:shadow-md"
-                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--brand-gold, #C4A882)', border: '1px solid var(--brand-gold-pale, #E8E0D5)' }}
+                style={{ background: 'var(--brand-bg, #FAF8F5)', color: 'var(--color-gold-primary)', border: '1px solid var(--color-gold-pale)' }}
               >
                 <ChevronRight size={18} />
               </button>

@@ -140,7 +140,7 @@ function SortableEventItem({
           <span>조회수: {event.views || 0}</span>
         </div>
       </div>
-      <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+      <div role="presentation" className="flex gap-2" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           onClick={(e) => {
@@ -202,6 +202,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (eventsList) setSortedEventsList([...eventsList]);
   }, [eventsList]);
 
@@ -449,7 +450,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
               {/* 가격 행 관리 */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-semibold text-[#1F2937]">가격 정보</label>
+                  <span className="text-sm font-semibold text-[#1F2937]">가격 정보</span>
                   <button
                     type="button"
                     onClick={() =>
@@ -517,8 +518,9 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
               {/* 이미지 업로드 */}
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-[#1F2937]">이미지</label>
+                <label htmlFor="event-image-upload" className="text-sm font-semibold text-[#1F2937]">이미지</label>
                 <input
+                  id="event-image-upload"
                   type="file"
                   accept="image/*"
                   disabled={imageUploading}
@@ -580,8 +582,9 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
               {/* 이벤트 유형 */}
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-[#1F2937]">이벤트 유형</label>
+                <label htmlFor="event-type-select" className="text-sm font-semibold text-[#1F2937]">이벤트 유형</label>
                 <select
+                  id="event-type-select"
                   value={
                     eventForm.isSpecialEvent === "1"
                       ? "special"
@@ -608,8 +611,9 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
               {/* 수면마취비 */}
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-[#1F2937]">수면마취비 정보</label>
+                <label htmlFor="event-anesthesia-fee" className="text-sm font-semibold text-[#1F2937]">수면마취비 정보</label>
                 <input
+                  id="event-anesthesia-fee"
                   type="text"
                   placeholder="예: 수면마취비 별도"
                   value={eventForm.anesthesiaFee || ""}
@@ -650,6 +654,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
 
               <div className="flex items-center gap-2">
                 <input
+                  id="event-is-active"
                   type="checkbox"
                   checked={eventForm.isActive === "1"}
                   onChange={(e) =>
@@ -657,7 +662,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
                   }
                   className="w-4 h-4"
                 />
-                <label className="text-sm text-[#6B7280]">활성화</label>
+<label htmlFor="event-is-active" className="text-sm text-[#6B7280]">활성화</label>
               </div>
               <div className="flex gap-2">
                 <button

@@ -15,7 +15,7 @@ function maskSensitive(msg: string): string {
     // 전화번호 패턴 (010-1234-5678 / 01012345678 / +82-10-...)
     .replace(/(\+?82[-\s]?)?0?1[0-9][-\s]?\d{3,4}[-\s]?\d{4}/g, "[PHONE]")
     // 이메일 패턴
-    .replace(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g, "[EMAIL]")
+    .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, "[EMAIL]")
     // 6자리 숫자 OTP 코드 (단독 토큰)
     .replace(/\b\d{6}\b/g, "[OTP]");
 }

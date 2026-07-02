@@ -78,7 +78,7 @@ function SectionFallback({
       <div
         style={{
           height: '9px', width: '3.5rem', borderRadius: '999px',
-          background: isDark ? 'rgba(196,168,130,0.35)' : 'rgba(196,168,130,0.42)',
+          background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 35%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 42%, transparent)',
         }}
       />
       {/* 제목 — 모바일에서 w-full로 잘림 방지 */}
@@ -100,7 +100,7 @@ function SectionFallback({
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.06)',
-              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
             }}>
             {/* 이미지 영역 — aspect-ratio 3/2 + 그라디언트 오버레이 + 가격 배지 힌트 */}
             <div className="relative w-full overflow-hidden" style={{ aspectRatio: '3/2' }}>
@@ -117,7 +117,7 @@ function SectionFallback({
               <div style={{
                 position: 'absolute', top: '10px', right: '10px',
                 height: '20px', width: '52px', borderRadius: '999px',
-                background: isDark ? 'rgba(196,168,130,0.30)' : 'rgba(196,168,130,0.38)',
+                background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 30%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 38%, transparent)',
               }} />
             </div>
             {/* 텍스트 영역 */}
@@ -125,7 +125,7 @@ function SectionFallback({
               {/* 배지 라벨 — 골드 픽스드 */}
               <div style={{
                 height: '11px', width: '3rem', borderRadius: '999px',
-                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+                background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 25%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)',
               }} />
               <div className={`h-5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.1}s` }} />
               <div className={`h-3.5 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.1 + 0.15}s` }} />
@@ -145,7 +145,7 @@ function SectionFallback({
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
-              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
             }}>
             {/* 이미지 영역 — 정사각형 비율 + 그라디언트 오버레이 */}
             <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1/1' }}>
@@ -163,7 +163,7 @@ function SectionFallback({
               {/* 배지 라벨 — 골드 픽스드 */}
               <div style={{
                 height: '9px', width: '2.4rem', borderRadius: '999px',
-                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+                background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 25%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)',
               }} />
               <div className={`h-3.5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.08 + 0.12}s` }} />
@@ -183,12 +183,12 @@ function SectionFallback({
               height: '52px',
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 1px 6px rgba(0,0,0,0.05)',
-              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
             }}>
             {/* Q 아이콘 힌트 — 골드 픽스드 */}
             <div style={{
               width: '11px', height: '11px', borderRadius: '50%', flexShrink: 0,
-              background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+              background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 25%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)',
             }} />
             <div className={`h-3 rounded flex-1 ${s}`} style={{ width: `${60 + (i % 3) * 10}%`, animationDelay: `${i * 0.08 + 0.05}s` }} />
           </div>
@@ -201,7 +201,7 @@ function SectionFallback({
     // 모바일: height 220px, 서브 패널 숨김 → 메인 1장만 표시
     const galleryCardStyle = {
       boxShadow: isDark ? 'none' : '0 2px 12px rgba(0,0,0,0.08)',
-      outline: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+      outline: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
       outlineOffset: '-1px',
     };
     content = (
@@ -224,12 +224,12 @@ function SectionFallback({
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
-              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
             }}>
             {/* 아이콘 원 — 골드 픽스드 힌트, 모바일 32px */}
             <div style={{
               width: 'clamp(28px, 7vw, 40px)', height: 'clamp(28px, 7vw, 40px)', borderRadius: '50%',
-              background: isDark ? 'rgba(196,168,130,0.18)' : 'rgba(196,168,130,0.22)',
+              background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 18%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 22%, transparent)',
             }} />
             <div className={`h-6 md:h-7 rounded ${s}`} style={{ width: 'clamp(3rem, 8vw, 4rem)', animationDelay: `${i * 0.1 + 0.05}s` }} />
             <div className={`h-3 rounded ${s}`} style={{ width: 'clamp(2.5rem, 7vw, 3.5rem)', animationDelay: `${i * 0.1 + 0.1}s` }} />
@@ -246,13 +246,13 @@ function SectionFallback({
             style={{
               background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.96)',
               boxShadow: isDark ? 'none' : '0 1px 8px rgba(0,0,0,0.05)',
-              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(196,168,130,0.14)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid color-mix(in srgb, var(--color-gold-primary) 14%, transparent)',
             }}>
             <div className={`${s} w-full`} style={{ aspectRatio: '4/3', animationDelay: `${i * 0.12}s` }} />
             <div className="p-2.5 md:p-3 flex flex-col gap-1.5 md:gap-2">
               <div style={{
                 height: '9px', width: '2.4rem', borderRadius: '999px',
-                background: isDark ? 'rgba(196,168,130,0.25)' : 'rgba(196,168,130,0.32)',
+                background: isDark ? 'color-mix(in srgb, var(--color-gold-primary) 25%, transparent)' : 'color-mix(in srgb, var(--color-gold-primary) 32%, transparent)',
               }} />
               <div className={`h-3.5 w-4/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.06}s` }} />
               <div className={`h-3 w-3/5 rounded ${s}`} style={{ animationDelay: `${i * 0.12 + 0.12}s` }} />

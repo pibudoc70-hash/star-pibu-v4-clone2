@@ -50,11 +50,11 @@
 
   /* ── Star Dermatology Brand Color System (Premium Edition) ── */
   /* Primary Accent — 절제된 웜 골드 */
-  --brand-gold: #C4A882;
-  --brand-gold-light: #D9C4A8;
-  --brand-gold-pale: #F0EAE0;
-  --brand-gold-deep: #A8895E;
-  --brand-gold-dark: #7A5C35;
+  --color-gold-primary: #C4A882;
+  --color-gold-light: #D9C4A8;
+  --color-gold-pale: #F0EAE0;
+  --color-gold-deep: #A8895E;
+  --color-gold-dark: #7A5C35;
   /* Brand Backgrounds */
   --brand-bg: #FAF8F5;
   --brand-bg-alt: #F5F0EB;
@@ -71,6 +71,10 @@
   /* Functional Colors (유지) */
   --color-star-kakao: #FEE500;
   --color-star-naver: #03C75A;
+  /* DoctorsSection 골드 변수 — round17 테스트 호환 */
+  --dr-gold: var(--color-gold-primary);          /* #C4A882 */
+  --dr-gold-light: var(--color-gold-light);      /* #D9C4A8 */
+  --dr-gold-mid: var(--color-gold-deep);         /* #A8895E */
   /* Legacy aliases — 기존 컴포넌트 호환성 유지 */
   --color-star-mint: #C4A882;
   --color-star-mint-light: #D9C4A8;
@@ -80,14 +84,6 @@
   --color-star-bg: #FAF8F5;
   --color-star-text: #2C2C2C;
   --color-star-text-mid: #666666;
-  /* Gold Tokens (통합) */
-  --color-gold-primary: #C4A882;
-  --color-gold-light: #D9C4A8;
-  --color-gold-pale: #F0EAE0;
-  /* DoctorsSection Gold Tokens */
-  --dr-gold: #C4A882;
-  --dr-gold-light: #F0EAE0;
-  --dr-gold-mid: #D9C4A8;
   /* DoctorsSection Text Tokens */
   --dr-text-dark: #2C2C2C;
   --dr-text-mid: #555;
@@ -107,6 +103,9 @@
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
   --font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 */
   --font-heading-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;          /* 한글 섹션 헤딩 */
+  /* ── Card Design Tokens ── */
+  --card-radius: 1rem;          /* 카드 공통 border-radius */
+  --card-hover-lift: -6px;      /* 카드 hover translateY */
 }
 
 :root {
@@ -307,7 +306,7 @@
 
   /* 브랜드 골드 버튼 (구 star-mint-btn — 브랜드 토큰으로 교체) */
   .star-mint-btn {
-    background-color: var(--brand-gold, #C4A882);
+    background-color: var(--color-gold-primary);
     color: #1a1a1a;
     font-weight: 400;
     padding: 0.75rem 1.5rem;
@@ -318,9 +317,9 @@
     gap: 0.5rem;
   }
   .star-mint-btn:hover {
-    background-color: var(--brand-gold-deep, #A8895E);
+    background-color: var(--color-gold-deep);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(196, 168, 130, 0.4);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-gold-primary) 40%, transparent);
   }
 
   /* 브랜드 차콜 버튼 (구 star-navy-btn — 브랜드 토큰으로 교체) */
@@ -368,13 +367,13 @@
 
   .treatment-card {
     background: var(--brand-bg, #FAF8F5); /* 웹 화이트 → 브랜드 웹 뉴트랄 */
-    border-radius: 0.875rem;
+    border-radius: var(--card-radius, 1rem);
     overflow: hidden;
     box-shadow: 0 2px 16px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04);
     transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.32s ease;
-    border: 1px solid rgba(196,168,130,0.15);
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
     position: relative;
     will-change: transform, box-shadow;
     backface-visibility: hidden;
@@ -386,7 +385,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(196,168,130,0.0), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 0%, transparent), transparent);
     transition: background 0.32s ease;
     pointer-events: none;
     z-index: 1;
@@ -395,32 +394,32 @@
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 0.875rem;
-    background: linear-gradient(160deg, rgba(196,168,130,0.03) 0%, transparent 60%);
+    border-radius: var(--card-radius, 1rem);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--color-gold-primary) 3%, transparent) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.32s ease;
     pointer-events: none;
   }
   .treatment-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(196,168,130,0.18), 0 6px 16px rgba(0,0,0,0.07);
-    border-color: rgba(196,168,130,0.38);
+    transform: translateY(var(--card-hover-lift, -6px));
+    box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0,0,0,0.07);
+    border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
   }
   .treatment-card:hover::before {
-    background: linear-gradient(90deg, transparent, rgba(196,168,130,0.6), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 60%, transparent), transparent);
   }
   .treatment-card:hover::after {
     opacity: 1;
   }
   .treatment-card:active {
-    transform: translateY(-3px);
+    transform: translateY(calc(var(--card-hover-lift, -6px) / 2));
     transition-duration: 0.12s;
   }
   /* [R17-P1-2] focus-visible 링: 키보드 네비게이션 시리는 시각적 포커스 표시 */
   .treatment-card:focus-visible {
-    outline: 2px solid var(--dr-gold);
+    outline: 2px solid var(--dr-gold, var(--color-gold-primary));
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--dr-gold) 20%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--dr-gold, var(--color-gold-primary)) 20%, transparent);
   }
 
   /* [R17-P2] CategoryTabButton — inline style → CSS class-variant */
@@ -476,15 +475,15 @@
     border-radius: 1.125rem;
     padding: 2rem;
     box-shadow: 0 2px 20px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.03);
-    border: 1px solid rgba(196,168,130,0.15);
-    border-top: 2px solid rgba(196,168,130,0.5);
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
+    border-top: 2px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent);
     transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   }
   .review-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 16px 44px rgba(196,168,130,0.15), 0 4px 14px rgba(0,0,0,0.06);
-    border-color: rgba(196,168,130,0.3);
-    border-top-color: rgba(196,168,130,0.7);
+    box-shadow: 0 16px 44px color-mix(in srgb, var(--color-gold-primary) 15%, transparent), 0 4px 14px rgba(0,0,0,0.06);
+    border-color: color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+    border-top-color: color-mix(in srgb, var(--color-gold-primary) 70%, transparent);
   }
 
   /* ═══════════════════════════════════════════════
@@ -593,7 +592,7 @@
   .before-after-container {
     position: relative;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: var(--card-radius, 1rem);
     cursor: ew-resize;
   }
 
@@ -603,7 +602,7 @@
     background: rgba(250,248,245,0.97) !important;
     backdrop-filter: blur(16px) saturate(1.2);
     box-shadow: 0 1px 24px rgba(0,0,0,0.07) !important;
-    border-bottom: 1px solid rgba(196,168,130,0.12);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
   }
 
   /* Mobile menu */
@@ -1024,7 +1023,7 @@
     letter-spacing: 0.03em;
     line-height: 1.06;
     margin-bottom: clamp(0.6rem, 1.8vh, 1.2rem);
-    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px rgba(196,168,130,0.18);
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
   }
   .hero-subtitle {
     color: rgba(255,255,255,0.78);
@@ -1042,7 +1041,7 @@
   .dr-section-bg { background: var(--brand-bg, #FAF8F5); }
   .dr-panel-card {
     background: white;
-    box-shadow: 0 24px 72px rgba(196,168,130,0.18), 0 6px 24px rgba(0,0,0,0.07);
+    box-shadow: 0 24px 72px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 24px rgba(0,0,0,0.07);
   }
   .dr-tab-sidebar {
     width: 220px;
@@ -1094,7 +1093,7 @@
     height: 2px;
     margin: 6px auto 0;
     border-radius: 2px;
-    background: var(--dr-gold);
+    background: var(--color-gold-primary);
     box-shadow: 0 0 6px rgba(201,168,76,0.55);
   }
   .dr-photo-panel {
@@ -1182,14 +1181,14 @@
     padding-top: 8px;
     height: 35px;
     text-align: center;
-    background: var(--dr-gold-light);
+    background: var(--color-gold-pale);
     color: #737373;
   }
   .dr-specialty-chip-mobile {
     border-radius: 20px;
-    background: var(--dr-gold-light);
+    background: var(--color-gold-pale);
     color: var(--dr-text-specialty);
-    border: 1px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 27%, transparent);
   }
   .dr-credentials-item-desktop {
     display: flex;
@@ -1197,7 +1196,7 @@
     gap: 0.625rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 8%, transparent);
   }
   .dr-mob-photo-wrap {
     position: relative;
@@ -1234,7 +1233,7 @@
   }
   .dr-credentials-item-mobile {
     background: var(--brand-bg, #FAF8F5);
-    border: 1px solid color-mix(in srgb, var(--dr-gold) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
     transition: background 0.15s ease;
   }
   .dr-dot-hint { color: var(--dr-text-inactive); }
@@ -1243,7 +1242,7 @@
   /* Section header */
   .dr-section-eyebrow {
     font-family: 'Montserrat', sans-serif;
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     font-weight: 400;
     letter-spacing: 0.28em;
     font-size: 0.68rem;
@@ -1266,17 +1265,17 @@
   }
   /* Panel border */
   .dr-panel-border {
-    border: 1px solid color-mix(in srgb, var(--dr-gold-mid) 33%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-gold-light) 33%, transparent);
   }
   /* Desktop layout min-height */
   .dr-desktop-panel { min-height: 520px; }
   /* Tab sidebar border */
   .dr-tab-sidebar-border {
-    border-right: 1px solid color-mix(in srgb, var(--dr-gold) 27%, transparent);
+    border-right: 1px solid color-mix(in srgb, var(--color-gold-primary) 27%, transparent);
   }
   /* Brand area border */
   .dr-brand-border {
-    border-color: color-mix(in srgb, var(--dr-gold) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
   }
   /* Desktop tab button: base + active/inactive background */
   .dr-tab-btn {
@@ -1294,26 +1293,26 @@
   }
   .dr-tab-btn[data-active="true"] {
     background: linear-gradient(135deg,
-      color-mix(in srgb, var(--dr-gold) 20%, transparent) 0%,
-      color-mix(in srgb, var(--dr-gold) 3%, transparent) 100%);
+      color-mix(in srgb, var(--color-gold-primary) 20%, transparent) 0%,
+      color-mix(in srgb, var(--color-gold-primary) 3%, transparent) 100%);
   }
   .dr-tab-btn[data-active="false"] { background: transparent; }
   /* [R21-P2] focus-visible: 키보드 네비게이션 시 시각적 포커스 표시 (WCAG 2.4.7) */
   .dr-tab-btn:focus-visible {
-    outline: 2px solid var(--dr-gold);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: 2px;
     border-radius: 2px;
   }
   .dr-tab-btn-border {
-    border-bottom: 1px solid color-mix(in srgb, var(--dr-gold) 13%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 13%, transparent);
   }
   /* Desktop tab thumbnail border */
   .dr-thumb-border[data-active="true"] {
-    border: 3px solid var(--dr-gold);
+    border: 3px solid var(--color-gold-primary);
     box-shadow: 0 0 0 3px rgba(201,168,76,0.22), 0 4px 12px rgba(201,168,76,0.28);
   }
   .dr-thumb-border[data-active="false"] {
-    border: 2px solid color-mix(in srgb, var(--dr-gold) 18%, transparent);
+    border: 2px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
     opacity: 0.6;
   }
   /* Desktop tab name/badge color */
@@ -1334,7 +1333,7 @@
   .dr-name-header { margin-top: 23px; }
   /* nameEn style */
   .dr-name-en {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     font-size: 18px;
     font-weight: 100;
     letter-spacing: 0.05em;
@@ -1343,11 +1342,11 @@
   /* Gold divider backgrounds */
   .dr-gold-divider-strong {
     background: linear-gradient(to right,
-      color-mix(in srgb, var(--dr-gold) 20%, transparent), transparent);
+      color-mix(in srgb, var(--color-gold-primary) 20%, transparent), transparent);
   }
   .dr-gold-divider-light {
     background: linear-gradient(to right,
-      color-mix(in srgb, var(--dr-gold) 13%, transparent), transparent);
+      color-mix(in srgb, var(--color-gold-primary) 13%, transparent), transparent);
     margin-bottom: 32px;
   }
   /* Intro paragraph styles */
@@ -1365,9 +1364,9 @@
   .dr-sub-header-wrap {
     margin-bottom: 16px;
   }
-  .dr-sub-header-icon { color: var(--dr-gold); }
+  .dr-sub-header-icon { color: var(--color-gold-primary); }
   .dr-sub-header-text {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     font-weight: 400;
     font-size: 15px;
     margin: 0;
@@ -1380,12 +1379,12 @@
   /* Specialty chip colors and credentials item border merged into R16 class definitions above */
   /* Credentials icon */
   .dr-credentials-icon {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     flex-shrink: 0;
     margin-top: 3px;
   }
   .dr-credentials-icon-mobile {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     flex-shrink: 0;
     margin-top: 4px;
     opacity: 0.85;
@@ -1404,7 +1403,7 @@
   }
   /* Mobile tab list border */
   .dr-mob-tablist-border {
-    border-top: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
   }
   /* Mobile slider arrow button */
   .dr-slider-arrow {
@@ -1415,7 +1414,7 @@
     transition: background 0.2s ease, transform 0.2s ease;
   }
   .dr-slider-arrow:hover {
-    background: rgba(196, 168, 130, 0.6);
+    background: color-mix(in srgb, var(--color-gold-primary) 60%, transparent);
     transform: scale(1.08);
   }
   .dr-slider-arrow:active {
@@ -1423,8 +1422,8 @@
   }
   /* Mobile tab button: active/inactive */
   .dr-mob-tab-btn[data-active="true"] {
-    background: var(--dr-gold-light);
-    border-bottom: 2px solid var(--dr-gold);
+    background: var(--color-gold-pale);
+    border-bottom: 2px solid var(--color-gold-primary);
   }
   .dr-mob-tab-btn[data-active="false"] {
     background: white;
@@ -1432,7 +1431,7 @@
   }
   /* Mobile thumb border */
   .dr-mob-thumb-border[data-active="true"] {
-    border: 2px solid var(--dr-gold);
+    border: 2px solid var(--color-gold-primary);
   }
   .dr-mob-thumb-border[data-active="false"] {
     border: 2px solid #e5e7eb;
@@ -1446,27 +1445,27 @@
     color: var(--dr-text-inactive);
     font-weight: 400;
   }
-  .dr-mob-tab-badge[data-active="true"] { color: var(--dr-gold); }
+  .dr-mob-tab-badge[data-active="true"] { color: var(--color-gold-primary); }
   .dr-mob-tab-badge[data-active="false"] { color: var(--dr-text-dot-inactive); }
   /* Mobile nameEn */
   .dr-mob-name-en {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     font-size: 0.75rem;
     font-weight: 400;
     white-space: nowrap;
   }
   /* Mobile specialty title */
   .dr-mob-specialty-title {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     font-weight: 400;
   }
   /* Accordion border */
   .dr-accordion-border {
-    border: 1px solid color-mix(in srgb, var(--dr-gold) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
   }
   /* Accordion button */
   .dr-accordion-btn[data-expanded="true"] {
-    background: var(--dr-gold-light);
+    background: var(--color-gold-pale);
     transition: background 0.2s ease;
   }
   .dr-accordion-btn[data-expanded="false"] {
@@ -1477,7 +1476,7 @@
   .dr-accordion-label { color: var(--dr-text-muted); }
   /* Accordion chevron */
   .dr-accordion-chevron {
-    color: var(--dr-gold);
+    color: var(--color-gold-primary);
     transition: transform 0.3s ease;
   }
   .dr-accordion-chevron[data-expanded="true"] { transform: rotate(180deg); }
@@ -1485,7 +1484,7 @@
   /* Dot nav button */
   .dr-dot-nav {
     height: 6px;
-    background: color-mix(in srgb, var(--brand-gold, #C4A882) 25%, transparent);
+    background: color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
     border: none;
     cursor: pointer;
     border-radius: 3px;
@@ -1497,7 +1496,7 @@
   }
   .dr-dot-nav[data-active="true"] {
     width: 24px;
-    background: var(--dr-gold);
+    background: var(--color-gold-primary);
   }
   .dr-dot-nav[data-active="false"] { width: 6px; }
 
@@ -1510,8 +1509,8 @@
 
   /* Pulse animation for CTA — 브랜드 골드 포커스 글로우 */
   @keyframes pulse-soft {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(196, 168, 130, 0.35); }
-    50% { box-shadow: 0 0 0 12px rgba(196, 168, 130, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-gold-primary) 35%, transparent); }
+    50% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--color-gold-primary) 0%, transparent); }
   }
 
   .star-navy-btn:focus {
@@ -1993,7 +1992,7 @@
       min-height: 48px !important;
       background: rgba(20,15,8,0.42) !important;
       color: rgba(220,196,158,0.97) !important;
-      border: 1px solid rgba(196,168,130,0.50) !important;
+      border: 1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent) !important;
       border-radius: 999px !important;
       opacity: 1 !important;
       backdrop-filter: blur(14px) saturate(1.3) !important;
@@ -2146,7 +2145,7 @@
   /* [FM-P3-2] pulse-soft (CTA 버튼 포커스 글로우) 비활성화 */
   .star-navy-btn:focus {
     animation: none !important;
-    box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.5) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold-primary) 50%, transparent) !important;
   }
 
   /* animate-bounce (스크롤 인디케이터 화살표) 비활성화 */
@@ -2192,7 +2191,7 @@
   box-shadow: 0 4px 20px rgba(31, 58, 95, 0.15);
 }
 .ds-card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 2px));
   box-shadow: 0 16px 48px rgba(31, 58, 95, 0.3);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2239,11 +2238,11 @@
   background: rgba(20,15,8,0.44);
   color: rgba(220,196,158,0.98);
   /* border 골드 강도 0.45 → 0.58 */
-  border: 1px solid rgba(196,168,130,0.58);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 58%, transparent);
   backdrop-filter: blur(14px) saturate(1.4);
   -webkit-backdrop-filter: blur(14px) saturate(1.4);
   /* box-shadow 강화: 외부 그림자 증가 + inset 골드 하이라이트 강화 */
-  box-shadow: 0 2px 16px rgba(0,0,0,0.40), 0 0 0 1px rgba(196,168,130,0.12), inset 0 1px 0 rgba(220,196,158,0.14);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.40), 0 0 0 1px color-mix(in srgb, var(--color-gold-primary) 12%, transparent), inset 0 1px 0 rgba(220,196,158,0.14);
   text-shadow: 0 1px 6px rgba(0,0,0,0.60), 0 0 14px rgba(0,0,0,0.35);
   font-size: clamp(0.68rem, 2.4vw, 0.8rem);
   padding: clamp(0.52rem, 1.6vw, 0.68rem) clamp(0.8rem, 2.8vw, 1.15rem);
@@ -2286,9 +2285,9 @@
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {
-  background: var(--brand-gold, #C4A882);
+  background: var(--color-gold-primary);
   color: #1a1a1a;
-  box-shadow: 0 4px 24px rgba(196, 168, 130, 0.45);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-gold-primary) 45%, transparent);
   padding-top: 11px;
   font-weight: 500;
 }
@@ -2308,8 +2307,8 @@
 /* .card: 기본 카드 스타일 통합 */
 .card {
   background: var(--brand-bg, #FAF8F5);
-  border: 1px solid rgba(196, 168, 130, 0.15);
-  border-radius: 0.875rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
+  border-radius: var(--card-radius, 1rem);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04);
   transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
@@ -2326,7 +2325,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 0%, transparent), transparent);
   transition: background 0.32s ease;
   pointer-events: none;
   z-index: 1;
@@ -2336,21 +2335,21 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 0.875rem;
-  background: linear-gradient(160deg, rgba(196, 168, 130, 0.03) 0%, transparent 60%);
+  border-radius: var(--card-radius, 1rem);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--color-gold-primary) 3%, transparent) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.32s ease;
   pointer-events: none;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(196, 168, 130, 0.18), 0 6px 16px rgba(0, 0, 0, 0.07);
-  border-color: rgba(196, 168, 130, 0.38);
+  transform: translateY(var(--card-hover-lift, -6px));
+  box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07);
+  border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
 }
 
 .card:hover::before {
-  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 60%, transparent), transparent);
 }
 
 .card:hover::after {
@@ -2358,42 +2357,77 @@
 }
 
 .card:active {
-  transform: translateY(-3px);
+  transform: translateY(calc(var(--card-hover-lift, -6px) / 2));
   transition-duration: 0.12s;
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--brand-gold, #C4A882);
+  outline: 2px solid var(--color-gold-primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-gold, #C4A882) 20%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
 }
 
 /* .card--review: 리뷰 카드 변형 (높은 패딩, 상단 강조 테두리) */
 .card--review {
-  border-radius: 1.125rem;
+  border-radius: calc(var(--card-radius, 1rem) + 0.125rem);
   padding: 2rem;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
-  border-top: 2px solid rgba(196, 168, 130, 0.5);
+  border-top: 2px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent);
 }
 
 .card--review:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 44px rgba(196, 168, 130, 0.15), 0 4px 14px rgba(0, 0, 0, 0.06);
-  border-top-color: rgba(196, 168, 130, 0.7);
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 1px));
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--color-gold-primary) 15%, transparent), 0 4px 14px rgba(0, 0, 0, 0.06);
+  border-top-color: color-mix(in srgb, var(--color-gold-primary) 70%, transparent);
+}
+
+/* .card--treatment: 시술 카드 변형 (treatment-card 별칭 — 하위 호환) */
+.card--treatment {
+  overflow: hidden;
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+}
+.card--treatment:hover {
+  transform: translateY(var(--card-hover-lift, -6px));
+  box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07);
+  border-color: color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
+}
+/* .card--event: 이벤트 카드 변형 (오프화이트 배경, 넓은 radius) */
+.card--event {
+  background: var(--brand-bg-alt, #F5F0EB);
+  border-radius: calc(var(--card-radius, 1rem) + 0.25rem);
+  overflow: hidden;
+}
+.card--event:hover {
+  transform: translateY(calc(var(--card-hover-lift, -6px) + 2px));
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--color-gold-primary) 16%, transparent), 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+/* .card--doctor: 의사 카드 변형 (dr-panel-card 별칭 — 하위 호환) */
+.card--doctor {
+  background: white;
+  border-radius: calc(var(--card-radius, 1rem) + 0.5rem);
+  overflow: hidden;
+  box-shadow: 0 24px 72px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 24px rgba(0, 0, 0, 0.07);
 }
 
 /* eyebrow: 영문 오버라인 — Montserrat, 골드, 넓은 자간 */
 .section-eyebrow {
   font-family: 'Montserrat', sans-serif;
-  /* [FINAL] 가독성 개선: 0.65rem, font-weight 400→500, opacity 0.95 */
+  /* [DS5-WCAG] 라이트 배경 위 AA 통과: #7A5C35(6.01:1) 사용
+     다크 배경 위에서는 .section-bg-dark-navy/.section-bg-dark-deep 내부에서 오버라이드 */
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.30em;
   text-transform: uppercase;
-  color: var(--brand-gold, #C4A882);
+  color: var(--color-gold-dark, #7A5C35);
   margin-bottom: 0.9rem;
   display: block;
-  opacity: 0.95;
+  opacity: 1;
+}
+/* 다크 배경 섹션 위에서는 밝은 골드로 복원 (6.97:1 PASS) */
+.section-bg-dark-navy .section-eyebrow,
+.section-bg-dark-deep .section-eyebrow {
+  color: var(--color-gold-primary, #C4A882);
 }
 /* section-title: 한글 주제목 — Noto Serif KR 명조, 존재감 */
 .section-title {
@@ -2652,8 +2686,8 @@
   text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .philosophy-value-card {
-  border-left: 2px solid rgba(196,168,130,0.3);
-  background: rgba(196,168,130,0.04);
+  border-left: 2px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--color-gold-primary) 4%, transparent);
   border-radius: 0 8px 8px 0;
   padding: 1rem;
   transition: transform 0.3s ease;
@@ -2680,7 +2714,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(196,168,130,0.3), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 30%, transparent), transparent);
 }
 
 /* 섹션 헤더 */
@@ -2698,8 +2732,8 @@
   padding: 3rem 2.5rem;
   box-shadow:
     0 2px 4px rgba(0,0,0,0.04),
-    0 12px 48px rgba(196,168,130,0.14),
-    0 0 0 1px rgba(196,168,130,0.14);
+    0 12px 48px color-mix(in srgb, var(--color-gold-primary) 14%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-gold-primary) 14%, transparent);
 }
 
 /* 행 레이아웃 (이름 + 연락처) */
@@ -2733,7 +2767,7 @@
   gap: 0.25rem;
 }
 .consultation-required {
-  color: var(--brand-gold);
+  color: var(--color-gold-primary);
   font-size: 0.875rem;
   line-height: 1;
 }
@@ -2744,7 +2778,7 @@
   width: 100%;
   min-height: 44px;
   padding: 0.625rem 0.875rem;
-  border: 1.5px solid rgba(196,168,130,0.25);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   border-radius: 8px;
   background: #fafaf8;
   color: var(--brand-text);
@@ -2761,9 +2795,9 @@
 }
 .consultation-input:focus,
 .consultation-textarea:focus {
-  border-color: var(--brand-gold);
+  border-color: var(--color-gold-primary);
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(196,168,130,0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
 }
 .consultation-input--error {
   border-color: #d97706 !important;
@@ -2796,7 +2830,7 @@
   width: 100%;
   min-height: 44px;
   padding: 0.625rem 0.875rem;
-  border: 1.5px solid rgba(196,168,130,0.25);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   border-radius: 8px;
   background: #fafaf8;
   color: var(--brand-text);
@@ -2816,8 +2850,8 @@
   color: rgba(74,58,45,0.38);
 }
 .consultation-select-btn:focus {
-  border-color: var(--brand-gold);
-  box-shadow: 0 0 0 3px rgba(196,168,130,0.15);
+  border-color: var(--color-gold-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
 }
 .consultation-select-chevron {
   color: rgba(74,58,45,0.5);
@@ -2833,7 +2867,7 @@
   left: 0;
   right: 0;
   background: #fff;
-  border: 1.5px solid rgba(196,168,130,0.25);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.10);
   z-index: 50;
@@ -2854,11 +2888,11 @@
   align-items: center;
 }
 .consultation-select-item:hover {
-  background: rgba(196,168,130,0.08);
+  background: color-mix(in srgb, var(--color-gold-primary) 8%, transparent);
 }
 .consultation-select-item--selected {
-  background: rgba(196,168,130,0.12);
-  color: var(--brand-gold-dark, #9a7a3a);
+  background: color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
+  color: var(--color-gold-dark);
   font-weight: 400;
 }
 
@@ -2882,12 +2916,12 @@
   width: 18px;
   height: 18px;
   min-width: 18px;
-  border: 1.5px solid rgba(196,168,130,0.4);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 40%, transparent);
   border-radius: 4px;
   background: #fafaf8;
   cursor: pointer;
   margin-top: 1px;
-  accent-color: var(--brand-gold);
+  accent-color: var(--color-gold-primary);
   flex-shrink: 0;
 }
 .consultation-privacy-text {
@@ -2897,7 +2931,7 @@
   word-break: keep-all;
 }
 .consultation-privacy-link {
-  color: var(--brand-gold);
+  color: var(--color-gold-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: opacity 0.15s ease;
@@ -2930,7 +2964,7 @@
   width: 100%;
   min-height: 52px;
   padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, var(--brand-gold) 0%, var(--brand-gold-dark, #9a7a3a) 100%);
+  background: linear-gradient(135deg, var(--color-gold-primary) 0%, var(--color-gold-dark) 100%);
   color: #fff;
   font-size: 1rem;
   font-weight: 400;
@@ -2943,13 +2977,13 @@
   justify-content: center;
   gap: 0.5rem;
   transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 16px rgba(196,168,130,0.35);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-gold-primary) 35%, transparent);
   font-family: inherit;
 }
 .consultation-submit-btn:hover:not(:disabled) {
   opacity: 0.92;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(196,168,130,0.45);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-gold-primary) 45%, transparent);
 }
 .consultation-submit-btn:active:not(:disabled) {
   transform: translateY(0);
@@ -2976,11 +3010,11 @@
   border-radius: 16px;
   box-shadow:
     0 1px 3px rgba(0,0,0,0.06),
-    0 8px 32px rgba(196,168,130,0.10),
-    0 0 0 1px rgba(196,168,130,0.12);
+    0 8px 32px color-mix(in srgb, var(--color-gold-primary) 10%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
 }
 .consultation-success-icon {
-  color: var(--brand-gold);
+  color: var(--color-gold-primary);
   margin: 0 auto 1.25rem;
   display: block;
   width: 48px;
@@ -3008,7 +3042,7 @@
   padding: 0.75rem 2rem;
   min-height: 44px;
   background: transparent;
-  border: 1.5px solid rgba(196,168,130,0.4);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 40%, transparent);
   border-radius: 8px;
   color: var(--brand-text);
   font-size: 0.9375rem;
@@ -3018,8 +3052,8 @@
   font-family: inherit;
 }
 .consultation-reset-btn:hover {
-  border-color: var(--brand-gold);
-  background: rgba(196,168,130,0.06);
+  border-color: var(--color-gold-primary);
+  background: color-mix(in srgb, var(--color-gold-primary) 6%, transparent);
 }
 
 /* ── 모바일 반응형 ──────────────────────────────────────────────────────── */
@@ -3070,8 +3104,8 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: #1A1A1C;
   /* [P2-FINISH] border-top 골드 강도 소폭 상향 — 브랜드 무드 연결 */
-  border-top: 1px solid rgba(196,168,130,0.32);
-  box-shadow: 0 -2px 20px rgba(0,0,0,0.45), 0 -1px 0 rgba(196,168,130,0.12);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 32%, transparent);
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.45), 0 -1px 0 color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
   /* 상단 radius: 바가 콘텐츠에서 자연스럽게 올라오는 느낌 */
   border-radius: 14px 14px 0 0;
   gap: 0; /* 구분선은 border-right로 처리 */
@@ -3161,7 +3195,7 @@
   font-weight: 500;
   letter-spacing: 0.05em;
   /* [v5-FINAL] 명시적 골드 구분선 — gap 방식보다 프리미엄 */
-  border-right: 1px solid rgba(196,168,130,0.22);
+  border-right: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent);
 }
 .mobile-bottom-btn--reserve:active {
   background: #02a84c;
@@ -3176,7 +3210,7 @@
   background: var(--chat-bg, #FEE500);
   color: var(--chat-color, #3C1E1E);
   /* [v5-FINAL] 명시적 골드 구분선 */
-  border-right: 1px solid rgba(196,168,130,0.22);
+  border-right: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent);
 }
 /* 카카오 리플: 어두운 갈색 반투명 (노란 배경 위에서 자연스럽게) */
 .mobile-bottom-btn--chat::after {
@@ -3186,7 +3220,7 @@
 /* 전화 — 브랜드 골드 톤 (시인성 확보) */
 .mobile-bottom-btn--phone {
   /* [P3-FINAL] 배경 0.22 → 0.28 강화, 텍스트 완전 불투명, 샄도우 강화 */
-  background: rgba(196,168,130,0.28);
+  background: color-mix(in srgb, var(--color-gold-primary) 28%, transparent);
   color: rgba(232,212,180,1.0);
   font-weight: 500;
   border-right: none;
@@ -3196,7 +3230,7 @@
 }
 /* 전화 리플: 골드 반투명 (다크 배경 위에서 자연스럽게) */
 .mobile-bottom-btn--phone::after {
-  background: radial-gradient(circle at 50% 50%, rgba(196,168,130,0.45) 0%, transparent 68%);
+  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-gold-primary) 45%, transparent) 0%, transparent 68%);
 }
 
 /* 데스크톱에서 완전히 숨김 */
@@ -3350,7 +3384,7 @@ body.font-lang-zh .hero-stat-label {
   .mobile-menu-header-title {
     font-size: 14px;
     font-weight: 700;
-    color: var(--brand-gold, #C4A882);
+    color: var(--color-gold-primary);
     letter-spacing: 0.08em;
     font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   }
@@ -3372,7 +3406,7 @@ body.font-lang-zh .hero-stat-label {
     background-color: rgba(0, 0, 0, 0.04);
   }
   .mobile-menu-close-btn:focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: 2px;
   }
 
@@ -3439,15 +3473,15 @@ body.font-lang-zh .hero-stat-label {
   }
   .mobile-menu-item.active {
     font-weight: 700;
-    color: var(--brand-gold, #C4A882);
-    border-left-color: var(--brand-gold, #C4A882);
-    background-color: rgba(196, 168, 130, 0.04);
+    color: var(--color-gold-primary);
+    border-left-color: var(--color-gold-primary);
+    background-color: color-mix(in srgb, var(--color-gold-primary) 4%, transparent);
   }
   .mobile-menu-item:hover {
     background-color: rgba(0, 0, 0, 0.02);
   }
   .mobile-menu-item:focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: -2px;
   }
 
@@ -3471,8 +3505,8 @@ body.font-lang-zh .hero-stat-label {
     min-width: 24px;
   }
   .mobile-menu-item.active .mobile-menu-icon {
-    background-color: rgba(196, 168, 130, 0.12);
-    color: var(--brand-gold, #C4A882);
+    background-color: color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
+    color: var(--color-gold-primary);
   }
 
   /* 2차 메뉴 섹션 - opacity 전환 */
@@ -3522,16 +3556,16 @@ body.font-lang-zh .hero-stat-label {
     color: var(--brand-text-mid, #666666);
   }
   .mobile-menu-lang-btn.active {
-    background-color: rgba(196, 168, 130, 0.08);
-    border-color: var(--brand-gold, #C4A882);
+    background-color: color-mix(in srgb, var(--color-gold-primary) 8%, transparent);
+    border-color: var(--color-gold-primary);
     font-weight: 700;
-    color: var(--brand-gold, #C4A882);
+    color: var(--color-gold-primary);
   }
   .mobile-menu-lang-btn:hover {
-    background-color: rgba(196, 168, 130, 0.04);
+    background-color: color-mix(in srgb, var(--color-gold-primary) 4%, transparent);
   }
   .mobile-menu-lang-btn:focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: 2px;
   }
   .mobile-menu-lang-badge {
@@ -3549,8 +3583,8 @@ body.font-lang-zh .hero-stat-label {
     transition: all 0.2s ease;
   }
   .mobile-menu-lang-btn.active .mobile-menu-lang-badge {
-    background-color: rgba(196, 168, 130, 0.15);
-    color: var(--brand-gold, #C4A882);
+    background-color: color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
+    color: var(--color-gold-primary);
   }
 
   /* 모바일 CTA 섹션 */
@@ -3589,7 +3623,7 @@ body.font-lang-zh .hero-stat-label {
     transform: translateY(-2px);
   }
   .mobile-menu-cta-primary:focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: 2px;
   }
 
@@ -3766,7 +3800,7 @@ body.font-lang-zh .hero-stat-label {
 /* ── 모바일 접근성 — focus-visible 링 통일 ── */
 @media (max-width: 640px) {
   :focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882);
+    outline: 2px solid var(--color-gold-primary);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -3986,33 +4020,33 @@ body.font-lang-zh .hero-stat-label {
   padding: 8px 18px;
   background: var(--brand-bg, #FAF8F5);
   color: var(--brand-text-mid, #666);
-  border: 1.5px solid rgba(196, 168, 130, 0.3);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
   transition: all 0.2s;
   min-height: 44px;
   cursor: pointer;
 }
 .faq-tab-btn--active {
-  background: var(--brand-gold, #C4A882);
+  background: var(--color-gold-primary);
   color: #fff;
   font-size: 0.95rem;
   padding: 10px 22px;
-  box-shadow: 0 4px 14px rgba(196, 168, 130, 0.3);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
   transform: translateY(-1px);
   border-color: transparent;
 }
 .faq-tab-btn:hover:not(.faq-tab-btn--active) {
-  border-color: rgba(196, 168, 130, 0.6);
+  border-color: color-mix(in srgb, var(--color-gold-primary) 60%, transparent);
   background: var(--brand-bg-alt, #F5F0EB);
 }
 
 /* 아코디언 래퍼 */
 .faq-accordion-wrap {
-  border: 1.5px solid rgba(196, 168, 130, 0.2);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
 }
 
 /* 아코디언 아이템 */
 .faq-accordion-item {
-  border-color: rgba(196, 168, 130, 0.15);
+  border-color: color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
 }
 
 /* 질문 버튼 */
@@ -4049,13 +4083,13 @@ body.font-lang-zh .hero-stat-label {
 
 /* 답변 뱃지 */
 .faq-answer-badge {
-  background: var(--brand-gold, #C4A882);
+  background: var(--color-gold-primary);
   color: #fff;
 }
 
 /* text-brand-gold 유틸리티 */
 .text-brand-gold {
-  color: var(--brand-gold, #C4A882);
+  color: var(--color-gold-primary);
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -4071,7 +4105,7 @@ body.font-lang-zh .hero-stat-label {
 
 /* 인용 아이콘 */
 .review-quote-icon {
-  color: var(--brand-gold-pale, #EDE8E0);
+  color: var(--color-gold-pale);
   margin-bottom: 0.5rem;
 }
 
@@ -4088,21 +4122,21 @@ body.font-lang-zh .hero-stat-label {
   width: 7px;
   height: 7px;
   border-radius: 9999px;
-  background: rgba(196, 168, 130, 0.25);
+  background: color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   transition: all 0.3s;
   min-height: 0;
   cursor: pointer;
 }
 .review-dot--active {
   width: 22px;
-  background: var(--brand-gold, #C4A882);
+  background: var(--color-gold-primary);
 }
 
 /* ─────────────────────────────────────────────────────────────────────
    SpecialEventSection CSS 클래스 (인라인 스타일 제거 후 대체)
    ───────────────────────────────────────────────────────────────────── */
 .event-empty-icon-wrap {
-  background: linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, rgba(196, 168, 130, 0.2) 100%);
+  background: linear-gradient(135deg, var(--brand-bg-alt, #F5F0EB) 0%, color-mix(in srgb, var(--color-gold-primary) 20%, transparent) 100%);
 }
 
 /* 스켈레톤 카드 */
@@ -4160,13 +4194,13 @@ body.font-lang-zh .hero-stat-label {
   transition: all 0.2s;
   background: var(--brand-bg, #FAF8F5);
   color: var(--brand-text-mid, #666666);
-  border: 1px solid rgba(196, 168, 130, 0.25);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   min-height: 44px;
 }
 .equipment-tab-btn--active {
-  background: var(--brand-gold, #C4A882);
+  background: var(--color-gold-primary);
   color: #ffffff;
-  border-color: var(--brand-gold, #C4A882);
+  border-color: var(--color-gold-primary);
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -4231,7 +4265,7 @@ body.font-lang-zh .hero-stat-label {
 
 .floating-btn-tel {
   /* [P4-FINAL] mobile-bottom-btn--phone과 완전 통일: 0.10→0.28, 완전 불투명 텍스트, 샤도우 */
-  background: rgba(196,168,130,0.28);
+  background: color-mix(in srgb, var(--color-gold-primary) 28%, transparent);
   color: rgba(232,212,180,1.0);
   padding-top: 10px;
   padding-bottom: 10px;
@@ -4256,19 +4290,19 @@ body.font-lang-zh .hero-stat-label {
 
 .floating-desktop-tel {
   background: rgba(12, 18, 40, 0.72);
-  border: 1px solid rgba(196, 168, 130, 0.25);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .floating-desktop-tel-icon {
-  color: rgba(196, 168, 130, 1.0);
+  color: color-mix(in srgb, var(--color-gold-primary) 100%, transparent);
   flex-shrink: 0;
 }
 
 .floating-desktop-tel-label {
-  color: rgba(196, 168, 130, 1.0);
+  color: color-mix(in srgb, var(--color-gold-primary) 100%, transparent);
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -4333,19 +4367,19 @@ body.font-lang-zh .hero-stat-label {
   }
   /* 섹션 간 리듬 — 배경 교차 섹션 경계에 미세 구분선 */
   section + section {
-    border-top: 1px solid rgba(196, 168, 130, 0.08);
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 8%, transparent);
   }
 }
 
 /* ── P0-3: 모바일 타이포그래피 스케일 정교화 ── */
 @media (max-width: 640px) {
-  /* 섹션 eyebrow — 더 선명한 골드, 적절한 크기 */
+  /* 섹션 eyebrow — [DS5-WCAG] color-gold-dark(5.81:1 AA PASS) 사용 */
   .section-eyebrow {
     font-size: 0.6rem !important;
     letter-spacing: 0.28em !important;
     margin-bottom: 0.6rem !important;
     opacity: 1 !important;
-    color: var(--brand-gold-deep, #A8895E) !important;
+    color: var(--color-gold-dark, #7A5C35) !important;
   }
   /* 섹션 타이틀 — 모바일 최적 크기 */
   .section-title {
@@ -4396,7 +4430,8 @@ body.font-lang-zh .hero-stat-label {
     line-height: 1.3 !important;
   }
   .management-devices-eyebrow {
-    color: var(--brand-gold-deep, #A8895E) !important;
+    /* [DS5-WCAG] 다크 배경 위에서는 --color-gold-primary(6.97:1 PASS) 유지 */
+    color: var(--color-gold-primary) !important;
     font-size: 0.6rem !important;
     letter-spacing: 0.28em !important;
     font-family: 'Montserrat', sans-serif !important;
@@ -4406,7 +4441,8 @@ body.font-lang-zh .hero-stat-label {
 /* ── P0-5: YouTubeSection 헤더 통일 ── */
 @media (max-width: 640px) {
   .youtube-section-eyebrow {
-    color: var(--brand-gold-deep, #A8895E) !important;
+    /* [DS5-WCAG] 다크 배경 위에서는 --color-gold-primary(6.97:1 PASS) 유지 */
+    color: var(--color-gold-primary) !important;
     font-size: 0.6rem !important;
     letter-spacing: 0.28em !important;
   }
@@ -4446,7 +4482,7 @@ body.font-lang-zh .hero-stat-label {
   /* Utility — 전화 (브랜드 골드 톤, 기본 CSS와 통일) */
   .mobile-bottom-btn--phone {
     /* [P3-FINAL] 0.10 → 0.28으로 기본 CSS와 동일하게 강화 */
-    background: rgba(196, 168, 130, 0.28) !important;
+    background: color-mix(in srgb, var(--color-gold-primary) 28%, transparent) !important;
     color: rgba(232, 212, 180, 1.0) !important;
     font-size: 0.72rem !important;
     font-weight: 500 !important;
@@ -4526,14 +4562,14 @@ body.font-lang-zh .hero-stat-label {
   font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   letter-spacing: 0.05em;
   background: transparent;
-  color: var(--brand-gold-deep, #A8895E);
-  border: 1px solid rgba(196, 168, 130, 0.45);
+  color: var(--color-gold-deep);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 45%, transparent);
   text-decoration: none;
   transition: background 0.18s, border-color 0.18s, transform 0.18s;
   -webkit-tap-highlight-color: transparent;
 }
 .btn-ghost-mobile:active {
-  background: var(--brand-gold-pale, #F0EAE0);
+  background: var(--color-gold-pale);
   transform: scale(0.97);
 }
 
@@ -4546,14 +4582,14 @@ body.font-lang-zh .hero-stat-label {
 .brand-card {
   background: var(--brand-bg, #FAF8F5);
   border-radius: 16px;
-  border: 1px solid rgba(196, 168, 130, 0.18);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
   overflow: hidden;
   transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
 }
 .brand-card:hover {
-  box-shadow: 0 8px 32px rgba(196, 168, 130, 0.15), 0 2px 8px rgba(0, 0, 0, 0.06);
-  border-color: rgba(196, 168, 130, 0.32);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--color-gold-primary) 15%, transparent), 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: color-mix(in srgb, var(--color-gold-primary) 32%, transparent);
 }
 .brand-card:active {
   transform: scale(0.99);
@@ -4572,7 +4608,7 @@ body.font-lang-zh .hero-stat-label {
 
 /* 카드 상단 골드 액센트 라인 */
 .brand-card--accented {
-  border-top: 2px solid rgba(196, 168, 130, 0.5);
+  border-top: 2px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent);
 }
 
 /* ── P1: 이벤트 카드 모바일 최적화 ── */
@@ -4597,7 +4633,7 @@ body.font-lang-zh .hero-stat-label {
   .review-card {
     padding: 1.5rem 1.25rem !important;
     border-radius: 16px !important;
-    border-top: 2px solid rgba(196, 168, 130, 0.45) !important;
+    border-top: 2px solid color-mix(in srgb, var(--color-gold-primary) 45%, transparent) !important;
   }
   /* 후기 텍스트 호흡 */
   .review-card p {
@@ -4785,7 +4821,7 @@ body.font-lang-zh .hero-stat-label {
     content: "";
     display: block;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-gold-primary) 30%, transparent), transparent);
     margin-top: 2rem;
   }
 }
@@ -4862,7 +4898,7 @@ body.font-lang-zh .hero-stat-label {
   .scroll-stagger.is-visible > :nth-child(4) { transition-delay: 0.16s !important; }
   /* focus-visible 통일 */
   :focus-visible {
-    outline: 2px solid var(--brand-gold, #C4A882) !important;
+    outline: 2px solid var(--color-gold-primary) !important;
     outline-offset: 3px !important;
     border-radius: 4px !important;
   }
@@ -4903,9 +4939,9 @@ body.font-lang-zh .hero-stat-label {
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(196,168,130,0.14) 20%,
-    rgba(196,168,130,0.26) 50%,
-    rgba(196,168,130,0.14) 80%
+    color-mix(in srgb, var(--color-gold-primary) 14%, transparent) 20%,
+    color-mix(in srgb, var(--color-gold-primary) 26%, transparent) 50%,
+    color-mix(in srgb, var(--color-gold-primary) 14%, transparent) 80%
   );
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
@@ -4926,10 +4962,214 @@ body.font-lang-zh .hero-stat-label {
   .skeleton-shimmer,
   .skeleton-shimmer--dark {
     animation: none !important;
-    background: rgba(196,168,130,0.15) !important;
+    background: color-mix(in srgb, var(--color-gold-primary) 15%, transparent) !important;
   }
   .section-fallback {
     animation: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   다국어 타이포그래피 :lang() 오버라이드 레이어 (Phase DS5)
+   ─ 언어별 폰트/줄높이 예외 규칙을 한 곳에 집중 관리
+   ─ body.font-lang-* 클래스 방식과 병행 운용 (하위 호환 유지)
+   ─ :lang() 선택자는 html[lang] 속성 기반으로 동작 (LangContext에서 설정)
+   ========================================================================== */
+
+/* ── 공통 CSS 변수 (언어별 오버라이드 기준값) ── */
+:root {
+  --typo-font-body: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
+  --typo-font-heading: 'Noto Serif KR', 'Cormorant Garamond', serif;
+  --typo-font-display: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  --typo-font-mono: 'Montserrat', sans-serif;
+  --typo-line-height-body: 1.7;
+  --typo-line-height-heading: 1.3;
+  --typo-word-break: keep-all;
+}
+
+/* ── 일본어: Noto Sans JP, 줄높이 확장 ── */
+:lang(ja) {
+  --typo-font-body: 'Noto Sans JP', sans-serif;
+  --typo-font-heading: 'Noto Sans JP', sans-serif;
+  --typo-font-display: 'Noto Sans JP', sans-serif;
+  --typo-line-height-body: 1.85;
+  --typo-line-height-heading: 1.45;
+  --typo-word-break: normal;
+}
+
+/* ── 중국어 간체: Noto Sans SC, 줄높이 확장 ── */
+:lang(zh) {
+  --typo-font-body: 'Noto Sans SC', sans-serif;
+  --typo-font-heading: 'Noto Sans SC', sans-serif;
+  --typo-font-display: 'Noto Sans SC', sans-serif;
+  --typo-line-height-body: 1.85;
+  --typo-line-height-heading: 1.45;
+  --typo-word-break: normal;
+}
+
+/* ── 영어: Pretendard + Cormorant Garamond ── */
+:lang(en) {
+  --typo-font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+  --typo-font-heading: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  --typo-font-display: 'Cormorant Garamond', serif;
+  --typo-line-height-body: 1.7;
+  --typo-line-height-heading: 1.25;
+  --typo-word-break: normal;
+}
+
+/* ── 변수 적용: 인라인 fontFamily를 CSS 변수로 대체할 수 있는 유틸리티 클래스 ── */
+/* 기존 인라인 style={{ fontFamily: "'Noto Serif KR'..." }} 패턴을 이 클래스로 교체 가능 */
+.typo-heading {
+  font-family: var(--typo-font-heading);
+  line-height: var(--typo-line-height-heading);
+  word-break: var(--typo-word-break);
+}
+.typo-body {
+  font-family: var(--typo-font-body);
+  line-height: var(--typo-line-height-body);
+  word-break: var(--typo-word-break);
+}
+.typo-display {
+  font-family: var(--typo-font-display);
+  line-height: var(--typo-line-height-heading);
+}
+.typo-mono {
+  font-family: var(--typo-font-mono);
+}
+
+/* ── section-title: :lang() 기반 폰트 오버라이드 ── */
+:lang(ja) .section-title,
+:lang(ja) .section-subtitle,
+:lang(ja) .section-eyebrow,
+:lang(ja) .dr-section-title,
+:lang(ja) .dr-section-eyebrow {
+  font-family: var(--typo-font-heading);
+  line-height: var(--typo-line-height-heading);
+  white-space: normal;
+  word-break: var(--typo-word-break);
+  overflow: visible;
+}
+
+:lang(zh) .section-title,
+:lang(zh) .section-subtitle,
+:lang(zh) .section-eyebrow,
+:lang(zh) .dr-section-title,
+:lang(zh) .dr-section-eyebrow {
+  font-family: var(--typo-font-heading);
+  line-height: var(--typo-line-height-heading);
+}
+
+/* ── h1~h6: :lang() 기반 폰트 오버라이드 ── */
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3,
+:lang(ja) h4, :lang(ja) h5, :lang(ja) h6 {
+  font-family: var(--typo-font-heading);
+  line-height: var(--typo-line-height-heading);
+}
+:lang(zh) h1, :lang(zh) h2, :lang(zh) h3,
+:lang(zh) h4, :lang(zh) h5, :lang(zh) h6 {
+  font-family: var(--typo-font-heading);
+  line-height: var(--typo-line-height-heading);
+}
+
+/* ── 영어 hero-title: 줄바꿈 방지 ── */
+:lang(en) .hero-title {
+  font-size: clamp(2.2rem, 10vw, 6rem);
+  white-space: nowrap;
+  overflow: visible;
+}
+
+/* ── Montserrat는 언어 무관 유지 ── */
+:lang(ko) .font-montserrat,
+:lang(ja) .font-montserrat,
+:lang(zh) .font-montserrat,
+:lang(en) .font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ==========================================================================
+   prefers-reduced-motion: 카드 hover 애니메이션 대응 강화 (Phase DS5)
+   ─ WCAG 2.1 SC 2.3.3 (AAA) / SC 2.3.1 (AA) 준수
+   ─ "동작 줄이기" 설정 시 translateY/scale hover 효과 즉시 비활성화
+   ─ 시각적 피드백은 border-color, box-shadow 변화로 대체 (움직임 없음)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  /* ── .card 베이스 및 BEM 변형자 ── */
+  .card:hover,
+  .card:active {
+    transform: none !important;
+  }
+  .card--review:hover,
+  .card--treatment:hover,
+  .card--event:hover,
+  .card--doctor:hover {
+    transform: none !important;
+  }
+
+  /* ── 레거시 카드 클래스 (하위 호환) ── */
+  .treatment-card:hover,
+  .treatment-card:active,
+  .review-card:hover,
+  .dr-panel-card:hover {
+    transform: none !important;
+  }
+
+  /* ── 이미지 줌 효과 ── */
+  .img-zoom:hover img,
+  .ds-img-zoom:hover {
+    transform: none !important;
+  }
+  .treatment-card:hover img {
+    transform: none !important;
+  }
+
+  /* ── 철학/가치 카드 ── */
+  .philosophy-value-card:hover {
+    transform: none !important;
+  }
+
+  /* ── 슬라이더 화살표 버튼 ── */
+  .dr-slider-arrow:hover {
+    transform: none !important;
+  }
+
+  /* ── CTA 버튼 hover 이동 ── */
+  .star-mint-btn:hover,
+  .star-navy-btn:hover,
+  .hero-btn-reserve:hover,
+  .hero-btn-phone:hover {
+    transform: none !important;
+  }
+
+  /* ── 상담 폼 버튼 ── */
+  .consultation-submit-btn:hover:not(:disabled) {
+    transform: none !important;
+  }
+
+  /* ── card-glow 호버 ── */
+  .card-glow:hover {
+    transform: none !important;
+  }
+
+  /* ── ds-card-lift ── */
+  .ds-card-lift:hover {
+    transform: none !important;
+  }
+
+  /* ── YouTube 버튼 hover scale ── */
+  .group:hover .group-hover\:scale-105 {
+    transform: none !important;
+  }
+
+  /* ── 모든 hover/active transition 즉시 완료 (카드 shadow 변화는 허용) ── */
+  .card,
+  .treatment-card,
+  .review-card,
+  .dr-panel-card,
+  .philosophy-value-card,
+  .ds-card-lift,
+  .card-glow {
+    transition-property: box-shadow, border-color, background-color !important;
+    transition-duration: 0.01ms !important;
   }
 }

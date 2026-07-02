@@ -47,7 +47,7 @@ export default function Header() {
           backdropFilter: scrolled ? "blur(24px) saturate(200%)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px) saturate(200%)" : "none",
           borderBottom: scrolled
-            ? "1px solid rgba(196,168,130,0.18)"
+            ? "1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent)"
             : "1px solid rgba(255,255,255,0.0)",
           boxShadow: scrolled ? "0 2px 32px rgba(0,0,0,0.07)" : "none",
           transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
@@ -69,7 +69,7 @@ export default function Header() {
               style={{
                 fontSize: "15px",
                 fontWeight: "700",
-                color: scrolled ? "#C4A882" : "rgba(255,255,255,0.95)",
+                color: scrolled ? "var(--color-gold-primary)" : "rgba(255,255,255,0.95)",
                 letterSpacing: "0.12em",
                 fontFamily: "'Montserrat', sans-serif",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
@@ -124,7 +124,7 @@ export default function Header() {
               style={{
                 width: "44px",
                 height: "44px",
-                color: scrolled ? "#C4A882" : "rgba(255,255,255,0.92)",
+                color: scrolled ? "var(--color-gold-primary)" : "rgba(255,255,255,0.92)",
                 borderRadius: "10px",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
                 textShadow: scrolled ? "none" : "0 2px 12px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)",

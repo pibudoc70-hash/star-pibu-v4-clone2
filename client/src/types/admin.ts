@@ -39,6 +39,7 @@ export interface PopupEventItem {
   priceItems: { label: string; original: string; price: string }[];
   startAt: number | null;
   endAt: number | null;
+  targetLang: "all" | "ko" | "en" | "ja" | "zh";
 }
 
 // ── 팝업 폼 상태 ──────────────────────────────────────────────────────────────
@@ -51,6 +52,7 @@ export interface PopupFormState {
   isActive: "0" | "1";
   startAt: number | null;
   endAt: number | null;
+  targetLang: "all" | "ko" | "en" | "ja" | "zh";
 }
 
 // ── 이벤트 목록 아이템 (trpc.events.list 반환 타입과 일치) ──────────────────────

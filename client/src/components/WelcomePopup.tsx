@@ -10,6 +10,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useLang } from "@/contexts/useLang";
 
 interface PopupEvent {
   id: number;
@@ -19,6 +20,7 @@ interface PopupEvent {
 }
 
 export default function WelcomePopup() {
+  const { lang } = useLang();
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -26,9 +28,11 @@ export default function WelcomePopup() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
-  const { data: events, isLoading, error } = trpc.popup.list.useQuery(undefined, {
-    staleTime: 5 * 60 * 1000,
-  });
+  // 현재 언어를 서버에 전달하여 해당 언어용 팝업만 수신
+  const { data: events, isLoading, error } = trpc.popup.list.useQuery(
+    { lang },
+    { staleTime: 5 * 60 * 1000 }
+  );
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 480);

@@ -183,6 +183,13 @@
       "when": 1782488018971,
       "tag": "0025_fixed_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "5",
+      "when": 1782969373777,
+      "tag": "0026_crazy_madame_hydra",
+      "breakpoints": true
     }
   ]
 }

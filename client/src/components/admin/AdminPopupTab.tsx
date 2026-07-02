@@ -25,7 +25,16 @@ const EMPTY_FORM: PopupFormState = {
   isActive: "1",
   startAt: null,
   endAt: null,
+  targetLang: "all",
 };
+
+const LANG_OPTIONS: { value: PopupFormState["targetLang"]; label: string; flag: string }[] = [
+  { value: "all", label: "전체 언어", flag: "🌐" },
+  { value: "ko", label: "한국어", flag: "🇰🇷" },
+  { value: "en", label: "English", flag: "🇺🇸" },
+  { value: "ja", label: "日本語", flag: "🇯🇵" },
+  { value: "zh", label: "中文", flag: "🇨🇳" },
+];
 
 export default function AdminPopupTab({ currentUser }: Props) {
   // Date.now()를 렌더 중 직접 호출하면 'Cannot call impure function during render' 에러 발생
@@ -116,6 +125,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
       isActive: ev.isActive,
       startAt: ev.startAt ?? null,
       endAt: ev.endAt ?? null,
+      targetLang: ev.targetLang ?? "all",
     });
   };
 
@@ -172,7 +182,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
+                <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                   <span
                     className="text-xs font-bold px-2 py-0.5 rounded-full"
                     style={{ background: ev.accentLight, color: ev.accent }}
@@ -188,6 +198,15 @@ export default function AdminPopupTab({ currentUser }: Props) {
                   >
                     {ev.isActive === "1" ? "활성" : "비활성"}
                   </span>
+                  {/* 언어 배지 */}
+                  {(() => {
+                    const opt = LANG_OPTIONS.find((o) => o.value === (ev.targetLang ?? "all"));
+                    return opt ? (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-semibold border border-blue-100">
+                        {opt.flag} {opt.label}
+                      </span>
+                    ) : null;
+                  })()}
                 </div>
                 <p className="font-bold text-[#1F2937] text-sm truncate">{ev.title}</p>
                 <p className="text-xs text-[#9CA3AF] truncate">
@@ -262,6 +281,31 @@ export default function AdminPopupTab({ currentUser }: Props) {
               </h2>
             </div>
             <div className="px-6 py-4 space-y-3">
+              {/* 노출 언어 선택 */}
+              <div>
+                <label htmlFor="popup-target-lang" className="text-xs font-semibold text-[#374151] mb-1 block">
+                  표시 대상 언어 *
+                </label>
+                <select
+                  id="popup-target-lang"
+                  className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-sm bg-white"
+                  value={popupForm.targetLang}
+                  onChange={(e) =>
+                    setPopupForm((f) =>
+                      f && { ...f, targetLang: e.target.value as PopupFormState["targetLang"] }
+                    )
+                  }
+                >
+                  {LANG_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.flag} {opt.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-[#9CA3AF] mt-1">
+                  "전체 언어"를 선택하면 모든 언어 페이지에 표시됩니다.
+                </p>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="popup-tab" className="text-xs font-semibold text-[#374151] mb-1 block">탭 레이블 *</label>

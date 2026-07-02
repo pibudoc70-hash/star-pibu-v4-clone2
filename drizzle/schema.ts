@@ -73,10 +73,12 @@ export const popupEvents = mysqlTable("popupEvents", {
   endAt: bigint("endAt", { mode: "number" }),
   sortOrder: int("sortOrder").notNull().default(0),
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),
+  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh"]).notNull().default("all"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   isActiveIdx: index("popupEvents_isActive_idx").on(table.isActive),
+  targetLangIdx: index("popupEvents_targetLang_idx").on(table.targetLang),
 }));
 export type PopupEvent = typeof popupEvents.$inferSelect;
 export type InsertPopupEvent = typeof popupEvents.$inferInsert;

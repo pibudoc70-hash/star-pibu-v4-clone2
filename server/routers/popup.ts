@@ -20,10 +20,15 @@ import { withCache, invalidateCache } from "../_core/cache";
 import { TRPCError } from "@trpc/server";
 
 export const popupRouter = router({
-  // 공개: 활성화된 이벤트 목록 조회 (유효기간 자동 필터링) — 2분 캐시
-  list: publicProcedure.query(async () =>
-    withCache("popup:list", () => getActivePopups())
-  ),
+  // 공개: 활성화된 이벤트 목록 조회 (유효기간 + 언어 필터링) — 2분 캐시
+  list: publicProcedure
+    .input(z.object({ lang: z.string().optional() }).optional())
+    .query(async ({ input }) => {
+      const lang = input?.lang;
+      const cacheKey = lang ? `popup:list:${lang}` : "popup:list";
+      return withCache(cacheKey, () => getActivePopups(lang));
+    }),
+
 
   // 관리자: 전체 목록 (비활성 포함)
   adminList: adminProcedure.query(async () => getAllPopups()),
@@ -39,6 +44,7 @@ export const popupRouter = router({
       isActive: z.enum(["0", "1"]).default("1"),
       startAt: z.number().nullable().optional(),
       endAt: z.number().nullable().optional(),
+      targetLang: z.enum(["all", "ko", "en", "ja", "zh"]).default("all"),
     }))
     .mutation(async ({ input }) => {
       try {
@@ -63,6 +69,7 @@ export const popupRouter = router({
       isActive: z.enum(["0", "1"]).optional(),
       startAt: z.number().nullable().optional(),
       endAt: z.number().nullable().optional(),
+      targetLang: z.enum(["all", "ko", "en", "ja", "zh"]).optional(),
     }))
     .mutation(async ({ input }) => {
       const { id, ...rest } = input;

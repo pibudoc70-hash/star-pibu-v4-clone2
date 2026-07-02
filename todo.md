@@ -3545,3 +3545,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] treatment-card:focus-visible outline에 --dr-gold 변수 사용 (round17 B-3 테스트 통과)
 - [x] Playwright 변경 전/후 스크린샷 비교 (5개 페이지)
 - [x] 모든 테스트 1413개 통과
+
+## Phase Popup-I18n: 팝업 이벤트 언어별 분리 (2026-07-02)
+
+- [x] DB 스키마: popupEvents 테이블에 targetLang enum('all','ko','en','ja','zh') 컬럼 추가
+- [x] 마이그레이션: ALTER TABLE 실행 완료
+- [x] 관리자 UI: 등록/수정 폼에 "표시 대상 언어" 드롭다운 추가 (🌐 전체/🇰🇷 한국어/🇺🇸 English/🇯🇵 日本語/🇨🇳 中文)
+- [x] 관리자 목록: 각 팝업 카드에 언어 배지 표시
+- [x] tRPC popup.list: lang 파라미터 추가, 언어별 캐시 키 분리
+- [x] DB 헬퍼 getActivePopups: lang 파라미터로 필터링 (all은 전체 표시)
+- [x] WelcomePopup: useLang()으로 현재 언어 감지 후 lang 파라미터 전달

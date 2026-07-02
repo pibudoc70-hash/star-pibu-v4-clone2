@@ -245,11 +245,16 @@ export const notices = mysqlTable("notices", {
   content: text("content").notNull(),
   isPinned: mysqlEnum("isPinned", ["0", "1"]).notNull().default("0"),
   views: int("views").notNull().default(0),
+  /** 표시 대상 언어: all=전체, ko/en/ja/zh=해당 언어 페이지만 */
+  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh"]).notNull().default("all"),
+  /** 원문 언어 (LLM 번역 시 원본 공지 ID 참조) */
+  sourceNoticeId: int("sourceNoticeId"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   isPinnedIdx: index("notices_isPinned_idx").on(table.isPinned),
   createdAtIdx: index("notices_createdAt_idx").on(table.createdAt),
+  targetLangIdx: index("notices_targetLang_idx").on(table.targetLang),
 }));
 export type Notice = typeof notices.$inferSelect;
 export type InsertNotice = typeof notices.$inferInsert;

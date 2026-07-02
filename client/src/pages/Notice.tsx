@@ -37,7 +37,7 @@ export default function Notice() {
   const [, navigate] = useLocation();
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
-  const { data: notices = [], refetch } = trpc.notices.list.useQuery();
+  const { data: notices = [], refetch } = trpc.notices.list.useQuery({ lang });
   const deleteMutation = trpc.notices.delete.useMutation({
     onSuccess: () => {
       refetch();

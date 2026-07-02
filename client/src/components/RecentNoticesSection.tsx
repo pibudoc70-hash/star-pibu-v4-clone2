@@ -27,7 +27,7 @@ const LABELS = {
 };
 
 function RecentNoticesSection({ lang }: Props) {
-  const { data: allNotices = [], isLoading } = trpc.notices.list.useQuery();
+  const { data: allNotices = [], isLoading } = trpc.notices.list.useQuery({ lang });
   const langPrefix = lang === "ko" ? "" : `/${lang}`;
   const labels = LABELS[lang];
 

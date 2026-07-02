@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Edit2, Pin } from 'lucide-react';
+import { Plus, Trash2, Edit2, Pin, Languages, Loader2 } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useLocation } from 'wouter';
+
+type TargetLang = 'all' | 'ko' | 'en' | 'ja' | 'zh';
 
 interface Notice {
   id: number;
@@ -10,9 +12,28 @@ interface Notice {
   content: string;
   isPinned: string;
   views: number;
+  targetLang: TargetLang;
+  sourceNoticeId?: number | null;
   createdAt: Date;
   updatedAt: Date;
+  thumbnail?: string | null;
 }
+
+const LANG_OPTIONS: { value: TargetLang; label: string; flag: string }[] = [
+  { value: 'all', label: '🌐 전체 언어', flag: '🌐' },
+  { value: 'ko', label: '🇰🇷 한국어', flag: '🇰🇷' },
+  { value: 'en', label: '🇺🇸 English', flag: '🇺🇸' },
+  { value: 'ja', label: '🇯🇵 日本語', flag: '🇯🇵' },
+  { value: 'zh', label: '🇨🇳 中文', flag: '🇨🇳' },
+];
+
+const LANG_BADGE_COLORS: Record<TargetLang, string> = {
+  all: 'bg-gray-100 text-gray-700',
+  ko: 'bg-blue-100 text-blue-700',
+  en: 'bg-green-100 text-green-700',
+  ja: 'bg-red-100 text-red-700',
+  zh: 'bg-yellow-100 text-yellow-700',
+};
 
 export default function AdminNotices() {
   const { user } = useAuth();
@@ -23,16 +44,24 @@ export default function AdminNotices() {
     title: '',
     content: '',
     isPinned: '0' as '0' | '1',
+    targetLang: 'all' as TargetLang,
   });
 
-  // 공지사항 목록 조회
-  const { data: notices = [], refetch } = trpc.notices.list.useQuery();
+  // 자동번역 상태
+  const [translateTargetId, setTranslateTargetId] = useState<number | null>(null);
+  const [selectedTranslateLangs, setSelectedTranslateLangs] = useState<('en' | 'ja' | 'zh')[]>(['en', 'ja', 'zh']);
+  const [showTranslateModal, setShowTranslateModal] = useState(false);
+
+  const utils = trpc.useUtils();
+
+  // 관리자 전체 목록 조회 (언어 필터 없이)
+  const { data: notices = [], refetch } = trpc.notices.adminList.useQuery();
 
   // 공지사항 생성
   const createMutation = trpc.notices.create.useMutation({
     onSuccess: () => {
       refetch();
-      setFormData({ title: '', content: '', isPinned: '0' });
+      setFormData({ title: '', content: '', isPinned: '0', targetLang: 'all' });
       setShowForm(false);
     },
   });
@@ -42,7 +71,7 @@ export default function AdminNotices() {
     onSuccess: () => {
       refetch();
       setEditingId(null);
-      setFormData({ title: '', content: '', isPinned: '0' });
+      setFormData({ title: '', content: '', isPinned: '0', targetLang: 'all' });
       setShowForm(false);
     },
   });
@@ -51,6 +80,24 @@ export default function AdminNotices() {
   const deleteMutation = trpc.notices.delete.useMutation({
     onSuccess: () => {
       refetch();
+    },
+  });
+
+  // LLM 자동번역
+  const translateMutation = trpc.notices.autoTranslate.useMutation({
+    onSuccess: (data) => {
+      const langNames = data.created.map((c) => {
+        const opt = LANG_OPTIONS.find((o) => o.value === c.lang);
+        return opt ? opt.flag : c.lang;
+      }).join(' ');
+      alert(`✅ 자동번역 완료!\n${langNames} 공지사항이 등록되었습니다.`);
+      setShowTranslateModal(false);
+      setTranslateTargetId(null);
+      refetch();
+      utils.notices.list.invalidate();
+    },
+    onError: (err) => {
+      alert(`번역 실패: ${err.message}`);
     },
   });
 
@@ -82,10 +129,18 @@ export default function AdminNotices() {
     if (editingId) {
       updateMutation.mutate({
         id: editingId,
-        ...formData,
+        title: formData.title,
+        content: formData.content,
+        isPinned: formData.isPinned,
+        targetLang: formData.targetLang,
       });
     } else {
-      createMutation.mutate(formData);
+      createMutation.mutate({
+        title: formData.title,
+        content: formData.content,
+        isPinned: formData.isPinned,
+        targetLang: formData.targetLang,
+      });
     }
   };
 
@@ -95,13 +150,14 @@ export default function AdminNotices() {
       title: notice.title,
       content: notice.content,
       isPinned: (notice.isPinned as '0' | '1'),
+      targetLang: notice.targetLang ?? 'all',
     });
     setShowForm(true);
   };
 
   const handleCancel = () => {
     setEditingId(null);
-    setFormData({ title: '', content: '', isPinned: '0' });
+    setFormData({ title: '', content: '', isPinned: '0', targetLang: 'all' });
     setShowForm(false);
   };
 
@@ -109,6 +165,27 @@ export default function AdminNotices() {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteMutation.mutate({ id });
     }
+  };
+
+  const handleOpenTranslate = (notice: Notice) => {
+    setTranslateTargetId(notice.id);
+    setSelectedTranslateLangs(['en', 'ja', 'zh']);
+    setShowTranslateModal(true);
+  };
+
+  const handleTranslate = () => {
+    if (!translateTargetId || selectedTranslateLangs.length === 0) return;
+    if (!confirm(`선택한 언어(${selectedTranslateLangs.join(', ')})로 자동번역하여 새 공지사항을 등록합니다.\n계속하시겠습니까?`)) return;
+    translateMutation.mutate({
+      sourceId: translateTargetId,
+      targetLangs: selectedTranslateLangs,
+    });
+  };
+
+  const toggleTranslateLang = (lang: 'en' | 'ja' | 'zh') => {
+    setSelectedTranslateLangs((prev) =>
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+    );
   };
 
   return (
@@ -120,7 +197,7 @@ export default function AdminNotices() {
             onClick={() => {
               setShowForm(!showForm);
               if (editingId) setEditingId(null);
-              if (showForm) setFormData({ title: '', content: '', isPinned: '0' });
+              if (showForm) setFormData({ title: '', content: '', isPinned: '0', targetLang: 'all' });
             }}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
@@ -167,8 +244,30 @@ export default function AdminNotices() {
                 />
               </div>
 
+              {/* 표시 대상 언어 선택 */}
+              <div>
+                <label htmlFor="notice-lang" className="block text-sm font-medium text-gray-700 mb-1">
+                  표시 대상 언어
+                </label>
+                <select
+                  id="notice-lang"
+                  value={formData.targetLang}
+                  onChange={(e) => setFormData({ ...formData, targetLang: e.target.value as TargetLang })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                >
+                  {LANG_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.targetLang === 'all'
+                    ? '모든 언어 페이지에 표시됩니다.'
+                    : `선택한 언어(${LANG_OPTIONS.find((o) => o.value === formData.targetLang)?.label}) 페이지에만 표시됩니다.`}
+                </p>
+              </div>
+
               <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={formData.isPinned === '1'}
@@ -208,6 +307,7 @@ export default function AdminNotices() {
               <thead className="bg-gray-100 border-b">
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">제목</th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">언어</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">조회수</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">작성일</th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">상태</th>
@@ -215,15 +315,23 @@ export default function AdminNotices() {
                 </tr>
               </thead>
               <tbody>
-                {notices.map((notice: Notice) => (
+                {(notices as Notice[]).map((notice) => (
                   <tr key={notice.id} className="border-b hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm text-gray-900">
                       <div className="flex items-center gap-2">
                         {notice.isPinned === '1' && (
                           <Pin size={16} className="text-red-500" />
                         )}
-                        {notice.title}
+                        <span className="line-clamp-1">{notice.title}</span>
+                        {notice.sourceNoticeId && (
+                          <span className="text-xs text-gray-400 shrink-0">(번역본)</span>
+                        )}
                       </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <span className={`px-2 py-1 rounded text-xs font-semibold ${LANG_BADGE_COLORS[notice.targetLang ?? 'all']}`}>
+                        {LANG_OPTIONS.find((o) => o.value === (notice.targetLang ?? 'all'))?.label ?? '🌐 전체'}
+                      </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {notice.views}
@@ -241,7 +349,7 @@ export default function AdminNotices() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 items-center">
                         <button type="button"
                           onClick={() => handleEdit(notice)}
                           className="p-1 text-blue-600 hover:bg-blue-50 rounded"
@@ -249,6 +357,16 @@ export default function AdminNotices() {
                         >
                           <Edit2 size={18} />
                         </button>
+                        {/* 자동번역 버튼: 한국어 또는 전체 공지사항에만 표시 */}
+                        {(notice.targetLang === 'ko' || notice.targetLang === 'all') && !notice.sourceNoticeId && (
+                          <button type="button"
+                            onClick={() => handleOpenTranslate(notice)}
+                            className="p-1 text-purple-600 hover:bg-purple-50 rounded"
+                            title="자동번역"
+                          >
+                            <Languages size={18} />
+                          </button>
+                        )}
                         <button type="button"
                           onClick={() => handleDelete(notice.id)}
                           className="p-1 text-red-600 hover:bg-red-50 rounded"
@@ -265,6 +383,71 @@ export default function AdminNotices() {
           )}
         </div>
       </div>
+
+      {/* 자동번역 모달 */}
+      {showTranslateModal && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          role="dialog"
+          aria-modal="true"
+          aria-label="자동번역 설정"
+          onClick={(e) => { if (e.target === e.currentTarget) { setShowTranslateModal(false); } }}
+          onKeyDown={(e) => { if (e.key === 'Escape') setShowTranslateModal(false); }}
+        >
+          <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">🌐 자동번역 등록</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              한글 공지사항을 AI가 자동으로 번역하여 각 언어 페이지에 등록합니다.
+            </p>
+
+            <div className="mb-4">
+              <p className="text-sm font-medium text-gray-700 mb-2">번역할 언어 선택</p>
+              <div className="flex flex-col gap-2">
+                {(['en', 'ja', 'zh'] as const).map((lang) => {
+                  const opt = LANG_OPTIONS.find((o) => o.value === lang)!;
+                  return (
+                    <label key={lang} className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
+                      <input
+                        type="checkbox"
+                        checked={selectedTranslateLangs.includes(lang)}
+                        onChange={() => toggleTranslateLang(lang)}
+                        className="w-4 h-4 text-purple-600 rounded"
+                      />
+                      <span className="text-sm font-medium">{opt.label}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+              <p className="text-xs text-amber-700">
+                ⚠️ 번역된 공지사항은 각 언어 페이지에 별도 항목으로 등록됩니다. 원본 수정 시 번역본은 자동 갱신되지 않습니다.
+              </p>
+            </div>
+
+            <div className="flex gap-2 justify-end">
+              <button type="button"
+                onClick={() => setShowTranslateModal(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm"
+              >
+                취소
+              </button>
+              <button type="button"
+                onClick={handleTranslate}
+                disabled={selectedTranslateLangs.length === 0 || translateMutation.isPending}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 text-sm"
+              >
+                {translateMutation.isPending ? (
+                  <><Loader2 size={16} className="animate-spin" /> 번역 중...</>
+                ) : (
+                  <><Languages size={16} /> 자동번역 시작</>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

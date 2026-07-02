@@ -137,5 +137,15 @@ export const adminRouter = router({
         invalidateCache("youtube:");
         return { success: true };
       }),
+    /** 드래그 앤 드롭 순서 일괄 저장: ids 배열의 인덱스 순서대로 sortOrder 업데이트 */
+    reorder: adminProcedure
+      .input(z.object({ ids: z.array(z.number()).min(1) }))
+      .mutation(async ({ input }) => {
+        await Promise.all(
+          input.ids.map((id, index) => updateYouTubeVideo(id, { sortOrder: index }))
+        );
+        invalidateCache("youtube:");
+        return { success: true };
+      }),
   }),
 });

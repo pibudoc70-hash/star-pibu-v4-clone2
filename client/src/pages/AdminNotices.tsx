@@ -47,6 +47,9 @@ export default function AdminNotices() {
     targetLang: 'all' as TargetLang,
   });
 
+  // 언어 탭 필터
+  const [activeTab, setActiveTab] = useState<TargetLang | 'all'>('all');
+
   // 자동번역 상태
   const [translateTargetId, setTranslateTargetId] = useState<number | null>(null);
   const [selectedTranslateLangs, setSelectedTranslateLangs] = useState<('en' | 'ja' | 'zh')[]>(['en', 'ja', 'zh']);
@@ -296,11 +299,46 @@ export default function AdminNotices() {
           </div>
         )}
 
+        {/* 언어별 탭 */}
+        <div className="flex gap-1 mb-4 bg-white rounded-xl shadow-sm p-1 border border-gray-200">
+          {([
+            { value: 'all' as const, label: '전체', count: (notices as Notice[]).length },
+            { value: 'ko' as const, label: '🇰🇷 한국어', count: (notices as Notice[]).filter((n) => n.targetLang === 'ko' || n.targetLang === 'all').length },
+            { value: 'en' as const, label: '🇺🇸 English', count: (notices as Notice[]).filter((n) => n.targetLang === 'en').length },
+            { value: 'ja' as const, label: '🇯🇵 日本語', count: (notices as Notice[]).filter((n) => n.targetLang === 'ja').length },
+            { value: 'zh' as const, label: '🇨🇳 中文', count: (notices as Notice[]).filter((n) => n.targetLang === 'zh').length },
+          ]).map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === tab.value
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              {tab.label}
+              <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${
+                activeTab === tab.value ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+              }`}>
+                {tab.count}
+              </span>
+            </button>
+          ))}
+        </div>
+
         {/* 공지사항 목록 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          {notices.length === 0 ? (
+          {(notices as Notice[]).filter((notice) => {
+            if (activeTab === 'all') return true;
+            if (activeTab === 'ko') return notice.targetLang === 'ko' || notice.targetLang === 'all';
+            return notice.targetLang === activeTab;
+          }).length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              공지사항이 없습니다.
+              {activeTab === 'all' ? '공지사항이 없습니다.' : `${LANG_OPTIONS.find((o) => o.value === activeTab)?.label} 공지사항이 없습니다.`}
             </div>
           ) : (
             <table className="w-full">
@@ -315,7 +353,11 @@ export default function AdminNotices() {
                 </tr>
               </thead>
               <tbody>
-                {(notices as Notice[]).map((notice) => (
+                {(notices as Notice[]).filter((notice) => {
+                  if (activeTab === 'all') return true;
+                  if (activeTab === 'ko') return notice.targetLang === 'ko' || notice.targetLang === 'all';
+                  return notice.targetLang === activeTab;
+                }).map((notice) => (
                   <tr key={notice.id} className="border-b hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm text-gray-900">
                       <div className="flex items-center gap-2">

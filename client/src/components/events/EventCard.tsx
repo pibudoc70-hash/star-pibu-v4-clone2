@@ -158,7 +158,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             isExpanded ? "block" : "hidden md:block"
           }`}
           style={{
-            aspectRatio: "3/2",
+            aspectRatio: "10/6",
             borderRadius: isExpanded ? "1rem 1rem 0 0" : "1rem 1rem 0 0",
           }}
         >

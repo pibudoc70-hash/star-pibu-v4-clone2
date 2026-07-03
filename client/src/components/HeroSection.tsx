@@ -223,45 +223,45 @@ const HeroSubtitleToggle = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const textStyle: React.CSSProperties = {
+  const sharedStyle: React.CSSProperties = {
     position: "absolute" as const,
-    inset: 0,
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+    top: 0,
+    left: 0,
+    right: 0,
+    fontSize: "clamp(0.8rem, 3.5vw, 0.95rem)",
     letterSpacing: "-0.01em",
-    lineHeight: "1.5",
+    lineHeight: "1.6",
     margin: 0,
+    padding: 0,
     transition: "opacity 1.5s ease-in-out",
+    whiteSpace: "normal" as const,
+    wordBreak: "keep-all" as const,
   };
 
   return (
     <div
       style={{
         position: "relative",
-        height: "clamp(2.8rem, 7vw, 3.5rem)",
+        height: "3rem",
         width: "100%",
+        overflow: "hidden",
       }}
     >
       {/* 영문 */}
       <p
         className="font-light text-white text-center"
-        style={{ ...textStyle, opacity: isKorean ? 0 : 1 }}
+        style={{ ...sharedStyle, opacity: isKorean ? 0 : 1 }}
         aria-hidden={isKorean}
       >
-        <span style={{ display: "block" }}>Where Experience,</span>
-        <span style={{ display: "block" }}>Trust, and Science Meet</span>
+        Where Experience, Trust, and Science Meet
       </p>
       {/* 한글 */}
       <p
         className="font-light text-white text-center"
-        style={{ ...textStyle, opacity: isKorean ? 1 : 0 }}
+        style={{ ...sharedStyle, opacity: isKorean ? 1 : 0 }}
         aria-hidden={!isKorean}
       >
-        <span style={{ display: "block" }}>풍부한 경험,</span>
-        <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
+        풍부한 경험, 깊은 신뢰, 그리고 과학의 만남
       </p>
     </div>
   );

@@ -12,6 +12,15 @@
 import {
   Clock, RefreshCw, AlertCircle, Repeat, Sparkles, ExternalLink,
 } from "lucide-react";
+
+// YouTube URL → embed URL 변환 (watch?v= / youtu.be / shorts 모두 지원)
+function toEmbedUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (url.includes("youtube.com/embed/")) return url;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (m?.[1]) return `https://www.youtube.com/embed/${m[1]}?rel=0`;
+  return null; // 알 수 없는 URL은 null 반환
+}
 import { useLocation } from "wouter";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -75,20 +84,21 @@ export function EquipmentTreatmentModal({
           </div>
 
           {/* 유튜브 임베드 */}
-          {item.youtubeUrl && (
+          {toEmbedUrl(item.youtubeUrl) && (
             <div className="rounded-xl overflow-hidden aspect-video">
               <iframe
-                src={item.youtubeUrl}
+                src={toEmbedUrl(item.youtubeUrl)!}
                 title={item.name}
                 className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           )}
 
-          {/* 모달 이미지 (유튜브 없을 때) */}
-          {!item.youtubeUrl && item.modalImage && (
+          {/* 모달 이미지 (유튜브 embed 불가능하거나 없을 때) */}
+          {!toEmbedUrl(item.youtubeUrl) && item.modalImage && (
             <div className="rounded-xl overflow-hidden">
               <OptimizedImage
                 src={item.modalImage}

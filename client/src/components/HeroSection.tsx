@@ -241,11 +241,8 @@ const HeroSubtitleToggle = () => {
     <div
       style={{
         position: "relative",
-        height: "clamp(2.5rem, 6vw, 3rem)",
+        height: "clamp(2.8rem, 7vw, 3.5rem)",
         width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
       }}
     >
       {/* 영문 */}

@@ -242,12 +242,21 @@ export default function FacilitySection() {
                 <button type="button"
                   key={i}
                   onClick={() => setCurrentIndex(i)}
-                  className="transition-all duration-300 rounded-full"
+                  className="transition-all duration-300"
                   style={{
-                    width: i === currentIndex ? "32px" : "8px",
-                    height: "8px",
+                    width: i === currentIndex ? "10px" : "8px",
+                    height: i === currentIndex ? "10px" : "8px",
+                    minWidth: i === currentIndex ? "10px" : "8px",
+                    minHeight: i === currentIndex ? "10px" : "8px",
+                    maxWidth: i === currentIndex ? "10px" : "8px",
+                    maxHeight: i === currentIndex ? "10px" : "8px",
+                    borderRadius: "50%",
                     background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
                     cursor: "pointer",
+                    padding: 0,
+                    border: "none",
+                    flexShrink: 0,
+                    display: "block",
                   }}
                   aria-label={fc.goToSlideLabel.replace("{n}", String(i + 1))}
                 />

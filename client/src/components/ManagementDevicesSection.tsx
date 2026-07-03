@@ -43,7 +43,7 @@ function DeviceModal({
       aria-label={displayName}
     >
       <div
-        className="relative w-full max-w-md rounded-2xl overflow-hidden"
+        className="relative w-full max-w-xl rounded-2xl overflow-hidden"
         style={{ background: "var(--brand-bg, #FAF8F5)" }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -212,7 +212,7 @@ export default function ManagementDevicesSection() {
             className="rounded-2xl px-4 py-6 sm:px-6 sm:py-8"
             style={{ background: "white" }}
           >
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
               {devices.map((device) => (
                 <DeviceCard
                   key={device.id}

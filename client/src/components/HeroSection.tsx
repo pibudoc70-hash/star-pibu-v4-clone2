@@ -241,8 +241,8 @@ const HeroSubtitleToggle = () => {
       style={{
         position: "relative",
         height: "3rem",
-        width: "100vw",
-        marginLeft: "calc(-50vw + 50%)",
+        width: "100%",
+        textAlign: "center",
       }}
     >
       {/* 영문 */}

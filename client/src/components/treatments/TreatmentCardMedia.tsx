@@ -29,7 +29,8 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
 
   return (
     <div
-      className="relative overflow-hidden h-48 bg-[#f6efe0]"
+      className="relative overflow-hidden bg-[#f6efe0] w-full h-48"
+      style={{ aspectRatio: "16/9" }}
     >
       {showBgOverlay ? (
         /* 비한국어: bgImageUrl 풀배경 + 텍스트 오버레이 (equipment3 카드와 동일) */

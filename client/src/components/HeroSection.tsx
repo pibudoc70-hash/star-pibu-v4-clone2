@@ -242,9 +242,8 @@ const HeroSubtitleToggle = () => {
     <div
       style={{
         position: "relative",
-        height: "3rem",
+        height: "4.5rem",
         width: "100%",
-        overflow: "hidden",
       }}
     >
       {/* 영문 */}

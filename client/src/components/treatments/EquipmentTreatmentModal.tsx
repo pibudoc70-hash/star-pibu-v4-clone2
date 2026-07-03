@@ -42,10 +42,14 @@ export function EquipmentTreatmentModal({
   onOpenChange,
   detailSlug,
 }: EquipmentTreatmentModalProps) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const tr = t.treatments;
   const { getText } = useLocalizedText();
   const [, setLocation] = useLocation();
+
+  // 언어별 헤더 이미지: ko는 imageUrl 썬네일, 비ko는 bgImageUrl 풀배경
+  const isNonKo = lang !== "ko";
+  const showBgOverlay = isNonKo && !!item.bgImageUrl;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -55,33 +59,70 @@ export function EquipmentTreatmentModal({
           {tr.modalDetailBtn}
         </DialogTitle>
         <div className="space-y-4">
-          {/* 헤더: 이미지 + 이름 + 시간/회복 */}
-          <div className="flex items-start gap-4">
-            <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
-              <OptimizedImage
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-contain"
+          {/* 헤더: 언어별 이미지 + 이름 + 시간/회복 */}
+          {showBgOverlay ? (
+            /* 비한국어: bgImageUrl 풀배경 + 텍스트 오버레이 */
+            <div className="relative rounded-xl overflow-hidden" style={{ height: "160px" }}>
+              <img
+                src={item.bgImageUrl!}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-800">
-                {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
-              </h3>
-              <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                <span className="flex items-center gap-1">
-                  <Clock size={12} />
-                  {tr.modalTime}:{" "}
-                  {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
-                </span>
-                <span className="flex items-center gap-1">
-                  <RefreshCw size={12} />
-                  {tr.modalRecovery}:{" "}
-                  {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/25 to-transparent" />
+              <div className="absolute inset-0 z-10 flex flex-col justify-end px-4 py-3">
+                {item.nameEn && (
+                  <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1"
+                    style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+                    {item.nameEn}
+                  </p>
+                )}
+                <h3 className="text-xl font-black leading-tight"
+                  style={{ color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
+                </h3>
+                <div className="flex items-center gap-3 text-xs mt-1.5"
+                  style={{ color: "rgba(255,255,255,0.85)" }}>
+                  <span className="flex items-center gap-1">
+                    <Clock size={11} />
+                    {tr.modalTime}: {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <RefreshCw size={11} />
+                    {tr.modalRecovery}: {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            /* 한국어 또는 bgImageUrl 없음: 기존 썬네일 + 텍스트 */
+            <div className="flex items-start gap-4">
+              <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
+                <OptimizedImage
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-slate-800">
+                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
+                </h3>
+                <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                  <span className="flex items-center gap-1">
+                    <Clock size={12} />
+                    {tr.modalTime}:{" "}
+                    {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <RefreshCw size={12} />
+                    {tr.modalRecovery}:{" "}
+                    {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* 유튜브 임베드 */}
           {toEmbedUrl(item.youtubeUrl) && (

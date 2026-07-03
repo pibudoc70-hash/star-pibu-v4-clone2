@@ -30,6 +30,7 @@ export interface Treatment {
   images?: string[];          // 복수 이미지 (나란히 표시)
   imgBg?: string;             // 이미지 배경 색상
   cardBannerImage?: string;   // 카드 이미지 영역 전체를 덮는 배너 이미지
+  bgImageUrl?: string;         // 비한국어 언어용 배경 이미지 (equipment3 오버레이 방식)
   best?: boolean;
   // 상세 모달용 추가 필드
   detail?: string;            // 더 긴 상세 설명 (ko)

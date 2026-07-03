@@ -153,6 +153,7 @@ function toTreatment(item: {
     badgeColor: item.badgeColor ?? undefined,
     // 이미지 필드 매핑
     image: item.imageUrl ?? "",
+    bgImageUrl: item.bgImageUrl ?? undefined,  // 비한국어 오버레이용
     cardBannerImage: item.bgImageUrl ?? undefined,
     images: parsedImages,
     youtubeUrl: item.youtubeUrl ?? undefined,

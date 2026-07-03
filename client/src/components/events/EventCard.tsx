@@ -158,13 +158,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             isExpanded ? "block" : "hidden md:block"
           }`}
           style={{
-            borderRadius: "1rem 1rem 0 0",
+            aspectRatio: "3/2",
+            borderRadius: isExpanded ? "1rem 1rem 0 0" : "1rem 1rem 0 0",
           }}
         >
           <OptimizedImage
             src={event.imageUrl}
             alt={title}
-            className="w-full h-auto block transition-transform duration-500 hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             width={800}
             height={533}
             priority={false}

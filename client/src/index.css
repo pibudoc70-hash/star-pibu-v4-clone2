@@ -974,20 +974,10 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* [P0] 모바일 hero 이미지 focal point — 30% 앵커로 클리닉 공간감 강화 */
+  /* 모바일 hero 이미지 — 중앙 고정 (로고 영역 보이도록) */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: center 30%;
-      animation: heroMobileSlide 30s ease-in-out forwards;
-    }
-  }
-  
-  @keyframes heroMobileSlide {
-    0% {
-      object-position: 50% 30%;
-    }
-    100% {
-      object-position: right 30%;
+      object-position: center center;
     }
   }
   .hero-content {

@@ -974,10 +974,20 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* 모바일 hero 이미지 — 중앙 고정 (로고 영역 보이도록) */
+  /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: center center;
+      object-position: left center;
+      animation: heroMobileSlide 30s ease-in-out forwards;
+    }
+  }
+
+  @keyframes heroMobileSlide {
+    0% {
+      object-position: left center;
+    }
+    100% {
+      object-position: right center;
     }
   }
   .hero-content {

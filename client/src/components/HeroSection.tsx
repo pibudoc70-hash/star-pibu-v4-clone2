@@ -215,49 +215,56 @@ function HeroSection() {
 // 영문/한글 텍스트 교체 컴포넌트
 const HeroSubtitleToggle = () => {
   const [isKorean, setIsKorean] = useState(false);
-  const [key, setKey] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsKorean((prev) => !prev);
-      setKey((prev) => prev + 1);
-    }, 4000);
-
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
+
+  const textStyle: React.CSSProperties = {
+    position: "absolute" as const,
+    inset: 0,
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+    letterSpacing: "-0.01em",
+    lineHeight: "1.5",
+    margin: 0,
+    transition: "opacity 1.5s ease-in-out",
+  };
 
   return (
     <div
       style={{
+        position: "relative",
         height: "clamp(2.5rem, 6vw, 3rem)",
-        overflow: "hidden",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
+      {/* 영문 */}
       <p
-        key={key}
-        className="hero-subtitle-toggle font-light text-white text-center"
-        style={{
-          fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
-          letterSpacing: "-0.01em",
-          lineHeight: "1.5",
-          animation: "heroSubtitleFadeUp 0.5s ease-out forwards",
-          margin: 0,
-        }}
+        className="font-light text-white text-center"
+        style={{ ...textStyle, opacity: isKorean ? 0 : 1 }}
+        aria-hidden={isKorean}
       >
-        {!isKorean ? (
-          <>
-            <span style={{ display: "block" }}>Where Experience,</span>
-            <span style={{ display: "block" }}>Trust, and Science Meet</span>
-          </>
-        ) : (
-          <>
-            <span style={{ display: "block" }}>풍부한 경험,</span>
-            <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
-          </>
-        )}
+        <span style={{ display: "block" }}>Where Experience,</span>
+        <span style={{ display: "block" }}>Trust, and Science Meet</span>
+      </p>
+      {/* 한글 */}
+      <p
+        className="font-light text-white text-center"
+        style={{ ...textStyle, opacity: isKorean ? 1 : 0 }}
+        aria-hidden={!isKorean}
+      >
+        <span style={{ display: "block" }}>풍부한 경험,</span>
+        <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
       </p>
     </div>
   );

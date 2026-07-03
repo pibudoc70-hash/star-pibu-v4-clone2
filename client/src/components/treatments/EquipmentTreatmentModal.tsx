@@ -27,7 +27,6 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useLang } from "@/contexts/LangContext";
 import type { Treatment } from "@/types/treatment";
-import { CLINIC_TEL } from "@/lib/constants";
 
 interface EquipmentTreatmentModalProps {
   item: Treatment;
@@ -215,13 +214,7 @@ export function EquipmentTreatmentModal({
             </button>
           )}
 
-          {/* 전화 상담 버튼 */}
-          <a
-            href={`tel:${CLINIC_TEL}`}
-            className="block w-full py-2.5 rounded-xl text-sm font-semibold text-center border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
-          >
-            {tr.modalConsultBtn}
-          </a>
+
         </div>
       </DialogContent>
     </Dialog>

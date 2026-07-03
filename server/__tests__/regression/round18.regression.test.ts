@@ -112,8 +112,9 @@ describe("D. TreatmentsEquipmentSection: setFilterOpen deprecated setter 제거"
   const treatSrc = readClient("components/TreatmentsEquipmentSection.tsx");
 
   it("D-1: setFilterOpen을 useStaticTreatmentFilter에서 destructure하지 않아야 한다", () => {
-    // deprecated setter를 훅에서 직접 꺼내지 않아야 함
-    expect(treatSrc).not.toMatch(/setFilterOpen\s*,|,\s*setFilterOpen/);
+    // [DB통합] useStaticTreatmentFilter 훅을 더 이상 사용하지 않으므로
+    // useStaticTreatmentFilter import 자체가 없어야 함
+    expect(treatSrc).not.toContain("useStaticTreatmentFilter");
   });
 
   it("D-2: closeFilter 함수가 존재해야 한다 (로컬 정의 또는 hook에서 직접 제공)", () => {

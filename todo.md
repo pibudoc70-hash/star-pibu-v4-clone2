@@ -3574,3 +3574,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] WelcomePopup은 이미 useLang() + trpc.popup.list({ lang }) 연동 완료
 - [x] popup.test.ts에 다국어 targetLang 필터 테스트 6건 추가 (총 1419 tests 통과)
 - [x] ESLint 에러 0건 유지
+## 메인 카드 섹션 equipment3 DB 통합 (2026-07-03)
+- [ ] TreatmentsEquipmentSection을 trpc.equipment3.list 사용으로 전환 (정적 데이터 제거)
+- [ ] equipment3 DB 데이터를 Treatment 타입으로 어댑터 변환 (imageUrl→image, category 기반 탭)
+- [ ] 카드/모달 UI 기존 디자인 유지하면서 DB 데이터 표시
+- [ ] 정적 데이터 파일 의존성 제거 (useStaticTreatmentFilter → DB 기반 필터)
+- [ ] 테스트 업데이트 및 체크포인트 저장
+## 메인 카드 섹션 equipment3 DB 통합
+- [x] useEquipment3AsTreatments 어댑터 훅 작성 (equipment3 DB → Treatment 타입 변환)
+- [x] TreatmentsEquipmentSection을 DB 데이터 소스로 전환 (정적 파일 의존성 제거)
+- [x] 카테고리 탭 동적 생성 (DB 카테고리 기반)
+- [x] 회귀 테스트 업데이트 (round18 D-1, round22 B-10/B-11)
+- [x] 1419 tests 전부 통과, ESLint 에러 0건

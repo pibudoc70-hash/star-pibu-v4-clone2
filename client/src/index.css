@@ -977,14 +977,14 @@
   /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: left center;
+      object-position: 50% center;
       animation: heroMobileSlide 30s ease-in-out forwards;
     }
   }
 
   @keyframes heroMobileSlide {
     0% {
-      object-position: left center;
+      object-position: 50% center;
     }
     100% {
       object-position: right center;

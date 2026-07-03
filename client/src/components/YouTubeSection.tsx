@@ -265,12 +265,8 @@ export default function YouTubeSection() {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
                       }}
                     />
-                    {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
-                      <div className="absolute bottom-3 left-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/60 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-5 md:border-l-7 border-l-transparent border-r-0 border-t-3 md:border-t-4 border-t-transparent border-b-3 md:border-b-4 border-b-transparent" style={{ borderLeftColor: 'var(--color-gold-primary)' }} />
-                      </div>
-                    </div>
+                    {/* 호버 오버레이 */}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true" />
                   </div>
 
                   {/* 제목 */}
@@ -309,12 +305,8 @@ export default function YouTubeSection() {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${short.videoId}/hqdefault.jpg`;
                       }}
                     />
-                    {/* 플레이 버튼 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true">
-                      <div className="absolute bottom-2 left-2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/90 flex items-center justify-center">
-                        <div className="w-0 h-0 border-l-4 border-l-transparent border-r-0 border-t-3 border-t-transparent border-b-3 border-b-transparent" style={{ borderLeftColor: 'var(--color-gold-primary)' }} />
-                      </div>
-                    </div>
+                    {/* 호버 오버레이 */}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true" />
                   </div>
 
                   {/* 제목 */}

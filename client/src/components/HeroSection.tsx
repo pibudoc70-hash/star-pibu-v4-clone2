@@ -223,24 +223,11 @@ const HeroSubtitleToggle = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const sharedStyle: React.CSSProperties = {
-    position: "absolute" as const,
-    top: 0,
-    left: 0,
-    right: 0,
-    fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
-    letterSpacing: "-0.01em",
-    lineHeight: "1.6",
-    margin: 0,
-    padding: 0,
-    transition: "opacity 1.5s ease-in-out",
-  };
-
+  /* grid 스택: 두 자식이 같은 셀을 차지하여 자연스럽게 격쳐짐 */
   return (
     <div
       style={{
-        position: "relative",
-        height: "3rem",
+        display: "grid",
         width: "100%",
         textAlign: "center",
       }}
@@ -248,20 +235,38 @@ const HeroSubtitleToggle = () => {
       {/* 영문 */}
       <p
         className="font-light text-white text-center"
-        style={{ ...sharedStyle, opacity: isKorean ? 0 : 1 }}
+        style={{
+          gridArea: "1 / 1",
+          fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
+          letterSpacing: "-0.01em",
+          lineHeight: "1.6",
+          margin: 0,
+          padding: 0,
+          opacity: isKorean ? 0 : 1,
+          transition: "opacity 1.5s ease-in-out",
+          pointerEvents: isKorean ? "none" : "auto",
+        }}
         aria-hidden={isKorean}
       >
-        <span style={{ display: "block" }}>Where Experience,</span>
-        <span style={{ display: "block" }}>Trust, and Science Meet</span>
+        Where Experience,<br />Trust, and Science Meet
       </p>
       {/* 한글 */}
       <p
         className="font-light text-white text-center"
-        style={{ ...sharedStyle, opacity: isKorean ? 1 : 0 }}
+        style={{
+          gridArea: "1 / 1",
+          fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
+          letterSpacing: "-0.01em",
+          lineHeight: "1.6",
+          margin: 0,
+          padding: 0,
+          opacity: isKorean ? 1 : 0,
+          transition: "opacity 1.5s ease-in-out",
+          pointerEvents: isKorean ? "auto" : "none",
+        }}
         aria-hidden={!isKorean}
       >
-        <span style={{ display: "block" }}>풍부한 경험,</span>
-        <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
+        풍부한 경험,<br />깊은 신뢰, 그리고 과학의 만남
       </p>
     </div>
   );

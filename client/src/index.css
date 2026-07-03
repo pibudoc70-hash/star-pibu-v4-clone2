@@ -1483,28 +1483,35 @@
   .dr-accordion-chevron[data-expanded="false"] { transform: rotate(0deg); }
   /* Dot nav button */
   .dr-dot-nav {
-    width: 8px;
-    height: 8px;
-    aspect-ratio: 1 / 1;
-    flex-shrink: 0;
+    width: 8px !important;
+    height: 8px !important;
+    min-width: 8px !important;
+    min-height: 8px !important;
+    max-width: 8px !important;
+    max-height: 8px !important;
+    flex-shrink: 0 !important;
+    align-self: center !important;
     background: color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
     border: none;
     cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s;
-    padding: 0;
-    display: block;
+    border-radius: 50% !important;
+    transition: background 0.3s, width 0.3s, height 0.3s;
+    padding: 0 !important;
+    display: block !important;
+    box-sizing: content-box !important;
   }
   .dr-dot-nav[data-active="true"] {
-    width: 10px;
-    height: 10px;
-    aspect-ratio: 1 / 1;
+    width: 10px !important;
+    height: 10px !important;
+    min-width: 10px !important;
+    min-height: 10px !important;
+    max-width: 10px !important;
+    max-height: 10px !important;
     background: var(--color-gold-primary);
   }
   .dr-dot-nav[data-active="false"] {
-    width: 8px;
-    height: 8px;
-    aspect-ratio: 1 / 1;
+    width: 8px !important;
+    height: 8px !important;
   }
 
   /* Soft Glow animation for hero section ceiling light */

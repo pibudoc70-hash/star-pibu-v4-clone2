@@ -206,7 +206,7 @@ export function DoctorMobileLayout({
         </div>
 
         {/* Dot indicator */}
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center items-center gap-2">
           {doctors.map((d) => (
             <button
               type="button"

@@ -9,6 +9,7 @@
  */
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
+import { useLang } from "@/contexts/LangContext";
 import type { Treatment } from "@/types/treatment";
 
 interface TreatmentCardMediaProps {
@@ -18,9 +19,13 @@ interface TreatmentCardMediaProps {
 
 export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
   const { getText } = useLocalizedText();
+  const { lang } = useLang();
   const localizedBadge = item.badge
     ? getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh)
     : null;
+
+  // 비한국어 + bgImageUrl 있음 → equipment3 카드와 동일한 오버레이 방식
+  const showBgOverlay = lang !== "ko" && !!item.bgImageUrl;
 
   return (
     <div
@@ -29,7 +34,34 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
         item.cardBannerImage ? "h-auto bg-transparent" : "h-48 bg-[#f6efe0]",
       ].join(" ")}
     >
-      {item.cardBannerImage ? (
+      {showBgOverlay ? (
+        /* 비한국어: bgImageUrl 풀배경 + 텍스트 오버레이 (equipment3 카드와 동일) */
+        <>
+          <img
+            src={item.bgImageUrl!}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+          <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 py-3">
+            {item.nameEn && (
+              <p
+                className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1"
+                style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
+              >
+                {item.nameEn}
+              </p>
+            )}
+            <h3
+              className="text-xl font-black leading-tight"
+              style={{ color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
+            >
+              {name}
+            </h3>
+          </div>
+        </>
+      ) : item.cardBannerImage ? (
         <OptimizedImage
           src={item.cardBannerImage}
           alt={name}

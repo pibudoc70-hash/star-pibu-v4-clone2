@@ -153,8 +153,9 @@ function toTreatment(item: {
     badgeColor: item.badgeColor ?? undefined,
     // 이미지 필드 매핑
     image: item.imageUrl ?? "",
-    bgImageUrl: item.bgImageUrl ?? undefined,  // 비한국어 오버레이용
-    cardBannerImage: item.bgImageUrl ?? undefined,
+    bgImageUrl: item.bgImageUrl ?? undefined,  // 비한국어 오버레이용 (언어 분기는 카드/모달 컴포넌트에서 처리)
+    // cardBannerImage는 매핑하지 않음: bgImageUrl을 cardBannerImage에 넣으면
+    // TreatmentCardMedia가 언어 구분 없이 배경 이미지만 표시하는 문제 발생
     images: parsedImages,
     youtubeUrl: item.youtubeUrl ?? undefined,
     modalImage: item.modalImage ?? undefined,

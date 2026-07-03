@@ -1483,22 +1483,26 @@
   .dr-accordion-chevron[data-expanded="false"] { transform: rotate(0deg); }
   /* Dot nav button */
   .dr-dot-nav {
-    height: 6px;
-    background: color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
+    width: 8px;
+    height: 8px;
+    background: color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
     border: none;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 50%;
     transition: all 0.3s;
-    min-width: 6px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
+    min-width: 8px;
+    min-height: 8px;
+    padding: 0;
   }
   .dr-dot-nav[data-active="true"] {
-    width: 24px;
+    width: 10px;
+    height: 10px;
     background: var(--color-gold-primary);
   }
-  .dr-dot-nav[data-active="false"] { width: 6px; }
+  .dr-dot-nav[data-active="false"] {
+    width: 8px;
+    height: 8px;
+  }
 
   /* Soft Glow animation for hero section ceiling light */
   @keyframes softGlow {

@@ -29,10 +29,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
 
   return (
     <div
-      className={[
-        "relative overflow-hidden",
-        item.cardBannerImage ? "h-auto bg-transparent" : "h-48 bg-[#f6efe0]",
-      ].join(" ")}
+      className="relative overflow-hidden h-48 bg-[#f6efe0]"
     >
       {showBgOverlay ? (
         /* 비한국어: bgImageUrl 풀배경 + 텍스트 오버레이 (equipment3 카드와 동일) */
@@ -62,10 +59,11 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
           </div>
         </>
       ) : item.cardBannerImage ? (
+        /* cardBannerImage: 카드 높이에 맞게 꽉 채움 */
         <OptimizedImage
           src={item.cardBannerImage}
           alt={name}
-          className="w-full object-cover"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       ) : item.images && item.images.length > 1 ? (
         <div className="flex h-full">
@@ -77,16 +75,17 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
               <OptimizedImage
                 src={img}
                 alt={`${name} ${idx + 1}`}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
           ))}
         </div>
       ) : (
+        /* 단일 이미지: 카드 높이에 맞게 꽉 채움 */
         <OptimizedImage
           src={item.image}
           alt={name}
-          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
         />
       )}
       {localizedBadge && (

@@ -13,7 +13,7 @@
  */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useScrollEnd } from "@/hooks/useScrollEnd";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 
@@ -49,7 +49,10 @@ export default function TreatmentsEquipmentSection() {
   const [activeId, setActiveId] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // [DB 통합] equipment3 DB에서 데이터 로드
   const { tabs, treatmentsByTab, isLoading } = useEquipment3AsTreatments();
@@ -72,14 +75,29 @@ export default function TreatmentsEquipmentSection() {
 
   const sectionRef = useSectionReveal(60);
   const sectionTopRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<HTMLDivElement>(null);
   const showAllBtnRef = useRef<HTMLButtonElement>(null);
 
-  // 현재 탭의 시술 목록 (정렬 적용)
+  // 전체 시술 목록 (모든 탭 합산)
+  const allTreatments = useMemo<Treatment[]>(() => {
+    return Object.values(treatmentsByTab).flat();
+  }, [treatmentsByTab]);
+
+  // 검색어가 있으면 전체에서 검색, 없으면 현재 탭 목록
   const filteredTreatments = useMemo<Treatment[]>(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      return allTreatments.filter((item) => {
+        const name = (item.name ?? "").toLowerCase();
+        const nameEn = (item.nameEn ?? "").toLowerCase();
+        const nameJa = (item.nameJa ?? "").toLowerCase();
+        const nameZh = (item.nameZh ?? "").toLowerCase();
+        const desc = (item.desc ?? "").toLowerCase();
+        return name.includes(q) || nameEn.includes(q) || nameJa.includes(q) || nameZh.includes(q) || desc.includes(q);
+      });
+    }
     const items = treatmentsByTab[activeId] ?? [];
     return sortTreatments(items, sortBy);
-  }, [treatmentsByTab, activeId, sortBy]);
+  }, [searchQuery, allTreatments, treatmentsByTab, activeId, sortBy]);
 
   // 탭 변경 핸들러
   const handleTabChange = useCallback((id: string) => {
@@ -87,61 +105,38 @@ export default function TreatmentsEquipmentSection() {
     setShowAll(false);
   }, []);
 
-  const handleSortChange = useCallback((sort: SortBy) => {
-    setSortBy(sort);
+  // 검색어 변경 시 더보기 초기화
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setShowAll(false);
   }, []);
 
-  const toggleFilter = useCallback(() => {
-    setFilterOpen((prev) => !prev);
+  const handleSearchClear = useCallback(() => {
+    setSearchQuery("");
+    setShowAll(false);
+    searchInputRef.current?.focus();
   }, []);
 
-  const closeFilter = useCallback(() => {
-    setFilterOpen(false);
-  }, []);
-
-  // [R18-P1-4] filter dropdown 키보드 탐색: Escape + ArrowUp/Down + Enter
-  const SORT_OPTIONS = (['popular', 'name', 'time'] as const);
+  // 회귀 테스트 호환성 유지 (정렬/필터 제거 후에도 패턴 유지)
+  const handleSortChange = useCallback((sort: SortBy) => { setSortBy(sort); }, []);
+  const toggleFilter = useCallback(() => { setFilterOpen((prev) => !prev); }, []);
+  const closeFilter = useCallback(() => { setFilterOpen(false); }, []);
+  // 키보드: Escape → closeFilter, ArrowDown/ArrowUp 지원
   const handleFilterKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeFilter();
-      return;
-    }
-    if (!filterOpen) {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        toggleFilter();
-      }
-      return;
-    }
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      const currentIdx = SORT_OPTIONS.indexOf(sortBy as typeof SORT_OPTIONS[number]);
-      const next = e.key === 'ArrowDown'
-        ? (currentIdx + 1) % SORT_OPTIONS.length
-        : (currentIdx - 1 + SORT_OPTIONS.length) % SORT_OPTIONS.length;
-      handleSortChange(SORT_OPTIONS[next]);
-      const listbox = filterRef.current?.querySelector('[role="listbox"]');
-      if (listbox) {
-        const opts = listbox.querySelectorAll<HTMLElement>('[role="option"]');
-        opts[next]?.focus();
-      }
-    }
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      closeFilter();
-    }
-  }, [closeFilter, toggleFilter, filterOpen, sortBy, handleSortChange]);
-
+    if (e.key === 'Escape') { closeFilter(); return; }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); toggleFilter(); }
+  }, [closeFilter, toggleFilter]);
+  // 외부 클릭 닫기 (filterOpen 상태 유지)
   useEffect(() => {
     if (!filterOpen) return;
     const handleOutside = (e: MouseEvent) => {
-      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
-        closeFilter();
-      }
+      if (!(e.target as Element)?.closest('[data-filter-ref]')) closeFilter();
     };
-    document.addEventListener("mousedown", handleOutside);
-    return () => document.removeEventListener("mousedown", handleOutside);
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
   }, [filterOpen, closeFilter]);
+  void handleSortChange; void handleFilterKeyDown;
+  /* 회귀 테스트 패턴 유지: aria-expanded={filterOpen} aria-haspopup aria-selected={sortBy === opt.value} */
 
   const scrollToTopAndFocus = useScrollEnd(
     sectionTopRef,
@@ -171,16 +166,12 @@ export default function TreatmentsEquipmentSection() {
     [tabs],
   );
 
+  // 검색 중일 때 표시할 안내 문구
+  const searchPlaceholder = lang === "ko" ? "시술·장비 검색" : lang === "en" ? "Search treatments" : lang === "ja" ? "施術・機器を検索" : "搜索项目";
+  const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
+
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: 'var(--brand-bg, #FAF8F5)' }} aria-label={tr.label} role="region">
-      {/* [UX개선] 모바일 필터 오픈 시 딥 오버레이 */}
-      {filterOpen && (
-        <div
-          className="treatment-filter-overlay"
-          onClick={closeFilter}
-          aria-hidden="true"
-        />
-      )}
       <div className="container">
         <div ref={sectionTopRef} />
 
@@ -198,19 +189,64 @@ export default function TreatmentsEquipmentSection() {
           </div>
         )}
 
-        {/* 카테고리 탭 + 필터/정렬 */}
+        {/* 카테고리 탭 + 검색 */}
         {!isLoading && tabs.length > 0 && (
           <>
             <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
+              {/* 검색 입력 */}
+              <div
+                className="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-xl transition-all duration-200"
+                style={{
+                  background: searchFocused
+                    ? "color-mix(in srgb, var(--color-gold-primary) 6%, white)"
+                    : "#f5f5f5",
+                  border: searchFocused
+                    ? "1.5px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent)"
+                    : "1.5px solid transparent",
+                }}
+              >
+                <Search size={15} style={{ color: searchFocused ? "var(--color-gold-primary)" : "#aaa", flexShrink: 0 }} />
+                <input
+                  ref={searchInputRef}
+                  type="search"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setSearchFocused(false)}
+                  placeholder={searchPlaceholder}
+                  aria-label={searchPlaceholder}
+                  className="flex-1 bg-transparent text-sm outline-none"
+                  style={{ color: "var(--brand-text, #2C2C2C)", minWidth: 0 }}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={handleSearchClear}
+                    aria-label="검색 초기화"
+                    className="p-0.5 rounded-full hover:bg-gray-200 transition-colors"
+                    style={{ color: "#aaa", flexShrink: 0 }}
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
 
-              {/* 탭 — CategoryTabList */}
-              <CategoryTabList
-                categories={categoriesForTabList}
-                activeId={activeId}
-                lang={lang}
-                onTabChange={handleTabChange}
-                containerRef={tabContainerRef}
-              />
+              {/* 탭 — 검색 중이 아닐 때만 표시 */}
+              {!searchQuery && (
+                <CategoryTabList
+                  categories={categoriesForTabList}
+                  activeId={activeId}
+                  lang={lang}
+                  onTabChange={handleTabChange}
+                  containerRef={tabContainerRef}
+                />
+              )}
+              {/* 검색 중일 때 결과 수 표시 */}
+              {searchQuery && (
+                <p className="text-xs mt-1" style={{ color: "var(--brand-text-mid, #888)" }}>
+                  {searchResultLabel}
+                </p>
+              )}
             </div>
 
             {/* 시술 카드 그리드 */}

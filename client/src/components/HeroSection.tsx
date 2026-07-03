@@ -228,22 +228,21 @@ const HeroSubtitleToggle = () => {
     top: 0,
     left: 0,
     right: 0,
-    fontSize: "clamp(0.8rem, 3.5vw, 0.95rem)",
+    fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
     letterSpacing: "-0.01em",
     lineHeight: "1.6",
     margin: 0,
     padding: 0,
     transition: "opacity 1.5s ease-in-out",
-    whiteSpace: "normal" as const,
-    wordBreak: "keep-all" as const,
   };
 
   return (
     <div
       style={{
         position: "relative",
-        height: "4.5rem",
-        width: "100%",
+        height: "3rem",
+        width: "100vw",
+        marginLeft: "calc(-50vw + 50%)",
       }}
     >
       {/* 영문 */}
@@ -252,7 +251,8 @@ const HeroSubtitleToggle = () => {
         style={{ ...sharedStyle, opacity: isKorean ? 0 : 1 }}
         aria-hidden={isKorean}
       >
-        Where Experience, Trust, and Science Meet
+        <span style={{ display: "block" }}>Where Experience,</span>
+        <span style={{ display: "block" }}>Trust, and Science Meet</span>
       </p>
       {/* 한글 */}
       <p
@@ -260,7 +260,8 @@ const HeroSubtitleToggle = () => {
         style={{ ...sharedStyle, opacity: isKorean ? 1 : 0 }}
         aria-hidden={!isKorean}
       >
-        풍부한 경험, 깊은 신뢰, 그리고 과학의 만남
+        <span style={{ display: "block" }}>풍부한 경험,</span>
+        <span style={{ display: "block" }}>깊은 신뢰, 그리고 과학의 만남</span>
       </p>
     </div>
   );

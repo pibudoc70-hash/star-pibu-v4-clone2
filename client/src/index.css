@@ -1799,7 +1799,7 @@
       line-height: 1.05 !important;
       text-align: center !important;
       margin: 0 0 clamp(6px, 1.2vh, 10px) 0 !important;
-      text-shadow: none !important;
+      text-shadow: 0 2px 16px rgba(4,8,22,0.85), 0 1px 4px rgba(4,8,22,0.95) !important;
       word-break: keep-all !important;
       width: auto !important;
     }
@@ -1861,6 +1861,7 @@
       line-height: 1.58 !important;
       margin: 0 !important;
       opacity: 0.92 !important;
+      text-shadow: 0 1px 12px rgba(4,8,22,0.90), 0 1px 3px rgba(4,8,22,0.95) !important;
     }
 
     /* ▶ 2. 데스크톱 전용 콘테이너 숨김 (모바일에서는 hero-mobile-layout만 사용) */

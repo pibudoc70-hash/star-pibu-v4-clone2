@@ -22,10 +22,10 @@ export const HERO_IMAGES = {
   desktopWebp: `${CDN}/hero-bg-new-desktop_2f8a8ccf.webp`,
   /** 데스크톱 배경 (JPEG 폴백) */
   desktopJpg: `${CDN}/hero-bg-new-desktop.jpg`,
-  /** 모바일 세로 배경 (WebP, max-width: 640px) */
-  mobilePortraitWebp: `${CDN}/hero-mobile-new-mobile_f9bea0c7.webp`,
+  /** 모바일 세로 배경 (WebP, max-width: 640px) — 데스크탑 이미지 공용 사용 (STAR DERMATOLOGY 글자 노출) */
+  mobilePortraitWebp: `${CDN}/hero-bg-new-desktop_2f8a8ccf.webp`,
   /** 모바일 세로 배경 (JPEG 폴백) */
-  mobilePortraitJpg: `${CDN}/hero-mobile-new-mobile.jpg`,
+  mobilePortraitJpg: `${CDN}/hero-bg-new-desktop.jpg`,
 } as const;
 
 /** 스타피부과 AI 로고 이미지 URL */

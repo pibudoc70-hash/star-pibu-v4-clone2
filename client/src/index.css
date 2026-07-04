@@ -974,11 +974,20 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* 모바일 hero 이미지 — 고정 (슬라이드 없음) */
+  /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: center center;
-      animation: none;
+      object-position: 1% center;
+      animation: heroMobileSlide 30s ease-in-out forwards;
+    }
+  }
+
+  @keyframes heroMobileSlide {
+    0% {
+      object-position: 1% center;
+    }
+    100% {
+      object-position: right center;
     }
   }
   .hero-content {
@@ -1732,140 +1741,37 @@
       align-items: center !important;
     }
 
-    /* ▶ 1b-0. 모바일에서 데스크톱 전용 로고 완전 숨김 (이중 심볼 방지) */
-    .hero-logo-wrap,
-    .hero-logo-img {
-      display: none !important;
-    }
-
-    /* ▶ 1b. 모바일 레이아웃 컨테이너 — section 전체를 flex-col로 채움 */
-    /* 사진 분석: 콘텐츠 상단 시작점 = 화면의 약 20vh(헤더 60px + 여백), 하단 = 화면 맨 아래 */
-    .hero-mobile-layout {
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      width: 100% !important;
-      height: 100% !important;
-      position: absolute !important;
-      inset: 0 !important;
-      padding-top: clamp(52px, 10vh, 72px) !important;
-      padding-bottom: clamp(16px, 3.5vh, 28px) !important;
+    /* ▶ 2. 콘텐츠 컨테이너 — 중앙 정렬, 상하단 여백 조정 */
+    #home > .relative.z-10 {
+      padding-top: clamp(72px, 12vh, 110px) !important;
+      padding-bottom: clamp(48px, 7vh, 88px) !important;
+      max-width: 100% !important;
       padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
       padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
-      z-index: 10 !important;
+      flex: 1 1 auto !important;
+      align-self: stretch !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
     }
 
-    /* ▶ 1c. 상단 그룹 — 로고+텍스트 중앙 정렬 */
-    .hero-mobile-top-group {
+    /* ▶ 3. 상단 콘텐츠 그룹 — 로고+텍스트+통계 */
+    .hero-top-group {
+      flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      text-align: center !important;
+      justify-content: center !important;
       gap: 0 !important;
     }
 
-    /* ▶ 1d. 하단 그룹 — 통계 (상단에서 위쪽으로 올림) */
-    .hero-mobile-bottom-group {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
+    /* ▶ 4. CTA 그룹 — 상단 그룹과 자연스럽게 이어짐 */
+    .hero-cta-group {
+      flex: 0 0 auto !important;
       width: 100% !important;
-      gap: 0 !important;
-      padding-bottom: clamp(24px, 6vh, 48px) !important;
-    }
-
-    /* ▶ 1e. 모바일 로고 — 30% 확대 (20vw → 26vw) */
-    .hero-mobile-logo-img {
-      display: block !important;
-      height: clamp(94px, 26vw, 114px) !important;
-      width: clamp(94px, 26vw, 114px) !important;
-      margin-top: 0 !important;
-      filter: drop-shadow(0 0 28px rgba(201,168,105,0.32)) !important;
-    }
-    .hero-mobile-logo-wrap {
-      display: flex !important;
-      justify-content: center !important;
-      margin-bottom: clamp(14px, 2.8vh, 20px) !important;
-    }
-
-    /* ▶ 1f. 모바일 병원명 — 사진: 화면 너비의 약 72% 차지하는 큰 글씨 */
-    .hero-mobile-title {
-      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
-      font-size: clamp(2.6rem, 12.5vw, 3.4rem) !important;
-      font-weight: 500 !important;
-      color: #ece5d3 !important;
-      letter-spacing: 0.01em !important;
-      line-height: 1.05 !important;
-      text-align: center !important;
-      margin: 0 0 clamp(6px, 1.2vh, 10px) 0 !important;
-      text-shadow: none !important;
-      word-break: keep-all !important;
-      width: auto !important;
-    }
-
-    /* ▶ 1g. STAR DERMATOLOGY — 사진 배경과 중복되어 숨김 */
-    .hero-mobile-dermatology {
-      display: none !important;
-    }
-    /* (숨김 처리 후 기존 스타일 보존용) */
-    .hero-mobile-dermatology-hidden {
-      font-family: 'Montserrat', sans-serif !important;
-      font-size: 9px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.40em !important;
-      color: #a1874a !important;
-      text-align: center !important;
-      margin: 0 0 clamp(14px, 2.8vh, 20px) 0 !important;
-      text-transform: uppercase !important;
-    }
-
-    /* ▶ 1h. 구분선 */
-    .hero-mobile-divider {
-      width: 28px !important;
-      height: 0.8px !important;
-      background: #c9a869 !important;
-      opacity: 0.55 !important;
-      margin: 0 auto clamp(14px, 2.8vh, 20px) auto !important;
-    }
-
-    /* ▶ 1i-wrap. 슬로건 래퍼 — 고정 높이로 레이아웃 안정화 */
-    .hero-mobile-slogan-wrap {
-      position: relative !important;
-      height: clamp(3.2rem, 8.5vh, 4.2rem) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      overflow: hidden !important;
-      width: 100% !important;
-    }
-
-    /* 디솔브 애니메이션 — 위치 이동 없이 순수 opacity만 */
-    @keyframes heroSloganDissolve {
-      from { opacity: 0; }
-      to   { opacity: 0.92; }
-    }
-    .hero-mobile-slogan-fade {
-      animation: heroSloganDissolve 1.8s ease-in-out both !important;
-      position: absolute !important;
-    }
-
-    /* ▶ 1i. 슬로건 — 사진: 병원명보다 훨씬 작은 2줄 */
-    .hero-mobile-slogan {
-      font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.05rem, 4.6vw, 1.25rem) !important;
-      font-weight: 400 !important;
-      font-style: italic !important;
-      color: #e5c98a !important;
-      text-align: center !important;
-      line-height: 1.58 !important;
-      margin: 0 !important;
-      opacity: 0.92 !important;
-    }
-
-    /* ▶ 2. 데스크톱 전용 콘테이너 숨김 (모바일에서는 hero-mobile-layout만 사용) */
-    #home > .relative.z-10.hero-content {
-      display: none !important;
+      padding-top: clamp(0.6rem, 1.5vh, 0.9rem) !important;
+      padding-bottom: 0 !important;
     }
 
     /* ▶ 5. 로고 — 높이 축소로 첫 화면 비율 개선 */
@@ -1881,8 +1787,7 @@
 
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
     /* 텍스트 그림자를 강화해 배경과 명확한 대비 확보 */
-    /* 주의: .hero-mobile-title이 있는 경우 이 스타일은 데스크톱 전용 히어로에만 적용됨 */
-    #home .hero-title {
+    #home h1, .hero-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
       font-style: normal !important;
       font-size: clamp(2.8rem, 13vw, 4rem) !important;

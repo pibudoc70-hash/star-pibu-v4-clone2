@@ -1,6 +1,9 @@
 /**
- * HeroStarfield — 모바일 히어로 섹션 별/은하수 캔버스 배경
- * 캄캄한 밤하늘에 별이 깜박이고 은하수 밴드가 흐르는 효과
+ * HeroStarfield — 모바일 히어로 섹션 별 배경
+ * 캄캄한 밤하늘에 별이 약하게 조금씩 빛나는 효과
+ * - 은하수 제거, 별 수 줄임
+ * - opacity 낮게, 깜박임 속도 느리게
+ * - 일부 별은 아주 천천히 골드 빛으로 빛남
  */
 import { useEffect, useRef } from "react";
 
@@ -8,16 +11,11 @@ interface Star {
   x: number;
   y: number;
   r: number;
-  opacity: number;
-  speed: number;
-  phase: number;
-}
-
-interface MilkyWayParticle {
-  x: number;
-  y: number;
-  r: number;
-  opacity: number;
+  baseOpacity: number;  // 기본 밝기 (낮게)
+  twinkleAmp: number;   // 깜박임 진폭
+  speed: number;        // 깜박임 속도 (느리게)
+  phase: number;        // 위상 오프셋
+  isGold: boolean;      // 골드 빛 여부
 }
 
 export default function HeroStarfield() {
@@ -35,39 +33,41 @@ export default function HeroStarfield() {
     canvas.width = W;
     canvas.height = H;
 
-    // 별 생성
-    const stars: Star[] = Array.from({ length: 220 }, () => ({
+    // 작은 별 — 약하고 느리게 깜박임
+    const smallStars: Star[] = Array.from({ length: 120 }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.0 + 0.3,
-      opacity: Math.random() * 0.5 + 0.3,
-      speed: Math.random() * 0.6 + 0.2,
+      r: Math.random() * 0.7 + 0.2,
+      baseOpacity: Math.random() * 0.12 + 0.04,   // 0.04 ~ 0.16 (매우 약함)
+      twinkleAmp: Math.random() * 0.08 + 0.02,    // 깜박임 폭 작게
+      speed: Math.random() * 0.25 + 0.08,         // 매우 느리게
       phase: Math.random() * Math.PI * 2,
+      isGold: false,
     }));
 
-    // 밝은 별
-    const brightStars: Star[] = Array.from({ length: 8 }, () => ({
+    // 중간 별 — 약간 밝고 느린 깜박임
+    const midStars: Star[] = Array.from({ length: 30 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H * 0.85,
+      r: Math.random() * 0.9 + 0.5,
+      baseOpacity: Math.random() * 0.18 + 0.08,   // 0.08 ~ 0.26
+      twinkleAmp: Math.random() * 0.12 + 0.04,
+      speed: Math.random() * 0.18 + 0.06,
+      phase: Math.random() * Math.PI * 2,
+      isGold: Math.random() < 0.3,                // 30%는 골드 빛
+    }));
+
+    // 밝은 별 — 아주 소수, 글로우 효과
+    const brightStars: Star[] = Array.from({ length: 5 }, () => ({
       x: Math.random() * W,
       y: Math.random() * H * 0.7,
-      r: Math.random() * 1.5 + 1.2,
-      opacity: Math.random() * 0.4 + 0.6,
-      speed: Math.random() * 0.3 + 0.1,
+      r: Math.random() * 1.0 + 0.8,
+      baseOpacity: Math.random() * 0.22 + 0.12,   // 0.12 ~ 0.34
+      twinkleAmp: Math.random() * 0.15 + 0.05,
+      speed: Math.random() * 0.12 + 0.04,         // 아주 느리게
       phase: Math.random() * Math.PI * 2,
+      isGold: Math.random() < 0.5,
     }));
-
-    // 은하수 파티클
-    const milkyWay: MilkyWayParticle[] = Array.from({ length: 80 }, (_, i) => {
-      const t = i / 80;
-      const angle = -0.35;
-      const cx = W * 0.5 + Math.cos(angle) * (t - 0.5) * W * 1.2;
-      const cy = H * 0.4 + Math.sin(angle) * (t - 0.5) * W * 1.2;
-      return {
-        x: cx + (Math.random() - 0.5) * 80,
-        y: cy + (Math.random() - 0.5) * 40,
-        r: Math.random() * 1.8 + 0.4,
-        opacity: Math.random() * 0.18 + 0.04,
-      };
-    });
 
     const startTime = performance.now();
 
@@ -76,41 +76,48 @@ export default function HeroStarfield() {
       const elapsed = (now - startTime) / 1000;
       ctx.clearRect(0, 0, W, H);
 
-      // 은하수
-      milkyWay.forEach((p) => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        const hue = Math.random() > 0.5 ? "180, 200, 255" : "200, 180, 255";
-        ctx.fillStyle = `rgba(${hue}, ${p.opacity})`;
-        ctx.fill();
-      });
-
-      // 일반 별
-      stars.forEach((s) => {
-        const flicker = 0.5 + 0.5 * Math.sin(elapsed * s.speed + s.phase);
-        const alpha = s.opacity * (0.6 + 0.4 * flicker);
+      // 작은 별
+      smallStars.forEach((s) => {
+        const flicker = Math.sin(elapsed * s.speed + s.phase);
+        const alpha = Math.max(0, s.baseOpacity + s.twinkleAmp * flicker);
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(255, 252, 240, ${alpha})`;
         ctx.fill();
       });
 
-      // 밝은 별 + 글로우
-      brightStars.forEach((s) => {
-        const flicker = 0.5 + 0.5 * Math.sin(elapsed * s.speed + s.phase);
-        const alpha = s.opacity * (0.7 + 0.3 * flicker);
-        // 글로우
-        const grd = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 5);
-        grd.addColorStop(0, `rgba(255, 248, 220, ${alpha * 0.5})`);
-        grd.addColorStop(1, "rgba(255, 248, 220, 0)");
+      // 중간 별
+      midStars.forEach((s) => {
+        const flicker = Math.sin(elapsed * s.speed + s.phase);
+        const alpha = Math.max(0, s.baseOpacity + s.twinkleAmp * flicker);
+        const color = s.isGold ? "236, 213, 163" : "255, 252, 240";
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r * 5, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color}, ${alpha})`;
+        ctx.fill();
+      });
+
+      // 밝은 별 + 부드러운 글로우
+      brightStars.forEach((s) => {
+        const flicker = Math.sin(elapsed * s.speed + s.phase);
+        const alpha = Math.max(0, s.baseOpacity + s.twinkleAmp * flicker);
+        const color = s.isGold ? "236, 213, 163" : "255, 252, 240";
+
+        // 글로우 (매우 부드럽게)
+        const glowR = s.r * 6;
+        const grd = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, glowR);
+        grd.addColorStop(0, `rgba(${color}, ${alpha * 0.35})`);
+        grd.addColorStop(0.4, `rgba(${color}, ${alpha * 0.12})`);
+        grd.addColorStop(1, `rgba(${color}, 0)`);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, glowR, 0, Math.PI * 2);
         ctx.fillStyle = grd;
         ctx.fill();
+
         // 별 본체
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(${color}, ${alpha})`;
         ctx.fill();
       });
 

@@ -102,25 +102,39 @@ function HeroSection() {
         </picture>
       </div>
 
-      {/* 모바일: 별/은하수 캔버스 배경 (md 미만에서만 표시) */}
+      {/* 모바일: 딥 그린-블랙 그라디언트 + 골드 별자리 배경 (md 미만에서만 표시) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
-        {/* 깊은 네이비 베이스 컬러 */}
-        <div
-          aria-hidden="true"
-          style={{ position: "absolute", inset: 0, background: "#07091a" }}
-        />
-        {/* 별/은하수 캔버스 */}
-        <HeroStarfield />
-        {/* 하단 그라디언트 페이드 (통계/버튼 영역 가독성) */}
+        {/* 딥 그린-블랙 베이스 그라디언트 */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "35%",
-            background: "linear-gradient(to top, rgba(7,9,26,0.92) 0%, rgba(7,9,26,0.5) 60%, transparent 100%)",
+            inset: 0,
+            background: "radial-gradient(120% 100% at 30% 0%, #1a2822 0%, #0d1614 55%, #050908 100%)",
+          }}
+        />
+        {/* 우상단 골드 광원 */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: 460,
+            height: 460,
+            borderRadius: "50%",
+            right: -180,
+            top: -200,
+            background: "radial-gradient(circle, rgba(201,168,105,0.10), transparent 65%)",
+          }}
+        />
+        {/* 골드 별자리 SVG */}
+        <HeroStarfield />
+        {/* 하단 비네트 */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.32) 100%)",
             pointerEvents: "none",
           }}
         />

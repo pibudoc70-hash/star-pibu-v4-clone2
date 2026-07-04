@@ -63,20 +63,36 @@ export default function Header() {
             onClick={() => handleNavClick("#home")}
             className="flex items-center flex-shrink-0 group"
             aria-label="홈으로 이동"
-            style={{ marginRight: "auto" }}
+            style={{ marginRight: "auto", gap: "8px" }}
           >
+            {/* 심볼 아이콘 */}
+            <img
+              src="/manus-storage/star_logo_d0ae8bbf.webp"
+              alt="스타피부과 로고"
+              style={{
+                width: "26px",
+                height: "26px",
+                objectFit: "contain",
+                filter: scrolled
+                  ? "brightness(0.7) sepia(1) hue-rotate(10deg) saturate(3)"
+                  : "brightness(1.1) drop-shadow(0 1px 6px rgba(0,0,0,0.5))",
+                transition: "filter 0.5s cubic-bezier(0.16,1,0.3,1)",
+                flexShrink: 0,
+              }}
+            />
+            {/* STAR 텍스트 */}
             <span
               style={{
                 fontSize: "15px",
                 fontWeight: "700",
                 color: scrolled ? "var(--color-gold-primary)" : "rgba(255,255,255,0.95)",
-                letterSpacing: "0.12em",
+                letterSpacing: "0.18em",
                 fontFamily: "'Montserrat', sans-serif",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
                 textShadow: scrolled ? "none" : "0 2px 12px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)",
               }}
             >
-              STAR DERMATOLOGY
+              STAR
             </span>
           </button>
 

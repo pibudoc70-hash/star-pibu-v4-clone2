@@ -1756,8 +1756,8 @@
       width: 100% !important;
       flex: 1 1 0 !important;
       min-height: 0 !important;
-      padding-top: clamp(72px, 14vh, 120px) !important;
-      padding-bottom: clamp(16px, 4vh, 32px) !important;
+      padding-top: clamp(80px, 15vh, 110px) !important;
+      padding-bottom: clamp(20px, 5vh, 40px) !important;
       padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
       padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
       position: relative !important;
@@ -1785,27 +1785,27 @@
     /* ▶ 1e. 모바일 로고 — 68px, 심볼 단일 렌더링 (데스크톱 로고 숨김 override) */
     .hero-mobile-logo-img {
       display: block !important;
-      height: 68px !important;
-      width: 68px !important;
+      height: 96px !important;
+      width: 96px !important;
       margin-top: 0 !important;
-      filter: drop-shadow(0 0 24px rgba(201,168,105,0.25)) !important;
+      filter: drop-shadow(0 0 28px rgba(201,168,105,0.30)) !important;
     }
     .hero-mobile-logo-wrap {
       display: flex !important;
       justify-content: center !important;
-      margin-bottom: 18px !important;
+      margin-bottom: 20px !important;
     }
 
     /* ▶ 1f. 모바일 병원명 — 사진 기준 (Cormorant Garamond, 골드-크림) */
     .hero-mobile-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
-      font-size: clamp(2.2rem, 10vw, 3rem) !important;
+      font-size: clamp(2.4rem, 11vw, 3.2rem) !important;
       font-weight: 500 !important;
       color: #ece5d3 !important;
       letter-spacing: 0.01em !important;
       line-height: 1.08 !important;
       text-align: center !important;
-      margin: 0 0 8px 0 !important;
+      margin: 0 0 10px 0 !important;
       text-shadow: none !important;
       word-break: keep-all !important;
       width: auto !important;
@@ -1819,7 +1819,7 @@
       letter-spacing: 0.42em !important;
       color: #a1874a !important;
       text-align: center !important;
-      margin: 0 0 18px 0 !important;
+      margin: 0 0 20px 0 !important;
       text-transform: uppercase !important;
     }
 
@@ -1829,18 +1829,18 @@
       height: 0.8px !important;
       background: #c9a869 !important;
       opacity: 0.55 !important;
-      margin: 0 auto 18px auto !important;
+      margin: 0 auto 20px auto !important;
     }
 
     /* ▶ 1i. 슬로건 */
     .hero-mobile-slogan {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.05rem, 4.5vw, 1.3rem) !important;
+      font-size: clamp(1.1rem, 4.8vw, 1.35rem) !important;
       font-weight: 400 !important;
       font-style: italic !important;
       color: #e5c98a !important;
       text-align: center !important;
-      line-height: 1.55 !important;
+      line-height: 1.6 !important;
       margin: 0 !important;
       opacity: 0.92 !important;
     }

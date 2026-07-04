@@ -124,44 +124,24 @@ function HeroSection() {
         </picture>
       </div>
 
-      {/* 모바일: 딥 그린-블랙 + 별자리 배경 */}
+      {/* 모바일: 병원 사진 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(120% 100% at 30% 0%, #1a2822 0%, #0d1614 55%, #050908 100%)",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            width: 460,
-            height: 460,
-            borderRadius: "50%",
-            right: -180,
-            top: -200,
-            background: "radial-gradient(circle, rgba(201,168,105,0.10), transparent 65%)",
-          }}
-        />
-        <HeroStarfield />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.32) 100%)",
-            pointerEvents: "none",
-          }}
-        />
+        <picture aria-hidden="true" className="absolute inset-0 block w-full h-full">
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
+          <img
+            src={HERO_IMAGES.mobilePortraitJpg}
+            alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+            className="hero-bg-img"
+          />
+        </picture>
       </div>
 
-      {/* 데스크톱 오버레이 */}
-      <div className="hidden md:block">
-        <HeroBackgroundLayers />
-      </div>
+      {/* 오버레이 (데스크톱 + 모바일 공통) */}
+      <HeroBackgroundLayers />
 
       {/* 층별 안내 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />

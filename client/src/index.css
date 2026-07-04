@@ -3484,47 +3484,49 @@ body.font-lang-zh .hero-stat-label {
     opacity: 1;
   }
 
-  /* 메뉴 패널 */
+  /* 메뉴 패널 — 다크 브라운+골드 테마 */
   .mobile-menu-panel {
     position: fixed;
     top: 0;
     right: 0;
     width: min(88vw, 360px);
     height: 100dvh;
-    background: var(--brand-bg, #FAF8F5);
+    background: linear-gradient(160deg, #1a1008 0%, #120c05 60%, #0e0a04 100%);
     z-index: 999;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -12px 0 60px rgba(0, 0, 0, 0.55);
+    border-left: 1px solid rgba(201, 168, 105, 0.15);
   }
   .mobile-menu-panel.visible {
     transform: translateX(0);
   }
 
-  /* 메뉴 헤더 */
+  /* 메뉴 헤더 — 다크 브라운+골드 */
   .mobile-menu-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid rgba(201, 168, 105, 0.18);
     flex-shrink: 0;
   }
   .mobile-menu-header-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-gold-primary);
-    letter-spacing: 0.08em;
-    font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(201, 168, 105, 0.75);
+    letter-spacing: 0.22em;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
   }
   .mobile-menu-close-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    color: #666;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: rgba(236, 229, 211, 0.55);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -3532,13 +3534,14 @@ body.font-lang-zh .hero-stat-label {
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
   }
   .mobile-menu-close-btn:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: rgba(201, 168, 105, 0.10);
+    color: rgba(201, 168, 105, 0.90);
   }
   .mobile-menu-close-btn:focus-visible {
-    outline: 2px solid var(--color-gold-primary);
+    outline: 2px solid rgba(201, 168, 105, 0.6);
     outline-offset: 2px;
   }
 
@@ -3552,36 +3555,38 @@ body.font-lang-zh .hero-stat-label {
     opacity: 1;
   }
 
-  /* 섹션 레이블 */
+  /* 섹션 레이블 — 골드 */
   .mobile-menu-section-label {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--brand-text-light, #BBBBBB);
+    letter-spacing: 0.20em;
+    color: rgba(201, 168, 105, 0.45);
     text-transform: uppercase;
     padding: 0 24px;
     margin-bottom: 4px;
+    font-family: 'Montserrat', sans-serif;
   }
 
-  /* 메뉴 항목 */
+  /* 메뉴 항목 — 다크 테마 */
   .mobile-menu-item {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 14px 24px;
     font-size: 15px;
-    font-weight: 500;
-    color: var(--brand-text, #2C2C2C);
-    border-left: 3px solid transparent;
+    font-weight: 400;
+    color: rgba(236, 229, 211, 0.82);
+    border-left: 2px solid transparent;
     background: transparent;
     border: none;
     cursor: pointer;
     width: 100%;
     text-align: left;
-    transition: all 0.2s ease;
+    transition: all 0.22s ease;
     opacity: 0;
     transform: translateX(20px);
     min-height: 44px;
+    letter-spacing: 0.01em;
   }
   /* 애니메이션 지연 클래스 (Primary Nav) */
   .mobile-menu-item-delay-0 { transition-delay: 100ms; }
@@ -3604,20 +3609,21 @@ body.font-lang-zh .hero-stat-label {
     transform: translateX(0);
   }
   .mobile-menu-item.active {
-    font-weight: 700;
-    color: var(--color-gold-primary);
-    border-left-color: var(--color-gold-primary);
-    background-color: color-mix(in srgb, var(--color-gold-primary) 4%, transparent);
+    font-weight: 600;
+    color: #c9a869;
+    border-left-color: #c9a869;
+    background-color: rgba(201, 168, 105, 0.07);
   }
   .mobile-menu-item:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: rgba(201, 168, 105, 0.06);
+    color: rgba(236, 229, 211, 1);
   }
   .mobile-menu-item:focus-visible {
-    outline: 2px solid var(--color-gold-primary);
+    outline: 2px solid rgba(201, 168, 105, 0.6);
     outline-offset: -2px;
   }
 
-  /* 메뉴 아이콘 */
+  /* 메뉴 아이콘 — 다크 테마 */
   .mobile-menu-icon {
     display: flex;
     align-items: center;
@@ -3625,9 +3631,9 @@ body.font-lang-zh .hero-stat-label {
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(201, 168, 105, 0.08);
     flex-shrink: 0;
-    color: #888;
+    color: rgba(201, 168, 105, 0.55);
     transition: all 0.2s ease;
     min-width: 30px;
   }
@@ -3637,8 +3643,12 @@ body.font-lang-zh .hero-stat-label {
     min-width: 24px;
   }
   .mobile-menu-item.active .mobile-menu-icon {
-    background-color: color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
-    color: var(--color-gold-primary);
+    background-color: rgba(201, 168, 105, 0.15);
+    color: #c9a869;
+  }
+  .mobile-menu-item:hover .mobile-menu-icon {
+    background-color: rgba(201, 168, 105, 0.12);
+    color: rgba(201, 168, 105, 0.80);
   }
 
   /* 2차 메뉴 섹션 - opacity 전환 */
@@ -3650,16 +3660,16 @@ body.font-lang-zh .hero-stat-label {
     opacity: 1;
   }
 
-  /* 메뉴 구분선 */
+  /* 메뉴 구분선 — 골드 헤어라인 */
   .mobile-menu-divider {
     margin: 4px 24px 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(201, 168, 105, 0.15);
   }
 
-  /* 언어 선택 섹션 */
+  /* 언어 선택 섹션 — 다크 테마 */
   .mobile-menu-lang-section {
     padding: 20px 24px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(201, 168, 105, 0.15);
     margin-top: auto;
     opacity: 0;
     transition: opacity 0.3s ease 420ms;
@@ -3678,26 +3688,27 @@ body.font-lang-zh .hero-stat-label {
     align-items: center;
     gap: 6px;
     padding: 12px 4px;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.03);
-    border: 1.5px solid transparent;
+    border-radius: 10px;
+    background: rgba(201, 168, 105, 0.06);
+    border: 1px solid rgba(201, 168, 105, 0.12);
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 10px;
     font-weight: 500;
-    color: var(--brand-text-mid, #666666);
+    color: rgba(236, 229, 211, 0.55);
   }
   .mobile-menu-lang-btn.active {
-    background-color: color-mix(in srgb, var(--color-gold-primary) 8%, transparent);
-    border-color: var(--color-gold-primary);
+    background-color: rgba(201, 168, 105, 0.14);
+    border-color: rgba(201, 168, 105, 0.55);
     font-weight: 700;
-    color: var(--color-gold-primary);
+    color: #c9a869;
   }
   .mobile-menu-lang-btn:hover {
-    background-color: color-mix(in srgb, var(--color-gold-primary) 4%, transparent);
+    background-color: rgba(201, 168, 105, 0.10);
+    color: rgba(236, 229, 211, 0.85);
   }
   .mobile-menu-lang-btn:focus-visible {
-    outline: 2px solid var(--color-gold-primary);
+    outline: 2px solid rgba(201, 168, 105, 0.6);
     outline-offset: 2px;
   }
   .mobile-menu-lang-badge {
@@ -3707,22 +3718,22 @@ body.font-lang-zh .hero-stat-label {
     width: 36px;
     height: 24px;
     border-radius: 6px;
-    background: rgba(0, 0, 0, 0.07);
+    background: rgba(201, 168, 105, 0.10);
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.05em;
-    color: var(--brand-text-mid, #666666);
+    color: rgba(201, 168, 105, 0.65);
     transition: all 0.2s ease;
   }
   .mobile-menu-lang-btn.active .mobile-menu-lang-badge {
-    background-color: color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
-    color: var(--color-gold-primary);
+    background-color: rgba(201, 168, 105, 0.20);
+    color: #c9a869;
   }
 
-  /* 모바일 CTA 섹션 */
+  /* 모바일 CTA 섹션 — 다크 테마 */
   .mobile-menu-cta-section {
     padding: 16px 24px max(32px, env(safe-area-inset-bottom, 32px));
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(201, 168, 105, 0.15);
     display: flex;
     flex-direction: column;
     gap: 10px;

@@ -156,22 +156,21 @@ export function HeroActions({
       <PhonePopup lang={lang} onClose={() => setPhonePopupOpen(false)} />
     )}
     <div className="flex flex-col items-center hero-actions-wrap">
-      {/* 모바일: 3버튼 그리드 / 데스크톱: 기존 레이아웃 */}
-
-      {/* 데스크톱용: Primary 예약 버튼 (전체 너비) */}
+      {/* Primary: 예약 버튼 — 가장 눈에 띄엄, 전체 너비 */}
       <a
         href={reserveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full md:block hidden ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
+        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
         style={{ animationDelay: delays.ctaFirst }}
       >
         <Calendar size={15} strokeWidth={2} />
         {t.hero.cta_reserve}
       </a>
 
-      {/* 데스크톱용: Secondary + Tertiary 행 */}
-      <div className="hidden md:flex flex-row w-full hero-actions-row">
+      {/* Secondary + Tertiary: 같은 행, 좌우 동등 */}
+      <div className="flex flex-row w-full hero-actions-row">
+        {/* Secondary: 카카오/WeChat 버튼 */}
         <div
           className="relative hero-fade flex-1"
           style={{ animationDelay: delays.ctaSecond }}
@@ -197,6 +196,8 @@ export function HeroActions({
             </div>
           )}
         </div>
+
+        {/* Tertiary: 전화 버튼 — PC: 팝업 / 모바일: 직접 전화 */}
         <a
           href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
           onClick={handlePhoneClick}
@@ -205,60 +206,6 @@ export function HeroActions({
         >
           <Phone size={14} strokeWidth={2} />
           {t.hero.cta_call}
-        </a>
-      </div>
-
-      {/* 모바일전용: 3버튼 그리드 (1fr 1fr 1fr) */}
-      <div className="flex md:hidden hero-actions-row w-full">
-        {/* 네이버 예약 */}
-        <a
-          href={reserveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`hero-fade hero-btn-action flex items-center gap-1.5 justify-center ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
-          style={{ animationDelay: delays.ctaFirst }}
-        >
-          <Calendar size={13} strokeWidth={2} />
-          {t.hero.cta_reserve}
-        </a>
-
-        {/* 카카오/WeChat 상담 */}
-        <div className="relative hero-fade" style={{ animationDelay: delays.ctaSecond }}>
-          <a
-            href={chatUrl}
-            target={isZH ? undefined : "_blank"}
-            rel="noopener noreferrer"
-            onClick={onWechatClick}
-            className="hero-btn-action hero-btn-mobile-chat flex items-center gap-1.5 justify-center w-full h-full"
-            style={{
-              background: chatBg,
-              color: chatColor,
-            }}
-          >
-            <MessageCircle size={13} strokeWidth={2} />
-            {wechatCopied && isZH ? t.access.copiedLabel : t.hero.cta_kakao}
-          </a>
-          {wechatCopied && isZH && (
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-50">
-              ID: {WECHAT_ID}
-            </div>
-          )}
-        </div>
-
-        {/* 전화 문의 (전화번호 표시) */}
-        <a
-          href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
-          onClick={handlePhoneClick}
-          className="hero-fade hero-btn-phone"
-          style={{ animationDelay: delays.ctaPhone }}
-        >
-          <span className="hero-btn-phone-label">
-            <Phone size={11} strokeWidth={2} />
-            {t.hero.cta_call}
-          </span>
-          <span className="hero-btn-phone-number">
-            {lang === "ko" ? CLINIC_TEL : CLINIC_TEL_INTL}
-          </span>
         </a>
       </div>
     </div>

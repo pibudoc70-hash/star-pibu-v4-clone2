@@ -1751,7 +1751,7 @@
       align-items: center !important;
     }
 
-    /* ▶ 1b. hero-section-root — 모바일에서 flex-col justify-between */
+    /* ▶ 1b. hero-section-root — 모바일에서 flex-col, 100dvh */
     .hero-section-root {
       display: flex !important;
       flex-direction: column !important;
@@ -1759,9 +1759,11 @@
       min-height: 100dvh !important;
       height: 100svh !important;
       height: 100dvh !important;
+      overflow: hidden !important;
     }
 
     /* ▶ 1c. 모바일 레이아웃 컨테이너 — 사진의 justify-between 구조 */
+    /* section의 나머지 공간을 모두 차지하고 상하단을 밀어냄 */
     .hero-mobile-layout {
       position: relative !important;
       z-index: 10 !important;
@@ -1769,7 +1771,8 @@
       flex-direction: column !important;
       justify-content: space-between !important;
       align-items: center !important;
-      flex: 1 1 auto !important;
+      flex: 1 1 0 !important;
+      min-height: 0 !important;
       width: 100% !important;
       padding-left: 20px !important;
       padding-right: 20px !important;
@@ -1840,7 +1843,7 @@
       padding-bottom: 0 !important;
     }
 
-    /* ▶ 5. 로고 — 높이 축소로 첫 화면 비율 개선 */
+    /* ▶ 5. 로고 — 데스크톱 로고 (모바일에서는 hero-mobile-logo-img 사용) */
     .hero-logo-img {
       height: clamp(110px, 28vw, 150px) !important;
       width: clamp(110px, 28vw, 150px) !important;
@@ -1849,6 +1852,18 @@
     }
     .hero-logo-wrap {
       margin-bottom: clamp(0.4rem, 1.2vw, 0.6rem) !important;
+    }
+    /* 모바일 로고 전용 — 사진 기준 68px (명시도 상승) */
+    #home .hero-mobile-logo-img,
+    .hero-mobile-logo-img {
+      height: 68px !important;
+      width: 68px !important;
+      margin-top: 0 !important;
+      filter: drop-shadow(0 0 24px rgba(201,168,105,0.20)) !important;
+    }
+    #home .hero-mobile-logo-wrap,
+    .hero-mobile-logo-wrap {
+      margin-bottom: 20px !important;
     }
 
     /* ▶ 6. 병원명 h1 — 명조 프리미엄, 모바일 최적 크기 */
@@ -1868,6 +1883,21 @@
         0 2px 8px rgba(0,0,0,0.95),
         0 4px 24px rgba(0,0,0,0.8),
         0 8px 48px rgba(0,0,0,0.5) !important;
+    }
+    /* hero-mobile-title은 별도 스타일 적용 — #home h1 오버라이드 (명시도 상승) */
+    #home .hero-mobile-title,
+    .hero-mobile-title {
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: clamp(2rem, 9vw, 2.6rem) !important;
+      font-weight: 500 !important;
+      color: #ece5d3 !important;
+      letter-spacing: 0.01em !important;
+      line-height: 1.1 !important;
+      text-align: center !important;
+      margin: 0 0 10px 0 !important;
+      text-shadow: none !important;
+      word-break: keep-all !important;
+      width: auto !important;
     }
 
     /* ▶ 6.4 모바일 히어로 텍스트 블록 (이미지 기준 레이아웃) */

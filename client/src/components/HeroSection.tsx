@@ -19,7 +19,7 @@
  *   상단: 로고(68px) → 병원명 → STAR DERMATOLOGY → 구분선 → 슬로건
  *   하단: 통계 스트립 → 3버튼 그리드
  */
-import { useRef, useState, memo } from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -35,6 +35,16 @@ import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
 import HeroStarfield from "@/components/hero/HeroStarfield";
 import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
 export { HERO_DELAYS } from "@/components/hero/constants";
+
+// 슬로건 영한 교차 애니메이션 훅
+function useSloganToggle(intervalMs = 3200) {
+  const [showKo, setShowKo] = useState(false);
+  useEffect(() => {
+    const id = setInterval(() => setShowKo(v => !v), intervalMs);
+    return () => clearInterval(id);
+  }, [intervalMs]);
+  return showKo;
+}
 
 function HeroSection() {
   const { t, lang } = useLang();
@@ -53,6 +63,7 @@ function HeroSection() {
       .catch(() => {});
   };
 
+  const showKo = useSloganToggle(3200);
   const statsRef = useRef<HTMLDivElement>(null);
   const clinicStats = useClinicStats();
   const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, statsRef, lang);
@@ -224,10 +235,17 @@ function HeroSection() {
           <p className="hero-mobile-dermatology">STAR&nbsp;DERMATOLOGY</p>
           {/* 구분선 */}
           <div className="hero-mobile-divider" />
-          {/* 슬로건 */}
-          <p className="hero-mobile-slogan">
-            Where Experience,<br />Trust, and Science Meet
-          </p>
+          {/* 슬로건 — 영한 교차 애니메이션 */}
+          <div className="hero-mobile-slogan-wrap">
+            <p
+              key={showKo ? "ko" : "en"}
+              className="hero-mobile-slogan hero-mobile-slogan-fade"
+            >
+              {showKo
+                ? <>경험, 신뢰, 그리고<br />과학이 만나는 곳</>  
+                : <>Where Experience,<br />Trust, and Science Meet</>}
+            </p>
+          </div>
         </div>
 
         {/* 하단 그룹: 통계 (CTA 버튼은 하단 고정 CTA바와 중복되어 제거) */}

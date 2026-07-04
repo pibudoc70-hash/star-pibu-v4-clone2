@@ -70,8 +70,8 @@ export default function Header() {
               src="/manus-storage/star_logo_d0ae8bbf.webp"
               alt="스타피부과 로고"
               style={{
-                width: "30px",
-                height: "30px",
+                width: "38px",
+                height: "38px",
                 objectFit: "contain",
                 filter: scrolled
                   ? "brightness(0.7) sepia(1) hue-rotate(10deg) saturate(3)"

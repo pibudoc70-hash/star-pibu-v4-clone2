@@ -1834,6 +1834,27 @@
       margin: 0 auto clamp(14px, 2.8vh, 20px) auto !important;
     }
 
+    /* ▶ 1i-wrap. 슬로건 래퍼 — 고정 높이로 레이아웃 안정화 */
+    .hero-mobile-slogan-wrap {
+      position: relative !important;
+      height: clamp(3.2rem, 8.5vh, 4.2rem) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      width: 100% !important;
+    }
+
+    /* fade-in 애니메이션 */
+    @keyframes heroSloganFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 0.92; transform: translateY(0); }
+    }
+    .hero-mobile-slogan-fade {
+      animation: heroSloganFadeIn 0.7s cubic-bezier(0.16,1,0.3,1) both !important;
+      position: absolute !important;
+    }
+
     /* ▶ 1i. 슬로건 — 사진: 병원명보다 훨씬 작은 2줄 */
     .hero-mobile-slogan {
       font-family: 'Cormorant Garamond', serif !important;

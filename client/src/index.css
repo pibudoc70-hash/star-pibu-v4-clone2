@@ -1741,6 +1741,12 @@
       align-items: center !important;
     }
 
+    /* ▶ 1b-0. 모바일에서 데스크톱 전용 로고 완전 숨김 (이중 심볼 방지) */
+    .hero-logo-wrap,
+    .hero-logo-img {
+      display: none !important;
+    }
+
     /* ▶ 1b. 모바일 레이아웃 컨테이너 — section 전체를 flex-col로 채움 */
     .hero-mobile-layout {
       display: flex !important;
@@ -1776,14 +1782,17 @@
       gap: 0 !important;
     }
 
-    /* ▶ 1e. 모바일 로고 — 68px, 심볼 단일 렌더링 */
+    /* ▶ 1e. 모바일 로고 — 68px, 심볼 단일 렌더링 (데스크톱 로고 숨김 override) */
     .hero-mobile-logo-img {
+      display: block !important;
       height: 68px !important;
       width: 68px !important;
       margin-top: 0 !important;
       filter: drop-shadow(0 0 24px rgba(201,168,105,0.25)) !important;
     }
     .hero-mobile-logo-wrap {
+      display: flex !important;
+      justify-content: center !important;
       margin-bottom: 18px !important;
     }
 
@@ -1836,37 +1845,9 @@
       opacity: 0.92 !important;
     }
 
-    /* ▶ 2. 콘텐츠 컨테이너 — 중앙 정렬, 상하단 여백 조정 */
-    #home > .relative.z-10 {
-      padding-top: clamp(72px, 12vh, 110px) !important;
-      padding-bottom: clamp(48px, 7vh, 88px) !important;
-      max-width: 100% !important;
-      padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
-      padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
-      flex: 1 1 auto !important;
-      align-self: stretch !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-    }
-
-    /* ▶ 3. 상단 콘텐츠 그룹 — 로고+텍스트+통계 */
-    .hero-top-group {
-      flex: 0 0 auto !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 0 !important;
-    }
-
-    /* ▶ 4. CTA 그룹 — 상단 그룹과 자연스럽게 이어짐 */
-    .hero-cta-group {
-      flex: 0 0 auto !important;
-      width: 100% !important;
-      padding-top: clamp(0.6rem, 1.5vh, 0.9rem) !important;
-      padding-bottom: 0 !important;
+    /* ▶ 2. 데스크톱 전용 콘테이너 숨김 (모바일에서는 hero-mobile-layout만 사용) */
+    #home > .relative.z-10.hero-content {
+      display: none !important;
     }
 
     /* ▶ 5. 로고 — 높이 축소로 첫 화면 비율 개선 */

@@ -225,9 +225,28 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* 하단 그룹: 통계 (CTA 버튼은 하단 고정 CTA바와 중복되어 제거) */}
+        {/* 하단 그룹: 통계 + 스크롤 유도 화살표 */}
         <div className="hero-mobile-bottom-group">
           <HeroStatsStrip statsRef={statsRef} stats={statsData} />
+          {/* 모바일 스크롤 유도 화살표 */}
+          <button
+            type="button"
+            aria-label={t.hero.scrollLabel ?? "Scroll down"}
+            className="hero-mobile-scroll-arrow"
+            onClick={() => {
+              const el = document.querySelector("#about");
+              if (el) {
+                const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+                const offset = header ? header.offsetHeight + 8 : 80;
+                const top = el.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: "smooth" });
+              }
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M5 8.5L11 14.5L17 8.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
       </div>
 

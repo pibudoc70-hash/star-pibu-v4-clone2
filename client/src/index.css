@@ -1864,6 +1864,28 @@
       text-shadow: 0 1px 12px rgba(4,8,22,0.90), 0 1px 3px rgba(4,8,22,0.95) !important;
     }
 
+    /* ▶ 1j. 모바일 스크롤 유도 화살표 */
+    @keyframes heroScrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.55; }
+      50%       { transform: translateY(6px); opacity: 0.90; }
+    }
+    .hero-mobile-scroll-arrow {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-top: clamp(10px, 2vh, 16px) !important;
+      color: rgba(201, 168, 105, 0.70) !important;
+      background: transparent !important;
+      border: none !important;
+      padding: 4px !important;
+      cursor: pointer !important;
+      animation: heroScrollBounce 2.2s ease-in-out infinite !important;
+      transition: color 0.2s !important;
+    }
+    .hero-mobile-scroll-arrow:hover {
+      color: rgba(201, 168, 105, 1) !important;
+    }
+
     /* ▶ 2. 데스크톱 전용 콘테이너 숨김 (모바일에서는 hero-mobile-layout만 사용) */
     #home > .relative.z-10.hero-content {
       display: none !important;

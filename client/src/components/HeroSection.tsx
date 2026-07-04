@@ -148,11 +148,12 @@ function HeroSection() {
       {/* [R12-P1-1] 층별 안내 서브컴포넌트 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />
 
-      {/* 콘텐츠 — 모바일: 상단(로고/텍스트) + flex-1 공간 + 하단(통계+CTA) */}
+      {/* 콘텐츠 — 모바일: space-between으로 상단(로고/텍스트/통계)와 하단(CTA) 분리 */}
       <div className="relative z-10 text-center flex flex-col items-center w-full hero-content">
-
-        {/* 데스크톱 전용: 로고 */}
-        <div className="hero-fade hero-logo-wrap hidden md:block">
+        {/* 상단 콘텐츠 그룹: 로고 + 텍스트 + 통계 */}
+        <div className="hero-top-group flex flex-col items-center w-full">
+        {/* 로고 */}
+        <div className="hero-fade hero-logo-wrap">
           <div className="relative">
             <OptimizedImage
               src={HERO_LOGO_IMAGE}
@@ -175,130 +176,73 @@ function HeroSection() {
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
 
-        {/* ── 모바일 전용 상단 콘텐츠 블록: 로고 + 텍스트 ── */}
-        <div className="md:hidden flex flex-col items-center w-full hero-mobile-top">
-          {/* 로고 */}
-          <div className="hero-fade hero-mobile-logo-wrap">
-            <OptimizedImage
-              src={HERO_LOGO_IMAGE}
-              alt="스타피부과 로고"
-              priority={true}
-              width={120}
-              height={120}
-              className="hero-mobile-logo-img"
-            />
-          </div>
-          {/* 병원명 */}
-          <h1 className="hero-mobile-title">{t.hero.title}</h1>
-          {/* STAR DERMATOLOGY */}
-          <p className="hero-mobile-dermatology">STAR&nbsp;DERMATOLOGY</p>
+        {/* ── 모바일 전용 히어로 텍스트 블록 ── */}
+        <div className="md:hidden flex flex-col items-center hero-mobile-text-block">
+          {/* 병원명 - 큰 제목 */}
+          <h1 className="hero-mobile-title">
+            {t.hero.title}
+          </h1>
+          {/* STAR DERMATOLOGY 영문 서브타이틀 */}
+          <p className="hero-mobile-dermatology">STAR DERMATOLOGY</p>
           {/* 구분선 */}
           <div className="hero-mobile-divider" />
-          {/* 슬로건 */}
+          {/* 슬로건 이탤릭 */}
           <p className="hero-mobile-slogan">
             Where Experience,<br />Trust, and Science Meet
           </p>
         </div>
 
-        {/* 모바일 전용: flex-1 중간 공백 (시안의 빈 영역) */}
-        <div className="md:hidden flex-1 min-h-0" aria-hidden="true" />
+        {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}
+        <HeroStatsStrip
+          statsRef={statsRef}
+          stats={[
+            {
+              value: count20,
+              unit: clinicStats.years.unit,
+              label: t.about.stats[0].label,
+              isDone: done20,
+              animationDelay: `${HERO_DELAYS.statBase}ms`,
+            },
+            {
+              value: count4000,
+              unit: clinicStats.cases.unit,
+              label: t.about.stats[1].label,
+              isDone: done4000,
+              animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms`,
+            },
+            {
+              value: count50,
+              unit: clinicStats.types.unit,
+              label: t.about.stats[2].label,
+              isDone: done50,
+              animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms`,
+            },
+          ]}
+        />
 
-        {/* 모바일 전용: 하단 통계 + CTA 그룹 */}
-        <div className="md:hidden w-full hero-mobile-bottom">
-          {/* 통계 스트립 */}
-          <HeroStatsStrip
-            statsRef={statsRef}
-            stats={[
-              {
-                value: count20,
-                unit: clinicStats.years.unit,
-                label: t.about.stats[0].label,
-                isDone: done20,
-                animationDelay: `${HERO_DELAYS.statBase}ms`,
-              },
-              {
-                value: count4000,
-                unit: clinicStats.cases.unit,
-                label: t.about.stats[1].label,
-                isDone: done4000,
-                animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms`,
-              },
-              {
-                value: count50,
-                unit: clinicStats.types.unit,
-                label: t.about.stats[2].label,
-                isDone: done50,
-                animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms`,
-              },
-            ]}
-          />
-          {/* CTA 버튼 */}
-          <HeroActions
-            lang={lang}
-            t={t}
-            chatUrl={chatUrl}
-            reserveUrl={reserveUrl}
-            chatBg={chatBg}
-            chatColor={chatColor}
-            chatShadow={chatShadow}
-            isZH={isZH}
-            wechatCopied={wechatCopied}
-            onWechatClick={handleWechatClick}
-            delays={{
-              ctaFirst: HERO_DELAYS.ctaFirst,
-              ctaSecond: HERO_DELAYS.ctaSecond,
-              ctaPhone: HERO_DELAYS.ctaPhone,
-            }}
-          />
-        </div>
+        </div>{/* /hero-top-group */}
 
-        {/* 데스크톱 전용: 통계 + CTA */}
-        <div className="hidden md:block w-full">
-          <HeroStatsStrip
-            statsRef={statsRef}
-            stats={[
-              {
-                value: count20,
-                unit: clinicStats.years.unit,
-                label: t.about.stats[0].label,
-                isDone: done20,
-                animationDelay: `${HERO_DELAYS.statBase}ms`,
-              },
-              {
-                value: count4000,
-                unit: clinicStats.cases.unit,
-                label: t.about.stats[1].label,
-                isDone: done4000,
-                animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms`,
-              },
-              {
-                value: count50,
-                unit: clinicStats.types.unit,
-                label: t.about.stats[2].label,
-                isDone: done50,
-                animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms`,
-              },
-            ]}
-          />
-          <HeroActions
-            lang={lang}
-            t={t}
-            chatUrl={chatUrl}
-            reserveUrl={reserveUrl}
-            chatBg={chatBg}
-            chatColor={chatColor}
-            chatShadow={chatShadow}
-            isZH={isZH}
-            wechatCopied={wechatCopied}
-            onWechatClick={handleWechatClick}
-            delays={{
-              ctaFirst: HERO_DELAYS.ctaFirst,
-              ctaSecond: HERO_DELAYS.ctaSecond,
-              ctaPhone: HERO_DELAYS.ctaPhone,
-            }}
-          />
-        </div>
-
+        {/* 하단 CTA 그룹 — 모바일에서는 화면 하단에 자연스럽게 위치 */}
+        <div className="hero-cta-group w-full">
+        {/* [R12-P1-1] CTA 버튼 그룹 서브컴포넌트 */}
+        <HeroActions
+          lang={lang}
+          t={t}
+          chatUrl={chatUrl}
+          reserveUrl={reserveUrl}
+          chatBg={chatBg}
+          chatColor={chatColor}
+          chatShadow={chatShadow}
+          isZH={isZH}
+          wechatCopied={wechatCopied}
+          onWechatClick={handleWechatClick}
+          delays={{
+            ctaFirst: HERO_DELAYS.ctaFirst,
+            ctaSecond: HERO_DELAYS.ctaSecond,
+            ctaPhone: HERO_DELAYS.ctaPhone,
+          }}
+        />
+        </div>{/* /hero-cta-group */}
       </div>
 
       {/* [R12-P1-1] 스크롤 인디케이터 서브컴포넌트 */}

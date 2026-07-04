@@ -125,7 +125,7 @@ export default function Header() {
               style={{
                 width: "44px",
                 height: "44px",
-                color: scrolled ? "var(--color-gold-primary)" : "rgba(255,255,255,0.92)",
+                color: scrolled ? "#3d2b1a" : "rgba(255,255,255,0.92)",
                 borderRadius: "10px",
                 transition: "color 0.5s cubic-bezier(0.16,1,0.3,1)",
                 textShadow: scrolled ? "none" : "0 2px 12px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)",

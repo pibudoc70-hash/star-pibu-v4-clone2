@@ -230,26 +230,9 @@ function HeroSection() {
           </p>
         </div>
 
-        {/* 하단 그룹: 통계 + CTA (화면 하부에 고정) */}
+        {/* 하단 그룹: 통계 (CTA 버튼은 하단 고정 CTA바와 중복되어 제거) */}
         <div className="hero-mobile-bottom-group">
           <HeroStatsStrip statsRef={statsRef} stats={statsData} />
-          <HeroActions
-            lang={lang}
-            t={t}
-            chatUrl={chatUrl}
-            reserveUrl={reserveUrl}
-            chatBg={chatBg}
-            chatColor={chatColor}
-            chatShadow={chatShadow}
-            isZH={isZH}
-            wechatCopied={wechatCopied}
-            onWechatClick={handleWechatClick}
-            delays={{
-              ctaFirst: HERO_DELAYS.ctaFirst,
-              ctaSecond: HERO_DELAYS.ctaSecond,
-              ctaPhone: HERO_DELAYS.ctaPhone,
-            }}
-          />
         </div>
       </div>
 

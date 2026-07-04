@@ -605,30 +605,7 @@
     border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
   }
 
-  /* Mobile menu */
-  .mobile-menu-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 40;
-    backdrop-filter: blur(4px);
-  }
-
-  .mobile-menu-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 280px;
-    background: var(--brand-bg, #FAF8F5);
-    z-index: 50;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-  }
-
-  .mobile-menu-panel.open {
-    transform: translateX(0);
-  }
+  /* Mobile menu — 구 라이트 테마 블록 제거됨 (아래 MOBILE MENU DESIGN SYSTEM 블록 사용) */
 
   /* Floating CTA */
   .floating-cta {
@@ -3475,70 +3452,120 @@ body.font-lang-zh .hero-stat-label {
   .mobile-menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    /* 다크 브라운 톤 딥 배경 */
+    background: rgba(8, 5, 2, 0.72);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     z-index: 998;
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.28s ease;
   }
   .mobile-menu-overlay.visible {
     opacity: 1;
   }
 
-  /* 메뉴 패널 — 다크 브라운+골드 테마 */
+  /* 메뉴 패널 — 다크 브라운+골드 프리미엄 테마 */
   .mobile-menu-panel {
     position: fixed;
     top: 0;
     right: 0;
     width: min(88vw, 360px);
     height: 100dvh;
-    background: linear-gradient(160deg, #1a1008 0%, #120c05 60%, #0e0a04 100%);
+    /* 깊고 풍부한 다크 브라운 그라디언트 — 왼쪽 상단에서 오른쪽 하단으로 */
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(80, 50, 15, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(40, 20, 5, 0.5) 0%, transparent 50%),
+      linear-gradient(165deg, #1e1208 0%, #140e06 40%, #0e0a04 75%, #0a0703 100%);
     z-index: 999;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     transform: translateX(100%);
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: -12px 0 60px rgba(0, 0, 0, 0.55);
-    border-left: 1px solid rgba(201, 168, 105, 0.15);
+    transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+    /* 왼쪽 테두리: 골드 헤어라인 + 부드러운 그림자 */
+    box-shadow:
+      -1px 0 0 rgba(201, 168, 105, 0.22),
+      -16px 0 80px rgba(0, 0, 0, 0.65),
+      -4px 0 24px rgba(0, 0, 0, 0.45);
+    border-left: 1px solid rgba(201, 168, 105, 0.18);
+    /* 스크롤바 스타일 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 168, 105, 0.20) transparent;
+  }
+  .mobile-menu-panel::-webkit-scrollbar {
+    width: 3px;
+  }
+  .mobile-menu-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .mobile-menu-panel::-webkit-scrollbar-thumb {
+    background: rgba(201, 168, 105, 0.25);
+    border-radius: 2px;
   }
   .mobile-menu-panel.visible {
     transform: translateX(0);
   }
 
-  /* 메뉴 헤더 — 다크 브라운+골드 */
+  /* 메뉴 헤더 — 다크 브라운+골드 프리미엄 */
   .mobile-menu-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 22px 24px 18px;
-    border-bottom: 1px solid rgba(201, 168, 105, 0.18);
+    padding: 24px 24px 20px;
+    /* 헤더 하단: 골드 그라디언트 라인 */
+    border-bottom: none;
+    position: relative;
     flex-shrink: 0;
   }
+  /* 헤더 하단 골드 그라디언트 구분선 */
+  .mobile-menu-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(201, 168, 105, 0.12) 10%,
+      rgba(201, 168, 105, 0.45) 35%,
+      rgba(201, 168, 105, 0.55) 50%,
+      rgba(201, 168, 105, 0.45) 65%,
+      rgba(201, 168, 105, 0.12) 90%,
+      transparent 100%
+    );
+  }
   .mobile-menu-header-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(201, 168, 105, 0.75);
-    letter-spacing: 0.22em;
+    font-size: 11px;
+    font-weight: 700;
+    /* 골드 그라디언트 텍스트 */
+    background: linear-gradient(90deg, rgba(201, 168, 105, 0.65) 0%, rgba(220, 190, 130, 0.90) 50%, rgba(201, 168, 105, 0.65) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.28em;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
   }
   .mobile-menu-close-btn {
     width: 40px;
     height: 40px;
-    border-radius: 8px;
-    color: rgba(236, 229, 211, 0.55);
+    border-radius: 10px;
+    color: rgba(236, 229, 211, 0.45);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: none;
+    background: rgba(201, 168, 105, 0.05);
+    border: 1px solid rgba(201, 168, 105, 0.10);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.22s ease;
   }
   .mobile-menu-close-btn:hover {
-    background-color: rgba(201, 168, 105, 0.10);
-    color: rgba(201, 168, 105, 0.90);
+    background-color: rgba(201, 168, 105, 0.12);
+    border-color: rgba(201, 168, 105, 0.30);
+    color: rgba(201, 168, 105, 0.95);
+    transform: rotate(90deg);
   }
   .mobile-menu-close-btn:focus-visible {
     outline: 2px solid rgba(201, 168, 105, 0.6);
@@ -3547,7 +3574,7 @@ body.font-lang-zh .hero-stat-label {
 
   /* 메뉴 네비게이션 */
   .mobile-menu-nav {
-    padding: 12px 0 8px;
+    padding: 16px 0 10px;
     opacity: 0;
     transition: opacity 0.3s ease 100ms;
   }
@@ -3555,38 +3582,53 @@ body.font-lang-zh .hero-stat-label {
     opacity: 1;
   }
 
-  /* 섹션 레이블 — 골드 */
+  /* 섹션 레이블 — 골드 프리미엄 */
   .mobile-menu-section-label {
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 700;
-    letter-spacing: 0.20em;
-    color: rgba(201, 168, 105, 0.45);
+    letter-spacing: 0.28em;
+    color: rgba(201, 168, 105, 0.38);
     text-transform: uppercase;
     padding: 0 24px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     font-family: 'Montserrat', sans-serif;
+    /* 왼쪽 골드 점 장식 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mobile-menu-section-label::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(201, 168, 105, 0.40);
+    flex-shrink: 0;
   }
 
-  /* 메뉴 항목 — 다크 테마 */
+  /* 메뉴 항목 — 다크 프리미엄 테마 */
   .mobile-menu-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 24px;
+    padding: 13px 24px;
     font-size: 15px;
     font-weight: 400;
-    color: rgba(236, 229, 211, 0.82);
-    border-left: 2px solid transparent;
+    color: rgba(236, 229, 211, 0.78);
     background: transparent;
     border: none;
     cursor: pointer;
     width: 100%;
     text-align: left;
-    transition: all 0.22s ease;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(18px);
     min-height: 44px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.015em;
+    /* 왼쪽 액센트 라인 — 기본은 투명 */
+    border-left: 2px solid transparent;
+    position: relative;
   }
   /* 애니메이션 지연 클래스 (Primary Nav) */
   .mobile-menu-item-delay-0 { transition-delay: 100ms; }
@@ -3610,45 +3652,50 @@ body.font-lang-zh .hero-stat-label {
   }
   .mobile-menu-item.active {
     font-weight: 600;
-    color: #c9a869;
+    color: #d4b47a;
     border-left-color: #c9a869;
-    background-color: rgba(201, 168, 105, 0.07);
+    background: linear-gradient(90deg, rgba(201, 168, 105, 0.10) 0%, transparent 100%);
   }
   .mobile-menu-item:hover {
-    background-color: rgba(201, 168, 105, 0.06);
-    color: rgba(236, 229, 211, 1);
+    background: linear-gradient(90deg, rgba(201, 168, 105, 0.07) 0%, transparent 100%);
+    color: rgba(236, 229, 211, 0.98);
+    border-left-color: rgba(201, 168, 105, 0.35);
   }
   .mobile-menu-item:focus-visible {
-    outline: 2px solid rgba(201, 168, 105, 0.6);
+    outline: 2px solid rgba(201, 168, 105, 0.55);
     outline-offset: -2px;
   }
 
-  /* 메뉴 아이콘 — 다크 테마 */
+  /* 메뉴 아이콘 — 다크 프리미엄 테마 */
   .mobile-menu-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: rgba(201, 168, 105, 0.08);
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: rgba(201, 168, 105, 0.07);
+    border: 1px solid rgba(201, 168, 105, 0.10);
     flex-shrink: 0;
-    color: rgba(201, 168, 105, 0.55);
-    transition: all 0.2s ease;
-    min-width: 30px;
+    color: rgba(201, 168, 105, 0.50);
+    transition: all 0.22s ease;
+    min-width: 32px;
   }
   .mobile-menu-icon-secondary {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 7px;
   }
   .mobile-menu-item.active .mobile-menu-icon {
-    background-color: rgba(201, 168, 105, 0.15);
+    background: rgba(201, 168, 105, 0.14);
+    border-color: rgba(201, 168, 105, 0.28);
     color: #c9a869;
   }
   .mobile-menu-item:hover .mobile-menu-icon {
-    background-color: rgba(201, 168, 105, 0.12);
-    color: rgba(201, 168, 105, 0.80);
+    background: rgba(201, 168, 105, 0.11);
+    border-color: rgba(201, 168, 105, 0.22);
+    color: rgba(201, 168, 105, 0.85);
   }
 
   /* 2차 메뉴 섹션 - opacity 전환 */
@@ -3660,19 +3707,48 @@ body.font-lang-zh .hero-stat-label {
     opacity: 1;
   }
 
-  /* 메뉴 구분선 — 골드 헤어라인 */
+  /* 메뉴 구분선 — 골드 그라디언트 헤어라인 */
   .mobile-menu-divider {
-    margin: 4px 24px 0;
-    border-top: 1px solid rgba(201, 168, 105, 0.15);
+    margin: 6px 24px 2px;
+    height: 1px;
+    border: none;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(201, 168, 105, 0.08) 10%,
+      rgba(201, 168, 105, 0.25) 35%,
+      rgba(201, 168, 105, 0.30) 50%,
+      rgba(201, 168, 105, 0.25) 65%,
+      rgba(201, 168, 105, 0.08) 90%,
+      transparent 100%
+    );
   }
 
-  /* 언어 선택 섹션 — 다크 테마 */
+  /* 언어 선택 섹션 — 다크 프리미엄 테마 */
   .mobile-menu-lang-section {
-    padding: 20px 24px;
-    border-top: 1px solid rgba(201, 168, 105, 0.15);
+    padding: 18px 24px 16px;
+    /* 골드 그라디언트 구분선 */
+    border-top: none;
+    position: relative;
     margin-top: auto;
     opacity: 0;
     transition: opacity 0.3s ease 420ms;
+  }
+  .mobile-menu-lang-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(201, 168, 105, 0.08) 10%,
+      rgba(201, 168, 105, 0.28) 35%,
+      rgba(201, 168, 105, 0.35) 50%,
+      rgba(201, 168, 105, 0.28) 65%,
+      rgba(201, 168, 105, 0.08) 90%,
+      transparent 100%
+    );
   }
   .mobile-menu-lang-section.visible {
     opacity: 1;
@@ -3687,115 +3763,151 @@ body.font-lang-zh .hero-stat-label {
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    padding: 12px 4px;
+    padding: 11px 4px;
     border-radius: 10px;
-    background: rgba(201, 168, 105, 0.06);
-    border: 1px solid rgba(201, 168, 105, 0.12);
+    background: rgba(201, 168, 105, 0.05);
+    border: 1px solid rgba(201, 168, 105, 0.10);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.22s ease;
     font-size: 10px;
     font-weight: 500;
-    color: rgba(236, 229, 211, 0.55);
+    color: rgba(236, 229, 211, 0.48);
   }
   .mobile-menu-lang-btn.active {
-    background-color: rgba(201, 168, 105, 0.14);
-    border-color: rgba(201, 168, 105, 0.55);
+    background: linear-gradient(145deg, rgba(201, 168, 105, 0.16) 0%, rgba(201, 168, 105, 0.08) 100%);
+    border-color: rgba(201, 168, 105, 0.50);
     font-weight: 700;
-    color: #c9a869;
+    color: #d4b47a;
+    box-shadow: 0 2px 8px rgba(201, 168, 105, 0.12);
   }
   .mobile-menu-lang-btn:hover {
-    background-color: rgba(201, 168, 105, 0.10);
-    color: rgba(236, 229, 211, 0.85);
+    background-color: rgba(201, 168, 105, 0.09);
+    border-color: rgba(201, 168, 105, 0.20);
+    color: rgba(236, 229, 211, 0.80);
   }
   .mobile-menu-lang-btn:focus-visible {
-    outline: 2px solid rgba(201, 168, 105, 0.6);
+    outline: 2px solid rgba(201, 168, 105, 0.55);
     outline-offset: 2px;
   }
   .mobile-menu-lang-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 24px;
-    border-radius: 6px;
-    background: rgba(201, 168, 105, 0.10);
-    font-size: 12px;
+    width: 34px;
+    height: 22px;
+    border-radius: 5px;
+    background: rgba(201, 168, 105, 0.08);
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.05em;
-    color: rgba(201, 168, 105, 0.65);
-    transition: all 0.2s ease;
+    letter-spacing: 0.04em;
+    color: rgba(201, 168, 105, 0.58);
+    transition: all 0.22s ease;
+    font-family: 'Montserrat', sans-serif;
   }
   .mobile-menu-lang-btn.active .mobile-menu-lang-badge {
-    background-color: rgba(201, 168, 105, 0.20);
+    background: rgba(201, 168, 105, 0.18);
     color: #c9a869;
   }
 
-  /* 모바일 CTA 섹션 — 다크 테마 */
+  /* 모바일 CTA 섹션 — 다크 프리미엄 테마 */
   .mobile-menu-cta-section {
     padding: 16px 24px max(32px, env(safe-area-inset-bottom, 32px));
-    border-top: 1px solid rgba(201, 168, 105, 0.15);
+    /* 골드 그라디언트 구분선 */
+    border-top: none;
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
     flex-shrink: 0;
     opacity: 0;
     transition: opacity 0.3s ease 460ms;
+    /* 미묘한 상단 글로우 */
+    background: linear-gradient(180deg, rgba(201, 168, 105, 0.04) 0%, transparent 30%);
+  }
+  .mobile-menu-cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(201, 168, 105, 0.10) 10%,
+      rgba(201, 168, 105, 0.38) 35%,
+      rgba(201, 168, 105, 0.48) 50%,
+      rgba(201, 168, 105, 0.38) 65%,
+      rgba(201, 168, 105, 0.10) 90%,
+      transparent 100%
+    );
   }
   .mobile-menu-cta-section.visible {
     opacity: 1;
   }
 
-  /* CTA 버튼 — Primary (상담) */
+  /* CTA 버튼 — Primary (상담/카카오) */
   .mobile-menu-cta-primary {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     padding: 14px;
     border-radius: 14px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     text-decoration: none;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    min-height: 48px;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    min-height: 50px;
+    /* 버튼 하단 미묘한 그림자 */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
   }
   .mobile-menu-cta-primary:hover {
-    opacity: 0.9;
+    opacity: 0.92;
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.30), 0 2px 6px rgba(0, 0, 0, 0.18);
+  }
+  .mobile-menu-cta-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
   }
   .mobile-menu-cta-primary:focus-visible {
     outline: 2px solid var(--color-gold-primary);
     outline-offset: 2px;
   }
 
-  /* CTA 버튼 — Secondary (예약) */
+  /* CTA 버튼 — Secondary (네이버 예약) */
   .mobile-menu-cta-secondary {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 14px;
     padding: 14px;
     border-radius: 14px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     text-decoration: none;
     border: none;
     cursor: pointer;
-    background-color: #1a7a4a;
+    /* 네이버 그린 — 브랜드 일관성 */
+    background-color: #03C75A;
     color: #ffffff;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(26, 122, 74, 0.3);
-    min-height: 48px;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(3, 199, 90, 0.28), 0 1px 3px rgba(0, 0, 0, 0.12);
+    min-height: 50px;
   }
   .mobile-menu-cta-secondary:hover {
-    background-color: #155a38;
+    background-color: #02a84c;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(26, 122, 74, 0.4);
+    box-shadow: 0 6px 20px rgba(3, 199, 90, 0.38), 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  .mobile-menu-cta-secondary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(3, 199, 90, 0.22);
   }
   .mobile-menu-cta-secondary:focus-visible {
-    outline: 2px solid var(--brand-text, #2C2C2C);
+    outline: 2px solid #03C75A;
     outline-offset: 2px;
   }
 

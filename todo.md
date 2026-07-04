@@ -3586,3 +3586,24 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 카테고리 탭 동적 생성 (DB 카테고리 기반)
 - [x] 회귀 테스트 업데이트 (round18 D-1, round22 B-10/B-11)
 - [x] 1419 tests 전부 통과, ESLint 에러 0건
+
+## Phase 모바일메뉴 고급화: 다크 브라운+골드 프리미엄 테마 (2026-07-04)
+- [x] .mobile-menu-panel 배경: radial-gradient 레이어 추가로 더 깊고 풍부한 다크 브라운 표현
+- [x] .mobile-menu-panel 왼쪽 테두리: 골드 헤어라인 + 다층 그림자 고급화
+- [x] .mobile-menu-panel 스크롤바: 골드 톤 thin 스크롤바 추가
+- [x] .mobile-menu-overlay 딤 배경: 다크 브라운 톤 + backdrop-filter blur(2px)
+- [x] .mobile-menu-header::after 골드 그라디언트 구분선 추가
+- [x] .mobile-menu-header-title 골드 그라디언트 텍스트 효과
+- [x] .mobile-menu-close-btn 테두리 추가, hover 시 90도 회전 애니메이션
+- [x] .mobile-menu-section-label 골드 점 장식(::before) 추가
+- [x] .mobile-menu-item hover: 좌→우 골드 그라디언트 배경 효과
+- [x] .mobile-menu-item.active: 골드 그라디언트 배경 강화
+- [x] .mobile-menu-icon 테두리 추가, 크기 30→32px
+- [x] .mobile-menu-divider 골드 그라디언트 헤어라인으로 교체
+- [x] .mobile-menu-lang-section::before 골드 그라디언트 구분선
+- [x] .mobile-menu-lang-btn.active 골드 그라디언트 배경 + 박스 섀도우
+- [x] .mobile-menu-cta-section::before 골드 그라디언트 구분선 + 상단 글로우
+- [x] .mobile-menu-cta-primary 박스 섀도우 + active 상태 추가
+- [x] .mobile-menu-cta-secondary 네이버 그린(#03C75A) 확인 + 박스 섀도우 + active 상태
+- [x] 구 레거시 라이트 테마 mobile-menu 블록 제거
+- [x] TypeScript 오류 0건, 빌드 성공

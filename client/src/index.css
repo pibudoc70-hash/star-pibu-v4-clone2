@@ -1748,19 +1748,20 @@
     }
 
     /* ▶ 1b. 모바일 레이아웃 컨테이너 — section 전체를 flex-col로 채움 */
+    /* 사진 분석: 콘텐츠 상단 시작점 = 화면의 약 20vh(헤더 60px + 여백), 하단 = 화면 맨 아래 */
     .hero-mobile-layout {
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
       align-items: center !important;
       width: 100% !important;
-      flex: 1 1 0 !important;
-      min-height: 0 !important;
-      padding-top: clamp(80px, 15vh, 110px) !important;
-      padding-bottom: clamp(20px, 5vh, 40px) !important;
+      height: 100% !important;
+      position: absolute !important;
+      inset: 0 !important;
+      padding-top: clamp(64px, 13vh, 96px) !important;
+      padding-bottom: clamp(16px, 3.5vh, 28px) !important;
       padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
       padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
-      position: relative !important;
       z-index: 10 !important;
     }
 
@@ -1782,65 +1783,65 @@
       gap: 0 !important;
     }
 
-    /* ▶ 1e. 모바일 로고 — 68px, 심볼 단일 렌더링 (데스크톱 로고 숨김 override) */
+    /* ▶ 1e. 모바일 로고 — 사진 기준 ~22vw */
     .hero-mobile-logo-img {
       display: block !important;
-      height: 96px !important;
-      width: 96px !important;
+      height: clamp(72px, 20vw, 88px) !important;
+      width: clamp(72px, 20vw, 88px) !important;
       margin-top: 0 !important;
-      filter: drop-shadow(0 0 28px rgba(201,168,105,0.30)) !important;
+      filter: drop-shadow(0 0 24px rgba(201,168,105,0.28)) !important;
     }
     .hero-mobile-logo-wrap {
       display: flex !important;
       justify-content: center !important;
-      margin-bottom: 20px !important;
+      margin-bottom: clamp(12px, 2.5vh, 18px) !important;
     }
 
-    /* ▶ 1f. 모바일 병원명 — 사진 기준 (Cormorant Garamond, 골드-크림) */
+    /* ▶ 1f. 모바일 병원명 — 사진: 화면 너비의 약 72% 차지하는 큰 글씨 */
     .hero-mobile-title {
       font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
-      font-size: clamp(2.4rem, 11vw, 3.2rem) !important;
+      font-size: clamp(2.6rem, 12.5vw, 3.4rem) !important;
       font-weight: 500 !important;
       color: #ece5d3 !important;
       letter-spacing: 0.01em !important;
-      line-height: 1.08 !important;
+      line-height: 1.05 !important;
       text-align: center !important;
-      margin: 0 0 10px 0 !important;
+      margin: 0 0 clamp(6px, 1.2vh, 10px) 0 !important;
       text-shadow: none !important;
       word-break: keep-all !important;
       width: auto !important;
     }
 
-    /* ▶ 1g. STAR DERMATOLOGY */
+    /* ▶ 1g. STAR DERMATOLOGY — 병원명 바로 아래 */
     .hero-mobile-dermatology {
       font-family: 'Montserrat', sans-serif !important;
-      font-size: 9.5px !important;
+      font-size: 9px !important;
       font-weight: 500 !important;
-      letter-spacing: 0.42em !important;
+      letter-spacing: 0.40em !important;
       color: #a1874a !important;
       text-align: center !important;
-      margin: 0 0 20px 0 !important;
+      margin: 0 0 clamp(14px, 2.8vh, 20px) 0 !important;
       text-transform: uppercase !important;
     }
 
     /* ▶ 1h. 구분선 */
     .hero-mobile-divider {
-      width: 32px !important;
+      width: 28px !important;
       height: 0.8px !important;
       background: #c9a869 !important;
       opacity: 0.55 !important;
-      margin: 0 auto 20px auto !important;
+      margin: 0 auto clamp(14px, 2.8vh, 20px) auto !important;
     }
 
-    /* ▶ 1i. 슬로건 */
+    /* ▶ 1i. 슬로건 — 사진: 병원명보다 훨씬 작은 2줄 */
     .hero-mobile-slogan {
       font-family: 'Cormorant Garamond', serif !important;
-      font-size: clamp(1.1rem, 4.8vw, 1.35rem) !important;
+      font-size: clamp(1.05rem, 4.6vw, 1.25rem) !important;
       font-weight: 400 !important;
       font-style: italic !important;
       color: #e5c98a !important;
       text-align: center !important;
-      line-height: 1.6 !important;
+      line-height: 1.58 !important;
       margin: 0 !important;
       opacity: 0.92 !important;
     }

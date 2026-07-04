@@ -974,20 +974,20 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 */
+  /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 (데스크탑 이미지 공용, STAR DERMATOLOGY 글자 노출) */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: 1% center;
+      object-position: 30% center;
       animation: heroMobileSlide 30s ease-in-out forwards;
     }
   }
 
   @keyframes heroMobileSlide {
     0% {
-      object-position: 1% center;
+      object-position: 30% center;
     }
     100% {
-      object-position: right center;
+      object-position: 70% center;
     }
   }
   .hero-content {

@@ -74,7 +74,7 @@ export default function Header() {
                 height: "38px",
                 objectFit: "contain",
                 filter: scrolled
-                  ? "brightness(0.7) sepia(1) hue-rotate(10deg) saturate(3)"
+                  ? "brightness(0) saturate(100%) invert(18%) sepia(15%) saturate(400%) hue-rotate(340deg) brightness(85%)"
                   : "brightness(1.1) drop-shadow(0 1px 6px rgba(0,0,0,0.5))",
                 transition: "filter 0.5s cubic-bezier(0.16,1,0.3,1)",
               }}

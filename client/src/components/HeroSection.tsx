@@ -242,7 +242,7 @@ function HeroSection() {
               className="hero-mobile-slogan hero-mobile-slogan-fade"
             >
               {showKo
-                ? <>경험, 신뢰, 그리고<br />과학이 만나는 곳</>  
+                ? <>신뢰와 과학이<br />경험으로 완성되는 곳</>
                 : <>Where Experience,<br />Trust, and Science Meet</>}
             </p>
           </div>

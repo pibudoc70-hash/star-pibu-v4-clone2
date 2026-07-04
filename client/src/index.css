@@ -1731,6 +1731,16 @@
   /* ─── Hero Section 모바일 전용 설계 (375px ~ 640px) ─── */
   /* 원칙: 데스크톱 축소판이 아닌 모바일 전용 경험 */
   @media (max-width: 640px) {
+    /* ▶ 0. 모바일 히어로 섭션 배경 컴포넌트 */
+    /* 별/은하수 캔버스 전체 노출 */
+    .hero-starfield-canvas {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+    }
+
     /* ▶ 1. Hero section — 화면 전체 100dvh */
     #home {
       min-height: 100svh !important;

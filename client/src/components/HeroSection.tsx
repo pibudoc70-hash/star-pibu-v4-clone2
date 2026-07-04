@@ -36,6 +36,7 @@ import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
+import HeroStarfield from "@/components/hero/HeroStarfield";
 // [R13-P1-1] 이미지 URL 상수를 hero/constants.ts로 분리
 // [R20-P0-3] HERO_DELAYS 상수도 hero/constants.ts로 이동 (애니메이션 타이밍 변경 시 이 파일만 수정)
 import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
@@ -77,8 +78,9 @@ function HeroSection() {
       id="home"
       className="relative flex flex-col items-center justify-center overflow-hidden min-h-svh"
     >
-      {/* LCP 최적화: <picture> 태그 + 모바일 애니메이션 래퍼 */}
-      <div className="absolute inset-0 block pointer-events-none overflow-hidden">
+      {/* ── 배경 레이어 ── */}
+      {/* 데스크톱: 기존 이미지 배경 (md 이상에서만 표시) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block">
         <picture
           aria-hidden="true"
           className="absolute inset-0 block w-full h-full"
@@ -86,11 +88,11 @@ function HeroSection() {
           {/* 데스크톱: 대형 이미지 */}
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-          {/* 모바일: 모바일 최적화 이미지 */}
+          {/* 모바일 이미지 소스 (실제 렌더링은 모바일에서 hidden이지만 상수 참조 유지) */}
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
-            src={HERO_IMAGES.mobilePortraitJpg}
+            src={HERO_IMAGES.desktopJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
             fetchPriority="high"
             loading="eager"
@@ -100,8 +102,34 @@ function HeroSection() {
         </picture>
       </div>
 
-      {/* [R18-P0-2] 배경 레이어 조립 → HeroBackgroundLayers로 추상화 */}
-      <HeroBackgroundLayers />
+      {/* 모바일: 별/은하수 캔버스 배경 (md 미만에서만 표시) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
+        {/* 깊은 네이비 베이스 컬러 */}
+        <div
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, background: "#07091a" }}
+        />
+        {/* 별/은하수 캔버스 */}
+        <HeroStarfield />
+        {/* 하단 그라디언트 페이드 (통계/버튼 영역 가독성) */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "35%",
+            background: "linear-gradient(to top, rgba(7,9,26,0.92) 0%, rgba(7,9,26,0.5) 60%, transparent 100%)",
+            pointerEvents: "none",
+          }}
+        />
+      </div>
+
+      {/* [R18-P0-2] 배경 레이어 조립 → HeroBackgroundLayers로 추상화 (데스크톱용 오버레이) */}
+      <div className="hidden md:block">
+        <HeroBackgroundLayers />
+      </div>
 
       {/* [R12-P1-1] 층별 안내 서브컴포넌트 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />

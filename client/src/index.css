@@ -974,20 +974,11 @@
     object-fit: cover;
     object-position: center center;
   }
-  /* 모바일 hero 이미지 — 왼쪽→오른쪽 슬라이드 (데스크탑 이미지 공용, STAR DERMATOLOGY 글자 노출) */
+  /* 모바일 hero 이미지 — 고정 (슬라이드 없음) */
   @media (max-width: 640px) {
     .hero-bg-img {
-      object-position: 30% center;
-      animation: heroMobileSlide 30s ease-in-out forwards;
-    }
-  }
-
-  @keyframes heroMobileSlide {
-    0% {
-      object-position: 30% center;
-    }
-    100% {
-      object-position: 70% center;
+      object-position: center center;
+      animation: none;
     }
   }
   .hero-content {
@@ -1758,7 +1749,7 @@
       height: 100% !important;
       position: absolute !important;
       inset: 0 !important;
-      padding-top: clamp(64px, 13vh, 96px) !important;
+      padding-top: clamp(52px, 10vh, 72px) !important;
       padding-bottom: clamp(16px, 3.5vh, 28px) !important;
       padding-left: clamp(1.25rem, 6vw, 1.75rem) !important;
       padding-right: clamp(1.25rem, 6vw, 1.75rem) !important;
@@ -1813,8 +1804,12 @@
       width: auto !important;
     }
 
-    /* ▶ 1g. STAR DERMATOLOGY — 병원명 바로 아래 */
+    /* ▶ 1g. STAR DERMATOLOGY — 사진 배경과 중복되어 숨김 */
     .hero-mobile-dermatology {
+      display: none !important;
+    }
+    /* (숨김 처리 후 기존 스타일 보존용) */
+    .hero-mobile-dermatology-hidden {
       font-family: 'Montserrat', sans-serif !important;
       font-size: 9px !important;
       font-weight: 500 !important;

@@ -211,10 +211,7 @@ function HeroSection() {
           </div>
           {/* 병원명 */}
           <h1 className="hero-mobile-title">{t.hero.title}</h1>
-          {/* STAR DERMATOLOGY */}
-          <p className="hero-mobile-dermatology">STAR&nbsp;DERMATOLOGY</p>
-          {/* 구분선 */}
-          <div className="hero-mobile-divider" />
+          {/* STAR DERMATOLOGY — 사진 배경에 이미 표시되므로 제거 */}
           {/* 슬로건 — 영한 교차 애니메이션 */}
           <div className="hero-mobile-slogan-wrap">
             <p

@@ -63,7 +63,7 @@ function HeroSection() {
       .catch(() => {});
   };
 
-  const showKo = useSloganToggle(3200);
+  const showKo = useSloganToggle(5000);
   const statsRef = useRef<HTMLDivElement>(null);
   const clinicStats = useClinicStats();
   const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, statsRef, lang);

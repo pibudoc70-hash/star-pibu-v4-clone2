@@ -1840,13 +1840,17 @@
       width: 100% !important;
     }
 
-    /* fade-in 애니메이션 */
+    /* fade-in 애니메이션 — 느리고 부드럽게 */
     @keyframes heroSloganFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(4px); }
       to   { opacity: 0.92; transform: translateY(0); }
     }
+    @keyframes heroSloganFadeOut {
+      from { opacity: 0.92; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-4px); }
+    }
     .hero-mobile-slogan-fade {
-      animation: heroSloganFadeIn 0.7s cubic-bezier(0.16,1,0.3,1) both !important;
+      animation: heroSloganFadeIn 1.6s cubic-bezier(0.25,0.46,0.45,0.94) both !important;
       position: absolute !important;
     }
 

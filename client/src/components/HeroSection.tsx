@@ -1,27 +1,14 @@
 /**
  * HeroSection - STAR 피부과
  *
- * 애니메이션 시스템:
- * - 로고: heroFadeUp (0.0s)
- * - 병원명 "스타피부과": 글자별 charReveal stagger (0.3s~)
- * - 개원 배지: heroFadeUp (0.75s)
- * - 슬로건 단어별: wordReveal stagger (0.9s~)
- * - 층별 안내: heroFadeUp (1.25s)
- * - 수치 통계: heroFadeUp stagger (1.4s~)
- * - CTA 버튼: heroFadeUp stagger (1.7s~)
- * - 스크롤 인디케이터: heroFadeUp (2.1s)
+ * 모바일 레이아웃 (사진 기준):
+ *   - section: height 100dvh, flex-col, justify-between
+ *   - 상단 그룹: 로고(68px) + 병원명 + STAR DERMATOLOGY + 구분선 + 슬로건
+ *     → 화면 상단 1/2 중앙에 배치
+ *   - 하단 그룹: 통계 스트립 + 3버튼 그리드
+ *     → 화면 하단에 붙어서 배치
  *
- * 모두 cubic-bezier(0.16, 1, 0.3, 1) spring easing — 팝업/섹션과 동일
- *
- * [R12-P1-1] 서브컴포넌트 분리:
- * - HeroOverlays: 배경 오버레이/그라디언트/글로우
- * - HeroFloorBadge: 층별 안내 텍스트
- * - HeroStatsStrip: 통계 스트립 (HeroStatItem 포함)
- * - HeroActions: CTA 버튼 그룹
- * - HeroScrollIndicator: 스크롤 인디케이터
- *
- * [R18-P0-2] 배경 레이어 추상화:
- * - HeroBackgroundLayers: HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립
+ * 데스크톱: 기존 레이아웃 유지
  */
 import { useRef, useState, memo } from "react";
 import { useLang } from "@/contexts/LangContext";
@@ -37,15 +24,9 @@ import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
 import HeroStarfield from "@/components/hero/HeroStarfield";
-// [R13-P1-1] 이미지 URL 상수를 hero/constants.ts로 분리
-// [R20-P0-3] HERO_DELAYS 상수도 hero/constants.ts로 이동 (애니메이션 타이밍 변경 시 이 파일만 수정)
 import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
-// [R20-P0-3] 하위 호환성 re-export: 이전 import 경로(HeroSection에서 HERO_DELAYS 직접 import)를 사용하는 코드가 있다면 계속 동작
-// 신규 코드는 hero/constants.ts에서 직접 import하세요
 export { HERO_DELAYS } from "@/components/hero/constants";
 
-// [P1-OPT] React.memo로 memoization 적용
-// Hero 섮션은 부모 업데이트 시 단순 리렌더링 방지
 function HeroSection() {
   const { t, lang } = useLang();
   const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
@@ -55,40 +36,56 @@ function HeroSection() {
   const handleWechatClick = (e: React.MouseEvent) => {
     if (!isZH) return;
     e.preventDefault();
-    // [P2] .catch() 추가 — HTTPS 미적용 환경·권한 거부 시 unhandled rejection 방지
     navigator.clipboard.writeText(WECHAT_ID)
       .then(() => {
         setWechatCopied(true);
         setTimeout(() => setWechatCopied(false), 2500);
       })
-      .catch(() => {
-        // 클립보드 접근 불가 시 조용히 무시
-      });
+      .catch(() => {});
   };
 
   const statsRef = useRef<HTMLDivElement>(null);
   const clinicStats = useClinicStats();
-  // [PERF] duration 1400→900ms: 750ms 시점에 97% 완료 → 중간값(3,280/3,105/41/39) 노출 시간 최소화
   const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, statsRef, lang);
   const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 900, "", 0, statsRef, lang);
   const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 900, "", 0, statsRef, lang);
 
+  type StatItem = { value: string; unit: string; label: string; isDone: boolean; animationDelay: string };
+  const statsData: [StatItem, StatItem, StatItem] = [
+    {
+      value: count20,
+      unit: clinicStats.years.unit,
+      label: t.about.stats[0].label,
+      isDone: done20,
+      animationDelay: `${HERO_DELAYS.statBase}ms`,
+    },
+    {
+      value: count4000,
+      unit: clinicStats.cases.unit,
+      label: t.about.stats[1].label,
+      isDone: done4000,
+      animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms`,
+    },
+    {
+      value: count50,
+      unit: clinicStats.types.unit,
+      label: t.about.stats[2].label,
+      isDone: done50,
+      animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms`,
+    },
+  ];
+
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center overflow-hidden min-h-svh"
+      className="relative overflow-hidden hero-section-root"
     >
       {/* ── 배경 레이어 ── */}
-      {/* 데스크톱: 기존 이미지 배경 (md 이상에서만 표시) */}
+      {/* 데스크톱: 이미지 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block">
-        <picture
-          aria-hidden="true"
-          className="absolute inset-0 block w-full h-full"
-        >
-          {/* 데스크톱: 대형 이미지 */}
+        <picture aria-hidden="true" className="absolute inset-0 block w-full h-full">
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-          {/* 모바일 이미지 소스 (실제 렌더링은 모바일에서 hidden이지만 상수 참조 유지) */}
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
@@ -102,9 +99,8 @@ function HeroSection() {
         </picture>
       </div>
 
-      {/* 모바일: 딥 그린-블랙 그라디언트 + 골드 별자리 배경 (md 미만에서만 표시) */}
+      {/* 모바일: 딥 그린-블랙 + 별자리 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
-        {/* 딥 그린-블랙 베이스 그라디언트 */}
         <div
           aria-hidden="true"
           style={{
@@ -113,7 +109,6 @@ function HeroSection() {
             background: "radial-gradient(120% 100% at 30% 0%, #1a2822 0%, #0d1614 55%, #050908 100%)",
           }}
         />
-        {/* 우상단 골드 광원 */}
         <div
           aria-hidden="true"
           style={{
@@ -126,9 +121,7 @@ function HeroSection() {
             background: "radial-gradient(circle, rgba(201,168,105,0.10), transparent 65%)",
           }}
         />
-        {/* 골드 별자리 SVG */}
         <HeroStarfield />
-        {/* 하단 비네트 */}
         <div
           aria-hidden="true"
           style={{
@@ -140,112 +133,109 @@ function HeroSection() {
         />
       </div>
 
-      {/* [R18-P0-2] 배경 레이어 조립 → HeroBackgroundLayers로 추상화 (데스크톱용 오버레이) */}
+      {/* 데스크톱 오버레이 */}
       <div className="hidden md:block">
         <HeroBackgroundLayers />
       </div>
 
-      {/* [R12-P1-1] 층별 안내 서브컴포넌트 */}
+      {/* 층별 안내 */}
       <HeroFloorBadge text={t.hero.floor} animationDelay={HERO_DELAYS.floorBadge} />
 
-      {/* 콘텐츠 — 모바일: space-between으로 상단(로고/텍스트/통계)와 하단(CTA) 분리 */}
-      <div className="relative z-10 text-center flex flex-col items-center w-full hero-content">
-        {/* 상단 콘텐츠 그룹: 로고 + 텍스트 + 통계 */}
+      {/* ── 데스크톱 레이아웃 ── */}
+      <div className="hidden md:flex relative z-10 text-center flex-col items-center w-full hero-content">
         <div className="hero-top-group flex flex-col items-center w-full">
-        {/* 로고 */}
-        <div className="hero-fade hero-logo-wrap">
-          <div className="relative">
+          <div className="hero-fade hero-logo-wrap">
+            <div className="relative">
+              <OptimizedImage
+                src={HERO_LOGO_IMAGE}
+                alt="스타피부과 로고"
+                priority={true}
+                width={220}
+                height={220}
+                className="hero-logo-img"
+              />
+            </div>
+          </div>
+          <h1 className="font-medium hero-title">
+            <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
+          </h1>
+          <p className="font-light hero-subtitle">
+            <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
+          </p>
+          <HeroStatsStrip statsRef={statsRef} stats={statsData} />
+        </div>
+        <div className="hero-cta-group w-full">
+          <HeroActions
+            lang={lang}
+            t={t}
+            chatUrl={chatUrl}
+            reserveUrl={reserveUrl}
+            chatBg={chatBg}
+            chatColor={chatColor}
+            chatShadow={chatShadow}
+            isZH={isZH}
+            wechatCopied={wechatCopied}
+            onWechatClick={handleWechatClick}
+            delays={{
+              ctaFirst: HERO_DELAYS.ctaFirst,
+              ctaSecond: HERO_DELAYS.ctaSecond,
+              ctaPhone: HERO_DELAYS.ctaPhone,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* ── 모바일 레이아웃: justify-between으로 상단/하단 분리 ── */}
+      <div className="md:hidden hero-mobile-layout">
+        {/* 상단 그룹: 로고 + 텍스트 (화면 상부 중앙) */}
+        <div className="hero-mobile-top-group">
+          {/* 로고 */}
+          <div className="hero-fade hero-mobile-logo-wrap">
             <OptimizedImage
               src={HERO_LOGO_IMAGE}
               alt="스타피부과 로고"
               priority={true}
-              width={220}
-              height={220}
-              className="hero-logo-img"
+              width={136}
+              height={136}
+              className="hero-mobile-logo-img"
             />
           </div>
-        </div>
-
-        {/* 병원명: 글자별 charReveal (데스크톱만) */}
-        <h1 className="font-medium hero-title hidden md:block">
-          <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
-        </h1>
-
-        {/* 슬로건: 단어별 wordReveal (데스크톱만) */}
-        <p className="font-light hero-subtitle hidden md:block">
-          <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
-        </p>
-
-        {/* ── 모바일 전용 히어로 텍스트 블록 ── */}
-        <div className="md:hidden flex flex-col items-center hero-mobile-text-block">
-          {/* 병원명 - 큰 제목 */}
-          <h1 className="hero-mobile-title">
-            {t.hero.title}
-          </h1>
-          {/* STAR DERMATOLOGY 영문 서브타이틀 */}
-          <p className="hero-mobile-dermatology">STAR DERMATOLOGY</p>
+          {/* 병원명 */}
+          <h1 className="hero-mobile-title">{t.hero.title}</h1>
+          {/* STAR DERMATOLOGY */}
+          <p className="hero-mobile-dermatology">STAR&nbsp;DERMATOLOGY</p>
           {/* 구분선 */}
           <div className="hero-mobile-divider" />
-          {/* 슬로건 이탤릭 */}
+          {/* 슬로건 */}
           <p className="hero-mobile-slogan">
             Where Experience,<br />Trust, and Science Meet
           </p>
         </div>
 
-        {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}
-        <HeroStatsStrip
-          statsRef={statsRef}
-          stats={[
-            {
-              value: count20,
-              unit: clinicStats.years.unit,
-              label: t.about.stats[0].label,
-              isDone: done20,
-              animationDelay: `${HERO_DELAYS.statBase}ms`,
-            },
-            {
-              value: count4000,
-              unit: clinicStats.cases.unit,
-              label: t.about.stats[1].label,
-              isDone: done4000,
-              animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep}ms`,
-            },
-            {
-              value: count50,
-              unit: clinicStats.types.unit,
-              label: t.about.stats[2].label,
-              isDone: done50,
-              animationDelay: `${HERO_DELAYS.statBase + HERO_DELAYS.statStep * 2}ms`,
-            },
-          ]}
-        />
-
-        </div>{/* /hero-top-group */}
-
-        {/* 하단 CTA 그룹 — 모바일에서는 화면 하단에 자연스럽게 위치 */}
-        <div className="hero-cta-group w-full">
-        {/* [R12-P1-1] CTA 버튼 그룹 서브컴포넌트 */}
-        <HeroActions
-          lang={lang}
-          t={t}
-          chatUrl={chatUrl}
-          reserveUrl={reserveUrl}
-          chatBg={chatBg}
-          chatColor={chatColor}
-          chatShadow={chatShadow}
-          isZH={isZH}
-          wechatCopied={wechatCopied}
-          onWechatClick={handleWechatClick}
-          delays={{
-            ctaFirst: HERO_DELAYS.ctaFirst,
-            ctaSecond: HERO_DELAYS.ctaSecond,
-            ctaPhone: HERO_DELAYS.ctaPhone,
-          }}
-        />
-        </div>{/* /hero-cta-group */}
+        {/* 하단 그룹: 통계 + CTA (화면 하부에 고정) */}
+        <div className="hero-mobile-bottom-group">
+          <HeroStatsStrip statsRef={statsRef} stats={statsData} />
+          <HeroActions
+            lang={lang}
+            t={t}
+            chatUrl={chatUrl}
+            reserveUrl={reserveUrl}
+            chatBg={chatBg}
+            chatColor={chatColor}
+            chatShadow={chatShadow}
+            isZH={isZH}
+            wechatCopied={wechatCopied}
+            onWechatClick={handleWechatClick}
+            delays={{
+              ctaFirst: HERO_DELAYS.ctaFirst,
+              ctaSecond: HERO_DELAYS.ctaSecond,
+              ctaPhone: HERO_DELAYS.ctaPhone,
+            }}
+          />
+        </div>
       </div>
 
-      {/* [R12-P1-1] 스크롤 인디케이터 서브컴포넌트 */}
+      {/* 스크롤 인디케이터 */}
       <HeroScrollIndicator
         label={t.hero.scrollLabel}
         animationDelay={HERO_DELAYS.ctaScroll}

@@ -23,7 +23,7 @@
  * [R18-P0-2] 배경 레이어 추상화:
  * - HeroBackgroundLayers: HeroDarkOverlay + HeroVignette + HeroGoldGlow + GoldParticles 조립
  */
-import { useRef, useState, memo, useEffect } from "react";
+import { useRef, useState, memo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { useCountUp } from "@/hooks/useCountUp";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -128,25 +128,26 @@ function HeroSection() {
         <h1 className="font-medium hero-title hidden md:block">
           <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
         </h1>
-        {/* 모바일: 병원명 숨김 */}
 
         {/* 슬로건: 단어별 wordReveal (데스크톱만) */}
         <p className="font-light hero-subtitle hidden md:block">
           <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
         </p>
-        
-        {/* 모바일: 병원명만 표시 (로고 아래 영어는 이미 있음) */}
-        <div className="md:hidden flex flex-col items-center gap-1 mb-4">
-          {/* 병원명 - i18n 처리 */}
-          <p className="hero-title-mobile font-medium text-white text-center">
-            {t.hero.title}
-          </p>
-        </div>
 
-        {/* 헤드카피 - 모바일에만 표시 */}
-        {/* 헤드카피 - 영문/한글 교차 텍스트 */}
-        <div className="md:hidden flex flex-col items-center gap-2 mb-8">
-          <HeroSubtitleToggle />
+        {/* ── 모바일 전용 히어로 텍스트 블록 ── */}
+        <div className="md:hidden flex flex-col items-center hero-mobile-text-block">
+          {/* 병원명 - 큰 제목 */}
+          <h1 className="hero-mobile-title">
+            {t.hero.title}
+          </h1>
+          {/* STAR DERMATOLOGY 영문 서브타이틀 */}
+          <p className="hero-mobile-dermatology">STAR DERMATOLOGY</p>
+          {/* 구분선 */}
+          <div className="hero-mobile-divider" />
+          {/* 슬로건 이탤릭 */}
+          <p className="hero-mobile-slogan">
+            Where Experience,<br />Trust, and Science Meet
+          </p>
         </div>
 
         {/* [R12-P1-1] 통계 스트립 서브컴포넌트 */}
@@ -210,66 +211,5 @@ function HeroSection() {
     </section>
   );
 }
-
-// [P1-OPT] React.memo로 memoization 내보내
-// 영문/한글 텍스트 교체 컴포넌트
-const HeroSubtitleToggle = () => {
-  const [isKorean, setIsKorean] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsKorean((prev) => !prev);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
-  /* grid 스택: 두 자식이 같은 셀을 차지하여 자연스럽게 격쳐짐 */
-  return (
-    <div
-      style={{
-        display: "grid",
-        width: "100%",
-        textAlign: "center",
-      }}
-    >
-      {/* 영문 */}
-      <p
-        className="font-light text-white text-center"
-        style={{
-          gridArea: "1 / 1",
-          fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
-          letterSpacing: "-0.01em",
-          lineHeight: "1.6",
-          margin: 0,
-          padding: 0,
-          opacity: isKorean ? 0 : 1,
-          transition: "opacity 1.5s ease-in-out",
-          pointerEvents: isKorean ? "none" : "auto",
-        }}
-        aria-hidden={isKorean}
-      >
-        Where Experience,<br />Trust, and Science Meet
-      </p>
-      {/* 한글 */}
-      <p
-        className="font-light text-white text-center"
-        style={{
-          gridArea: "1 / 1",
-          fontSize: "clamp(0.75rem, 3.2vw, 0.9rem)",
-          letterSpacing: "-0.01em",
-          lineHeight: "1.6",
-          margin: 0,
-          padding: 0,
-          opacity: isKorean ? 1 : 0,
-          transition: "opacity 1.5s ease-in-out",
-          pointerEvents: isKorean ? "auto" : "none",
-        }}
-        aria-hidden={!isKorean}
-      >
-        풍부한 경험,<br />깊은 신뢰, 그리고 과학의 만남
-      </p>
-    </div>
-  );
-};
 
 export default memo(HeroSection);

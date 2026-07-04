@@ -1804,7 +1804,69 @@
         0 8px 48px rgba(0,0,0,0.5) !important;
     }
 
-    /* ▶ 6.5 모바일 병원명 + 영문 서브텍스트 */
+    /* ▶ 6.4 모바일 히어로 텍스트 블록 (이미지 기준 레이아웃) */
+    .hero-mobile-text-block {
+      width: 100% !important;
+      gap: 0 !important;
+      margin-bottom: clamp(1.2rem, 3vh, 2rem) !important;
+    }
+
+    /* 모바일 병원명 큰 제목 */
+    .hero-mobile-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
+      font-size: clamp(2.6rem, 12vw, 3.6rem) !important;
+      font-weight: 500 !important;
+      color: #e8d5a3 !important;
+      letter-spacing: 0.04em !important;
+      line-height: 1.1 !important;
+      text-align: center !important;
+      margin: 0 0 clamp(0.3rem, 1vh, 0.6rem) 0 !important;
+      text-shadow:
+        0 2px 8px rgba(0,0,0,0.8),
+        0 4px 24px rgba(0,0,0,0.6) !important;
+      word-break: keep-all !important;
+    }
+
+    /* STAR DERMATOLOGY 영문 서브타이틀 */
+    .hero-mobile-dermatology {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: clamp(0.65rem, 2.8vw, 0.85rem) !important;
+      font-weight: 400 !important;
+      color: rgba(232, 213, 163, 0.85) !important;
+      letter-spacing: 0.28em !important;
+      text-transform: uppercase !important;
+      text-align: center !important;
+      margin: 0 0 clamp(0.6rem, 1.5vh, 1rem) 0 !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6) !important;
+    }
+
+    /* 구분선 */
+    .hero-mobile-divider {
+      width: clamp(2rem, 8vw, 3rem) !important;
+      height: 1px !important;
+      background: rgba(232, 213, 163, 0.6) !important;
+      margin: 0 auto clamp(0.8rem, 2vh, 1.2rem) auto !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* 슬로건 이탤릭 */
+    .hero-mobile-slogan {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif !important;
+      font-style: italic !important;
+      font-size: clamp(1.05rem, 4.5vw, 1.3rem) !important;
+      font-weight: 400 !important;
+      color: rgba(255, 255, 255, 0.88) !important;
+      letter-spacing: 0.01em !important;
+      line-height: 1.55 !important;
+      text-align: center !important;
+      margin: 0 !important;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,0.8),
+        0 2px 12px rgba(0,0,0,0.5) !important;
+      word-break: keep-all !important;
+    }
+
+    /* ▶ 6.5 모바일 병원명 + 영문 서브텍스트 (레거시) */
     .hero-title-mobile {
       font-size: clamp(1.8rem, 8vw, 2.4rem) !important;
       font-weight: 600 !important;

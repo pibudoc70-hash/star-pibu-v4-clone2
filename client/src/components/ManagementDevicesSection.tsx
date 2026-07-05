@@ -136,7 +136,7 @@ function DeviceCard({
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col items-center gap-2.5 p-3 rounded-xl transition-all duration-200 w-full"
+      className="group flex flex-col items-center gap-2 p-2 sm:p-3 rounded-xl transition-all duration-200 w-full hover:bg-white/5"
       style={{
         background: "transparent",
         border: "none",
@@ -146,10 +146,11 @@ function DeviceCard({
     >
       {/* 원형 이미지 */}
       <div
-        className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-md"
+        className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
         style={{
-          background: "rgba(201, 168, 105, 0.10)",
-          border: "2px solid rgba(201, 168, 105, 0.45)",
+          background: "rgba(201, 168, 105, 0.12)",
+          border: "2px solid rgba(201, 168, 105, 0.55)",
+          boxShadow: "0 0 0 1px rgba(201,168,105,0.15)",
         }}
       >
         <OptimizedImage
@@ -164,8 +165,8 @@ function DeviceCard({
       {/* 이름 */}
       <div className="text-center">
         <p
-          className="text-xs sm:text-sm font-semibold leading-tight transition-colors duration-200 group-hover:text-[var(--color-gold-light)]"
-          style={{ color: "rgba(236, 229, 211, 0.88)" }}
+          className="text-[11px] sm:text-xs lg:text-sm font-bold leading-tight transition-colors duration-200 group-hover:text-[var(--color-gold-light)] break-keep"
+          style={{ color: "rgba(240, 234, 218, 0.96)", textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}
         >
           {displayName}
         </p>
@@ -210,7 +211,7 @@ export default function ManagementDevicesSection() {
           {/* 6열 그리드 */}
           <div
             className="rounded-2xl px-4 py-6 sm:px-6 sm:py-8"
-            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(201,168,105,0.15)" }}
+            style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(201,168,105,0.25)" }}
           >
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
               {devices.map((device) => (

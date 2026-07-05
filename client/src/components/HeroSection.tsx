@@ -212,16 +212,22 @@ function HeroSection() {
           {/* 병원명 */}
           <h1 className="hero-mobile-title">{t.hero.title}</h1>
           {/* STAR DERMATOLOGY — 사진 배경에 이미 표시되므로 제거 */}
-          {/* 슬로건 — 영한 교차 애니메이션 */}
+          {/* 슬로건 — 한국어일 때만 영한 교차, 외국어에서는 해당 언어 슬로건만 표시 */}
           <div className="hero-mobile-slogan-wrap">
-            <p
-              key={showKo ? "ko" : "en"}
-              className="hero-mobile-slogan hero-mobile-slogan-fade"
-            >
-              {showKo
-                ? <>신뢰와 과학이<br />경험으로 완성되는 곳</>
-                : <>Where Experience,<br />Trust, and Science Meet</>}
-            </p>
+            {lang === "ko" ? (
+              <p
+                key={showKo ? "ko" : "en"}
+                className="hero-mobile-slogan hero-mobile-slogan-fade"
+              >
+                {showKo
+                  ? <>신뢰와 과학이<br />경험으로 완성되는 곳</>
+                  : <>Where Experience,<br />Trust, and Science Meet</>}
+              </p>
+            ) : (
+              <p className="hero-mobile-slogan">
+                {t.hero.subtitle}
+              </p>
+            )}
           </div>
         </div>
 

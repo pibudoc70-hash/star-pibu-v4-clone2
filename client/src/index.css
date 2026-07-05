@@ -4260,6 +4260,56 @@ body.font-lang-zh .hero-stat-label {
   background: linear-gradient(180deg, #1A2744 0%, #0F1A30 100%);
 }
 
+/* ── Option A+B 혼합 시안 클래스 ──────────────────────────────────────
+   A: 순백(#fff) → 웜 오프화이트 크림 계열
+   B: 다크 네이비 → 다크 브라운 (모바일 메뉴와 동일 브랜드 팔레트)
+   ─────────────────────────────────────────────────────────────────── */
+
+/* B: 다크 브라운 섹션 내부 텍스트 색상 오버라이드 — 접근성 보장 */
+.section-bg-dark-brown .section-eyebrow,
+.section-bg-dark-brown-mid .section-eyebrow {
+  color: var(--color-gold-primary, #C4A882);
+}
+.section-bg-dark-brown .section-title,
+.section-bg-dark-brown-mid .section-title {
+  color: rgba(236, 229, 211, 0.95);
+}
+.section-bg-dark-brown .section-subtitle,
+.section-bg-dark-brown-mid .section-subtitle {
+  color: rgba(236, 229, 211, 0.62);
+}
+.section-bg-dark-brown .star-divider,
+.section-bg-dark-brown-mid .star-divider {
+  background: linear-gradient(90deg, transparent, rgba(201,168,105,0.55), transparent);
+  opacity: 1;
+}
+
+/* A: 순백 대체 — 따뜻한 크림 화이트 (눈부심 제거) */
+.section-bg-cream {
+  background: #F7F3EE;
+}
+/* A: 약간 더 따뜻한 오프화이트 (Doctors·Reviews 대비 차별화) */
+.section-bg-warm-alt {
+  background: linear-gradient(180deg, #F5F0EA 0%, #EDE8E0 100%);
+}
+/* A: offwhite 강화 — 순백 대신 크림 베이지 */
+.section-bg-cream-soft {
+  background: linear-gradient(180deg, #F8F4EF 0%, #F3EEE8 100%);
+}
+
+/* B: 다크 브라운 (모바일 메뉴 패널과 동일 계열) */
+.section-bg-dark-brown {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(80, 50, 15, 0.28) 0%, transparent 60%),
+    linear-gradient(180deg, #1e1208 0%, #140e06 55%, #0e0a04 100%);
+}
+/* B: 다크 브라운 미드 — 완전 블랙보다 따뜻한 중간 톤 */
+.section-bg-dark-brown-mid {
+  background:
+    radial-gradient(ellipse at 80% 100%, rgba(60, 35, 8, 0.35) 0%, transparent 55%),
+    linear-gradient(180deg, #221508 0%, #1a1006 50%, #120c04 100%);
+}
+
 /* ─────────────────────────────────────────────────────────────────────
    FAQ 섹션 CSS 클래스 (인라인 스타일 제거 후 대체)
    ───────────────────────────────────────────────────────────────────── */
@@ -4703,7 +4753,8 @@ body.font-lang-zh .hero-stat-label {
   }
   .youtube-section-title {
     font-size: clamp(1.45rem, 6.5vw, 1.85rem) !important;
-    color: var(--brand-text, #2C2C2C) !important;
+    /* [Option B] 다크 브라운 배경 위에서 밝은 크림으로 */
+    color: rgba(236, 229, 211, 0.95) !important;
     font-family: 'Noto Serif KR', 'Cormorant Garamond', serif !important;
     font-weight: 400 !important;
   }

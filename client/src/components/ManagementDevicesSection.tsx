@@ -148,8 +148,8 @@ function DeviceCard({
       <div
         className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-md"
         style={{
-          background: "var(--brand-bg-warm, #EDE8E0)",
-          border: "2px solid color-mix(in srgb, var(--color-gold-primary) 60%, transparent)",
+          background: "rgba(201, 168, 105, 0.10)",
+          border: "2px solid rgba(201, 168, 105, 0.45)",
         }}
       >
         <OptimizedImage
@@ -164,8 +164,8 @@ function DeviceCard({
       {/* 이름 */}
       <div className="text-center">
         <p
-          className="text-xs sm:text-sm font-semibold leading-tight transition-colors duration-200 group-hover:text-[var(--color-gold-deep)]"
-          style={{ color: "var(--brand-text, #2C2C2C)" }}
+          className="text-xs sm:text-sm font-semibold leading-tight transition-colors duration-200 group-hover:text-[var(--color-gold-light)]"
+          style={{ color: "rgba(236, 229, 211, 0.88)" }}
         >
           {displayName}
         </p>
@@ -191,7 +191,6 @@ export default function ManagementDevicesSection() {
       <section
         id="management-devices"
         className="py-12 sm:py-20"
-        style={{ background: "var(--brand-bg, #FAF8F5)" }}
         aria-label="관리 장비 안내"
       >
         <div className="container">
@@ -202,7 +201,7 @@ export default function ManagementDevicesSection() {
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle text-[var(--color-gold-deep)]">
+            <p className="section-subtitle text-[var(--color-gold-light)]">
               {md.sectionSubtitle}
             </p>
           </div>
@@ -210,7 +209,7 @@ export default function ManagementDevicesSection() {
           {/* 6열 그리드 */}
           <div
             className="rounded-2xl px-4 py-6 sm:px-6 sm:py-8"
-            style={{ background: "white" }}
+            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(201,168,105,0.15)" }}
           >
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
               {devices.map((device) => (

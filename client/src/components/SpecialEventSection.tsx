@@ -108,7 +108,7 @@ export default function SpecialEventSection() {
 
   if (isLoading) {
     return (
-      <section className="py-20 md:py-28 section-bg-offwhite" aria-label="스페셜 이벤트" aria-busy="true">
+      <section className="py-20 md:py-28" aria-label="스페셔 이벤트" aria-busy="true">
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
@@ -130,7 +130,7 @@ export default function SpecialEventSection() {
       zh: "重试",
     };
     return (
-      <section id="events" className="py-20 md:py-28 section-bg-offwhite" aria-label="스페셜 이벤트">
+      <section id="events" className="py-20 md:py-28" aria-label="스페셔 이벤트">
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="text-center py-16 flex flex-col items-center gap-4">
@@ -155,7 +155,7 @@ export default function SpecialEventSection() {
   const hasMoreDesktop = allEvents.length > 6;
 
   return (
-    <section id="events" className="py-20 md:py-28 section-bg-offwhite" aria-label="스페셜 이벤트">
+    <section id="events" className="py-20 md:py-28" aria-label="스페셔 이벤트">
       <div className="container">
         <SectionHeader lang={lang} />
         {allEvents.length === 0 ? (

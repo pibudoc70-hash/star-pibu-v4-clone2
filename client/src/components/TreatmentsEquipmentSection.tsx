@@ -171,7 +171,7 @@ export default function TreatmentsEquipmentSection() {
   const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" style={{ background: 'var(--brand-bg, #FAF8F5)' }} aria-label={tr.label} role="region">
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 
@@ -184,7 +184,7 @@ export default function TreatmentsEquipmentSection() {
 
         {/* 로딩 스켈레톤 */}
         {isLoading && (
-          <div className="rounded-2xl px-4 py-8 mb-4 bg-white text-center text-sm text-gray-400">
+            <div className="rounded-2xl px-4 py-8 mb-4 text-center text-sm text-gray-500" style={{ background: "#F3EEE8" }}>
             시술·장비 정보를 불러오는 중...
           </div>
         )}
@@ -192,7 +192,7 @@ export default function TreatmentsEquipmentSection() {
         {/* 카테고리 탭 + 검색 */}
         {!isLoading && tabs.length > 0 && (
           <>
-            <div className="rounded-2xl px-4 py-4 mb-4 bg-white">
+              <div className="rounded-2xl px-4 py-4 mb-4" style={{ background: "#F3EEE8" }}>
               {/* 검색 입력 */}
               <div
                 className="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-xl transition-all duration-200"
@@ -255,7 +255,7 @@ export default function TreatmentsEquipmentSection() {
                 key={`content-${activeId}`}
                 className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade"
               >
-                <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
+                <div className="px-5 pt-5 pb-5 rounded-b-2xl" style={{ background: "#F3EEE8" }}>
                   <div
                     id="treatments-grid"
                     aria-live="polite"

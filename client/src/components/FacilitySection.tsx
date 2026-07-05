@@ -114,7 +114,7 @@ export default function FacilitySection() {
   }, [lightboxIndex]);
 
   return (
-    <section ref={sectionRef} id="facility" className="py-16 sm:py-24 bg-white" aria-label="클리닉 시설 갤러리">
+    <section ref={sectionRef} id="facility" className="py-16 sm:py-24" aria-label="클리닉 시설 갤러리">
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 reveal-heading">

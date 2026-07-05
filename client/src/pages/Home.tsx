@@ -490,10 +490,8 @@ export default function Home() {
         <HeroSection />
         <MobileBottomCTA />
 
-        {/* 2. SPECIAL EVENT — 순수 흰색, Hero 바로 아래 (즉시 마운트 + Suspense)
-            deferMount=false: Hero 스크롤 직후 바로 보이므로 선로딩 유지
-            단, Suspense로 감싸 코드 스플리팅 유지 */}
-        <div className="bg-white">
+        {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
+        <div className="section-bg-cream">
           <Suspense fallback={<SectionFallback minH="min-h-[640px]" layout="cards-3" bg="#ffffff" />}>
             <SpecialEventSection />
           </Suspense>
@@ -510,33 +508,33 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 4. Treatments + Equipment */}
+        {/* 4. Treatments + Equipment — [Option A] 순백→크림 소프트 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="bg-white">
+          <div className="section-bg-cream-soft">
             <Suspense fallback={<SectionFallback minH="min-h-[720px]" layout="cards-3" bg="#ffffff" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 5. Management Devices */}
+        {/* 5. Management Devices — [Option B] 다크 네이비→다크 브라운 */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-navy">
+          <div className="section-bg-dark-brown">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" layout="cards-4" bg="linear-gradient(180deg, #1A2744 0%, #243358 100%)" />}>
               <ManagementDevicesSection />
             </Suspense>
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 6. Philosophy */}
+        {/* 6. Philosophy — [Option A] offwhite→크림 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-offwhite">
+          <div className="section-bg-cream">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" layout="stats" bg="#FAFAFA" />}>
               <PhilosophySection />
             </Suspense>
@@ -554,11 +552,11 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 7. Facility Gallery */}
+        {/* 7. Facility Gallery — [Option A] 순백→웜 알트 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="bg-white">
+          <div className="section-bg-warm-alt">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" bg="#ffffff" />}>
               <FacilitySection />
             </Suspense>
@@ -576,22 +574,22 @@ export default function Home() {
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 8-2. YouTube Channel */}
+        {/* 8-2. YouTube Channel — [Option B] 다크 딥→다크 브라운 미드 */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-deep">
+          <div className="section-bg-dark-brown-mid">
             <Suspense fallback={<SectionFallback minH="min-h-[400px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
               <YouTubeSection />
             </Suspense>
           </div>
         </ScrollAnimationWrapper>
 
-        {/* 9. FAQ */}
+        {/* 9. FAQ — [Option A] 순백→크림 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="bg-white">
+          <div className="section-bg-cream">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="list" bg="#ffffff" />}>
               <FAQSection />
             </Suspense>
@@ -607,11 +605,11 @@ export default function Home() {
           </Suspense>
         </ScrollAnimationWrapper>
 
-        {/* 10. Location & Contact */}
+        {/* 10. Location & Contact — [Option B] 다크 딥→다크 브라운 */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-deep">
+          <div className="section-bg-dark-brown">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
               <ContactSection />
             </Suspense>

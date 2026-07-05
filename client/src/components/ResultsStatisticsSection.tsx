@@ -40,7 +40,7 @@ export default function ResultsStatisticsSection() {
   ];
 
   return (
-    <section id="results-statistics" className="py-16 md:py-24" style={{ background: "var(--brand-bg, #FAF8F5)" }} aria-label="시술 결과 실적">
+    <section id="results-statistics" className="py-16 md:py-24" aria-label="시술 결과 실적">
       <div className="container">
         {/* 제목 */}
         <div className="section-header-block">

@@ -64,11 +64,16 @@ function HeroSection() {
   };
 
   const showKo = useSloganToggle(5000);
-  const statsRef = useRef<HTMLDivElement>(null);
+  // [BUG FIX] 데스크톱/모바일 statsRef 분리
+  // 두 HeroStatsStrip이 동일 ref를 공유하면 IntersectionObserver가
+  // CSS로 숨겨진 모바일 요소를 감시하여 isDone 완료가 불안정해짐
+  const desktopStatsRef = useRef<HTMLDivElement>(null);
+  const mobileStatsRef = useRef<HTMLDivElement>(null);
   const clinicStats = useClinicStats();
-  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, statsRef, lang);
-  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 900, "", 0, statsRef, lang);
-  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 900, "", 0, statsRef, lang);
+  // useCountUp은 데스크톱 ref 기준으로 트리거 (PC에서 뷰포트 진입 시 카운트업 시작)
+  const { value: count4000, isDone: done4000 } = useCountUp(CLINIC_STATS.eyeBagCases, 900, "", 0, desktopStatsRef, lang);
+  const { value: count20, isDone: done20 } = useCountUp(CLINIC_STATS.yearsExperience, 900, "", 0, desktopStatsRef, lang);
+  const { value: count50, isDone: done50 } = useCountUp(CLINIC_STATS.laserTypes, 900, "", 0, desktopStatsRef, lang);
 
   const statsData: [
     { value: string; unit: string; label: string; isDone: boolean; animationDelay: string },
@@ -171,7 +176,7 @@ function HeroSection() {
             <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
           </p>
           {/* 통계 스트립 */}
-          <HeroStatsStrip statsRef={statsRef} stats={statsData} />
+          <HeroStatsStrip statsRef={desktopStatsRef} stats={statsData} />
         </div>
         <div className="hero-cta-group w-full">
           <HeroActions
@@ -233,7 +238,7 @@ function HeroSection() {
 
         {/* 하단 그룹: 통계 + 스크롤 유도 화살표 */}
         <div className="hero-mobile-bottom-group">
-          <HeroStatsStrip statsRef={statsRef} stats={statsData} />
+          <HeroStatsStrip statsRef={mobileStatsRef} stats={statsData} />
           {/* 모바일 스크롤 유도 화살표 */}
           <button
             type="button"

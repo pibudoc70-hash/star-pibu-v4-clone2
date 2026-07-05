@@ -169,8 +169,9 @@ function DeviceCard({
         >
           {displayName}
         </p>
+        {/* 영어 이름: 모바일에서는 정렬 문제로 숨김, sm 이상에서만 표시 */}
         <span
-          className="text-[9px] tracking-widest uppercase mt-0.5 block"
+          className="hidden sm:block text-[9px] tracking-widest uppercase mt-0.5"
           style={{ color: "var(--color-gold-primary)", fontWeight: 300 }}
         >
           {device.nameEn}

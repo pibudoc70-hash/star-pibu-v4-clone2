@@ -111,7 +111,14 @@ function HtmlLangUpdater() {
       location === "/ja" || location.startsWith("/ja/") ||
       location === "/zh" || location.startsWith("/zh/") ||
       location === "/foreign-guide" || location.startsWith("/foreign-guide/");
-    if (isManagedLangPath && lang !== urlLang) setLang(urlLang, false);
+    if (isManagedLangPath && lang !== urlLang) {
+      // 외국어 경로: URL에 맞는 언어로 동기화 (저장 안함)
+      setLang(urlLang, false);
+    } else if (!isManagedLangPath && lang !== "ko") {
+      // 한국어 경로(/): 외국어에서 한국어로 돌아왔을 때 localStorage에 남은
+      // 외국어 상태를 ko로 초기화 (저장 포함)
+      setLang("ko", true);
+    }
   }, [location, lang, setLang]);
   return null;
 }

@@ -1373,6 +1373,72 @@
   .dr-mob-tablist-border {
     border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent);
   }
+
+  /* ── 상단 의사 선택 탭 (dr-mob-top-selector) ─────────────────────────────── */
+  /* 상단 선택바 래퍼 */
+  .dr-mob-top-selector {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 16px 12px 0;
+    background: var(--dr-panel-bg, #FAF8F5);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
+  }
+  /* 각 의사 탭 버튼 */
+  .dr-mob-top-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 8px 0;
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .dr-mob-top-tab[data-active="false"] {
+    opacity: 0.55;
+  }
+  .dr-mob-top-tab[data-active="true"] {
+    opacity: 1;
+  }
+  .dr-mob-top-tab[data-active="false"]:hover {
+    opacity: 0.8;
+  }
+  /* 활성 인디케이터 라인 */
+  .dr-mob-top-tab-line {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    border-radius: 2px 2px 0 0;
+    margin-top: 4px;
+    transition: background 0.25s ease, opacity 0.25s ease;
+  }
+  .dr-mob-top-tab-line[data-active="true"] {
+    background: linear-gradient(90deg, var(--color-gold-deep, #8B6914), var(--color-gold-primary, #C4A882), var(--color-gold-deep, #8B6914));
+    opacity: 1;
+  }
+  .dr-mob-top-tab-line[data-active="false"] {
+    background: transparent;
+    opacity: 0;
+  }
+  /* 상단 탭의 이름 텍스트 크기 조정 */
+  .dr-mob-top-selector .dr-mob-tab-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .dr-mob-top-selector .dr-mob-tab-name[data-active="true"] {
+    color: var(--color-gold-deep, #8B6914);
+    font-weight: 600;
+  }
+  /* 상단 탭의 주의사 사진 크기 조정 (56px → 64px) */
+  .dr-mob-top-selector .dr-thumb-mobile {
+    width: 64px;
+    height: 64px;
+  }
   /* Mobile slider arrow button */
   .dr-slider-arrow {
     background: rgba(0, 0, 0, 0.35);

@@ -48,7 +48,54 @@ export function DoctorMobileLayout({
 
   return (
     <div className="lg:hidden">
-      {/* ── 슬라이더 뷰포트 ── */}
+
+      {/* ── 상단 의사 선택 탭 (슬라이더 위) ── */}
+      <div className="dr-mob-top-selector">
+        {mergedDoctors.map((d) => (
+          <button
+            type="button"
+            key={d.id}
+            role="tab"
+            id={`doctor-mob-tab-${d.id}`}
+            aria-controls={`doctor-mob-panel-${d.id}`}
+            aria-selected={activeDoctor === d.id}
+            onClick={() => onSelect(d.id)}
+            onKeyDown={onKeyDown}
+            className="dr-mob-top-tab"
+            data-active={String(activeDoctor === d.id)}
+          >
+            {/* 주의사 사진 */}
+            <div
+              className="dr-thumb-mobile dr-mob-thumb-border"
+              data-active={String(activeDoctor === d.id)}
+            >
+              <OptimizedImage
+                src={d.cardImage || d.image}
+                alt={d.name}
+                priority
+                usePicture={false}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: d.cardImagePosition || "center top",
+                }}
+              />
+            </div>
+            {/* 이름 */}
+            <span
+              className="dr-mob-tab-name whitespace-nowrap"
+              data-active={String(activeDoctor === d.id)}
+            >
+              {d.name}
+            </span>
+            {/* 활성 인디케이터 라인 */}
+            <span className="dr-mob-top-tab-line" data-active={String(activeDoctor === d.id)} />
+          </button>
+        ))}
+      </div>
+
+      {/* ── 슬라이더 븷포트 ── */}
       <div className="relative overflow-hidden">
         {/* 슬라이드 트랙 */}
         <div
@@ -160,68 +207,6 @@ export function DoctorMobileLayout({
             <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-      </div>
-
-      {/* ── Dot Indicator + 이름 네비게이션 ── */}
-      <div className="flex flex-col items-center gap-3 py-5 border-t dr-mob-tablist-border">
-        {/* 의사 이름 버튼 목록 */}
-        <div className="flex justify-center gap-4">
-          {mergedDoctors.map((d) => (
-            <button
-              type="button"
-              key={d.id}
-              role="tab"
-              id={`doctor-mob-tab-${d.id}`}
-              aria-controls={`doctor-mob-panel-${d.id}`}
-              aria-selected={activeDoctor === d.id}
-              onClick={() => onSelect(d.id)}
-              onKeyDown={onKeyDown}
-              className="flex flex-col items-center gap-1.5 px-3 py-1 transition-all duration-200"
-            >
-              <div
-                className="dr-thumb-mobile dr-mob-thumb-border"
-                data-active={String(activeDoctor === d.id)}
-              >
-                <OptimizedImage
-                  src={d.cardImage || d.image}
-                  alt={d.name}
-                  priority
-                  usePicture={false}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: d.cardImagePosition || "center top",
-                  }}
-                />
-              </div>
-              <span
-                className="text-[0.7rem] dr-mob-tab-name whitespace-nowrap"
-                data-active={String(activeDoctor === d.id)}
-              >
-                {d.name}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Dot indicator */}
-        <div className="flex justify-center items-center gap-2">
-          {doctors.map((d) => (
-            <button
-              type="button"
-              key={d.id}
-              onClick={() => onSelect(d.id)}
-              aria-label={(t.doctors.dotNavLabel ?? "").replace(
-                "{name}",
-                doctors[d.id]?.name ?? String(d.id + 1)
-              )}
-              aria-current={activeDoctor === d.id ? "true" : undefined}
-              data-active={String(activeDoctor === d.id)}
-              className="dr-dot-nav"
-            />
-          ))}
-        </div>
       </div>
     </div>
   );

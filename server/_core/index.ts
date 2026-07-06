@@ -12,6 +12,7 @@ import { startOtpCleanupScheduler } from "../otpCleanup";
 import { collectKeywordTrendsHandler } from "./scheduled";
 import { initializeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
+import { registerSitemapDynamic } from "../sitemap";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -41,6 +42,7 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   registerRssFeed(app);
+  registerSitemapDynamic(app);
 
   // NOTE: /sitemap.xml is served as a static file from client/public/sitemap.xml
   // (via express.static in serveStatic). The dynamic route that was here has been

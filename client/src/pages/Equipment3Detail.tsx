@@ -130,7 +130,8 @@ export default function Equipment3Detail() {
   // ── SEO ─────────────────────────────────────────────────────────────────────
   const pageUrl = getLocalizedUrl(lang, `/equipment3/${slug}`);
 
-  const seoTitle = (() => {
+  // DB에 저장된 SEO 필드를 우선 사용, 없으면 자동 생성
+  const seoTitle = item.seoTitle?.trim() || (() => {
     switch (lang) {
       case "en": return `${localizedName} | Star Dermatology, Seomyeon, Busan`;
       case "ja": return `${localizedName} | 釜山西面 スター皮膚科`;
@@ -139,19 +140,19 @@ export default function Equipment3Detail() {
     }
   })();
 
-  const seoDesc = (() => {
+  const seoDesc = item.seoDescription?.trim() || (() => {
     const d = localizedDesc || "";
     switch (lang) {
       case "en": return `Star Dermatology Clinic in Seomyeon, Busan offers ${localizedName}. ${d} Performed by board-certified dermatologist.`;
       case "ja": return `釜山西面スター皮膚科の${localizedName}施術案内。${d} 皮膚科専門医が直接施術。`;
       case "zh": return `釜山西面STAR皮肤科${localizedName}项目介绍。${d} 由皮肤科专科医生亲自操作。`;
-      default:   return `부산 서면 스타피부과의 ${item.name} 시술 안내. ${item.desc || ""} 피부과 전문의가 직접 시술합니다.`;
+      default:   return `부산 서면 스타피부과의 ${item.name} 시술 안내. ${item.desc || ""} 피부과 전문의가가 직접 시술합니다.`;
     }
   })();
 
-  const seoKeywords = lang === "ko"
+  const seoKeywords = item.seoKeywords?.trim() || (lang === "ko"
     ? `${item.name}, ${item.nameEn || ""}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의`
-    : `${localizedName}, Busan dermatology, Star Dermatology, Seomyeon`;
+    : `${localizedName}, Busan dermatology, Star Dermatology, Seomyeon`);
 
   const jsonLd = [{
     "@context": "https://schema.org",
@@ -189,7 +190,7 @@ export default function Equipment3Detail() {
         description={seoDesc}
         keywords={seoKeywords}
         canonical={pageUrl}
-        ogImage={item.imageUrl || undefined}
+        ogImage={item.ogImageUrl?.trim() || item.imageUrl || undefined}
         ogUrl={pageUrl}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
         hreflangs={buildHreflangs(

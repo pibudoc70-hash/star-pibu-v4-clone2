@@ -84,6 +84,11 @@ type FormData = {
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
   youtubeUrl: string; imageUrl: string; bgImageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1";
+  // SEO
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+  ogImageUrl: string;
 };
 
 export default function AdminEquipment3Edit() {
@@ -138,6 +143,10 @@ export default function AdminEquipment3Edit() {
       images: Array.isArray(images) ? images : [],
       isActive: (item.isActive ?? "1") as "0" | "1",
       isBest: (item.isBest ?? "0") as "0" | "1",
+      seoTitle: item.seoTitle ?? "",
+      seoDescription: item.seoDescription ?? "",
+      seoKeywords: item.seoKeywords ?? "",
+      ogImageUrl: item.ogImageUrl ?? "",
     });
   }, [item]);
 
@@ -305,6 +314,10 @@ export default function AdminEquipment3Edit() {
         images: JSON.stringify(form.images),
         isActive: form.isActive,
         isBest: form.isBest,
+        seoTitle: form.seoTitle || undefined,
+        seoDescription: form.seoDescription || undefined,
+        seoKeywords: form.seoKeywords || undefined,
+        ogImageUrl: form.ogImageUrl || undefined,
       });
       alert("✅ 시술 정보가 수정되었습니다!");
       navigate("/admin/equipment3");
@@ -577,6 +590,88 @@ export default function AdminEquipment3Edit() {
               <Input id="youtubeUrl" name="youtubeUrl" value={form.youtubeUrl} onChange={handleChange}
                 placeholder="https://www.youtube.com/embed/..." className="mt-1" />
               <p className="text-xs text-gray-400 mt-2">💡 YouTube URL 형식: https://www.youtube.com/embed/VIDEO_ID</p>
+            </CardContent>
+          </Card>
+
+          {/* SEO 메타 정보 */}
+          <Card className="border-2 border-blue-100 bg-blue-50/30">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <span>검색엔진 최적화 (SEO)</span>
+                <span className="text-xs font-normal text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">네이버 · 구글 최적화</span>
+              </CardTitle>
+              <p className="text-sm text-gray-500 mt-1">입력하지 않으면 시술명과 설명으로 자동 생성됩니다. 직접 입력 시 검색 결과에 더 정확한 정보가 표시됩니다.</p>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div>
+                <Label htmlFor="seoTitle" className="font-semibold">
+                  페이지 타이틀
+                  <span className="ml-2 text-xs font-normal text-gray-400">권장 60자 이내 · 미입력 시: “시술명 | 부산 서면 스타피부과” 자동 생성</span>
+                </Label>
+                <Input
+                  id="seoTitle" name="seoTitle" value={form.seoTitle} onChange={handleChange}
+                  placeholder="예: 울쎄라피 프라임 | 부산 서면 스타피부과"
+                  maxLength={120}
+                  className="mt-1"
+                />
+                <div className="flex justify-between mt-1">
+                  <p className="text-xs text-gray-400">구글 검색 결과에 표시되는 제목입니다. 네이버는 30자 이내 권장.</p>
+                  <span className={`text-xs ${form.seoTitle.length > 60 ? 'text-orange-500 font-medium' : 'text-gray-400'}`}>{form.seoTitle.length}/60</span>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="seoDescription" className="font-semibold">
+                  메타 설명
+                  <span className="ml-2 text-xs font-normal text-gray-400">권장 80자 이내 (네이버 기준)</span>
+                </Label>
+                <Textarea
+                  id="seoDescription" name="seoDescription" value={form.seoDescription} onChange={handleChange}
+                  placeholder="예: 부산 서면 스타피부과의 울쎄라피 프라임 시술 안내. 피부과 전문의가가 직접 시술합니다."
+                  rows={3}
+                  className="mt-1 text-sm"
+                />
+                <div className="flex justify-between mt-1">
+                  <p className="text-xs text-gray-400">검색 결과 스니펫에 표시됩니다. 사용자의 클릭율에 직접 영향을 줍니다.</p>
+                  <span className={`text-xs ${form.seoDescription.length > 80 ? 'text-orange-500 font-medium' : 'text-gray-400'}`}>{form.seoDescription.length}/80</span>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="seoKeywords" className="font-semibold">
+                  키워드
+                  <span className="ml-2 text-xs font-normal text-gray-400">쉼표로 구분, 10개 이내 권장</span>
+                </Label>
+                <Input
+                  id="seoKeywords" name="seoKeywords" value={form.seoKeywords} onChange={handleChange}
+                  placeholder="예: 울쎄라피, 리프팅, 부산피부과, 스타피부과, 서면피부과"
+                  className="mt-1"
+                />
+                <p className="text-xs text-gray-400 mt-1">네이버 검색에서 중요하게 작용합니다. 시술명, 지역명, 증상 등을 포함하세요.</p>
+              </div>
+
+              <div>
+                <Label htmlFor="ogImageUrl" className="font-semibold">
+                  SNS 공유 이미지 URL (OG Image)
+                  <span className="ml-2 text-xs font-normal text-gray-400">카카오톡/마레이커톡 공유 시 노출 이미지 · 미입력 시 대표 이미지 사용</span>
+                </Label>
+                <Input
+                  id="ogImageUrl" name="ogImageUrl" value={form.ogImageUrl} onChange={handleChange}
+                  placeholder="https://... (미입력 시 대표 이미지 자동 사용)"
+                  className="mt-1"
+                />
+                {form.ogImageUrl && (
+                  <img src={form.ogImageUrl} alt="OG 이미지 미리보기" className="mt-2 h-24 rounded-lg object-cover border" />
+                )}
+              </div>
+
+              {/* 검색 결과 예시 미리보기 */}
+              <div className="bg-white border rounded-xl p-4 space-y-1">
+                <p className="text-xs font-semibold text-gray-500 mb-2">Google 검색 결과 예시</p>
+                <p className="text-blue-700 font-medium text-sm truncate">{form.seoTitle || `${form.name || '시술명'} | 부산 서면 스타피부과`}</p>
+                <p className="text-green-700 text-xs">https://스타피부과.com/equipment3/{form.slug || 'slug'}</p>
+                <p className="text-gray-600 text-xs line-clamp-2">{form.seoDescription || `부산 서면 스타피부과의 ${form.name || '시술명'} 시술 안내. 피부과 전문의가가 직접 시술합니다.`}</p>
+              </div>
             </CardContent>
           </Card>
 

@@ -48,7 +48,10 @@ describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", (
 
   it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A]", () => {
     // [R19] DoctorMobileLayout에 dotNavLabel ?? "" 패턴 존재
-    expect(combinedSrc).toMatch(/dotNavLabel\s*\?\?\s*["']/);
+    // [R23] 의사 선택 탭이 상단으로 이동되면서 dr-mob-top-selector 패턴 사용
+    const hasOldPattern = /dotNavLabel\s*\?\?\s*["']/.test(combinedSrc);
+    const hasNewPattern = combinedSrc.includes("dr-mob-top-selector") || combinedSrc.includes("dr-mob-top-tab");
+    expect(hasOldPattern || hasNewPattern).toBeTruthy();
   });
 
   it("expandCredentialsLabel에 ?? fallback이 없어야 한다", () => {
@@ -60,7 +63,10 @@ describe("[D] DoctorsSection aria-label fallback 제거 [R11-A 업데이트]", (
   });
 
   it("dotNavLabel은 optional chaining + fallback 패턴을 사용해야 한다 [R11-A] (2차)", () => {
-    expect(combinedSrc).toMatch(/dotNavLabel\s*\?\?\s*["']/);
+    // [R23] 의사 선택 탭이 상단으로 이동되면서 dr-mob-top-selector 패턴 사용
+    const hasOldPattern = /dotNavLabel\s*\?\?\s*["']/.test(combinedSrc);
+    const hasNewPattern = combinedSrc.includes("dr-mob-top-selector") || combinedSrc.includes("dr-mob-top-tab");
+    expect(hasOldPattern || hasNewPattern).toBeTruthy();
   });
 
   it("expandCredentialsLabel/collapseCredentialsLabel은 직접 prop 전달로 사용해야 한다", () => {

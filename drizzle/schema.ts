@@ -351,6 +351,11 @@ export const equipment3 = mysqlTable("equipment3", {
   // 뱃지
   badge: varchar("badge", { length: 100 }).default(""),
   badgeColor: varchar("badgeColor", { length: 20 }).default("#4A6FA5"),
+  // SEO 메타 정보 (관리자 직접 입력 — 미입력 시 자동 생성값 사용)
+  seoTitle: varchar("seoTitle", { length: 120 }).default(""),        // 페이지 타이틀 (60자 이내 권장)
+  seoDescription: text("seoDescription").default(""),                // 메타 설명 (140자 이내 권장)
+  seoKeywords: varchar("seoKeywords", { length: 500 }).default(""),  // 키워드 (쉼표 구분, 10개 이내)
+  ogImageUrl: text("ogImageUrl"),                                    // OG 이미지 URL (미입력 시 imageUrl 사용)
   // 정렬·활성화
   sortOrder: int("sortOrder").notNull().default(0),
   isActive: mysqlEnum("isActive", ["0", "1"]).notNull().default("1"),

@@ -68,6 +68,11 @@ const itemFieldsSchema = z.object({
   sortOrder: z.number().optional(),
   isActive: z.enum(["0", "1"]).optional(),
   isBest: z.enum(["0", "1"]).optional(),
+  // SEO 메타 정보
+  seoTitle: z.string().max(120).optional(),
+  seoDescription: z.string().optional(),
+  seoKeywords: z.string().max(500).optional(),
+  ogImageUrl: z.string().optional(),
 });
 
 export const equipment3Router = router({
@@ -152,6 +157,10 @@ export const equipment3Router = router({
         sortOrder: input.sortOrder ?? 0,
         isActive: input.isActive ?? "1",
         isBest: input.isBest ?? "0",
+        seoTitle: input.seoTitle ?? "",
+        seoDescription: input.seoDescription ?? "",
+        seoKeywords: input.seoKeywords ?? "",
+        ogImageUrl: input.ogImageUrl ?? null,
       });
       return { success: true, id };
     }),

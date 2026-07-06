@@ -83,9 +83,9 @@ describe("validateReservationDate", () => {
   });
 
   it("일요일 날짜는 거부한다", () => {
-    // 2026-07-05 KST 12:00 사용: UTC에서 getDay()=0 (일요일) — 미래 날짜
+    // 2026-07-12 KST 12:00 사용: UTC에서 getDay()=0 (일요일) — 미래 날짜
     // KST 자정(00:00)은 UTC 토요일 15:00이라 getDay()=6이 되므로 정오 사용
-    const sunday = new Date("2026-07-05T12:00:00+09:00").getTime();
+    const sunday = new Date("2026-07-12T12:00:00+09:00").getTime();
     expect(() => validateReservationDate(sunday)).toThrow("일요일은 예약이 불가");
   });
 
@@ -99,7 +99,7 @@ describe("validateReservationDate", () => {
   });
 
   it("일요일 날짜는 DomainError(RESERVATION_DATE_INVALID)를 던진다", () => {
-    const sunday = new Date("2026-07-05T12:00:00+09:00").getTime();
+    const sunday = new Date("2026-07-12T12:00:00+09:00").getTime();
     let caught: unknown;
     try { validateReservationDate(sunday); } catch (e) { caught = e; }
     expect(caught).toBeInstanceOf(DomainError);

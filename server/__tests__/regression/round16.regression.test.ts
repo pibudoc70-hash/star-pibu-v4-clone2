@@ -186,12 +186,11 @@ describe("D. EquipmentTreatmentCard: CSS custom property 기반 스타일", () =
     expect(cardSrc).not.toMatch(/style=\{\{[^}]*background:\s*imgBg/);
   });
 
-  it("D-5: 카드 이미지 높이에 h-48 Tailwind 클래스가 사용되어야 한다", () => {
-    // [R20-P1-5] h-48 클래스는 TreatmentCardMedia.tsx로 이동됨
+  it("D-5: 카드 이미지 비율이 aspect-ratio 방식으로 제어되어야 한다", () => {
+    // [R20-P1-5] 모바일 이미지 잡힌 버그 수정: h-48 고정 높이 제거, aspect-ratio 16/9 단독 적용
     const mediaSrc = readClient("components/treatments/TreatmentCardMedia.tsx");
-    const hasH48InCard = cardSrc.includes("h-48");
-    const hasH48InMedia = mediaSrc.includes("h-48");
-    expect(hasH48InCard || hasH48InMedia).toBe(true);
+    const hasAspectRatio = mediaSrc.includes("aspect-ratio") || mediaSrc.includes("16/9") || mediaSrc.includes("16:9");
+    expect(hasAspectRatio).toBe(true);
   });
 });
 

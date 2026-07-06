@@ -204,6 +204,13 @@
       "when": 1782984791988,
       "tag": "0028_jazzy_inhumans",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "5",
+      "when": 1783350094394,
+      "tag": "0029_freezing_legion",
+      "breakpoints": true
     }
   ]
 }

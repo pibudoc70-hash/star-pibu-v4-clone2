@@ -146,6 +146,46 @@ export default function AdminEquipment3New() {
 
   const createMutation = trpc.equipment3.create.useMutation();
   const uploadMutation = trpc.equipment3.uploadImage.useMutation();
+  const autoGenerateSeoMutation = trpc.equipment3.autoGenerateSeo.useMutation();
+  const [generatingSeo, setGeneratingSeo] = useState(false);
+  const [seoDone, setSeoDone] = useState(false);
+
+  /** SEO 메타 정보 자동생성 (LLM) */
+  async function handleAutoGenerateSeo() {
+    if (!form.name.trim()) {
+      alert("시술명을 먼저 입력해주세요.");
+      return;
+    }
+    setGeneratingSeo(true);
+    setSeoDone(false);
+    try {
+      const result = await autoGenerateSeoMutation.mutateAsync({
+        name: form.name,
+        nameEn: form.nameEn,
+        category: form.category,
+        desc: form.desc,
+        detail: form.detail,
+        effect: form.effect,
+        caution: form.caution,
+        sessions: form.sessions,
+        time: form.time,
+        recovery: form.recovery,
+      });
+      setForm((prev) => ({
+        ...prev,
+        seoTitle: result.seoTitle || prev.seoTitle,
+        seoDescription: result.seoDescription || prev.seoDescription,
+        seoKeywords: result.seoKeywords || prev.seoKeywords,
+      }));
+      setSeoDone(true);
+      setTimeout(() => setSeoDone(false), 4000);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "알 수 없는 오류";
+      alert(`❌ SEO 자동생성 실패: ${msg}`);
+    } finally {
+      setGeneratingSeo(false);
+    }
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
@@ -450,11 +490,34 @@ export default function AdminEquipment3New() {
           {/* SEO 메타 정보 */}
           <Card className="border-2 border-blue-100 bg-blue-50/30">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <span>검색엔진 최적화 (SEO)</span>
-                <span className="text-xs font-normal text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">네이버 · 구글 최적화</span>
-              </CardTitle>
-              <p className="text-sm text-gray-500 mt-1">입력하지 않으면 시술명과 설명으로 자동 생성됩니다. 직접 입력 시 검색 결과에 더 정확한 정보가 표시됩니다.</p>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <span>검색엔진 최적화 (SEO)</span>
+                    <span className="text-xs font-normal text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">네이버 · 구글 최적화</span>
+                  </CardTitle>
+                  <p className="text-sm text-gray-500 mt-1">입력하지 않으면 시술명과 설명으로 자동 생성됩니다. 직접 입력 시 검색 결과에 더 정확한 정보가 표시됩니다.</p>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAutoGenerateSeo}
+                  disabled={generatingSeo}
+                  className="shrink-0 border-blue-300 text-blue-700 hover:bg-blue-50 gap-1.5"
+                >
+                  {generatingSeo ? (
+                    <>
+                      <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                      생성 중...
+                    </>
+                  ) : seoDone ? (
+                    <>✅ 생성 완료</>
+                  ) : (
+                    <>✨ AI 자동생성</>
+                  )}
+                </Button>
+              </div>
             </CardHeader>
             <CardContent className="space-y-5">
               <div>

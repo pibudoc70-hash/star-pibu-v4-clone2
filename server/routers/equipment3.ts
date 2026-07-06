@@ -277,6 +277,110 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       return { translations: parsed };
     }),
 
+  // ── 관리자: SEO 자동생성 (LLM) ─────────────────────────────────────────────────────
+  autoGenerateSeo: adminProcedure
+    .input(
+      z.object({
+        name: z.string().optional(),
+        nameEn: z.string().optional(),
+        category: z.string().optional(),
+        desc: z.string().optional(),
+        detail: z.string().optional(),
+        effect: z.string().optional(),
+        caution: z.string().optional(),
+        sessions: z.string().optional(),
+        time: z.string().optional(),
+        recovery: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const name = input.name?.trim() || "";
+      const nameEn = input.nameEn?.trim() || "";
+      const category = input.category?.trim() || "";
+      const desc = input.desc?.trim() || "";
+      const detail = input.detail?.trim() || "";
+      const effect = input.effect?.trim() || "";
+      const caution = input.caution?.trim() || "";
+      const sessions = input.sessions?.trim() || "";
+      const time = input.time?.trim() || "";
+      const recovery = input.recovery?.trim() || "";
+
+      if (!name) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "시술명을 먼저 입력해주세요." });
+      }
+
+      const prompt = `당신은 부산 서면 스타피부과의 검색엔진 전문가입니다.
+다음 시술 정보를 바탕으로 네이버/구글 검색 최적화(SEO)를 위한 메타 정보를 한국어로 생성해주세요.
+
+시술 정보:
+- 시술명(한): ${name}
+- 시술명(영): ${nameEn}
+- 카테고리: ${category}
+- 시술 설명: ${desc}
+- 시술 상세: ${detail}
+- 기대 효과: ${effect}
+- 주의사항: ${caution}
+- 권장 횟수: ${sessions}
+- 시술 시간: ${time}
+- 회복 기간: ${recovery}
+
+다음 JSON 형식으로만 응답하세요 (마크다운, 설명 미포함):
+{
+  "seoTitle": "네이버/구글 검색 최적화 타이틀 (30-60자, 시술명+피부과+지역명 포함)",
+  "seoDescription": "네이버 검색 기준 메타 설명문 (80-140자, 핵심 키워드와 혼신 문구 포함, 자연스러운 문장체)",
+  "seoKeywords": "주요 키워드 8-10개 콤마 구분 (시술명, 지역명+피부과, 증상/효과 키워드 포함)"
+}
+
+작성 규칙:
+- seoTitle: "[시술명] | 부산 서면 스타피부과" 형식 권장
+- seoDescription: 시술 효과와 피부과 전문의 직접 시술 강조
+- seoKeywords: 시술명, 부산피부과, 서면피부과, 스타피부과 등 지역 키워드 포함
+- 의학 브랜드명(울써라피, 써마지 FLX 등)은 영문 원어 유지`;
+
+      const response = await invokeLLM({
+        messages: [
+          { role: "system", content: "You are a Korean SEO specialist for a dermatology clinic. Respond with valid JSON only, no markdown, no explanation." },
+          { role: "user", content: prompt },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "seo_meta",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                seoTitle: { type: "string", description: "SEO title (30-60 chars)" },
+                seoDescription: { type: "string", description: "Meta description (80-140 chars)" },
+                seoKeywords: { type: "string", description: "Comma-separated keywords (8-10)" },
+              },
+              required: ["seoTitle", "seoDescription", "seoKeywords"],
+              additionalProperties: false,
+            },
+          },
+        },
+      });
+
+      const rawContent = response.choices?.[0]?.message?.content;
+      if (!rawContent) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "SEO 생성 응답이 없습니다." });
+
+      let content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
+      content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+
+      let parsed: { seoTitle: string; seoDescription: string; seoKeywords: string };
+      try {
+        parsed = JSON.parse(content);
+      } catch {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "SEO JSON 파싱 실패: " + content.slice(0, 200) });
+      }
+
+      return {
+        seoTitle: parsed.seoTitle || "",
+        seoDescription: parsed.seoDescription || "",
+        seoKeywords: parsed.seoKeywords || "",
+      };
+    }),
+
   // ── 관리자: 이미지 업로드 ─────────────────────────────────────────────────────
   uploadImage: adminProcedure
     .input(

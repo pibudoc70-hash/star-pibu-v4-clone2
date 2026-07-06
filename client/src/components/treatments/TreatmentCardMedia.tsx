@@ -29,7 +29,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
 
   return (
     <div
-      className="relative overflow-hidden bg-[#f6efe0] w-full h-48"
+      className="relative overflow-hidden bg-[#f6efe0] w-full"
       style={{ aspectRatio: "16/9" }}
     >
       {showBgOverlay ? (

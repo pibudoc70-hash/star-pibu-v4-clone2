@@ -508,10 +508,10 @@ export default function Home() {
               {/* PC: 768px 이상 */}
               <source
                 media="(min-width: 768px)"
-                srcSet="/manus-storage/regen-medicine-banner_b1918d74.png"
+                srcSet="/manus-storage/regen-medicine-banner-pc2_e6271aa5.png"
               />
               <img
-                src="/manus-storage/regen-medicine-banner_b1918d74.png"
+                src="/manus-storage/regen-medicine-banner-pc2_e6271aa5.png"
                 alt="보건복지부 지정 첨단재생의료 실시기관 — 스타피부과는 보건복지부로부터 첨단재생의료 실시기관에 지정됐습니다"
                 className="w-full h-auto block"
                 loading="eager"

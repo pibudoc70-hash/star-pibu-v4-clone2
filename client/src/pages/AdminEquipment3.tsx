@@ -49,6 +49,7 @@ type Item = {
   badge?: string | null;
   badgeColor?: string | null;
   isBest?: string | number | null;
+  isNew?: string | number | null;
   isActive: string;
   sortOrder: number;
 };
@@ -133,6 +134,11 @@ function SortableItem({
           {String(item.isBest) === "1" && (
             <Badge variant="best" className="text-xs">
               ★ Best
+            </Badge>
+          )}
+          {String(item.isNew) === "1" && (
+            <Badge variant="new" className="text-xs">
+              ✨ 신규
             </Badge>
           )}
           <Badge variant={item.isActive === "1" ? "default" : "secondary"}>

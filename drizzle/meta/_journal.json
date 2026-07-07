@@ -211,6 +211,13 @@
       "when": 1783350094394,
       "tag": "0029_freezing_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "5",
+      "when": 1783415405139,
+      "tag": "0030_sleepy_shocker",
+      "breakpoints": true
     }
   ]
 }

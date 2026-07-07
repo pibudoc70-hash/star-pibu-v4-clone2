@@ -154,7 +154,7 @@ function Equipment3Card({
             className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
           />
         ) : null}
-        {/* 뉵지 */}
+        {/* 답지 (badge 필드) */}
         {item.badge && (
           <span
             className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
@@ -163,6 +163,19 @@ function Equipment3Card({
             {item.badge}
           </span>
         )}
+        {/* isBest / isNew 시스템 뱃지 */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1 z-20">
+          {String(item.isBest) === "1" && (
+            <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ backgroundColor: "#d1ab67" }}>
+              ★ BEST
+            </span>
+          )}
+          {String(item.isNew) === "1" && (
+            <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ backgroundColor: "#2d9e6b" }}>
+              ✨ 신규
+            </span>
+          )}
+        </div>
         {/* 검색 결과에서 카테고리 태그 표시 */}
         {showCategory && catLabel && (
           <span

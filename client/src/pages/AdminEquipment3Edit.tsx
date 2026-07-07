@@ -83,7 +83,7 @@ type FormData = {
   time: string; timeEn: string; timeJa: string; timeZh: string;
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
-  youtubeUrl: string; imageUrl: string; bgImageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1";
+  youtubeUrl: string; imageUrl: string; bgImageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1"; isNew: "0" | "1";
   // SEO
   seoTitle: string;
   seoDescription: string;
@@ -146,6 +146,7 @@ export default function AdminEquipment3Edit() {
       images: Array.isArray(images) ? images : [],
       isActive: (item.isActive ?? "1") as "0" | "1",
       isBest: (item.isBest ?? "0") as "0" | "1",
+      isNew: (item.isNew ?? "0") as "0" | "1",
       seoTitle: item.seoTitle ?? "",
       seoDescription: item.seoDescription ?? "",
       seoKeywords: item.seoKeywords ?? "",
@@ -358,6 +359,7 @@ export default function AdminEquipment3Edit() {
         images: JSON.stringify(form.images),
         isActive: form.isActive,
         isBest: form.isBest,
+        isNew: form.isNew,
         seoTitle: form.seoTitle || undefined,
         seoDescription: form.seoDescription || undefined,
         seoKeywords: form.seoKeywords || undefined,
@@ -502,6 +504,16 @@ export default function AdminEquipment3Edit() {
                   className="h-4 w-4 rounded border-gray-300 cursor-pointer"
                 />
                 <Label htmlFor="isBest" className="font-semibold cursor-pointer">Best 시술에 추가</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isNew"
+                  checked={form.isNew === "1"}
+                  onChange={(e) => setForm((prev) => prev ? { ...prev, isNew: e.target.checked ? "1" : "0" } : prev)}
+                  className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+                />
+                <Label htmlFor="isNew" className="font-semibold cursor-pointer">New 시술에 추가</Label>
               </div>
             </CardContent>
           </Card>

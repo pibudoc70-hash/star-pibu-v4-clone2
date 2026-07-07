@@ -25,6 +25,8 @@ const badgeVariants = cva(
           + " bg-transparent [a&]:hover:bg-[var(--color-gold-primary)]/10",
         best:
           "border-transparent bg-[#d1ab67] text-white [a&]:hover:opacity-90",
+        new:
+          "border-transparent bg-[#2d9e6b] text-white [a&]:hover:opacity-90",
       },
     },
     defaultVariants: {

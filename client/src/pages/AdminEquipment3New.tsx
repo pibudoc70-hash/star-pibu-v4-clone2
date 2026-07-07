@@ -47,6 +47,7 @@ type FormData = {
   imageUrl: string;
   bgImageUrl: string;
   isBest: boolean;
+  isNew: boolean;
   // SEO
   seoTitle: string;
   seoDescription: string;
@@ -65,7 +66,7 @@ const INITIAL: FormData = {
   time: "", timeEn: "", timeJa: "", timeZh: "",
   recovery: "", recoveryEn: "", recoveryJa: "", recoveryZh: "",
   slug: "", badge: "", badgeColor: "#4A6FA5", sortOrder: "0",
-  youtubeUrl: "", imageUrl: "", bgImageUrl: "", isBest: false,
+  youtubeUrl: "", imageUrl: "", bgImageUrl: "", isBest: false, isNew: false,
   seoTitle: "", seoDescription: "", seoKeywords: "", ogImageUrl: "",
 };
 
@@ -270,6 +271,7 @@ export default function AdminEquipment3New() {
         bgImageUrl: form.bgImageUrl || undefined,
         isActive: "1",
         isBest: form.isBest ? "1" : "0",
+        isNew: form.isNew ? "1" : "0",
         seoTitle: form.seoTitle || undefined,
         seoDescription: form.seoDescription || undefined,
         seoKeywords: form.seoKeywords || undefined,
@@ -373,6 +375,16 @@ export default function AdminEquipment3New() {
                   className="h-4 w-4 rounded border-gray-300 cursor-pointer"
                 />
                 <Label htmlFor="isBest" className="font-semibold cursor-pointer">Best 시술에 추가</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="isNew"
+                  checked={form.isNew}
+                  onChange={(e) => setForm((prev) => ({ ...prev, isNew: e.target.checked }))}
+                  className="h-4 w-4 rounded border-gray-300 cursor-pointer"
+                />
+                <Label htmlFor="isNew" className="font-semibold cursor-pointer">New 시술에 추가</Label>
               </div>
             </CardContent>
           </Card>

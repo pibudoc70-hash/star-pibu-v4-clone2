@@ -3607,3 +3607,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] .mobile-menu-cta-secondary 네이버 그린(#03C75A) 확인 + 박스 섀도우 + active 상태
 - [x] 구 레거시 라이트 테마 mobile-menu 블록 제거
 - [x] TypeScript 오류 0건, 빌드 성공
+
+## isNew(신규) 뱃지 기능 추가 (2026-07-07)
+- [x] DB 스키마 equipment3 테이블에 isNew 컬럼 추가 (mysqlEnum "0"/"1", default "0")
+- [x] drizzle-kit generate → webdev_execute_sql 마이그레이션 적용
+- [x] tRPC 라우터 itemFieldsSchema에 isNew: z.enum(["0","1"]).optional() 추가
+- [x] AdminEquipment3New.tsx: isNew boolean 필드 + "New 시술에 추가" 체크박스 추가
+- [x] AdminEquipment3Edit.tsx: isNew "0"|"1" 필드 + "New 시술에 추가" 체크박스 추가
+- [x] AdminEquipment3.tsx: 목록에서 isNew === "1" 시 "✨ 신규" 초록 뱃지 표시
+- [x] Badge 컴포넌트에 new variant 추가 (bg-[#2d9e6b] 초록색)
+- [x] Equipment3.tsx Equipment3Card: isBest/isNew 시스템 뱃지 이미지 우상단에 표시
+- [x] TypeScript 오류 0건, 1419 tests 전체 통과

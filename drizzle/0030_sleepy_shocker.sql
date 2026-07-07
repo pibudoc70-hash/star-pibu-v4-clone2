@@ -1,0 +1,1 @@
+ALTER TABLE `equipment3` ADD `isNew` enum('0','1') DEFAULT '0' NOT NULL;

@@ -68,6 +68,7 @@ const itemFieldsSchema = z.object({
   sortOrder: z.number().optional(),
   isActive: z.enum(["0", "1"]).optional(),
   isBest: z.enum(["0", "1"]).optional(),
+  isNew: z.enum(["0", "1"]).optional(),
   // SEO 메타 정보
   seoTitle: z.string().max(120).optional(),
   seoDescription: z.string().optional(),

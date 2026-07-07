@@ -495,7 +495,7 @@ export default function Home() {
           href="https://star-pibu.com/notice/90001"
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full"
+          className="block w-[70%] mx-auto"
           aria-label="보건복지부 지정 첨단재생의료 실시기관 공지 보기"
         >
           <img

@@ -491,12 +491,12 @@ export default function Home() {
         <MobileBottomCTA />
 
         {/* 1-B. 첨단재생의료 실시기관 배너 — SPECIAL EVENT 위 */}
-        <div className="section-bg-cream py-6 md:py-8">
+        <div className="section-bg-cream py-6 md:py-8 flex justify-center px-4 md:px-0">
           <a
             href="https://star-pibu.com/notice/90001"
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-[70%] mx-auto rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.30)]"
+            className="block w-full max-w-[92%] md:w-[70%] md:max-w-none mx-auto rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.30)]"
             aria-label="보건복지부 지정 첨단재생의료 실시기관 공지 보기"
           >
             <picture>

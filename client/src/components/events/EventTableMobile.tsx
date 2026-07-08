@@ -181,8 +181,8 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
             </div>
           </div>
 
-          {/* CTA 버튼 */}
-          <div className="flex gap-3 pt-2 pb-2">
+          {/* CTA 버튼 — 모바일 하단 퀘스타 바(56px) + safe-area 만큼 하단 여백 */}
+          <div className="flex gap-3 pt-2" style={{ paddingBottom: "calc(56px + env(safe-area-inset-bottom, 0px) + 12px)" }}>
             <a
               href={chatUrl}
               target="_blank"

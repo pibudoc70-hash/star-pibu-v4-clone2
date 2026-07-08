@@ -4,7 +4,7 @@
  * 하나의 카드 안에 모든 시술 목록을 표시
  * 각 시술 행의 "상세보기" 버튼 클릭 시 모달에서 상세 정보 표시
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronRight, X, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
@@ -27,6 +27,16 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
 
+  // 모달 열릴 때 배경 스크롤 잠금
+  useEffect(() => {
+    if (!event) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [event]);
+
   if (!event) return null;
 
   let priceRows: PriceRow[] = [];
@@ -42,8 +52,13 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ touchAction: "none" }}
     >
-      <div className="bg-white w-full rounded-t-3xl max-h-[88vh] overflow-y-auto">
+      <div
+        className="bg-white w-full rounded-t-3xl overflow-y-auto"
+        style={{ maxHeight: "88dvh", WebkitOverflowScrolling: "touch", touchAction: "pan-y" }}
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* 핸들 바 */}
         <div className="flex justify-center pt-3 pb-1">
           <div className="w-10 h-1 rounded-full bg-gray-300" />

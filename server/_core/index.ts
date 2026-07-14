@@ -13,6 +13,7 @@ import { collectKeywordTrendsHandler } from "./scheduled";
 import { initializeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
+import { securityHeadersMiddleware } from "./securityHeaders";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,6 +37,10 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  // ── 보안 헤더 미들웨어 (가장 먼저 적용) ──────────────────────────────────────
+  app.use(securityHeadersMiddleware);
+
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

@@ -158,6 +158,7 @@ export const equipment3Router = router({
         sortOrder: input.sortOrder ?? 0,
         isActive: input.isActive ?? "1",
         isBest: input.isBest ?? "0",
+        isNew: input.isNew ?? "0",
         seoTitle: input.seoTitle ?? "",
         seoDescription: input.seoDescription ?? "",
         seoKeywords: input.seoKeywords ?? "",

@@ -83,10 +83,12 @@ describe("validateReservationDate", () => {
   });
 
   it("일요일 날짜는 거부한다", () => {
-    // 2026-07-12 KST 12:00 사용: UTC에서 getDay()=0 (일요일) — 미래 날짜
-    // KST 자정(00:00)은 UTC 토요일 15:00이라 getDay()=6이 되므로 정오 사용
-    const sunday = new Date("2026-07-12T12:00:00+09:00").getTime();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-07-14T10:00:00+09:00")); // 오늘을 월요일로 고정
+    // 2026-07-19 KST 12:00 사용: UTC에서 getDay()=0 (일요일) — 미래 날짜
+    const sunday = new Date("2026-07-19T12:00:00+09:00").getTime();
     expect(() => validateReservationDate(sunday)).toThrow("일요일은 예약이 불가");
+    vi.useRealTimers();
   });
 
   it("토요일 날짜는 허용한다", () => {

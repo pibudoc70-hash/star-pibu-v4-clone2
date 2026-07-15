@@ -60,7 +60,8 @@ function buildCSP(isDev: boolean): string {
     self,
     "data:",
     "blob:",
-    "https://d2xsxph8kpxj0f.cloudfront.net",
+    // Manus 스토리지 CDN: 여러 CloudFront 서브도메인 허용
+    "https://*.cloudfront.net",
     "https://images.unsplash.com",
     "https://img.youtube.com",
     "https://i.ytimg.com",

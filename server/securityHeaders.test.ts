@@ -70,7 +70,8 @@ describe("securityHeadersMiddleware", () => {
   it("CSP에 Manus 스토리지 CDN img-src가 포함되어야 한다", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
     const csp = res._headers["Content-Security-Policy"];
-    expect(csp).toContain("https://d2xsxph8kpxj0f.cloudfront.net");
+    // CloudFront 와일드카드로 모든 서브도메인 허용 (d2xsxph8..., d36hbw14... 등)
+    expect(csp).toContain("https://*.cloudfront.net");
   });
 
   it("CSP에 analytics connect-src가 포함되어야 한다", () => {

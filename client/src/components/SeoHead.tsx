@@ -134,7 +134,7 @@ export default function SeoHead({
       <meta property="og:url" content={resolvedOgUrl} />
       {ogImage && <meta property="og:image" content={ogImage} />}
       {ogImage && ogImage.startsWith("https://") && <meta property="og:image:secure_url" content={ogImage} />}
-      {ogImage && <meta property="og:image:type" content="image/png" />}
+      {ogImage && <meta property="og:image:type" content={ogImage.endsWith('.webp') ? 'image/webp' : ogImage.endsWith('.jpg') || ogImage.endsWith('.jpeg') ? 'image/jpeg' : 'image/png'} />}
       {ogImage && <meta property="og:image:width" content="1200" />}
       {ogImage && <meta property="og:image:height" content="630" />}
       {ogImage && <meta property="og:image:alt" content={title} />}

@@ -1,5 +1,6 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 
 const EQUIPMENT_LIST = [
   { name: '울쎄라(Ultherapy)', desc: '초음파 에너지를 이용한 비침습적 리프팅 시술. FDA 승인 유일 비수술 리프팅.', category: '리프팅·탄력' },
@@ -17,6 +18,14 @@ export default function Equipment() {
 
   return (
     <MainLayout>
+      <SeoHead
+        title="부산 서면 스타피부과 | 시술·장비 안내 - 울쎄라, 써마지, 리주란, 눈밑지방 전문"
+        description="부산 서면 스타피부과의 시술 및 장비 안내입니다. 울쎄라피, 써마지 FLX, 눈밑지방재배치, 리쥬란힐러, 피코레이저 등 50종 이상의 프리미엄 레이저 시술을 보유하고 있습니다."
+        keywords="부산피부과, 울쎄라, 써마지, 리주란, 눈밑지방재배치, 피코레이저, 레이저시술, 시술안내"
+        canonical="https://star-pibu.com/equipment"
+        hreflangs={COMMON_HREFLANGS}
+        pageType="treatment"
+      />
       <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.nav.equipment}</h1>

@@ -3618,3 +3618,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Badge 컴포넌트에 new variant 추가 (bg-[#2d9e6b] 초록색)
 - [x] Equipment3.tsx Equipment3Card: isBest/isNew 시스템 뱃지 이미지 우상단에 표시
 - [x] TypeScript 오류 0건, 1419 tests 전체 통과
+
+## SEO/AEO 최적화 개선 (2026-07-15)
+- [x] index.html에 정적 LocalBusiness JSON-LD 삽입 (SPA 크롤러 대응)
+- [x] og:image:type 수정 (image/png → 실제 이미지 포맷 동적 감지)
+- [x] Equipment.tsx 공개 페이지에 SeoHead 추가
+- [x] 사이트맵 lastmod 날짜 2026-07-15로 업데이트
+- [x] WebSite 구조화 데이터에 SearchAction 추가
+- [ ] 시술 상세 페이지 MedicalProcedure 구조화 데이터 보강 (추후 개선)

@@ -115,11 +115,11 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": ["MedicalBusiness", "MedicalClinic", "LocalBusiness"],
+      "@type": ["Dermatology", "MedicalBusiness", "MedicalClinic", "LocalBusiness"],
       "@id": "https://star-pibu.com/#organization",
       "name": "부산 서면 스타피부과",
-      "alternateName": "스타피부과의원",
-      "legalName": "의료법인 스타피부과",
+      "alternateName": ["스타피부과의원", "Star Dermatologic Clinic", "スター皮膚科", "星皮肤科"],
+      "legalName": "스타피부과의원",
       "url": "https://star-pibu.com",
       "logo": {
         "@type": "ImageObject",
@@ -134,7 +134,7 @@
       "email": "starpibu@naver.com",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층",
+        "streetAddress": "서면로 74 아이온시티빌딩 4층",
         "addressLocality": "부산진구",
         "addressRegion": "부산광역시",
         "postalCode": "47280",
@@ -161,10 +161,97 @@
       ],
       "priceRange": "₩₩₩",
       "currenciesAccepted": "KRW",
-      "paymentAccepted": "Cash, Credit Card",
-      "medicalSpecialty": {
-        "@type": "MedicalSpecialty",
-        "name": "Dermatology"
+      "paymentAccepted": "현금, 신용카드, 체크카드",
+      "medicalSpecialty": [
+        { "@type": "MedicalSpecialty", "name": "Dermatology" },
+        { "@type": "MedicalSpecialty", "name": "CosmeticDermatology" }
+      ],
+      "knowsAbout": [
+        "울쎄라", "울쎄라피", "써마지 FLX", "써마지",
+        "세르프 리프팅", "눈밑지방재배치", "눈밑지방재배치 수술",
+        "리쥬란힐러", "리쥬란", "피코레이저", "피코슈어",
+        "홍조치료", "레이저토닝", "보톡스", "필러",
+        "색소치료", "여드름치료", "피부관리", "안티에이징",
+        "Ultherapy", "Thermage FLX", "HIFU lifting",
+        "lower eyelid fat repositioning", "Rejuran Healer",
+        "PicoSure laser", "rosacea treatment"
+      ],
+      "availableService": [
+        {
+          "@type": "MedicalProcedure",
+          "name": "울쎄라피 (Ultherapy)",
+          "description": "초음파 에너지를 이용한 비침습적 리프팅 시술. 피부 깊은 층(SMAS)에 작용하여 처진 피부를 당기고 콜라겐 생성을 촉진합니다.",
+          "procedureType": "https://schema.org/NoninvasiveProcedure",
+          "bodyLocation": "얼굴, 목, 데콜테"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "써마지 FLX (Thermage FLX)",
+          "description": "4세대 고주파 리프팅 시술. 피부 탄력 개선 및 윤곽 리프팅 효과. 스타피부과 조시형 원장은 써마지 공식 자문의입니다.",
+          "procedureType": "https://schema.org/NoninvasiveProcedure",
+          "bodyLocation": "얼굴, 눈가, 바디"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "눈밑지방재배치",
+          "description": "눈 아래 지방을 재배치하여 다크서클과 눈물고랑을 개선하는 수술적 시술. 20년 이상 경력의 피부과 전문의 직접 시술.",
+          "procedureType": "https://schema.org/SurgicalProcedure",
+          "bodyLocation": "눈 아래"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "리쥬란힐러 (Rejuran Healer)",
+          "description": "연어 DNA(PDRN) 성분을 피부에 주입하여 피부 재생 및 탄력을 개선하는 주사 시술.",
+          "procedureType": "https://schema.org/TherapeuticProcedure",
+          "bodyLocation": "얼굴 전체"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "피코레이저 (PicoSure)",
+          "description": "피코초 단위 레이저로 색소, 잡티, 문신을 제거하고 피부 톤을 균일하게 개선하는 레이저 시술.",
+          "procedureType": "https://schema.org/NoninvasiveProcedure",
+          "bodyLocation": "얼굴, 전신"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "세르프 리프팅",
+          "description": "실을 이용한 리프팅 시술로 즉각적인 얼굴 윤곽 개선 효과를 제공합니다.",
+          "procedureType": "https://schema.org/MinimallyInvasiveProcedure",
+          "bodyLocation": "얼굴"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "홍조 치료",
+          "description": "혈관 레이저를 이용한 홍조, 모세혈관 확장증 치료. 피부과 전문의 진단 후 맞춤 치료.",
+          "procedureType": "https://schema.org/NoninvasiveProcedure",
+          "bodyLocation": "얼굴"
+        },
+        {
+          "@type": "MedicalProcedure",
+          "name": "보톡스 / 필러",
+          "description": "주름 개선 및 볼륨 보충을 위한 주사 시술. 피부과 전문의 직접 시술로 안전하고 자연스러운 결과.",
+          "procedureType": "https://schema.org/TherapeuticProcedure",
+          "bodyLocation": "얼굴 전체"
+        }
+      ],
+      "employee": [
+        {
+          "@type": "Physician",
+          "name": "조시형",
+          "jobTitle": "피부과 전문의 원장",
+          "description": "써마지 FLX 공식 자문의, 20년 이상 피부과 전문의 경력, 눈밑지방재배치 전문",
+          "medicalSpecialty": { "@type": "MedicalSpecialty", "name": "Dermatology" }
+        }
+      ],
+      "areaServed": [
+        { "@type": "City", "name": "부산" },
+        { "@type": "AdministrativeArea", "name": "부산진구" },
+        { "@type": "AdministrativeArea", "name": "서면" }
+      ],
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "minValue": 3,
+        "description": "피부과 전문의 3인 직접 진료"
       },
       "hasMap": "https://maps.google.com/?q=35.1579,129.0597",
       "sameAs": [

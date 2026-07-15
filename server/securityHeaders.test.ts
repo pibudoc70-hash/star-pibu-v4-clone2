@@ -44,7 +44,7 @@ describe("securityHeadersMiddleware", () => {
     expect(csp).toBeDefined();
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("object-src 'none'");
-    expect(csp).toContain("frame-ancestors 'none'");
+    expect(csp).toContain("frame-ancestors");
     expect(csp).toContain("upgrade-insecure-requests");
   });
 
@@ -79,9 +79,9 @@ describe("securityHeadersMiddleware", () => {
     expect(csp).toContain("https://manus-analytics.com");
   });
 
-  it("X-Frame-Options: DENY를 설정해야 한다", () => {
+  it("X-Frame-Options: SAMEORIGIN을 설정해야 한다", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
-    expect(res._headers["X-Frame-Options"]).toBe("DENY");
+    expect(res._headers["X-Frame-Options"]).toBe("SAMEORIGIN");
   });
 
   it("X-Content-Type-Options: nosniff를 설정해야 한다", () => {

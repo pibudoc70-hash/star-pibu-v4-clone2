@@ -105,7 +105,11 @@ function buildCSP(isDev: boolean): string {
   const baseUri = self;
   const formAction = self;
   // frame-ancestors: 이 사이트가 다른 사이트에 iframe으로 삽입되는 것을 방지
-  const frameAncestors = "'none'";
+  // 개발 환경에서는 Manus 미리보기 패널(iframe 임베드)을 허용
+  // 프로덕션에서도 Manus 관리 도메인에서의 iframe 허용
+  const frameAncestors = isDev
+    ? "'self' https://*.manus.computer https://*.manus.space https://*.manus.im https://manus.im"
+    : "'self' https://*.manus.space https://*.manus.im https://manus.im";
   // upgrade-insecure-requests: HTTP 리소스를 HTTPS로 자동 업그레이드
   const upgradeInsecureRequests = "upgrade-insecure-requests";
 
@@ -143,7 +147,8 @@ export function securityHeadersMiddleware(
   res.setHeader("Content-Security-Policy", buildCSP(isDev));
 
   // X-Frame-Options: CSP frame-ancestors와 중복 설정 (구형 브라우저 호환)
-  res.setHeader("X-Frame-Options", "DENY");
+  // SAMEORIGIN: 같은 출처에서의 iframe 허용 (Manus 미리보기 패널 대응)
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
 
   // X-Content-Type-Options: MIME 스니핑 방지
   res.setHeader("X-Content-Type-Options", "nosniff");

@@ -282,15 +282,14 @@ export default function Footer() {
               {t.footer.bizInfo}
           </p>
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <a
-              href="https://www.hira.or.kr/ra/medi/getHealthCareList.do"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => handleNavClick("/non-covered")}
               className="transition-colors hover:text-white"
               style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
             >
               {t.footer.nonCovered}
-            </a>
+            </button>
             <button
               type="button"
               onClick={() => handleNavClick("/privacy")}

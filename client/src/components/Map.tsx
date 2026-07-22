@@ -151,6 +151,7 @@ function waitForMapsReady(timeoutMs = 10000): Promise<void> {
 
 interface MapViewProps {
   className?: string;
+  style?: React.CSSProperties;
   initialCenter?: google.maps.LatLngLiteral;
   initialZoom?: number;
   onMapReady?: (map: google.maps.Map) => void;
@@ -158,6 +159,7 @@ interface MapViewProps {
 
 export function MapView({
   className,
+  style,
   initialCenter = { lat: 37.7749, lng: -122.4194 },
   initialZoom = 12,
   onMapReady,
@@ -170,10 +172,12 @@ export function MapView({
     // 이미 초기화된 경우 재초기화 방지
     // 이 가드가 없으면 커포넌트 리렌더링 시 init()이 다시 호출되어
     // 기본값(initialCenter = 샌프란시스코 좌표)로 지도가 덮어쓰여지는 버그 발생
-    if (map.current) return;
+    console.log('[MapView] init called, map.current:', !!map.current, 'mapContainer.current:', !!mapContainer.current);
+    if (map.current) { console.log('[MapView] already initialized, skipping'); return; }
     try {
       await loadMapScript();
-      if (!mapContainer.current) return;
+      console.log('[MapView] script loaded, mapContainer.current:', !!mapContainer.current, 'google.maps.Map:', !!window.google?.maps?.Map);
+      if (!mapContainer.current) { console.log('[MapView] mapContainer.current is null, aborting'); return; }
       const g = window.google;
       if (!g?.maps?.Map) {
         throw new Error("google.maps.Map not available");
@@ -228,6 +232,6 @@ export function MapView({
   }
 
   return (
-    <div ref={mapContainer} className={cn("w-full h-[500px]", className)} />
+    <div ref={mapContainer} className={cn("w-full h-[500px]", className)} style={style} />
   );
 }

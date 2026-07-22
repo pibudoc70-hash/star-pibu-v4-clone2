@@ -89,6 +89,10 @@ function buildCSP(isDev: boolean): string {
     "https://www.youtube.com",
     "https://youtube.com",
     "https://challenges.cloudflare.com",
+    // Google Maps iframe embed
+    "https://maps.google.com",
+    "https://www.google.com",
+    "https://google.com",
   ].join(" ");
 
   const mediaSrc = [

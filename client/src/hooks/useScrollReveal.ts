@@ -174,8 +174,10 @@ export function useSectionReveal(staggerMs = 50) {
 
     const observer = new IntersectionObserver(
       handleIntersect,
-      // [FM-P1-8] rootMargin -40px → -50px: viewport once 트리거를 약간 더 일찍 발동
-      { threshold: 0.08, rootMargin: "0px 0px -50px 0px" }
+      // [UI개선-2026-07-22-v3] rootMargin을 양수로 변경:
+      // 음수 rootMargin은 앵커 링크로 직접 이동 시 이미 뷰포트에 있는 섹션이
+      // 트리거되지 않는 문제를 유발함. 양수 rootMargin으로 더 일찍 트리거.
+      { threshold: 0.01, rootMargin: "200px 0px 200px 0px" }
     );
 
     observer.observe(section);

@@ -3632,3 +3632,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ContactSection.tsx: shouldRenderMap 조건 완화 (rootMargin 300px로 확대, threshold 0으로 변경)
 - [x] 지도 placeholder 개선 (골드 브랜드 색상 + 로딩 스피너 추가)
 - [x] drizzle/schema.ts guestOtps 스키마 DB 동기화 (codeHash → code) - TypeScript 오류 3건 해결
+
+## 찾아오시는 길 섹션 UI 재개선 (2026-07-22 v2)
+- [x] 지도 미표시 근본 원인 분석: Google Maps JS API / iframe 방식 모두 샌드박스 환경에서 렌더링 실패
+- [x] Google Static Maps API (<img> 태그) 방식으로 전환 → 지도 정상 표시
+- [x] 지도 클릭 시 카카오맵으로 이동하는 링크 추가
+- [x] 지도 로드 실패 시 카카오맵/네이버 지도 링크 폴백 UI 추가
+- [x] 섹션 헤더 reveal-heading 제거 → 항상 표시 (opacity 0 문제 해결)
+- [x] 섹션 헤더 텍스트 색상 #1A1A1A로 강화 (배경 #F5F0EB 대비 WCAG AA 충족)
+- [x] CSP frame-src에 Google Maps 도메인 추가
+- [x] useScrollReveal rootMargin 양수로 변경 (뷰포트 진입 시 즉시 트리거)

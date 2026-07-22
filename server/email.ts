@@ -39,6 +39,29 @@ export interface EmailOptions {
   text?: string;
 }
 
+/** Escape values interpolated into HTML email templates. */
+export function escapeHtml(value: string | number): string {
+  return String(value).replace(/[&<>'"]/g, (character) => {
+    const entities: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "'": "&#39;",
+      '"': "&quot;",
+    };
+    return entities[character];
+  });
+}
+
+function getPortalUrl(path: string): string {
+  const configuredUrl = process.env.VITE_OAUTH_PORTAL_URL || "https://star-pibu.com";
+  try {
+    return new URL(path, configuredUrl).toString();
+  } catch {
+    return new URL(path, "https://star-pibu.com").toString();
+  }
+}
+
 /**
  * 이메일 발송 (no-op stub)
  *
@@ -76,6 +99,9 @@ export function getReservationConfirmationEmail(data: {
   notes?: string;
   reservationId: number;
 }): string {
+  const reservationPortalUrl = `${process.env.VITE_OAUTH_PORTAL_URL || "https://star-pibu.com"}/my-reservations`;
+  const reservationUrl = escapeHtml(getPortalUrl(reservationPortalUrl));
+
   return `
     <!DOCTYPE html>
     <html>
@@ -104,35 +130,35 @@ export function getReservationConfirmationEmail(data: {
           </div>
           
           <div class="content">
-            <p>안녕하세요, ${data.patientName}님!</p>
+            <p>안녕하세요, ${escapeHtml(data.patientName)}님!</p>
             <p>스타피부과에 예약을 신청해주셔서 감사합니다.</p>
             
             <div class="info-box">
               <h3 style="margin-top: 0;">예약 정보</h3>
               <div class="info-row">
                 <span class="label">예약 번호</span>
-                <span class="value">#${data.reservationId}</span>
+                <span class="value">#${escapeHtml(data.reservationId)}</span>
               </div>
               <div class="info-row">
                 <span class="label">시술명</span>
-                <span class="value">${data.treatmentName}</span>
+                <span class="value">${escapeHtml(data.treatmentName)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 날짜</span>
-                <span class="value">${data.preferredDate}</span>
+                <span class="value">${escapeHtml(data.preferredDate)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 시간</span>
-                <span class="value">${data.preferredTime}</span>
+                <span class="value">${escapeHtml(data.preferredTime)}</span>
               </div>
               <div class="info-row">
                 <span class="label">연락처</span>
-                <span class="value">${data.phone}</span>
+                <span class="value">${escapeHtml(data.phone)}</span>
               </div>
               ${data.notes ? `
               <div class="info-row">
                 <span class="label">추가 사항</span>
-                <span class="value">${data.notes}</span>
+                <span class="value">${escapeHtml(data.notes)}</span>
               </div>
               ` : ''}
             </div>
@@ -142,7 +168,7 @@ export function getReservationConfirmationEmail(data: {
               ✓ 예약 변경이나 취소가 필요하신 경우 051-818-2300으로 연락주세요.
             </p>
             
-            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://star-pibu.com'}/my-reservations" class="button">예약 상태 확인</a>
+            <a href="${reservationUrl}" class="button">예약 상태 확인</a>
           </div>
           
           <div class="footer">
@@ -168,11 +194,17 @@ export function getReservationStatusEmail(data: {
   adminNote?: string;
   reservationId: number;
 }): string {
-  const statusMessages: Record<string, string> = {
-    confirmed: '예약이 확정되었습니다. 예약하신 날짜와 시간에 방문해주세요.',
-    completed: '시술이 완료되었습니다. 이용해주셔서 감사합니다.',
-    cancelled: '예약이 취소되었습니다. 문의사항은 051-818-2300으로 연락주세요.',
-  };
+  const statusMessages = {
+    confirmed: "예약이 확정되었습니다. 예약하신 날짜와 시간에 방문해주세요.",
+    completed: "시술이 완료되었습니다. 이용해주셔서 감사합니다.",
+    cancelled: "예약이 취소되었습니다. 문의사항은 051-818-2300으로 연락주세요.",
+  } as const;
+  const status = Object.hasOwn(statusMessages, data.status)
+    ? (data.status as keyof typeof statusMessages)
+    : "updated";
+  const statusMessage = status === "updated"
+    ? "예약 상태가 변경되었습니다."
+    : statusMessages[status];
 
   return `
     <!DOCTYPE html>
@@ -205,38 +237,38 @@ export function getReservationStatusEmail(data: {
           </div>
           
           <div class="content">
-            <p>안녕하세요, ${data.patientName}님!</p>
+            <p>안녕하세요, ${escapeHtml(data.patientName)}님!</p>
             
-            <div class="status-badge status-${data.status}">
-              ${data.statusLabel}
+            <div class="status-badge status-${status}">
+              ${escapeHtml(data.statusLabel)}
             </div>
             
-            <p>${statusMessages[data.status] || '예약 상태가 변경되었습니다.'}</p>
+            <p>${statusMessage}</p>
             
             <div class="info-box">
               <h3 style="margin-top: 0;">예약 정보</h3>
               <div class="info-row">
                 <span class="label">예약 번호</span>
-                <span class="value">#${data.reservationId}</span>
+                <span class="value">#${escapeHtml(data.reservationId)}</span>
               </div>
               <div class="info-row">
                 <span class="label">시술명</span>
-                <span class="value">${data.treatmentName}</span>
+                <span class="value">${escapeHtml(data.treatmentName)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 날짜</span>
-                <span class="value">${data.preferredDate}</span>
+                <span class="value">${escapeHtml(data.preferredDate)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 시간</span>
-                <span class="value">${data.preferredTime}</span>
+                <span class="value">${escapeHtml(data.preferredTime)}</span>
               </div>
             </div>
             
             ${data.adminNote ? `
             <div class="info-box">
               <h3 style="margin-top: 0;">관리자 메모</h3>
-              <p>${data.adminNote}</p>
+              <p>${escapeHtml(data.adminNote)}</p>
             </div>
             ` : ''}
             
@@ -267,6 +299,9 @@ export function getAdminNotificationEmail(data: {
   notes?: string;
   reservationId: number;
 }): string {
+  const adminPortalUrl = `${process.env.VITE_OAUTH_PORTAL_URL || "https://star-pibu.com"}/admin?tab=reservations`;
+  const adminUrl = escapeHtml(getPortalUrl(adminPortalUrl));
+
   return `
     <!DOCTYPE html>
     <html>
@@ -302,39 +337,39 @@ export function getAdminNotificationEmail(data: {
               <h3 style="margin-top: 0;">예약 정보</h3>
               <div class="info-row">
                 <span class="label">예약 번호</span>
-                <span class="value">#${data.reservationId}</span>
+                <span class="value">#${escapeHtml(data.reservationId)}</span>
               </div>
               <div class="info-row">
                 <span class="label">환자명</span>
-                <span class="value">${data.patientName}</span>
+                <span class="value">${escapeHtml(data.patientName)}</span>
               </div>
               <div class="info-row">
                 <span class="label">연락처</span>
-                <span class="value">${data.phone}</span>
+                <span class="value">${escapeHtml(data.phone)}</span>
               </div>
               <div class="info-row">
                 <span class="label">시술명</span>
-                <span class="value">${data.treatmentName}</span>
+                <span class="value">${escapeHtml(data.treatmentName)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 날짜</span>
-                <span class="value">${data.preferredDate}</span>
+                <span class="value">${escapeHtml(data.preferredDate)}</span>
               </div>
               <div class="info-row">
                 <span class="label">희망 시간</span>
-                <span class="value">${data.preferredTime}</span>
+                <span class="value">${escapeHtml(data.preferredTime)}</span>
               </div>
               ${data.notes ? `
               <div class="info-row">
                 <span class="label">추가 사항</span>
-                <span class="value">${data.notes}</span>
+                <span class="value">${escapeHtml(data.notes)}</span>
               </div>
               ` : ''}
             </div>
             
             <p>관리자 대시보드에서 예약을 확인하고 상태를 변경해주세요.</p>
             
-            <a href="${process.env.VITE_OAUTH_PORTAL_URL || 'https://star-pibu.com'}/admin?tab=reservations" class="button">관리자 대시보드 이동</a>
+            <a href="${adminUrl}" class="button">관리자 대시보드 이동</a>
           </div>
         </div>
       </body>

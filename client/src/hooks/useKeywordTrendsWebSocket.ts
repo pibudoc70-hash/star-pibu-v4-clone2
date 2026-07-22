@@ -27,7 +27,7 @@ export function useKeywordTrendsWebSocket(
   isAdmin?: boolean
 ) {
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
   const reconnectDelay = 3000;
@@ -139,12 +139,15 @@ export function useKeywordTrendsWebSocket(
   }, []);
 
   useEffect(() => {
-    connect();
-
-    return () => {
+    // 관리자 대시보드 외에서는 불필요한 WebSocket 연결과 재연결을 만들지 않는다.
+    if (!isAdmin) {
       disconnect();
-    };
-  }, [connect, disconnect]);
+      return;
+    }
+
+    connect();
+    return disconnect;
+  }, [connect, disconnect, isAdmin]);
 
   return {
     isConnected: wsRef.current?.readyState === WebSocket.OPEN,

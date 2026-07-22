@@ -1,7 +1,45 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { appRouter } from "../routers";
 import type { TrpcContext } from "../_core/context";
-import type { Event } from "../../drizzle/schema";
+
+type EventRow = Record<string, unknown> & {
+  id: number;
+  title: string;
+  isActive: "0" | "1";
+  isSpecialEvent: "0" | "1";
+  targetLang: string;
+};
+
+const eventStore = vi.hoisted(() => ({
+  nextId: 1,
+  rows: [] as EventRow[],
+}));
+
+vi.mock("../db", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../db")>();
+  return {
+    ...actual,
+    getAllEvents: vi.fn(async () => eventStore.rows.filter((event) => event.isActive === "1")),
+    getSpecialEventsByLang: vi.fn(async (lang: string) =>
+      eventStore.rows.filter(
+        (event) => event.isActive === "1" && event.isSpecialEvent === "1" && event.targetLang === lang,
+      ),
+    ),
+    createEvent: vi.fn(async (data: Record<string, unknown>) => {
+      eventStore.rows.push({
+        ...data,
+        id: eventStore.nextId++,
+        title: String(data.title),
+        isActive: data.isActive === "0" ? "0" : "1",
+        isSpecialEvent: data.isSpecialEvent === "1" ? "1" : "0",
+        targetLang: String(data.targetLang ?? "ko"),
+      });
+    }),
+    deleteEvent: vi.fn(async (id: number) => {
+      eventStore.rows = eventStore.rows.filter((event) => event.id !== id);
+    }),
+  };
+});
 
 type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
 
@@ -18,231 +56,103 @@ function createAdminContext(): TrpcContext {
     lastSignedIn: new Date(),
   };
 
-  const ctx: TrpcContext = {
+  return {
     user,
-    req: {
-      protocol: "https",
-      headers: {},
-    } as TrpcContext["req"],
+    req: { protocol: "https", headers: {} } as TrpcContext["req"],
     res: {} as TrpcContext["res"],
   };
+}
 
-  return ctx;
+function eventInput(overrides: Record<string, unknown> = {}) {
+  return {
+    type: "이벤트" as const,
+    title: "테스트 특별 이벤트",
+    subtitle: "테스트",
+    desc: "테스트 설명",
+    content: "테스트 내용",
+    date: "2026년 4월 30일",
+    badge: "테스트",
+    badgeColor: "#4A6FA5",
+    accent: "#4A6FA5",
+    accentDark: "#2D4A7A",
+    accentBg: "#EEF3FA",
+    iconBg: "#E0EBF7",
+    iconType: "tag",
+    tag: "",
+    hot: "0" as const,
+    cta: "자세히 보기",
+    views: 0,
+    isFeatured: "0" as const,
+    sortOrder: 0,
+    isActive: "1" as const,
+    category: "이벤트" as const,
+    isSpecialEvent: "1" as const,
+    productName: "테스트 상품",
+    normalPrice: 100000,
+    discountPrice: 50000,
+    priceRows: [],
+    anesthesiaFee: "수면마취비 별도",
+    imageUrl: "",
+    ...overrides,
+  };
 }
 
 describe("events.special", () => {
-  // Cleanup function to remove test events
-  async function cleanupTestEvents(caller: ReturnType<typeof appRouter.createCaller>) {
-    const allEvents = await caller.events.list();
-    const testEventTitles = ["울쎼라피 프라임", "테스트 특별 이벤트", "비활성 특별 이벤트", "마취비 테스트 이벤트"];
-    for (const event of allEvents) {
-      if (testEventTitles.includes(event.title)) {
-        try {
-          await caller.events.delete({ id: event.id });
-        } catch (e) {
-          // Ignore deletion errors
-        }
-      }
-    }
-  }
-
-  afterEach(async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
-    await cleanupTestEvents(caller);
+  beforeEach(() => {
+    eventStore.nextId = 1;
+    eventStore.rows = [];
   });
 
-  it("should return empty array when no special events exist", async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
+  it("특별 이벤트가 없으면 빈 배열을 반환한다", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
+    await expect(caller.events.special()).resolves.toEqual([]);
+  });
 
-    const result = await caller.events.special();
+  it("관리자가 특별 이벤트를 생성할 수 있다", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
 
-    expect(Array.isArray(result)).toBe(true);
-  }, 10000);
-
-  it("should create a special event with isSpecialEvent=1", async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
-
-    const eventData = {
-      type: "이벤트" as const,
+    await expect(caller.events.create(eventInput({ title: "울쎼라피 프라임" }))).resolves.toEqual({ success: true });
+    expect(eventStore.rows).toHaveLength(1);
+    expect(eventStore.rows[0]).toMatchObject({
       title: "울쎼라피 프라임",
-      subtitle: "특별한 가격으로 시작하는 고급 시술",
-      desc: "울쎼라피 프라임 시술입니다.",
-      content: "상세 설명",
-      date: "2026년 4월 30일",
-      badge: "신규",
-      badgeColor: "#4A6FA5",
-      accent: "#4A6FA5",
-      accentDark: "#2D4A7A",
-      accentBg: "#EEF3FA",
-      iconBg: "#E0EBF7",
-      iconType: "tag",
-      tag: "",
-      hot: "0" as const,
-      cta: "자세히 보기",
-      views: 0,
-      isFeatured: "0" as const,
-      sortOrder: 0,
-      isActive: "1" as const,
-      category: "이벤트" as const,
-      isSpecialEvent: "1" as const,
-      productName: "울쎼라피 프라임",
-      normalPrice: 500000,
-      discountPrice: 350000,
-      priceRows: [{ label: "기본 패키지", normalPrice: 500000, discountPrice: 350000 }],
-      anesthesiaFee: "수면마취비 별도",
-      imageUrl: "",
-    };
-
-    const result = await caller.events.create(eventData);
-
-    expect(result).toEqual({ success: true });
+      isSpecialEvent: "1",
+      isActive: "1",
+      targetLang: "ko",
+    });
   });
 
-  it("should filter events by isSpecialEvent=1 and isActive=1", async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
+  it("활성화된 특별 이벤트만 조회한다", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
+    await caller.events.create(eventInput({ title: "활성 특별 이벤트" }));
+    await caller.events.create(eventInput({ title: "일반 이벤트", isSpecialEvent: "0" }));
 
-    // 먼저 특별 이벤트를 생성
-    const eventData = {
-      type: "이벤트" as const,
-      title: "테스트 특별 이벤트",
-      subtitle: "테스트",
-      desc: "테스트 설명",
-      content: "테스트 내용",
-      date: "2026년 4월 30일",
-      badge: "테스트",
-      badgeColor: "#4A6FA5",
-      accent: "#4A6FA5",
-      accentDark: "#2D4A7A",
-      accentBg: "#EEF3FA",
-      iconBg: "#E0EBF7",
-      iconType: "tag",
-      tag: "",
-      hot: "0" as const,
-      cta: "자세히 보기",
-      views: 0,
-      isFeatured: "0" as const,
-      sortOrder: 0,
-      isActive: "1" as const,
-      category: "이벤트" as const,
-      isSpecialEvent: "1" as const,
-      productName: "테스트 상품",
-      normalPrice: 100000,
-      discountPrice: 50000,
-      priceRows: [],
-      anesthesiaFee: "수면마취비 별도",
-      imageUrl: "",
-    };
-
-    await caller.events.create(eventData);
-
-    // special 쿼리 실행
     const specialEvents = await caller.events.special();
 
-    // 결과 검증
-    expect(Array.isArray(specialEvents)).toBe(true);
-    
-    // 생성된 이벤트가 포함되어 있는지 확인
-    const testEvent = specialEvents.find((e: Event) => e.title === "테스트 특별 이벤트");
-    if (testEvent) {
-      expect(testEvent.isSpecialEvent).toBe("1");
-      expect(testEvent.isActive).toBe("1");
-      expect(testEvent.anesthesiaFee).toBe("수면마취비 별도");
-    }
+    expect(specialEvents).toHaveLength(1);
+    expect(specialEvents[0]).toMatchObject({
+      title: "활성 특별 이벤트",
+      isSpecialEvent: "1",
+      isActive: "1",
+    });
   });
 
-  it("should not include inactive events in special events", async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
+  it("비활성 특별 이벤트는 조회하지 않는다", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
+    await caller.events.create(eventInput({ title: "비활성 특별 이벤트", isActive: "0" }));
 
-    const eventData = {
-      type: "이벤트" as const,
-      title: "비활성 특별 이벤트",
-      subtitle: "테스트",
-      desc: "테스트 설명",
-      content: "테스트 내용",
-      date: "2026년 4월 30일",
-      badge: "테스트",
-      badgeColor: "#4A6FA5",
-      accent: "#4A6FA5",
-      accentDark: "#2D4A7A",
-      accentBg: "#EEF3FA",
-      iconBg: "#E0EBF7",
-      iconType: "tag",
-      tag: "",
-      hot: "0" as const,
-      cta: "자세히 보기",
-      views: 0,
-      isFeatured: "0" as const,
-      sortOrder: 0,
-      isActive: "0" as const, // 비활성
-      category: "이벤트" as const,
-      isSpecialEvent: "1" as const,
-      productName: "테스트 상품",
-      normalPrice: 100000,
-      discountPrice: 50000,
-      priceRows: [],
-      anesthesiaFee: "수면마취비 별도",
-      imageUrl: "",
-    };
-
-    await caller.events.create(eventData);
-
-    // special 쿼리 실행
-    const specialEvents = await caller.events.special();
-
-    // 비활성 이벤트는 포함되지 않아야 함
-    const inactiveEvent = specialEvents.find((e: Event) => e.title === "비활성 특별 이벤트");
-    expect(inactiveEvent).toBeUndefined();
+    await expect(caller.events.special()).resolves.toEqual([]);
   });
 
-  it("should include anesthesiaFee in special event response", async () => {
-    const ctx = createAdminContext();
-    const caller = appRouter.createCaller(ctx);
+  it("특별 이벤트 응답에 마취비 정보를 포함한다", async () => {
+    const caller = appRouter.createCaller(createAdminContext());
+    await caller.events.create(
+      eventInput({
+        title: "마취비 테스트 이벤트",
+        anesthesiaFee: "수면마취비 별도 (별도 상담 필요)",
+      }),
+    );
 
-    const eventData = {
-      type: "이벤트" as const,
-      title: "마취비 테스트 이벤트",
-      subtitle: "테스트",
-      desc: "테스트 설명",
-      content: "테스트 내용",
-      date: "2026년 4월 30일",
-      badge: "테스트",
-      badgeColor: "#4A6FA5",
-      accent: "#4A6FA5",
-      accentDark: "#2D4A7A",
-      accentBg: "#EEF3FA",
-      iconBg: "#E0EBF7",
-      iconType: "tag",
-      tag: "",
-      hot: "0" as const,
-      cta: "자세히 보기",
-      views: 0,
-      isFeatured: "0" as const,
-      sortOrder: 0,
-      isActive: "1" as const,
-      category: "이벤트" as const,
-      isSpecialEvent: "1" as const,
-      productName: "마취비 테스트 상품",
-      normalPrice: 100000,
-      discountPrice: 50000,
-      priceRows: [],
-      anesthesiaFee: "수면마취비 별도 (별도 상담 필요)",
-      imageUrl: "",
-    };
-
-    await caller.events.create(eventData);
-
-    // special 쿼리 실행
-    const specialEvents = await caller.events.special();
-
-    // 마취비 정보가 포함되어 있는지 확인
-    const testEvent = specialEvents.find((e: Event) => e.title === "마취비 테스트 이벤트");
-    if (testEvent) {
-      expect(testEvent.anesthesiaFee).toBe("수면마취비 별도 (별도 상담 필요)");
-    }
+    const [event] = await caller.events.special();
+    expect(event).toMatchObject({ anesthesiaFee: "수면마취비 별도 (별도 상담 필요)" });
   });
 });

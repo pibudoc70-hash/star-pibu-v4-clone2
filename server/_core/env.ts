@@ -19,12 +19,9 @@ export const ENV = {
 /** Reject insecure production boot configuration instead of signing JWTs with an empty key. */
 export function assertProductionEnvironment() {
   if (!ENV.isProduction) return;
-  const required = ["JWT_SECRET", "DATABASE_URL", "APP_ORIGIN"];
+  const required = ["JWT_SECRET", "DATABASE_URL"];
   const missing = required.filter((key) => !process.env[key]);
   if (missing.length) throw new Error(`Missing required production environment variables: ${missing.join(", ")}`);
-  if (!ENV.naverClientId && !ENV.kakaoRestApiKey) {
-    throw new Error("At least one social login provider (Naver or Kakao) must be configured in production");
-  }
   if (ENV.naverClientId && (!ENV.naverClientSecret || !ENV.naverRedirectUri)) {
     throw new Error("NAVER_CLIENT_SECRET and NAVER_REDIRECT_URI are required when Naver login is enabled");
   }

@@ -71,7 +71,7 @@ interface FormErrors {
 
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
 export default function ConsultationFormSection() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const c = t.consultation;
 
   const [form, setForm] = useState<FormState>({
@@ -85,6 +85,7 @@ export default function ConsultationFormSection() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [turnstileReady, setTurnstileReady] = useState(false);
   const [concernOpen, setConcernOpen] = useState(false);
 
   const turnstileRef = useRef<HTMLDivElement>(null);
@@ -103,12 +104,15 @@ export default function ConsultationFormSection() {
         sitekey: siteKey,
         callback: (token: string) => {
           setTurnstileToken(token);
+          setTurnstileReady(true);
         },
         "error-callback": () => {
           setTurnstileToken("");
+          setTurnstileReady(false);
         },
         "expired-callback": () => {
           setTurnstileToken("");
+          setTurnstileReady(false);
         },
         theme: "light",
         size: "normal",
@@ -166,6 +170,7 @@ export default function ConsultationFormSection() {
         if (widgetIdRef.current && window.turnstile) {
           window.turnstile.reset(widgetIdRef.current);
           setTurnstileToken("");
+          setTurnstileReady(false);
         }
       } else {
         setErrors({ general: msg });
@@ -179,7 +184,7 @@ export default function ConsultationFormSection() {
     if (!form.name.trim()) newErrors.name = c.errorRequired;
     if (!form.phone.trim()) {
       newErrors.phone = c.errorRequired;
-    } else if (!/^[0-9\s+()-]{9,20}$/.test(form.phone)) {
+    } else if (!/^[0-9\-\s\+\(\)]{9,20}$/.test(form.phone)) {
       newErrors.phone = c.errorPhone;
     }
     if (!form.concern) newErrors.concern = c.errorRequired;
@@ -212,10 +217,10 @@ export default function ConsultationFormSection() {
         privacyAgreed: form.privacyAgreed,
         turnstileToken: token,
         website: form.website, // honeypot
-        lang,
+        lang: "ko",
       });
     },
-    [form, lang, turnstileToken, validate, submitMutation]
+    [form, turnstileToken, validate, submitMutation]
   );
 
   // ── 폼 리셋 ──────────────────────────────────────────────────────────────
@@ -224,6 +229,7 @@ export default function ConsultationFormSection() {
     setErrors({});
     setSubmitted(false);
     setTurnstileToken("");
+    setTurnstileReady(false);
     if (widgetIdRef.current && window.turnstile) {
       window.turnstile.reset(widgetIdRef.current);
     }
@@ -376,7 +382,6 @@ export default function ConsultationFormSection() {
                   role="combobox"
                   aria-expanded={concernOpen}
                   aria-haspopup="listbox"
-                  aria-controls="cf-concern-options"
                   aria-invalid={!!errors.concern}
                   aria-describedby={errors.concern ? "cf-concern-error" : undefined}
                   onClick={() => setConcernOpen((p) => !p)}
@@ -391,7 +396,6 @@ export default function ConsultationFormSection() {
                 </button>
                 {concernOpen && (
                   <ul
-                    id="cf-concern-options"
                     role="listbox"
                     aria-label={c.concernLabel}
                     className="consultation-select-list"
@@ -401,18 +405,14 @@ export default function ConsultationFormSection() {
                         key={item}
                         role="option"
                         aria-selected={form.concern === item}
+                        onClick={() => {
+                          setForm((p) => ({ ...p, concern: item }));
+                          setConcernOpen(false);
+                          if (errors.concern) setErrors((p) => ({ ...p, concern: undefined }));
+                        }}
+                        className={`consultation-select-item${form.concern === item ? " consultation-select-item--selected" : ""}`}
                       >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setForm((p) => ({ ...p, concern: item }));
-                            setConcernOpen(false);
-                            if (errors.concern) setErrors((p) => ({ ...p, concern: undefined }));
-                          }}
-                          className={`consultation-select-item${form.concern === item ? " consultation-select-item--selected" : ""}`}
-                        >
-                          {item}
-                        </button>
+                        {item}
                       </li>
                     ))}
                   </ul>

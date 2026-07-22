@@ -1,14 +1,4 @@
-import { describe, it, expect, afterEach, vi } from "vitest";
-
-// 공개 팝업 조회는 외부 DB가 아니라 repository 계약만 확인하도록 빈 fixture를 사용한다.
-vi.mock("../db", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("../db")>();
-  return {
-    ...actual,
-    getActivePopups: vi.fn().mockResolvedValue([]),
-  };
-});
-
+import { describe, it, expect, afterEach } from "vitest";
 import { appRouter } from "../routers";
 import type { TrpcContext } from "../_core/context";
 

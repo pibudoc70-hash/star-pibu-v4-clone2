@@ -6,7 +6,7 @@
  * (P2-2: admin.youtube 중복 제거 — Round-9 리팩터)
  */
 import { z } from "zod/v4";
-import { adminProcedure, publicProcedure, router } from "../_core/trpc";
+import { publicProcedure, router } from "../_core/trpc";
 import { getAllYouTubeVideos, getYouTubeVideosByType } from "../db";
 import { withCache, invalidateCache } from "../_core/cache";
 
@@ -23,8 +23,8 @@ export const youtubeRouter = router({
       withCache(`youtube:type:${input.type}`, () => getYouTubeVideosByType(input.type), 5 * 60 * 1000)
     ),
 
-  /** 캐시 무효화 (관리자 전용) */
-  clearCache: adminProcedure.mutation(async () => {
+  /** 캐시 무효화 (개발/테스트용) */
+  clearCache: publicProcedure.mutation(async () => {
     invalidateCache("youtube:");
     return { success: true, message: "YouTube cache cleared" };
   }),

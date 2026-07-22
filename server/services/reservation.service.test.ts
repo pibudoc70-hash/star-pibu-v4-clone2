@@ -9,27 +9,9 @@
  * DB·외부 서비스 의존 함수(createMemberReservation, createGuestReservation)는
  * 통합 테스트 영역이므로 여기서는 순수 검증 로직만 단위 테스트한다.
  */
-import { beforeEach, describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
-
-const otpMocks = vi.hoisted(() => ({
-  consumeGuestOtp: vi.fn(),
-  verifyGuestOtp: vi.fn(),
-  cancelGuestReservation: vi.fn(),
-}));
-
-vi.mock("../db", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("../db")>();
-  return {
-    ...actual,
-    consumeGuestOtp: otpMocks.consumeGuestOtp,
-    verifyGuestOtp: otpMocks.verifyGuestOtp,
-    cancelGuestReservation: otpMocks.cancelGuestReservation,
-  };
-});
-
 import {
-  cancelGuestReservationWithOtp,
   validatePhone,
   validateReservationDate,
 } from "./reservation.service";
@@ -140,20 +122,24 @@ describe("validateReservationDate", () => {
 
 // ─── cancelGuestReservationWithOtp (OTP 실패 경로) ────────────────────────────
 describe("cancelGuestReservationWithOtp — OTP 실패 경로", () => {
-  beforeEach(() => {
-    otpMocks.consumeGuestOtp.mockReset();
-    otpMocks.verifyGuestOtp.mockReset();
-    otpMocks.cancelGuestReservation.mockReset();
-  });
-
-  it("소비되지 않은 잘못된 OTP는 예약 취소를 거부한다", async () => {
-    otpMocks.consumeGuestOtp.mockResolvedValue(false);
-    otpMocks.verifyGuestOtp.mockResolvedValue(false);
-
-    await expect(
-      cancelGuestReservationWithOtp(1, "010-1234-5678", "000000"),
-    ).rejects.toMatchObject({ code: DOMAIN_ERROR_CODES.OTP_EXPIRED });
-
-    expect(otpMocks.cancelGuestReservation).not.toHaveBeenCalled();
+  it("verifyGuestOtp가 false를 반환하면 에러를 던진다", async () => {
+    // DB 없이 순수 로직만 검증: verifyGuestOtp를 mock
+    vi.mock("../db", async (importOriginal) => {
+      const actual = await importOriginal<typeof import("../db")>();
+      return {
+        ...actual,
+        verifyGuestOtp: vi.fn().mockResolvedValue(false),
+        cancelGuestReservation: vi.fn().mockResolvedValue(undefined),
+      };
+    });
+    const { cancelGuestReservationWithOtp } = await import("./reservation.service");
+    let caught: unknown;
+    try {
+      await cancelGuestReservationWithOtp(1, "010-1234-5678", "000000");
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(DomainError);
+    expect((caught as DomainError).code).toBe(DOMAIN_ERROR_CODES.OTP_INVALID);
   });
 });

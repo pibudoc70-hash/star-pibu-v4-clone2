@@ -3053,7 +3053,6 @@
   overflow-y: auto;
 }
 .consultation-select-item {
-  width: 100%;
   padding: 0.625rem 1rem;
   font-size: 0.9375rem;
   color: var(--brand-text);
@@ -3062,14 +3061,6 @@
   min-height: 44px;
   display: flex;
   align-items: center;
-  border: 0;
-  background: transparent;
-  text-align: left;
-}
-
-.consultation-select-item:focus-visible {
-  outline: 2px solid var(--color-gold-primary);
-  outline-offset: -2px;
 }
 .consultation-select-item:hover {
   background: color-mix(in srgb, var(--color-gold-primary) 8%, transparent);

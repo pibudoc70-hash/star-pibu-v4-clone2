@@ -42,9 +42,7 @@ export function getSessionCookieOptions(
   return {
     httpOnly: true,
     path: "/",
-    // OAuth callbacks are top-level GET navigations, which Lax supports while
-    // preventing cross-site form/fetch requests from carrying the session.
-    sameSite: "lax",
+    sameSite: "none",
     secure: isSecureRequest(req),
   };
 }

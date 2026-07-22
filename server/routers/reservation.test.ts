@@ -104,7 +104,6 @@ describe("reservationRouter.createGuest", () => {
         treatmentName: "토닝",
         preferredDate: Date.now() + 2 * 24 * 60 * 60 * 1000,
         preferredTime: "10:00",
-        privacyAgreed: true,
       })
     ).rejects.toThrow("올바른 휴대폰 번호 형식");
   });
@@ -134,7 +133,6 @@ describe("reservationRouter.createGuest", () => {
         treatmentName: "토닝",
         preferredDate: nextSunday.getTime(),
         preferredTime: "10:00",
-        privacyAgreed: true,
       })
     ).rejects.toThrow("일요일");
   });

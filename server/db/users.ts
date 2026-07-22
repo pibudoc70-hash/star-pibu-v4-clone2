@@ -1,7 +1,5 @@
-import { and, eq, desc, count } from "drizzle-orm";
-import { createHash } from "crypto";
-import { authIdentities, InsertUser, users } from "../../drizzle/schema";
-import type { SocialProfile } from "../_core/socialAuth";
+import { eq, desc, count } from "drizzle-orm";
+import { InsertUser, users } from "../../drizzle/schema";
 import { ENV } from "../_core/env";
 import { logger } from "../_core/logger";
 import { getDb } from "./connection";
@@ -40,62 +38,6 @@ export async function getUserByOpenId(openId: string) {
   if (!db) return undefined;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : undefined;
-}
-
-function socialOpenId(provider: SocialProfile["provider"], providerUserId: string) {
-  // The external identifier itself remains only in authIdentities. This stable,
-  // bounded value keeps compatibility with legacy code that still uses openId.
-  return `social_${provider}_${createHash("sha256").update(providerUserId).digest("hex")}`;
-}
-
-/** Find a social identity or create its local user on the first social sign-in. */
-export async function findOrCreateSocialUser(profile: SocialProfile) {
-  const db = await getDb();
-  if (!db) throw new Error("DB not available");
-
-  const existing = await db
-    .select({ user: users })
-    .from(authIdentities)
-    .innerJoin(users, eq(authIdentities.userId, users.id))
-    .where(and(eq(authIdentities.provider, profile.provider), eq(authIdentities.providerUserId, profile.providerUserId)))
-    .limit(1);
-  if (existing[0]?.user) {
-    await db.update(users).set({
-      name: profile.name,
-      email: profile.email,
-      loginMethod: profile.provider,
-      lastSignedIn: new Date(),
-    }).where(eq(users.id, existing[0].user.id));
-    return { ...existing[0].user, name: profile.name, email: profile.email, loginMethod: profile.provider, lastSignedIn: new Date() };
-  }
-
-  try {
-    return await db.transaction(async (tx) => {
-      const openId = socialOpenId(profile.provider, profile.providerUserId);
-      const inserted = await tx.insert(users).values({
-        openId,
-        name: profile.name,
-        email: profile.email,
-        loginMethod: profile.provider,
-        lastSignedIn: new Date(),
-      });
-      const userId = Number(inserted[0].insertId);
-      await tx.insert(authIdentities).values({ userId, provider: profile.provider, providerUserId: profile.providerUserId });
-      const created = await tx.select().from(users).where(eq(users.id, userId)).limit(1);
-      if (!created[0]) throw new Error("Failed to create social user");
-      return created[0];
-    });
-  } catch (error) {
-    // A concurrent first login may have inserted the unique provider identity.
-    const raced = await db
-      .select({ user: users })
-      .from(authIdentities)
-      .innerJoin(users, eq(authIdentities.userId, users.id))
-      .where(and(eq(authIdentities.provider, profile.provider), eq(authIdentities.providerUserId, profile.providerUserId)))
-      .limit(1);
-    if (raced[0]?.user) return raced[0].user;
-    throw error;
-  }
 }
 
 /** 페이지네이션 회원 목록 */

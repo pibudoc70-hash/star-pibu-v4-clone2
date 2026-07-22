@@ -27,7 +27,7 @@ export function useKeywordTrendsWebSocket(
   isAdmin?: boolean
 ) {
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
   const reconnectDelay = 3000;
@@ -49,9 +49,29 @@ export function useKeywordTrendsWebSocket(
 
         // 관리자인 경우 인증 및 구독
         if (isAdmin) {
-          // Authentication is based exclusively on the HttpOnly session cookie
-          // included in the WebSocket handshake. Do not send roles or tokens from localStorage.
-          wsRef.current?.send(JSON.stringify({ type: "auth" }));
+          wsRef.current?.send(
+            JSON.stringify({
+              type: "auth",
+              isAdmin: true,
+              token: localStorage.getItem("auth_token"),
+              userId: localStorage.getItem("user_id"),
+            })
+          );
+
+          // 키워드 및 통계 채널 구독
+          wsRef.current?.send(
+            JSON.stringify({
+              type: "subscribe",
+              channel: "keywords",
+            })
+          );
+
+          wsRef.current?.send(
+            JSON.stringify({
+              type: "subscribe",
+              channel: "statistics",
+            })
+          );
         }
       };
 
@@ -66,8 +86,6 @@ export function useKeywordTrendsWebSocket(
 
             case "auth_success":
               console.log("[WebSocket] Admin authenticated");
-              wsRef.current?.send(JSON.stringify({ type: "subscribe", channel: "keywords" }));
-              wsRef.current?.send(JSON.stringify({ type: "subscribe", channel: "statistics" }));
               break;
 
             case "subscribed":
@@ -139,15 +157,12 @@ export function useKeywordTrendsWebSocket(
   }, []);
 
   useEffect(() => {
-    // 관리자 대시보드 외에서는 불필요한 WebSocket 연결과 재연결을 만들지 않는다.
-    if (!isAdmin) {
-      disconnect();
-      return;
-    }
-
     connect();
-    return disconnect;
-  }, [connect, disconnect, isAdmin]);
+
+    return () => {
+      disconnect();
+    };
+  }, [connect, disconnect]);
 
   return {
     isConnected: wsRef.current?.readyState === WebSocket.OPEN,

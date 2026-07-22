@@ -2,11 +2,11 @@
  * client/src/components/KeywordTrendsDashboard.tsx
  * 키워드 트렌드 관리자 대시보드
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { useKeywordTrendsWebSocket } from "@/hooks/useKeywordTrendsWebSocket";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -19,6 +19,27 @@ export function KeywordTrendsDashboard() {
   const [category, setCategory] = useState<string | undefined>();
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState(5000); // 5초
+  const [wsConnected, setWsConnected] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+
+  // WebSocket 연결
+  const { isConnected } = useKeywordTrendsWebSocket(
+    (update) => {
+      console.log("[Dashboard] Keyword update received:", update);
+      setLastUpdate(new Date());
+      refetchLatest();
+    },
+    (stats) => {
+      console.log("[Dashboard] Statistics update received:", stats);
+      setLastUpdate(new Date());
+    },
+    user?.role === "admin"
+  );
+
+  useEffect(() => {
+    setWsConnected(isConnected);
+  }, [isConnected]);
+
   // 최신 트렌드 조회
   const { data: latestTrends, isLoading: isLoadingLatest, refetch: refetchLatest } = trpc.keywords.getLatest.useQuery(
     { limit: 20, category },
@@ -26,29 +47,21 @@ export function KeywordTrendsDashboard() {
   );
 
   // 상위 트렌딩 키워드 조회
-  const { data: topTrending, isLoading: isLoadingTop, refetch: refetchTopTrending } = trpc.keywords.getTopTrending.useQuery(
+  const { data: topTrending, isLoading: isLoadingTop } = trpc.keywords.getTopTrending.useQuery(
     { limit: 10, category },
     { enabled: true }
   );
-
-  const refetchAll = useCallback(() => {
-    void refetchLatest();
-    void refetchTopTrending();
-  }, [refetchLatest, refetchTopTrending]);
-
-  // WebSocket 알림은 서버 인증된 관리자에게만 전달되며, 수신 시 관련 차트를 모두 갱신한다.
-  useKeywordTrendsWebSocket(refetchAll, refetchAll, user?.role === "admin");
 
   // 자동 새로고침
   useEffect(() => {
     if (!autoRefresh) return;
 
     const interval = setInterval(() => {
-      refetchAll();
+      refetchLatest();
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [autoRefresh, refreshInterval, refetchAll]);
+  }, [autoRefresh, refreshInterval, refetchLatest]);
 
   // 차트 데이터 변환
   const chartData = topTrending?.map((trend) => ({
@@ -79,7 +92,7 @@ export function KeywordTrendsDashboard() {
         </div>
         <div className="flex gap-3">
           <Button
-            onClick={refetchAll}
+            onClick={() => refetchLatest()}
             disabled={isLoadingLatest}
             className="bg-blue-600 hover:bg-blue-700"
           >
@@ -98,13 +111,13 @@ export function KeywordTrendsDashboard() {
       {/* 필터 및 설정 */}
       <div className="flex gap-4 items-end bg-white p-4 rounded-lg shadow-sm border border-slate-200">
         <div className="flex-1">
-          <label htmlFor="keyword-category" className="block text-sm font-medium text-slate-700 mb-2">카테고리 필터</label>
-          <Select value={category ?? "all"} onValueChange={(value) => setCategory(value === "all" ? undefined : value)}>
-            <SelectTrigger id="keyword-category" className="w-full">
+          <label className="block text-sm font-medium text-slate-700 mb-2">카테고리 필터</label>
+          <Select value={category || ""} onValueChange={(val) => setCategory(val || undefined)}>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="모든 카테고리" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">모든 카테고리</SelectItem>
+              <SelectItem value="">모든 카테고리</SelectItem>
               <SelectItem value="treatment">시술</SelectItem>
               <SelectItem value="equipment">장비</SelectItem>
               <SelectItem value="ingredient">성분</SelectItem>
@@ -114,9 +127,9 @@ export function KeywordTrendsDashboard() {
         </div>
 
         <div className="flex-1">
-          <label htmlFor="keyword-refresh-interval" className="block text-sm font-medium text-slate-700 mb-2">자동 새로고침 간격</label>
-          <Select value={refreshInterval.toString()} onValueChange={(value) => setRefreshInterval(Number(value))}>
-            <SelectTrigger id="keyword-refresh-interval" className="w-full">
+          <label className="block text-sm font-medium text-slate-700 mb-2">자동 새로고침 간격</label>
+          <Select value={refreshInterval.toString()} onValueChange={(val) => setRefreshInterval(parseInt(val))}>
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -169,9 +182,7 @@ export function KeywordTrendsDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-slate-900">
-              {latestTrends?.length
-                ? Math.round(latestTrends.reduce((sum, trend) => sum + trend.searchVolume, 0) / latestTrends.length)
-                : 0}
+              {latestTrends ? Math.round(latestTrends.reduce((sum, t) => sum + t.searchVolume, 0) / latestTrends.length) : 0}
             </div>
             <p className="text-xs text-slate-500 mt-1">상대 검색량 (0-100)</p>
           </CardContent>
@@ -275,7 +286,7 @@ export function KeywordTrendsDashboard() {
                     dataKey="value"
                   >
                     {categoryDistribution.map((entry, index) => (
-                      <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip formatter={(value) => `${value}개`} />
@@ -298,8 +309,8 @@ export function KeywordTrendsDashboard() {
               {isLoadingLatest ? (
                 <div className="text-center py-8 text-slate-500">로딩 중...</div>
               ) : latestTrends && latestTrends.length > 0 ? (
-                latestTrends.slice(0, 15).map((trend) => (
-                  <div key={`${trend.category ?? "general"}-${trend.keyword}`} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors">
+                latestTrends.slice(0, 15).map((trend, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors">
                     <div className="flex-1">
                       <p className="font-medium text-slate-900">{trend.keyword}</p>
                       <p className="text-xs text-slate-500">{trend.category || "general"}</p>
@@ -309,7 +320,7 @@ export function KeywordTrendsDashboard() {
                         <div className="w-24 bg-slate-200 rounded-full h-2">
                           <div
                             className="bg-blue-600 h-2 rounded-full"
-                            style={{ width: `${Math.min(100, Math.max(0, trend.searchVolume))}%` }}
+                            style={{ width: `${trend.searchVolume}%` }}
                           ></div>
                         </div>
                         <span className="text-sm font-semibold text-slate-900 w-10">{trend.searchVolume}</span>

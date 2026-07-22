@@ -3626,3 +3626,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 사이트맵 lastmod 날짜 2026-07-15로 업데이트
 - [x] WebSite 구조화 데이터에 SearchAction 추가
 - [ ] 시술 상세 페이지 MedicalProcedure 구조화 데이터 보강 (추후 개선)
+
+## 위치 및 연락 정보 섹션 UI 개선 (2026-07-22)
+- [x] ContactInfoPanel.tsx: text-[var(--color-star-text-mid)] → text-[var(--color-star-text)] 로 가독성 개선 (주소/교통/주차 설명 텍스트)
+- [x] ContactSection.tsx: shouldRenderMap 조건 완화 (rootMargin 300px로 확대, threshold 0으로 변경)
+- [x] 지도 placeholder 개선 (골드 브랜드 색상 + 로딩 스피너 추가)
+- [x] drizzle/schema.ts guestOtps 스키마 DB 동기화 (codeHash → code) - TypeScript 오류 3건 해결

@@ -4,6 +4,9 @@
  *
  * [R15-P1-2] ContactSection에서 분리된 서브컴포넌트.
  *            인라인 hex 색상 → CSS 변수 토큰 치환.
+ * [UI개선-2026-07-22] 텍스트 가독성 개선:
+ *   - 보조 텍스트 color-star-text-mid(#666666) → color-star-text(#2C2C2C)로 변경
+ *   - 밝은 배경(#FAF8F5)에서 WCAG AA 대비 기준 충족
  */
 import React from "react";
 import {
@@ -62,7 +65,8 @@ export default function ContactInfoPanel({
             <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
               {addressLabel}
             </p>
-            <p className="text-sm text-[var(--color-star-text-mid)]">
+            {/* [UI개선] color-star-text-mid → color-star-text (가독성 향상) */}
+            <p className="text-sm text-[var(--color-star-text)]">
               {t.access.address}
             </p>
             <button
@@ -128,7 +132,8 @@ export default function ContactInfoPanel({
             <div className="space-y-1.5">
               {t.hours.rows.map((h) => (
                 <div key={h.day} className="flex justify-between text-sm">
-                  <span className="text-[var(--color-star-text-mid)]">{h.day}</span>
+                  {/* [UI개선] 요일 텍스트: color-star-text-mid → color-star-text */}
+                  <span className="text-[var(--color-star-text)]">{h.day}</span>
                   <span
                     className="font-normal"
                     style={{ color: h.time === closedLabel ? "#EF4444" : "var(--color-star-text)" }}
@@ -138,7 +143,7 @@ export default function ContactInfoPanel({
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-3 p-2 rounded-lg" style={{ background: 'var(--color-gold-pale)', color: 'var(--brand-text, #2C2C2C)' }}>
+            <p className="text-xs mt-3 p-2 rounded-lg" style={{ background: 'var(--color-gold-pale)', color: 'var(--color-star-text, #2C2C2C)' }}>
               {hoursNote}
             </p>
           </div>
@@ -153,7 +158,8 @@ export default function ContactInfoPanel({
             <p className="font-normal text-sm mb-2 text-[var(--color-star-text)]">
               {transitLabel}
             </p>
-            <p className="text-sm text-[var(--color-star-text-mid)]">
+            {/* [UI개선] color-star-text-mid → color-star-text */}
+            <p className="text-sm text-[var(--color-star-text)]">
               {transitDesc}
             </p>
           </div>
@@ -164,7 +170,8 @@ export default function ContactInfoPanel({
             <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
               {parkingLabel}
             </p>
-            <p className="text-sm text-[var(--color-star-text-mid)]">
+            {/* [UI개선] color-star-text-mid → color-star-text */}
+            <p className="text-sm text-[var(--color-star-text)]">
               {parkingDesc}
             </p>
           </div>

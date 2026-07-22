@@ -53,9 +53,11 @@ export default function ContactSection() {
 
   // [P0-MAP-LAZY] Map lazy mount: viewport 진입 시에만 MapView 렌더링
   // 모바일 홈페이지 초기 로드 시 지도 스크립트 로드 방지 (~100KB 감소)
+  // [UI개선-2026-07-22] rootMargin 300px로 확대 → 섹션 진입 전 미리 로드
+  // 스크롤 속도가 빠르거나 섹션이 화면 하단에 있을 때 지도가 표시 안 되는 문제 방지
   const { ref: mapContainerRef, isVisible: shouldRenderMap } = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '100px', // 100px 전에 미리 로드 시작
+    threshold: 0,
+    rootMargin: '300px', // 300px 전에 미리 로드 시작 (기존 100px → 확대)
     triggerOnce: true,
   });
 
@@ -131,6 +133,7 @@ export default function ContactSection() {
             aria-label={t.access.mapAriaLabel}
           >
             {/* [P0-MAP-LAZY] shouldRenderMap 플래그로 조건부 렌더링 */}
+            {/* [UI개선-2026-07-22] placeholder: 로딩 스피너 + 브랜드 색상 적용 */}
             {shouldRenderMap ? (
               <MapView
                 className="w-full h-full"
@@ -139,10 +142,21 @@ export default function ContactSection() {
                 onMapReady={handleMapReady}
               />
             ) : (
-              // 지도 로드 전 placeholder
-              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-sm text-gray-500">지도 로드 중...</div>
+              // 지도 로드 전 placeholder - 브랜드 색상 + 스피너
+              <div className="w-full h-full flex items-center justify-center" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>
+                <div className="text-center flex flex-col items-center gap-3">
+                  <svg
+                    className="animate-spin"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" stroke="var(--color-gold-pale)" strokeWidth="3" />
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke="var(--color-gold-primary)" strokeWidth="3" strokeLinecap="round" />
+                  </svg>
+                  <span className="text-sm" style={{ color: 'var(--color-star-text, #2C2C2C)' }}>지도 로드 중...</span>
                 </div>
               </div>
             )}

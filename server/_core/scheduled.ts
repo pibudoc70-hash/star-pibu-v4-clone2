@@ -69,16 +69,8 @@ export async function collectKeywordTrendsHandler(req: Request, res: Response) {
       taskUid: user.taskUid || "unknown",
     });
   } catch (error) {
-    // 에러 응답
-    const err = error instanceof Error ? error : new Error(String(error));
-    res.status(500).json({
-      error: err.message,
-      stack: err.stack,
-      context: {
-        url: req.url,
-        taskUid: "unknown",
-      },
-      timestamp: new Date().toISOString(),
-    });
+    // Keep diagnostics in server logs; never disclose stack traces or internal routes.
+    console.error("[Scheduled] Keyword trend collection failed", error);
+    res.status(500).json({ error: "internal_error", timestamp: new Date().toISOString() });
   }
 }

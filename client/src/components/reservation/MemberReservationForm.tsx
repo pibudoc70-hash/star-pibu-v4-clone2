@@ -32,6 +32,7 @@ export function MemberReservationForm({ onSuccess }: Props) {
     treatmentName: "",
     preferredDate: "",
     preferredTime: "10:00",
+    privacyAgreed: false,
     notes: "",
   });
 
@@ -40,7 +41,7 @@ export function MemberReservationForm({ onSuccess }: Props) {
   const createReservationMutation = trpc.reservation.create.useMutation({
     onSuccess: () => {
       toast.success(lbl.successMsg);
-      setForm({ patientName: user?.name ?? "", phone: "", treatmentCategory: "", treatmentName: "", preferredDate: "", preferredTime: "10:00", notes: "" });
+      setForm({ patientName: user?.name ?? "", phone: "", treatmentCategory: "", treatmentName: "", preferredDate: "", preferredTime: "10:00", privacyAgreed: false, notes: "" });
       onSuccess?.();
     },
     onError: (err) => toast.error(parseReservationError(err, currentLang)),
@@ -51,6 +52,7 @@ export function MemberReservationForm({ onSuccess }: Props) {
     if (!form.treatmentCategory || !form.treatmentName) { toast.error(lbl.validationCategory); return; }
     if (!form.preferredDate) { toast.error(lbl.validationDate); return; }
     if (!form.phone) { toast.error(lbl.validationPhone); return; }
+    if (!form.privacyAgreed) { toast.error("개인정보 수집 및 이용에 동의해주세요."); return; }
     await createReservationMutation.mutateAsync({
       patientName: form.patientName,
       phone: form.phone,
@@ -58,6 +60,7 @@ export function MemberReservationForm({ onSuccess }: Props) {
       treatmentName: form.treatmentName,
       preferredDate: new Date(form.preferredDate).getTime(),
       preferredTime: form.preferredTime,
+      privacyAgreed: true,
       notes: form.notes,
     });
   };
@@ -133,6 +136,11 @@ export function MemberReservationForm({ onSuccess }: Props) {
           onChange={(e) => setForm({ ...form, notes: e.target.value })}
           placeholder={lbl.notesPlaceholder} className={inputCls} rows={3} />
       </div>
+
+      <label className="flex items-start gap-2 text-sm text-[#4B5563] cursor-pointer">
+        <input type="checkbox" checked={form.privacyAgreed} onChange={(e) => setForm({ ...form, privacyAgreed: e.target.checked })} className="mt-1" />
+        <span>예약 처리 및 연락을 위한 개인정보 수집·이용에 동의합니다. (필수)</span>
+      </label>
 
       <button type="submit" disabled={createReservationMutation.isPending}
         className="w-full py-3 rounded-lg font-semibold text-white transition-colors flex items-center justify-center gap-2"

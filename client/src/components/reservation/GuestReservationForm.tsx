@@ -27,6 +27,7 @@ const EMPTY_GUEST_FORM = {
   treatmentName: "",
   preferredDate: "",
   preferredTime: "10:00",
+  privacyAgreed: false,
   notes: "",
 };
 
@@ -99,6 +100,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
     if (!form.preferredDate) { toast.error(lbl.validationDate); return; }
     const fullPhoneRe = /^01[0-9]-\d{3,4}-\d{4}$|^01[0-9]\d{7,8}$/;
     if (isKo && !fullPhoneRe.test(form.phone)) { toast.error(lbl.validationPhoneFormat); return; }
+    if (!form.privacyAgreed) { toast.error("개인정보 수집 및 이용에 동의해주세요."); return; }
     await createGuestMutation.mutateAsync({
       phone: form.phone,
       patientName: form.patientName,
@@ -107,6 +109,7 @@ export function GuestReservationForm({ onSuccess }: Props) {
       treatmentName: form.treatmentName,
       preferredDate: new Date(form.preferredDate).getTime(),
       preferredTime: form.preferredTime,
+      privacyAgreed: true,
       notes: form.notes,
     });
   };
@@ -339,6 +342,11 @@ export function GuestReservationForm({ onSuccess }: Props) {
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
               placeholder={lbl.notesPlaceholder} className={inputCls} rows={3} />
           </div>
+
+          <label className="flex items-start gap-2 text-sm text-[#4B5563] cursor-pointer">
+            <input type="checkbox" checked={form.privacyAgreed} onChange={(e) => setForm({ ...form, privacyAgreed: e.target.checked })} className="mt-1" />
+            <span>예약 처리 및 연락을 위한 개인정보 수집·이용에 동의합니다. (필수)</span>
+          </label>
 
           <button type="submit" disabled={createGuestMutation.isPending}
             className="w-full py-3 rounded-lg font-semibold text-white transition-colors flex items-center justify-center gap-2"

@@ -49,29 +49,9 @@ export function useKeywordTrendsWebSocket(
 
         // 관리자인 경우 인증 및 구독
         if (isAdmin) {
-          wsRef.current?.send(
-            JSON.stringify({
-              type: "auth",
-              isAdmin: true,
-              token: localStorage.getItem("auth_token"),
-              userId: localStorage.getItem("user_id"),
-            })
-          );
-
-          // 키워드 및 통계 채널 구독
-          wsRef.current?.send(
-            JSON.stringify({
-              type: "subscribe",
-              channel: "keywords",
-            })
-          );
-
-          wsRef.current?.send(
-            JSON.stringify({
-              type: "subscribe",
-              channel: "statistics",
-            })
-          );
+          // Authentication is based exclusively on the HttpOnly session cookie
+          // included in the WebSocket handshake. Do not send roles or tokens from localStorage.
+          wsRef.current?.send(JSON.stringify({ type: "auth" }));
         }
       };
 
@@ -86,6 +66,8 @@ export function useKeywordTrendsWebSocket(
 
             case "auth_success":
               console.log("[WebSocket] Admin authenticated");
+              wsRef.current?.send(JSON.stringify({ type: "subscribe", channel: "keywords" }));
+              wsRef.current?.send(JSON.stringify({ type: "subscribe", channel: "statistics" }));
               break;
 
             case "subscribed":

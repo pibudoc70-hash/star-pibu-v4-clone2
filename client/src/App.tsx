@@ -25,6 +25,7 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminYouTube = lazy(() => import("./pages/AdminYouTube"));
 const AdminNotices = lazy(() => import("./pages/AdminNotices"));
 const MyReservations = lazy(() => import("./pages/MyReservations"));
+const SocialLogin = lazy(() => import("./pages/SocialLogin"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const NonCoveredGuide = lazy(() => import("./pages/NonCoveredGuide"));
 const About = lazy(() => import("./pages/About"));
@@ -165,6 +166,7 @@ function Router() {
                 )}
 
                 {/* 사용자 페이지 */}
+                <Route path="/login" component={SocialLogin} />
                 <Route path="/my-reservations" component={MyReservations} />
 
                 {/* 관리자 페이지 — 구체적 경로(new/edit)를 파라미터 경로보다 먼저 선언 */}

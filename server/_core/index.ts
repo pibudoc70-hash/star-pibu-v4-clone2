@@ -14,6 +14,8 @@ import { initializeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { securityHeadersMiddleware } from "./securityHeaders";
+import { csrfProtection } from "./csrf";
+import { assertProductionEnvironment } from "./env";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -35,15 +37,19 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  assertProductionEnvironment();
   const app = express();
+  // Required for secure cookies and Origin reconstruction behind a TLS proxy.
+  app.set("trust proxy", 1);
   const server = createServer(app);
 
   // ── 보안 헤더 미들웨어 (가장 먼저 적용) ──────────────────────────────────────
   app.use(securityHeadersMiddleware);
 
-  // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  // Reservation and administration APIs do not need large request bodies.
+  // File uploads use the storage proxy and should have their own limits.
+  app.use(express.json({ limit: "1mb" }));
+  app.use(express.urlencoded({ limit: "1mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   registerRssFeed(app);
@@ -56,6 +62,9 @@ async function startServer() {
   // Source of truth: client/public/sitemap.xml
   // Heartbeat 스케줄러 핸들러
   app.post("/api/scheduled/collectKeywordTrends", collectKeywordTrendsHandler);
+
+  // Cookie-authenticated mutations require a same-origin request.
+  app.use("/api/trpc", csrfProtection);
 
   // tRPC API
   app.use(

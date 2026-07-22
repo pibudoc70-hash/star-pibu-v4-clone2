@@ -526,6 +526,7 @@ function GuestInfoStep({ selectedTreatment, selectedDate, selectedTime, onBack, 
       treatmentName: selectedTreatment,
       preferredDate: new Date(selectedDate).getTime(),
       preferredTime: selectedTime,
+      privacyAgreed: true,
       notes: notes.trim() || undefined,
     });
   };
@@ -664,6 +665,7 @@ export default function Reserve() {
       treatmentName: selectedTreatment,
       preferredDate: new Date(selectedDate).getTime(),
       preferredTime: selectedTime,
+      privacyAgreed: true,
       notes: notes.trim() || undefined,
     });
   };

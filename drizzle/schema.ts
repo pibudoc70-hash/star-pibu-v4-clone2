@@ -1,8 +1,9 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint, index, real } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, bigint, index, real, uniqueIndex } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  // Legacy Manus identifier or a deterministic internal social-login identifier.
+  openId: varchar("openId", { length: 128 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
@@ -14,11 +15,30 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+/**
+ * External OAuth identities. A user may have more than one provider linked,
+ * but a provider account can belong to exactly one local user.
+ */
+export const authIdentities = mysqlTable("authIdentities", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  provider: mysqlEnum("provider", ["naver", "kakao"]).notNull(),
+  providerUserId: varchar("providerUserId", { length: 255 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  providerUserUnique: uniqueIndex("auth_identities_provider_user_unique").on(table.provider, table.providerUserId),
+  userIdIdx: index("auth_identities_user_id_idx").on(table.userId),
+}));
+export type AuthIdentity = typeof authIdentities.$inferSelect;
+export type InsertAuthIdentity = typeof authIdentities.$inferInsert;
+
 export const guestOtps = mysqlTable("guestOtps", {
   id: int("id").autoincrement().primaryKey(),
   phone: varchar("phone", { length: 20 }).notNull(),
-  code: varchar("code", { length: 6 }).notNull(),
+  codeHash: varchar("codeHash", { length: 128 }).notNull(),
   verified: mysqlEnum("verified", ["0", "1"]).notNull().default("0"),
+  consumedAt: timestamp("consumedAt"),
   expiresAt: bigint("expiresAt", { mode: "number" }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   attemptCount: int("attemptCount").notNull().default(0),
@@ -37,6 +57,7 @@ export const reservations = mysqlTable("reservations", {
   isGuest: mysqlEnum("isGuest", ["0", "1"]).notNull().default("0"),
   patientName: varchar("patientName", { length: 100 }).notNull(),
   phone: varchar("phone", { length: 20 }).notNull(),
+  privacyAgreed: mysqlEnum("privacyAgreed", ["0", "1"]).notNull().default("0"),
   treatmentCategory: varchar("treatmentCategory", { length: 100 }).notNull(),
   treatmentName: varchar("treatmentName", { length: 200 }).notNull(),
   preferredDate: bigint("preferredDate", { mode: "number" }).notNull(),

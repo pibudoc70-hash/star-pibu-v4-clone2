@@ -11,11 +11,10 @@
  * 의존 방향: service → db/*, _core/*, email, sms
  * 라우터는 입력 파싱·권한 검사·TRPCError 변환만 담당하고 이 service를 호출한다.
  */
-import { eq, and } from "drizzle-orm";
-import { guestOtps } from "../../drizzle/schema";
 import {
   createReservation,
   verifyGuestOtp,
+  consumeGuestOtp,
   cancelGuestReservation,
   getUnavailableSlots,
   generateOtpCode,
@@ -27,13 +26,9 @@ import { notifyOwner } from "../_core/notification";
 import { sendEmail, getReservationConfirmationEmail, getAdminNotificationEmail } from "../email";
 import { sendSMS, getOTPMessage } from "../sms";
 import { logger } from "../_core/logger";
-import { getDb } from "../db/connection";
 
 // ─── 상수 ────────────────────────────────────────────────────────────────────
 const PHONE_REGEX = /^01[0-9]-\d{3,4}-\d{4}$|^01[0-9]\d{7,8}$/;
-/** OTP 인증 완료 후 예약 생성까지 허용하는 유예 시간 (10분) */
-const OTP_GRACE_MS = 10 * 60 * 1000;
-
 // ─── 날짜 검증 ────────────────────────────────────────────────────────────────
 export function validateReservationDate(preferredDate: number): void {
   const preferredDateObj = new Date(preferredDate);
@@ -66,6 +61,12 @@ export function validatePhone(phone: string): void {
       DOMAIN_ERROR_CODES.VALIDATION,
       "올바른 휴대폰 번호 형식이 아닙니다. (010-1234-5678 또는 01012345678 형식)",
     );
+  }
+}
+
+export function validateReservationTime(preferredTime: string): void {
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(preferredTime)) {
+    throw new DomainError(DOMAIN_ERROR_CODES.VALIDATION, "예약 시간은 HH:mm 형식이어야 합니다.");
   }
 }
 
@@ -159,33 +160,15 @@ export async function verifyGuestReservationOtp(
 }
 
 // ─── OTP 검증 (예약 생성 시점) ────────────────────────────────────────────────
-/**
- * 예약 생성 시점의 OTP 검증.
- * verifyGuestOtp()가 false를 반환하면 verified=1 행을 재확인한다.
- * (이미 verified된 OTP로 예약하는 경우 허용)
- */
+/** Verify and atomically consume the code. A verified code authorizes one action only. */
 export async function verifyOtpForReservation(phone: string, otpCode: string): Promise<void> {
-  const ok = await verifyGuestOtp(phone, otpCode);
-  if (!ok) {
-    const db = await getDb();
-    if (!db) throw new Error("DB not available");
-    const rows = await db
-      .select()
-      .from(guestOtps)
-      .where(
-        and(
-          eq(guestOtps.phone, phone),
-          eq(guestOtps.code, otpCode),
-          eq(guestOtps.verified, "1"),
-        ),
-      )
-      .limit(1);
-    if (rows.length === 0 || rows[0].expiresAt < Date.now() - OTP_GRACE_MS) {
-      throw new DomainError(
-        DOMAIN_ERROR_CODES.OTP_EXPIRED,
-        "인증이 만료되었습니다. 다시 인증해주세요.",
-      );
-    }
+  let consumed = await consumeGuestOtp(phone, otpCode);
+  if (!consumed) {
+    const verified = await verifyGuestOtp(phone, otpCode);
+    if (verified) consumed = await consumeGuestOtp(phone, otpCode);
+  }
+  if (!consumed) {
+    throw new DomainError(DOMAIN_ERROR_CODES.OTP_EXPIRED, "인증번호가 올바르지 않거나 만료되었습니다.");
   }
 }
 
@@ -199,14 +182,24 @@ interface CreateMemberReservationInput {
   treatmentName: string;
   preferredDate: number;
   preferredTime: string;
+  privacyAgreed: boolean;
   notes?: string | null;
 }
 
 export async function createMemberReservation(input: CreateMemberReservationInput) {
+  if (!input.privacyAgreed) {
+    throw new DomainError(DOMAIN_ERROR_CODES.VALIDATION, "개인정보 수집 및 이용 동의가 필요합니다.");
+  }
+  validatePhone(input.phone);
+  validateReservationDate(input.preferredDate);
+  validateReservationTime(input.preferredTime);
+  await validateDateNotUnavailable(input.preferredDate);
+
   const reservation = await createReservation({
     userId: input.userId,
     patientName: input.patientName,
     phone: input.phone,
+    privacyAgreed: "1",
     treatmentCategory: input.treatmentCategory,
     treatmentName: input.treatmentName,
     preferredDate: input.preferredDate,
@@ -283,12 +276,17 @@ interface CreateGuestReservationInput {
   treatmentName: string;
   preferredDate: number;
   preferredTime: string;
+  privacyAgreed: boolean;
   notes?: string | null;
 }
 
 export async function createGuestReservation(input: CreateGuestReservationInput) {
+  if (!input.privacyAgreed) {
+    throw new DomainError(DOMAIN_ERROR_CODES.VALIDATION, "개인정보 수집 및 이용 동의가 필요합니다.");
+  }
   validatePhone(input.phone);
   validateReservationDate(input.preferredDate);
+  validateReservationTime(input.preferredTime);
   await validateDateNotUnavailable(input.preferredDate);
   await verifyOtpForReservation(input.phone, input.otpCode);
 
@@ -297,6 +295,7 @@ export async function createGuestReservation(input: CreateGuestReservationInput)
     isGuest: "1",
     patientName: input.patientName,
     phone: input.phone,
+    privacyAgreed: "1",
     treatmentCategory: input.treatmentCategory,
     treatmentName: input.treatmentName,
     preferredDate: input.preferredDate,
@@ -318,11 +317,7 @@ export async function cancelGuestReservationWithOtp(
   phone: string,
   otpCode: string,
 ) {
-  const ok = await verifyGuestOtp(phone, otpCode);
-  if (!ok) throw new DomainError(
-    DOMAIN_ERROR_CODES.OTP_INVALID,
-    "인증번호가 올바르지 않거나 만료되었습니다.",
-  );
+  await verifyOtpForReservation(phone, otpCode);
   const affected = await cancelGuestReservation(id, phone);
   if (affected === 0) {
     throw new DomainError(

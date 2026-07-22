@@ -1,134 +1,82 @@
-/**
- * reservation.ts — 예약 라우터 (회원 + 비회원 OTP)
- *
- * 책임: 입력 파싱, 권한 검사, HTTP 에러 변환
- * 비즈니스 로직은 server/services/reservation.service.ts 에 위임한다.
- */
+import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 import { protectedProcedure, publicProcedure, router } from "../_core/trpc";
+import { cancelReservation, getReservationsByUserId, getUnavailableSlots } from "../db";
 import {
-  getReservationsByUserId, cancelReservation,
-  getUnavailableSlots,
-} from "../db";
-import {
-  createMemberReservation,
-  createGuestReservation,
   cancelGuestReservationWithOtp,
+  createGuestReservation,
+  createMemberReservation,
   sendGuestReservationOtp,
   verifyGuestReservationOtp,
 } from "../services/reservation.service";
 import { mapDomainErrorToTRPC } from "../shared/errors";
 
-export const reservationRouter = router({
-  // 공개: 예약 불가 날짜 목록
-  unavailableDates: publicProcedure.query(async () => {
-    return getUnavailableSlots(undefined);
-  }),
+const phoneSchema = z.string().regex(/^01[0-9]-?\d{3,4}-?\d{4}$/, "올바른 휴대폰 번호 형식이 아닙니다.");
+const reservationInput = {
+  patientName: z.string().trim().min(1).max(100),
+  phone: phoneSchema,
+  privacyAgreed: z.literal(true, { error: "개인정보 수집 및 이용 동의가 필요합니다." }),
+  treatmentCategory: z.string().trim().min(1).max(100),
+  treatmentName: z.string().trim().min(1).max(200),
+  preferredDate: z.number().int().positive(),
+  preferredTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "HH:mm 형식이어야 합니다."),
+  notes: z.string().trim().max(1000).optional(),
+};
 
-  // 회원 예약 신청
+function requireSocialReservationLogin(loginMethod: string | null) {
+  if (loginMethod !== "naver" && loginMethod !== "kakao") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "네이버 또는 카카오 로그인 후 예약할 수 있습니다." });
+  }
+}
+
+export const reservationRouter = router({
+  unavailableDates: publicProcedure.query(() => getUnavailableSlots(undefined)),
+
+  /** Only a Naver/Kakao session may create a member reservation. */
   create: protectedProcedure
-    .input(z.object({
-      patientName: z.string().min(1).max(100),
-      phone: z.string().min(8).max(20),
-      treatmentCategory: z.string().min(1).max(100),
-      treatmentName: z.string().min(1).max(200),
-      preferredDate: z.number(),
-      preferredTime: z.string().min(4).max(10),
-      notes: z.string().max(1000).optional(),
-    }))
+    .input(z.object(reservationInput))
     .mutation(async ({ ctx, input }) => {
-      return createMemberReservation({
-        userId: ctx.user.id,
-        userEmail: ctx.user.email,
-        patientName: input.patientName,
-        phone: input.phone,
-        treatmentCategory: input.treatmentCategory,
-        treatmentName: input.treatmentName,
-        preferredDate: input.preferredDate,
-        preferredTime: input.preferredTime,
-        notes: input.notes,
-      });
+      requireSocialReservationLogin(ctx.user.loginMethod);
+      return createMemberReservation({ ...input, userId: ctx.user.id, userEmail: ctx.user.email });
     }),
 
-  // 내 예약 목록 조회
-  myReservations: protectedProcedure.query(async ({ ctx }) => {
-    return getReservationsByUserId(ctx.user.id);
-  }),
+  myReservations: protectedProcedure.query(({ ctx }) => getReservationsByUserId(ctx.user.id)),
 
-  // 예약 취소 (본인만)
   cancel: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.number().int().positive() }))
     .mutation(async ({ ctx, input }) => {
       await cancelReservation(input.id, ctx.user.id);
       return { success: true };
     }),
 
-  // OTP 발송 (비회원 전화번호 인증)
+  // Backwards-compatible guest OTP flow. It may be removed later without
+  // affecting social reservations; it now uses hashed, single-use OTPs.
   sendOtp: publicProcedure
-    .input(z.object({ phone: z.string().min(9).max(20) }))
+    .input(z.object({ phone: phoneSchema }))
     .mutation(async ({ input }) => {
-      try {
-        return await sendGuestReservationOtp(input.phone);
-      } catch (err) {
-        throw mapDomainErrorToTRPC(err);
-      }
+      try { return await sendGuestReservationOtp(input.phone); }
+      catch (err) { throw mapDomainErrorToTRPC(err); }
     }),
 
-  // OTP 검증
   verifyOtp: publicProcedure
-    .input(z.object({
-      phone: z.string().min(9).max(20),
-      code: z.string().length(6),
-    }))
+    .input(z.object({ phone: phoneSchema, code: z.string().regex(/^\d{6}$/) }))
     .mutation(async ({ input }) => {
-      try {
-        return await verifyGuestReservationOtp(input.phone, input.code);
-      } catch (err) {
-        throw mapDomainErrorToTRPC(err);
-      }
+      try { return await verifyGuestReservationOtp(input.phone, input.code); }
+      catch (err) { throw mapDomainErrorToTRPC(err); }
     }),
 
-  // 비회원 예약 생성 (OTP 인증 완료 후)
   createGuest: publicProcedure
-    .input(z.object({
-      patientName: z.string().min(1).max(100),
-      phone: z.string().min(9).max(20),
-      otpCode: z.string().length(6),
-      treatmentCategory: z.string().min(1).max(100),
-      treatmentName: z.string().min(1).max(200),
-      preferredDate: z.number(),
-      preferredTime: z.string().min(4).max(10),
-      notes: z.string().max(1000).optional(),
-    }))
-    .mutation(async ({ input }) => {
-      return createGuestReservation({
-        patientName: input.patientName,
-        phone: input.phone,
-        otpCode: input.otpCode,
-        treatmentCategory: input.treatmentCategory,
-        treatmentName: input.treatmentName,
-        preferredDate: input.preferredDate,
-        preferredTime: input.preferredTime,
-        notes: input.notes,
-      });
-    }),
+    .input(z.object({ ...reservationInput, otpCode: z.string().regex(/^\d{6}$/) }))
+    .mutation(({ input }) => createGuestReservation(input)),
 
-  // 비회원 예약 취소
   cancelGuest: publicProcedure
-    .input(z.object({
-      id: z.number(),
-      phone: z.string().min(9).max(20),
-      otpCode: z.string().length(6),
-    }))
+    .input(z.object({ id: z.number().int().positive(), phone: phoneSchema, otpCode: z.string().regex(/^\d{6}$/) }))
     .mutation(async ({ input }) => {
       await cancelGuestReservationWithOtp(input.id, input.phone, input.otpCode);
       return { success: true };
     }),
 });
 
-// schedule 서브라우터 (예약 불가 날짜 공개 조회 — 기존 appRouter.schedule 유지)
 export const scheduleRouter = router({
-  unavailableDates: publicProcedure.query(async () => {
-    return getUnavailableSlots(undefined);
-  }),
+  unavailableDates: publicProcedure.query(() => getUnavailableSlots(undefined)),
 });

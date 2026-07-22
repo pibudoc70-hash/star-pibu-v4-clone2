@@ -165,6 +165,13 @@ pnpm build       # 프론트엔드 및 Node 서버 production build
 - 대시보드의 평균값 0건 나누기, 목록의 배열 인덱스 key, 진행 막대의 범위 초과를 방어했습니다.
 - 예약 이메일 템플릿은 사용자 입력 HTML 이스케이프와 상태 class allowlist를 적용해 HTML/속성 주입을 방지합니다.
 
+## 성능 검토 반영 사항 (2026-07-22)
+
+- `App.tsx`의 홈·공지·404 페이지를 route-level lazy loading으로 전환했습니다. 초기 엔트리 청크는 이전 약 492KB에서 **약 308KB**로 줄고, 페이지 코드는 실제 경로 접근 시에만 로드됩니다.
+- 관리자 대시보드의 모든 탭을 tab-level lazy loading으로 전환했습니다. 대시보드 셸은 **약 14KB**로 분리되며, 기본 시술 탭(약 21KB)과 예약 관리의 XLSX 의존 코드(약 293KB), 키워드 트렌드 대시보드(약 417KB)는 해당 탭을 선택할 때만 다운로드합니다.
+- 탭 전환과 route chunk를 위한 `Suspense` fallback을 제공해 네트워크 지연 중에도 사용자에게 명확한 로딩 상태를 표시합니다.
+- 검증 완료: `pnpm check`, `pnpm lint`(기존 warning만 존재), `pnpm test`(61 files / 1,434 tests), `pnpm build`를 통과했습니다. production preview에서 `/`, `/notice`, `/admin` SPA fallback 및 생성된 lazy asset의 HTTP 응답을 확인했습니다.
+
 ## 남은 작업 및 권장 다음 단계
 
 - Naver/Kakao 실제 앱 키와 callback URL을 등록해 OAuth end-to-end 테스트 수행

@@ -5,20 +5,18 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider, useLang } from "./contexts/LangContext";
 import { Suspense, useEffect, lazy } from "react";
-import Home from "./pages/Home";
 import MapErrorBoundary from "./components/MapErrorBoundary";
 import {
   LANG_ROUTES, withLangPrefixes,
 } from "./routes";
 
-// [P1-OPT] 페이지별 lazy import로 메인 엔트리 크기 감소
-// NotFound, Notice, NoticeDetail, NoticeEdit는 자주 사용되므로 eager import 유지
-import NotFound from "./pages/NotFound";
-import Notice from "./pages/Notice";
-import NoticeDetail from "./pages/NoticeDetail";
-import NoticeEdit from "./pages/NoticeEdit";
-
-// 나머지 페이지는 lazy import
+// 페이지별 lazy import로 초기 엔트리와 홈 화면의 파싱·실행 비용을 낮춘다.
+// 홈과 공지 페이지도 라우트가 선택될 때만 내려받는다.
+const Home = lazy(() => import("./pages/Home"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Notice = lazy(() => import("./pages/Notice"));
+const NoticeDetail = lazy(() => import("./pages/NoticeDetail"));
+const NoticeEdit = lazy(() => import("./pages/NoticeEdit"));
 const EventDetail = lazy(() => import("./pages/EventDetail"));
 const TreatmentRedirect = lazy(() => import("./pages/TreatmentRedirect"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));

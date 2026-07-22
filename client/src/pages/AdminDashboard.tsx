@@ -4,7 +4,7 @@
  *   AdminUsersTab / AdminPopupTab / AdminEventsTab
  *   AdminReservationsTab / AdminUnavailableSlotsTab
  */
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import type { AdminTab, AdminStats } from "@/types/admin";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -16,13 +16,17 @@ import {
   CheckCircle, ClipboardList, Megaphone, Stethoscope, Youtube,
 } from "lucide-react";
 import StarLogo from "@/components/StarLogo";
-import TreatmentsManager from "@/components/TreatmentsManager";
-import AdminUsersTab from "@/components/admin/AdminUsersTab";
-import AdminPopupTab from "@/components/admin/AdminPopupTab";
-import AdminEventsTab from "@/components/admin/AdminEventsTab";
-import AdminReservationsTab from "@/components/admin/AdminReservationsTab";
-import AdminUnavailableSlotsTab from "@/components/admin/AdminUnavailableSlotsTab";
-import { KeywordTrendsDashboard } from "@/components/KeywordTrendsDashboard";
+// 탭 콘텐츠는 선택 시에만 다운로드한다. 특히 XLSX를 포함하는 예약 탭을
+// 기본 관리자 화면에서 제외해 초기 관리자 로딩과 파싱 비용을 줄인다.
+const TreatmentsManager = lazy(() => import("@/components/TreatmentsManager"));
+const AdminUsersTab = lazy(() => import("@/components/admin/AdminUsersTab"));
+const AdminPopupTab = lazy(() => import("@/components/admin/AdminPopupTab"));
+const AdminEventsTab = lazy(() => import("@/components/admin/AdminEventsTab"));
+const AdminReservationsTab = lazy(() => import("@/components/admin/AdminReservationsTab"));
+const AdminUnavailableSlotsTab = lazy(() => import("@/components/admin/AdminUnavailableSlotsTab"));
+const KeywordTrendsDashboard = lazy(() =>
+  import("@/components/KeywordTrendsDashboard").then((module) => ({ default: module.KeywordTrendsDashboard })),
+);
 
 const TAB_META: Record<AdminTab, { label: string; desc: string }> = {
   treatments:      { label: "시술·장비 관리",       desc: "시술 및 장비 정보를 추가·수정·삭제합니다" },
@@ -233,14 +237,22 @@ export default function AdminDashboard() {
           </div>
 
           {/* ─── 탭 콘텐츠 ─── */}
-          {activeTab === "treatments"       && <TreatmentsManager />}
-          {activeTab === "treatmentsV2"     && <TreatmentsManager section="v2" />}
-          {activeTab === "users"            && <AdminUsersTab currentUser={user} />}
-          {activeTab === "popup"            && <AdminPopupTab currentUser={user} />}
-          {activeTab === "events"           && <AdminEventsTab currentUser={user} />}
-          {activeTab === "reservations"     && <AdminReservationsTab currentUser={user} />}
-          {activeTab === "unavailableSlots" && <AdminUnavailableSlotsTab currentUser={user} />}
-          {activeTab === "keywords"         && <KeywordTrendsDashboard />}
+          <Suspense
+            fallback={(
+              <div className="min-h-72 flex items-center justify-center text-sm text-slate-500" aria-busy="true">
+                관리 도구를 불러오는 중입니다…
+              </div>
+            )}
+          >
+            {activeTab === "treatments"       && <TreatmentsManager />}
+            {activeTab === "treatmentsV2"     && <TreatmentsManager section="v2" />}
+            {activeTab === "users"            && <AdminUsersTab currentUser={user} />}
+            {activeTab === "popup"            && <AdminPopupTab currentUser={user} />}
+            {activeTab === "events"           && <AdminEventsTab currentUser={user} />}
+            {activeTab === "reservations"     && <AdminReservationsTab currentUser={user} />}
+            {activeTab === "unavailableSlots" && <AdminUnavailableSlotsTab currentUser={user} />}
+            {activeTab === "keywords"         && <KeywordTrendsDashboard />}
+          </Suspense>
         </div>
       </div>
     </div>

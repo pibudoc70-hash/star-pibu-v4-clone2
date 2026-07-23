@@ -3642,3 +3642,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 섹션 헤더 텍스트 색상 #1A1A1A로 강화 (배경 #F5F0EB 대비 WCAG AA 충족)
 - [x] CSP frame-src에 Google Maps 도메인 추가
 - [x] useScrollReveal rootMargin 양수로 변경 (뷰포트 진입 시 즉시 트리거)
+
+## 찾아오시는 길 지도 서버 사이드 프록시 구현 (2026-07-23)
+- [x] server/routers/location.ts: BUILT_IN_FORGE_API_KEY로 Google Static Maps API 이미지를 base64 data URL로 반환하는 tRPC 엔드포인트 구현
+- [x] server/routers.ts: locationRouter 등록
+- [x] ContactSection.tsx: 클라이언트 사이드 buildStaticMapUrl 제거, trpc.location.getStaticMapUrl.useQuery 사용으로 교체
+- [x] 지도 정상 표시 확인 (My Browser에서 서면역 근처 스타피부과 위치 마커 표시)

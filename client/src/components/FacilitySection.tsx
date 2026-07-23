@@ -10,12 +10,12 @@ import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 
 const galleryImageSrcs = [
-  { srcWebP: "/manus-storage/metaview_room_535d3491.jpg", srcJPG: "/manus-storage/metaview_room_535d3491.jpg" },
-  { srcWebP: "/manus-storage/waiting_room_ce355737.jpg", srcJPG: "/manus-storage/waiting_room_ce355737.jpg" },
-  { srcWebP: "/manus-storage/multi_skincare_room_ebebe73e.jpg", srcJPG: "/manus-storage/multi_skincare_room_ebebe73e.jpg" },
-  { srcWebP: "/manus-storage/laser_corridor_9e114a15.jpg", srcJPG: "/manus-storage/laser_corridor_9e114a15.jpg" },
-  { srcWebP: "/manus-storage/reception_desk_f4dd56dc.jpg", srcJPG: "/manus-storage/reception_desk_f4dd56dc.jpg" },
-  { srcWebP: "/manus-storage/reception_desk_02_1fe4bedc.jpg", srcJPG: "/manus-storage/reception_desk_02_1fe4bedc.jpg" },
+  { srcWebP: "/api/storage/metaview_room_535d3491.jpg", srcJPG: "/api/storage/metaview_room_535d3491.jpg" },
+  { srcWebP: "/api/storage/waiting_room_ce355737.jpg", srcJPG: "/api/storage/waiting_room_ce355737.jpg" },
+  { srcWebP: "/api/storage/multi_skincare_room_ebebe73e.jpg", srcJPG: "/api/storage/multi_skincare_room_ebebe73e.jpg" },
+  { srcWebP: "/api/storage/laser_corridor_9e114a15.jpg", srcJPG: "/api/storage/laser_corridor_9e114a15.jpg" },
+  { srcWebP: "/api/storage/reception_desk_f4dd56dc.jpg", srcJPG: "/api/storage/reception_desk_f4dd56dc.jpg" },
+  { srcWebP: "/api/storage/reception_desk_02_1fe4bedc.jpg", srcJPG: "/api/storage/reception_desk_02_1fe4bedc.jpg" },
 ];
 
 // PC 버전용 제목 (사용자 요청대로)

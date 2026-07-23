@@ -19,7 +19,7 @@ export const ultheraClassic: TreatmentI18n = {
     zh: "提升·紧致",
   },
 
-  image: "/manus-storage/ulthera_fbd556da_9f827cec.jpg",
+  image: "/api/storage/ulthera_fbd556da_9f827cec.jpg",
 
   desc: {
     ko: "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅. 자연스러운 피부 탄력 회복.",

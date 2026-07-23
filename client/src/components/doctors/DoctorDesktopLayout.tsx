@@ -104,7 +104,7 @@ export function DoctorDesktopLayout({
               </div>
             </div>
             <img
-              src="/manus-storage/derm-specialist-badge_9b9bcf96.png"
+              src="/api/storage/derm-specialist-badge_9b9bcf96.png"
               alt={t.doctors.dermBadge.replace("\n", " ")}
               className="dr-derm-badge-img dr-derm-badge-img-desktop"
               draggable={false}

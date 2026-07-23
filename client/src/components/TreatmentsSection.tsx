@@ -38,7 +38,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: "인기",
         badgeColor: "#C8860A",
-        image: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
+        image: "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png",
         best: true,
       },
       {
@@ -49,7 +49,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/ulthera_fbd556da_9f827cec.jpg",
+        image: "/api/storage/ulthera_fbd556da_9f827cec.jpg",
         best: false,
       },
     ],
@@ -69,7 +69,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: "자문의",
         badgeColor: "#9C5FA5",
-        image: "/manus-storage/thermage-flx_20a90462_e6b7cf77.png",
+        image: "/api/storage/thermage-flx_20a90462_e6b7cf77.png",
         best: true,
       },
     ],
@@ -89,7 +89,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: "이벤트",
         badgeColor: "#E57373",
-        image: "/manus-storage/cerf_a8ccb139_39d2638a.png",
+        image: "/api/storage/cerf_a8ccb139_39d2638a.png",
         best: true,
       },
       {
@@ -100,7 +100,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/tensera-modal_9b5a5348_2e3e3932.png",
+        image: "/api/storage/tensera-modal_9b5a5348_2e3e3932.png",
         best: false,
       },
       {
@@ -111,7 +111,7 @@ const liftingGroups = [
         recovery: "1~3일",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/onda_8a3c9635_a0e514d4.png",
+        image: "/api/storage/onda_8a3c9635_a0e514d4.png",
         best: false,
       },
       {
@@ -122,7 +122,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/intense_shrink_device_497f97c6_cda74dc9.jpg",
+        image: "/api/storage/intense_shrink_device_497f97c6_cda74dc9.jpg",
         best: false,
       },
       {
@@ -133,7 +133,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/trinity-liftoning_ae069042_325d0351.png",
+        image: "/api/storage/trinity-liftoning_ae069042_325d0351.png",
         best: false,
       },
       {
@@ -144,7 +144,7 @@ const liftingGroups = [
         recovery: "3~5일",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/virtue-rf_d5248119_b5c31b9d.png",
+        image: "/api/storage/virtue-rf_d5248119_b5c31b9d.png",
         best: false,
       },
       {
@@ -155,7 +155,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/curemax_6a680589_4fcf8527.png",
+        image: "/api/storage/curemax_6a680589_4fcf8527.png",
         best: false,
       },
       {
@@ -166,7 +166,7 @@ const liftingGroups = [
         recovery: "5~7일",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/profound_93be7410_e56130d4.png",
+        image: "/api/storage/profound_93be7410_e56130d4.png",
         best: false,
       },
       {
@@ -177,7 +177,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: "NEW",
         badgeColor: "#2E7D32",
-        image: "/manus-storage/lafera_device_51c00701_6626baa4.jpg",
+        image: "/api/storage/lafera_device_51c00701_6626baa4.jpg",
         best: false,
       },
       {
@@ -188,7 +188,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/intense_shrink_device_497f97c6_cda74dc9.jpg",
+        image: "/api/storage/intense_shrink_device_497f97c6_cda74dc9.jpg",
         best: false,
       },
       {
@@ -199,7 +199,7 @@ const liftingGroups = [
         recovery: "1~2일",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/enerjet_device_03fc0d73_fa1a61fa.webp",
+        image: "/api/storage/enerjet_device_03fc0d73_fa1a61fa.webp",
         best: false,
       },
       {
@@ -210,7 +210,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/exilis_device_addd0ab6_1b565b88.png",
+        image: "/api/storage/exilis_device_addd0ab6_1b565b88.png",
         best: false,
       },
       {
@@ -221,7 +221,7 @@ const liftingGroups = [
         recovery: "당일 일상",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/dermashine_device_4b690d79_ea08c2b9.webp",
+        image: "/api/storage/dermashine_device_4b690d79_ea08c2b9.webp",
         best: false,
       },
       {
@@ -232,7 +232,7 @@ const liftingGroups = [
         recovery: "3~5일",
         badge: null,
         badgeColor: "",
-        image: "/manus-storage/shurink_6ee40d79_0511d7c1.png",
+        image: "/api/storage/shurink_6ee40d79_0511d7c1.png",
         best: false,
       },
     ],
@@ -306,7 +306,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: "인기",
     badgeColor: "#4A6FA5",
-    image: "/manus-storage/picosure_20d65c44_79fc42df.png",
+    image: "/api/storage/picosure_20d65c44_79fc42df.png",
   },
   {
     category: "색소·문신제거",
@@ -319,7 +319,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/starwalker_b95a35a4_b023c330.png",
+    image: "/api/storage/starwalker_b95a35a4_b023c330.png",
   },
   {
     category: "색소·문신제거",
@@ -332,7 +332,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/bbl-removebg-preview_f5544d44_fdb327f5.png",
+    image: "/api/storage/bbl-removebg-preview_f5544d44_fdb327f5.png",
   },
   {
     category: "색소·문신제거",
@@ -345,7 +345,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/discovery-pico_41237d61_0b78b97d.png",
+    image: "/api/storage/discovery-pico_41237d61_0b78b97d.png",
   },
   // 여드름·흉터·홍조
   {
@@ -359,7 +359,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: "특화",
     badgeColor: "#E57373",
-    image: "/manus-storage/excel-v_70001aa7_cc87addc.png",
+    image: "/api/storage/excel-v_70001aa7_cc87addc.png",
   },
   {
     category: "여드름·흉터·홍조",
@@ -372,7 +372,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/aviclear_3d94823e_d47688ce.png",
+    image: "/api/storage/aviclear_3d94823e_d47688ce.png",
   },
   {
     category: "여드름·흉터·홍조",
@@ -385,7 +385,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/playduo_5670ee42_253bcb67.png",
+    image: "/api/storage/playduo_5670ee42_253bcb67.png",
   },
   {
     category: "여드름·흉터·홍조",
@@ -398,7 +398,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/tixel_fba3887b_1851f5ad.png",
+    image: "/api/storage/tixel_fba3887b_1851f5ad.png",
   },
   // 무좀·액취증·다한증
   {
@@ -412,7 +412,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/oniko_46e4998f_29f69cda.png",
+    image: "/api/storage/oniko_46e4998f_29f69cda.png",
   },
   {
     category: "무좀·액취증·다한증",
@@ -425,7 +425,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/miradry_07125c02_37af7d4a.png",
+    image: "/api/storage/miradry_07125c02_37af7d4a.png",
   },
   {
     category: "무좀·액취증·다한증",
@@ -438,7 +438,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/enerjet_afcf856d_370d2a25.png",
+    image: "/api/storage/enerjet_afcf856d_370d2a25.png",
   },
   {
     category: "무좀·액취증·다한증",
@@ -451,7 +451,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/excimer-v7_5a8a4340_abe47dad.jpg",
+    image: "/api/storage/excimer-v7_5a8a4340_abe47dad.jpg",
   },
   {
     category: "무좀·액취증·다한증",
@@ -464,7 +464,7 @@ const otherTreatments = [
     price: "상담 후 결정",
     badge: null,
     badgeColor: "",
-    image: "/manus-storage/pento9900_4e088bc1_e9bb82ba.png",
+    image: "/api/storage/pento9900_4e088bc1_e9bb82ba.png",
   },
 ];
 
@@ -483,7 +483,7 @@ const rubyPicoLaser = {
   price: "상담 후 결정",
   badge: "추천",
   badgeColor: "#4A6FA5",
-  image: "/manus-storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
+  image: "/api/storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
 };
 
 // 주요시술 순서: 눈밑지방재배치, 써마지FLX, 울쎄라프라임, 안면홍조치료, 루비피코레이저

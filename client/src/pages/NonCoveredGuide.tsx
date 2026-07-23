@@ -179,7 +179,7 @@ export default function NonCoveredGuide() {
           {/* 비급여 진료비 가격표 이미지 */}
           <div className="mb-10 rounded-2xl overflow-hidden shadow-md border border-blue-200">
             <img
-              src="/manus-storage/pc_sub01_06_d54a5db8.webp"
+              src="/api/storage/pc_sub01_06_d54a5db8.webp"
               alt={lang === "ko" ? "비급여 진료비 가격표" : lang === "ja" ? "非保険診療費用価格表" : lang === "zh" ? "非医保诊疗费用价格表" : "Non-Covered Medical Fees Price List"}
               className="w-full h-auto"
             />

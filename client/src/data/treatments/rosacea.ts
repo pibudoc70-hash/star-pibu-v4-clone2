@@ -27,7 +27,7 @@ export const rosacea: TreatmentI18n = {
   },
   badgeColor: "#DC2626",
 
-  image: "/manus-storage/excel-v_70001aa7_cc87addc.png",
+  image: "/api/storage/excel-v_70001aa7_cc87addc.png",
 
   desc: {
     ko: "Excel V+ 혈관 레이저로 안면홍조, 모세혈관 확장, 붉은 피부를 효과적으로 개선.",

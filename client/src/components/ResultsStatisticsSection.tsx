@@ -13,19 +13,19 @@ export default function ResultsStatisticsSection() {
   const doctors = [
     {
       id: 1,
-      image: '/manus-storage/01_cd3dce52.jpg',
+      image: '/api/storage/01_cd3dce52.jpg',
       title: r.whyItems[0].title,
       description: r.whyItems[0].desc,
     },
     {
       id: 2,
-      image: '/manus-storage/02_92c1e337.jpg',
+      image: '/api/storage/02_92c1e337.jpg',
       title: r.whyItems[1].title,
       description: r.whyItems[1].desc,
     },
     {
       id: 3,
-      image: '/manus-storage/03_a440359e.jpg',
+      image: '/api/storage/03_a440359e.jpg',
       title: r.whyItems[2].title,
       description: r.whyItems[2].desc,
     },

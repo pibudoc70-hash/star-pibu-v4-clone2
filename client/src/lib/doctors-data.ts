@@ -12,15 +12,15 @@ import { Award, GraduationCap, Stethoscope, Zap } from "lucide-react";
 
 export const DR_JO_IMAGE_DESKTOP_JPG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/01_5e3176cb.png";
-export const DR_JO_IMAGE_MOBILE_WEBP = "/manus-storage/dr_jo_profile-mobile_ee5a7e09_ade1e10f.webp";
+export const DR_JO_IMAGE_MOBILE_WEBP = "/api/storage/dr_jo_profile-mobile_ee5a7e09_ade1e10f.webp";
 
 export const DR_WOO_IMAGE_DESKTOP_JPG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/0211_8cfcf452.png";
-export const DR_WOO_IMAGE_MOBILE_WEBP = "/manus-storage/sub_01_02_img2-mobile_ceacc144_5e5b82a2.webp";
+export const DR_WOO_IMAGE_MOBILE_WEBP = "/api/storage/sub_01_02_img2-mobile_ceacc144_5e5b82a2.webp";
 
 export const DR_LEE_IMAGE_DESKTOP_JPG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/03_46691618.png";
-export const DR_LEE_IMAGE_MOBILE_WEBP = "/manus-storage/sub_01_02_img5-mobile_2e57f5ca_5c1f8be0.webp";
+export const DR_LEE_IMAGE_MOBILE_WEBP = "/api/storage/sub_01_02_img5-mobile_2e57f5ca_5c1f8be0.webp";
 
 export const DR_JO_CARD_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/01_5e3176cb.png";

@@ -39,7 +39,7 @@ const equipmentList: Equipment[] = [
     name: "큐어맥스",
     category: "리프팅",
     tone: "A",
-    image: "/manus-storage/curemax_baf2c9ec_91a0fb75.png",
+    image: "/api/storage/curemax_baf2c9ec_91a0fb75.png",
     desc: "최신 고강도 집속 초음파 리프팅",
   },
   {
@@ -47,7 +47,7 @@ const equipmentList: Equipment[] = [
     name: "울쎄라피 프라임",
     category: "리프팅",
     tone: "A",
-    image: "/manus-storage/ulthera-prime_1_798484e7_c9058abb.png",
+    image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png",
     desc: "리프팅 만족도 1위 울쎄라피 최신 버전",
   },
   {
@@ -55,7 +55,7 @@ const equipmentList: Equipment[] = [
     name: "써마지 FLX",
     category: "리프팅",
     tone: "B",
-    image: "/manus-storage/thermage-flx_f1163ff8_03a0e6ae.png",
+    image: "/api/storage/thermage-flx_f1163ff8_03a0e6ae.png",
     desc: "조시형 원장 공식 자문의 장비. 고주파 탄력 개선",
   },
   {
@@ -63,7 +63,7 @@ const equipmentList: Equipment[] = [
     name: "세르프 리프팅",
     category: "리프팅",
     tone: "C",
-    image: "/manus-storage/cerf_4ade36ff_66c5ad2c.png",
+    image: "/api/storage/cerf_4ade36ff_66c5ad2c.png",
     desc: "최신 고강도 RF 리프팅 장비",
   },
   {
@@ -71,7 +71,7 @@ const equipmentList: Equipment[] = [
     name: "올리지오X",
     category: "RF고주파 리프팅",
     tone: "B",
-    image: "/manus-storage/oligio-x_e1e54986_86f0c9be.png",
+    image: "/api/storage/oligio-x_e1e54986_86f0c9be.png",
     desc: "RF 고주파 리프팅의 새로운 기준",
   },
   {
@@ -79,7 +79,7 @@ const equipmentList: Equipment[] = [
     name: "슈링크 유니버스",
     category: "리프팅",
     tone: "A",
-    image: "/manus-storage/shurink_77cc74d6_6b7e0dec.png",
+    image: "/api/storage/shurink_77cc74d6_6b7e0dec.png",
     desc: "집속 초음파 리프팅의 진화",
   },
   {
@@ -87,7 +87,7 @@ const equipmentList: Equipment[] = [
     name: "프로파운드",
     category: "리프팅",
     tone: "C",
-    image: "/manus-storage/profound_481e0c83_b36d0ef8.png",
+    image: "/api/storage/profound_481e0c83_b36d0ef8.png",
     desc: "진피층 직접 자극 RF 리프팅",
   },
   {
@@ -95,7 +95,7 @@ const equipmentList: Equipment[] = [
     name: "트리니티 리프토닝",
     category: "리프팅 토닝",
     tone: "B",
-    image: "/manus-storage/trinity-liftoning_4ef97ebc_90a2d003.png",
+    image: "/api/storage/trinity-liftoning_4ef97ebc_90a2d003.png",
     desc: "리프팅과 토닝을 동시에",
   },
   {
@@ -103,7 +103,7 @@ const equipmentList: Equipment[] = [
     name: "버츄RF",
     category: "RF고주파 리프팅",
     tone: "A",
-    image: "/manus-storage/virtue-rf_47204eff_0ae44252.png",
+    image: "/api/storage/virtue-rf_47204eff_0ae44252.png",
     desc: "마이크로니들 RF 리프팅",
   },
   {
@@ -111,7 +111,7 @@ const equipmentList: Equipment[] = [
     name: "텐써마",
     category: "피부탄력 주름개선",
     tone: "C",
-    image: "/manus-storage/onda_f7d84892_4919974a.png",
+    image: "/api/storage/onda_f7d84892_4919974a.png",
     desc: "피부 탄력과 주름 개선",
   },
   {
@@ -119,7 +119,7 @@ const equipmentList: Equipment[] = [
     name: "온다 리프팅",
     category: "주름 탄력",
     tone: "B",
-    image: "/manus-storage/onda_f7d84892_4919974a.png",
+    image: "/api/storage/onda_f7d84892_4919974a.png",
     desc: "쿨웨이브 기술로 주름 탄력 개선",
   },
   {
@@ -127,7 +127,7 @@ const equipmentList: Equipment[] = [
     name: "브이로 리프팅",
     category: "주름 탄력",
     tone: "A",
-    image: "/manus-storage/viro_fb2f8b4c_dd3eab38.png",
+    image: "/api/storage/viro_fb2f8b4c_dd3eab38.png",
     desc: "주름과 탄력을 동시에 개선",
   },
   {
@@ -135,7 +135,7 @@ const equipmentList: Equipment[] = [
     name: "울쎄라",
     category: "리프팅",
     tone: "A",
-    image: "/manus-storage/ulthera_d4b3cefc_a2ff878d.jpg",
+    image: "/api/storage/ulthera_d4b3cefc_a2ff878d.jpg",
     desc: "집속 초음파 리프팅의 원조",
   },
   {
@@ -143,7 +143,7 @@ const equipmentList: Equipment[] = [
     name: "엑실리스 울트라",
     category: "리프팅 타이트닝",
     tone: "B",
-    image: "/manus-storage/exilis-ultra_5449a8ed_09b4fe4b.png",
+    image: "/api/storage/exilis-ultra_5449a8ed_09b4fe4b.png",
     desc: "RF+초음파 복합 리프팅 타이트닝",
   },
   {
@@ -151,7 +151,7 @@ const equipmentList: Equipment[] = [
     name: "라페라 리프팅",
     category: "얼굴탄력 리프팅",
     tone: "C",
-    image: "/manus-storage/lasemd-ultra_a5fd8612_006e0525.png",
+    image: "/api/storage/lasemd-ultra_a5fd8612_006e0525.png",
     desc: "고주파 얼굴 탄력 리프팅",
   },
   {
@@ -159,7 +159,7 @@ const equipmentList: Equipment[] = [
     name: "엘싸",
     category: "초음파 지방흡입",
     tone: "B",
-    image: "/manus-storage/elsa_e9085db0_6bf86e39.png",
+    image: "/api/storage/elsa_e9085db0_6bf86e39.png",
     desc: "초음파 지방흡입 장비",
   },
   // ─── 여드름·흉터·홍조 ───
@@ -168,7 +168,7 @@ const equipmentList: Equipment[] = [
     name: "아비클리어",
     category: "여드름 치료",
     tone: "C",
-    image: "/manus-storage/aviclear_2d9cab50_01f97741.png",
+    image: "/api/storage/aviclear_2d9cab50_01f97741.png",
     desc: "FDA 승인 여드름 전용 레이저",
   },
   {
@@ -176,7 +176,7 @@ const equipmentList: Equipment[] = [
     name: "플라듀오 레이저",
     category: "여드름 치료",
     tone: "A",
-    image: "/manus-storage/playduo_6eccf485_7b4b7fa8.png",
+    image: "/api/storage/playduo_6eccf485_7b4b7fa8.png",
     desc: "여드름 치료 전용 레이저",
   },
   {
@@ -184,7 +184,7 @@ const equipmentList: Equipment[] = [
     name: "틱셀 레이저",
     category: "여드름 흉터 모공",
     tone: "B",
-    image: "/manus-storage/tixel_98a5cbdf_3d21a076.png",
+    image: "/api/storage/tixel_98a5cbdf_3d21a076.png",
     desc: "여드름·흉터·모공 개선 레이저",
   },
   {
@@ -192,7 +192,7 @@ const equipmentList: Equipment[] = [
     name: "미라젯",
     category: "흉터 안티에이징",
     tone: "C",
-    image: "/manus-storage/mirajet_9e79e7c4_4f7538f7.png",
+    image: "/api/storage/mirajet_9e79e7c4_4f7538f7.png",
     desc: "흉터 안티에이징 레이저",
   },
   {
@@ -200,7 +200,7 @@ const equipmentList: Equipment[] = [
     name: "트리필 프로",
     category: "흉터 주름 튼살",
     tone: "A",
-    image: "/manus-storage/trifill-pro_642c1b7b_8686af30.jpg",
+    image: "/api/storage/trifill-pro_642c1b7b_8686af30.jpg",
     desc: "흉터·주름·튼살 복합 치료",
   },
   {
@@ -208,7 +208,7 @@ const equipmentList: Equipment[] = [
     name: "아드바티엑스",
     category: "흉터 탄력",
     tone: "B",
-    image: "/manus-storage/adva-tx_e865914d_6315b701.png",
+    image: "/api/storage/adva-tx_e865914d_6315b701.png",
     desc: "흉터 탄력 개선 레이저",
   },
   {
@@ -216,7 +216,7 @@ const equipmentList: Equipment[] = [
     name: "엑셀 V플러스",
     category: "색소·혈관",
     tone: "C",
-    image: "/manus-storage/excel-v_5364dd04_e71c3bd4.png",
+    image: "/api/storage/excel-v_5364dd04_e71c3bd4.png",
     desc: "혈관·색소 치료의 표준",
   },
   // ─── 색소·문신 제거 ───
@@ -225,7 +225,7 @@ const equipmentList: Equipment[] = [
     name: "디스커버리 피코",
     category: "색소 문신제거",
     tone: "A",
-    image: "/manus-storage/discovery-pico_41237d61_0b78b97d.png",
+    image: "/api/storage/discovery-pico_41237d61_0b78b97d.png",
     desc: "피코초 레이저 색소·문신 제거",
   },
   {
@@ -233,7 +233,7 @@ const equipmentList: Equipment[] = [
     name: "인라이튼 루비피코",
     category: "색소치료 문신제거",
     tone: "B",
-    image: "/manus-storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
+    image: "/api/storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
     desc: "3세대 피코초 레이저",
   },
   {
@@ -241,7 +241,7 @@ const equipmentList: Equipment[] = [
     name: "스타워커 MAQX",
     category: "색소치료",
     tone: "C",
-    image: "/manus-storage/starwalker_7ba78892_61be4721.png",
+    image: "/api/storage/starwalker_7ba78892_61be4721.png",
     desc: "색소 치료 전문 레이저",
   },
   {
@@ -249,7 +249,7 @@ const equipmentList: Equipment[] = [
     name: "피코슈어",
     category: "색소 문신제거",
     tone: "A",
-    image: "/manus-storage/picosure_71bad6af_8e64bc90.png",
+    image: "/api/storage/picosure_71bad6af_8e64bc90.png",
     desc: "755nm 피코초 레이저",
   },
   {
@@ -257,7 +257,7 @@ const equipmentList: Equipment[] = [
     name: "펜토 9900",
     category: "색소 탄력",
     tone: "B",
-    image: "/manus-storage/pento9900_3af14ef2_b901c4f9.png",
+    image: "/api/storage/pento9900_3af14ef2_b901c4f9.png",
     desc: "색소 탄력 복합 치료",
   },
   {
@@ -265,7 +265,7 @@ const equipmentList: Equipment[] = [
     name: "줄 레이저",
     category: "색소 흉터 박피",
     tone: "C",
-    image: "/manus-storage/healer_6ec6c8e4_bb1418ab.png",
+    image: "/api/storage/healer_6ec6c8e4_bb1418ab.png",
     desc: "색소·흉터·박피 다목적 레이저",
   },
   {
@@ -273,7 +273,7 @@ const equipmentList: Equipment[] = [
     name: "라셈드 울트라",
     category: "피부탄력 재생",
     tone: "A",
-    image: "/manus-storage/lasemd-ultra_a5fd8612_006e0525.png",
+    image: "/api/storage/lasemd-ultra_a5fd8612_006e0525.png",
     desc: "피부 탄력 재생 레이저",
   },
   {
@@ -281,7 +281,7 @@ const equipmentList: Equipment[] = [
     name: "네오젠 플라즈마",
     category: "피부재생",
     tone: "B",
-    image: "/manus-storage/lasemd-ultra_a5fd8612_006e0525.png",
+    image: "/api/storage/lasemd-ultra_a5fd8612_006e0525.png",
     desc: "플라즈마 에너지 피부 재생",
   },
   // ─── 무좀·다한증·액취증 ───
@@ -290,7 +290,7 @@ const equipmentList: Equipment[] = [
     name: "엑셀 토우",
     category: "손·발톱무좀",
     tone: "C",
-    image: "/manus-storage/excel-toe_ee49101f_8d0f3c37.png",
+    image: "/api/storage/excel-toe_ee49101f_8d0f3c37.png",
     desc: "손·발톱 무좀 전용 레이저",
   },
   {
@@ -298,7 +298,7 @@ const equipmentList: Equipment[] = [
     name: "오니코 레이저",
     category: "발톱무좀",
     tone: "A",
-    image: "/manus-storage/oniko_c1743b24_23064067.png",
+    image: "/api/storage/oniko_c1743b24_23064067.png",
     desc: "발톱 무좀 전용 레이저",
   },
   {
@@ -306,7 +306,7 @@ const equipmentList: Equipment[] = [
     name: "미라드라이 프레쉬",
     category: "다한증 액취증",
     tone: "B",
-    image: "/manus-storage/miradry_9f46ebac_257e4cbd.png",
+    image: "/api/storage/miradry_9f46ebac_257e4cbd.png",
     desc: "땀샘 영구 제거. 다한증·액취증 동시 해결",
   },
   {
@@ -314,7 +314,7 @@ const equipmentList: Equipment[] = [
     name: "더마샤인 프로",
     category: "보습 탄력",
     tone: "C",
-    image: "/manus-storage/lasemd-ultra_a5fd8612_006e0525.png",
+    image: "/api/storage/lasemd-ultra_a5fd8612_006e0525.png",
     desc: "피부 보습 탄력 개선",
   },
 ];

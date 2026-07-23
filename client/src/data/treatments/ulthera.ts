@@ -28,8 +28,8 @@ export const ulthera: TreatmentI18n = {
   },
   badgeColor: "#C8860A",
 
-  image: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
-  cardBannerImage: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
+  image: "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png",
+  cardBannerImage: "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png",
 
   desc: {
     ko: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",

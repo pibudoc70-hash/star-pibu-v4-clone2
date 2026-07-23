@@ -67,7 +67,7 @@ export default function Header() {
           >
             {/* 심볼 아이콘만 표시 */}
             <img
-              src="/manus-storage/star_logo_d0ae8bbf.webp"
+              src="/api/storage/star_logo_d0ae8bbf.webp"
               alt="스타피부과 로고"
               style={{
                 width: "38px",

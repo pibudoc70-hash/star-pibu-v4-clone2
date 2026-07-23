@@ -27,7 +27,7 @@ export const picoLaser: TreatmentI18n = {
   },
   badgeColor: "#C8860A",
 
-  image: "/manus-storage/picosure_20d65c44_79fc42df.png",
+  image: "/api/storage/picosure_20d65c44_79fc42df.png",
 
   desc: {
     ko: "기미·잡티·문신 제거에 탁월. 피코초 단위의 초단파 레이저로 색소 분해. 주변 조직 손상 최소화.",

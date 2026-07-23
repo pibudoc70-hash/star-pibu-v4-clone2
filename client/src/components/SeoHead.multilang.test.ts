@@ -45,19 +45,19 @@ describe("OG_IMAGE_LOCALIZED", () => {
   });
 
   it("ko OG 이미지 URL이 올바른 경로여야 한다", () => {
-    expect(OG_IMAGE_LOCALIZED.ko).toBe("/manus-storage/og-image-ko_5fc1105f.jpg");
+    expect(OG_IMAGE_LOCALIZED.ko).toBe("/api/storage/og-image-ko_5fc1105f.jpg");
   });
 
   it("en OG 이미지 URL이 올바른 경로여야 한다", () => {
-    expect(OG_IMAGE_LOCALIZED.en).toBe("/manus-storage/og-image-en_dc8cb653.jpg");
+    expect(OG_IMAGE_LOCALIZED.en).toBe("/api/storage/og-image-en_dc8cb653.jpg");
   });
 
   it("ja OG 이미지 URL이 올바른 경로여야 한다", () => {
-    expect(OG_IMAGE_LOCALIZED.ja).toBe("/manus-storage/og-image-ja_273d0e42.jpg");
+    expect(OG_IMAGE_LOCALIZED.ja).toBe("/api/storage/og-image-ja_273d0e42.jpg");
   });
 
   it("zh OG 이미지 URL이 올바른 경로여야 한다", () => {
-    expect(OG_IMAGE_LOCALIZED.zh).toBe("/manus-storage/og-image-zh_31a7313b.jpg");
+    expect(OG_IMAGE_LOCALIZED.zh).toBe("/api/storage/og-image-zh_31a7313b.jpg");
   });
 
   it("구 cloudfront URL이 남아있지 않아야 한다 (회귀 방지)", () => {

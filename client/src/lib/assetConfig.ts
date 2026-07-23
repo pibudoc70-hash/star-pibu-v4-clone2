@@ -6,15 +6,15 @@
  * - 클리닉 대표 이미지: constants.ts CLINIC_INFO.image 동기화
  *
  * 에셋 URL 변경 시 이 파일만 수정하면 됩니다.
- * 배포 경로: /manus-storage/{key} (Manus 내장 스토리지)
+ * 배포 경로: /api/storage/{key} (Manus 내장 스토리지)
  */
 
 /** OG 이미지 URL — SNS 공유 시 사용 (1200×630px) */
 export const OG_IMAGES = {
-  ko: "/manus-storage/og-image-ko_5fc1105f.jpg",
-  en: "/manus-storage/og-image-en_dc8cb653.jpg",
-  ja: "/manus-storage/og-image-ja_273d0e42.jpg",
-  zh: "/manus-storage/og-image-zh_31a7313b.jpg",
+  ko: "/api/storage/og-image-ko_5fc1105f.jpg",
+  en: "/api/storage/og-image-en_dc8cb653.jpg",
+  ja: "/api/storage/og-image-ja_273d0e42.jpg",
+  zh: "/api/storage/og-image-zh_31a7313b.jpg",
 } as const;
 
 /**

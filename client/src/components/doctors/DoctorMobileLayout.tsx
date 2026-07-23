@@ -134,7 +134,7 @@ export function DoctorMobileLayout({
                     <p className="font-montserrat mt-0.5 dr-mob-name-en">{d.nameEn}</p>
                   </div>
                   <img
-                    src="/manus-storage/derm-specialist-badge_9b9bcf96.png"
+                    src="/api/storage/derm-specialist-badge_9b9bcf96.png"
                     alt={t.doctors.dermBadge.replace("\n", " ")}
                     className="dr-derm-badge-img dr-derm-badge-img-mobile"
                     draggable={false}

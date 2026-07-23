@@ -66,7 +66,7 @@ function buildCSP(isDev: boolean): string {
     "https://img.youtube.com",
     "https://i.ytimg.com",
     "https://lh3.googleusercontent.com",
-    // Manus 스토리지 (상대 경로 /manus-storage/ 는 self로 커버)
+    // Manus 스토리지 (상대 경로 /api/storage/ 는 self로 커버)
   ].join(" ");
 
   const connectSrc = [

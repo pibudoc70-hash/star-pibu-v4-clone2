@@ -22,7 +22,18 @@ function getMimeType(key: string): string {
 }
 
 export function registerStorageProxy(app: Express) {
+  // /manus-storage/* 경로도 하위 호환성을 위해 유지
   app.get("/manus-storage/*", async (req, res) => {
+    const key = (req.params as Record<string, string>)[0];
+    if (key) {
+      res.redirect(307, `/api/storage/${key}`);
+    } else {
+      res.status(400).send("Missing storage key");
+    }
+  });
+
+  // /api/storage/* 경로: Cloudflare 규칙 우회 (origin 서버 직접 도달)
+  app.get("/api/storage/*", async (req, res) => {
     const key = (req.params as Record<string, string>)[0];
     if (!key) {
       res.status(400).send("Missing storage key");

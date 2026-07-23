@@ -28,8 +28,8 @@ export const thermage: TreatmentI18n = {
   },
   badgeColor: "#9C5FA5",
 
-  image: "/manus-storage/thermage-flx_20a90462_e6b7cf77.png",
-  cardBannerImage: "/manus-storage/thermage-flx_20a90462_e6b7cf77.png",
+  image: "/api/storage/thermage-flx_20a90462_e6b7cf77.png",
+  cardBannerImage: "/api/storage/thermage-flx_20a90462_e6b7cf77.png",
 
   desc: {
     ko: "4세대 고주파 리프팅의 정점. 피부 깊은 층 콜라겐을 자극해 탄력 개선과 주름 완화에 탁월. 조시형 원장 공식 자문의.",

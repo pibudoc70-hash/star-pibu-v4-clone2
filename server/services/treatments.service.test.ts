@@ -96,7 +96,7 @@ describe("uploadTreatmentImage", () => {
     // 1×1 투명 PNG (base64)
     const tinyPng =
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
-    mockStoragePut.mockResolvedValue({ key: "treatments/test.png", url: "/manus-storage/test.png" } as never);
+    mockStoragePut.mockResolvedValue({ key: "treatments/test.png", url: "/api/storage/test.png" } as never);
 
     const result = await uploadTreatmentImage({
       base64: tinyPng,
@@ -104,7 +104,7 @@ describe("uploadTreatmentImage", () => {
       mimeType: "image/png",
     });
 
-    expect(result.url).toBe("/manus-storage/test.png");
+    expect(result.url).toBe("/api/storage/test.png");
     expect(mockStoragePut).toHaveBeenCalledOnce();
     const [key, , mime] = mockStoragePut.mock.calls[0];
     expect(key).toMatch(/^treatments\//);
@@ -114,7 +114,7 @@ describe("uploadTreatmentImage", () => {
   it("data URL 접두사(data:image/jpeg;base64,...)를 자동으로 제거한다", async () => {
     const tinyPng =
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
-    mockStoragePut.mockResolvedValue({ key: "treatments/t.jpg", url: "/manus-storage/t.jpg" } as never);
+    mockStoragePut.mockResolvedValue({ key: "treatments/t.jpg", url: "/api/storage/t.jpg" } as never);
 
     await uploadTreatmentImage({
       base64: `data:image/jpeg;base64,${tinyPng}`,
@@ -147,7 +147,7 @@ describe("uploadTreatmentImage", () => {
   it("mimeType 미입력 시 image/jpeg를 기본값으로 사용한다", async () => {
     const tinyPng =
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
-    mockStoragePut.mockResolvedValue({ key: "treatments/t.jpg", url: "/manus-storage/t.jpg" } as never);
+    mockStoragePut.mockResolvedValue({ key: "treatments/t.jpg", url: "/api/storage/t.jpg" } as never);
 
     await uploadTreatmentImage({ base64: tinyPng, fileName: "photo.jpg" });
 

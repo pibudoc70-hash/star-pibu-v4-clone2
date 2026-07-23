@@ -31,7 +31,7 @@ export const underEyeFat: TreatmentI18n = {
   },
   badgeColor: "#4A6FA5",
 
-  image: "/manus-storage/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF_1bdb9103.webp",
+  image: "/api/storage/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF_1bdb9103.webp",
   cardBannerImage: `${CDN2}/눈밑지방_4c0b8a51.png`,
 
   desc: {

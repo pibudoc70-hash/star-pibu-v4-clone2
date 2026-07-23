@@ -7,7 +7,7 @@
  *   1. /api/* requests are NEVER cached — always pass through to network.
  *      Caching tRPC responses causes "Unexpected token '<'" JSON parse errors
  *      when the SW serves stale HTML instead of JSON.
- *   2. /manus-storage/* requests are NEVER cached — signed URLs expire.
+ *   2. /api/storage/* requests are NEVER cached — signed URLs expire.
  *   3. Only GET requests are handled; non-GET passes through unmodified.
  *   4. Only same-origin "basic" responses are stored in cache.
  *

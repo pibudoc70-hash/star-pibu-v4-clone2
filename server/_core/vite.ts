@@ -32,7 +32,7 @@ export async function setupVite(app: Express, server: Server) {
 
     // /api/* 경로는 SPA fallback에서 제외 — tRPC/OAuth/storage 요청에 HTML 반환 방지
     // 이 가드가 없으면 서버 재시작 중 Vite 미들웨어가 tRPC 요청을 가로채 HTML을 반환할 수 있음
-    if (url.startsWith("/api/") || url.startsWith("/manus-storage/")) {
+    if (url.startsWith("/api/") || url.startsWith("/api/storage/")) {
       return next();
     }
 

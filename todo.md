@@ -3648,3 +3648,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] server/routers.ts: locationRouter 등록
 - [x] ContactSection.tsx: 클라이언트 사이드 buildStaticMapUrl 제거, trpc.location.getStaticMapUrl.useQuery 사용으로 교체
 - [x] 지도 정상 표시 확인 (My Browser에서 서면역 근처 스타피부과 위치 마커 표시)
+
+## 버그 수정: 이미지 깨짐 (쿠키 초기화 후)
+- [x] 이전 프로젝트 CDN(104196446) URL 참조 전체 파악
+- [x] 이전 CDN에서 이미지 다운로드 및 현재 프로젝트 스토리지에 재업로드
+- [x] 403 이미지는 현재 프로젝트의 대체 이미지로 교체
+- [x] 코드에서 이전 CDN URL → /manus-storage/ URL로 전체 교체 (207개 교체)
+- [x] CDN 변수 정의 제거 (사용되지 않는 const CDN 제거)

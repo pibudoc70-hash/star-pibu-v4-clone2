@@ -69,7 +69,7 @@ export const events: EventItem[] = [
     iconBg: "#C8ECEE",
     iconType: "zap",
     cta: "이벤트 문의",
-    deviceImage: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/cerf-device-v2_f0ba33a0.png",
+    deviceImage: "/manus-storage/cerf-device-v2_f0ba33a0_982683d2.png",
     deviceImageAlt: "XERF 세르프 리프팅 장비",
   },
   {
@@ -125,9 +125,9 @@ export const events: EventItem[] = [
     iconBg: "#C8D8F0",
     iconType: "sparkles",
     cta: "이벤트 문의",
-    deviceImage: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/ultherapy-prime-v2_a733133e.jpg",
+    deviceImage: "/manus-storage/ultherapy-prime-v2_a733133e_db3b55de.jpg",
     deviceImageAlt: "울쎄라피 프라임 + 써마지 FLX 장비",
-    deviceImage2: "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/thermage-flx-device2_f28cc552.png",
+    deviceImage2: "/manus-storage/thermage-flx-device2_f28cc552_b29a60f0.png",
     deviceImage2Alt: "써마지 FLX 장비",
   },
   {

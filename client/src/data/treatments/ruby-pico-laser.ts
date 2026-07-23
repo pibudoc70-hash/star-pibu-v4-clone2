@@ -1,6 +1,5 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
 export const rubyPicoLaser: TreatmentI18n = {
   slug: "ruby-pico-laser",
@@ -28,7 +27,7 @@ export const rubyPicoLaser: TreatmentI18n = {
   },
   badgeColor: "#2563EB",
 
-  image: `${CDN}/인라이튼루비피코_43c3fbfb.png`,
+  image: "/manus-storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
 
   desc: {
     ko: "3세대 피코초 레이저. 기미·잡티·색소 제거에 탁월하며 피부 톤 개선 및 콜라겐 생성 유도.",

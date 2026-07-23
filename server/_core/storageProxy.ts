@@ -38,7 +38,8 @@ export function registerStorageProxy(app: Express) {
         return;
       }
 
-      res.set("Cache-Control", "no-store");
+      // 이미지를 브라우저에 1시간 캐시 (콜드 스타트 시 이미지 깨짐 방지)
+      res.set("Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
       res.redirect(307, url);
     } catch (err) {
       console.error("[StorageProxy] failed:", err);

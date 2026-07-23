@@ -1,6 +1,5 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
 export const ultheraClassic: TreatmentI18n = {
   slug: "ulthera-classic",
@@ -20,7 +19,7 @@ export const ultheraClassic: TreatmentI18n = {
     zh: "提升·紧致",
   },
 
-  image: `${CDN}/울쎄라_fbd556da.jpg`,
+  image: "/manus-storage/ulthera_fbd556da_9f827cec.jpg",
 
   desc: {
     ko: "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅. 자연스러운 피부 탄력 회복.",

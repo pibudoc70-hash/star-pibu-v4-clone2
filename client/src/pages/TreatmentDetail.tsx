@@ -81,7 +81,6 @@ function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string
 
 // 모든 시술 데이터를 한 곳에서 관리
 const getAllTreatments = () => {
-  const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
   // 리프팅 시술
   const liftingTreatments = [
@@ -94,7 +93,7 @@ const getAllTreatments = () => {
       recovery: "당일 일상",
       price: "상담 후 결정",
       badge: "인기",
-      image: `${CDN}/울쎄라피프라임_1_0daba485.png`,
+      image: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
       effect: "피부 탄력 개선, 주름 완화, 얼굴 윤곽 개선, 콜라겐 생성 유도, 자연스러운 리프팅 효과",
       detailedDesc: "울쎄라피 프라임은 초음파 에너지를 이용하여 피부 깊은 층의 SMAS층까지 자극합니다. 절개 없이 자연스러운 리프팅 효과를 얻을 수 있으며, 시술 후 즉시 일상생활이 가능합니다.",
       faqs: [
@@ -125,7 +124,7 @@ const getAllTreatments = () => {
       recovery: "당일 일상",
       price: "상담 후 결정",
       badge: null,
-      image: `${CDN}/울쎄라_fbd556da.jpg`,
+      image: "/manus-storage/ulthera_fbd556da_9f827cec.jpg",
       effect: "피부 탄력 개선, 주름 완화, 얼굴 리프팅, 콜라겐 재생, 피부 톤 개선",
       detailedDesc: "정통 울쎄라는 초음파 에너지를 이용한 비침습적 리프팅 시술입니다. 자연스러운 결과와 빠른 회복이 특징입니다.",
       faqs: [
@@ -156,7 +155,7 @@ const getAllTreatments = () => {
       recovery: "당일 일상",
       price: "상담 후 결정",
       badge: "자문의",
-      image: `${CDN}/써마지FLX_20a90462.png`,
+      image: "/manus-storage/thermage-flx_20a90462_e6b7cf77.png",
       effect: "피부 탄력 개선, 주름 완화, 모공 축소, 콜라겐 생성 유도, 즉각적인 리프팅 효과",
       detailedDesc: "써마지 FLX는 4세대 고주파 기술로 피부 깊은 층의 콜라겐을 자극합니다. 시술 직후부터 효과를 느낄 수 있으며, 지속적인 개선이 일어납니다.",
       faqs: [
@@ -226,7 +225,7 @@ const getAllTreatments = () => {
       recovery: "3~5일",
       price: "상담 후 결정",
       badge: "인기",
-      image: `${CDN}/피코슈어_20d65c44.png`,
+      image: "/manus-storage/picosure_20d65c44_79fc42df.png",
       effect: "기미 제거, 잡티 개선, 문신 제거, 피부 톤 균일화, 색소 침착 완화",
       detailedDesc: "피코레이저는 피코초 단위의 초단파를 이용하여 색소를 분해합니다. 주변 조직 손상을 최소화하면서 효과적인 색소 제거가 가능합니다.",
       faqs: [
@@ -257,7 +256,7 @@ const getAllTreatments = () => {
       recovery: "3~5일",
       price: "상담 후 결정",
       badge: "추천",
-      image: `${CDN}/인라이튼루비피코_43c3fbfb.png`,
+      image: "/manus-storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
       effect: "기미 제거, 잡티 개선, 피부 톤 균일화, 콜라겐 생성 유도, 피부 탄력 개선",
       detailedDesc: "루비피코레이저는 3세대 피코초 기술로 기미, 잡티, 색소를 효과적으로 제거합니다. 동시에 콜라겐 생성을 유도하여 피부 탄력도 개선됩니다.",
       faqs: [
@@ -292,7 +291,7 @@ const getAllTreatments = () => {
       recovery: "1~3일",
       price: "상담 후 결정",
       badge: "특화",
-      image: `${CDN}/엑셀V_70001aa7.png`,
+      image: "/manus-storage/excel-v_70001aa7_cc87addc.png",
       effect: "안면홍조 개선, 모세혈관 확장 감소, 주사비 치료, 피부 탄력 개선, 콜라겐 생성 유도",
       detailedDesc: "Excel V+ 혈관 레이저는 안면홍조와 모세혈관 확장을 효과적으로 개선합니다. 혈관에 선택적으로 작용하여 주변 조직 손상을 최소화합니다.",
       faqs: [

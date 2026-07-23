@@ -4,7 +4,7 @@
  * 박스 테두리 제거 완료
  */
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/스타피부과_로고_64a097b7.gif";
+const LOGO_URL = "/manus-storage/star-logo_64a097b7_50456ffb.gif";
 
 interface StarLogoProps {
   variant?: "color" | "white" | "dark";

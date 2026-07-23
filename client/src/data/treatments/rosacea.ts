@@ -1,6 +1,5 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
 export const rosacea: TreatmentI18n = {
   slug: "rosacea",
@@ -28,7 +27,7 @@ export const rosacea: TreatmentI18n = {
   },
   badgeColor: "#DC2626",
 
-  image: `${CDN}/엑셀V_70001aa7.png`,
+  image: "/manus-storage/excel-v_70001aa7_cc87addc.png",
 
   desc: {
     ko: "Excel V+ 혈관 레이저로 안면홍조, 모세혈관 확장, 붉은 피부를 효과적으로 개선.",

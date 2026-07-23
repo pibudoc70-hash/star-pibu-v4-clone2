@@ -1,6 +1,5 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 const CDN2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
 
 export const ulthera: TreatmentI18n = {
@@ -29,8 +28,8 @@ export const ulthera: TreatmentI18n = {
   },
   badgeColor: "#C8860A",
 
-  image: `${CDN}/울쎄라피프라임_1_0daba485.png`,
-  cardBannerImage: `${CDN2}/sub_03_01_52_3b05391b.jpg`,
+  image: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
+  cardBannerImage: "/manus-storage/ulthera-prime_1_0daba485_b78e0b48.png",
 
   desc: {
     ko: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",

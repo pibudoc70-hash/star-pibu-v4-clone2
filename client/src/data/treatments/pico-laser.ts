@@ -1,6 +1,5 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";
 
 export const picoLaser: TreatmentI18n = {
   slug: "pico-laser",
@@ -28,7 +27,7 @@ export const picoLaser: TreatmentI18n = {
   },
   badgeColor: "#C8860A",
 
-  image: `${CDN}/피코슈어_20d65c44.png`,
+  image: "/manus-storage/picosure_20d65c44_79fc42df.png",
 
   desc: {
     ko: "기미·잡티·문신 제거에 탁월. 피코초 단위의 초단파 레이저로 색소 분해. 주변 조직 손상 최소화.",

@@ -26,4 +26,3 @@ export const OG_IMAGES = {
 export const CLINIC_REPRESENTATIVE_IMAGE = OG_IMAGES.ko;
 
 /** 히어로 배경 이미지 CDN 기반 URL — hero/constants.ts에서 관리 (여기서는 참조만) */
-export const HERO_CDN_BASE = "https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e";

@@ -226,9 +226,31 @@ export default function YouTubeSection() {
     );
   }
 
-  // 빈 상태 — 디버깅: 임시로 렌더 (데이터 로드 확인용)
+  // 빈 상태 — 데이터 없을 때 섹션 제목만 표시하고 나머지는 숨김
   if (!videos.length && !shorts.length) {
     console.warn('[YouTubeSection] No videos or shorts found!', { allVideos, videos, shorts });
+    // 섹션 제목만 표시하고 영상 그리드는 숨김
+    return (
+      <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="section-header-block">
+            <span className="section-eyebrow youtube-section-eyebrow">
+              YOUTUBE CHANNEL
+            </span>
+            <h2 className="section-title youtube-section-title">
+              {yt.sectionTitle}
+            </h2>
+            <div className="star-divider mx-auto" />
+            <p className="section-subtitle">
+              {yt.sectionSubtitle}
+            </p>
+          </div>
+          <div className="text-center mt-12 text-gray-500">
+            <p>{yt.errorMessage || 'YouTube 영상을 불러올 수 없습니다.'}</p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -264,7 +286,7 @@ export default function YouTubeSection() {
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
                     <OptimizedImage
-                      src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`}
+                      src={`/api/youtube-thumbnail/${video.videoId}`}
                       alt={video.title}
                       className="w-full h-full object-cover"
                       usePicture={false}
@@ -304,7 +326,7 @@ export default function YouTubeSection() {
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-[9/16] bg-gray-200 overflow-hidden">
                     <OptimizedImage
-                      src={`https://img.youtube.com/vi/${short.videoId}/maxresdefault.jpg`}
+                      src={`/api/youtube-thumbnail/${short.videoId}`}
                       alt={short.title}
                       className="w-full h-full object-cover"
                       usePicture={false}

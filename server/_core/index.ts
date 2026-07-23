@@ -45,6 +45,53 @@ async function startServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
+  
+  // YouTube 썸네일 프록시 라우터
+  app.get('/api/youtube-thumbnail/:videoId', async (req, res) => {
+    const { videoId } = req.params;
+    if (!videoId) {
+      res.status(400).send('Missing videoId');
+      return;
+    }
+    
+    try {
+      // maxresdefault.jpg 시도 → 실패 시 hqdefault.jpg 폴백
+      const urls = [
+        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      ];
+      
+      let imgResp = null;
+      for (const url of urls) {
+        try {
+          const resp = await fetch(url);
+          if (resp.ok) {
+            imgResp = resp;
+            break;
+          }
+        } catch (e) {
+          // 다음 URL 시도
+        }
+      }
+      
+      if (!imgResp) {
+        res.status(404).send('Thumbnail not found');
+        return;
+      }
+      
+      // 1시간 캐시 설정
+      res.set('Content-Type', 'image/jpeg');
+      res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+      res.set('Access-Control-Allow-Origin', '*');
+      
+      const buffer = await imgResp.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    } catch (err) {
+      console.error('[YouTubeThumbnailProxy] error:', err);
+      res.status(502).send('Failed to fetch thumbnail');
+    }
+  });
+  
   registerOAuthRoutes(app);
   registerRssFeed(app);
   registerSitemapDynamic(app);

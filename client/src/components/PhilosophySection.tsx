@@ -9,7 +9,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useClinicStats } from "@/hooks/useClinicStats";
 
-const NEW_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/patient-consultation-mobile_e2474e05.jpg";
+const NEW_IMAGE = "/api/storage/patient-consultation-mobile_e2474e05_fb420943.jpg";
 const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;
 const PATIENT_IMAGE_MOBILE_WEBP = NEW_IMAGE;
 const PATIENT_IMAGE_TABLET_WEBP = NEW_IMAGE;

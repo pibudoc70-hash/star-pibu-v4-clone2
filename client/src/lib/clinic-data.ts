@@ -24,7 +24,7 @@ export const CLINIC_DOCTORS = [
     jobTitleEn: "Dermatologist, MD, PhD",
     nationality: "KR",
     url: "https://star-pibu.com/#doctors",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_01_2e3c0c6f.jpg",
+    image: "/api/storage/01_5e3176cb_69bdbf43.png",
     description: `${_STATS.yearsExperience}년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 ${_STATS.eyeBagCases.toLocaleString('ko-KR')}례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.`,
     sameAs: [
       "https://www.youtube.com/@starpibu",
@@ -68,7 +68,7 @@ export const CLINIC_DOCTORS = [
     jobTitleEn: "Dermatologist, MD",
     nationality: "KR",
     url: "https://star-pibu.com/#doctors",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_02_8e3c0c6f.jpg",
+    image: "/api/storage/0211_8cfcf452_31628e98.png",
     description: "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라피 프라임, 써마지 FLX 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
     sameAs: [
       "https://www.youtube.com/@starpibu",
@@ -108,7 +108,7 @@ export const CLINIC_DOCTORS = [
     jobTitleEn: "Dermatologist, MD, PhD",
     nationality: "KR",
     url: "https://star-pibu.com/#doctors",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/sub_01_03_03_8e3c0c6f.jpg",
+    image: "/api/storage/03_46691618_e287e8e1.png",
     description: "고신대학교 의과대학 의학박사. 리프팅, 색소치료, 백반증 치료 등 다양한 피부질환 치료에 전문성을 갖추고 있습니다.",
     sameAs: [
       "https://www.youtube.com/@starpibu",
@@ -210,26 +210,26 @@ export interface ManagementDevice {
 }
 
 // ── 관리 장비 CDN 경로 ────────────────────────────────────────────────────────
-export const MANAGEMENT_DEVICE_CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
+export const MANAGEMENT_DEVICE_CDN = "/api/storage";
 
 // ── 관리 장비 이미지 맵 ───────────────────────────────────────────────────────
 export const MANAGEMENT_DEVICE_IMAGES: Record<string, string> = {
-  sonopeel: `${MANAGEMENT_DEVICE_CDN}/sonopeel_53d2c9d1.jpg`,
-  porederm: `${MANAGEMENT_DEVICE_CDN}/porederm_new_896695b4.jpg`,
-  airbubble: `${MANAGEMENT_DEVICE_CDN}/airbubble_9631da26.jpg`,
-  oxyjet: `${MANAGEMENT_DEVICE_CDN}/oxyet_a81daa05.jpg`,
-  inbio: `${MANAGEMENT_DEVICE_CDN}/inbio_new_f3628f96.jpg`,
-  flawless: `${MANAGEMENT_DEVICE_CDN}/flawless_48eb550e.jpg`,
-  dermalight: `${MANAGEMENT_DEVICE_CDN}/dermalight_new_0effb3eb.jpg`,
-  fray: `${MANAGEMENT_DEVICE_CDN}/fray_66504ffe.jpg`,
-  ionzyme: `${MANAGEMENT_DEVICE_CDN}/ionzyme_ec731187.png`,
-  healingbright: `${MANAGEMENT_DEVICE_CDN}/healingbright_d060a2aa.jpg`,
-  mesoskin: `${MANAGEMENT_DEVICE_CDN}/mesoskin_new_32137830.jpg`,
-  ultraduo: `${MANAGEMENT_DEVICE_CDN}/ultraduo_af289409.jpg`,
-  triplemultigel: `${MANAGEMENT_DEVICE_CDN}/supersonic_5df47d2e.jpg`,
-  ldm: `${MANAGEMENT_DEVICE_CDN}/ldm_ac66d69e.jpg`,
-  ilumi: `${MANAGEMENT_DEVICE_CDN}/ilumi_new_3d286596.jpg`,
-  transkin: `${MANAGEMENT_DEVICE_CDN}/transskin_67357f56.jpg`,
+  sonopeel: `/api/storage/sonopeel_53d2c9d1_98e548a0.jpg`,
+  porederm: `/api/storage/porederm_new_896695b4_2bd9152b.jpg`,
+  airbubble: `/api/storage/airbubble_9631da26_03e03b84.jpg`,
+  oxyjet: `/api/storage/oxyet_a81daa05_06a40b0e.jpg`,
+  inbio: `/api/storage/inbio_new_f3628f96_da0b433c.jpg`,
+  flawless: `/api/storage/flawless_48eb550e_5e78910f.jpg`,
+  dermalight: `/api/storage/dermalight_new_0effb3eb_2b192086.jpg`,
+  fray: `/api/storage/fray_66504ffe_6a6a0764.jpg`,
+  ionzyme: `/api/storage/ionzyme_ec731187_aeb6531a.png`,
+  healingbright: `/api/storage/healingbright_d060a2aa_ac3bcf4b.jpg`,
+  mesoskin: `/api/storage/mesoskin_new_32137830_3a93cfe5.jpg`,
+  ultraduo: `/api/storage/ultraduo_af289409_e79e4dfa.jpg`,
+  triplemultigel: `/api/storage/supersonic_5df47d2e_38e98bb4.jpg`,
+  ldm: `/api/storage/ldm_ac66d69e_8129485d.jpg`,
+  ilumi: `/api/storage/ilumi_new_3d286596_5121300a.jpg`,
+  transkin: `/api/storage/transskin_67357f56_e00fae32.jpg`,
 };
 
 // ── 관리 장비 목록 (4개 언어 완전 번역) ──────────────────────────────────────

@@ -24,7 +24,7 @@ function DeviceModal({
   const { getText } = useLocalizedText();
   const imgUrl =
     deviceImages[device.imgId] ??
-    `https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/${device.imgId}.png`;
+    `/api/storage/${device.imgId}.png`;
   const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh);
   const displayDesc = getText(
     device.shortDesc,
@@ -128,7 +128,7 @@ function DeviceCard({
 }) {
   const imgUrl =
     deviceImages[device.imgId] ??
-    `https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB/${device.imgId}.png`;
+    `/api/storage/${device.imgId}.png`;
   const { getText } = useLocalizedText();
   const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh);
 

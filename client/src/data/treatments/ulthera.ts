@@ -1,6 +1,6 @@
 import type { TreatmentI18n } from "./index";
 
-const CDN2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
+const CDN2 = "/api/storage";
 
 export const ulthera: TreatmentI18n = {
   slug: "ulthera",

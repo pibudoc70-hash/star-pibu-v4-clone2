@@ -3,7 +3,7 @@ import type { TreatmentI18n } from "./index";
 import { CLINIC_STATS } from "../../lib/constants";
 const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
 
-const CDN2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663496986810/4mEoPkvqQdPU4cZqm7AUEB";
+const CDN2 = "/api/storage";
 
 export const underEyeFat: TreatmentI18n = {
   slug: "under-eye-fat",

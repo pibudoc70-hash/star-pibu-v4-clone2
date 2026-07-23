@@ -23,9 +23,9 @@ import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import OptimizedImage from '@/components/OptimizedImage';
 
 const DOCTOR_IMAGES = [
-  'https://d2fqpnqbhf3bxe.cloudfront.net/star-pibu/doctors/cho-si-hyung.jpg',
-  'https://d2fqpnqbhf3bxe.cloudfront.net/star-pibu/doctors/woo-hye-jin.jpg',
-  'https://d2fqpnqbhf3bxe.cloudfront.net/star-pibu/doctors/lee-gi-wook.jpg',
+  '/api/storage/01_5e3176cb_69bdbf43.png',
+  '/api/storage/0211_8cfcf452_31628e98.png',
+  '/api/storage/03_46691618_e287e8e1.png',
 ];
 
 export default function Doctors() {

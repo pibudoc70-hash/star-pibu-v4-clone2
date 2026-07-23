@@ -75,7 +75,7 @@ export function registerStorageProxy(app: Express) {
       //    → 브라우저가 /manus-storage/ URL 자체를 캐시하므로 시크릿 모드·쿠키 초기화 후에도 정상 표시
       const imgResp = await fetch(url);
       if (!imgResp.ok) {
-        console.error(`[StorageProxy] image fetch error: ${imgResp.status}`);
+        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${key}`);
         res.status(502).send("Failed to fetch image from storage");
         return;
       }

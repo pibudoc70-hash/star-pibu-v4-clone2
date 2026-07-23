@@ -92,6 +92,34 @@ async function startServer() {
     }
   });
   
+  // 팝업 이미지 프록시 라우터 (CloudFront URL을 프록시로 변환)
+  app.get('/api/popup-image', async (req, res) => {
+    const { url } = req.query;
+    if (!url || typeof url !== 'string') {
+      res.status(400).send('Missing or invalid url parameter');
+      return;
+    }
+    
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) {
+        res.status(resp.status).send('Failed to fetch image');
+        return;
+      }
+      
+      // 1시간 캐시 설정
+      res.set('Content-Type', resp.headers.get('content-type') || 'image/jpeg');
+      res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+      res.set('Access-Control-Allow-Origin', '*');
+      
+      const buffer = await resp.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    } catch (err) {
+      console.error('[PopupImageProxy] error:', err);
+      res.status(502).send('Failed to fetch image');
+    }
+  });
+  
   registerOAuthRoutes(app);
   registerRssFeed(app);
   registerSitemapDynamic(app);

@@ -127,9 +127,21 @@ export default function WelcomePopup() {
     dismiss();
   };
 
+  // 팝업 이미지 URL을 프록시로 변환 (CloudFront 이미지 로딩 문제 해결)
+  const getProxiedImageUrl = (url: string | null) => {
+    if (!url) return '';
+    // 이미 /api/로 시작하면 그대로 사용
+    if (url.startsWith('/api/')) return url;
+    // CloudFront URL이면 프록시로 변환
+    if (url.includes('cloudfront.net') || url.includes('d2xsxph8kpxj0f')) {
+      return `/api/popup-image?url=${encodeURIComponent(url)}`;
+    }
+    return url;
+  };
+
   return isMobile
-    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} />
-    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} />;
+    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={getProxiedImageUrl} />
+    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={getProxiedImageUrl} />;
 }
 
 // ── 모바일 팝업 ───────────────────────────────────────────────────────────────
@@ -140,9 +152,10 @@ interface PopupProps {
   dismissToday: () => void;
   handleImageClick: () => void;
   dialogRef: React.RefObject<HTMLDivElement | null>;
+  getProxiedImageUrl: (url: string | null) => string;
 }
 
-function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef }: PopupProps) {
+function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
   return (
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
@@ -174,7 +187,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
             aria-label="팝업 이미지 클릭"
           >
             <OptimizedImage
-              src={ev.imageUrl || ""}
+              src={getProxiedImageUrl(ev.imageUrl)}
               alt="팝업 이벤트 이미지"
               className="w-full h-full object-contain"
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
@@ -193,7 +206,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
 }
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
-function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef }: PopupProps) {
+function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
       <div
@@ -228,7 +241,7 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
             aria-label="팝업 이미지 클릭"
           >
             <OptimizedImage
-              src={ev.imageUrl || ""}
+              src={getProxiedImageUrl(ev.imageUrl)}
               alt="팝업 이벤트 이미지"
               className="w-full h-full object-contain"
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}

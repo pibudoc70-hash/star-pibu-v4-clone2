@@ -531,7 +531,7 @@ export default function AdminEquipment3Edit() {
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                 {form.imageUrl ? (
                   <div className="relative inline-block">
-                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" loading="lazy" decoding="async" />
+                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" />
                     <button type="button" onClick={() => setForm((p) => p ? { ...p, imageUrl: "" } : p)}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                       <X className="h-4 w-4" />
@@ -561,7 +561,7 @@ export default function AdminEquipment3Edit() {
                 <input ref={bgFileInputRef} type="file" accept="image/*" className="hidden" onChange={handleBgImageUpload} />
                 {form.bgImageUrl ? (
                   <div className="relative inline-block">
-                    <img src={form.bgImageUrl} alt="배경 이미지" className="h-48 rounded-xl object-cover border" loading="lazy" decoding="async" />
+                    <img src={form.bgImageUrl} alt="배경 이미지" className="h-48 rounded-xl object-cover border" />
                     <button type="button" onClick={() => setForm((p) => p ? { ...p, bgImageUrl: "" } : p)}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                       <X className="h-4 w-4" />
@@ -626,7 +626,7 @@ export default function AdminEquipment3Edit() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {form.images.map((imgUrl, idx) => (
                     <div key={idx} className="relative">
-                      <img src={imgUrl} alt={`갤러리 ${idx + 1}`} className="w-full h-40 object-cover rounded-lg" loading="lazy" decoding="async" />
+                      <img src={imgUrl} alt={`갤러리 ${idx + 1}`} className="w-full h-40 object-cover rounded-lg" />
                       <button type="button" onClick={() => removeGalleryImage(idx)}
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                         <X className="h-4 w-4" />
@@ -740,7 +740,7 @@ export default function AdminEquipment3Edit() {
                   className="mt-1"
                 />
                 {form.ogImageUrl && (
-                  <img src={form.ogImageUrl} alt="OG 이미지 미리보기" className="mt-2 h-24 rounded-lg object-cover border" loading="lazy" decoding="async" />
+                  <img src={form.ogImageUrl} alt="OG 이미지 미리보기" className="mt-2 h-24 rounded-lg object-cover border" />
                 )}
               </div>
 

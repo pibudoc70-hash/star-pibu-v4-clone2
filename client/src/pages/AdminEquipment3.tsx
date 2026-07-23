@@ -112,7 +112,7 @@ function SortableItem({
       {/* 썸네일 */}
       <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
         {item.imageUrl ? (
-          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300 text-2xl">✦</div>
         )}
@@ -192,7 +192,7 @@ function DragOverlayCard({ item }: { item: Item }) {
       <GripVertical className="h-5 w-5 text-gray-400 shrink-0" />
       <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
         {item.imageUrl ? (
-          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300 text-2xl">✦</div>
         )}

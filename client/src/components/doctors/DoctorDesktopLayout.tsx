@@ -108,8 +108,6 @@ export function DoctorDesktopLayout({
               alt={t.doctors.dermBadge.replace("\n", " ")}
               className="dr-derm-badge-img dr-derm-badge-img-desktop"
               draggable={false}
-              loading="lazy"
-              decoding="async"
             />
           </div>
 

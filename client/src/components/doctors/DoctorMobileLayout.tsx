@@ -138,8 +138,6 @@ export function DoctorMobileLayout({
                     alt={t.doctors.dermBadge.replace("\n", " ")}
                     className="dr-derm-badge-img dr-derm-badge-img-mobile"
                     draggable={false}
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
 

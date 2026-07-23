@@ -34,7 +34,8 @@ interface YouTubeVideo {
 type TabType = 'all' | 'video' | 'shorts';
 
 function getThumbUrl(videoId: string) {
-  return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+  // 프로덕션 환경에서 외부 YouTube 도메인 차단 방지를 위해 프록시 사용
+  return `/api/youtube-thumbnail/${videoId}`;
 }
 
 function getEmbedUrl(video: YouTubeVideo) {

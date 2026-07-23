@@ -402,7 +402,7 @@ export default function AdminEquipment3New() {
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                 {form.imageUrl ? (
                   <div className="relative inline-block">
-                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" />
+                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" loading="lazy" decoding="async" />
                     <button type="button" onClick={() => setForm((p) => ({ ...p, imageUrl: "" }))}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                       <X className="h-4 w-4" />
@@ -432,7 +432,7 @@ export default function AdminEquipment3New() {
                 <input ref={bgFileInputRef} type="file" accept="image/*" className="hidden" onChange={handleBgImageUpload} />
                 {form.bgImageUrl ? (
                   <div className="relative inline-block">
-                    <img src={form.bgImageUrl} alt="배경 이미지" className="h-48 rounded-xl object-cover border" />
+                    <img src={form.bgImageUrl} alt="배경 이미지" className="h-48 rounded-xl object-cover border" loading="lazy" decoding="async" />
                     <button type="button" onClick={() => setForm((p) => ({ ...p, bgImageUrl: "" }))}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                       <X className="h-4 w-4" />
@@ -590,7 +590,7 @@ export default function AdminEquipment3New() {
                   className="mt-1"
                 />
                 {form.ogImageUrl && (
-                  <img src={form.ogImageUrl} alt="OG 이미지 미리보기" className="mt-2 h-24 rounded-lg object-cover border" />
+                  <img src={form.ogImageUrl} alt="OG 이미지 미리보기" className="mt-2 h-24 rounded-lg object-cover border" loading="lazy" decoding="async" />
                 )}
               </div>
 

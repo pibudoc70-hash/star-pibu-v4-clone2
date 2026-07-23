@@ -182,6 +182,8 @@ export default function NonCoveredGuide() {
               src="/manus-storage/pc_sub01_06_d54a5db8.webp"
               alt={lang === "ko" ? "비급여 진료비 가격표" : lang === "ja" ? "非保険診療費用価格表" : lang === "zh" ? "非医保诊疗费用价格表" : "Non-Covered Medical Fees Price List"}
               className="w-full h-auto"
+              loading="lazy"
+              decoding="async"
             />
           </div>
 

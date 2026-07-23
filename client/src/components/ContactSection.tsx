@@ -26,8 +26,10 @@ export { buildMarkerPinElement } from "@/lib/mapHelpers";
 const STAR_LAT = 35.1572312;
 const STAR_LNG = 129.0581932;
 
-// 카카오맵 링크 (지도 클릭 시 이동)
+// 카카오맵 링크 (폴백 버튼용)
 const KAKAO_MAP_URL = `https://map.kakao.com/link/map/스타피부과,${STAR_LAT},${STAR_LNG}`;
+// 구글 지도 링크 (지도 이미지 클릭 시 이동)
+const GOOGLE_MAP_URL = "https://maps.app.goo.gl/1trKAhUzLhw3gMFG9";
 
 export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
@@ -126,10 +128,10 @@ export default function ContactSection() {
               </div>
             ) : !mapImgError && staticMapDataUrl ? (
               <a
-                href={KAKAO_MAP_URL}
+                href={GOOGLE_MAP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="카카오맵에서 스타피부과 위치 보기 (새 탭)"
+                aria-label="구글 지도에서 스타피부과 위치 보기 (새 탭)"
                 className="block w-full h-full"
               >
                 <img
@@ -143,7 +145,7 @@ export default function ContactSection() {
                   className="absolute bottom-3 right-3 px-3 py-1.5 rounded-full text-xs font-medium pointer-events-none"
                   style={{ background: 'rgba(0,0,0,0.55)', color: '#fff', backdropFilter: 'blur(4px)' }}
                 >
-                  지도 클릭 → 카카오맵 열기
+                  지도 클릭 → 구글 지도 열기
                 </div>
               </a>
             ) : (

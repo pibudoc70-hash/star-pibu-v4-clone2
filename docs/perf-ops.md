@@ -45,17 +45,32 @@ pnpm size:why     # 어떤 라이브러리가 청크에 기여했는지
 | vendor-icons | 15 KB |
 | **홈 초기 총합** | **230 KB** |
 
-## Service Worker 캐시 갱신
+## Service Worker 캐시 갱신 원칙
 
-배포 후 사용자 브라우저에서 오래된 캐시가 남으면:
+정적 자산·이미지·폰트를 크게 변경하는 배포 후에는
+반드시 `client/public/sw.js` 의 `CACHE_VERSION` 값을 갱신할 것.
 
-1. `client/public/sw.js` 안의 `CACHE_VERSION` 값 변경 후 재배포
-2. 클라이언트 접속 시 자동으로 구 버전 캐시가 삭제됩니다
+형식: `v<번호>-<yyyy-mm-dd>`  
+예: `v2-2026-07-24`
+
+이 값이 바뀌면 사용자 브라우저의 옛 캐시 버킷(`static-v*`, `image-v*`, `html-v*`)이
+`activate` 이벤트 시점에 자동 삭제되고, `controllerchange` 이벤트로 페이지가 자동 리로드됩니다.
 
 ```javascript
-// sw.js
-const CACHE_VERSION = "v1-2026-07"; // ← 이 값을 변경
+// client/public/sw.js
+const CACHE_VERSION = "v2-2026-07-24"; // ← 배포마다 갱신
 ```
+
+### 갱신이 필요한 경우
+
+- 이미지·폰트·JS/CSS 파일 대규모 교체 또는 경로 변경
+- CSP 정책 변경 (SW가 캐시한 응답에 영향)
+- 스토리지 경로 변경 (`/manus-storage/` → `/api/storage/` 등)
+
+### 갱신이 불필요한 경우
+
+- 파일명 해시가 바뀌는 일반 코드 변경 (Vite가 자동 처리)
+- 서버사이드 로직만 변경되는 경우
 
 ## 알려진 제한사항
 

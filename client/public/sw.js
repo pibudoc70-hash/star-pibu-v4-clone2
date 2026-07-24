@@ -16,7 +16,7 @@
 
 // ⚠️ 배포 시 이 문자열을 바꾸면 기존 캐시 전체가 무효화된다.
 // 배포 파이프라인에서 자동으로 치환하도록 확장 가능.
-const CACHE_VERSION = "v1-2026-07";
+const CACHE_VERSION = "v2-2026-07-24";
 
 const CACHE_NAMES = {
   static: `static-${CACHE_VERSION}`,   // JS/CSS/폰트

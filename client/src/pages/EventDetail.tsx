@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
+import { withVersion } from "@/lib/imageUrl";
 import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_LOCALE, buildHreflangs, buildEventJsonLd, buildBreadcrumbJsonLd } from "@/components/SeoHead";
 import { parseEventError } from "@/lib/errorMessages";
 
@@ -201,7 +202,7 @@ export default function EventDetail() {
           {event.imageUrl && (
             <div className="mb-8 rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
               <OptimizedImage
-                src={event.imageUrl}
+                src={withVersion(event.imageUrl, event.updatedAt)}
                 alt={event.title}
                 className="w-full h-auto object-cover"
               />

@@ -21,6 +21,7 @@ import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X } from "luc
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import OptimizedImage from "@/components/OptimizedImage";
+import { withVersion } from "@/lib/imageUrl";
 import { Dna } from "lucide-react";
 import StemCellGuide from "@/components/treatments/StemCellGuide";
 
@@ -113,7 +114,7 @@ function Equipment3Card({
           /* ── 비한국어: 배경+텍스트 오버레이 ── */
           <>
             <img
-              src={item.bgImageUrl}
+              src={withVersion(item.bgImageUrl, item.updatedAt)}
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
@@ -149,7 +150,7 @@ function Equipment3Card({
         ) : item.imageUrl ? (
           /* ── 한국어 또는 bgImageUrl 없음: 기존 이미지 ── */
           <OptimizedImage
-            src={item.imageUrl}
+            src={withVersion(item.imageUrl, item.updatedAt)}
             alt={name}
             className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
           />

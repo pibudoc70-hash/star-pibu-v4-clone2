@@ -24,6 +24,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import { withVersion } from "@/lib/imageUrl";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -130,7 +131,7 @@ export default function Notice() {
                         {/* 썸네일 이미지 */}
                         {(notice as any).thumbnail && (
                           <img
-                            src={(notice as any).thumbnail}
+                            src={withVersion((notice as any).thumbnail, (notice as any).updatedAt)}
                             alt={notice.title}
                             className="w-16 h-16 rounded-lg object-cover shrink-0 border border-gray-100"
                             loading="lazy"

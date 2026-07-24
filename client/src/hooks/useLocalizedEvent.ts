@@ -21,6 +21,7 @@ export interface SpecialEvent {
   sortOrder: number;
   anesthesiaFee?: string;
   targetLang?: string;
+  updatedAt?: Date | number | null;
   titleEn?: string; titleJa?: string; titleZh?: string;
   subtitleEn?: string; subtitleJa?: string; subtitleZh?: string;
   descEn?: string; descJa?: string; descZh?: string;

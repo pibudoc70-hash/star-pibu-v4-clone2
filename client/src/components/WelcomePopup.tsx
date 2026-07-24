@@ -7,6 +7,7 @@
  * - 모바일/데스크톱 반응형 유지
  */
 import { useState, useEffect, useRef, useCallback } from "react";
+import { withVersion } from "@/lib/imageUrl";
 import { X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -17,6 +18,7 @@ interface PopupEvent {
   imageUrl: string | null;
   clickUrl: string | null;
   isActive: "0" | "1";
+  updatedAt?: Date | number | null;
 }
 
 export default function WelcomePopup() {
@@ -127,21 +129,27 @@ export default function WelcomePopup() {
     dismiss();
   };
 
-  // 팝업 이미지 URL을 프록시로 변환 (CloudFront 이미지 로딩 문제 해결)
-  const getProxiedImageUrl = (url: string | null) => {
+  // 팝업 이미지 URL을 프록시로 변환 + 캐시 무효화 버전 파라미터 추가
+  const getProxiedImageUrl = (url: string | null, version?: Date | number | null) => {
     if (!url) return '';
     // 이미 /api/로 시작하면 그대로 사용
-    if (url.startsWith('/api/')) return url;
+    if (url.startsWith('/api/')) {
+      const ts = version instanceof Date ? version.getTime() : version;
+      return withVersion(url, ts ?? undefined);
+    }
     // CloudFront URL이면 프록시로 변환
     if (url.includes('cloudfront.net') || url.includes('d2xsxph8kpxj0f')) {
-      return `/api/popup-image?url=${encodeURIComponent(url)}`;
+      const ts = version instanceof Date ? version.getTime() : version;
+      const proxied = `/api/popup-image?url=${encodeURIComponent(url)}`;
+      return withVersion(proxied, ts ?? undefined);
     }
-    return url;
+    const ts = version instanceof Date ? version.getTime() : version;
+    return withVersion(url, ts ?? undefined);
   };
 
   return isMobile
-    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={getProxiedImageUrl} />
-    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={getProxiedImageUrl} />;
+    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />
+    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />;
 }
 
 // ── 모바일 팝업 ───────────────────────────────────────────────────────────────

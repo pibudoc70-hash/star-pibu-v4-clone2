@@ -14,6 +14,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader, MessageCircle, Calendar } from "lucide-react";
 import { lazy, Suspense } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { withVersion } from "@/lib/imageUrl";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -233,7 +234,7 @@ export default function Equipment3Detail() {
               >
                 {/* 배경 이미지 */}
                 <img
-                  src={item.bgImageUrl}
+                  src={withVersion(item.bgImageUrl, item.updatedAt)}
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 w-full h-full object-cover"
@@ -272,7 +273,7 @@ export default function Equipment3Detail() {
             ) : item.imageUrl ? (
               /* ── 한국어 또는 bgImageUrl 없음: 기존 이미지 그대로 표시 ── */
               <OptimizedImage
-                src={item.imageUrl}
+                src={withVersion(item.imageUrl, item.updatedAt)}
                 alt={localizedName}
                 className="w-full h-auto rounded-2xl shadow-lg"
               />

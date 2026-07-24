@@ -13,6 +13,7 @@
  */
 import { useState } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -163,7 +164,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           }}
         >
           <OptimizedImage
-            src={event.imageUrl}
+            src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
             alt={title}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             width={800}

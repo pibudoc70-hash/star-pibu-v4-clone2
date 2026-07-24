@@ -11,6 +11,7 @@ import { Bell, Pin, ArrowLeft, Pencil, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SeoHead from "@/components/SeoHead";
+import { withVersion } from "@/lib/imageUrl";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -151,13 +152,13 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
                 {notice.images.map((img, idx) => (
                   <a
                     key={img.id}
-                    href={img.url}
+                    href={withVersion(img.url, img.createdAt)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                   >
                     <img
-                      src={img.url}
+                      src={withVersion(img.url, img.createdAt)}
                       alt={`공지사항 이미지 ${idx + 1}`}
                       className="w-full h-auto object-cover"
                       loading="lazy"

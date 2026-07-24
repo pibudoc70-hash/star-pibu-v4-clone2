@@ -52,6 +52,24 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
+  // DB 연결 부팅 검증: 연결 실패 시 서버가 뜨지 못하도록 즉시 종료
+  // (getDb() 가 undefined를 반환하는 상태로 서버가 뜨면 모든 요청이 500 에러가 나므로
+  //  차라리 부팅 실패로 만들어 배포 시스템이 재시도하거나 알람을 보내도록 유도)
+  try {
+    const { getDb } = await import("../db/connection");
+    const db = await getDb();
+    if (!db) {
+      console.error(
+        "[FATAL] Database connection failed. Check DATABASE_URL environment variable.",
+      );
+      process.exit(1);
+    }
+    console.log("[Boot] Database connection OK");
+  } catch (err) {
+    console.error("[FATAL] Database initialization error:", err);
+    process.exit(1);
+  }
+
   // Express 기본 서버 정보 노출 방지
   app.disable("x-powered-by");
 
@@ -268,10 +286,25 @@ async function startServer() {
   }
 
   const preferredPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(preferredPort);
+  let port: number;
 
-  if (port !== preferredPort) {
-    console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+  if (process.env.NODE_ENV === "development") {
+    // 개발 환경: 포트 충돌 시 자동 탐색 (기존 동작 유지)
+    port = await findAvailablePort(preferredPort);
+    if (port !== preferredPort) {
+      console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+    }
+  } else {
+    // 프로덕션 환경: 지정 포트가 사용 불가면 즉시 종료
+    // 로드밸런서/헬스체크가 특정 포트를 기대하므로 자동 전환은 위험
+    const available = await isPortAvailable(preferredPort);
+    if (!available) {
+      console.error(
+        `[FATAL] Port ${preferredPort} is not available in production. Exiting.`,
+      );
+      process.exit(1);
+    }
+    port = preferredPort;
   }
 
   server.listen(port, () => {
@@ -280,6 +313,42 @@ async function startServer() {
     startOtpCleanupScheduler();
     // WebSocket 서버 초기화
     initializeWebSocketServer(server);
+  });
+
+  // Graceful shutdown: 진행 중인 요청을 완료한 후 프로세스 종료
+  // 컨테이너 오케스트레이터(k8s, ECS 등)가 SIGTERM 을 보내면 즉시 죽지 않고
+  // 최대 10초간 기존 연결 처리를 마무리한 뒤 종료한다.
+  const shutdown = (signal: string) => {
+    console.log(`[Shutdown] ${signal} received, closing server gracefully...`);
+
+    // 강제 종료 타임아웃: 10초 내 정상 종료가 안 되면 강제 exit
+    const forceExitTimer = setTimeout(() => {
+      console.error("[Shutdown] Forced exit after 10s timeout");
+      process.exit(1);
+    }, 10_000);
+
+    server.close((err) => {
+      clearTimeout(forceExitTimer);
+      if (err) {
+        console.error("[Shutdown] Error during server.close:", err);
+        process.exit(1);
+      }
+      console.log("[Shutdown] Server closed cleanly");
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
+
+  // 처리되지 않은 예외 로깅 (프로세스는 죽지 않도록 방어)
+  process.on("unhandledRejection", (reason) => {
+    console.error("[UnhandledRejection]", reason);
+  });
+  process.on("uncaughtException", (err) => {
+    console.error("[UncaughtException]", err);
+    // uncaughtException 은 프로세스 상태가 불안정하므로 graceful shutdown 트리거
+    shutdown("uncaughtException");
   });
 }
 

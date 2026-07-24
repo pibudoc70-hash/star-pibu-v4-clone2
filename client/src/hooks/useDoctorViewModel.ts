@@ -113,9 +113,16 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
       const iv = setInterval(() => {
         const el = document.getElementById(`dr-${slug}`);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
           clearInterval(iv);
-        } else if (++attempts >= 40) {
+          // 400ms 후 SpecialEvent 이미지 로드로 인한 레이아웃 시프트 재보정
+          setTimeout(() => {
+            document.getElementById(`dr-${slug}`)?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+            });
+          }, 400);
+        } else if (++attempts >= 60) {
           clearInterval(iv);
         }
       }, 100);

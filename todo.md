@@ -3721,3 +3721,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Step I: About.tsx 의료진 링크 항상 렌더링 확인 → 수정 불필요
 - [x] index.css에 .dr-hash-anchor 유틸리티 클래스 추가 (인라인 style 제거 → round17 테스트 통과)
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과, dist about#dr 패턴 0건
+
+## Phase 의료진 앵커 버그 근본 해결 v2 (2026-07-25 세션 3, pasted_content_20 기반)
+- [x] Step A: doctors-data.ts slug 필드 이미 존재 확인 (cho/woo/lee) → 수정 불필요
+- [x] Step B: index.html KEEP regex 이미 존재 확인 (FIX v6) → 수정 불필요
+- [x] Step C: DoctorsSection.tsx 앵커 div 3개 이미 존재 확인 → 수정 불필요
+- [x] Step C (개선): useDoctorViewModel.ts block: 'start' → 'center' + 400ms 재보정 setTimeout 추가 (MAX 40→60)
+- [x] Step D: Home.tsx에 deferMount 우회 useEffect 추가 (#dr-* 진입 시 #doctors 앵커로 즉시 스크롤)
+- [x] Step E: DoctorsSection.tsx scroll-mt-24 md:scroll-mt-28 이미 존재 확인 → 수정 불필요
+- [x] Step F: Doctor 타입 slug 필드 이미 string 타입으로 정의됨, 다른 파일 타입 오류 없음 확인
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과, pnpm build 성공

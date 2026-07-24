@@ -3710,3 +3710,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] scripts/migrate-images-to-webp.mjs 마이그레이션 스크립트 작성 (--dry-run 지원)
 - [x] server/__tests__/imageOptimizer.test.ts 유닛 테스트 9개 작성 (전부 통과)
 - [x] --dry-run 실행: 157건 대상, 156건 변환 예정, 1건 스킵(이미 WebP), 오류 0건
+
+## Phase 의료진 앵커 버그 근본 해결 (2026-07-25 세션 2)
+- [x] Step B: DoctorTabButton이 이미 `<button type="button">` 확인 → 수정 불필요
+- [x] Step D: DoctorsSection.tsx 섹션 상단에 투명 앵커 div 3개 삽입 (id=dr-cho/woo/lee, .dr-hash-anchor CSS 클래스)
+- [x] Step E: useDoctorViewModel.ts에 applyFromHash useEffect 추가 (hashchange 이벤트 처리 + setInterval 최대 4초 대기 후 scrollIntoView)
+- [x] Step F: Home.tsx hash useEffect FIX v6 적용 (sessionStorage 브릿지 방식 유지, #dr-* 처리는 useDoctorViewModel에 위임)
+- [x] Step G: handleDoctorSelect에 hash/history 변경 코드 없음 확인 → 수정 불필요
+- [x] Step H: index.html KEEP regex 수정 (#dr-*, #doctors, #section-*, #faq-* 해시를 KEEP 패턴에 포함)
+- [x] Step I: About.tsx 의료진 링크 항상 렌더링 확인 → 수정 불필요
+- [x] index.css에 .dr-hash-anchor 유틸리티 클래스 추가 (인라인 style 제거 → round17 테스트 통과)
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과, dist about#dr 패턴 0건

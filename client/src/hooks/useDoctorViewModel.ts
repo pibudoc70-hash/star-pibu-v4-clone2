@@ -95,6 +95,37 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
+  // [Step E] applyFromHash: URL hash(#dr-{slug})에서 의사 탭 자동 선택 + 스크롤
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const applyFromHash = () => {
+      const hash = window.location.hash;
+      const m = hash.match(/^#dr-(cho|woo|lee)$/);
+      if (!m) return;
+      const slug = m[1];
+      const idx = doctors.findIndex((d) => d.slug === slug);
+      if (idx < 0) return;
+      setActiveDoctor(idx);
+      setExpandedCredentials(false);
+      // 렌더 완료 후 스크롤 (최대 4초 대기)
+      let attempts = 0;
+      const iv = setInterval(() => {
+        const el = document.getElementById(`dr-${slug}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          clearInterval(iv);
+        } else if (++attempts >= 40) {
+          clearInterval(iv);
+        }
+      }, 100);
+    };
+
+    applyFromHash();
+    window.addEventListener('hashchange', applyFromHash);
+    return () => window.removeEventListener('hashchange', applyFromHash);
+  }, []);
+
   // 의사 전환 시 학력·경력 접기 초기화
   const handleDoctorSelect = useCallback((i: number) => {
     setActiveDoctor(i);

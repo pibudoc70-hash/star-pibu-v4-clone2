@@ -310,10 +310,8 @@ export default function Home() {
   // 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
   // hash를 무시하고 상단으로 이동한다.
   useEffect(() => {
-    // [FIX v5] #dr-{slug} 직접 진입 지원 + 일반 섹션 스크롤 유지
-    // - #dr-{slug}: setInterval로 id="dr-{slug}" 요소 대기 후 스크롤 + 의사 탭 활성화
-    // - 일반 섹션: sessionStorage(__star_scroll_to) 방식 유지
-    // - 카드 클릭 시 재실행 없음 (deps=[])
+    // [FIX v6] #dr-{slug} 처리는 useDoctorViewModel.applyFromHash에 위임
+    // Home.tsx는 sessionStorage 브릿지 + 일반 섹션 스크롤만 담당
 
     // [FIX v4] 언어 변경 시 scroll restoration 무시
     const forceScrollTop = sessionStorage.getItem("__star_force_scroll_top");
@@ -324,39 +322,31 @@ export default function Home() {
       return;
     }
 
-    // URL hash 처리 (#dr-{slug} 또는 일반 섹션 hash)
-    let drSlug: string | null = null;
-    if (window.location.hash) {
-      const rawHash = window.location.hash.slice(1); // e.g. "dr-cho"
-      const drMatch = rawHash.match(/^dr-(cho|woo|lee)$/);
-      if (drMatch) {
-        drSlug = drMatch[1];
-        const slugToIdx: Record<string, number> = { cho: 0, woo: 1, lee: 2 };
-        const idx = slugToIdx[drSlug];
-        // 의사 탭 인덱스를 sessionStorage에 저장 (useDoctorViewModel이 읽음)
-        sessionStorage.setItem("__star_doctor_tab", String(idx));
-      }
-      // URL에서 hash 제거 (다음 방문 시 자동 스크롤 방지)
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-      if (!drMatch) {
-        window.scrollTo({ top: 0, behavior: "instant" });
+    // sessionStorage 브릿지: 다른 페이지에서 /#dr-{slug} 클릭 시 hash 복원
+    const storedTab = sessionStorage.getItem("__star_doctor_tab");
+    if (storedTab) {
+      sessionStorage.removeItem("__star_doctor_tab");
+      const slugMap = ['cho', 'woo', 'lee'];
+      const slug = slugMap[parseInt(storedTab, 10)];
+      if (slug) {
+        // hash를 복원해 useDoctorViewModel.applyFromHash가 처리하도록 위임
+        window.location.hash = `#dr-${slug}`;
+        return;
       }
     }
 
-    // #dr-{slug} 직접 진입: setInterval로 id="dr-{slug}" 요소 대기 후 스크롤
-    if (drSlug) {
-      const targetId = `dr-${drSlug}`;
-      let attempts = 0;
-      const iv = setInterval(() => {
-        const el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-          clearInterval(iv);
-        } else if (++attempts >= 40) {
-          clearInterval(iv);
-        }
-      }, 100);
-      return () => clearInterval(iv);
+    // URL hash 처리: #dr-* 는 useDoctorViewModel.applyFromHash에 위임
+    // 일반 섹션 hash는 URL에서 제거 후 sessionStorage 방식으로 처리
+    if (window.location.hash) {
+      const rawHash = window.location.hash.slice(1);
+      const isDrHash = /^dr-(cho|woo|lee)$/.test(rawHash);
+      if (isDrHash) {
+        // #dr-* hash는 그대로 유지 → useDoctorViewModel.applyFromHash가 처리
+        return;
+      }
+      // 일반 섹션 hash: URL에서 제거
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
 
     // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) 방식

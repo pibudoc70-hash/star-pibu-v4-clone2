@@ -1018,6 +1018,8 @@
   }
 
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
+  /* 해시 앵커 타겟: /#dr-{slug} 직접 접근 시 스크롤 목적지 (높이 0, 레이아웃 영향 없음) */
+  .dr-hash-anchor { position: relative; top: 0; height: 0; }
   .dr-section-bg { background: var(--brand-bg, #FAF8F5); }
   .dr-panel-card {
     background: white;

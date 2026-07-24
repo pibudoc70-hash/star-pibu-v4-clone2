@@ -11,6 +11,7 @@ import "./index.css";
 
 // Core Web Vitals 모니터링
 import { initWebVitals } from './lib/webVitals';
+import { registerServiceWorker } from './lib/swRegister';
 
 // [FIX] 브라우저 자동 스크롤 복원 비활성화
 // 브라우저가 이전 스크롤 위치를 기억해 자동 복원하는 기능을 끔
@@ -98,16 +99,8 @@ if (
   document.head.appendChild(analyticsScript);
 }
 
-// Service Worker 등록 (프로덕션 환경에서만 활성화)
-// 개발 환경에서 SW 캐시로 인한 빈 화면 문제 방지
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .catch((error) => {
-        console.warn('⚠️ Service Worker 등록 실패:', error);
-      });
-  });
-}
+// Service Worker 등록 (프로덕션 환경에서만 활성화, 개발 환경 캐시 문제 방지)
+registerServiceWorker();
 
 createRoot(document.getElementById("root")!).render(
   <HelmetProvider>

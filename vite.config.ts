@@ -5,7 +5,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
-import { visualizer } from "rollup-plugin-visualizer";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -221,21 +220,12 @@ const plugins = [
   // KaTeX CSS를 CDN으로 전환: 폰트 파일 59개(~1MB) 배포 패키지 제외
   // KaTeX CSS는 client/index.html에서 jsDelivr CDN으로 직접 로드됨
   externalizeKatexCssPlugin(),
-  // 번들 청크 그래프 시각화: pnpm build 실행 시 stats.html 생성 (dist/ 밖 — 배포 패키지에 포함되지 않음)
-  // 열어보면 어떤 라이브러리가 어떤 청크에 얼마나 들어갔는지 확인 가능
-  visualizer({
-    filename: "stats.html",
-    gzipSize: true,
-    brotliSize: true,
-    template: "treemap",
-    open: false, // CI 환경에서 자동으로 브라우저 열리는 것 방지
-  }) as Plugin,
   // 홈에 불필요한 청크의 modulepreload 링크를 index.html에서 제거
   // 이 청크들은 실제 라우트 이동 시 lazy 로드됨
   stripUnusedModulePreloadPlugin([
     "page-admin",      // 관리자 페이지 (일반 방문자는 접근 안 함)
     "page-landings",   // /en, /ja, /zh 진입 시에만 필요
-    "vendor-heavy",    // xlsx, streamdown, katex (관리자·특수 페이지)
+    "vendor-heavy",    // xlsx, katex (관리자·특수 페이지)
     "vendor-charts",   // recharts (관리자 통계 페이지)
     "data-treatments", // 시술 상세 페이지 진입 시에만 필요
   ]),
@@ -316,10 +306,13 @@ export default defineConfig({
             return "vendor-icons";
           }
 
-          // ── 8. XLSX + streamdown + katex (관리자/AI 전용, 홈에서 절대 불필요) ──
+          // ── 8. XLSX (관리자/AI 전용, 홈에서 절대 불필요) ──
+          // streamdown은 lazy import로 전환되어 Rollup 자동 분할에 맡김.
+          // streamdown을 vendor-heavy에 강제 묶으면 300+ 언어 하이라이터 청크가
+          // 모두 vendor-heavy에 딸려와 1.2MB 단일 청크가 생성됨.
+          // 자동 분할 시 각 언어 청크는 실제 사용 시에만 lazy load됨.
           if (
             id.includes("xlsx") ||
-            id.includes("streamdown") ||
             id.includes("katex")
           ) {
             return "vendor-heavy";

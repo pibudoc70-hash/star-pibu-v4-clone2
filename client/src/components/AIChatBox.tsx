@@ -3,8 +3,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Loader2, Send, User, Sparkles } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import { Streamdown } from "streamdown";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+// Lazy load Streamdown: streamdown bundles 300+ syntax highlighter chunks.
+// AIChatBox is a template component — load streamdown only when rendered.
+const Streamdown = lazy(() =>
+  import("streamdown").then((m) => ({ default: m.Streamdown }))
+);
 
 /**
  * Message type matching server-side LLM Message interface
@@ -262,7 +266,9 @@ export function AIChatBox({
                     >
                       {message.role === "assistant" ? (
                         <div className="prose prose-sm dark:prose-invert max-w-none">
-                          <Streamdown>{message.content}</Streamdown>
+                          <Suspense fallback={<span className="text-sm opacity-60">{message.content}</span>}>
+                            <Streamdown>{message.content}</Streamdown>
+                          </Suspense>
                         </div>
                       ) : (
                         <p className="whitespace-pre-wrap text-sm">

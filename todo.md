@@ -3664,3 +3664,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm check + pnpm build 검증: KaTeX 폰트 파일 59개 → 0개, 전체 443개 → 383개 (-60개), 19MB → 17MB (-2MB)
 
 - [x] 의사 사진 /manus-storage/ → /api/storage/ 경로 교체 (307 리다이렉트 문제 해결)
+
+- [x] streamdown lazy import 전환 (AIChatBox.tsx) - 배포 패키지 최적화
+- [x] vendor-heavy에서 streamdown 분리 (vite.config.ts manualChunks)
+- [x] 불필요한 devDependencies 제거: playwright, @lhci/cli, lighthouse, chrome-launcher, sharp, rollup-plugin-visualizer, size-limit, @size-limit/preset-app (8개)

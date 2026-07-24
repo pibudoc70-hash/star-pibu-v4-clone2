@@ -138,6 +138,10 @@ function buildCSP(isDev: boolean): string {
   return directives.join("; ");
 }
 
+// 모듈 로드 시 CSP 문자열을 1회 계산해서 상수화 (요청마다 재빌드 방지)
+const CSP_HEADER_DEV = buildCSP(true);
+const CSP_HEADER_PROD = buildCSP(false);
+
 export function securityHeadersMiddleware(
   req: Request,
   res: Response,
@@ -145,11 +149,8 @@ export function securityHeadersMiddleware(
 ): void {
   const isDev = process.env.NODE_ENV === "development";
 
-  // X-Powered-By 제거 (Express 기본 노출 방지)
-  res.removeHeader("X-Powered-By");
-
   // Content-Security-Policy
-  res.setHeader("Content-Security-Policy", buildCSP(isDev));
+  res.setHeader("Content-Security-Policy", isDev ? CSP_HEADER_DEV : CSP_HEADER_PROD);
 
   // X-Frame-Options: CSP frame-ancestors와 중복 설정 (구형 브라우저 호환)
   // SAMEORIGIN: 같은 출처에서의 iframe 허용 (Manus 미리보기 패널 대응)

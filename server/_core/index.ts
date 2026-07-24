@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import compression from "compression";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
@@ -51,12 +52,31 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // ── 보안 헤더 미들웨어 (가장 먼저 적용) ──────────────────────────────────────
+  // Express 기본 서버 정보 노출 방지
+  app.disable("x-powered-by");
+
+  // ── 보안 헤더 미들웨어 (가장 먼저 적용) ───────────────────────────────────────────
   app.use(securityHeadersMiddleware);
 
-  // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  // gzip/brotli 압축: 텍스트 응답(HTML, JSON, JS, CSS) 크기 축소
+  // threshold: 1KB 이상 응답에만 압축 적용 (작은 응답은 오히려 오버헤드)
+  app.use(
+    compression({
+      threshold: 1024,
+      level: 6, // 0(무압축)~9(최대압축), 6이 속도·압축률 균형점
+      filter: (req, res) => {
+        // 이미지 프록시는 이미 최적화된 바이너리 → 압축 제외 (CPU 낙비 방지)
+        if (req.path.startsWith("/api/storage")) return false;
+        if (req.path.startsWith("/api/youtube-thumbnail")) return false;
+        if (req.path.startsWith("/api/popup-image")) return false;
+        return compression.filter(req, res);
+      },
+    }),
+  );
+
+  // body-parser: 1mb 제한 (일반 API 요청에 충분, DoS 벡터 축소)
+  app.use(express.json({ limit: "1mb" }));
+  app.use(express.urlencoded({ limit: "1mb", extended: true }));
   registerStorageProxy(app);
   
   // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)

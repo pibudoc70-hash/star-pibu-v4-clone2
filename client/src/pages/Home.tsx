@@ -503,7 +503,7 @@ export default function Home() {
               {/* 모바일 WebP (768px 미만) — 273KB PNG → 24KB WebP */}
               <source
                 media="(max-width: 767px)"
-                srcSet="/manus-storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
+                srcSet="/api/storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
                 type="image/webp"
               />
               {/* 모바일 PNG 폴백 (768px 미만) */}
@@ -514,7 +514,7 @@ export default function Home() {
               {/* PC WebP (768px 이상) — 374KB PNG → 36KB WebP */}
               <source
                 media="(min-width: 768px)"
-                srcSet="/manus-storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
+                srcSet="/api/storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
                 type="image/webp"
               />
               {/* PC PNG 폴백 (768px 이상) */}

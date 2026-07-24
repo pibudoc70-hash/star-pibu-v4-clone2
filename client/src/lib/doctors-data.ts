@@ -11,19 +11,19 @@ import { Award, GraduationCap, Stethoscope, Zap } from "lucide-react";
 // ── CDN 기반 이미지 URL ──────────────────────────────────────────────────────
 
 export const DR_JO_IMAGE_DESKTOP_JPG =
-  "/manus-storage/01_5e3176cb_69bdbf43_e8e22b42.webp";
+  "/api/storage/01_5e3176cb_69bdbf43_e8e22b42.webp";
 export const DR_JO_IMAGE_MOBILE_WEBP = "/api/storage/dr_jo_profile-mobile_ee5a7e09_ade1e10f.webp";
 
 export const DR_WOO_IMAGE_DESKTOP_JPG =
-  "/manus-storage/0211_8cfcf452_31628e98_2a57d4d8.webp";
+  "/api/storage/0211_8cfcf452_31628e98_2a57d4d8.webp";
 export const DR_WOO_IMAGE_MOBILE_WEBP = "/api/storage/sub_01_02_img2-mobile_ceacc144_5e5b82a2.webp";
 
 export const DR_LEE_IMAGE_DESKTOP_JPG =
-  "/manus-storage/03_46691618_e287e8e1_dc958eaf.webp";
+  "/api/storage/03_46691618_e287e8e1_dc958eaf.webp";
 export const DR_LEE_IMAGE_MOBILE_WEBP = "/api/storage/sub_01_02_img5-mobile_2e57f5ca_5c1f8be0.webp";
 
 export const DR_JO_CARD_IMAGE =
-  "/manus-storage/01_5e3176cb_69bdbf43_e8e22b42.webp";
+  "/api/storage/01_5e3176cb_69bdbf43_e8e22b42.webp";
 
 // ── 디자인 토큰 ──────────────────────────────────────────────────────────────
 export const GOLD = "#d2ac67";

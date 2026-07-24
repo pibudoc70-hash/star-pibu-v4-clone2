@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import crypto from "crypto";
 import { ENV } from "./env";
+import { imageCache } from "./imageCache";
 
 // 파일 확장자 → MIME 타입 매핑
 const MIME_MAP: Record<string, string> = {
@@ -46,8 +47,36 @@ export function registerStorageProxy(app: Express) {
       return;
     }
 
+    const cacheKey = `storage:${key}`;
+
     try {
-      // 1. presigned URL 발급
+      // 1. LRU 캐시 조회
+      const cached = imageCache.get(cacheKey);
+      if (cached) {
+        console.log(`[StorageProxy] [cache hit] key=${key}`);
+
+        // If-None-Match 헤더 확인 (캐시 유효성 검사)
+        const ifNoneMatch = req.get("If-None-Match");
+        if (ifNoneMatch === `"${cached.etag}"`) {
+          res.status(304).end();
+          return;
+        }
+
+        const hasVersionParam = req.query.v !== undefined;
+        const cacheControl = hasVersionParam
+          ? "public, max-age=31536000, immutable"
+          : "public, max-age=60, stale-while-revalidate=300";
+
+        res.set("Content-Type", cached.contentType);
+        res.set("Cache-Control", cacheControl);
+        res.set("ETag", `"${cached.etag}"`);
+        res.set("Vary", "Accept, Accept-Encoding");
+        res.set("Access-Control-Allow-Origin", "*");
+        res.send(cached.buffer);
+        return;
+      }
+
+      // 2. presigned URL 발급
       const forgeUrl = new URL(
         "v1/storage/presign/get",
         ENV.forgeApiUrl.replace(/\/+$/, "") + "/",
@@ -71,9 +100,7 @@ export function registerStorageProxy(app: Express) {
         return;
       }
 
-      // 2. 이미지 바이트를 직접 가져와서 스트리밍 (리다이렉트 대신)
-      //    → Cloudflare가 Cache-Control 헤더를 덮어쓰는 문제 우회
-      //    → 브라우저가 /manus-storage/ URL 자체를 캐시하므로 시크릿 모드·쿠키 초기화 후에도 정상 표시
+      // 3. 이미지 바이트를 직접 가져와서 스트리밍 (리다이렉트 대신)
       const imgResp = await fetch(url);
       if (!imgResp.ok) {
         console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${key}`);
@@ -81,37 +108,38 @@ export function registerStorageProxy(app: Express) {
         return;
       }
 
-      // 3. 이미지 바이트 가져오기
+      // 4. 이미지 바이트 가져오기
       const buffer = await imgResp.arrayBuffer();
       const bufferData = Buffer.from(buffer);
 
-      // 4. ETag 생성 (SHA1 해시의 첫 16자)
+      // 5. ETag 생성 (SHA1 해시의 첫 16자)
       const etag = crypto.createHash("sha1").update(bufferData).digest("hex").slice(0, 16);
 
-      // 5. If-None-Match 헤더 확인 (캐시 유효성 검사)
+      // 6. LRU 캐시에 저장
+      const mimeType = getMimeType(key);
+      imageCache.set(cacheKey, { buffer: bufferData, contentType: mimeType, etag });
+
+      // 7. If-None-Match 헤더 확인 (캐시 유효성 검사)
       const ifNoneMatch = req.get("If-None-Match");
       if (ifNoneMatch === `"${etag}"`) {
         res.status(304).end();
         return;
       }
 
-      // 6. Cache-Control 헤더 조건 분기
-      // ?v= 파라미터가 있으면 1년 캐시 (immutable)
-      // 없으면 1분 캐시 (stale-while-revalidate)
+      // 8. Cache-Control 헤더 조건 분기
       const hasVersionParam = req.query.v !== undefined;
       const cacheControl = hasVersionParam
         ? "public, max-age=31536000, immutable"
         : "public, max-age=60, stale-while-revalidate=300";
 
-      // 7. 응답 헤더 설정
-      const mimeType = getMimeType(key);
+      // 9. 응답 헤더 설정
       res.set("Content-Type", mimeType);
       res.set("Cache-Control", cacheControl);
       res.set("ETag", `"${etag}"`);
       res.set("Vary", "Accept, Accept-Encoding");
       res.set("Access-Control-Allow-Origin", "*");
 
-      // 8. 바이트 직접 전송
+      // 10. 바이트 직접 전송
       res.send(bufferData);
     } catch (err) {
       console.error("[StorageProxy] failed:", err);

@@ -5,6 +5,7 @@ import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
+import { imageCache } from "./imageCache";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -14,6 +15,18 @@ import { initializeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { securityHeadersMiddleware } from "./securityHeaders";
+import crypto from "crypto";
+
+// 팝업 이미지 SSRF 화이트리스트 호스트 패턴
+const POPUP_IMAGE_WHITELIST = [
+  /\.cloudfront\.net$/,
+  /^img\.youtube\.com$/,
+  /\.iitm\.ac\.in$/,
+];
+
+function isAllowedPopupHost(hostname: string): boolean {
+  return POPUP_IMAGE_WHITELIST.some((pattern) => pattern.test(hostname));
+}
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -46,22 +59,42 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   
-  // YouTube 썸네일 프록시 라우터
+  // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)
   app.get('/api/youtube-thumbnail/:videoId', async (req, res) => {
     const { videoId } = req.params;
     if (!videoId) {
       res.status(400).send('Missing videoId');
       return;
     }
-    
+
+    const cacheKey = `yt:${videoId}`;
+
     try {
-      // maxresdefault.jpg 시도 → 실패 시 hqdefault.jpg 폴백
+      // 1. LRU 캐시 조회
+      const cached = imageCache.get(cacheKey);
+      if (cached) {
+        console.log(`[YouTubeThumbnailProxy] [cache hit] videoId=${videoId}`);
+        const ifNoneMatch = req.get("If-None-Match");
+        if (ifNoneMatch === `"${cached.etag}"`) {
+          res.status(304).end();
+          return;
+        }
+        res.set('Content-Type', cached.contentType);
+        res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        res.set('ETag', `"${cached.etag}"`);
+        res.set('Vary', 'Accept, Accept-Encoding');
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(cached.buffer);
+        return;
+      }
+
+      // 2. maxresdefault.jpg 시도 → 실패 시 hqdefault.jpg 폴백
       const urls = [
         `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
         `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
       ];
       
-      let imgResp = null;
+      let imgResp: Response | null = null;
       for (const url of urls) {
         try {
           const resp = await fetch(url);
@@ -69,7 +102,7 @@ async function startServer() {
             imgResp = resp;
             break;
           }
-        } catch (e) {
+        } catch (_e) {
           // 다음 URL 시도
         }
       }
@@ -78,42 +111,109 @@ async function startServer() {
         res.status(404).send('Thumbnail not found');
         return;
       }
-      
-      // 1시간 캐시 설정
+
+      // 3. 이미지 바이트 가져오기
+      const buffer = Buffer.from(await imgResp.arrayBuffer());
+      const etag = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 16);
+
+      // 4. LRU 캐시에 저장
+      imageCache.set(cacheKey, { buffer, contentType: 'image/jpeg', etag });
+
+      // 5. If-None-Match 확인
+      const ifNoneMatch = req.get("If-None-Match");
+      if (ifNoneMatch === `"${etag}"`) {
+        res.status(304).end();
+        return;
+      }
+
       res.set('Content-Type', 'image/jpeg');
       res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+      res.set('ETag', `"${etag}"`);
+      res.set('Vary', 'Accept, Accept-Encoding');
       res.set('Access-Control-Allow-Origin', '*');
-      
-      const buffer = await imgResp.arrayBuffer();
-      res.send(Buffer.from(buffer));
+      res.send(buffer);
     } catch (err) {
       console.error('[YouTubeThumbnailProxy] error:', err);
       res.status(502).send('Failed to fetch thumbnail');
     }
   });
   
-  // 팝업 이미지 프록시 라우터 (CloudFront URL을 프록시로 변환)
+  // 팝업 이미지 프록시 라우터 (LRU 캐시 + SSRF 방어)
   app.get('/api/popup-image', async (req, res) => {
     const { url } = req.query;
     if (!url || typeof url !== 'string') {
       res.status(400).send('Missing or invalid url parameter');
       return;
     }
-    
+
+    // SSRF 방어: URL 파싱 및 화이트리스트 검증
+    let parsedUrl: URL;
     try {
+      parsedUrl = new URL(url);
+    } catch (_e) {
+      res.status(400).send('Invalid url parameter');
+      return;
+    }
+
+    if (parsedUrl.protocol !== 'https:') {
+      res.status(400).send('Only https URLs are allowed');
+      return;
+    }
+
+    if (!isAllowedPopupHost(parsedUrl.hostname)) {
+      res.status(400).send('URL host not allowed');
+      return;
+    }
+
+    const cacheKey = `popup:${url}`;
+
+    try {
+      // 1. LRU 캐시 조회
+      const cached = imageCache.get(cacheKey);
+      if (cached) {
+        console.log(`[PopupImageProxy] [cache hit] url=${url}`);
+        const ifNoneMatch = req.get("If-None-Match");
+        if (ifNoneMatch === `"${cached.etag}"`) {
+          res.status(304).end();
+          return;
+        }
+        res.set('Content-Type', cached.contentType);
+        res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        res.set('ETag', `"${cached.etag}"`);
+        res.set('Vary', 'Accept, Accept-Encoding');
+        res.set('Access-Control-Allow-Origin', '*');
+        res.send(cached.buffer);
+        return;
+      }
+
+      // 2. 원본 이미지 가져오기
       const resp = await fetch(url);
       if (!resp.ok) {
         res.status(resp.status).send('Failed to fetch image');
         return;
       }
-      
-      // 1시간 캐시 설정
-      res.set('Content-Type', resp.headers.get('content-type') || 'image/jpeg');
+
+      // 3. 이미지 바이트 가져오기
+      const contentType = resp.headers.get('content-type') || 'image/jpeg';
+      const buffer = Buffer.from(await resp.arrayBuffer());
+      const etag = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 16);
+
+      // 4. LRU 캐시에 저장
+      imageCache.set(cacheKey, { buffer, contentType, etag });
+
+      // 5. If-None-Match 확인
+      const ifNoneMatch = req.get("If-None-Match");
+      if (ifNoneMatch === `"${etag}"`) {
+        res.status(304).end();
+        return;
+      }
+
+      res.set('Content-Type', contentType);
       res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+      res.set('ETag', `"${etag}"`);
+      res.set('Vary', 'Accept, Accept-Encoding');
       res.set('Access-Control-Allow-Origin', '*');
-      
-      const buffer = await resp.arrayBuffer();
-      res.send(Buffer.from(buffer));
+      res.send(buffer);
     } catch (err) {
       console.error('[PopupImageProxy] error:', err);
       res.status(502).send('Failed to fetch image');

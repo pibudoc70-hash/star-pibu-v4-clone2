@@ -15,13 +15,27 @@ import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getReservationPath } from "@/lib/reservationPath";
 import { getLocalizedUrl } from "@/lib/localizedPath";
 
 // Lazy load Streamdown to avoid bundling it in the initial page load
 const Streamdown = lazy(() => import("streamdown").then(m => ({ default: m.Streamdown })));
+
+// KaTeX CSS dynamic 로드 (Step 18: index.html에서 제거 후 사용 페이지에서만 로드)
+function useKatexCss() {
+  useEffect(() => {
+    const linkId = "katex-css-dynamic";
+    if (document.getElementById(linkId)) return;
+    const link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css";
+    link.crossOrigin = "anonymous";
+    document.head.appendChild(link);
+  }, []);
+}
 
 // safe JSON parser
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
@@ -33,6 +47,7 @@ interface TreatmentStep { title: string; description: string; }
 interface RelatedTreatment { id?: number; slug: string; name: string; desc?: string; image?: string; }
 
 export default function Equipment2Detail() {
+  useKatexCss();
   const params = useParams();
   const [, setLocation] = useLocation();
   const { lang } = useLang();

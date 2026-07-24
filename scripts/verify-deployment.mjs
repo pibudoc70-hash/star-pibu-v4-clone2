@@ -17,8 +17,8 @@ const checks = {
   "재생의료 배너 PC preload": /rel=["']preload["'][^>]*regen-medicine-banner-pc2[^"']*\.webp/.test(html),
   "재생의료 배너 모바일 preload": /rel=["']preload["'][^>]*regen-medicine-banner-mobile[^"']*\.webp/.test(html),
   "Pretendard 폰트 preload": /rel=["']preload["'][^>]*PretendardVariable[^"']*\.woff2/.test(html),
-  // Step 15: KaTeX 폰트를 CDN으로 전환했으므로 jsdelivr는 있어야 ✅
-  "KaTeX CDN 로드": /cdn\.jsdelivr\.net\/npm\/katex/.test(html),
+  // Step 18: KaTeX CSS는 홈 index.html에서 제거됨 (시술 상세 페이지에서 dynamic 로드)
+  "KaTeX CDN 홈에서 배제": !/katex\.min\.css/.test(html),
   "brotli 압축": resp.headers.get("content-encoding") === "br",
 };
 

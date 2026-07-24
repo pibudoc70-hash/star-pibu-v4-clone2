@@ -3679,3 +3679,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] About.tsx 카드 div에 scroll-mt-24 md:scroll-mt-28 클래스 추가
 - [x] TypeScript 오류 0건 확인
 - [x] 체크포인트 저장
+
+## Phase About-DoctorAnchor: About 중복 의료진 섹션 제거 + 홈 앵커 통일
+
+- [x] About.tsx 의료진 카드 섹션 제거 (중복 콘텐츠 → 홈 DoctorsSection으로 통일)
+- [x] About.tsx에 "의료진 소개 보기 →" 링크 추가 (/#doctors 앵커)
+- [x] doctors-data.ts Doctor 타입에 slug 필드 추가 (cho/woo/lee)
+- [x] CLINIC_DOCTORS url 필드를 /about#dr-* → /#dr-* 로 변경 (JSON-LD 통일)
+- [x] Home.tsx hash 스크롤 로직에 #dr-{slug} 감지 추가 (sessionStorage 전달)
+- [x] useDoctorViewModel.ts 마운트 시 __star_doctor_tab 읽어 초기 탭 자동 선택
+- [x] TypeScript 오류 0건 확인
+- [x] 60파일 1436테스트 전부 통과
+- [x] dist에서 about#dr 패턴 0건 확인

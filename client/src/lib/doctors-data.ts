@@ -33,6 +33,7 @@ export const GOLD_MID = "#e8d5a3";
 // ── 타입 ─────────────────────────────────────────────────────────────────────
 export interface Doctor {
   id: number;
+  slug: string;
   name: string;
   nameEn: string;
   title: string;
@@ -51,6 +52,7 @@ export interface Doctor {
 export const doctors: Doctor[] = [
   {
     id: 0,
+    slug: "cho",
     name: "조시형 원장",
     nameEn: "Dr. JO SI-HYUNG",
     title: "피부과 전문의 · 의학박사",
@@ -81,6 +83,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: 1,
+    slug: "woo",
     name: "우혜진 원장",
     nameEn: "Dr. WOO HYE-JIN",
     title: "피부과 전문의",
@@ -108,6 +111,7 @@ export const doctors: Doctor[] = [
   },
   {
     id: 2,
+    slug: "lee",
     name: "이기욱 원장",
     nameEn: "Dr. LEE GI-WOOK",
     title: "피부과 전문의 · 의학박사",

@@ -334,10 +334,22 @@ export default function Home() {
       return;
     }
 
-    // URL에 hash가 있으면 즉시 제거 + 상단으로 이동 (어떤 경우든 hash를 URL에 남기지 않음)
+    // URL에 hash가 있으면 처리
     if (window.location.hash) {
+      const rawHash = window.location.hash.slice(1); // e.g. "dr-cho"
+      // #dr-{slug} 해시: doctors 섹션으로 스크롤 + 해당 의사 탭 자동 선택
+      const drMatch = rawHash.match(/^dr-(cho|woo|lee)$/);
+      if (drMatch) {
+        const slugToIdx: Record<string, number> = { cho: 0, woo: 1, lee: 2 };
+        const idx = slugToIdx[drMatch[1]];
+        // sessionStorage에 스크롤 대상 + 의사 인덱스 저장
+        sessionStorage.setItem("__star_scroll_to", "doctors");
+        sessionStorage.setItem("__star_doctor_tab", String(idx));
+      }
       history.replaceState(null, "", window.location.pathname + window.location.search);
-      window.scrollTo({ top: 0, behavior: "instant" });
+      if (!drMatch) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
     }
 
     // sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)

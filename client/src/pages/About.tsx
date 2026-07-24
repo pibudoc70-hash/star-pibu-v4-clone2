@@ -13,44 +13,15 @@
  *
  * [TRANSLATION STATUS] 완성 (ko/en/ja/zh 전 섹션 i18n 처리)
  */
-import { useEffect } from 'react';
+
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
 import SeoHead, { buildHreflangs, buildBreadcrumbJsonLd, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED, BASE_URL } from '@/components/SeoHead';
 import { getLocalizedUrl } from '@/lib/localizedPath';
-import { doctors } from '@/lib/doctors-data';
-
-// slug 매핑: doctors 배열 index → URL 앵커 slug
-const DOCTOR_SLUGS = ['cho', 'woo', 'lee'] as const;
 
 export default function About() {
   const { t, lang } = useLang();
-
-  // C-2: URL hash(#dr-cho|woo|lee) 시 해당 의사 카드로 스크롤
-  // 컴포넌트 마운트 후 DOM이 완전히 렌더링될 때까지 MutationObserver로 재시도
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash || !/^#dr-/.test(hash)) return;
-    const id = hash.slice(1);
-    let tries = 0;
-    const MAX_TRIES = 40;
-    const INTERVAL = 100;
-    const scrollToEl = () => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return true;
-      }
-      return false;
-    };
-    if (scrollToEl()) return;
-    const timer = setInterval(() => {
-      tries++;
-      if (scrollToEl() || tries >= MAX_TRIES) clearInterval(timer);
-    }, INTERVAL);
-    return () => clearInterval(timer);
-  }, []);
 
   // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책) [R11-F]
   const pageUrl = getLocalizedUrl(lang, "/about");
@@ -154,6 +125,20 @@ export default function About() {
                   </div>
                 ))}
               </div>
+
+              {/* 의료진 소개 링크 */}
+              <div className="mt-6">
+                <a
+                  href="/#doctors"
+                  className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+                  style={{ color: 'var(--color-gold-primary)' }}
+                >
+                  {lang === "ja" ? "医療陣を見る →"
+                   : lang === "zh" ? "查看医疗团队 →"
+                   : lang === "en" ? "Meet Our Doctors →"
+                   : "의료진 소개 보기 →"}
+                </a>
+              </div>
             </div>
 
             {/* 우측 이미지 영역 */}
@@ -195,45 +180,6 @@ export default function About() {
             {t.hours.note && (
               <p className="text-gray-500 text-sm mt-4 text-center">{t.hours.note}</p>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* 의료진 소개 */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            {lang === 'ja' ? '医療チーム' : lang === 'zh' ? '医疗团队' : lang === 'en' ? 'Medical Team' : '의료진 소개'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {doctors.map((doctor, idx) => (
-              <div
-                key={doctor.id}
-                id={`dr-${DOCTOR_SLUGS[idx]}`}
-                className="scroll-mt-24 md:scroll-mt-28 bg-white rounded-xl overflow-hidden shadow-sm"
-              >
-                <div className="h-64 overflow-hidden">
-                  <OptimizedImage
-                    src={doctor.cardImage ?? doctor.image}
-                    alt={doctor.name}
-                    className="w-full h-full object-cover"
-                    height={256}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{doctor.name}</h3>
-                  <p className="text-sm font-medium mb-3" style={{color: 'var(--color-gold-primary)'}}>{doctor.title}</p>
-                  <ul className="space-y-1">
-                    {doctor.credentials.slice(0, 3).map((c, i) => (
-                      <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
-                        <span className="mt-0.5 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>·</span>
-                        <span>{c.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

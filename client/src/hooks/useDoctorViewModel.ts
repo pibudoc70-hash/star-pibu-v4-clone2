@@ -77,13 +77,22 @@ function preloadDoctorImages() {
  * @param t - useLang()에서 받은 번역 객체
  */
 export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
-  const [activeDoctor, setActiveDoctor] = useState(0);
+  // 마운트 시 sessionStorage에서 의사 탭 인덱스 읽기 (#dr-{slug} 직접 접근 지원)
+  const [activeDoctor, setActiveDoctor] = useState(() => {
+    const stored = sessionStorage.getItem("__star_doctor_tab");
+    if (stored !== null) {
+      const idx = parseInt(stored, 10);
+      if (!isNaN(idx) && idx >= 0 && idx < doctors.length) return idx;
+    }
+    return 0;
+  });
   const [expandedCredentials, setExpandedCredentials] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
 
-  // 이미지 프리로드 (마운트 시 1회)
+  // 이미지 프리로드 (마운트 시 1회) + sessionStorage 정리
   useEffect(() => {
     preloadDoctorImages();
+    sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
   // 의사 전환 시 학력·경력 접기 초기화

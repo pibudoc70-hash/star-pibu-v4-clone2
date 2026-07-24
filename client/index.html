@@ -87,12 +87,12 @@
     <!-- [PROD-P1-3] LCP 최적화: 재생의료 배너 preload (히어로 다음 첫 화면 노출 이미지) -->
     <!-- PC (768px 이상): WebP 변환본 사용 (374KB PNG → 36KB WebP, 90% 절감) -->
     <link rel="preload" as="image" type="image/webp"
-      href="/manus-storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
+      href="/api/storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
       media="(min-width: 768px)"
       fetchpriority="high" />
     <!-- 모바일 (767px 이하): WebP 변환본 사용 (273KB PNG → 24KB WebP, 91% 절감) -->
     <link rel="preload" as="image" type="image/webp"
-      href="/manus-storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
+      href="/api/storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
       media="(max-width: 767px)"
       fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
@@ -143,14 +143,13 @@
       media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous" /></noscript>
     <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable font, self-host)
-         jsdelivr CDN 의존 제거 → /manus-storage/ 경로로 self-host
+         /api/storage/ 경로 사용 (/manus-storage/는 외부 307 리다이렉트로 브라우저 로드 실패)
          @font-face 선언은 client/src/index.css 에서 처리 -->
     <link rel="preload" as="font" type="font/woff2"
-      href="/manus-storage/PretendardVariable_1ede78f7.woff2"
+      href="/api/storage/PretendardVariable_1ede78f7.woff2"
       crossorigin="anonymous" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="shortcut icon" href="/favicon.ico" />
     <!-- JSON-LD Structured Data: 정적 기본 스키마 (크롤러 JS 미실행 대응) -->
     <!-- SeoHead 컴포넌트가 페이지별 추가 JSON-LD를 동적으로 삽입합니다 -->
     <script type="application/ld+json">

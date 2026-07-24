@@ -3,6 +3,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Pretendard 자체 호스팅 (jsdelivr CDN 의존 제거) ──────────────────── */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("/manus-storage/PretendardVariable_1ede78f7.woff2") format("woff2-variations");
+}
+
 /* 
  * STAR 피부과 디자인 시스템 — 프리미엄 브랜드 에디션
  * 컬러: 웜 뉴트럴 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)

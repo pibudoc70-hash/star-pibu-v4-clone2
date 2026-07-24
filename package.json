@@ -18,7 +18,9 @@
     "perf:audit": "node scripts/perf-audit.mjs",
     "perf:lighthouse": "node scripts/lighthouse-audit.mjs",
     "perf:all": "pnpm build && pnpm size && pnpm perf:audit && pnpm perf:lighthouse",
-    "perf:server": "pnpm build && pnpm start"
+    "perf:server": "pnpm build && pnpm start",
+    "perf:remote": "node scripts/lighthouse-remote.mjs",
+    "fonts:download": "node scripts/download-fonts.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",

@@ -27,7 +27,6 @@
     <link rel="dns-prefetch" href="https://d2xsxph8kpxj0f.cloudfront.net" />
     <link rel="dns-prefetch" href="https://img.youtube.com" />
     <link rel="dns-prefetch" href="https://i.ytimg.com" />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <title>부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유</title>
     <meta name="description" content="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리쥬란 등 프리미엄 시술 전문. 온라인 예약 가능." />
     <meta name="keywords" content="부산피부과, 울쎄라, 써마지, 리프팅, 눈밑지방재배치" />
@@ -79,13 +78,9 @@
     <meta name="category" content="피부과, 피부과의원, 의료기관" />
     <!-- [PROD-P1-2] LCP 최적화: 히어로 배경 이미지 preload + fetchpriority="high" -->
     <!-- fetchpriority="high": 브라우저가 다른 리소스보다 이 이미지를 먼저 다운로드하도록 지시 -->
+    <!-- 실제 HeroSection 컴포넌트 URL과 동일해야 preload 재사용 가능 -->
     <link rel="preload" as="image" type="image/webp"
-      href="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-bg-new-desktop_2f8a8ccf.webp"
-      media="(min-width: 641px)"
-      fetchpriority="high" />
-    <link rel="preload" as="image" type="image/webp"
-      href="https://d2xsxph8kpxj0f.cloudfront.net/104196446/FfraVpZBeN8JUDHaejFA3e/hero-mobile-new-mobile_f9bea0c7.webp"
-      media="(max-width: 640px)"
+      href="/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"
       fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
     <link rel="alternate" hreflang="ko" href="https://star-pibu.com/" />
@@ -126,9 +121,12 @@
         }
       })();
     </script>
-    <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable subset, 동기 로드)
-         preload as=style 제거: 바로 뒤에 stylesheet가 있어 중복 요청 방지 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable font, self-host)
+         jsdelivr CDN 의존 제거 → /manus-storage/ 경로로 self-host
+         @font-face 선언은 client/src/index.css 에서 처리 -->
+    <link rel="preload" as="font" type="font/woff2"
+      href="/manus-storage/PretendardVariable_1ede78f7.woff2"
+      crossorigin="anonymous" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />

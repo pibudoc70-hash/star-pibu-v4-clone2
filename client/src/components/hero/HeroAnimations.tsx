@@ -20,7 +20,7 @@ import React from "react";
 export function CharReveal({
   text,
   startDelay = 0,
-  charGap = 55,
+  charGap = 5, // [LCP-FIX] 55ms → 5ms: 기본 글자 간격 축소
   className = "",
 }: {
   text: string;
@@ -58,7 +58,7 @@ export function CharReveal({
 export function WordReveal({
   text,
   startDelay = 0,
-  wordGap = 90,
+  wordGap = 9, // [LCP-FIX] 90ms → 9ms: 기본 단어 간격 축소
   className = "",
 }: {
   text: string;

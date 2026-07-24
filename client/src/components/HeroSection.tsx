@@ -3,9 +3,9 @@
  *
  * 애니메이션 시스템:
  * - 로고: heroFadeUp (0.0s)
- * - 병원명 "스타피부과": 글자별 charReveal stagger (0.3s~)
+ * - 병원명 "스타피부과": 글자별 charReveal stagger (0.03s~) [LCP-FIX: 0.3s→0.03s]
  * - 개원 배지: heroFadeUp (0.75s)
- * - 슬로건 단어별: wordReveal stagger (0.9s~)
+ * - 슬로건 단어별: wordReveal stagger (0.09s~) [LCP-FIX: 0.9s→0.09s]
  * - 층별 안내: heroFadeUp (1.25s)
  * - 수치 통계: heroFadeUp stagger (1.4s~)
  * - CTA 버튼: heroFadeUp stagger (1.7s~)
@@ -168,12 +168,14 @@ function HeroSection() {
             </div>
           </div>
           {/* 병원명: 글자별 charReveal */}
+          {/* [LCP-FIX] startDelay 300→30, charGap 60→6: 마지막 글자 완료 540ms→54ms, LCP 개선 */}
           <h1 className="font-medium hero-title">
-            <CharReveal text={t.hero.title} startDelay={300} charGap={60} />
+            <CharReveal text={t.hero.title} startDelay={30} charGap={6} />
           </h1>
           {/* 슬로건: 단어별 wordReveal */}
+          {/* [LCP-FIX] startDelay 900→90, wordGap 85→8 */}
           <p className="font-light hero-subtitle">
-            <WordReveal text={t.hero.subtitle} startDelay={900} wordGap={85} />
+            <WordReveal text={t.hero.subtitle} startDelay={90} wordGap={8} />
           </p>
           {/* 통계 스트립 */}
           <HeroStatsStrip statsRef={desktopStatsRef} stats={statsData} />

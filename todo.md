@@ -3668,3 +3668,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] streamdown lazy import 전환 (AIChatBox.tsx) - 배포 패키지 최적화
 - [x] vendor-heavy에서 streamdown 분리 (vite.config.ts manualChunks)
 - [x] 불필요한 devDependencies 제거: playwright, @lhci/cli, lighthouse, chrome-launcher, sharp, rollup-plugin-visualizer, size-limit, @size-limit/preset-app (8개)
+
+## Phase 의료진 앵커 링크: About 페이지 의료진 카드 앵커 스크롤 (2026-07-25)
+- [x] constants.ts priceRange ₩₩₩ → ₩₩ 수정
+- [x] clinic-data.ts CLINIC_DOCTORS 3명에 slug 추가 (dr-cho, dr-woo, dr-lee)
+- [x] clinic-data.ts url을 /about#dr-{slug} 고유 앵커로 변경
+- [x] About.tsx 의료진 카드 섹션 신규 추가 (id="dr-cho/woo/lee" 앵커 부여)
+- [x] App.tsx ScrollToTop에 hash 존재 시 스크롤 리셋 skip 추가
+- [x] About.tsx hash 스크롤 useEffect 추가 (MutationObserver 재시도 포함)
+- [x] About.tsx 카드 div에 scroll-mt-24 md:scroll-mt-28 클래스 추가
+- [x] TypeScript 오류 0건 확인
+- [x] 체크포인트 저장

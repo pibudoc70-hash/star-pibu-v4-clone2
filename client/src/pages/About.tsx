@@ -13,6 +13,7 @@
  *
  * [TRANSLATION STATUS] 완성 (ko/en/ja/zh 전 섹션 i18n 처리)
  */
+import { useEffect } from 'react';
 import MainLayout from '@/components/MainLayout';
 import { useLang } from '@/contexts/LangContext';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -25,6 +26,31 @@ const DOCTOR_SLUGS = ['cho', 'woo', 'lee'] as const;
 
 export default function About() {
   const { t, lang } = useLang();
+
+  // C-2: URL hash(#dr-cho|woo|lee) 시 해당 의사 카드로 스크롤
+  // 컴포넌트 마운트 후 DOM이 완전히 렌더링될 때까지 MutationObserver로 재시도
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || !/^#dr-/.test(hash)) return;
+    const id = hash.slice(1);
+    let tries = 0;
+    const MAX_TRIES = 40;
+    const INTERVAL = 100;
+    const scrollToEl = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return true;
+      }
+      return false;
+    };
+    if (scrollToEl()) return;
+    const timer = setInterval(() => {
+      tries++;
+      if (scrollToEl() || tries >= MAX_TRIES) clearInterval(timer);
+    }, INTERVAL);
+    return () => clearInterval(timer);
+  }, []);
 
   // SEO: 현재 언어 route 기준 pageUrl 계산 (localized live page 정책) [R11-F]
   const pageUrl = getLocalizedUrl(lang, "/about");
@@ -184,7 +210,7 @@ export default function About() {
               <div
                 key={doctor.id}
                 id={`dr-${DOCTOR_SLUGS[idx]}`}
-                className="bg-white rounded-xl overflow-hidden shadow-sm"
+                className="scroll-mt-24 md:scroll-mt-28 bg-white rounded-xl overflow-hidden shadow-sm"
               >
                 <div className="h-64 overflow-hidden">
                   <OptimizedImage

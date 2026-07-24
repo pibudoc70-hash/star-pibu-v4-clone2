@@ -10,9 +10,13 @@
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
-      // URL에 hash가 있으면 즉시 제거 (새로고침 시 hash로 인한 자동 스크롤 방지)
+      // URL에 hash가 있으면 조건부 제거
+      // dr-|section-|faq- 앵커는 보존 (About 의사 카드 스크롤 등)
       if (window.location.hash) {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
+        var KEEP_HASH = /^#(dr-|section-|faq-)/.test(window.location.hash);
+        if (!KEEP_HASH) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
       }
     </script>
     <meta

@@ -111,7 +111,7 @@ export const CLINIC_INFO = {
     "Sa 09:30-15:00",
   ],
   specialOpeningHours: [],
-  priceRange: "₩₩₩",
+  priceRange: "₩₩",
   currenciesAccepted: "KRW",
   paymentAccepted: "Cash, Credit Card",
   medicalSpecialty: "Dermatology",

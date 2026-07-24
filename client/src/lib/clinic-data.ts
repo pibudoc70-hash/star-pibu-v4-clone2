@@ -23,7 +23,8 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
     nationality: "KR",
-    url: "https://star-pibu.com/#doctors",
+    slug: "cho",
+    url: "https://star-pibu.com/about#dr-cho",
     image: "/api/storage/01_5e3176cb_69bdbf43.png",
     description: `${_STATS.yearsExperience}년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 ${_STATS.eyeBagCases.toLocaleString('ko-KR')}례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.`,
     sameAs: [
@@ -67,7 +68,8 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의",
     jobTitleEn: "Dermatologist, MD",
     nationality: "KR",
-    url: "https://star-pibu.com/#doctors",
+    slug: "woo",
+    url: "https://star-pibu.com/about#dr-woo",
     image: "/api/storage/0211_8cfcf452_31628e98.png",
     description: "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라피 프라임, 써마지 FLX 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
     sameAs: [
@@ -107,7 +109,8 @@ export const CLINIC_DOCTORS = [
     jobTitle: "피부과 전문의 · 의학박사",
     jobTitleEn: "Dermatologist, MD, PhD",
     nationality: "KR",
-    url: "https://star-pibu.com/#doctors",
+    slug: "lee",
+    url: "https://star-pibu.com/about#dr-lee",
     image: "/api/storage/03_46691618_e287e8e1.png",
     description: "고신대학교 의과대학 의학박사. 리프팅, 색소치료, 백반증 치료 등 다양한 피부질환 치료에 전문성을 갖추고 있습니다.",
     sameAs: [

@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -150,7 +151,22 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const plugins = [
+  react(),
+  tailwindcss(),
+  jsxLocPlugin(),
+  vitePluginManusRuntime(),
+  vitePluginManusDebugCollector(),
+  // 번들 청크 그래프 시각화: pnpm build 실행 시 dist/stats.html 생성
+  // 열어보면 어떤 라이브러리가 어떤 청크에 얼마나 들어갔는지 확인 가능
+  visualizer({
+    filename: "dist/stats.html",
+    gzipSize: true,
+    brotliSize: true,
+    template: "treemap",
+    open: false, // CI 환경에서 자동으로 브라우저 열리는 것 방지
+  }) as Plugin,
+];
 
 export default defineConfig({
   plugins,
@@ -174,54 +190,89 @@ export default defineConfig({
     // Vite는 모든 manualChunks를 자동으로 modulepreload하므로,
     // 홈페이지에서 사용하지 않는 청크는 manualChunks에서 제외하여
     // 불필요한 preload 링크 생성 방지
+    chunkSizeWarningLimit: 800, // 기본 500KB → 800KB (초대형 청크만 경고)
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // React 코어 — 가장 먼저 캐시되어야 하는 vendor
-          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
+          // ── 1. React 코어 (거의 모든 페이지가 사용) ──
+          if (
+            id.includes("node_modules/react/") ||
+            id.includes("node_modules/react-dom/") ||
+            id.includes("node_modules/scheduler/")
+          ) {
             return "vendor-react";
           }
-          // tRPC + React Query
-          if (id.includes("@trpc") || id.includes("@tanstack/react-query")) {
+
+          // ── 2. tRPC + React Query (데이터 페칭 계층) ──
+          if (
+            id.includes("@trpc/") ||
+            id.includes("@tanstack/react-query") ||
+            id.includes("superjson")
+          ) {
             return "vendor-trpc";
           }
-          // Lucide 아이콘 (큰 패키지)
+
+          // ── 3. Radix UI 프리미티브 (shadcn/ui 기반) ──
+          if (id.includes("@radix-ui/")) {
+            return "vendor-radix";
+          }
+
+          // ── 4. Framer Motion (애니메이션, ~40KB gzip) ──
+          if (id.includes("framer-motion")) {
+            return "vendor-motion";
+          }
+
+          // ── 5. Recharts (관리자 통계 차트, 홈에서는 불필요) ──
+          if (id.includes("recharts") || id.includes("d3-")) {
+            return "vendor-charts";
+          }
+
+          // ── 6. Date/Form 유틸 ──
+          if (
+            id.includes("date-fns") ||
+            id.includes("react-day-picker") ||
+            id.includes("react-hook-form") ||
+            id.includes("@hookform/") ||
+            id.includes("zod")
+          ) {
+            return "vendor-forms";
+          }
+
+          // ── 7. Lucide 아이콘 ──
           if (id.includes("lucide-react")) {
             return "vendor-icons";
           }
-          // [P0-OPT] KaTeX + streamdown: manualChunks에서 제거
-          // 이유: Home 첫 진입에서 modulepreload 대상이 되어 291KB gzip 선로드 발생
-          // katex (88KB gzip): AI 채팅/관리자 페이지에서만 사용
-          // streamdown (203KB gzip): AI 채팅 페이지에서만 사용
-          // → Rollup 기본 청킹에 맡기면 사용 페이지에서만 dynamic import로 로드됨
-          // if (id.includes("katex")) { return "vendor-katex"; }
-          // if (id.includes("streamdown")) { return "vendor-streamdown"; }
-          // [P0-OPT] treatments-data: manualChunks에서 제거
-          // 이유: Home 첫 진입에서 modulepreload 대상이 되어 396KB gzip 선로드 발생
-          // treatments-data (396KB gzip): 시술 페이지에서만 사용
-          // → Rollup 기본 청킹에 맡기면 사용 페이지에서만 dynamic import로 로드됨
-          // if (id.includes("data/treatments")) {
-          //   return "data-treatments";
-          // }
-          // [P0-OPT] 관리자 페이지 청크 분리 제거
-          // 이유: 모바일 홈에서 불필요한 1.2MB 청크 preload 방지
-          // 관리자 페이지 접근 시 동적 import로 로드됨
-          // if (id.includes("pages/Admin")) {
-          //   return "page-admin";
-          // }
-          
-          // [P0-OPT] 시술/장비 페이지 청크 분리 제거
-          // 이유: 홈페이지에서 사용하지 않는 149KB 청크 preload 방지
-          // if (id.includes("pages/Treatment") || id.includes("pages/Equipment")) {
-          //   return "page-treatments-equipment";
-          // }
-          
-          // [P0-OPT] 랜딩 페이지 청크 분리 제거
-          // 이유: 홈페이지에서 사용하지 않는 682KB 청크 preload 방지
-          // if (id.includes("pages/Landing")) {
-          //   return "page-landings";
-          // }
-          // 나머지 node_modules는 Rollup 기본 청킹에 맡김
+
+          // ── 8. XLSX + streamdown + katex (관리자/AI 전용, 홈에서 절대 불필요) ──
+          if (
+            id.includes("xlsx") ||
+            id.includes("streamdown") ||
+            id.includes("katex")
+          ) {
+            return "vendor-heavy";
+          }
+
+          // ── 9. 관리자 페이지 코드 (홈 초기 청크에서 완전 분리) ──
+          if (id.includes("/pages/Admin") || id.includes("/pages/admin/")) {
+            return "page-admin";
+          }
+
+          // ── 10. 언어별 랜딩 페이지 (홈에서는 불필요) ──
+          if (
+            id.includes("/pages/LandingEN") ||
+            id.includes("/pages/LandingJA") ||
+            id.includes("/pages/LandingZH")
+          ) {
+            return "page-landings";
+          }
+
+          // ── 11. 시술·장비 상세 데이터 (대용량 상수, 상세 페이지에서만) ──
+          if (id.includes("/data/treatments") || id.includes("/data/equipment")) {
+            return "data-treatments";
+          }
+
+          // ── 12. 나머지 node_modules 는 Rollup 자동 분할에 맡김 ──
+          //     (return 없으면 Rollup 이 청크 그래프 기반으로 알아서 분리)
         },
       },
     },

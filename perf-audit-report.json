@@ -1,0 +1,28 @@
+{
+  "url": "http://localhost:3002",
+  "timestamp": "2026-07-24T03:03:13.624Z",
+  "checks": {
+    "serviceWorkerActivated": false,
+    "cacheNames": [],
+    "cacheBuckets": {
+      "static": false,
+      "image": false,
+      "html": false
+    },
+    "compressionApplied": true,
+    "compressionType": "br",
+    "htmlNetworkFirst": true,
+    "trpcNotCached": true
+  },
+  "metrics": {
+    "firstVisitJsCount": 9,
+    "firstVisitJsBytes": 3701146,
+    "firstVisitJsKB": 3614,
+    "secondVisitJsFromSw": 0,
+    "secondVisitJsTotal": 9,
+    "secondVisitSwRatio": 0,
+    "trpcRequests": 1,
+    "trpcFromSw": 0
+  },
+  "errors": []
+}

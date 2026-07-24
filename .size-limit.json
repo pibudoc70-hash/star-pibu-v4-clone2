@@ -1,0 +1,19 @@
+[
+  { "name": "홈 진입 (index)", "path": "dist/public/assets/index-*.js", "limit": "30 KB", "gzip": true },
+  { "name": "vendor-react", "path": "dist/public/assets/vendor-react-*.js", "limit": "120 KB", "gzip": true },
+  { "name": "vendor-trpc", "path": "dist/public/assets/vendor-trpc-*.js", "limit": "35 KB", "gzip": true },
+  { "name": "vendor-radix", "path": "dist/public/assets/vendor-radix-*.js", "limit": "40 KB", "gzip": true },
+  { "name": "vendor-icons", "path": "dist/public/assets/vendor-icons-*.js", "limit": "15 KB", "gzip": true },
+  {
+    "name": "홈 초기 총합 (5개 청크)",
+    "path": [
+      "dist/public/assets/index-*.js",
+      "dist/public/assets/vendor-react-*.js",
+      "dist/public/assets/vendor-trpc-*.js",
+      "dist/public/assets/vendor-radix-*.js",
+      "dist/public/assets/vendor-icons-*.js"
+    ],
+    "limit": "230 KB",
+    "gzip": true
+  }
+]

@@ -57,6 +57,8 @@ function buildCSP(isDev: boolean): string {
     "https://fonts.gstatic.com",
     // KaTeX 폰트 파일 (CDN에서 로드되는 woff2/woff/ttf)
     "https://cdn.jsdelivr.net",
+    // Manus 스토리지 CDN: /manus-storage/ 307 리다이렉트 대상 (Pretendard 등)
+    "https://*.cloudfront.net",
     "data:",
   ].join(" ");
 
@@ -80,6 +82,10 @@ function buildCSP(isDev: boolean): string {
     "https://manus.im",
     "https://manus-analytics.com",
     "https://challenges.cloudflare.com",
+    // Manus 스토리지 CDN: SW fetch → /api/storage/ → 307 → CloudFront 리다이렉트 대상
+    "https://*.cloudfront.net",
+    // Manus CDN (콘솔 에러에서 발견)
+    "https://files.manuscdn.com",
     isDev ? "ws://localhost:*" : "",
     isDev ? "wss://localhost:*" : "",
     isDev ? "ws://*.manus.computer" : "",
@@ -101,7 +107,8 @@ function buildCSP(isDev: boolean): string {
 
   const mediaSrc = [
     self,
-    "https://d2xsxph8kpxj0f.cloudfront.net",
+    // 와일드카드로 모든 CloudFront 서브도메인 허용 (d2xsxph8kpxj0f, d36hbw14aib5lz 등)
+    "https://*.cloudfront.net",
     "blob:",
   ].join(" ");
 

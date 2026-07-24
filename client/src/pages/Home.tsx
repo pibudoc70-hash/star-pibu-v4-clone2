@@ -310,57 +310,62 @@ export default function Home() {
   // 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
   // hash를 무시하고 상단으로 이동한다.
   useEffect(() => {
-    // [FIX v3] 완전 재작성 - 초기 진입 시 무조건 상단으로 이동
-    // URL hash는 일체 무시하고 sessionStorage만 사용
-    //
-    // 문제 원인:
-    // 1. useHeaderState에서 history.replaceState로 URL에 #events 등 hash 저장
-    // 2. 브라우저 scroll restoration이 이전 스크롤 위치 복원
-    // 3. Home.tsx의 hash 스크롤 useEffect가 이를 읽어 자동 스크롤
-    //
-    // 해결 방법:
-    // - 진입 시 URL hash를 즉시 제거하고 상단으로 이동
-    // - 다른 페이지에서 메뉴 클릭 시 sessionStorage로 스크롤 대상 전달
+    // [FIX v5] #dr-{slug} 직접 진입 지원 + 일반 섹션 스크롤 유지
+    // - #dr-{slug}: setInterval로 id="dr-{slug}" 요소 대기 후 스크롤 + 의사 탭 활성화
+    // - 일반 섹션: sessionStorage(__star_scroll_to) 방식 유지
+    // - 카드 클릭 시 재실행 없음 (deps=[])
 
     // [FIX v4] 언어 변경 시 scroll restoration 무시
-    // sessionStorage에 "__star_force_scroll_top" 플래그가 있으면
-    // 브라우저의 scroll restoration을 무시하고 상단으로 이동
     const forceScrollTop = sessionStorage.getItem("__star_force_scroll_top");
     if (forceScrollTop) {
       sessionStorage.removeItem("__star_force_scroll_top");
-      // 브라우저의 scroll restoration 무시
       history.scrollRestoration = "manual";
       window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
 
-    // URL에 hash가 있으면 처리
+    // URL hash 처리 (#dr-{slug} 또는 일반 섹션 hash)
+    let drSlug: string | null = null;
     if (window.location.hash) {
       const rawHash = window.location.hash.slice(1); // e.g. "dr-cho"
-      // #dr-{slug} 해시: doctors 섹션으로 스크롤 + 해당 의사 탭 자동 선택
       const drMatch = rawHash.match(/^dr-(cho|woo|lee)$/);
       if (drMatch) {
+        drSlug = drMatch[1];
         const slugToIdx: Record<string, number> = { cho: 0, woo: 1, lee: 2 };
-        const idx = slugToIdx[drMatch[1]];
-        // sessionStorage에 스크롤 대상 + 의사 인덱스 저장
-        sessionStorage.setItem("__star_scroll_to", "doctors");
+        const idx = slugToIdx[drSlug];
+        // 의사 탭 인덱스를 sessionStorage에 저장 (useDoctorViewModel이 읽음)
         sessionStorage.setItem("__star_doctor_tab", String(idx));
       }
+      // URL에서 hash 제거 (다음 방문 시 자동 스크롤 방지)
       history.replaceState(null, "", window.location.pathname + window.location.search);
       if (!drMatch) {
         window.scrollTo({ top: 0, behavior: "instant" });
       }
     }
 
-    // sessionStorage에서 스크롤 대상 확인 (다른 페이지에서 메뉴 클릭 시)
+    // #dr-{slug} 직접 진입: setInterval로 id="dr-{slug}" 요소 대기 후 스크롤
+    if (drSlug) {
+      const targetId = `dr-${drSlug}`;
+      let attempts = 0;
+      const iv = setInterval(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          clearInterval(iv);
+        } else if (++attempts >= 40) {
+          clearInterval(iv);
+        }
+      }, 100);
+      return () => clearInterval(iv);
+    }
+
+    // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) 방식
     const sessionTarget = sessionStorage.getItem("__star_scroll_to");
     if (!sessionTarget) {
-      // 스크롤 대상이 없으면 상단으로 이동 (이미 ScrollToTop이 처리하지만 이중 보장)
       window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
 
-    // sessionStorage에 스크롤 대상이 있으면 해당 섹션으로 스크롤
     sessionStorage.removeItem("__star_scroll_to");
     const id = sessionTarget;
 
@@ -382,7 +387,7 @@ export default function Home() {
     observer.observe(document.body, { childList: true, subtree: true });
     const timeout = setTimeout(() => observer.disconnect(), 5000);
     return () => { observer.disconnect(); clearTimeout(timeout); };
-  }, []);
+  }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행 (카드 클릭 시 재실행 없음)
 
   return (
     <div className="min-h-screen">

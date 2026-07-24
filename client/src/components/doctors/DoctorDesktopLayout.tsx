@@ -75,6 +75,15 @@ export function DoctorDesktopLayout({
         aria-labelledby={`doctor-tab-${activeDoctor}`}
         className="flex flex-1"
       >
+        {/* [C-3] 각 의사별 앵커 타겟 (/#dr-{slug} 직접 진입 스크롤용) */}
+        {mergedDoctors.map((d) => (
+          <div
+            key={d.id}
+            id={`dr-${d.slug}`}
+            className="sr-only scroll-mt-24 md:scroll-mt-28"
+            aria-hidden="true"
+          />
+        ))}
         {/* 사진 영역 */}
         <div className="relative flex-shrink-0 dr-photo-panel">
           {mergedDoctors.map((d) => (

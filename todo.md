@@ -3691,3 +3691,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TypeScript 오류 0건 확인
 - [x] 60파일 1436테스트 전부 통과
 - [x] dist에서 about#dr 패턴 0건 확인
+
+## Phase 의료진 앵커 버그 수정 (2026-07-25)
+- [x] DoctorDesktopLayout에 id="dr-{slug}" 앵커 타겟 추가 (scroll-mt-24 md:scroll-mt-28)
+- [x] DoctorMobileLayout에 id="dr-{slug}" 앵커 타겟 추가 (scroll-mt-24)
+- [x] Home.tsx hash useEffect를 FIX v5로 교체 (setInterval로 id="dr-{slug}" 직접 대기)
+- [x] index.html KEEP_HASH 패턴 제거 (모든 hash 즉시 제거 → 브라우저 자동 앵커 점프 방지)
+- [x] TypeScript 오류 0건, 60파일 1436테스트 전부 통과, dist about#dr 패턴 0건

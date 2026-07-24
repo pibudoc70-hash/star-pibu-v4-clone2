@@ -10,13 +10,11 @@
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
-      // URL에 hash가 있으면 조건부 제거
-      // dr-|section-|faq- 앵커는 보존 (About 의사 카드 스크롤 등)
+      // URL에 hash가 있으면 제거
+      // [FIX v5] dr- 해시는 Home.tsx useEffect에서 setInterval로 처리하므로
+      // 브라우저 자동 앵커 점프를 막기 위해 모든 hash를 제거
       if (window.location.hash) {
-        var KEEP_HASH = /^#(dr-|section-|faq-)/.test(window.location.hash);
-        if (!KEEP_HASH) {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
+        history.replaceState(null, '', window.location.pathname + window.location.search);
       }
     </script>
     <meta

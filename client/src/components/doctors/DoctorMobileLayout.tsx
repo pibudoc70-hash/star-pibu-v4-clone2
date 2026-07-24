@@ -97,6 +97,15 @@ export function DoctorMobileLayout({
 
       {/* ── 슬라이더 븷포트 ── */}
       <div className="relative overflow-hidden">
+        {/* [C-3] 각 의사별 앵커 타겟 (/#dr-{slug} 직접 진입 스크롤용) */}
+        {mergedDoctors.map((d) => (
+          <div
+            key={d.id}
+            id={`dr-${d.slug}`}
+            className="sr-only scroll-mt-24"
+            aria-hidden="true"
+          />
+        ))}
         {/* 슬라이드 트랙 */}
         <div
           className="flex transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"

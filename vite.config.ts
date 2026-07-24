@@ -184,10 +184,10 @@ const plugins = [
   jsxLocPlugin(),
   vitePluginManusRuntime(),
   vitePluginManusDebugCollector(),
-  // 번들 청크 그래프 시각화: pnpm build 실행 시 dist/stats.html 생성
+  // 번들 청크 그래프 시각화: pnpm build 실행 시 stats.html 생성 (dist/ 밖 — 배포 패키지에 포함되지 않음)
   // 열어보면 어떤 라이브러리가 어떤 청크에 얼마나 들어갔는지 확인 가능
   visualizer({
-    filename: "dist/stats.html",
+    filename: "stats.html",
     gzipSize: true,
     brotliSize: true,
     template: "treemap",

@@ -114,3 +114,6 @@ client/public/__manus__/version.json
 .project-config.json
 .manus/
 screenshots/
+
+# rollup-plugin-visualizer 번들 분석 파일 (배포 패키지 제외)
+stats.html

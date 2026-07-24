@@ -438,6 +438,7 @@ export default function AdminPopupTab({ currentUser }: Props) {
                     </>
                   )}
                 </label>
+                <p className="text-xs text-gray-400 mt-1">PNG/JPEG 업로드 시 WebP로 자동 변환 및 1600px 리사이즈됩니다.</p>
                 <input
                   className="w-full border border-[#E5E7EB] rounded-lg px-3 py-2 text-xs mt-2 text-[#9CA3AF]"
                   value={popupForm.imageUrl}

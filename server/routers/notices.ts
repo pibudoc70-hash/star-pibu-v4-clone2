@@ -20,6 +20,7 @@ import {
 import { storagePut } from "../storage";
 import { invokeLLM } from "../_core/llm";
 import { TRPCError } from "@trpc/server";
+import { optimizeImage } from "../_core/imageOptimizer";
 
 const LANG_LABELS: Record<string, string> = {
   en: "English",
@@ -205,21 +206,23 @@ export const noticesRouter = router({
       noticeId: z.number().int().positive(),
       base64: z.string(), // data:image/jpeg;base64,... 또는 순수 base64
       mimeType: z.string().default("image/jpeg"),
+      fileName: z.string().default("image.jpg"),
       sortOrder: z.number().int().default(0),
     }))
     .mutation(async ({ input }) => {
       // base64 디코딩
       const base64Data = input.base64.replace(/^data:[^;]+;base64,/, "");
-      const buffer = Buffer.from(base64Data, "base64");
+      const rawBuffer = Buffer.from(base64Data, "base64");
 
       // 파일 크기 제한: 10MB
-      if (buffer.length > 10 * 1024 * 1024) {
+      if (rawBuffer.length > 10 * 1024 * 1024) {
         throw new TRPCError({ code: "PAYLOAD_TOO_LARGE", message: "이미지 크기는 10MB 이하여야 합니다." });
       }
 
-      const ext = input.mimeType.split("/")[1] ?? "jpg";
-      const fileKey = `notices/${input.noticeId}/${Date.now()}.${ext}`;
-      const { key, url } = await storagePut(fileKey, buffer, input.mimeType);
+      // WebP 변환 + 1600px 리사이즈 파이프라인
+      const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType);
+      const fileKey = `notices/${input.noticeId}/${Date.now()}-${optimized.fileName}`;
+      const { key, url } = await storagePut(fileKey, optimized.buffer, optimized.mimeType);
 
       await addNoticeImage({
         noticeId: input.noticeId,

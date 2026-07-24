@@ -18,6 +18,7 @@ import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
 import { withCache, invalidateCache } from "../_core/cache";
 import { TRPCError } from "@trpc/server";
+import { optimizeImage } from "../_core/imageOptimizer";
 
 /** 팝업 다국어 필드 공통 zod 스키마 */
 const popupI18nFields = {
@@ -153,11 +154,12 @@ export const popupRouter = router({
     }))
     .mutation(async ({ input }) => {
       const base64Data = input.base64.includes(",") ? input.base64.split(",")[1] : input.base64;
-      const buffer = Buffer.from(base64Data, "base64");
-      if (buffer.length > 5 * 1024 * 1024) throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
-      const ext = input.mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "jpg";
-      const uniqueName = `popup-images/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { url } = await storagePut(uniqueName, buffer, input.mimeType);
+      const rawBuffer = Buffer.from(base64Data, "base64");
+      if (rawBuffer.length > 5 * 1024 * 1024) throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
+      // WebP 변환 + 1600px 리사이즈 파이프라인
+      const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType);
+      const uniqueName = `popup-images/${Date.now()}-${Math.random().toString(36).slice(2)}-${optimized.fileName}`;
+      const { url } = await storagePut(uniqueName, optimized.buffer, optimized.mimeType);
       return { url };
     }),
 });

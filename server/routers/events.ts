@@ -12,6 +12,7 @@ import {
 } from "../db";
 import { storagePut } from "../storage";
 import { logger } from "../_core/logger";
+import { optimizeImage } from "../_core/imageOptimizer";
 import { withCache, invalidateCache } from "../_core/cache";
 import type { InsertEvent } from "../../drizzle/schema";
 import { TRPCError } from "@trpc/server";
@@ -204,10 +205,12 @@ export const eventsRouter = router({
     .mutation(async ({ input }) => {
       try {
         const base64Data = input.fileData.split(',')[1] || input.fileData;
-        const buffer = Buffer.from(base64Data, 'base64');
-        if (buffer.length > 5 * 1024 * 1024) throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
-        const fileKey = `events/${Date.now()}-${input.fileName}`;
-        const { url } = await storagePut(fileKey, buffer, input.mimeType);
+        const rawBuffer = Buffer.from(base64Data, 'base64');
+        if (rawBuffer.length > 5 * 1024 * 1024) throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
+        // WebP 변환 + 1600px 리사이즈 파이프라인
+        const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType);
+        const fileKey = `events/${Date.now()}-${optimized.fileName}`;
+        const { url } = await storagePut(fileKey, optimized.buffer, optimized.mimeType);
         return { success: true, url };
       } catch (error) {
         logger.error("ImageUpload", "이미지 업로드 오류", error);

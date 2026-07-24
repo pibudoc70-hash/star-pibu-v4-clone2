@@ -560,6 +560,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
                   }}
                   className="px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                 />
+                <p className="text-xs text-gray-400 mt-1">PNG/JPEG 업로드 시 WebP로 자동 변환 및 1600px 리사이즈됩니다.</p>
                 {eventForm.imageUrl && (
                   <div className="mt-2">
                     <img

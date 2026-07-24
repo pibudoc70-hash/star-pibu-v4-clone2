@@ -3698,3 +3698,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Home.tsx hash useEffect를 FIX v5로 교체 (setInterval로 id="dr-{slug}" 직접 대기)
 - [x] index.html KEEP_HASH 패턴 제거 (모든 hash 즉시 제거 → 브라우저 자동 앵커 점프 방지)
 - [x] TypeScript 오류 0건, 60파일 1436테스트 전부 통과, dist about#dr 패턴 0건
+
+## Phase WebP 이미지 최적화 파이프라인 (2026-07-25)
+- [x] sharp 패키지 설치 (v0.34.x, 내장 타입 포함)
+- [x] server/_core/imageOptimizer.ts 신설 (PNG/JPEG → WebP 변환, 1600px 리사이즈, 50KB 미만/SVG/GIF pass-through)
+- [x] events.ts uploadImage 라우터에 optimizeImage 파이프라인 삽입
+- [x] popup.ts uploadImage 라우터에 optimizeImage 파이프라인 삽입
+- [x] notices.ts uploadImage 라우터에 optimizeImage 파이프라인 삽입
+- [x] equipment3.ts uploadImage 라우터에 optimizeImage 파이프라인 삽입
+- [x] 관리자 UI 4곳에 WebP 자동 변환 힌트 텍스트 추가
+- [x] scripts/migrate-images-to-webp.mjs 마이그레이션 스크립트 작성 (--dry-run 지원)
+- [x] server/__tests__/imageOptimizer.test.ts 유닛 테스트 9개 작성 (전부 통과)
+- [x] --dry-run 실행: 157건 대상, 156건 변환 예정, 1건 스킵(이미 WebP), 오류 0건

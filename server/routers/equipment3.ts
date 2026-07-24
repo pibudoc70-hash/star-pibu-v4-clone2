@@ -18,6 +18,7 @@ import {
 import { z } from "zod/v4";
 import { storagePut } from "../storage";
 import { TRPCError } from "@trpc/server";
+import { optimizeImage } from "../_core/imageOptimizer";
 
 // 공통 시술 필드 스키마 (생성/수정 공용)
 const itemFieldsSchema = z.object({
@@ -396,19 +397,17 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       const base64Data = input.base64.includes(",")
         ? input.base64.split(",")[1]
         : input.base64;
-      const buffer = Buffer.from(base64Data, "base64");
+      const rawBuffer = Buffer.from(base64Data, "base64");
 
-      if (buffer.length > 5 * 1024 * 1024) {
+      if (rawBuffer.length > 5 * 1024 * 1024) {
         throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
       }
 
-      const ext =
-        input.mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "jpg";
-      const uniqueName = `equipment3/${Date.now()}-${Math.random()
-        .toString(36)
-        .slice(2)}.${ext}`;
+      // WebP 변환 + 1600px 리사이즈 파이프라인
+      const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType);
+      const uniqueName = `equipment3/${Date.now()}-${Math.random().toString(36).slice(2)}-${optimized.fileName}`;
 
-      const { url } = await storagePut(uniqueName, buffer, input.mimeType);
+      const { url } = await storagePut(uniqueName, optimized.buffer, optimized.mimeType);
       return { url };
     }),
 });

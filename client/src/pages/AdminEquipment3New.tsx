@@ -415,6 +415,7 @@ export default function AdminEquipment3New() {
                     {uploading ? "업로드 중..." : "대표 이미지 업로드 (최대 5MB)"}
                   </button>
                 )}
+                <p className="text-xs text-gray-400">PNG/JPEG 업로드 시 WebP로 자동 변환 및 1600px 리사이즈됩니다.</p>
                 <div>
                   <Label className="text-xs text-gray-500">또는 URL 직접 입력</Label>
                   <Input name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." className="mt-1" />

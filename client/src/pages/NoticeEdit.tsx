@@ -312,7 +312,7 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
                     클릭하거나 이미지를 드래그해서 업로드
                   </p>
                   <p className="text-xs text-gray-400 mt-1">
-                    JPG, PNG, GIF, WEBP 지원 · 최대 10장
+                    JPG, PNG, GIF, WEBP 지원 · 최대 10장 · PNG/JPEG는 WebP로 자동 변환
                   </p>
                 </div>
                 <input

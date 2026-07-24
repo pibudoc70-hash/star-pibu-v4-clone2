@@ -152,6 +152,40 @@ function vitePluginManusDebugCollector(): Plugin {
 }
 
 /**
+ * KaTeX CSS externalize 플러그인
+ *
+ * streamdown은 수식이 있을 때 `import('katex/dist/katex.min.css')`를 동적으로 호출한다.
+ * Vite가 이 CSS를 번들에 포함시키면 KaTeX 폰트 파일 59개(~1MB)가 dist/public/assets/에
+ * 복사된다. 이 플러그인은 해당 import를 빈 모듈로 대체하여 폰트 파일을 배포 패키지에서
+ * 제외한다. KaTeX CSS는 client/index.html에서 jsDelivr CDN으로 직접 로드한다.
+ *
+ * 참고: streamdown 내부에는 이미 `/cdn/katex/${version}/katex.min.css` 경로로
+ * CDN 링크를 동적 삽입하는 로직(In 함수)이 있으나, ESM 빌드에서는 실행되지 않아
+ * Vite의 CSS 번들링이 먼저 동작한다. 따라서 이 플러그인으로 번들링을 차단한다.
+ */
+function externalizeKatexCssPlugin(): Plugin {
+  return {
+    name: "externalize-katex-css",
+    // enforce: "pre"로 Vite CSS 플러그인보다 먼저 실행
+    enforce: "pre",
+    apply: "build",
+    resolveId(id) {
+      // katex CSS import를 빈 모듈로 리다이렉트 (폰트 파일 번들 제외)
+      // enforce: "pre"로 Vite의 CSS 플러그인보다 먼저 실행되어 dynamic import도 가로체진다
+      if (id.includes("katex") && id.endsWith(".css")) {
+        return "\0katex-css-noop";
+      }
+    },
+    load(id) {
+      if (id === "\0katex-css-noop") {
+        // 빈 CSS 모듈 반환 — KaTeX CSS는 index.html의 CDN 링크로 로드됨
+        return "/* KaTeX CSS is loaded via CDN in index.html */";
+      }
+    },
+  };
+}
+
+/**
  * 홈에 불필요한 청크의 <link rel="modulepreload"> 를 index.html 에서 제거한다.
  *
  * Vite 는 manualChunks 로 지정된 모든 청크를 index.html 에 자동으로 preload
@@ -184,6 +218,9 @@ const plugins = [
   jsxLocPlugin(),
   vitePluginManusRuntime(),
   vitePluginManusDebugCollector(),
+  // KaTeX CSS를 CDN으로 전환: 폰트 파일 59개(~1MB) 배포 패키지 제외
+  // KaTeX CSS는 client/index.html에서 jsDelivr CDN으로 직접 로드됨
+  externalizeKatexCssPlugin(),
   // 번들 청크 그래프 시각화: pnpm build 실행 시 stats.html 생성 (dist/ 밖 — 배포 패키지에 포함되지 않음)
   // 열어보면 어떤 라이브러리가 어떤 청크에 얼마나 들어갔는지 확인 가능
   visualizer({

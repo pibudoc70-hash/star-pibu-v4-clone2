@@ -27,6 +27,8 @@
     <link rel="dns-prefetch" href="https://d2xsxph8kpxj0f.cloudfront.net" />
     <link rel="dns-prefetch" href="https://img.youtube.com" />
     <link rel="dns-prefetch" href="https://i.ytimg.com" />
+    <!-- jsDelivr: KaTeX CSS CDN (수식 렌더링 폰트, AI 채팅 컴포넌트 전용) -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <title>부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유</title>
     <meta name="description" content="부산 서면 스타피부과는 20년 경력 피부과 전문의가 직접 진료합니다. 울쎄라, 써마지 리프팅, 색소질환 치료, 다양한 레이저 시술 보유. 눈밑지방재배치, 리쥬란 등 프리미엄 시술 전문. 온라인 예약 가능." />
     <meta name="keywords" content="부산피부과, 울쎄라, 써마지, 리프팅, 눈밑지방재배치" />
@@ -132,6 +134,14 @@
         }
       })();
     </script>
+    <!-- KaTeX CSS (CDN): AI 채팅 컴포넌트에서 수식 렌더링 시 필요한 폰트 제공
+         배포 패키지에서 KaTeX 폰트 파일 59개(~1MB)를 제외하기 위해 CDN 방식으로 전환
+         katex@0.16.22: rehype-katex@7.x에서 사용하는 매핑 버전 (streamdown 내부 매핑 테이블 {7:"0.16.22"}) -->
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+      crossorigin="anonymous"
+      media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous" /></noscript>
     <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable font, self-host)
          jsdelivr CDN 의존 제거 → /manus-storage/ 경로로 self-host
          @font-face 선언은 client/src/index.css 에서 처리 -->

@@ -48,11 +48,15 @@ function buildCSP(isDev: boolean): string {
     self,
     unsafeInline,
     "https://fonts.googleapis.com",
+    // KaTeX CSS CDN (AI 채팅 컴포넌트 수식 렌더링)
+    "https://cdn.jsdelivr.net",
   ].join(" ");
 
   const fontSrc = [
     self,
     "https://fonts.gstatic.com",
+    // KaTeX 폰트 파일 (CDN에서 로드되는 woff2/woff/ttf)
+    "https://cdn.jsdelivr.net",
     "data:",
   ].join(" ");
 

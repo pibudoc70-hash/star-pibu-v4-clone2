@@ -3655,3 +3655,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 403 이미지는 현재 프로젝트의 대체 이미지로 교체
 - [x] 코드에서 이전 CDN URL → /manus-storage/ URL로 전체 교체 (207개 교체)
 - [x] CDN 변수 정의 제거 (사용되지 않는 const CDN 제거)
+
+## Step 15: KaTeX 폰트 CDN 전환 (2026-07-24)
+- [x] streamdown의 `import('katex/dist/katex.min.css')` dynamic import 분석
+- [x] vite.config.ts: externalizeKatexCssPlugin 추가 (enforce:"pre", resolveId/load 훅으로 KaTeX CSS → 빈 모듈 대체)
+- [x] client/index.html: jsDelivr CDN에서 katex@0.16.22 CSS 로드 (media="print" onload 비동기 방식), dns-prefetch 추가
+- [x] server/_core/securityHeaders.ts: CSP style-src, font-src에 cdn.jsdelivr.net 추가
+- [x] pnpm check + pnpm build 검증: KaTeX 폰트 파일 59개 → 0개, 전체 443개 → 383개 (-60개), 19MB → 17MB (-2MB)

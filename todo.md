@@ -2868,44 +2868,44 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 전체 디자인 개선 (2026-06-14)
 
 ### [P0] 모바일 Hero 수정
-- [ ] 모바일 Hero 상단 128px 크림색 여백 제거 (SECTION 태그 원인 파악 및 수정)
-- [ ] STAR DERMATOLOGY 텍스트 가시성 개선 (다크 배경 위 흰색 텍스트 그림자 강화)
-- [ ] 모바일 Hero 콘텐츠 위치 최적화 (padding-top 조정, 잘림 방지)
-- [ ] 모바일 Hero focal point 재조정 (object-position)
+- [x] 모바일 Hero 상단 128px 크림색 여백 제거 (SECTION 태그 원인 파악 및 수정)
+- [x] STAR DERMATOLOGY 텍스트 가시성 개선 (다크 배경 위 흰색 텍스트 그림자 강화)
+- [x] 모바일 Hero 콘텐츠 위치 최적화 (padding-top 조정, 잘림 방지)
+- [x] 모바일 Hero focal point 재조정 (object-position)
 - [x] 모바일 CTA 위계 명확화 (네이버예약 Primary, 카카오 Secondary, 전화 Tertiary)
 
 ### [P0] CTA 시스템 정비
 - [x] Primary/Secondary/Tertiary CTA 위계 통일
 - [x] sticky 모바일 CTA 바 고급화
-- [ ] 버튼 스타일 시스템 통일 (border, radius, spacing)
+- [x] 버튼 스타일 시스템 통일 (border, radius, spacing)
 
 ### [P1] 여백 시스템 + 타이포 계층
-- [ ] 섹션 간 간격 통일 (mobile 80px / desktop 120px)
-- [ ] 제목/설명/캡션/수치 hierarchy 명확화
-- [ ] 모바일 줄바꿈, 본문 길이, 섹션 밀도 정리
+- [x] 섹션 간 간격 통일 (mobile 80px / desktop 120px)
+- [x] 제목/설명/캡션/수치 hierarchy 명확화
+- [x] 모바일 줄바꿈, 본문 길이, 섹션 밀도 정리
 
 ## 모바일 디자인 개선 (2026-06-14 지시서 기반)
 
 ### [P0] Hero 비율 재설계
-- [ ] 모바일 Hero 높이 비율 재조정 (과도하게 세로로 긴 문제 해결)
-- [ ] 배경 이미지 focal point 재조정 (object-position 최적화)
-- [ ] Hero 콘텐츠 수직 간격 재설계 (로고/카피/수치/CTA breathing room)
-- [ ] Hero 상단/하단 불필요한 빈 어두운 영역 제거
+- [x] 모바일 Hero 높이 비율 재조정 (과도하게 세로로 긴 문제 해결)
+- [x] 배경 이미지 focal point 재조정 (object-position 최적화)
+- [x] Hero 콘텐츠 수직 간격 재설계 (로고/카피/수치/CTA breathing room)
+- [x] Hero 상단/하단 불필요한 빈 어두운 영역 제거
 
 ### [P0] Hero CTA 위계 재정비
-- [ ] Primary(네이버예약) / Secondary(카카오) / Tertiary(전화) 시각적 구분 강화
-- [ ] 버튼 대비 강화 (배경에 묻히지 않게)
-- [ ] 버튼 최소 44px 높이 보장
+- [x] Primary(네이버예약) / Secondary(카카오) / Tertiary(전화) 시각적 구분 강화
+- [x] 버튼 대비 강화 (배경에 묻히지 않게)
+- [x] 버튼 최소 44px 높이 보장
 
 ### [P0] 모바일 텍스트 대비/가독성
-- [ ] Hero 보조 텍스트(stat 라벨, 서브카피) 대비 강화 (WCAG AA 4.5:1)
-- [ ] 반투명 텍스트 어두운 배경 위 가독성 개선
+- [x] Hero 보조 텍스트(stat 라벨, 서브카피) 대비 강화 (WCAG AA 4.5:1)
+- [x] 반투명 텍스트 어두운 배경 위 가독성 개선
 
 ### [P1] 모바일 전체 여백/리듬
-- [ ] 섹션 top/bottom spacing 80px 기준 통일
-- [ ] 카드 padding/gap 24px 기준 통일
-- [ ] 카드 UI 개선 (시술/장비/이벤트/후기/의료진)
-- [ ] 신뢰 요소 모바일 재배치
+- [x] 섹션 top/bottom spacing 80px 기준 통일
+- [x] 카드 padding/gap 24px 기준 통일
+- [x] 카드 UI 개선 (시술/장비/이벤트/후기/의료진)
+- [x] 신뢰 요소 모바일 재배치
 
 ## Phase N+1: 중국어/일본어 폰트 줄 높이 불일치 수정 (2026-06-15)
 - [x] PhilosophySection.tsx - 일본어 타이틀 white-space: nowrap 추가 (スター皮膚科について 한 줄 표시)
@@ -2942,36 +2942,36 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 타이포 계층 5단계 시스템 정립
 
 ### [P0] Hero 섹션 배열·비율 재설계
-- [ ] 모바일 Hero 높이·비율 재조정
-- [ ] Hero 내부 배열 재설계: 로고→메인카피→서브카피→신뢰수치→CTA 위계 명확화
-- [ ] 각 요소 사이 수직 간격 정교화
-- [ ] 상단 신뢰 수치와 중간 섹션 수치 정합성 확인
+- [x] 모바일 Hero 높이·비율 재조정
+- [x] Hero 내부 배열 재설계: 로고→메인카피→서브카피→신뢰수치→CTA 위계 명확화
+- [x] 각 요소 사이 수직 간격 정교화
+- [x] 상단 신뢰 수치와 중간 섹션 수치 정합성 확인
 
 ### [P0] 섹션 헤더 패턴 통일 및 리듬
-- [ ] 오버라인+제목+설명문 패턴 전 섹션 통일
-- [ ] section padding: mobile 80px / desktop 120px 기준 적용
-- [ ] grid gap: mobile 24px / desktop 40px 기준 적용
-- [ ] 섹션 간 강약 리듬 조절
+- [x] 오버라인+제목+설명문 패턴 전 섹션 통일
+- [x] section padding: mobile 80px / desktop 120px 기준 적용
+- [x] grid gap: mobile 24px / desktop 40px 기준 적용
+- [x] 섹션 간 강약 리듬 조절
 
 ### [P1] 카드형 섹션 배열·정보 위계
-- [ ] 시술/장비/이벤트/후기 카드 정보 위계 재정리
-- [ ] 카드 높이·패딩·타이틀 크기·설명문 길이 통일감 정리
-- [ ] 이벤트 카드 가격표 느낌 제거
-- [ ] 후기 카드 행간·폭 개선
+- [x] 시술/장비/이벤트/후기 카드 정보 위계 재정리
+- [x] 카드 높이·패딩·타이틀 크기·설명문 길이 통일감 정리
+- [x] 이벤트 카드 가격표 느낌 제거
+- [x] 후기 카드 행간·폭 개선
 
 ### [P1] 모바일 타이포·배열 보강
-- [ ] 모바일 제목 2줄 이내 우선 처리
-- [ ] 작은 회색 텍스트 대비 강화 (contrast 4.5:1 이상)
-- [ ] 모바일 카드 1카드 1메시지 단순화
+- [x] 모바일 제목 2줄 이내 우선 처리
+- [x] 작은 회색 텍스트 대비 강화 (contrast 4.5:1 이상)
+- [x] 모바일 카드 1카드 1메시지 단순화
 
 ### [P1] 신뢰 섹션 정리
-- [ ] 수치 섹션 제목-수치-설명 위계 강화
+- [x] 수치 섹션 제목-수치-설명 위계 강화
 - [ ] Journey/Timeline 브랜드 자산처럼 다듬기
 
 ### [P2] 하단 전환 섹션
-- [ ] FAQ→문의→예약→위치/연락정보 흐름 정리
-- [ ] ONLINE RESERVATION 배열 고급화
-- [ ] 주소/진료시간/교통/주차 정보 가독성 개선
+- [x] FAQ→문의→예약→위치/연락정보 흐름 정리
+- [x] ONLINE RESERVATION 배열 고급화
+- [x] 주소/진료시간/교통/주차 정보 가독성 개선
 
 ## Phase N+3: 외국어 홈페이지 전수 검수 및 다국어 번역 수정 (2026-06-15)
 - [x] useLocalizedText.ts - ja/zh 폴백을 ko 대신 en으로 변경 (외국인 환자에게 한국어보다 영어가 이해하기 쉬움)
@@ -2999,16 +2999,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 체크포인트 저장
 
 ## Phase N+6: 공지사항 게시판 신규 구현 (2026-06-18)
-- [ ] drizzle/schema.ts에 notices 테이블 추가 (id, title, content, isPinned, createdAt, updatedAt)
-- [ ] pnpm drizzle-kit generate 실행 후 SQL 마이그레이션 적용
-- [ ] server/db.ts에 notices 쿼리 헬퍼 추가
-- [ ] server/routers.ts에 notice 라우터 추가 (list, getById, create, update, delete)
-- [ ] client/src/pages/Notice.tsx 공지사항 목록 페이지 구현 (일반 방문자용)
-- [ ] client/src/pages/NoticeDetail.tsx 공지사항 상세 페이지 구현
-- [ ] client/src/pages/NoticeAdmin.tsx 관리자 작성/수정/삭제 페이지 구현
-- [ ] App.tsx에 /notice, /notice/:id, /admin/notice 라우트 등록
-- [ ] i18n 파일에 notice 관련 번역 키 추가 (ko/en/ja/zh)
-- [ ] useHeaderState.ts 드롭다운 메뉴에 공지사항 링크 추가
+- [x] drizzle/schema.ts에 notices 테이블 추가 (id, title, content, isPinned, createdAt, updatedAt)
+- [x] pnpm drizzle-kit generate 실행 후 SQL 마이그레이션 적용
+- [x] server/db.ts에 notices 쿼리 헬퍼 추가
+- [x] server/routers.ts에 notice 라우터 추가 (list, getById, create, update, delete)
+- [x] client/src/pages/Notice.tsx 공지사항 목록 페이지 구현 (일반 방문자용)
+- [x] client/src/pages/NoticeDetail.tsx 공지사항 상세 페이지 구현
+- [x] client/src/pages/NoticeAdmin.tsx 관리자 작성/수정/삭제 페이지 구현
+- [x] App.tsx에 /notice, /notice/:id, /admin/notice 라우트 등록
+- [x] i18n 파일에 notice 관련 번역 키 추가 (ko/en/ja/zh)
+- [x] useHeaderState.ts 드롭다운 메뉴에 공지사항 링크 추가
 - [x] 체크포인트 저장 (e406a74f)
 
 ## Phase N+7: 공지사항 이미지 업로드 기능
@@ -3019,11 +3019,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Notice 목록 썸네일 표시
 
 ## Phase N+8: 메인 페이지 공지사항 섹션 추가
-- [ ] RecentNoticesSection 컴포넌트 작성 (썸네일+제목+날짜, 최근 3개)
-- [ ] Home.tsx (한국어 메인)에 섹션 삽입
-- [ ] LandingEN.tsx (영어 메인)에 섹션 삽입
-- [ ] LandingJA.tsx (일본어 메인)에 섹션 삽입
-- [ ] LandingZH.tsx (중국어 메인)에 섹션 삽입
+- [x] RecentNoticesSection 컴포넌트 작성 (썸네일+제목+날짜, 최근 3개)
+- [x] Home.tsx (한국어 메인)에 섹션 삽입
+- [x] LandingEN.tsx (영어 메인)에 섹션 삽입
+- [x] LandingJA.tsx (일본어 메인)에 섹션 삽입
+- [x] LandingZH.tsx (중국어 메인)에 섹션 삽입
 - [x] 체크포인트 저장 (d8083ee2)
 
 ## Phase 68: 관리자 이벤트 관리 - 언어별 탭 구조 구현 (2026-06-24)
@@ -3055,12 +3055,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## Phase 70: 모바일 UX/UI 전면 개선 (시니어 디자이너 관점)
 
 - [x] P0: MobileMenu 전면 개선 - CSS 클래스화, scroll lock, focus trap, ESC 닫기, 브랜드 컬러 통일
-- [ ] P0: 모바일 Hero 첫 화면 비율과 정보 위계 개선
-- [ ] P1: 신뢰 지표/카드/섹션 헤더 일관성 강화
-- [ ] P1: CTA 시스템 정리 (Primary/Secondary/Utility 위계)
-- [ ] P1: MobileBottomCTA 충돌 및 하단 여백 개선
-- [ ] P2: 모바일 타이포그래피/터치 UX 표준화
-- [ ] 모바일 375px 기준 전체 검증 및 최종 보고
+- [x] P0: 모바일 Hero 첫 화면 비율과 정보 위계 개선
+- [x] P1: 신뢰 지표/카드/섹션 헤더 일관성 강화
+- [x] P1: CTA 시스템 정리 (Primary/Secondary/Utility 위계)
+- [x] P1: MobileBottomCTA 충돌 및 하단 여백 개선
+- [x] P2: 모바일 타이포그래피/터치 UX 표준화
+- [x] 모바일 375px 기준 전체 검증 및 최종 보고
 
 ## Phase 70: 모바일 UX/UI 전면 개선 (2026-06-26)
 - [x] Phase 70-1: MobileMenu 전면 개선 (CSS 클래스화, scroll lock, focus trap, ESC 닫기)
@@ -3198,7 +3198,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ### Phase 6: 실시간 업데이트 기능
 - [x] 폴링 기반 자동 새로고침 (3초~1분 선택 가능)
 - [ ] WebSocket 실시간 업데이트 (선택사항)
-- [ ] 업데이트 알림 토스트
+- [x] 업데이트 알림 토스트
 
 ### Phase 7: 테스트 및 검증
 - [x] 기존 테스트 스위트 완료 (1398/1398 통과)
@@ -3214,18 +3214,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## Phase 131: 공지사항 기능 구현 (2026-06-28)
 
 ### Phase 131-1: 데이터베이스 스키마 설계 및 마이그레이션
-- [ ] notices 테이블 생성 (id, title, content, createdAt, updatedAt, isActive)
-- [ ] Drizzle ORM 스키마 정의 (drizzle/schema.ts)
-- [ ] 마이그레이션 SQL 생성 및 적용 (webdev_execute_sql)
+- [x] notices 테이블 생성 (id, title, content, createdAt, updatedAt, isActive)
+- [x] Drizzle ORM 스키마 정의 (drizzle/schema.ts)
+- [x] 마이그레이션 SQL 생성 및 적용 (webdev_execute_sql)
 
 ### Phase 131-2: 서버 API 구현 (CRUD 라우터)
-- [ ] server/db.ts에 공지사항 CRUD 함수 추가
+- [x] server/db.ts에 공지사항 CRUD 함수 추가
   - getNotices() - 전체 목록 조회
   - getNoticeById() - 상세 조회
   - createNotice() - 등록
   - updateNotice() - 수정
   - deleteNotice() - 삭제
-- [ ] server/routers.ts에 공지사항 라우터 추가
+- [x] server/routers.ts에 공지사항 라우터 추가
   - notices.list (public)
   - notices.getById (public)
   - notices.create (admin)
@@ -3233,43 +3233,43 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - notices.delete (admin)
 
 ### Phase 131-3: 관리자 공지사항 관리 페이지 구현
-- [ ] AdminNotices.tsx 페이지 생성
-- [ ] 공지사항 목록 테이블 (등록일, 제목, 상태, 수정/삭제 버튼)
-- [ ] 공지사항 등록 폼 (제목, 내용, 활성화 여부)
-- [ ] 공지사항 수정 폼
-- [ ] App.tsx에 /admin/notices 라우트 추가
+- [x] AdminNotices.tsx 페이지 생성
+- [x] 공지사항 목록 테이블 (등록일, 제목, 상태, 수정/삭제 버튼)
+- [x] 공지사항 등록 폼 (제목, 내용, 활성화 여부)
+- [x] 공지사항 수정 폼
+- [x] App.tsx에 /admin/notices 라우트 추가
 
 ### Phase 131-4: 공지사항 목록 페이지 구현
-- [ ] NoticesPage.tsx 생성 (/notices)
-- [ ] 공지사항 목록 표시 (최신순 정렬)
-- [ ] 페이지네이션 또는 무한 스크롤
-- [ ] 각 공지사항 클릭 시 상세 페이지로 이동
+- [x] NoticesPage.tsx 생성 (/notices)
+- [x] 공지사항 목록 표시 (최신순 정렬)
+- [x] 페이지네이션 또는 무한 스크롤
+- [x] 각 공지사항 클릭 시 상세 페이지로 이동
 
 ### Phase 131-5: 공지사항 상세 페이지 구현
-- [ ] NoticeDetail.tsx 생성 (/notices/:id)
-- [ ] 공지사항 제목, 내용, 등록일 표시
-- [ ] 목록으로 돌아가기 버튼
-- [ ] SEO 메타 태그 설정
+- [x] NoticeDetail.tsx 생성 (/notices/:id)
+- [x] 공지사항 제목, 내용, 등록일 표시
+- [x] 목록으로 돌아가기 버튼
+- [x] SEO 메타 태그 설정
 
 ### Phase 131-6: 메인 페이지 최근 공지사항 섹션 추가
-- [ ] NoticesSection.tsx 컴포넌트 생성
-- [ ] 최근 공지사항 3-5개 표시
-- [ ] "더보기" 버튼으로 전체 목록 페이지 이동
-- [ ] Home.tsx에 섹션 추가
+- [x] NoticesSection.tsx 컴포넌트 생성
+- [x] 최근 공지사항 3-5개 표시
+- [x] "더보기" 버튼으로 전체 목록 페이지 이동
+- [x] Home.tsx에 섹션 추가
 
 ### Phase 131-7: 다국어(i18n) 지원 추가
-- [ ] i18n.ts에 공지사항 관련 문구 추가 (한/영/일/중)
+- [x] i18n.ts에 공지사항 관련 문구 추가 (한/영/일/중)
   - 섹션 제목, 버튼, 레이블, 플레이스홀더
-- [ ] AdminNotices.tsx 다국어 적용
-- [ ] NoticesPage.tsx 다국어 적용
-- [ ] NoticeDetail.tsx 다국어 적용
+- [x] AdminNotices.tsx 다국어 적용
+- [x] NoticesPage.tsx 다국어 적용
+- [x] NoticeDetail.tsx 다국어 적용
 
 ### Phase 131-8: 테스트 및 최종 검수
-- [ ] 공지사항 CRUD 기능 테스트
-- [ ] 관리자 페이지 접근 권한 확인
-- [ ] 다국어 표시 확인
-- [ ] 메인 페이지 공지사항 섹션 표시 확인
-- [ ] 최종 체크포인트 저장
+- [x] 공지사항 CRUD 기능 테스트
+- [x] 관리자 페이지 접근 권한 확인
+- [x] 다국어 표시 확인
+- [x] 메인 페이지 공지사항 섹션 표시 확인
+- [x] 최종 체크포인트 저장
 
 
 ## Phase 131: 공지사항 기능 구현 ✅ (완료)
@@ -3297,9 +3297,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P1 작업 2: 섹션 헤더 표준화 검증 (.section-header-block 이미 구현됨) 
 - [x] P1 작업 3: 섹션 패딩 시스템 검증 (py-20, py-28 이미 통일됨) 
 - [x] P1 작업 4: 색상 토큰 정리 (CSS 변수 중심, 동적 스타일은 인라인 유지) 
-- [ ] P2 작업: 레거시 코드 정리
+- [x] P2 작업: 레거시 코드 정리
 - [x] 폰트 로딩 최적화
-- [ ] 최종 검증 및 보고
+- [x] 최종 검증 및 보고
 
 ## Phase 5-6: 텍스트 대비/가독성 마감 + 최종 검증 (2026-06-28 재개)
 - [x] ManagementDevicesSection 카드 설명 텍스트 #6B7280 → #555555 (4.30→6.63:1)
@@ -3311,8 +3311,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm run check
 - [x] pnpm run test
 - [x] pnpm run build
-- [ ] 체크포인트 저장
-- [ ] 종합 보고서 작성
+- [x] 체크포인트 저장
+- [x] 종합 보고서 작성
 
 ## 마감 이슈 후속 수정 (2026-06-28)
 - [x] Montserrat weight 500 제거 (400만 유지 - 실제 사용 없음 확인)
@@ -3522,14 +3522,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## Phase DS5: 디자인 시스템 Phase 5 리팩터링 (2026-07-02)
 - [ ] Playwright 변경 전 스크린샷 캡처 (홈, 시술 목록, 후기, 이벤트, 의료진 소개)
-- [ ] CSS 변수 통일: --color-gold-primary 단일 토큰으로 전체 코드베이스 치환 (142건)
-- [ ] 카드 컴포넌트 통일: .card 베이스 + BEM 변형자 구조 (.card--treatment, .card--review, .card--event, .card--doctor)
-- [ ] EventsSection.tsx, SpecialEventSection.tsx 인라인 스타일 CSS 변수 전환
-- [ ] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 통합 (index.css)
-- [ ] WCAG AA 미달 수정: section-eyebrow 골드→goldDark(#7A5C35) (라이트 배경)
-- [ ] WCAG AA 미달 수정: Header 스크롤 시 골드→goldDark
-- [ ] WCAG AA 미달 수정: YouTubeSection 버튼 white→navy 텍스트
-- [ ] prefers-reduced-motion 카드 hover 애니메이션 대응 강화
+- [x] CSS 변수 통일: --color-gold-primary 단일 토큰으로 전체 코드베이스 치환 (142건)
+- [x] 카드 컴포넌트 통일: .card 베이스 + BEM 변형자 구조 (.card--treatment, .card--review, .card--event, .card--doctor)
+- [x] EventsSection.tsx, SpecialEventSection.tsx 인라인 스타일 CSS 변수 전환
+- [x] 다국어 타이포그래피 :lang() 선택자 CSS 변수 오버라이드 레이어 통합 (index.css)
+- [x] WCAG AA 미달 수정: section-eyebrow 골드→goldDark(#7A5C35) (라이트 배경)
+- [x] WCAG AA 미달 수정: Header 스크롤 시 골드→goldDark
+- [x] WCAG AA 미달 수정: YouTubeSection 버튼 white→navy 텍스트
+- [x] prefers-reduced-motion 카드 hover 애니메이션 대응 강화
 - [ ] Playwright 변경 후 스크린샷 캡처 및 비교 보고
 
 ## Phase DS5: 디자인 시스템 Phase 5 [DONE] (2026-07-02)
@@ -3575,10 +3575,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] popup.test.ts에 다국어 targetLang 필터 테스트 6건 추가 (총 1419 tests 통과)
 - [x] ESLint 에러 0건 유지
 ## 메인 카드 섹션 equipment3 DB 통합 (2026-07-03)
-- [ ] TreatmentsEquipmentSection을 trpc.equipment3.list 사용으로 전환 (정적 데이터 제거)
-- [ ] equipment3 DB 데이터를 Treatment 타입으로 어댑터 변환 (imageUrl→image, category 기반 탭)
-- [ ] 카드/모달 UI 기존 디자인 유지하면서 DB 데이터 표시
-- [ ] 정적 데이터 파일 의존성 제거 (useStaticTreatmentFilter → DB 기반 필터)
+- [x] TreatmentsEquipmentSection을 trpc.equipment3.list 사용으로 전환 (정적 데이터 제거)
+- [x] equipment3 DB 데이터를 Treatment 타입으로 어댑터 변환 (imageUrl→image, category 기반 탭)
+- [x] 카드/모달 UI 기존 디자인 유지하면서 DB 데이터 표시
+- [x] 정적 데이터 파일 의존성 제거 (useStaticTreatmentFilter → DB 기반 필터)
 - [ ] 테스트 업데이트 및 체크포인트 저장
 ## 메인 카드 섹션 equipment3 DB 통합
 - [x] useEquipment3AsTreatments 어댑터 훅 작성 (equipment3 DB → Treatment 타입 변환)

@@ -102,10 +102,10 @@ export default function EventsSection() {
     <section id="events-legacy" className="py-16 sm:py-24 star-section-alt" aria-label="이벤트 및 공지사항">
       <div className="container">
         {/* ── Section Header ── */}
-        <div className="text-center mb-8 sm:mb-12">
+        <div className="section-header-block">
           <span className="section-eyebrow">{ev_t.eyebrow}</span>
-          <h2 className="section-title mb-4">{ev_t.sectionTitle}</h2>
-          <div className="star-divider mx-auto mb-4" />
+          <h2 className="section-title">{ev_t.sectionTitle}</h2>
+          <div className="star-divider mx-auto" />
           <p className="section-subtitle">{ev_t.sectionSubtitle}</p>
         </div>
 
@@ -177,7 +177,7 @@ export default function EventsSection() {
                     {ev.badge && (
                       <Badge
                         className="rounded-full text-xs font-normal"
-                        style={{ backgroundColor: ev.badgeColor, color: "#fff", border: "none" }}
+                        style={{ backgroundColor: ev.badgeColor, color: "var(--color-white, #fff)", border: "none" }}
                       >
                         {ev.badge}
                       </Badge>

@@ -38,9 +38,9 @@ describe("OG_IMAGE_LOCALIZED", () => {
     }
   });
 
-  it("모든 OG 이미지 URL이 manus-storage 경로를 사용해야 한다", () => {
+  it("모든 OG 이미지 URL이 manus-storage 또는 api/storage 경로를 사용해야 한다", () => {
     for (const lang of SUPPORTED_LANGS) {
-      expect(OG_IMAGE_LOCALIZED[lang]).toMatch(/^\/manus-storage\//);
+      expect(OG_IMAGE_LOCALIZED[lang]).toMatch(/^\/(?:manus-storage|api\/storage)\//);
     }
   });
 

@@ -198,5 +198,8 @@ export function securityHeadersMiddleware(
   // 'cross-origin'으로 설정: CDN 이미지 등 외부 접근 허용
   res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
 
+  // X-Powered-By 제거: Express 서버 정보 노출 방지
+  res.removeHeader("X-Powered-By");
+
   next();
 }

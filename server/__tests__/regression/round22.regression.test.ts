@@ -321,7 +321,7 @@ describe("G. assetConfig", () => {
   });
 
   it("G-2: manus-storage URL 패턴을 사용한다 (로컬 파일 경로 금지)", () => {
-    // /api/storage/ 또는 https:// URL 패턴이어야 함
-    expect(content).toMatch(/manus-storage\/|https:\/\//);
+    // /api/storage/ 또는 /manus-storage/ 또는 https:// URL 패턴이어야 함
+    expect(content).toMatch(/manus-storage\/|api\/storage\/|https:\/\//);
   });
 });

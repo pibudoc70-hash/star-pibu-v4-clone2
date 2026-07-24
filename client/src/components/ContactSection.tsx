@@ -136,7 +136,7 @@ export default function ContactSection() {
               >
                 <img
                   src={staticMapDataUrl}
-                  alt={t.access.mapAriaLabel ?? "스타피부과 위치 지도"}
+                  alt={t.access.mapAriaLabel}
                   className="w-full h-full object-cover"
                   loading="eager"
                 />

@@ -36,6 +36,8 @@ const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 const RecentNoticesSection = lazy(() => import("@/components/RecentNoticesSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
+import { useNewNoticeToast } from "@/hooks/useNewNoticeToast";
+import { useLocation } from "wouter";
 
 /** 셉션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선
  * variant="dark": 어두운 배경 섹션(ManagementDevices, YouTube, Contact)
@@ -294,6 +296,10 @@ function useIdleMount(delayMs = 2000): boolean {
 
 export default function Home() {
   const popupReady = useIdleMount(2000);
+  const [, navigate] = useLocation();
+
+  // 새 공지사항 알림 토스트 (세션당 1회)
+  useNewNoticeToast(navigate);
 
   // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기

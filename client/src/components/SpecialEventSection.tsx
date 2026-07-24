@@ -61,7 +61,7 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
     <div
       className={`rounded-2xl overflow-hidden${index > 0 ? ' hidden md:block' : ''}`}
       style={{
-        background: '#ffffff',
+        background: 'var(--color-white, #ffffff)',
         boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
         border: '1px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent)',
       }}

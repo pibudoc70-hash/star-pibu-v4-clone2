@@ -135,10 +135,10 @@ describe("P2-8 SeoHead admin noindex 자동 정책", () => {
 describe("P2-9 assetConfig OG_IMAGES", () => {
   it("OG_IMAGES에 ko/en/ja/zh 키가 모두 존재한다", async () => {
     const { OG_IMAGES } = await import("@/lib/assetConfig");
-    expect(OG_IMAGES.ko).toMatch(/api/storage/);
-    expect(OG_IMAGES.en).toMatch(/api/storage/);
-    expect(OG_IMAGES.ja).toMatch(/api/storage/);
-    expect(OG_IMAGES.zh).toMatch(/api/storage/);
+    expect(OG_IMAGES.ko).toMatch(/api\/storage/);
+    expect(OG_IMAGES.en).toMatch(/api\/storage/);
+    expect(OG_IMAGES.ja).toMatch(/api\/storage/);
+    expect(OG_IMAGES.zh).toMatch(/api\/storage/);
   });
 
   it("seoHelpers.OG_IMAGE_LOCALIZED는 assetConfig.OG_IMAGES와 동일한 값을 가진다", async () => {

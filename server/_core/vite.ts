@@ -70,7 +70,30 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  app.use(
+    express.static(distPath, {
+      // etag/lastModified 는 express-static 기본값(true) 유지
+      setHeaders: (res, filePath) => {
+        // HTML: 배포 즉시 반영을 위해 캐시 안 함
+        if (filePath.endsWith(".html")) {
+          res.setHeader("Cache-Control", "no-cache, must-revalidate");
+          return;
+        }
+        // Vite 빌드 산출물: 파일명에 해시가 붙어있으므로 1년 immutable
+        if (/\.(js|css|woff2?|ttf|otf|eot)$/i.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+          return;
+        }
+        // 이미지·미디어: 파일명에 해시가 없을 수도 있으므로 30일
+        if (/\.(png|jpe?g|webp|avif|svg|ico|gif|mp4|webm)$/i.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=2592000");
+          return;
+        }
+        // 그 외 (JSON, txt 등): 5분
+        res.setHeader("Cache-Control", "public, max-age=300");
+      },
+    }),
+  );
 
   // fall through to index.html if the file doesn't exist
   // /api/* 경로는 SPA fallback에서 제외 — storage/tRPC 요청에 HTML 반환 방지
@@ -79,6 +102,8 @@ export function serveStatic(app: Express) {
       res.status(404).send("Not found");
       return;
     }
+    // SPA fallback: index.html은 항상 최신 버전 제공
+    res.setHeader("Cache-Control", "no-cache, must-revalidate");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

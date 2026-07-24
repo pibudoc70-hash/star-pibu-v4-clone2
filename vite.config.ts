@@ -151,6 +151,33 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
+/**
+ * 홈에 불필요한 청크의 <link rel="modulepreload"> 를 index.html 에서 제거한다.
+ *
+ * Vite 는 manualChunks 로 지정된 모든 청크를 index.html 에 자동으로 preload
+ * 링크로 추가한다. 하지만 관리자 페이지, 언어별 랜딩, 대용량 vendor 청크는
+ * 홈에서 즉시 로드할 필요가 없다. 이 링크들만 제거하면 브라우저는 실제 필요
+ * 시점(라우트 이동 시)에 lazy 로드한다.
+ *
+ * dynamic import 로 참조되는 청크는 자동으로 lazy 로드되므로 preload 링크만
+ * 제거해도 동작에는 문제없다.
+ */
+function stripUnusedModulePreloadPlugin(chunksToStrip: string[]): Plugin {
+  return {
+    name: "strip-unused-modulepreload",
+    apply: "build",
+    transformIndexHtml(html) {
+      return html.replace(
+        /<link[^>]+rel=["']modulepreload["'][^>]*>/g,
+        (match) => {
+          const shouldStrip = chunksToStrip.some((chunk) => match.includes(chunk));
+          return shouldStrip ? "" : match;
+        },
+      );
+    },
+  };
+}
+
 const plugins = [
   react(),
   tailwindcss(),
@@ -166,6 +193,15 @@ const plugins = [
     template: "treemap",
     open: false, // CI 환경에서 자동으로 브라우저 열리는 것 방지
   }) as Plugin,
+  // 홈에 불필요한 청크의 modulepreload 링크를 index.html에서 제거
+  // 이 청크들은 실제 라우트 이동 시 lazy 로드됨
+  stripUnusedModulePreloadPlugin([
+    "page-admin",      // 관리자 페이지 (일반 방문자는 접근 안 함)
+    "page-landings",   // /en, /ja, /zh 진입 시에만 필요
+    "vendor-heavy",    // xlsx, streamdown, katex (관리자·특수 페이지)
+    "vendor-charts",   // recharts (관리자 통계 페이지)
+    "data-treatments", // 시술 상세 페이지 진입 시에만 필요
+  ]),
 ];
 
 export default defineConfig({
@@ -266,10 +302,12 @@ export default defineConfig({
             return "page-landings";
           }
 
-          // ── 11. 시술·장비 상세 데이터 (대용량 상수, 상세 페이지에서만) ──
-          if (id.includes("/data/treatments") || id.includes("/data/equipment")) {
-            return "data-treatments";
-          }
+          // ── 11. 시술·장비 상세 데이터 ──
+          // [Circular chunk 해소] page-landings ↔ data-treatments 순환 의존 방지를 위해
+          // data-treatments 청크 규칙을 제거하고 Rollup 자동 분할에 맡김.
+          // 랜딩 페이지와 treatments 데이터가 서로 참조하는 구조에서 별도 청크를 강제하면
+          // Rollup이 순환 경고를 발생시키므로, 자동 분할로 각 페이지 청크에 포함시킴.
+          // (총 번들 크기는 동일하나 청크 그래프가 단순해짐)
 
           // ── 12. 나머지 node_modules 는 Rollup 자동 분할에 맡김 ──
           //     (return 없으면 Rollup 이 청크 그래프 기반으로 알아서 분리)

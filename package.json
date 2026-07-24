@@ -132,6 +132,7 @@
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^7.0.1",
+    "sharp": "^0.35.3",
     "size-limit": "^12.1.0",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.19.1",

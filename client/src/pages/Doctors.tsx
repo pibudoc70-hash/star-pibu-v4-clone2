@@ -23,9 +23,9 @@ import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
 import OptimizedImage from '@/components/OptimizedImage';
 
 const DOCTOR_IMAGES = [
-  '/api/storage/01_5e3176cb_69bdbf43.png',
-  '/api/storage/0211_8cfcf452_31628e98.png',
-  '/api/storage/03_46691618_e287e8e1.png',
+  '/manus-storage/01_5e3176cb_69bdbf43_e8e22b42.webp',
+  '/manus-storage/0211_8cfcf452_31628e98_2a57d4d8.webp',
+  '/manus-storage/03_46691618_e287e8e1_dc958eaf.webp',
 ];
 
 export default function Doctors() {

@@ -82,6 +82,17 @@
     <link rel="preload" as="image" type="image/webp"
       href="/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"
       fetchpriority="high" />
+    <!-- [PROD-P1-3] LCP 최적화: 재생의료 배너 preload (히어로 다음 첫 화면 노출 이미지) -->
+    <!-- PC (768px 이상): WebP 변환본 사용 (374KB PNG → 36KB WebP, 90% 절감) -->
+    <link rel="preload" as="image" type="image/webp"
+      href="/manus-storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
+      media="(min-width: 768px)"
+      fetchpriority="high" />
+    <!-- 모바일 (767px 이하): WebP 변환본 사용 (273KB PNG → 24KB WebP, 91% 절감) -->
+    <link rel="preload" as="image" type="image/webp"
+      href="/manus-storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
+      media="(max-width: 767px)"
+      fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
     <link rel="alternate" hreflang="ko" href="https://star-pibu.com/" />
     <link rel="alternate" hreflang="en" href="https://star-pibu.com/en" />

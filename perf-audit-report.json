@@ -1,18 +1,19 @@
 {
   "url": "http://localhost:3002",
-  "timestamp": "2026-07-24T03:03:13.624Z",
+  "timestamp": "2026-07-24T03:12:32.630Z",
   "checks": {
-    "serviceWorkerActivated": false,
+    "serviceWorkerActivated": true,
+    "compressionApplied": true,
+    "compressionType": "br",
+    "htmlNetworkFirst": true,
+    "trpcNotCached": true,
     "cacheNames": [],
+    "cacheEntryCounts": {},
     "cacheBuckets": {
       "static": false,
       "image": false,
       "html": false
-    },
-    "compressionApplied": true,
-    "compressionType": "br",
-    "htmlNetworkFirst": true,
-    "trpcNotCached": true
+    }
   },
   "metrics": {
     "firstVisitJsCount": 9,

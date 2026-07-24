@@ -1,9 +1,13 @@
 /**
- * Lighthouse 자동 실측 스크립트.
+ * Lighthouse 자동 실측 스크립트 — Step 11 (Chromium 폴백 추가)
  *
  * 사용법:
  *   pnpm build && pnpm start &
  *   node scripts/lighthouse-audit.mjs
+ *
+ * Chromium 우선순위:
+ *   1. chrome-launcher 로 시스템 Chrome/Chromium 사용
+ *   2. Playwright 가 이미 설치한 chromium 경로 폴백
  */
 import lighthouse from "lighthouse";
 import * as chromeLauncher from "chrome-launcher";
@@ -13,11 +17,34 @@ const BASE_URL = process.env.LH_AUDIT_URL || "http://localhost:3000";
 const OUT_JSON = "lighthouse-report.json";
 const OUT_HTML = "lighthouse-report.html";
 
+async function launchChrome() {
+  // 1차 시도: chrome-launcher 로 시스템 Chrome/Chromium 사용
+  try {
+    return await chromeLauncher.launch({
+      chromeFlags: ["--headless=new", "--no-sandbox", "--disable-dev-shm-usage"],
+    });
+  } catch (err) {
+    console.warn("[lighthouse] chrome-launcher 실패, playwright chromium 폴백 시도");
+  }
+
+  // 2차 시도: Playwright 가 이미 설치한 chromium 경로 사용
+  try {
+    const { chromium } = await import("playwright");
+    const executablePath = chromium.executablePath();
+    console.log(`[lighthouse] Playwright chromium 경로: ${executablePath}`);
+    return await chromeLauncher.launch({
+      chromePath: executablePath,
+      chromeFlags: ["--headless=new", "--no-sandbox", "--disable-dev-shm-usage"],
+    });
+  } catch (err) {
+    console.error("[lighthouse] playwright chromium 폴백도 실패:", err.message);
+    throw err;
+  }
+}
+
 async function main() {
   console.log(`[lighthouse] 실측 대상: ${BASE_URL}`);
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: ["--headless=new", "--no-sandbox", "--disable-dev-shm-usage"],
-  });
+  const chrome = await launchChrome();
 
   const options = {
     logLevel: "error",
@@ -70,6 +97,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("[lighthouse] 오류:", err);
-  process.exit(1);
+  console.error("[lighthouse] 환경 오류:", err.message);
+  console.error("힌트: GitHub Actions 환경 또는 로컬에 Chromium 설치 후 재시도");
+  process.exit(2); // 2 = 환경 문제 (1 = 성능 실패)
 });

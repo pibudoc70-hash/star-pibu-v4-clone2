@@ -3833,3 +3833,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] grep 검증: hasAuthCredentials 2건
 - [x] 실동작 검증 5~9 (공개 페이지, 인증 스킵, 관리자 로그인 회귀, 쿠키 분기, 정규식)
 - [x] 체크포인트 저장
+
+## 모바일 PNG 2.1MB 제거 (2026-07-25)
+- [x] Step E: OptimizedImage props 확인
+- [x] Step A: useDoctorViewModel.ts preloadDoctorImages 재작성
+- [x] Step B: DoctorMobileLayout.tsx 상단 탭 썸네일 수정
+- [x] Step C: DoctorMobileLayout.tsx 슬라이드 사진 priority 조건부화
+- [x] Step D: DoctorDesktopLayout.tsx 사진 3장 priority 조건부화
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 검증 5종
+- [x] 실동작 검증 9~15
+- [x] 체크포인트 저장

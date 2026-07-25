@@ -63,12 +63,25 @@ export interface UseDoctorViewModelReturn {
 
 // ── 이미지 프리로드 ──────────────────────────────────────────────────────────
 
+/**
+ * 의료진 이미지 프리로드.
+ *
+ * 최적화 원칙:
+ * - 뷰포트에 맞는 소스만 프리로드 (모바일에서 데스크톱 PNG 를 받지 않도록)
+ * - 첫 화면에 실제로 보이는 활성 원장(index 0) 1장만 프리로드
+ *   → 나머지는 탭 전환 시 브라우저가 자연스럽게 로드
+ * - 홈 진입 시 hero 이미지와의 대역폭 경쟁을 최소화
+ */
 function preloadDoctorImages() {
-  doctors.forEach((d) => {
-    const src = d.image;
-    const img = new Image();
-    img.src = src;
-  });
+  if (typeof window === "undefined") return;
+
+  const isMobileViewport = window.matchMedia("(max-width: 1023px)").matches;
+  const first = doctors[0];
+  if (!first) return;
+
+  const src = isMobileViewport ? (first.mobileImage ?? first.image) : first.image;
+  const img = new Image();
+  img.src = src;
 }
 
 // ── 훅 ───────────────────────────────────────────────────────────────────────

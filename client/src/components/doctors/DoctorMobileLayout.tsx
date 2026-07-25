@@ -70,9 +70,9 @@ export function DoctorMobileLayout({
               data-active={String(activeDoctor === d.id)}
             >
               <OptimizedImage
-                src={d.cardImage || d.image}
+                src={d.mobileImage || d.cardImage || d.image}
                 alt={d.name}
-                priority
+                priority={activeDoctor === d.id}
                 usePicture={false}
                 style={{
                   width: "100%",
@@ -127,7 +127,7 @@ export function DoctorMobileLayout({
                 <OptimizedImage
                   src={d.mobileImage || d.image}
                   alt={d.name}
-                  priority
+                  priority={activeDoctor === d.id}
                   usePicture={false}
                   onLoad={() => onImageLoad(d.id)}
                   className="dr-mob-photo-img opacity-100 z-[1]"

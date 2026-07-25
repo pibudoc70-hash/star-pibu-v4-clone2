@@ -56,7 +56,7 @@ export function DoctorTabButton({
         <OptimizedImage
           src={doctor.cardImage || doctor.image}
           alt={doctor.name}
-          priority
+          priority={isActive}
           usePicture={false}
           style={{
             width: "100%",

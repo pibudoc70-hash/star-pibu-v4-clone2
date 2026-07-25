@@ -93,7 +93,7 @@ export function DoctorDesktopLayout({
               key={d.id}
               src={d.image}
               alt={d.name}
-              priority
+              priority={activeDoctor === d.id}
               usePicture={false}
               onLoad={() => onImageLoad(d.id)}
               className={`dr-photo-img ${activeDoctor === d.id ? "opacity-100 z-[1]" : "opacity-0 z-0"}`}

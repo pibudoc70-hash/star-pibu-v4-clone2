@@ -8,7 +8,7 @@
  */
 import { z } from "zod/v4";
 import { TRPCError } from "@trpc/server";
-import { publicProcedure, protectedProcedure, router } from "../_core/trpc";
+import { publicProcedure, adminProcedure, router } from "../_core/trpc";
 import {
   createConsultationRequest,
   countConsultationByIp,
@@ -25,28 +25,58 @@ const MAX_BY_PHONE = 2;
 const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
 // ── Turnstile 서버단 검증 ─────────────────────────────────────────────────────
-async function verifyTurnstile(token: string, remoteIp?: string): Promise<boolean> {
+// [Step52-A] 프로덕션 fail-closed + 더미 토큰 개발 환경 한정 허용
+async function verifyTurnstile(token: string, ip?: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  // 시크릿 미설정 시 개발 환경으로 간주 → 통과 (프로덕션에서는 반드시 설정)
+  const isProd = process.env.NODE_ENV === "production";
+
+  // [Step52-A] 프로덕션에서 키가 없으면 통과시키지 않는다 (fail-closed).
+  // 개발 환경에서만 검증을 건너뛴다.
   if (!secret) {
-    console.warn("[Turnstile] TURNSTILE_SECRET_KEY not set — skipping verification (dev mode)");
+    if (isProd) {
+      console.error("[Turnstile] SECRET_KEY missing in production — rejecting request");
+      return false;
+    }
+    console.warn("[Turnstile] SECRET_KEY not set — skipping verification (dev only)");
     return true;
   }
-  // Cloudflare 테스트 토큰: 항상 성공
-  if (token === "XXXX.DUMMY.TOKEN.XXXX") return true;
+
+  // [Step52-A] Cloudflare 공개 더미 토큰은 개발 환경에서만 허용한다.
+  // 프로덕션에서 허용하면 누구나 이 문자열로 검증을 우회할 수 있다.
+  if (!isProd && token === "XXXX.DUMMY.TOKEN.XXXX") {
+    return true;
+  }
+
+  if (!token || token.length > 2048) return false;
 
   try {
     const body = new URLSearchParams({ secret, response: token });
-    if (remoteIp) body.set("remoteip", remoteIp);
-    const res = await fetch(TURNSTILE_VERIFY_URL, {
-      method: "POST",
-      body,
-    });
-    const data = (await res.json()) as { success: boolean };
+    if (ip) body.set("remoteip", ip);
+
+    const resp = await fetch(
+      TURNSTILE_VERIFY_URL,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+        redirect: "error",
+        signal: AbortSignal.timeout(5000),
+      },
+    );
+
+    if (!resp.ok) {
+      console.error(`[Turnstile] siteverify HTTP ${resp.status}`);
+      return false; // 검증 서버 장애 시에도 통과시키지 않는다
+    }
+
+    const data = (await resp.json()) as { success?: boolean; "error-codes"?: string[] };
+    if (!data.success) {
+      console.warn("[Turnstile] verification failed:", data["error-codes"]?.join(",") ?? "unknown");
+    }
     return data.success === true;
   } catch (err) {
-    console.warn("[Turnstile] Verification request failed:", err);
-    return false;
+    console.error("[Turnstile] verify error:", err instanceof Error ? err.message : err);
+    return false; // 타임아웃·네트워크 오류도 실패로 처리
   }
 }
 
@@ -79,11 +109,9 @@ export const consultationRouter = router({
         return { success: true, id: -1 };
       }
 
-      // IP 추출
-      const ip =
-        (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
-        ctx.req.socket?.remoteAddress ||
-        "unknown";
+      // [Step52-C] x-forwarded-for 직접 파싱 제거 — Express trust proxy 설정 하에서
+      // req.ip 를 사용한다. 클라이언트가 위조한 X-Forwarded-For 첫 값을 신뢰하지 않는다.
+      const ip = ctx.req.ip || ctx.req.socket?.remoteAddress || "unknown";
 
       // 2. Rate limit — IP
       const ipCount = await countConsultationByIp(ip, RATE_WINDOW_MS);
@@ -143,25 +171,21 @@ export const consultationRouter = router({
     }),
 
   /** 관리자: 상담 목록 조회 */
-  list: protectedProcedure.query(async ({ ctx }) => {
-    if (ctx.user.role !== "admin") {
-      throw new TRPCError({ code: "FORBIDDEN" });
-    }
+  // [Step52-D] protectedProcedure + 수동 role 체크 → adminProcedure 로 교체
+  list: adminProcedure.query(async () => {
     return getConsultationRequests(200);
   }),
 
   /** 관리자: 상태 변경 */
-  updateStatus: protectedProcedure
+  // [Step52-D] protectedProcedure + 수동 role 체크 → adminProcedure 로 교체
+  updateStatus: adminProcedure
     .input(
       z.object({
         id: z.number().int().positive(),
         status: z.enum(["pending", "contacted", "done", "spam"]),
       })
     )
-    .mutation(async ({ ctx, input }) => {
-      if (ctx.user.role !== "admin") {
-        throw new TRPCError({ code: "FORBIDDEN" });
-      }
+    .mutation(async ({ input }) => {
       await updateConsultationStatus(input.id, input.status);
       return { success: true };
     }),

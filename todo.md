@@ -3990,3 +3990,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Phase 3: G1/G2/G3 그룹 순차 제거 + 각 그룹 check/build 확인 (제거 대상 없음 — 모든 패키지 실사용 확인)
 - [x] Phase 4: dep-scan.mjs 삭제 + frozen-lockfile + 최종 check/build/test
 - [x] 브라우저 회귀 + 리포트 작성 + 체크포인트 저장
+## Step 52+53: 보안 결함 일괄 수정 (2026-07-25)
+- [x] Phase 0: WebSocket 사용처 grep 진단 (B-1/B-2 분기 결정) → B-2 선택
+- [x] A: Turnstile 우회 차단 (envSchema.ts + consultation.ts verifyTurnstile 교체)
+- [x] B: WebSocket 처리 (B-2 인증 구현 — verifyClient + MAX_CLIENTS + isAlive + heartbeat + graceful shutdown)
+- [x] C: IP 스푸핑 차단 (x-forwarded-for 직접 파싱 제거 → ctx.req.ip 사용)
+- [x] D: adminProcedure 전면 적용 (consultation.ts list + updateStatus)
+- [x] V1~V4: pnpm check + build + test + grep 7종
+- [x] V5: 런타임 검증 a~d
+- [x] V6+V7: 브라우저 회귀 + 리포트 + 체크포인트

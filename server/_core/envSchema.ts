@@ -27,6 +27,10 @@ const EnvSchema = z.object({
   OWNER_OPEN_ID: z.string().optional(),
   OWNER_NAME: z.string().optional(),
 
+  // [Step52-A] Cloudflare Turnstile 시크릿.
+  // 프로덕션에서는 필수. 누락 시 봇 방어가 조용히 꺼지는 사고를 막는다.
+  TURNSTILE_SECRET_KEY: z.string().min(1).optional(),
+
   // 선택: 캐시·풀 튜닝
   IMAGE_CACHE_MAX: z.coerce.number().int().positive().optional(),
   IMAGE_CACHE_MAX_MB: z.coerce.number().int().positive().optional(),
@@ -53,5 +57,16 @@ export function validateEnv(): AppEnv {
     process.exit(1);
   }
 
-  return result.data;
+  const parsed = result.data;
+
+  // [Step52-A] 프로덕션에서 TURNSTILE_SECRET_KEY 누락 시 즉시 종료 (fail-closed)
+  if (parsed.NODE_ENV === "production" && !parsed.TURNSTILE_SECRET_KEY) {
+    console.error(
+      "[FATAL] TURNSTILE_SECRET_KEY is required in production. " +
+      "Bot protection would be silently disabled.",
+    );
+    process.exit(1);
+  }
+
+  return parsed;
 }

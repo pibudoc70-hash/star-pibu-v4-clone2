@@ -13,7 +13,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startOtpCleanupScheduler } from "../otpCleanup";
 import { collectKeywordTrendsHandler } from "./scheduled";
-import { initializeWebSocketServer } from "./websocket";
+import { initializeWebSocketServer, closeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { securityHeadersMiddleware } from "./securityHeaders";
@@ -426,6 +426,12 @@ async function startServer() {
 
     server.close(async (err) => {
       clearTimeout(forceExitTimer);
+      // [Step53-B] WebSocket 서버 먼저 닫기 (closeDb 앞)
+      try {
+        await closeWebSocketServer();
+      } catch (wsErr) {
+        console.error("[Shutdown] WebSocket server close failed:", wsErr);
+      }
       try {
         const { closeDb } = await import("../db/connection");
         await closeDb();

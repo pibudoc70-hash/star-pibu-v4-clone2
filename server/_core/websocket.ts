@@ -1,6 +1,19 @@
 import { Server as HTTPServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { logger } from "./logger";
+import { sdk } from "./sdk";
+
+// [Step53-B] 리소스 한계
+const MAX_CLIENTS = 100;
+const MAX_MESSAGE_BYTES = 4 * 1024;
+const HEARTBEAT_MS = 30_000;
+
+// [Step53-B] CSWSH 방지: 허용 Origin
+const ALLOWED_WS_ORIGINS = new Set([
+  "https://star-pibu.com",
+  "https://www.star-pibu.com",
+  "https://starpibu-qdq7tysk.manus.space",
+]);
 
 interface KeywordTrendUpdate {
   type: "new" | "update" | "delete";
@@ -15,6 +28,7 @@ interface ClientConnection {
   ws: WebSocket;
   userId?: string;
   isAdmin: boolean;
+  isAlive: boolean; // [Step53-B] heartbeat 추적
   subscriptions: Set<string>;
 }
 
@@ -22,26 +36,54 @@ class KeywordTrendWebSocketServer {
   private wss: WebSocketServer;
   private clients: Map<string, ClientConnection> = new Map();
   private clientCounter = 0;
+  private heartbeatTimer?: ReturnType<typeof setInterval>;
 
   constructor(httpServer: HTTPServer) {
-    this.wss = new WebSocketServer({ server: httpServer, path: "/ws/trends" });
+    this.wss = new WebSocketServer({
+      server: httpServer,
+      path: "/ws/trends",
+      maxPayload: MAX_MESSAGE_BYTES,
+      // [Step53-B] CSWSH 방지: 허용된 Origin 만 연결 허용
+      verifyClient: (info, done) => {
+        const origin = info.origin;
+        const isDev = process.env.NODE_ENV !== "production";
+        if (isDev || (origin && ALLOWED_WS_ORIGINS.has(origin))) {
+          done(true);
+        } else {
+          done(false, 403, "Forbidden origin");
+        }
+      },
+    });
     this.setupConnectionHandler();
+    this.startHeartbeat();
   }
 
   private setupConnectionHandler() {
     this.wss.on("connection", (ws: WebSocket) => {
+      // [Step53-B] 연결 수 제한
+      if (this.clients.size >= MAX_CLIENTS) {
+        ws.close(1013, "Server busy");
+        return;
+      }
+
       const clientId = `client_${++this.clientCounter}`;
       const connection: ClientConnection = {
         ws,
         isAdmin: false,
+        isAlive: true,
         subscriptions: new Set(),
       };
 
       this.clients.set(clientId, connection);
       logger.info("WebSocket", `Client connected: ${clientId}`);
 
+      // [Step53-B] pong 수신 시 isAlive 갱신
+      ws.on("pong", () => {
+        connection.isAlive = true;
+      });
+
       ws.on("message", (data: Buffer) => {
-        this.handleMessage(clientId, data);
+        void this.handleMessage(clientId, data);
       });
 
       ws.on("close", () => {
@@ -63,7 +105,8 @@ class KeywordTrendWebSocketServer {
     });
   }
 
-  private handleMessage(clientId: string, data: Buffer) {
+  // [Step53-B] handleMessage 를 async 로 변경 (토큰 검증 await 필요)
+  private async handleMessage(clientId: string, data: Buffer) {
     try {
       const message = JSON.parse(data.toString());
       const connection = this.clients.get(clientId);
@@ -71,18 +114,30 @@ class KeywordTrendWebSocketServer {
       if (!connection) return;
 
       switch (message.type) {
-        case "auth":
-          if (message.isAdmin && message.token) {
-            connection.isAdmin = true;
-            connection.userId = message.userId;
-            connection.ws.send(
-              JSON.stringify({
-                type: "auth_success",
-                message: "Admin authenticated",
-              })
-            );
+        case "auth": {
+          // [Step53-B] 이전 구현은 message.isAdmin 만 보고 관리자로 승격시켰다.
+          // 클라이언트가 보낸 값을 신뢰하지 않고 서버가 세션 쿠키를 검증한다.
+          const token = typeof message.token === "string" ? message.token : "";
+          if (!token || token.length > 4096) {
+            connection.ws.send(JSON.stringify({ type: "auth_failed" }));
+            break;
+          }
+          try {
+            // sdk.authenticateRequest 가 받는 형태에 맞춰 가짜 req 객체 사용
+            const fakeReq = { headers: { cookie: `app_session_id=${token}` } } as unknown as import("express").Request;
+            const user = await sdk.authenticateRequest(fakeReq);
+            if (user && user.role === "admin") {
+              connection.isAdmin = true;
+              connection.userId = String(user.id);
+              connection.ws.send(JSON.stringify({ type: "auth_success" }));
+            } else {
+              connection.ws.send(JSON.stringify({ type: "auth_failed" }));
+            }
+          } catch {
+            connection.ws.send(JSON.stringify({ type: "auth_failed" }));
           }
           break;
+        }
 
         case "subscribe":
           if (message.channel) {
@@ -108,6 +163,36 @@ class KeywordTrendWebSocketServer {
     } catch (error) {
       logger.error("WebSocket", `Failed to parse message: ${error}`);
     }
+  }
+
+  // [Step53-B] heartbeat — 죽은 연결 정리
+  private startHeartbeat() {
+    this.heartbeatTimer = setInterval(() => {
+      this.clients.forEach((conn, id) => {
+        if (conn.ws.readyState !== WebSocket.OPEN) {
+          this.clients.delete(id);
+          return;
+        }
+        if (conn.isAlive === false) {
+          conn.ws.terminate();
+          this.clients.delete(id);
+          return;
+        }
+        conn.isAlive = false;
+        conn.ws.ping();
+      });
+    }, HEARTBEAT_MS);
+    this.heartbeatTimer.unref?.();
+  }
+
+  // [Step53-B] graceful shutdown
+  public close(): Promise<void> {
+    if (this.heartbeatTimer) {
+      clearInterval(this.heartbeatTimer);
+    }
+    return new Promise((resolve) => {
+      this.wss.close(() => resolve());
+    });
   }
 
   public broadcastKeywordUpdate(update: KeywordTrendUpdate) {
@@ -171,4 +256,12 @@ export function initializeWebSocketServer(httpServer: HTTPServer) {
 
 export function getWebSocketServer(): KeywordTrendWebSocketServer | null {
   return wsServer;
+}
+
+// [Step53-B] graceful shutdown 용 close 함수 export
+export async function closeWebSocketServer(): Promise<void> {
+  if (wsServer) {
+    await wsServer.close();
+    wsServer = null;
+  }
 }

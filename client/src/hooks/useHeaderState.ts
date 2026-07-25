@@ -35,10 +35,10 @@ export function useHeaderState() {
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
-  // [FIX scroll-stable] pendingNavRef 타입 확장: interval 필드 추가
+  // [FIX scroll-v2] pendingNavRef: interval 필드만 사용 (MutationObserver 제거)
   const pendingNavRef = useRef<{
-    observer: MutationObserver | null;
-    timeout: ReturnType<typeof setTimeout> | null;
+    observer: null;
+    timeout: null;
     interval: ReturnType<typeof setInterval> | null;
   } | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -141,10 +141,8 @@ export function useHeaderState() {
   const handleNavClick = (href: string) => {
     closeMobileMenu();
     setMoreOpen(false);
-    // 이전 pending 정리 (observer + timeout + interval 모두)
+    // 이전 pending interval 정리
     if (pendingNavRef.current) {
-      pendingNavRef.current.observer?.disconnect();
-      if (pendingNavRef.current.timeout) clearTimeout(pendingNavRef.current.timeout);
       if (pendingNavRef.current.interval) clearInterval(pendingNavRef.current.interval);
       pendingNavRef.current = null;
     }
@@ -155,10 +153,16 @@ export function useHeaderState() {
     };
 
     /**
-     * [FIX scroll-stable] lazy 섹션 마운트로 인한 레이아웃 시프트에 대응하는 재보정 스크롤.
-     * - 1차 스크롤 후 150ms 간격으로 목표 좌표를 재계산하여 오차가 크면 재스크롤
-     * - 좌표가 안정화(연속 2회 오차 < 4px)되면 종료
-     * - 2차 이후 재스크롤은 behavior: "auto"로 덜컥거림 방지
+     * [FIX scroll-v2] lazy 섹션 마운트 완료 후 안정적으로 스크롤
+     *
+     * 문제: MutationObserver 방식은 #contact 마운트 시점에 FAQ 등 위 섹션들이
+     *   동시에 마운트되면서 레이아웃이 틀어져 FAQ 근처로 스크롤됨
+     *
+     * 해결: 클릭 즉시 페이지 하단으로 스크롤하여 모든 lazy 섹션을
+     *   강제 마운트한 뒤, 안정적 위치로 재스크롤
+     *   - 1차: 페이지 하단으로 즉시 이동 (behavior: instant)
+     *   - 2차: 300ms 대기 후 목표 요소로 smooth 스크롤
+     *   - 3차: 600ms 후 좌표 안정화 확인 후 미세 보정
      */
     const scrollToElStable = (selector: string): ReturnType<typeof setInterval> => {
       const getTargetTop = () => {
@@ -168,15 +172,14 @@ export function useHeaderState() {
         return el.getBoundingClientRect().top + window.scrollY - offset;
       };
 
-      const initial = getTargetTop();
-      if (initial !== null) {
-        window.scrollTo({ top: initial, behavior: "smooth" });
-      }
+      // Step 1: 페이지 하단으로 즉시 이동 → 모든 lazy 섹션 강제 마운트
+      const pageBottom = document.documentElement.scrollHeight;
+      window.scrollTo({ top: pageBottom, behavior: "instant" });
 
-      let lastTop = initial;
+      let lastTop: number | null = null;
       let stableCount = 0;
       let ticks = 0;
-      const MAX_TICKS = 24; // 24 * 150ms = 3.6s
+      const MAX_TICKS = 30; // 30 * 100ms = 3s
 
       const iv = setInterval(() => {
         ticks += 1;
@@ -187,28 +190,34 @@ export function useHeaderState() {
           return;
         }
 
-        const drift = lastTop !== null ? Math.abs(top - lastTop) : Infinity;
+        if (lastTop === null) {
+          // Step 2: 요소 발견 즉시 smooth 스크롤
+          lastTop = top;
+          window.scrollTo({ top, behavior: "smooth" });
+          return;
+        }
+
+        const drift = Math.abs(top - lastTop);
         lastTop = top;
 
         if (drift < 4) {
           stableCount += 1;
-          // 좌표가 2회 연속 안정 → 최종 위치로 한 번 더 정렬 후 종료
-          if (stableCount >= 2) {
-            const current = window.scrollY;
-            if (Math.abs(current - top) > 8) {
-              window.scrollTo({ top, behavior: "auto" });
+          if (stableCount >= 3) {
+            // Step 3: 안정화 확인 후 미세 보정
+            if (Math.abs(window.scrollY - top) > 8) {
+              window.scrollTo({ top, behavior: "smooth" });
             }
             clearInterval(iv);
             return;
           }
         } else {
-          // 레이아웃이 변했으면 재스크롤 (behavior: "auto"로 덜컥거림 방지)
           stableCount = 0;
-          window.scrollTo({ top, behavior: "auto" });
+          // 레이아웃 변화 시 smooth로 재스크롤 (덜쪿거림 제거)
+          window.scrollTo({ top, behavior: "smooth" });
         }
 
         if (ticks >= MAX_TICKS) clearInterval(iv);
-      }, 150);
+      }, 100);
 
       return iv;
     };
@@ -231,31 +240,10 @@ export function useHeaderState() {
         return;
       }
 
-      // 요소가 이미 DOM에 있으면 바로 재보정 스크롤 시작
-      const el = document.querySelector(href);
-      if (el) {
-        const iv = scrollToElStable(href);
-        pendingNavRef.current = { observer: null, timeout: null, interval: iv };
-        return;
-      }
-
-      // lazy 섹션 대기: MutationObserver로 DOM 등장 감지 후 재보정 스크롤
-      const observer = new MutationObserver(() => {
-        const lazyEl = document.querySelector(href);
-        if (lazyEl) {
-          observer.disconnect();
-          clearTimeout(timeout);
-          const iv = scrollToElStable(href);
-          pendingNavRef.current = { observer: null, timeout: null, interval: iv };
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-      const timeout = setTimeout(() => {
-        observer.disconnect();
-        pendingNavRef.current = null;
-      }, 3000);
-      pendingNavRef.current = { observer, timeout, interval: null };
-      // [FIX] URL에 hash를 저장하지 않음 (lazy 섹션 대기 시에도 동일)
+      // [FIX scroll-v2] 요소 유무 관계없이 scrollToElStable로 직접 처리
+      // (scrollToElStable 내부에서 페이지 하단 이동 → 모든 lazy 섹션 강제 마운트 → 안정적 스크롤)
+      const iv = scrollToElStable(href);
+      pendingNavRef.current = { observer: null, timeout: null, interval: iv };
       return;
     }
     // 절대 경로 (/about, /foreign-guide 등) — wouter setLocation으로 SPA 라우팅

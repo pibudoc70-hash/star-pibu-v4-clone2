@@ -3772,3 +3772,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Step F: deferMount 임계값 보고 (변경 없음)
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과 확인
 - [x] 체크포인트 저장
+
+## 오시는 길 첫 클릭 FAQ 이동 버그 + 스크롤 부드러움 수정 (2026-07-25)
+- [x] useHeaderState.ts: MutationObserver 경로 제거 → 강제 마운트 후 재스크롤 방식으로 교체
+- [x] Home.tsx: __star_scroll_to 재보정 루프 개선 (초기 스크롤 즉시 실행)
+- [x] index.css: scroll-fade-in-slow bounce easing 제거 → 부드러운 easing으로 교체
+- [x] TypeScript 오류 0건, 테스트 전부 통과 확인
+- [x] 체크포인트 저장

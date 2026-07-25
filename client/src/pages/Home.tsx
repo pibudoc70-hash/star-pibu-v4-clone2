@@ -368,47 +368,43 @@ export default function Home() {
       return el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
     };
 
-    // [FIX scroll-stable] 재보정 루프: lazy 섹션 마운트 후 레이아웃 안정화까지 재스크롤
+    // [FIX scroll-v2] useHeaderState.scrollToElStable와 동일한 전략:
+    // 페이지 하단으로 즉시 이동 → 모든 lazy 섹션 강제 마운트 → 안정적 smooth 스크롤
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
     let lastTop: number | null = null;
     let stableCount = 0;
     let ticks = 0;
-    const MAX_TICKS = 40; // 40 * 150ms = 6s (lazy 마운트 대기 포함)
-
+    const MAX_TICKS = 30; // 30 * 100ms = 3s
     const iv = setInterval(() => {
       ticks += 1;
       const top = getTargetTop();
-
       if (top === null) {
         if (ticks >= MAX_TICKS) clearInterval(iv);
         return;
       }
-
       if (lastTop === null) {
+        // 요소 발견 즉시 smooth 스크롤
         lastTop = top;
         window.scrollTo({ top, behavior: "smooth" });
         return;
       }
-
       const drift = Math.abs(top - lastTop);
       lastTop = top;
-
       if (drift < 4) {
         stableCount += 1;
-        if (stableCount >= 2) {
+        if (stableCount >= 3) {
           if (Math.abs(window.scrollY - top) > 8) {
-            window.scrollTo({ top, behavior: "auto" });
+            window.scrollTo({ top, behavior: "smooth" });
           }
           clearInterval(iv);
           return;
         }
       } else {
         stableCount = 0;
-        window.scrollTo({ top, behavior: "auto" });
+        window.scrollTo({ top, behavior: "smooth" });
       }
-
       if (ticks >= MAX_TICKS) clearInterval(iv);
-    }, 150);
-
+    }, 100);
     return () => clearInterval(iv);
   }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행 (카드 클릭 시 재실행 없음)
 

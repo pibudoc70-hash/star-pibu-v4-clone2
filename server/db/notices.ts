@@ -1,4 +1,4 @@
-import { asc, desc, eq, inArray, or } from "drizzle-orm";
+import { asc, desc, eq, inArray } from "drizzle-orm";
 import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
@@ -89,4 +89,80 @@ export async function getNoticeImagesByNoticeIds(noticeIds: number[]) {
     .from(noticeImages)
     .where(inArray(noticeImages.noticeId, noticeIds))
     .orderBy(asc(noticeImages.sortOrder));
+}
+
+// ─── 트랜잭션 헬퍼 ────────────────────────────────────────────────────────────
+
+/**
+ * 공지사항 생성 + 이미지 일괄 insert 를 단일 트랜잭션으로 처리.
+ * notices insert 성공 후 noticeImages insert 실패 시 notices 도 롤백된다.
+ *
+ * 반환: 생성된 notices 행 (라우터의 insertId 캐스팅 패턴과 동일하게 raw result 반환)
+ */
+export async function createNoticeWithImages(
+  data: InsertNotice,
+  images: { fileKey: string; url: string; sortOrder: number }[],
+) {
+  const db = await getDb();
+
+  return db.transaction(async (tx) => {
+    const result = await tx.insert(notices).values(data);
+    // 기존 라우터가 사용하는 insertId 획득 방식 유지
+    const noticeId = Number((result as any).insertId as number);
+
+    if (images.length > 0) {
+      await tx.insert(noticeImages).values(
+        images.map((img) => ({
+          noticeId,
+          fileKey: img.fileKey,
+          url: img.url,
+          sortOrder: img.sortOrder,
+        })),
+      );
+    }
+
+    const [created] = await tx
+      .select()
+      .from(notices)
+      .where(eq(notices.id, noticeId))
+      .limit(1);
+
+    return created;
+  });
+}
+
+/**
+ * 공지사항 수정 + 이미지 교체를 단일 트랜잭션으로 처리.
+ * deleteImageIds 에 해당하는 이미지 삭제 → addImages insert 를 원자적으로 수행.
+ *
+ * 반환: void (기존 updateNotice 시그니처와 동일)
+ */
+export async function updateNoticeWithImages(
+  id: number,
+  data: Partial<InsertNotice>,
+  deleteImageIds: number[],
+  addImages: { fileKey: string; url: string; sortOrder: number }[],
+): Promise<void> {
+  const db = await getDb();
+
+  await db.transaction(async (tx) => {
+    if (Object.keys(data).length > 0) {
+      await tx.update(notices).set(data).where(eq(notices.id, id));
+    }
+
+    if (deleteImageIds.length > 0) {
+      await tx.delete(noticeImages).where(inArray(noticeImages.id, deleteImageIds));
+    }
+
+    if (addImages.length > 0) {
+      await tx.insert(noticeImages).values(
+        addImages.map((img) => ({
+          noticeId: id,
+          fileKey: img.fileKey,
+          url: img.url,
+          sortOrder: img.sortOrder,
+        })),
+      );
+    }
+  });
 }

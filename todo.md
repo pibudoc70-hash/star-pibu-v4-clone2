@@ -3915,3 +3915,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] framer-motion 제거
 - [x] ui/chart.tsx 파일 삭제 (recharts는 KeywordTrendsDashboard에서 사용 유지)
 - [x] 전체 검증: tsc 0건, build 성공, 1445 tests passed
+
+## Step 39: DB 트랜잭션 적용 (2026-07-25)
+- [x] notices.ts createNoticeWithImages() 트랜잭션 적용
+- [x] notices.ts updateNoticeImages() 트랜잭션 적용
+- [x] equipment3.ts reorderEquipment3Items() Promise.all → 순차 트랜잭션 변환
+- [x] youtube.ts reorderYouTubeVideos() 트랜잭션 함수 신규 추가 (라우터 연결 보류)
+- [x] 정적 검증: tsc 0건, build 성공, 1445개 테스트 전부 통과
+- [x] 실동작 검증: 프로덕션 공지 생성(7→8건) 성공, 테스트 공지 DB 삭제 완료(8→7건)

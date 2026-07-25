@@ -54,3 +54,20 @@ export async function deleteYouTubeVideo(id: number): Promise<void> {
     logger.error("Database", "Failed to delete YouTube video", error);
   }
 }
+
+/**
+ * YouTube 영상 순서 일괄 변경을 단일 트랜잭션으로 처리.
+ * 중간 실패 시 전체 롤백 보장.
+ * 트랜잭션 내 병렬 쿼리는 커넥션 문제를 일으킬 수 있으므로 순차 실행 유지.
+ *
+ * 참고: 현재 admin.ts 라우터는 updateYouTubeVideo 를 Promise.all 로 직접 호출하고 있어
+ * 이 함수는 향후 라우터 리팩토링 시 사용 예정이다. (라우터 수정 금지 조건에 따라 현재 미연결)
+ */
+export async function reorderYouTubeVideos(items: Array<{ id: number; sortOrder: number }>): Promise<void> {
+  const db = await getDb();
+  await db.transaction(async (tx) => {
+    for (const { id, sortOrder } of items) {
+      await tx.update(youtubeVideos).set({ sortOrder }).where(eq(youtubeVideos.id, id));
+    }
+  });
+}

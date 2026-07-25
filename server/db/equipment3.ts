@@ -42,12 +42,14 @@ export async function deleteEquipment3Item(id: number): Promise<void> {
 
 /**
  * 순서 변경: [{id, sortOrder}] 배열을 받아 일괄 업데이트
+ * 트랜잭션으로 감싸 중간 실패 시 전체 롤백 보장.
+ * 트랜잭션 내 병렬 쿼리는 커넥션 문제를 일으킬 수 있으므로 순차 실행 유지.
  */
 export async function reorderEquipment3Items(items: Array<{ id: number; sortOrder: number }>): Promise<void> {
   const db = await getDb();
-  await Promise.all(
-    items.map(({ id, sortOrder }) =>
-      db.update(equipment3).set({ sortOrder }).where(eq(equipment3.id, id))
-    )
-  );
+  await db.transaction(async (tx) => {
+    for (const { id, sortOrder } of items) {
+      await tx.update(equipment3).set({ sortOrder }).where(eq(equipment3.id, id));
+    }
+  });
 }

@@ -12,7 +12,8 @@
     "test": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate"
+    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "audit:pii": "node scripts/audit-pii.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

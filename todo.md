@@ -3923,3 +3923,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] youtube.ts reorderYouTubeVideos() 트랜잭션 함수 신규 추가 (라우터 연결 보류)
 - [x] 정적 검증: tsc 0건, build 성공, 1445개 테스트 전부 통과
 - [x] 실동작 검증: 프로덕션 공지 생성(7→8건) 성공, 테스트 공지 DB 삭제 완료(8→7건)
+
+## Step 40: doctors-data.ts SSoT 전환 (2026-07-25)
+- [x] Doctor interface에 스키마 전용 필드 추가 (schemaDescription, jobTitleEn, sameAs, alumniOf, memberOf, award, availableService)
+- [x] doctors 배열 3명에 스키마 필드 채우기 (clinic-data.ts 값 이동)
+- [x] clinic-data.ts CLINIC_DOCTORS를 doctors-data.ts 변환 함수 방식으로 전환
+- [x] ManagementDevice 섹션 clinic-data.ts에 유지 (ManagementDevicesSection.tsx 의존성)
+- [x] FacilitySection.test.tsx lucide-react mock에 Award/GraduationCap/Stethoscope/Zap 추가
+- [x] 순환참조 없음 확인 (doctors-data.ts → clinic-data.ts 방향 import 없음)
+- [x] tsc 0건, build 성공, 1445/1445 테스트 통과

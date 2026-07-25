@@ -46,6 +46,22 @@ export interface Doctor {
   intro: string[];
   credentials: { icon: React.ElementType; label: string; text: string }[];
   specialties: string[];
+
+  // ── JSON-LD 스키마 전용 필드 (신규) ──
+  /** schema.org Person.jobTitle (영문) */
+  jobTitleEn?: string;
+  /** schema.org Person.description — 검색엔진용 요약 */
+  schemaDescription?: string;
+  /** schema.org Person.alumniOf */
+  alumniOf?: { name: string; url?: string }[];
+  /** schema.org Person.memberOf */
+  memberOf?: { name: string; url?: string }[];
+  /** schema.org Person.award */
+  award?: string[];
+  /** schema.org Person.sameAs */
+  sameAs?: string[];
+  /** schema.org Person.availableService */
+  availableService?: string[];
 }
 
 // ── 의료진 데이터 ─────────────────────────────────────────────────────────────
@@ -80,6 +96,34 @@ export const doctors: Doctor[] = [
       "눈밑지방재배치", "리프팅", "울쎄라", "써마지",
       "흉터치료", "색소치료", "백반증", "문신제거", "보톡스", "필러",
     ],
+
+    // ── JSON-LD 스키마 전용 필드 ──
+    jobTitleEn: "Dermatologist, MD, PhD",
+    schemaDescription:
+      "20년 이상의 임상 경험을 보유한 피부과 전문의. 눈밑지방재배치 4,000례 이상의 경험으로 국내 최고 수준의 기술을 자랑합니다. 써마지 FLX 공식 자문의로 활동 중입니다.",
+    alumniOf: [
+      { name: "부산대학교 의과대학", url: "https://med.pusan.ac.kr" },
+      { name: "인제대학교 의과대학", url: "https://med.inje.ac.kr" },
+    ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+      { name: "미국피부과학회(AAD)", url: "https://www.aad.org" },
+      { name: "부산경남울산피부과의사회" },
+    ],
+    award: [
+      "써마지 FLX 공식 자문의 위촉",
+      "눈밑지방재배치 4,000례 달성",
+    ],
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu",
+    ],
+    availableService: [
+      "눈밑지방재배치", "울쎄라피 프라임", "써마지 FLX",
+      "리주란힐러", "피코레이저", "흉터치료",
+    ],
   },
   {
     id: 1,
@@ -108,6 +152,31 @@ export const doctors: Doctor[] = [
       "리프팅", "울쎄라", "써마지", "흉터치료",
       "색소치료", "피부질환", "문신제거", "손발톱무좀", "보톡스",
     ],
+
+    // ── JSON-LD 스키마 전용 필드 ──
+    jobTitleEn: "Dermatologist, MD",
+    schemaDescription:
+      "카톨릭의대에서 수련한 피부과 전문의. 리프팅, 울쎄라피 프라임, 써마지 FLX 등 최신 장비를 활용한 시술에 전문성을 갖추고 있습니다.",
+    alumniOf: [
+      { name: "카톨릭대학교 의과대학", url: "https://med.catholic.ac.kr" },
+    ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+      { name: "미국피부과학회(AAD)", url: "https://www.aad.org" },
+    ],
+    award: [
+      "카톨릭의대 피부과 외래교수 역임",
+    ],
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu",
+    ],
+    availableService: [
+      "울쎄라피 프라임", "써마지 FLX", "리주란힐러",
+      "피코레이저", "흉터치료", "색소치료",
+    ],
   },
   {
     id: 2,
@@ -135,6 +204,30 @@ export const doctors: Doctor[] = [
     specialties: [
       "리프팅", "울쎄라", "써마지", "색소치료",
       "백반증", "피부질환", "문신제거", "손발톱무좀",
+    ],
+
+    // ── JSON-LD 스키마 전용 필드 ──
+    jobTitleEn: "Dermatologist, MD, PhD",
+    schemaDescription:
+      "고신대학교 의과대학 의학박사. 리프팅, 색소치료, 백반증 치료 등 다양한 피부질환 치료에 전문성을 갖추고 있습니다.",
+    alumniOf: [
+      { name: "고신대학교 의과대학", url: "https://med.ksu.ac.kr" },
+    ],
+    memberOf: [
+      { name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { name: "대한피부과의사회", url: "https://www.kda.or.kr" },
+    ],
+    award: [
+      "고신대학교 의과대학 피부과 외래교수 역임",
+    ],
+    sameAs: [
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+      "https://instagram.com/starpibu",
+    ],
+    availableService: [
+      "울쓰라피 프라임", "써마지 FLX", "색소치료",
+      "백반증", "피부질환", "흥터치료",
     ],
   },
 ];

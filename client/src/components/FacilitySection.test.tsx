@@ -21,6 +21,11 @@ vi.mock("lucide-react", () => ({
   Pause: () => <div data-testid="pause-icon">⏸</div>,
   Play: () => <div data-testid="play-icon">▶</div>,
   X: () => <div data-testid="x-icon">✕</div>,
+  // doctors-data.ts에서 간접 import되는 아이콘 (clinic-data.ts SSoT 전환 후 필요)
+  Award: () => <div data-testid="award-icon" />,
+  GraduationCap: () => <div data-testid="graduation-cap-icon" />,
+  Stethoscope: () => <div data-testid="stethoscope-icon" />,
+  Zap: () => <div data-testid="zap-icon" />,
 }));
 
 const renderWithLang = (component: React.ReactElement) => {

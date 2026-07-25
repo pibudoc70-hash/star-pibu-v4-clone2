@@ -3896,3 +3896,22 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 검증 7: /en/ 우혜진 탭 - Catholic University Medical School 정상 표시
 - [x] 검증 9: JSON-LD 스키마 - 카톨릭 포함, 부산대학병원/인제대는 조시형 원장 스키마에만 존재
 - [x] 검증 10: JSON-LD 스키마 개수 10개 유지
+
+## Step 38: 미사용 의존성 감사 및 제거 (2026-07-25)
+- [x] helmet 제거 (server-side, securityHeaders.ts가 대체)
+- [x] input-otp 제거 (ui/input-otp.tsx 파일도 삭제)
+- [x] @radix-ui/react-menubar 제거 (ui/menubar.tsx 파일도 삭제)
+- [x] @radix-ui/react-context-menu 제거 (ui/context-menu.tsx 파일도 삭제)
+- [x] @radix-ui/react-hover-card 제거 (ui/hover-card.tsx 파일도 삭제)
+- [x] react-resizable-panels 제거 (ui/resizable.tsx 파일도 삭제)
+- [x] vaul 제거 (ui/drawer.tsx 파일도 삭제)
+- [x] embla-carousel-react 제거 (ui/carousel.tsx 파일도 삭제)
+- [x] @aws-sdk/client-s3 제거 (storage.ts는 Forge API 프록시 사용)
+- [x] @aws-sdk/s3-request-presigner 제거
+- [x] react-day-picker 제거 (ui/calendar.tsx 파일도 삭제)
+- [x] cmdk 제거 (ui/command.tsx 파일도 삭제)
+- [x] react-hook-form 제거 (ui/form.tsx 파일도 삭제)
+- [x] @hookform/resolvers 제거
+- [x] framer-motion 제거
+- [x] ui/chart.tsx 파일 삭제 (recharts는 KeywordTrendsDashboard에서 사용 유지)
+- [x] 전체 검증: tsc 0건, build 성공, 1445 tests passed

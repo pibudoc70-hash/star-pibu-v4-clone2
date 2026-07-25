@@ -322,29 +322,25 @@ export default function Home() {
       return;
     }
 
-    // sessionStorage 브릿지: 다른 페이지에서 /#dr-{slug} 클릭 시 hash 복원
+    // sessionStorage 브릿지: 다른 페이지에서 /#dr-{slug} 클릭 시
+    // [FIX v9] __star_doctor_tab → __star_dr_target 방식으로 통일
+    // 이전: hash를 URL에 세팅해 브라우저 기본 스크롤을 유발했음
+    // 현재: sessionStorage에 저장해 useDoctorViewModel이 직접 처리
     const storedTab = sessionStorage.getItem("__star_doctor_tab");
     if (storedTab) {
       sessionStorage.removeItem("__star_doctor_tab");
       const slugMap = ['cho', 'woo', 'lee'];
       const slug = slugMap[parseInt(storedTab, 10)];
       if (slug) {
-        // hash를 복원해 useDoctorViewModel.applyFromHash가 처리하도록 위임
-        window.location.hash = `#dr-${slug}`;
+        // hash URL 세팅 대신 __star_dr_target에 저장 → 브라우저 기본 스크롤 차단
+        sessionStorage.setItem('__star_dr_target', `dr-${slug}`);
         return;
       }
     }
 
-    // URL hash 처리: #dr-* 는 useDoctorViewModel.applyFromHash에 위임
-    // 일반 섹션 hash는 URL에서 제거 후 sessionStorage 방식으로 처리
+    // URL hash 처리: index.html에서 #dr-* 는 이미 제거되어 여기에 도달하지 않음
+    // 남은 hash(일반 섹션)는 URL에서 제거
     if (window.location.hash) {
-      const rawHash = window.location.hash.slice(1);
-      const isDrHash = /^dr-(cho|woo|lee)$/.test(rawHash);
-      if (isDrHash) {
-        // #dr-* hash는 그대로 유지 → useDoctorViewModel.applyFromHash가 처리
-        return;
-      }
-      // 일반 섹션 hash: URL에서 제거
       history.replaceState(null, "", window.location.pathname + window.location.search);
       window.scrollTo({ top: 0, behavior: "instant" });
     }

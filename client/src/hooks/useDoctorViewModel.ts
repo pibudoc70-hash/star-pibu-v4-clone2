@@ -95,15 +95,79 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
-  // [FIX v8] applyFromHash: 레이아웃 안정화 후 스크롤
-  // 문제: SpecialEventSection 이미지 로드 시 레이아웃 시프트로
-  //   스크롤 위치가 밀려 이벤트 섹션으로 다시 튀어지는 버그
-  // 해결: 목표 요소의 offsetTop이 연속 3회 동일할 때까지 폴링,
-  //   레이아웃이 안정된 시점에 단일 scrollTo(‘instant’)로 정확히 이동
+  // [FIX v9] applyFromDrTarget: sessionStorage(__star_dr_target) 기반 의사 탭 자동 선택 + 스크롤
+  //
+  // 이전 방식의 근본 문제:
+  //   URL에 #dr-* hash가 남아있으면 브라우저가 기본 hash 스크롤을 먼저 실행하고,
+  //   이후 SpecialEventSection 이미지 로드 시 레이아웃 시프트로 위치가 밀려짐
+  //   → 첫 번째 클릭에서 이벤트 섹션으로 튀어지는 버그
+  //
+  // FIX v9 전략:
+  //   index.html에서 #dr-* hash를 sessionStorage에 저장 후 URL에서 즉시 제거
+  //   → 브라우저 기본 hash 스크롤 완전 차단
+  //   → useDoctorViewModel 마운트 후 sessionStorage에서 읽어 폴링 시작
+  //   → 레이아웃 안정화 후 정확한 위치로 스크롤
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const applyFromHash = () => {
+    // sessionStorage에서 대상 slug 읽기 (index.html에서 저장한 값)
+    const stored = sessionStorage.getItem('__star_dr_target');
+    if (!stored) return;
+    sessionStorage.removeItem('__star_dr_target');
+
+    const m = stored.match(/^dr-(cho|woo|lee)$/);
+    if (!m) return;
+    const slug = m[1];
+    const idx = doctors.findIndex((d) => d.slug === slug);
+    if (idx < 0) return;
+
+    // 1) 탭 상태 먼저 설정
+    setActiveDoctor(idx);
+    setExpandedCredentials(false);
+
+    // 2) 레이아웃 안정화 폴링
+    //    - 80ms 간격으로 #dr-{slug} 요소의 절대 위치 감시
+    //    - 연속 4회 2px 이내 변화 시 레이아웃 안정으로 판단
+    //    - 안정 후 window.scrollTo('instant')로 정확히 이동 (레이아웃 시프트 추가 발생 불가능)
+    const STABLE_COUNT = 4;
+    const POLL_MS = 80;
+    const MAX_MS = 4000;
+    let stableCount = 0;
+    let lastTop = -1;
+    let elapsed = 0;
+
+    const poll = setInterval(() => {
+      elapsed += POLL_MS;
+
+      const el = document.getElementById(`dr-${slug}`);
+      if (!el) {
+        // 요소가 아직 마운트되지 않음 (레이지 로딩 중) — 대기
+        if (elapsed > MAX_MS) clearInterval(poll);
+        return;
+      }
+
+      const currentTop = el.getBoundingClientRect().top + window.scrollY;
+      if (Math.abs(currentTop - lastTop) < 2) {
+        stableCount++;
+      } else {
+        stableCount = 0;
+      }
+      lastTop = currentTop;
+
+      if (stableCount >= STABLE_COUNT || elapsed > MAX_MS) {
+        clearInterval(poll);
+        scrollToEl(el);
+      }
+    }, POLL_MS);
+
+    return () => clearInterval(poll);
+  }, []);
+
+  // hashchange 이벤트: 사용자가 주소상에 직접 hash 입력 시 실시간 처리
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const onHashChange = () => {
       const hash = window.location.hash;
       const m = hash.match(/^#dr-(cho|woo|lee)$/);
       if (!m) return;
@@ -111,64 +175,43 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
       const idx = doctors.findIndex((d) => d.slug === slug);
       if (idx < 0) return;
 
-      // 1) 탭 상태 먼저 설정
+      // hash URL에서 제거 (브라우저 기본 스크롤 차단)
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+
       setActiveDoctor(idx);
       setExpandedCredentials(false);
 
-      // 2) 레이아웃 안정화 폴링: offsetTop이 3회 연속 동일하면 안정된 것으로 판단
-      const STABLE_COUNT = 3;  // 연속 동일 횟수
-      const POLL_MS = 80;       // 폴링 간격
-      const MAX_MS = 3000;      // 최대 대기 시간
-      let stableCount = 0;
-      let lastTop = -1;
-      let elapsed = 0;
-
-      const poll = setInterval(() => {
-        elapsed += POLL_MS;
-        if (elapsed > MAX_MS) {
-          clearInterval(poll);
-          // 타임아웃: 마지막 알려진 위치로 이동
-          const el = document.getElementById(`dr-${slug}`);
-          if (el) scrollToEl(el);
-          return;
-        }
-
+      // 레이아웃이 이미 안정된 상태이리므로 짧은 폴링으로 충분
+      let attempts = 0;
+      const iv = setInterval(() => {
         const el = document.getElementById(`dr-${slug}`);
-        if (!el) return;
-
-        const currentTop = el.getBoundingClientRect().top + window.scrollY;
-        if (Math.abs(currentTop - lastTop) < 2) {
-          stableCount++;
-        } else {
-          stableCount = 0;
-        }
-        lastTop = currentTop;
-
-        if (stableCount >= STABLE_COUNT) {
-          clearInterval(poll);
+        if (el) {
+          clearInterval(iv);
           scrollToEl(el);
+        } else if (++attempts > 20) {
+          clearInterval(iv);
         }
-      }, POLL_MS);
+      }, 50);
     };
 
-    // 스크롤 헬퍼: 헤더 높이 보정 + 중앙 정렬
-    const scrollToEl = (el: HTMLElement) => {
-      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-      const headerH = header ? header.offsetHeight : 64;
-      const elRect = el.getBoundingClientRect();
-      const elAbsTop = elRect.top + window.scrollY;
-      // 요소를 븷포트 중앙에 놓으려면:
-      // scrollY = elAbsTop - (viewportH / 2) + (elH / 2) - headerH/2
-      const viewportH = window.innerHeight;
-      const elH = elRect.height;
-      const targetY = elAbsTop - (viewportH / 2) + (elH / 2) - headerH / 2;
-      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
-    };
-
-    applyFromHash();
-    window.addEventListener('hashchange', applyFromHash);
-    return () => window.removeEventListener('hashchange', applyFromHash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+
+  // 스크롤 헬퍼: 헤더 높이 보정 + 븷포트 중앙 정렬
+  // (instant 사용: 레이아웃 안정 후 호출되므로 smooth 불필요)
+  function scrollToEl(el: HTMLElement) {
+    const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+    const headerH = header ? header.offsetHeight : 64;
+    const elRect = el.getBoundingClientRect();
+    const elAbsTop = elRect.top + window.scrollY;
+    const viewportH = window.innerHeight;
+    // 요소를 븷포트 중앙에 놓으려면:
+    // targetY = elAbsTop - viewportH/2 + elH/2 - headerH/2
+    const elH = Math.max(el.offsetHeight, 1);
+    const targetY = elAbsTop - (viewportH / 2) + (elH / 2) - (headerH / 2);
+    window.scrollTo({ top: Math.max(0, targetY), behavior: 'instant' });
+  }
 
   // 의사 전환 시 학력·경력 접기 초기화
   const handleDoctorSelect = useCallback((i: number) => {

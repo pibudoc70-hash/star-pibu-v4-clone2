@@ -89,9 +89,10 @@ function ScrollToTop() {
   useEffect(() => {
     // hash 앵커(#dr-, #section-, #faq- 등)가 있으면 스크롤 리셋 skip
     if (window.location.hash) return;
-    if (!sessionStorage.getItem("__star_scroll_to")) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
+    // sessionStorage에 스크롤 대상이 있으면 Home.tsx / useDoctorViewModel이 처리
+    if (sessionStorage.getItem("__star_scroll_to")) return;
+    if (sessionStorage.getItem("__star_dr_target")) return;
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
   return null;
 }

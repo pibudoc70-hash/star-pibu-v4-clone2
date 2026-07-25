@@ -3746,3 +3746,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] useDoctorViewModel.ts applyFromHash FIX v8: offsetTop 폴링 방식 (80ms 간격, 연속 3회 동일 시 안정 판단, 최대 3초)
 - [x] scrollToEl 헬퍼: 헤더 높이 보정 + 뷰포트 중앙 정렬 (window.scrollTo smooth)
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과
+
+## 첫 번째 클릭 이벤트 섹션 튀기 버그 완전 수정 (2026-07-25 세션 3, FIX v9)
+- [x] 근본 원인: URL에 #dr-* hash가 남아있어 브라우저 기본 hash 스크롤 발생 → SpecialEventSection 이미지 로드 시 레이아웃 시프트로 위치 밀림
+- [x] index.html: #dr-* hash를 sessionStorage(__star_dr_target)에 저장 후 URL에서 즉시 제거 (브라우저 기본 스크롤 완전 차단)
+- [x] useDoctorViewModel.ts FIX v9: sessionStorage 기반 처리 + 레이아웃 안정화 폴링 (80ms, 연속 4회 2px 이내) + instant 스크롤
+- [x] hashchange 이벤트 처리: hash URL에서 즉시 제거 후 짧은 폴링으로 스크롤
+- [x] Home.tsx: __star_doctor_tab 브릿지를 __star_dr_target 방식으로 통일 (hash URL 세팅 제거)
+- [x] App.tsx ScrollToTop: __star_dr_target도 체크하여 스크롤 리셋 방지
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과

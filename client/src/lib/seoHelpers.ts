@@ -745,7 +745,7 @@ export function buildEventJsonLd(event: {
         streetAddress: "서면로 74 아이온시티빌딩 4층",
         addressLocality: "부산진구",
         addressRegion: "부산",
-        postalCode: "47296",
+        postalCode: "47280", // [Step59-A] NAP 일관성: 47296 → 47280 (constants.ts 정본)
         addressCountry: "KR",
       },
     },

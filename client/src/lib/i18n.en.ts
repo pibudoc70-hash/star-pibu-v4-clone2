@@ -504,6 +504,8 @@ export const en: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@starpibu",
     businessInfo: "Business Reg. No.: 605-24-84306 | Email: starpibu@naver.com",
+    /** [Step59-B] Naver Place permanent link label */
+    naverPlaceLabel: "Naver Place",
   },
   youtube: {
     sectionTitle: "Skin Stories from Our Dermatologists",

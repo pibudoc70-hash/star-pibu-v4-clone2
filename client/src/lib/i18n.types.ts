@@ -359,6 +359,8 @@ export interface I18nContent {
     sms: string;
     kakao: string;
     businessInfo: string;
+    /** [Step59-B] 네이버 플레이스 상시 링크 레이블 */
+    naverPlaceLabel?: string;
   };
   youtube: {
     sectionTitle: string;

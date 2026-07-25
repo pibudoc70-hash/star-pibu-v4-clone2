@@ -504,6 +504,8 @@ export const ja: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@starpibu",
     businessInfo: "事業者登録番号: 605-24-84306 | Email: starpibu@naver.com",
+    /** [Step59-B] ネイバープレイス 常時リンク ラベル */
+    naverPlaceLabel: "ネイバープレイス",
   },
   youtube: {
     sectionTitle: "皮膚科専門医が教える肆の話",

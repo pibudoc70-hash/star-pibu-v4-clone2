@@ -497,6 +497,8 @@ export const ko: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@스타피부과",
     businessInfo: "사업자등록번호: 605-24-84306 | 이메일: starpibu@naver.com",
+    /** [Step59-B] 네이버 플레이스 상시 링크 레이블 */
+    naverPlaceLabel: "네이버 플레이스",
   },
   youtube: {
     sectionTitle: "피부과전문의가 알려주는 피부이야기",

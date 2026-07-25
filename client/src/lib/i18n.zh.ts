@@ -504,6 +504,8 @@ export const zh: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@starpibu",
     businessInfo: "营业执照号: 605-24-84306 | 邮筱: starpibu@naver.com",
+    /** [Step59-B] Naver地图 常驻链接 标签 */
+    naverPlaceLabel: "Naver地图",
   },
   youtube: {
     sectionTitle: "皮肤科专家为您讲解皮肤故事",

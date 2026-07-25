@@ -18,15 +18,15 @@ import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
 import { trpc } from "@/lib/trpc";
-
+// [Step59-B] 네이버 플레이스 상시 링크 — 리뷰·길찾기 유입 경로
+import { NAVER_PLACE_URL } from "@/lib/constants";
 // 후행 호환성을 위해 re-export 유지
 export { buildMarkerPinElement } from "@/lib/mapHelpers";
-
 // 스타피부과 위치 (부산 서면)
 const STAR_LAT = 35.1572312;
 const STAR_LNG = 129.0581932;
-
 // 카카오맵 링크 (폴백 버튼용)
+// [Step59-A] 지도 검색용 문자열. NAP 표기(도로명)와 별개로 유지.
 const KAKAO_MAP_URL = `https://map.kakao.com/link/map/스타피부과,${STAR_LAT},${STAR_LNG}`;
 // 구글 지도 링크 (지도 이미지 클릭 시 이동)
 const GOOGLE_MAP_URL = "https://maps.app.goo.gl/1trKAhUzLhw3gMFG9";
@@ -156,7 +156,8 @@ export default function ContactSection() {
                     스타피부과
                   </p>
                   <p className="text-sm" style={{ color: '#555' }}>
-                    부산 부산진구 부전동 257-3<br />아이온시티빌딩 4층
+                    {/* [Step59-A] NAP 일관성: 지번주소 → 도로명주소 통일 */}
+                    부산광역시 부산진구 서면로 74<br />아이온시티빌딩 4층
                   </p>
                 </div>
                 <div className="flex gap-2 flex-wrap justify-center">
@@ -177,6 +178,16 @@ export default function ContactSection() {
                     style={{ background: 'var(--color-star-naver)', color: '#fff' }}
                   >
                     네이버지도로 보기
+                  </a>
+                  {/* [Step59-B] 네이버 플레이스 상시 링크 */}
+                  <a
+                    href={NAVER_PLACE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-full text-sm font-medium transition-opacity hover:opacity-80"
+                    style={{ background: 'var(--color-star-naver)', color: '#fff' }}
+                  >
+                    {t.contact.naverPlaceLabel ?? "네이버 플레이스"}
                   </a>
                 </div>
               </div>

@@ -4049,3 +4049,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] C: client/src/lib/__tests__/clinic-stats.test.ts 신규 생성 + pnpm test 통과
 - [ ] V1~V4: pnpm check + build + test + grep 4종
 - [x] V5+V6: 브라우저 육안 확인 (6곳 × 4언어) + 회귀 + 체크포인트
+
+## Step 59: NAP 주소 일관성 통일 + 네이버 플레이스 유입 링크 상시화 (2026-07-26)
+- [x] Phase 0: 주소 표기 전수 조사 (grep 3종)
+- [x] A-1: ContactSection.tsx 지번주소 → 도로명주소 교체
+- [x] A-2: 우편번호 47280 통일 확인
+- [x] A-3: 지도 검색용 문자열 주석 처리
+- [x] A-4: i18n 4개 파일 주소 도로명 교체
+- [x] B-1: constants.ts에 NAVER_PLACE_URL 상수 추가
+- [x] B-2: ContactSection.tsx에 네이버 플레이스 상시 링크 추가
+- [x] B-3: i18n 4개 파일 naverPlaceLabel 추가
+- [x] B-4: 기존 폴백 버튼 유지 확인
+- [x] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5~V7: 브라우저 확인 a~f + 회귀 + 체크포인트

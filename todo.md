@@ -3764,3 +3764,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Research.tsx: buildBreadcrumbJsonLd + buildResearcherJsonLd + buildScholarlyArticleListJsonLd + buildFAQPageJsonLd(ko 전용) 연결 완료
 - [x] Research.tsx: SeoHead keywords + jsonLd prop 추가 완료
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과
+
+## 헤더 #contact 스크롤 버그 수정 (2026-07-25, pasted_content_26)
+- [x] Step B~C: useHeaderState.ts scrollToElStable 함수 구현 + handleNavClick 교체
+- [x] Step D: Home.tsx __star_scroll_to useEffect 재보정 루프 적용
+- [x] Step E: ContactSection/TreatmentsEquipmentSection/SpecialEventSection/FacilitySection에 scroll-mt-24 md:scroll-mt-28 추가
+- [x] Step F: deferMount 임계값 보고 (변경 없음)
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과 확인
+- [x] 체크포인트 저장

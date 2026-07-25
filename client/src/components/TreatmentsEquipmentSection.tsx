@@ -171,7 +171,7 @@ export default function TreatmentsEquipmentSection() {
   const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
 
   return (
-    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24" aria-label={tr.label} role="region">
+    <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
 

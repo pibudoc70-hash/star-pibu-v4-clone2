@@ -35,7 +35,12 @@ export function useHeaderState() {
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
-  const pendingNavRef = useRef<{ observer: MutationObserver; timeout: ReturnType<typeof setTimeout> } | null>(null);
+  // [FIX scroll-stable] pendingNavRef 타입 확장: interval 필드 추가
+  const pendingNavRef = useRef<{
+    observer: MutationObserver | null;
+    timeout: ReturnType<typeof setTimeout> | null;
+    interval: ReturnType<typeof setInterval> | null;
+  } | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
 
@@ -136,9 +141,11 @@ export function useHeaderState() {
   const handleNavClick = (href: string) => {
     closeMobileMenu();
     setMoreOpen(false);
+    // 이전 pending 정리 (observer + timeout + interval 모두)
     if (pendingNavRef.current) {
-      pendingNavRef.current.observer.disconnect();
-      clearTimeout(pendingNavRef.current.timeout);
+      pendingNavRef.current.observer?.disconnect();
+      if (pendingNavRef.current.timeout) clearTimeout(pendingNavRef.current.timeout);
+      if (pendingNavRef.current.interval) clearInterval(pendingNavRef.current.interval);
       pendingNavRef.current = null;
     }
     const getLocalizedPath = () => getLocaleBase(location);
@@ -146,6 +153,66 @@ export function useHeaderState() {
       const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
       return header ? header.offsetHeight + 8 : 80;
     };
+
+    /**
+     * [FIX scroll-stable] lazy 섹션 마운트로 인한 레이아웃 시프트에 대응하는 재보정 스크롤.
+     * - 1차 스크롤 후 150ms 간격으로 목표 좌표를 재계산하여 오차가 크면 재스크롤
+     * - 좌표가 안정화(연속 2회 오차 < 4px)되면 종료
+     * - 2차 이후 재스크롤은 behavior: "auto"로 덜컥거림 방지
+     */
+    const scrollToElStable = (selector: string): ReturnType<typeof setInterval> => {
+      const getTargetTop = () => {
+        const el = document.querySelector(selector);
+        if (!el) return null;
+        const offset = getHeaderOffset();
+        return el.getBoundingClientRect().top + window.scrollY - offset;
+      };
+
+      const initial = getTargetTop();
+      if (initial !== null) {
+        window.scrollTo({ top: initial, behavior: "smooth" });
+      }
+
+      let lastTop = initial;
+      let stableCount = 0;
+      let ticks = 0;
+      const MAX_TICKS = 24; // 24 * 150ms = 3.6s
+
+      const iv = setInterval(() => {
+        ticks += 1;
+        const top = getTargetTop();
+
+        if (top === null) {
+          if (ticks >= MAX_TICKS) clearInterval(iv);
+          return;
+        }
+
+        const drift = lastTop !== null ? Math.abs(top - lastTop) : Infinity;
+        lastTop = top;
+
+        if (drift < 4) {
+          stableCount += 1;
+          // 좌표가 2회 연속 안정 → 최종 위치로 한 번 더 정렬 후 종료
+          if (stableCount >= 2) {
+            const current = window.scrollY;
+            if (Math.abs(current - top) > 8) {
+              window.scrollTo({ top, behavior: "auto" });
+            }
+            clearInterval(iv);
+            return;
+          }
+        } else {
+          // 레이아웃이 변했으면 재스크롤 (behavior: "auto"로 덜컥거림 방지)
+          stableCount = 0;
+          window.scrollTo({ top, behavior: "auto" });
+        }
+
+        if (ticks >= MAX_TICKS) clearInterval(iv);
+      }, 150);
+
+      return iv;
+    };
+
     if (href.startsWith("#")) {
       const basePath = getLocalizedPath();
       if (href === "#home") {
@@ -163,22 +230,23 @@ export function useHeaderState() {
         setLocation(homePath || "/");
         return;
       }
-      const scrollToEl = (el: Element) => {
-        const offset = getHeaderOffset();
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });
-        // [FIX] URL에 hash를 저장하지 않음
-        // hash가 URL에 남으면 다음 방문 시 자동 스크롤이 발생함
-      };
+
+      // 요소가 이미 DOM에 있으면 바로 재보정 스크롤 시작
       const el = document.querySelector(href);
-      if (el) { scrollToEl(el); return; }
+      if (el) {
+        const iv = scrollToElStable(href);
+        pendingNavRef.current = { observer: null, timeout: null, interval: iv };
+        return;
+      }
+
+      // lazy 섹션 대기: MutationObserver로 DOM 등장 감지 후 재보정 스크롤
       const observer = new MutationObserver(() => {
         const lazyEl = document.querySelector(href);
         if (lazyEl) {
           observer.disconnect();
           clearTimeout(timeout);
-          pendingNavRef.current = null;
-          scrollToEl(lazyEl);
+          const iv = scrollToElStable(href);
+          pendingNavRef.current = { observer: null, timeout: null, interval: iv };
         }
       });
       observer.observe(document.body, { childList: true, subtree: true });
@@ -186,7 +254,7 @@ export function useHeaderState() {
         observer.disconnect();
         pendingNavRef.current = null;
       }, 3000);
-      pendingNavRef.current = { observer, timeout };
+      pendingNavRef.current = { observer, timeout, interval: null };
       // [FIX] URL에 hash를 저장하지 않음 (lazy 섹션 대기 시에도 동일)
       return;
     }

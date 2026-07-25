@@ -357,26 +357,59 @@ export default function Home() {
     }
 
     sessionStorage.removeItem("__star_scroll_to");
-    const id = sessionTarget;
-
-    const scrollToElement = (el: Element) => {
+    const selector = `#${sessionTarget}`;
+    const getHeaderOffset = () => {
       const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-      const offset = header ? header.offsetHeight + 8 : 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+      return header ? header.offsetHeight + 8 : 80;
+    };
+    const getTargetTop = () => {
+      const el = document.querySelector(selector);
+      if (!el) return null;
+      return el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
     };
 
-    const existing = document.getElementById(id);
-    if (existing) { scrollToElement(existing); return; }
+    // [FIX scroll-stable] 재보정 루프: lazy 섹션 마운트 후 레이아웃 안정화까지 재스크롤
+    let lastTop: number | null = null;
+    let stableCount = 0;
+    let ticks = 0;
+    const MAX_TICKS = 40; // 40 * 150ms = 6s (lazy 마운트 대기 포함)
 
-    // lazy 섹션이 마운트될 때까지 MutationObserver로 대기 (최대 5초)
-    const observer = new MutationObserver(() => {
-      const el = document.getElementById(id);
-      if (el) { observer.disconnect(); clearTimeout(timeout); scrollToElement(el); }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    const timeout = setTimeout(() => observer.disconnect(), 5000);
-    return () => { observer.disconnect(); clearTimeout(timeout); };
+    const iv = setInterval(() => {
+      ticks += 1;
+      const top = getTargetTop();
+
+      if (top === null) {
+        if (ticks >= MAX_TICKS) clearInterval(iv);
+        return;
+      }
+
+      if (lastTop === null) {
+        lastTop = top;
+        window.scrollTo({ top, behavior: "smooth" });
+        return;
+      }
+
+      const drift = Math.abs(top - lastTop);
+      lastTop = top;
+
+      if (drift < 4) {
+        stableCount += 1;
+        if (stableCount >= 2) {
+          if (Math.abs(window.scrollY - top) > 8) {
+            window.scrollTo({ top, behavior: "auto" });
+          }
+          clearInterval(iv);
+          return;
+        }
+      } else {
+        stableCount = 0;
+        window.scrollTo({ top, behavior: "auto" });
+      }
+
+      if (ticks >= MAX_TICKS) clearInterval(iv);
+    }, 150);
+
+    return () => clearInterval(iv);
   }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행 (카드 클릭 시 재실행 없음)
 
   return (

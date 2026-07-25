@@ -87,7 +87,7 @@ export default function ContactSection() {
   const sectionTitle = t.access.sectionTitle ?? "";
 
   return (
-    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg" aria-label="오시는 방법 및 연락처">
+    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg scroll-mt-24 md:scroll-mt-28" aria-label="오시는 방법 및 연락처">
       <div className="container">
         {/* Section Header — reveal-heading 제거: 항상 표시 */}
         <div className="section-header-block">

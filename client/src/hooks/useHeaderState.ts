@@ -4,6 +4,7 @@
  * Header.tsx에서 분리하여 단일 책임 원칙을 준수한다.
  */
 import { useState, useEffect, useRef } from "react";
+import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -35,12 +36,7 @@ export function useHeaderState() {
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
-  // [FIX scroll-v2] pendingNavRef: interval 필드만 사용 (MutationObserver 제거)
-  const pendingNavRef = useRef<{
-    observer: null;
-    timeout: null;
-    interval: ReturnType<typeof setInterval> | null;
-  } | null>(null);
+  const { scrollToSelector, cancel: cancelAnchorScroll } = useAnchorScroll();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
 
@@ -141,86 +137,9 @@ export function useHeaderState() {
   const handleNavClick = (href: string) => {
     closeMobileMenu();
     setMoreOpen(false);
-    // 이전 pending interval 정리
-    if (pendingNavRef.current) {
-      if (pendingNavRef.current.interval) clearInterval(pendingNavRef.current.interval);
-      pendingNavRef.current = null;
-    }
+    cancelAnchorScroll();
+
     const getLocalizedPath = () => getLocaleBase(location);
-    const getHeaderOffset = () => {
-      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-      return header ? header.offsetHeight + 8 : 80;
-    };
-
-    /**
-     * [FIX scroll-v2] lazy 섹션 마운트 완료 후 안정적으로 스크롤
-     *
-     * 문제: MutationObserver 방식은 #contact 마운트 시점에 FAQ 등 위 섹션들이
-     *   동시에 마운트되면서 레이아웃이 틀어져 FAQ 근처로 스크롤됨
-     *
-     * 해결: 클릭 즉시 페이지 하단으로 스크롤하여 모든 lazy 섹션을
-     *   강제 마운트한 뒤, 안정적 위치로 재스크롤
-     *   - 1차: 페이지 하단으로 즉시 이동 (behavior: instant)
-     *   - 2차: 300ms 대기 후 목표 요소로 smooth 스크롤
-     *   - 3차: 600ms 후 좌표 안정화 확인 후 미세 보정
-     */
-    const scrollToElStable = (selector: string): ReturnType<typeof setInterval> => {
-      const getTargetTop = () => {
-        const el = document.querySelector(selector);
-        if (!el) return null;
-        const offset = getHeaderOffset();
-        return el.getBoundingClientRect().top + window.scrollY - offset;
-      };
-
-      // Step 1: 페이지 하단으로 즉시 이동 → 모든 lazy 섹션 강제 마운트
-      const pageBottom = document.documentElement.scrollHeight;
-      window.scrollTo({ top: pageBottom, behavior: "instant" });
-
-      let lastTop: number | null = null;
-      let stableCount = 0;
-      let ticks = 0;
-      const MAX_TICKS = 30; // 30 * 100ms = 3s
-
-      const iv = setInterval(() => {
-        ticks += 1;
-        const top = getTargetTop();
-
-        if (top === null) {
-          if (ticks >= MAX_TICKS) clearInterval(iv);
-          return;
-        }
-
-        if (lastTop === null) {
-          // Step 2: 요소 발견 즉시 smooth 스크롤
-          lastTop = top;
-          window.scrollTo({ top, behavior: "smooth" });
-          return;
-        }
-
-        const drift = Math.abs(top - lastTop);
-        lastTop = top;
-
-        if (drift < 4) {
-          stableCount += 1;
-          if (stableCount >= 3) {
-            // Step 3: 안정화 확인 후 미세 보정
-            if (Math.abs(window.scrollY - top) > 8) {
-              window.scrollTo({ top, behavior: "smooth" });
-            }
-            clearInterval(iv);
-            return;
-          }
-        } else {
-          stableCount = 0;
-          // 레이아웃 변화 시 smooth로 재스크롤 (덜쪿거림 제거)
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-
-        if (ticks >= MAX_TICKS) clearInterval(iv);
-      }, 100);
-
-      return iv;
-    };
 
     if (href.startsWith("#")) {
       const basePath = getLocalizedPath();
@@ -232,18 +151,14 @@ export function useHeaderState() {
       // 현재 페이지가 홈이 아닌 경우 홈으로 이동 후 해시 스크롤
       // (예: /about, /equipment2 등에서 EVENT 메뉴 클릭 시)
       // [FIX] URL에 hash를 남기지 않고 sessionStorage로 스크롤 대상 전달
-      // hash가 URL에 남으면 다음 방문 시 Home.tsx useEffect가 자동 스크롤함
       if (!isHome) {
         const homePath = basePath === "/" ? "" : basePath;
         sessionStorage.setItem("__star_scroll_to", href.slice(1));
         setLocation(homePath || "/");
         return;
       }
-
-      // [FIX scroll-v2] 요소 유무 관계없이 scrollToElStable로 직접 처리
-      // (scrollToElStable 내부에서 페이지 하단 이동 → 모든 lazy 섹션 강제 마운트 → 안정적 스크롤)
-      const iv = scrollToElStable(href);
-      pendingNavRef.current = { observer: null, timeout: null, interval: iv };
+      // useAnchorScroll: 페이지 하단 이동 → lazy 섹션 강제 마운트 → 폴링 재보정
+      scrollToSelector(href, { block: "start" });
       return;
     }
     // 절대 경로 (/about, /foreign-guide 등) — wouter setLocation으로 SPA 라우팅

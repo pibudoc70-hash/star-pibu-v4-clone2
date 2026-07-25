@@ -3932,3 +3932,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] FacilitySection.test.tsx lucide-react mock에 Award/GraduationCap/Stethoscope/Zap 추가
 - [x] 순환참조 없음 확인 (doctors-data.ts → clinic-data.ts 방향 import 없음)
 - [x] tsc 0건, build 성공, 1445/1445 테스트 통과
+- [x] Step 41: useAnchorScroll 훅 통합 (scrollToElStable MutationObserver 제거, Home.tsx 인라인 폴링 제거, useHeaderState 전환)

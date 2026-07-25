@@ -10,6 +10,7 @@
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
 import { lazy, Suspense, useEffect, useState } from "react";
+import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { CLINIC_STATS } from "../lib/constants";
 const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildVideoObjectListJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
@@ -301,19 +302,13 @@ export default function Home() {
   // 새 공지사항 알림 토스트 (세션당 1회)
   useNewNoticeToast(navigate);
 
-  // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
-  // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
-  //
-  // [FIX v2] URL hash 대신 sessionStorage(__star_scroll_to)를 사용해
-  // URL에 hash가 남지 않도록 한다. hash가 URL에 남으면 다음 방문 시
-  // 자동 스크롤이 발생하는 버그가 있었음.
-  // 외부 직접 진입(새 탭, 북마크, 외부 링크)이나 새로고침 시에는
-  // hash를 무시하고 상단으로 이동한다.
-  useEffect(() => {
-    // [FIX v6] #dr-{slug} 처리는 useDoctorViewModel.applyFromHash에 위임
-    // Home.tsx는 sessionStorage 브릿지 + 일반 섹션 스크롤만 담당
+  const { scrollToSelector } = useAnchorScroll();
 
-    // [FIX v4] 언어 변경 시 scroll restoration 무시
+  // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
+  // [FIX v2] URL hash 대신 sessionStorage(__star_scroll_to)를 사용해
+  // URL에 hash가 남지 않도록 한다.
+  useEffect(() => {
+    // [FIX v4] 언어 변경 시 scroll restoration 무시 → 강제 최상단
     const forceScrollTop = sessionStorage.getItem("__star_force_scroll_top");
     if (forceScrollTop) {
       sessionStorage.removeItem("__star_force_scroll_top");
@@ -322,91 +317,36 @@ export default function Home() {
       return;
     }
 
-    // sessionStorage 브릿지: 다른 페이지에서 /#dr-{slug} 클릭 시
     // [FIX v9] __star_doctor_tab → __star_dr_target 방식으로 통일
-    // 이전: hash를 URL에 세팅해 브라우저 기본 스크롤을 유발했음
-    // 현재: sessionStorage에 저장해 useDoctorViewModel이 직접 처리
     const storedTab = sessionStorage.getItem("__star_doctor_tab");
     if (storedTab) {
       sessionStorage.removeItem("__star_doctor_tab");
       const slugMap = ['cho', 'woo', 'lee'];
       const slug = slugMap[parseInt(storedTab, 10)];
       if (slug) {
-        // hash URL 세팅 대신 __star_dr_target에 저장 → 브라우저 기본 스크롤 차단
         sessionStorage.setItem('__star_dr_target', `dr-${slug}`);
         return;
       }
     }
 
-    // URL hash 처리: index.html에서 #dr-* 는 이미 제거되어 여기에 도달하지 않음
-    // 남은 hash(일반 섹션)는 URL에서 제거
+    // URL hash 처리: index.html에서 #dr-* 는 이미 제거됨
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname + window.location.search);
       window.scrollTo({ top: 0, behavior: "instant" });
     }
 
     // [FIX v12] __star_dr_target이 있으면 useDoctorViewModel이 스크롤 담당
-    // → scrollTo(0,0) 실행하지 않음 (히어로 고정 버그 방지)
     if (sessionStorage.getItem('__star_dr_target')) return;
 
-    // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) 방식
+    // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) → useAnchorScroll
     const sessionTarget = sessionStorage.getItem("__star_scroll_to");
     if (!sessionTarget) {
       window.scrollTo({ top: 0, behavior: "instant" });
       return;
     }
-
     sessionStorage.removeItem("__star_scroll_to");
-    const selector = `#${sessionTarget}`;
-    const getHeaderOffset = () => {
-      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-      return header ? header.offsetHeight + 8 : 80;
-    };
-    const getTargetTop = () => {
-      const el = document.querySelector(selector);
-      if (!el) return null;
-      return el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
-    };
-
-    // [FIX scroll-v2] useHeaderState.scrollToElStable와 동일한 전략:
-    // 페이지 하단으로 즉시 이동 → 모든 lazy 섹션 강제 마운트 → 안정적 smooth 스크롤
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
-    let lastTop: number | null = null;
-    let stableCount = 0;
-    let ticks = 0;
-    const MAX_TICKS = 30; // 30 * 100ms = 3s
-    const iv = setInterval(() => {
-      ticks += 1;
-      const top = getTargetTop();
-      if (top === null) {
-        if (ticks >= MAX_TICKS) clearInterval(iv);
-        return;
-      }
-      if (lastTop === null) {
-        // 요소 발견 즉시 smooth 스크롤
-        lastTop = top;
-        window.scrollTo({ top, behavior: "smooth" });
-        return;
-      }
-      const drift = Math.abs(top - lastTop);
-      lastTop = top;
-      if (drift < 4) {
-        stableCount += 1;
-        if (stableCount >= 3) {
-          if (Math.abs(window.scrollY - top) > 8) {
-            window.scrollTo({ top, behavior: "smooth" });
-          }
-          clearInterval(iv);
-          return;
-        }
-      } else {
-        stableCount = 0;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
-      if (ticks >= MAX_TICKS) clearInterval(iv);
-    }, 100);
-    return () => clearInterval(iv);
-  }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행 (카드 클릭 시 재실행 없음)
+    scrollToSelector(`#${sessionTarget}`, { block: "start" });
+  }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행
 
   return (
     <div className="min-h-screen">

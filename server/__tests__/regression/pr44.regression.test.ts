@@ -127,9 +127,9 @@ describe("Sitemap 정책 (PR-43) — server/sitemap.ts 소스 검사", () => {
     expect(sitemapSource).toMatch(/\/zh\/foreign-guide/);
   });
 
-  it("/privacy URL이 STATIC_URLS에 없어야 한다 (noindex 정책)", () => {
-    // loc: `${SITE_URL}/privacy` 형태가 없어야 함
-    expect(sitemapSource).not.toMatch(
+  it("/privacy URL이 STATIC_URLS에 있어야 한다 ([Step56b-A] 의료기관 필수 페이지)", () => {
+    // [Step56b-A] 개인정보처리방침은 의료기관 필수 페이지이므로 sitemap에 포함한다.
+    expect(sitemapSource).toMatch(
       /loc:\s*`\$\{SITE_URL\}\/privacy`/,
     );
   });

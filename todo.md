@@ -4033,3 +4033,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V4: pnpm check + build + test + grep 11종
 - [x] V5: 런타임 실측 a~g
 - [x] V6: 브라우저 회귀 + 체크포인트
+
+## Step 56-b: sitemap 잔여 정리 (2026-07-26)
+- [x] Phase 0: 현재 구조 파악 (hreflang 생성 방식, /research, /privacy, 리다이렉트 라인)
+- [x] A: /privacy 4개 언어 추가 (loc + hreflang)
+- [x] B: /research hreflang 4개 언어+x-default 보완
+- [x] C: /sitemap-dynamic.xml 리다이렉트 코드 확인 (C-1 코드 이미 존재)
+- [x] V1~V4: pnpm check + build + test + 로컬 실측 a~f
+- [x] V5+V6: 프로덕션 실측 + 브라우저 회귀 + 체크포인트

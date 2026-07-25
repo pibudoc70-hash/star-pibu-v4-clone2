@@ -149,8 +149,8 @@ const STATIC_URLS = [
     lastmod: BUILD_DATE,
     changefreq: "monthly",
     priority: "0.6",
-    hreflang: `    <xhtml:link rel="alternate" hreflang="ko"        href="${SITE_URL}/research" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/research" />`,
+    // [Step56b-B] /research hreflang 4개 언어+x-default 보완 (/en|ja|zh/research HTTP 200 확인)
+    hreflang: hreflangBlock("/research"),
   },
   // [Step56-A] 다국어 research (JSON-LD 는 en/ja/zh 이미 대응 완료)
   { loc: `${SITE_URL}/en/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
@@ -165,7 +165,17 @@ const STATIC_URLS = [
     priority: "0.5",
     hreflang: hreflangBlock("/non-covered"),
   },
-  // /privacy 는 noindex 정사 정첵으로 sitemap 제외 (PR-43/44 정첵 유지)
+  // [Step56b-A] 개인정보처리방침 — 의료기관 필수 페이지. LANG_ROUTES에 { path: "privacy" }로 등록되어 4개 언어 경로가 모두 유효하다.
+  {
+    loc: `${SITE_URL}/privacy`,
+    lastmod: BUILD_DATE,
+    changefreq: "yearly",
+    priority: "0.3",
+    hreflang: hreflangBlock("/privacy"),
+  },
+  { loc: `${SITE_URL}/en/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/ja/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/zh/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
 ];
 
 function buildUrlEntry(entry: {

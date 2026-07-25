@@ -122,7 +122,7 @@ function buildCSP(isDev: boolean): string {
   const formAction = self;
   // [Step49-F] frame-ancestors: 프로덕션은 'self'만 허용, 개발은 Manus 미리보기 패널 허용
   const frameAncestors = isDev
-    ? "'self' https://*.manuspre.computer"
+    ? "'self' https://*.manus.computer https://*.manus.space https://*.manus.im https://manus.im"
     : "'self'";  // 프로덕션: 외부 iframe 삽입 완전 차단
   // upgrade-insecure-requests: HTTP 리소스를 HTTPS로 자동 업그레이드
   const upgradeInsecureRequests = "upgrade-insecure-requests";

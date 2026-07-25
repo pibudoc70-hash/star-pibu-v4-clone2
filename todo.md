@@ -3824,3 +3824,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] grep 검증 4종 (express-rate-limit, trust proxy, onError, imageNotFoundCache 3건+)
 - [x] 실동작 검증 5~11 (정상트래픽, 429, 헤더, 음수캐시, 오염없음, onError, trust proxy)
 - [x] 체크포인트 저장
+
+## context.ts 인증 최적화 (2026-07-25)
+- [x] 사전: 실제 세션 쿠키 이름 확인 (grep res.cookie / setCookie / oauth.ts)
+- [x] context.ts 전체 교체 (hasAuthCredentials + console.warn)
+- [x] 정규식이 실제 쿠키 이름 매칭하는지 검증 후 필요시 추가
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 검증: hasAuthCredentials 2건
+- [x] 실동작 검증 5~9 (공개 페이지, 인증 스킵, 관리자 로그인 회귀, 쿠키 분기, 정규식)
+- [x] 체크포인트 저장

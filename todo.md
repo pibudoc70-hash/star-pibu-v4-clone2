@@ -3999,3 +3999,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V4: pnpm check + build + test + grep 7종
 - [x] V5: 런타임 검증 a~d
 - [x] V6+V7: 브라우저 회귀 + 리포트 + 체크포인트
+## Step 54: 상담폼 검사 순서 재배치 + notifyOwner 재시도 + WS 인증 경로 정리 (2026-07-26)
+- [x] A: consultation.ts 검사 순서 재배치 (memRateLimited 추가 + Turnstile 앞으로 이동)
+- [x] B: notification.ts notifyOwner 재시도 래퍼 + fetch 타임아웃/리다이렉트 방어
+- [x] C+D: websocket.ts 인증 경로 정리 + 프리뷰 도메인 분리
+- [x] V1~V5: pnpm check + build + test + grep 9종 + 검사 순서 라인 번호 확인
+- [x] V6: 런타임 검증 a~e
+- [x] V7: 브라우저 회귀 + 체크포인트

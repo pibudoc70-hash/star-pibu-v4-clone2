@@ -1,4 +1,4 @@
-import { asc, desc, eq, inArray } from "drizzle-orm";
+import { asc, desc, eq, inArray, lt } from "drizzle-orm";
 import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
@@ -165,4 +165,34 @@ export async function updateNoticeWithImages(
       );
     }
   });
+}
+
+/**
+ * 커서 기반 공지 목록 조회.
+ *
+ * OFFSET 방식의 문제: OFFSET 10000 은 10000행을 읽고 버려서 뒷페이지가 느리다.
+ * 커서 방식: 마지막으로 본 id 이후만 읽으므로 페이지 위치와 무관하게 일정하다.
+ *
+ * @param cursor 마지막으로 조회한 공지의 id (첫 페이지는 undefined)
+ * @param limit 페이지 크기 (최대 100)
+ */
+export async function getNoticesByCursor(params: {
+  cursor?: number;
+  limit?: number;
+}) {
+  const db = await getDb();
+  const limit = Math.min(params.limit ?? 20, 100);
+
+  const rows = await db
+    .select()
+    .from(notices)
+    .where(params.cursor !== undefined ? lt(notices.id, params.cursor) : undefined)
+    .orderBy(desc(notices.id))
+    .limit(limit + 1); // 다음 페이지 존재 여부 판별용 +1
+
+  const hasMore = rows.length > limit;
+  const items = hasMore ? rows.slice(0, limit) : rows;
+  const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+  return { items, nextCursor, hasMore };
 }

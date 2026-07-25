@@ -3933,3 +3933,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 순환참조 없음 확인 (doctors-data.ts → clinic-data.ts 방향 import 없음)
 - [x] tsc 0건, build 성공, 1445/1445 테스트 통과
 - [x] Step 41: useAnchorScroll 훅 통합 (scrollToElStable MutationObserver 제거, Home.tsx 인라인 폴링 제거, useHeaderState 전환)
+
+## Step 43: DB 인덱스 추가 + 커서 페이지네이션 (2026-07-25)
+- [x] schema.ts: notices 복합(isPinned+createdAt), equipment3(sortOrder, isActive+sortOrder), youtube(sortOrder, type+isActive+sortOrder), events(isActive+sortOrder+createdAt), reservations(createdAt) 인덱스 추가
+- [x] drizzle/0032_light_paper_doll.sql 생성 (위험 구문 없음, CREATE INDEX 7개)
+- [x] webdev_execute_sql로 인덱스 7개 DB 적용 완료
+- [x] server/db/notices.ts: getNoticesByCursor() 함수 신규 추가 (커서 기반, limit 최대 100 클램프)
+- [x] server/__tests__/notices-cursor.test.ts: 4개 케이스 작성 및 통과

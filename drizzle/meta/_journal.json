@@ -225,6 +225,13 @@
       "when": 1784726400000,
       "tag": "0031_social_auth_and_otp_hardening",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "5",
+      "when": 1784980082101,
+      "tag": "0032_light_paper_doll",
+      "breakpoints": true
     }
   ]
 }

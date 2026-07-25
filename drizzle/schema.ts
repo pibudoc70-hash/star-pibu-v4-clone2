@@ -73,6 +73,8 @@ export const reservations = mysqlTable("reservations", {
   phoneIdx: index("reservations_phone_idx").on(table.phone),
   statusIdx: index("reservations_status_idx").on(table.status),
   userIdStatusIdx: index("reservations_userId_status_idx").on(table.userId, table.status),
+  // createdAt 인덱스: ORDER BY createdAt DESC 관리자 목록 쿼리 최적화
+  createdAtIdx: index("reservations_createdAt_idx").on(table.createdAt),
 }));
 export type Reservation = typeof reservations.$inferSelect;
 export type InsertReservation = typeof reservations.$inferInsert;
@@ -173,6 +175,8 @@ export const events = mysqlTable("events", {
   isActiveSpecialIdx: index("events_isActive_special_idx").on(table.isActive, table.isSpecialEvent),
   isActiveLangIdx: index("events_isActive_lang_idx").on(table.isActive, table.targetLang),
   sortOrderIdx: index("events_sortOrder_idx").on(table.sortOrder),
+  // 복합 인덱스: WHERE isActive = '1' ORDER BY sortOrder ASC, createdAt DESC 쿼리 최적화
+  isActiveSortOrderCreatedAtIdx: index("events_isActive_sortOrder_createdAt_idx").on(table.isActive, table.sortOrder, table.createdAt),
 }));
 export type Event = typeof events.$inferSelect;
 export type InsertEvent = typeof events.$inferInsert;
@@ -269,6 +273,10 @@ export const youtubeVideos = mysqlTable("youtubeVideos", {
 }, (table) => ({
   isActiveIdx: index("youtubeVideos_isActive_idx").on(table.isActive),
   typeIsActiveIdx: index("youtubeVideos_type_isActive_idx").on(table.type, table.isActive),
+  // sortOrder 인덱스: ORDER BY sortOrder ASC 쿼리 최적화
+  sortOrderIdx: index("youtubeVideos_sortOrder_idx").on(table.sortOrder),
+  // 복합 인덱스: WHERE type = ? AND isActive = '1' ORDER BY sortOrder ASC 쿼리 최적화
+  typeIsActiveSortOrderIdx: index("youtubeVideos_type_isActive_sortOrder_idx").on(table.type, table.isActive, table.sortOrder),
 }));
 export type YouTubeVideo = typeof youtubeVideos.$inferSelect;
 export type InsertYouTubeVideo = typeof youtubeVideos.$inferInsert;
@@ -292,6 +300,8 @@ export const notices = mysqlTable("notices", {
   isPinnedIdx: index("notices_isPinned_idx").on(table.isPinned),
   createdAtIdx: index("notices_createdAt_idx").on(table.createdAt),
   targetLangIdx: index("notices_targetLang_idx").on(table.targetLang),
+  // 복합 인덱스: ORDER BY isPinned DESC, createdAt DESC 쿼리 최적화
+  isPinnedCreatedAtIdx: index("notices_isPinned_createdAt_idx").on(table.isPinned, table.createdAt),
 }));
 export type Notice = typeof notices.$inferSelect;
 export type InsertNotice = typeof notices.$inferInsert;
@@ -386,7 +396,12 @@ export const equipment3 = mysqlTable("equipment3", {
   isNew: mysqlEnum("isNew", ["0", "1"]).notNull().default("0"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  // sortOrder 인덱스: ORDER BY sortOrder ASC 쿼리 최적화
+  sortOrderIdx: index("equipment3_sortOrder_idx").on(table.sortOrder),
+  // 복합 인덱스: WHERE isActive = '1' ORDER BY sortOrder ASC 쿼리 최적화
+  isActiveSortOrderIdx: index("equipment3_isActive_sortOrder_idx").on(table.isActive, table.sortOrder),
+}));
 export type Equipment3Item = typeof equipment3.$inferSelect;
 export type InsertEquipment3Item = typeof equipment3.$inferInsert;
 

@@ -3760,3 +3760,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과
 - [x] seoHelpers.ts에 buildResearcherJsonLd (AEO Person 스키마) 추가 (769번줄)
 - [x] seoHelpers.ts에 buildScholarlyArticleListJsonLd + PaperJsonLdInput 인터페이스 추가 (834번줄)
+- [x] Research.tsx: JsonLdSchema import + researchJsonLd: JsonLdSchema[] 타입 수정 (TypeScript 오류 0건)
+- [x] Research.tsx: buildBreadcrumbJsonLd + buildResearcherJsonLd + buildScholarlyArticleListJsonLd + buildFAQPageJsonLd(ko 전용) 연결 완료
+- [x] Research.tsx: SeoHead keywords + jsonLd prop 추가 완료
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과

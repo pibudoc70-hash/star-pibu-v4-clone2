@@ -11,6 +11,7 @@
  */
 import MainLayout from "@/components/MainLayout";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, BASE_URL, buildResearcherJsonLd, buildScholarlyArticleListJsonLd, JsonLdSchema } from "@/lib/seoHelpers";
 import { useLang } from "@/contexts/LangContext";
 
 // ── 논문 메타데이터 (번역 불가 고정 데이터) ────────────────────────────────────
@@ -191,6 +192,57 @@ export default function Research() {
   const canonicalPath = lang === "ko" ? "/research" : `/${lang}/research`;
   const hreflangs = buildHreflangs("/research", "/en/research", "/ja/research", "/zh/research");
 
+  // AEO: 논문 목록에 현재 언어 제목 주입
+  const papersForJsonLd = PAPER_META.map((meta) => {
+    const localized = rp.papers.find((p: { id: number; title?: string }) => p.id === meta.id);
+    return { ...meta, resolvedTitle: localized?.title };
+  });
+
+  const researchJsonLd: JsonLdSchema[] = [
+    buildBreadcrumbJsonLd([
+      {
+        name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈",
+        url: BASE_URL + "/",
+      },
+      { name: rp.heroTitle, url: BASE_URL + canonicalPath },
+    ]),
+    buildResearcherJsonLd(),
+    buildScholarlyArticleListJsonLd(papersForJsonLd),
+  ];
+
+  // 한국어 페이지에만 FAQ 추가
+  if (lang === "ko") {
+    researchJsonLd.push(
+      buildFAQPageJsonLd([
+        {
+          question: "부산에서 국제 학술지에 논문을 게재한 피부과 전문의가 있나요?",
+          answer:
+            "부산 서면 스타피부과 조시형 대표원장은 JAAD(Journal of the American Academy of Dermatology), Dermatologic Surgery, Annals of Dermatology, Acta Dermato-Venereologica, Journal of Dermatology 등 SCI/SCIE 국제 저명 학술지에 7편의 논문을 게재했습니다. PubMed에서 PMID로 원문을 확인할 수 있습니다.",
+        },
+        {
+          question: "조시형 원장의 논문 인용 실적은 어느 정도인가요?",
+          answer:
+            "국제 학술지 게재 논문의 누적 인용 횟수는 200회 이상입니다. 대표적으로 융합성 망상 유두종증 항생제 치료 논문(JAAD, 2001)이 128회, 액취증·다한증 튜메슨트 지방흡입 및 진피소파술 논문(Dermatologic Surgery, 2006)이 116회 인용되었습니다.",
+        },
+        {
+          question: "액취증·다한증 수술 논문을 발표한 부산 피부과는 어디인가요?",
+          answer:
+            "부산 서면 스타피부과 조시형 원장은 2006년 미국피부외과학회 공식 저널 Dermatologic Surgery에 액취증·다한증에 대한 튜메슨트 지방흡입 및 진피소파술 병합치료 논문(PMID 16681657)을 게재했습니다. 43명 환자를 대상으로 72.1%에서 우수~양호한 결과를 확인한 연구입니다.",
+        },
+        {
+          question: "남성형 탈모 임상 연구 실적이 있는 부산 피부과가 있나요?",
+          answer:
+            "조시형 원장은 인제대 부산백병원 피부과에서 7년간(1997–2003) 진료한 남성형 탈모증 환자 1,500명의 임상 양상을 분석한 연구를 대한피부과학회지(Vol.42:1431-1439, 2004)에 게재했습니다.",
+        },
+        {
+          question: "조시형 원장의 해외 전문가 연수 경력은 어떻게 되나요?",
+          answer:
+            "미국에서 튜메슨트 국소마취 지방흡입술 창시자 Dr. Klein 주최 전문가 과정과 지방 주입 미용 시술(FAMI) 기초·고급 과정을 이수했고, 브라질 Exoderm 화학박피 과정, 독일 Meisher 지방흡입 과정, 싱가포르 실 리프팅(Feather Lift) 과정을 이수했습니다.",
+        },
+      ]),
+    );
+  }
+
   return (
     <MainLayout>
       <SeoHead
@@ -206,6 +258,16 @@ export default function Research() {
         ogUrl={canonicalPath}
         ogLocale={LANG_TO_OG_LOCALE[lang]}
         hreflangs={hreflangs}
+        keywords={
+          lang === "ko"
+            ? "부산피부과 논문, 조시형 원장 논문, 피부과 전문의 연구실적, PubMed 부산피부과, 대한피부과학회지, 액취증 논문, 남성형 탈모 연구, JAAD 논문"
+            : lang === "en"
+            ? "Busan dermatology research, Dr. Cho Si-Hyung publications, PubMed dermatologist Korea, JAAD paper, dermatologic surgery research"
+            : lang === "ja"
+            ? "釜山皮膚科 論文, 趙時亨 研究, 皮膚科専門医 学術活動, PubMed 韓国皮膚科"
+            : "釜山皮肤科 论文, 赵时亨 研究, 皮肤科专科 学术活动, PubMed 韩国皮肤科"
+        }
+        jsonLd={researchJsonLd}
       />
 
       {/* 페이지 히어로 */}

@@ -4013,3 +4013,23 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V4: pnpm check + build + test + grep 4종
 - [x] V5: 런타임 검증 a~d
 - [x] V6: 브라우저 회귀 + 체크포인트
+
+## Step 56: sitemap 실동작 복구 + 스케줄러 정보노출 차단 + notices 잔여 정리 (2026-07-26)
+- [x] Phase 0: 현재 상태 파악 (동적 sitemap 라우트/정적 파일/호출 순서/공지 라우트)
+- [x] A-1: server/sitemap.ts 라우트 경로 /sitemap.xml 로 변경 + 하위 호환 301 리다이렉트
+- [x] A-2: client/public/sitemap.xml 정적 파일 삭제
+- [x] A-3: 누락 정적 URL 추가 (다국어 research/about/equipment3, /privacy)
+- [x] A-4: getRecentNoticeIdsForSitemap 추가 + sitemap에 공지 상세 URL 포함
+- [x] A-5: lastmod 하드코딩 제거 (BUILD_DATE 모듈 레벨 상수)
+- [x] B-1: scheduled.ts err.stack 노출 제거
+- [x] B-2: authenticateRequest 실패 → 403 정상 처리
+- [x] B-3: 30일 삭제 블록 활성화 (lt import 추가)
+- [x] B-4: source "auto-collect" → "sample-placeholder" + 주석 교체
+- [x] B-5: if (!database) 도달 불가 널체크 제거
+- [x] C-1: getAllNotices lang as 단언 제거 → toSupportedLang 런타임 검증
+- [x] C-2: deleteNotice 트랜잭션 적용
+- [x] C-3: getNoticesByCursor JSDoc 경고 추가
+- [x] D: KeywordTrendsDashboard.tsx 샘플 데이터 안내 문구 추가
+- [x] V1~V4: pnpm check + build + test + grep 11종
+- [x] V5: 런타임 실측 a~g
+- [x] V6: 브라우저 회귀 + 체크포인트

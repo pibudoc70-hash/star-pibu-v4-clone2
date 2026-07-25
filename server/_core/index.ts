@@ -327,8 +327,14 @@ async function startServer() {
       process.exit(1);
     }, 10_000);
 
-    server.close((err) => {
+    server.close(async (err) => {
       clearTimeout(forceExitTimer);
+      try {
+        const { closeDb } = await import("../db/connection");
+        await closeDb();
+      } catch (dbErr) {
+        console.error("[Shutdown] DB pool close failed:", dbErr);
+      }
       if (err) {
         console.error("[Shutdown] Error during server.close:", err);
         process.exit(1);

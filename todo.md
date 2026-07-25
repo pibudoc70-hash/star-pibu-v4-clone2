@@ -3779,3 +3779,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] index.css: scroll-fade-in-slow bounce easing 제거 → 부드러운 easing으로 교체
 - [x] TypeScript 오류 0건, 테스트 전부 통과 확인
 - [x] 체크포인트 저장
+
+## imageCache 축소 + DB 풀 graceful shutdown (2026-07-25)
+- [x] server/_core/imageCache.ts: maxSize 200MB → 40MB (IMAGE_CACHE_MAX_MB 환경변수)
+- [x] server/db/connection.ts: closeDb() + _registerPool() 추가, getDb 내 _registerPool 삽입
+- [x] server/_core/index.ts: shutdown server.close 콜백에 closeDb() 호출 추가
+- [x] pnpm check/build/test 전부 통과 확인
+- [x] grep 검증: IMAGE_CACHE_MAX_MB, closeDb, _registerPool
+- [x] SIGINT 종료 로그 확인
+- [x] 체크포인트 저장

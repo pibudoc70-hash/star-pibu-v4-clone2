@@ -3957,3 +3957,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] web-vitals 제거 (참조 0건 증명)
 - [x] pnpm check + build + test 1,449건 전부 통과
 - [x] dep-scan.mjs 삭제 + frozen-lockfile 확인
+## Step 51: 이미지 프록시 보안 강화 2차 (2026-07-25)
+- [x] storageProxy.ts: extractStorageKey() 신규 추가 (1회 디코딩 + 이중 인코딩 차단 + 키 검증)
+- [x] storageProxy.ts: /manus-storage 307→301 리다이렉트 전환
+- [x] index.ts: POPUP_IMAGE_WHITELIST에서 iitm.ac.in 제거 (템플릿 잔재)
+- [x] index.ts: MAX_POPUP_BYTES 5MB 상한 추가 (youtube-thumbnail + popup-image 양쪽 적용)
+- [x] index.ts: fetch() 옵션에 redirect:"error" + AbortSignal.timeout(8000) 추가
+- [x] index.ts: /manus-storage 리미터 대상에서 제외 (301만 수행, 외부 fetch 없음)
+- [x] rateLimits.ts: imageProxyLimiter 기본값 120→2000 상향 (Step51-E)
+- [x] V1: tsc 0건, V2: build 성공, V3: 1,449개 테스트 전부 통과
+- [x] V4: grep 6종 확인 (extractStorageKey, iitm 잔존 0건, MAX_POPUP_BYTES, redirect:error, /manus-storage 리미터 제외, RL 2000)
+- [x] V5: curl 실측 5종 (경로탈출 400, 이중인코딩 400, 보안헤더 확인, /manus-storage 301, RateLimit-Policy 2000)
+- [x] V6: 브라우저 회귀 (홈/notice/research/admin 정상 렌더, 콘솔 에러 0건)

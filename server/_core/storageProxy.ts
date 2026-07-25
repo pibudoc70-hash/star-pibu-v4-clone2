@@ -23,13 +23,30 @@ function getMimeType(key: string): string {
   return MIME_MAP[ext] ?? "application/octet-stream";
 }
 
-// [Step49-A] 스토리지 키 검증: 영숫자/._- 만 허용, 경로 구분자·상위경로 차단
+// [Step51-A] 스토리지 키 검증
+// 전제: 이 함수에는 반드시 "디코딩이 끝난" 키를 넘긴다.
 const SAFE_STORAGE_KEY = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/;
+
 function isSafeStorageKey(key: string): boolean {
   if (!key) return false;
-  if (key.includes("/") || key.includes("\\") || key.includes("..")) return false;
-  if (key.includes("%") || key.includes("\0")) return false;
+  if (key.includes("/") || key.includes("\\")) return false;
+  if (key.includes("..")) return false;
+  if (key.includes("\0")) return false;
   return SAFE_STORAGE_KEY.test(key);
+}
+
+// [Step51-A] raw 경로 → 안전 키 추출. 실패 시 null.
+// 1회 디코딩 후에도 '%' 가 남아 있으면 이중 인코딩 우회 시도로 간주한다.
+function extractStorageKey(raw: string | undefined): string | null {
+  if (!raw) return null;
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(raw);
+  } catch {
+    return null; // malformed URI sequence
+  }
+  if (decoded.includes("%")) return null; // 이중 인코딩 차단
+  return isSafeStorageKey(decoded) ? decoded : null;
 }
 
 // [Step49-B] 프록시 응답 최대 크기
@@ -56,27 +73,22 @@ function setCorsHeader(req: { headers: { origin?: string } }, res: { setHeader: 
 }
 
 export function registerStorageProxy(app: Express) {
-  // /manus-storage/* 경로도 하위 호환성을 위해 유지
-  app.get("/manus-storage/*", async (req, res) => {
-    const key = (req.params as Record<string, string>)[0];
-    if (key) {
-      res.redirect(307, `/api/storage/${key}`);
-    } else {
-      res.status(400).send("Missing storage key");
+  // [Step51-B] 레거시 경로 호환. 검증 통과한 키만 리다이렉트한다.
+  app.get("/manus-storage/*", (req, res) => {
+    const key = extractStorageKey((req.params as Record<string, string>)[0]);
+    if (!key) {
+      res.status(400).type("text/plain").send("Invalid key");
+      return;
     }
+    // 301(영구)로 변경: 검색엔진/브라우저가 캐싱하여 왕복이 1회로 줄어든다.
+    res.redirect(301, `/api/storage/${encodeURIComponent(key)}`);
   });
 
   // /api/storage/* 경로: Cloudflare 규칙 우회 (origin 서버 직접 도달)
   app.get("/api/storage/*", async (req, res) => {
-    // Express가 req.params[0]을 자동으로 decodeURIComponent 처리함
-    const key = (req.params as Record<string, string>)[0];
+    // [Step51-A] extractStorageKey: 1회 디코딩 + 이중 인코딩 차단 + 키 검증
+    const key = extractStorageKey((req.params as Record<string, string>)[0]);
     if (!key) {
-      res.status(400).send("Missing storage key");
-      return;
-    }
-
-    // [Step49-A] 키 화이트리스트 검증 (decodeURIComponent 이후)
-    if (!isSafeStorageKey(key)) {
       res.status(400).type("text/plain").send("Invalid key");
       return;
     }
@@ -86,11 +98,12 @@ export function registerStorageProxy(app: Express) {
       return;
     }
 
-    const cacheKey = `storage:${key}`;
+    const safeKey = key as string;
+    const cacheKey = `storage:${safeKey}`;
 
     // [Step49-D] 파일명 기반 Cache-Control 결정 함수
     function getCacheControl(): string {
-      return HASHED_NAME.test(key)
+      return HASHED_NAME.test(safeKey)
         ? "public, max-age=31536000, immutable"
         : "public, max-age=86400, stale-while-revalidate=604800";
     }
@@ -101,7 +114,7 @@ export function registerStorageProxy(app: Express) {
       if (cached) {
         // [Step49-C] 캐시 히트 로그 프로덕션 억제
         if (process.env.NODE_ENV !== "production") {
-          console.log(`[StorageProxy] [cache hit] key=${key}`);
+          console.log(`[StorageProxy] [cache hit] key=${safeKey}`);
         }
 
         // If-None-Match 헤더 확인 (캐시 유효성 검사)
@@ -151,7 +164,7 @@ export function registerStorageProxy(app: Express) {
       // 3. 이미지 바이트를 직접 가져와서 스트리밍 (리다이렉트 대신)
       const imgResp = await fetch(url);
       if (!imgResp.ok) {
-        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${key}`);
+        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${safeKey}`);
         res.status(502).send("Failed to fetch image from storage");
         return;
       }
@@ -177,7 +190,7 @@ export function registerStorageProxy(app: Express) {
       const etag = crypto.createHash("sha1").update(bufferData).digest("hex").slice(0, 16);
 
       // 6. LRU 캐시에 저장
-      const mimeType = getMimeType(key);
+      const mimeType = getMimeType(safeKey);
       imageCache.set(cacheKey, { buffer: bufferData, contentType: mimeType, etag });
 
       // 7. If-None-Match 헤더 확인 (캐시 유효성 검사)

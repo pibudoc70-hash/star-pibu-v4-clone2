@@ -21,12 +21,15 @@ import { validateEnv } from "./envSchema";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
-// 팝업 이미지 SSRF 화이트리스트 호스트 패턴
+// [Step51-C] 팝업 이미지 SSRF 화이트리스트 호스트 패턴
+// iitm.ac.in 은 이 사이트와 무관한 템플릿 잔재이므로 제거.
 const POPUP_IMAGE_WHITELIST = [
   /\.cloudfront\.net$/,
   /^img\.youtube\.com$/,
-  /\.iitm\.ac\.in$/,
 ];
+
+// [Step51-C] 이미지 프록시 응답 크기 상한 (storageProxy 와 동일 기준)
+const MAX_POPUP_BYTES = 5 * 1024 * 1024;
 
 function isAllowedPopupHost(hostname: string): boolean {
   return POPUP_IMAGE_WHITELIST.some((pattern) => pattern.test(hostname));
@@ -107,7 +110,8 @@ async function startServer() {
   // ── 레이트 리미팅 (공개 엔드포인트 보호) ─────────────────────────────────
   app.use("/healthz", healthLimiter);
   app.use("/api/storage", imageProxyLimiter);
-  app.use("/manus-storage", imageProxyLimiter);
+  // [Step51-D] /manus-storage 는 301 리다이렉트만 수행하므로 리미터 대상에서 제외
+  // (외부 fetch 없음 → 이중 소모 방지)
   app.use("/api/youtube-thumbnail", imageProxyLimiter);
   app.use("/api/popup-image", imageProxyLimiter);
   app.use("/api/trpc", trpcLimiter);
@@ -180,7 +184,10 @@ async function startServer() {
       let imgResp: Response | null = null;
       for (const url of urls) {
         try {
-          const resp = await fetch(url);
+          const resp = await fetch(url, {
+            redirect: "error", // [Step51-C] 화이트리스트 밖으로의 리다이렉트 차단
+            signal: AbortSignal.timeout(8000),
+          });
           if (resp.ok) {
             imgResp = resp;
             break;
@@ -198,7 +205,18 @@ async function startServer() {
       }
 
       // 3. 이미지 바이트 가져오기
+      // [Step51-C] Content-Length 기반 사전 차단
+      const ytDeclaredLen = Number(imgResp.headers.get("content-length") || 0);
+      if (ytDeclaredLen > MAX_POPUP_BYTES) {
+        res.status(413).type("text/plain").send("Payload too large");
+        return;
+      }
       const buffer = Buffer.from(await imgResp.arrayBuffer());
+      // [Step51-C] 실제 버퍼 크기 검사 (캐시에 넣기 전)
+      if (buffer.byteLength > MAX_POPUP_BYTES) {
+        res.status(413).type("text/plain").send("Payload too large");
+        return;
+      }
       const etag = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 16);
 
       // 4. LRU 캐시에 저장
@@ -276,7 +294,10 @@ async function startServer() {
       }
 
       // 2. 원본 이미지 가져오기
-      const resp = await fetch(url);
+      const resp = await fetch(url, {
+        redirect: "error", // [Step51-C] 화이트리스트 밖으로의 리다이렉트 차단
+        signal: AbortSignal.timeout(8000),
+      });
       if (!resp.ok) {
         // 404 실패 시에만 음수 캐시 기록 (SSRF 403 등 다른 오류는 제외)
         if (resp.status === 404) {
@@ -287,8 +308,19 @@ async function startServer() {
       }
 
       // 3. 이미지 바이트 가져오기
+      // [Step51-C] Content-Length 기반 사전 차단
+      const popupDeclaredLen = Number(resp.headers.get("content-length") || 0);
+      if (popupDeclaredLen > MAX_POPUP_BYTES) {
+        res.status(413).type("text/plain").send("Payload too large");
+        return;
+      }
       const contentType = resp.headers.get('content-type') || 'image/jpeg';
       const buffer = Buffer.from(await resp.arrayBuffer());
+      // [Step51-C] 실제 버퍼 크기 검사 (캐시에 넣기 전)
+      if (buffer.byteLength > MAX_POPUP_BYTES) {
+        res.status(413).type("text/plain").send("Payload too large");
+        return;
+      }
       const etag = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 16);
 
       // 4. LRU 캐시에 저장

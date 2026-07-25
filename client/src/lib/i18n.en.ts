@@ -1,4 +1,6 @@
 // 영어(en) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-3)
+// ⚠️ Promo numbers must match CLINIC_STATS in client/src/lib/clinic-stats.ts.
+//    When changing values, update all 4 language files + llms.txt + llms-full.txt.
 import type { I18nContent } from "./i18n.types";
 import { CLINIC_STATS, STAT_UNITS } from "./constants";
 const _n_en = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"

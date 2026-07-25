@@ -1,4 +1,6 @@
 // 일본어(ja) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-4)
+// ⚠️ 広告数字は client/src/lib/clinic-stats.ts の CLINIC_STATS と一致させること。
+//    値変更時は 4言語ファイル + llms.txt + llms-full.txt を一緒に修正すること。
 import type { I18nContent } from "./i18n.types";
 import { CLINIC_STATS, STAT_UNITS } from "./constants";
 const _n_ja = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"

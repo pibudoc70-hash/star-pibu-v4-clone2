@@ -4041,3 +4041,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] C: /sitemap-dynamic.xml 리다이렉트 코드 확인 (C-1 코드 이미 존재)
 - [x] V1~V4: pnpm check + build + test + 로컬 실측 a~f
 - [x] V5+V6: 프로덕션 실측 + 브라우저 회귀 + 체크포인트
+
+## Step 58: 통계 숫자 전수 조사 + 단일 소스화 (2026-07-26)
+- [x] Phase 0: grep 6종 전수 조사 + _STATS 상수 확인 + llms.txt 숫자 확인
+- [x] A: client/src/lib/clinic-stats.ts 신규 생성 (정본 값 그대로)
+- [x] B: 불일치 항목만 교정 (i18n 주석 추가 + llms 값 수정)
+- [x] C: client/src/lib/__tests__/clinic-stats.test.ts 신규 생성 + pnpm test 통과
+- [ ] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5+V6: 브라우저 육안 확인 (6곳 × 4언어) + 회귀 + 체크포인트

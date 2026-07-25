@@ -345,6 +345,10 @@ export default function Home() {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
 
+    // [FIX v12] __star_dr_target이 있으면 useDoctorViewModel이 스크롤 담당
+    // → scrollTo(0,0) 실행하지 않음 (히어로 고정 버그 방지)
+    if (sessionStorage.getItem('__star_dr_target')) return;
+
     // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) 방식
     const sessionTarget = sessionStorage.getItem("__star_scroll_to");
     if (!sessionTarget) {

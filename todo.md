@@ -3741,6 +3741,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] DoctorMobileLayout.tsx 앵커 sr-only → absolute top-0 left-0 w-0 h-0 (동일)
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과
 
+- [x] FIX v12: Home.tsx에서 __star_dr_target 있을 때 scrollTo(0,0) 차단 (히어로 고정 버그 수정)
+- [x] FIX v12: useDoctorViewModel applyFromHash — MutationObserver로 #dr-{slug} 요소 대기 (최대 8초)
+
 ## 이벤트 섹션 튀기 버그 수정 (2026-07-25 세션 3, FIX v8)
 - [x] 근본 원인: SpecialEventSection 이미지 로드 시 레이아웃 시프트 → 스크롤 위치 밀림
 - [x] useDoctorViewModel.ts applyFromHash FIX v8: offsetTop 폴링 방식 (80ms 간격, 연속 3회 동일 시 안정 판단, 최대 3초)

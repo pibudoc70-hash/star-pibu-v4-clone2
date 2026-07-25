@@ -105,12 +105,11 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
   //   3) 이 상태에서 SpecialEventSection의 이미지들이 lazy load되면
   //      레이아웃 시프트 발생 → 스크롤 위치가 밀림
   //
-  // FIX v10 전략:
-  //   - 타겟 slug를 읽은 즉시 window.scrollTo(0,0)으로 상단 고정
-  //     → 이미지 lazy load시 레이아웃 시프트가 스크롤 위치에 영향 없음
-  //   - window 'load' 이벤트 후 스크롤 실행
-  //     → 모든 이미지가 로드된 후 레이아웃이 안정된 상태
-  //   - 추가 500ms 대기: 데이터 fetch 완료 후 DOM 업데이트 대응
+  // FIX v11 전략:
+  //   - scrollTo(0,0) 제거: 브라우저 scroll restoration이 덮어쓰는 문제 해결
+  //   - 즉시 스크롤 실행 (requestAnimationFrame 3회 후)
+  //   - ResizeObserver로 레이아웃 변경 감지 시 재보정 (최대 2초)
+  //     → 이미지 로드/데이터 fetch로 인한 레이아웃 시프트 대응
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -129,41 +128,89 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     setActiveDoctor(idx);
     setExpandedCredentials(false);
 
-    // 2) 즉시 페이지 상단으로 고정
-    //    → 이미지 lazy load 시 레이아웃 시프트가 스크롤 위치에 영향 없음
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    // 2) 브라우저 scroll restoration 비활성화
+    //    → 페이지 로드 시 이전 스크롤 위치 복원 방지
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
 
-    // 3) 스크롤 실행 함수: window.load + 500ms 후 실행
-    const doScroll = () => {
-      // 요소가 아직 마운트되지 않은 경우 잠시 폴링
-      let attempts = 0;
-      const iv = setInterval(() => {
-        const el = document.getElementById(`dr-${slug}`);
-        if (el) {
-          clearInterval(iv);
-          scrollToEl(el);
-        } else if (++attempts > 50) {
-          clearInterval(iv);
-        }
-      }, 100);
+    // 3) 요소 찾기 + 스크롤 실행
+    const doScrollOnce = (el: HTMLElement) => {
+      scrollToEl(el);
     };
 
-    // window.load 이후 500ms 대기
-    // 로드가 이미 완료된 경우(readyState === 'complete')는 즉시 500ms 대기
-    let tid: ReturnType<typeof setTimeout>;
-    if (document.readyState === 'complete') {
-      tid = setTimeout(doScroll, 500);
-    } else {
-      const onLoad = () => {
-        tid = setTimeout(doScroll, 500);
-      };
-      window.addEventListener('load', onLoad, { once: true });
-      return () => {
-        window.removeEventListener('load', onLoad);
-        clearTimeout(tid);
-      };
-    }
-    return () => clearTimeout(tid);
+    // 4) #dr-{slug} 요소가 DOM에 나타날 때까지 MutationObserver로 대기
+    //    (DoctorsSection이 lazy 번들이라 스크롤 시점에 아직 마운트 안 되었을 수 있음)
+    let rafId = 0;
+    let roCleanup: (() => void) | null = null;
+    let deadlineId: ReturnType<typeof setTimeout>;
+    let mo: MutationObserver | null = null;
+
+    const onElFound = (el: HTMLElement) => {
+      // 요소 발견 즉시 스크롤
+      doScrollOnce(el);
+
+      // ResizeObserver로 레이아웃 변경 감지 시 재보정 (최대 2초)
+      const deadline = Date.now() + 2000;
+      const ro = new ResizeObserver(() => {
+        if (Date.now() > deadline) {
+          ro.disconnect();
+          roCleanup = null;
+          return;
+        }
+        const freshEl = document.getElementById(`dr-${slug}`);
+        if (freshEl) doScrollOnce(freshEl);
+      });
+
+      // #doctors 섹션과 #events 섹션 높이 변화 관찰
+      const doctorsSection = document.getElementById('doctors');
+      const eventsSection = document.getElementById('events');
+      if (doctorsSection) ro.observe(doctorsSection);
+      if (eventsSection) ro.observe(eventsSection);
+      ro.observe(document.body);
+
+      roCleanup = () => ro.disconnect();
+      deadlineId = setTimeout(() => {
+        ro.disconnect();
+        roCleanup = null;
+      }, 2000);
+    };
+
+    const tryScroll = () => {
+      const el = document.getElementById(`dr-${slug}`);
+      if (el) {
+        onElFound(el);
+        return;
+      }
+      // 요소가 없으면 MutationObserver로 DOM 업데이트 대기 (최대 8초)
+      mo = new MutationObserver(() => {
+        const found = document.getElementById(`dr-${slug}`);
+        if (found) {
+          mo!.disconnect();
+          mo = null;
+          clearTimeout(deadlineId);
+          onElFound(found);
+        }
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+      // 8초 후 포기
+      deadlineId = setTimeout(() => {
+        if (mo) { mo.disconnect(); mo = null; }
+      }, 8000);
+    };
+
+    // requestAnimationFrame 3회 후 실행 (React 렌더 완료 보장)
+    const raf3 = (cb: () => void) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(cb)));
+    };
+    raf3(tryScroll);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(deadlineId);
+      if (mo) { mo.disconnect(); mo = null; }
+      if (roCleanup) roCleanup();
+    };
   }, []);
 
   // hashchange 이벤트: 사용자가 주소상에 직접 hash 입력 시 실시간 처리

@@ -764,3 +764,128 @@ export function buildEventJsonLd(event: {
     },
   };
 }
+
+// ── AEO: 연구자 Person 스키마 ────────────────────────────────────────────────
+export function buildResearcherJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://star-pibu.com/#dr-cho",
+    name: "조시형",
+    alternateName: ["Cho Si-Hyung", "조시형 원장"],
+    honorificPrefix: "Dr.",
+    jobTitle: "피부과 전문의 · 의학박사",
+    url: "https://star-pibu.com/#dr-cho",
+    worksFor: {
+      "@type": "MedicalClinic",
+      name: "부산 서면 스타피부과",
+      url: "https://star-pibu.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "서면로 74 아이온시티빌딩 4층",
+        addressLocality: "부산진구",
+        addressRegion: "부산광역시",
+        addressCountry: "KR",
+      },
+    },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "부산대학교 의과대학", url: "https://med.pusan.ac.kr" },
+      { "@type": "CollegeOrUniversity", name: "인제대학교 의과대학", url: "https://med.inje.ac.kr" },
+    ],
+    knowsAbout: [
+      "피부과학", "미용피부외과", "레이저 치료", "리프팅",
+      "눈밑지방재배치", "액취증", "다한증", "남성형 탈모",
+      "흉터치료", "색소질환", "융합성 망상 유두종증",
+      "Dermatologic Surgery", "Cosmetic Dermatology",
+      "Tumescent Liposuction", "Androgenetic Alopecia",
+    ],
+    memberOf: [
+      { "@type": "Organization", name: "대한피부과학회", url: "https://www.derma.or.kr" },
+      { "@type": "Organization", name: "미국피부과학회 (AAD)", url: "https://www.aad.org" },
+      { "@type": "Organization", name: "대한미용피부외과학회" },
+      { "@type": "Organization", name: "대한레이저학회" },
+      { "@type": "Organization", name: "대한코스메틱피부과학회" },
+      { "@type": "Organization", name: "대한비만학회" },
+      { "@type": "Organization", name: "대한임상메조테라피연구회" },
+      { "@type": "Organization", name: "부산경남 피부과 개원의 협의회" },
+    ],
+    sameAs: [
+      "https://pubmed.ncbi.nlm.nih.gov/?term=Cho+Si-Hyung%5BAuthor%5D",
+      "https://www.youtube.com/@starpibu",
+      "https://blog.naver.com/starpibu",
+    ],
+  };
+}
+
+// ── AEO: 논문 목록 ItemList + ScholarlyArticle ──────────────────────────────
+export interface PaperJsonLdInput {
+  id: number;
+  titleEn?: string;
+  journal: string;
+  year: string;
+  authors: string;
+  category: "international" | "domestic";
+  pmid?: string;
+  doi?: string;
+  citations?: number;
+  resolvedTitle?: string;
+}
+
+export function buildScholarlyArticleListJsonLd(papers: PaperJsonLdInput[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "조시형 원장 학술 논문 목록",
+    description:
+      "부산 서면 스타피부과 조시형 대표원장이 국내외 학술지에 게재한 연구 논문 목록",
+    numberOfItems: papers.length,
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    itemListElement: papers.map((p, i) => {
+      const year = (p.year.match(/\d{4}/) ?? [])[0];
+      const identifiers = [
+        ...(p.pmid ? [{ "@type": "PropertyValue", propertyID: "PMID", value: p.pmid }] : []),
+        ...(p.doi ? [{ "@type": "PropertyValue", propertyID: "DOI", value: p.doi }] : []),
+      ];
+      const primaryUrl = p.doi
+        ? `https://doi.org/${p.doi}`
+        : p.pmid
+        ? `https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`
+        : undefined;
+
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "ScholarlyArticle",
+          name: p.resolvedTitle ?? p.titleEn ?? `${p.journal} (${p.year})`,
+          ...(p.titleEn && p.resolvedTitle && p.titleEn !== p.resolvedTitle
+            ? { alternateName: p.titleEn }
+            : {}),
+          author: p.authors
+            .split(/,\s*/)
+            .filter(Boolean)
+            .map((n) => ({ "@type": "Person", name: n.trim() })),
+          ...(year ? { datePublished: year } : {}),
+          isPartOf: { "@type": "Periodical", name: p.journal },
+          inLanguage: p.category === "international" ? "en" : "ko",
+          ...(identifiers.length ? { identifier: identifiers } : {}),
+          ...(primaryUrl ? { url: primaryUrl, sameAs: primaryUrl } : {}),
+          ...(p.citations !== undefined
+            ? {
+                interactionStatistic: {
+                  "@type": "InteractionCounter",
+                  interactionType: "https://schema.org/CiteAction",
+                  userInteractionCount: p.citations,
+                },
+              }
+            : {}),
+          creator: { "@id": "https://star-pibu.com/#dr-cho" },
+          publisher: {
+            "@type": "Organization",
+            name: p.category === "international" ? "International Journal" : "대한피부과학회",
+          },
+        },
+      };
+    }),
+  };
+}

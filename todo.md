@@ -3758,3 +3758,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Home.tsx: __star_doctor_tab 브릿지를 __star_dr_target 방식으로 통일 (hash URL 세팅 제거)
 - [x] App.tsx ScrollToTop: __star_dr_target도 체크하여 스크롤 리셋 방지
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과
+- [x] seoHelpers.ts에 buildResearcherJsonLd (AEO Person 스키마) 추가 (769번줄)
+- [x] seoHelpers.ts에 buildScholarlyArticleListJsonLd + PaperJsonLdInput 인터페이스 추가 (834번줄)

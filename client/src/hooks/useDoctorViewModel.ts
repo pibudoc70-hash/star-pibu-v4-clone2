@@ -95,11 +95,11 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
-  // [FIX v7] applyFromHash: URL hash(#dr-{slug})에서 의사 탭 자동 선택 + 스크롤
-  // 실행 순서:
-  //   1) 탭 상태 먼저 설정 (setActiveDoctor)
-  //   2) React 렌더 사이클 후 (#doctors 섹션 스크롤 시작)
-  //   3) 600ms 후 이미지 로드 완료 시점에 #dr-{slug} 위치로 정밀 스크롤
+  // [FIX v8] applyFromHash: 레이아웃 안정화 후 스크롤
+  // 문제: SpecialEventSection 이미지 로드 시 레이아웃 시프트로
+  //   스크롤 위치가 밀려 이벤트 섹션으로 다시 튀어지는 버그
+  // 해결: 목표 요소의 offsetTop이 연속 3회 동일할 때까지 폴링,
+  //   레이아웃이 안정된 시점에 단일 scrollTo(‘instant’)로 정확히 이동
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -115,21 +115,54 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
       setActiveDoctor(idx);
       setExpandedCredentials(false);
 
-      // 2) requestAnimationFrame으로 React 렌더 후 #doctors 섹션으로 1차 스크롤
-      requestAnimationFrame(() => {
-        const section = document.getElementById('doctors');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+      // 2) 레이아웃 안정화 폴링: offsetTop이 3회 연속 동일하면 안정된 것으로 판단
+      const STABLE_COUNT = 3;  // 연속 동일 횟수
+      const POLL_MS = 80;       // 폴링 간격
+      const MAX_MS = 3000;      // 최대 대기 시간
+      let stableCount = 0;
+      let lastTop = -1;
+      let elapsed = 0;
 
-      // 3) 600ms 후 이미지 로드 완료 시점에 #dr-{slug} 위치로 정밀 스크롤
-      setTimeout(() => {
-        const el = document.getElementById(`dr-${slug}`);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const poll = setInterval(() => {
+        elapsed += POLL_MS;
+        if (elapsed > MAX_MS) {
+          clearInterval(poll);
+          // 타임아웃: 마지막 알려진 위치로 이동
+          const el = document.getElementById(`dr-${slug}`);
+          if (el) scrollToEl(el);
+          return;
         }
-      }, 600);
+
+        const el = document.getElementById(`dr-${slug}`);
+        if (!el) return;
+
+        const currentTop = el.getBoundingClientRect().top + window.scrollY;
+        if (Math.abs(currentTop - lastTop) < 2) {
+          stableCount++;
+        } else {
+          stableCount = 0;
+        }
+        lastTop = currentTop;
+
+        if (stableCount >= STABLE_COUNT) {
+          clearInterval(poll);
+          scrollToEl(el);
+        }
+      }, POLL_MS);
+    };
+
+    // 스크롤 헬퍼: 헤더 높이 보정 + 중앙 정렬
+    const scrollToEl = (el: HTMLElement) => {
+      const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+      const headerH = header ? header.offsetHeight : 64;
+      const elRect = el.getBoundingClientRect();
+      const elAbsTop = elRect.top + window.scrollY;
+      // 요소를 븷포트 중앙에 놓으려면:
+      // scrollY = elAbsTop - (viewportH / 2) + (elH / 2) - headerH/2
+      const viewportH = window.innerHeight;
+      const elH = elRect.height;
+      const targetY = elAbsTop - (viewportH / 2) + (elH / 2) - headerH / 2;
+      window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
     };
 
     applyFromHash();

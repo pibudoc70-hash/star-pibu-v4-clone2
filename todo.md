@@ -3788,3 +3788,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] grep 검증: IMAGE_CACHE_MAX_MB, closeDb, _registerPool
 - [x] SIGINT 종료 로그 확인
 - [x] 체크포인트 저장
+
+## getDb() SELECT 1 실연결 검증 + 반환 타입 Db|null→Db (2026-07-25)
+- [x] connection.ts 전체 교체 (_initPromise 싱글턴, SELECT 1 검증, closeDb 포함)
+- [x] index.ts 부팅 검증 블록 교체 (if (!db) 제거, 에러 메시지 개선)
+- [x] getDb() 호출부 null 체크 제거 (패턴 A/B/C)
+- [x] _registerPool import 제거 (0건 확인)
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 검증 5종 (SELECT 1, timezone Z, _initPromise 5건+, _registerPool 0건, if (!db) 0건)
+- [x] 실동작 검증 5~9 (정상DB, 잘못된URL, URL없음, 동시요청, SIGINT)
+- [ ] 체크포인트 저장

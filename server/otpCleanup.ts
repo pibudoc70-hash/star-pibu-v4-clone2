@@ -19,7 +19,6 @@ const MAX_AGE_MS = 24 * 60 * 60 * 1000;          // 24시간
 
 export async function cleanupExpiredOtps(): Promise<number> {
   const db = await getDb();
-  if (!db) return 0;
   const now = Date.now();
   const cutoffDate = new Date(now - MAX_AGE_MS);
   try {

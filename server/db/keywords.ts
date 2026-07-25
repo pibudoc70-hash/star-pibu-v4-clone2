@@ -13,7 +13,6 @@ export async function saveKeywordTrend(data: {
   source?: string;
 }) {
   const db = await getDb();
-  if (!db) throw new Error("Database connection failed");
 
   const result = await db.insert(keywordTrends).values({
     keyword: data.keyword,
@@ -27,7 +26,6 @@ export async function saveKeywordTrend(data: {
 
 export async function getLatestKeywordTrends(limit: number = 20, category?: string) {
   const db = await getDb();
-  if (!db) throw new Error("Database connection failed");
 
   const query = category
     ? await db
@@ -47,7 +45,6 @@ export async function getLatestKeywordTrends(limit: number = 20, category?: stri
 
 export async function getKeywordTrendsByDate(startDate: Date, endDate?: Date, category?: string) {
   const db = await getDb();
-  if (!db) throw new Error("Database connection failed");
 
   const conditions: any[] = [gte(keywordTrends.collectedAt, startDate)];
 
@@ -70,7 +67,6 @@ export async function getKeywordTrendsByDate(startDate: Date, endDate?: Date, ca
 
 export async function getTopTrendingKeywords(limit: number = 10, category?: string) {
   const db = await getDb();
-  if (!db) throw new Error("Database connection failed");
 
   const query = category
     ? await db
@@ -90,7 +86,6 @@ export async function getTopTrendingKeywords(limit: number = 10, category?: stri
 
 export async function deleteOldKeywordTrends(daysOld: number = 90) {
   const db = await getDb();
-  if (!db) throw new Error("Database connection failed");
 
   const cutoffDate = new Date(Date.now() - daysOld * 24 * 60 * 60 * 1000);
 

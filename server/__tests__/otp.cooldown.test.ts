@@ -4,7 +4,7 @@
  * 검증 대상:
  *  - 최근 60초 이내 OTP가 있으면 true 반환
  *  - 60초 초과 OTP만 있으면 false 반환
- *  - DB가 없으면 false 반환 (graceful degradation)
+ *  - DB 연결 실패 시 예외를 던진다 (getDb()가 이제 Db를 반환하므로 null 반환 불가)
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
@@ -23,15 +23,12 @@ describe("isOtpCooldown", () => {
     vi.clearAllMocks();
   });
 
-  it("DB가 없으면 false를 반환한다 (graceful degradation)", async () => {
-    mockGetDb.mockResolvedValue(null as never);
-    const result = await isOtpCooldown("01012345678");
-    expect(result).toBe(false);
+  it("DB 연결 실패 시 예외를 던진다 (getDb throws)", async () => {
+    mockGetDb.mockRejectedValue(new Error("DB connection failed"));
+    await expect(isOtpCooldown("01012345678")).rejects.toThrow("DB connection failed");
   });
 
   it("최근 60초 이내 OTP가 있으면 true를 반환한다", async () => {
-    const now = Date.now();
-    // expiresAt = now + 5분 (방금 발급된 OTP)
     const mockDb = {
       select: vi.fn().mockReturnThis(),
       from: vi.fn().mockReturnThis(),

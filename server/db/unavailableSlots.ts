@@ -5,7 +5,6 @@ import { getDb } from "./connection";
 
 export async function createUnavailableSlot(data: InsertUnavailableSlot): Promise<UnavailableSlot | null> {
   const db = await getDb();
-  if (!db) return null;
   try {
     const result = await db.insert(unavailableSlots).values(data);
     const id = result[0].insertId;
@@ -18,7 +17,6 @@ export async function createUnavailableSlot(data: InsertUnavailableSlot): Promis
 
 export async function getUnavailableSlots(date?: string): Promise<UnavailableSlot[]> {
   const db = await getDb();
-  if (!db) return [];
   try {
     if (date) {
       return db.select().from(unavailableSlots).where(eq(unavailableSlots.date, date));
@@ -32,7 +30,6 @@ export async function getUnavailableSlots(date?: string): Promise<UnavailableSlo
 
 export async function deleteUnavailableSlot(id: number): Promise<void> {
   const db = await getDb();
-  if (!db) return;
   try {
     await db.delete(unavailableSlots).where(eq(unavailableSlots.id, id));
   } catch (error) {
@@ -42,7 +39,6 @@ export async function deleteUnavailableSlot(id: number): Promise<void> {
 
 export async function updateUnavailableSlot(id: number, data: Partial<InsertUnavailableSlot>): Promise<UnavailableSlot | null> {
   const db = await getDb();
-  if (!db) return null;
   try {
     await db.update(unavailableSlots).set(data).where(eq(unavailableSlots.id, id));
     return db.select().from(unavailableSlots).where(eq(unavailableSlots.id, id)).then(rows => rows[0] || null);

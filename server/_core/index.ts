@@ -57,16 +57,14 @@ async function startServer() {
   //  차라리 부팅 실패로 만들어 배포 시스템이 재시도하거나 알람을 보내도록 유도)
   try {
     const { getDb } = await import("../db/connection");
-    const db = await getDb();
-    if (!db) {
-      console.error(
-        "[FATAL] Database connection failed. Check DATABASE_URL environment variable.",
-      );
-      process.exit(1);
-    }
-    console.log("[Boot] Database connection OK");
+    await getDb(); // 실패 시 throw → 아래 catch 로 진입
+    console.log("[Boot] Database connection verified (SELECT 1 OK)");
   } catch (err) {
-    console.error("[FATAL] Database initialization error:", err);
+    console.error(
+      "[FATAL] Database connection failed:",
+      err instanceof Error ? err.message : err,
+    );
+    console.error("[FATAL] Check DATABASE_URL and network reachability.");
     process.exit(1);
   }
 

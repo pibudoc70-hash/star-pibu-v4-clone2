@@ -35,7 +35,6 @@ function withParsedPriceItems(row: PopupRow) {
 /** 공개: 현재 활성 팝업 목록 (기간 필터 + 언어 필터 포함) */
 export async function getActivePopups(lang?: string) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   const now = Date.now();
   const rows = await db
     .select()
@@ -56,7 +55,6 @@ export async function getActivePopups(lang?: string) {
 /** 관리자: 전체 목록 (비활성 포함) */
 export async function getAllPopups() {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   const rows = await db
     .select()
     .from(popupEvents)
@@ -67,7 +65,6 @@ export async function getAllPopups() {
 /** 관리자: 팝업 생성 */
 export async function createPopup(data: Omit<InsertPopup, "id" | "createdAt" | "updatedAt">) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   await db.insert(popupEvents).values(data);
   return { success: true };
 }
@@ -75,7 +72,6 @@ export async function createPopup(data: Omit<InsertPopup, "id" | "createdAt" | "
 /** 관리자: 팝업 수정 */
 export async function updatePopup(id: number, data: Partial<Omit<InsertPopup, "id">>) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   await db.update(popupEvents).set(data).where(eq(popupEvents.id, id));
   return { success: true };
 }
@@ -83,7 +79,6 @@ export async function updatePopup(id: number, data: Partial<Omit<InsertPopup, "i
 /** 관리자: 팝업 삭제 */
 export async function deletePopup(id: number) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   await db.delete(popupEvents).where(eq(popupEvents.id, id));
   return { success: true };
 }

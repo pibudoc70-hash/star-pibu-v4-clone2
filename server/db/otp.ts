@@ -12,7 +12,6 @@ export function generateOtpCode(): string {
 
 export async function createGuestOtp(phone: string, code: string) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   const expiresAt = Date.now() + 5 * 60 * 1000; // 5분
   await db.insert(guestOtps).values({ phone, code, expiresAt });
 }
@@ -28,7 +27,6 @@ export async function isOtpCooldown(
   cooldownMs = 60 * 1000,
 ): Promise<boolean> {
   const db = await getDb();
-  if (!db) return false;
   // OTP 만료 시간(5분) 기준으로 cooldownMs 이내 발급 여부 확인
   const rows = await db
     .select({ id: guestOtps.id })
@@ -47,7 +45,6 @@ export async function isOtpCooldown(
 /** OTP 잠금 여부 확인 (lockedUntil 기준) */
 export async function isOtpLocked(phone: string): Promise<{ locked: boolean; remainMs: number }> {
   const db = await getDb();
-  if (!db) return { locked: false, remainMs: 0 };
   const now = Date.now();
   const rows = await db.select().from(guestOtps)
     .where(eq(guestOtps.phone, phone))
@@ -62,7 +59,6 @@ export async function isOtpLocked(phone: string): Promise<{ locked: boolean; rem
 
 export async function verifyGuestOtp(phone: string, code: string): Promise<boolean> {
   const db = await getDb();
-  if (!db) return false;
   const now = Date.now();
 
   // 가장 최근 OTP 레코드 조회 (코드 일치 여부 무관하게)

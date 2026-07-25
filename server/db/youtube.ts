@@ -5,7 +5,6 @@ import { getDb } from "./connection";
 
 export async function getAllYouTubeVideos() {
   const db = await getDb();
-  if (!db) return [];
   try {
     return db.select().from(youtubeVideos).where(eq(youtubeVideos.isActive, "1")).orderBy(asc(youtubeVideos.sortOrder));
   } catch (error) {
@@ -16,7 +15,6 @@ export async function getAllYouTubeVideos() {
 
 export async function getYouTubeVideosByType(type: "video" | "shorts") {
   const db = await getDb();
-  if (!db) return [];
   try {
     return db.select().from(youtubeVideos).where(and(eq(youtubeVideos.type, type), eq(youtubeVideos.isActive, "1"))).orderBy(asc(youtubeVideos.sortOrder));
   } catch (error) {
@@ -27,7 +25,6 @@ export async function getYouTubeVideosByType(type: "video" | "shorts") {
 
 export async function createYouTubeVideo(data: InsertYouTubeVideo): Promise<YouTubeVideo | null> {
   const db = await getDb();
-  if (!db) return null;
   try {
     const result = await db.insert(youtubeVideos).values(data);
     const id = result[0].insertId;
@@ -40,7 +37,6 @@ export async function createYouTubeVideo(data: InsertYouTubeVideo): Promise<YouT
 
 export async function updateYouTubeVideo(id: number, data: Partial<InsertYouTubeVideo>): Promise<YouTubeVideo | null> {
   const db = await getDb();
-  if (!db) return null;
   try {
     await db.update(youtubeVideos).set(data).where(eq(youtubeVideos.id, id));
     return db.select().from(youtubeVideos).where(eq(youtubeVideos.id, id)).then(rows => rows[0] || null);
@@ -52,7 +48,6 @@ export async function updateYouTubeVideo(id: number, data: Partial<InsertYouTube
 
 export async function deleteYouTubeVideo(id: number): Promise<void> {
   const db = await getDb();
-  if (!db) return;
   try {
     await db.delete(youtubeVideos).where(eq(youtubeVideos.id, id));
   } catch (error) {

@@ -7,7 +7,6 @@ import { getDb } from "./connection";
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
-  if (!db) { logger.warn("Database", "Cannot upsert user: database not available"); return; }
   try {
     const values: InsertUser = { openId: user.openId };
     const updateSet: Record<string, unknown> = {};
@@ -35,7 +34,6 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 
 export async function getUserByOpenId(openId: string) {
   const db = await getDb();
-  if (!db) return undefined;
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : undefined;
 }
@@ -43,7 +41,6 @@ export async function getUserByOpenId(openId: string) {
 /** 페이지네이션 회원 목록 */
 export async function listUsers(page: number, pageSize: number) {
   const db = await getDb();
-  if (!db) return { users: [], total: 0 };
   const offset = (page - 1) * pageSize;
   const [rows, totalRows] = await Promise.all([
     db.select().from(users).orderBy(desc(users.createdAt)).limit(pageSize).offset(offset),
@@ -55,14 +52,12 @@ export async function listUsers(page: number, pageSize: number) {
 /** 회원 역할 변경 */
 export async function updateUserRole(userId: number, role: "user" | "admin") {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   await db.update(users).set({ role }).where(eq(users.id, userId));
 }
 
 /** 관리자 대시보드 사용자 통계 */
 export async function getUserStats() {
   const db = await getDb();
-  if (!db) return { totalUsers: 0, adminUsers: 0, recentSignups: 0 };
   const [totalRows, adminRows, allUsers] = await Promise.all([
     db.select({ count: count() }).from(users),
     db.select({ count: count() }).from(users).where(eq(users.role, "admin")),

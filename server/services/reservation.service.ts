@@ -168,8 +168,7 @@ export async function verifyOtpForReservation(phone: string, otpCode: string): P
   const ok = await verifyGuestOtp(phone, otpCode);
   if (!ok) {
     const db = await getDb();
-    if (!db) throw new Error("DB not available");
-    const rows = await db
+      const rows = await db
       .select()
       .from(guestOtps)
       .where(

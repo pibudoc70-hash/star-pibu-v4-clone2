@@ -12,7 +12,6 @@ export async function createConsultationRequest(
   data: InsertConsultationRequest
 ) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   const [result] = await db
     .insert(consultationRequests)
     .values(data)
@@ -26,7 +25,6 @@ export async function countConsultationByIp(
   windowMs: number
 ): Promise<number> {
   const db = await getDb();
-  if (!db) return 0;
   const since = new Date(Date.now() - windowMs);
   const [row] = await db
     .select({ cnt: count() })
@@ -46,7 +44,6 @@ export async function countConsultationByPhone(
   windowMs: number
 ): Promise<number> {
   const db = await getDb();
-  if (!db) return 0;
   const since = new Date(Date.now() - windowMs);
   const [row] = await db
     .select({ cnt: count() })
@@ -63,7 +60,6 @@ export async function countConsultationByPhone(
 /** 관리자: 상담 목록 조회 (최신순, 최대 200건) */
 export async function getConsultationRequests(limit = 200) {
   const db = await getDb();
-  if (!db) return [];
   return db
     .select()
     .from(consultationRequests)
@@ -77,7 +73,6 @@ export async function updateConsultationStatus(
   status: "pending" | "contacted" | "done" | "spam"
 ) {
   const db = await getDb();
-  if (!db) throw new Error("DB not available");
   await db
     .update(consultationRequests)
     .set({ status })

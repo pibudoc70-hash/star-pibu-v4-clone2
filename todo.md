@@ -3950,3 +3950,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] securityHeaders.ts: frame-ancestors 프로덕션 'self'만 허용
 - [x] securityHeaders.ts: X-XSS-Protection "0"으로 변경
 - [x] /manus-storage 참조 grep: 실제 URL 참조 없음 (치환 불필요)
+
+## Step 50: 미사용 npm 의존성 안전 제거
+- [x] dep-scan.mjs 생성 및 실행 (참조 0건 목록 확정)
+- [x] tailwindcss-animate 제거 (참조 0건 증명)
+- [x] web-vitals 제거 (참조 0건 증명)
+- [x] pnpm check + build + test 1,449건 전부 통과
+- [x] dep-scan.mjs 삭제 + frozen-lockfile 확인

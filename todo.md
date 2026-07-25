@@ -3878,3 +3878,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 검증 15: 모바일 break-all 클래스 적용 (긴 DOI 문자열 줄바꿈 처리)
 - [x] 검증 16: JSON-LD 7개 유지, PARSE FAIL 0건, ItemList numberOfItems=11
 - [x] 검증 17: 홈 정상 렌더, Console ERROR 0건 (2026-07-25 기준)
+
+## Step 37: 우혜진 원장 경력 정보 감사 및 정정 (2026-07-25)
+- [x] Step A: 전수 검색 6종 실행 (부산대학병원/인제의대/우혜진/Woo Hye/카톨릭/가톨릭)
+- [x] 불일치 발견: llms.txt / llms-full.txt 우혜진 섹션에 카톨릭의대 2줄 누락
+- [x] 이미 정확: clinic-data.ts 우혜진 항목(카톨릭의대 정확), doctors-data.ts, i18n.ko/en/ja/zh 전부 정확
+- [x] "가톨릭" 표기 혼재 없음 (전부 "카톨릭")
+- [x] 조시형 원장 항목(부산대학병원/인제대) 수정하지 않음 (정확한 정보)
+- [x] llms.txt 우혜진 섹션에 카톨릭의대 피부과 수련 + 외래교수 역임 2줄 추가
+- [x] llms-full.txt 동일하게 반영
+- [x] pnpm tsc --noEmit: 0건
+- [x] pnpm build: 성공 (218.3kb)
+- [x] pnpm test: 61파일 1445건 전부 통과
+- [x] grep 검증 4: 부산대학병원 3건 모두 조시형 원장 항목, 인제대 매칭 모두 조시형 원장 항목
+- [x] grep 검증: 카톨릭 doctors-data.ts 2건, clinic-data.ts 5건 (1건 이상 확인)
+- [x] 검증 6: 홈 우혜진 탭 - 카톨릭의대 피부과 수련/외래교수 역임 표시, 부산대학병원/의학박사 없음
+- [x] 검증 7: /en/ 우혜진 탭 - Catholic University Medical School 정상 표시
+- [x] 검증 9: JSON-LD 스키마 - 카톨릭 포함, 부산대학병원/인제대는 조시형 원장 스키마에만 존재
+- [x] 검증 10: JSON-LD 스키마 개수 10개 유지

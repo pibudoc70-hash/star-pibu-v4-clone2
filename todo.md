@@ -3983,3 +3983,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V5-c: RateLimit-Policy: 300;w=60
 - [x] V5-d: 경로탈출 400 (회귀 통과)
 - [x] V6: 홈/about/equipment3/notice/research 정상 렌더, 콘솔 에러 0건
+## Step 50 (재실행): 미사용 의존성 정리 실측 기반 (2026-07-25)
+- [x] Phase 0: add + @types/sharp 즉시 제거 + check/build 확인
+- [x] Phase 1: dep-scan.mjs 생성 및 실행 (참조 0건 목록 확보)
+- [x] Phase 2: xlsx/next-themes/streamdown/axios/sharp/recharts/@radix-ui 25개 개별 판정
+- [x] Phase 3: G1/G2/G3 그룹 순차 제거 + 각 그룹 check/build 확인 (제거 대상 없음 — 모든 패키지 실사용 확인)
+- [x] Phase 4: dep-scan.mjs 삭제 + frozen-lockfile + 최종 check/build/test
+- [x] 브라우저 회귀 + 리포트 작성 + 체크포인트 저장

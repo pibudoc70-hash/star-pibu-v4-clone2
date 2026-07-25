@@ -3844,3 +3844,37 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] grep 검증 5종
 - [x] 실동작 검증 9~15
 - [x] 체크포인트 저장
+
+## Research JSON-LD 빌더 함수 (2026-07-25)
+- [x] Step A: seoHelpers.ts에 buildResearcherJsonLd (769번), PaperJsonLdInput (821번), buildScholarlyArticleListJsonLd (834번) 이미 존재 확인
+- [x] Step C: PaperMeta ↔ PaperJsonLdInput 9개 필드 완전 일치 확인
+- [x] pnpm check/build/test 전부 통과 (61파일 1445개)
+- [x] grep 검증 4종 (buildResearcherJsonLd, buildScholarlyArticleListJsonLd, PaperJsonLdInput, export function)
+- [x] /research 페이지 ScholarlyArticle 미출현 확인 (0건)
+- [x] 체크포인트 저장 불필요 (코드 변경 없음 - 이미 구현됨)
+
+## Research.tsx JSON-LD SeoHead 연결 (Step 33, 2026-07-25)
+- [x] Step A: Research.tsx 현재 상태 확인 (이미 모두 구현됨)
+- [x] Step B~D: 코드 변경 없음 (이전 스텝에서 완료)
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 4종 확인
+- [x] 실동작 검증 5~13 전부 통과
+
+## Step 36: Research 페이지 DOI 링크 + PubMed 저자 검색 버튼 추가 (2026-07-25)
+- [x] Step A: Research.tsx 렌더 구조 확인 (map 변수명=paper, doi 접근=paper.doi, PubMed JSX 확인, lang 접근 가능)
+- [x] Step B: 국제 논문 카드 PubMed 링크 바로 뒤에 DOI 링크 추가 (조건부 렌더, break-all, flex-shrink-0)
+- [x] Step C: 히어로 통계 블록 바로 뒤에 PubMed 저자 검색 버튼 추가 (4개 언어 삼항 연산자)
+- [x] JSX 주석 닫기 오류 수정 (*/} 누락)
+- [x] pnpm tsc --noEmit: 0건
+- [x] pnpm build: 성공 (218.3kb)
+- [x] pnpm test: 61파일 1445건 전부 통과
+- [x] grep doi.org: 1건 (394줄)
+- [x] grep Cho+Si-Hyung: 1건 (312줄)
+- [x] grep -c PubMed: 12건 (2건 이상)
+- [x] 검증 7: DOI 링크 논문 1·2·3번만 표시 (3건), 4·5·6·7번 미표시
+- [x] 검증 9: 국내 논문(8~11번) DOI 미표시 확인
+- [x] 검증 10~12: en="Search all papers on PubMed", ja="PubMedで全論文を検索", zh="在PubMed搜索全部论文"
+- [x] 검증 14: 6개 섹션 정상 (히어로/국제/국내/학회/해외연수/소속학회)
+- [x] 검증 15: 모바일 break-all 클래스 적용 (긴 DOI 문자열 줄바꿈 처리)
+- [x] 검증 16: JSON-LD 7개 유지, PARSE FAIL 0건, ItemList numberOfItems=11
+- [x] 검증 17: 홈 정상 렌더, Console ERROR 0건 (2026-07-25 기준)

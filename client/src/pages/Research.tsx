@@ -306,6 +306,25 @@ export default function Research() {
               </div>
             ))}
           </div>
+          {/* PubMed 저자 검색 버튼 */}
+          <div className="mt-8">
+            <a
+              href="https://pubmed.ncbi.nlm.nih.gov/?term=Cho+Si-Hyung%5BAuthor%5D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full transition-colors hover:opacity-80"
+              style={{
+                backgroundColor: "rgba(210,172,103,0.15)",
+                color: "var(--color-gold-primary)",
+              }}
+            >
+              {lang === "ko" ? "PubMed에서 전체 논문 검색"
+               : lang === "en" ? "Search all papers on PubMed"
+               : lang === "ja" ? "PubMedで全論文を検索"
+               : "在PubMed搜索全部论文"}
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -368,6 +387,30 @@ export default function Research() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                     {rp.pubmedLabel.replace("{pmid}", paper.pmid)}
+                  </a>
+                )}
+                {paper.doi && (
+                  <a
+                    href={`https://doi.org/${paper.doi}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-gray-500 hover:text-gray-800 transition-colors"
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.828 10.172a4 4 0 010 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5M10.172 13.828a4 4 0 010-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"
+                      />
+                    </svg>
+                    <span className="break-all">DOI: {paper.doi}</span>
                   </a>
                 )}
               </li>

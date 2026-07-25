@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import crypto from "crypto";
 import { ENV } from "./env";
-import { imageCache } from "./imageCache";
+import { imageCache, imageNotFoundCache } from "./imageCache"; // [Step51-hotfix-D] imageNotFoundCache 추가
 
 // 파일 확장자 → MIME 타입 매핑
 const MIME_MAP: Record<string, string> = {
@@ -55,6 +55,13 @@ const MAX_PROXY_BYTES = 5 * 1024 * 1024;
 // [Step49-D] 8자 이상 해시가 붙은 파일명은 내용 불변 → immutable
 const HASHED_NAME = /[-_][a-f0-9]{8,}\.[a-z0-9]{2,5}$/i;
 
+// [Step51-hotfix-E] getCacheControl 모듈 레벨로 이동 (인자를 받도록 변경)
+function getCacheControl(key: string): string {
+  return HASHED_NAME.test(key)
+    ? "public, max-age=31536000, immutable"
+    : "public, max-age=86400, stale-while-revalidate=604800";
+}
+
 // [Step49-E] 이미지 프록시 허용 오리진
 const ALLOWED_ORIGINS = new Set([
   "https://star-pibu.com",
@@ -98,35 +105,35 @@ export function registerStorageProxy(app: Express) {
       return;
     }
 
-    const safeKey = key as string;
-    const cacheKey = `storage:${safeKey}`;
-
-    // [Step49-D] 파일명 기반 Cache-Control 결정 함수
-    function getCacheControl(): string {
-      return HASHED_NAME.test(safeKey)
-        ? "public, max-age=31536000, immutable"
-        : "public, max-age=86400, stale-while-revalidate=604800";
-    }
+    // [Step51-hotfix-C] 타입 단언(as string) 제거 — extractStorageKey 가 string 을 보장
+    const cacheKey = `storage:${key}`;
+    const notFoundKey = `storage404:${key}`; // [Step51-hotfix-D] 음수 캐시 키
 
     try {
+      // [Step51-hotfix-D] 음수 캐시 확인 (LRU 조회 직전)
+      if (imageNotFoundCache.has(notFoundKey)) {
+        res.status(404).type("text/plain").send("Not found");
+        return;
+      }
+
       // 1. LRU 캐시 조회
       const cached = imageCache.get(cacheKey);
       if (cached) {
         // [Step49-C] 캐시 히트 로그 프로덕션 억제
         if (process.env.NODE_ENV !== "production") {
-          console.log(`[StorageProxy] [cache hit] key=${safeKey}`);
+          console.log(`[StorageProxy] [cache hit] key=${key}`);
         }
 
         // If-None-Match 헤더 확인 (캐시 유효성 검사)
         const ifNoneMatch = req.get("If-None-Match");
         if (ifNoneMatch === `"${cached.etag}"`) {
           // 304에도 동일한 Cache-Control 적용
-          res.set("Cache-Control", getCacheControl());
+          res.set("Cache-Control", getCacheControl(key));
           res.status(304).end();
           return;
         }
 
-        const cacheControl = getCacheControl();
+        const cacheControl = getCacheControl(key);
 
         res.set("Content-Type", cached.contentType);
         res.set("Cache-Control", cacheControl);
@@ -144,12 +151,21 @@ export function registerStorageProxy(app: Express) {
       );
       forgeUrl.searchParams.set("path", key);
 
+      // [Step51-hotfix-B1] presign 호출: redirect 차단 + 5초 타임아웃
       const forgeResp = await fetch(forgeUrl, {
         headers: { Authorization: `Bearer ${ENV.forgeApiKey}` },
+        redirect: "error",
+        signal: AbortSignal.timeout(5000),
       });
 
       if (!forgeResp.ok) {
         const body = await forgeResp.text().catch(() => "");
+        // [Step51-hotfix-D3] presign 404/403 → 음수 캐시 등록
+        if (forgeResp.status === 404 || forgeResp.status === 403) {
+          imageNotFoundCache.set(notFoundKey, true);
+          res.status(404).type("text/plain").send("Not found");
+          return;
+        }
         console.error(`[StorageProxy] forge error: ${forgeResp.status} ${body}`);
         res.status(502).send("Storage backend error");
         return;
@@ -162,9 +178,19 @@ export function registerStorageProxy(app: Express) {
       }
 
       // 3. 이미지 바이트를 직접 가져와서 스트리밍 (리다이렉트 대신)
-      const imgResp = await fetch(url);
+      // [Step51-hotfix-B2] 이미지 fetch: redirect 차단 + 8초 타임아웃
+      const imgResp = await fetch(url, {
+        redirect: "error",
+        signal: AbortSignal.timeout(8000),
+      });
       if (!imgResp.ok) {
-        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${safeKey}`);
+        // [Step51-hotfix-D4] 이미지 fetch 404/403 → 음수 캐시 등록
+        if (imgResp.status === 404 || imgResp.status === 403) {
+          imageNotFoundCache.set(notFoundKey, true);
+          res.status(404).type("text/plain").send("Not found");
+          return;
+        }
+        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${key}`);
         res.status(502).send("Failed to fetch image from storage");
         return;
       }
@@ -190,20 +216,20 @@ export function registerStorageProxy(app: Express) {
       const etag = crypto.createHash("sha1").update(bufferData).digest("hex").slice(0, 16);
 
       // 6. LRU 캐시에 저장
-      const mimeType = getMimeType(safeKey);
+      const mimeType = getMimeType(key);
       imageCache.set(cacheKey, { buffer: bufferData, contentType: mimeType, etag });
 
       // 7. If-None-Match 헤더 확인 (캐시 유효성 검사)
       const ifNoneMatch = req.get("If-None-Match");
       if (ifNoneMatch === `"${etag}"`) {
         // 304에도 동일한 Cache-Control 적용
-        res.set("Cache-Control", getCacheControl());
+        res.set("Cache-Control", getCacheControl(key));
         res.status(304).end();
         return;
       }
 
       // 8. Cache-Control 헤더 ([Step49-D] 해시 파일명 기반 immutable)
-      const cacheControl = getCacheControl();
+      const cacheControl = getCacheControl(key);
 
       // 9. 응답 헤더 설정
       res.set("Content-Type", mimeType);
@@ -215,6 +241,15 @@ export function registerStorageProxy(app: Express) {
       // 10. 바이트 직접 전송
       res.send(bufferData);
     } catch (err) {
+      // [Step51-hotfix-B3] 타임아웃을 504 로 구분
+      const isTimeout =
+        err instanceof Error &&
+        (err.name === "TimeoutError" || err.name === "AbortError");
+      if (isTimeout) {
+        console.error(`[StorageProxy] upstream timeout key=${key}`);
+        res.status(504).type("text/plain").send("Upstream timeout");
+        return;
+      }
       console.error("[StorageProxy] failed:", err);
       res.status(502).send("Storage proxy error");
     }

@@ -3969,3 +3969,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V4: grep 6종 확인 (extractStorageKey, iitm 잔존 0건, MAX_POPUP_BYTES, redirect:error, /manus-storage 리미터 제외, RL 2000)
 - [x] V5: curl 실측 5종 (경로탈출 400, 이중인코딩 400, 보안헤더 확인, /manus-storage 301, RateLimit-Policy 2000)
 - [x] V6: 브라우저 회귀 (홈/notice/research/admin 정상 렌더, 콘솔 에러 0건)
+## Step 51-hotfix: 이미지 프록시 보안 강화 3차 (2026-07-25)
+- [x] A: rateLimits.ts imageProxyLimiter 2000→300 정정 + 주석 수정 (정상 사용자 8~15배 여유, ENV 튜닝 가능)
+- [x] B: storageProxy.ts presign fetch redirect:"error"+AbortSignal.timeout(5000), 이미지 fetch redirect:"error"+AbortSignal.timeout(8000)
+- [x] B3: catch 블록 타임아웃 504 구분 (TimeoutError/AbortError → 504, 나머지 → 502)
+- [x] C: safeKey 타입 단언(as string) 제거 — cacheKey/notFoundKey/log/getMimeType 모두 key 직접 사용 (grep 0건)
+- [x] D: imageNotFoundCache import 추가, LRU 조회 직전 음수캐시 확인, presign 404/403 → 음수캐시 등록, 이미지 fetch 404/403 → 음수캐시 등록
+- [x] E: getCacheControl(key) 모듈 레벨로 이동, 인자 key 받도록 변경, 호출부 4곳 모두 getCacheControl(key)로 변경
+- [x] V1: tsc 0건, V2: build 성공, V3: 62 files / 1,449 tests passed
+- [x] V4: RL_IMAGE_PER_MIN 300 확인, safeKey 0건, AbortSignal.timeout 2건, redirect:"error" 2건, imageNotFoundCache 4건, as string 0건
+- [x] V5-a: 200 + Cache-Control: public, max-age=31536000, immutable
+- [x] V5-b: miss1 404 1.02s / miss2 404 0.002s (음수 캐시 확인)
+- [x] V5-c: RateLimit-Policy: 300;w=60
+- [x] V5-d: 경로탈출 400 (회귀 통과)
+- [x] V6: 홈/about/equipment3/notice/research 정상 렌더, 콘솔 에러 0건

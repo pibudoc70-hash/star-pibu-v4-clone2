@@ -3940,3 +3940,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] webdev_execute_sql로 인덱스 7개 DB 적용 완료
 - [x] server/db/notices.ts: getNoticesByCursor() 함수 신규 추가 (커서 기반, limit 최대 100 클램프)
 - [x] server/__tests__/notices-cursor.test.ts: 4개 케이스 작성 및 통과
+
+## Step 49: 스토리지 프록시 보안 강화 + 보안 헤더 정정
+- [x] storageProxy.ts: isSafeStorageKey 키 검증 (경로 탈출 차단)
+- [x] storageProxy.ts: MAX_PROXY_BYTES 5MB 응답 크기 상한
+- [x] storageProxy.ts: 캐시 히트 로그 프로덕션 억제
+- [x] storageProxy.ts: HASHED_NAME 기반 immutable 캐시 정책
+- [x] storageProxy.ts: ALLOWED_ORIGINS CORS 제한 (프로덕션)
+- [x] securityHeaders.ts: frame-ancestors 프로덕션 'self'만 허용
+- [x] securityHeaders.ts: X-XSS-Protection "0"으로 변경
+- [x] /manus-storage 참조 grep: 실제 URL 참조 없음 (치환 불필요)

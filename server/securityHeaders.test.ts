@@ -104,9 +104,9 @@ describe("securityHeadersMiddleware", () => {
     expect(pp).toContain("payment=()");
   });
 
-  it("X-XSS-Protection을 설정해야 한다", () => {
+  it("X-XSS-Protection을 설정해야 한다 (Step49-G: 구형 XSS 필터 비활성화)", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
-    expect(res._headers["X-XSS-Protection"]).toBe("1; mode=block");
+    expect(res._headers["X-XSS-Protection"]).toBe("0");
   });
 
   it("Cross-Origin-Opener-Policy를 설정해야 한다", () => {

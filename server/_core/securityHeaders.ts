@@ -120,12 +120,10 @@ function buildCSP(isDev: boolean): string {
   const objectSrc = "'none'";
   const baseUri = self;
   const formAction = self;
-  // frame-ancestors: 이 사이트가 다른 사이트에 iframe으로 삽입되는 것을 방지
-  // 개발 환경에서는 Manus 미리보기 패널(iframe 임베드)을 허용
-  // 프로덕션에서도 Manus 관리 도메인에서의 iframe 허용
+  // [Step49-F] frame-ancestors: 프로덕션은 'self'만 허용, 개발은 Manus 미리보기 패널 허용
   const frameAncestors = isDev
-    ? "'self' https://*.manus.computer https://*.manus.space https://*.manus.im https://manus.im"
-    : "'self' https://*.manus.space https://*.manus.im https://manus.im";
+    ? "'self' https://*.manuspre.computer"
+    : "'self'";  // 프로덕션: 외부 iframe 삽입 완전 차단
   // upgrade-insecure-requests: HTTP 리소스를 HTTPS로 자동 업그레이드
   const upgradeInsecureRequests = "upgrade-insecure-requests";
 
@@ -188,8 +186,8 @@ export function securityHeadersMiddleware(
     ].join(", ")
   );
 
-  // X-XSS-Protection: 구형 브라우저용 XSS 필터 (현대 브라우저는 CSP로 대체)
-  res.setHeader("X-XSS-Protection", "1; mode=block");
+  // [Step49-G] X-XSS-Protection: 구형 XSS 필터는 오히려 취약점을 만들므로 비활성화 (권장값 0)
+  res.setHeader("X-XSS-Protection", "0");
 
   // Cross-Origin-Opener-Policy: 팝업 창 격리
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");

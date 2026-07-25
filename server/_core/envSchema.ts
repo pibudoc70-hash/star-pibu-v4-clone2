@@ -31,6 +31,8 @@ const EnvSchema = z.object({
   IMAGE_CACHE_MAX: z.coerce.number().int().positive().optional(),
   IMAGE_CACHE_MAX_MB: z.coerce.number().int().positive().optional(),
   DB_POOL_SIZE: z.coerce.number().int().positive().optional(),
+  RL_IMAGE_PER_MIN: z.coerce.number().int().positive().optional(),
+  RL_TRPC_PER_MIN: z.coerce.number().int().positive().optional(),
 });
 
 export type AppEnv = z.infer<typeof EnvSchema>;

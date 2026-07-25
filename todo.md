@@ -3797,7 +3797,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm check/build/test 전부 통과
 - [x] grep 검증 5종 (SELECT 1, timezone Z, _initPromise 5건+, _registerPool 0건, if (!db) 0건)
 - [x] 실동작 검증 5~9 (정상DB, 잘못된URL, URL없음, 동시요청, SIGINT)
-- [ ] 체크포인트 저장
+- [x] 체크포인트 저장
 
 ## env 검증 + 헬스체크 (2026-07-25)
 - [x] server/_core/envSchema.ts 신규 생성 (zod 스키마, validateEnv 함수)
@@ -3808,4 +3808,19 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] pnpm check/build/test 전부 통과
 - [x] grep 검증 3종 (validateEnv 2건, healthz 1건, sqlRaw 2건)
 - [x] 실동작 검증 5~10 (정상부팅, 헬스체크, 필수env누락, URL오류, 민감정보, DB장애)
+- [x] 체크포인트 저장
+
+## 레이트 리미팅 + 에러 관측 (2026-07-25)
+- [x] express-rate-limit 설치
+- [x] server/_core/rateLimits.ts 신규 생성
+- [x] server/_core/envSchema.ts: RL_IMAGE_PER_MIN, RL_TRPC_PER_MIN 2줄 추가
+- [x] index.ts: rateLimits import + imageNotFoundCache import 추가
+- [x] index.ts: trust proxy 설정 (app.disable 바로 뒤)
+- [x] index.ts: 레이트 리미터 5개 적용 (/healthz, /api/storage, /manus-storage, /api/youtube-thumbnail, /api/popup-image, /api/trpc)
+- [x] index.ts: tRPC onError 훅 추가 (INTERNAL_SERVER_ERROR만 로깅)
+- [x] index.ts: youtube-thumbnail 핸들러에 음수 캐시 연결 (최종 폴백 실패 지점만)
+- [x] index.ts: popup-image 핸들러에 음수 캐시 연결 (SSRF 403 제외)
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 검증 4종 (express-rate-limit, trust proxy, onError, imageNotFoundCache 3건+)
+- [x] 실동작 검증 5~11 (정상트래픽, 429, 헤더, 음수캐시, 오염없음, onError, trust proxy)
 - [x] 체크포인트 저장

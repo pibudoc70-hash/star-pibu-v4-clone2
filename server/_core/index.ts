@@ -6,7 +6,8 @@ import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
-import { imageCache } from "./imageCache";
+import { imageCache, imageNotFoundCache } from "./imageCache";
+import { imageProxyLimiter, trpcLimiter, healthLimiter } from "./rateLimits";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -78,7 +79,9 @@ async function startServer() {
 
   // Express 기본 서버 정보 노출 방지
   app.disable("x-powered-by");
-
+  // Cloudflare/리버스 프록시 뒤에서 실제 클라이언트 IP 를 얻기 위함
+  // (레이트 리미팅이 프록시 IP 하나에 몰려 전체 사용자가 차단되는 것을 방지)
+  app.set("trust proxy", 1);
   // ── 보안 헤더 미들웨어 (가장 먼저 적용) ───────────────────────────────────────────
   app.use(securityHeadersMiddleware);
 
@@ -101,6 +104,14 @@ async function startServer() {
   // body-parser: 1mb 제한 (일반 API 요청에 충분, DoS 벡터 축소)
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ limit: "1mb", extended: true }));
+  // ── 레이트 리미팅 (공개 엔드포인트 보호) ─────────────────────────────────
+  app.use("/healthz", healthLimiter);
+  app.use("/api/storage", imageProxyLimiter);
+  app.use("/manus-storage", imageProxyLimiter);
+  app.use("/api/youtube-thumbnail", imageProxyLimiter);
+  app.use("/api/popup-image", imageProxyLimiter);
+  app.use("/api/trpc", trpcLimiter);
+
   // ── 헬스체크 (로드밸런서 · 모니터링용) ─────────────────────────────────────
   app.get("/healthz", async (_req, res) => {
     const started = Date.now();
@@ -137,6 +148,11 @@ async function startServer() {
     const cacheKey = `yt:${videoId}`;
 
     try {
+      // 0. 음수 캐시: 최근 404 로 확인된 리소스는 외부 요청 없이 즉시 404
+      if (imageNotFoundCache.has(cacheKey)) {
+        res.status(404).send("Not found (cached)");
+        return;
+      }
       // 1. LRU 캐시 조회
       const cached = imageCache.get(cacheKey);
       if (cached) {
@@ -175,6 +191,8 @@ async function startServer() {
       }
       
       if (!imgResp) {
+        // 모든 폴백이 실패한 최종 실패 지점에만 음수 캐시 기록
+        imageNotFoundCache.set(cacheKey, true);
         res.status(404).send('Thumbnail not found');
         return;
       }
@@ -233,8 +251,12 @@ async function startServer() {
     }
 
     const cacheKey = `popup:${url}`;
-
     try {
+      // 0. 음수 캐시: 최근 404 로 확인된 리소스는 외부 요청 없이 즉시 404
+      if (imageNotFoundCache.has(cacheKey)) {
+        res.status(404).send("Not found (cached)");
+        return;
+      }
       // 1. LRU 캐시 조회
       const cached = imageCache.get(cacheKey);
       if (cached) {
@@ -256,6 +278,10 @@ async function startServer() {
       // 2. 원본 이미지 가져오기
       const resp = await fetch(url);
       if (!resp.ok) {
+        // 404 실패 시에만 음수 캐시 기록 (SSRF 403 등 다른 오류는 제외)
+        if (resp.status === 404) {
+          imageNotFoundCache.set(cacheKey, true);
+        }
         res.status(resp.status).send('Failed to fetch image');
         return;
       }
@@ -305,6 +331,16 @@ async function startServer() {
     createExpressMiddleware({
       router: appRouter,
       createContext,
+      onError({ error, path, type }) {
+        // INTERNAL_SERVER_ERROR 만 기록 (클라이언트 입력 오류는 로그 노이즈이므로 제외)
+        if (error.code === "INTERNAL_SERVER_ERROR") {
+          console.error(
+            `[tRPC:ERROR] ${type} ${path ?? "<no-path>"} — ${error.message}`,
+          );
+          if (error.cause) console.error("[tRPC:CAUSE]", error.cause);
+          if (error.stack) console.error(error.stack);
+        }
+      },
     })
   );
   // development mode uses Vite, production mode uses static files

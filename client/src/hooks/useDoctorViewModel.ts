@@ -95,18 +95,22 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
-  // [FIX v9] applyFromDrTarget: sessionStorage(__star_dr_target) 기반 의사 탭 자동 선택 + 스크롤
+  // [FIX v10] applyFromDrTarget: sessionStorage(__star_dr_target) 기반 의사 탭 자동 선택 + 스크롤
   //
-  // 이전 방식의 근본 문제:
-  //   URL에 #dr-* hash가 남아있으면 브라우저가 기본 hash 스크롤을 먼저 실행하고,
-  //   이후 SpecialEventSection 이미지 로드 시 레이아웃 시프트로 위치가 밀려짐
-  //   → 첫 번째 클릭에서 이벤트 섹션으로 튀어지는 버그
+  // 근본 원인 분석:
+  //   1) index.html에서 hash를 sessionStorage에 저장하고 URL에서 제거하면
+  //      브라우저 기본 hash 스크롤은 차단됨
+  //   2) 그러나 DoctorsSection은 lazy로 로드되므로 useDoctorViewModel이
+  //      마운트될 때 이미 스크롤이 의사 섹션 근처로 이동해 있음
+  //   3) 이 상태에서 SpecialEventSection의 이미지들이 lazy load되면
+  //      레이아웃 시프트 발생 → 스크롤 위치가 밀림
   //
-  // FIX v9 전략:
-  //   index.html에서 #dr-* hash를 sessionStorage에 저장 후 URL에서 즉시 제거
-  //   → 브라우저 기본 hash 스크롤 완전 차단
-  //   → useDoctorViewModel 마운트 후 sessionStorage에서 읽어 폴링 시작
-  //   → 레이아웃 안정화 후 정확한 위치로 스크롤
+  // FIX v10 전략:
+  //   - 타겟 slug를 읽은 즉시 window.scrollTo(0,0)으로 상단 고정
+  //     → 이미지 lazy load시 레이아웃 시프트가 스크롤 위치에 영향 없음
+  //   - window 'load' 이벤트 후 스크롤 실행
+  //     → 모든 이미지가 로드된 후 레이아웃이 안정된 상태
+  //   - 추가 500ms 대기: 데이터 fetch 완료 후 DOM 업데이트 대응
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -125,42 +129,41 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     setActiveDoctor(idx);
     setExpandedCredentials(false);
 
-    // 2) 레이아웃 안정화 폴링
-    //    - 80ms 간격으로 #dr-{slug} 요소의 절대 위치 감시
-    //    - 연속 4회 2px 이내 변화 시 레이아웃 안정으로 판단
-    //    - 안정 후 window.scrollTo('instant')로 정확히 이동 (레이아웃 시프트 추가 발생 불가능)
-    const STABLE_COUNT = 4;
-    const POLL_MS = 80;
-    const MAX_MS = 4000;
-    let stableCount = 0;
-    let lastTop = -1;
-    let elapsed = 0;
+    // 2) 즉시 페이지 상단으로 고정
+    //    → 이미지 lazy load 시 레이아웃 시프트가 스크롤 위치에 영향 없음
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
-    const poll = setInterval(() => {
-      elapsed += POLL_MS;
+    // 3) 스크롤 실행 함수: window.load + 500ms 후 실행
+    const doScroll = () => {
+      // 요소가 아직 마운트되지 않은 경우 잠시 폴링
+      let attempts = 0;
+      const iv = setInterval(() => {
+        const el = document.getElementById(`dr-${slug}`);
+        if (el) {
+          clearInterval(iv);
+          scrollToEl(el);
+        } else if (++attempts > 50) {
+          clearInterval(iv);
+        }
+      }, 100);
+    };
 
-      const el = document.getElementById(`dr-${slug}`);
-      if (!el) {
-        // 요소가 아직 마운트되지 않음 (레이지 로딩 중) — 대기
-        if (elapsed > MAX_MS) clearInterval(poll);
-        return;
-      }
-
-      const currentTop = el.getBoundingClientRect().top + window.scrollY;
-      if (Math.abs(currentTop - lastTop) < 2) {
-        stableCount++;
-      } else {
-        stableCount = 0;
-      }
-      lastTop = currentTop;
-
-      if (stableCount >= STABLE_COUNT || elapsed > MAX_MS) {
-        clearInterval(poll);
-        scrollToEl(el);
-      }
-    }, POLL_MS);
-
-    return () => clearInterval(poll);
+    // window.load 이후 500ms 대기
+    // 로드가 이미 완료된 경우(readyState === 'complete')는 즉시 500ms 대기
+    let tid: ReturnType<typeof setTimeout>;
+    if (document.readyState === 'complete') {
+      tid = setTimeout(doScroll, 500);
+    } else {
+      const onLoad = () => {
+        tid = setTimeout(doScroll, 500);
+      };
+      window.addEventListener('load', onLoad, { once: true });
+      return () => {
+        window.removeEventListener('load', onLoad);
+        clearTimeout(tid);
+      };
+    }
+    return () => clearTimeout(tid);
   }, []);
 
   // hashchange 이벤트: 사용자가 주소상에 직접 hash 입력 시 실시간 처리
@@ -206,9 +209,21 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     const elRect = el.getBoundingClientRect();
     const elAbsTop = elRect.top + window.scrollY;
     const viewportH = window.innerHeight;
-    // 요소를 븷포트 중앙에 놓으려면:
+    // 앵커 요소(w-0 h-0)인 경우 부모 패널 높이를 사용
+    // 앵커가 카드 상단에 위치하므로 카드 전체를 중앙에 오게 하려면 카드 높이 필요
+    let elH = el.offsetHeight;
+    if (elH === 0) {
+      // 부모 tabpanel 또는 가장 가까운 실제 높이를 가진 조상 사용
+      const panel = el.closest('[role="tabpanel"]') as HTMLElement | null;
+      if (panel) {
+        elH = panel.offsetHeight;
+      } else {
+        // fallback: #doctors 섹션 높이의 절반
+        const doctorsSection = document.getElementById('doctors');
+        elH = doctorsSection ? doctorsSection.offsetHeight / 2 : 400;
+      }
+    }
     // targetY = elAbsTop - viewportH/2 + elH/2 - headerH/2
-    const elH = Math.max(el.offsetHeight, 1);
     const targetY = elAbsTop - (viewportH / 2) + (elH / 2) - (headerH / 2);
     window.scrollTo({ top: Math.max(0, targetY), behavior: 'instant' });
   }

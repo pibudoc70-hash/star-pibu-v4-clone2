@@ -3798,3 +3798,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] grep 검증 5종 (SELECT 1, timezone Z, _initPromise 5건+, _registerPool 0건, if (!db) 0건)
 - [x] 실동작 검증 5~9 (정상DB, 잘못된URL, URL없음, 동시요청, SIGINT)
 - [ ] 체크포인트 저장
+
+## env 검증 + 헬스체크 (2026-07-25)
+- [x] server/_core/envSchema.ts 신규 생성 (zod 스키마, validateEnv 함수)
+- [x] index.ts: import 추가 (validateEnv, sqlRaw)
+- [x] index.ts: startServer() 첫 줄에 validateEnv() 삽입
+- [x] index.ts: /healthz 라우트 추가 (registerStorageProxy 앞)
+- [x] index.ts: PORT 처리 env.PORT 사용 여부 검토
+- [x] pnpm check/build/test 전부 통과
+- [x] grep 검증 3종 (validateEnv 2건, healthz 1건, sqlRaw 2건)
+- [x] 실동작 검증 5~10 (정상부팅, 헬스체크, 필수env누락, URL오류, 민감정보, DB장애)
+- [x] 체크포인트 저장

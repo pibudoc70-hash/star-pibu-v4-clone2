@@ -16,6 +16,8 @@ import { initializeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { securityHeadersMiddleware } from "./securityHeaders";
+import { validateEnv } from "./envSchema";
+import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
 // 팝업 이미지 SSRF 화이트리스트 호스트 패턴
@@ -49,6 +51,12 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  // 환경변수 검증 (DB 연결보다 먼저) — 실패 시 즉시 종료
+  const env = validateEnv();
+  console.log(
+    `[Boot] Environment validated (NODE_ENV=${env.NODE_ENV}, PORT=${env.PORT})`,
+  );
+
   const app = express();
   const server = createServer(app);
 
@@ -93,8 +101,31 @@ async function startServer() {
   // body-parser: 1mb 제한 (일반 API 요청에 충분, DoS 벡터 축소)
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ limit: "1mb", extended: true }));
+  // ── 헬스체크 (로드밸런서 · 모니터링용) ─────────────────────────────────────
+  app.get("/healthz", async (_req, res) => {
+    const started = Date.now();
+    try {
+      const { getDb } = await import("../db/connection");
+      const db = await getDb();
+      await db.execute(sqlRaw`SELECT 1`);
+      res.status(200).json({
+        status: "ok",
+        db: "ok",
+        uptimeSec: Math.round(process.uptime()),
+        latencyMs: Date.now() - started,
+        env: process.env.NODE_ENV ?? "unknown",
+      });
+    } catch (err) {
+      res.status(503).json({
+        status: "degraded",
+        db: "fail",
+        error: err instanceof Error ? err.message : String(err),
+        uptimeSec: Math.round(process.uptime()),
+      });
+    }
+  });
+
   registerStorageProxy(app);
-  
   // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)
   app.get('/api/youtube-thumbnail/:videoId', async (req, res) => {
     const { videoId } = req.params;
@@ -283,7 +314,7 @@ async function startServer() {
     serveStatic(app);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
+  const preferredPort = env.PORT;
   let port: number;
 
   if (process.env.NODE_ENV === "development") {

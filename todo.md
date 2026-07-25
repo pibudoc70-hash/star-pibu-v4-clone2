@@ -4006,3 +4006,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V5: pnpm check + build + test + grep 9종 + 검사 순서 라인 번호 확인
 - [x] V6: 런타임 검증 a~e
 - [x] V7: 브라우저 회귀 + 체크포인트
+## Step 55: notices.ts 데이터 정확성 + 쿼리 최적화 + 타입 안전 (2026-07-26)
+- [x] A: incrementNoticeViews read-modify-write → 원자적 UPDATE + sql import 추가
+- [x] B: getAllNotices targetLang 필터 SQL WHERE 이동 (조건 판단 포함)
+- [x] C: as any 제거 (insertId 타입 명시 + $returningId 확인)
+- [x] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5: 런타임 검증 a~d
+- [x] V6: 브라우저 회귀 + 체크포인트

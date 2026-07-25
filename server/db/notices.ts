@@ -1,17 +1,24 @@
-import { asc, desc, eq, inArray, lt } from "drizzle-orm";
+import { asc, desc, eq, inArray, lt, or, sql } from "drizzle-orm";
 import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../drizzle/schema";
 import { getDb } from "./connection";
 
 /** 공지사항 목록 (고정글 먼저, 최신순, 언어 필터 지원) */
 export async function getAllNotices(lang?: string) {
   const db = await getDb();
-  const rows = await db
+  // [Step55-B] 언어 필터를 SQL WHERE 로 이동.
+  // 기존: 전체 SELECT 후 JS filter(targetLang === "all" || targetLang === lang)
+  // 변경: WHERE (targetLang = 'all' OR targetLang = lang)
+  // 조건 형태: 단순 동등 비교 + "all" 문자열 전체 대상 → or() 조합으로 이동 가능.
+  // [Step55-B] 적응: targetLang 은 notNull().default("all") 이므로 isNull 조건 불필요.
+  // or(eq(targetLang, "all"), eq(targetLang, lang)) 으로 단순화.
+  const langCondition = lang
+    ? or(eq(notices.targetLang, "all"), eq(notices.targetLang, lang as "ko" | "en" | "ja" | "zh"))
+    : undefined;
+  return db
     .select()
     .from(notices)
+    .where(langCondition)
     .orderBy(desc(notices.isPinned), desc(notices.createdAt));
-  if (!lang) return rows;
-  // 언어 필터: all이거나 현재 언어와 일치하는 항목만
-  return rows.filter((r) => r.targetLang === "all" || r.targetLang === lang);
 }
 
 /** 공지사항 단건 조회 */
@@ -41,12 +48,20 @@ export async function deleteNotice(id: number) {
   await db.delete(notices).where(eq(notices.id, id));
 }
 
-/** 조회수 증가 */
-export async function incrementNoticeViews(id: number) {
+/**
+ * 공지 조회수 +1 (원자적).
+ *
+ * [Step55-A] read-modify-write → 단일 UPDATE.
+ * DB 가 직접 증가시키므로 동시 요청에서도 카운트가 유실되지 않고,
+ * DB 왕복도 2회 → 1회로 줄어든다.
+ * views 컬럼은 int.notNull().default(0) 이므로 COALESCE 불필요.
+ */
+export async function incrementNoticeViews(id: number): Promise<void> {
   const db = await getDb();
-  const row = await db.select({ views: notices.views }).from(notices).where(eq(notices.id, id)).limit(1);
-  if (!row[0]) return;
-  await db.update(notices).set({ views: row[0].views + 1 }).where(eq(notices.id, id));
+  await db
+    .update(notices)
+    .set({ views: sql`${notices.views} + 1` })
+    .where(eq(notices.id, id));
 }
 
 // ─── notice_images ────────────────────────────────────────────────────────────
@@ -97,7 +112,7 @@ export async function getNoticeImagesByNoticeIds(noticeIds: number[]) {
  * 공지사항 생성 + 이미지 일괄 insert 를 단일 트랜잭션으로 처리.
  * notices insert 성공 후 noticeImages insert 실패 시 notices 도 롤백된다.
  *
- * 반환: 생성된 notices 행 (라우터의 insertId 캐스팅 패턴과 동일하게 raw result 반환)
+ * 반환: 생성된 notices 행
  */
 export async function createNoticeWithImages(
   data: InsertNotice,
@@ -106,9 +121,9 @@ export async function createNoticeWithImages(
   const db = await getDb();
 
   return db.transaction(async (tx) => {
-    const result = await tx.insert(notices).values(data);
-    // 기존 라우터가 사용하는 insertId 획득 방식 유지
-    const noticeId = Number((result as any).insertId as number);
+    // [Step55-C] 타입 단언 제거. drizzle 0.44.7 mysql2: $returningId() 로 PK 획득.
+    // notices.id 는 int.autoincrement().primaryKey() 이므로 $returningId 가 id 를 반환한다.
+    const [{ id: noticeId }] = await tx.insert(notices).values(data).$returningId();
 
     if (images.length > 0) {
       await tx.insert(noticeImages).values(

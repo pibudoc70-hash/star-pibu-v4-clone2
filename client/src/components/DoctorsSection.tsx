@@ -35,10 +35,7 @@ function DoctorsSection() {
       role="region"
       aria-label={t.doctors.label}
     >
-      {/* 투명 앵커 div 3개: /#dr-{slug} 직접 접근 시 스크롤 목적지 (translateX 슬라이드 트랙 바깥) */}
-      <div id="dr-cho" className="dr-hash-anchor" aria-hidden="true" />
-      <div id="dr-woo" className="dr-hash-anchor" aria-hidden="true" />
-      <div id="dr-lee" className="dr-hash-anchor" aria-hidden="true" />
+      {/* 앵커 div는 DoctorDesktopLayout / DoctorMobileLayout 내부에 id=dr-{slug}로 이미 존재 */}
       <div className="container">
         {/* ── Section Header ── */}
         <div className="text-center mb-10 sm:mb-16 reveal-heading">

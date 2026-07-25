@@ -301,23 +301,6 @@ export default function Home() {
   // 새 공지사항 알림 토스트 (세션당 1회)
   useNewNoticeToast(navigate);
 
-  // [Step D] hash로 원장 앵커 진입 시 DoctorsSection의 deferMount 트리거 앞당김
-  // lazy + deferMount 구조에서는 초기 스크롤 위치가 최상단이라 DoctorsSection이 마운트되지 않을 수 있음
-  // #doctors 요소가 있으면 즉시 스크롤, 없으면 페이지 하단 방향으로 임시 이동
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const hash = window.location.hash;
-    if (!/^#dr-(cho|woo|lee)$/.test(hash)) return;
-
-    const doctorsAnchor = document.getElementById('doctors');
-    if (doctorsAnchor) {
-      doctorsAnchor.scrollIntoView({ behavior: 'auto', block: 'start' });
-    } else {
-      // #doctors도 없다면 페이지 하단 방향으로 이동하여 deferMount 트리거
-      window.scrollTo({ top: window.innerHeight * 2, behavior: 'auto' });
-    }
-  }, []);
-
   // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
   // lazy 섹션은 300ms 내 렌더링이 보장되지 않으므로 MutationObserver로 DOM 대기
   //

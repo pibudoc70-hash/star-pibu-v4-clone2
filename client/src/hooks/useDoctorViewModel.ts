@@ -95,7 +95,11 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
     sessionStorage.removeItem("__star_doctor_tab");
   }, []);
 
-  // [Step E] applyFromHash: URL hash(#dr-{slug})에서 의사 탭 자동 선택 + 스크롤
+  // [FIX v7] applyFromHash: URL hash(#dr-{slug})에서 의사 탭 자동 선택 + 스크롤
+  // 실행 순서:
+  //   1) 탭 상태 먼저 설정 (setActiveDoctor)
+  //   2) React 렌더 사이클 후 (#doctors 섹션 스크롤 시작)
+  //   3) 600ms 후 이미지 로드 완료 시점에 #dr-{slug} 위치로 정밀 스크롤
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -106,26 +110,26 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
       const slug = m[1];
       const idx = doctors.findIndex((d) => d.slug === slug);
       if (idx < 0) return;
+
+      // 1) 탭 상태 먼저 설정
       setActiveDoctor(idx);
       setExpandedCredentials(false);
-      // 렌더 완료 후 스크롤 (최대 4초 대기)
-      let attempts = 0;
-      const iv = setInterval(() => {
+
+      // 2) requestAnimationFrame으로 React 렌더 후 #doctors 섹션으로 1차 스크롤
+      requestAnimationFrame(() => {
+        const section = document.getElementById('doctors');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      // 3) 600ms 후 이미지 로드 완료 시점에 #dr-{slug} 위치로 정밀 스크롤
+      setTimeout(() => {
         const el = document.getElementById(`dr-${slug}`);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          clearInterval(iv);
-          // 400ms 후 SpecialEvent 이미지 로드로 인한 레이아웃 시프트 재보정
-          setTimeout(() => {
-            document.getElementById(`dr-${slug}`)?.scrollIntoView({
-              behavior: 'smooth',
-              block: 'center',
-            });
-          }, 400);
-        } else if (++attempts >= 60) {
-          clearInterval(iv);
         }
-      }, 100);
+      }, 600);
     };
 
     applyFromHash();

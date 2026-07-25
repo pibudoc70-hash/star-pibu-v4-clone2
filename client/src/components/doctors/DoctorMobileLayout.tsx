@@ -97,12 +97,14 @@ export function DoctorMobileLayout({
 
       {/* ── 슬라이더 븷포트 ── */}
       <div className="relative overflow-hidden">
-        {/* [C-3] 각 의사별 앵커 타겟 (/#dr-{slug} 직접 진입 스크롤용) */}
+        {/* [C-3] 각 의사별 앵커 타겟 (/#dr-{slug} 직접 진입 스크롤용)
+             sr-only 대신 absolute 사용: sr-only는 width:1px/height:1px로
+             scrollIntoView의 실제 위치를 잡지 못함 */}
         {mergedDoctors.map((d) => (
           <div
             key={d.id}
             id={`dr-${d.slug}`}
-            className="sr-only scroll-mt-24"
+            className="absolute top-0 left-0 w-0 h-0 overflow-hidden scroll-mt-24"
             aria-hidden="true"
           />
         ))}

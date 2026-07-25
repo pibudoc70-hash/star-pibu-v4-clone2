@@ -3731,3 +3731,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Step E: DoctorsSection.tsx scroll-mt-24 md:scroll-mt-28 이미 존재 확인 → 수정 불필요
 - [x] Step F: Doctor 타입 slug 필드 이미 string 타입으로 정의됨, 다른 파일 타입 오류 없음 확인
 - [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과, pnpm build 성공
+
+## 히어로 섹션 튀기 버그 수정 (2026-07-25 세션 3, 사용자 리포트)
+- [x] 근본 원인 분석: 중복 id (DoctorsSection + Desktop + Mobile = 7개), deferMount 미사용, sr-only 앵커 위치 문제
+- [x] DoctorsSection.tsx에서 중복 앵커 div 3개 제거 (Desktop/Mobile에 이미 존재)
+- [x] Home.tsx Step D useEffect 제거 (역효과: deferMount 없는 구조에서 불필요한 스크롤 유발)
+- [x] useDoctorViewModel.ts applyFromHash FIX v7: requestAnimationFrame + 600ms 2단계 스크롤
+- [x] DoctorDesktopLayout.tsx 앵커 sr-only → absolute top-0 left-0 w-0 h-0 (scrollIntoView 위치 정확도 개선)
+- [x] DoctorMobileLayout.tsx 앵커 sr-only → absolute top-0 left-0 w-0 h-0 (동일)
+- [x] TypeScript 오류 0건, 61파일 1445테스트 전부 통과

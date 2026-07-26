@@ -262,6 +262,32 @@ function injectMeta(
         ? `<meta data-rh="true" name="twitter:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
         : "$&"
     )
+    // [Step62-A] og:image 부가 태그를 실제 시술 이미지에 맞게 치환한다.
+    // 이미지 경로가 /api/storage/... 원격 URL 이라 로컈 파일에서 sharp 로 크기를 읽을 수 없다.
+    // 따라서 A-3 에서 width/height 는 제거한다 (잘못된 값보다 없는 편이 낙다).
+    // og:image / kakao:image / twitter:image 는 반드시 PNG/JPEG 유지 (카카오톡·페이스북 WebP 지원 불안정).
+    .replace(
+      /<meta\s+property="og:image:type"[^>]*\/?>/i,
+      t.image
+        ? (() => {
+            const imgType = t.image.endsWith(".webp") ? "image/webp"
+                          : t.image.endsWith(".png")  ? "image/png"
+                          : t.image.endsWith(".jpg") || t.image.endsWith(".jpeg") ? "image/jpeg"
+                          : "image/png";
+            return `<meta data-rh="true" property="og:image:type" content="${imgType}" />`;
+          })()
+        : "$&"
+    )
+    .replace(
+      /<meta\s+property="og:image:alt"[^>]*\/?>/i,
+      t.image
+        ? `<meta data-rh="true" property="og:image:alt" content="${escapeHtml(pick(t.name, lang))} - 부산 서면 스타피부과" />`
+        : "$&"
+    )
+    // [Step62-A3] 실제 크기를 알 수 없으므로 잘못된 홈 배경(1200×630) 값을 제거한다.
+    // 플랫폼이 이미지 파일에서 직접 크기를 읽는다. 시술 페이지 응답에서만 제거되며 홈 index.html 은 건드리지 않는다.
+    .replace(/<meta\s+property="og:image:width"[^>]*\/?>/i, t.image ? "" : "$&")
+    .replace(/<meta\s+property="og:image:height"[^>]*\/?>/i, t.image ? "" : "$&")
     // [Step61b-C] hreflang 을 시술 페이지 기준으로 재작성.
     // 기존 5줄(ko/en/ja/zh/x-default)을 통째로 치환한다.
     .replace(

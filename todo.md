@@ -4125,3 +4125,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V5-f: 비시술 페이지 회귀 없음 (홈 hreflang 5개, 홈 주소 그대로)
 - [x] V5: og:image/kakao:image/twitter:image 시술 이미지 절대 URL 치환 확인
 - [x] V6~V7: 체크포인트 저장
+
+## Step 62: og:image 부가 태그 정합성 + 시술 이미지 WebP 조건부 (2026-07-26)
+- [x] A-1: 이미지 크기 추출 가능 여부 조사 (원격 경로 여부 확인)
+- [x] A-2: og:image:type + og:image:alt 치환 추가
+- [x] A-3: og:image:width/height 실제값 또는 제거
+- [x] B-1~B-4: WebP 필요성 조사 (OptimizedImage, LCP, 인프라, 이미지 크기)
+- [x] C: WebP 변환 (B 결과가 필요일 때만) 또는 스킵 판단
+- [x] V1~V5: TypeScript + build + test + grep + curl a~d
+- [x] V6~V7: 브라우저 + 체크포인트 + 리포트

@@ -16,7 +16,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         본문으로 바로가기
       </a>
       <Header />
-      <main id="main-content" className="flex-grow" tabIndex={-1}>
+      <main id="main-content" className="flex-grow star-page-enter" tabIndex={-1}>
         {children}
       </main>
       <Footer />

@@ -4134,3 +4134,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] C: WebP 변환 (B 결과가 필요일 때만) 또는 스킵 판단
 - [x] V1~V5: TypeScript + build + test + grep + curl a~d
 - [x] V6~V7: 브라우저 + 체크포인트 + 리포트
+
+## Step 63: 헤더 메뉴 스크롤 동작 통일 (2026-07-26)
+- [x] A-1: ScrollOptions 인터페이스에 approachRatio 옵션 추가
+- [x] A-2: 구조분해에 approachRatio = 0.8 기본값 추가
+- [x] A-3: lazy 마운트 점프를 조건부로 변경 (alreadyMounted 체크)
+- [x] A-4: 1차 스크롤을 "접근 후 smooth" 방식으로 교체
+- [x] B: 페이드인 CSS + MainLayout 확인 (홈 사용 여부 체크 후 적용/생략)
+- [x] C: 크로스 페이지 경로 확인 (__star_scroll_to → scrollToSelector 여부)
+- [x] V1~V4: TypeScript + build + test + grep 4종
+- [x] V5~V8: 브라우저 실동작 + 왕복 안정성 + 크로스 페이지 + 회귀 + 체크포인트

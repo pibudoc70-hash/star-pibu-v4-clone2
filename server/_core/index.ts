@@ -16,6 +16,7 @@ import { collectKeywordTrendsHandler } from "./scheduled";
 import { initializeWebSocketServer, closeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
+import { registerTreatmentPrerender } from "./treatmentPrerender";
 import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { sql as sqlRaw } from "drizzle-orm";
@@ -347,6 +348,8 @@ async function startServer() {
   
   registerOAuthRoutes(app);
   registerRssFeed(app);
+  // [Step61-B] 시술 상세 크롤러 대응. 정적 서빙보다 먼저 등록해야 한다.
+  registerTreatmentPrerender(app);
   registerSitemapDynamic(app);
 
   // NOTE: /sitemap.xml is served as a static file from client/public/sitemap.xml

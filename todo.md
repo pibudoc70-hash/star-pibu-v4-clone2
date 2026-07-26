@@ -4072,3 +4072,28 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] B: en/ja/zh 다국어 최소 지역 키워드 보강 — 7개 시술
 - [x] V1~V5: TypeScript + build + test + 길이 검증 + 금지어 검사
 - [x] V6~V7: 브라우저 확인 + 회귀 + 체크포인트
+
+## Step 61: 시술 페이지 서버 HTML 주입 — 네이버·AI 크롤러 대응 (2026-07-26)
+- [ ] Phase 0: 구조 확인 (import 가능 여부, 라우트 순서, index.html 태그 형태)
+- [ ] A: server/_core/treatmentPrerender.ts 신규 생성 (A-1~A-5)
+- [ ] B: server/_core/index.ts 미들웨어 등록
+- [ ] C: JSON-LD 주입 (여유 있으면)
+- [ ] V1~V5: TypeScript + build + test + grep + 로컬 실측 (curl 7가지)
+- [ ] V6~V7: 브라우저 확인 + 프로덕션 실측 + 체크포인트
+
+## Step 61: 시술 페이지 서버 HTML 주입 — 네이버·AI 크롤러 대응 (2026-07-26)
+- [x] Phase 0: 구조 확인 (import 가능 여부, 라우트 순서, index.html 태그 형태)
+- [x] A-1: scripts/gen-treatment-seo.mjs 생성 (시술 TS → JSON 추출)
+- [x] A-2: server/_generated/treatment-seo.json 생성 (7개 시술 SEO 데이터)
+- [x] A-3: server/_core/treatmentPrerender.ts 신규 생성 (메타 치환 + noscript 주입)
+- [x] A-4: injectJsonLd() — MedicalProcedure + FAQPage JSON-LD 주입
+- [x] A-5: registerTreatmentPrerender() — Express 미들웨어 등록 함수
+- [x] B: server/_core/index.ts에 registerTreatmentPrerender import + 호출 추가
+- [x] C: package.json build 스크립트에 gen-treatment-seo.mjs 전처리 추가
+- [x] V1: TypeScript 오류 0건
+- [x] V2: pnpm build 성공 (240.9KB)
+- [x] V3: 63 files / 1,458 tests passed
+- [x] V4: grep 4종 (registerTreatmentPrerender 3건, data-rh 13건, noscript 3건, next() 6건)
+- [x] V5: curl 7가지 실측 (7개 시술 title 치환, 언어별 canonical, 중복 태그 0, 실패 안전성)
+- [x] V6: 브라우저 확인 (title 치환, JSON-LD 3개 스키마, noscript 숨김, 콘솔 에러 0)
+- [x] V7: 체크포인트 저장

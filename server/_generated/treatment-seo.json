@@ -1,0 +1,1183 @@
+{
+  "ulthera": {
+    "slug": "ulthera",
+    "nameEn": "Ultherapy Prime",
+    "name": {
+      "ko": "울쎄라피 프라임",
+      "en": "Ultherapy Prime",
+      "ja": "ウルセラピー プライム",
+      "zh": "超声刀 Prime"
+    },
+    "desc": {
+      "ko": "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",
+      "en": "The latest upgrade of the #1 lifting treatment, Ultherapy. Covers a wider area faster with outstanding lifting results.",
+      "ja": "リフティング満足度No.1のウルセラピーの最新アップグレード版。より広い範囲を素早くカバーし、卓越したリフティング効果を発揮。",
+      "zh": "提升满意度第一的超声刀最新升级版。覆盖面积更广，提升效果卓越。"
+    },
+    "detail": {
+      "ko": "울쎄라피 프라임은 기존 울쎄라피 대비 더 넓은 면적을 빠르게 커버하는 최신 업그레이드 버전입니다. 집속 초음파(HIFU) 에너지를 피부 깊은 층인 SMAS(근막층)까지 정확하게 전달하여 피부 속에서부터 리프팅 효과를 유도합니다. FDA 승인을 받은 비수술 리프팅 시술로, 시술 후 즉시 일상 복귀가 가능합니다. 시술 효과는 시술 후 2~3개월부터 서서히 나타나며 6개월까지 지속적으로 개선됩니다.",
+      "en": "Ultherapy Prime is the latest upgrade that covers a wider area faster than the original Ultherapy. It precisely delivers focused ultrasound (HIFU) energy down to the deep SMAS layer, inducing a lifting effect from within. As an FDA-cleared non-surgical lifting procedure, you can return to daily activities immediately after treatment. Results gradually appear from 2–3 months post-treatment and continue to improve for up to 6 months.",
+      "ja": "ウルセラピー プライムは、従来のウルセラピーよりも広い範囲を素早くカバーする最新アップグレード版です。集束超音波（HIFU）エネルギーを皮膚深層のSMAS（筋膜層）まで正確に届け、内側からリフティング効果を引き出します。FDA承認済みの非手術リフティング施術で、施術後すぐに日常生活に戻れます。効果は施術後2〜3ヶ月から徐々に現れ、6ヶ月まで継続的に改善されます。",
+      "zh": "超声刀Prime是比原版超声刀覆盖面积更广、速度更快的最新升级版。将集束超声波（HIFU）能量精准传递至皮肤深层的SMAS筋膜层，从内部激发提升效果。这是一项经FDA认证的非手术提升疗程，术后可立即恢复日常生活。效果从术后2～3个月开始逐渐显现，并持续改善长达6个月。"
+    },
+    "effect": {
+      "ko": "얼굴 리프팅, 턱선 개선, 피부 탄력 향상, 주름 완화, SMAS층 자극",
+      "en": "Facial lifting, jawline improvement, skin firmness enhancement, wrinkle reduction, SMAS layer stimulation",
+      "ja": "顔のリフティング、フェイスラインの改善、肌の弾力向上、シワの緩和、SMAS層の刺激",
+      "zh": "面部提升、下颌线改善、皮肤弹力增强、皱纹改善、SMAS层刺激"
+    },
+    "caution": {
+      "ko": "시술 중 일시적인 열감이나 따끔거림이 있을 수 있습니다. 시술 후 1~2일간 약간의 붓기나 붉기가 나타날 수 있으나 정상 반응입니다. 시술 후 자외선 차단제를 매일 사용하세요.",
+      "en": "Temporary warmth or tingling sensations may occur during treatment. Mild swelling or redness for 1–2 days after treatment is a normal reaction. Apply sunscreen daily after the procedure.",
+      "ja": "施術中に一時的な熱感やチクチク感が生じることがあります。施術後1〜2日間、軽い腫れや赤みが現れることがありますが、正常な反応です。施術後は毎日日焼け止めをご使用ください。",
+      "zh": "施术过程中可能会有短暂的热感或刺痛感。术后1～2天可能出现轻微肿胀或泛红，属正常反应。术后请每日使用防晒霜。"
+    },
+    "time": {
+      "ko": "60~90분",
+      "en": "60–90 min",
+      "ja": "60〜90分",
+      "zh": "60～90分钟"
+    },
+    "recovery": {
+      "ko": "당일 일상",
+      "en": "Same-day return",
+      "ja": "当日から日常生活可",
+      "zh": "当天可正常生活"
+    },
+    "sessions": {
+      "ko": "1~2회 (6~12개월 간격)",
+      "en": "1–2 sessions (every 6–12 months)",
+      "ja": "1〜2回（6〜12ヶ月間隔）",
+      "zh": "1～2次（间隔6～12个月）"
+    },
+    "seoTitle": {
+      "ko": "울쎄라피 프라임 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Ultherapy Prime | Star Dermatology Seomyeon Busan – #1 Lifting Treatment",
+      "ja": "ウルセラピー プライム | 釜山西面 スター皮膚科 – リフティング満足度No.1",
+      "zh": "超声刀 Prime | 釜山西面 STAR 皮肤科 – 提升满意度第一"
+    },
+    "seoDescription": {
+      "ko": "울쎄라피 프라임은 HIFU 집속 초음파로 SMAS층까지 자극하는 FDA 승인 비수술 리프팅. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Ultherapy Prime at Star Dermatology, Seomyeon, Busan. FDA-cleared non-surgical lifting using HIFU to stimulate the SMAS layer. Same-day return to daily activities. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科のウルセラピー プライム施術案内。HIFUでSMAS層まで刺激するFDA承認の非手術リフティング。施術当日から日常生活に復帰可能。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科超声刀Prime施术介绍。HIFU集束超声波刺激SMAS层，经FDA认证的非手术提升疗程。当天可恢复日常生活，由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "울쎄라피 프라임, 울쎄라, 부산울쎄라, 서면울쎄라, 부산울쎄라가격, HIFU, 부산리프팅, 서면리프팅, 부산피부과, 서면피부과, 서면역피부과, 비수술리프팅, 피부과전문의",
+      "en": "Ultherapy Prime, Ulthera, HIFU, Busan lifting, Seomyeon lifting, Busan dermatology, Star Dermatology, Seomyeon dermatology, non-surgical lifting, board-certified dermatologist",
+      "ja": "ウルセラピー プライム, ウルセラ, 釜山ウルセラ, 西面ウルセラ, HIFU, 釜山リフティング, 西面リフティング, 釜山皮膚科, 西面皮膚科, 非手術リフティング, 皮膚科専門医",
+      "zh": "超声刀Prime, 超声刀, 釜山超声刀, 西面超声刀, HIFU, 釜山提升, 西面提升, 釜山皮肤科, 西面皮肤科, 非手术提升, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": {
+      "ko": "얼굴, 목, 데콜테",
+      "en": "Face, neck, décolletage",
+      "ja": "顔、首、デコルテ",
+      "zh": "面部、颈部、胸前区"
+    },
+    "image": "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png",
+    "faq": {
+      "ko": [
+        {
+          "question": "울쎄라피 프라임 시술 시간은 얼마나 걸리나요?",
+          "answer": "시술 부위와 범위에 따라 다르지만 보통 60~90분 정도 소요됩니다."
+        },
+        {
+          "question": "울쎄라피 프라임 효과는 언제부터 나타나나요?",
+          "answer": "시술 후 2~3개월부터 서서히 효과가 나타나며, 6개월까지 지속적으로 개선됩니다."
+        },
+        {
+          "question": "울쎄라피 프라임 시술 후 일상생활이 가능한가요?",
+          "answer": "네, 시술 당일 바로 일상 복귀가 가능합니다. 약간의 붓기나 붉기는 1~2일 내 가라앉습니다."
+        },
+        {
+          "question": "울쎄라피 프라임은 몇 회 시술이 필요한가요?",
+          "answer": "보통 1~2회 시술로 효과를 볼 수 있으며, 6~12개월 간격으로 유지 시술을 권장합니다."
+        },
+        {
+          "question": "울쎄라 시술이 아플까요? 통증 관리는 어떻게 하나요?",
+          "answer": "부산 서면 스타피부과는 울쎄라피 프라임 시술 시 다층 통증 경감 프로토콜을 운영합니다. 시술 전 마취 크림 도포, 시술 중 실시간 통증 모니터링, 환자 요청 시 모니터링 진정(수면 진정) 옵션을 제공합니다. 20년 이상 임상 경력의 피부과 전문의가 통증 민감도에 따라 시술 강도를 개별 조정합니다."
+        },
+        {
+          "question": "부산에서 수면마취(진정) 하에 울쎄라 시술 가능한가요?",
+          "answer": "부산 서면 스타피부과는 환자가 원하는 경우 전문 의료진 감독 하에 모니터링 진정 방식으로 울쎄라피 프라임 시술을 진행할 수 있습니다. 진정 시술 시에는 별도의 상담과 사전 안내가 이루어지며, 시술 중 환자의 활력 징후를 모니터링합니다."
+        },
+        {
+          "question": "부산 서면에서 울쎄라 잘하는 병원을 찾고 있어요.",
+          "answer": "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 스타피부과는 20년 이상의 피부과 전문의 경력을 바탕으로 울쎄라피 프라임 시술을 제공합니다. 부산 지하철 서면역에서 도보 5분 거리이며, 50종 이상의 프리미엄 레이저·시술 장비를 보유하고 있습니다."
+        }
+      ],
+      "en": [
+        {
+          "question": "How long does an Ultherapy Prime session take?",
+          "answer": "It typically takes 60–90 minutes depending on the treatment area and scope."
+        },
+        {
+          "question": "When will I see results from Ultherapy Prime?",
+          "answer": "Results gradually appear from 2–3 months after treatment and continue to improve for up to 6 months."
+        },
+        {
+          "question": "Can I return to daily activities after Ultherapy Prime?",
+          "answer": "Yes, you can return to your normal routine the same day. Any mild swelling or redness usually subsides within 1–2 days."
+        },
+        {
+          "question": "How many Ultherapy Prime sessions do I need?",
+          "answer": "Most patients see results after 1–2 sessions. Maintenance treatments every 6–12 months are recommended."
+        },
+        {
+          "question": "Is Ultherapy painful? How is pain managed?",
+          "answer": "Star Dermatology Busan operates a multi-layer pain relief protocol for Ultherapy Prime. This includes topical anesthetic cream, real-time pain monitoring during the procedure, and optional monitored sedation (sleep sedation) upon request. Dermatologists with 20+ years of experience adjust treatment intensity based on individual pain sensitivity."
+        },
+        {
+          "question": "Is Ultherapy under sedation available in Busan?",
+          "answer": "At Star Dermatology Busan, Ultherapy Prime can be performed under monitored sedation if the patient requests it, supervised by professional medical staff. Sedation procedures involve separate consultation and pre-briefing, with continuous monitoring of vital signs."
+        },
+        {
+          "question": "Looking for a reputable clinic for Ultherapy in Seomyeon, Busan.",
+          "answer": "Star Dermatology, located at 4F Ion City Building, 74 Seomyeon-ro, Busanjin-gu, Busan, provides Ultherapy Prime treatments backed by 20+ years of dermatological expertise. It is a 5-minute walk from Seomyeon Station and houses 50+ premium laser and treatment devices."
+        }
+      ],
+      "ja": [
+        {
+          "question": "ウルセラピー プライムの施術時間はどのくらいですか？",
+          "answer": "施術部位と範囲によりますが、通常60〜90分程度かかります。"
+        },
+        {
+          "question": "ウルセラピー プライムの効果はいつから現れますか？",
+          "answer": "施術後2〜3ヶ月から徐々に効果が現れ、6ヶ月まで継続的に改善されます。"
+        },
+        {
+          "question": "施術後すぐに日常生活に戻れますか？",
+          "answer": "はい、施術当日から日常生活に戻れます。軽い腫れや赤みは1〜2日で落ち着きます。"
+        },
+        {
+          "question": "何回の施術が必要ですか？",
+          "answer": "通常1〜2回の施術で効果を実感でき、6〜12ヶ月ごとのメンテナンス施術をお勧めします。"
+        },
+        {
+          "question": "ウルセラは痛いですか？痛み管理はどうしていますか？",
+          "answer": "釜山ソミョンのスター皮膚科では、ウルセラプライム施術時に多層痛み軽減プロトコルを運用しています。施術前の麻酔クリーム塗布、施術中のリアルタイム痛みモニタリング、患者様のご要望による鎮静(睡眠鎮静)オプションを提供します。20年以上の臨床経験を持つ皮膚科専門医が個別に施術強度を調整します。"
+        },
+        {
+          "question": "釜山で睡眠鎮静下のウルセラ施術は可能ですか？",
+          "answer": "釜山ソミョンのスター皮膚科では、患者様のご希望がある場合、専門医療スタッフの監督下でモニタリング鎮静方式によるウルセラプライム施術が可能です。鎮静施術時には別途相談と事前案内が行われ、施術中はバイタルサインをモニタリングします。"
+        },
+        {
+          "question": "釜山ソミョンでウルセラ経験豊富なクリニックを探しています。",
+          "answer": "釜山広域市釜山鎮区西面路74アイオンシティビル4階のスター皮膚科は、20年以上の皮膚科専門医経験に基づいてウルセラプライム施術を提供しています。釜山地下鉄西面駅から徒歩5分の距離にあり、50種以上のプレミアムレーザー・施術装備を保有しています。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "超声刀Prime的施术时间需要多久？",
+          "answer": "根据施术部位和范围，通常需要60～90分钟。"
+        },
+        {
+          "question": "超声刀Prime的效果何时出现？",
+          "answer": "效果从术后2～3个月开始逐渐显现，并持续改善长达6个月。"
+        },
+        {
+          "question": "术后可以立即恢复日常生活吗？",
+          "answer": "是的，当天即可恢复日常生活。轻微肿胀或泛红通常在1～2天内消退。"
+        },
+        {
+          "question": "需要做几次超声刀Prime？",
+          "answer": "通常1～2次即可见效，建议每6～12个月进行一次维护性治疗。"
+        },
+        {
+          "question": "Ultherapy(乌美拉)会疼吗？如何管理疼痛？",
+          "answer": "釜山西面STAR皮肤科在Ultherapy Prime治疗时运行多层疼痛缓解方案。包括术前麻醉膏涂抹、术中实时疼痛监测,以及应患者要求提供的监测镇静(睡眠镇静)选项。20年以上临床经验的皮肤科专科医生根据个人疼痛敏感度调整治疗强度。"
+        },
+        {
+          "question": "在釜山可以在睡眠镇静下进行Ultherapy吗？",
+          "answer": "在釜山西面STAR皮肤科,患者可根据需求在专业医疗人员监督下,以监测镇静方式接受Ultherapy Prime治疗。镇静治疗前需另行咨询和事前说明,治疗中持续监测生命体征。"
+        },
+        {
+          "question": "在釜山西面寻找Ultherapy经验丰富的医院。",
+          "answer": "位于釜山广域市釜山镇区西面路74号Ion City大厦4楼的STAR皮肤科,以20年以上皮肤科专科医生经验为基础,提供Ultherapy Prime治疗。距离釜山地铁西面站步行5分钟,拥有50多种高端激光和治疗设备。"
+        }
+      ]
+    }
+  },
+  "thermage": {
+    "slug": "thermage",
+    "nameEn": "Thermage FLX",
+    "name": {
+      "ko": "써마지 FLX",
+      "en": "Thermage FLX",
+      "ja": "サーマジ FLX",
+      "zh": "热玛吉 FLX"
+    },
+    "desc": {
+      "ko": "4세대 고주파 리프팅의 정점. 피부 깊은 층 콜라겐을 자극해 탄력 개선과 주름 완화에 탁월. 조시형 원장 공식 자문의.",
+      "en": "The pinnacle of 4th-generation RF lifting. Stimulates deep collagen for exceptional firmness and wrinkle reduction. Dr. Cho Si-hyung is an official Thermage advisory physician.",
+      "ja": "第4世代高周波リフティングの頂点。深層コラーゲンを刺激し、弾力改善とシワ緩和に卓越。チョ・シヒョン院長は公式顧問医。",
+      "zh": "第四代射频提升的巅峰之作。刺激皮肤深层胶原蛋白，卓越改善弹力与皱纹。曹时亨院长为官方顾问医。"
+    },
+    "detail": {
+      "ko": "써마지 FLX는 4세대 고주파(RF) 리프팅 장비로, 피부 깊은 층의 콜라겐을 가열하여 즉각적인 수축 효과와 함께 장기적인 콜라겐 재생을 유도합니다. 스타피부과 조시형 원장은 써마지 공식 자문의로, 최적의 파라미터 설정과 시술 노하우를 보유하고 있습니다. 진동 기능(AccuREP)이 탑재되어 시술 중 불편감을 최소화하며, 시술 후 즉시 일상 복귀가 가능합니다. 눈가·볼·목·바디 등 다양한 부위에 적용 가능합니다.",
+      "en": "Thermage FLX is a 4th-generation radiofrequency (RF) lifting device that heats deep collagen to deliver immediate tightening and long-term collagen regeneration. Dr. Cho Si-hyung at Star Dermatology is an official Thermage advisory physician with expertise in optimal parameter settings. The built-in AccuREP vibration technology minimizes discomfort during treatment, and you can return to daily activities immediately. Applicable to the eye area, cheeks, neck, and body.",
+      "ja": "サーマジ FLXは第4世代高周波（RF）リフティング機器で、皮膚深層のコラーゲンを加熱し、即時の引き締め効果と長期的なコラーゲン再生を促します。スター皮膚科のチョ・シヒョン院長はサーマジ公式顧問医として、最適なパラメータ設定と施術ノウハウを持っています。AccuREP振動機能により施術中の不快感を最小化し、施術後すぐに日常生活に戻れます。目元・頬・首・ボディなど様々な部位に対応。",
+      "zh": "热玛吉FLX是第四代射频（RF）提升仪器，通过加热皮肤深层胶原蛋白，实现即时紧致效果并促进长期胶原再生。STAR皮肤科曹时亨院长是热玛吉官方顾问医，掌握最优参数设置和施术技巧。内置AccuREP振动技术将施术中的不适感降至最低，术后可立即恢复日常生活。适用于眼周、面颊、颈部及身体各部位。"
+    },
+    "effect": {
+      "ko": "피부 탄력 개선, 얼굴 리프팅, 주름 완화, 콜라겐 재생, 눈가·목 탄력 개선",
+      "en": "Skin firmness improvement, facial lifting, wrinkle reduction, collagen regeneration, eye area and neck tightening",
+      "ja": "肌の弾力改善、顔のリフティング、シワ緩和、コラーゲン再生、目元・首の弾力改善",
+      "zh": "皮肤弹力改善、面部提升、皱纹改善、胶原蛋白再生、眼周及颈部紧致"
+    },
+    "caution": {
+      "ko": "시술 중 열감이 느껴지는 것은 정상 반응입니다. 시술 후 일시적인 붉기나 붓기가 나타날 수 있으나 수 시간 내 가라앉습니다. 임산부, 금속 임플란트 보유자는 시술 전 반드시 상담이 필요합니다.",
+      "en": "Warmth during treatment is a normal reaction. Temporary redness or swelling may occur but typically subsides within a few hours. Pregnant women and those with metal implants must consult a physician before treatment.",
+      "ja": "施術中の熱感は正常な反応です。一時的な赤みや腫れが現れることがありますが、数時間以内に落ち着きます。妊婦の方や金属インプラントをお持ちの方は、施術前に必ずご相談ください。",
+      "zh": "施术中感到热感属正常反应。术后可能出现短暂泛红或肿胀，通常数小时内消退。孕妇及体内有金属植入物者，施术前必须先进行咨询。"
+    },
+    "time": {
+      "ko": "45~90분",
+      "en": "45–90 min",
+      "ja": "45〜90分",
+      "zh": "45～90分钟"
+    },
+    "recovery": {
+      "ko": "당일 일상",
+      "en": "Same-day return",
+      "ja": "当日から日常生活可",
+      "zh": "当天可正常生活"
+    },
+    "sessions": {
+      "ko": "1~2회 (6~12개월 간격)",
+      "en": "1–2 sessions (every 6–12 months)",
+      "ja": "1〜2回（6〜12ヶ月間隔）",
+      "zh": "1～2次（间隔6～12个月）"
+    },
+    "seoTitle": {
+      "ko": "써마지 FLX | 부산 서면 스타피부과 · 조시형 원장 공식 자문의",
+      "en": "Thermage FLX | Star Dermatology Seomyeon Busan – Official Advisory Physician",
+      "ja": "サーマジ FLX | 釜山西面 スター皮膚科 – 公式顧問医",
+      "zh": "热玛吉 FLX | 釜山西面 STAR 皮肤科 – 官方顾问医"
+    },
+    "seoDescription": {
+      "ko": "써마지 FLX는 4세대 고주파 리프팅으로 콜라겐 재생 및 피부 탄력을 개선. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Thermage FLX at Star Dermatology, Seomyeon, Busan. 4th-generation RF lifting for collagen regeneration and skin firmness. Dr. Cho Si-hyung is an official advisory physician. Same-day return to daily activities.",
+      "ja": "釜山西面スター皮膚科のサーマジ FLX施術案内。第4世代高周波リフティングでコラーゲン再生と肌弾力改善。チョ・シヒョン院長は公式顧問医。施術当日から日常生活に復帰可能。",
+      "zh": "釜山西面STAR皮肤科热玛吉FLX施术介绍。第四代射频提升，促进胶原再生、改善皮肤弹力。曹时亨院长为官方顾问医。当天可恢复日常生活。"
+    },
+    "seoKeywords": {
+      "ko": "써마지 FLX, 써마지, 부산써마지, 서면써마지, 부산써마지가격, Thermage, 고주파리프팅, 부산리프팅, 서면리프팅, 부산피부과, 서면피부과, 서면역피부과, 콜라겐재생, 피부과전문의",
+      "en": "Thermage FLX, Thermage, RF lifting, Busan lifting, Seomyeon lifting, Busan dermatology, Star Dermatology, Seomyeon dermatology, collagen regeneration, board-certified dermatologist",
+      "ja": "サーマジ FLX, サーマジ, 釜山サーマジ, 西面サーマジ, Thermage, 高周波リフティング, 釜山リフティング, 西面リフティング, 釜山皮膚科, 西面皮膚科, コラーゲン再生, 皮膚科専門医",
+      "zh": "热玛吉FLX, 热玛吉, 釜山热玛吉, 西面热玛吉, Thermage, 射频提升, 釜山提升, 西面提升, 釜山皮肤科, 西面皮肤科, 胶原再生, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": {
+      "ko": "얼굴, 목, 눈가, 바디",
+      "en": "Face, neck, eye area, body",
+      "ja": "顔、首、目元、ボディ",
+      "zh": "面部、颈部、眼周、身体"
+    },
+    "image": "/api/storage/thermage-flx_20a90462_e6b7cf77.png",
+    "faq": {
+      "ko": [
+        {
+          "question": "써마지 FLX 시술 시간은 얼마나 걸리나요?",
+          "answer": "시술 부위에 따라 45~90분 정도 소요됩니다. 전체 얼굴 시술은 약 60~90분입니다."
+        },
+        {
+          "question": "써마지 FLX 효과는 얼마나 지속되나요?",
+          "answer": "개인차가 있지만 보통 1~2년 정도 효과가 지속됩니다. 정기적인 유지 시술을 권장합니다."
+        },
+        {
+          "question": "써마지 FLX 시술 후 통증이 있나요?",
+          "answer": "AccuREP 진동 기능으로 불편감을 최소화합니다. 시술 중 열감은 정상 반응이며 시술 후 바로 일상 복귀가 가능합니다."
+        },
+        {
+          "question": "써마지 자문의가 무엇인가요?",
+          "answer": "써마지 제조사가 공인한 전문 시술의로, 최적의 파라미터 설정과 시술 노하우를 공식 인정받은 의사입니다. 스타피부과 조시형 원장이 공식 자문의입니다."
+        },
+        {
+          "question": "써마지 시술이 아플까요? 통증 관리는 어떻게 하나요?",
+          "answer": "부산 서면 스타피부과는 써마지 FLX 시술 시 AccuREP 진동 기능으로 불편감을 최소화하며, 시술 전 마취 크림 도포, 시술 중 실시간 통증 모니터링, 환자 요청 시 모니터링 진정(수면 진정) 옵션을 제공합니다. 써마지 공식 자문의인 조시형 원장이 통증 민감도에 따라 시술 강도를 개별 조정합니다."
+        },
+        {
+          "question": "부산에서 수면마취(진정) 하에 써마지 시술 가능한가요?",
+          "answer": "부산 서면 스타피부과는 환자가 원하는 경우 전문 의료진 감독 하에 모니터링 진정 방식으로 써마지 FLX 시술을 진행할 수 있습니다. 진정 시술 시에는 별도의 상담과 사전 안내가 이루어지며, 시술 중 활력 징후를 모니터링합니다."
+        },
+        {
+          "question": "부산 서면에서 써마지 잘하는 병원을 찾고 있어요.",
+          "answer": "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 스타피부과는 써마지 공식 자문의 조시형 원장이 직접 시술하는 부산 서면의 써마지 FLX 전문 병원입니다. 부산 지하철 서면역에서 도보 5분 거리입니다."
+        }
+      ],
+      "en": [
+        {
+          "question": "How long does a Thermage FLX session take?",
+          "answer": "It takes approximately 45–90 minutes depending on the treatment area. A full-face treatment takes about 60–90 minutes."
+        },
+        {
+          "question": "How long do Thermage FLX results last?",
+          "answer": "Results typically last 1–2 years, though individual results may vary. Regular maintenance treatments are recommended."
+        },
+        {
+          "question": "Is Thermage FLX painful?",
+          "answer": "The AccuREP vibration technology minimizes discomfort. Warmth during treatment is normal, and you can return to daily activities immediately afterward."
+        },
+        {
+          "question": "What is a Thermage advisory physician?",
+          "answer": "An advisory physician is officially recognized by the Thermage manufacturer for expertise in optimal parameter settings and treatment techniques. Dr. Cho Si-hyung at Star Dermatology holds this designation."
+        },
+        {
+          "question": "Is Thermage painful? How is pain managed?",
+          "answer": "Star Dermatology Busan minimizes discomfort with AccuREP vibration technology during Thermage FLX. The clinic also offers topical anesthetic cream, real-time pain monitoring, and optional monitored sedation upon request. Official Thermage advisory physician Dr. Cho Si-hyung adjusts treatment intensity based on individual pain sensitivity."
+        },
+        {
+          "question": "Is Thermage under sedation available in Busan?",
+          "answer": "At Star Dermatology Busan, Thermage FLX can be performed under monitored sedation if the patient requests it, supervised by professional medical staff. Sedation procedures involve separate consultation and pre-briefing, with continuous monitoring of vital signs."
+        },
+        {
+          "question": "Looking for a reputable Thermage clinic in Seomyeon, Busan.",
+          "answer": "Star Dermatology, located at 4F Ion City Building, 74 Seomyeon-ro, Busanjin-gu, Busan, is the official Thermage advisory clinic where Dr. Cho Si-hyung performs treatments directly. It is a 5-minute walk from Seomyeon Station."
+        }
+      ],
+      "ja": [
+        {
+          "question": "サーマジ FLXの施術時間はどのくらいですか？",
+          "answer": "施術部位によって45〜90分程度かかります。全顔施術は約60〜90分です。"
+        },
+        {
+          "question": "サーマジ FLXの効果はどのくらい続きますか？",
+          "answer": "個人差はありますが、通常1〜2年程度効果が持続します。定期的なメンテナンス施術をお勧めします。"
+        },
+        {
+          "question": "サーマジ FLXは痛いですか？",
+          "answer": "AccuREP振動機能で不快感を最小化します。施術中の熱感は正常な反応で、施術後すぐに日常生活に戻れます。"
+        },
+        {
+          "question": "サーマジ顧問医とは何ですか？",
+          "answer": "サーマジメーカーが公認した専門施術医で、最適なパラメータ設定と施術ノウハウを公式に認定された医師です。スター皮膚科のチョ・シヒョン院長がその顧問医です。"
+        },
+        {
+          "question": "サーマジは痛いですか？痛み管理はどうしていますか？",
+          "answer": "釜山ソミョンのスター皮膚科では、サーマジFLX施術時にAccuREP振動機能で不快感を最小化し、施術前の麻酔クリーム塗布、施術中のリアルタイム痛み監視、患者様のご要望による鎮静オプションを提供します。サーマジ公式顧問医のチョ・シヒョン院長が個別に施術強度を調整します。"
+        },
+        {
+          "question": "釜山で睡眠鎮静下のサーマジ施術は可能ですか？",
+          "answer": "釜山ソミョンのスター皮膚科では、患者様のご希望がある場合、専門医療スタッフの監督下でモニタリング鎮静方式によるサーマジFLX施術が可能です。鎮静施術時には別途相談と事前案内が行われ、施術中はバイタルサインをモニタリングします。"
+        },
+        {
+          "question": "釜山ソミョンでサーマジ経験豊富なクリニックを探しています。",
+          "answer": "釜山広域市釜山鎮区西面路74アイオンシティビル4階のスター皮膚科は、サーマジ公式顧問医のチョ・シヒョン院長が直接施術する釜山西面のサーマジFLX専門クリニックです。釜山地下鉄西面駅から徒歩5分の距離にあります。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "热玛吉FLX的施术时间需要多久？",
+          "answer": "根据施术部位，大约需要45～90分钟。全脸施术约需60～90分钟。"
+        },
+        {
+          "question": "热玛吉FLX的效果能持续多久？",
+          "answer": "因人而异，通常效果可持续1～2年。建议定期进行维护性治疗。"
+        },
+        {
+          "question": "热玛吉FLX疼吗？",
+          "answer": "AccuREP振动技术将不适感降至最低。施术中的热感属正常反应，术后可立即恢复日常生活。"
+        },
+        {
+          "question": "热玛吉顾问医是什么？",
+          "answer": "顾问医是经热玛吉制造商官方认证的专业施术医生，具备最优参数设置和施术技巧。STAR皮肤科曹时亨院长即为官方顾问医。"
+        },
+        {
+          "question": "热玛吉会疼吗？如何管理疼痛？",
+          "answer": "釜山西面STAR皮肤科在热玛吉FLX施术时利用AccuREP振动技术将不适感降至最低，并提供术前麻醉膏涂抹、术中实时疼痛监测和应患者要求的监测镇静选项。热玛吉官方顾问医曹时亨院长根据个人疼痛敏感度调整施术强度。"
+        },
+        {
+          "question": "在釜山可以在睡眠镇静下进行热玛吉吗？",
+          "answer": "在釜山西面STAR皮肤科,患者可根据需求在专业医疗人员监督下,以监测镇静方式接受热玛吉FLX治疗。镇静治疗前需另行咨询和事前说明,治疗中持续监测生命体征。"
+        },
+        {
+          "question": "在釜山西面寻找热玛吉经验丰富的医院。",
+          "answer": "位于釜山广域市釜山镇区西面路74号Ion City大厦4楼的STAR皮肤科,是热玛吉官方顾问医曹时亨院长亲自施术的釜山西面热玛吉FLX专科医院。距离釜山地铁西面站步行5分钟。"
+        }
+      ]
+    }
+  },
+  "under-eye-fat": {
+    "slug": "under-eye-fat",
+    "nameEn": "Under-eye Fat Repositioning",
+    "name": {
+      "ko": "눈밑지방재배치",
+      "en": "Under-eye Fat Repositioning",
+      "ja": "目の下脂肪再配置",
+      "zh": "眼下脂肪重置术"
+    },
+    "desc": {
+      "ko": "${_n}례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선. 지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.",
+      "en": "With over ${_n} cases of experience, this procedure simultaneously improves dark circles and under-eye puffiness by repositioning fat to create a natural under-eye contour — Star Dermatology's signature treatment.",
+      "ja": "${_n}例以上の経験でクマと目の下のふくらみを同時に改善。脂肪を再配置して自然な目の下のラインを作るスター皮膚科の代表施術。",
+      "zh": "凭借${_n}例以上的丰富经验，同时改善黑眼圈和眼下膨出。通过脂肪重置打造自然眼下轮廓，是STAR皮肤科的招牌施术。"
+    },
+    "detail": {
+      "ko": "눈밑지방재배치술은 눈 아래 과잉 축적된 지방을 제거하지 않고 꺼진 눈물고랑(tear trough) 부위로 재배치하여 다크서클과 눈밑 볼록함을 동시에 개선하는 시술입니다. 스타피부과는 ${_n}례 이상의 풍부한 시술 경험을 보유하고 있으며, 절개를 최소화하여 흉터 위험을 낮춥니다. 지방을 제거하지 않고 재배치하는 방식이므로 시술 후 지방 공동이나 외관 변형이 거의 없고, 자연스러운 눈밑 라인을 기대할 수 있습니다.",
+      "en": "Under-eye fat repositioning does not remove excess fat beneath the eyes — instead, it repositions the fat into the sunken tear trough area to simultaneously improve dark circles and under-eye puffiness. Star Dermatology has performed over ${_n} cases and uses minimal incisions to reduce scarring risk. Because the fat is repositioned rather than removed, there is virtually no hollow appearance or contour deformity after the procedure, and a natural under-eye line can be expected.",
+      "ja": "目の下脂肪再配置術は、目の下に過剰に蓄積した脂肪を除去せず、くぼんだ涙溝（ tear trough）部位に再配置することで、クマと目の下のふくらみを同時に改善する施術です。スター皮膚科は${_n}例以上の豊富な施術経験を持ち、切開を最小限に抑えて傷跡リスクを低減します。脂肪を除去せず再配置する方式のため、施術後の脂肪空洞や外観変形がほとんどなく、自然な目の下のラインが期待できます。",
+      "zh": "眼下脂肪重置术并不切除眼下多余脂肪，而是将其重新填充至凹陷的泪沟区域，从而同时改善黑眼圈和眼下膨出。STAR皮肤科拥有${_n}例以上的丰富施术经验，采用最小化切口降低疤痕风险。由于是重置而非切除脂肪，术后几乎不会出现脂肪空洞或外观变形，可期待自然的眼下轮廓。"
+    },
+    "effect": {
+      "ko": "다크서클 개선, 눈밑 볼록함 해소, 눈물고랑 음영 완화, 자연스러운 눈밑 라인, 피로해 보이는 인상 개선",
+      "en": "Dark circle improvement, under-eye puffiness reduction, tear trough shadow reduction, natural under-eye contour, fresher and more rested appearance",
+      "ja": "クマの改善、目の下のふくらみ解消、涙溝の陰影緩和、自然な目の下のライン、疲れた印象の改善",
+      "zh": "改善黑眼圈、消除眼下膨出、淡化泪沟阴影、打造自然眼下轮廓、改善疲惫感"
+    },
+    "caution": {
+      "ko": "시술 후 3~7일간 붓기와 멍이 나타날 수 있으며, 완전한 결과 확인까지 4~8주가 소요됩니다. 시술 후 1주일간 격렬한 운동과 음주를 피하고, 엎드려 자는 자세를 삼가세요. 눈을 비비거나 강하게 누르는 행동을 피하고, 선글라스 착용으로 자외선을 차단하세요.",
+      "en": "Swelling and bruising may occur for 3–7 days after the procedure, and full results may take 4–8 weeks to appear. Avoid strenuous exercise and alcohol for one week after treatment, and refrain from sleeping face-down. Avoid rubbing or pressing the eye area, and wear sunglasses to protect against UV exposure.",
+      "ja": "施術後3〜7日間、腫れやあざが現れることがあり、完全な結果の確認には4〜8週間かかります。施術後1週間は激しい運動と飲酒を避け、うつ伏せで寝る姿勢は控えてください。目をこすったり強く押したりする行動を避け、サングラスで紫外線を遮断してください。",
+      "zh": "术后3～7天可能出现肿胀和淤青，完整效果需4～8周才能显现。术后一周内避免剧烈运动和饮酒，不要俯卧睡眠。避免揉眼或用力按压眼部，佩戴墨镜防止紫外线照射。"
+    },
+    "time": {
+      "ko": "30~60분",
+      "en": "30–60 min",
+      "ja": "30〜60分",
+      "zh": "30～60分钟"
+    },
+    "recovery": {
+      "ko": "3~7일",
+      "en": "3–7 days",
+      "ja": "3〜7日",
+      "zh": "3～7天"
+    },
+    "sessions": {
+      "ko": "1회 (반영구적 효과)",
+      "en": "1 session (semi-permanent results)",
+      "ja": "1回（半永久的な効果）",
+      "zh": "1次（半永久效果）"
+    },
+    "seoTitle": {
+      "ko": "눈밑지방재배치 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Under-eye Fat Repositioning | Star Dermatology Seomyeon Busan – ${_n}+ Cases",
+      "ja": "目の下脂肪再配置 | 釜山西面 スター皮膚科 – ${_n}例以上の経験",
+      "zh": "眼下脂肪重置术 | 釜山西面 STAR 皮肤科 – ${_n}例以上经验"
+    },
+    "seoDescription": {
+      "ko": "눈밑지방재배치는 다크서클과 눈밑 볼록함을 동시에 개선하는 시술. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Under-eye fat repositioning at Star Dermatology, Seomyeon, Busan. Over ${_n} cases of experience. Star Dermatology's signature procedure that simultaneously improves dark circles and under-eye puffiness. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科の目の下脂肪再配置施術案内。${_n}例以上の豊富な経験。クマと目の下のふくらみを同時に改善するスター皮膚科の代表施術。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科眼下脂肪重置术介绍。拥有${_n}例以上丰富经验。同时改善黑眼圈和眼下膨出的招牌施术，由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "눈밑지방재배치, 부산눈밑지방재배치, 서면눈밑지방재배치, 다크서클, 눈밑볼록, 눈물고랑, 부산피부과, 서면피부과, 서면역피부과, 눈밑시술, 눈밑지방, 피부과전문의",
+      "en": "under-eye fat repositioning, Busan under-eye fat repositioning, Seomyeon under-eye fat repositioning, dark circles, under-eye puffiness, tear trough, Busan dermatology, Star Dermatology, Seomyeon dermatology, board-certified dermatologist",
+      "ja": "目の下脂肪再配置, 釜山目の下脂肪再配置, 西面目の下脂肪再配置, クマ, 目の下のふくらみ, 涙溝, 釜山皮膚科, 西面皮膚科, 目の下施術, 皮膚科専門医",
+      "zh": "眼下脂肪重置, 釜山眼下脂肪重置, 西面眼下脂肪重置, 黑眼圈, 眼下膨出, 泪沟, 釜山皮肤科, 西面皮肤科, 眼下施术, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": {
+      "ko": "눈밑, 눈물고랑",
+      "en": "Under-eye area, tear trough",
+      "ja": "目の下、涙溝",
+      "zh": "眼下区域、泪沟"
+    },
+    "image": "/api/storage/treat-eyelid-new-6Qge5k6ndWTS5nFXDZSXRF_1bdb9103.webp",
+    "faq": {
+      "ko": [
+        {
+          "question": "눈밑지방재배치 시술 시간은 얼마나 걸리나요?",
+          "answer": "보통 30~60분 정도 소요됩니다. 국소마취 후 진행하므로 통증은 최소화됩니다."
+        },
+        {
+          "question": "눈밑지방재배치 회복 기간은 얼마나 되나요?",
+          "answer": "시술 후 3~7일간 붓기와 멍이 나타날 수 있습니다. 완전한 결과 확인까지는 4~8주가 소요됩니다."
+        },
+        {
+          "question": "눈밑지방재배치 효과는 얼마나 지속되나요?",
+          "answer": "지방을 재배치하는 방식이므로 반영구적인 효과를 기대할 수 있습니다. 노화에 따른 변화는 있을 수 있습니다."
+        },
+        {
+          "question": "눈밑지방재배치와 필러의 차이는 무엇인가요?",
+          "answer": "필러는 임시적인 볼륨 보충이지만, 눈밑지방재배치는 자신의 지방을 활용하므로 더 자연스럽고 반영구적인 효과를 얻을 수 있습니다."
+        },
+        {
+          "question": "눈밑지방재배치 시술이 아플까요? 통증 관리는 어떻게 하나요?",
+          "answer": "부산 서면 스타피부과는 눈밑지방재배치 시술 시 국소마취를 기본으로 진행하며, 환자 요청 시 모니터링 진정(수면 진정) 옵션을 제공합니다. 20년 이상 임상 경험의 피부과 전문의가 직접 시술하여 통증과 부작용을 최소화합니다."
+        },
+        {
+          "question": "부산에서 수면마취(진정) 하에 눈밑지방재배치 가능한가요?",
+          "answer": "부산 서면 스타피부과는 환자가 원하는 경우 전문 의료진 감독 하에 모니터링 진정 방식으로 눈밑지방재배치 시술을 진행할 수 있습니다. 진정 시술 시에는 별도의 상담과 사전 안내가 이루어지며, 시술 중 활력 징후를 모니터링합니다."
+        },
+        {
+          "question": "부산에서 눈밑지방재배치 경험 많은 피부과를 찾고 있어요.",
+          "answer": "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 스타피부과는 20년 이상 임상 경험의 피부과 전문의가 직접 시술하는 부산 서면의 눈밑지방재배치 전문 병원입니다. 부산 지하철 서면역에서 도보 5분 거리이며, 50여 종의 고급 레이저 및 시술 장비를 보유하고 있습니다."
+        }
+      ],
+      "en": [
+        {
+          "question": "How long does under-eye fat repositioning take?",
+          "answer": "The procedure typically takes 30–60 minutes. Local anesthesia is used to minimize discomfort."
+        },
+        {
+          "question": "What is the recovery time for under-eye fat repositioning?",
+          "answer": "Swelling and bruising may occur for 3–7 days after the procedure. Full results can be assessed after 4–8 weeks."
+        },
+        {
+          "question": "How long do the results last?",
+          "answer": "Because fat is repositioned rather than removed, the results are semi-permanent. Some changes may occur naturally with aging."
+        },
+        {
+          "question": "What is the difference between under-eye fat repositioning and filler?",
+          "answer": "Filler provides temporary volume, while fat repositioning uses your own fat for a more natural and semi-permanent result."
+        },
+        {
+          "question": "Is under-eye fat repositioning painful? How is pain managed?",
+          "answer": "Star Dermatology Busan performs under-eye fat repositioning under local anesthesia as standard, with optional monitored sedation available upon request. A board-certified dermatologist with over 20 years of clinical experience performs the procedure directly to minimize pain and side effects."
+        },
+        {
+          "question": "Is under-eye fat repositioning under sedation available in Busan?",
+          "answer": "At Star Dermatology Busan, under-eye fat repositioning can be performed under monitored sedation if the patient requests it, supervised by professional medical staff. Sedation procedures involve separate consultation and pre-briefing, with continuous monitoring of vital signs."
+        },
+        {
+          "question": "Looking for an experienced clinic for under-eye fat repositioning in Busan.",
+          "answer": "Star Dermatology, located at 4F Ion City Building, 74 Seomyeon-ro, Busanjin-gu, Busan, is a specialist clinic for under-eye fat repositioning where a board-certified dermatologist with over 20 years of experience performs treatments directly. It is a 5-minute walk from Seomyeon Station."
+        }
+      ],
+      "ja": [
+        {
+          "question": "目の下脂肪再配置の施術時間はどのくらいですか？",
+          "answer": "通常30〜60分程度かかります。局所麻酔を使用するため、痛みは最小限です。"
+        },
+        {
+          "question": "目の下脂肪再配置の回復期間はどのくらいですか？",
+          "answer": "施術後3〜7日間、腫れやあざが現れることがあります。完全な結果の確認には4〜8週間かかります。"
+        },
+        {
+          "question": "目の下脂肪再配置の効果はどのくらい続きますか？",
+          "answer": "脂肪を再配置する方式のため、半永久的な効果が期待できます。加齢による変化は生じることがあります。"
+        },
+        {
+          "question": "目の下脂肪再配置とフィラーの違いは何ですか？",
+          "answer": "フィラーは一時的なボリューム補充ですが、脂肪再配置は自分の脂肪を活用するため、より自然で半永久的な効果が得られます。"
+        },
+        {
+          "question": "目の下脂肪再配置は痛いですか？痛み管理はどうしていますか？",
+          "answer": "釜山ソミョンのスター皮膚科では、目の下脂肪再配置施術時に局所麻酔を基本として行い、患者様のご要望によりモニタリング鎮静オプションを提供します。20年以上の臨床経験を持つ皮膚科専門医が直接施術し、痛みと副作用を最小化します。"
+        },
+        {
+          "question": "釜山で睡眠鎮静下の目の下脂肪再配置は可能ですか？",
+          "answer": "釜山ソミョンのスター皮膚科では、患者様のご希望がある場合、専門医療スタッフの監督下でモニタリング鎮静方式による目の下脂肪再配置施術が可能です。鎮静施術時には別途相談と事前案内が行われ、施術中はバイタルサインをモニタリングします。"
+        },
+        {
+          "question": "釜山で目の下脂肪再配置の経験豊富なクリニックを探しています。",
+          "answer": "釜山広域市釜山鎮区西面路74アイオンシティビル4階のスター皮膚科は、20年以上の臨床経験を持つ皮膚科専門医が直接施術する釜山西面の目の下脂肪再配置専門クリニックです。釜山地下鉄西面駅から徒歩5分の距離にあります。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "眼下脂肪重置术需要多长时间？",
+          "answer": "通常需要30～60分钟。采用局部麻醉，将疼痛降至最低。"
+        },
+        {
+          "question": "眼下脂肪重置术的恢复期是多久？",
+          "answer": "术后3～7天可能出现肿胀和淤青。完整效果需4～8周才能评估。"
+        },
+        {
+          "question": "眼下脂肪重置术的效果能持续多久？",
+          "answer": "由于是重置而非切除脂肪，效果为半永久性。随着年龄增长可能会有自然变化。"
+        },
+        {
+          "question": "眼下脂肪重置术与填充剂有什么区别？",
+          "answer": "填充剂是临时性的容量补充，而脂肪重置术利用自身脂肪，效果更自然且为半永久性。"
+        },
+        {
+          "question": "眼下脂肪重置术会疼吗？如何管理疼痛？",
+          "answer": "釜山西面STAR皮肤科在眼下脂肪重置术时以局部麻醉为基础进行，并应患者要求提供监测镇静（睡眠镇静）选项。拥有20年以上临床经验的皮肤科专科医生亲自施术，将疼痛和副作用降至最低。"
+        },
+        {
+          "question": "在釜山可以在睡眠镇静下进行眼下脂肪重置术吗？",
+          "answer": "在釜山西面STAR皮肤科,患者可根据需求在专业医疗人员监督下,以监测镇静方式接受眼下脂肪重置术。镇静治疗前需另行咨询和事前说明,治疗中持续监测生命体征。"
+        },
+        {
+          "question": "在釜山西面寻找眼下脂肪重置术经验丰富的医院。",
+          "answer": "位于釜山广域市釜山镇区西面路74号Ion City大厦4楼的STAR皮肤科,是拥有20年以上临床经验的皮肤科专科医生亲自施术的釜山西面眼下脂肪重置术专科医院。距离釜山地铁西面站步行5分钟。"
+        }
+      ]
+    }
+  },
+  "ulthera-classic": {
+    "slug": "ulthera-classic",
+    "nameEn": "Ulthera",
+    "name": {
+      "ko": "울쎄라",
+      "en": "Ulthera",
+      "ja": "ウルセラ",
+      "zh": "超声刀"
+    },
+    "desc": {
+      "ko": "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅. 자연스러운 피부 탄력 회복.",
+      "en": "Classic HIFU lifting that stimulates the SMAS layer for natural skin firmness restoration.",
+      "ja": "超音波エネルギーでSMAS層まで刺激する正統リフティング。自然な肌弾力の回復。",
+      "zh": "超声波能量刺激SMAS层的经典提升疗程，自然恢复皮肤弹力。"
+    },
+    "detail": {
+      "ko": "정통 울쎄라는 초음파 에너지를 이용한 비침습적 리프팅 시술입니다. 집속 초음파(HIFU) 에너지를 피부 깊은 층인 SMAS(근막층)까지 정확하게 전달하여 피부 속에서부터 리프팅 효과를 유도합니다. 자연스러운 결과와 빠른 회복이 특징이며, 시술 직후 일상 복귀가 가능합니다.",
+      "en": "Classic Ulthera is a non-invasive lifting procedure using ultrasound energy. It precisely delivers focused ultrasound (HIFU) energy down to the deep SMAS layer, inducing a lifting effect from within. Known for natural results and fast recovery, you can return to daily activities immediately after treatment.",
+      "ja": "正統ウルセラは超音波エネルギーを使用した非侵襲的リフティング施術です。集束超音波（HIFU）エネルギーを皮膚深層のSMAS（筋膜層）まで正確に届け、内側からリフティング効果を引き出します。自然な結果と早い回復が特徴で、施術直後から日常生活に戻れます。",
+      "zh": "经典超声刀是一种使用超声波能量的非侵入性提升疗程。将集束超声波（HIFU）能量精准传递至皮肤深层的SMAS筋膜层，从内部激发提升效果。以自然效果和快速恢复为特点，术后可立即恢复日常生活。"
+    },
+    "effect": {
+      "ko": "피부 탄력 개선, 주름 완화, 얼굴 리프팅, 콜라겐 재생, 피부 톤 개선",
+      "en": "Skin firmness improvement, wrinkle reduction, facial lifting, collagen regeneration, skin tone improvement",
+      "ja": "肌弾力改善、シワ緩和、顔のリフティング、コラーゲン再生、肌トーン改善",
+      "zh": "皮肤弹力改善、皱纹改善、面部提升、胶原蛋白再生、肤色改善"
+    },
+    "caution": {
+      "ko": "시술 중 일시적인 열감이나 따끔거림이 있을 수 있습니다. 시술 후 24시간 동안 뜨거운 물 사용과 과도한 자외선 노출은 피하세요.",
+      "en": "Temporary warmth or tingling sensations may occur during treatment. Avoid hot water and excessive sun exposure for 24 hours after the procedure.",
+      "ja": "施術中に一時的な熱感やチクチク感が生じることがあります。施術後24時間は熱いお湯の使用と過度な紫外線曝露を避けてください。",
+      "zh": "施术过程中可能会有短暂的热感或刺痛感。术后24小时内请避免使用热水和过度日晒。"
+    },
+    "time": {
+      "ko": "60~90분",
+      "en": "60–90 min",
+      "ja": "60〜90分",
+      "zh": "60～90分钟"
+    },
+    "recovery": {
+      "ko": "당일 일상",
+      "en": "Same-day return",
+      "ja": "当日から日常生活可",
+      "zh": "当天可正常生活"
+    },
+    "sessions": {
+      "ko": "1~2회 (6~12개월 간격)",
+      "en": "1–2 sessions (every 6–12 months)",
+      "ja": "1〜2回（6〜12ヶ月間隔）",
+      "zh": "1～2次（间隔6～12个月）"
+    },
+    "seoTitle": {
+      "ko": "울쎄라 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Ulthera | Star Dermatology Seomyeon Busan – HIFU Non-Surgical Lifting",
+      "ja": "ウルセラ | 釜山西面 スター皮膚科 – HIFU 非手術リフティング",
+      "zh": "超声刀 | 釜山西面 STAR 皮肤科 – HIFU 非手术提升"
+    },
+    "seoDescription": {
+      "ko": "울쎄라는 HIFU 집속 초음파로 SMAS층까지 자극하는 비침습적 리프팅. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Ulthera at Star Dermatology, Seomyeon, Busan. Non-invasive lifting using HIFU to stimulate the SMAS layer. Same-day return to daily activities. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科のウルセラ施術案内。HIFUでSMAS層まで刺激する非侵襲的リフティング。施術当日から日常生活に復帰可能。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科超声刀施术介绍。HIFU集束超声波刺激SMAS层的非侵入性提升疗程。当天可恢复日常生活，由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "울쎄라, 부산울쎄라, 서면울쎄라, 부산울쎄라가격, HIFU, 부산리프팅, 서면리프팅, 부산피부과, 서면피부과, 서면역피부과, 비수술리프팅, 피부과전문의",
+      "en": "Ulthera, HIFU, Busan Ulthera, Seomyeon Ulthera, Busan lifting, Seomyeon lifting, Busan dermatology, Star Dermatology, Seomyeon dermatology, non-surgical lifting, board-certified dermatologist",
+      "ja": "ウルセラ, 釜山ウルセラ, 西面ウルセラ, HIFU, 釜山リフティング, 西面リフティング, 釜山皮膚科, 西面皮膚科, 非手術リフティング, 皮膚科専門医",
+      "zh": "超声刀, 釜山超声刀, 西面超声刀, HIFU, 釜山提升, 西面提升, 釜山皮肤科, 西面皮肤科, 非手术提升, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": null,
+    "image": "/api/storage/ulthera_fbd556da_9f827cec.jpg",
+    "faq": {
+      "ko": [
+        {
+          "question": "시술 중 통증이 있나요?",
+          "answer": "울쎄라는 초음파 기술을 사용하므로 시술 중 약간의 따뜻함과 따끔거림을 느낄 수 있습니다. 통증은 개인차가 있으며, 필요시 마취크림 사용이 가능합니다."
+        },
+        {
+          "question": "효과는 얼마나 지속되나요?",
+          "answer": "울쎄라의 효과는 6개월~1년 정도 지속됩니다. 시술 후 2~3주부터 변화를 느낄 수 있으며, 3개월 후 최대 효과를 경험합니다."
+        },
+        {
+          "question": "부작용이 있을까요?",
+          "answer": "매우 안전한 시술이지만 시술 후 일시적인 부종, 발적이 있을 수 있습니다. 이는 보통 수시간~하루 내에 사라집니다."
+        },
+        {
+          "question": "언제부터 일상생활이 가능한가요?",
+          "answer": "울쎄라는 회복 기간이 거의 없어 시술 직후 바로 일상생활이 가능합니다."
+        }
+      ],
+      "en": [
+        {
+          "question": "Is there pain during the treatment?",
+          "answer": "Ulthera uses ultrasound technology, so you may feel slight warmth and tingling during the procedure. Pain levels vary by individual, and numbing cream is available if needed."
+        },
+        {
+          "question": "How long do the results last?",
+          "answer": "Ulthera results typically last 6 months to 1 year. You may notice changes from 2–3 weeks post-treatment, with maximum results at 3 months."
+        },
+        {
+          "question": "Are there any side effects?",
+          "answer": "It is a very safe procedure, but temporary swelling or redness may occur after treatment. This usually subsides within a few hours to a day."
+        },
+        {
+          "question": "When can I return to daily activities?",
+          "answer": "Ulthera has virtually no downtime, so you can return to daily activities immediately after treatment."
+        }
+      ],
+      "ja": [
+        {
+          "question": "施術中に痛みはありますか？",
+          "answer": "ウルセラは超音波技術を使用するため、施術中に軽い温感とチクチク感を感じることがあります。痛みには個人差があり、必要に応じて麻酔クリームの使用が可能です。"
+        },
+        {
+          "question": "効果はどのくらい続きますか？",
+          "answer": "ウルセラの効果は6ヶ月〜1年程度続きます。施術後2〜3週間から変化を感じ始め、3ヶ月後に最大効果を実感できます。"
+        },
+        {
+          "question": "副作用はありますか？",
+          "answer": "非常に安全な施術ですが、施術後に一時的な腫れや赤みが出ることがあります。これは通常数時間〜1日以内に消えます。"
+        },
+        {
+          "question": "いつから日常生活に戻れますか？",
+          "answer": "ウルセラはダウンタイムがほとんどなく、施術直後から日常生活に戻れます。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "施术过程中会疼吗？",
+          "answer": "超声刀使用超声波技术，施术过程中可能会感到轻微温热和刺痛感。疼痛程度因人而异，如有需要可使用麻醉霜。"
+        },
+        {
+          "question": "效果能持续多久？",
+          "answer": "超声刀效果通常持续6个月至1年。术后2～3周开始感受到变化，3个月后达到最佳效果。"
+        },
+        {
+          "question": "有副作用吗？",
+          "answer": "这是一种非常安全的疗程，但术后可能出现短暂肿胀或泛红，通常在数小时至一天内消退。"
+        },
+        {
+          "question": "何时可以恢复日常生活？",
+          "answer": "超声刀几乎没有恢复期，术后可立即恢复日常生活。"
+        }
+      ]
+    }
+  },
+  "pico-laser": {
+    "slug": "pico-laser",
+    "nameEn": "Pico Laser",
+    "name": {
+      "ko": "피코레이저",
+      "en": "Pico Laser",
+      "ja": "ピコレーザー",
+      "zh": "皮秒激光"
+    },
+    "desc": {
+      "ko": "기미·잡티·문신 제거에 탁월. 피코초 단위의 초단파 레이저로 색소 분해. 주변 조직 손상 최소화.",
+      "en": "Outstanding for melasma, blemish, and tattoo removal. Picosecond ultra-short pulse laser breaks down pigment with minimal surrounding tissue damage.",
+      "ja": "シミ・そばかす・タトゥー除去に卓越。ピコ秒単位の超短波レーザーで色素を分解。周辺組織へのダメージを最小化。",
+      "zh": "祛除黄褐斑、斑点、纹身效果卓越。皮秒级超短脉冲激光分解色素，最大限度减少周围组织损伤。"
+    },
+    "detail": {
+      "ko": "피코레이저는 피코초(1조분의 1초) 단위의 초단파를 이용하여 색소를 분해합니다. 기존 나노초 레이저보다 훨씬 짧은 펄스로 색소를 더욱 미세하게 분쇄하며, 주변 조직 손상을 최소화합니다. 기미, 잡티, 문신 제거에 탁월한 효과를 보이며, 피부 톤 균일화에도 도움이 됩니다.",
+      "en": "Pico Laser uses picosecond (one trillionth of a second) ultra-short pulses to break down pigment. With pulses far shorter than conventional nanosecond lasers, it shatters pigment into finer particles while minimizing damage to surrounding tissue. It is highly effective for melasma, blemishes, and tattoo removal, and also helps even out skin tone.",
+      "ja": "ピコレーザーはピコ秒（1兆分の1秒）単位の超短波を使用して色素を分解します。従来のナノ秒レーザーよりもはるかに短いパルスで色素をより細かく粉砕し、周辺組織へのダメージを最小限に抑えます。シミ、そばかす、タトゥー除去に卓越した効果を発揮し、肌トーンの均一化にも役立ちます。",
+      "zh": "皮秒激光使用皮秒（万亿分之一秒）级超短脉冲分解色素。与传统纳秒激光相比，脉冲更短，能将色素粉碎得更细，同时最大限度减少对周围组织的损伤。对黄褐斑、斑点和纹身去除效果卓越，也有助于均匀肤色。"
+    },
+    "effect": {
+      "ko": "기미 제거, 잡티 개선, 문신 제거, 피부 톤 균일화, 색소 침착 완화",
+      "en": "Melasma removal, blemish improvement, tattoo removal, skin tone unification, pigmentation reduction",
+      "ja": "シミ除去、そばかす改善、タトゥー除去、肌トーン均一化、色素沈着緩和",
+      "zh": "黄褐斑去除、斑点改善、纹身去除、肤色均匀、色素沉着改善"
+    },
+    "caution": {
+      "ko": "시술 후 딱지가 생기는데 억지로 떼지 않도록 주의하세요. 자연스럽게 떨어질 때까지 기다리고, 충분한 보습과 자외선 차단이 필요합니다.",
+      "en": "Scabs may form after treatment — do not forcibly remove them. Wait for them to fall off naturally, and ensure adequate moisturizing and sun protection.",
+      "ja": "施術後にかさぶたができますが、無理に剥がさないようにしてください。自然に剥がれるまで待ち、十分な保湿と紫外線対策が必要です。",
+      "zh": "术后可能结痂，请勿强行剥除，等待自然脱落，并做好充分保湿和防晒。"
+    },
+    "time": {
+      "ko": "20~40분",
+      "en": "20–40 min",
+      "ja": "20〜40分",
+      "zh": "20～40分钟"
+    },
+    "recovery": {
+      "ko": "3~5일",
+      "en": "3–5 days",
+      "ja": "3〜5日",
+      "zh": "3～5天"
+    },
+    "sessions": {
+      "ko": "3~5회 (4~6주 간격)",
+      "en": "3–5 sessions (every 4–6 weeks)",
+      "ja": "3〜5回（4〜6週間隔）",
+      "zh": "3～5次（间隔4～6周）"
+    },
+    "seoTitle": {
+      "ko": "피코레이저 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Pico Laser | Star Dermatology Seomyeon Busan – Melasma & Tattoo Removal",
+      "ja": "ピコレーザー | 釜山西面 スター皮膚科 – シミ・そばかす・タトゥー除去",
+      "zh": "皮秒激光 | 釜山西面 STAR 皮肤科 – 祛斑·纹身去除"
+    },
+    "seoDescription": {
+      "ko": "피코레이저는 피코초 단위 초단파로 기미·잡티·문신을 효과적으로 제거하는 레이저. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Pico Laser at Star Dermatology, Seomyeon, Busan. Effective removal of melasma, blemishes, and tattoos using picosecond ultra-short pulses with minimal tissue damage. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科のピコレーザー施術案内。ピコ秒超短波でシミ・そばかす・タトゥーを効果的に除去。周辺組織へのダメージを最小化。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科皮秒激光施术介绍。皮秒级超短脉冲有效去除黄褐斑、斑点和纹身，最大限度减少组织损伤。由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "피코레이저, 부산피코레이저, 서면피코레이저, 부산기미제거, 기미제거, 잡티제거, 문신제거, 부산피부과, 서면피부과, 서면역피부과, 색소레이저, 피코슈어, 피부과전문의",
+      "en": "Pico Laser, Busan pico laser, Seomyeon pico laser, melasma removal, blemish removal, tattoo removal, Busan dermatology, Star Dermatology, Seomyeon dermatology, pigment laser, PicoSure, board-certified dermatologist",
+      "ja": "ピコレーザー, 釜山ピコレーザー, 西面ピコレーザー, シミ除去, そばかす除去, タトゥー除去, 釜山皮膚科, 西面皮膚科, 色素レーザー, 皮膚科専門医",
+      "zh": "皮秒激光, 釜山皮秒激光, 西面皮秒激光, 祛斑, 去纹身, 釜山皮肤科, 西面皮肤科, 色素激光, PicoSure, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": null,
+    "image": "/api/storage/picosure_20d65c44_79fc42df.png",
+    "faq": {
+      "ko": [
+        {
+          "question": "시술 중 통증이 있나요?",
+          "answer": "피코레이저는 고무줄로 튕기는 듯한 통증을 느낄 수 있습니다. 마취크림이나 국소 마취를 사용하여 통증을 줄일 수 있습니다."
+        },
+        {
+          "question": "효과는 얼마나 지속되나요?",
+          "answer": "피코레이저는 색소를 제거하는 시술이므로 효과는 반영구적입니다. 다만 자외선 노출로 인한 새로운 색소 침착은 예방이 필요합니다."
+        },
+        {
+          "question": "부작용이 있을까요?",
+          "answer": "시술 후 일시적인 발적, 부종, 딱지가 생길 수 있습니다. 이는 1~2주 내에 사라집니다. 시술 후 자외선 차단이 중요합니다."
+        },
+        {
+          "question": "회복 기간은 어떻게 되나요?",
+          "answer": "회복 기간은 3~5일입니다. 딱지가 생기는데 억지로 떼지 않도록 주의하세요."
+        }
+      ],
+      "en": [
+        {
+          "question": "Is there pain during the treatment?",
+          "answer": "You may feel a snapping sensation similar to a rubber band. Numbing cream or local anesthesia can be used to reduce discomfort."
+        },
+        {
+          "question": "How long do the results last?",
+          "answer": "Since Pico Laser removes pigment, the results are semi-permanent. However, new pigmentation from UV exposure needs to be prevented."
+        },
+        {
+          "question": "Are there any side effects?",
+          "answer": "Temporary redness, swelling, and scabbing may occur after treatment. These typically resolve within 1–2 weeks. Sun protection after treatment is important."
+        },
+        {
+          "question": "What is the recovery period?",
+          "answer": "Recovery takes 3–5 days. Be careful not to forcibly remove any scabs that form."
+        }
+      ],
+      "ja": [
+        {
+          "question": "施術中に痛みはありますか？",
+          "answer": "輪ゴムで弾かれるような痛みを感じることがあります。麻酔クリームや局所麻酔で痛みを軽減できます。"
+        },
+        {
+          "question": "効果はどのくらい続きますか？",
+          "answer": "ピコレーザーは色素を除去する施術なので、効果は半永久的です。ただし、紫外線による新たな色素沈着の予防が必要です。"
+        },
+        {
+          "question": "副作用はありますか？",
+          "answer": "施術後に一時的な発赤、腫れ、かさぶたが生じることがあります。これは1〜2週間で消えます。施術後の紫外線対策が重要です。"
+        },
+        {
+          "question": "回復期間はどのくらいですか？",
+          "answer": "回復期間は3〜5日です。できたかさぶたを無理に剥がさないようにしてください。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "施术过程中会疼吗？",
+          "answer": "可能会感到像橡皮筋弹击的疼痛感。可以使用麻醉霜或局部麻醉来减轻不适。"
+        },
+        {
+          "question": "效果能持续多久？",
+          "answer": "皮秒激光去除色素，效果是半永久性的。但需要预防因紫外线照射产生的新色素沉着。"
+        },
+        {
+          "question": "有副作用吗？",
+          "answer": "术后可能出现短暂泛红、肿胀和结痂，通常在1～2周内消退。术后防晒非常重要。"
+        },
+        {
+          "question": "恢复期是多久？",
+          "answer": "恢复期为3～5天。请注意不要强行剥除结痂。"
+        }
+      ]
+    }
+  },
+  "ruby-pico-laser": {
+    "slug": "ruby-pico-laser",
+    "nameEn": "Ruby Pico Laser",
+    "name": {
+      "ko": "루비피코레이저",
+      "en": "Ruby Pico Laser",
+      "ja": "ルビーピコレーザー",
+      "zh": "红宝石皮秒激光"
+    },
+    "desc": {
+      "ko": "3세대 피코초 레이저. 기미·잡티·색소 제거에 탁월하며 피부 톤 개선 및 콜라겐 생성 유도.",
+      "en": "3rd-generation picosecond laser. Outstanding for melasma, blemish, and pigmentation removal while improving skin tone and stimulating collagen production.",
+      "ja": "第3世代ピコ秒レーザー。シミ・そばかす・色素除去に卓越し、肌トーン改善とコラーゲン生成を促進。",
+      "zh": "第三代皮秒激光。祛除黄褐斑、斑点、色素效果卓越，同时改善肤色并促进胶原蛋白生成。"
+    },
+    "detail": {
+      "ko": "루비피코레이저는 3세대 피코초 기술로 기미, 잡티, 색소를 효과적으로 제거합니다. 694nm 루비 파장을 사용하여 멜라닌 색소에 선택적으로 작용하며, 동시에 콜라겐 생성을 유도하여 피부 탄력도 개선됩니다. 기존 피코레이저보다 통증이 적고 회복이 빠른 것이 특징입니다.",
+      "en": "Ruby Pico Laser uses 3rd-generation picosecond technology to effectively remove melasma, blemishes, and pigmentation. Using a 694nm ruby wavelength, it selectively targets melanin pigment while simultaneously stimulating collagen production to improve skin elasticity. It is characterized by less pain and faster recovery compared to conventional pico lasers.",
+      "ja": "ルビーピコレーザーは第3世代ピコ秒技術でシミ、そばかす、色素を効果的に除去します。694nmのルビー波長を使用してメラニン色素に選択的に作用し、同時にコラーゲン生成を促進して肌弾力も改善します。従来のピコレーザーよりも痛みが少なく、回復が早いのが特徴です。",
+      "zh": "红宝石皮秒激光采用第三代皮秒技术，有效去除黄褐斑、斑点和色素。使用694nm红宝石波长选择性作用于黑色素，同时促进胶原蛋白生成，改善皮肤弹力。与传统皮秒激光相比，疼痛更少，恢复更快。"
+    },
+    "effect": {
+      "ko": "기미 제거, 잡티 개선, 피부 톤 균일화, 콜라겐 생성 유도, 피부 탄력 개선",
+      "en": "Melasma removal, blemish improvement, skin tone unification, collagen stimulation, skin elasticity improvement",
+      "ja": "シミ除去、そばかす改善、肌トーン均一化、コラーゲン生成促進、肌弾力改善",
+      "zh": "黄褐斑去除、斑点改善、肤色均匀、促进胶原蛋白生成、皮肤弹力改善"
+    },
+    "caution": {
+      "ko": "시술 후 일시적인 발적, 부종이 있을 수 있습니다. 이는 보통 24~48시간 내에 사라집니다. 시술 후 자외선 차단이 중요합니다.",
+      "en": "Temporary redness and swelling may occur after treatment. These usually subside within 24–48 hours. Sun protection after treatment is important.",
+      "ja": "施術後に一時的な発赤、腫れが生じることがあります。これは通常24〜48時間以内に消えます。施術後の紫外線対策が重要です。",
+      "zh": "术后可能出现短暂泛红和肿胀，通常在24～48小时内消退。术后防晒非常重要。"
+    },
+    "time": {
+      "ko": "20~40분",
+      "en": "20–40 min",
+      "ja": "20〜40分",
+      "zh": "20～40分钟"
+    },
+    "recovery": {
+      "ko": "3~5일",
+      "en": "3–5 days",
+      "ja": "3〜5日",
+      "zh": "3～5天"
+    },
+    "sessions": {
+      "ko": "3~5회 (기미: 4~6주 간격)",
+      "en": "3–5 sessions (melasma: every 4–6 weeks)",
+      "ja": "3〜5回（シミ：4〜6週間隔）",
+      "zh": "3～5次（黄褐斑：间隔4～6周）"
+    },
+    "seoTitle": {
+      "ko": "루비피코레이저 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Ruby Pico Laser | Star Dermatology Seomyeon Busan – 3rd-Gen Picosecond Pigmentation Removal",
+      "ja": "ルビーピコレーザー | 釜山西面 スター皮膚科 – 第3世代ピコ秒シミ・色素除去",
+      "zh": "红宝石皮秒激光 | 釜山西面 STAR 皮肤科 – 第三代皮秒祛斑·色素去除"
+    },
+    "seoDescription": {
+      "ko": "루비피코레이저는 3세대 피코초 기술로 기미·잡티·색소를 제거하고 콜라겐 생성을 유도. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Ruby Pico Laser at Star Dermatology, Seomyeon, Busan. 3rd-generation picosecond technology for effective removal of melasma, blemishes, and pigmentation with collagen stimulation. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科のルビーピコレーザー施術案内。第3世代ピコ秒技術でシミ・そばかす・色素を効果的に除去し、コラーゲン生成を促進。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科红宝石皮秒激光施术介绍。第三代皮秒技术有效去除黄褐斑、斑点和色素，促进胶原蛋白生成。由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "루비피코레이저, 부산루비피코레이저, 서면루비피코레이저, 피코레이저, 부산기미제거, 기미제거, 잡티제거, 부산피부과, 서면피부과, 서면역피부과, 색소레이저, 인라이튼, 피부과전문의",
+      "en": "Ruby Pico Laser, Busan ruby pico laser, Seomyeon ruby pico laser, pico laser, melasma removal, blemish removal, Busan dermatology, Star Dermatology, Seomyeon dermatology, Enlighten, board-certified dermatologist",
+      "ja": "ルビーピコレーザー, 釜山ルビーピコレーザー, 西面ルビーピコレーザー, ピコレーザー, シミ除去, そばかす除去, 釜山皮膚科, 西面皮膚科, エンライトン, 皮膚科専門医",
+      "zh": "红宝石皮秒激光, 釜山红宝石皮秒激光, 西面红宝石皮秒激光, 皮秒激光, 祛斑, 釜山皮肤科, 西面皮肤科, Enlighten, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": null,
+    "image": "/api/storage/enlighten-ruby-pico_43c3fbfb_5b70e61c.png",
+    "faq": {
+      "ko": [
+        {
+          "question": "시술 중 통증이 있나요?",
+          "answer": "루비피코레이저는 피코레이저보다 통증이 적은 편입니다. 따뜻한 감각과 약간의 따끔거림을 느낄 수 있으며, 마취크림으로 통증을 줄일 수 있습니다."
+        },
+        {
+          "question": "효과는 얼마나 지속되나요?",
+          "answer": "루비피코레이저의 효과는 반영구적입니다. 색소 제거 효과는 장기간 유지되며, 동시에 콜라겐 생성으로 인한 피부 탄력 개선도 지속됩니다."
+        },
+        {
+          "question": "부작용이 있을까요?",
+          "answer": "시술 후 일시적인 발적, 부종이 있을 수 있습니다. 이는 보통 24~48시간 내에 사라집니다. 드물게 색소 침착이나 흉터가 발생할 수 있으므로 시술 후 자외선 차단이 중요합니다."
+        },
+        {
+          "question": "몇 번의 시술이 필요한가요?",
+          "answer": "색소의 깊이와 정도에 따라 다릅니다. 보통 기미는 3~5회, 잡티는 1~3회 정도의 시술이 필요합니다. 의료진과 상담하여 개인맞춤 치료 계획을 수립하세요."
+        }
+      ],
+      "en": [
+        {
+          "question": "Is there pain during the treatment?",
+          "answer": "Ruby Pico Laser tends to be less painful than conventional pico lasers. You may feel warmth and slight tingling, and numbing cream can be used to reduce discomfort."
+        },
+        {
+          "question": "How long do the results last?",
+          "answer": "Ruby Pico Laser results are semi-permanent. Pigmentation removal effects are maintained long-term, and skin elasticity improvement from collagen stimulation also persists."
+        },
+        {
+          "question": "Are there any side effects?",
+          "answer": "Temporary redness and swelling may occur after treatment. These usually subside within 24–48 hours. Rarely, pigmentation or scarring may occur, so sun protection after treatment is important."
+        },
+        {
+          "question": "How many sessions are needed?",
+          "answer": "It depends on the depth and extent of pigmentation. Typically, melasma requires 3–5 sessions and blemishes require 1–3 sessions. Consult with your doctor to create a personalized treatment plan."
+        }
+      ],
+      "ja": [
+        {
+          "question": "施術中に痛みはありますか？",
+          "answer": "ルビーピコレーザーは従来のピコレーザーより痛みが少ない傾向があります。温かい感覚と軽いチクチク感を感じることがあり、麻酔クリームで痛みを軽減できます。"
+        },
+        {
+          "question": "効果はどのくらい続きますか？",
+          "answer": "ルビーピコレーザーの効果は半永久的です。色素除去効果は長期間維持され、コラーゲン生成による肌弾力改善も持続します。"
+        },
+        {
+          "question": "副作用はありますか？",
+          "answer": "施術後に一時的な発赤、腫れが生じることがあります。これは通常24〜48時間以内に消えます。まれに色素沈着や傷跡が発生することがあるため、施術後の紫外線対策が重要です。"
+        },
+        {
+          "question": "何回の施術が必要ですか？",
+          "answer": "色素の深さと程度によって異なります。通常、シミは3〜5回、そばかすは1〜3回程度の施術が必要です。医師と相談して個人に合った治療計画を立ててください。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "施术过程中会疼吗？",
+          "answer": "红宝石皮秒激光比传统皮秒激光疼痛感更少。可能会感到温热和轻微刺痛，可以使用麻醉霜减轻不适。"
+        },
+        {
+          "question": "效果能持续多久？",
+          "answer": "红宝石皮秒激光效果是半永久性的。色素去除效果长期维持，胶原蛋白生成带来的皮肤弹力改善也会持续。"
+        },
+        {
+          "question": "有副作用吗？",
+          "answer": "术后可能出现短暂泛红和肿胀，通常在24～48小时内消退。极少数情况下可能出现色素沉着或疤痕，因此术后防晒非常重要。"
+        },
+        {
+          "question": "需要做几次？",
+          "answer": "根据色素的深度和程度而定。通常黄褐斑需要3～5次，斑点需要1～3次。请咨询医生制定个性化治疗方案。"
+        }
+      ]
+    }
+  },
+  "rosacea": {
+    "slug": "rosacea",
+    "nameEn": "Rosacea Treatment",
+    "name": {
+      "ko": "안면홍조 치료",
+      "en": "Rosacea Treatment",
+      "ja": "顔面紅潮治療",
+      "zh": "面部潮红治疗"
+    },
+    "desc": {
+      "ko": "Excel V+ 혈관 레이저로 안면홍조, 모세혈관 확장, 붉은 피부를 효과적으로 개선.",
+      "en": "Excel V+ vascular laser effectively improves rosacea, telangiectasia, and red skin.",
+      "ja": "Excel V+血管レーザーで顔面紅潮、毛細血管拡張、赤い肌を効果的に改善。",
+      "zh": "Excel V+血管激光有效改善面部潮红、毛细血管扩张和红色肌肤。"
+    },
+    "detail": {
+      "ko": "Excel V+ 혈관 레이저는 안면홍조와 모세혈관 확장을 효과적으로 개선합니다. 혈관에 선택적으로 작용하여 주변 조직 손상을 최소화합니다. 주사비(로사세아), 안면홍조, 모세혈관 확장 등 다양한 혈관성 피부 문제에 효과적입니다.",
+      "en": "Excel V+ vascular laser effectively improves rosacea and telangiectasia. It acts selectively on blood vessels, minimizing damage to surrounding tissue. It is effective for various vascular skin conditions including rosacea, facial flushing, and telangiectasia.",
+      "ja": "Excel V+血管レーザーは顔面紅潮と毛細血管拡張を効果的に改善します。血管に選択的に作用し、周辺組織へのダメージを最小限に抑えます。酒さ（ロサセア）、顔面紅潮、毛細血管拡張など様々な血管性皮膚問題に効果的です。",
+      "zh": "Excel V+血管激光有效改善面部潮红和毛细血管扩张。选择性作用于血管，最大限度减少对周围组织的损伤。对酒渣鼻（玫瑰痤疮）、面部潮红、毛细血管扩张等各种血管性皮肤问题均有效。"
+    },
+    "effect": {
+      "ko": "안면홍조 개선, 모세혈관 확장 감소, 주사비 치료, 피부 탄력 개선, 콜라겐 생성 유도",
+      "en": "Rosacea improvement, telangiectasia reduction, rosacea treatment, skin elasticity improvement, collagen stimulation",
+      "ja": "顔面紅潮改善、毛細血管拡張減少、酒さ治療、肌弾力改善、コラーゲン生成促進",
+      "zh": "面部潮红改善、毛细血管扩张减少、酒渣鼻治疗、皮肤弹力改善、促进胶原蛋白生成"
+    },
+    "caution": {
+      "ko": "시술 후 일시적인 발적, 부종, 멍이 생길 수 있습니다. 이는 보통 1~3일 내에 사라집니다. 시술 후 냉찜질을 하고 자극적인 제품 사용을 피하세요.",
+      "en": "Temporary redness, swelling, and bruising may occur after treatment. These typically resolve within 1–3 days. Apply cold compresses after treatment and avoid irritating products.",
+      "ja": "施術後に一時的な発赤、腫れ、あざが生じることがあります。これは通常1〜3日以内に消えます。施術後は冷湿布をし、刺激の強い製品の使用を避けてください。",
+      "zh": "术后可能出现短暂泛红、肿胀和瘀青，通常在1～3天内消退。术后请进行冷敷，避免使用刺激性产品。"
+    },
+    "time": {
+      "ko": "20~40분",
+      "en": "20–40 min",
+      "ja": "20〜40分",
+      "zh": "20～40分钟"
+    },
+    "recovery": {
+      "ko": "1~3일",
+      "en": "1–3 days",
+      "ja": "1〜3日",
+      "zh": "1～3天"
+    },
+    "sessions": {
+      "ko": "3~5회 (4~6주 간격)",
+      "en": "3–5 sessions (every 4–6 weeks)",
+      "ja": "3〜5回（4〜6週間隔）",
+      "zh": "3～5次（间隔4～6周）"
+    },
+    "seoTitle": {
+      "ko": "안면홍조 치료 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+      "en": "Rosacea Treatment | Star Dermatology Seomyeon Busan – Excel V+ Vascular Laser",
+      "ja": "顔面紅潮治療 | 釜山西面 スター皮膚科 – Excel V+血管レーザー",
+      "zh": "面部潮红治疗 | 釜山西面 STAR 皮肤科 – Excel V+血管激光"
+    },
+    "seoDescription": {
+      "ko": "안면홍조·주사비는 Excel V+ 혈관 레이저로 효과적으로 개선. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+      "en": "Rosacea treatment at Star Dermatology, Seomyeon, Busan. Excel V+ vascular laser effectively improves rosacea, telangiectasia, and facial flushing. Performed directly by board-certified dermatologists.",
+      "ja": "釜山西面スター皮膚科の顔面紅潮治療案内。Excel V+血管レーザーで顔面紅潮、毛細血管拡張、酒さを効果的に改善。皮膚科専門医が直接施術。",
+      "zh": "釜山西面STAR皮肤科面部潮红治疗介绍。Excel V+血管激光有效改善面部潮红、毛细血管扩张和酒渣鼻。由皮肤科专科医生亲自操作。"
+    },
+    "seoKeywords": {
+      "ko": "안면홍조, 주사비, 로사세아, 부산안면홍조, 서면안면홍조, 모세혈관확장, Excel V+, 혈관레이저, 부산피부과, 서면피부과, 서면역피부과, 피부과전문의",
+      "en": "rosacea, telangiectasia, facial flushing, Busan rosacea, Seomyeon rosacea, Excel V+, vascular laser, Busan dermatology, Star Dermatology, Seomyeon dermatology, board-certified dermatologist",
+      "ja": "顔面紅潮, 酒さ, ロサセア, 釜山顔面紅潮, 西面顔面紅潮, 毛細血管拡張, Excel V+, 血管レーザー, 釜山皮膚科, 西面皮膚科, 皮膚科専門医",
+      "zh": "面部潮红, 酒渣鼻, 玫瑰痤疮, 釜山面部潮红, 西面面部潮红, 毛细血管扩张, Excel V+, 血管激光, 釜山皮肤科, 西面皮肤科, 皮肤科专科医生"
+    },
+    "schemaBodyLocation": null,
+    "image": "/api/storage/excel-v_70001aa7_cc87addc.png",
+    "faq": {
+      "ko": [
+        {
+          "question": "시술 중 통증이 있나요?",
+          "answer": "Excel V+ 레이저는 고무줄로 튕기는 듯한 통증을 느낄 수 있습니다. 마취크림을 사용하여 통증을 줄일 수 있습니다."
+        },
+        {
+          "question": "효과는 얼마나 지속되나요?",
+          "answer": "안면홍조 치료의 효과는 개인차가 있지만 보통 6개월~1년 정도 지속됩니다. 재발을 방지하기 위해 정기적인 관리가 필요할 수 있습니다."
+        },
+        {
+          "question": "부작용이 있을까요?",
+          "answer": "시술 후 일시적인 발적, 부종, 멍이 생길 수 있습니다. 이는 보통 1~3일 내에 사라집니다. 드물게 색소 침착이나 흉터가 발생할 수 있습니다."
+        },
+        {
+          "question": "회복 기간은 어떻게 되나요?",
+          "answer": "회복 기간은 1~3일입니다. 시술 후 냉찜질을 하고 자극적인 제품 사용을 피하세요. 자외선 차단은 필수입니다."
+        }
+      ],
+      "en": [
+        {
+          "question": "Is there pain during the treatment?",
+          "answer": "You may feel a snapping sensation similar to a rubber band. Numbing cream can be used to reduce discomfort."
+        },
+        {
+          "question": "How long do the results last?",
+          "answer": "Results vary by individual but typically last 6 months to 1 year. Regular maintenance may be needed to prevent recurrence."
+        },
+        {
+          "question": "Are there any side effects?",
+          "answer": "Temporary redness, swelling, and bruising may occur after treatment. These typically resolve within 1–3 days. Rarely, pigmentation or scarring may occur."
+        },
+        {
+          "question": "What is the recovery period?",
+          "answer": "Recovery takes 1–3 days. Apply cold compresses after treatment and avoid irritating products. Sun protection is essential."
+        }
+      ],
+      "ja": [
+        {
+          "question": "施術中に痛みはありますか？",
+          "answer": "輪ゴムで弾かれるような痛みを感じることがあります。麻酔クリームで痛みを軽減できます。"
+        },
+        {
+          "question": "効果はどのくらい続きますか？",
+          "answer": "顔面紅潮治療の効果は個人差がありますが、通常6ヶ月〜1年程度続きます。再発を防ぐために定期的なケアが必要な場合があります。"
+        },
+        {
+          "question": "副作用はありますか？",
+          "answer": "施術後に一時的な発赤、腫れ、あざが生じることがあります。これは通常1〜3日以内に消えます。まれに色素沈着や傷跡が発生することがあります。"
+        },
+        {
+          "question": "回復期間はどのくらいですか？",
+          "answer": "回復期間は1〜3日です。施術後は冷湿布をし、刺激の強い製品の使用を避けてください。紫外線対策は必須です。"
+        }
+      ],
+      "zh": [
+        {
+          "question": "施术过程中会疼吗？",
+          "answer": "可能会感到像橡皮筋弹击的疼痛感。可以使用麻醉霜来减轻不适。"
+        },
+        {
+          "question": "效果能持续多久？",
+          "answer": "效果因人而异，通常持续6个月至1年。可能需要定期维护以防止复发。"
+        },
+        {
+          "question": "有副作用吗？",
+          "answer": "术后可能出现短暂泛红、肿胀和瘀青，通常在1～3天内消退。极少数情况下可能出现色素沉着或疤痕。"
+        },
+        {
+          "question": "恢复期是多久？",
+          "answer": "恢复期为1～3天。术后请进行冷敷，避免使用刺激性产品。防晒必不可少。"
+        }
+      ]
+    }
+  }
+}

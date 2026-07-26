@@ -4074,12 +4074,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V6~V7: 브라우저 확인 + 회귀 + 체크포인트
 
 ## Step 61: 시술 페이지 서버 HTML 주입 — 네이버·AI 크롤러 대응 (2026-07-26)
-- [ ] Phase 0: 구조 확인 (import 가능 여부, 라우트 순서, index.html 태그 형태)
-- [ ] A: server/_core/treatmentPrerender.ts 신규 생성 (A-1~A-5)
-- [ ] B: server/_core/index.ts 미들웨어 등록
-- [ ] C: JSON-LD 주입 (여유 있으면)
-- [ ] V1~V5: TypeScript + build + test + grep + 로컬 실측 (curl 7가지)
-- [ ] V6~V7: 브라우저 확인 + 프로덕션 실측 + 체크포인트
+- [x] Phase 0: 구조 확인 (import 가능 여부, 라우트 순서, index.html 태그 형태)
+- [x] A: server/_core/treatmentPrerender.ts 신규 생성 (A-1~A-5)
+- [x] B: server/_core/index.ts 미들웨어 등록
+- [x] C: JSON-LD 주입 (여유 있으면)
+- [x] V1~V5: TypeScript + build + test + grep + 로컬 실측 (curl 7가지)
+- [x] V6~V7: 브라우저 확인 + 프로덕션 실측 + 체크포인트
 
 ## Step 61: 시술 페이지 서버 HTML 주입 — 네이버·AI 크롤러 대응 (2026-07-26)
 - [x] Phase 0: 구조 확인 (import 가능 여부, 라우트 순서, index.html 태그 형태)
@@ -4097,3 +4097,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V5: curl 7가지 실측 (7개 시술 title 치환, 언어별 canonical, 중복 태그 0, 실패 안전성)
 - [x] V6: 브라우저 확인 (title 치환, JSON-LD 3개 스키마, noscript 숨김, 콘솔 에러 0)
 - [x] V7: 체크포인트 저장
+
+## Step 62: 시술 이미지 업로드 WebP 자동 변환 적용 (2026-07-26)
+- [x] Phase 0: 이벤트 WebP 변환 로직 파악 (imageOptimizer.ts, equipment3.ts 이미 적용 확인)
+- [x] A: treatments.service.ts에 optimizeImage import + uploadTreatmentImage 파이프라인 적용
+- [x] B: TreatmentsManager.tsx fileName/mimeType 전달 확인 (수정 불필요)
+- [x] V1: TypeScript 오류 0건
+- [x] V2: pnpm build 성공 (240.9KB)
+- [x] V3: 63 files / 1,458 tests passed
+- [x] V4: grep 검증 (optimizeImage import, Step62 주석, equipment3 기존 유지)
+- [x] V5~V6: 체크포인트 저장

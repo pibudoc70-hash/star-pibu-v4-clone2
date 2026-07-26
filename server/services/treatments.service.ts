@@ -11,6 +11,7 @@
  */
 import { storagePut } from "../storage";
 import { DomainError, DOMAIN_ERROR_CODES } from "../shared/errors";
+import { optimizeImage } from "../_core/imageOptimizer";
 
 // ─── 상수 ─────────────────────────────────────────────────────────────────────
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
@@ -105,7 +106,8 @@ export interface UploadTreatmentImageInput {
 /**
  * 시술 이미지 업로드 유스케이스.
  *
- * 흐름: base64 파싱 → 크기 검증(5MB) → 고유 파일명 생성 → storage 업로드
+ * 흐름: base64 파싱 → 크기 검증(5MB) → WebP 변환 + 1600px 리사이즈 → 고유 파일명 생성 → storage 업로드
+ * [Step62] equipment3 와 동일한 optimizeImage 파이프라인 적용
  */
 export async function uploadTreatmentImage(
   input: UploadTreatmentImageInput,
@@ -115,18 +117,19 @@ export async function uploadTreatmentImage(
   const base64Data = input.base64.includes(",")
     ? input.base64.split(",")[1]
     : input.base64;
-  const buffer = Buffer.from(base64Data, "base64");
+  const rawBuffer = Buffer.from(base64Data, "base64");
 
-  if (buffer.length > MAX_IMAGE_BYTES) {
+  if (rawBuffer.length > MAX_IMAGE_BYTES) {
     throw new DomainError(
       DOMAIN_ERROR_CODES.VALIDATION,
       "이미지 파일 크기는 5MB 이하여야 합니다.",
     );
   }
 
-  const ext = mimeType.split("/")[1]?.replace("jpeg", "jpg") ?? "jpg";
-  const uniqueName = `treatments/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  // [Step62] WebP 변환 + 1600px 리사이즈 파이프라인 (equipment3 와 동일)
+  const optimized = await optimizeImage(rawBuffer, input.fileName, mimeType);
+  const uniqueName = `treatments/${Date.now()}-${Math.random().toString(36).slice(2)}-${optimized.fileName}`;
 
-  const { url } = await storagePut(uniqueName, buffer, mimeType);
+  const { url } = await storagePut(uniqueName, optimized.buffer, optimized.mimeType);
   return { url };
 }

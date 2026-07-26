@@ -111,7 +111,13 @@ function loadTreatmentData(): Record<string, TreatmentSeoRecord> | null {
       /* 다음 후보 */
     }
   }
-  console.warn("[TreatmentPrerender] treatment-seo.json not found — prerender disabled");
+  // [Step65-C] 이 파일이 없으면 모든 시술 페이지가 홈 메타로 되돌아간다.
+  // 조용히 넘어가면 SEO가 통째로 꺼진 것을 알 수 없으므로 error로 남긴다.
+  console.error(
+    "[TreatmentPrerender][CRITICAL] treatment-seo.json not found — " +
+    "all treatment pages will fall back to home meta. " +
+    "Check that scripts/gen-treatment-seo.mjs ran during build.",
+  );
   return null;
 }
 
@@ -120,15 +126,25 @@ function loadTreatmentData(): Record<string, TreatmentSeoRecord> | null {
 let cachedHtml: string | null = null;
 
 function loadIndexHtml(): string | null {
-  if (cachedHtml) return cachedHtml;
-  const candidates = [
-    path.resolve(process.cwd(), "dist/public/index.html"),
-    path.resolve(process.cwd(), "client/index.html"),
-  ];
+  const isDev = process.env.NODE_ENV !== "production";
+
+  // [Step65-C] 개발 환경에서는 캐시하지 않고 매번 client/index.html을 읽는다.
+  // 이전 빌드의 dist/public/index.html이 남아 있으면 낡은 HTML이 영구 캐싱되어,
+  // index.html을 수정해도 시술 페이지에만 반영되지 않는 문제가 있었다.
+  const candidates = isDev
+    ? [path.resolve(process.cwd(), "client/index.html")]
+    : [
+        path.resolve(process.cwd(), "dist/public/index.html"),
+        path.resolve(process.cwd(), "client/index.html"),
+      ];
+
+  if (!isDev && cachedHtml) return cachedHtml;
+
   for (const p of candidates) {
     try {
-      cachedHtml = fs.readFileSync(p, "utf8");
-      return cachedHtml;
+      const html = fs.readFileSync(p, "utf8");
+      if (!isDev) cachedHtml = html;
+      return html;
     } catch {
       /* 다음 후보 */
     }
@@ -441,7 +457,8 @@ export function registerTreatmentPrerender(app: Express): void {
         );
 
         res.setHeader("Content-Type", "text/html; charset=utf-8");
-        res.setHeader("Cache-Control", "public, max-age=600, s-maxage=300");
+        // [Step65-B] HTML은 배포 즉시 반영되어야 하며, 시술 내용 수정이 최대 10분 지연되던 문제를 없앤다.
+        res.setHeader("Cache-Control", "no-cache, must-revalidate");
         res.send(out);
       } catch (err) {
         console.error(

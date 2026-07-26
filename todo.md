@@ -4148,3 +4148,16 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## Step 64: 모든 섹션 reveal 진입 애니메이션 통일 (2026-07-26)
 - [x] A: EventsSection, FAQSection, ManagementDevicesSection, RecentNoticesSection, ResultsStatisticsSection, SpecialEventSection에 useSectionReveal + reveal-heading 추가
 - [x] V1~V4: TypeScript 0건 + build 성공 + 63 files/1458 tests + grep 14개 섹션 확인
+
+## Step 65: 지도 프록시 캐시·타임아웃 + 프리렌더 캐시 정책 정렬 (2026-07-26)
+- [x] Phase 0: ContactSection mapInput 값 확인 + cache.ts invalidateCache 여부 확인
+- [x] A-1: location.ts withCache 24시간 TTL 추가 (캐시 키: staticmap:WxH@scale)
+- [x] A-2: AbortSignal.timeout(8000) + redirect:"error" 방어 추가
+- [x] A-3: MAX_MAP_BYTES 3MB 상한 (선언/실제 2중 체크)
+- [x] A-4: width/height/scale 화이트리스트 (700|900|640 × 400|560|480 × 1|2)
+- [x] A-5: 실패 응답 invalidateCache (일시 장애 24시간 고정 방지)
+- [x] B: treatmentPrerender.ts Cache-Control "public, max-age=600" → "no-cache, must-revalidate"
+- [x] C: loadIndexHtml isDev 분기 (개발: 매번 읽기, 프로덕션: 캐시)
+- [x] C: treatment-seo.json 미발견 시 warn → error[CRITICAL] 격상
+- [x] V1~V4: TypeScript 0건 + build 244.9KB + test 1458 passed + grep 7종 확인
+- [x] V5: 지도 캐시 실측 (캐시 미스 14ms, 히트 12ms) + Cache-Control 확인 + HTTP 상태 5건

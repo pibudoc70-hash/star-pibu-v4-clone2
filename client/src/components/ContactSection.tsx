@@ -44,8 +44,8 @@ export default function ContactSection() {
 
   // 지도 이미지 크기 (컨테이너 기준) — 안정적인 참조를 위해 useMemo 사용
   const mapInput = useMemo(() => ({
-    width: isMobile ? 700 : 900,
-    height: isMobile ? 400 : 560,
+    width: (isMobile ? 700 : 900) as 700 | 900,
+    height: (isMobile ? 400 : 560) as 400 | 560,
     scale: 1 as const,
   }), [isMobile]);
 

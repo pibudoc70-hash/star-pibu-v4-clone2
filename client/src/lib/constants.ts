@@ -32,6 +32,12 @@ export const WECHAT_ID = "star2006beauty";
  * 숫자 변경 시 이 파일을 수정하면 `useCountUp`과 JSON-LD에 자동 반영됩니다.
  * 표시 문자열(다국어 레이블)은 `client/src/lib/i18n.*.ts`의 `about.stats`를 함께 수정하세요.
  */
+/**
+ * [Step68-A] 이 값들의 근거·출처는 client/src/lib/clinic-stats.ts
+ * (CLINIC_STATS_CANONICAL) 에 기록되어 있다.
+ * 숫자를 변경할 때는 반드시 양쪽을 함께 수정할 것.
+ * 불일치 시 clinic-stats.test.ts 가 실패한다.
+ */
 export const CLINIC_STATS = {
   /** 피부과 전문의 경력 (년) */
   yearsExperience: 20,

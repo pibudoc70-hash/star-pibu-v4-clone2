@@ -272,13 +272,8 @@ function injectMeta(
         ? `<meta data-rh="true" property="kakao:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
         : "$&"
     )
-    .replace(
-      /<meta\s+name="twitter:image"[^>]*\/?>/i,
-      t.image
-        ? `<meta data-rh="true" name="twitter:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
-        : "$&"
-    )
     // [Step62-A] og:image 부가 태그를 실제 시술 이미지에 맞게 치환한다.
+    // twitter:image 치환은 [Step68-B3] 블록에서 twitter:image:alt 삽입과 함께 통합 처리한다.
     // 이미지 경로가 /api/storage/... 원격 URL 이라 로컈 파일에서 sharp 로 크기를 읽을 수 없다.
     // 따라서 A-3 에서 width/height 는 제거한다 (잘못된 값보다 없는 편이 낙다).
     // og:image / kakao:image / twitter:image 는 반드시 PNG/JPEG 유지 (카카오톡·페이스북 WebP 지원 불안정).
@@ -297,7 +292,28 @@ function injectMeta(
     .replace(
       /<meta\s+property="og:image:alt"[^>]*\/?>/i,
       t.image
-        ? `<meta data-rh="true" property="og:image:alt" content="${escapeHtml(pick(t.name, lang))} - 부산 서면 스타피부과" />`
+        ? (() => {
+            // [Step68-B2] seoTitle 의 " | " 앞부분만 사용해 시술별 alt 생성
+            const rawTitle = pick(t.seoTitle, lang);
+            const treatmentLabel = rawTitle.split(" | ")[0].trim() || pick(t.name, lang);
+            return `<meta data-rh="true" property="og:image:alt" content="${escapeHtml(treatmentLabel)} 시술 안내 - 부산 서면 스타피부과" />`;
+          })()
+        : "$&"
+    )
+    // [Step68-B3] twitter:image:alt 동일 값으로 설정 (인덱스.html에 없으므로 삽입 방식 사용)
+    // twitter:image 태그 내용을 twitter:image + twitter:image:alt 로 확장
+    .replace(
+      /<meta\s+name="twitter:image"[^>]*\/?>/i,
+      t.image
+        ? (() => {
+            const rawTitle = pick(t.seoTitle, lang);
+            const treatmentLabel = rawTitle.split(" | ")[0].trim() || pick(t.name, lang);
+            const imgUrl = t.image.startsWith('http') ? t.image : BASE_URL + t.image;
+            return [
+              `<meta data-rh="true" name="twitter:image" content="${imgUrl}" />`,
+              `<meta data-rh="true" name="twitter:image:alt" content="${escapeHtml(treatmentLabel)} 시술 안내 - 부산 서면 스타피부과" />`,
+            ].join("\n    ");
+          })()
         : "$&"
     )
     // [Step62-A3] 실제 크기를 알 수 없으므로 잘못된 홈 배경(1200×630) 값을 제거한다.

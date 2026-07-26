@@ -1,5 +1,5 @@
 /**
- * clinic-stats.ts — 병원 홍보 통계 단일 소스
+ * clinic-stats.ts — 병원 홍보 통계 단일 소스 (정본·검증 전용)
  *
  * ⚠️ 의료광고 심의 대응
  *    아래 숫자는 모두 근거 자료가 확보된 값이다 (2026-07 원장 확인).
@@ -8,6 +8,12 @@
  *
  * [Step58-A] 여러 파일에 흩어진 숫자를 한 곳으로 모았다.
  *
+ * [Step68-A] 이름 충돌 해소.
+ * 실제 UI 렌더링은 constants.ts 의 CLINIC_STATS 를 사용한다.
+ * 이 파일은 근거·출처가 기록된 정본이며, 회귀 테스트가
+ * constants.ts 값과의 일치를 강제한다.
+ * 숫자를 바꿀 때는 이 파일을 먼저 고치고 constants.ts 를 맞춘다.
+ *
  * ⚠️ 기존 CLINIC_STATS (client/src/lib/constants.ts) 와의 관계:
  *    constants.ts 의 CLINIC_STATS 는 useCountUp 애니메이션 + JSON-LD 스키마 전용으로
  *    이미 16개 파일에서 참조 중이다. 이 파일은 그것을 대체하지 않고,
@@ -15,7 +21,7 @@
  *    회귀 테스트의 단일 정본 역할을 한다.
  */
 
-export const CLINIC_STATS = {
+export const CLINIC_STATS_CANONICAL = {
   /** 개원 연도 — 근거: 개원 기록 */
   openedYear: 2006,
   /** 임상 경력(년) — 근거: 개원 연도 기준 */
@@ -32,7 +38,7 @@ export const CLINIC_STATS = {
   paperCount: 11,
 } as const;
 
-export type ClinicStats = typeof CLINIC_STATS;
+export type ClinicStatsCanonical = typeof CLINIC_STATS_CANONICAL;
 
 /** 표시용 포맷 헬퍼 — "4,000" 처럼 천단위 구분 */
 export function formatStat(n: number): string {

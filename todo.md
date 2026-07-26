@@ -4177,3 +4177,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] E: client/src/components/ContactSection.tsx img src 전환
 - [x] V1~V4: TypeScript 0건 + build 246.6KB + 63 files / 1458 tests + grep 10종
 - [x] V5: curl 200 OK (86118 bytes) + ETag 304 Not Modified 확인 완료
+## Step 68: CLINIC_STATS 이중화 해소 + og:image 부가태그 정정 (2026-07-26)
+- [x] D1~D6: 현황 조사 (CLINIC_STATS 참조 파일 수, og:image 태그 현황)
+- [x] A-1: clinic-stats.ts — CLINIC_STATS → CLINIC_STATS_CANONICAL 리네임 + Step68 주석
+- [x] A-2: constants.ts — CLINIC_STATS 선언 위에 Step68-A 주석 추가 (불일치 시 테스트 실패 안내)
+- [x] A-3: clinic-stats.test.ts — CLINIC_STATS_CANONICAL import + T1~T4 검증 추가 (T2: openedYear+yearsExperience≈currentYear, T3: specialistCount===3, T4: formatStat)
+- [x] B-1: treatmentPrerender.ts — og:image:alt를 t.name 대신 seoTitle 앞부분(" | " 기준)으로 생성
+- [x] B-2: treatmentPrerender.ts — twitter:image 첫 번째 치환 블록 제거 (중복 제거)
+- [x] B-3: treatmentPrerender.ts — twitter:image 치환 시 twitter:image:alt 함께 삽입
+- [x] V1: TypeScript 0건
+- [x] V2: build 247.2KB
+- [x] V3: 63 files / 1461 tests 전부 통과
+- [x] V4a~V4e: grep 5종 (CANONICAL 참조, 이름충돌 없음, seoTitle 사용, twitter:image 단일, twitter:image:alt 삽입)
+- [x] V5: 프로덕션 모드 ulthera — og:image:alt="울쎄라피 프라임 시술 안내 - 부산 서면 스타피부과", twitter:image:alt 동일
+- [x] V6: 프로덕션 모드 thermage — og:image:alt="써마지 FLX 시술 안내 - 부산 서면 스타피부과", botox(이미지 없음) — og:image:width 유지 확인

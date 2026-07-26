@@ -230,6 +230,49 @@ function injectMeta(
     .replace(
       /<meta\s+name="twitter:description"[^>]*\/?>/i,
       `<meta data-rh="true" name="twitter:description" content="${ed}" />`
+    )
+    // [Step61b-B] 카카오톡 공유 카드. 환자들이 카톡으로 링크를 많이 공유하므로
+    // 홈 제목이 아니라 시술 제목이 나와야 한다.
+    .replace(
+      /<meta\s+property="kakao:title"[^>]*\/?>/i,
+      `<meta data-rh="true" property="kakao:title" content="${et}" />`
+    )
+    .replace(
+      /<meta\s+property="kakao:description"[^>]*\/?>/i,
+      `<meta data-rh="true" property="kakao:description" content="${ed}" />`
+    )
+    // [Step61b-B] og:image / kakao:image / twitter:image — 시술 이미지가 있으면 절대 URL 로 변환 후 치환
+    // t.image 는 /api/storage/... 형태의 상대경로이므로 BASE_URL 을 붙인다.
+    // 이미지가 없으면 치환하지 않아 홈 이미지가 그대로 유지된다.
+    .replace(
+      /<meta\s+property="og:image"[^>]*\/?>/i,
+      t.image
+        ? `<meta data-rh="true" property="og:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
+        : "$&"
+    )
+    .replace(
+      /<meta\s+property="kakao:image"[^>]*\/?>/i,
+      t.image
+        ? `<meta data-rh="true" property="kakao:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
+        : "$&"
+    )
+    .replace(
+      /<meta\s+name="twitter:image"[^>]*\/?>/i,
+      t.image
+        ? `<meta data-rh="true" name="twitter:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
+        : "$&"
+    )
+    // [Step61b-C] hreflang 을 시술 페이지 기준으로 재작성.
+    // 기존 5줄(ko/en/ja/zh/x-default)을 통째로 치환한다.
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="ko"[^>]*\/?>([\s\S]*?)<link\s+rel="alternate"\s+hreflang="x-default"[^>]*\/?>/i,
+      [
+        `<link data-rh="true" rel="alternate" hreflang="ko" href="${BASE_URL}/treatments/${slug}" />`,
+        `<link data-rh="true" rel="alternate" hreflang="en" href="${BASE_URL}/en/treatments/${slug}" />`,
+        `<link data-rh="true" rel="alternate" hreflang="ja" href="${BASE_URL}/ja/treatments/${slug}" />`,
+        `<link data-rh="true" rel="alternate" hreflang="zh" href="${BASE_URL}/zh/treatments/${slug}" />`,
+        `<link data-rh="true" rel="alternate" hreflang="x-default" href="${BASE_URL}/treatments/${slug}" />`,
+      ].join("\n    ")
     );
 }
 

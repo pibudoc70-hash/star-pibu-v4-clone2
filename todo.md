@@ -4107,3 +4107,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V3: 63 files / 1,458 tests passed
 - [x] V4: grep 검증 (optimizeImage import, Step62 주석, equipment3 기존 유지)
 - [x] V5~V6: 체크포인트 저장
+
+## Step 61-b: 시술 페이지 kakao 태그·hreflang 치환 보완 (2026-07-26)
+- [x] A: client/index.html 울쎼라 → 울쎄라 오타 수정 (73·74번 줄 kakao:title/description)
+- [x] B: treatmentPrerender.ts kakao:title/description 치환 추가
+- [x] B: og:image / kakao:image / twitter:image 시술 이미지로 치환 (절대 URL 변환)
+- [x] C: hreflang 5개 시술 URL로 재작성 (통합 정규식 방식)
+- [x] V1: TypeScript 오류 0건
+- [x] V2: pnpm build 성공 (242.4KB)
+- [x] V3: 63 files / 1,458 tests passed
+- [x] V4: grep 검증 (울쎼라 0건, kakao: 7건, hreflang 7건)
+- [x] V5-a: kakao:title → 울쎄라피 프라임 포함 확인
+- [x] V5-b: 홈 kakao:title → 홈 제목 (울쎼라→울쎄라 오타 수정 반영)
+- [x] V5-c: hreflang 정확히 5개, en → /en/treatments/ulthera 확인
+- [x] V5-d: 중복 태그 전부 1 확인
+- [x] V5-e: ja/thermage canonical 정확
+- [x] V5-f: 비시술 페이지 회귀 없음 (홈 hreflang 5개, 홈 주소 그대로)
+- [x] V5: og:image/kakao:image/twitter:image 시술 이미지 절대 URL 치환 확인
+- [x] V6~V7: 체크포인트 저장

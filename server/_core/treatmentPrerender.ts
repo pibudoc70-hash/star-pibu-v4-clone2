@@ -431,6 +431,13 @@ export function registerTreatmentPrerender(app: Express): void {
   app.get(
     ["/treatments/:slug", "/:lang/treatments/:slug"],
     (req: Request, res: Response, next: NextFunction) => {
+      // [Step66-A] dev에서는 Vite의 transformIndexHtml을 반드시 거쳐야 한다.
+      // 여기서 원본 HTML을 직접 반환하면 @vite/client와 React Refresh preamble이
+      // 주입되지 않아 시술 페이지만 흰 화면이 된다. SEO는 프로덕션에서만 의미가 있으므로
+      // dev에서는 프리렌더를 건너뛰고 Vite catch-all에 위임한다.
+      if (process.env.NODE_ENV !== "production") {
+        return next();
+      }
       try {
         const parsed = parsePath(req.path);
         if (!parsed) return next();

@@ -4161,3 +4161,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] C: treatment-seo.json 미발견 시 warn → error[CRITICAL] 격상
 - [x] V1~V4: TypeScript 0건 + build 244.9KB + test 1458 passed + grep 7종 확인
 - [x] V5: 지도 캐시 실측 (캐시 미스 14ms, 히트 12ms) + Cache-Control 확인 + HTTP 상태 5건
+
+## Step 66: dev Vite 우회 차단 + 지도 캐시 LRU 분리 (2026-07-26)
+- [x] A: treatmentPrerender.ts 핸들러 최상단에 NODE_ENV !== production 가드 추가
+- [x] B-1: server/_core/mapCache.ts 신규 생성 (LRU 24h TTL, 12MB 상한)
+- [x] B-2: location.ts withCache/invalidateCache → staticMapCache LRU 교체
+- [x] V1~V4: TypeScript + build + test + grep 6종
+- [x] V5~V7: dev 실동작 + 지도 캐시 + 회귀 + 체크포인트

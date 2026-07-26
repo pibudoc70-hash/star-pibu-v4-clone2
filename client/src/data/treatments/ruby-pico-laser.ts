@@ -79,24 +79,24 @@ export const rubyPicoLaser: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "루비피코레이저 | 부산 서면 스타피부과 - 3세대 피코초 기미·색소 제거",
+    ko: "루비피코레이저 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
     en: "Ruby Pico Laser | Star Dermatology Seomyeon Busan – 3rd-Gen Picosecond Pigmentation Removal",
     ja: "ルビーピコレーザー | 釜山西面 スター皮膚科 – 第3世代ピコ秒シミ・色素除去",
     zh: "红宝石皮秒激光 | 釜山西面 STAR 皮肤科 – 第三代皮秒祛斑·色素去除",
   },
 
   seoDescription: {
-    ko: "부산 서면 스타피부과의 루비피코레이저 시술 안내. 3세대 피코초 기술로 기미·잡티·색소를 효과적으로 제거하고 콜라겐 생성 유도. 피부과 전문의 직접 시술.",
+    ko: "루비피코레이저는 3세대 피코초 기술로 기미·잡티·색소를 제거하고 콜라겐 생성을 유도. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
     en: "Ruby Pico Laser at Star Dermatology, Seomyeon, Busan. 3rd-generation picosecond technology for effective removal of melasma, blemishes, and pigmentation with collagen stimulation. Performed directly by board-certified dermatologists.",
     ja: "釜山西面スター皮膚科のルビーピコレーザー施術案内。第3世代ピコ秒技術でシミ・そばかす・色素を効果的に除去し、コラーゲン生成を促進。皮膚科専門医が直接施術。",
     zh: "釜山西面STAR皮肤科红宝石皮秒激光施术介绍。第三代皮秒技术有效去除黄褐斑、斑点和色素，促进胶原蛋白生成。由皮肤科专科医生亲自操作。",
   },
 
   seoKeywords: {
-    ko: "루비피코레이저, 피코레이저, 기미제거, 잡티제거, 부산피부과, 스타피부과, 서면피부과, 색소레이저, 인라이튼",
-    en: "Ruby Pico Laser, pico laser, melasma removal, blemish removal, Busan dermatology, Star Dermatology, Seomyeon clinic, Enlighten",
-    ja: "ルビーピコレーザー, ピコレーザー, シミ除去, そばかす除去, 釜山皮膚科, スター皮膚科, 西面皮膚科, エンライトン",
-    zh: "红宝石皮秒激光, 皮秒激光, 祛斑, 釜山皮肤科, STAR皮肤科, 西面皮肤科, Enlighten",
+    ko: "루비피코레이저, 부산루비피코레이저, 서면루비피코레이저, 피코레이저, 부산기미제거, 기미제거, 잡티제거, 부산피부과, 서면피부과, 서면역피부과, 색소레이저, 인라이튼, 피부과전문의",
+    en: "Ruby Pico Laser, Busan ruby pico laser, Seomyeon ruby pico laser, pico laser, melasma removal, blemish removal, Busan dermatology, Star Dermatology, Seomyeon dermatology, Enlighten, board-certified dermatologist",
+    ja: "ルビーピコレーザー, 釜山ルビーピコレーザー, 西面ルビーピコレーザー, ピコレーザー, シミ除去, そばかす除去, 釜山皮膚科, 西面皮膚科, エンライトン, 皮膚科専門医",
+    zh: "红宝石皮秒激光, 釜山红宝石皮秒激光, 西面红宝石皮秒激光, 皮秒激光, 祛斑, 釜山皮肤科, 西面皮肤科, Enlighten, 皮肤科专科医生",
   },
 
   faq: {

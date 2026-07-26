@@ -93,24 +93,24 @@ export const underEyeFat: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: `눈밑지방재배치 | 부산 서면 스타피부과 - ${_n}례 이상 경험`,
+    ko: `눈밑지방재배치 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료`,
     en: `Under-eye Fat Repositioning | Star Dermatology Seomyeon Busan – ${_n}+ Cases`,
     ja: `目の下脂肪再配置 | 釜山西面 スター皮膚科 – ${_n}例以上の経験`,
     zh: `眼下脂肪重置术 | 釜山西面 STAR 皮肤科 – ${_n}例以上经验`,
   },
 
   seoDescription: {
-    ko: `부산 서면 스타피부과의 눈밑지방재배치 시술 안내. ${_n}례 이상의 풍부한 경험. 다크서클과 눈밑 볼록함을 동시에 개선하는 스타피부과 대표 시술. 피부과 전문의 직접 시술.`,
+    ko: `눈밑지방재배치는 다크서클과 눈밑 볼록함을 동시에 개선하는 시술. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.`,
     en: `Under-eye fat repositioning at Star Dermatology, Seomyeon, Busan. Over ${_n} cases of experience. Star Dermatology's signature procedure that simultaneously improves dark circles and under-eye puffiness. Performed directly by board-certified dermatologists.`,
     ja: `釜山西面スター皮膚科の目の下脂肪再配置施術案内。${_n}例以上の豊富な経験。クマと目の下のふくらみを同時に改善するスター皮膚科の代表施術。皮膚科専門医が直接施術。`,
     zh: `釜山西面STAR皮肤科眼下脂肪重置术介绍。拥有${_n}例以上丰富经验。同时改善黑眼圈和眼下膨出的招牌施术，由皮肤科专科医生亲自操作。`,
   },
 
   seoKeywords: {
-    ko: "눈밑지방재배치, 다크서클, 눈밑볼록, 눈물고랑, 부산피부과, 스타피부과, 서면피부과, 눈밑시술, 눈밑지방, 피부과전문의",
-    en: "under-eye fat repositioning, dark circles, under-eye puffiness, tear trough, Busan dermatology, Star Dermatology, Seomyeon clinic, eye treatment, board-certified dermatologist",
-    ja: "目の下脂肪再配置, クマ, 目の下のふくらみ, 涙溝, 釜山皮膚科, スター皮膚科, 西面皮膚科, 目の下施術, 皮膚科専門医",
-    zh: "眼下脂肪重置, 黑眼圈, 眼下膨出, 泪沟, 釜山皮肤科, STAR皮肤科, 西面皮肤科, 眼下施术, 皮肤科专科医生",
+    ko: "눈밑지방재배치, 부산눈밑지방재배치, 서면눈밑지방재배치, 다크서클, 눈밑볼록, 눈물고랑, 부산피부과, 서면피부과, 서면역피부과, 눈밑시술, 눈밑지방, 피부과전문의",
+    en: "under-eye fat repositioning, Busan under-eye fat repositioning, Seomyeon under-eye fat repositioning, dark circles, under-eye puffiness, tear trough, Busan dermatology, Star Dermatology, Seomyeon dermatology, board-certified dermatologist",
+    ja: "目の下脂肪再配置, 釜山目の下脂肪再配置, 西面目の下脂肪再配置, クマ, 目の下のふくらみ, 涙溝, 釜山皮膚科, 西面皮膚科, 目の下施術, 皮膚科専門医",
+    zh: "眼下脂肪重置, 釜山眼下脂肪重置, 西面眼下脂肪重置, 黑眼圈, 眼下膨出, 泪沟, 釜山皮肤科, 西面皮肤科, 眼下施术, 皮肤科专科医生",
   },
 
   faq: {

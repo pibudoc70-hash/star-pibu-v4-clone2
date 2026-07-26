@@ -79,24 +79,24 @@ export const picoLaser: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "피코레이저 | 부산 서면 스타피부과 - 기미·잡티·문신 제거",
+    ko: "피코레이저 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
     en: "Pico Laser | Star Dermatology Seomyeon Busan – Melasma & Tattoo Removal",
     ja: "ピコレーザー | 釜山西面 スター皮膚科 – シミ・そばかす・タトゥー除去",
     zh: "皮秒激光 | 釜山西面 STAR 皮肤科 – 祛斑·纹身去除",
   },
 
   seoDescription: {
-    ko: "부산 서면 스타피부과의 피코레이저 시술 안내. 피코초 단위 초단파로 기미·잡티·문신을 효과적으로 제거. 주변 조직 손상 최소화. 피부과 전문의 직접 시술.",
+    ko: "피코레이저는 피코초 단위 초단파로 기미·잡티·문신을 효과적으로 제거하는 레이저. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
     en: "Pico Laser at Star Dermatology, Seomyeon, Busan. Effective removal of melasma, blemishes, and tattoos using picosecond ultra-short pulses with minimal tissue damage. Performed directly by board-certified dermatologists.",
     ja: "釜山西面スター皮膚科のピコレーザー施術案内。ピコ秒超短波でシミ・そばかす・タトゥーを効果的に除去。周辺組織へのダメージを最小化。皮膚科専門医が直接施術。",
     zh: "釜山西面STAR皮肤科皮秒激光施术介绍。皮秒级超短脉冲有效去除黄褐斑、斑点和纹身，最大限度减少组织损伤。由皮肤科专科医生亲自操作。",
   },
 
   seoKeywords: {
-    ko: "피코레이저, 기미제거, 잡티제거, 문신제거, 부산피부과, 스타피부과, 서면피부과, 색소레이저, 피코슈어",
-    en: "Pico Laser, melasma removal, blemish removal, tattoo removal, Busan dermatology, Star Dermatology, Seomyeon clinic, pigment laser, PicoSure",
-    ja: "ピコレーザー, シミ除去, そばかす除去, タトゥー除去, 釜山皮膚科, スター皮膚科, 西面皮膚科, 色素レーザー",
-    zh: "皮秒激光, 祛斑, 去纹身, 釜山皮肤科, STAR皮肤科, 西面皮肤科, 色素激光, PicoSure",
+    ko: "피코레이저, 부산피코레이저, 서면피코레이저, 부산기미제거, 기미제거, 잡티제거, 문신제거, 부산피부과, 서면피부과, 서면역피부과, 색소레이저, 피코슈어, 피부과전문의",
+    en: "Pico Laser, Busan pico laser, Seomyeon pico laser, melasma removal, blemish removal, tattoo removal, Busan dermatology, Star Dermatology, Seomyeon dermatology, pigment laser, PicoSure, board-certified dermatologist",
+    ja: "ピコレーザー, 釜山ピコレーザー, 西面ピコレーザー, シミ除去, そばかす除去, タトゥー除去, 釜山皮膚科, 西面皮膚科, 色素レーザー, 皮膚科専門医",
+    zh: "皮秒激光, 釜山皮秒激光, 西面皮秒激光, 祛斑, 去纹身, 釜山皮肤科, 西面皮肤科, 色素激光, PicoSure, 皮肤科专科医生",
   },
 
   faq: {

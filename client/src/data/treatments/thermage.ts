@@ -90,24 +90,24 @@ export const thermage: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "써마지 FLX | 부산 서면 스타피부과 - 조시형 원장 공식 자문의",
+    ko: "써마지 FLX | 부산 서면 스타피부과 · 조시형 원장 공식 자문의",
     en: "Thermage FLX | Star Dermatology Seomyeon Busan – Official Advisory Physician",
     ja: "サーマジ FLX | 釜山西面 スター皮膚科 – 公式顧問医",
     zh: "热玛吉 FLX | 釜山西面 STAR 皮肤科 – 官方顾问医",
   },
 
   seoDescription: {
-    ko: "부산 서면 스타피부과의 써마지 FLX 시술 안내. 4세대 고주파 리프팅으로 콜라겐 재생 및 피부 탄력 개선. 조시형 원장 공식 자문의. 시술 당일 일상 복귀 가능.",
+    ko: "써마지 FLX는 4세대 고주파 리프팅으로 콜라겐 재생 및 피부 탄력을 개선. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
     en: "Thermage FLX at Star Dermatology, Seomyeon, Busan. 4th-generation RF lifting for collagen regeneration and skin firmness. Dr. Cho Si-hyung is an official advisory physician. Same-day return to daily activities.",
     ja: "釜山西面スター皮膚科のサーマジ FLX施術案内。第4世代高周波リフティングでコラーゲン再生と肌弾力改善。チョ・シヒョン院長は公式顧問医。施術当日から日常生活に復帰可能。",
     zh: "釜山西面STAR皮肤科热玛吉FLX施术介绍。第四代射频提升，促进胶原再生、改善皮肤弹力。曹时亨院长为官方顾问医。当天可恢复日常生活。",
   },
 
   seoKeywords: {
-    ko: "써마지 FLX, 써마지, Thermage, 고주파리프팅, 부산리프팅, 부산피부과, 스타피부과, 서면피부과, 콜라겐재생, 피부탄력",
-    en: "Thermage FLX, Thermage, RF lifting, Busan lifting, Busan dermatology, Star Dermatology, Seomyeon clinic, collagen regeneration, skin firmness",
-    ja: "サーマジ FLX, サーマジ, Thermage, 高周波リフティング, 釜山リフティング, 釜山皮膚科, スター皮膚科, 西面皮膚科, コラーゲン再生, 肌弾力",
-    zh: "热玛吉FLX, 热玛吉, Thermage, 射频提升, 釜山提升, 釜山皮肤科, STAR皮肤科, 西面皮肤科, 胶原再生, 皮肤弹力",
+    ko: "써마지 FLX, 써마지, 부산써마지, 서면써마지, 부산써마지가격, Thermage, 고주파리프팅, 부산리프팅, 서면리프팅, 부산피부과, 서면피부과, 서면역피부과, 콜라겐재생, 피부과전문의",
+    en: "Thermage FLX, Thermage, RF lifting, Busan lifting, Seomyeon lifting, Busan dermatology, Star Dermatology, Seomyeon dermatology, collagen regeneration, board-certified dermatologist",
+    ja: "サーマジ FLX, サーマジ, 釜山サーマジ, 西面サーマジ, Thermage, 高周波リフティング, 釜山リフティング, 西面リフティング, 釜山皮膚科, 西面皮膚科, コラーゲン再生, 皮膚科専門医",
+    zh: "热玛吉FLX, 热玛吉, 釜山热玛吉, 西面热玛吉, Thermage, 射频提升, 釜山提升, 西面提升, 釜山皮肤科, 西面皮肤科, 胶原再生, 皮肤科专科医生",
   },
 
   faq: {

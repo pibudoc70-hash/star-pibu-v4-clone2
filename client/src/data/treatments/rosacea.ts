@@ -79,24 +79,24 @@ export const rosacea: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "안면홍조 치료 | 부산 서면 스타피부과 - Excel V+ 혈관 레이저",
+    ko: "안면홍조 치료 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
     en: "Rosacea Treatment | Star Dermatology Seomyeon Busan – Excel V+ Vascular Laser",
     ja: "顔面紅潮治療 | 釜山西面 スター皮膚科 – Excel V+血管レーザー",
     zh: "面部潮红治疗 | 釜山西面 STAR 皮肤科 – Excel V+血管激光",
   },
 
   seoDescription: {
-    ko: "부산 서면 스타피부과의 안면홍조 치료 안내. Excel V+ 혈관 레이저로 안면홍조, 모세혈관 확장, 주사비를 효과적으로 개선. 피부과 전문의 직접 시술.",
+    ko: "안면홍조·주사비는 Excel V+ 혈관 레이저로 효과적으로 개선. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
     en: "Rosacea treatment at Star Dermatology, Seomyeon, Busan. Excel V+ vascular laser effectively improves rosacea, telangiectasia, and facial flushing. Performed directly by board-certified dermatologists.",
     ja: "釜山西面スター皮膚科の顔面紅潮治療案内。Excel V+血管レーザーで顔面紅潮、毛細血管拡張、酒さを効果的に改善。皮膚科専門医が直接施術。",
     zh: "釜山西面STAR皮肤科面部潮红治疗介绍。Excel V+血管激光有效改善面部潮红、毛细血管扩张和酒渣鼻。由皮肤科专科医生亲自操作。",
   },
 
   seoKeywords: {
-    ko: "안면홍조, 주사비, 로사세아, 모세혈관확장, Excel V+, 혈관레이저, 부산피부과, 스타피부과, 서면피부과",
-    en: "rosacea, telangiectasia, facial flushing, Excel V+, vascular laser, Busan dermatology, Star Dermatology, Seomyeon clinic",
-    ja: "顔面紅潮, 酒さ, ロサセア, 毛細血管拡張, Excel V+, 血管レーザー, 釜山皮膚科, スター皮膚科, 西面皮膚科",
-    zh: "面部潮红, 酒渣鼻, 玫瑰痤疮, 毛细血管扩张, Excel V+, 血管激光, 釜山皮肤科, STAR皮肤科, 西面皮肤科",
+    ko: "안면홍조, 주사비, 로사세아, 부산안면홍조, 서면안면홍조, 모세혈관확장, Excel V+, 혈관레이저, 부산피부과, 서면피부과, 서면역피부과, 피부과전문의",
+    en: "rosacea, telangiectasia, facial flushing, Busan rosacea, Seomyeon rosacea, Excel V+, vascular laser, Busan dermatology, Star Dermatology, Seomyeon dermatology, board-certified dermatologist",
+    ja: "顔面紅潮, 酒さ, ロサセア, 釜山顔面紅潮, 西面顔面紅潮, 毛細血管拡張, Excel V+, 血管レーザー, 釜山皮膚科, 西面皮膚科, 皮膚科専門医",
+    zh: "面部潮红, 酒渣鼻, 玫瑰痤疮, 釜山面部潮红, 西面面部潮红, 毛细血管扩张, Excel V+, 血管激光, 釜山皮肤科, 西面皮肤科, 皮肤科专科医生",
   },
 
   faq: {

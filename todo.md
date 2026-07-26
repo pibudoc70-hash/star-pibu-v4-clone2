@@ -3999,3 +3999,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V4: pnpm check + build + test + grep 7종
 - [x] V5: 런타임 검증 a~d
 - [x] V6+V7: 브라우저 회귀 + 리포트 + 체크포인트
+
+## Step 60: 시술 페이지 SEO 메타 지역 키워드 보강 (2026-07-26)
+- [x] Phase 0: 7개 시술 SEO 필드 현황 파악 (파일 구조, 현재 값, 길이 측정)
+- [x] A-1: seoTitle(ko) 지역 키워드 보강 — 7개 시술 (60자 이내)
+- [x] A-2: seoDescription(ko) 지역 키워드 보강 — 7개 시술 (150자 이내)
+- [x] A-3: seoKeywords(ko) 지역 키워드 추가 — 7개 시술 (20개 이내)
+- [x] B: en/ja/zh 다국어 최소 지역 키워드 보강 — 7개 시술
+- [x] V1~V5: TypeScript + build + test + 길이 검증 + 금지어 검사
+- [x] V6~V7: 브라우저 확인 + 회귀 + 체크포인트

@@ -4168,3 +4168,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] B-2: location.ts withCache/invalidateCache → staticMapCache LRU 교체
 - [x] V1~V4: TypeScript + build + test + grep 6종
 - [x] V5~V7: dev 실동작 + 지도 캐시 + 회귀 + 체크포인트
+
+## Step 67: 지도 이미지 base64 tRPC → GET 엔드포인트 전환 (2026-07-26)
+- [x] A: mapCache.ts Buffer 타입 변경 + fetchStaticMap 공용 함수 추출
+- [x] B: server/_core/staticMapRoute.ts 신규 생성
+- [x] C: server/_core/index.ts 라우트 등록 1줄
+- [x] D: server/routers/location.ts 하위호환 유지 (fetchStaticMap 재사용)
+- [x] E: client/src/components/ContactSection.tsx img src 전환
+- [x] V1~V4: TypeScript 0건 + build 246.6KB + 63 files / 1458 tests + grep 10종
+- [x] V5: curl 200 OK (86118 bytes) + ETag 304 Not Modified 확인 완료

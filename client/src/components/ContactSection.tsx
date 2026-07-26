@@ -4,20 +4,19 @@
  * i18n: useLang으로 한/중/일 전환
  * 모바일 최적화: 지도 높이 확대, 주소 복사 버튼, 레이아웃 개선
  *
- * [UI개선-2026-07-22-v7] 서버 사이드 tRPC 프록시로 지도 이미지 표시
- *   - BUILT_IN_FORGE_API_KEY (서버 사이드 키) 사용 → 인증 문제 해결
- *   - location.getStaticMapUrl tRPC 프로시저로 base64 data URL 반환
- *   - 클라이언트에서 API 키 노출 없이 지도 이미지 표시
- *   - reveal-heading 제거 → 섹션 헤더 항상 표시
+ * [Step67-E] tRPC base64 → GET /api/staticmap.png 전환
+ *   - trpc.location.getStaticMapUrl 제거
+ *   - <img src="/api/staticmap.png?w=...&h=...&s=1"> 직접 사용
+ *   - 브라우저 캐시 + CDN immutable 캐시 활성화
+ *   - 전송량 약 25% 감소 (base64 오버헤드 제거)
  */
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
-import { trpc } from "@/lib/trpc";
 // [Step59-B] 네이버 플레이스 상시 링크 — 리뷰·길찾기 유입 경로
 import { NAVER_PLACE_URL } from "@/lib/constants";
 // 후행 호환성을 위해 re-export 유지
@@ -42,21 +41,14 @@ export default function ContactSection() {
   // 지도 높이 계산 로직
   const { mapHeight, isMobile, infoPanelRef } = useMapHeight();
 
-  // 지도 이미지 크기 (컨테이너 기준) — 안정적인 참조를 위해 useMemo 사용
-  const mapInput = useMemo(() => ({
-    width: (isMobile ? 700 : 900) as 700 | 900,
-    height: (isMobile ? 400 : 560) as 400 | 560,
-    scale: 1 as const,
-  }), [isMobile]);
-
-  // 서버 사이드 tRPC 프록시를 통해 지도 이미지 가져오기
-  const { data: mapData, isLoading: mapLoading } = trpc.location.getStaticMapUrl.useQuery(mapInput, {
-    staleTime: 1000 * 60 * 60, // 1시간 캐시
-    retry: 2,
-  });
-
-  const staticMapDataUrl = mapData?.dataUrl ?? null;
-  const mapImgError = mapData?.success === false;
+  // [Step67-E] GET /api/staticmap.png?w=...&h=...&s=1
+  // isMobile 변경으로 src가 바뀌면 에러 상태를 초기화한다
+  const mapSrc = useMemo(
+    () => `/api/staticmap.png?w=${isMobile ? 700 : 900}&h=${isMobile ? 400 : 560}&s=1`,
+    [isMobile],
+  );
+  const [mapImgError, setMapImgError] = useState(false);
+  useEffect(() => { setMapImgError(false); }, [mapSrc]);
 
   // CONTACT-P4-A: navigator.clipboard 전용
   const handleCopyAddress = useCallback(async () => {
@@ -109,24 +101,13 @@ export default function ContactSection() {
         <div
           className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-5"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
         >
-          {/* 지도 영역 — tRPC 서버 사이드 프록시 이미지 방식 */}
+          {/* 지도 영역 — [Step67-E] GET /api/staticmap.png 직접 사용 */}
           <div
             className="lg:col-span-3 rounded-2xl overflow-hidden shadow-lg relative"
             style={{ height: mapHeight, minHeight: '400px', background: '#E8E4DF' }}
             aria-label={t.access.mapAriaLabel}
           >
-            {mapLoading ? (
-              /* 로딩 상태 */
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-                    style={{ borderColor: 'var(--color-gold-primary)', borderTopColor: 'transparent' }}
-                  />
-                  <span className="text-sm" style={{ color: '#888' }}>지도 로딩 중...</span>
-                </div>
-              </div>
-            ) : !mapImgError && staticMapDataUrl ? (
+            {!mapImgError ? (
               <a
                 href={GOOGLE_MAP_URL}
                 target="_blank"
@@ -135,10 +116,12 @@ export default function ContactSection() {
                 className="block w-full h-full"
               >
                 <img
-                  src={staticMapDataUrl}
+                  src={mapSrc}
                   alt={t.access.mapAriaLabel}
                   className="w-full h-full object-cover"
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
+                  onError={() => setMapImgError(true)}
                 />
                 {/* 지도 클릭 안내 오버레이 */}
                 <div

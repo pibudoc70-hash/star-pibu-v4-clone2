@@ -4191,3 +4191,15 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V4a~V4e: grep 5종 (CANONICAL 참조, 이름충돌 없음, seoTitle 사용, twitter:image 단일, twitter:image:alt 삽입)
 - [x] V5: 프로덕션 모드 ulthera — og:image:alt="울쎄라피 프라임 시술 안내 - 부산 서면 스타피부과", twitter:image:alt 동일
 - [x] V6: 프로덕션 모드 thermage — og:image:alt="써마지 FLX 시술 안내 - 부산 서면 스타피부과", botox(이미지 없음) — og:image:width 유지 확인
+
+## Step 70: 취약 의존성 제거 + 환경변수 가드 + og 태그 이중 주입 해소 (2026-07-26)
+
+- [x] Phase 0: D1~D8 사전 조사 완료 (axios/streamdown/next-themes 실사용 확인 → 제거 불가)
+- [x] A: xlsx(CVE-2023-30533) 제거 — excelExport.ts 삭제 + AdminReservationsTab.tsx CSV 교체 + pnpm remove xlsx
+- [x] B: 미사용 의존성 제거 — axios(sdk.ts)/streamdown(Equipment2/3Detail)/next-themes(sonner.tsx) 모두 실사용 중 → 제거 불가 사유 기록
+- [x] C: JWT_SECRET 프로덕션 필수화 — envSchema.ts 가드 추가 + env.ts 주석 추가
+- [x] D: og:image 부가태그 이중 주입 해소 — SeoHead.tsx ogImageWidth/Height/Alt prop 추가 + 하드코딩 1200/630 제거 + Home.tsx ogImageWidth={1200} ogImageHeight={630} 명시 + round22 D-4 테스트 갱신
+- [x] V1: TypeScript 0건
+- [x] V2: build 247.6 KB
+- [x] V3: 63 files / 1,461 tests 전부 통과
+- [x] V4: xlsx 제거 확인 + excelExport.ts 없음 + JWT_SECRET 가드 1건 + content="1200" 0건 + ogImageWidth 4건

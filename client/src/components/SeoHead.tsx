@@ -70,6 +70,12 @@ export interface SeoHeadProps {
   ogLocaleAlternates?: string[];
   /** og:site_name 언어별 사이트명 오버라이드 */
   ogSiteName?: string;
+  /** og:image:width. 미지정 시 태그를 출력하지 않는다 */
+  ogImageWidth?: number;
+  /** og:image:height. 미지정 시 태그를 출력하지 않는다 */
+  ogImageHeight?: number;
+  /** og:image:alt. 미지정 시 태그를 출력하지 않는다 */
+  ogImageAlt?: string;
   /**
    * [G항목] 페이지 타입 프리셋 (SEO_PRESETS 참조)
    * - "home"      → WebSite + MedicalBusiness 스키마 모두 포함
@@ -94,6 +100,9 @@ export default function SeoHead({
   ogLocale = "ko_KR",
   ogLocaleAlternates,
   ogSiteName,
+  ogImageWidth,
+  ogImageHeight,
+  ogImageAlt,
   pageType = "default",
 }: SeoHeadProps) {
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
@@ -135,9 +144,18 @@ export default function SeoHead({
       {ogImage && <meta property="og:image" content={ogImage} />}
       {ogImage && ogImage.startsWith("https://") && <meta property="og:image:secure_url" content={ogImage} />}
       {ogImage && <meta property="og:image:type" content={ogImage.endsWith('.webp') ? 'image/webp' : ogImage.endsWith('.jpg') || ogImage.endsWith('.jpeg') ? 'image/jpeg' : 'image/png'} />}
-      {ogImage && <meta property="og:image:width" content="1200" />}
-      {ogImage && <meta property="og:image:height" content="630" />}
-      {ogImage && <meta property="og:image:alt" content={title} />}
+      {/* [Step70-D] 실제 크기를 모르는 상태의 1200x630 하드코딩은
+          시술 페이지에서 서버 주입값과 충돌하고 잘못된 정보를 준다.
+          호출부가 명시한 경우에만 출력한다. */}
+      {ogImage && ogImageWidth != null && (
+        <meta property="og:image:width" content={String(ogImageWidth)} />
+      )}
+      {ogImage && ogImageHeight != null && (
+        <meta property="og:image:height" content={String(ogImageHeight)} />
+      )}
+      {ogImage && ogImageAlt && (
+        <meta property="og:image:alt" content={ogImageAlt} />
+      )}
       <meta property="og:locale" content={ogLocale} />
       {alternates.map((loc) => (
         <meta key={loc} property="og:locale:alternate" content={loc} />

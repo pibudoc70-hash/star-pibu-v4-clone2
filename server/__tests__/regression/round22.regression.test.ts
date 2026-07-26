@@ -194,10 +194,12 @@ describe("D. SeoHead", () => {
     expect(content).toContain("SEO_PRESETS[pageType]");
   });
 
-  it("D-4: og:image:width/height/alt 메타태그가 존재한다 (OG 이미지 완전성)", () => {
-    expect(content).toContain('og:image:width');
-    expect(content).toContain('og:image:height');
-    expect(content).toContain('og:image:alt');
+  it("D-4: [Step70-D] ogImageWidth/Height/Alt prop이 선언되어 있다 (하드코딩 1200/630 제거 후 prop 기반 조건부 출력)", () => {
+    // [Step70-D] SeoHead.tsx에서 1200/630 하드코딩이 제거되고 ogImageWidth/Height/Alt prop으로 전환되었다.
+    // 호출부가 명시한 경우에만 og:image:width/height/alt를 출력한다.
+    expect(content).toContain('ogImageWidth');
+    expect(content).toContain('ogImageHeight');
+    expect(content).toContain('ogImageAlt');
   });
 
   it("D-5: twitter:card='summary_large_image'가 존재한다", () => {

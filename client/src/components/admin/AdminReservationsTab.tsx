@@ -8,7 +8,31 @@ import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Download } from "luc
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import type { ReservationItem, ReservationStatus } from "@/types/admin";
-import { exportReservationsToExcel } from "@/utils/excelExport";
+// [Step70-A] xlsx(CVE-2023-30533) 제거로 excelExport.ts 삭제됨.
+// 엑셀 대신 CSV 다운로드로 교체한다.
+function exportReservationsToCsv(items: ReservationItem[]) {
+  const header = ["번호", "이름", "연락처", "시술", "날짜", "시간", "상태", "메모"].join(",");
+  const rows = items.map((r) =>
+    [
+      r.id,
+      `"${(r.patientName ?? "").replace(/"/g, '""')}"`,
+      `"${(r.phone ?? "").replace(/"/g, '""')}"`,
+      `"${(r.treatmentName ?? "").replace(/"/g, '""')}"`,
+      r.preferredDate ? new Date(r.preferredDate).toLocaleDateString("ko-KR") : "",
+      r.preferredTime ?? "",
+      r.status ?? "",
+      `"${(r.notes ?? "").replace(/"/g, '""')}"`,
+    ].join(",")
+  );
+  const csv = "\uFEFF" + [header, ...rows].join("\n"); // BOM for Excel
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `reservations_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 interface CurrentUser {
   role: string;
@@ -66,7 +90,7 @@ export default function AdminReservationsTab({ currentUser }: Props) {
           type="button"
           onClick={() => {
             if (data?.items?.length) {
-              exportReservationsToExcel(data.items);
+              exportReservationsToCsv(data.items);
               toast.success("엑셀 파일이 다운로드되었습니다.");
             } else {
               toast.error("다운로드할 예약 데이터가 없습니다.");

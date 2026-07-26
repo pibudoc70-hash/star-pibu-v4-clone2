@@ -68,5 +68,16 @@ export function validateEnv(): AppEnv {
     process.exit(1);
   }
 
+  // [Step70-C] JWT_SECRET 누락 시 env.ts 가 "" 로 폴백해
+  // 빈 키로 세션이 서명된다 → 관리자 세션 위조 가능.
+  // 관리자 로그인이 살아 있는 한 프로덕션 필수다.
+  if (parsed.NODE_ENV === "production" && !parsed.JWT_SECRET) {
+    console.error(
+      "[FATAL] JWT_SECRET is required in production. " +
+      "Empty signing key allows admin session forgery.",
+    );
+    process.exit(1);
+  }
+
   return parsed;
 }

@@ -362,6 +362,8 @@ export default function Home() {
         keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
         canonical="https://star-pibu.com/"
         ogImage={OG_IMAGE_LOCALIZED.ko}
+        ogImageWidth={1200}
+        ogImageHeight={630}
         ogSiteName={SITE_NAME_LOCALIZED.ko}
         ogLocale="ko_KR"
         ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}

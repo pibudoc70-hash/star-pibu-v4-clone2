@@ -195,7 +195,9 @@ export function KeywordTrendsDashboard() {
         <Card className="bg-white border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle>상위 키워드 검색량</CardTitle>
-            <CardDescription>상대 검색량 기준 상위 10개</CardDescription>
+            <CardDescription>상대 검색량 기준 상위 10개
+              <span className="ml-2 text-amber-600 font-medium">⚠️ 샘플 데이터 — Google Trends / Naver DataLab 연동 후 실제 값으로 교체됩니다</span>
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {isLoadingTop ? (
@@ -227,7 +229,7 @@ export function KeywordTrendsDashboard() {
         <Card className="bg-white border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle>트렌드 변화율</CardTitle>
-            <CardDescription>키워드별 증감률 (%)</CardDescription>
+            <CardDescription>키워드별 증감률 (%) · <span className="text-amber-600 font-medium">샘플 데이터</span></CardDescription>
           </CardHeader>
           <CardContent>
             {isLoadingTop ? (

@@ -1,17 +1,30 @@
-import { asc, desc, eq, inArray, lt } from "drizzle-orm";
+import { asc, desc, eq, inArray, lt, or, sql } from "drizzle-orm";
 import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../drizzle/schema";
 import { getDb } from "./connection";
+
+// [Step56-C] as 단언 제거. 허용 언어를 런타임에서 검증해 좁힌다.
+const SUPPORTED_LANGS = ["ko", "en", "ja", "zh"] as const;
+type SupportedLang = (typeof SUPPORTED_LANGS)[number];
+
+function toSupportedLang(v: string | undefined): SupportedLang | undefined {
+  return SUPPORTED_LANGS.find((l) => l === v);
+}
 
 /** 공지사항 목록 (고정글 먼저, 최신순, 언어 필터 지원) */
 export async function getAllNotices(lang?: string) {
   const db = await getDb();
-  const rows = await db
+  // [Step55-B] 언어 필터를 SQL WHERE 로 이동.
+  // [Step56-C] as 단언 제거 → toSupportedLang 런타임 검증.
+  // 지원하지 않는 lang 값이 오면 전체 목록을 반환한다(빈 목록 대신).
+  const safeLang = toSupportedLang(lang);
+  const langCondition = safeLang
+    ? or(eq(notices.targetLang, "all"), eq(notices.targetLang, safeLang))
+    : undefined;
+  return db
     .select()
     .from(notices)
+    .where(langCondition)
     .orderBy(desc(notices.isPinned), desc(notices.createdAt));
-  if (!lang) return rows;
-  // 언어 필터: all이거나 현재 언어와 일치하는 항목만
-  return rows.filter((r) => r.targetLang === "all" || r.targetLang === lang);
 }
 
 /** 공지사항 단건 조회 */
@@ -34,19 +47,29 @@ export async function updateNotice(id: number, data: Partial<InsertNotice>) {
   await db.update(notices).set(data).where(eq(notices.id, id));
 }
 
-/** 공지사항 삭제 (이미지도 함께 삭제) */
+/** 공지사항 삭제 (이미지도 함께 삭제) — [Step56-C] 트랜잭션 적용 */
 export async function deleteNotice(id: number) {
   const db = await getDb();
-  await db.delete(noticeImages).where(eq(noticeImages.noticeId, id));
-  await db.delete(notices).where(eq(notices.id, id));
+  await db.transaction(async (tx) => {
+    await tx.delete(noticeImages).where(eq(noticeImages.noticeId, id));
+    await tx.delete(notices).where(eq(notices.id, id));
+  });
 }
 
-/** 조회수 증가 */
-export async function incrementNoticeViews(id: number) {
+/**
+ * 공지 조회수 +1 (원자적).
+ *
+ * [Step55-A] read-modify-write → 단일 UPDATE.
+ * DB 가 직접 증가시키므로 동시 요청에서도 카운트가 유실되지 않고,
+ * DB 왕복도 2회 → 1회로 줄어든다.
+ * views 컬럼은 int.notNull().default(0) 이므로 COALESCE 불필요.
+ */
+export async function incrementNoticeViews(id: number): Promise<void> {
   const db = await getDb();
-  const row = await db.select({ views: notices.views }).from(notices).where(eq(notices.id, id)).limit(1);
-  if (!row[0]) return;
-  await db.update(notices).set({ views: row[0].views + 1 }).where(eq(notices.id, id));
+  await db
+    .update(notices)
+    .set({ views: sql`${notices.views} + 1` })
+    .where(eq(notices.id, id));
 }
 
 // ─── notice_images ────────────────────────────────────────────────────────────
@@ -97,7 +120,7 @@ export async function getNoticeImagesByNoticeIds(noticeIds: number[]) {
  * 공지사항 생성 + 이미지 일괄 insert 를 단일 트랜잭션으로 처리.
  * notices insert 성공 후 noticeImages insert 실패 시 notices 도 롤백된다.
  *
- * 반환: 생성된 notices 행 (라우터의 insertId 캐스팅 패턴과 동일하게 raw result 반환)
+ * 반환: 생성된 notices 행
  */
 export async function createNoticeWithImages(
   data: InsertNotice,
@@ -106,9 +129,9 @@ export async function createNoticeWithImages(
   const db = await getDb();
 
   return db.transaction(async (tx) => {
-    const result = await tx.insert(notices).values(data);
-    // 기존 라우터가 사용하는 insertId 획득 방식 유지
-    const noticeId = Number((result as any).insertId as number);
+    // [Step55-C] 타입 단언 제거. drizzle 0.44.7 mysql2: $returningId() 로 PK 획득.
+    // notices.id 는 int.autoincrement().primaryKey() 이므로 $returningId 가 id 를 반환한다.
+    const [{ id: noticeId }] = await tx.insert(notices).values(data).$returningId();
 
     if (images.length > 0) {
       await tx.insert(noticeImages).values(
@@ -170,8 +193,11 @@ export async function updateNoticeWithImages(
 /**
  * 커서 기반 공지 목록 조회.
  *
- * OFFSET 방식의 문제: OFFSET 10000 은 10000행을 읽고 버려서 뒷페이지가 느리다.
+ * OFFSET 방식의 문제: OFFSET 10000 은 10000행을 읽고 버려서 뒤페이지가 느리다.
  * 커서 방식: 마지막으로 본 id 이후만 읽으므로 페이지 위치와 무관하게 일정하다.
+ *
+ * ⚠️ [Step56-C] 주의: 이 함수는 isPinned 우선 정렬과 targetLang 필터를
+ *    적용하지 않는다. getAllNotices 를 대체하려면 두 조건을 먼저 반영해야 한다.
  *
  * @param cursor 마지막으로 조회한 공지의 id (첫 페이지는 undefined)
  * @param limit 페이지 크기 (최대 100)
@@ -195,4 +221,18 @@ export async function getNoticesByCursor(params: {
   const nextCursor = hasMore ? items[items.length - 1].id : null;
 
   return { items, nextCursor, hasMore };
+}
+
+/**
+ * [Step56-A] sitemap 용 공지 목록. 최근 항목만 반환해 sitemap 크기를 제한한다.
+ * notices 스키마에 isPublished / isActive / status 같은 공개 여부 컬럼이 없으므로
+ * 전체 공지를 반환한다. (공개 컬럼 없음 — schema.ts 확인 완료)
+ */
+export async function getRecentNoticeIdsForSitemap(limit = 100): Promise<{ id: number; updatedAt: Date }[]> {
+  const db = await getDb();
+  return db
+    .select({ id: notices.id, updatedAt: notices.updatedAt })
+    .from(notices)
+    .orderBy(desc(notices.createdAt))
+    .limit(limit);
 }

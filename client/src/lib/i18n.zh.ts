@@ -1,4 +1,6 @@
 // 중국어(zh) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-5)
+// ⚠️ 广告数字必须与 client/src/lib/clinic-stats.ts 中的 CLINIC_STATS 保持一致。
+//    修改数字时，请同时更新 4个语言文件 + llms.txt + llms-full.txt。
 import type { I18nContent } from "./i18n.types";
 import { CLINIC_STATS, STAT_UNITS } from "./constants";
 const _n_zh = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
@@ -502,6 +504,8 @@ export const zh: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@starpibu",
     businessInfo: "营业执照号: 605-24-84306 | 邮筱: starpibu@naver.com",
+    /** [Step59-B] Naver地图 常驻链接 标签 */
+    naverPlaceLabel: "Naver地图",
   },
   youtube: {
     sectionTitle: "皮肤科专家为您讲解皮肤故事",

@@ -12,6 +12,8 @@ export const CLINIC_TEL = "051-818-2300";
 export const CLINIC_TEL_INTL = "+82-51-818-2300";
 export const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
 export const NAVER_BOOK_URL = "https://booking.naver.com/booking/13/bizes/209080";
+/** [Step59-B] 네이버 플레이스 페이지 — 리뷰·길찾기 유입 경로 (sameAs 배열과 동일한 URL) */
+export const NAVER_PLACE_URL = "https://place.naver.com/hospital/12020103";
 export const LINE_URL = "https://lin.ee/tyuRdUc";
 export const WECHAT_ID = "star2006beauty";
 

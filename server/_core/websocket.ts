@@ -2,18 +2,27 @@ import { Server as HTTPServer } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { logger } from "./logger";
 import { sdk } from "./sdk";
+import { getUserByOpenId } from "../db/users";
 
 // [Step53-B] 리소스 한계
 const MAX_CLIENTS = 100;
 const MAX_MESSAGE_BYTES = 4 * 1024;
 const HEARTBEAT_MS = 30_000;
 
-// [Step53-B] CSWSH 방지: 허용 Origin
-const ALLOWED_WS_ORIGINS = new Set([
-  "https://star-pibu.com",
-  "https://www.star-pibu.com",
-  "https://starpibu-qdq7tysk.manus.space",
-]);
+// [Step54-C] 연결당 auth 시도 상한
+const MAX_AUTH_ATTEMPTS = 5;
+
+// [Step54-D] 프로덕션 신뢰 경계는 실서비스 도메인으로만 한정한다.
+// 개발 환경은 verifyClient 의 isDev 분기에서 이미 전체 허용되므로
+// 프리뷰 도메인을 여기에 넣을 필요가 없다.
+// 스테이징에서 임시 허용이 필요하면 ENV WS_EXTRA_ORIGIN 으로 주입한다.
+const ALLOWED_WS_ORIGINS = new Set(
+  [
+    "https://star-pibu.com",
+    "https://www.star-pibu.com",
+    process.env.WS_EXTRA_ORIGIN,
+  ].filter((v): v is string => typeof v === "string" && v.length > 0),
+);
 
 interface KeywordTrendUpdate {
   type: "new" | "update" | "delete";
@@ -29,6 +38,7 @@ interface ClientConnection {
   userId?: string;
   isAdmin: boolean;
   isAlive: boolean; // [Step53-B] heartbeat 추적
+  authAttempts: number; // [Step54-C] auth 시도 횟수
   subscriptions: Set<string>;
 }
 
@@ -71,6 +81,7 @@ class KeywordTrendWebSocketServer {
         ws,
         isAdmin: false,
         isAlive: true,
+        authAttempts: 0, // [Step54-C]
         subscriptions: new Set(),
       };
 
@@ -115,17 +126,29 @@ class KeywordTrendWebSocketServer {
 
       switch (message.type) {
         case "auth": {
-          // [Step53-B] 이전 구현은 message.isAdmin 만 보고 관리자로 승격시켰다.
-          // 클라이언트가 보낸 값을 신뢰하지 않고 서버가 세션 쿠키를 검증한다.
+          // [Step54-C] JWT 서명 검증(verifySession) + 조회 전용 getUserByOpenId 로 대체.
+          // DB 쓰기(이전 구현의 upsertUser) 및 fakeReq 이중 단언 제거.
           const token = typeof message.token === "string" ? message.token : "";
           if (!token || token.length > 4096) {
             connection.ws.send(JSON.stringify({ type: "auth_failed" }));
             break;
           }
+
+          // [Step54-C] auth 시도 횟수 제한 — 인증 서버·DB 남용 방지
+          connection.authAttempts += 1;
+          if (connection.authAttempts > MAX_AUTH_ATTEMPTS) {
+            connection.ws.close(1008, "Too many auth attempts");
+            this.clients.delete(clientId);
+            break;
+          }
+
           try {
-            // sdk.authenticateRequest 가 받는 형태에 맞춰 가짜 req 객체 사용
-            const fakeReq = { headers: { cookie: `app_session_id=${token}` } } as unknown as import("express").Request;
-            const user = await sdk.authenticateRequest(fakeReq);
+            const session = await sdk.verifySession(token);
+            if (!session) {
+              connection.ws.send(JSON.stringify({ type: "auth_failed" }));
+              break;
+            }
+            const user = await getUserByOpenId(session.openId);
             if (user && user.role === "admin") {
               connection.isAdmin = true;
               connection.userId = String(user.id);

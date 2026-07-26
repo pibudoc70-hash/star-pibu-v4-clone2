@@ -3999,6 +3999,70 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V1~V4: pnpm check + build + test + grep 7종
 - [x] V5: 런타임 검증 a~d
 - [x] V6+V7: 브라우저 회귀 + 리포트 + 체크포인트
+## Step 54: 상담폼 검사 순서 재배치 + notifyOwner 재시도 + WS 인증 경로 정리 (2026-07-26)
+- [x] A: consultation.ts 검사 순서 재배치 (memRateLimited 추가 + Turnstile 앞으로 이동)
+- [x] B: notification.ts notifyOwner 재시도 래퍼 + fetch 타임아웃/리다이렉트 방어
+- [x] C+D: websocket.ts 인증 경로 정리 + 프리뷰 도메인 분리
+- [x] V1~V5: pnpm check + build + test + grep 9종 + 검사 순서 라인 번호 확인
+- [x] V6: 런타임 검증 a~e
+- [x] V7: 브라우저 회귀 + 체크포인트
+
+## Step 55: notices.ts 데이터 정확성 + 쿼리 최적화 + 타입 안전 (2026-07-26)
+- [x] A: incrementNoticeViews read-modify-write → 원자적 UPDATE + sql import 추가
+- [x] B: getAllNotices targetLang 필터 SQL WHERE 이동 (조건 판단 포함)
+- [x] C: as any 제거 (insertId 타입 명시 + $returningId 확인)
+- [x] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5: 런타임 검증 a~d
+- [x] V6: 브라우저 회귀 + 체크포인트
+
+## Step 56: sitemap 실동작 복구 + 스케줄러 정보노출 차단 + notices 잔여 정리 (2026-07-26)
+- [x] Phase 0: 현재 상태 파악 (동적 sitemap 라우트/정적 파일/호출 순서/공지 라우트)
+- [x] A-1: server/sitemap.ts 라우트 경로 /sitemap.xml 로 변경 + 하위 호환 301 리다이렉트
+- [x] A-2: client/public/sitemap.xml 정적 파일 삭제
+- [x] A-3: 누락 정적 URL 추가 (다국어 research/about/equipment3, /privacy)
+- [x] A-4: getRecentNoticeIdsForSitemap 추가 + sitemap에 공지 상세 URL 포함
+- [x] A-5: lastmod 하드코딩 제거 (BUILD_DATE 모듈 레벨 상수)
+- [x] B-1: scheduled.ts err.stack 노출 제거
+- [x] B-2: authenticateRequest 실패 → 403 정상 처리
+- [x] B-3: 30일 삭제 블록 활성화 (lt import 추가)
+- [x] B-4: source "auto-collect" → "sample-placeholder" + 주석 교체
+- [x] B-5: if (!database) 도달 불가 널체크 제거
+- [x] C-1: getAllNotices lang as 단언 제거 → toSupportedLang 런타임 검증
+- [x] C-2: deleteNotice 트랜잭션 적용
+- [x] C-3: getNoticesByCursor JSDoc 경고 추가
+- [x] D: KeywordTrendsDashboard.tsx 샘플 데이터 안내 문구 추가
+- [x] V1~V4: pnpm check + build + test + grep 11종
+- [x] V5: 런타임 실측 a~g
+- [x] V6: 브라우저 회귀 + 체크포인트
+
+## Step 56-b: sitemap 잔여 정리 (2026-07-26)
+- [x] Phase 0: 현재 구조 파악 (hreflang 생성 방식, /research, /privacy, 리다이렉트 라인)
+- [x] A: /privacy 4개 언어 추가 (loc + hreflang)
+- [x] B: /research hreflang 4개 언어+x-default 보완
+- [x] C: /sitemap-dynamic.xml 리다이렉트 코드 확인 (C-1 코드 이미 존재)
+- [x] V1~V4: pnpm check + build + test + 로컬 실측 a~f
+- [x] V5+V6: 프로덕션 실측 + 브라우저 회귀 + 체크포인트
+
+## Step 58: 통계 숫자 전수 조사 + 단일 소스화 (2026-07-26)
+- [x] Phase 0: grep 6종 전수 조사 + _STATS 상수 확인 + llms.txt 숫자 확인
+- [x] A: client/src/lib/clinic-stats.ts 신규 생성 (정본 값 그대로)
+- [x] B: 불일치 항목만 교정 (i18n 주석 추가 + llms 값 수정)
+- [x] C: client/src/lib/__tests__/clinic-stats.test.ts 신규 생성 + pnpm test 통과
+- [x] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5+V6: 브라우저 육안 확인 (6곳 × 4언어) + 회귀 + 체크포인트
+
+## Step 59: NAP 주소 일관성 통일 + 네이버 플레이스 유입 링크 상시화 (2026-07-26)
+- [x] Phase 0: 주소 표기 전수 조사 (grep 3종)
+- [x] A-1: ContactSection.tsx 지번주소 → 도로명주소 교체
+- [x] A-2: 우편번호 47280 통일 확인
+- [x] A-3: 지도 검색용 문자열 주석 처리
+- [x] A-4: i18n 4개 파일 주소 도로명 교체
+- [x] B-1: constants.ts에 NAVER_PLACE_URL 상수 추가
+- [x] B-2: ContactSection.tsx에 네이버 플레이스 상시 링크 추가
+- [x] B-3: i18n 4개 파일 naverPlaceLabel 추가
+- [x] B-4: 기존 폴백 버튼 유지 확인
+- [x] V1~V4: pnpm check + build + test + grep 4종
+- [x] V5~V7: 브라우저 확인 a~f + 회귀 + 체크포인트
 
 ## Step 60: 시술 페이지 SEO 메타 지역 키워드 보강 (2026-07-26)
 - [x] Phase 0: 7개 시술 SEO 필드 현황 파악 (파일 구조, 현재 값, 길이 측정)

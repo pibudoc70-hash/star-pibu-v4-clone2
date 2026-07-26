@@ -1,4 +1,6 @@
 // 한국어(ko) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-2)
+// ⚠️ 홍보 숫자는 client/src/lib/clinic-stats.ts 의 CLINIC_STATS 와 일치해야 한다.
+//    값 변경 시 4개 언어 파일 + llms.txt + llms-full.txt 를 함께 수정할 것.
 import type { I18nContent } from "./i18n.types";
 import { CLINIC_STATS, STAT_UNITS } from "./constants";
 const _n_ko = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
@@ -495,6 +497,8 @@ export const ko: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@스타피부과",
     businessInfo: "사업자등록번호: 605-24-84306 | 이메일: starpibu@naver.com",
+    /** [Step59-B] 네이버 플레이스 상시 링크 레이블 */
+    naverPlaceLabel: "네이버 플레이스",
   },
   youtube: {
     sectionTitle: "피부과전문의가 알려주는 피부이야기",

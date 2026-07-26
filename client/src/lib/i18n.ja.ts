@@ -1,4 +1,6 @@
 // 일본어(ja) i18n 데이터 — i18n.ts에서 분리 (STRUCT-I18N-4)
+// ⚠️ 広告数字は client/src/lib/clinic-stats.ts の CLINIC_STATS と一致させること。
+//    値変更時は 4言語ファイル + llms.txt + llms-full.txt を一緒に修正すること。
 import type { I18nContent } from "./i18n.types";
 import { CLINIC_STATS, STAT_UNITS } from "./constants";
 const _n_ja = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR"); // "4,000"
@@ -502,6 +504,8 @@ export const ja: I18nContent = {
     sms: "010-5855-3201",
     kakao: "@starpibu",
     businessInfo: "事業者登録番号: 605-24-84306 | Email: starpibu@naver.com",
+    /** [Step59-B] ネイバープレイス 常時リンク ラベル */
+    naverPlaceLabel: "ネイバープレイス",
   },
   youtube: {
     sectionTitle: "皮膚科専門医が教える肆の話",

@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
 import {
   type ManagementDevice,
   MANAGEMENT_DEVICES,
@@ -186,18 +187,20 @@ function DeviceCard({
 export default function ManagementDevicesSection() {
   const { t } = useLang();
   const md = t.managementDevices;
+  const sectionRef = useSectionReveal(60); // [Step64]
   const [selectedDevice, setSelectedDevice] = useState<ManagementDevice | null>(null);
 
   return (
     <>
       <section
+        ref={sectionRef}
         id="management-devices"
         className="py-12 sm:py-20"
         aria-label="관리 장비 안내"
       >
         <div className="container">
           {/* 섹션 헤더 */}
-          <div className="section-header-block">
+          <div className="section-header-block reveal-heading">
             <span className="section-eyebrow management-devices-eyebrow">
               MANAGEMENT DEVICES
             </span>

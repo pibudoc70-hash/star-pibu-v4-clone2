@@ -4144,3 +4144,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] C: 크로스 페이지 경로 확인 (__star_scroll_to → scrollToSelector 여부)
 - [x] V1~V4: TypeScript + build + test + grep 4종
 - [x] V5~V8: 브라우저 실동작 + 왕복 안정성 + 크로스 페이지 + 회귀 + 체크포인트
+
+## Step 64: 모든 섹션 reveal 진입 애니메이션 통일 (2026-07-26)
+- [x] A: EventsSection, FAQSection, ManagementDevicesSection, RecentNoticesSection, ResultsStatisticsSection, SpecialEventSection에 useSectionReveal + reveal-heading 추가
+- [x] V1~V4: TypeScript 0건 + build 성공 + 63 files/1458 tests + grep 14개 섹션 확인

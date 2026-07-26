@@ -12,6 +12,7 @@ import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { Badge } from "@/components/ui/badge";
 import EventShareButton from "@/components/EventShareButton";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
 
 interface Event {
   id: number;
@@ -47,6 +48,7 @@ function EventIcon({ type, size = 22 }: { type?: string; size?: number }) {
 export default function EventsSection() {
   const { t } = useLang();
   const ev_t = t.events;
+  const sectionRef = useSectionReveal(60); // [Step64]
 
   const [activeCategory, setActiveCategory] = useState(ev_t.filterAll);
   const [, navigate] = useLocation();
@@ -99,10 +101,10 @@ export default function EventsSection() {
   ];
 
   return (
-    <section id="events-legacy" className="py-16 sm:py-24 star-section-alt" aria-label="이벤트 및 공지사항">
+    <section ref={sectionRef} id="events-legacy" className="py-16 sm:py-24 star-section-alt" aria-label="이벤트 및 공지사항">
       <div className="container">
         {/* ── Section Header ── */}
-        <div className="section-header-block">
+        <div className="section-header-block reveal-heading">
           <span className="section-eyebrow">{ev_t.eyebrow}</span>
           <h2 className="section-title">{ev_t.sectionTitle}</h2>
           <div className="star-divider mx-auto" />

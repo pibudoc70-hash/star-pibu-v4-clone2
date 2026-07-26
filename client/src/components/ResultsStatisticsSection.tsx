@@ -3,8 +3,10 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 import { useClinicStats } from '@/hooks/useClinicStats';
 import { DoctorCardSkeleton, StatisticCardSkeleton } from '@/components/SkeletonUI';
+import { useSectionReveal } from '@/hooks/useScrollReveal';
 
 export default function ResultsStatisticsSection() {
+  const sectionRef = useSectionReveal(60); // [Step64]
   const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 800ms 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
   const { t } = useLang();
   const r = t.results;
@@ -40,10 +42,10 @@ export default function ResultsStatisticsSection() {
   ];
 
   return (
-    <section id="results-statistics" className="py-16 md:py-24" aria-label="시술 결과 실적">
+    <section ref={sectionRef} id="results-statistics" className="py-16 md:py-24" aria-label="시술 결과 실적">
       <div className="container">
         {/* 제목 */}
-        <div className="section-header-block">
+        <div className="section-header-block reveal-heading">
           <span className="section-eyebrow">RESULTS & STATISTICS</span>
           <h2 className="section-title">{r.sectionTitle}</h2>
           <div className="star-divider mx-auto" />

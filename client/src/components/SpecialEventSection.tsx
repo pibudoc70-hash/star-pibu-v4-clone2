@@ -15,6 +15,7 @@ import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
 import { parseEventListError } from "@/lib/errorMessages";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
 
 // ── Empty State ───────────────────────────────────────────────────────────────
 function EventEmptyState({ lang }: { lang: string }) {
@@ -44,7 +45,7 @@ function SectionHeader({ lang }: { lang: string }) {
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
-    <div className="section-header-block">
+    <div className="section-header-block reveal-heading">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
       <div className="star-divider mx-auto" />
@@ -97,6 +98,7 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
 export default function SpecialEventSection() {
   const { lang, t } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
+  const sectionRef = useSectionReveal(60); // [Step64]
   const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery({ lang });
   const [showMore, setShowMore] = useState(false);
 
@@ -155,7 +157,7 @@ export default function SpecialEventSection() {
   const hasMoreDesktop = allEvents.length > 6;
 
   return (
-    <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
+    <section ref={sectionRef} id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
       <div className="container">
         <SectionHeader lang={lang} />
         {allEvents.length === 0 ? (

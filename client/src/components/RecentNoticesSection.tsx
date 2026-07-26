@@ -6,6 +6,7 @@ import { memo } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Bell, ChevronRight, Pin } from "lucide-react";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
 
 interface Props {
   lang: "ko" | "en" | "ja" | "zh";
@@ -30,6 +31,7 @@ function RecentNoticesSection({ lang }: Props) {
   const { data: allNotices = [], isLoading } = trpc.notices.list.useQuery({ lang });
   const langPrefix = lang === "ko" ? "" : `/${lang}`;
   const labels = LABELS[lang];
+  const sectionRef = useSectionReveal(0); // [Step64]
 
   const notices = allNotices.slice(0, 3);
 
@@ -37,7 +39,7 @@ function RecentNoticesSection({ lang }: Props) {
   if (!isLoading && notices.length === 0) return null;
 
   return (
-    <section className="py-8 border-t border-gray-100" style={{ background: "#FAF8F5" }}>
+    <section ref={sectionRef} className="py-8 border-t border-gray-100 reveal" style={{ background: "#FAF8F5" }}>
       <div className="max-w-5xl mx-auto px-4">
         {/* 섹션 헤더 */}
         <div className="flex items-center justify-between mb-4">

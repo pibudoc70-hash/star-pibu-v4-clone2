@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
+import { useSectionReveal } from "@/hooks/useScrollReveal";
 
 interface FAQQuestion { q: string; a: string; }
 interface FAQItem { equipment: string; questions: FAQQuestion[]; }
@@ -16,6 +17,7 @@ export default function FAQSection() {
   const { t } = useLang();
   const faq = t.faq;
   const { chatUrl, chatBg, chatColor } = useChatConfig();
+  const sectionRef = useSectionReveal(60); // [Step64]
   const [openEquipment, setOpenEquipment] = useState<number>(0);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
 
@@ -72,10 +74,10 @@ export default function FAQSection() {
       )}
 
       {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
-      <section id="faq" className="py-16 md:py-24 faq-section-bg" aria-label="자주 묻는 질문">
+      <section ref={sectionRef} id="faq" className="py-16 md:py-24 faq-section-bg" aria-label="자주 묻는 질문">
         <div className="container max-w-4xl">
           {/* 섹션 헤더 */}
-          <div className="section-header-block">
+          <div className="section-header-block reveal-heading">
             <span className="section-eyebrow">FAQ</span>
             <h2 className="section-title">{faq.sectionTitle}</h2>
             <div className="star-divider mx-auto" />

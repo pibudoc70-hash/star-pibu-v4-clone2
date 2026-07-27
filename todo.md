@@ -4255,3 +4255,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 다국어 라우트 등록 (/doctors, /en/doctors, /ja/doctors, /zh/doctors)
 - [x] 헤더 네비게이션 "피부과전문의" → /doctors 페이지 연결
 - [x] Footer 빠른 링크 /doctors 업데이트
+
+## 구 사이트 .htaccess 301 리다이렉트 Express 서버 구현
+- [x] server/redirects.ts 생성 (83개 규칙 → Express res.redirect(301) 변환)
+- [x] server/_core/index.ts에 registerRedirects(app) 등록 (다른 라우트보다 먼저)
+- [x] TypeScript 오류 0건 확인
+- [x] 로컬 테스트: sub_03_52.html, sub_01_02.html, sub_02_07.html 모두 301 응답 확인
+- [x] 중복 라인 2개(sub_03_24, sub_03_52) 통합 처리
+- [x] 인라이튼-3세대-루비피코 slug DB 미등록 → 원본 URL 유지 (페이지 추가 시 수정 필요)

@@ -18,6 +18,7 @@ import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { registerTreatmentPrerender } from "./treatmentPrerender";
 import { registerStaticMapRoute } from "./staticMapRoute"; // [Step67-C]
+import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { sql as sqlRaw } from "drizzle-orm";
@@ -141,6 +142,9 @@ async function startServer() {
       });
     }
   });
+
+  // 구 사이트 .htaccess 301 리다이렉트 (반드시 다른 라우트보다 먼저 등록)
+  registerRedirects(app);
 
   registerStorageProxy(app);
   // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)

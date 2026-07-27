@@ -2,7 +2,7 @@
  * PigmentGuide.tsx — 색소·문신 탭 전용 카테고리 소개 섹션
  */
 import { useLang } from "@/contexts/LangContext";
-import { CheckCircle2, Sun, Eraser, Target, ShieldCheck } from "lucide-react";
+import { CheckCircle2, Sun, Eraser, Target, ShieldCheck, Award } from "lucide-react";
 
 type ML = { ko: string; en: string; ja: string; zh: string };
 const t = (ml: ML, lang: string) =>
@@ -19,6 +19,20 @@ const HERO_SUB: ML = {
   en: "Melasma, freckles, age spots, and tattoos are effectively treated with the latest devices including picosecond lasers and BBL. Personalized treatment for your skin type restores clear skin without side effects.",
   ja: "シミ、そばかす、くすみ、タトゥーなどさまざまな色素問題をピコ秒レーザーやBBLなどの最新機器で効果的に治療します。肌タイプに合わせたカスタム治療で副作用なく明るい肌を取り戻します。",
   zh: "黄褐斑、雀斑、色斑、纹身等各种色素问题，通过皮秒激光、BBL等最新设备进行有效治疗。针对肤质的定制化治疗，无副作用地恢复清透肌肤。",
+};
+
+// 병무청 배너 다국어
+const MILITARY_TITLE: ML = {
+  ko: "부산지방병무청 문신제거 지정 협력 피부과",
+  en: "Designated Tattoo Removal Partner Clinic\nof Busan Regional Military Manpower Administration",
+  ja: "釜山地方兵務庁 タトゥー除去指定協力皮膚科",
+  zh: "釜山地方兵务厅 纹身去除指定合作皮肤科",
+};
+const MILITARY_DESC: ML = {
+  ko: "스타피부과는 부산지방병무청과 업무 협약을 체결한 공식 지정 협력 피부과입니다. 병역 이행자를 위한 문신 제거 시술을 전문적으로 지원하며, 안전하고 체계적인 치료를 제공합니다.",
+  en: "Star Dermatology is an officially designated partner clinic that has signed a business agreement with the Busan Regional Military Manpower Administration. We professionally support tattoo removal procedures for military service members, providing safe and systematic treatment.",
+  ja: "スター皮膚科は釜山地方兵務庁と業務協約を締結した公式指定協力皮膚科です。兵役履行者のためのタトゥー除去施術を専門的に支援し、安全で体系的な治療を提供します。",
+  zh: "STAR皮肤科是与釜山地方兵务厅签订业务协议的官方指定合作皮肤科。专业支持服役人员的纹身去除手术，提供安全、系统的治疗。",
 };
 
 const FEATURES: { icon: typeof CheckCircle2; title: ML; desc: ML; color: string; bg: string }[] = [
@@ -64,6 +78,7 @@ export default function PigmentGuide() {
   const { lang } = useLang();
   return (
     <div className="space-y-8">
+      {/* 히어로 배너 */}
       <section>
         <div className="rounded-2xl p-6 sm:p-8 text-center" style={{ background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)", border: "1.5px solid #FDE68A" }}>
           <span className="inline-block mb-3 px-3 py-1 rounded-full text-xs font-bold tracking-wide" style={{ background: "#D97706", color: "#fff" }}>PIGMENT & TATTOO</span>
@@ -71,6 +86,74 @@ export default function PigmentGuide() {
           <p className="text-sm text-amber-700 max-w-xl mx-auto leading-relaxed">{t(HERO_SUB, lang)}</p>
         </div>
       </section>
+
+      {/* 부산지방병무청 지정 협력 피부과 배너 */}
+      <section>
+        <div
+          className="rounded-2xl overflow-hidden"
+          style={{ border: "2px solid #1B3A6B", background: "linear-gradient(135deg, #0F2044 0%, #1B3A6B 60%, #2455A4 100%)" }}
+        >
+          {/* 상단 타이틀 영역 */}
+          <div className="px-5 pt-5 pb-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Award size={20} style={{ color: "#FFD700" }} />
+              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#FFD700" }}>OFFICIAL DESIGNATION</span>
+              <Award size={20} style={{ color: "#FFD700" }} />
+            </div>
+            <h3
+              className="text-base sm:text-lg font-extrabold leading-snug whitespace-pre-line"
+              style={{ color: "#FFFFFF" }}
+            >
+              {t(MILITARY_TITLE, lang)}
+            </h3>
+          </div>
+
+          {/* 협약식 사진 */}
+          <div className="px-4 pb-4">
+            <img
+              src="/manus-storage/sub_02_img15_1bbef814.png"
+              alt={lang === "en"
+                ? "MOU signing ceremony between Busan Regional Military Manpower Administration and Star Dermatology for tattoo removal"
+                : lang === "ja"
+                ? "釜山地方兵務庁とスター皮膚科のタトゥー除去業務協約締結式"
+                : lang === "zh"
+                ? "釜山地方兵务厅与STAR皮肤科纹身去除业务协议签署仪式"
+                : "부산지방병무청 × 스타피부과 문신제거 업무 협약식"}
+              className="w-full rounded-xl object-cover"
+              style={{ maxHeight: "260px", objectPosition: "center" }}
+            />
+          </div>
+
+          {/* 설명 텍스트 */}
+          <div
+            className="mx-4 mb-4 rounded-xl px-4 py-3"
+            style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}
+          >
+            <p className="text-xs sm:text-sm leading-relaxed text-center" style={{ color: "rgba(255,255,255,0.9)" }}>
+              {t(MILITARY_DESC, lang)}
+            </p>
+          </div>
+
+          {/* 하단 배지 */}
+          <div className="flex justify-center gap-3 pb-5 flex-wrap px-4">
+            {[
+              lang === "en" ? "Official Designated Clinic" : lang === "ja" ? "公式指定協力皮膚科" : lang === "zh" ? "官方指定合作皮肤科" : "공식 지정 협력 피부과",
+              lang === "en" ? "MOU Signed 2019" : lang === "ja" ? "2019年業務協約締結" : lang === "zh" ? "2019年签署业务协议" : "2019년 업무 협약 체결",
+              lang === "en" ? "Military Service Support" : lang === "ja" ? "兵役履行者支援" : lang === "zh" ? "服役人员支持" : "병역 이행자 우대",
+            ].map((badge, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 rounded-full text-xs font-semibold"
+                style={{ background: "rgba(255,215,0,0.15)", color: "#FFD700", border: "1px solid rgba(255,215,0,0.4)" }}
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 특별함 4가지 */}
       <section>
         <h3 className="text-lg sm:text-xl font-extrabold text-gray-800 mb-4 text-center">{lang === "en" ? "Why Choose Star Dermatology for Pigment & Tattoo?" : lang === "ja" ? "色素・タトゥー治療の特別さ" : lang === "zh" ? "色素·纹身治疗的特别之处" : "스타피부과 색소·문신 치료의 특별함"}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -82,6 +165,8 @@ export default function PigmentGuide() {
           ); })}
         </div>
       </section>
+
+      {/* 추천 대상 */}
       <section>
         <h3 className="text-lg sm:text-xl font-extrabold text-gray-800 mb-4 text-center">{t(TARGETS_LABEL, lang)}</h3>
         <div className="rounded-2xl p-5" style={{ background: "#FFFBEB", border: "1.5px solid #FDE68A" }}>

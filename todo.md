@@ -4241,3 +4241,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Equipment3.tsx 각 탭 label 조건에 렌더링 코드 추가 (검색 중 숨김 처리 포함)
 - [x] TypeScript 0건 확인
 - [x] 체크포인트 저장
+
+## PigmentGuide 부산지방병무청 문신제거 지정 협력 피부과 배너 추가
+- [x] sub_02_img15.png 이미지 업로드 (/manus-storage/sub_02_img15_1bbef814.png)
+- [x] PigmentGuide.tsx에 부산지방병무청 지정 협력 피부과 강조 섹션 추가 (네이비 배경 배너, 협약식 사진, 다국어 설명, 배지 3개)
+- [x] TypeScript 0건 확인
+- [x] 체크포인트 저장

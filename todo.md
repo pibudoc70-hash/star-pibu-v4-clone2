@@ -4211,3 +4211,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 한국어(ko) 전용 HTML 테이블 삽입 (시술부위 rowspan 병합, 최소/최대금액 색상 구분)
 - [x] 타이틀 "스타피부과의원 비급여 진료 비용 안내" + 의료법 고지 문구 포함
 - [x] TypeScript 0건 확인 + 브라우저 렌더링 확인
+
+## equipment3 여드름 탭 카테고리 소개 섹션 추가
+- [x] AcneGuide.tsx 신규 생성 (StemCellGuide.tsx 패턴 동일 적용, sub_02_01.html 내용 기반)
+- [x] Equipment3.tsx에 AcneGuide import 및 여드름 탭 조건부 렌더링 추가
+- [x] TypeScript 0건 확인
+- [x] 롤백 기준점: 체크포인트 29915eb5

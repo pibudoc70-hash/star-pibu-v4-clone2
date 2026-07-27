@@ -120,7 +120,7 @@ export default function PigmentGuide() {
                 ? "釜山地方兵务厅与STAR皮肤科纹身去除业务协议签署仪式"
                 : "부산지방병무청 × 스타피부과 문신제거 업무 협약식"}
               className="w-full rounded-xl object-cover"
-              style={{ maxHeight: "260px", objectPosition: "center" }}
+              style={{ maxHeight: "420px", objectPosition: "center" }}
             />
           </div>
 

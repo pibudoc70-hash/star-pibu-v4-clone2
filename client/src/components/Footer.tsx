@@ -74,7 +74,7 @@ export default function Footer() {
   const quickLinks = [
     // 1차 메뉴
     { label: t.nav.treatments, href: "#treatments" },
-    { label: t.nav.doctors,    href: "#doctors"    },
+    { label: t.nav.doctors,    href: "/doctors"    },
     { label: "EVENT",          href: "#events"     },
     { label: t.nav.about,      href: "/about"      },
     // 2차 메뉴 (More 패널과 동일)

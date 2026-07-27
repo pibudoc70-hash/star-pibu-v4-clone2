@@ -4247,3 +4247,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] PigmentGuide.tsx에 부산지방병무청 지정 협력 피부과 강조 섹션 추가 (네이비 배경 배너, 협약식 사진, 다국어 설명, 배지 3개)
 - [x] TypeScript 0건 확인
 - [x] 체크포인트 저장
+
+## 피부과전문의 3인 전용 SEO 페이지 (/doctors)
+- [x] Doctors.tsx 페이지 전면 재작성 (캡처 이미지 레이아웃 재현 — 좌측 탭 사이드바 + 우측 상세 패널)
+- [x] SEO 메타: title/description/keywords ko/en/ja/zh 4개 언어
+- [x] JSON-LD: 3인 Physician 스키마 + BreadcrumbList
+- [x] 다국어 라우트 등록 (/doctors, /en/doctors, /ja/doctors, /zh/doctors)
+- [x] 헤더 네비게이션 "피부과전문의" → /doctors 페이지 연결
+- [x] Footer 빠른 링크 /doctors 업데이트

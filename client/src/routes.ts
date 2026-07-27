@@ -43,6 +43,7 @@ export const pages = {
   AdminEquipment3:    () => import("@/pages/AdminEquipment3"),
   AdminEquipment3New: () => import("@/pages/AdminEquipment3New"),
   AdminEquipment3Edit:() => import("@/pages/AdminEquipment3Edit"),
+  Doctors:            () => import("@/pages/Doctors"),
   NotFound:           () => import("@/pages/NotFound"),
   Notice:             () => import("@/pages/Notice"),
   NoticeDetail:       () => import("@/pages/NoticeDetail"),
@@ -78,6 +79,7 @@ export const Research           = lazy(pages.Research);
 export const Notice             = lazy(pages.Notice);
 export const NoticeDetail       = lazy(pages.NoticeDetail);
 export const NoticeEdit         = lazy(pages.NoticeEdit);
+export const Doctors            = lazy(pages.Doctors);
 
 // ─── 다국어 경로 헬퍼 ─────────────────────────────────────────────────────────
 
@@ -109,4 +111,5 @@ export const LANG_ROUTES: LangRoute[] = [
   { path: "privacy",           component: Privacy },
   { path: "non-covered",       component: NonCoveredGuide },
   { path: "notice",            component: Notice },
+  { path: "doctors",           component: Doctors },
 ];

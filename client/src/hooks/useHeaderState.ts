@@ -55,7 +55,7 @@ export function useHeaderState() {
   // ── 1차 메뉴 ──────────────────────────────────────────────────────────────
   const primaryNav: NavItem[] = [
     { label: t.nav.treatments, href: "#treatments", sectionId: "treatments" },
-    { label: t.nav.doctors,    href: "#doctors",    sectionId: "doctors"    },
+    { label: t.nav.doctors,    href: "/doctors",    sectionId: null         },
     { label: "EVENT",          href: "#events",     sectionId: "events"     },
     { label: t.nav.about,      href: "/about",      sectionId: null         },
     { label: t.nav.contact,    href: "#contact",    sectionId: "contact"    },

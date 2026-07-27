@@ -4217,3 +4217,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Equipment3.tsx에 AcneGuide import 및 여드름 탭 조건부 렌더링 추가
 - [x] TypeScript 0건 확인
 - [x] 롤백 기준점: 체크포인트 29915eb5
+
+## equipment3 리프팅·탄력 탭 카테고리 소개 섹션 추가
+- [x] LiftingGuide.tsx 신규 생성 (AcneGuide.tsx 패턴 동일 적용, sub_02_10.html 내용 기반)
+- [x] Equipment3.tsx에 LiftingGuide import 및 리프팅·탄력 탭 조건부 렌더링 추가
+- [x] TypeScript 0건 확인

@@ -27,6 +27,14 @@ import StemCellGuide from "@/components/treatments/StemCellGuide";
 import AcneGuide from "@/components/treatments/AcneGuide";
 import LiftingGuide from "@/components/treatments/LiftingGuide";
 import UnderEyeGuide from "@/components/treatments/UnderEyeGuide";
+import ScarGuide from "@/components/treatments/ScarGuide";
+import PigmentGuide from "@/components/treatments/PigmentGuide";
+import VolumeGuide from "@/components/treatments/VolumeGuide";
+import BotoxGuide from "@/components/treatments/BotoxGuide";
+import RosaceaGuide from "@/components/treatments/RosaceaGuide";
+import PsoriasisGuide from "@/components/treatments/PsoriasisGuide";
+import NailFungusGuide from "@/components/treatments/NailFungusGuide";
+import HyperhidrosisGuide from "@/components/treatments/HyperhidrosisGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 9;
@@ -584,6 +592,70 @@ export default function Equipment3() {
                   <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
                     <div className="px-5 pt-6 pb-2">
                       <AcneGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 흉터·모공 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "흉터·모공" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <ScarGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 색소·문신 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "색소·문신" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <PigmentGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 볼륨·부스터 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "볼륨·부스터" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <VolumeGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 보톡스·필러 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "보톡스·필러" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <BotoxGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 홍조·혈관 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "홍조·혈관" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <RosaceaGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 건선·아토피 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "건선·아토피" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <PsoriasisGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 손·발톱무좀 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "손·발톱무좀" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <NailFungusGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 액취증·다한증 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "액취증·다한증" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <HyperhidrosisGuide />
                     </div>
                   </div>
                 )}

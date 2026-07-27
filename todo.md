@@ -4227,3 +4227,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] UnderEyeGuide.tsx 신규 생성 (under-eye-fat.ts 데이터 기반)
 - [x] Equipment3.tsx 눈밑지방재배치 탭에 UnderEyeGuide 연결
 - [x] TypeScript 0건 확인
+
+## equipment3 나머지 8개 탭 카테고리 소개 섹션 추가
+- [x] ScarGuide.tsx 신규 생성 (흉터·모공 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] PigmentGuide.tsx 신규 생성 (색소·문신 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] VolumeGuide.tsx 신규 생성 (볼륨·부스터 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] BotoxGuide.tsx 신규 생성 (보톡스·필러 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] RosaceaGuide.tsx 신규 생성 (홍조·혈관 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] PsoriasisGuide.tsx 신규 생성 (건선·아토피 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] NailFungusGuide.tsx 신규 생성 (손·발톱무좀 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] HyperhidrosisGuide.tsx 신규 생성 (액취증·다한증 탭 — 4가지 특별함 + 추천 대상 4가지, 다국어 ko/en/ja/zh)
+- [x] Equipment3.tsx에 8개 컴포넌트 일괄 import 추가
+- [x] Equipment3.tsx 각 탭 label 조건에 렌더링 코드 추가 (검색 중 숨김 처리 포함)
+- [x] TypeScript 0건 확인
+- [x] 체크포인트 저장

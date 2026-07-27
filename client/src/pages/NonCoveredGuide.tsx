@@ -176,14 +176,179 @@ export default function NonCoveredGuide() {
             </a>
           </div>
 
-          {/* 비급여 진료비 가격표 이미지 */}
-          <div className="mb-10 rounded-2xl overflow-hidden shadow-md border border-blue-200">
-            <img
-              src="/api/storage/pc_sub01_06_d54a5db8.webp"
-              alt={lang === "ko" ? "비급여 진료비 가격표" : lang === "ja" ? "非保険診療費用価格表" : lang === "zh" ? "非医保诊疗费用价格表" : "Non-Covered Medical Fees Price List"}
-              className="w-full h-auto"
-            />
-          </div>
+          {/* 비급여 진료비 가격표 — 텍스트 테이블 (Step71) */}
+          {lang === "ko" && (
+            <div className="mb-10 rounded-2xl overflow-hidden shadow-md border border-blue-200">
+              <div className="px-6 py-4" style={{ background: "#1A4FA0" }}>
+                <h2 className="font-bold text-white text-base">
+                  스타피부과의원 비급여 진료 비용 안내
+                </h2>
+                <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  의료법 제 45조 및 동법 시행규칙 제 42조의 2에 의해 비급여 진료 비용을 고지합니다.(2024.03)
+                </p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr style={{ background: "#2d2d2d", color: "#fff" }}>
+                      <th className="px-4 py-2.5 text-center font-semibold border border-gray-600 whitespace-nowrap" style={{ width: "13%" }}>시술부위</th>
+                      <th className="px-4 py-2.5 text-center font-semibold border border-gray-600" style={{ width: "38%" }}>항목</th>
+                      <th className="px-4 py-2.5 text-center font-semibold border border-gray-600 whitespace-nowrap" style={{ width: "10%" }}>단위</th>
+                      <th className="px-4 py-2.5 text-center font-semibold border border-gray-600 whitespace-nowrap" style={{ width: "14%" }}>최소금액(만원)</th>
+                      <th className="px-4 py-2.5 text-center font-semibold border border-gray-600 whitespace-nowrap" style={{ width: "14%" }}>최대금액(만원)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* 기미/주근깨/홍조 */}
+                    {[
+                      ["인라이트3","1회","20","30"],
+                      ["스타워커","1회","20","30"],
+                      ["피코슈어","1회","20","30"],
+                      ["엑셀V+(부분/전체)","1회","20","80"],
+                      ["시너지","1회","20","80"],
+                      ["루메니스/BBL","1회","30",""],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={6} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>기미/주근깨/홍조</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 문신제거 */}
+                    {[
+                      ["눈썹","1회","25","30"],
+                      ["아이라인","1회","25","30"],
+                      ["몸(명함사이즈 기준)","1회","40",""],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={3} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>문신제거</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 여드름 */}
+                    {[
+                      ["카프리+스켈링","1회","15",""],
+                      ["플라듀오","1회","15",""],
+                      ["플레티넘 PPT + 스켈링 1회","1회","30",""],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={3} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>여드름</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 모공/흉터 */}
+                    {[
+                      ["울트라펄스 앙코르","1회","80",""],
+                      ["MCL / DRT","1회","60",""],
+                      ["줄레이저","1회","80","100"],
+                      ["피코 프락셀","1회","60",""],
+                      ["버츄RF","1회","40",""],
+                      ["프로파운드","1회","350","450"],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={6} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>모공/흉터</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 리프팅 */}
+                    {[
+                      ["울쎄라","1회","150",""],
+                      ["써마지 FLX","1회","250",""],
+                      ["라페라 / 엑실리스","1회","50","80"],
+                      ["프로파운드","1회","350","450"],
+                      ["에너젯","1회","100",""],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={5} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>리프팅</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 눈밑지방제거 재배치 */}
+                    <tr style={{ background: "#fff" }}>
+                      <td className="px-3 py-2 text-center font-bold border border-gray-200" style={{ background: "#f5f5f5" }}>눈밑지방제거 재배치</td>
+                      <td className="px-4 py-2 text-left border border-gray-200">리프팅 포함</td>
+                      <td className="px-3 py-2 text-center border border-gray-200">1회</td>
+                      <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>150</td>
+                      <td className="px-3 py-2 text-center border border-gray-200"></td>
+                    </tr>
+                    {/* 액취증/다한증 */}
+                    <tr style={{ background: "#fafafa" }}>
+                      <td className="px-3 py-2 text-center font-bold border border-gray-200" style={{ background: "#f5f5f5" }}>액취증/다한증</td>
+                      <td className="px-4 py-2 text-left border border-gray-200">미라드라이 프레쉬</td>
+                      <td className="px-3 py-2 text-center border border-gray-200">1회</td>
+                      <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>220</td>
+                      <td className="px-3 py-2 text-center border border-gray-200"></td>
+                    </tr>
+                    {/* 손/발톱무좀 */}
+                    {[
+                      ["손톱무좀 (손톱 1개당)","1회","3","5"],
+                      ["발톱무좀 (발톱 1개당)","1회","3","5"],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={2} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>손/발톱무좀</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 에스테틱 */}
+                    {[
+                      ["비타민","1회","5","10"],
+                      ["포아딤","1회","15","20"],
+                      ["버블테라피","1회","15",""],
+                      ["LDM","1회","15",""],
+                      ["플로리스","1회","15",""],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={5} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>에스테틱</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: r[3] ? "#b94040" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                    {/* 주의 문구 */}
+                    <tr>
+                      <td colSpan={5} className="px-4 py-3 text-center text-xs font-medium border border-yellow-200" style={{ background: "#fffbe6", color: "#7a5c00" }}>
+                        ※ 위 시술은 치료부위와 분포도에 따라 비용이 달라질수 있습니다.
+                      </td>
+                    </tr>
+                    {/* 제증명 수수료 */}
+                    {[
+                      ["진단서","","2",""],
+                      ["소견서","","2",""],
+                      ["의뢰서","","0.5",""],
+                      ["진료확인서","","0.3",""],
+                      ["진료기록사본","1~5매","0.1 (장당)","6매이상 100원(장당)"],
+                    ].map((r, i) => (
+                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                        {i === 0 && <td rowSpan={5} className="px-3 py-2 text-center font-bold border border-gray-200 align-middle" style={{ background: "#f5f5f5" }}>제증명 수수료</td>}
+                        <td className="px-4 py-2 text-left border border-gray-200">{r[0]}</td>
+                        <td className="px-3 py-2 text-center border border-gray-200">{r[1]}</td>
+                        <td className="px-3 py-2 text-center font-semibold border border-gray-200" style={{ color: "#1a4fa0" }}>{r[2]}</td>
+                        <td className="px-3 py-2 text-center text-xs border border-gray-200" style={{ color: r[3] ? "#555" : undefined }}>{r[3]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           {/* 비급여 항목 테이블 */}
           <div className="space-y-6">

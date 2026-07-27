@@ -4203,3 +4203,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] V2: build 247.6 KB
 - [x] V3: 63 files / 1,461 tests 전부 통과
 - [x] V4: xlsx 제거 확인 + excelExport.ts 없음 + JWT_SECRET 가드 1건 + content="1200" 0건 + ogImageWidth 4건
+
+
+## 비급여 진료 비용 안내 페이지 이미지→텍스트 테이블 교체
+
+- [x] NonCoveredGuide.tsx — 이미지(pc_sub01_06_d54a5db8.webp) 블록 제거
+- [x] 한국어(ko) 전용 HTML 테이블 삽입 (시술부위 rowspan 병합, 최소/최대금액 색상 구분)
+- [x] 타이틀 "스타피부과의원 비급여 진료 비용 안내" + 의료법 고지 문구 포함
+- [x] TypeScript 0건 확인 + 브라우저 렌더링 확인

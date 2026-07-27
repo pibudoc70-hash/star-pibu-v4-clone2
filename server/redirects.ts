@@ -64,8 +64,7 @@ const REDIRECT_MAP: Record<string, string> = {
   "/sub/sub_03_15.html": "https://star-pibu.com/equipment3/%EC%8B%9C%EB%84%88%EC%A7%80?tab=%ED%99%8D%EC%A1%B0%C2%B7%ED%98%88%EA%B4%80",
   "/sub/sub_03_16.html": "https://star-pibu.com/equipment3/%EB%84%A4%EC%98%A4%EC%A0%A0-%ED%94%8C%EB%9D%BC%EC%A6%88%EB%A7%88?tab=%EC%97%AC%EB%93%9C%EB%A6%84",
   "/sub/sub_03_17.html": "https://star-pibu.com/equipment3/%ED%94%84%EB%A1%9C%ED%8C%8C%EC%9A%B4%EB%93%9C?tab=%EB%A6%AC%ED%94%84%ED%8C%85%C2%B7%ED%83%84%EB%A0%A5",
-  // sub_03_18: 인라이튼-3세대-루비피코 slug가 DB에 없어 홈으로 임시 처리
-  "/sub/sub_03_18.html": "https://star-pibu.com/equipment3/%EC%9D%B8%EB%9D%BC%EC%9D%B4%ED%8A%BC-3%EC%84%B8%EB%8C%80-%EB%A3%A8%EB%B9%84%ED%94%BC%EC%BD%94",
+  "/sub/sub_03_18.html": "https://star-pibu.com/equipment3/3?tab=%EC%83%89%EC%86%8C%C2%B7%EB%AC%B8%EC%8B%A0",
   "/sub/sub_03_19.html": "https://star-pibu.com/equipment3/%EC%8A%88%EB%A7%81%ED%81%AC-%EC%9C%A0%EB%8B%88%EB%B2%84%EC%8A%A4?tab=%EB%A6%AC%ED%94%84%ED%8C%85%C2%B7%ED%83%84%EB%A0%A5",
   "/sub/sub_03_20.html": "https://star-pibu.com/",
   "/sub/sub_03_21.html": "https://star-pibu.com/equipment3/%EC%98%A4%EB%8B%88%EC%BD%94?tab=%EC%86%90%C2%B7%EB%B0%9C%ED%86%B1%EB%AC%B4%EC%A2%80",

@@ -165,7 +165,7 @@ export default function NonCoveredGuide() {
               <p className="text-sm" style={{ color: "#4A6FA5" }}>{labels.hiraDesc}</p>
             </div>
             <a
-              href="https://www.hira.or.kr/ra/medi/getHealthCareList.do"
+              href="https://www.hira.or.kr"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm whitespace-nowrap transition-all hover:scale-105"

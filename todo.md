@@ -4222,3 +4222,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] LiftingGuide.tsx 신규 생성 (AcneGuide.tsx 패턴 동일 적용, sub_02_10.html 내용 기반)
 - [x] Equipment3.tsx에 LiftingGuide import 및 리프팅·탄력 탭 조건부 렌더링 추가
 - [x] TypeScript 0건 확인
+
+## equipment3 눈밑지방재배치 탭 카테고리 소개 섹션 추가
+- [x] UnderEyeGuide.tsx 신규 생성 (under-eye-fat.ts 데이터 기반)
+- [x] Equipment3.tsx 눈밑지방재배치 탭에 UnderEyeGuide 연결
+- [x] TypeScript 0건 확인

@@ -26,6 +26,7 @@ import { Dna } from "lucide-react";
 import StemCellGuide from "@/components/treatments/StemCellGuide";
 import AcneGuide from "@/components/treatments/AcneGuide";
 import LiftingGuide from "@/components/treatments/LiftingGuide";
+import UnderEyeGuide from "@/components/treatments/UnderEyeGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 9;
@@ -567,6 +568,14 @@ export default function Equipment3() {
                   <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
                     <div className="px-5 pt-6 pb-2">
                       <LiftingGuide />
+                    </div>
+                  </div>
+                )}
+                {/* 눈밑지방재배치 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
+                {!isSearching && activeId === "눈밑지방재배치" && (
+                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      <UnderEyeGuide />
                     </div>
                   </div>
                 )}

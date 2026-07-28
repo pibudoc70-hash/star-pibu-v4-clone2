@@ -4277,3 +4277,18 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] RecentNoticesSection.tsx lang prop에 zh-TW 추가
 - [x] i18n.ja.ts 耳を傍ける → 耳を傾ける 오타 수정
 - [x] i18n.zh.ts WeChat咨询 → 微信咨询 등 어색한 표현 수정
+
+## zh-TW 번체 오버라이드 보완 (2026-07-28)
+- [x] floatingCta 섹션 번체 오버라이드 추가 (LINE預約 등)
+- [x] results 섹션 번체 오버라이드 추가
+- [x] reviews 섹션 번체 오버라이드 추가 (患者評價, 查看更多評價 등)
+- [x] facility 섹션 번체 오버라이드 추가 (外觀, 候診區, 諮詢室, 手術室 등)
+- [x] managementDevices 섹션 번체 오버라이드 추가
+- [x] welcomePopup 섹션 번체 오버라이드 추가
+- [x] eventDetail 섹션 번체 오버라이드 추가
+- [x] treatmentDetail 섹션 번체 오버라이드 추가
+- [x] faq 섹션 번체 오버라이드 추가 (超音波刀, 熱瑪吉 등)
+- [x] contact 섹션 번체 오버라이드 추가
+- [x] youtube 섹션 번체 오버라이드 추가
+- [x] researchPage 섹션 번체 오버라이드 추가
+- [x] TypeScript 오류 0건 확인

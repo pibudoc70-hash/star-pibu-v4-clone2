@@ -39,14 +39,14 @@ export const zhTW: I18nContent = {
     desc: "STAR皮膚科位於釜山西面十字路口前，自2006年開業以來，始終以患者為中心，致力於提供最優質的醫療服務。身為皮膚科專科醫師，我們持續研究各類皮膚疾病，不斷引進最新雷射設備，為每位患者量身打造個人化的診療方案。",
     stats: [
       { num: "20年+", label: "專科醫師資歷" },
-      { num: `${_n_zhTW}${_cases_unit}`, label: "眼袋案例" },
+      { num: `${_n_zhTW}${_cases_unit}`, label: "眼袋治療案例" },
       { num: "50+", label: "雷射設備" },
     ],
     values: [
-      { letter: "S", title: "Special Guest", desc: "每位患者對我們而言都是最特別的人。我們提供認真傾聽每個人煩惱的1對1個人化診療。" },
+      { letter: "S", title: "Special Guest", desc: "對我們而言，每位顧客都很重要。我們提供一對一個性化診療，認真傾聽每位顧客的膚膚困擾。" },
       { letter: "T", title: "Top Quality", desc: "憑藉多樣的高階雷射設備與先進醫療技術，始終提供高水準的治療效果。" },
-      { letter: "A", title: "Attractive Atmosphere", desc: "透過預約制減少等候時間，提供只需專注於治療的舒適環境。" },
-      { letter: "R", title: "Responsibility", desc: "認真進行治療說明與術後追蹤，直到您對結果感到滿意為止。" },
+      { letter: "A", title: "Attractive Atmosphere", desc: "透過預約制減少等候時間，為您提供能夠安心專注於治療的舒適環境。" },
+      { letter: "R", title: "Responsibility", desc: "我們會詳細說明治療內容，並持續進行術後隨訪，直到您滿意為止。" },
     ],
     consultationAlt: "STAR皮膚科患者與診療",
   },
@@ -108,7 +108,7 @@ export const zhTW: I18nContent = {
           "美國皮膚科學會（AAD）正式會員",
           "現) 星皮膚科 院長",
         ],
-        specialties: ["眼袋脂肪重置", "拉提", "超音波刀", "熱瑪吉", "疤痕治療", "色素治療", "白斑", "刺青去除", "肉毒桿菌", "玻尿酸填充"],
+        specialties: ["眼下脂肪重置", "拉提", "超音波刀", "熱瑪吉", "疤痕治療", "色素治療", "白斑", "刺青去除", "肉毒桿菌", "玻尿酸填充"],
       },
       {
         id: 1,
@@ -149,7 +149,7 @@ export const zhTW: I18nContent = {
         specialties: ["拉提", "超音波刀", "熱瑪吉", "色素治療", "白斑", "皮膚疾病", "刺青去除", "甲癬"],
       },
     ],
-    tagline: "皮膚品質改變的瞬間，專科醫師的審美眼光創造差異。",
+    tagline: "在膚膚狀態改變的關鍵時刻，專科醫師的審美判斷會帶來不同。",
     specialistCount: "皮膚科專科醫師 3名",
     badge: "院長",
     dermBadge: "皮膚科\n專科醫師",
@@ -190,7 +190,7 @@ export const zhTW: I18nContent = {
     categories: [
       { name: "拉提・緊緻", items: ["歐活素拉提療法", "熱瑪吉FLX", "XERF", "埋線拉提"] },
       { name: "豐盈・注射", items: ["舒顏萃", "玻尿酸填充", "肉毒桿菌"] },
-      { name: "眼袋・輪廓", items: ["眼袋脂肪重置", "午間眼袋雷射", "汗管瘤去除"] },
+      { name: "眼袋・輪廓", items: ["眼下脂肪重置", "午間眼袋雷射", "汗管瘤去除"] },
       { name: "色素・刺青去除", items: ["皮秒雷射", "紅寶石皮秒雷射", "刺青去除", "肝斑調色"] },
       { name: "紅血絲・血管擴張", items: ["Excel V+", "協同治療"] },
     ],
@@ -211,8 +211,8 @@ export const zhTW: I18nContent = {
     stats: [
       { label: "專科醫師經驗", desc: "2006年開院至今" },
       { label: "患者滿意度", desc: "基於Naver評價" },
-      { label: "累計手術件數", desc: "安全有效的手術" },
-      { label: "院長親自操作", desc: "所有手術均由院長親自操作" },
+      { label: "累計施術案例", desc: "安全且效果明確的施術" },
+      { label: "院長親自施術", desc: "所有施術均由院長親自進行" },
     ],
     whyTitle: "STAR皮膚科的獨特之處",
     whyItems: [
@@ -222,7 +222,7 @@ export const zhTW: I18nContent = {
     ],
     treatmentResultsTitle: "主要手術預期效果",
     treatmentResults: [
-      { treatment: "眼袋脂肪重置", period: "術後4週", improvements: ["黑眼圈改善", "眼袋消除", "自然眼下輪廓"] },
+      { treatment: "眼下脂肪重置", period: "術後4週", improvements: ["黑眼圈改善", "眼袋消除", "自然眼下輪廓"] },
       { treatment: "熱瑪吉FLX", period: "術後3個月", improvements: ["增強肌膚緊緻度", "膠原蛋白再生", "整體肌膚改善"] },
       { treatment: "歐活素拉提療法", period: "術後6週", improvements: ["SMAS層拉提", "改善肌膚彈性", "淡化皺紋"] },
       { treatment: "紅寶石皮秒雷射", period: "3-5次術後", improvements: ["色斑改善", "膚色提亮", "防止色素沉著"] },
@@ -246,13 +246,13 @@ export const zhTW: I18nContent = {
     prevLabel: "上一個",
     nextLabel: "下一個",
     items: [
-      { name: "金**", age: "", treatment: "眼袋脂肪重置", text: "我的黑眼圈非常嚴重，術後一個月眼睛就亮了起來。效果自然，非常滿意！", platform: "Naver", rating: 5, date: "" },
+      { name: "金**", age: "", treatment: "眼下脂肪重置", text: "我的黑眼圈非常嚴重，術後一個月眼睛就亮了起來。效果自然，非常滿意！", platform: "Naver", rating: 5, date: "" },
       { name: "李**", age: "", treatment: "皮膚雷射", text: "我有很多色斑，3次治療後改善明顯。膚色也變亮了，很滿意。", platform: "Naver", rating: 5, date: "" },
       { name: "朴**", age: "", treatment: "歐活素拉提療法", text: "拉提效果非常好。效果自然，恢復期也很短，非常滿意！", platform: "Naver", rating: 5, date: "" },
       { name: "崔**", age: "", treatment: "熱瑪吉FLX", text: "熱瑪吉後皮膚彈力明顯改善。醫師詳細說明，讓我很放心。術後護理指導也很貼心。強烈推薦！", platform: "Naver", rating: 5, date: "" },
       { name: "鄭**", age: "", treatment: "歐活素拉提療法", text: "在西面諮詢過多家診所，星皮膚科最專業。醫師親自操作，效果十分明顯。強烈推薦！", platform: "Naver", rating: 5, date: "" },
       { name: "韓**", age: "", treatment: "雷射調色", text: "常年煩惱的色斑經過幾次治療後明顯淡化。工作人員非常親切，設施乾淨整潔。很喜歡這裡！", platform: "Naver", rating: 5, date: "" },
-      { name: "尹**", age: "", treatment: "眼袋脂肪重置", text: "考慮眼袋手術很久了，醫師在諮詢中詳細說明，讓我消除了顧慮。術後恢復快，效果非常自然，很滿意。", platform: "Naver", rating: 5, date: "" },
+      { name: "尹**", age: "", treatment: "眼下脂肪重置", text: "考慮眼袋手術很久了，醫師在諮詢中詳細說明，讓我消除了顧慮。術後恢復快，效果非常自然，很滿意。", platform: "Naver", rating: 5, date: "" },
       { name: "姜**", age: "", treatment: "皮膚雷射", text: "困擾已久的色斑經3次治療後明顯淡化。由皮膚科專科醫師親自操作，十分放心。效果超出預期！", platform: "Naver", rating: 5, date: "" },
       { name: "趙**", age: "", treatment: "熱瑪吉FLX", text: "40多歲做了熱瑪吉後，周圍的人都問我臉怎麼了，變化如此明顯。疼痛感比想像中少，恢復也很快。非常滿意！", platform: "Naver", rating: 5, date: "" },
     ],
@@ -262,9 +262,9 @@ export const zhTW: I18nContent = {
     sectionTitle: "設施介紹",
     sectionSubtitle: "先進醫療設備和舒適環境",
     highlights: [
-      { label: "最新雷射設備" },
+      { label: "先進雷射設備" },
       { label: "經驗豐富的醫療團隊" },
-      { label: "潔淨的手術室" },
+      { label: "整潔的治療室" },
       { label: "舒適的候診區" },
     ],
     images: [
@@ -370,9 +370,9 @@ export const zhTW: I18nContent = {
         ]
       },
       {
-        equipment: "眼袋脂肪重置",
+        equipment: "眼下脂肪重置",
         questions: [
-          { q: "眼袋脂肪重置是什麼？", a: "將眼睛下方突出的脂肪重新定位，改善眼下凹陷的手術。無需切開即可獲得自然的效果。" },
+          { q: "眼下脂肪重置是什麼？", a: "將眼睛下方突出的脂肪重新定位，改善眼下凹陷的手術。無需切開即可獲得自然的效果。" },
           { q: "治療後的恢復期是多久？", a: "可能會有1-2週的腫脹和瘀青，2-4週後恢復自然狀態。" },
           { q: "會復發嗎？", a: "由於是重置脂肪而非去除，復發可能性很低。" },
         ]
@@ -409,7 +409,7 @@ export const zhTW: I18nContent = {
       },
     ],
     ctaLabel: "微信諮詢",
-    ctaDesc: "還有其他問題嗎？請透過微信隨時聯絡我們。",
+    ctaDesc: "如有其他疑問，歡迎透過微信聯絡我們。",
   },
   contact: {
     ...zh.contact,
@@ -425,7 +425,7 @@ export const zhTW: I18nContent = {
     close: "關閉",
     loadingLabel: "YouTube頻道載入中",
     errorLabel: "YouTube頻道錯誤",
-    errorMessage: "無法載入影片。",
+    errorMessage: "目前無法顯示影片。",
     retry: "重試",
     playVideo: "播放影片",
     playShorts: "播放短影片",
@@ -521,8 +521,8 @@ export const zhTW: I18nContent = {
     noEvents: "目前沒有可用的活動。",
     readMore: "查看詳情",
     featured: "主推活動",
-    specialEmptyTitle: "特別優惠活動正在準備中。",
-    specialEmptyDesc: "即將推出新優惠，敬請期待。如需諮詢，請透過LINE或電話與我們聯絡。",
+    specialEmptyTitle: "特別優惠活動正在籌備中。",
+    specialEmptyDesc: "全新優惠即將推出，敬請期待。如需諮詢，請透過 LINE 或電話聯絡我們。",
     shareTitle: "分享此活動",
     shareLink: "複製連結",
     shareCopied: "已複製！",
@@ -584,7 +584,7 @@ export const zhTW: I18nContent = {
     quickPlaceholder: "請簡單留下您的問題",
     quickBtn: "諮詢",
     concerns: [
-      "眼袋脂肪重置",
+      "眼下脂肪重置",
       "拉提（超音波刀/熱瑪吉）",
       "雷射調膚",
       "色素・雀斑治療",

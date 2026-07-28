@@ -4292,3 +4292,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] youtube 섹션 번체 오버라이드 추가
 - [x] researchPage 섹션 번체 오버라이드 추가
 - [x] TypeScript 오류 0건 확인
+
+## zh-TW 언어 스위처 버그 수정 (2026-07-28)
+- [x] 근본 원인 파악: buildLocalizedPath에서 zh-TW locale key → /zh-TW(대문자) URL 생성 버그
+- [x] LANG_TO_SLUG 매핑 추가 (zh-TW → /zh-tw 소문자 slug)
+- [x] LANG_PREFIXES에 /zh-TW 대문자 케이스 추가 (이전 버그 URL 복구 대응)
+- [x] strip 루프를 while로 변경 (중첩 prefix /zh-TW/zh-TW 처리)
+- [x] 20개 테스트 케이스 전부 PASS 확인
+- [x] TypeScript 오류 0건 확인

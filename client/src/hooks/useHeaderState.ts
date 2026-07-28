@@ -74,19 +74,37 @@ export function useHeaderState() {
 
   // ── URL 유틸 ──────────────────────────────────────────────────────────────
   const buildLocalizedPath = (targetLang: Lang): string => {
-    const LANG_PREFIXES = ["/en", "/ja", "/zh-tw", "/zh"];
+    // Lang locale key → URL slug 매핑
+    // 중요: zh-TW locale key는 zh-tw URL slug를 사용 (대소문자 구분)
+    const LANG_TO_SLUG: Record<string, string> = {
+      ko: "",
+      en: "/en",
+      ja: "/ja",
+      zh: "/zh",
+      "zh-TW": "/zh-tw",
+    };
+    // 현재 pathname에서 언어 prefix 제거
+    // NOTE: /zh-tw 를 /zh 보다 먼저 검사해야 /zh-tw 가 /zh 로 오인되지 않음
+    // NOTE: /zh-TW (대문자) 케이스도 처리 (이전 버그로 인해 저장된 URL 대응)
+    // NOTE: 중첩 prefix (/zh-TW/zh-TW 등) 처리를 위해 strip을 반복 적용
+    const LANG_PREFIXES = ["/zh-tw", "/zh-TW", "/en", "/ja", "/zh"];
     let stripped = window.location.pathname;
-    for (const prefix of LANG_PREFIXES) {
-      if (stripped === prefix || stripped.startsWith(prefix + "/")) {
-        stripped = stripped.slice(prefix.length) || "/";
-        break;
+    let didStrip = true;
+    while (didStrip) {
+      didStrip = false;
+      for (const prefix of LANG_PREFIXES) {
+        if (stripped === prefix || stripped.startsWith(prefix + "/")) {
+          stripped = stripped.slice(prefix.length) || "/";
+          didStrip = true;
+          break;
+        }
       }
     }
     if (targetLang === "ko" && (stripped === "/foreign-guide" || stripped.startsWith("/foreign-guide/"))) {
       return "/";
     }
-    const prefix = targetLang === "ko" ? "" : `/${targetLang}`;
-    return prefix + (stripped === "/" ? "" : stripped) || "/";
+    const slug = LANG_TO_SLUG[targetLang] ?? `/${targetLang}`;
+    return slug + (stripped === "/" ? "" : stripped) || "/";
   };
 
   // ── 핸들러 ────────────────────────────────────────────────────────────────

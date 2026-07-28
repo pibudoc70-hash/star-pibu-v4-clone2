@@ -300,6 +300,7 @@ export const zhTW: I18nContent = {
     ...zh.managementDevices,
     scrollPrevLabel: "上一個",
     scrollNextLabel: "下一個",
+    eyebrow: "護理設備",
     sectionTitle: "護理設備",
     sectionSubtitle: "STAR皮膚科 護理設備",
     items: [

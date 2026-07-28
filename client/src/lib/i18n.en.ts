@@ -392,6 +392,7 @@ export const en: I18nContent = {
   managementDevices: {
     scrollPrevLabel: "Previous",
     scrollNextLabel: "Next",
+    eyebrow: "CARE DEVICES",
     sectionTitle: "Management Devices",
     sectionSubtitle: "STAR Dermatology Management Equipment",
     items: [

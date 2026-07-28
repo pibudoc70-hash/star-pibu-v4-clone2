@@ -392,6 +392,7 @@ export const zh: I18nContent = {
   managementDevices: {
     scrollPrevLabel: "上一个",
     scrollNextLabel: "下一个",
+    eyebrow: "护理设备",
     sectionTitle: "护理设备",
     sectionSubtitle: "STAR皮肤科 护理设备",
     items: [

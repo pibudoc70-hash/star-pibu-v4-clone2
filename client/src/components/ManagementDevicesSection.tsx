@@ -202,7 +202,7 @@ export default function ManagementDevicesSection() {
           {/* 섹션 헤더 */}
           <div className="section-header-block reveal-heading">
             <span className="section-eyebrow management-devices-eyebrow">
-              MANAGEMENT DEVICES
+              {md.eyebrow ?? "MANAGEMENT DEVICES"}
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />

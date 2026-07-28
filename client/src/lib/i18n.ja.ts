@@ -392,6 +392,7 @@ export const ja: I18nContent = {
   managementDevices: {
     scrollPrevLabel: "前へ",
     scrollNextLabel: "次へ",
+    eyebrow: "ケア機器",
     sectionTitle: "ケア機器",
     sectionSubtitle: "スター皮膚科 ケア機器",
     items: [

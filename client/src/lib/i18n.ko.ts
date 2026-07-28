@@ -385,6 +385,7 @@ export const ko: I18nContent = {
   managementDevices: {
     scrollPrevLabel: "이전",
     scrollNextLabel: "다음",
+    eyebrow: "케어 기기",
     sectionTitle: "관리 장비",
     sectionSubtitle: "스타피부과 관리 장비",
     items: [

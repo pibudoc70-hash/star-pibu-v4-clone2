@@ -319,6 +319,8 @@ export interface I18nContent {
     shareFacebook: string;
   };
   managementDevices: {
+    /** 섹션 eyebrow 레이블 (영문 하드코딩 대체) */
+    eyebrow?: string;
     /** 스크롤 이전 버튼 aria-label */
     scrollPrevLabel?: string;
     /** 스크롤 다음 버튼 aria-label */

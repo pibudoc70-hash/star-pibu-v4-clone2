@@ -12,6 +12,7 @@ const LANG_CODE_LABEL: Record<string, string> = {
   en: "EN",
   ja: "JA",
   zh: "ZH",
+  "zh-TW": "繁中",
 };
 
 interface LanguageSwitcherProps {

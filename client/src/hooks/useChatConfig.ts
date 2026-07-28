@@ -66,7 +66,7 @@ export function useChatConfig(): ChatConfig {
   const { lang } = useLang();
 
   const isKO = lang === "ko";
-  const isZH = lang === "zh";
+  const isZH = lang === "zh" || lang === "zh-TW";
   const isJA = lang === "ja";
 
   // 전화번호: 한국어는 국내 번호, 그 외는 국제 번호

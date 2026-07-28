@@ -31,7 +31,7 @@ export function useHeaderState() {
   const [location, setLocation] = useLocation();
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
-  const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh";
+  const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh" || location === "/zh-tw";
 
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null);
@@ -44,11 +44,13 @@ export function useHeaderState() {
     { lang: "ko", label: "한국어", flag: "🇰🇷" },
     { lang: "en", label: "English", flag: "🇺🇸" },
     { lang: "ja", label: "日本語", flag: "🇯🇵" },
-    { lang: "zh", label: "中文", flag: "🇨🇳" },
+    { lang: "zh", label: "中文(简)", flag: "🇨🇳" },
+    { lang: "zh-TW", label: "繁體中文", flag: "🇹🇼" },
   ];
   const currentLangOption = langOptions.find(o => o.lang === lang) || langOptions[0];
 
-  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH, phoneHref, phoneDisplay } = useChatConfig();
+  const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH: isZHBase, phoneHref, phoneDisplay } = useChatConfig();
+  const isZH = isZHBase || lang === "zh-TW";
   const WECHAT_ID = "star2006beauty";
   const chatUrl = isZH ? "#" : rawChatUrl;
 
@@ -72,7 +74,7 @@ export function useHeaderState() {
 
   // ── URL 유틸 ──────────────────────────────────────────────────────────────
   const buildLocalizedPath = (targetLang: Lang): string => {
-    const LANG_PREFIXES = ["/en", "/ja", "/zh"];
+    const LANG_PREFIXES = ["/en", "/ja", "/zh-tw", "/zh"];
     let stripped = window.location.pathname;
     for (const prefix of LANG_PREFIXES) {
       if (stripped === prefix || stripped.startsWith(prefix + "/")) {
@@ -106,7 +108,7 @@ export function useHeaderState() {
   };
 
   const handleWechatClick = (e: React.MouseEvent) => {
-    if (lang !== "zh") return;
+    if (lang !== "zh" && lang !== "zh-TW") return;
     e.preventDefault();
     // [P2] .catch() 추가 — HTTPS 미적용 환경·권한 거부 시 unhandled rejection 방지
     navigator.clipboard.writeText(WECHAT_ID)

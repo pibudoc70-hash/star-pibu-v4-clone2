@@ -41,6 +41,7 @@ const TreatmentPage = lazy(() => import("./pages/TreatmentPage"));
 const LandingEN = lazy(() => import("./pages/LandingEN"));
 const LandingJA = lazy(() => import("./pages/LandingJA"));
 const LandingZH = lazy(() => import("./pages/LandingZH"));
+const LandingZHTW = lazy(() => import("./pages/LandingZHTW"));
 const Research = lazy(() => import("./pages/Research"));
 const ForeignGuide = lazy(() => import("./pages/ForeignGuide"));
 
@@ -103,15 +104,17 @@ function HtmlLangUpdater() {
   const [location] = useLocation();
   const { lang, setLang } = useLang();
   useEffect(() => {
-    let urlLang: "ko" | "en" | "ja" | "zh" = "ko";
-    if (location === "/en" || location.startsWith("/en/"))           urlLang = "en";
-    else if (location === "/ja" || location.startsWith("/ja/"))      urlLang = "ja";
-    else if (location === "/zh" || location.startsWith("/zh/"))      urlLang = "zh";
+    let urlLang: "ko" | "en" | "ja" | "zh" | "zh-TW" = "ko";
+    if (location === "/en" || location.startsWith("/en/"))               urlLang = "en";
+    else if (location === "/ja" || location.startsWith("/ja/"))          urlLang = "ja";
+    else if (location === "/zh-tw" || location.startsWith("/zh-tw/"))    urlLang = "zh-TW";
+    else if (location === "/zh" || location.startsWith("/zh/"))          urlLang = "zh";
     else if (location === "/foreign-guide" || location.startsWith("/foreign-guide/")) urlLang = "en";
-    document.documentElement.lang = urlLang;
+    document.documentElement.lang = urlLang === "zh-TW" ? "zh-Hant" : urlLang;
     const isManagedLangPath =
       location === "/en" || location.startsWith("/en/") ||
       location === "/ja" || location.startsWith("/ja/") ||
+      location === "/zh-tw" || location.startsWith("/zh-tw/") ||
       location === "/zh" || location.startsWith("/zh/") ||
       location === "/foreign-guide" || location.startsWith("/foreign-guide/");
     if (isManagedLangPath && lang !== urlLang) {
@@ -152,7 +155,8 @@ function Router() {
                 <Route path="/"    component={Home} />
                 <Route path="/en"  component={LandingEN} />
                 <Route path="/ja"  component={LandingJA} />
-                <Route path="/zh"  component={LandingZH} />
+                <Route path="/zh"    component={LandingZH} />
+                <Route path="/zh-tw" component={LandingZHTW} />
 
                 {/* 이벤트 상세 */}
                 <Route path="/events/:id" component={EventDetail} />

@@ -241,7 +241,7 @@ function Equipment3Card({
 
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Equipment3() {
-  const { lang } = useLang();
+  const { lang, t } = useLang();
   const { getText } = useLocalizedText();
 
   const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
@@ -451,7 +451,7 @@ export default function Equipment3() {
             {/* 섹션 헤더 */}
             <div className="text-center mb-8 sm:mb-12">
               <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
-                TREATMENTS & EQUIPMENT
+                {t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}
               </p>
               <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
                 {pageTitle}

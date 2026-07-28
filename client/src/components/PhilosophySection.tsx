@@ -47,7 +47,7 @@ export default function PhilosophySection() {
               textTransform: "uppercase",
             }}
           >
-            TRUSTED BY PATIENTS SINCE 2006
+            {t.about.sectionLabels?.trustedSince ?? "TRUSTED BY PATIENTS SINCE 2006"}
           </p>
           <div className="grid grid-cols-3 gap-0">
             {[
@@ -103,18 +103,18 @@ export default function PhilosophySection() {
               textTransform: "uppercase",
             }}
           >
-            OUR JOURNEY
+            {t.about.sectionLabels?.journey ?? "OUR JOURNEY"}
           </p>
           <div
             className="grid grid-cols-2 sm:grid-cols-4 gap-0"
             style={{ borderTop: "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" }}
           >
-            {[
+            {(t.about.journeyItems ?? [
               { year: "2006", label: "서면 개원", sub: "부산 서면에서 시작" },
               { year: "2010", label: "레이저 전문화", sub: "프리미엄 장비 도입" },
               { year: "2016", label: "10주년", sub: "누적 환자 10,000명+" },
               { year: "2026", label: "20주년", sub: "한결같은 신뢰" },
-            ].map((m, idx, arr) => (
+            ]).map((m, idx, arr) => (
               <div
                 key={m.year}
                 style={{
@@ -182,12 +182,12 @@ export default function PhilosophySection() {
 
             {/* Left: Text */}
             <div ref={leftRef} className="reveal-left">
-              <span className="section-eyebrow">OUR PHILOSOPHY</span>
+              <span className="section-eyebrow">{t.about.sectionLabels?.philosophy ?? "OUR PHILOSOPHY"}</span>
               <h2 className="section-title mb-4">
                 {t.about.title}
               </h2>
               <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>
-                20년의 안목, 한결같은 신뢰
+                {t.about.philosophyTagline ?? "20년의 안목, 한결같은 신뢰"}
               </p>
               <p className="section-subtitle leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
                 {t.about.desc}

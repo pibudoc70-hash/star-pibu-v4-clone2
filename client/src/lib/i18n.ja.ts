@@ -47,6 +47,19 @@ export const ja: I18nContent = {
       { letter: "R", title: "責任ある診療", desc: "治療内容のご説明とアフターケアに責任を持ち、結果にご満足いただけるまでともに歩みます。" },
     ],
     consultationAlt: "スター皮膚科 患者カウンセリング",
+    philosophyTagline: "20年の審美眼、変わらぬ信頼",
+    sectionLabels: {
+      journey: "歩み",
+      philosophy: "理念",
+      trustedSince: "2006年から患者様に選び続けています",
+      treatmentsEquipment: "施術・設備",
+    },
+    journeyItems: [
+      { year: "2006", label: "西面で開院", sub: "釜山・西面でスタート" },
+      { year: "2010", label: "レーザー治療の専門化", sub: "プレミアム機器を導入" },
+      { year: "2016", label: "開院10周年", sub: "累計患者数 10,000人以上" },
+      { year: "2026", label: "開院20周年", sub: "変わらぬ信頼" },
+    ],
   },
   hours: {
     label: "診療時間",
@@ -277,7 +290,7 @@ export const ja: I18nContent = {
     sectionTitle: "スター皮膚科を選ぶ理由",
     sectionSubtitle: "20年以上の経験を持つ皮膚科専門医が直接担当する安全で自然な結果",
     stats: [
-      { label: "専門医の経験", desc: "2006年開院以来" },
+      { label: "専門医歴", desc: "2006年開院以来" },
       { label: "患者満足度", desc: "Naverレビューに基づく" },
       { label: "累計施術件数", desc: "安全で実績のある施術" },
       { label: "院長による直接施術", desc: "全ての施術を院長が直接担当" },

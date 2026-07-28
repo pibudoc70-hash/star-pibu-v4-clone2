@@ -47,6 +47,19 @@ export const en: I18nContent = {
       { letter: "R", title: "Responsibility", desc: "We take full responsibility for treatment explanations and follow-up care, staying with you until you are completely satisfied with the results." },
     ],
     consultationAlt: "STAR Dermatology patient consultation",
+    philosophyTagline: "20 Years of Expertise, Unwavering Trust",
+    sectionLabels: {
+      journey: "OUR JOURNEY",
+      philosophy: "OUR PHILOSOPHY",
+      trustedSince: "TRUSTED BY PATIENTS SINCE 2006",
+      treatmentsEquipment: "TREATMENTS & EQUIPMENT",
+    },
+    journeyItems: [
+      { year: "2006", label: "Opening in Seomyeon", sub: "Started in Seomyeon, Busan" },
+      { year: "2010", label: "Laser Specialization", sub: "Introducing premium equipment" },
+      { year: "2016", label: "10th Anniversary", sub: "10,000+ cumulative patients" },
+      { year: "2026", label: "20th Anniversary", sub: "Unwavering trust" },
+    ],
   },
   hours: {
     label: "Hours",

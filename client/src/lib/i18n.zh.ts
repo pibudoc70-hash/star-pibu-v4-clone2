@@ -47,6 +47,19 @@ export const zh: I18nContent = {
       { letter: "R", title: "Responsibility", desc: "我们会详细说明治疗内容，并持续进行术后随访，直到您满意为止。" },
     ],
     consultationAlt: "STAR皮肤科患者和诊咨询",
+    philosophyTagline: "20年的眼光，始终如一的信赖",
+    sectionLabels: {
+      journey: "发展历程",
+      philosophy: "诊疗理念",
+      trustedSince: "自2006年起深受患者信赖",
+      treatmentsEquipment: "疗程与设备",
+    },
+    journeyItems: [
+      { year: "2006", label: "西面开院", sub: "在釜山西面起步" },
+      { year: "2010", label: "激光专业化", sub: "引进高端设备" },
+      { year: "2016", label: "开院10周年", sub: "累计患者超10,000人" },
+      { year: "2026", label: "开院20周年", sub: "始终如一的信赖" },
+    ],
   },
   hours: {
     label: "诊疗时间",
@@ -497,7 +510,7 @@ export const zh: I18nContent = {
       },
     ],
     ctaLabel: "微信咨询",
-    ctaDesc: "如有其他疑问，欢迎通过WeChat联系我们。",
+    ctaDesc: "如有其他疑问，欢迎通过微信联系我们。",
   },
   contact: {
     phone: "+82-51-818-2300",

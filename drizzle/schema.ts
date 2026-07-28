@@ -290,8 +290,8 @@ export const notices = mysqlTable("notices", {
   content: text("content").notNull(),
   isPinned: mysqlEnum("isPinned", ["0", "1"]).notNull().default("0"),
   views: int("views").notNull().default(0),
-  /** 표시 대상 언어: all=전체, ko/en/ja/zh=해당 언어 페이지만 */
-  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh"]).notNull().default("all"),
+  /** 표시 대상 언어: all=전체, ko/en/ja/zh/zh-TW=해당 언어 페이지만 */
+  targetLang: mysqlEnum("targetLang", ["all", "ko", "en", "ja", "zh", "zh-TW"]).notNull().default("all"),
   /** 원문 언어 (LLM 번역 시 원본 공지 ID 참조) */
   sourceNoticeId: int("sourceNoticeId"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

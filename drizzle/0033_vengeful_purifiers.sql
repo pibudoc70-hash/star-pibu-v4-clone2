@@ -1,0 +1,1 @@
+ALTER TABLE `notices` MODIFY COLUMN `targetLang` enum('all','ko','en','ja','zh','zh-TW') NOT NULL DEFAULT 'all';

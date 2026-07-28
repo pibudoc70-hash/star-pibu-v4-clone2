@@ -3,7 +3,8 @@ import { InsertNotice, InsertNoticeImage, noticeImages, notices } from "../../dr
 import { getDb } from "./connection";
 
 // [Step56-C] as 단언 제거. 허용 언어를 런타임에서 검증해 좁힌다.
-const SUPPORTED_LANGS = ["ko", "en", "ja", "zh"] as const;
+// zh-TW 추가: /zh-tw 페이지는 targetLang='zh-TW' 또는 'all' 공지만 표시
+const SUPPORTED_LANGS = ["ko", "en", "ja", "zh", "zh-TW"] as const;
 type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
 function toSupportedLang(v: string | undefined): SupportedLang | undefined {

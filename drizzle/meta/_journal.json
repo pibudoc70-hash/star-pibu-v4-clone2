@@ -232,6 +232,13 @@
       "when": 1784980082101,
       "tag": "0032_light_paper_doll",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "5",
+      "when": 1785274923127,
+      "tag": "0033_vengeful_purifiers",
+      "breakpoints": true
     }
   ]
 }

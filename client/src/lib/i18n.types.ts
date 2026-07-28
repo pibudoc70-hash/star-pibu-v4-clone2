@@ -70,6 +70,17 @@ export interface I18nContent {
     values: Array<{ letter: string; title: string; desc: string }>;
     /** 환자 상담 이미지 alt 텍스트 */
     consultationAlt: string;
+    /** 철학 섹션 태그라인 ("20년의 안목, 한결같은 신뢰" 등) */
+    philosophyTagline?: string;
+    /** 섹션 레이블 (영문 하드코딩 대체) */
+    sectionLabels?: {
+      journey: string;
+      philosophy: string;
+      trustedSince: string;
+      treatmentsEquipment: string;
+    };
+    /** 여정 타임라인 아이템 */
+    journeyItems?: Array<{ year: string; label: string; sub: string }>;
   };
   hours: {
     label: string;

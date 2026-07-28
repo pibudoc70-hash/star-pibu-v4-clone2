@@ -177,7 +177,7 @@ export default function TreatmentsEquipmentSection() {
 
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
-          <span className="section-eyebrow text-[12px]">TREATMENTS &amp; EQUIPMENT</span>
+          <span className="section-eyebrow text-[12px]">{t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}</span>
           <h2 className="section-title mb-4">{tr.title}</h2>
           <p className="section-subtitle">{tr.subtitle}</p>
         </div>

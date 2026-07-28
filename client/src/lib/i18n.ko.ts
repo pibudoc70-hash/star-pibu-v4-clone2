@@ -47,6 +47,19 @@ export const ko: I18nContent = {
       { letter: "R", title: "Responsibility", desc: "치료 설명과 경과 관찰에 선임감을 갖고, 결과에 만족하실 때까지 함께합니다." },
     ],
     consultationAlt: "스타피부과 환자 상담",
+    philosophyTagline: "20년의 안목, 한결같은 신뢰",
+    sectionLabels: {
+      journey: "OUR JOURNEY",
+      philosophy: "OUR PHILOSOPHY",
+      trustedSince: "TRUSTED BY PATIENTS SINCE 2006",
+      treatmentsEquipment: "TREATMENTS & EQUIPMENT",
+    },
+    journeyItems: [
+      { year: "2006", label: "서면 개원", sub: "부산 서면에서 시작" },
+      { year: "2010", label: "레이저 전문화", sub: "프리미엄 장비 도입" },
+      { year: "2016", label: "10주년", sub: "누적 환자 10,000명+" },
+      { year: "2026", label: "20주년", sub: "한결같은 신뢰" },
+    ],
   },
   hours: {
     label: "진료시간",

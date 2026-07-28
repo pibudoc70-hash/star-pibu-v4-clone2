@@ -143,7 +143,8 @@ export function buildHreflangs(
     { hreflang: "en", href: `${BASE_URL}${enPath ?? "/en"}` },
     { hreflang: "ja", href: `${BASE_URL}${jaPath ?? "/ja"}` },
     { hreflang: "zh", href: `${BASE_URL}${zhPath ?? "/zh"}` },
-    // x-default 정책: koPath가 항상 x-default로 설정됨
+    { hreflang: "zh-TW", href: `${BASE_URL}/zh-tw` },
+    // x-default 정송: koPath가 항상 x-default로 설정됨
     // subset 페이지(예: ForeignGuide)에서는 이 함수 대신 hreflangs prop에 배열을 직접 전달할 것
     { hreflang: "x-default", href: `${BASE_URL}${koPath}` },
   ];

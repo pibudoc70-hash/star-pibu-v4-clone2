@@ -118,14 +118,18 @@ describe("ALL_OG_LOCALES", () => {
     expect(ALL_OG_LOCALES).toContain("zh_CN");
   });
 
-  it("정확히 4개 locale이 있어야 한다", () => {
-    expect(ALL_OG_LOCALES).toHaveLength(4);
+  it("정확히 5개 locale이 있어야 한다 (zh-TW 포함)", () => {
+    expect(ALL_OG_LOCALES).toHaveLength(5);
+    expect(ALL_OG_LOCALES).toContain("zh_TW");
   });
 });
 
 describe("COMMON_HREFLANGS", () => {
-  it("ko, en, ja, zh, x-default 5개 항목이 있어야 한다", () => {
-    expect(COMMON_HREFLANGS).toHaveLength(5);
+  it("ko, en, ja, zh, zh-TW, x-default 6개 항목이 있어야 한다", () => {
+    expect(COMMON_HREFLANGS).toHaveLength(6);
+    const zhTW = COMMON_HREFLANGS.find((h) => h.hreflang === "zh-TW");
+    expect(zhTW).toBeDefined();
+    expect(zhTW!.href).toBe(`${BASE_URL}/zh-tw`);
   });
 
   it("ko hreflang이 BASE_URL 루트를 가리켜야 한다", () => {
@@ -177,9 +181,9 @@ describe("buildHreflangs", () => {
     expect(result.find((h) => h.hreflang === "zh")!.href).toBe(`${BASE_URL}/zh`);
   });
 
-  it("결과에 5개 항목(ko, en, ja, zh, x-default)이 있어야 한다", () => {
+  it("결과에 6개 항목(ko, en, ja, zh, zh-TW, x-default)이 있어야 한다", () => {
     const result = buildHreflangs("/");
-    expect(result).toHaveLength(5);
+    expect(result).toHaveLength(6);
   });
 });
 

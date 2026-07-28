@@ -32,6 +32,7 @@ export function parseEventError(err: TRPCClientErrorLike<any>, lang: Lang = "ko"
       en: "Event not found.",
       ja: "イベント情報が見つかりません。",
       zh: "找不到活动信息。",
+      "zh-TW": "找不到活動資訊。",
     };
     return notFound[lang] ?? notFound.ko;
   }
@@ -51,6 +52,7 @@ export function parseEventListError(err: TRPCClientErrorLike<any>, lang: Lang = 
       en: "Failed to load events. Please try again shortly.",
       ja: "イベント一覧の読み込みに失敗しました。しばらくしてから再試行してください。",
       zh: "加载活动列表失败，请稍后重试。",
+      "zh-TW": "載入活動列表失敗，請稍後再試。",
     };
     return serverError[lang] ?? serverError.ko;
   }

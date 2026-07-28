@@ -107,7 +107,7 @@ export default function Events() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-amber-500 hover:bg-amber-600 transition-colors"
               >
                 <RefreshCw size={15} />
-                {{ ko: "다시 시도", en: "Retry", ja: "再試行", zh: "重试" }[lang] ?? "다시 시도"}
+                {(({ ko: "다시 시도", en: "Retry", ja: "再試行", zh: "重试", "zh-TW": "重試" }) as Record<string, string>)[lang] ?? "다시 시도"}
               </button>
             </div>
           ) : events && events.length > 0 ? (

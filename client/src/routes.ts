@@ -23,6 +23,7 @@ export const pages = {
   LandingEN:          () => import("@/pages/LandingEN"),
   LandingJA:          () => import("@/pages/LandingJA"),
   LandingZH:          () => import("@/pages/LandingZH"),
+  LandingZHTW:        () => import("@/pages/LandingZHTW"),
   EventDetail:        () => import("@/pages/EventDetail"),
   TreatmentRedirect:  () => import("@/pages/TreatmentRedirect"),
   TreatmentPage:      () => import("@/pages/TreatmentPage"),
@@ -75,6 +76,7 @@ export const TreatmentPage      = lazy(pages.TreatmentPage);
 export const LandingEN          = lazy(pages.LandingEN);
 export const LandingJA          = lazy(pages.LandingJA);
 export const LandingZH          = lazy(pages.LandingZH);
+export const LandingZHTW        = lazy(pages.LandingZHTW);
 export const Research           = lazy(pages.Research);
 export const Notice             = lazy(pages.Notice);
 export const NoticeDetail       = lazy(pages.NoticeDetail);
@@ -84,11 +86,11 @@ export const Doctors            = lazy(pages.Doctors);
 // ─── 다국어 경로 헬퍼 ─────────────────────────────────────────────────────────
 
 /**
- * 단일 경로 패턴을 4개 언어 접두사(/, /en/, /ja/, /zh/)로 확장한다.
- * 예: withLangPrefixes("about") → ["/about", "/en/about", "/ja/about", "/zh/about"]
+ * 단일 경로 패턴을 5개 언어 접두사(/, /en/, /ja/, /zh/, /zh-tw/)로 확장한다.
+ * 예: withLangPrefixes("about") → ["/about", "/en/about", "/ja/about", "/zh/about", "/zh-tw/about"]
  */
 export function withLangPrefixes(path: string): string[] {
-  return [`/${path}`, `/en/${path}`, `/ja/${path}`, `/zh/${path}`];
+  return [`/${path}`, `/en/${path}`, `/ja/${path}`, `/zh/${path}`, `/zh-tw/${path}`];
 }
 
 /**

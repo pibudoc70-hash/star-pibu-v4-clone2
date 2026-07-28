@@ -10,5 +10,6 @@ import { ko } from "./i18n.ko";
 import { en } from "./i18n.en";
 import { ja } from "./i18n.ja";
 import { zh } from "./i18n.zh";
+import { zhTW } from "./i18n.zh-TW";
 
-export const i18n: Record<Lang, I18nContent> = { ko, en, ja, zh };
+export const i18n: Record<Lang, I18nContent> = { ko, en, ja, zh, "zh-TW": zhTW };

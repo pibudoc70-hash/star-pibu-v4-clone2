@@ -27,6 +27,7 @@ export const SITE_NAME_LOCALIZED: Record<string, string> = {
   en: "Star Dermatology Busan",
   ja: "釜山スター皮膚科",
   zh: "釜山STAR皮肤科",
+  "zh-TW": "釜山STAR皮膚科",
 };
 
 /**
@@ -57,6 +58,7 @@ export const COMMON_HREFLANGS = [
   { hreflang: "en", href: `${BASE_URL}/en` },
   { hreflang: "ja", href: `${BASE_URL}/ja` },
   { hreflang: "zh", href: `${BASE_URL}/zh` },
+  { hreflang: "zh-TW", href: `${BASE_URL}/zh-tw` },
   // x-default: 홈페이지 루트 고정 (buildHreflangs의 koPath 기반 x-default와 다름)
   { hreflang: "x-default", href: `${BASE_URL}/` },
 ];
@@ -67,10 +69,11 @@ export const LANG_TO_OG_LOCALE: Record<string, string> = {
   en: "en_US",
   ja: "ja_JP",
   zh: "zh_CN",
+  "zh-TW": "zh_TW",
 };
 
 /** 다국어 og:locale:alternate 목록 */
-export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN"];
+export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN", "zh_TW"];
 
 /**
  * 페이지별 locale-aware hreflang 목록 생성 헬퍼

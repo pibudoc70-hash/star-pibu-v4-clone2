@@ -4263,3 +4263,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 로컬 테스트: sub_03_52.html, sub_01_02.html, sub_02_07.html 모두 301 응답 확인
 - [x] 중복 라인 2개(sub_03_24, sub_03_52) 통합 처리
 - [x] 인라이튼-3세대-루비피코 slug DB 미등록 → 원본 URL 유지 (페이지 추가 시 수정 필요)
+
+## zh-TW (대만 번체 중국어) 로케일 추가 및 ja/zh 표현 수정
+- [x] Lang 타입에 "zh-TW" 추가 (i18n.types.ts)
+- [x] i18n.zh-TW.ts 신규 생성 (zh base + 번체자 오버라이드)
+- [x] routes.ts withLangPrefixes에 /zh-tw 경로 추가
+- [x] LandingZHTW.tsx 신규 생성 (/zh-tw 홈페이지)
+- [x] seoHelpers.ts COMMON_HREFLANGS/ALL_OG_LOCALES에 zh-TW 추가
+- [x] LangContext.tsx zh-TW localStorage/document.lang 처리
+- [x] i18nText.ts SupportedLang에 zh-TW 추가 및 fallback 처리
+- [x] TreatmentPage.tsx LANG_PREFIX/LABELS에 zh-TW 추가
+- [x] reservation/errorMessages.ts zh-TW 추가
+- [x] RecentNoticesSection.tsx lang prop에 zh-TW 추가
+- [x] i18n.ja.ts 耳を傍ける → 耳を傾ける 오타 수정
+- [x] i18n.zh.ts WeChat咨询 → 微信咨询 등 어색한 표현 수정

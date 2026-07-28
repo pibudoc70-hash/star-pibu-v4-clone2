@@ -41,7 +41,7 @@ export const ja: I18nContent = {
       { num: "50+", label: "レーザー機器" },
     ],
     values: [
-      { letter: "S", title: "Special Guest", desc: "すべての患者様は私たちにとって最も大切な方です。お一人お一人のお悩みに耳を傍ける1対1のオーダーメイド診療を実践しています。" },
+      { letter: "S", title: "Special Guest", desc: "すべての患者様は私たちにとって最も大切な方です。お一人お一人のお悩みに耳を傾ける1対1のオーダーメイド診療を実践しています。" },
       { letter: "T", title: "Top Quality", desc: "多様なプレミアムレーザーと先進医療技術により、常に高水準の治療結果を提供します。" },
       { letter: "A", title: "Attractive Atmosphere", desc: "予約制により待ち時間を短縮し、治療のみに集中できる心地よい環境を提供します。" },
       { letter: "R", title: "Responsibility", desc: "治療の説明と経過観察に責任感を持ち、結果にご満足いただけるまでともに歩みます。" },

@@ -1,20 +1,22 @@
 // i18n 타입 정의 및 공통 상수 — i18n.ts에서 분리 (STRUCT-I18N-1)
 /**
  * STAR 피부과 다국어 콘텐츠 데이터
- * 언어: ko(한국어) | en(English) | ja(日本語) | zh(中文)
+ * 언어: ko(한국어) | en(English) | ja(日本語) | zh(中文簡體) | zh-TW(繁體中文)
  *
  * 일본어 출처: OTOMO 부산 (otomo-busan.com/star/)
  * 중국어: 기존 홈페이지 구조 기반 번역
  * 영어: 영어권 외국인 환자 안내
+ * 번체 중국어: 대만 방문객 전용 (zh 베이스 오버라이드)
  */
 
-export type Lang = "ko" | "en" | "ja" | "zh";
+export type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 export const langLabels: Record<Lang, string> = {
   ko: "한국어",
   en: "English",
   ja: "日本語",
   zh: "中文",
+  "zh-TW": "繁體中文",
 };
 
 export const langCodes: Record<Lang, string> = {
@@ -22,6 +24,7 @@ export const langCodes: Record<Lang, string> = {
   en: "EN",
   ja: "JP",
   zh: "CN",
+  "zh-TW": "TW",
 };
 
 export const langFlags: Record<Lang, string> = {
@@ -29,6 +32,7 @@ export const langFlags: Record<Lang, string> = {
   en: "🇺🇸",
   ja: "🇯🇵",
   zh: "🇨🇳",
+  "zh-TW": "🇹🇼",
 };
 
 export interface I18nContent {

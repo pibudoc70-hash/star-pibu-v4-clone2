@@ -9,13 +9,14 @@ import { Bell, ChevronRight, Pin } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 
 interface Props {
-  lang: "ko" | "en" | "ja" | "zh";
+  lang: "ko" | "en" | "ja" | "zh" | "zh-TW";
 }
 
 function formatDate(date: Date | string, lang: string) {
   const d = new Date(date);
   if (lang === "ja") return d.toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit" });
   if (lang === "zh") return d.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" });
+  if (lang === "zh-TW") return d.toLocaleDateString("zh-TW", { year: "numeric", month: "2-digit", day: "2-digit" });
   if (lang === "en") return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
   return d.toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" });
 }
@@ -25,12 +26,13 @@ const LABELS = {
   en: { section: "Notice", more: "View All", pinned: "Pinned", noNotice: "No notices available." },
   ja: { section: "お知らせ", more: "一覧を見る", pinned: "固定", noNotice: "公開中のお知らせはありません。" },
   zh: { section: "公告", more: "查看全部", pinned: "置顶", noNotice: "暂无公告。" },
+  "zh-TW": { section: "公告", more: "查看全部", pinned: "置頂", noNotice: "目前尚無公告。" },
 };
 
 function RecentNoticesSection({ lang }: Props) {
   const { data: allNotices = [], isLoading } = trpc.notices.list.useQuery({ lang });
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
-  const labels = LABELS[lang];
+  const langPrefix = lang === "ko" ? "" : lang === "zh-TW" ? "/zh-tw" : `/${lang}`;
+  const labels = LABELS[lang as keyof typeof LABELS] ?? LABELS.zh;
   const sectionRef = useSectionReveal(0); // [Step64]
 
   const notices = allNotices.slice(0, 3);

@@ -22,6 +22,7 @@ const LANG_PREFIX: Record<SupportedLang, string> = {
   en: "/en",
   ja: "/ja",
   zh: "/zh",
+  "zh-TW": "/zh-tw",
 };
 
 // ── JSON-LD 구조화 데이터 생성 (MedicalProcedure + FAQ) ──────────────────────
@@ -146,7 +147,7 @@ const LABELS = {
     effects: "预期效果",
     video: "治疗视频",
     caution: "术前术后注意事项",
-    ctaKakao: "微信咨询",
+    ctaKakao: "微信和误",
     ctaCall: "+82-51-818-2300",
     ctaCallIntl: "+82-51-818-2300",
     ctaBook: "立即预约",
@@ -155,6 +156,22 @@ const LABELS = {
     notFound: "未找到治疗信息。",
     notFoundBack: "返回首页",
     faqTitle: "常见问题",
+  },
+  "zh-TW": {
+    backHome: "返回首頁",
+    intro: "療程介紹",
+    effects: "預期效果",
+    video: "療程影片",
+    caution: "療程前後注意事項",
+    ctaKakao: "微信談詢",
+    ctaCall: "+82-51-818-2300",
+    ctaCallIntl: "+82-51-818-2300",
+    ctaBook: "立即預約",
+    otherTreatments: "查看其他療程",
+    recovery: "復原期",
+    notFound: "找不到療程資訊。",
+    notFoundBack: "返回首頁",
+    faqTitle: "常見問題",
   },
 } as const;
 

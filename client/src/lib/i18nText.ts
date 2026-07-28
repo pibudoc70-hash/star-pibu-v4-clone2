@@ -8,9 +8,10 @@
  *   en → en → ko
  *   ja → ja → en → ko
  *   zh → zh → en → ko
+ *   zh-TW → zh → en → ko
  */
 
-export type SupportedLang = "ko" | "en" | "ja" | "zh";
+export type SupportedLang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 export type LocalizedString = {
   ko: string;
@@ -31,6 +32,7 @@ export function pickLocalized(value: LocalizedString, lang: SupportedLang): stri
   if (lang === "en") return value.en?.trim() ? value.en : value.ko;
   if (lang === "ja") return value.ja?.trim() ? value.ja : value.en?.trim() ? value.en : value.ko;
   if (lang === "zh") return value.zh?.trim() ? value.zh : value.en?.trim() ? value.en : value.ko;
+  if (lang === "zh-TW") return value.zh?.trim() ? value.zh : value.en?.trim() ? value.en : value.ko;
   return value.ko;
 }
 
@@ -43,5 +45,6 @@ export function pickLocalizedFaq(
   if (lang === "en") return faq.en?.length ? faq.en : faq.ko ?? [];
   if (lang === "ja") return faq.ja?.length ? faq.ja : faq.en?.length ? faq.en : faq.ko ?? [];
   if (lang === "zh") return faq.zh?.length ? faq.zh : faq.en?.length ? faq.en : faq.ko ?? [];
+  if (lang === "zh-TW") return faq.zh?.length ? faq.zh : faq.en?.length ? faq.en : faq.ko ?? [];
   return faq.ko ?? [];
 }

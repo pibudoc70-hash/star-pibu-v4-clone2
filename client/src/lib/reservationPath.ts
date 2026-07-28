@@ -18,6 +18,7 @@ const LANG_HOME_PREFIX: Record<Lang, string> = {
   en: "/en",
   ja: "/ja",
   zh: "/zh",
+  "zh-TW": "/zh-tw",
 };
 
 /**

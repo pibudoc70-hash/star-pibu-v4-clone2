@@ -123,7 +123,7 @@ export default function FacilitySection() {
           <div className="star-divider mx-auto mb-6" />
           {fc.highlights[0] && (
             <p className="section-subtitle">
-              {fc.highlights.map((h) => h.label).join(" · ")}
+              {fc.highlights.map((h) => h.label).join("・")}
             </p>
           )}
         </div>

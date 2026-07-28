@@ -151,7 +151,7 @@ export default function ContactSection() {
                     className="px-4 py-2 rounded-full text-sm font-medium transition-opacity hover:opacity-80"
                     style={{ background: 'var(--color-star-kakao)', color: '#3C1E1E' }}
                   >
-                    카카오맵으로 보기
+                    {t.access.kakaoMapLabel ?? "KakaoMap"}
                   </a>
                   <a
                     href="https://map.naver.com/v5/search/스타피부과%20서면"
@@ -160,7 +160,7 @@ export default function ContactSection() {
                     className="px-4 py-2 rounded-full text-sm font-medium transition-opacity hover:opacity-80"
                     style={{ background: 'var(--color-star-naver)', color: '#fff' }}
                   >
-                    네이버지도로 보기
+                    {t.access.naverMap ?? "Naver Map"}
                   </a>
                   {/* [Step59-B] 네이버 플레이스 상시 링크 */}
                   <a

@@ -4304,3 +4304,20 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## zh-TW Code-Only Patch (2026-07-28)
 - [x] zh-TW footer 간체 혼재 수정: quickMenu "快速菜单"→"快速選單", mainTreatments "主要项目"→"主要療程", contactInfo "联系方式及位置"→"聯絡方式及位置", brandDesc/subwayInfo/nonCovered/bizInfo 번체 오버라이드 추가
 - [x] zh-TW 복사 버튼 "复制地址"→"複製地址" 수정 (access.copyAddress, access.copiedLabel 번체 오버라이드 추가)
+
+## zh-TW DB Content Localization (2026-07-29)
+- [ ] DB 스키마 감사: equipment3, managementDevices, events, notices 테이블 현황 파악
+- [ ] notices target_lang 수정: id=1, 30001, 60001 한국어 전용 여부 판단 후 처리
+- [ ] equipment3 zh-TW 콘텐츠 작성 및 업데이트 (tabZhTw, titleZhTw, nameZhTw, descZhTw)
+- [ ] managementDevices zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
+- [ ] events zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
+- [ ] /zh-tw 프로덕션 렌더링 검증
+
+## zh-TW Full Localization - Code + DB (2026-07-29, 수정 허가)
+- [x] getCatLabel() zh-TW 분기 추가 (categories.ts)
+- [x] useLocalizedText() zh-TW 분기 추가 (useLocalizedText.ts)
+- [x] clinic-data.ts ManagementDevices nameZhTw/shortDescZhTw 번체 추가
+- [x] equipment3 DB: nameZh, categoryZh, descZh → zh-TW 번체로 채우기
+- [x] events DB: titleZh, descZh → zh-TW 번체로 채우기
+- [x] notices DB: id=1,30001,60001 target_lang 수정
+- [ ] /zh-tw 프로덕션 렌더링 최종 검증

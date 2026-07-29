@@ -26,12 +26,13 @@ function DeviceModal({
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
-  const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh);
+  const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
   const displayDesc = getText(
     device.shortDesc,
     device.shortDescEn,
     device.shortDescJa,
     device.shortDescZh,
+    device.shortDescZhTw,
   );
 
   return (
@@ -130,9 +131,8 @@ function DeviceCard({
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
-  const { getText } = useLocalizedText();
-  const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh);
-
+    const { getText } = useLocalizedText();
+  const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
   return (
     <button
       type="button"

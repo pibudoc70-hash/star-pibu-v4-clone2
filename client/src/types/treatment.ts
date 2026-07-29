@@ -85,6 +85,7 @@ export interface Category {
   labelEn: string;
   labelJa?: string;
   labelZh?: string;
+  labelZhTw?: string;
   desc: string;
   descEn: string;
   descJa: string;

@@ -21,19 +21,22 @@ export function useLocalizedText() {
    * @param ko 한국어 기본값 (fallback)
    * @param en 영어 번역 (없으면 ko 사용)
    * @param ja 일본어 번역 (없으면 ko 사용)
-   * @param zh 중국어 번역 (없으면 ko 사용)
+   * @param zh 중국어 간체 번역 (없으면 ko 사용)
+   * @param zhTw 중국어 번체 번역 (없으면 zh → en → ko 순으로 폴백)
    */
   const getText = (
     ko: string | null | undefined,
     en?: string | null,
     ja?: string | null,
-    zh?: string | null
+    zh?: string | null,
+    zhTw?: string | null
   ): string => {
     const base = ko ?? "";
     const enFallback = en || base;
     if (lang === "en") return enFallback;
-    // ja/zh: 해당 번역이 없으면 한국어보다 영어를 폴백으로 사용 (외국인 환자에게 한국어보다 영어가 이해하기 쉽음)
+    // ja/zh/zh-TW: 해당 번역이 없으면 한국어보다 영어를 폴백으로 사용 (외국인 환자에게 한국어보다 영어가 이해하기 쉽음)
     if (lang === "ja") return ja || enFallback;
+    if (lang === "zh-TW") return zhTw || zh || enFallback;
     if (lang === "zh") return zh || enFallback;
     return base;
   };

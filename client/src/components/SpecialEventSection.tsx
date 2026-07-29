@@ -42,6 +42,7 @@ function SectionHeader({ lang }: { lang: string }) {
     en: "Experience premium skin care at Star's exclusive prices.",
     ja: "スターの特別価格で、ワンランク上のスキンケアを。",
     zh: "以STAR独家优惠价，享受顶级皮肤护理。",
+    "zh-TW": "以STAR獨家優惠價，享受頂級皮膚護理。",
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
@@ -130,6 +131,7 @@ export default function SpecialEventSection() {
       en: "Retry",
       ja: "再試行",
       zh: "重试",
+      "zh-TW": "重試",
     };
     return (
       <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
@@ -194,12 +196,12 @@ export default function SpecialEventSection() {
                 >
                   {showMore ? (
                     <>
-                      {lang === "ko" ? "접기" : lang === "en" ? "Show Less" : lang === "ja" ? "閉じる" : "隐藏"}
+                      {lang === "ko" ? "접기" : lang === "en" ? "Show Less" : lang === "ja" ? "閉じる" : lang === "zh-TW" ? "收起" : "隐藏"}
                       <ChevronDown size={18} className="rotate-180" />
                     </>
                   ) : (
                     <>
-                      {lang === "ko" ? "더보기" : lang === "en" ? "Show More" : lang === "ja" ? "もっと見る" : "更多"}
+                      {lang === "ko" ? "더보기" : lang === "en" ? "Show More" : lang === "ja" ? "もっと見る" : lang === "zh-TW" ? "更多內容" : "更多"}
                       <ChevronDown size={18} />
                     </>
                   )}

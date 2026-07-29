@@ -51,6 +51,12 @@ export function useLocalizedEvent() {
   const { lang } = useLang();
 
   const getLocalizedText = (event: SpecialEvent, field: LocalizableField): string => {
+    // zh-TW: titleZh/subtitleZh/descZh 필드를 우선 사용 (번체 전용 필드 없음)
+    if (lang === "zh-TW") {
+      const zhKey = FIELD_SUFFIX_MAP[field + "Zh"];
+      const zhText = zhKey ? (event[zhKey] as string | undefined) : undefined;
+      return zhText || event[field] || "";
+    }
     const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh" ? "Zh" : null;
     if (suffix) {
       const key = FIELD_SUFFIX_MAP[field + suffix];

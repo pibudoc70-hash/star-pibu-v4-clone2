@@ -4300,3 +4300,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] strip 루프를 while로 변경 (중첩 prefix /zh-TW/zh-TW 처리)
 - [x] 20개 테스트 케이스 전부 PASS 확인
 - [x] TypeScript 오류 0건 확인
+
+## zh-TW Code-Only Patch (2026-07-28)
+- [x] zh-TW footer 간체 혼재 수정: quickMenu "快速菜单"→"快速選單", mainTreatments "主要项目"→"主要療程", contactInfo "联系方式及位置"→"聯絡方式及位置", brandDesc/subwayInfo/nonCovered/bizInfo 번체 오버라이드 추가
+- [x] zh-TW 복사 버튼 "复制地址"→"複製地址" 수정 (access.copyAddress, access.copiedLabel 번체 오버라이드 추가)

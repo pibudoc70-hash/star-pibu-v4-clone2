@@ -95,6 +95,8 @@ export const zhTW: I18nContent = {
     kakaoMapLabel: "KakaoMap導航",
     kakaoChat: "微信聯絡我們",
     naverMap: "Naver Map",
+    copyAddress: "複製地址",
+    copiedLabel: "已複製！",
   },
   doctors: {
     ...zh.doctors,
@@ -516,6 +518,13 @@ export const zhTW: I18nContent = {
     address: "釜山廣域市釜山鎮區西面路74 愛奧城市大廈 2・4樓",
     copyright: "© 2024 STAR皮膚科. 保留所有權利。",
     privacy: "隱私政策",
+    quickMenu: "快速選單",
+    mainTreatments: "主要療程",
+    contactInfo: "聯絡方式及位置",
+    brandDesc: "釜山西面STAR皮膚科。皮膚科專科醫師擁有20年以上豐富臨床經驗，親自為患者提供診療。",
+    subwayInfo: "地鐵1・2號線西面站5、7號出口步行2分鐘",
+    nonCovered: "非健保診療指南",
+    bizInfo: "STAR皮膚科醫院｜代表院長：趙時享｜統一編號：605-24-84306",
   },
   events: {
     ...zh.events,

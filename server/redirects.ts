@@ -111,6 +111,22 @@ const REDIRECT_MAP: Record<string, string> = {
  * 반드시 다른 라우트보다 먼저 등록해야 한다.
  */
 export function registerRedirects(app: Express): void {
+  // ── www → apex 301 리다이렉트 ────────────────────────────────────────────
+  // www.star-pibu.com/* → star-pibu.com/* (경로 보존)
+  // Host 헤더는 Cloudflare/리버스 프록시를 통과하면 원본 호스트가 유지됨
+  app.use((req, res, next) => {
+    const host = req.headers.host ?? "";
+    if (host.startsWith("www.")) {
+      const apexHost = host.slice(4); // "www.star-pibu.com" → "star-pibu.com"
+      const proto = req.headers["x-forwarded-proto"] ?? "https";
+      const target = `${proto}://${apexHost}${req.originalUrl}`;
+      res.redirect(301, target);
+      return;
+    }
+    next();
+  });
+
+  // ── 구 사이트 .htaccess 경로별 301 리다이렉트 ────────────────────────────
   for (const [src, dst] of Object.entries(REDIRECT_MAP)) {
     app.get(src, (_req, res) => {
       res.redirect(301, dst);

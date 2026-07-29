@@ -4306,12 +4306,12 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] zh-TW 복사 버튼 "复制地址"→"複製地址" 수정 (access.copyAddress, access.copiedLabel 번체 오버라이드 추가)
 
 ## zh-TW DB Content Localization (2026-07-29)
-- [ ] DB 스키마 감사: equipment3, managementDevices, events, notices 테이블 현황 파악
-- [ ] notices target_lang 수정: id=1, 30001, 60001 한국어 전용 여부 판단 후 처리
-- [ ] equipment3 zh-TW 콘텐츠 작성 및 업데이트 (tabZhTw, titleZhTw, nameZhTw, descZhTw)
-- [ ] managementDevices zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
-- [ ] events zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
-- [ ] /zh-tw 프로덕션 렌더링 검증
+- [x] DB 스키마 감사: equipment3, managementDevices, events, notices 테이블 현황 파악
+- [x] notices target_lang 수정: id=1, 30001, 60001 한국어 전용 여부 판단 후 처리
+- [x] equipment3 zh-TW 콘텐츠 작성 및 업데이트 (tabZhTw, titleZhTw, nameZhTw, descZhTw)
+- [x] managementDevices zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
+- [x] events zh-TW 콘텐츠 작성 및 업데이트 (titleZhTw, descZhTw)
+- [x] /zh-tw 프로덕션 렌더링 검증
 
 ## zh-TW Full Localization - Code + DB (2026-07-29, 수정 허가)
 - [x] getCatLabel() zh-TW 분기 추가 (categories.ts)

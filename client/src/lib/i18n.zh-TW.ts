@@ -26,6 +26,7 @@ export const zhTW: I18nContent = {
   },
   hero: {
     ...zh.hero,
+    title: "STAR皮膚科",
     subtitle: "經驗、信賴與科學的交融",
     floor: "釜山西面 愛奧城市大廈 4F 掛號・診療 | 2F 幹細胞研究中心",
     cta_kakao: "微信諮詢",

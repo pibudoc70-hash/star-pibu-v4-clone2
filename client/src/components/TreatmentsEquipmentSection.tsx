@@ -156,14 +156,15 @@ export default function TreatmentsEquipmentSection() {
       label: tab.label,
       labelEn: tab.labelEn,
       labelJa: tab.labelJa,
-      labelZh: lang === "zh-TW" ? (tab.labelZhTw ?? tab.labelZh) : tab.labelZh,
+      labelZh: tab.labelZh,
+      labelZhTw: tab.labelZhTw,
       // Category 타입 호환 (desc 필드 필수)
       desc: "",
       descEn: "",
       descJa: "",
       descZh: "",
     })),
-    [tabs, lang],
+    [tabs],
   );
 
   // 검색 중일 때 표시할 안내 문구

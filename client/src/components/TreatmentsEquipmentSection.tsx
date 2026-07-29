@@ -156,19 +156,19 @@ export default function TreatmentsEquipmentSection() {
       label: tab.label,
       labelEn: tab.labelEn,
       labelJa: tab.labelJa,
-      labelZh: tab.labelZh,
+      labelZh: lang === "zh-TW" ? (tab.labelZhTw ?? tab.labelZh) : tab.labelZh,
       // Category 타입 호환 (desc 필드 필수)
       desc: "",
       descEn: "",
       descJa: "",
       descZh: "",
     })),
-    [tabs],
+    [tabs, lang],
   );
 
   // 검색 중일 때 표시할 안내 문구
-  const searchPlaceholder = lang === "ko" ? "시술·장비 검색" : lang === "en" ? "Search treatments" : lang === "ja" ? "施術・機器を検索" : "搜索项目";
-  const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
+  const searchPlaceholder = lang === "ko" ? "시술·장비 검색" : lang === "en" ? "Search treatments" : lang === "ja" ? "施術・機器を検索" : lang === "zh-TW" ? "搜尋療程" : "搜索项目";
+  const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : lang === "zh-TW" ? `「${searchQuery}」的搜尋結果 ${filteredTreatments.length} 筆` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label={tr.label} role="region">
@@ -185,7 +185,7 @@ export default function TreatmentsEquipmentSection() {
         {/* 로딩 스켈레톤 */}
         {isLoading && (
             <div className="rounded-2xl px-4 py-8 mb-4 text-center text-sm text-gray-500" style={{ background: "#F3EEE8" }}>
-            시술·장비 정보를 불러오는 중...
+            {lang === "ko" ? "시술·장비 정보를 불러오는 중..." : lang === "en" ? "Loading treatments..." : lang === "ja" ? "施術・機器情報を読み込み中..." : lang === "zh-TW" ? "療程資訊載入中..." : "正在加载项目信息..."}
           </div>
         )}
 

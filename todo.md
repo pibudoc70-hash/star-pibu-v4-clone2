@@ -4320,4 +4320,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] equipment3 DB: nameZh, categoryZh, descZh → zh-TW 번체로 채우기
 - [x] events DB: titleZh, descZh → zh-TW 번체로 채우기
 - [x] notices DB: id=1,30001,60001 target_lang 수정
-- [ ] /zh-tw 프로덕션 렌더링 최종 검증
+- [x] /zh-tw 프로덕션 렌더링 최종 검증

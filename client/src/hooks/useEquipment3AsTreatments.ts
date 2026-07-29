@@ -19,22 +19,22 @@ import { trpc } from "@/lib/trpc";
 import type { Treatment } from "@/types/treatment";
 
 // Equipment3 페이지와 동일한 카테고리 번역 테이블
-const CATEGORY_TRANS: Record<string, { en: string; ja: string; zh: string }> = {
-  "Best 시술":     { en: "Best Treatments",           ja: "ベスト施術",          zh: "最佳项目" },
-  "리프팅·탄력":   { en: "Lifting & Elasticity",       ja: "リフティング・弾力",   zh: "提升·弹力" },
-  "눈밑지방재배치": { en: "Under-eye Fat Repositioning", ja: "目の下の脂肪再配置",   zh: "眼袋脂肪重置" },
-  "백반증":        { en: "Vitiligo",                   ja: "白斑症",              zh: "白癜风" },
-  "색소·문신":     { en: "Pigmentation·Tattoo",        ja: "色素・タトゥー",       zh: "色素·纹身" },
-  "홍조·혈관":     { en: "Rosacea·Vascular",           ja: "紅潮・血管",           zh: "红斑·血管" },
-  "여드름":        { en: "Acne",                       ja: "ニキビ",              zh: "痤疮" },
-  "액취증·다한증": { en: "Osmidrosis·Hyperhidrosis",   ja: "腋臭症・多汗症",       zh: "腋臭·多汗症" },
-  "손·발톱무좀":   { en: "Nail Fungus",                ja: "爪水虫",              zh: "灰指甲" },
-  "건선·아토피":   { en: "Psoriasis·Atopy",            ja: "乾癬・アトピー",       zh: "银屑病·特应性" },
-  "볼륨·부스터":   { en: "Volume·Booster",             ja: "ボリューム・ブースター", zh: "填充·促进" },
-  "보톡스·필러":   { en: "Botox·Filler",               ja: "ボトックス・フィラー",  zh: "肉毒素·填充" },
-  "줄기세포 치료": { en: "Stem Cell Therapy",          ja: "幹細胞治療",           zh: "干细胞治疗" },
-  "흉터·모공":     { en: "Scar·Pores",                 ja: "傷跡・毛穴",           zh: "疤痕·毛孔" },
-  "피부관리":      { en: "Skin Care",                  ja: "スキンケア",            zh: "皮肤护理" },
+const CATEGORY_TRANS: Record<string, { en: string; ja: string; zh: string; zhTw: string }> = {
+  "Best 시술":     { en: "Best Treatments",           ja: "ベスト施術",          zh: "最佳项目",        zhTw: "精選療程" },
+  "리프팅·탄력":   { en: "Lifting & Elasticity",       ja: "リフティング・弾力",   zh: "提升·弹力",       zhTw: "拉提·緊緻" },
+  "눈밑지방재배치": { en: "Under-eye Fat Repositioning", ja: "目の下の脂肪再配置",   zh: "眼袋脂肪重置",     zhTw: "眼袋脂肪重置" },
+  "백반증":        { en: "Vitiligo",                   ja: "白斑症",              zh: "白癜风",          zhTw: "白斑症" },
+  "색소·문신":     { en: "Pigmentation·Tattoo",        ja: "色素・タトゥー",       zh: "色素·纹身",       zhTw: "色素·刺青" },
+  "홍조·혈관":     { en: "Rosacea·Vascular",           ja: "紅潮・血管",           zh: "红斑·血管",       zhTw: "泛紅·血管" },
+  "여드름":        { en: "Acne",                       ja: "ニキビ",              zh: "痤疮",            zhTw: "痘痘" },
+  "액취증·다한증": { en: "Osmidrosis·Hyperhidrosis",   ja: "腋臭症・多汗症",       zh: "腋臭·多汗症",     zhTw: "腋臭·多汗症" },
+  "손·발톱무좀":   { en: "Nail Fungus",                ja: "爪水虫",              zh: "灰指甲",          zhTw: "灰指甲" },
+  "건선·아토피":   { en: "Psoriasis·Atopy",            ja: "乾癬・アトピー",       zh: "银屑病·特应性",   zhTw: "乾癬·異位性" },
+  "볼륨·부스터":   { en: "Volume·Booster",             ja: "ボリューム・ブースター", zh: "填充·促进",       zhTw: "豐盈·亮澤" },
+  "보톡스·필러":   { en: "Botox·Filler",               ja: "ボトックス・フィラー",  zh: "肉毒素·填充",     zhTw: "肉毒桿菌·玻尿酸" },
+  "줄기세포 치료": { en: "Stem Cell Therapy",          ja: "幹細胞治療",           zh: "干细胞治疗",      zhTw: "幹細胞治療" },
+  "흉터·모공":     { en: "Scar·Pores",                 ja: "傷跡・毛穴",           zh: "疤痕·毛孔",       zhTw: "疤痕·毛孔" },
+  "피부관리":      { en: "Skin Care",                  ja: "スキンケア",            zh: "皮肤护理",        zhTw: "皮膚護理" },
 };
 
 const BEST_CATEGORY_LABELS = new Set([
@@ -47,6 +47,7 @@ export interface Equipment3Tab {
   labelEn: string;
   labelJa: string;
   labelZh: string;
+  labelZhTw?: string;
 }
 
 export interface UseEquipment3AsTreatmentsReturn {
@@ -180,6 +181,7 @@ export function useEquipment3AsTreatments(): UseEquipment3AsTreatmentsReturn {
         labelEn: "Best Treatments",
         labelJa: "ベスト施術",
         labelZh: "最佳项目",
+        labelZhTw: "精選療程",
       });
       seen.add("best");
     }
@@ -191,13 +193,14 @@ export function useEquipment3AsTreatments(): UseEquipment3AsTreatmentsReturn {
       if (BEST_CATEGORY_LABELS.has(catId)) continue;
       if (!seen.has(catId)) {
         seen.add(catId);
-        const fallback = CATEGORY_TRANS[catId] ?? { en: catId, ja: catId, zh: catId };
+        const fallback = CATEGORY_TRANS[catId] ?? { en: catId, ja: catId, zh: catId, zhTw: catId };
         result.push({
           id: catId,
           label: item.category ?? catId,
           labelEn: (item.categoryEn && item.categoryEn.trim()) ? item.categoryEn : fallback.en,
           labelJa: (item.categoryJa && item.categoryJa.trim()) ? item.categoryJa : fallback.ja,
           labelZh: (item.categoryZh && item.categoryZh.trim()) ? item.categoryZh : fallback.zh,
+          labelZhTw: fallback.zhTw,
         });
       }
     }

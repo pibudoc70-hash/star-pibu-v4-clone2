@@ -51,16 +51,19 @@ export async function getSpecialEvents() {
   return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"), eq(events.targetLang, "ko"))).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
-/** 언어별 SPECIAL EVENT 조회 */
+/** 언어별 SPECIAL EVENT 조회 (zh-TW는 zh로 fallback) */
 export async function getSpecialEventsByLang(lang: string) {
   const db = await getDb();
-  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"), eq(events.targetLang, lang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+  // zh-TW는 zh 레코드를 공유하며, titleZh/descZh 등 zh 필드에 번체를 저장함
+  const effectiveLang = lang === "zh-TW" ? "zh" : lang;
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.isSpecialEvent, "1"), eq(events.targetLang, effectiveLang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
-/** 언어별 일반 이벤트 조회 */
+/** 언어별 일반 이벤트 조회 (zh-TW는 zh로 fallback) */
 export async function getAllEventsByLang(lang: string) {
   const db = await getDb();
-  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.targetLang, lang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
+  const effectiveLang = lang === "zh-TW" ? "zh" : lang;
+  return db.select().from(events).where(and(eq(events.isActive, "1"), eq(events.targetLang, effectiveLang))).orderBy(asc(events.sortOrder), desc(events.createdAt));
 }
 
 /** 카테고리별 이벤트 조회 */

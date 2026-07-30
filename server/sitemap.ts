@@ -38,6 +38,14 @@ function toDateStr(date: Date | null | undefined): string {
   return new Date(date).toISOString().split("T")[0];
 }
 
+/** 트레일링 슬래시 정규화: /en/ → /en, 단 루트 / 는 유지 */
+function normalizeTrailingSlash(url: string): string {
+  // 루트 URL(https://star-pibu.com/)은 그대로 유지
+  if (url === `${SITE_URL}/`) return url;
+  // 그 외 트레일링 슬래시 제거
+  return url.replace(/\/+$/, "");
+}
+
 /** hreflang 다국어 링크 블록 생성 (5개 언어: ko, en, ja, zh, zh-TW) */
 function hreflangBlock(
   koPath: string,
@@ -46,11 +54,11 @@ function hreflangBlock(
   zhPath?: string,
   zhTwPath?: string
 ): string {
-  const ko   = `${SITE_URL}${koPath}`;
-  const en   = enPath   ? `${SITE_URL}${enPath}`   : `${SITE_URL}/en${koPath}`;
-  const ja   = jaPath   ? `${SITE_URL}${jaPath}`   : `${SITE_URL}/ja${koPath}`;
-  const zh   = zhPath   ? `${SITE_URL}${zhPath}`   : `${SITE_URL}/zh${koPath}`;
-  const zhTw = zhTwPath ? `${SITE_URL}${zhTwPath}` : `${SITE_URL}/zh-tw${koPath}`;
+  const ko   = normalizeTrailingSlash(`${SITE_URL}${koPath}`);
+  const en   = normalizeTrailingSlash(enPath   ? `${SITE_URL}${enPath}`   : `${SITE_URL}/en${koPath}`);
+  const ja   = normalizeTrailingSlash(jaPath   ? `${SITE_URL}${jaPath}`   : `${SITE_URL}/ja${koPath}`);
+  const zh   = normalizeTrailingSlash(zhPath   ? `${SITE_URL}${zhPath}`   : `${SITE_URL}/zh${koPath}`);
+  const zhTw = normalizeTrailingSlash(zhTwPath ? `${SITE_URL}${zhTwPath}` : `${SITE_URL}/zh-tw${koPath}`);
   return `    <xhtml:link rel="alternate" hreflang="ko"    href="${escapeXml(ko)}" />
     <xhtml:link rel="alternate" hreflang="en"    href="${escapeXml(en)}" />
     <xhtml:link rel="alternate" hreflang="ja"    href="${escapeXml(ja)}" />
@@ -69,10 +77,10 @@ const STATIC_URLS = [
     priority: "1.0",
     hreflang: hreflangBlock("/"),
   },
-  { loc: `${SITE_URL}/en`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
-  { loc: `${SITE_URL}/ja`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
-  { loc: `${SITE_URL}/zh`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
-  { loc: `${SITE_URL}/zh-tw`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
+  { loc: `${SITE_URL}/en`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
+  { loc: `${SITE_URL}/ja`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
+  { loc: `${SITE_URL}/zh`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
+  { loc: `${SITE_URL}/zh-tw`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
 
   // ── 장비·시술 소개 목록 ───────────────────────────────────────
   {

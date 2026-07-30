@@ -1,39 +1,30 @@
-# robots.txt for Star Dermatology Clinic
-# 검색 엔진 크롤러를 위한 지시사항
+# robots.txt — Star Dermatology Clinic (star-pibu.com)
+# RFC 9309 / Google robots.txt 사양 준수
+# 주의: Sitemap 지시자는 반드시 User-agent 블록 밖에 선언
+# 주의: User-agent 블록 사이에 빈 줄로 명확히 구분
 
-# 모든 검색 엔진 크롤러 허용
+# ── 1. 기본 크롤러 규칙 ───────────────────────────────────────────
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /api/trpc/
 
-# 특정 경로 제외
-Disallow: /admin
-Disallow: /api
-Disallow: /_next
-Disallow: /.git
-Disallow: /node_modules
-
-# Sitemap 위치
-Sitemap: https://star-pibu.com/sitemap.xml
-
-# 크롤링 속도 제한
-Crawl-delay: 1
-
-# Google 특정 설정
+# ── 2. Googlebot (Crawl-delay 제거 — Google은 Search Console에서 직접 조절) ──
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
-# Naver 특정 설정
+# ── 3. Naver ─────────────────────────────────────────────────────
 User-agent: Yeti
 Allow: /
 Crawl-delay: 1
 
-# Bing 특정 설정
+# ── 4. Bing ──────────────────────────────────────────────────────
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-# ── AI 검색 크롤러 (명시적 허용) ──────────────────────────────────
+# ── 5. AI 검색 크롤러 ────────────────────────────────────────────
 # OpenAI ChatGPT / SearchGPT
 User-agent: GPTBot
 Allow: /
@@ -78,6 +69,9 @@ User-agent: Amazonbot
 Allow: /
 Crawl-delay: 1
 
-# ── AI 크롤러 전용 콘텐츠 파일 ────────────────────────────────────
+# ── Sitemap (User-agent 블록 외부 선언 — RFC 9309 표준) ──────────
+Sitemap: https://star-pibu.com/sitemap.xml
+
+# ── LLM 최적화 콘텐츠 파일 ───────────────────────────────────────
 # LLM 최적화 콘텐츠: https://star-pibu.com/llms.txt
 # 전체 상세 콘텐츠: https://star-pibu.com/llms-full.txt

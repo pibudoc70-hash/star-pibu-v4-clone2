@@ -4325,4 +4325,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## www → apex 301 Redirect (2026-07-29)
 - [x] server/redirects.ts: www.star-pibu.com/* → star-pibu.com/* 301 미들웨어 추가 (경로·쿼리스트링 보존)
 - [x] server/__tests__/www.redirect.test.ts: 7개 단위 테스트 작성 및 통과
-- [ ] 프로덕션 301 리다이렉트 동작 검증 (curl -I https://www.star-pibu.com/)
+- [x] 프로덕션 301 리다이렉트 동작 검증 (curl -I https://www.star-pibu.com/)

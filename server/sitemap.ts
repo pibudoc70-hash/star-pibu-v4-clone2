@@ -1,15 +1,14 @@
 /**
  * sitemap.ts — 동적 사이트맵 생성 엔드포인트
  *
- * [Step56-A] 동적 sitemap 을 표준 경로 /sitemap.xml 로 승격.
- * robots.txt 가 /sitemap.xml 만 선언하므로 이 경로여야 검색엔진에 전달된다.
- *
  * 포함 항목:
  *   1. 고정 페이지 (홈, 다국어, 시술, 공지, 외국인 안내, 소개 등)
  *   2. equipment3 세부 페이지 (DB에서 동적으로 생성)
  *   3. 공지 상세 페이지 (DB에서 동적으로 생성, 최근 100건)
  *
  * robots.txt 선언: Sitemap: https://star-pibu.com/sitemap.xml
+ *
+ * 지원 언어: ko, en, ja, zh, zh-TW (5개)
  */
 
 import type { Express, Request, Response } from "express";
@@ -19,8 +18,7 @@ import type { Equipment3Item } from "../drizzle/schema";
 
 const SITE_URL = "https://star-pibu.com";
 
-// [Step56-A] lastmod 하드코딩 제거. 모듈 로드 시 1회만 계산한다
-// (요청마다 계산하면 매일 값이 바뀌어 "매일 수정됨"으로 오해된다).
+// 모듈 로드 시 1회만 계산 (요청마다 계산하면 매일 수정됨으로 오해됨)
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
 /** XML 특수문자 이스케이프 */
@@ -40,22 +38,30 @@ function toDateStr(date: Date | null | undefined): string {
   return new Date(date).toISOString().split("T")[0];
 }
 
-/** hreflang 다국어 링크 블록 생성 */
-function hreflangBlock(koPath: string, enPath?: string, jaPath?: string, zhPath?: string): string {
-  const ko = `${SITE_URL}${koPath}`;
-  const en = enPath ? `${SITE_URL}${enPath}` : `${SITE_URL}/en${koPath}`;
-  const ja = jaPath ? `${SITE_URL}${jaPath}` : `${SITE_URL}/ja${koPath}`;
-  const zh = zhPath ? `${SITE_URL}${zhPath}` : `${SITE_URL}/zh${koPath}`;
-  return `    <xhtml:link rel="alternate" hreflang="ko"        href="${escapeXml(ko)}" />
-    <xhtml:link rel="alternate" hreflang="en"        href="${escapeXml(en)}" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="${escapeXml(ja)}" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="${escapeXml(zh)}" />
+/** hreflang 다국어 링크 블록 생성 (5개 언어: ko, en, ja, zh, zh-TW) */
+function hreflangBlock(
+  koPath: string,
+  enPath?: string,
+  jaPath?: string,
+  zhPath?: string,
+  zhTwPath?: string
+): string {
+  const ko   = `${SITE_URL}${koPath}`;
+  const en   = enPath   ? `${SITE_URL}${enPath}`   : `${SITE_URL}/en${koPath}`;
+  const ja   = jaPath   ? `${SITE_URL}${jaPath}`   : `${SITE_URL}/ja${koPath}`;
+  const zh   = zhPath   ? `${SITE_URL}${zhPath}`   : `${SITE_URL}/zh${koPath}`;
+  const zhTw = zhTwPath ? `${SITE_URL}${zhTwPath}` : `${SITE_URL}/zh-tw${koPath}`;
+  return `    <xhtml:link rel="alternate" hreflang="ko"    href="${escapeXml(ko)}" />
+    <xhtml:link rel="alternate" hreflang="en"    href="${escapeXml(en)}" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="${escapeXml(ja)}" />
+    <xhtml:link rel="alternate" hreflang="zh"    href="${escapeXml(zh)}" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="${escapeXml(zhTw)}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(ko)}" />`;
 }
 
 /** 고정 URL 목록 */
 const STATIC_URLS = [
-  // 홈 (다국어)
+  // ── 홈 (다국어) ──────────────────────────────────────────────
   {
     loc: `${SITE_URL}/`,
     lastmod: BUILD_DATE,
@@ -63,20 +69,12 @@ const STATIC_URLS = [
     priority: "1.0",
     hreflang: hreflangBlock("/"),
   },
-  { loc: `${SITE_URL}/en`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
-  { loc: `${SITE_URL}/ja`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
-  { loc: `${SITE_URL}/zh`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
+  { loc: `${SITE_URL}/en`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
+  { loc: `${SITE_URL}/ja`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
+  { loc: `${SITE_URL}/zh`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
+  { loc: `${SITE_URL}/zh-tw`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/") },
 
-  // 시술 상세 페이지 (legacy slug)
-  { loc: `${SITE_URL}/treatments/ulthera`,        lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/thermage`,       lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/under-eye-fat`,  lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/pico-laser`,     lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/rosacea`,        lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/ruby-pico-laser`,lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/treatments/ulthera-classic`,lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-
-  // 장비 소개 목록
+  // ── 장비·시술 소개 목록 ───────────────────────────────────────
   {
     loc: `${SITE_URL}/equipment3`,
     lastmod: BUILD_DATE,
@@ -84,12 +82,12 @@ const STATIC_URLS = [
     priority: "0.9",
     hreflang: hreflangBlock("/equipment3"),
   },
-  // [Step56-A] 다국어 equipment3 목록
-  { loc: `${SITE_URL}/en/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly",   priority: "0.8" },
-  { loc: `${SITE_URL}/ja/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly",   priority: "0.8" },
-  { loc: `${SITE_URL}/zh/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly",   priority: "0.8" },
+  { loc: `${SITE_URL}/en/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
+  { loc: `${SITE_URL}/ja/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
+  { loc: `${SITE_URL}/zh/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
+  { loc: `${SITE_URL}/zh-tw/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
 
-  // 공지사항
+  // ── 공지사항 ─────────────────────────────────────────────────
   {
     loc: `${SITE_URL}/notice`,
     lastmod: BUILD_DATE,
@@ -98,39 +96,23 @@ const STATIC_URLS = [
     hreflang: hreflangBlock("/notice"),
   },
 
-  // 외국인 안내
+  // ── 외국인 안내 ──────────────────────────────────────────────
   {
     loc: `${SITE_URL}/en/foreign-guide`,
     lastmod: BUILD_DATE,
     changefreq: "monthly",
     priority: "0.8",
-    hreflang: `    <xhtml:link rel="alternate" hreflang="en"        href="${SITE_URL}/en/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="${SITE_URL}/ja/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="${SITE_URL}/zh/foreign-guide" />
+    hreflang: `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/foreign-guide" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`,
   },
-  {
-    loc: `${SITE_URL}/ja/foreign-guide`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.8",
-    hreflang: `    <xhtml:link rel="alternate" hreflang="en"        href="${SITE_URL}/en/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="${SITE_URL}/ja/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="${SITE_URL}/zh/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`,
-  },
-  {
-    loc: `${SITE_URL}/zh/foreign-guide`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.8",
-    hreflang: `    <xhtml:link rel="alternate" hreflang="en"        href="${SITE_URL}/en/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="${SITE_URL}/ja/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="${SITE_URL}/zh/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`,
-  },
+  { loc: `${SITE_URL}/ja/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/zh/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/zh-tw/foreign-guide`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
 
-  // 병원 소개
+  // ── 병원 소개 ────────────────────────────────────────────────
   {
     loc: `${SITE_URL}/about`,
     lastmod: BUILD_DATE,
@@ -138,26 +120,25 @@ const STATIC_URLS = [
     priority: "0.7",
     hreflang: hreflangBlock("/about"),
   },
-  // [Step56-A] 다국어 about
-  { loc: `${SITE_URL}/en/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
-  { loc: `${SITE_URL}/ja/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
-  { loc: `${SITE_URL}/zh/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/en/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/ja/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/zh/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/zh-tw/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
 
-  // 연구 및 발표
+  // ── 연구 및 발표 ─────────────────────────────────────────────
   {
     loc: `${SITE_URL}/research`,
     lastmod: BUILD_DATE,
     changefreq: "monthly",
     priority: "0.6",
-    // [Step56b-B] /research hreflang 4개 언어+x-default 보완 (/en|ja|zh/research HTTP 200 확인)
     hreflang: hreflangBlock("/research"),
   },
-  // [Step56-A] 다국어 research (JSON-LD 는 en/ja/zh 이미 대응 완료)
-  { loc: `${SITE_URL}/en/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
-  { loc: `${SITE_URL}/ja/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
-  { loc: `${SITE_URL}/zh/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/en/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/ja/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/zh/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/zh-tw/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
 
-  // 비급여 진료안내
+  // ── 비급여 진료안내 ──────────────────────────────────────────
   {
     loc: `${SITE_URL}/non-covered`,
     lastmod: BUILD_DATE,
@@ -165,7 +146,8 @@ const STATIC_URLS = [
     priority: "0.5",
     hreflang: hreflangBlock("/non-covered"),
   },
-  // [Step56b-A] 개인정보처리방침 — 의료기관 필수 페이지. LANG_ROUTES에 { path: "privacy" }로 등록되어 4개 언어 경로가 모두 유효하다.
+
+  // ── 개인정보처리방침 ─────────────────────────────────────────
   {
     loc: `${SITE_URL}/privacy`,
     lastmod: BUILD_DATE,
@@ -173,9 +155,10 @@ const STATIC_URLS = [
     priority: "0.3",
     hreflang: hreflangBlock("/privacy"),
   },
-  { loc: `${SITE_URL}/en/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
-  { loc: `${SITE_URL}/ja/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
-  { loc: `${SITE_URL}/zh/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/en/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/ja/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/zh/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/zh-tw/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
 ];
 
 function buildUrlEntry(entry: {
@@ -199,8 +182,6 @@ function buildUrlEntry(entry: {
 }
 
 export function registerSitemapDynamic(app: Express): void {
-  // [Step56-A] 동적 sitemap 을 표준 경로로 승격.
-  // robots.txt 가 /sitemap.xml 만 선언하므로 이 경로여야 검색엔진에 전달된다.
   app.get("/sitemap.xml", async (_req: Request, res: Response) => {
     try {
       const [items, noticeRows] = await Promise.all([
@@ -211,7 +192,7 @@ export function registerSitemapDynamic(app: Express): void {
       // 고정 URL 섹션
       const staticSection = STATIC_URLS.map(buildUrlEntry).join("");
 
-      // equipment3 세부 페이지 동적 섹션
+      // equipment3 세부 페이지 동적 섹션 (5개 언어 hreflang 포함)
       const dynamicSection = items
         .map((item: Equipment3Item) => {
           const slug = escapeXml(item.slug);
@@ -224,16 +205,17 @@ export function registerSitemapDynamic(app: Express): void {
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ko"        href="${SITE_URL}${koPath}" />
-    <xhtml:link rel="alternate" hreflang="en"        href="${SITE_URL}/en${koPath}" />
-    <xhtml:link rel="alternate" hreflang="ja"        href="${SITE_URL}/ja${koPath}" />
-    <xhtml:link rel="alternate" hreflang="zh"        href="${SITE_URL}/zh${koPath}" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="${SITE_URL}${koPath}" />
+    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en${koPath}" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja${koPath}" />
+    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh${koPath}" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw${koPath}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${koPath}" />
   </url>`;
         })
         .join("");
 
-      // [Step56-A] 공지 상세 페이지 동적 섹션
+      // 공지 상세 페이지 동적 섹션
       const noticeSection = noticeRows
         .map((n) => {
           const lastmod = toDateStr(n.updatedAt ? new Date(n.updatedAt) : null);
@@ -252,6 +234,7 @@ export function registerSitemapDynamic(app: Express): void {
   sitemap.xml — 스타피부과 동적 사이트맵
   빌드일자: ${BUILD_DATE}
   포함: 고정 페이지 + equipment3 세부 페이지 + 공지 상세 페이지 (DB 동적 생성)
+  지원 언어: ko, en, ja, zh, zh-TW (5개)
   robots.txt: Sitemap: https://star-pibu.com/sitemap.xml
 -->
 <urlset
@@ -271,7 +254,7 @@ ${staticSection}
     }
   });
 
-  // [Step56-A] 하위 호환 리다이렉트: 기존 /sitemap-dynamic.xml → /sitemap.xml
+  // 하위 호환 리다이렉트: 기존 /sitemap-dynamic.xml → /sitemap.xml
   app.get("/sitemap-dynamic.xml", (_req: Request, res: Response) => {
     res.redirect(301, "/sitemap.xml");
   });

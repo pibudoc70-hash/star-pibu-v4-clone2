@@ -54,13 +54,13 @@ export const OG_IMAGE_LOCALIZED: Record<string, string> = OG_IMAGES;
  * [R23-P1] 정책 불일치 문서화 — 혼용 방지
  */
 export const COMMON_HREFLANGS = [
-  { hreflang: "ko", href: `${BASE_URL}/` },
+  { hreflang: "ko", href: `${BASE_URL}` },
   { hreflang: "en", href: `${BASE_URL}/en` },
   { hreflang: "ja", href: `${BASE_URL}/ja` },
   { hreflang: "zh", href: `${BASE_URL}/zh` },
   { hreflang: "zh-TW", href: `${BASE_URL}/zh-tw` },
   // x-default: 홈페이지 루트 고정 (buildHreflangs의 koPath 기반 x-default와 다름)
-  { hreflang: "x-default", href: `${BASE_URL}/` },
+  { hreflang: "x-default", href: `${BASE_URL}` },
 ];
 
 /** 다국어 og:locale 매핑 */

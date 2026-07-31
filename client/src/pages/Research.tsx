@@ -189,7 +189,7 @@ export default function Research() {
     ...rp.papers.find((p) => p.id === meta.id),
   }));
 
-  const canonicalPath = lang === "ko" ? "/research" : `/${lang}/research`;
+  const canonicalPath = `${BASE_URL}${lang === "ko" ? "/research" : `/${lang}/research`}`;
   const hreflangs = buildHreflangs("/research", "/en/research", "/ja/research", "/zh/research");
 
   // AEO: 논문 목록에 현재 언어 제목 주입
@@ -204,7 +204,7 @@ export default function Research() {
         name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈",
         url: BASE_URL + "/",
       },
-      { name: rp.heroTitle, url: BASE_URL + canonicalPath },
+      { name: rp.heroTitle, url: canonicalPath },
     ]),
     buildResearcherJsonLd(),
     buildScholarlyArticleListJsonLd(papersForJsonLd),

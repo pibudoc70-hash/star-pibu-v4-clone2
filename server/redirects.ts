@@ -126,6 +126,33 @@ export function registerRedirects(app: Express): void {
     next();
   });
 
+  // ── 트레일링 슬래시 301 리다이렉트 ──────────────────────────────────────────
+  // /en/, /ja/, /zh/, /zh-tw/ 등 트레일링 슬래시 → 슬래시 없는 표준 URL
+  // 루트 / 는 제외 (정상 URL)
+  // 정적 파일(/sitemap.xml, /robots.txt 등) 및 API 경로는 제외
+  app.use((req, res, next) => {
+    const { path, query } = req;
+    // 루트, API, 정적 파일 제외
+    if (
+      path === "/" ||
+      path.startsWith("/api/") ||
+      path.startsWith("/manus-storage/") ||
+      path.match(/\.\w{2,5}$/)
+    ) {
+      return next();
+    }
+    // 트레일링 슬래시 제거 후 301
+    if (path.endsWith("/")) {
+      const cleanPath = path.replace(/\/+$/, "");
+      const queryStr = Object.keys(query).length > 0
+        ? "?" + new URLSearchParams(query as Record<string, string>).toString()
+        : "";
+      res.redirect(301, cleanPath + queryStr);
+      return;
+    }
+    next();
+  });
+
   // ── 구 사이트 .htaccess 경로별 301 리다이렉트 ────────────────────────────
   for (const [src, dst] of Object.entries(REDIRECT_MAP)) {
     app.get(src, (_req, res) => {

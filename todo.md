@@ -4326,3 +4326,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] server/redirects.ts: www.star-pibu.com/* → star-pibu.com/* 301 미들웨어 추가 (경로·쿼리스트링 보존)
 - [x] server/__tests__/www.redirect.test.ts: 7개 단위 테스트 작성 및 통과
 - [x] 프로덕션 301 리다이렉트 동작 검증 (curl -I https://www.star-pibu.com/)
+
+## SPECIAL EVENT 섹션 헤더 복원 (2026-08-02)
+- [x] SpecialEventSection.tsx: SectionHeader의 reveal-heading 클래스 제거 (opacity:0 → 항상 표시)
+  - 원인: useSectionReveal useEffect 의존성 배열에 ref 미포함 → isLoading→정상 전환 시 IntersectionObserver 재연결 안됨
+  - 수정: section-header-block div에서 reveal-heading 클래스 제거 (스크롤 애니메이션 없이 항상 표시)
+  - 적용 범위: ko/en/ja/zh/zh-TW 모든 언어 버전 (SectionHeader 컴포넌트 공통 사용)

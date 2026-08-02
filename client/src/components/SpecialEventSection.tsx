@@ -46,7 +46,7 @@ function SectionHeader({ lang }: { lang: string }) {
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
-    <div className="section-header-block reveal-heading">
+    <div className="section-header-block">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
       <div className="star-divider mx-auto" />

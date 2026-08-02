@@ -14,6 +14,7 @@ export const zhTW: I18nContent = {
     home: "首頁",
     about: "診所介紹",
     treatments: "療程・設備介紹",
+    directions: "交通指南",
     equipment: "設備介紹",
     doctors: "醫師介紹",
     facility: "設施介紹",

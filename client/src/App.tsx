@@ -44,6 +44,7 @@ const LandingZH = lazy(() => import("./pages/LandingZH"));
 const LandingZHTW = lazy(() => import("./pages/LandingZHTW"));
 const Research = lazy(() => import("./pages/Research"));
 const ForeignGuide = lazy(() => import("./pages/ForeignGuide"));
+const Directions = lazy(() => import("./pages/Directions"));
 
 // ─── 공통 UI ─────────────────────────────────────────────────────────────────
 
@@ -171,8 +172,14 @@ function Router() {
                   ))
                 )}
 
+                {/* 다국어 찾아오시는 길 */}
+                {(["en", "ja", "zh", "zh-TW"] as const).map(l => (
+                  <Route key={`${l}-directions`} path={`/${l === "zh-TW" ? "zh-tw" : l}/directions`} component={Directions} />
+                ))}
+
                 {/* 사용자 페이지 */}
                 <Route path="/my-reservations" component={MyReservations} />
+                <Route path="/directions" component={Directions} />
 
                 {/* 관리자 페이지 — 구체적 경로(new/edit)를 파라미터 경로보다 먼저 선언 */}
             <Route path="/admin/equipment2/new"        component={AdminEquipment2New} />

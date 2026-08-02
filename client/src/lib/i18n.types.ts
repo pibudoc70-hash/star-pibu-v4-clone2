@@ -45,6 +45,7 @@ export interface I18nContent {
     equipment2: string;
     doctors: string;
     facility: string;
+    directions: string;
     contact: string;
     foreignGuide: string;
     research: string;

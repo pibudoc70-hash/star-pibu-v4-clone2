@@ -66,6 +66,7 @@ export function useHeaderState() {
   // ── More 패널 항목 ─────────────────────────────────────────────────────────
   const secondaryNav: NavItem[] = [
     { label: t.nav.facility,    href: "#facility",    sectionId: "facility" },
+    { label: t.nav.directions, href: "/directions", sectionId: null },
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
     { label: t.nav.research,      href: "/research",      sectionId: null   },
     { label: t.nav.equipment3, href: "/equipment3", sectionId: null },

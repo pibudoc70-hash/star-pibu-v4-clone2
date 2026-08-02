@@ -13,6 +13,7 @@ export const ja: I18nContent = {
     equipment: "設備紹介",
     doctors: "医師紹介",
     facility: "施設案内",
+    directions: "アクセス",
     contact: "アクセス",
     foreignGuide: "外国語案内",
     research: "研究・発表活動",

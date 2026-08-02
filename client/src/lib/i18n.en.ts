@@ -13,6 +13,7 @@ export const en: I18nContent = {
     equipment: "Equipment",
     doctors: "Doctors",
     facility: "Facility",
+    directions: "Directions",
     contact: "Directions",
     foreignGuide: "Foreign Patient Guide",
     research: "Research & Presentations",

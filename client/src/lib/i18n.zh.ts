@@ -14,6 +14,7 @@ export const zh: I18nContent = {
     doctors: "医生介绍",
     facility: "设施介绍",
     contact: "交通指南",
+    directions: "交通指南",
     foreignGuide: "外语服务",
     research: "研究及学术活动",
     equipment3: "项目与设备介绍",

@@ -13,6 +13,7 @@ export const ko: I18nContent = {
     equipment: "장비 소개",
     doctors: "피부과전문의",
     facility: "시설안내",
+    directions: "오시는 길",
     contact: "오시는 길",
     foreignGuide: "외국어 안내",
     research: "연구 및 발표 활동",

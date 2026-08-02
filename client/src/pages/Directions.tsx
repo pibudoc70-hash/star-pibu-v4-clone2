@@ -77,6 +77,8 @@ export default function Directions() {
               <div className="md:col-span-2">
                 <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: '400px' }}>
                   <MapView
+                    initialCenter={{ lat: 35.1595, lng: 129.0628 }}
+                    initialZoom={16}
                     onMapReady={(map: google.maps.Map) => {
                       const geocoder = new google.maps.Geocoder();
                       geocoder.geocode({ address: HOSPITAL.address }, (results, status) => {

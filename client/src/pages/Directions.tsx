@@ -80,17 +80,12 @@ export default function Directions() {
                     initialCenter={{ lat: 35.1595, lng: 129.0628 }}
                     initialZoom={16}
                     onMapReady={(map: google.maps.Map) => {
-                      const geocoder = new google.maps.Geocoder();
-                      geocoder.geocode({ address: HOSPITAL.address }, (results, status) => {
-                        if (status === 'OK' && results && results[0]) {
-                          map.setCenter(results[0].geometry.location);
-                          map.setZoom(16);
-                          new google.maps.Marker({
-                            map,
-                            position: results[0].geometry.location,
-                            title: 'STAR 피부과',
-                          });
-                        }
+                      // 마커 추가
+                      const g = window.google!;
+                      new g.maps.marker.AdvancedMarkerElement({
+                        map,
+                        position: { lat: 35.1595, lng: 129.0628 },
+                        title: 'STAR 피부과',
                       });
                     }}
                   />

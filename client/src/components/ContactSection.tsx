@@ -88,13 +88,14 @@ export default function ContactSection() {
         >
           {/* 지도 영역 — 인터랙티브 구글 지도 */}
           <div
-            className="lg:col-span-3 rounded-2xl overflow-hidden shadow-lg relative"
-            style={{ height: mapHeight, minHeight: '400px', background: '#E8E4DF' }}
+            className="lg:col-span-3 rounded-2xl overflow-hidden shadow-lg relative w-full"
+            style={{ height: mapHeight || '500px', minHeight: '400px', background: '#E8E4DF' }}
             aria-label={t.access.mapAriaLabel}
           >
             <MapView
               initialCenter={{ lat: STAR_LAT, lng: STAR_LNG }}
               initialZoom={16}
+              style={{ width: '100%', height: '100%' }}
               onMapReady={(map: google.maps.Map) => {
                 // 마커 추가
                 const g = window.google!;

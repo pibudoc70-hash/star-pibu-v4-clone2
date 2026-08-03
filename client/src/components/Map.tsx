@@ -191,6 +191,16 @@ export function MapView({
         streetViewControl: true,
         mapId: "DEMO_MAP_ID",
       });
+      console.log('[MapView] Map created:', !!map.current);
+      
+      // 지도 렌더링을 위해 리사이즈 이벤트 트리거
+      setTimeout(() => {
+        if (map.current) {
+          g.maps.event.trigger(map.current, 'resize');
+          console.log('[MapView] Resize event triggered');
+        }
+      }, 100);
+      
       if (onMapReady) {
         onMapReady(map.current);
       }

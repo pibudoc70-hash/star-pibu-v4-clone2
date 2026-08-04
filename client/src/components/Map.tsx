@@ -36,11 +36,6 @@
  * map.setCenter(place.location);
  *
  * -------------------------------
- * 🧭 GEOCODER (from `geocoding` library)
- * - Standalone service; manually apply results to map.
- * const geocoder = new window.google!.maps.Geocoder();
- *
- * -------------------------------
  * 📐 GEOMETRY (from `geometry` library)
  * - Pure utility functions; not attached to map.
  * const dist = window.google!.maps.geometry.spherical.computeDistanceBetween(p1, p2);
@@ -67,7 +62,6 @@
 /// <reference types="@types/google.maps" />
 
 import { useEffect, useRef, useState } from "react";
-import { usePersistFn } from "@/hooks/usePersistFn";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LangContext";
 
@@ -165,54 +159,95 @@ export function MapView({
   onMapReady,
 }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<google.maps.Map | null>(null);
+  const mapInstance = useRef<google.maps.Map | null>(null);
+  const initialized = useRef(false);
   const [mapError, setMapError] = useState(false);
 
-  const init = usePersistFn(async () => {
-    // 이미 초기화된 경우 재초기화 방지
-    // 이 가드가 없으면 커포넌트 리렌더링 시 init()이 다시 호출되어
-    // 기본값(initialCenter = 샌프란시스코 좌표)로 지도가 덮어쓰여지는 버그 발생
-    console.log('[MapView] init called, map.current:', !!map.current, 'mapContainer.current:', !!mapContainer.current);
-    if (map.current) { console.log('[MapView] already initialized, skipping'); return; }
-    try {
-      await loadMapScript();
-      console.log('[MapView] script loaded, mapContainer.current:', !!mapContainer.current, 'google.maps.Map:', !!window.google?.maps?.Map);
-      if (!mapContainer.current) { console.log('[MapView] mapContainer.current is null, aborting'); return; }
-      const g = window.google;
-      if (!g?.maps?.Map) {
-        throw new Error("google.maps.Map not available");
-      }
-      map.current = new g.maps.Map(mapContainer.current, {
-        zoom: initialZoom,
-        center: initialCenter,
-        mapTypeControl: true,
-        fullscreenControl: true,
-        zoomControl: true,
-        streetViewControl: true,
-        mapId: "DEMO_MAP_ID",
-      });
-      console.log('[MapView] Map created:', !!map.current);
-      
-      // 지도 렌더링을 위해 리사이즈 이벤트 트리거
-      setTimeout(() => {
-        if (map.current) {
-          g.maps.event.trigger(map.current, 'resize');
-          console.log('[MapView] Resize event triggered');
-        }
-      }, 100);
-      
-      if (onMapReady) {
-        onMapReady(map.current);
-      }
-    } catch (err) {
-      console.error("[MapView] Failed to initialize map:", err);
-      setMapError(true);
-    }
+  // onMapReady를 ref로 저장하여 stale closure 방지
+  const onMapReadyRef = useRef(onMapReady);
+  useEffect(() => {
+    onMapReadyRef.current = onMapReady;
   });
 
   useEffect(() => {
-    init();
-  }, [init]);
+    if (initialized.current) return;
+
+    let cancelled = false;
+
+    async function initMap() {
+      try {
+        await loadMapScript();
+
+        if (cancelled) return;
+        if (!mapContainer.current) {
+          console.error('[MapView] Container not found after script load');
+          setMapError(true);
+          return;
+        }
+        if (mapInstance.current) return;
+
+        initialized.current = true;
+
+        const g = window.google;
+        if (!g?.maps?.Map) {
+          throw new Error('google.maps.Map not available');
+        }
+
+        const map = new g.maps.Map(mapContainer.current, {
+          zoom: initialZoom,
+          center: initialCenter,
+          mapTypeControl: true,
+          fullscreenControl: true,
+          zoomControl: true,
+          streetViewControl: true,
+          mapId: 'DEMO_MAP_ID',
+        });
+
+        mapInstance.current = map;
+
+        // 지도 렌더링을 위해 리사이즈 이벤트 트리거
+        setTimeout(() => {
+          if (mapInstance.current && g.maps.event) {
+            g.maps.event.trigger(mapInstance.current, 'resize');
+            mapInstance.current.setCenter(initialCenter);
+          }
+        }, 300);
+
+        if (onMapReadyRef.current) {
+          onMapReadyRef.current(map);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error('[MapView] Failed to initialize map:', err instanceof Error ? err.message : err);
+          setMapError(true);
+        }
+      }
+    }
+
+    // mapContainer.current가 준비될 때까지 폴링
+    let pollTimer: ReturnType<typeof setTimeout> | null = null;
+    const deadline = Date.now() + 5000;
+
+    function tryInit() {
+      if (cancelled) return;
+      if (mapContainer.current) {
+        initMap();
+      } else if (Date.now() < deadline) {
+        pollTimer = setTimeout(tryInit, 50);
+      } else {
+        console.error('[MapView] Container never mounted');
+        setMapError(true);
+      }
+    }
+
+    tryInit();
+
+    return () => {
+      cancelled = true;
+      if (pollTimer) clearTimeout(pollTimer);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { t } = useLang();
   const mapLabel = t.access.mapViewLabel;
@@ -222,6 +257,7 @@ export function MapView({
     return (
       <div
         className={cn("w-full h-[500px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
+        style={style}
       >
         <a
           href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
@@ -242,6 +278,10 @@ export function MapView({
   }
 
   return (
-    <div ref={mapContainer} className={cn("w-full h-[500px]", className)} style={style} />
+    <div
+      ref={mapContainer}
+      className={cn("w-full", !style?.height && "h-[500px]", className)}
+      style={style}
+    />
   );
 }

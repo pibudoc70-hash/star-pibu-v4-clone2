@@ -4332,3 +4332,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
   - 원인: useSectionReveal useEffect 의존성 배열에 ref 미포함 → isLoading→정상 전환 시 IntersectionObserver 재연결 안됨
   - 수정: section-header-block div에서 reveal-heading 클래스 제거 (스크롤 애니메이션 없이 항상 표시)
   - 적용 범위: ko/en/ja/zh/zh-TW 모든 언어 버전 (SectionHeader 컴포넌트 공통 사용)
+
+## Phase (찾아오시는 길 지도 수정 - 2026-08-05)
+- [x] 백업 사이트(starpibu-aihusmdb.manus.space) ContactSection 지도 초기화 방식 분석
+- [x] 개발 서버에서 MapView 컴포넌트 지도 타일 미렌더링 원인 파악 (API 키 권한 차이)
+- [x] ContactSection.tsx를 Google Maps Embed API (iframe) 방식으로 교체
+- [x] 지도 정상 렌더링 확인 (스타피부과 서면 위치 표시)
+- [x] 체크포인트 저장 및 배포

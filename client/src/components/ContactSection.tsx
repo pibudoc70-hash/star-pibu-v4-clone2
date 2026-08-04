@@ -5,17 +5,16 @@
  * 모바일 최적화: 지도 높이 확대, 주소 복사 버튼, 레이아웃 개선
  *
  * [Step68] 정적 이미지 지도 → 인터랙티브 구글 지도 전환
- *   - MapView 컴포넌트 사용
+ *   - Google Maps Embed API (iframe) 사용 — API 키 불필요
  *   - 사용자가 확대/축소/드래그 가능
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
-import { MapView } from "@/components/Map";
 // [Step59-B] 네이버 플레이스 상시 링크 — 리뷰·길찾기 유입 경로
 import { NAVER_PLACE_URL } from "@/lib/constants";
 // 후행 호환성을 위해 re-export 유지
@@ -27,6 +26,9 @@ const STAR_LNG = 129.0581932;
 // 카카오맵 링크 (폴백 버튼용)
 // [Step59-A] 지도 검색용 문자열. NAP 표기(도로명)와 별개로 유지.
 const KAKAO_MAP_URL = `https://map.kakao.com/link/map/스타피부과,${STAR_LAT},${STAR_LNG}`;
+
+// Google Maps Embed API URL (API 키 불필요)
+const GOOGLE_MAPS_EMBED_URL = `https://maps.google.com/maps?q=${STAR_LAT},${STAR_LNG}&z=17&output=embed&hl=ko`;
 
 export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
@@ -86,25 +88,21 @@ export default function ContactSection() {
         <div
           className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-5"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
         >
-          {/* 지도 영역 — 인터랙티브 구글 지도 */}
+          {/* 지도 영역 — Google Maps Embed API (iframe) */}
           <div
             className="lg:col-span-3 rounded-2xl overflow-hidden shadow-lg relative w-full"
-            style={{ height: mapHeight || '500px', minHeight: '400px', background: '#E8E4DF' }}
+            style={{ height: mapHeight || '500px', minHeight: '400px' }}
             aria-label={t.access.mapAriaLabel}
           >
-            <MapView
-              initialCenter={{ lat: STAR_LAT, lng: STAR_LNG }}
-              initialZoom={16}
-              style={{ width: '100%', height: '100%' }}
-              onMapReady={(map: google.maps.Map) => {
-                // 마커 추가
-                const g = window.google!;
-                new g.maps.marker.AdvancedMarkerElement({
-                  map,
-                  position: { lat: STAR_LAT, lng: STAR_LNG },
-                  title: 'STAR 피부과',
-                });
-              }}
+            <iframe
+              src={GOOGLE_MAPS_EMBED_URL}
+              width="100%"
+              height="100%"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="스타피부과 위치"
             />
           </div>
 

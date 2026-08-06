@@ -294,8 +294,8 @@ export default function YouTubeSection() {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
                       }}
                     />
-                    {/* 호버 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true" />
+                    {/* 호버 오버레이 — 기본 투명, 호버 시만 어두워짐 */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" aria-hidden="true" />
                   </div>
 
                   {/* 제목 */}
@@ -334,8 +334,8 @@ export default function YouTubeSection() {
                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${short.videoId}/hqdefault.jpg`;
                       }}
                     />
-                    {/* 호버 오버레이 */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" aria-hidden="true" />
+                    {/* 호버 오버레이 — 기본 투명, 호버 시만 어두워짐 */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" aria-hidden="true" />
                   </div>
 
                   {/* 제목 */}

@@ -4339,3 +4339,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] ContactSection.tsx를 Google Maps Embed API (iframe) 방식으로 교체
 - [x] 지도 정상 렌더링 확인 (스타피부과 서면 위치 표시)
 - [x] 체크포인트 저장 및 배포
+
+## YouTubeSection 썸네일 어두움 수정 (2026-08-06)
+- [x] YouTubeSection.tsx 영상/쇼츠 카드 기본 오버레이 제거 (bg-black/40 → bg-black/0)
+- [x] 호버 시에만 오버레이 적용 (group-hover:bg-black/40 유지)
+- [x] 체크포인트 저장 및 배포

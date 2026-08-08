@@ -541,10 +541,10 @@ export default function Home() {
                 media="(max-width: 767px)"
                 srcSet="/api/storage/regen-medicine-banner-mobile_1fe7ea14.png"
               />
-              {/* PC WebP (768px 이상) — 374KB PNG → 36KB WebP */}
+              {/* PC WebP (768px 이상) — 새로운 보건복지부 지정 배너 */}
               <source
                 media="(min-width: 768px)"
-                srcSet="/api/storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
+                srcSet="/manus-storage/regen-medicine-banner-pc2_430fd36f.webp"
                 type="image/webp"
               />
               {/* PC PNG 폴백 (768px 이상) */}
@@ -553,7 +553,7 @@ export default function Home() {
                 srcSet="/api/storage/regen-medicine-banner-pc2_e6271aa5.png"
               />
               <img
-                src="/api/storage/regen-medicine-banner-pc2_e6271aa5.png"
+                src="/manus-storage/regen-medicine-banner-pc2_430fd36f.webp"
                 alt="보건복지부 지정 체담재생의료 실시기관 — 스타피부과는 보건복지부로부터 체담재생의료 실시기관에 지정됐습니다"
                 className="w-full h-auto block"
                 loading="eager"

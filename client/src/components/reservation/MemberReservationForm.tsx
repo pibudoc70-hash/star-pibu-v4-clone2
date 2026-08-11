@@ -41,10 +41,22 @@ export function MemberReservationForm({ onSuccess }: Props) {
     onSuccess: () => {
       toast.success(lbl.successMsg);
       setForm({ patientName: user?.name ?? "", phone: "", treatmentCategory: "", treatmentName: "", preferredDate: "", preferredTime: "10:00", notes: "" });
+      
+      // OpenAI 광고 전환 이벤트 추적
+      if (typeof window !== 'undefined' && (window as any).oaiq) {
+        (window as any).oaiq("measure", "reservation_created", {
+          type: "contents",
+          currency: "KRW"
+        }, {
+          event_id: `reservation_${Date.now()}`
+        });
+      }
+      
       onSuccess?.();
     },
     onError: (err) => toast.error(parseReservationError(err, currentLang)),
   });
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -160,6 +160,14 @@
       crossorigin="anonymous" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- OpenAI 광고 전환 측정 픽셀 초기화 -->
+    <script>
+      window.oaiq = window.oaiq || function () {
+        (window.oaiq.q = window.oaiq.q || []).push(arguments);
+      };
+      oaiq("init", { pixelId: "Ci5P3hg9XSP2sJHhJCVh67" });
+    </script>
+    <script async src="https://bzrcdn.openai.com/sdk/oaiq.min.js"></script>
     <!-- JSON-LD Structured Data: 정적 기본 스키마 (크롤러 JS 미실행 대응) -->
     <!-- SeoHead 컴포넌트가 페이지별 추가 JSON-LD를 동적으로 삽입합니다 -->
     <script type="application/ld+json">

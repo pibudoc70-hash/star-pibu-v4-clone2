@@ -68,17 +68,6 @@ export function GuestReservationForm({ onSuccess }: Props) {
       setForm(EMPTY_GUEST_FORM);
       timer.reset();
       setStep("info");
-      
-      // OpenAI 광고 전환 이벤트 추적
-      if (typeof window !== 'undefined' && (window as any).oaiq) {
-        (window as any).oaiq("measure", "reservation_created", {
-          type: "contents",
-          currency: "KRW"
-        }, {
-          event_id: `reservation_${Date.now()}`
-        });
-      }
-      
       onSuccess?.();
     },
     onError: (err) => toast.error(parseReservationError(err, currentLang)),

@@ -102,6 +102,11 @@ if (
 // Service Worker 등록 (프로덕션 환경에서만 활성화, 개발 환경 캐시 문제 방지)
 registerServiceWorker();
 
+// OpenAI 픽셀 페이지 뷰 이벤트 추적
+if (typeof window !== 'undefined' && (window as any).oaiq) {
+  (window as any).oaiq("measure", "page_viewed", { type: "contents" });
+}
+
 createRoot(document.getElementById("root")!).render(
   <HelmetProvider>
     <trpc.Provider client={trpcClient} queryClient={queryClient}>

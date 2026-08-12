@@ -19,6 +19,10 @@ import { lazy } from "react";
 // ─── Lazy imports ─────────────────────────────────────────────────────────────
 
 export const pages = {
+  NotFound:            () => import("@/pages/NotFound"),
+  Notice:              () => import("@/pages/Notice"),
+  NoticeDetail:        () => import("@/pages/NoticeDetail"),
+  NoticeEdit:          () => import("@/pages/NoticeEdit"),
   LandingEN:          () => import("@/pages/LandingEN"),
   LandingJA:          () => import("@/pages/LandingJA"),
   LandingZH:          () => import("@/pages/LandingZH"),
@@ -37,6 +41,7 @@ export const pages = {
   NonCoveredGuide:    () => import("@/pages/NonCoveredGuide"),
   MyReservations:     () => import("@/pages/MyReservations"),
   AdminDashboard:     () => import("@/pages/AdminDashboard"),
+  AdminNotices:       () => import("@/pages/AdminNotices"),
   AdminYouTube:       () => import("@/pages/AdminYouTube"),
   AdminEquipment2New: () => import("@/pages/AdminEquipment2New"),
   AdminEquipment2Edit:() => import("@/pages/AdminEquipment2Edit"),
@@ -44,14 +49,20 @@ export const pages = {
   AdminEquipment3New: () => import("@/pages/AdminEquipment3New"),
   AdminEquipment3Edit:() => import("@/pages/AdminEquipment3Edit"),
   Doctors:            () => import("@/pages/Doctors"),
+  Directions:         () => import("@/pages/Directions"),
 } as const;
 
 // ─── Lazy components ──────────────────────────────────────────────────────────
 
 export const ForeignGuide       = lazy(pages.ForeignGuide);
+export const NotFound           = lazy(pages.NotFound);
+export const Notice             = lazy(pages.Notice);
+export const NoticeDetail       = lazy(pages.NoticeDetail);
+export const NoticeEdit         = lazy(pages.NoticeEdit);
 export const EventDetail        = lazy(pages.EventDetail);
 export const TreatmentRedirect  = lazy(pages.TreatmentRedirect);
 export const AdminDashboard     = lazy(pages.AdminDashboard);
+export const AdminNotices       = lazy(pages.AdminNotices);
 export const AdminYouTube       = lazy(pages.AdminYouTube);
 export const MyReservations     = lazy(pages.MyReservations);
 export const Privacy            = lazy(pages.Privacy);
@@ -73,6 +84,7 @@ export const LandingZH          = lazy(pages.LandingZH);
 export const LandingZHTW        = lazy(pages.LandingZHTW);
 export const Research           = lazy(pages.Research);
 export const Doctors            = lazy(pages.Doctors);
+export const Directions         = lazy(pages.Directions);
 
 // ─── 다국어 경로 헬퍼 ─────────────────────────────────────────────────────────
 

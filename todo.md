@@ -4440,7 +4440,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 단계별 품질·성능·CI·의존성 개선 (예약·OTP 제외, 2026-08-12)
 - [x] 단계별 테스트·실제 사이트 확인·로컬 Git 커밋 기반 롤백 상태 보존 방식 확정
 - [x] 5단계: React lint와 접근성 개선 — Hooks cleanup/ref 안정화, 모바일 감지 구독 모델 개선, 관리자 트렌드 대시보드 상태·접근성 정합화, Hero 불필요 aria/import 제거. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·홈 렌더링 확인 완료
-- [ ] 6단계: lazy loading과 초기 번들 최적화
+- [x] 6단계: lazy loading과 초기 번들 최적화 — routes.ts를 단일 lazy import 출처로 통일하고, 운영 빌드에서 개발 전용 Manus runtime·JSX 위치 표시를 제외. KaTeX CSS는 실제 수식 Markdown이 있는 상세 페이지에서만 로드. production index.html 388,234B→21,326B(-95%), entry JS 78,385B→69,608B(-12%), tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·개발/production 홈 및 production 공지 라우트 확인 완료
 - [ ] 7단계: CI와 테스트 환경 개선
 - [ ] 8단계: 취약 의존성 안전 업데이트
 - [ ] 9단계: 최종 통합 검증 및 종합 보고

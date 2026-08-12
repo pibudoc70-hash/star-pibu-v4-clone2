@@ -23,9 +23,15 @@ import { getLocalizedUrl } from "@/lib/localizedPath";
 // Lazy load Streamdown to avoid bundling it in the initial page load
 const Streamdown = lazy(() => import("streamdown").then(m => ({ default: m.Streamdown })));
 
-// KaTeX CSS dynamic 로드 (Step 18: index.html에서 제거 후 사용 페이지에서만 로드)
-function useKatexCss() {
+function hasKatexMarkup(markdown: string) {
+  return markdown.includes("\\(") || markdown.includes("\\[") || /(^|[^\\])\$(?=\S)/m.test(markdown);
+}
+
+// KaTeX CSS는 실제 수식 Markdown이 있는 상세 페이지에서만 로드한다.
+function useKatexCss(markdown: string) {
   useEffect(() => {
+    if (!hasKatexMarkup(markdown)) return;
+
     const linkId = "katex-css-dynamic";
     if (document.getElementById(linkId)) return;
     const link = document.createElement("link");
@@ -34,7 +40,7 @@ function useKatexCss() {
     link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css";
     link.crossOrigin = "anonymous";
     document.head.appendChild(link);
-  }, []);
+  }, [markdown]);
 }
 
 // safe JSON parser
@@ -47,7 +53,6 @@ interface TreatmentStep { title: string; description: string; }
 interface RelatedTreatment { id?: number; slug: string; name: string; desc?: string; image?: string; }
 
 export default function Equipment2Detail() {
-  useKatexCss();
   const params = useParams();
   const [, setLocation] = useLocation();
   const { lang } = useLang();
@@ -63,6 +68,14 @@ export default function Equipment2Detail() {
     { slug },
     { enabled: !!slug, retry: 1 }
   );
+  const katexContent = treatment
+    ? [
+        treatment.detail, treatment.detailEn, treatment.detailJa, treatment.detailZh,
+        treatment.effect, treatment.effectEn, treatment.effectJa, treatment.effectZh,
+        treatment.caution, treatment.cautionEn, treatment.cautionJa, treatment.cautionZh,
+      ].filter((value): value is string => typeof value === "string").join("\n")
+    : "";
+  useKatexCss(katexContent);
 
   // locale별 UI 레이블 (getText 훅 활용)
   const LABELS = {

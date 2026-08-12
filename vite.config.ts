@@ -211,12 +211,18 @@ function stripUnusedModulePreloadPlugin(chunksToStrip: string[]): Plugin {
   };
 }
 
+function developmentOnly(plugin: Plugin): Plugin {
+  return { ...plugin, apply: "serve" };
+}
+
 const plugins = [
   react(),
   tailwindcss(),
-  jsxLocPlugin(),
-  vitePluginManusRuntime(),
-  vitePluginManusDebugCollector(),
+  // visual editor source location, browser log collector, and Manus preview
+  // runtime are development-only and must not be in visitor-facing assets.
+  developmentOnly(jsxLocPlugin()),
+  developmentOnly(vitePluginManusRuntime()),
+  developmentOnly(vitePluginManusDebugCollector()),
   // KaTeX CSS를 CDN으로 전환: 폰트 파일 59개(~1MB) 배포 패키지 제외
   // KaTeX CSS는 client/index.html에서 jsDelivr CDN으로 직접 로드됨
   externalizeKatexCssPlugin(),

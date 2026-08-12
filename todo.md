@@ -4396,3 +4396,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 써마지 FLX 검수 완료 반영 (2026-08-12)
 - [x] 써마지 FLX 주의사항·소요 시간 운영 데이터 및 MedicalProcedure 스키마 반영
 - [x] 검수 문서에서 써마지 FLX 검수 대기 해소 및 79개 전체 완료 상태 재검증
+
+## 공지 대표 이미지 적용 위치 검증 (2026-08-12)
+- [x] 목록·상세·OG/Twitter·NewsArticle에서의 대표 이미지 적용 경로 확인
+- [x] 기본 대표 이미지가 적용된 실제 화면과 권장 규격 검증

@@ -4445,3 +4445,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 8단계: 취약 의존성 안전 업데이트 — moderate 이상 audit 0건을 확인하고, 위험 없는 dev test runner 패치만 Vitest/@vitest-ui 4.1.9→4.1.10으로 업데이트. major 업데이트(Vite 8, Streamdown 2, jsdom 30 등)는 audit 필요성이 없어 보류. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·audit 0건·홈 렌더링 확인 완료
 - [x] 9단계: 최종 통합 검증 및 종합 보고 — frozen lockfile 설치, tsc, lint(오류 0·경고 220), 전체 Vitest 72 files/1,499 tests, production build, moderate 이상 audit 0건, diff check를 통과. 홈·울쎄라 상세·영문 Directions의 개발 렌더링을 재확인했고, 예약·OTP 관련 변경 파일 0건을 확인 완료
 - [x] GitHub 백업 디렉터리의 구식 상태 표시 원인과 활성 동기화 영향 점검 — `.github/star-pibu-github-backup/workflows/ci.yml`은 2026-07-02 기준의 단순 보관본으로 nested Git 저장소가 아니며 활성 Actions 경로가 아님. 실제 GitHub `main`은 로컬 `main`의 조상(원격 `6e4f377`, 로컬 `cadd478`)으로 5~9단계 로컬 커밋이 아직 원격에 반영되지 않은 상태임을 확인
+- [ ] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인

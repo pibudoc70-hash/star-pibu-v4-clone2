@@ -6,15 +6,15 @@
 
 ## 기술 스택
 
-| 계층 | 기술 |
-|------|------|
-| 프론트엔드 | React 19, Tailwind CSS 4, Vite, wouter (SPA 라우팅) |
-| 백엔드 | Node.js, Express 4, tRPC 11 (end-to-end type safety) |
-| 데이터베이스 | MySQL / TiDB, Drizzle ORM |
-| 인증 | Manus OAuth 2.0 (세션 쿠키 기반) |
-| 파일 스토리지 | AWS S3 (Manus built-in storage) |
-| 테스트 | Vitest, jsdom |
-| 언어 | TypeScript (전 계층) |
+| 계층          | 기술                                                 |
+| ------------- | ---------------------------------------------------- |
+| 프론트엔드    | React 19, Tailwind CSS 4, Vite, wouter (SPA 라우팅)  |
+| 백엔드        | Node.js, Express 4, tRPC 11 (end-to-end type safety) |
+| 데이터베이스  | MySQL / TiDB, Drizzle ORM                            |
+| 인증          | Manus OAuth 2.0 (세션 쿠키 기반)                     |
+| 파일 스토리지 | AWS S3 (Manus built-in storage)                      |
+| 테스트        | Vitest, jsdom                                        |
+| 언어          | TypeScript (전 계층)                                 |
 
 ---
 
@@ -22,7 +22,7 @@
 
 ### 사전 요구사항
 
-- Node.js 22+, pnpm 10+
+- Node.js 22+, pnpm 10.34.5
 - MySQL 또는 TiDB 인스턴스
 - `.env` 파일에 아래 환경 변수 설정 (Manus 플랫폼에서는 자동 주입됨)
 
@@ -43,7 +43,7 @@ VITE_FRONTEND_FORGE_API_URL=...
 ### 개발 서버 실행
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev          # http://localhost:3000
 ```
 
@@ -64,9 +64,23 @@ pnpm db:push      # drizzle-kit generate + migrate
 
 ```bash
 pnpm check        # TypeScript 타입 검사
-pnpm test         # Vitest 전체 테스트 실행
+pnpm lint         # ESLint 검사 (경고는 보고, 오류는 실패)
+pnpm test:unit    # DB 없이 실행 가능한 단위·클라이언트 테스트
+pnpm test         # 전체 Vitest 테스트 (DB 통합 테스트 포함)
 pnpm format       # Prettier 포맷팅
 ```
+
+### DB 통합 테스트
+
+`server/__tests__/reservation.test.ts`는 실제 MySQL/TiDB 연결과 마이그레이션된 스키마가 필요한 통합 테스트입니다. 로컬에서 실행할 때는 전용 테스트 데이터베이스를 준비한 뒤 아래 순서로 진행합니다. CI는 별도 MySQL 8.4 서비스 컨테이너와 임시 `star_pibu_test` 데이터베이스를 사용하므로 운영 데이터베이스를 사용하지 않습니다.
+
+```bash
+export DATABASE_URL='mysql://root:root@127.0.0.1:3306/star_pibu_test'
+pnpm drizzle-kit migrate
+pnpm test:integration
+```
+
+`pnpm audit --audit-level moderate`는 CI의 독립 검사 단계이며, 보통 이상 취약점이 있으면 실패합니다. `.github/star-pibu-github-backup/workflows/ci.yml`은 활성 Actions 경로 밖에 보관된 이전 설정으로, 현재 CI 기준은 `.github/workflows/ci.yml`입니다.
 
 ---
 
@@ -141,16 +155,16 @@ star-pibu-v4-clone/
 
 ### 공개 페이지
 
-| 기능 | URL | 설명 |
-|------|-----|------|
-| 홈 (한국어) | `/` | 히어로, 의료진 소개, 시술 소개, 이벤트, 연락처 |
-| 시술·장비 소개 | `/equipment3` | DB 연동 시술·장비 목록 (카테고리 탭 + 카드) |
-| 시술 상세 | `/treatments/:slug` | 시술별 상세 페이지 (다국어 지원) |
-| 이벤트 | `/events/:id` | 이벤트 상세 |
-| 피부과 소개 | `/about` | 클리닉 소개 |
-| 외국인 안내 | `/foreign-guide` | 영어 전용 외국인 안내 |
-| 연구 자료 | `/research` | 학술·연구 자료 |
-| 개인정보처리방침 | `/privacy` | 개인정보 처리방침 |
+| 기능             | URL                 | 설명                                           |
+| ---------------- | ------------------- | ---------------------------------------------- |
+| 홈 (한국어)      | `/`                 | 히어로, 의료진 소개, 시술 소개, 이벤트, 연락처 |
+| 시술·장비 소개   | `/equipment3`       | DB 연동 시술·장비 목록 (카테고리 탭 + 카드)    |
+| 시술 상세        | `/treatments/:slug` | 시술별 상세 페이지 (다국어 지원)               |
+| 이벤트           | `/events/:id`       | 이벤트 상세                                    |
+| 피부과 소개      | `/about`            | 클리닉 소개                                    |
+| 외국인 안내      | `/foreign-guide`    | 영어 전용 외국인 안내                          |
+| 연구 자료        | `/research`         | 학술·연구 자료                                 |
+| 개인정보처리방침 | `/privacy`          | 개인정보 처리방침                              |
 
 ### 다국어 지원
 
@@ -158,15 +172,15 @@ star-pibu-v4-clone/
 
 ### 관리자 기능 (로그인 필요)
 
-| 기능 | URL |
-|------|-----|
-| 관리자 대시보드 | `/admin` |
-| 시술·장비 관리 | `/admin/equipment3`, `/admin/equipment3/new`, `/admin/equipment3/:id/edit` |
-| YouTube 관리 | `/admin/youtube` |
+| 기능            | URL                                                                        |
+| --------------- | -------------------------------------------------------------------------- |
+| 관리자 대시보드 | `/admin`                                                                   |
+| 시술·장비 관리  | `/admin/equipment3`, `/admin/equipment3/new`, `/admin/equipment3/:id/edit` |
+| YouTube 관리    | `/admin/youtube`                                                           |
 
 ### 예약 시스템
 
-비회원 전화번호 OTP 인증 기반 예약 접수. 네이버 예약 외부 링크와 병행 운영한다.
+운영 예약 접수는 **네이버·카카오 외부 예약 링크**를 기준으로 운영합니다. 기존 내부 예약·OTP 코드는 레거시 회귀 범위를 보존하기 위해 유지하며, 해당 코드·테스트는 일반 품질 개선 작업에서 변경하지 않습니다.
 
 ### SEO
 

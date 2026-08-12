@@ -4441,6 +4441,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 단계별 테스트·실제 사이트 확인·로컬 Git 커밋 기반 롤백 상태 보존 방식 확정
 - [x] 5단계: React lint와 접근성 개선 — Hooks cleanup/ref 안정화, 모바일 감지 구독 모델 개선, 관리자 트렌드 대시보드 상태·접근성 정합화, Hero 불필요 aria/import 제거. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·홈 렌더링 확인 완료
 - [x] 6단계: lazy loading과 초기 번들 최적화 — routes.ts를 단일 lazy import 출처로 통일하고, 운영 빌드에서 개발 전용 Manus runtime·JSX 위치 표시를 제외. KaTeX CSS는 실제 수식 Markdown이 있는 상세 페이지에서만 로드. production index.html 388,234B→21,326B(-95%), entry JS 78,385B→69,608B(-12%), tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·개발/production 홈 및 production 공지 라우트 확인 완료
-- [ ] 7단계: CI와 테스트 환경 개선
+- [x] 7단계: CI와 테스트 환경 개선 — pnpm 10.34.5·frozen lockfile 통일, CI에 build·audit 추가, DB 없는 단위 테스트(71 files/1,488 tests)와 MySQL 8.4 서비스 컨테이너 기반 예약 통합 테스트를 분리. README에 로컬·CI DB 조건, 운영 외부 예약 방침, 활성 workflow 기준을 문서화. tsc·lint(오류 0)·전체 Vitest 72 files/1,499 tests·build·홈 렌더링 확인 완료
 - [ ] 8단계: 취약 의존성 안전 업데이트
 - [ ] 9단계: 최종 통합 검증 및 종합 보고

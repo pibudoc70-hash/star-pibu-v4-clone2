@@ -35,8 +35,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
 
-  test:
-    name: Test
+  test-unit:
+    name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,4 +48,79 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm test
+      - run: pnpm test:unit
+
+  test-integration:
+    name: DB Integration Test
+    runs-on: ubuntu-latest
+    needs: test-unit
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: star_pibu_test
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DATABASE_URL: mysql://root:root@127.0.0.1:3306/star_pibu_test
+      JWT_SECRET: ci-test-secret-32-chars-minimum
+      VITE_APP_ID: ci-test-app-id
+      OAUTH_SERVER_URL: https://api.manus.im
+      VITE_OAUTH_PORTAL_URL: https://manus.im
+      BUILT_IN_FORGE_API_URL: https://api.manus.im
+      BUILT_IN_FORGE_API_KEY: ci-test-key
+      VITE_FRONTEND_FORGE_API_KEY: ci-test-key
+      VITE_FRONTEND_FORGE_API_URL: https://api.manus.im
+      TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
+      VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+      OWNER_OPEN_ID: ci-test-owner
+      OWNER_NAME: CI Test Owner
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm drizzle-kit migrate
+      - run: pnpm test:integration
+
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    needs: [check, lint, test-unit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+  audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit --audit-level moderate

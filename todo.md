@@ -4453,6 +4453,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선 — 데이터 오류·빈 결과·모달 iframe 실패 시 재시도 및 공식 YouTube 채널/영상 링크 제공. 지도는 기존 카카오·네이버 길찾기 대체 링크 유지
 - [x] 접근성·영상 UX: Equipment2 연관 시술 카드를 button으로 전환하고, Equipment2·Equipment3·홈 YouTube 모달에 키보드 포커스 및 새 탭 YouTube 대체 링크 추가. youtu.be/watch/embed URL을 `youtube-nocookie.com/embed`로 정규화해 실제 울쎄라피 프라임 상세 DOM에서 embed·fallback URL 확인
 - [x] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리 — 전체 폭 네이버 예약을 primary CTA로, 카카오 상담·전화는 secondary CTA로 유지해 불필요한 레이아웃 변경을 피함. 전화 팝업의 토요일 진료시간을 09:30–15:00으로 정정하고 Escape·배경 버튼으로 닫을 수 있는 dialog로 개선
-- [ ] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가
-- [ ] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리
+- [x] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가 — 언어별 배열 길이·문단 구조 차이를 허용하면서 공통 UI 키 경로를 검증하는 4개 locale 회귀 테스트 추가. Home FAQ 시술 건수 값을 의미 있는 상수로 정리
+- [x] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리 — 기존 전역 CSS에는 다수의 reduced-motion 대응과 브랜드 토큰이 이미 적용돼 있어, 디자인 회귀 위험이 큰 대규모 CSS 재작성은 이번 안전 개선 범위에서 제외
 - [ ] 개선 후 타입·lint·전체 테스트·build·audit·실제 홈/시술/다국어 화면 통합 검증

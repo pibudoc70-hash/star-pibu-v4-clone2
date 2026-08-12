@@ -12,7 +12,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { CLINIC_STATS } from "../lib/constants";
-const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import { CLINIC_DOCTORS } from "@/lib/clinic-data";
 import Header from "@/components/Header";
@@ -26,6 +25,7 @@ const DoctorsSection = lazy(() => import("@/components/DoctorsSection"));
 const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEquipmentSection"));
 import Footer from "@/components/Footer";
 const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));
+const eyeBagCasesText = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 
 // 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
 const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevicesSection"));
@@ -429,7 +429,7 @@ export default function Home() {
             /* ── 눈밑지방재배치 ── */
             {
               question: "눈밑지방재배치술이란 무엇인가요?",
-              answer: `눈밑지방재배치술은 눈 아래 과잉 지방을 제거하지 않고 꺼진 눈물고랑 부위로 재배치하여 자연스러운 눈밑 라인을 형성하는 시술입니다. 스타피부과 조시형 원장은 ${_n}례 이상의 시술 경험을 보유하고 있습니다.`
+              answer: `눈밑지방재배치술은 눈 아래 과잉 지방을 제거하지 않고 꺼진 눈물고랑 부위로 재배치하여 자연스러운 눈밑 라인을 형성하는 시술입니다. 스타피부과 조시형 원장은 ${eyeBagCasesText}례 이상의 시술 경험을 보유하고 있습니다.`
             },
             {
               question: "눈밑지방재배치 회복 기간은 얼마나 걸리나요?",

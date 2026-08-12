@@ -4450,9 +4450,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 신뢰성: 정적 후기·평점 UI와 다국어 후기 데이터를 제거하고 중립적인 외부 리뷰 링크로 대체 — 출처 검증이 되지 않은 static 리뷰·평점은 링크로 대체하지 않고 완전히 제거, MedicalClinic/LocalBusiness JSON-LD에서도 review·aggregateRating 제거
 - [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지
 - [ ] 접근성: 공개 Hero·시술 상세·공용 UI의 비시맨틱 클릭 요소와 라벨 연결 경고를 안전하게 해소
-- [ ] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선
+- [x] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선 — 데이터 오류·빈 결과·모달 iframe 실패 시 재시도 및 공식 YouTube 채널/영상 링크 제공. 지도는 기존 카카오·네이버 길찾기 대체 링크 유지
 - [x] 접근성·영상 UX: Equipment2 연관 시술 카드를 button으로 전환하고, Equipment2·Equipment3·홈 YouTube 모달에 키보드 포커스 및 새 탭 YouTube 대체 링크 추가. youtu.be/watch/embed URL을 `youtube-nocookie.com/embed`로 정규화해 실제 울쎄라피 프라임 상세 DOM에서 embed·fallback URL 확인
-- [ ] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리
+- [x] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리 — 전체 폭 네이버 예약을 primary CTA로, 카카오 상담·전화는 secondary CTA로 유지해 불필요한 레이아웃 변경을 피함. 전화 팝업의 토요일 진료시간을 09:30–15:00으로 정정하고 Escape·배경 버튼으로 닫을 수 있는 dialog로 개선
 - [ ] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가
 - [ ] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리
 - [ ] 개선 후 타입·lint·전체 테스트·build·audit·실제 홈/시술/다국어 화면 통합 검증

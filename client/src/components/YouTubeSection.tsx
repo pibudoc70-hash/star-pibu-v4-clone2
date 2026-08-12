@@ -212,15 +212,25 @@ export default function YouTubeSection() {
         <div className="container mx-auto px-4 text-center">
           <AlertCircle className="mx-auto mb-4 text-gray-400" size={48} aria-hidden="true" />
           <p className="text-gray-600 mb-4">{yt.errorMessage}</p>
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
-            style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
-          >
-            <RefreshCw size={16} aria-hidden="true" />
-            {yt.retry}
-          </button>
+          <div className="flex flex-wrap justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => refetch()}
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
+              style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
+            >
+              <RefreshCw size={16} aria-hidden="true" />
+              {yt.retry}
+            </button>
+            <a
+              href="https://www.youtube.com/@starpibu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-2 rounded-full border border-slate-300 text-slate-700 font-semibold transition-all hover:border-slate-500 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+            >
+              {yt.visitChannel}
+            </a>
+          </div>
         </div>
       </section>
     );
@@ -245,8 +255,27 @@ export default function YouTubeSection() {
               {yt.sectionSubtitle}
             </p>
           </div>
-          <div className="text-center mt-12 text-gray-500">
-            <p>{yt.errorMessage || 'YouTube 영상을 불러올 수 없습니다.'}</p>
+          <div className="mt-12 text-center text-gray-500">
+            <p className="mb-4">{yt.errorMessage || 'YouTube 영상을 불러올 수 없습니다.'}</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => refetch()}
+                className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
+                style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
+              >
+                <RefreshCw size={16} aria-hidden="true" />
+                {yt.retry}
+              </button>
+              <a
+                href="https://www.youtube.com/@starpibu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-2 rounded-full border border-slate-300 text-slate-700 font-semibold transition-all hover:border-slate-500 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+              >
+                {yt.visitChannel}
+              </a>
+            </div>
           </div>
         </div>
       </section>

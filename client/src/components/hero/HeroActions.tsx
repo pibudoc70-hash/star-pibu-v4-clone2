@@ -16,7 +16,7 @@
  * - animationDelay (데이터 기반) + chatBg/chatColor (동적 prop): 인라인 style 유지
  */
 import { MessageCircle, Calendar, Phone, X, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CLINIC_TEL, CLINIC_TEL_INTL, WECHAT_ID } from "@/lib/constants";
 
 interface HeroActionsProps {
@@ -45,6 +45,14 @@ function PhonePopup({ lang, onClose }: { lang: string; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
   const tel = lang === "ko" ? CLINIC_TEL : CLINIC_TEL_INTL;
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(tel).then(() => {
       setCopied(true);
@@ -53,16 +61,20 @@ function PhonePopup({ lang, onClose }: { lang: string; onClose: () => void }) {
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       {/* 배경 오버레이 */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default bg-black/50 backdrop-blur-sm"
+        aria-label={lang === "ko" ? "전화 안내 닫기" : "Close phone information"}
+        onClick={onClose}
+      />
       {/* 팝업 카드 */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={lang === "ko" ? "전화 안내" : "Phone information"}
         className="relative bg-white rounded-2xl shadow-2xl px-8 py-7 flex flex-col items-center gap-4 min-w-[300px]"
-        onClick={(e) => e.stopPropagation()}
         style={{ animation: "heroFadeUp 0.25s cubic-bezier(0.16,1,0.3,1) both" }}
       >
         {/* 닫기 버튼 */}
@@ -98,9 +110,9 @@ function PhonePopup({ lang, onClose }: { lang: string; onClose: () => void }) {
         {/* 진료시간 안내 */}
         <p className="text-xs text-gray-400 text-center leading-relaxed">
           {lang === "ko" ? (
-            <>평일 10:00 – 19:00 &nbsp;|&nbsp; 토요일 10:00 – 16:00<br />일요일·공휴일 휴진</>
+            <>평일 10:00 – 19:00 &nbsp;|&nbsp; 토요일 09:30 – 15:00<br />일요일·공휴일 휴진</>
           ) : (
-            <>Mon–Fri 10:00–19:00 &nbsp;|&nbsp; Sat 10:00–16:00<br />Closed on Sundays &amp; Holidays</>
+            <>Mon–Fri 10:00–19:00 &nbsp;|&nbsp; Sat 09:30–15:00<br />Closed on Sundays &amp; Holidays</>
           )}
         </p>
 

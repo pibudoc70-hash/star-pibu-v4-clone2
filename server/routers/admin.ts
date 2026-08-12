@@ -6,13 +6,14 @@ import { z } from "zod/v4";
 import { TRPCError } from "@trpc/server";
 import { adminProcedure, router } from "../_core/trpc";
 import {
-  getAllReservations, LastAdminRoleChangeError,
+  getAllReservations, LastAdminRoleChangeError, SelfAdminRoleChangeError, UserRoleChangeNotFoundError,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole,
 } from "../db";
 import { updateAdminReservationStatus, normalizeYouTubeCreatePayload, getAdminStats } from "../services/admin.service";
 import { invalidateCache } from "../_core/cache";
+import { logger } from "../_core/logger";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -29,19 +30,32 @@ export const adminRouter = router({
   // 회원 역할 변경
   updateUserRole: adminProcedure
     .input(z.object({ userId: z.number(), role: z.enum(["user", "admin"]) }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
-        await dbUpdateUserRole(input.userId, input.role);
+        const result = await dbUpdateUserRole(input.userId, input.role, ctx.user.id);
+        logger.warn("AdminRole", JSON.stringify({
+          action: "role_change",
+          actorUserId: ctx.user.id,
+          targetUserId: input.userId,
+          role: input.role,
+          changed: result.changed,
+        }));
+        return { success: true, ...result };
       } catch (error) {
+        if (error instanceof SelfAdminRoleChangeError) {
+          throw new TRPCError({ code: "FORBIDDEN", message: error.message });
+        }
         if (error instanceof LastAdminRoleChangeError) {
           throw new TRPCError({
             code: "CONFLICT",
             message: "At least one administrator must remain active",
           });
         }
+        if (error instanceof UserRoleChangeNotFoundError) {
+          throw new TRPCError({ code: "NOT_FOUND", message: error.message });
+        }
         throw error;
       }
-      return { success: true };
     }),
 
   // 전체 통계

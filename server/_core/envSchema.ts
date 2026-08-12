@@ -22,6 +22,7 @@ const EnvSchema = z.object({
   BUILT_IN_FORGE_API_KEY: z.string().min(1, "BUILT_IN_FORGE_API_KEY is required"),
 
   // 선택: 인증 (회원 기능 폐지 예정이므로 optional)
+  VITE_APP_ID: z.string().optional(),
   JWT_SECRET: z.string().min(16).optional(),
   OAUTH_SERVER_URL: z.string().url().optional(),
   OWNER_OPEN_ID: z.string().optional(),
@@ -40,6 +41,12 @@ const EnvSchema = z.object({
 });
 
 export type AppEnv = z.infer<typeof EnvSchema>;
+
+export function assertProductionAppId(nodeEnv: string, appId: unknown): void {
+  if (nodeEnv === "production" && (typeof appId !== "string" || appId.trim().length === 0)) {
+    throw new Error("VITE_APP_ID is required in production for session app binding");
+  }
+}
 
 /**
  * 환경변수를 검증하고 반환한다. 실패 시 상세 메시지를 출력하고 프로세스를 종료한다.
@@ -76,6 +83,13 @@ export function validateEnv(): AppEnv {
       "[FATAL] JWT_SECRET is required in production. " +
       "Empty signing key allows admin session forgery.",
     );
+    process.exit(1);
+  }
+
+  try {
+    assertProductionAppId(parsed.NODE_ENV, parsed.VITE_APP_ID);
+  } catch (error) {
+    console.error(`[FATAL] ${error instanceof Error ? error.message : "VITE_APP_ID validation failed"}`);
     process.exit(1);
   }
 

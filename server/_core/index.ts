@@ -25,6 +25,7 @@ import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { logger } from "./logger";
+import { buildDegradedPayload, buildHealthyPayload } from "./health";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -127,21 +128,13 @@ async function startServer() {
       const { getDb } = await import("../db/connection");
       const db = await getDb();
       await db.execute(sqlRaw`SELECT 1`);
-      res.status(200).json({
-        status: "ok",
-        db: "ok",
-        uptimeSec: Math.round(process.uptime()),
-        latencyMs: Date.now() - started,
-        env: process.env.NODE_ENV ?? "unknown",
-      });
+      res.status(200).json(buildHealthyPayload(
+        Math.round(process.uptime()),
+        Date.now() - started,
+      ));
     } catch (err) {
-      logger.warn("Health", "Database health check failed");
-      res.status(503).json({
-        status: "degraded",
-        db: "fail",
-        code: "DB_UNAVAILABLE",
-        uptimeSec: Math.round(process.uptime()),
-      });
+      logger.warn("Health", "Database health check failed", err);
+      res.status(503).json(buildDegradedPayload(Math.round(process.uptime())));
     }
   });
 

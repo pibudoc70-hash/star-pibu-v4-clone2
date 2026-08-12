@@ -18,6 +18,12 @@ import type {
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.length > 0;
 
+export function isCurrentAppSession(payloadAppId: unknown, currentAppId: unknown): boolean {
+  return isNonEmptyString(payloadAppId)
+    && isNonEmptyString(currentAppId)
+    && payloadAppId === currentAppId;
+}
+
 export type SessionPayload = {
   openId: string;
   appId: string;
@@ -239,17 +245,16 @@ class SDKServer {
 
       if (
         !isNonEmptyString(openId) ||
-        !isNonEmptyString(appId) ||
         typeof name !== "string" ||
-        appId !== ENV.appId
+        !isCurrentAppSession(appId, ENV.appId)
       ) {
-        console.warn("[Auth] Session payload missing required fields");
+        console.warn("[Auth] Session payload missing required fields or app binding");
         return null;
       }
 
       return {
-        openId,
-        appId,
+        openId: openId as string,
+        appId: appId as string,
         name,
       };
     } catch (error) {

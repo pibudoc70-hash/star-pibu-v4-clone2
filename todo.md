@@ -4430,3 +4430,17 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## 통증 및 마취 안내 페이지 초안 설계 (2026-08-12)
 - [x] `/anesthesia-guide` 정보 구조·문구·검수 경계 제안 작성
+
+## 최소 범위 백엔드 보안 개선 (예약·OTP·OAuth 흐름 제외, 2026-08-12)
+- [x] JWT appId 검증과 ENV appId fail-fast 및 단위 테스트 추가
+- [x] healthz 최소 응답·관리자 역할 보호·logger 민감정보 마스킹 강화
+- [x] storage key·외부 응답 검증 및 관련 단위 테스트 추가
+- [x] OAuth state SDK 문서 조사·전체 품질 검사·변경 범위 보고
+
+## 단계별 품질·성능·CI·의존성 개선 (예약·OTP 제외, 2026-08-12)
+- [x] 단계별 테스트·실제 사이트 확인·로컬 Git 커밋 기반 롤백 상태 보존 방식 확정
+- [ ] 5단계: React lint와 접근성 개선
+- [ ] 6단계: lazy loading과 초기 번들 최적화
+- [ ] 7단계: CI와 테스트 환경 개선
+- [ ] 8단계: 취약 의존성 안전 업데이트
+- [ ] 9단계: 최종 통합 검증 및 종합 보고

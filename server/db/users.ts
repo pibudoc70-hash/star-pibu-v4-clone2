@@ -11,12 +11,65 @@ export class LastAdminRoleChangeError extends Error {
   }
 }
 
+export class SelfAdminRoleChangeError extends Error {
+  constructor() {
+    super("Administrators cannot remove their own administrator role");
+    this.name = "SelfAdminRoleChangeError";
+  }
+}
+
+export class UserRoleChangeNotFoundError extends Error {
+  constructor() {
+    super("User not found");
+    this.name = "UserRoleChangeNotFoundError";
+  }
+}
+
 export function wouldRemoveLastAdmin(
   currentRole: "user" | "admin",
   nextRole: "user" | "admin",
   activeAdminCount: number,
 ): boolean {
   return currentRole === "admin" && nextRole === "user" && activeAdminCount <= 1;
+}
+
+export function wouldRemoveOwnAdminRole(
+  actorUserId: number,
+  targetUserId: number,
+  nextRole: "user" | "admin",
+): boolean {
+  return actorUserId === targetUserId && nextRole === "user";
+}
+
+export type UserRoleChangeResult = {
+  changed: boolean;
+  reason: "UPDATED" | "UNCHANGED";
+};
+
+export type UserRoleChangeDecision =
+  | "NOT_FOUND"
+  | "SELF_ADMIN_DEMOTION"
+  | "LAST_ADMIN_DEMOTION"
+  | "UNCHANGED"
+  | "UPDATE";
+
+export function evaluateUserRoleChange(input: {
+  actorUserId: number;
+  targetUserId: number;
+  targetExists: boolean;
+  currentRole: "user" | "admin";
+  nextRole: "user" | "admin";
+  activeAdminCount: number;
+}): UserRoleChangeDecision {
+  if (!input.targetExists) return "NOT_FOUND";
+  if (wouldRemoveOwnAdminRole(input.actorUserId, input.targetUserId, input.nextRole)) {
+    return "SELF_ADMIN_DEMOTION";
+  }
+  if (input.currentRole === input.nextRole) return "UNCHANGED";
+  if (wouldRemoveLastAdmin(input.currentRole, input.nextRole, input.activeAdminCount)) {
+    return "LAST_ADMIN_DEMOTION";
+  }
+  return "UPDATE";
 }
 
 export async function upsertUser(user: InsertUser): Promise<void> {
@@ -65,9 +118,13 @@ export async function listUsers(page: number, pageSize: number) {
 }
 
 /** 회원 역할 변경 */
-export async function updateUserRole(userId: number, role: "user" | "admin") {
+export async function updateUserRole(
+  userId: number,
+  role: "user" | "admin",
+  actorUserId: number,
+): Promise<UserRoleChangeResult> {
   const db = await getDb();
-  await db.transaction(async (tx) => {
+  return db.transaction(async (tx) => {
     // 모든 admin 행을 잠가 동시 강등 요청에서도 마지막 admin이 사라지지 않게 한다.
     const lockedAdmins = await tx
       .select({ id: users.id })
@@ -75,13 +132,27 @@ export async function updateUserRole(userId: number, role: "user" | "admin") {
       .where(eq(users.role, "admin"))
       .for("update");
 
-    const targetAdmin = lockedAdmins.find(admin => admin.id === userId);
-    const currentRole = targetAdmin ? "admin" : "user";
-    if (wouldRemoveLastAdmin(currentRole, role, lockedAdmins.length)) {
-      throw new LastAdminRoleChangeError();
-    }
+    const targetRows = await tx
+      .select({ id: users.id, role: users.role })
+      .from(users)
+      .where(eq(users.id, userId))
+      .for("update");
+    const target = targetRows[0];
+    const decision = evaluateUserRoleChange({
+      actorUserId,
+      targetUserId: userId,
+      targetExists: Boolean(target),
+      currentRole: target?.role ?? "user",
+      nextRole: role,
+      activeAdminCount: lockedAdmins.length,
+    });
+    if (decision === "NOT_FOUND") throw new UserRoleChangeNotFoundError();
+    if (decision === "SELF_ADMIN_DEMOTION") throw new SelfAdminRoleChangeError();
+    if (decision === "LAST_ADMIN_DEMOTION") throw new LastAdminRoleChangeError();
+    if (decision === "UNCHANGED") return { changed: false, reason: "UNCHANGED" };
 
     await tx.update(users).set({ role }).where(eq(users.id, userId));
+    return { changed: true, reason: "UPDATED" };
   });
 }
 

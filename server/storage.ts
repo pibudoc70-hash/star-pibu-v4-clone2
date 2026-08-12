@@ -4,6 +4,7 @@
 import { ENV } from './_core/env';
 
 type StorageConfig = { baseUrl: string; apiKey: string };
+const MAX_STORAGE_KEY_LENGTH = 200;
 
 function getStorageConfig(): StorageConfig {
   const baseUrl = ENV.forgeApiUrl;
@@ -34,19 +35,67 @@ async function buildDownloadUrl(
     ensureTrailingSlash(baseUrl)
   );
   downloadApiUrl.searchParams.set("path", normalizeKey(relKey));
-  const response = await fetch(downloadApiUrl, {
-    method: "GET",
-    headers: buildAuthHeaders(apiKey),
-  });
-  return (await response.json()).url;
+  let response: Response;
+  try {
+    response = await fetch(downloadApiUrl, {
+      method: "GET",
+      headers: buildAuthHeaders(apiKey),
+    });
+  } catch {
+    throw new Error("Storage download request failed");
+  }
+  return readStorageUrlResponse(response, "download");
 }
 
 function ensureTrailingSlash(value: string): string {
   return value.endsWith("/") ? value : `${value}/`;
 }
 
-function normalizeKey(relKey: string): string {
-  return relKey.replace(/^\/+/, "");
+export function normalizeKey(relKey: string): string {
+  if (typeof relKey !== "string") throw new Error("Storage key is invalid");
+  const key = relKey.replace(/^\/+/, "");
+  const hasControlCharacter = Array.from(key).some((char) => {
+    const code = char.charCodeAt(0);
+    return code <= 31 || code === 127;
+  });
+  if (
+    key.length === 0 ||
+    key.length > MAX_STORAGE_KEY_LENGTH ||
+    key.includes("..") ||
+    key.includes("\\") ||
+    key.includes("\0") ||
+    hasControlCharacter
+  ) {
+    throw new Error("Storage key is invalid");
+  }
+  return key;
+}
+
+export async function readStorageUrlResponse(response: Response, operation: "upload" | "download"): Promise<string> {
+  if (!response.ok) {
+    throw new Error(`Storage ${operation} request failed (${response.status})`);
+  }
+
+  let payload: unknown;
+  try {
+    payload = await response.json();
+  } catch {
+    throw new Error(`Storage ${operation} response is invalid`);
+  }
+  if (!payload || typeof payload !== "object" || typeof (payload as { url?: unknown }).url !== "string") {
+    throw new Error(`Storage ${operation} response is invalid`);
+  }
+
+  const url = (payload as { url: string }).url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      throw new Error("unsupported protocol");
+    }
+  } catch {
+    throw new Error(`Storage ${operation} response URL is invalid`);
+  }
+  return url;
 }
 
 function toFormData(
@@ -76,19 +125,17 @@ export async function storagePut(
   const key = normalizeKey(relKey);
   const uploadUrl = buildUploadUrl(baseUrl, key);
   const formData = toFormData(data, contentType, key.split("/").pop() ?? key);
-  const response = await fetch(uploadUrl, {
-    method: "POST",
-    headers: buildAuthHeaders(apiKey),
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const message = await response.text().catch(() => response.statusText);
-    throw new Error(
-      `Storage upload failed (${response.status} ${response.statusText}): ${message}`
-    );
+  let response: Response;
+  try {
+    response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: buildAuthHeaders(apiKey),
+      body: formData,
+    });
+  } catch {
+    throw new Error("Storage upload request failed");
   }
-  const url = (await response.json()).url;
+  const url = await readStorageUrlResponse(response, "upload");
   return { key, url };
 }
 

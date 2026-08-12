@@ -4414,3 +4414,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 전 페이지 hreflang 6종·개별 canonical·OG locale alternate 전수 점검 및 보완
 - [x] 시술·장비·콘텐츠 이미지 alt와 lazy loading 정책 점검 및 보완
 - [x] Lighthouse 성능 감사와 Core Web Vitals 결과 검증
+
+## AI 크롤러·sitemap·NAP 감사 (2026-08-12)
+- [x] 최근 AI 크롤러 User-Agent 접속 기록의 접근 가능 범위와 URL별 현황 확인
+- [x] sitemap 등록 URL과 실제 공개 라우트·응답 상태 대조
+- [x] 홈·Footer·Directions·JSON-LD·다국어 NAP 정보 일치 감사
+- [x] 네이버 플레이스·Google Business Profile용 한글·영문 표준 NAP 텍스트 작성

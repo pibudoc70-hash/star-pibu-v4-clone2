@@ -154,7 +154,7 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
 
     // 4) #dr-{slug} 요소가 DOM에 나타날 때까지 MutationObserver로 대기
     //    (DoctorsSection이 lazy 번들이라 스크롤 시점에 아직 마운트 안 되었을 수 있음)
-    let rafId = 0;
+    const rafId = 0;
     let roCleanup: (() => void) | null = null;
     let deadlineId: ReturnType<typeof setTimeout>;
     let mo: MutationObserver | null = null;

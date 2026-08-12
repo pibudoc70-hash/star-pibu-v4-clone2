@@ -135,7 +135,7 @@ describe("COMMON_HREFLANGS", () => {
   it("ko hreflang이 BASE_URL 루트를 가리켜야 한다", () => {
     const ko = COMMON_HREFLANGS.find((h) => h.hreflang === "ko");
     expect(ko).toBeDefined();
-    expect(ko!.href).toBe(`${BASE_URL}/`);
+    expect(ko!.href).toBe(BASE_URL);
   });
 
   it("en hreflang이 /en 경로를 가리켜야 한다", () => {
@@ -159,7 +159,7 @@ describe("COMMON_HREFLANGS", () => {
   it("x-default hreflang이 BASE_URL 루트를 가리켜야 한다", () => {
     const xDefault = COMMON_HREFLANGS.find((h) => h.hreflang === "x-default");
     expect(xDefault).toBeDefined();
-    expect(xDefault!.href).toBe(`${BASE_URL}/`);
+    expect(xDefault!.href).toBe(BASE_URL);
   });
 });
 

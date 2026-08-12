@@ -46,3 +46,15 @@ export function getSessionCookieOptions(
     secure: isSecureRequest(req),
   };
 }
+
+/** OAuth state nonce는 브라우저가 로그인 시작 시 읽고 쓸 수 있어야 한다. */
+export function getOAuthStateCookieOptions(
+  req: Request
+): Pick<CookieOptions, "httpOnly" | "path" | "sameSite" | "secure"> {
+  return {
+    httpOnly: false,
+    path: "/",
+    sameSite: "none",
+    secure: isSecureRequest(req),
+  };
+}

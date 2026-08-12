@@ -1,12 +1,20 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { COOKIE_NAME, decodeOAuthState, OAUTH_STATE_COOKIE, ONE_YEAR_MS } from "@shared/const";
+import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";
 import * as db from "../db";
-import { getSessionCookieOptions } from "./cookies";
+import { getOAuthStateCookieOptions, getSessionCookieOptions } from "./cookies";
+import { logger } from "./logger";
 import { sdk } from "./sdk";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
   return typeof value === "string" ? value : undefined;
+}
+
+export function hasMatchingOAuthState(req: Pick<Request, "headers">, state: string): boolean {
+  const { nonce, redirectUri } = decodeOAuthState(state);
+  const expectedNonce = parseCookieHeader(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
+  return Boolean(nonce && redirectUri && expectedNonce && nonce === expectedNonce);
 }
 
 export function registerOAuthRoutes(app: Express) {
@@ -18,6 +26,14 @@ export function registerOAuthRoutes(app: Express) {
       res.status(400).json({ error: "code and state are required" });
       return;
     }
+
+    if (!hasMatchingOAuthState(req, state)) {
+      res.status(403).json({ error: "invalid oauth state" });
+      return;
+    }
+
+    // nonce는 교환 전에 폐기해 callback 재사용과 session-fixation을 막는다.
+    res.clearCookie(OAUTH_STATE_COOKIE, getOAuthStateCookieOptions(req));
 
     try {
       const tokenResponse = await sdk.exchangeCodeForToken(code, state);
@@ -46,7 +62,7 @@ export function registerOAuthRoutes(app: Express) {
 
       res.redirect(302, "/");
     } catch (error) {
-      console.error("[OAuth] Callback failed", error);
+      logger.error("OAuth", "Callback failed", error);
       res.status(500).json({ error: "OAuth callback failed" });
     }
   });

@@ -125,11 +125,11 @@ describe("B. useStaticTreatmentFilter 타입 강화 + auto-scroll 안정성", ()
 describe("C. seoHelpers x-default 정책 문서화 및 일관성", () => {
   const content = readClient("lib/seoHelpers.ts");
 
-  it("C-1: COMMON_HREFLANGS의 x-default가 루트('/')를 가리킨다", () => {
+  it("C-1: COMMON_HREFLANGS의 x-default가 트레일링 슬래시 없는 표준 루트를 가리킨다", () => {
     // COMMON_HREFLANGS 블록에서 x-default 확인
     const commonBlock = content.match(/COMMON_HREFLANGS\s*=\s*\[[\s\S]*?\];/)?.[0] ?? "";
     expect(commonBlock).toContain('"x-default"');
-    expect(commonBlock).toContain('`${BASE_URL}/`');
+    expect(commonBlock).toContain('`${BASE_URL}`');
   });
 
   it("C-2: buildHreflangs의 x-default가 koPath를 가리킨다", () => {

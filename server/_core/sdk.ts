@@ -1,4 +1,4 @@
-import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { AXIOS_TIMEOUT_MS, COOKIE_NAME, decodeOAuthState, ONE_YEAR_MS } from "@shared/const";
 import { ForbiddenError } from "@shared/_core/errors";
 import axios, { type AxiosInstance } from "axios";
 import { parse as parseCookieHeader } from "cookie";
@@ -63,7 +63,8 @@ class OAuthService {
   }
 
   private decodeState(state: string): string {
-    const redirectUri = atob(state);
+    const { redirectUri } = decodeOAuthState(state);
+    if (!redirectUri) throw new Error("Invalid OAuth state");
     return redirectUri;
   }
 
@@ -239,7 +240,8 @@ class SDKServer {
       if (
         !isNonEmptyString(openId) ||
         !isNonEmptyString(appId) ||
-        !isNonEmptyString(name)
+        typeof name !== "string" ||
+        appId !== ENV.appId
       ) {
         console.warn("[Auth] Session payload missing required fields");
         return null;

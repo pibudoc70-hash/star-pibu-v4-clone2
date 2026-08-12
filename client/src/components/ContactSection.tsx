@@ -52,7 +52,7 @@ export default function ContactSection() {
     }
 
     try {
-      await navigator.clipboard.writeText(t.access.address || '부산광역시 부산진구 서면로 74 아이온시티빌딩 4층');
+      await navigator.clipboard.writeText(t.access.address ?? '부산광역시 부산진구 서면로 74 아이온시티빌딩 4층');
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -62,8 +62,10 @@ export default function ContactSection() {
   }, [t.access.address]);
 
   // 섹션 제목 및 부제목
-  const sectionTitle = t.access.sectionTitle || t.access.title || '오시는 길';
-  const locationInfo = t.access.locationInfo || 'Location';
+  const sectionTitle = t.access.sectionTitle ?? t.access.title ?? '오시는 길';
+  const locationInfo = t.access.locationInfo ?? 'Location';
+  const mapTitle = t.access.mapAriaLabel ?? `${sectionTitle} 지도`;
+  const closedLabel = t.hours.rows.at(-1)?.time ?? '휴진';
 
   return (
     <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg scroll-mt-24 md:scroll-mt-28" aria-label="오시는 방법 및 연락처">
@@ -90,9 +92,9 @@ export default function ContactSection() {
         >
           {/* 지도 영역 — Google Maps Embed API (iframe) */}
           <div
-            className="lg:col-span-3 rounded-2xl overflow-hidden shadow-lg relative w-full"
+            className="lg:col-span-3 flex flex-col rounded-2xl overflow-hidden shadow-lg relative w-full"
             style={{ height: mapHeight || '500px', minHeight: '400px' }}
-            aria-label={t.access.mapAriaLabel}
+            aria-label={mapTitle}
           >
             <iframe
               src={GOOGLE_MAPS_EMBED_URL}
@@ -102,8 +104,16 @@ export default function ContactSection() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="스타피부과 위치"
+              title={mapTitle}
             />
+            <a
+              href={KAKAO_MAP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-black focus:shadow"
+            >
+              {t.access.mapAriaLabel ?? '지도 앱에서 위치 열기'}
+            </a>
           </div>
 
           {/* Info Panel */}
@@ -113,7 +123,7 @@ export default function ContactSection() {
             copied={copied}
             copyFailed={copyFailed}
             copyFailReason={copyFailReason}
-            closedLabel={'휴진'}
+            closedLabel={closedLabel}
             phoneHref={phoneHref}
             phoneDisplay={phoneDisplay}
             onCopyAddress={handleCopyAddress}

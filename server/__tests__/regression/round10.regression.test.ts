@@ -120,11 +120,11 @@ describe("[D] ContactSection mapError state 제거", () => {
     expect(contactSrc).not.toMatch(/setMapError/);
   });
 
-  it("MapView 컴포넌틈를 사용하거나 tRPC 지도 프록시를 사용한다", () => {
-    // 현재 ContactSection은 tRPC 서버 사이드 프록시로 지도 이미지를 표시 (MapView 불필요)
+  it("인터랙티브 지도 구현(MapView, tRPC 프록시 또는 Google Maps iframe)을 사용한다", () => {
     const hasMapView = /<MapView/.test(contactSrc);
     const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    expect(hasMapView || hasTrpcMap).toBe(true);
+    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
+    expect(hasMapView || hasTrpcMap || hasEmbedMap).toBe(true);
   });
 });
 

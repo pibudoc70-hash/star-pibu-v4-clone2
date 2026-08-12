@@ -27,6 +27,17 @@ export default tseslint.config(
   // ── 기본 JS 권장 규칙 ────────────────────────────────────────────
   js.configs.recommended,
 
+  // ── 프로젝트 루트 Node 관리 스크립트 ─────────────────────────────
+  {
+    files: ['*.mjs'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+
   // ── TypeScript 권장 규칙 ─────────────────────────────────────────
   ...tseslint.configs.recommended,
 

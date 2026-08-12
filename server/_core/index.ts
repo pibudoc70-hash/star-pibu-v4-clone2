@@ -21,6 +21,7 @@ import { registerStaticMapRoute } from "./staticMapRoute"; // [Step67-C]
 import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
+import { logger } from "./logger";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -75,11 +76,8 @@ async function startServer() {
     await getDb(); // 실패 시 throw → 아래 catch 로 진입
     console.log("[Boot] Database connection verified (SELECT 1 OK)");
   } catch (err) {
-    console.error(
-      "[FATAL] Database connection failed:",
-      err instanceof Error ? err.message : err,
-    );
-    console.error("[FATAL] Check DATABASE_URL and network reachability.");
+    logger.error("Boot", "Database connection failed", err);
+    logger.error("Boot", "Check database configuration and network reachability.");
     process.exit(1);
   }
 
@@ -134,10 +132,11 @@ async function startServer() {
         env: process.env.NODE_ENV ?? "unknown",
       });
     } catch (err) {
+      logger.warn("Health", "Database health check failed");
       res.status(503).json({
         status: "degraded",
         db: "fail",
-        error: err instanceof Error ? err.message : String(err),
+        code: "DB_UNAVAILABLE",
         uptimeSec: Math.round(process.uptime()),
       });
     }

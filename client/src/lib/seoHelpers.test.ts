@@ -113,19 +113,19 @@ describe("buildHreflangs — x-default 정책", () => {
 
   it("COMMON_HREFLANGS의 x-default는 BASE_URL 루트를 가리켜야 한다 (홈 전용 정책)", () => {
     const xDefault = COMMON_HREFLANGS.find((h) => h.hreflang === "x-default");
-    expect(xDefault!.href).toBe(`${BASE_URL}/`);
+    expect(xDefault!.href).toBe(BASE_URL);
   });
 
   it("buildHreflangs x-default와 COMMON_HREFLANGS x-default 정책이 다름을 확인 (문서화)", () => {
     // buildHreflangs: x-default = koPath (페이지별)
-    // COMMON_HREFLANGS: x-default = BASE_URL + "/" (홈 고정)
+    // COMMON_HREFLANGS: x-default = BASE_URL (홈 고정, 트레일링 슬래시 없음)
     // 이 두 정책은 의도적으로 다름 — 이 테스트는 그 차이를 문서화함
     const pageHreflangs = buildHreflangs("/about");
     const pageXDefault = pageHreflangs.find((h) => h.hreflang === "x-default");
     const commonXDefault = COMMON_HREFLANGS.find((h) => h.hreflang === "x-default");
 
     expect(pageXDefault!.href).toBe(`${BASE_URL}/about`);
-    expect(commonXDefault!.href).toBe(`${BASE_URL}/`);
+    expect(commonXDefault!.href).toBe(BASE_URL);
     // 두 값이 다름을 명시적으로 확인
     expect(pageXDefault!.href).not.toBe(commonXDefault!.href);
   });

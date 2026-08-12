@@ -4,6 +4,21 @@ import { ENV } from "../_core/env";
 import { logger } from "../_core/logger";
 import { getDb } from "./connection";
 
+export class LastAdminRoleChangeError extends Error {
+  constructor() {
+    super("At least one administrator must remain active");
+    this.name = "LastAdminRoleChangeError";
+  }
+}
+
+export function wouldRemoveLastAdmin(
+  currentRole: "user" | "admin",
+  nextRole: "user" | "admin",
+  activeAdminCount: number,
+): boolean {
+  return currentRole === "admin" && nextRole === "user" && activeAdminCount <= 1;
+}
+
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();
@@ -52,7 +67,22 @@ export async function listUsers(page: number, pageSize: number) {
 /** 회원 역할 변경 */
 export async function updateUserRole(userId: number, role: "user" | "admin") {
   const db = await getDb();
-  await db.update(users).set({ role }).where(eq(users.id, userId));
+  await db.transaction(async (tx) => {
+    // 모든 admin 행을 잠가 동시 강등 요청에서도 마지막 admin이 사라지지 않게 한다.
+    const lockedAdmins = await tx
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.role, "admin"))
+      .for("update");
+
+    const targetAdmin = lockedAdmins.find(admin => admin.id === userId);
+    const currentRole = targetAdmin ? "admin" : "user";
+    if (wouldRemoveLastAdmin(currentRole, role, lockedAdmins.length)) {
+      throw new LastAdminRoleChangeError();
+    }
+
+    await tx.update(users).set({ role }).where(eq(users.id, userId));
+  });
 }
 
 /** 관리자 대시보드 사용자 통계 */

@@ -552,7 +552,8 @@ describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거
       "utf8",
     );
     expect(src).not.toMatch(/mapAriaLabel \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC704\uCE58 \uC9C0\uB3C4/);
-    expect(src).toMatch(/aria-label=\{t\.access\.mapAriaLabel\}/);
+    expect(src).toMatch(/aria-label=\{mapTitle\}/);
+    expect(src).toMatch(/title=\{mapTitle\}/);
   });
 
   it("ContactSection.tsx에 mapMarkerTitle 한국어 fallback이 없어야 한다", () => {

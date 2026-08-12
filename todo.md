@@ -4344,3 +4344,23 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] YouTubeSection.tsx 영상/쇼츠 카드 기본 오버레이 제거 (bg-black/40 → bg-black/0)
 - [x] 호버 시에만 오버레이 적용 (group-hover:bg-black/40 유지)
 - [x] 체크포인트 저장 및 배포
+
+## 코드·보안 개선 설계 (예약·OTP 제외, 2026-08-12)
+- [ ] OAuth state 1회성 nonce와 JWT 앱 소속 검증 설계 확정
+- [ ] 마지막 관리자 강등 방지 트랜잭션 및 회귀 테스트 설계
+- [ ] healthz 오류 응답 및 서버 로그의 민감정보 마스킹 정책 설계
+- [ ] 운영·개발 의존성 취약점 업데이트 순서와 회귀 검증 범위 확정
+- [ ] lint·접근성·React Hooks 경고 축소 계획 수립
+- [ ] ContactSection 지도 정책과 회귀 테스트 계약 정합화 방안 확정
+- [ ] CI pnpm 버전·Vitest 환경 분리·코드 분할 경고 개선안 확정
+
+## 코드·보안 개선 구현 (예약·OTP 제외, 2026-08-12)
+- [x] 변경 전 테스트·lint·build·audit 기준선 기록 및 예약/OTP 변경 경로 차단
+- [x] OAuth state nonce 검증 및 JWT appId 검증 구현과 비예약 인증 테스트 추가
+- [x] 마지막 관리자 역할 변경 보호 및 동시성 안전 검증 추가
+- [x] healthz 외부 오류 응답 축소 및 공통 오류 로그 마스킹 강화
+- [x] 운영·개발 의존성 보안 업데이트 및 audit 재검증
+- [x] CI pnpm 버전 정렬과 server/client Vitest 환경 분리
+- [x] iframe 지도 정책에 맞춘 ContactSection 회귀 테스트·SEO 기대값 정합화
+- [x] 예약 외 lint 오류·접근성·React Hooks 경고 및 라우트 import 충돌 개선
+- [x] 전체 테스트·타입 검사·lint·build·audit·브라우저 검증 후 체크포인트 저장

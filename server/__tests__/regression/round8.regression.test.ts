@@ -151,18 +151,18 @@ describe("[F] ContactSection.tsx useMapHeight 훅 사용", () => {
     expect(contactSrc).not.toMatch(/setMapHeight/);
   });
 
-  it("buildMarkerPinElement에 onToggle 콜백이 전달되거나 tRPC 지도 프록시를 사용한다", () => {
-    // 현재 ContactSection은 tRPC 서버 사이드 프록시로 지도 이미지를 표시하므로 onToggle 또는 tRPC 호출 패턴 허용
+  it("마커 콜백, tRPC 지도 프록시 또는 인터랙티브 iframe 지도를 사용한다", () => {
     const hasOnToggle = /onToggle/.test(contactSrc);
     const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    expect(hasOnToggle || hasTrpcMap).toBe(true);
+    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
+    expect(hasOnToggle || hasTrpcMap || hasEmbedMap).toBe(true);
   });
 
-  it("팝업 토글 상태를 React state로 관리하거나 tRPC 지도 프록시를 사용한다", () => {
-    // 현재 ContactSection은 tRPC 프록시 방식으로 지도 표시 (markerPopupVisible 불필요)
+  it("팝업 상태, tRPC 지도 프록시 또는 인터랙티브 iframe 지도를 사용한다", () => {
     const hasMarkerState = /markerPopupVisible|setMarkerPopupVisible/.test(contactSrc);
     const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    expect(hasMarkerState || hasTrpcMap).toBe(true);
+    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
+    expect(hasMarkerState || hasTrpcMap || hasEmbedMap).toBe(true);
   });
 });
 

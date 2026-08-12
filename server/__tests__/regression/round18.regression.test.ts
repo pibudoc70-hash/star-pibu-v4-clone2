@@ -169,18 +169,18 @@ describe("F. useClinicMap: ContactSection onMapReady 콜백 캡슐화", () => {
     expect(clinicMapSrc).toMatch(/handleMapReady/);
   });
 
-  it("F-3: ContactSection이 useClinicMap을 import하거나 tRPC 지도 프록시를 사용한다", () => {
-    // 현재 ContactSection은 tRPC 서버 사이드 프록시로 지도 이미지를 표시 (useClinicMap 불필요)
+  it("F-3: ContactSection이 useClinicMap, tRPC 지도 프록시 또는 인터랙티브 iframe을 사용한다", () => {
     const hasUseClinicMap = contactSrc.includes("useClinicMap");
     const hasTrpcMap = contactSrc.includes("trpc.location.getStaticMapUrl");
-    expect(hasUseClinicMap || hasTrpcMap).toBe(true);
+    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
+    expect(hasUseClinicMap || hasTrpcMap || hasEmbedMap).toBe(true);
   });
 
-  it("F-4: ContactSection에서 useClinicMap을 호출하거나 tRPC 지도 프록시를 사용한다", () => {
-    // 현재 ContactSection은 tRPC 프록시 방식으로 지도 표시 (handleMapReady 불필요)
+  it("F-4: ContactSection이 useClinicMap 호출, tRPC 지도 프록시 또는 iframe 지도를 사용한다", () => {
     const hasHandleMapReady = /const\s*\{[^}]*handleMapReady[^}]*\}\s*=\s*useClinicMap/.test(contactSrc);
     const hasTrpcMap = contactSrc.includes("trpc.location.getStaticMapUrl");
-    expect(hasHandleMapReady || hasTrpcMap).toBe(true);
+    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
+    expect(hasHandleMapReady || hasTrpcMap || hasEmbedMap).toBe(true);
   });
 });
 

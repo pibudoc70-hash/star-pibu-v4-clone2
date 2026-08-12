@@ -19,7 +19,6 @@ import { lazy } from "react";
 // ─── Lazy imports ─────────────────────────────────────────────────────────────
 
 export const pages = {
-  Home:               () => import("@/pages/Home"),
   LandingEN:          () => import("@/pages/LandingEN"),
   LandingJA:          () => import("@/pages/LandingJA"),
   LandingZH:          () => import("@/pages/LandingZH"),
@@ -45,15 +44,10 @@ export const pages = {
   AdminEquipment3New: () => import("@/pages/AdminEquipment3New"),
   AdminEquipment3Edit:() => import("@/pages/AdminEquipment3Edit"),
   Doctors:            () => import("@/pages/Doctors"),
-  NotFound:           () => import("@/pages/NotFound"),
-  Notice:             () => import("@/pages/Notice"),
-  NoticeDetail:       () => import("@/pages/NoticeDetail"),
-  NoticeEdit:         () => import("@/pages/NoticeEdit"),
 } as const;
 
 // ─── Lazy components ──────────────────────────────────────────────────────────
 
-export const NotFound           = lazy(pages.NotFound);
 export const ForeignGuide       = lazy(pages.ForeignGuide);
 export const EventDetail        = lazy(pages.EventDetail);
 export const TreatmentRedirect  = lazy(pages.TreatmentRedirect);
@@ -78,9 +72,6 @@ export const LandingJA          = lazy(pages.LandingJA);
 export const LandingZH          = lazy(pages.LandingZH);
 export const LandingZHTW        = lazy(pages.LandingZHTW);
 export const Research           = lazy(pages.Research);
-export const Notice             = lazy(pages.Notice);
-export const NoticeDetail       = lazy(pages.NoticeDetail);
-export const NoticeEdit         = lazy(pages.NoticeEdit);
 export const Doctors            = lazy(pages.Doctors);
 
 // ─── 다국어 경로 헬퍼 ─────────────────────────────────────────────────────────
@@ -112,6 +103,5 @@ export const LANG_ROUTES: LangRoute[] = [
   { path: "research",          component: Research },
   { path: "privacy",           component: Privacy },
   { path: "non-covered",       component: NonCoveredGuide },
-  { path: "notice",            component: Notice },
   { path: "doctors",           component: Doctors },
 ];

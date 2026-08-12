@@ -3,9 +3,10 @@
  * 분리 근거: server/routers.ts 914줄 → 기능 단위 모듈화 (Round-8 리팩터)
  */
 import { z } from "zod/v4";
+import { TRPCError } from "@trpc/server";
 import { adminProcedure, router } from "../_core/trpc";
 import {
-  getAllReservations,
+  getAllReservations, LastAdminRoleChangeError,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
   getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole,
@@ -29,7 +30,17 @@ export const adminRouter = router({
   updateUserRole: adminProcedure
     .input(z.object({ userId: z.number(), role: z.enum(["user", "admin"]) }))
     .mutation(async ({ input }) => {
-      await dbUpdateUserRole(input.userId, input.role);
+      try {
+        await dbUpdateUserRole(input.userId, input.role);
+      } catch (error) {
+        if (error instanceof LastAdminRoleChangeError) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "At least one administrator must remain active",
+          });
+        }
+        throw error;
+      }
       return { success: true };
     }),
 

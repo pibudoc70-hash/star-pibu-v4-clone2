@@ -209,7 +209,7 @@ describe("i18n.ts specialEmptyTitle/specialEmptyDesc 4개 언어 (PR-47)", () =>
   });
 
   it("zh 번역에 specialEmptyTitle 이 있어야 한다", () => {
-    expect(i18nSource).toContain("特别优惠活动正在准备中。");
+    expect(i18nSource).toContain("特别优惠活动正在筹备中。");
   });
 
   it("ko 번역에 specialEmptyDesc 가 있어야 한다", () => {
@@ -225,7 +225,7 @@ describe("i18n.ts specialEmptyTitle/specialEmptyDesc 4개 언어 (PR-47)", () =>
   });
 
   it("zh 번역에 specialEmptyDesc 가 있어야 한다", () => {
-    expect(i18nSource).toContain("即将推出新优惠");
+    expect(i18nSource).toContain("全新优惠即将推出");
   });
 });
 

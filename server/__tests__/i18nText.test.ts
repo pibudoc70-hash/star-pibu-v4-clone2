@@ -323,16 +323,9 @@ describe("PR-QA-P1: i18n.ja.ts 오탈자 수정 회귀 방지", () => {
     expect(allCareers).not.toContain("スタ皮膚科");
   });
 
-  it("ja reviews에 '膚トーン' 오탈자가 없어야 한다", async () => {
+  it("ja에 출처가 검증되지 않은 정적 후기 리소스가 없어야 한다", async () => {
     const { i18n } = await import("../../client/src/lib/i18n");
-    const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
-    expect(allTexts).not.toContain("膚トーン");
-  });
-
-  it("ja reviews에 '膚の弾力' 오탈자가 없어야 한다", async () => {
-    const { i18n } = await import("../../client/src/lib/i18n");
-    const allTexts = i18n.ja.reviews.items.map((r: { text: string }) => r.text).join(" ");
-    expect(allTexts).not.toContain("膚の弾力");
+    expect(i18n.ja).not.toHaveProperty("reviews");
   });
 });
 

@@ -406,10 +406,19 @@ export default function YouTubeSection() {
               </div>
 
               {/* 제목 */}
-              <div className="p-4 bg-gray-900">
+              <div className="p-4 bg-gray-900 flex items-center justify-between gap-4">
                 <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-sm md:text-base line-clamp-2">
                   {selectedVideo.title}
                 </h3>
+                <a
+                  href={`https://www.youtube.com/watch?v=${selectedVideo.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-xs font-medium text-white underline underline-offset-4 hover:text-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  aria-label={`${selectedVideo.title} YouTube`}
+                >
+                  YouTube
+                </a>
               </div>
             </div>
           ) : (
@@ -441,10 +450,19 @@ export default function YouTubeSection() {
               </div>
 
               {/* 제목 */}
-              <div className="p-3 bg-gray-900 flex-shrink-0">
+              <div className="p-3 bg-gray-900 flex-shrink-0 flex items-center justify-between gap-3">
                 <h3 id={MODAL_TITLE_ID} className="text-white font-semibold text-xs md:text-sm line-clamp-2">
                   {selectedVideo.title}
                 </h3>
+                <a
+                  href={`https://www.youtube.com/watch?v=${selectedVideo.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 text-xs font-medium text-white underline underline-offset-4 hover:text-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  aria-label={`${selectedVideo.title} YouTube`}
+                >
+                  YouTube
+                </a>
               </div>
             </div>
           )}

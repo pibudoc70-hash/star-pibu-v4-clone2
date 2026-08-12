@@ -27,6 +27,20 @@ function hasKatexMarkup(markdown: string) {
   return markdown.includes("\\(") || markdown.includes("\\[") || /(^|[^\\])\$(?=\S)/m.test(markdown);
 }
 
+function getYouTubeVideoId(url: string) {
+  return url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
+}
+
+function getYouTubeEmbedUrl(url: string) {
+  const videoId = getYouTubeVideoId(url);
+  return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : url;
+}
+
+function getYouTubeWatchUrl(url: string) {
+  const videoId = getYouTubeVideoId(url);
+  return videoId ? `https://www.youtube.com/watch?v=${videoId}` : url;
+}
+
 // KaTeX CSS는 실제 수식 Markdown이 있는 상세 페이지에서만 로드한다.
 function useKatexCss(markdown: string) {
   useEffect(() => {
@@ -92,6 +106,7 @@ export default function Equipment2Detail() {
     caution:   getText("주의사항",          "Precautions",                   "注意事項",           "注意事项"),
     gallery:   getText("시술 사례",         "Before & After",                "施術事例",           "施术案例"),
     video:     getText("시술 영상",         "Treatment Video",               "施術動画",           "施术视频"),
+    videoFallback: getText("영상을 재생할 수 없으면 YouTube에서 보기", "If the video does not play, watch it on YouTube", "動画を再生できない場合はYouTubeで見る", "如无法播放视频，请在 YouTube 观看"),
     related:   getText("연관 시술",         "Related Treatments",            "関連施術",           "相关项目"),
     bodyLoc:   getText("피부",             "Skin",                          "皮膚",               "皮肤"),
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
@@ -352,7 +367,7 @@ export default function Equipment2Detail() {
               <iframe
                 width="100%"
                 height="100%"
-                src={treatment.youtubeUrl}
+                src={getYouTubeEmbedUrl(treatment.youtubeUrl)}
                 title={localizedName}
                 style={{ border: 'none' }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -360,6 +375,16 @@ export default function Equipment2Detail() {
                 className="rounded-lg"
               />
             </div>
+            <p className="mt-3 text-sm text-slate-600">
+              <a
+                href={getYouTubeWatchUrl(treatment.youtubeUrl)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+              >
+                {LABELS.videoFallback}
+              </a>
+            </p>
           </div>
         )}
 
@@ -369,9 +394,10 @@ export default function Equipment2Detail() {
             <h2 className="text-2xl font-bold mb-4">{LABELS.related}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedTreatments.map((related) => (
-                <div
+                <button
+                  type="button"
                   key={related.slug}
-                  className="border rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer"
+                  className="border rounded-lg overflow-hidden hover:shadow-lg transition text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                   onClick={() => setLocation(`/equipment2/${related.slug}`)}
                 >
                   {related.image && (
@@ -386,7 +412,7 @@ export default function Equipment2Detail() {
                     <h3 className="font-semibold text-gray-900">{related.name}</h3>
                     <p className="text-sm text-gray-600 mt-1">{related.desc}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>

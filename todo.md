@@ -4451,6 +4451,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지
 - [ ] 접근성: 공개 Hero·시술 상세·공용 UI의 비시맨틱 클릭 요소와 라벨 연결 경고를 안전하게 해소
 - [ ] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선
+- [x] 접근성·영상 UX: Equipment2 연관 시술 카드를 button으로 전환하고, Equipment2·Equipment3·홈 YouTube 모달에 키보드 포커스 및 새 탭 YouTube 대체 링크 추가. youtu.be/watch/embed URL을 `youtube-nocookie.com/embed`로 정규화해 실제 울쎄라피 프라임 상세 DOM에서 embed·fallback URL 확인
 - [ ] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리
 - [ ] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가
 - [ ] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리

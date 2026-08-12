@@ -458,14 +458,11 @@ export default function Equipment3Detail() {
 
         {/* YouTube 가이드 영상 */}
         {item.youtubeUrl && (() => {
-          const getEmbedUrl = (url: string) => {
-            if (!url) return '';
-            if (url.includes('/embed/')) return url;
-            const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-            if (videoIdMatch) return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
-            return url;
-          };
-          const embedUrl = getEmbedUrl(item.youtubeUrl);
+          const sourceUrl = item.youtubeUrl ?? "";
+          const videoId = sourceUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
+          const getEmbedUrl = () => videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : sourceUrl;
+          const getWatchUrl = () => videoId ? `https://www.youtube.com/watch?v=${videoId}` : sourceUrl;
+          const embedUrl = getEmbedUrl();
           return (
             <section className="mt-4 mb-16 py-8 border-t border-b border-gray-100">
               <h2 className="text-2xl font-bold mb-8 text-center">{LABELS.video}</h2>
@@ -481,6 +478,16 @@ export default function Equipment3Detail() {
                     allowFullScreen
                   />
                 </div>
+                <p className="mt-3 text-sm text-slate-600">
+                  <a
+                    href={getWatchUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+                  >
+                    YouTube
+                  </a>
+                </p>
               </div>
             </section>
           );

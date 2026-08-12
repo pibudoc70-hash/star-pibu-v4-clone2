@@ -216,9 +216,10 @@ describe("F. buildClinicJsonLd: 핵심 필드", () => {
     expect(src).toMatch(/clinicInfo\.address|CLINIC_INFO\.address/);
   });
 
-  it("F-4: aggregateRating이 있어야 한다", () => {
+  it("F-4: 검증 근거 없는 aggregateRating과 review가 없어야 한다", () => {
     const src = readSeoHelpers();
-    expect(src).toContain("aggregateRating");
+    expect(src).not.toContain("aggregateRating");
+    expect(src).not.toMatch(/\breview:\s*seoClinicMeta/);
   });
 
   it("F-5: employee 목록이 CLINIC_DOCTORS에서 생성되어야 한다", () => {

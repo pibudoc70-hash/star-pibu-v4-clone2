@@ -45,8 +45,6 @@ export const CLINIC_STATS = {
   eyeBagCases: 4000,
   /** 보유 프리미엄 레이저 종류 (종) */
   laserTypes: 50,
-  /** 고객 만족도 (%) */
-  satisfactionRate: 95,
   /** 의사 1인당 환자 비율 (1:N → N) */
   doctorPatientRatio: 1,
 } as const;
@@ -64,7 +62,6 @@ export const STAT_UNITS = {
   years:   { ko: "년+",  en: "+yrs", ja: "年+",  zh: "年+"  },
   cases:   { ko: "례+",  en: "+",    ja: "例+",  zh: "例+"  },
   types:   { ko: "종+",  en: "+",    ja: "種+",  zh: "种+"  },
-  percent: { ko: "%",   en: "%",    ja: "%",   zh: "%"   },
   ratio:   { ko: ":1",  en: ":1",   ja: ":1",  zh: ":1"  },
 } as const;
 
@@ -84,7 +81,6 @@ export const CLINIC_STAT_UNIT_MAP = {
   yearsExperience:    "years",
   eyeBagCases:        "cases",
   laserTypes:         "types",
-  satisfactionRate:   "percent",
   doctorPatientRatio: "ratio",
 } as const satisfies Record<ClinicStatKey, StatKey>;
 
@@ -142,37 +138,6 @@ export const CLINIC_INFO = {
 export const SEO_CLINIC_META = {
   /** 의료진 수 (numberOfEmployees.value) */
   physicianCount: 3,
-  /** 집계 평점 */
-  aggregateRating: {
-    ratingValue: "4.9",
-    reviewCount: "312",
-    bestRating: "5",
-    worstRating: "1",
-  },
-  /**
-   * 대표 리뷰 샘플 (Schema.org Review)
-   * 지역 검색 결과에서 리뷰 스니펫 노출 강화
-   */
-  reviews: [
-    {
-      author: "네이버 예약 이용자 A",
-      reviewRating: "5",
-      reviewBody: "써마지 FLX 시술을 받았는데 원장님이 직접 시술해 주셔서 믿음이 갔습니다. 리프팅 효과가 확실히 느껴졌어요.",
-      datePublished: "2024-11-01",
-    },
-    {
-      author: "네이버 예약 이용자 B",
-      reviewRating: "5",
-      reviewBody: "눈밑지방재배치 수술 후 다크서클이 많이 개선됐습니다. 조원장님 경험이 풍부하셔서 안심하고 받을 수 있었어요.",
-      datePublished: "2024-10-15",
-    },
-    {
-      author: "네이버 예약 이용자 C",
-      reviewRating: "5",
-      reviewBody: "울쎄라피 프라임 받고 피부 탄력이 좋아졌습니다. 직접 시술이라 신뢰가 가고 결과도 만족스러워요.",
-      datePublished: "2024-09-20",
-    },
-  ],
   /**
    * 편의시설 정보 (Schema.org LocationFeatureSpecification)
    * 지역 검색 결과에서 편의시설 정보 노출

@@ -136,9 +136,9 @@ describe("D. SEO_CLINIC_META 단일 소스 정책 (P1-4)", () => {
     expect(src).toMatch(/physicianCount:/);
   });
 
-  it("D-3: SEO_CLINIC_META는 aggregateRating을 포함한다", () => {
+  it("D-3: SEO_CLINIC_META는 검증 근거 없는 aggregateRating을 포함하지 않는다", () => {
     const src = readClient("lib/constants.ts");
-    expect(src).toMatch(/aggregateRating:/);
+    expect(src).not.toMatch(/aggregateRating:/);
   });
 
   it("D-4: SEO_CLINIC_META는 knowsAbout을 포함한다", () => {

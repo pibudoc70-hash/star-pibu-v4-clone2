@@ -26,8 +26,6 @@ export interface ClinicStats {
   cases: ClinicStat;
   /** 레이저 장비 종류 수 */
   types: ClinicStat;
-  /** 만족도 (%) */
-  satisfaction: ClinicStat;
   /** 의사 1인당 환자 비율 */
   ratio: ClinicStat;
 }
@@ -51,10 +49,6 @@ export function useClinicStats(): ClinicStats {
     types: {
       value: String(CLINIC_STATS.laserTypes),
       unit: unit("types"),
-    },
-    satisfaction: {
-      value: String(CLINIC_STATS.satisfactionRate),
-      unit: unit("percent"),
     },
     ratio: {
       value: String(CLINIC_STATS.doctorPatientRatio),

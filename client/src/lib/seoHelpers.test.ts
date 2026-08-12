@@ -19,6 +19,7 @@ import {
   buildBreadcrumbJsonLd,
   buildLocalBusinessJsonLd,
   buildOpeningHoursSpec,
+  buildVideoObjectListJsonLd,
   SEO_PRESETS,
   COMMON_HREFLANGS,
 } from "./seoHelpers";
@@ -228,11 +229,9 @@ describe("buildClinicJsonLd — 구조 심층 검증", () => {
     }
   });
 
-  it("aggregateRating 필드가 AggregateRating 타입이어야 한다", () => {
-    const rating = schema["aggregateRating"] as Record<string, unknown>;
-    expect(rating["@type"]).toBe("AggregateRating");
-    expect(typeof rating["ratingValue"]).toBe("string");
-    expect(typeof rating["reviewCount"]).toBe("string");
+  it("검증 근거 없는 aggregateRating과 review 필드를 포함하지 않아야 한다", () => {
+    expect(schema).not.toHaveProperty("aggregateRating");
+    expect(schema).not.toHaveProperty("review");
   });
 
   it("logo 필드가 ImageObject 타입이어야 한다", () => {
@@ -453,14 +452,10 @@ describe("buildLocalBusinessJsonLd — 지역 검색 최적화 필드", () => {
     expect(schema["hasMap"]).toMatch(/^https:\/\/maps\.google\.com\/\?q=/);
   });
 
-  it("review 배열이 존재하고 Schema.org Review 타입이어야 한다", () => {
+  it("검증 근거 없는 review와 aggregateRating을 포함하지 않아야 한다", () => {
     const schema = buildLocalBusinessJsonLd();
-    const reviews = schema["review"] as Record<string, unknown>[];
-    expect(Array.isArray(reviews)).toBe(true);
-    expect(reviews.length).toBeGreaterThan(0);
-    expect(reviews[0]["@type"]).toBe("Review");
-    expect(reviews[0]["reviewBody"]).toBeTruthy();
-    expect(reviews[0]["datePublished"]).toBeTruthy();
+    expect(schema).not.toHaveProperty("review");
+    expect(schema).not.toHaveProperty("aggregateRating");
   });
 
   it("amenityFeature 배열이 LocationFeatureSpecification 타입이어야 한다", () => {
@@ -507,21 +502,29 @@ describe("buildLocalBusinessJsonLd — 지역 검색 최적화 필드", () => {
     expect(offered["name"]).toBeTruthy();
   });
 
-  it("review의 author가 Person 타입이어야 한다", () => {
-    const schema = buildLocalBusinessJsonLd();
-    const reviews = schema["review"] as Record<string, unknown>[];
-    const author = reviews[0]["author"] as Record<string, unknown>;
-    expect(author["@type"]).toBe("Person");
-    expect(author["name"]).toBeTruthy();
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// buildVideoObjectListJsonLd — 실제 YouTube 식별자만 구조화 데이터에 포함
+// ─────────────────────────────────────────────────────────────────────────────
+describe("buildVideoObjectListJsonLd — 검증된 영상 식별자", () => {
+  it("placeholder 또는 잘못된 식별자만 있으면 VideoObject를 생성하지 않아야 한다", () => {
+    expect(buildVideoObjectListJsonLd([
+      { title: "임시 영상", videoId: "PLACEHOLDER_VIDEO" },
+      { title: "짧은 값", videoId: "short" },
+    ])).toBeNull();
   });
 
-  it("review의 reviewRating이 Rating 타입이어야 한다", () => {
-    const schema = buildLocalBusinessJsonLd();
-    const reviews = schema["review"] as Record<string, unknown>[];
-    const rating = reviews[0]["reviewRating"] as Record<string, unknown>;
-    expect(rating["@type"]).toBe("Rating");
-    expect(rating["ratingValue"]).toBe("5");
-    expect(rating["bestRating"]).toBe("5");
+  it("유효한 11자리 YouTube 식별자만 ItemList에 포함해야 한다", () => {
+    const schema = buildVideoObjectListJsonLd([
+      { title: "유효 영상", videoId: "dQw4w9WgXcQ" },
+      { title: "임시 영상", videoId: "PLACEHOLDER_VIDEO" },
+    ]);
+    expect(schema).not.toBeNull();
+    const items = schema!["itemListElement"] as Record<string, unknown>[];
+    expect(items).toHaveLength(1);
+    const video = items[0]["item"] as Record<string, unknown>;
+    expect(video["contentUrl"]).toBe("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
   });
 });
 

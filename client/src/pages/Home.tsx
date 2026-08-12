@@ -13,7 +13,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { CLINIC_STATS } from "../lib/constants";
 const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildVideoObjectListJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import { CLINIC_DOCTORS } from "@/lib/clinic-data";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -32,7 +32,6 @@ const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevic
 const PhilosophySection = lazy(() => import("@/components/PhilosophySection"));
 const ResultsStatisticsSection = lazy(() => import("@/components/ResultsStatisticsSection"));
 const FacilitySection = lazy(() => import("@/components/FacilitySection"));
-const ReviewsSection = lazy(() => import("@/components/ReviewsSection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
@@ -493,23 +492,6 @@ export default function Home() {
             },
                     ]),
           buildPersonListJsonLd(CLINIC_DOCTORS),
-          buildVideoObjectListJsonLd([
-            {
-              title: "울쎄라피 프라임 시술 안내 | 부산 서면 스타피부과",
-              videoId: "PLACEHOLDER_ULTHERAPY",
-              description: "울쎄라피 프라임 HIFU 리프팅 시술 효과와 과정을 스타피부과 전문의가 직접 설명합니다.",
-            },
-            {
-              title: "써마지 FLX 시술 안내 | 부산 서면 스타피부과",
-              videoId: "PLACEHOLDER_THERMAGE",
-              description: "4세대 고주파 써마지 FLX 리프팅 시술 효과와 과정을 스타피부과 전문의가 직접 설명합니다.",
-            },
-            {
-              title: "눈밑지방재배치 시술 안내 | 부산 서면 스타피부과",
-              videoId: "PLACEHOLDER_EYEBAG",
-              description: "눈밑지방재배치 수술 효과와 회복 과정을 스타피부과 전문의가 직접 설명합니다.",
-            },
-          ]),
         ]}
       />
       {/* Fixed Header */}
@@ -634,17 +616,6 @@ export default function Home() {
           <div className="section-bg-warm-alt">
             <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" bg="#ffffff" />}>
               <FacilitySection />
-            </Suspense>
-          </div>
-        </ScrollAnimationWrapper>
-
-        {/* 8. Patient Reviews */}
-        <ScrollAnimationWrapper
-          animationType="fade-in"
-        >
-          <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[480px]" layout="cards-3" bg="linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" />}>
-              <ReviewsSection />
             </Suspense>
           </div>
         </ScrollAnimationWrapper>

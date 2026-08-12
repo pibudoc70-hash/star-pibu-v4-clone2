@@ -4,14 +4,14 @@
  */
 // [FM-P2-3] React.memo: 부모 리렌더 시 불필요한 재렌더 방지 (통계 카드 카운팅 애니메이션 보호)
 import { memo } from "react";
-import { CheckCircle, TrendingUp, Users, Star, Award, Sparkles, Heart, Shield } from "lucide-react";
+import { CheckCircle, TrendingUp, Users, Award, Sparkles, Heart, Shield } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useLang } from "@/contexts/LangContext";
 import { useClinicStats } from "@/hooks/useClinicStats";
 import { STAR_COLORS } from "../../../shared/colors";
 
-const statIcons = [Award, Star, TrendingUp, Users];
+const statIcons = [Award, TrendingUp, Users];
 const { dark, gray, muted } = STAR_COLORS;
 /* 브랜드 웜 뉴트럴 컬러 시스템 */
 const brandGold = 'var(--color-gold-primary)';
@@ -19,8 +19,8 @@ const brandGoldPale = '#F0EAE0';
 const brandGoldDeep = '#A8895E';
 const brandBg = '#FAF8F5';
 const brandBgAlt = '#F5F0EB';
-const statColors = [brandGold, brandGoldDeep, brandGold, brandGoldDeep];
-const statBgs = [brandBgAlt, brandBg, brandBgAlt, brandBg];
+const statColors = [brandGold, brandGoldDeep, brandGold];
+const statBgs = [brandBgAlt, brandBg, brandBgAlt];
 const whyIcons = [Shield, Heart, Sparkles];
 const whyColors = [brandGold, brandGoldDeep, brandGold];
 const treatmentAccents = [brandGold, brandGoldDeep, brandGold, brandGoldDeep, brandGold, brandGoldDeep];
@@ -35,10 +35,9 @@ function ResultsSection() {
 
   // 카운팅 애니메이션 적용
   const { value: countValue1 } = useCountUp(clinicStats.years.value, 2000, clinicStats.years.unit, 0, undefined, lang);
-  const { value: countValue2 } = useCountUp(clinicStats.satisfaction.value, 2000, clinicStats.satisfaction.unit, 0, undefined, lang);
-  const { value: countValue3 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit, 0, undefined, lang);
+  const { value: countValue2 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit, 0, undefined, lang);
 
-  const countValues = [countValue1, countValue2, countValue3, `1:${clinicStats.ratio.value}`];
+  const countValues = [countValue1, countValue2, `1:${clinicStats.ratio.value}`];
 
   return (
     <section ref={sectionRef} id="results" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FAF8F5' }}>
@@ -96,7 +95,7 @@ function ResultsSection() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16">
           {r.stats.map((s, i) => {
             const Icon = statIcons[i];
             const color = statColors[i];

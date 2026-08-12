@@ -283,17 +283,6 @@ export interface I18nContent {
     notices: string[];
     disclaimer: string;
   };
-  reviews: {
-    eyebrow: string;
-    sectionTitle: string;
-    sectionSubtitle: string;
-    ratingSource: string;
-    moreReviews: string;
-    swipeHint: string;
-    prevLabel: string;
-    nextLabel: string;
-    items: Array<{ name: string; age: string; treatment: string; text: string; platform: string; rating: number; date: string }>;
-  };
   facility: {
     sectionTitle: string;
     sectionSubtitle: string;

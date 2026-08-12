@@ -267,29 +267,12 @@ export function buildClinicJsonLd(
       value: seoClinicMeta.physicianCount,
       unitText: "physicians",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ...seoClinicMeta.aggregateRating,
-    },
     knowsAbout: [...seoClinicMeta.knowsAbout],
     // 서비스 제공 지역 세분화 (지역 검색 범위 확장)
     areaServed: seoClinicMeta.areaServed.map((area) => ({
       "@type": area.type,
       name: area.name,
       alternateName: area.nameKo,
-    })),
-    // 대표 리뷰 샘플 (리뷰 스니펫 노출 강화)
-    review: seoClinicMeta.reviews.map((r) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: r.author },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: r.reviewRating,
-        bestRating: "5",
-        worstRating: "1",
-      },
-      reviewBody: r.reviewBody,
-      datePublished: r.datePublished,
     })),
     // 편의시설 정보 (주차, 엘리베이터, 다국어 상담 등)
     amenityFeature: seoClinicMeta.amenityFeature.map((f) => ({
@@ -545,23 +528,6 @@ export function buildLocalBusinessJsonLd(
       alternateName: area.nameKo,
     })),
     sameAs: [...clinicInfo.sameAs],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ...seoClinicMeta.aggregateRating,
-    },
-    // 대표 리뷰 샘플 (리뷰 스니펫 노출 강화)
-    review: seoClinicMeta.reviews.map((r) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: r.author },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: r.reviewRating,
-        bestRating: "5",
-        worstRating: "1",
-      },
-      reviewBody: r.reviewBody,
-      datePublished: r.datePublished,
-    })),
     // 편의시설 정보 (주차, 엘리베이터, 다국어 상담 등)
     amenityFeature: seoClinicMeta.amenityFeature.map((f) => ({
       "@type": "LocationFeatureSpecification",
@@ -698,13 +664,18 @@ export function buildPersonListJsonLd(
  */
 export function buildVideoObjectListJsonLd(
   videos: { title: string; videoId: string; description?: string }[],
-): JsonLdSchema {
+): JsonLdSchema | null {
+  const validVideos = videos.filter(({ videoId }) =>
+    /^[A-Za-z0-9_-]{11}$/.test(videoId),
+  );
+  if (validVideos.length === 0) return null;
+
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "스타피부과 YouTube 영상",
     description: "부산 서면 스타피부과 시술 안내 및 원장 강의 영상",
-    itemListElement: videos.map((v, index) => ({
+    itemListElement: validVideos.map((v, index) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {

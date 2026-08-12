@@ -297,7 +297,7 @@ describe("F. constants", () => {
 
   it("F-5: CLINIC_STATS의 모든 키가 CLINIC_STAT_UNIT_MAP에 매핑된다", () => {
     // CLINIC_STATS 키 목록
-    const statsKeys = ["yearsExperience", "eyeBagCases", "laserTypes", "satisfactionRate", "doctorPatientRatio"];
+    const statsKeys = ["yearsExperience", "eyeBagCases", "laserTypes", "doctorPatientRatio"];
     for (const key of statsKeys) {
       expect(content).toContain(key);
     }

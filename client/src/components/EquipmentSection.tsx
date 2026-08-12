@@ -48,7 +48,7 @@ const equipmentList: Equipment[] = [
     category: "리프팅",
     tone: "A",
     image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png",
-    desc: "리프팅 만족도 1위 울쎄라피 최신 버전",
+    desc: "집속초음파 기술을 적용한 울쎄라피 최신 버전",
   },
   {
     brand: "THERMAGE FLX",

@@ -17,7 +17,6 @@ import ManagementDevicesSection from "@/components/ManagementDevicesSection";
 import SpecialEventSection from "@/components/SpecialEventSection";
 import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
 import FacilitySection from "@/components/FacilitySection";
-import ReviewsSection from "@/components/ReviewsSection";
 import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
@@ -148,10 +147,6 @@ export default function LandingZH() {
           <FacilitySection />
         </div>
 
-        <div style={{ background: "#F5F1ED" }}>
-          <ReviewsSection />
-        </div>
-
         <div style={{ background: "#FFFFFF" }}>
           <YouTubeSection />
         </div>
@@ -175,4 +170,3 @@ export default function LandingZH() {
     </div>
   );
 }
-

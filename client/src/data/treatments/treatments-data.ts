@@ -215,7 +215,7 @@ const TREATMENTS: Record<string, Treatment[]> = {
       nameEn: "ULTHERAPY PRIME",
       nameJa: "ウルセラピープライム",
       nameZh: "超声刀Prime",
-      desc: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.", descEn: "The latest upgraded version of Ultherapy with the highest lifting satisfaction rating. Covers wider areas faster for outstanding lifting results.", descJa: "リフティング満足度1位ウルセラピーの最新アップグレード版。より広い面積を素早くカバーし、卓越したリフティング効果を発揮します。", descZh: "提升满意度第一的超声刀最新升级版。更快覆盖更大面积，带来卓越的提升效果。",
+      desc: "울쎄라피의 최신 업그레이드 버전입니다. 집속초음파 기술로 넓은 시술 부위에 정밀하게 에너지를 전달하도록 설계되었습니다.", descEn: "The latest version of Ultherapy, designed to deliver focused ultrasound energy precisely across a wider treatment area.", descJa: "ウルセラピーの最新アップグレード版です。集束超音波技術により、より広い施術範囲へ精密にエネルギーを届けるよう設計されています。", descZh: "超声刀Prime的最新升级版本。采用聚焦超声波技术，可在更广的治疗区域精准传递能量。",
       time: "60~90분", timeEn: "60~90min", timeJa: "60~90分", timeZh: "60~90分钟", recovery: "당일 일상", recoveryEn: "Same day", recoveryJa: "当日", recoveryZh: "当天",
       badge: "인기", badgeEn: "Popular", badgeJa: "人気", badgeZh: "热门", badgeColor: "#C8860A",
       image: "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png", best: true,

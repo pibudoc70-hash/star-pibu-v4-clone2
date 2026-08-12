@@ -8,7 +8,7 @@ import type { Equipment } from "@/types/treatment";
 
 const EQUIPMENT: Record<string, Equipment[]> = {
   best: [
-    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", descEn: "Latest version with the highest lifting satisfaction rating", descJa: "リフティング満足度No.1最新バージョン", descZh: "提升满意度第一的最新版本", image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png" },
+    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "집속초음파 기술을 적용한 최신 버전", descEn: "Latest version using focused ultrasound technology", descJa: "集束超音波技術を採用した最新バージョン", descZh: "采用聚焦超声波技术的最新版本", image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png" },
     { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", descEn: "Official advisory device of Dr. Jo Si-hyeong", descJa: "趙時亨院長公式アドバイザー機器", descZh: "赵时亨院长官方顾问设备", image: "/api/storage/thermage-flx_f1163ff8_03a0e6ae.png" },
     { brand: "REJURAN", name: "리쥬란 힐러", desc: "피부 재생 연어 주사", descEn: "Salmon DNA skin regeneration injection", descJa: "皮膚再生サーモンDNA注射", descZh: "皮肤再生三文鱼DNA注射", image: "/api/storage/lasemd-ultra_a5fd8612_006e0525.png" },
     { brand: "ULTRAPULSE CO₂", name: "울트라펄스", desc: "흉터 치료 전문 CO₂ 레이저", descEn: "Specialized CO2 laser for scar treatment", descJa: "瘢痕治療専門CO2レーザー", descZh: "疤痕治疗专用CO2激光", image: "/api/storage/playduo_6eccf485_7b4b7fa8.png" },
@@ -18,7 +18,7 @@ const EQUIPMENT: Record<string, Equipment[]> = {
     { brand: "PROFOUND RF", name: "프로파운드", desc: "진피층 직접 자극 RF 리프팅", descEn: "RF lifting that directly stimulates the dermis layer", descJa: "真皮層を直接刺激するRFリフティング", descZh: "直接刺激真皮层的RF提升", image: "/api/storage/profound_481e0c83_b36d0ef8.png" },
   ],
   lifting: [
-    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "리프팅 만족도 1위 최신 버전", descEn: "Latest version with the highest lifting satisfaction rating", descJa: "リフティング満足度No.1最新バージョン", descZh: "提升满意度第一的最新版本", image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png" },
+    { brand: "MERZ AESTHETICS", name: "울쎄라피 프라임", desc: "집속초음파 기술을 적용한 최신 버전", descEn: "Latest version using focused ultrasound technology", descJa: "集束超音波技術を採用した最新バージョン", descZh: "采用聚焦超声波技术的最新版本", image: "/api/storage/ulthera-prime_1_798484e7_c9058abb.png" },
     { brand: "THERMAGE FLX", name: "써마지 FLX", desc: "조시형 원장 공식 자문의 장비", descEn: "Official advisory device of Dr. Jo Si-hyeong", descJa: "趙時亨院長公式アドバイザー機器", descZh: "赵时亨院长官方顾问设备", image: "/api/storage/thermage-flx_f1163ff8_03a0e6ae.png" },
     { brand: "REVINAS", name: "세르프 리프팅", desc: "최신 고강도 RF 리프팅", descEn: "Latest high-intensity RF lifting", descJa: "最新高強度RFリフティング", descZh: "最新高强度射频提升", image: `/api/storage/equip-xerf-cropped_d21e359e_16d3dcea.png` },
     { brand: "SHURINK UNIVERSE", name: "스른크 유니버스", desc: "집속 초음파 리프팅의 진화", descEn: "Evolution of focused ultrasound lifting", descJa: "集束超音波リフティングの進化", descZh: "聚焦超声提升的进化", image: "/api/storage/shurink_77cc74d6_6b7e0dec.png" },

@@ -36,9 +36,8 @@ export default function ResultsStatisticsSection() {
   // useClinicStats Hook으로 중앙화된 통계 수치 참조
   const statistics = [
     { icon: getIcon(0), number: clinicStats.years.value, unit: clinicStats.years.unit, label: r.stats[0].label, description: r.stats[0].desc },
-    { icon: getIcon(1), number: clinicStats.satisfaction.value, unit: clinicStats.satisfaction.unit, label: r.stats[1].label, description: r.stats[1].desc },
-    { icon: getIcon(2), number: clinicStats.cases.value, unit: clinicStats.cases.unit, label: r.stats[2].label, description: r.stats[2].desc },
-    { icon: getIcon(3), number: clinicStats.ratio.value, unit: clinicStats.ratio.unit, label: r.stats[3].label, description: r.stats[3].desc },
+    { icon: getIcon(1), number: clinicStats.cases.value, unit: clinicStats.cases.unit, label: r.stats[1].label, description: r.stats[1].desc },
+    { icon: getIcon(2), number: clinicStats.ratio.value, unit: clinicStats.ratio.unit, label: r.stats[2].label, description: r.stats[2].desc },
   ];
 
   return (
@@ -89,10 +88,9 @@ export default function ResultsStatisticsSection() {
         </div>
 
         {/* 통계 섹션 */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {isLoading ? (
             <>
-              <StatisticCardSkeleton />
               <StatisticCardSkeleton />
               <StatisticCardSkeleton />
               <StatisticCardSkeleton />

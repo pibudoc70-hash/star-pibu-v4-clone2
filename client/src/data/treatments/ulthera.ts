@@ -32,10 +32,10 @@ export const ulthera: TreatmentI18n = {
   cardBannerImage: "/api/storage/ulthera-prime_1_0daba485_b78e0b48.png",
 
   desc: {
-    ko: "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",
-    en: "The latest upgrade of the #1 lifting treatment, Ultherapy. Covers a wider area faster with outstanding lifting results.",
-    ja: "リフティング満足度No.1のウルセラピーの最新アップグレード版。より広い範囲を素早くカバーし、卓越したリフティング効果を発揮。",
-    zh: "提升满意度第一的超声刀最新升级版。覆盖面积更广，提升效果卓越。",
+    ko: "울쎄라피의 최신 업그레이드 버전입니다. 집속초음파 기술로 넓은 시술 부위에 정밀하게 에너지를 전달하도록 설계되었습니다.",
+    en: "The latest version of Ultherapy, designed to deliver focused ultrasound energy precisely across a wider treatment area.",
+    ja: "ウルセラピーの最新アップグレード版です。集束超音波技術により、より広い施術範囲へ精密にエネルギーを届けるよう設計されています。",
+    zh: "超声刀Prime的最新升级版本。采用聚焦超声波技术，可在更广的治疗区域精准传递能量。",
   },
 
   detail: {
@@ -91,9 +91,9 @@ export const ulthera: TreatmentI18n = {
 
   seoTitle: {
     ko: "울쎄라피 프라임 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
-    en: "Ultherapy Prime | Star Dermatology Seomyeon Busan – #1 Lifting Treatment",
-    ja: "ウルセラピー プライム | 釜山西面 スター皮膚科 – リフティング満足度No.1",
-    zh: "超声刀 Prime | 釜山西面 STAR 皮肤科 – 提升满意度第一",
+    en: "Ultherapy Prime | Star Dermatology Seomyeon Busan – Focused Ultrasound Lifting",
+    ja: "ウルセラピー プライム | 釜山西面 スター皮膚科 – 集束超音波リフティング",
+    zh: "超声刀 Prime | 釜山西面 STAR 皮肤科 – 聚焦超声波提升",
   },
 
   seoDescription: {

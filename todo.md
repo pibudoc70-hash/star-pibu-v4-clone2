@@ -4445,4 +4445,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 8단계: 취약 의존성 안전 업데이트 — moderate 이상 audit 0건을 확인하고, 위험 없는 dev test runner 패치만 Vitest/@vitest-ui 4.1.9→4.1.10으로 업데이트. major 업데이트(Vite 8, Streamdown 2, jsdom 30 등)는 audit 필요성이 없어 보류. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·audit 0건·홈 렌더링 확인 완료
 - [x] 9단계: 최종 통합 검증 및 종합 보고 — frozen lockfile 설치, tsc, lint(오류 0·경고 220), 전체 Vitest 72 files/1,499 tests, production build, moderate 이상 audit 0건, diff check를 통과. 홈·울쎄라 상세·영문 Directions의 개발 렌더링을 재확인했고, 예약·OTP 관련 변경 파일 0건을 확인 완료
 - [x] GitHub 백업 디렉터리의 구식 상태 표시 원인과 활성 동기화 영향 점검 — `.github/star-pibu-github-backup/workflows/ci.yml`은 2026-07-02 기준의 단순 보관본으로 nested Git 저장소가 아니며 활성 Actions 경로가 아님. 실제 GitHub `main`은 로컬 `main`의 조상(원격 `6e4f377`, 로컬 `cadd478`)으로 5~9단계 로컬 커밋이 아직 원격에 반영되지 않은 상태임을 확인
-- [x] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인 — 기존 프로젝트 토큰의 workflows 권한 부족을 확인해 사용자 GitHub 연결을 활성화했으며, 활성 사용자 인증으로 일반 push 수행 예정
+- [ ] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인 — 두 번의 일반 push가 `.github/workflows/ci.yml`의 workflows 권한 부족으로 거부됨. GitHub 로그인 후 Actions workflows 쓰기 권한 승인 필요
+- [x] 예약·OTP 제외 코드베이스의 개발·디자인 개선 기회 감사 및 우선순위 권고안 작성 — 정적 후기·평점 표시, placeholder VideoObject JSON-LD, lint 경고 220건, 대형 Home/CSS/정적 데이터 파일, 테스트 coverage 부재, 디자인 토큰·동작 일관성을 점검 완료
+- [x] 신뢰성: 정적 후기·평점 UI와 다국어 후기 데이터를 제거하고 중립적인 외부 리뷰 링크로 대체 — 출처 검증이 되지 않은 static 리뷰·평점은 링크로 대체하지 않고 완전히 제거, MedicalClinic/LocalBusiness JSON-LD에서도 review·aggregateRating 제거
+- [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지
+- [ ] 접근성: 공개 Hero·시술 상세·공용 UI의 비시맨틱 클릭 요소와 라벨 연결 경고를 안전하게 해소
+- [ ] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선
+- [ ] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리
+- [ ] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가
+- [ ] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리
+- [ ] 개선 후 타입·lint·전체 테스트·build·audit·실제 홈/시술/다국어 화면 통합 검증

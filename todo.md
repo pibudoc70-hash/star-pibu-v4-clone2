@@ -4374,3 +4374,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] JavaScript 비실행 원본 HTML의 주요 본문 텍스트·FAQ 노출 여부 확인
 - [x] 필요한 라우트의 프리렌더링 방식 설계 및 구현
 - [x] 원본 HTML·빌드·크롤러 친화성 회귀 검증
+
+## 상세 페이지·콘텐츠 구조화 데이터 확장 (2026-08-12)
+- [x] 시술·장비 상세 원본 HTML의 본문 표·FAQ·JSON-LD 전수 노출 상태 점검
+- [x] MedicalClinic·Physician·MedicalProcedure JSON-LD 및 시술 정보 표 프리렌더링
+- [x] 공지사항·연구 페이지 Article/NewsArticle JSON-LD 구현
+- [x] sitemap.xml·robots.txt 최신 URL과 연결 상태 검증
+- [x] 대표 시술 상세 URL의 JavaScript 비실행 원본 HTML 증거 및 전체 회귀 검증

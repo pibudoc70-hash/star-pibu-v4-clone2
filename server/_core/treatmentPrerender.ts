@@ -8,7 +8,7 @@
  *
  * 핵심 안전장치:
  *   ① 주입 메타에 data-rh="true" → react-helmet-async 가 하이드레이션 시 교체
- *   ② 본문은 <noscript> 안에만 → 방문자 화면·레이아웃 영향 0
+ *   ② 본문은 React root 안에 미리 주입하고, 클라이언트 React가 기존 화면을 그대로 렌더링한다.
  *   ③ 모든 실패 경로에서 next() → 어떤 경우에도 사이트가 깨지지 않음
  *
  * 데이터 소스: server/_generated/treatment-seo.json
@@ -21,7 +21,7 @@ import path from "node:path";
 
 // ── 타입 정의 ────────────────────────────────────────────────────────────────
 
-const SUPPORTED_LANGS = ["ko", "en", "ja", "zh"] as const;
+const SUPPORTED_LANGS = ["ko", "en", "ja", "zh", "zh-TW"] as const;
 type Lang = (typeof SUPPORTED_LANGS)[number];
 
 interface LocalizedString {
@@ -47,6 +47,7 @@ interface TreatmentSeoRecord {
   slug: string;
   nameEn: string;
   name: LocalizedString;
+  category: LocalizedString | null;
   desc: LocalizedString;
   detail: LocalizedString;
   effect: LocalizedString | null;
@@ -89,6 +90,42 @@ const CLINIC_PROVIDER = {
     "https://place.naver.com/hospital/12020103",
     "https://map.kakao.com/?itemId=1523764",
   ],
+} as const;
+
+const CLINIC_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": `${BASE_URL}/#medical-clinic`,
+  name: "스타피부과",
+  url: BASE_URL,
+  telephone: "+82-51-818-2300",
+  medicalSpecialty: "Dermatology",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "서면로 74 아이온시티빌딩 4층",
+    addressLocality: "부산진구",
+    addressRegion: "부산광역시",
+    postalCode: "47280",
+    addressCountry: "KR",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 35.1579, longitude: 129.0597 },
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "19:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:30", closes: "15:00" },
+  ],
+} as const;
+
+const PHYSICIAN_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Physician",
+  "@id": `${BASE_URL}/#physician-cho-si-hyung`,
+  name: "조시형",
+  alternateName: "Cho Si-hyung",
+  jobTitle: "피부과 전문의 · 의학박사",
+  description: "20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다.",
+  medicalSpecialty: "Dermatology",
+  memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
+  worksFor: { "@id": `${BASE_URL}/#medical-clinic` },
 } as const;
 
 // ── 데이터 로딩 ───────────────────────────────────────────────────────────────
@@ -166,14 +203,19 @@ function escapeHtml(s: string): string {
 /** LocalizedString 에서 언어값을 뽑는다 (pickLocalized 와 동일 규칙) */
 function pick(v: LocalizedString | null | undefined, lang: Lang): string {
   if (!v) return "";
-  return v[lang] ?? v.ko ?? "";
+  return lang === "zh-TW" ? v.zh ?? v.ko ?? "" : v[lang] ?? v.ko ?? "";
+}
+
+function pickFaq(t: TreatmentSeoRecord, lang: Lang): FaqItem[] {
+  const baseLang: keyof LocalizedFaq = lang === "zh-TW" ? "zh" : lang as keyof LocalizedFaq;
+  return t.faq?.[baseLang] ?? t.faq?.ko ?? [];
 }
 
 /** 경로에서 언어·slug 추출. 실패 시 null */
 function parsePath(p: string): { lang: Lang; slug: string } | null {
-  const m = p.match(/^\/(?:(en|ja|zh)\/)?treatments\/([^/?#]+)\/?$/);
+  const m = p.match(/^\/(?:(en|ja|zh|zh-tw)\/)?treatments\/([^/?#]+)\/?$/);
   if (!m) return null;
-  const lang = (m[1] ?? "ko") as Lang;
+  const lang = m[1] === "zh-tw" ? "zh-TW" : (m[1] ?? "ko") as Lang;
   let slug: string;
   try {
     slug = decodeURIComponent(m[2]);
@@ -329,51 +371,58 @@ function injectMeta(
         `<link data-rh="true" rel="alternate" hreflang="en" href="${BASE_URL}/en/treatments/${slug}" />`,
         `<link data-rh="true" rel="alternate" hreflang="ja" href="${BASE_URL}/ja/treatments/${slug}" />`,
         `<link data-rh="true" rel="alternate" hreflang="zh" href="${BASE_URL}/zh/treatments/${slug}" />`,
+        `<link data-rh="true" rel="alternate" hreflang="zh-TW" href="${BASE_URL}/zh-tw/treatments/${slug}" />`,
         `<link data-rh="true" rel="alternate" hreflang="x-default" href="${BASE_URL}/treatments/${slug}" />`,
       ].join("\n    ")
     );
 }
 
-// ── noscript 본문 주입 ────────────────────────────────────────────────────────
+function getTableLabels(lang: Lang) {
+  const labels: Record<Lang, Record<string, string>> = {
+    ko: { description: "시술 설명", target: "적합한 대상", duration: "효과 지속 기간", recovery: "회복 기간", caution: "부작용·주의사항", time: "시술 소요 시간", sessions: "권장 횟수·간격", faq: "자주 묻는 질문" },
+    en: { description: "What it is", target: "Who it may suit", duration: "Effect duration", recovery: "Recovery time", caution: "Side effects and precautions", time: "Treatment time", sessions: "Recommended sessions and interval", faq: "Frequently Asked Questions" },
+    ja: { description: "施術説明", target: "適した方", duration: "効果の持続", recovery: "回復期間", caution: "副作用・注意事項", time: "施術時間", sessions: "推奨回数・間隔", faq: "よくある質問" },
+    zh: { description: "治疗说明", target: "适合人群", duration: "效果持续时间", recovery: "恢复期", caution: "副作用与注意事项", time: "治疗所需时间", sessions: "建议次数与间隔", faq: "常见问题" },
+    "zh-TW": { description: "療程說明", target: "適合對象", duration: "效果持續時間", recovery: "恢復期", caution: "副作用與注意事項", time: "療程所需時間", sessions: "建議次數與間隔", faq: "常見問題" },
+  };
+  return labels[lang];
+}
 
-function buildNoscript(t: TreatmentSeoRecord, lang: Lang): string {
-  const parts: string[] = [
-    `<h1>${escapeHtml(pick(t.name, lang))}</h1>`,
-    `<p>${escapeHtml(pick(t.desc, lang))}</p>`,
-    `<p>${escapeHtml(pick(t.detail, lang))}</p>`,
-  ];
+function findDuration(t: TreatmentSeoRecord, lang: Lang): string {
+  const list = pickFaq(t, lang);
+  const keywords: Record<Lang, string[]> = {
+    ko: ["지속", "언제부터"], en: ["how long", "when will"], ja: ["持続", "いつから"], zh: ["持续", "何时"], "zh-TW": ["持續", "何時"],
+  };
+  const match = list.find((item) => keywords[lang].some((keyword) => item.question.toLowerCase().includes(keyword)));
+  return match?.answer || pick(t.sessions, lang) || "개인 피부 상태와 시술 범위에 따라 의료진 상담 후 안내합니다.";
+}
 
+function buildStructuredBody(t: TreatmentSeoRecord, lang: Lang): string {
+  const labels = getTableLabels(lang);
   const effect = pick(t.effect, lang);
-  if (effect) parts.push(`<h2>기대 효과</h2><p>${escapeHtml(effect)}</p>`);
+  const target = effect
+    ? `${effect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.`
+    : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.";
+  const rows = [
+    [labels.description, pick(t.detail, lang) || pick(t.desc, lang)],
+    [labels.target, target],
+    [labels.duration, findDuration(t, lang)],
+    [labels.recovery, pick(t.recovery, lang)],
+    [labels.caution, pick(t.caution, lang)],
+    [labels.time, pick(t.time, lang)],
+    [labels.sessions, pick(t.sessions, lang)],
+  ].filter(([, value]) => value);
+  const list = pickFaq(t, lang);
+  const faq = list.length
+    ? `<section><h2>${escapeHtml(labels.faq)}</h2>${list.map((item) => `<h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p>`).join("\n")}</section>`
+    : "";
 
-  const caution = pick(t.caution, lang);
-  if (caution) parts.push(`<h2>주의사항</h2><p>${escapeHtml(caution)}</p>`);
-
-  const time = pick(t.time, lang);
-  const recovery = pick(t.recovery, lang);
-  const sessions = pick(t.sessions, lang);
-  if (time) parts.push(`<p>시술 시간: ${escapeHtml(time)}</p>`);
-  if (recovery) parts.push(`<p>회복 기간: ${escapeHtml(recovery)}</p>`);
-  if (sessions) parts.push(`<p>권장 횟수: ${escapeHtml(sessions)}</p>`);
-
-  // FAQ — 최대 5개. AI 검색·구글 FAQ 노출에 효과가 크다.
-  if (t.faq) {
-    const list = t.faq[lang] ?? t.faq.ko;
-    if (Array.isArray(list) && list.length > 0) {
-      parts.push("<h2>자주 묻는 질문</h2>");
-      for (const item of list.slice(0, 5)) {
-        parts.push(
-          `<h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p>`
-        );
-      }
-    }
-  }
-
-  parts.push(
-    `<p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p>`
-  );
-
-  return `<noscript>\n      ${parts.join("\n      ")}\n    </noscript>`;
+  return `<main id="crawler-content" lang="${lang}"><article>
+    <header><h1>${escapeHtml(pick(t.name, lang))}</h1><p>${escapeHtml(pick(t.desc, lang))}</p></header>
+    <section><h2>${escapeHtml(labels.description)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>
+    ${faq}
+    <footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer>
+  </article></main>`;
 }
 
 // ── JSON-LD 주입 (C) ──────────────────────────────────────────────────────────
@@ -410,13 +459,15 @@ function injectJsonLd(
     howPerformed: detail,
     status: "https://schema.org/ActiveActionStatus",
     provider: CLINIC_PROVIDER,
+    duration: pick(t.time, lang),
+    relevantSpecialty: "https://schema.org/Dermatology",
   };
 
-  const schemas: object[] = [medicalProcedure];
+  const schemas: object[] = [CLINIC_SCHEMA, PHYSICIAN_SCHEMA, medicalProcedure];
 
   // FAQPage 스키마
   if (t.faq) {
-    const list = t.faq[lang] ?? t.faq.ko;
+    const list = pickFaq(t, lang);
     if (Array.isArray(list) && list.length > 0) {
       const faqPage = {
         "@context": "https://schema.org",
@@ -475,8 +526,8 @@ export function registerTreatmentPrerender(app: Express): void {
         let out = injectMeta(html, t, parsed.lang, parsed.slug);
         out = injectJsonLd(out, t, parsed.lang, pageUrl);
         out = out.replace(
-          "<body>",
-          `<body>\n    ${buildNoscript(t, parsed.lang)}`
+          '<div id="root"></div>',
+          `<div id="root">${buildStructuredBody(t, parsed.lang)}</div>`
         );
 
         res.setHeader("Content-Type", "text/html; charset=utf-8");

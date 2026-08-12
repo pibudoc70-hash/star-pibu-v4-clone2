@@ -8,6 +8,12 @@
       "ja": "ウルセラピー プライム",
       "zh": "超声刀 Prime"
     },
+    "category": {
+      "ko": "리프팅·탄력",
+      "en": "Lifting & Firmness",
+      "ja": "リフティング・弾力",
+      "zh": "提升·紧致"
+    },
     "desc": {
       "ko": "리프팅 만족도 1위 울쎄라피의 최신 업그레이드 버전. 더 넓은 면적을 빠르게 커버하며 탁월한 리프팅 효과.",
       "en": "The latest upgrade of the #1 lifting treatment, Ultherapy. Covers a wider area faster with outstanding lifting results.",
@@ -206,6 +212,12 @@
       "en": "Thermage FLX",
       "ja": "サーマジ FLX",
       "zh": "热玛吉 FLX"
+    },
+    "category": {
+      "ko": "리프팅·탄력",
+      "en": "Lifting & Firmness",
+      "ja": "リフティング・弾力",
+      "zh": "提升·紧致"
     },
     "desc": {
       "ko": "4세대 고주파 리프팅의 정점. 피부 깊은 층 콜라겐을 자극해 탄력 개선과 주름 완화에 탁월. 조시형 원장 공식 자문의.",
@@ -406,6 +418,12 @@
       "ja": "目の下脂肪再配置",
       "zh": "眼下脂肪重置术"
     },
+    "category": {
+      "ko": "눈밑·성형",
+      "en": "Under-eye & Contouring",
+      "ja": "目の下・形成",
+      "zh": "眼下·整形"
+    },
     "desc": {
       "ko": "${_n}례 이상의 경험으로 다크서클과 눈밑 볼록함을 동시에 개선. 지방을 재배치하여 자연스러운 눈밑 라인을 만드는 스타피부과 대표 시술.",
       "en": "With over ${_n} cases of experience, this procedure simultaneously improves dark circles and under-eye puffiness by repositioning fat to create a natural under-eye contour — Star Dermatology's signature treatment.",
@@ -605,6 +623,12 @@
       "ja": "ウルセラ",
       "zh": "超声刀"
     },
+    "category": {
+      "ko": "리프팅·탄력",
+      "en": "Lifting & Firmness",
+      "ja": "リフティング・弾力",
+      "zh": "提升·紧致"
+    },
     "desc": {
       "ko": "초음파 에너지로 SMAS층까지 자극하는 정통 리프팅. 자연스러운 피부 탄력 회복.",
       "en": "Classic HIFU lifting that stimulates the SMAS layer for natural skin firmness restoration.",
@@ -750,6 +774,12 @@
       "en": "Pico Laser",
       "ja": "ピコレーザー",
       "zh": "皮秒激光"
+    },
+    "category": {
+      "ko": "색소·문신제거",
+      "en": "Pigmentation & Tattoo Removal",
+      "ja": "色素・タトゥー除去",
+      "zh": "色素·纹身去除"
     },
     "desc": {
       "ko": "기미·잡티·문신 제거에 탁월. 피코초 단위의 초단파 레이저로 색소 분해. 주변 조직 손상 최소화.",
@@ -897,6 +927,12 @@
       "ja": "ルビーピコレーザー",
       "zh": "红宝石皮秒激光"
     },
+    "category": {
+      "ko": "색소·문신제거",
+      "en": "Pigmentation & Tattoo Removal",
+      "ja": "色素・タトゥー除去",
+      "zh": "色素·纹身去除"
+    },
     "desc": {
       "ko": "3세대 피코초 레이저. 기미·잡티·색소 제거에 탁월하며 피부 톤 개선 및 콜라겐 생성 유도.",
       "en": "3rd-generation picosecond laser. Outstanding for melasma, blemish, and pigmentation removal while improving skin tone and stimulating collagen production.",
@@ -1042,6 +1078,12 @@
       "en": "Rosacea Treatment",
       "ja": "顔面紅潮治療",
       "zh": "面部潮红治疗"
+    },
+    "category": {
+      "ko": "여드름·흉터·홍조",
+      "en": "Acne, Scar & Rosacea",
+      "ja": "ニキビ・傷跡・紅潮",
+      "zh": "痤疮·疤痕·潮红"
     },
     "desc": {
       "ko": "Excel V+ 혈관 레이저로 안면홍조, 모세혈관 확장, 붉은 피부를 효과적으로 개선.",

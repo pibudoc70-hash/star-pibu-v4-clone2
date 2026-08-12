@@ -169,6 +169,31 @@ const STATIC_URLS = [
   { loc: `${SITE_URL}/zh-tw/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
 ];
 
+/** client/src/data/treatments/index.ts의 정적 시술 상세 라우트와 동기화한다. */
+export const STATIC_TREATMENT_SLUGS = [
+  "ulthera",
+  "thermage",
+  "under-eye-fat",
+  "ulthera-classic",
+  "pico-laser",
+  "ruby-pico-laser",
+  "rosacea",
+] as const;
+
+export function buildStaticTreatmentSection(): string {
+  return STATIC_TREATMENT_SLUGS.map((slug) => {
+    const koPath = `/treatments/${slug}`;
+    return `
+  <url>
+    <loc>${SITE_URL}${koPath}</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+${hreflangBlock(koPath)}
+  </url>`;
+  }).join("");
+}
+
 function buildUrlEntry(entry: {
   loc: string;
   lastmod: string;
@@ -199,6 +224,7 @@ export function registerSitemapDynamic(app: Express): void {
 
       // 고정 URL 섹션
       const staticSection = STATIC_URLS.map(buildUrlEntry).join("");
+      const staticTreatmentSection = buildStaticTreatmentSection();
 
       // equipment3 세부 페이지 동적 섹션 (5개 언어 hreflang 포함)
       const dynamicSection = items
@@ -249,6 +275,7 @@ export function registerSitemapDynamic(app: Express): void {
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${staticSection}
+  <!-- ── 정적 시술 상세 페이지 ── -->${staticTreatmentSection}
   <!-- ── equipment3 세부 페이지 (DB 동적 생성) ── -->${dynamicSection}
   <!-- ── 공지 상세 페이지 (DB 동적 생성, 최근 100건) ── -->${noticeSection}
 </urlset>`;

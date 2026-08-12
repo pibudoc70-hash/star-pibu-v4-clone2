@@ -8,7 +8,7 @@
  * 미들웨어가 import 대신 이 JSON 을 읽는다.
  *
  * 추출 필드:
- *   slug, name, nameEn, desc, detail, effect, caution,
+ *   slug, name, nameEn, category, desc, detail, effect, caution,
  *   time, recovery, sessions, seoTitle, seoDescription,
  *   seoKeywords, schemaBodyLocation, faq, image
  */
@@ -154,6 +154,7 @@ function processSlug(slug) {
     slug,
     nameEn: extractStringValue(src, "nameEn") || slug,
     name: extractLocalized(src, "name"),
+    category: extractLocalized(src, "category"),
     desc: extractLocalized(src, "desc"),
     detail: extractLocalized(src, "detail"),
     effect: extractLocalized(src, "effect"),

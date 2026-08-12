@@ -36,6 +36,7 @@ export default function Directions() {
   const [copied, setCopied] = useState(false);
   const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
   const mapEmbedUrl = `https://maps.google.com/maps?q=35.1572312,129.0581932&z=17&output=embed&hl=${mapLanguage[lang]}`;
+  const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
 
   const handleCopyAddress = () => {
     // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
@@ -145,16 +146,26 @@ export default function Directions() {
 
                 {/* 길찾기 버튼 */}
                 <div className="space-y-3">
-                  <a href={HOSPITAL.kakaoMapUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300">
-                      {t.directions.kakaoMap}
-                    </Button>
-                  </a>
-                  <a href={HOSPITAL.naverMapUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
-                      {t.directions.naverMap}
-                    </Button>
-                  </a>
+                  {lang === 'ko' ? (
+                    <>
+                      <a href={HOSPITAL.kakaoMapUrl} target="_blank" rel="noopener noreferrer">
+                        <Button className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300">
+                          {t.directions.kakaoMap}
+                        </Button>
+                      </a>
+                      <a href={HOSPITAL.naverMapUrl} target="_blank" rel="noopener noreferrer">
+                        <Button className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
+                          {t.directions.naverMap}
+                        </Button>
+                      </a>
+                    </>
+                  ) : (
+                    <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full bg-[#4285F4] text-white hover:bg-[#3367D6]">
+                        {t.directions.googleMaps}
+                      </Button>
+                    </a>
+                  )}
                 </div>
               </div>
           </div>

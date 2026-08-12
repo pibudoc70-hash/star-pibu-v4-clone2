@@ -103,7 +103,7 @@ export const zhTW: I18nContent = {
   directions: {
     ...zh.directions,
     title: "交通資訊", subtitle: "輕鬆找到我們。", addressLabel: "地址", phoneLabel: "電話", hoursLabel: "診療時間",
-    copyAddress: "複製地址", copiedAddress: "已複製", kakaoMap: "在KakaoMap查看", naverMap: "在Naver地圖查看", mapTitle: "STAR皮膚科位置地圖",
+    copyAddress: "複製地址", copiedAddress: "已複製", kakaoMap: "在KakaoMap查看", naverMap: "在Naver地圖查看", googleMaps: "在 Google 地圖中導航", mapTitle: "STAR皮膚科位置地圖",
     transportationTitle: "交通資訊", carTitle: "自行開車", carDescription: "可使用愛奧城市大廈地下停車場。療程期間提供免費停車服務。",
     parkingFee: "停車費：療程顧客免費", parkingLocation: "停車位置：地下1樓至3樓", accessibleParking: "無障礙停車：設有專用車位",
     transitTitle: "大眾運輸", transitDescription: "搭乘地鐵或公車均可輕鬆抵達。", subwayInfo: "地鐵：西面站5號、7號出口步行3分鐘", busInfo: "公車：西面站站牌附近", taxiInfo: "計程車：請告知愛奧城市大廈",

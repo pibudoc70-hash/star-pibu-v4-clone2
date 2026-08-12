@@ -220,6 +220,7 @@ describe("Directions 다국어·지도 회귀 방지", () => {
       expect(directions.copyAddress).toBeTruthy();
       expect(directions.kakaoMap).toBeTruthy();
       expect(directions.naverMap).toBeTruthy();
+      expect(directions.googleMaps).toBeTruthy();
       expect(directions.mapTitle).toBeTruthy();
     }
   });
@@ -230,6 +231,16 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     expect(src).toMatch(/maps\.google\.com\/maps/);
     expect(src).not.toMatch(/<MapView/);
     expect(src).toMatch(/title=\{t\.directions\.mapTitle\}/);
+  });
+
+  it("외국어 Directions는 언어별 Google Maps 길찾기를, 한국어는 카카오·네이버 지도를 유지한다", () => {
+    const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
+    expect(src).toMatch(/www\.google\.com\/maps\/dir/);
+    expect(src).toMatch(/hl=\$\{mapLanguage\[lang\]\}/);
+    expect(src).toMatch(/lang === 'ko'/);
+    expect(src).toMatch(/t\.directions\.googleMaps/);
+    expect(src).toMatch(/HOSPITAL\.kakaoMapUrl/);
+    expect(src).toMatch(/HOSPITAL\.naverMapUrl/);
   });
 });
 

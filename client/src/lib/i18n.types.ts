@@ -142,6 +142,7 @@ export interface I18nContent {
     copiedAddress: string;
     kakaoMap: string;
     naverMap: string;
+    googleMaps: string;
     transportationTitle: string;
     carTitle: string;
     carDescription: string;

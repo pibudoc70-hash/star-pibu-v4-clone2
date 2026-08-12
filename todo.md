@@ -4405,3 +4405,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] en·ja·zh·zh-tw Directions 빈 지도 렌더링 원인 점검 및 수정
 - [x] Directions 페이지 누락 라벨·버튼·진료 시간 다국어 키 보완
 - [x] 네 언어 Directions 화면의 지도·번역 스크린샷 검증
+
+## 외국어 Directions Google Maps 길찾기 전환 (2026-08-12)
+- [x] en·ja·zh·zh-tw 길찾기 버튼을 언어별 Google Maps 링크로 교체
+- [x] 한국어 카카오·네이버 지도 버튼 유지 및 다국어 링크 회귀 검증

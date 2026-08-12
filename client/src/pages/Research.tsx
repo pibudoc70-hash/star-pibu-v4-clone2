@@ -13,6 +13,7 @@ import MainLayout from "@/components/MainLayout";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, BASE_URL, buildResearcherJsonLd, buildScholarlyArticleListJsonLd, JsonLdSchema } from "@/lib/seoHelpers";
 import { useLang } from "@/contexts/LangContext";
+import { CONTENT_OG_IMAGES } from "@/lib/assetConfig";
 
 // ── 논문 메타데이터 (번역 불가 고정 데이터) ────────────────────────────────────
 interface PaperMeta {
@@ -256,6 +257,9 @@ export default function Research() {
         description={rp.heroDesc}
         canonical={canonicalPath}
         ogUrl={canonicalPath}
+        ogImage={CONTENT_OG_IMAGES.research}
+        ogType="article"
+        ogImageAlt={lang === "ko" ? "스타피부과 연구 및 발표 활동" : "Star Dermatology research and publications"}
         ogLocale={LANG_TO_OG_LOCALE[lang]}
         hreflangs={hreflangs}
         keywords={

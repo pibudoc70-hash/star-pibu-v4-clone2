@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SeoHead from "@/components/SeoHead";
 import { withVersion } from "@/lib/imageUrl";
+import { CONTENT_OG_IMAGES } from "@/lib/assetConfig";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -35,6 +36,9 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
   );
 
   const langPrefix = lang === "ko" ? "" : `/${lang}`;
+  const primaryImage = notice?.images?.[0]
+    ? withVersion(notice.images[0].url, notice.images[0].createdAt)
+    : CONTENT_OG_IMAGES.notice;
 
   const backLabel =
     lang === "ja" ? "一覧に戻る" :
@@ -85,6 +89,9 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
       <SeoHead
         title={`${notice.title} | STAR DERMATOLOGY`}
         description={notice.content.slice(0, 150)}
+        ogImage={primaryImage}
+        ogType="article"
+        ogImageAlt={notice.title}
         noindex={false}
       />
       <Header />
@@ -136,6 +143,16 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
               </Button>
             )}
           </div>
+
+          <figure className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <img
+              src={primaryImage}
+              alt={`${notice.title} 대표 이미지`}
+              className="h-auto w-full object-cover"
+              width={1200}
+              height={630}
+            />
+          </figure>
 
           {/* 본문 */}
           <div

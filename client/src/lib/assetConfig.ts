@@ -25,4 +25,10 @@ export const OG_IMAGES = {
  */
 export const CLINIC_REPRESENTATIVE_IMAGE = OG_IMAGES.ko;
 
+/** 공지·연구 콘텐츠에 첨부 이미지가 없을 때 사용하는 기본 대표 이미지 (1200×630px) */
+export const CONTENT_OG_IMAGES = {
+  notice: "/manus-storage/star-pibu-notice-default-og_ecb315e1.png",
+  research: "/manus-storage/star-pibu-research-default-og_d1b8b02a.png",
+} as const;
+
 /** 히어로 배경 이미지 CDN 기반 URL — hero/constants.ts에서 관리 (여기서는 참조만) */

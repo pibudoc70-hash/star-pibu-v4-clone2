@@ -11,6 +11,8 @@ describe("contentPrerender", () => {
     expect(html).toContain("datePublished");
     expect(html).toContain("dateModified");
     expect(html).toContain("공지 본문입니다.");
+    expect(html).toContain("star-pibu-notice-default-og");
+    expect(html).toContain('property="og:image"');
   });
 
   it("연구 원본 HTML에 Article과 연구 본문을 주입한다", () => {
@@ -18,5 +20,7 @@ describe("contentPrerender", () => {
     expect(html).toContain('"@type":"Article"');
     expect(html).toContain("Tumescent Liposuction");
     expect(html).toContain("datePublished");
+    expect(html).toContain("star-pibu-research-default-og");
+    expect(html).toContain('property="og:image"');
   });
 });

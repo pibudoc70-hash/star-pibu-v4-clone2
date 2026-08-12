@@ -4381,3 +4381,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 공지사항·연구 페이지 Article/NewsArticle JSON-LD 구현
 - [x] sitemap.xml·robots.txt 최신 URL과 연결 상태 검증
 - [x] 대표 시술 상세 URL의 JavaScript 비실행 원본 HTML 증거 및 전체 회귀 검증
+
+## 색인 요청·의료진 검수·콘텐츠 대표 이미지 (2026-08-12)
+- [x] Search Console 주요 URL 색인 생성 요청 또는 우선순위 URL 목록 확정 — 로그인 세션 부재로 우선순위 목록 제공
+- [x] 전체 시술의 적합 대상·지속 기간·회복 기간·주의사항 의료진 검수 문서 생성
+- [x] 공지사항·연구 페이지 기본 대표 이미지 및 OG 이미지 적용
+- [x] 울쎄라 원본 HTML의 본문·JSON-LD 텍스트 증거 제공 및 전체 검증

@@ -4392,3 +4392,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 써마지 FLX No.10의 두 항목을 제외한 의료진 검수 문구의 완료 상태 표시
 - [x] 전용 대표 이미지가 없는 공지사항 URL 목록 추출
 - [x] 실제 시술·장비 데이터 기준 Search Console 재크롤링 우선순위 재검증
+
+## 써마지 FLX 검수 완료 반영 (2026-08-12)
+- [x] 써마지 FLX 주의사항·소요 시간 운영 데이터 및 MedicalProcedure 스키마 반영
+- [x] 검수 문서에서 써마지 FLX 검수 대기 해소 및 79개 전체 완료 상태 재검증

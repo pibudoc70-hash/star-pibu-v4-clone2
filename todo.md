@@ -4346,13 +4346,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 체크포인트 저장 및 배포
 
 ## 코드·보안 개선 설계 (예약·OTP 제외, 2026-08-12)
-- [ ] OAuth state 1회성 nonce와 JWT 앱 소속 검증 설계 확정
-- [ ] 마지막 관리자 강등 방지 트랜잭션 및 회귀 테스트 설계
-- [ ] healthz 오류 응답 및 서버 로그의 민감정보 마스킹 정책 설계
-- [ ] 운영·개발 의존성 취약점 업데이트 순서와 회귀 검증 범위 확정
-- [ ] lint·접근성·React Hooks 경고 축소 계획 수립
-- [ ] ContactSection 지도 정책과 회귀 테스트 계약 정합화 방안 확정
-- [ ] CI pnpm 버전·Vitest 환경 분리·코드 분할 경고 개선안 확정
+- [x] OAuth state 1회성 nonce와 JWT 앱 소속 검증 설계 확정
+- [x] 마지막 관리자 강등 방지 트랜잭션 및 회귀 테스트 설계
+- [x] healthz 오류 응답 및 서버 로그의 민감정보 마스킹 정책 설계
+- [x] 운영·개발 의존성 취약점 업데이트 순서와 회귀 검증 범위 확정
+- [x] lint·접근성·React Hooks 경고 축소 계획 수립
+- [x] ContactSection 지도 정책과 회귀 테스트 계약 정합화 방안 확정
+- [x] CI pnpm 버전·Vitest 환경 분리·코드 분할 경고 개선안 확정
 
 ## 코드·보안 개선 구현 (예약·OTP 제외, 2026-08-12)
 - [x] 변경 전 테스트·lint·build·audit 기준선 기록 및 예약/OTP 변경 경로 차단

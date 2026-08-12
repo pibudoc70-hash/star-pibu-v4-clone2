@@ -1340,14 +1340,14 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 - [x] App.tsx에서 `/treatment/:name` route를 redirect 컴포넌트로 교체 — TreatmentRedirect 컴포넌트 적용
 - [x] redirect 로직: `NAME_TO_SLUG[name]`이 있으면 `/treatments/${slug}`로 301, 없으면 404 — TreatmentRedirect.tsx 구현
-- [ ] redirect 안정화 기간: 30일 이상 운영 후 TreatmentDetail 삭제 검토 — 운영 안정화 기간 대기 중
+- [x] redirect 안정화 기간: 30일 이상 운영 후 TreatmentDetail 삭제 검토 — 사용자 요청으로 중단
 
 #### Step 3 — TreatmentDetail 제거 (PR-34, Step 2 완료 후 30일+)
 
-- [ ] `/treatment/:name` route 제거 — 운영 안정화 후 실행
-- [ ] `client/src/pages/TreatmentDetail.tsx` 파일 삭제 — 운영 안정화 후 실행
-- [ ] App.tsx에서 TreatmentDetail import 제거 — 운영 안정화 후 실행
-- [ ] 관련 테스트 정리 — 운영 안정화 후 실행
+- [x] `/treatment/:name` route 제거 — 사용자 요청으로 중단
+- [x] `client/src/pages/TreatmentDetail.tsx` 파일 삭제 — 사용자 요청으로 중단
+- [x] App.tsx에서 TreatmentDetail import 제거 — 사용자 요청으로 중단
+- [x] 관련 테스트 정리 — 사용자 요청으로 중단
 
 ### slug 매핑 확정 테이블 (PR-31 기준)
 
@@ -2676,10 +2676,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 공통 section-eyebrow / section-title / section-subtitle 클래스 전체 적용
 
 ### P2 — 자산/정책 확인 후 적용
-- [ ] 자연광 의료진 사진 교체 (자산 확보 시)
-- [ ] Before & After 섹션 (정책 확인 후)
-- [ ] 20 Years Timeline 섹션 (연혁 자산 확보 시)
-- [ ] 5초 루프 영상 히어로 (영상 자산 확보 시)
+- [x] 자연광 의료진 사진 교체 (자산 확보 시) — 사용자 요청으로 중단
+- [x] Before & After 섹션 (정책 확인 후) — 사용자 요청으로 중단
+- [x] 20 Years Timeline 섹션 (연혁 자산 확보 시) — 사용자 요청으로 중단
+- [x] 5초 루프 영상 히어로 (영상 자산 확보 시) — 사용자 요청으로 중단
 
 ## 전체 브랜드 리디자인 라운드 2 (2026-06-14)
 
@@ -3178,9 +3178,9 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] server/routers.ts에 keywordsRouter 추가
 
 ### Phase 4: 자동 새로고침 스케줄러
-- [ ] Manus Heartbeat 설정 (매일 자정 또는 정시마다 실행)
-- [ ] 키워드 수집 로직 구현 (Google Trends API 또는 모의 데이터)
-- [ ] 트렌드 점수 계산 로직 (증감률 계산)
+- [x] Manus Heartbeat 설정 (매일 자정 또는 정시마다 실행) — 사용자 요청으로 중단
+- [x] 키워드 수집 로직 구현 (Google Trends API 또는 모의 데이터) — 사용자 요청으로 중단
+- [x] 트렌드 점수 계산 로직 (증감률 계산) — 사용자 요청으로 중단
 - [x] 스케줄러 테스트
 
 ### Phase 5: 관리자 대시보드 UI
@@ -4364,3 +4364,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] iframe 지도 정책에 맞춘 ContactSection 회귀 테스트·SEO 기대값 정합화
 - [x] 예약 외 lint 오류·접근성·React Hooks 경고 및 라우트 import 충돌 개선
 - [x] 전체 테스트·타입 검사·lint·build·audit·브라우저 검증 후 체크포인트 저장
+
+## 남은 운영 보류 항목 검토 (예약·OTP 제외, 2026-08-12)
+- [x] 레거시 치료 URL 30일 운영 관찰의 측정 기준과 종료 조건 확정 — 사용자 요청으로 중단
+- [x] 자연광 의료진 사진·연혁·히어로 영상 자산의 제공 또는 제작 범위 확정 — 사용자 요청으로 중단
+- [x] 키워드 수집 데이터 원천·실행 주기·결과 전달 방식 확정 — 사용자 요청으로 중단
+
+## 크롤러용 본문 프리렌더링 검토 (2026-08-12)
+- [x] JavaScript 비실행 원본 HTML의 주요 본문 텍스트·FAQ 노출 여부 확인
+- [x] 필요한 라우트의 프리렌더링 방식 설계 및 구현
+- [x] 원본 HTML·빌드·크롤러 친화성 회귀 검증

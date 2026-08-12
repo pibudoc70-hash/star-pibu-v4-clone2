@@ -17,6 +17,7 @@ import { initializeWebSocketServer, closeWebSocketServer } from "./websocket";
 import { registerRssFeed } from "../rss";
 import { registerSitemapDynamic } from "../sitemap";
 import { registerTreatmentPrerender } from "./treatmentPrerender";
+import { registerHomePrerender } from "./homePrerender";
 import { registerStaticMapRoute } from "./staticMapRoute"; // [Step67-C]
 import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
@@ -354,6 +355,8 @@ async function startServer() {
   registerRssFeed(app);
   // [Step67-C] 지도 바이너리 GET — 정적 서빙·SPA fallback 보다 먼저 등록
   registerStaticMapRoute(app);
+  // 홈 언어 루트 본문을 원본 HTML에 주입해 JavaScript 미실행 크롤러도 읽을 수 있게 한다.
+  registerHomePrerender(app);
   // [Step61-B] 시술 상세 크롤러 대응. 정적 서빙보다 먼저 등록해야 한다.
   registerTreatmentPrerender(app);
   registerSitemapDynamic(app);

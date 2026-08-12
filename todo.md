@@ -4427,3 +4427,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Physician·MedicalProcedure 구조화 데이터와 크롤러 원본 HTML 반영
 - [x] 마취과전문의 상주 오인 표현 미포함 확인과 원본 HTML·전체 테스트 검증
 - [x] 반영 문구·검수 필요 문항·울쎄라 HTML 스니펫 검수 문서 작성
+
+## 통증 및 마취 안내 페이지 초안 설계 (2026-08-12)
+- [x] `/anesthesia-guide` 정보 구조·문구·검수 경계 제안 작성

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 interface KeywordTrendUpdate {
   type: "new" | "update" | "delete";
@@ -29,6 +29,9 @@ export function useKeywordTrendsWebSocket(
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reconnectAttemptsRef = useRef(0);
+  const connectRef = useRef<() => void>(() => undefined);
+  const shouldReconnectRef = useRef(false);
+  const [isConnected, setIsConnected] = useState(false);
   const maxReconnectAttempts = 5;
   const reconnectDelay = 3000;
 
@@ -46,6 +49,7 @@ export function useKeywordTrendsWebSocket(
       wsRef.current.onopen = () => {
         console.log("[WebSocket] Connected");
         reconnectAttemptsRef.current = 0;
+        setIsConnected(true);
 
         // 관리자인 경우 인증 및 구독
         if (isAdmin) {
@@ -125,14 +129,15 @@ export function useKeywordTrendsWebSocket(
       wsRef.current.onclose = () => {
         console.log("[WebSocket] Disconnected");
         wsRef.current = null;
+        setIsConnected(false);
 
         // 자동 재연결
-        if (reconnectAttemptsRef.current < maxReconnectAttempts) {
+        if (shouldReconnectRef.current && reconnectAttemptsRef.current < maxReconnectAttempts) {
           reconnectAttemptsRef.current++;
           console.log(
             `[WebSocket] Reconnecting... (attempt ${reconnectAttemptsRef.current}/${maxReconnectAttempts})`
           );
-          reconnectTimeoutRef.current = setTimeout(connect, reconnectDelay);
+          reconnectTimeoutRef.current = setTimeout(() => connectRef.current(), reconnectDelay);
         }
       };
     } catch (error) {
@@ -148,6 +153,7 @@ export function useKeywordTrendsWebSocket(
       wsRef.current.close();
       wsRef.current = null;
     }
+    setIsConnected(false);
   }, []);
 
   const send = useCallback((message: WebSocketMessage) => {
@@ -157,15 +163,18 @@ export function useKeywordTrendsWebSocket(
   }, []);
 
   useEffect(() => {
+    shouldReconnectRef.current = true;
+    connectRef.current = connect;
     connect();
 
     return () => {
+      shouldReconnectRef.current = false;
       disconnect();
     };
   }, [connect, disconnect]);
 
   return {
-    isConnected: wsRef.current?.readyState === WebSocket.OPEN,
+    isConnected,
     send,
     disconnect,
     reconnect: connect,

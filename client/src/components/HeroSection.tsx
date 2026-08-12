@@ -32,7 +32,6 @@ import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
-import HeroStarfield from "@/components/hero/HeroStarfield";
 import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
 export { HERO_DELAYS } from "@/components/hero/constants";
 
@@ -112,7 +111,7 @@ function HeroSection() {
 
       {/* 데스크톱: 이미지 배경 */}
       <div className="absolute inset-0 block pointer-events-none overflow-hidden hidden md:block">
-        <picture aria-hidden="true" className="absolute inset-0 block w-full h-full">
+        <picture className="absolute inset-0 block w-full h-full">
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
           {/* 모바일 이미지 소스 (테스트 참조용 — 실제 모바일은 별자리 배경 사용) */}
@@ -131,7 +130,7 @@ function HeroSection() {
 
       {/* 모바일: 병원 사진 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
-        <picture aria-hidden="true" className="absolute inset-0 block w-full h-full">
+        <picture className="absolute inset-0 block w-full h-full">
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img

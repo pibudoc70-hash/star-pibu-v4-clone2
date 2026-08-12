@@ -10,7 +10,7 @@
  *   const scrollAndFocus = useScrollEnd(targetRef, () => btnRef.current?.focus());
  *   scrollAndFocus(); // 호출 시 scrollIntoView + 완료 후 콜백
  */
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 /** scrollend 이벤트 지원 여부 (SSR-safe) */
 const supportsScrollEnd =
@@ -29,7 +29,9 @@ export function useScrollEnd(
 ): () => void {
   // 최신 콜백을 ref로 유지 (stale closure 방지)
   const onSettledRef = useRef(onSettled);
-  onSettledRef.current = onSettled;
+  useEffect(() => {
+    onSettledRef.current = onSettled;
+  }, [onSettled]);
 
   return useCallback(() => {
     const target = targetRef.current;

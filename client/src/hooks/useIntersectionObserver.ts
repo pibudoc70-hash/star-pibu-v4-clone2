@@ -33,13 +33,15 @@ export function useIntersectionObserver(
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const node = ref.current;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           // triggerOnce가 true면 처음 한 번만 감지 후 옵저버 제거
-          if (triggerOnce && ref.current) {
-            observer.unobserve(ref.current);
+          if (triggerOnce && node) {
+            observer.unobserve(node);
           }
         } else if (!triggerOnce) {
           // triggerOnce가 false면 계속 감지
@@ -52,13 +54,13 @@ export function useIntersectionObserver(
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (node) {
+      observer.observe(node);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (node) {
+        observer.unobserve(node);
       }
     };
   }, [threshold, rootMargin, triggerOnce]);

@@ -4439,7 +4439,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## 단계별 품질·성능·CI·의존성 개선 (예약·OTP 제외, 2026-08-12)
 - [x] 단계별 테스트·실제 사이트 확인·로컬 Git 커밋 기반 롤백 상태 보존 방식 확정
-- [ ] 5단계: React lint와 접근성 개선
+- [x] 5단계: React lint와 접근성 개선 — Hooks cleanup/ref 안정화, 모바일 감지 구독 모델 개선, 관리자 트렌드 대시보드 상태·접근성 정합화, Hero 불필요 aria/import 제거. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·홈 렌더링 확인 완료
 - [ ] 6단계: lazy loading과 초기 번들 최적화
 - [ ] 7단계: CI와 테스트 환경 개선
 - [ ] 8단계: 취약 의존성 안전 업데이트

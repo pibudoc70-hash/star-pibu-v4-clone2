@@ -2,11 +2,11 @@
  * client/src/components/KeywordTrendsDashboard.tsx
  * 키워드 트렌드 관리자 대시보드
  */
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useKeywordTrendsWebSocket } from "@/hooks/useKeywordTrendsWebSocket";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -19,32 +19,19 @@ export function KeywordTrendsDashboard() {
   const [category, setCategory] = useState<string | undefined>();
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState(5000); // 5초
-  const [wsConnected, setWsConnected] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
-
-  // WebSocket 연결
-  const { isConnected } = useKeywordTrendsWebSocket(
-    (update) => {
-      console.log("[Dashboard] Keyword update received:", update);
-      setLastUpdate(new Date());
-      refetchLatest();
-    },
-    (stats) => {
-      console.log("[Dashboard] Statistics update received:", stats);
-      setLastUpdate(new Date());
-    },
-    user?.role === "admin"
-  );
-
-  useEffect(() => {
-    setWsConnected(isConnected);
-  }, [isConnected]);
 
   // 최신 트렌드 조회
   const { data: latestTrends, isLoading: isLoadingLatest, refetch: refetchLatest } = trpc.keywords.getLatest.useQuery(
     { limit: 20, category },
     { enabled: true }
   );
+
+  const handleKeywordUpdate = useCallback(() => {
+    void refetchLatest();
+  }, [refetchLatest]);
+
+  // 콜백을 안정화해 렌더링마다 WebSocket이 재연결되거나 중복 refetch되지 않게 한다.
+  useKeywordTrendsWebSocket(handleKeywordUpdate, undefined, user?.role === "admin");
 
   // 상위 트렌딩 키워드 조회
   const { data: topTrending, isLoading: isLoadingTop } = trpc.keywords.getTopTrending.useQuery(
@@ -111,9 +98,9 @@ export function KeywordTrendsDashboard() {
       {/* 필터 및 설정 */}
       <div className="flex gap-4 items-end bg-white p-4 rounded-lg shadow-sm border border-slate-200">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-slate-700 mb-2">카테고리 필터</label>
+          <label htmlFor="keyword-category-filter" className="block text-sm font-medium text-slate-700 mb-2">카테고리 필터</label>
           <Select value={category || ""} onValueChange={(val) => setCategory(val || undefined)}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger id="keyword-category-filter" className="w-full">
               <SelectValue placeholder="모든 카테고리" />
             </SelectTrigger>
             <SelectContent>
@@ -127,9 +114,9 @@ export function KeywordTrendsDashboard() {
         </div>
 
         <div className="flex-1">
-          <label className="block text-sm font-medium text-slate-700 mb-2">자동 새로고침 간격</label>
+          <label htmlFor="keyword-refresh-interval" className="block text-sm font-medium text-slate-700 mb-2">자동 새로고침 간격</label>
           <Select value={refreshInterval.toString()} onValueChange={(val) => setRefreshInterval(parseInt(val))}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger id="keyword-refresh-interval" className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

@@ -18,6 +18,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import fs from "node:fs";
 import path from "node:path";
+import { injectPageSeoMeta } from "./seoMeta";
 
 // ── 타입 정의 ────────────────────────────────────────────────────────────────
 
@@ -245,7 +246,7 @@ function injectMeta(
   const canonical =
     lang === "ko"
       ? `${BASE_URL}/treatments/${slug}`
-      : `${BASE_URL}/${lang}/treatments/${slug}`;
+      : `${BASE_URL}/${lang === "zh-TW" ? "zh-tw" : lang}/treatments/${slug}`;
 
   const et = escapeHtml(title);
   const ed = escapeHtml(desc);
@@ -521,7 +522,7 @@ export function registerTreatmentPrerender(app: Express): void {
         const pageUrl =
           parsed.lang === "ko"
             ? `${BASE_URL}/treatments/${parsed.slug}`
-            : `${BASE_URL}/${parsed.lang}/treatments/${parsed.slug}`;
+            : `${BASE_URL}/${parsed.lang === "zh-TW" ? "zh-tw" : parsed.lang}/treatments/${parsed.slug}`;
 
         let out = injectMeta(html, t, parsed.lang, parsed.slug);
         out = injectJsonLd(out, t, parsed.lang, pageUrl);
@@ -529,6 +530,7 @@ export function registerTreatmentPrerender(app: Express): void {
           '<div id="root"></div>',
           `<div id="root">${buildStructuredBody(t, parsed.lang)}</div>`
         );
+        out = injectPageSeoMeta(out, req.path);
 
         res.setHeader("Content-Type", "text/html; charset=utf-8");
         // [Step65-B] HTML은 배포 즉시 반영되어야 하며, 시술 내용 수정이 최대 10분 지연되던 문제를 없앤다.

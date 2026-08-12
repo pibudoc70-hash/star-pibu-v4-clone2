@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { withVersion } from "@/lib/imageUrl";
+import { getLangPrefix } from "@/lib/localizedPath";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -46,18 +47,20 @@ export default function Notice() {
     },
   });
 
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
+  const langPrefix = getLangPrefix(lang);
 
-  const pageTitle = lang === "ja" ? "お知らせ" : lang === "zh" ? "公告" : lang === "en" ? "Notice" : "공지사항";
+  const pageTitle = lang === "ja" ? "お知らせ" : lang === "zh" ? "公告" : lang === "zh-TW" ? "公告" : lang === "en" ? "Notice" : "공지사항";
   const pageSubtitle =
     lang === "ja" ? "スター皮膚科からのお知らせ" :
     lang === "zh" ? "STAR皮肤科公告" :
+    lang === "zh-TW" ? "STAR皮膚科公告" :
     lang === "en" ? "Announcements from STAR Dermatology" :
     "스타피부과 공지사항";
-  const writeLabel = lang === "ja" ? "新規作成" : lang === "zh" ? "新建" : lang === "en" ? "New Post" : "글쓰기";
+  const writeLabel = lang === "ja" ? "新規作成" : lang === "zh" ? "新建" : lang === "zh-TW" ? "新增公告" : lang === "en" ? "New Post" : "글쓰기";
   const emptyLabel =
     lang === "ja" ? "公開中のお知らせはありません。" :
     lang === "zh" ? "暂无公告。" :
+    lang === "zh-TW" ? "目前沒有公告。" :
     lang === "en" ? "No notices available." :
     "등록된 공지사항이 없습니다.";
 

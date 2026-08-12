@@ -10,9 +10,10 @@ import { useLang } from "@/contexts/LangContext";
 import { Bell, Pin, ArrowLeft, Pencil, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import SeoHead from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { withVersion } from "@/lib/imageUrl";
 import { CONTENT_OG_IMAGES } from "@/lib/assetConfig";
+import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
 
 function formatDate(date: Date | string) {
   const d = new Date(date);
@@ -35,7 +36,8 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
     { enabled: !isNaN(noticeId) }
   );
 
-  const langPrefix = lang === "ko" ? "" : `/${lang}`;
+  const langPrefix = getLangPrefix(lang);
+  const canonical = getLocalizedUrl(lang, `/notice/${noticeId}`);
   const primaryImage = notice?.images?.[0]
     ? withVersion(notice.images[0].url, notice.images[0].createdAt)
     : CONTENT_OG_IMAGES.notice;
@@ -43,16 +45,19 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
   const backLabel =
     lang === "ja" ? "一覧に戻る" :
     lang === "zh" ? "返回列表" :
+    lang === "zh-TW" ? "返回列表" :
     lang === "en" ? "Back to List" :
     "목록으로";
   const editLabel =
     lang === "ja" ? "編集" :
     lang === "zh" ? "编辑" :
+    lang === "zh-TW" ? "編輯" :
     lang === "en" ? "Edit" :
     "수정";
   const pinnedLabel =
     lang === "ja" ? "固定" :
     lang === "zh" ? "置顶" :
+    lang === "zh-TW" ? "置頂" :
     lang === "en" ? "Pinned" :
     "고정";
 
@@ -89,6 +94,10 @@ export default function NoticeDetail({ id }: NoticeDetailProps) {
       <SeoHead
         title={`${notice.title} | STAR DERMATOLOGY`}
         description={notice.content.slice(0, 150)}
+        canonical={canonical}
+        ogUrl={canonical}
+        ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
+        hreflangs={buildHreflangs(`/notice/${noticeId}`)}
         ogImage={primaryImage}
         ogType="article"
         ogImageAlt={notice.title}

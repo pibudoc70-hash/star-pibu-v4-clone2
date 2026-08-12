@@ -142,12 +142,15 @@ function Router() {
         <Route path="/notice/:id/edit"    component={({ params }) => <NoticeEdit id={params.id} />} />
         <Route path="/notice/:id"         component={({ params }) => <NoticeDetail id={params.id} />} />
         <Route path="/notice"             component={Notice} />
-        {(["en", "ja", "zh"] as const).map(l => [
-          <Route key={`${l}-notice-new`}    path={`/${l}/notice/new`}         component={() => <NoticeEdit id="new" />} />,
-          <Route key={`${l}-notice-edit`}   path={`/${l}/notice/:id/edit`}    component={({ params }) => <NoticeEdit id={params.id} />} />,
-          <Route key={`${l}-notice-detail`} path={`/${l}/notice/:id`}         component={({ params }) => <NoticeDetail id={params.id} />} />,
-          <Route key={`${l}-notice`}        path={`/${l}/notice`}             component={Notice} />,
-        ])}
+        {(["en", "ja", "zh", "zh-TW"] as const).map(l => {
+          const prefix = l === "zh-TW" ? "zh-tw" : l;
+          return [
+            <Route key={`${l}-notice-new`}    path={`/${prefix}/notice/new`}         component={() => <NoticeEdit id="new" />} />,
+            <Route key={`${l}-notice-edit`}   path={`/${prefix}/notice/:id/edit`}    component={({ params }) => <NoticeEdit id={params.id} />} />,
+            <Route key={`${l}-notice-detail`} path={`/${prefix}/notice/:id`}         component={({ params }) => <NoticeDetail id={params.id} />} />,
+            <Route key={`${l}-notice`}        path={`/${prefix}/notice`}             component={Notice} />,
+          ];
+        })}
         <Route>
           <MapErrorBoundary>
             <Suspense fallback={<MapLoadingFallback />}>

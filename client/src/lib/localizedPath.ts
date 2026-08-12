@@ -17,10 +17,11 @@ export const SITE_ORIGIN = "https://star-pibu.com";
 /**
  * 언어 코드에 따른 URL 경로 접두사를 반환합니다.
  * - ko: "" (접두사 없음)
- * - en/ja/zh: "/{lang}"
+ * - en/ja/zh: "/{lang}", zh-TW: "/zh-tw"
  */
 export function getLangPrefix(lang: Lang): string {
-  return lang === "ko" ? "" : `/${lang}`;
+  if (lang === "ko") return "";
+  return lang === "zh-TW" ? "/zh-tw" : `/${lang}`;
 }
 
 /**

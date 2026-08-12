@@ -27,6 +27,7 @@ import {
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
 } from "./SeoHead";
+import { getLocalizedUrl } from "@/lib/localizedPath";
 
 describe("OG_IMAGE_LOCALIZED", () => {
   const SUPPORTED_LANGS = ["ko", "en", "ja", "zh"] as const;
@@ -122,6 +123,10 @@ describe("ALL_OG_LOCALES", () => {
     expect(ALL_OG_LOCALES).toHaveLength(5);
     expect(ALL_OG_LOCALES).toContain("zh_TW");
   });
+
+  it("영문·일문·간체·번체 중국어 locale alternate를 모두 제공한다", () => {
+    expect(ALL_OG_LOCALES).toEqual(expect.arrayContaining(["en_US", "ja_JP", "zh_CN", "zh_TW"]));
+  });
 });
 
 describe("COMMON_HREFLANGS", () => {
@@ -164,12 +169,13 @@ describe("COMMON_HREFLANGS", () => {
 });
 
 describe("buildHreflangs", () => {
-  it("koPath만 전달하면 en/ja/zh는 기본 경로를 사용해야 한다", () => {
+  it("koPath만 전달하면 모든 언어가 해당 서브페이지 경로를 사용해야 한다", () => {
     const result = buildHreflangs("/about");
     expect(result.find((h) => h.hreflang === "ko")!.href).toBe(`${BASE_URL}/about`);
-    expect(result.find((h) => h.hreflang === "en")!.href).toBe(`${BASE_URL}/en`);
-    expect(result.find((h) => h.hreflang === "ja")!.href).toBe(`${BASE_URL}/ja`);
-    expect(result.find((h) => h.hreflang === "zh")!.href).toBe(`${BASE_URL}/zh`);
+    expect(result.find((h) => h.hreflang === "en")!.href).toBe(`${BASE_URL}/en/about`);
+    expect(result.find((h) => h.hreflang === "ja")!.href).toBe(`${BASE_URL}/ja/about`);
+    expect(result.find((h) => h.hreflang === "zh")!.href).toBe(`${BASE_URL}/zh/about`);
+    expect(result.find((h) => h.hreflang === "zh-TW")!.href).toBe(`${BASE_URL}/zh-tw/about`);
     expect(result.find((h) => h.hreflang === "x-default")!.href).toBe(`${BASE_URL}/about`);
   });
 
@@ -179,11 +185,18 @@ describe("buildHreflangs", () => {
     expect(result.find((h) => h.hreflang === "en")!.href).toBe(`${BASE_URL}/en`);
     expect(result.find((h) => h.hreflang === "ja")!.href).toBe(`${BASE_URL}/ja`);
     expect(result.find((h) => h.hreflang === "zh")!.href).toBe(`${BASE_URL}/zh`);
+    expect(result.find((h) => h.hreflang === "zh-TW")!.href).toBe(`${BASE_URL}/zh-tw`);
   });
 
   it("결과에 6개 항목(ko, en, ja, zh, zh-TW, x-default)이 있어야 한다", () => {
     const result = buildHreflangs("/");
     expect(result).toHaveLength(6);
+  });
+});
+
+describe("localized canonical URL", () => {
+  it("번체 중국어 canonical은 /zh-tw의 소문자 경로를 사용한다", () => {
+    expect(getLocalizedUrl("zh-TW", "/research")).toBe(`${BASE_URL}/zh-tw/research`);
   });
 });
 

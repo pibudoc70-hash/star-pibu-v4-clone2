@@ -19,7 +19,7 @@
  */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
-import SeoHead, { COMMON_HREFLANGS } from '@/components/SeoHead';
+import SeoHead, { buildHreflangs } from '@/components/SeoHead';
 import { Button } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
@@ -56,7 +56,7 @@ export default function Directions() {
         title={`${t.directions.title} | STAR DERMATOLOGY`}
         description={t.directions.subtitle}
         canonical={`https://star-pibu.com${lang === 'ko' ? '' : `/${lang.toLowerCase()}`}/directions`}
-        hreflangs={COMMON_HREFLANGS}
+        hreflangs={buildHreflangs("/directions")}
         pageType="treatment"
       />
       {/* 페이지 헤더 */}

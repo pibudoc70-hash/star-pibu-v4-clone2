@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getNoticeById, getNoticeImages } from "../db/notices";
 import type { Notice } from "../../drizzle/schema";
+import { injectPageSeoMeta } from "./seoMeta";
 
 const BASE_URL = "https://star-pibu.com";
 const RESEARCH_PUBLISHED = "2026-06-08";
@@ -48,12 +49,13 @@ export function buildNoticePrerenderedHtml(template: string, notice: Notice, pat
   };
   const jsonLd = JSON.stringify(article).replace(/</g, "\\u003c");
   const body = `<main id="crawler-content"><article><header><h1>${escapeHtml(notice.title)}</h1><time datetime="${toIso(notice.createdAt)}">${notice.createdAt.toISOString().slice(0, 10)}</time></header><figure><img src="${escapeHtml(image)}" alt="${escapeHtml(notice.title)} 대표 이미지" width="1200" height="630" /></figure><div>${escapeHtml(notice.content).replace(/\n/g, "<br />")}</div></article></main>`;
-  return injectOgImage(template
+  const rendered = injectOgImage(template
     .replace(/<title>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(`${notice.title} | STAR DERMATOLOGY`)}</title>`)
     .replace(/<meta\s+name="description"[^>]*\/?>/i, `<meta data-rh="true" name="description" content="${escapeHtml(notice.content.slice(0, 180))}" />`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>/i, `<link data-rh="true" rel="canonical" href="${url}" />`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="notice-article">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`), image, notice.title);
+  return injectPageSeoMeta(rendered, pathname);
 }
 
 export function buildResearchPrerenderedHtml(template: string, pathname: string): string {
@@ -72,12 +74,13 @@ export function buildResearchPrerenderedHtml(template: string, pathname: string)
     "Syringomas Treated by Intralesional Insulated Needles without Epidermal Damage — Annals of Dermatology, 2010",
   ];
   const body = `<main id="crawler-content"><article><header><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p><time datetime="${RESEARCH_PUBLISHED}">${RESEARCH_PUBLISHED}</time></header><figure><img src="${RESEARCH_DEFAULT_OG_IMAGE}" alt="스타피부과 연구 및 발표 활동 대표 이미지" width="1200" height="630" /></figure><section><h2>주요 연구 논문</h2><ul>${papers.map((paper) => `<li>${escapeHtml(paper)}</li>`).join("")}</ul></section></article></main>`;
-  return injectOgImage(template
+  const rendered = injectOgImage(template
     .replace(/<title>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(title)}</title>`)
     .replace(/<meta\s+name="description"[^>]*\/?>/i, `<meta data-rh="true" name="description" content="${escapeHtml(description)}" />`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>/i, `<link data-rh="true" rel="canonical" href="${url}" />`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="research-article">${JSON.stringify(article).replace(/</g, "\\u003c")}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`), RESEARCH_DEFAULT_OG_IMAGE, title);
+  return injectPageSeoMeta(rendered, pathname);
 }
 
 export function registerContentPrerender(app: Express): void {

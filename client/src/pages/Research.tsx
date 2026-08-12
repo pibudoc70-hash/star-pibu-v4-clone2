@@ -14,6 +14,7 @@ import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, BASE_URL, buildResearcherJsonLd, buildScholarlyArticleListJsonLd, JsonLdSchema } from "@/lib/seoHelpers";
 import { useLang } from "@/contexts/LangContext";
 import { CONTENT_OG_IMAGES } from "@/lib/assetConfig";
+import { getLocalizedUrl } from "@/lib/localizedPath";
 
 // ── 논문 메타데이터 (번역 불가 고정 데이터) ────────────────────────────────────
 interface PaperMeta {
@@ -190,7 +191,7 @@ export default function Research() {
     ...rp.papers.find((p) => p.id === meta.id),
   }));
 
-  const canonicalPath = `${BASE_URL}${lang === "ko" ? "/research" : `/${lang}/research`}`;
+  const canonicalPath = getLocalizedUrl(lang, "/research");
   const hreflangs = buildHreflangs("/research", "/en/research", "/ja/research", "/zh/research");
 
   // AEO: 논문 목록에 현재 언어 제목 주입

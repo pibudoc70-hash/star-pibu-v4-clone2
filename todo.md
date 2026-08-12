@@ -4409,3 +4409,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 외국어 Directions Google Maps 길찾기 전환 (2026-08-12)
 - [x] en·ja·zh·zh-tw 길찾기 버튼을 언어별 Google Maps 링크로 교체
 - [x] 한국어 카카오·네이버 지도 버튼 유지 및 다국어 링크 회귀 검증
+
+## 전체 SEO 메타·이미지·성능 점검 (2026-08-12)
+- [x] 전 페이지 hreflang 6종·개별 canonical·OG locale alternate 전수 점검 및 보완
+- [x] 시술·장비·콘텐츠 이미지 alt와 lazy loading 정책 점검 및 보완
+- [x] Lighthouse 성능 감사와 Core Web Vitals 결과 검증

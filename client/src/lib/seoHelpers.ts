@@ -96,19 +96,21 @@ export const ALL_OG_LOCALES = ["ko_KR", "en_US", "ja_JP", "zh_CN", "zh_TW"];
  *   - subset 페이지에서는 x-default를 영어 경로로 설정하는 것이 올바릅니다.
  *
  * @param koPath  한국어 경로 (e.g. "/about") — x-default로도 사용됨
- * @param enPath  영어 경로 (e.g. "/en/about"), 미지정 시 "/en"
- * @param jaPath  일본어 경로 (e.g. "/ja/about"), 미지정 시 "/ja"
- * @param zhPath  중국어 경로 (e.g. "/zh/about"), 미지정 시 "/zh"
+ * @param enPath  영어 경로 (e.g. "/en/about"), 미지정 시 koPath 기반으로 생성
+ * @param jaPath  일본어 경로 (e.g. "/ja/about"), 미지정 시 koPath 기반으로 생성
+ * @param zhPath  중국어 경로 (e.g. "/zh/about"), 미지정 시 koPath 기반으로 생성
+ * @param zhTWPath 번체 중국어 경로 (e.g. "/zh-tw/about"), 미지정 시 koPath 기반으로 생성
  */
 export function buildHreflangs(
   koPath: string,
   enPath?: string,
   jaPath?: string,
   zhPath?: string,
+  zhTWPath?: string,
 ): { hreflang: string; href: string }[] {
   // [R17-P2] 런타임 가드: path는 '/'(루트) 또는 '/'로 시작해야 함
   if (process.env.NODE_ENV !== "production") {
-    const paths = [koPath, enPath, jaPath, zhPath].filter(Boolean) as string[];
+    const paths = [koPath, enPath, jaPath, zhPath, zhTWPath].filter(Boolean) as string[];
     const invalid = paths.filter((p) => p !== "/" && !p.startsWith("/"));
     if (invalid.length > 0) {
       console.warn(
@@ -137,13 +139,21 @@ export function buildHreflangs(
         `중국어 경로는 '/zh/...' 형식이어야 합니다.`
       );
     }
+    if (zhTWPath?.startsWith("/") && !zhTWPath.startsWith("/zh-tw")) {
+      console.warn(
+        `[buildHreflangs] zhTWPath가 '/zh-tw'로 시작하지 않습니다: ${zhTWPath}. ` +
+        `번체 중국어 경로는 '/zh-tw/...' 형식이어야 합니다.`
+      );
+    }
   }
+  const localizedPath = (prefix: "en" | "ja" | "zh" | "zh-tw", explicitPath?: string) =>
+    explicitPath ?? (koPath === "/" ? `/${prefix}` : `/${prefix}${koPath}`);
   return [
     { hreflang: "ko", href: `${BASE_URL}${koPath}` },
-    { hreflang: "en", href: `${BASE_URL}${enPath ?? "/en"}` },
-    { hreflang: "ja", href: `${BASE_URL}${jaPath ?? "/ja"}` },
-    { hreflang: "zh", href: `${BASE_URL}${zhPath ?? "/zh"}` },
-    { hreflang: "zh-TW", href: `${BASE_URL}/zh-tw` },
+    { hreflang: "en", href: `${BASE_URL}${localizedPath("en", enPath)}` },
+    { hreflang: "ja", href: `${BASE_URL}${localizedPath("ja", jaPath)}` },
+    { hreflang: "zh", href: `${BASE_URL}${localizedPath("zh", zhPath)}` },
+    { hreflang: "zh-TW", href: `${BASE_URL}${localizedPath("zh-tw", zhTWPath)}` },
     // x-default 정송: koPath가 항상 x-default로 설정됨
     // subset 페이지(예: ForeignGuide)에서는 이 함수 대신 hreflangs prop에 배열을 직접 전달할 것
     { hreflang: "x-default", href: `${BASE_URL}${koPath}` },

@@ -14,6 +14,7 @@ import { en } from "../../client/src/lib/i18n.en";
 import { ja } from "../../client/src/lib/i18n.ja";
 import { zh } from "../../client/src/lib/i18n.zh";
 import { zhTW } from "../../client/src/lib/i18n.zh-TW";
+import { injectPageSeoMeta } from "./seoMeta";
 
 const BASE_URL = "https://star-pibu.com";
 
@@ -147,11 +148,12 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
     })),
   }).replace(/</g, "\\u003c");
 
-  return template
+  const rendered = template
     .replace(/<html([^>]*)>/i, `<html$1 lang="${lang}">`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>(\s*)/i, `<link data-rh="true" rel="canonical" href="${canonical}" />$1`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="home-faq">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">\n    ${noscriptBody}\n  </div>`);
+  return injectPageSeoMeta(rendered, pathname);
 }
 
 export function registerHomePrerender(app: Express): void {

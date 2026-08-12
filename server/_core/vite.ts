@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+import { injectPageSeoMeta } from "./seoMeta";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -50,7 +51,7 @@ export async function setupVite(app: Express, server: Server) {
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`
       );
-      const page = await vite.transformIndexHtml(url, template);
+      const page = injectPageSeoMeta(await vite.transformIndexHtml(url, template), req.originalUrl);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
@@ -104,6 +105,11 @@ export function serveStatic(app: Express) {
     }
     // SPA fallback: index.html은 항상 최신 버전 제공
     res.setHeader("Cache-Control", "no-cache, must-revalidate");
-    res.sendFile(path.resolve(distPath, "index.html"));
+    try {
+      const template = fs.readFileSync(path.resolve(distPath, "index.html"), "utf8");
+      res.type("html").send(injectPageSeoMeta(template, req.originalUrl));
+    } catch {
+      res.status(500).send("Unable to load application shell");
+    }
   });
 }

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getEquipment3BySlug } from "../db/equipment3";
 import type { Equipment3Item } from "../../drizzle/schema";
+import { injectPageSeoMeta } from "./seoMeta";
 
 const BASE_URL = "https://star-pibu.com";
 type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -109,12 +110,13 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure]).replace(/</g, "\\u003c");
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section><footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;
 
-  return template
+  const rendered = template
     .replace(/<title>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(`${name} | 스타피부과`)}</title>`)
     .replace(/<meta\s+name="description"[^>]*\/?>/i, `<meta data-rh="true" name="description" content="${escapeHtml(localized(item, "desc", lang))}" />`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>/i, `<link data-rh="true" rel="canonical" href="${canonical}" />`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="equipment-medical">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  return injectPageSeoMeta(rendered, pathName);
 }
 
 export function registerEquipmentPrerender(app: Express): void {

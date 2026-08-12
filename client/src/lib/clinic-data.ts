@@ -14,6 +14,7 @@
  */
 
 import { doctors } from "@/lib/doctors-data";
+import { LIFTING_DIRECT_CARE_DESCRIPTION } from "@shared/liftingPositioning";
 
 // ── 공통 workLocation (전 원장 동일) ────────────────────────────────────────────
 const _WORK_LOCATION = {
@@ -46,7 +47,7 @@ export const CLINIC_DOCTORS = doctors.map((doc) => {
     slug: doc.slug,
     url: `https://star-pibu.com/#dr-${doc.slug}`,
     image: doc.image.replace(/\.[^.]+$/, ".png"), // webp → png (스키마용)
-    description: doc.schemaDescription ?? doc.intro[0] ?? "",
+    description: `${doc.schemaDescription ?? doc.intro[0] ?? ""} ${LIFTING_DIRECT_CARE_DESCRIPTION}`.trim(),
     sameAs: doc.sameAs ?? [
       "https://www.youtube.com/@starpibu",
       "https://blog.naver.com/starpibu",
@@ -54,6 +55,7 @@ export const CLINIC_DOCTORS = doctors.map((doc) => {
     ],
     credentials: credentialTexts,
     specialties: [...doc.specialties],
+    knowsAbout: [...doc.specialties, "리프팅 시술", "통증 관리"],
     alumniOf: doc.alumniOf ?? [],
     memberOf: doc.memberOf ?? [],
     award: doc.award ?? [],

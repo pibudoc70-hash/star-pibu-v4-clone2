@@ -5,6 +5,7 @@ import path from "node:path";
 import { getEquipment3BySlug } from "../db/equipment3";
 import type { Equipment3Item } from "../../drizzle/schema";
 import { injectPageSeoMeta } from "./seoMeta";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
 
 const BASE_URL = "https://star-pibu.com";
 type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -34,8 +35,9 @@ const CLINIC_AND_PHYSICIAN = [
     name: "조시형",
     alternateName: "Cho Si-hyung",
     jobTitle: "피부과 전문의 · 의학박사",
-    description: "20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다.",
+    description: `20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다. ${LIFTING_DIRECT_CARE_DESCRIPTION}`,
     medicalSpecialty: "Dermatology",
+    knowsAbout: ["리프팅 시술", "통증 관리"],
     memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
     worksFor: { "@id": `${BASE_URL}/#medical-clinic` },
   },
@@ -101,14 +103,17 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     [text.recovery, localized(item, "recovery", lang)], [text.caution, localized(item, "caution", lang)], [text.sessions, localized(item, "sessions", lang)],
   ].filter(([, value]) => value);
   const canonical = `${BASE_URL}${pathName}`;
+  const hasLiftingPainCare = isPainSensitiveLifting(item.slug) || isPainSensitiveLifting(item.name);
   const procedure = {
     "@context": "https://schema.org", "@type": "MedicalProcedure", name, alternateName: item.nameEn || item.name,
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
-    preparation: localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
+    preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#medical-clinic` }, relevantSpecialty: "https://schema.org/Dermatology",
   };
-  const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure]).replace(/</g, "\\u003c");
-  const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section><footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;
+  const liftingFaq = hasLiftingPainCare ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: LIFTING_FAQS[lang].map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
+  const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure, ...(liftingFaq ? [liftingFaq] : [])]).replace(/</g, "\\u003c");
+  const faqBody = hasLiftingPainCare ? `<section><h2>리프팅 시술과 통증 관리 FAQ</h2><dl>${LIFTING_FAQS[lang].map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
+  const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;
 
   const rendered = template
     .replace(/<title>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(`${name} | 스타피부과`)}</title>`)

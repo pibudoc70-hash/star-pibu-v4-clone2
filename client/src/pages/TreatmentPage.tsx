@@ -15,6 +15,7 @@ import type { SupportedLang } from "@/lib/i18nText";
 import { getTreatmentBySlug, getAllTreatments } from "@/data/treatments";
 import type { TreatmentI18n } from "@/data/treatments";
 import { getReservationPath } from "@/lib/reservationPath";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
 
 // ── lang → URL prefix 매핑 ────────────────────────────────────────────────────
 const LANG_PREFIX: Record<SupportedLang, string> = {
@@ -33,6 +34,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
   const caution = pickLocalized(t.caution, lang);
   const recovery = pickLocalized(t.recovery, lang);
   const bodyLocation = t.schemaBodyLocation ? pickLocalized(t.schemaBodyLocation, lang) : "피부";
+  const hasLiftingPainCare = isPainSensitiveLifting(t.slug);
 
   const medicalProcedure = {
     "@context": "https://schema.org",
@@ -44,7 +46,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     "image": t.image,
     "url": pageUrl,
     "bodyLocation": bodyLocation,
-    "preparation": caution,
+    "preparation": hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : caution,
     "followup": `회복 기간: ${recovery}. ${caution}`,
     "howPerformed": detail,
     "status": "https://schema.org/ActiveActionStatus",
@@ -71,7 +73,10 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     }
   };
 
-  const faqItems = pickLocalizedFaq(t.faq, lang);
+  const faqItems = [
+    ...pickLocalizedFaq(t.faq, lang),
+    ...(hasLiftingPainCare ? LIFTING_FAQS[lang] : []),
+  ];
   if (faqItems.length === 0) return [medicalProcedure];
 
   const faqPage = {
@@ -227,7 +232,10 @@ export default function TreatmentPage() {
   const seoTitle = pickLocalized(treatment.seoTitle, currentLang);
   const seoDescription = pickLocalized(treatment.seoDescription, currentLang);
   const seoKeywords = pickLocalized(treatment.seoKeywords, currentLang);
-  const faqItems = pickLocalizedFaq(treatment.faq, currentLang);
+  const faqItems = [
+    ...pickLocalizedFaq(treatment.faq, currentLang),
+    ...(isPainSensitiveLifting(treatment.slug) ? LIFTING_FAQS[currentLang] : []),
+  ];
 
   const effectItems = treatmentEffect.split(",").map((s) => s.trim()).filter(Boolean);
   const cautionItems = treatmentCaution.split(".").map((s) => s.trim()).filter(Boolean);

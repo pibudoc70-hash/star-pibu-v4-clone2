@@ -14,7 +14,9 @@ import { trpc } from "@/lib/trpc";
 import { Loader, MessageCircle, Calendar } from "lucide-react";
 import { lazy, Suspense, useEffect } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { LiftingFaqSection } from "@/components/LiftingPositioning";
 import { withVersion } from "@/lib/imageUrl";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -140,6 +142,7 @@ export default function Equipment3Detail() {
   const localizedTime     = getText(item.time,    item.timeEn,    item.timeJa,    item.timeZh);
   const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
   const localizedSessions = getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh);
+  const hasLiftingPainCare = isPainSensitiveLifting(slug) || isPainSensitiveLifting(item.name);
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -170,7 +173,7 @@ export default function Equipment3Detail() {
     ? `${item.name}, ${item.nameEn || ""}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의`
     : `${localizedName}, Busan dermatology, Star Dermatology, Seomyeon`);
 
-  const jsonLd = [{
+  const medicalProcedureJsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
     "name": localizedName,
@@ -195,9 +198,21 @@ export default function Equipment3Detail() {
       },
     },
     "bodyLocation": LABELS.bodyLoc,
-    "preparation": localizedCaution || "",
+    "preparation": hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : (localizedCaution || ""),
     "followup": localizedRecovery || "",
-  }];
+  };
+  const jsonLd = [
+    medicalProcedureJsonLd,
+    ...(hasLiftingPainCare ? [{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": LIFTING_FAQS[lang].map(({ question, answer }) => ({
+        "@type": "Question",
+        "name": question,
+        "acceptedAnswer": { "@type": "Answer", "text": answer },
+      })),
+    }] : []),
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -407,6 +422,8 @@ export default function Equipment3Detail() {
             </div>
           </section>
         )}
+
+        {hasLiftingPainCare && <LiftingFaqSection lang={lang} />}
 
         {/* 추가 이미지 갤러리 */}
         {images.length > 0 && (

@@ -19,6 +19,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import fs from "node:fs";
 import path from "node:path";
 import { injectPageSeoMeta } from "./seoMeta";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
 
 // ── 타입 정의 ────────────────────────────────────────────────────────────────
 
@@ -123,8 +124,9 @@ const PHYSICIAN_SCHEMA = {
   name: "조시형",
   alternateName: "Cho Si-hyung",
   jobTitle: "피부과 전문의 · 의학박사",
-  description: "20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다.",
+  description: `20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다. ${LIFTING_DIRECT_CARE_DESCRIPTION}`,
   medicalSpecialty: "Dermatology",
+  knowsAbout: ["리프팅 시술", "통증 관리"],
   memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
   worksFor: { "@id": `${BASE_URL}/#medical-clinic` },
 } as const;
@@ -413,7 +415,11 @@ function buildStructuredBody(t: TreatmentSeoRecord, lang: Lang): string {
     [labels.time, pick(t.time, lang)],
     [labels.sessions, pick(t.sessions, lang)],
   ].filter(([, value]) => value);
-  const list = pickFaq(t, lang);
+  const hasLiftingPainCare = isPainSensitiveLifting(t.slug);
+  const list = [
+    ...pickFaq(t, lang),
+    ...(hasLiftingPainCare ? LIFTING_FAQS[lang] : []),
+  ];
   const faq = list.length
     ? `<section><h2>${escapeHtml(labels.faq)}</h2>${list.map((item) => `<h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p>`).join("\n")}</section>`
     : "";
@@ -444,6 +450,7 @@ function injectJsonLd(
   const caution = pick(t.caution, lang);
   const recovery = pick(t.recovery, lang);
   const bodyLocation = pick(t.schemaBodyLocation, lang) || "피부";
+  const hasLiftingPainCare = isPainSensitiveLifting(t.slug);
 
   const medicalProcedure = {
     "@context": "https://schema.org",
@@ -455,7 +462,7 @@ function injectJsonLd(
     image: t.image,
     url: pageUrl,
     bodyLocation,
-    preparation: caution,
+    preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : caution,
     followup: recovery ? `회복 기간: ${recovery}. ${caution}` : caution,
     howPerformed: detail,
     status: "https://schema.org/ActiveActionStatus",
@@ -468,12 +475,15 @@ function injectJsonLd(
 
   // FAQPage 스키마
   if (t.faq) {
-    const list = pickFaq(t, lang);
+    const list = [
+      ...pickFaq(t, lang),
+      ...(hasLiftingPainCare ? LIFTING_FAQS[lang] : []),
+    ];
     if (Array.isArray(list) && list.length > 0) {
       const faqPage = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: list.slice(0, 5).map((item) => ({
+        mainEntity: list.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: {

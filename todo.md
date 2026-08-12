@@ -4420,3 +4420,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] sitemap 등록 URL과 실제 공개 라우트·응답 상태 대조
 - [x] 홈·Footer·Directions·JSON-LD·다국어 NAP 정보 일치 감사
 - [x] 네이버 플레이스·Google Business Profile용 한글·영문 표준 NAP 텍스트 작성
+
+## 직접 리프팅 시술·통증별 마취 관리 포지셔닝 (2026-08-12)
+- [x] 홈페이지 역피라미드 요약과 리프팅 FAQ의 확정 문구 반영
+- [x] 원장 소개의 직접 상담·시술·마취 관리 문구 반영
+- [x] Physician·MedicalProcedure 구조화 데이터와 크롤러 원본 HTML 반영
+- [x] 마취과전문의 상주 오인 표현 미포함 확인과 원본 HTML·전체 테스트 검증
+- [x] 반영 문구·검수 필요 문항·울쎄라 HTML 스니펫 검수 문서 작성

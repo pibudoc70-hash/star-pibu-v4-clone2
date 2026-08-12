@@ -9,6 +9,7 @@ const _n = CLINIC_STATS.eyeBagCases.toLocaleString("zh-TW");
 import Header from "@/components/Header";
 import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
+import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
 import PhilosophySection from "@/components/PhilosophySection";
 import DoctorsSection from "@/components/DoctorsSection";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
@@ -109,6 +110,7 @@ export default function LandingZHTW() {
       {/* Main Content - identical to Home.tsx */}
       <main>
         <HeroSection />
+        <LiftingPositioningSummary />
         <div style={{ background: "#FFFFFF" }}>
           <SpecialEventSection />
         </div>

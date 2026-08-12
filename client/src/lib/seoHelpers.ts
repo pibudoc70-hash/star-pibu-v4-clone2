@@ -327,6 +327,7 @@ export function buildClinicJsonLd(
         award?: readonly string[];
         workLocation?: { name: string; address: string };
         availableService?: readonly string[];
+        knowsAbout?: readonly string[];
       };
       const physician: Record<string, unknown> = {
         "@type": "Physician",
@@ -344,7 +345,7 @@ export function buildClinicJsonLd(
           { "@type": "MedicalSpecialty", name: "Dermatology" },
           ...doc.specialties.map((s) => ({ "@type": "MedicalSpecialty", name: s })),
         ],
-        knowsAbout: [...doc.specialties],
+        knowsAbout: d.knowsAbout ? [...d.knowsAbout] : [...doc.specialties],
         hasCredential: doc.credentials.map((cred) => ({
           "@type": "EducationalOccupationalCredential",
           credentialCategory: cred,

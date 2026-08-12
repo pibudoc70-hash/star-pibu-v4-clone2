@@ -17,6 +17,7 @@ import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, b
 import { CLINIC_DOCTORS } from "@/lib/clinic-data";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
 // [P1-OPT] SpecialEventSection, DoctorsSection을 lazy import로 전환
 // 폴드 아래 섹션이므로 초기 로딩 시 필요 없음
@@ -518,6 +519,7 @@ export default function Home() {
       <main>
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
+        <LiftingPositioningSummary />
         <MobileBottomCTA />
 
         {/* 1-B. 첨단재생의료 실시기관 배너 — SPECIAL EVENT 위 */}

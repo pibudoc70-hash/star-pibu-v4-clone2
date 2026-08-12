@@ -132,6 +132,29 @@ export interface I18nContent {
     /** 구글맵 마커 팝업: 도보 시간 */
     mapPopupWalkLabel: string;
   };
+  directions: {
+    title: string;
+    subtitle: string;
+    addressLabel: string;
+    phoneLabel: string;
+    hoursLabel: string;
+    copyAddress: string;
+    copiedAddress: string;
+    kakaoMap: string;
+    naverMap: string;
+    transportationTitle: string;
+    carTitle: string;
+    carDescription: string;
+    parkingFee: string;
+    parkingLocation: string;
+    accessibleParking: string;
+    transitTitle: string;
+    transitDescription: string;
+    subwayInfo: string;
+    busInfo: string;
+    taxiInfo: string;
+    mapTitle: string;
+  };
   doctors: {
     label: string;
     title: string;
@@ -487,4 +510,3 @@ export interface I18nContent {
     concerns: string[];
   };
 }
-

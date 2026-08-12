@@ -104,6 +104,13 @@ export const ko: I18nContent = {
     mapPopupExitLabel: "서면역 5·7번 출구",
     mapPopupWalkLabel: "도보 2분",
   },
+  directions: {
+    title: "찾아오시는 길", subtitle: "쉽게 찾아오세요.", addressLabel: "주소", phoneLabel: "전화", hoursLabel: "진료 시간",
+    copyAddress: "주소 복사", copiedAddress: "복사됨", kakaoMap: "카카오맵으로 보기", naverMap: "네이버지도로 보기", mapTitle: "스타피부과 위치 지도",
+    transportationTitle: "교통 안내", carTitle: "자동차", carDescription: "아이온시티빌딩 지하 주차장을 이용하실 수 있습니다. 시술 시간 동안 무료 주차 서비스를 제공합니다.",
+    parkingFee: "주차 요금: 무료 (시술 고객)", parkingLocation: "주차 위치: 지하 1층~3층", accessibleParking: "장애인 주차: 별도 구역 준비",
+    transitTitle: "대중교통", transitDescription: "지하철과 버스로 편리하게 오실 수 있습니다.", subwayInfo: "지하철: 서면역 5·7번 출구 도보 3분", busInfo: "버스: 서면역 정류장 인근", taxiInfo: "택시: 아이온시티빌딩 기준",
+  },
   doctors: {
     label: "Doctors",
     title: "피부과전문의 3인",

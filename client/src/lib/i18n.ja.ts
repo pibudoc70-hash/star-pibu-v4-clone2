@@ -104,6 +104,13 @@ export const ja: I18nContent = {
     mapPopupExitLabel: "5·7番出口",
     mapPopupWalkLabel: "徒歩2分",
   },
+  directions: {
+    title: "アクセス", subtitle: "お気軽にお越しください。", addressLabel: "住所", phoneLabel: "電話", hoursLabel: "診療時間",
+    copyAddress: "住所をコピー", copiedAddress: "コピーしました", kakaoMap: "KakaoMapで見る", naverMap: "Naver Mapで見る", mapTitle: "スター皮膚科の所在地地図",
+    transportationTitle: "交通案内", carTitle: "お車でお越しの方", carDescription: "アイオンシティビル地下駐車場をご利用いただけます。施術時間中は無料駐車サービスをご提供します。",
+    parkingFee: "駐車料金：施術のお客様は無料", parkingLocation: "駐車場所：地下1階〜3階", accessibleParking: "障がい者用駐車場：専用区画あり",
+    transitTitle: "公共交通機関", transitDescription: "地下鉄・バスで便利にお越しいただけます。", subwayInfo: "地下鉄：西面駅5・7番出口から徒歩3分", busInfo: "バス：西面駅バス停付近", taxiInfo: "タクシー：アイオンシティビルをお伝えください",
+  },
   doctors: {
     label: "医師紹介",
     title: "皮膚科専門医のご紹介",

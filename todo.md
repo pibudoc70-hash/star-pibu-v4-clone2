@@ -4400,3 +4400,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 공지 대표 이미지 적용 위치 검증 (2026-08-12)
 - [x] 목록·상세·OG/Twitter·NewsArticle에서의 대표 이미지 적용 경로 확인
 - [x] 기본 대표 이미지가 적용된 실제 화면과 권장 규격 검증
+
+## 다국어 Directions 지도·번역 수정 (2026-08-12)
+- [x] en·ja·zh·zh-tw Directions 빈 지도 렌더링 원인 점검 및 수정
+- [x] Directions 페이지 누락 라벨·버튼·진료 시간 다국어 키 보완
+- [x] 네 언어 Directions 화면의 지도·번역 스크린샷 검증

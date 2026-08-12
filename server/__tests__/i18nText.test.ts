@@ -207,6 +207,32 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
   });
 });
 
+describe("Directions 다국어·지도 회귀 방지", () => {
+  it("5개 언어 모두 Directions의 필수 라벨과 버튼 텍스트를 제공한다", async () => {
+    const { i18n } = await import("../../client/src/lib/i18n");
+    for (const lang of ["ko", "en", "ja", "zh", "zh-TW"] as const) {
+      const directions = i18n[lang].directions;
+      expect(directions.title).toBeTruthy();
+      expect(directions.subtitle).toBeTruthy();
+      expect(directions.addressLabel).toBeTruthy();
+      expect(directions.phoneLabel).toBeTruthy();
+      expect(directions.hoursLabel).toBeTruthy();
+      expect(directions.copyAddress).toBeTruthy();
+      expect(directions.kakaoMap).toBeTruthy();
+      expect(directions.naverMap).toBeTruthy();
+      expect(directions.mapTitle).toBeTruthy();
+    }
+  });
+
+  it("Directions는 불안정한 MapView 대신 접근 가능한 지도 iframe을 사용한다", () => {
+    const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
+    expect(src).toMatch(/<iframe/);
+    expect(src).toMatch(/maps\.google\.com\/maps/);
+    expect(src).not.toMatch(/<MapView/);
+    expect(src).toMatch(/title=\{t\.directions\.mapTitle\}/);
+  });
+});
+
 // ─────────────────────────────────────────────────────────────────────────────
 // P1 수정 회귀 방지 테스트 (PR-QA-P1)
 // ─────────────────────────────────────────────────────────────────────────────

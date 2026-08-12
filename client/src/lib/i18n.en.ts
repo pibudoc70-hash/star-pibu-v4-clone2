@@ -104,6 +104,13 @@ export const en: I18nContent = {
     mapPopupExitLabel: "Exit 5·7",
     mapPopupWalkLabel: "2 min walk",
   },
+  directions: {
+    title: "Directions", subtitle: "Find us with ease.", addressLabel: "Address", phoneLabel: "Phone", hoursLabel: "Clinic Hours",
+    copyAddress: "Copy Address", copiedAddress: "Copied", kakaoMap: "View on KakaoMap", naverMap: "View on Naver Map", mapTitle: "STAR Dermatology location map",
+    transportationTitle: "Getting Here", carTitle: "By Car", carDescription: "Underground parking is available at ION City Building. Complimentary parking is provided during your treatment.",
+    parkingFee: "Parking fee: Complimentary for treatment visitors", parkingLocation: "Parking location: Basement levels B1–B3", accessibleParking: "Accessible parking: Dedicated spaces available",
+    transitTitle: "Public Transit", transitDescription: "The clinic is easy to reach by subway or bus.", subwayInfo: "Subway: 3-minute walk from Seomyeon Station Exits 5 or 7", busInfo: "Bus: Near Seomyeon Station stop", taxiInfo: "Taxi: Ask for ION City Building",
+  },
   doctors: {
     label: "Our Doctors",
     title: "Meet Our Specialists",

@@ -104,6 +104,13 @@ export const zh: I18nContent = {
     mapPopupExitLabel: "5·7号出口",
     mapPopupWalkLabel: "步行2分钟",
   },
+  directions: {
+    title: "交通指南", subtitle: "轻松找到我们。", addressLabel: "地址", phoneLabel: "电话", hoursLabel: "诊疗时间",
+    copyAddress: "复制地址", copiedAddress: "已复制", kakaoMap: "在KakaoMap查看", naverMap: "在Naver地图查看", mapTitle: "星皮肤科位置地图",
+    transportationTitle: "交通信息", carTitle: "自驾", carDescription: "可使用爱恩城大厦地下停车场。就诊期间提供免费停车服务。",
+    parkingFee: "停车费用：就诊顾客免费", parkingLocation: "停车位置：地下1层至3层", accessibleParking: "无障碍停车：设有专用车位",
+    transitTitle: "公共交通", transitDescription: "乘坐地铁或公交均可方便到达。", subwayInfo: "地铁：西面站5号、7号出口步行3分钟", busInfo: "公交：西面站站点附近", taxiInfo: "出租车：请说明爱恩城大厦",
+  },
   doctors: {
     label: "医生介绍",
     title: "皮肤科专科医生介绍",

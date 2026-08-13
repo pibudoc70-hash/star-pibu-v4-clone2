@@ -4477,3 +4477,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Equipment3 공개 상세·서버 프리렌더 원본 HTML·FAQPage JSON-LD에 저장 FAQ를 동일하게 반영
 - [x] 첨부 리프팅 FAQ의 검수 완료 항목만 9개 장비 상세에 저장하고 의료·운영 검수 필요 문구는 제외 — 대상 불일치가 확인된 복합 시술 FAQ #2는 보류하고, slug 매핑이 확인된 8개 단일 시술만 저장
 - [ ] 타입·라우터·프리렌더·관리자·공개 상세·원본 HTML 통합 검증 후 로컬 롤백 커밋 생성 — check·lint·75 files/1,511 tests·개발 상세 FAQ/FAQPage 검증은 통과. production build는 Vite chunk rendering 중 3회 SIGTERM(143)으로 종료돼 환경 원인 추가 확인 필요
+- [x] 복합 리프팅·리쥬란 상세의 실제 slug·명칭·기존 본문을 확인하고 FAQ #2의 정확한 반영 대상 확정 — 실제 대상은 `ultherapy-thermage-lift-rejuran`, 장비명은 ‘울써마지 리프팅 + 리쥬란’으로 확인
+- [x] FAQ #2를 고민·병행 판단 기준·개별 상담 필요성을 담은 검색 친화적·의료 신중 문구로 작성해 FAQPage JSON-LD와 함께 검증 — 공개 상세의 question·answer와 `FAQPage.mainEntity` 1건에 같은 내용이 렌더링되는 것을 개발 환경에서 확인

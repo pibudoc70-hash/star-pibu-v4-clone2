@@ -521,10 +521,15 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
     >
       {/* 이미지 영역 */}
       <div
-        className="relative overflow-hidden cursor-pointer"
+        className="relative overflow-hidden"
         style={{ height: "190px", background: "#f0f4f8" }}
-        onClick={() => setMobileOverlay((v) => !v)}
       >
+        <button
+          type="button"
+          onClick={() => setMobileOverlay((v) => !v)}
+          className="absolute inset-0 z-10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
+          aria-label={`${t.name} 상세 정보 보기`}
+        />
         <OptimizedImage
           src={t.image}
           alt={t.name}
@@ -536,7 +541,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
         />
         {t.badge && (
           <span
-            className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white z-10"
+            className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white z-20 pointer-events-none"
             style={{ background: t.badgeColor }}
           >
             {t.badge}
@@ -544,7 +549,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
         )}
         {/* 호버 오버레이 (PC: hover, 모바일: 탭 토글) */}
         <div
-          className={`absolute inset-0 flex flex-col justify-end p-4 transition-all duration-300 ${
+          className={`absolute inset-0 z-20 flex flex-col justify-end p-4 transition-all duration-300 pointer-events-none ${
             mobileOverlay ? "opacity-100" : "opacity-0 group-hover:opacity-100"
           }`}
           style={{
@@ -572,7 +577,7 @@ function TreatmentCard({ t, i, price = "상담 후 결정" }: { t: BestTreatment
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all hover:brightness-110 active:scale-95"
+            className="pointer-events-auto flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-bold transition-all hover:brightness-110 active:scale-95"
             style={{ background: "#FEE500", color: "#3C1E1E" }}
           >
             <MessageCircle size={12} />

@@ -4453,6 +4453,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 접근성: WelcomePopup 배경 닫기 영역을 시맨틱 button으로 교체하고, dialog 레이어·Escape 닫기·포커스 복귀를 유지. 해당 컴포넌트 lint 경고 0·타입 검사 통과
 - [x] 접근성: ManagementDevicesSection 모달 배경 닫기 영역을 시맨틱 button으로 교체하고, dialog 역할을 콘텐츠 레이어로 이동. 해당 컴포넌트 lint 경고 0·타입 검사 통과
 - [x] 접근성: EventShareButton의 전파 차단을 캡처 단계로 이동해 공유 버튼·패널의 클릭 동작을 유지하면서 해당 컴포넌트 lint 경고 0·타입 검사 통과
+- [x] 접근성: TreatmentsSection 이미지 탭 토글을 시맨틱 button으로 분리하고, 카카오 상담 링크는 pointer-events 레이어로 보존. 해당 컴포넌트 lint 경고 0·타입 검사 통과
 - [x] UX: YouTube·지도 외부 임베드 실패 시 사용자가 대체 링크로 진행할 수 있도록 안내 개선 — 데이터 오류·빈 결과·모달 iframe 실패 시 재시도 및 공식 YouTube 채널/영상 링크 제공. 지도는 기존 카카오·네이버 길찾기 대체 링크 유지
 - [x] 접근성·영상 UX: Equipment2 연관 시술 카드를 button으로 전환하고, Equipment2·Equipment3·홈 YouTube 모달에 키보드 포커스 및 새 탭 YouTube 대체 링크 추가. youtu.be/watch/embed URL을 `youtube-nocookie.com/embed`로 정규화해 실제 울쎄라피 프라임 상세 DOM에서 embed·fallback URL 확인
 - [x] 홈 UX: 히어로 CTA의 우선순위를 정리하고 반복 신뢰 지표의 정보 역할을 분리 — 전체 폭 네이버 예약을 primary CTA로, 카카오 상담·전화는 secondary CTA로 유지해 불필요한 레이아웃 변경을 피함. 전화 팝업의 토요일 진료시간을 09:30–15:00으로 정정하고 Escape·배경 버튼으로 닫을 수 있는 dialog로 개선

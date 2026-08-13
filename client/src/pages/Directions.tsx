@@ -60,7 +60,7 @@ export default function Directions() {
         pageType="treatment"
       />
       {/* 페이지 헤더 */}
-      <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12">
+      <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12 md:pt-32 md:pb-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.directions.title}</h1>
           <p className="text-gray-600 mt-4">{t.directions.subtitle}</p>

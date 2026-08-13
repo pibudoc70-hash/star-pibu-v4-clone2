@@ -4460,3 +4460,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 상단 ‘오시는 길’을 `/directions` 표준 경로로 연결하고 보조 메뉴의 중복 항목 ‘오시는 길’을 제거
 - [x] 메뉴 중복 정리 후 타입·lint·헤더 실제 경로 및 보조 메뉴 항목 검증, 로컬 Git 롤백 커밋 생성 — 타입·lint(오류 0)·diff check 통과. 실제 헤더에서 보조 메뉴가 시설안내·외국어 안내·연구 및 발표 활동·공지사항 4개만 표시되며, 주 메뉴 클릭으로 `/equipment3`·`/directions` 이동 확인
 - [ ] 검증 완료된 메뉴·품질 개선 변경 사항을 운영 환경에 배포하고 `star-pibu.com` 실제 반영 확인
+- [x] PC `/directions` 상단 제목·서브타이틀이 고정 헤더에 가려지지 않도록 제목 영역 여백 수정 — desktop(md 이상) 제목 영역 상단 여백을 8rem으로 확장해 고정 헤더와 분리
+- [x] Directions 수정 후 타입·PC 실제 화면·다국어 및 모바일 회귀 확인, 로컬 Git 롤백 커밋 생성 — 타입·lint(오류 0)·diff check 통과. 개발 PC 화면에서 header 하단 60px, 제목 상단 128px로 68px 간격 확보. 모바일 기본 `py-12` 및 다국어 콘텐츠 경로는 변경하지 않음

@@ -4445,7 +4445,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 8단계: 취약 의존성 안전 업데이트 — moderate 이상 audit 0건을 확인하고, 위험 없는 dev test runner 패치만 Vitest/@vitest-ui 4.1.9→4.1.10으로 업데이트. major 업데이트(Vite 8, Streamdown 2, jsdom 30 등)는 audit 필요성이 없어 보류. tsc·lint(오류 0)·Vitest 72 files/1,499 tests·build·audit 0건·홈 렌더링 확인 완료
 - [x] 9단계: 최종 통합 검증 및 종합 보고 — frozen lockfile 설치, tsc, lint(오류 0·경고 220), 전체 Vitest 72 files/1,499 tests, production build, moderate 이상 audit 0건, diff check를 통과. 홈·울쎄라 상세·영문 Directions의 개발 렌더링을 재확인했고, 예약·OTP 관련 변경 파일 0건을 확인 완료
 - [x] GitHub 백업 디렉터리의 구식 상태 표시 원인과 활성 동기화 영향 점검 — `.github/star-pibu-github-backup/workflows/ci.yml`은 2026-07-02 기준의 단순 보관본으로 nested Git 저장소가 아니며 활성 Actions 경로가 아님. 실제 GitHub `main`은 로컬 `main`의 조상(원격 `6e4f377`, 로컬 `cadd478`)으로 5~9단계 로컬 커밋이 아직 원격에 반영되지 않은 상태임을 확인
-- [ ] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인 — 두 번의 일반 push가 `.github/workflows/ci.yml`의 workflows 권한 부족으로 거부됨. GitHub 로그인 후 Actions workflows 쓰기 권한 승인 필요
+- [ ] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인 — 사용자 권한 설정 완료 후 GitHub App/PAT 인증과 workflow 파일을 포함한 일반 push 재시도 예정
 - [x] 예약·OTP 제외 코드베이스의 개발·디자인 개선 기회 감사 및 우선순위 권고안 작성 — 정적 후기·평점 표시, placeholder VideoObject JSON-LD, lint 경고 220건, 대형 Home/CSS/정적 데이터 파일, 테스트 coverage 부재, 디자인 토큰·동작 일관성을 점검 완료
 - [x] 신뢰성: 정적 후기·평점 UI와 다국어 후기 데이터를 제거하고 중립적인 외부 리뷰 링크로 대체 — 출처 검증이 되지 않은 static 리뷰·평점은 링크로 대체하지 않고 완전히 제거, MedicalClinic/LocalBusiness JSON-LD에서도 review·aggregateRating 제거
 - [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지
@@ -4489,3 +4489,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 순차 FAQ 반영 후 전체 타입·테스트·build·운영 원본 HTML 검증 및 체크포인트 배포 — 타입·lint·75 files/1,511 tests·production build·audit 통과. FAQ는 60개 상세페이지·207문항 저장, 운영 미라드라이 원본 HTML과 FAQPage JSON-LD 3건 확인. FAQ 렌더링 코드는 체크포인트 06309420에 이미 운영 배포되어 있어 이후 DB FAQ 저장분도 즉시 반영됨
 - [x] 모바일 공통 시술·장비 상세 헤더에서 고정 헤더와 제목이 겹치는 원인을 확인하고 모든 상세에 적용되는 여백 수정 — 고정 Header가 상단 레이아웃 여백을 제공하지 않아 Equipment3 공통 히어로가 헤더 뒤에서 시작하던 원인 확인. 모바일 `pt-[calc(8rem+env(safe-area-inset-top))] pb-12`, 데스크톱 `md:py-12`로 분기
 - [x] 모바일 대표 상세·PC·다국어 회귀 검증 후 로컬 롤백 저장 및 운영 배포 — 모바일 여백 회귀 테스트 추가, 타입·lint(오류 0)·75 files/1,512 tests·production build·audit·diff check 통과. 공통 Equipment3 경로이므로 전체 장비 상세 및 다국어 상세에 적용
+- [x] 네이버·카카오 외부 예약 원칙과 예약·OTP 비수정 범위를 보존한 현재 사이트 개발·디자인 재감사 수행
+- [x] 실제 운영·개발 화면, 주요 공개 경로, 모바일·접근성·SEO·성능·관리자 FAQ 흐름을 점검하고 근거 수집
+- [x] 기존 기능을 훼손하지 않는 개선 후보를 위험도·효과·수정 범위별로 분류하여 단계별 권고안 작성

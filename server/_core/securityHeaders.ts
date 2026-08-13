@@ -98,6 +98,8 @@ function buildCSP(isDev: boolean): string {
     self,
     "https://www.youtube.com",
     "https://youtube.com",
+    // 시술 상세의 개인정보 보호 YouTube 임베드
+    "https://www.youtube-nocookie.com",
     "https://challenges.cloudflare.com",
     // Google Maps iframe embed
     "https://maps.google.com",

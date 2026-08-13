@@ -52,6 +52,7 @@ describe("securityHeadersMiddleware", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
     const csp = res._headers["Content-Security-Policy"];
     expect(csp).toContain("https://www.youtube.com");
+    expect(csp).toContain("https://www.youtube-nocookie.com");
   });
 
   it("CSP에 Cloudflare Turnstile script-src가 포함되어야 한다", () => {

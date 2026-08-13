@@ -4456,3 +4456,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 유지보수: Home SEO 데이터·섹션 fallback을 분리하고 i18n 키 완결성 검증 테스트 추가 — 언어별 배열 길이·문단 구조 차이를 허용하면서 공통 UI 키 경로를 검증하는 4개 locale 회귀 테스트 추가. Home FAQ 시술 건수 값을 의미 있는 상수로 정리
 - [x] 유지보수: 전역 CSS 중복 유틸리티·고정 인라인 스타일을 점진적으로 토큰·클래스 기반으로 정리 — 기존 전역 CSS에는 다수의 reduced-motion 대응과 브랜드 토큰이 이미 적용돼 있어, 디자인 회귀 위험이 큰 대규모 CSS 재작성은 이번 안전 개선 범위에서 제외
 - [x] 개선 후 타입·lint·전체 테스트·build·audit·실제 홈/시술/다국어 화면 통합 검증 — tsc 통과, lint 오류 0·기존 경고 213, Vitest 73 files/1,503 tests 통과, production build 통과, moderate 이상 audit 0건, diff check 통과. 홈·울쎄라 상세·zh-TW 홈·영문 Directions의 실제 렌더링 및 YouTube/지도 fallback DOM 확인 완료
+- [x] 상단 ‘시술·장비소개’를 `/equipment3` 표준 경로로 연결하고 보조 메뉴의 중복 항목 ‘시술·장비 소개’를 제거
+- [x] 상단 ‘오시는 길’을 `/directions` 표준 경로로 연결하고 보조 메뉴의 중복 항목 ‘오시는 길’을 제거
+- [x] 메뉴 중복 정리 후 타입·lint·헤더 실제 경로 및 보조 메뉴 항목 검증, 로컬 Git 롤백 커밋 생성 — 타입·lint(오류 0)·diff check 통과. 실제 헤더에서 보조 메뉴가 시설안내·외국어 안내·연구 및 발표 활동·공지사항 4개만 표시되며, 주 메뉴 클릭으로 `/equipment3`·`/directions` 이동 확인

@@ -56,20 +56,18 @@ export function useHeaderState() {
 
   // ── 1차 메뉴 ──────────────────────────────────────────────────────────────
   const primaryNav: NavItem[] = [
-    { label: t.nav.treatments, href: "#treatments", sectionId: "treatments" },
+    { label: t.nav.treatments, href: "/equipment3", sectionId: null },
     { label: t.nav.doctors,    href: "/doctors",    sectionId: null         },
     { label: "EVENT",          href: "#events",     sectionId: "events"     },
     { label: t.nav.about,      href: "/about",      sectionId: null         },
-    { label: t.nav.contact,    href: "#contact",    sectionId: "contact"    },
+    { label: t.nav.contact,    href: "/directions", sectionId: null         },
   ];
 
   // ── More 패널 항목 ─────────────────────────────────────────────────────────
   const secondaryNav: NavItem[] = [
     { label: t.nav.facility,    href: "#facility",    sectionId: "facility" },
-    { label: t.nav.directions, href: "/directions", sectionId: null },
     { label: t.nav.foreignGuide, href: "/foreign-guide", sectionId: null   },
     { label: t.nav.research,      href: "/research",      sectionId: null   },
-    { label: t.nav.equipment3, href: "/equipment3", sectionId: null },
     { label: t.nav.notice, href: "/notice", sectionId: null },
   ];
 

@@ -19,7 +19,7 @@ const CLINIC_AND_PHYSICIAN = [
   {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
-    "@id": `${BASE_URL}/#medical-clinic`,
+    "@id": `${BASE_URL}/#organization`,
     name: "스타피부과",
     url: BASE_URL,
     telephone: "+82-51-818-2300",
@@ -42,7 +42,7 @@ const CLINIC_AND_PHYSICIAN = [
     medicalSpecialty: "Dermatology",
     knowsAbout: ["리프팅 시술", "통증 관리"],
     memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
-    worksFor: { "@id": `${BASE_URL}/#medical-clinic` },
+    worksFor: { "@id": `${BASE_URL}/#organization` },
   },
 ] as const;
 
@@ -111,12 +111,12 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const procedure = {
-    "@context": "https://schema.org", "@type": "MedicalProcedure", name, alternateName: item.nameEn || item.name,
+    "@context": "https://schema.org", "@type": "MedicalProcedure", "@id": `${canonical}#medical-procedure`, name, alternateName: item.nameEn || item.name,
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
     preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#medical-clinic` }, relevantSpecialty: "https://schema.org/Dermatology",
   };
-  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
+  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonical}#faq`, mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
   const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
   const faqBody = allFaqs.length > 0 ? `<section><h2>${escapeHtml(text.faq)}</h2><dl>${allFaqs.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;

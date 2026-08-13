@@ -221,6 +221,7 @@ export default function Equipment3Detail() {
   const medicalProcedureJsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
+    "@id": `${pageUrl}#medical-procedure`,
     "name": localizedName,
     "alternateName": lang === "ko" ? (item.nameEn || "") : item.name,
     "description": localizedDesc || "",
@@ -251,6 +252,7 @@ export default function Equipment3Detail() {
     ...(allFaqs.length > 0 ? [{
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
       "mainEntity": allFaqs.map(({ question, answer }) => ({
         "@type": "Question",
         "name": question,

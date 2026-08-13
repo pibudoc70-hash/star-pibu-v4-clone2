@@ -24,6 +24,14 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("FAQPage");
   });
 
+  it("병원·시술·FAQ 엔터티 ID를 클라이언트 스키마와 같은 표준 URL로 연결한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
+
+    expect(html).toContain('"@id":"https://star-pibu.com/#organization"');
+    expect(html).toContain('"@id":"https://star-pibu.com/equipment3/rejuran#medical-procedure"');
+    expect(html).toContain('"@id":"https://star-pibu.com/equipment3/rejuran#faq"');
+  });
+
   it("장비 상세는 관리 반영을 위해 짧은 공유 캐시 재검증 정책을 사용한다", () => {
     expect(EQUIPMENT_PRERENDER_CACHE_CONTROL).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=120");
   });

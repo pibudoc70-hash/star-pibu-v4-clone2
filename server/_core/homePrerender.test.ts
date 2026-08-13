@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildHomePrerenderedHtml } from "./homePrerender";
+import { buildHomePrerenderedHtml, HOME_PRERENDER_CACHE_CONTROL } from "./homePrerender";
 
 const template = `<!doctype html><html lang="ko"><head><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="root"></div></body></html>`;
 
@@ -24,5 +24,9 @@ describe("homePrerender", () => {
 
   it("홈 언어 루트가 아닌 경로는 처리하지 않는다", () => {
     expect(buildHomePrerenderedHtml(template, "/about")).toBeNull();
+  });
+
+  it("브라우저 최신성을 유지하면서 공유 캐시 재검증 정책을 사용한다", () => {
+    expect(HOME_PRERENDER_CACHE_CONTROL).toBe("public, max-age=0, s-maxage=300, stale-while-revalidate=600");
   });
 });

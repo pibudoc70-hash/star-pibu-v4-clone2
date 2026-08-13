@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildEquipmentPrerenderedHtml } from "./equipmentPrerender";
+import { buildEquipmentPrerenderedHtml, EQUIPMENT_PRERENDER_CACHE_CONTROL } from "./equipmentPrerender";
 
 const template = `<!doctype html><html><head><title>스타피부과</title><meta name="description" content="" /><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="root"></div></body></html>`;
 const item = {
@@ -22,5 +22,9 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("저장 FAQ 질문");
     expect(html).toContain("저장 FAQ 답변");
     expect(html).toContain("FAQPage");
+  });
+
+  it("장비 상세는 관리 반영을 위해 짧은 공유 캐시 재검증 정책을 사용한다", () => {
+    expect(EQUIPMENT_PRERENDER_CACHE_CONTROL).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=120");
   });
 });

@@ -9,6 +9,8 @@ import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTIN
 import { getLocalizedEquipmentFaqs } from "../../shared/equipmentFaq";
 
 const BASE_URL = "https://star-pibu.com";
+// 관리자에서 상세 정보를 수정할 수 있으므로 장비 페이지는 홈보다 짧은 공유 캐시를 사용한다.
+export const EQUIPMENT_PRERENDER_CACHE_CONTROL = "public, max-age=0, s-maxage=60, stale-while-revalidate=120";
 type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 let cachedHtml: string | null = null;
@@ -137,7 +139,7 @@ export function registerEquipmentPrerender(app: Express): void {
       const item = parsed ? await getEquipment3BySlug(parsed.slug) : undefined;
       if (!parsed || !template || !item || item.isActive !== "1") return next();
       res.setHeader("Content-Type", "text/html; charset=utf-8");
-      res.setHeader("Cache-Control", "no-cache, must-revalidate");
+      res.setHeader("Cache-Control", EQUIPMENT_PRERENDER_CACHE_CONTROL);
       res.send(buildEquipmentPrerenderedHtml(template, item, parsed.lang, req.path));
     } catch (error) {
       console.error("[EquipmentPrerender] failed:", error instanceof Error ? error.message : error);

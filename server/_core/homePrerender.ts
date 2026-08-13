@@ -18,6 +18,8 @@ import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY } from "../../shared/liftingPositioning";
 
 const BASE_URL = "https://star-pibu.com";
+// 브라우저는 항상 최신 HTML을 확인하되, CDN은 짧게 재사용해 반복 프리렌더 비용을 줄인다.
+export const HOME_PRERENDER_CACHE_CONTROL = "public, max-age=0, s-maxage=300, stale-while-revalidate=600";
 
 type Locale = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
@@ -174,7 +176,7 @@ export function registerHomePrerender(app: Express): void {
       if (!html) return next();
 
       res.setHeader("Content-Type", "text/html; charset=utf-8");
-      res.setHeader("Cache-Control", "no-cache, must-revalidate");
+      res.setHeader("Cache-Control", HOME_PRERENDER_CACHE_CONTROL);
       res.send(html);
     } catch (error) {
       console.error("[HomePrerender] failed:", error instanceof Error ? error.message : error);

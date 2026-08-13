@@ -4487,3 +4487,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 보톡스·필러·스킨부스터 FAQ를 실제 상세·FAQPage JSON-LD·크롤러 원본 HTML에 반영 — 보톡스·필러·윤곽 주사·리쥬란·스킨부스터·스컬트라 등 11개 상세에 33문항을 저장하고 보톡스 공개 상세 FAQ 3건 렌더링 확인
 - [x] 바디·제모 FAQ를 실제 상세·FAQPage JSON-LD·크롤러 원본 HTML에 반영 — 실제 등록된 인접 카테고리(눈밑 2개, 줄기세포 3개, 액취증·다한증 3개, 손발톱무좀 4개, 아토피 1개)에 각 3문항을 저장. 미등록 백반증·UVB와 첨부 원문에 없는 바디·제모는 별도 데이터 등록 후 반영 필요
 - [x] 순차 FAQ 반영 후 전체 타입·테스트·build·운영 원본 HTML 검증 및 체크포인트 배포 — 타입·lint·75 files/1,511 tests·production build·audit 통과. FAQ는 60개 상세페이지·207문항 저장, 운영 미라드라이 원본 HTML과 FAQPage JSON-LD 3건 확인. FAQ 렌더링 코드는 체크포인트 06309420에 이미 운영 배포되어 있어 이후 DB FAQ 저장분도 즉시 반영됨
+- [x] 모바일 공통 시술·장비 상세 헤더에서 고정 헤더와 제목이 겹치는 원인을 확인하고 모든 상세에 적용되는 여백 수정 — 고정 Header가 상단 레이아웃 여백을 제공하지 않아 Equipment3 공통 히어로가 헤더 뒤에서 시작하던 원인 확인. 모바일 `pt-[calc(8rem+env(safe-area-inset-top))] pb-12`, 데스크톱 `md:py-12`로 분기
+- [x] 모바일 대표 상세·PC·다국어 회귀 검증 후 로컬 롤백 저장 및 운영 배포 — 모바일 여백 회귀 테스트 추가, 타입·lint(오류 0)·75 files/1,512 tests·production build·audit·diff check 통과. 공통 Equipment3 경로이므로 전체 장비 상세 및 다국어 상세에 적용

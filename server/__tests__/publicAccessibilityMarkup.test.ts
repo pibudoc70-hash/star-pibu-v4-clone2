@@ -37,4 +37,10 @@ describe("공개 화면 접근성 마크업 회귀 방지", () => {
     expect(source).toMatch(/onClickCapture=\{\(e\) => e\.stopPropagation\(\)\}/);
     expect(source).not.toMatch(/<div className="relative" onClick=/);
   });
+
+  it("Equipment3 상세 히어로는 모바일 고정 헤더 아래에서 제목을 시작한다", () => {
+    const source = readClient("pages/Equipment3Detail.tsx");
+
+    expect(source).toContain("pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12");
+  });
 });

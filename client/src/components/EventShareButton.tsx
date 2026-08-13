@@ -138,7 +138,7 @@ export default function EventShareButton({ eventId, eventTitle, size = "md" }: E
       : "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-normal transition-all";
 
   return (
-    <div className="relative" onClick={(e) => e.stopPropagation()}>
+    <div className="relative" onClickCapture={(e) => e.stopPropagation()}>
       {/* 공유 토글 버튼 */}
       <button
         ref={btnRef}
@@ -169,7 +169,7 @@ export default function EventShareButton({ eventId, eventTitle, size = "md" }: E
             background: "#fff",
             borderColor: "color-mix(in srgb, var(--color-gold-primary) 20%, transparent)",
           }}
-          onClick={(e) => e.stopPropagation()}
+          onClickCapture={(e) => e.stopPropagation()}
         >
           {/* 헤더 */}
           <div className="flex items-center justify-between mb-2.5">

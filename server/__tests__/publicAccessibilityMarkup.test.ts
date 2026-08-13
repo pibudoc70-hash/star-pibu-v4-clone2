@@ -43,4 +43,14 @@ describe("공개 화면 접근성 마크업 회귀 방지", () => {
 
     expect(source).toContain("pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12");
   });
+
+  it("Equipment3 상세 로딩은 전체 화면 스피너 대신 구조를 유지하는 접근 가능한 스켈레톤을 제공한다", () => {
+    const source = readClient("pages/Equipment3Detail.tsx");
+
+    expect(source).toContain("function EquipmentDetailLoading");
+    expect(source).toContain('<main id="main-content" aria-busy="true" aria-label={label}>');
+    expect(source).toContain('<p className="sr-only" role="status">{label}</p>');
+    expect(source).toContain("return <EquipmentDetailLoading label={LABELS.loading} />;");
+    expect(source).not.toContain('className="flex items-center justify-center min-h-screen"');
+  });
 });

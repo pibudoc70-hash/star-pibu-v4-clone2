@@ -11,7 +11,7 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { Loader, MessageCircle, Calendar } from "lucide-react";
+import { MessageCircle, Calendar } from "lucide-react";
 import { lazy, Suspense, useEffect } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { LiftingFaqSection } from "@/components/LiftingPositioning";
@@ -50,6 +50,38 @@ function useKatexCss(markdown: string) {
 function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
   if (!raw) return fallback;
   try { return JSON.parse(raw) as T; } catch { return fallback; }
+}
+
+function EquipmentDetailLoading({ label }: { label: string }) {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main id="main-content" aria-busy="true" aria-label={label}>
+        <section className="bg-gradient-to-r from-slate-800 to-slate-900 pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
+          <div className="container mx-auto px-4 animate-pulse" aria-hidden="true">
+            <div className="h-4 w-28 rounded bg-slate-600" />
+            <div className="mt-4 h-10 max-w-md rounded bg-slate-600" />
+            <div className="mt-3 h-5 w-48 rounded bg-slate-700" />
+          </div>
+        </section>
+        <section className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 md:grid-cols-2" aria-hidden="true">
+          <div className="aspect-[4/3] rounded-2xl bg-slate-100 animate-pulse" />
+          <div className="space-y-5 pt-2">
+            <div className="h-6 w-28 rounded bg-slate-100 animate-pulse" />
+            <div className="h-4 w-full rounded bg-slate-100 animate-pulse" />
+            <div className="h-4 w-5/6 rounded bg-slate-100 animate-pulse" />
+            <div className="h-4 w-2/3 rounded bg-slate-100 animate-pulse" />
+            <div className="grid grid-cols-2 gap-3 pt-4">
+              <div className="h-12 rounded-xl bg-slate-100 animate-pulse" />
+              <div className="h-12 rounded-xl bg-slate-100 animate-pulse" />
+            </div>
+          </div>
+        </section>
+        <p className="sr-only" role="status">{label}</p>
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 export default function Equipment3Detail() {
@@ -107,12 +139,7 @@ export default function Equipment3Detail() {
 
   // ── 로딩 ────────────────────────────────────────────────────────────────────
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader className="animate-spin" size={40} />
-        <span className="ml-3 text-gray-600">{LABELS.loading}</span>
-      </div>
-    );
+    return <EquipmentDetailLoading label={LABELS.loading} />;
   }
 
   // ── 에러 ────────────────────────────────────────────────────────────────────

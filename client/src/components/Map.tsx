@@ -178,6 +178,11 @@ export function MapView({
     let mapRenderTimer: ReturnType<typeof setTimeout> | null = null;
     let tilesListener: google.maps.MapsEventListener | null = null;
 
+    const hasRenderedMapDom = () => {
+      const mapRoot = mapContainer.current?.querySelector(".gm-style");
+      return Boolean(mapRoot && mapRoot.querySelector("img, canvas"));
+    };
+
     async function initMap() {
       try {
         await loadMapScript();
@@ -213,6 +218,9 @@ export function MapView({
         // 렌더링되지 않아 빈 영역이 남을 수 있다. 이 경우 상위 화면의 명시적
         // 외부 지도 대체 UI로 전환한다.
         tilesListener = g.maps.event.addListener(map, 'tilesloaded', () => {
+          // 일부 프록시·브라우저 환경에서는 tilesloaded 이벤트만 오고 실제 지도 DOM이
+          // 생성되지 않을 수 있다. 실제 타일 또는 canvas가 확인될 때만 성공 처리한다.
+          if (!hasRenderedMapDom()) return;
           if (mapRenderTimer) {
             clearTimeout(mapRenderTimer);
             mapRenderTimer = null;

@@ -4496,11 +4496,13 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 2단계: 주소·전화·진료·교통 정보의 공통 원본 정합화 — Directions 기준 서면역 도보 3분으로 5개 언어 홈·지도 팝업·Footer의 상충 표기를 통일하고, 번체 운영 Footer·Directions·주소·전화·진료·Google Maps 경로 검증 후 체크포인트 저장
 - [x] 3단계: Equipment3 상세 초기 로딩 경험 개선 — 전체 화면 대기 대신 Header·Footer·히어로·정보 골격·스크린리더 상태를 유지하는 상세 스켈레톤 적용. 타입·접근성 회귀·lint·build와 새 미리보기의 본문·FAQ·영상·외부 네이버/카카오 CTA 정상 로드 검증 후 체크포인트 저장
 - [x] 긴급: 미리보기 Equipment3 상세 로드 실패 재현·원인 진단·복구 — 예약/OTP 및 외부 예약 링크 제외, 데이터 요청·콘솔·서버 로그·개발 화면 재검증. 새 미리보기에서 상세 본문 3개 영역·FAQ·외부 CTA·홈 Hero가 정상 렌더링되고 console 오류가 없음을 확인
-- [ ] 4단계: 홈·상세 프리렌더 응답 성능 계측 및 안전한 캐시 정책 개선 — 원본 HTML·SEO와 운영 응답 검증 후 체크포인트 저장
-- [ ] 이연: 운영 도메인의 4단계 프리렌더 캐시 헤더 전파 재확인 — 사용자 선택에 따라 5~8단계 완료 후 최종 통합 검증에서 수행
+- [x] 4단계: 홈·상세 프리렌더 응답 성능 계측 및 안전한 캐시 정책 개선 — 서버 프리렌더에 짧은 공유 캐시 재검증 정책·회귀 테스트 적용. 격리 production에서 헤더·원본 HTML을 확인했고, 운영 도메인은 호스팅 계층이 `no-cache, no-store`로 덮어쓰는 것을 최종 확인
+- [x] 이연: 운영 도메인의 4단계 프리렌더 캐시 헤더 전파 재확인 — 최종 확인 완료. 응답 본문·구조화 데이터는 정상이나 Cache-Control은 호스팅 계층에서 no-store로 유지되어 플랫폼 설정 범위로 기록
 - [x] 긴급: 4단계 production build SIGTERM 재발 방지 — Rollup 파일 작업 병렬성을 4로 낮추고 TypeScript 감시 프로세스를 정리한 뒤 production build·diff check 통과. 런타임 동작 변경 없음
 - [x] 5단계: 프리렌더·클라이언트 구조화 데이터의 엔터티·필드·중복 정합성 강화 — 병원 `#organization`, 페이지별 MedicalProcedure `#medical-procedure`, FAQPage `#faq`로 식별자 통일. 타입·72개 SEO/프리렌더 회귀·lint·build·미리보기 JSON-LD/상세 기능 검증 후 체크포인트 저장
 - [x] 6단계: 공개·관리자 비예약 화면의 접근성 경고 우선 정리 — 공지 이미지 드롭 영역을 키보드 조작 가능한 button과 분리 file input으로 정리하고, 상단 고정 설명을 switch에 연결. 타입·접근성 회귀·lint(오류 0, 총 경고 191→186)·build 검증 후 체크포인트 저장. 남은 NoticeEdit setState-in-effect 경고는 편집 초기화 구조 재설계가 필요해 보수 범위에서 이연
 - [x] 7단계: 관리자 FAQ 편집 안전장치 보강 — 빈 질문·답변과 공백/대소문자만 다른 중복 질문을 공개 FAQ·FAQPage에서 제외하고, 관리자에게 작성 중·중복 상태 및 언어별 20개 제한을 안내. 타입·FAQ 정규화/편집기/프리렌더 회귀 8개·lint·build 검증 후 체크포인트 저장
 - [x] 8단계: 활성 경로와 불일치하는 코드 주석 및 승인된 콘텐츠 검수 경계 정리 — 활성 Doctors·Directions를 dormant로 잘못 표기한 routes 주석만 정정. 의료·다국어 DB 콘텐츠와 예약/OTP는 변경하지 않고 타입·주석 회귀·lint·build 검증 후 체크포인트 저장
-- [ ] 1~8단계 최종 통합 검증 — 예약·OTP 변경 0건 확인, 타입·lint·전체 테스트·build·audit·운영 주요 경로 검증
+- [x] 1~8단계 최종 통합 검증 — 예약·OTP 변경 0건 확인, 타입·lint·전체 테스트·build·audit·운영 주요 경로 및 원본 HTML 검증
+- [x] 긴급: 최종 audit에서 발견된 PostCSS 경로 nanoid 고위험 취약점 수정 — workspace override로 postcss 하위 nanoid를 3.3.18로 고정, frozen install·audit·전체 품질 재검증 통과
+- [x] 긴급: 운영 Directions 지도 타일 미초기화 시 대체 UI 미표시 재발 복구 — 타일 이벤트와 실제 지도 DOM을 함께 검증해 빈 회색 영역 대신 한국어 카카오맵·외국어 Google Maps 대체 UI로 전환되는 미리보기 검증 완료

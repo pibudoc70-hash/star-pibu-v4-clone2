@@ -5,6 +5,7 @@ patchedDependencies:
 
 overrides:
   tailwindcss>nanoid: "3.3.7"
+  postcss>nanoid: "3.3.18"
   "@esbuild-kit/core-utils>esbuild": "0.25.12"
   "tsx>esbuild": "0.28.1"
   "vite>esbuild": "0.28.1"

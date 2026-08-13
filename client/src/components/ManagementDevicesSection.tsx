@@ -39,15 +39,19 @@ function DeviceModal({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.5)" }}
-      onClick={onClose}
-      aria-modal="true"
-      role="dialog"
-      aria-label={displayName}
     >
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default"
+        aria-label="관리 장비 안내 닫기"
+        onClick={onClose}
+      />
       <div
-        className="relative w-full max-w-xl rounded-2xl overflow-hidden"
+        className="relative z-10 w-full max-w-xl rounded-2xl overflow-hidden"
+        aria-modal="true"
+        role="dialog"
+        aria-label={displayName}
         style={{ background: "var(--brand-bg, #FAF8F5)" }}
-        onClick={(e) => e.stopPropagation()}
       >
         {/* 상단 금선 */}
         <div className="h-1 w-full" style={{ background: "var(--color-gold-primary)" }} />

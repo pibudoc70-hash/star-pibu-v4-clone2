@@ -4501,6 +4501,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 긴급: 4단계 production build SIGTERM 재발 방지 — Rollup 파일 작업 병렬성을 4로 낮추고 TypeScript 감시 프로세스를 정리한 뒤 production build·diff check 통과. 런타임 동작 변경 없음
 - [x] 5단계: 프리렌더·클라이언트 구조화 데이터의 엔터티·필드·중복 정합성 강화 — 병원 `#organization`, 페이지별 MedicalProcedure `#medical-procedure`, FAQPage `#faq`로 식별자 통일. 타입·72개 SEO/프리렌더 회귀·lint·build·미리보기 JSON-LD/상세 기능 검증 후 체크포인트 저장
 - [x] 6단계: 공개·관리자 비예약 화면의 접근성 경고 우선 정리 — 공지 이미지 드롭 영역을 키보드 조작 가능한 button과 분리 file input으로 정리하고, 상단 고정 설명을 switch에 연결. 타입·접근성 회귀·lint(오류 0, 총 경고 191→186)·build 검증 후 체크포인트 저장. 남은 NoticeEdit setState-in-effect 경고는 편집 초기화 구조 재설계가 필요해 보수 범위에서 이연
-- [ ] 7단계: 관리자 FAQ 편집 안전장치 보강 — 언어별 저장 상태·빈/중복 문항 안내·공개 FAQ/JSON-LD 회귀 검증 후 체크포인트 저장
+- [x] 7단계: 관리자 FAQ 편집 안전장치 보강 — 빈 질문·답변과 공백/대소문자만 다른 중복 질문을 공개 FAQ·FAQPage에서 제외하고, 관리자에게 작성 중·중복 상태 및 언어별 20개 제한을 안내. 타입·FAQ 정규화/편집기/프리렌더 회귀 8개·lint·build 검증 후 체크포인트 저장
 - [ ] 8단계: 활성 경로와 불일치하는 코드 주석 및 승인된 콘텐츠 검수 경계 정리 — 의료·다국어 DB 내용을 코드로 임의 보완하지 않고 검증 후 체크포인트 저장
 - [ ] 1~8단계 최종 통합 검증 — 예약·OTP 변경 0건 확인, 타입·lint·전체 테스트·build·audit·운영 주요 경로 검증

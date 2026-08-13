@@ -11,7 +11,7 @@ type EquipmentFaqSource = {
   faqsZhTw?: string | null;
 };
 
-const MAX_FAQS = 20;
+export const MAX_EQUIPMENT_FAQS = 20;
 const MAX_FIELD_LENGTH = 4_000;
 
 export function parseEquipmentFaqs(raw: string | null | undefined): EquipmentFaq[] {
@@ -21,8 +21,9 @@ export function parseEquipmentFaqs(raw: string | null | undefined): EquipmentFaq
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
 
+    const seenQuestions = new Set<string>();
     return parsed
-      .slice(0, MAX_FAQS)
+      .slice(0, MAX_EQUIPMENT_FAQS)
       .flatMap((entry): EquipmentFaq[] => {
         if (!entry || typeof entry !== "object") return [];
         const { question, answer } = entry as Record<string, unknown>;
@@ -31,6 +32,9 @@ export function parseEquipmentFaqs(raw: string | null | undefined): EquipmentFaq
         const normalizedAnswer = answer.trim();
         if (!normalizedQuestion || !normalizedAnswer) return [];
         if (normalizedQuestion.length > MAX_FIELD_LENGTH || normalizedAnswer.length > MAX_FIELD_LENGTH) return [];
+        const questionKey = normalizedQuestion.replace(/\s+/g, " ").toLocaleLowerCase();
+        if (seenQuestions.has(questionKey)) return [];
+        seenQuestions.add(questionKey);
         return [{ question: normalizedQuestion, answer: normalizedAnswer }];
       });
   } catch {
@@ -45,7 +49,7 @@ export function parseEquipmentFaqDrafts(raw: string | null | undefined): Equipme
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
 
-    return parsed.slice(0, MAX_FAQS).flatMap((entry): EquipmentFaq[] => {
+    return parsed.slice(0, MAX_EQUIPMENT_FAQS).flatMap((entry): EquipmentFaq[] => {
       if (!entry || typeof entry !== "object") return [];
       const { question, answer } = entry as Record<string, unknown>;
       if (typeof question !== "string" || typeof answer !== "string") return [];

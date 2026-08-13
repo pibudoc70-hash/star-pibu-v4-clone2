@@ -65,11 +65,29 @@ export default function WelcomePopup() {
         return () => clearTimeout(timer);
       }
     }
-  }, [isLoading, events]);
+  }, [isLoading, error, events]);
 
   useEffect(() => {
     return () => { if (closeTimerRef.current) clearTimeout(closeTimerRef.current); };
   }, []);
+
+  const triggerClose = useCallback((callback?: () => void) => {
+    setClosing(true);
+    closeTimerRef.current = setTimeout(() => {
+      setVisible(false);
+      setClosing(false);
+      callback?.();
+    }, 260);
+  }, []);
+
+  const dismiss = useCallback(() => triggerClose(), [triggerClose]);
+
+  const dismissToday = () =>
+    triggerClose(() => {
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + 1);
+      localStorage.setItem("star-popup-v2-dismissed", expiry.toISOString());
+    });
 
   useEffect(() => {
     if (visible) {
@@ -96,25 +114,7 @@ export default function WelcomePopup() {
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [visible]);
-
-  const triggerClose = useCallback((callback?: () => void) => {
-    setClosing(true);
-    closeTimerRef.current = setTimeout(() => {
-      setVisible(false);
-      setClosing(false);
-      callback?.();
-    }, 260);
-  }, []);
-
-  const dismiss = useCallback(() => triggerClose(), [triggerClose]);
-
-  const dismissToday = () =>
-    triggerClose(() => {
-      const expiry = new Date();
-      expiry.setDate(expiry.getDate() + 1);
-      localStorage.setItem("star-popup-v2-dismissed", expiry.toISOString());
-    });
+  }, [visible, dismiss]);
 
   if (!visible || !events || events.length === 0) return null;
 
@@ -168,15 +168,19 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
       style={{ alignItems: "flex-start", padding: 0, paddingTop: "15%" }}
-      onClick={dismiss}
     >
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default"
+        aria-label="팝업 닫기"
+        onClick={dismiss}
+      />
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
         aria-label="팝업 이벤트"
-        className={`popup-modal-mobile${closing ? " closing" : ""} w-full overflow-hidden shadow-2xl`}
-        onClick={(e) => e.stopPropagation()}
+        className={`popup-modal-mobile${closing ? " closing" : ""} relative z-10 w-full overflow-hidden shadow-2xl`}
         style={{
           borderRadius: "20px",
           background: "#ffffff",
@@ -216,14 +220,19 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
 function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
   return (
-    <div className={`popup-overlay${closing ? " closing" : ""}`} onClick={dismiss}>
+    <div className={`popup-overlay${closing ? " closing" : ""}`}>
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default"
+        aria-label="팝업 닫기"
+        onClick={dismiss}
+      />
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
         aria-modal="true"
         aria-label="팝업 이벤트"
-        className={`popup-modal relative overflow-hidden shadow-2xl${closing ? " closing" : ""}`}
-        onClick={(e) => e.stopPropagation()}
+        className={`popup-modal relative z-10 overflow-hidden shadow-2xl${closing ? " closing" : ""}`}
         style={{
           maxWidth: "600px",
           maxHeight: "700px",

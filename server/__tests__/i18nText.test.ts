@@ -225,6 +225,34 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     }
   });
 
+  it("5개 언어의 홈·Footer·Directions는 서면역 도보 시간을 3분으로 일치시킨다", async () => {
+    const { i18n } = await import("../../client/src/lib/i18n");
+    const expectedWalkText = {
+      ko: "3분",
+      ja: "徒歩3分",
+      zh: "步行3分钟",
+      "zh-TW": "步行3分鐘",
+    } as const;
+
+    const englishWalkPattern = /3(?:-minute|-min| min) walk/;
+    const englishValues = [
+      i18n.en.access.subway,
+      i18n.en.access.transitDesc,
+      i18n.en.directions.subwayInfo,
+      i18n.en.footer.subwayInfo,
+    ];
+    for (const value of englishValues) {
+      expect(value).toMatch(englishWalkPattern);
+    }
+
+    for (const [lang, walkText] of Object.entries(expectedWalkText) as Array<[keyof typeof expectedWalkText, string]>) {
+      expect(i18n[lang].access.subway).toContain(walkText);
+      expect(i18n[lang].access.transitDesc).toContain(walkText);
+      expect(i18n[lang].directions.subwayInfo).toContain(walkText);
+      expect(i18n[lang].footer.subwayInfo).toContain(walkText);
+    }
+  });
+
   it("Directions는 공통 지도 SDK와 언어별 오류 대체 링크를 사용한다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
     const mapSrc = readFileSync(nodePath.resolve(process.cwd(), "client/src/components/Map.tsx"), "utf8");

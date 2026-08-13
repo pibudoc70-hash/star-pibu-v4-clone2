@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EquipmentFaqEditor } from "@/components/admin/EquipmentFaqEditor";
 import { ArrowLeft, Upload, X } from "lucide-react";
 
 // 카테고리 목록 (Equipment3와 동일)
@@ -40,6 +41,7 @@ type FormData = {
   sessions: string; sessionsEn: string; sessionsJa: string; sessionsZh: string;
   time: string; timeEn: string; timeJa: string; timeZh: string;
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
+  faqs: string; faqsEn: string; faqsJa: string; faqsZh: string; faqsZhTw: string;
   slug: string;
   badge: string; badgeColor: string;
   sortOrder: string;
@@ -65,6 +67,7 @@ const INITIAL: FormData = {
   sessions: "", sessionsEn: "", sessionsJa: "", sessionsZh: "",
   time: "", timeEn: "", timeJa: "", timeZh: "",
   recovery: "", recoveryEn: "", recoveryJa: "", recoveryZh: "",
+  faqs: "[]", faqsEn: "[]", faqsJa: "[]", faqsZh: "[]", faqsZhTw: "[]",
   slug: "", badge: "", badgeColor: "#4A6FA5", sortOrder: "0",
   youtubeUrl: "", imageUrl: "", bgImageUrl: "", isBest: false, isNew: false,
   seoTitle: "", seoDescription: "", seoKeywords: "", ogImageUrl: "",
@@ -263,6 +266,7 @@ export default function AdminEquipment3New() {
         sessions: form.sessions, sessionsEn: form.sessionsEn, sessionsJa: form.sessionsJa, sessionsZh: form.sessionsZh,
         time: form.time, timeEn: form.timeEn, timeJa: form.timeJa, timeZh: form.timeZh,
         recovery: form.recovery, recoveryEn: form.recoveryEn, recoveryJa: form.recoveryJa, recoveryZh: form.recoveryZh,
+        faqs: form.faqs, faqsEn: form.faqsEn, faqsJa: form.faqsJa, faqsZh: form.faqsZh, faqsZhTw: form.faqsZhTw,
         slug: form.slug,
         badge: form.badge, badgeColor: form.badgeColor,
         sortOrder: parseInt(form.sortOrder) || 0,
@@ -481,6 +485,20 @@ export default function AdminEquipment3New() {
               <MultiLangField label="시술 시간" fieldKey="time" form={form} onChange={handleChange} />
               <MultiLangField label="회복 기간" fieldKey="recovery" form={form} onChange={handleChange} />
               <MultiLangField label="권장 횟수" fieldKey="sessions" form={form} onChange={handleChange} />
+            </CardContent>
+          </Card>
+
+          <Card className="border-blue-100">
+            <CardHeader>
+              <CardTitle>상세 FAQ · FAQPage 구조화 데이터</CardTitle>
+              <p className="text-sm text-gray-500">저장된 FAQ는 상세 페이지와 검색엔진용 FAQPage JSON-LD에 동일하게 반영됩니다.</p>
+            </CardHeader>
+            <CardContent className="space-y-8">
+              <EquipmentFaqEditor id="new-faqs-ko" label="한국어 FAQ" value={form.faqs} onChange={(faqs) => setForm((prev) => ({ ...prev, faqs }))} />
+              <EquipmentFaqEditor id="new-faqs-en" label="English FAQ" value={form.faqsEn} onChange={(faqsEn) => setForm((prev) => ({ ...prev, faqsEn }))} />
+              <EquipmentFaqEditor id="new-faqs-ja" label="日本語 FAQ" value={form.faqsJa} onChange={(faqsJa) => setForm((prev) => ({ ...prev, faqsJa }))} />
+              <EquipmentFaqEditor id="new-faqs-zh" label="简体中文 FAQ" value={form.faqsZh} onChange={(faqsZh) => setForm((prev) => ({ ...prev, faqsZh }))} />
+              <EquipmentFaqEditor id="new-faqs-zh-tw" label="繁體中文 FAQ" value={form.faqsZhTw} onChange={(faqsZhTw) => setForm((prev) => ({ ...prev, faqsZhTw }))} />
             </CardContent>
           </Card>
 

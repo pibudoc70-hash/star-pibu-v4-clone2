@@ -4470,3 +4470,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 울쎄라피 프라임을 포함한 시술·장비 상세의 YouTube 영상 URL 데이터·embed 변환·실제 응답 상태 점검 — 울쎄라피 프라임(`VeADRwws0e8`)은 공개 oEmbed 200·watch URL 정상. 공통 no-cookie iframe 도메인이 CSP `frame-src`에 누락된 것이 차단 원인임을 확인
 - [x] 깨진 YouTube 가이드 영상의 URL 변환 또는 데이터 연결을 복구하고 대체 링크·대표 상세 재생 검증 — `www.youtube-nocookie.com`을 CSP에 추가하고 보안 헤더 회귀 테스트 보완. 개발 상세에서 player title·채널·Play 버튼이 정상 렌더링되며 YouTube 새 탭 대체 링크 유지
 - [ ] YouTube CSP 복구와 공개 화면 접근성 개선을 운영 배포하고 울쎄라피 프라임 실제 iframe 재생 상태 확인
+
+## 장비 상세 FAQ 데이터·관리자·SEO 반영 (2026-08-13)
+- [x] FAQ 저장 구조 사전 점검 — `equipment3` DB에 `faqs`, `faqsEn`, `faqsJa`, `faqsZh`, `faqsZhTw` 컬럼 존재 확인; 복구된 코드에는 아직 모델·UI·렌더링 반영이 필요
+- [x] Drizzle 스키마·공통 FAQ 파서·관리자 장비 등록/수정 폼·tRPC 검증을 다시 반영
+- [x] Equipment3 공개 상세·서버 프리렌더 원본 HTML·FAQPage JSON-LD에 저장 FAQ를 동일하게 반영
+- [x] 첨부 리프팅 FAQ의 검수 완료 항목만 9개 장비 상세에 저장하고 의료·운영 검수 필요 문구는 제외 — 대상 불일치가 확인된 복합 시술 FAQ #2는 보류하고, slug 매핑이 확인된 8개 단일 시술만 저장
+- [ ] 타입·라우터·프리렌더·관리자·공개 상세·원본 HTML 통합 검증 후 로컬 롤백 커밋 생성 — check·lint·75 files/1,511 tests·개발 상세 FAQ/FAQPage 검증은 통과. production build는 Vite chunk rendering 중 3회 SIGTERM(143)으로 종료돼 환경 원인 추가 확인 필요

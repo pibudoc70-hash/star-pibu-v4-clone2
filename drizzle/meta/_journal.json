@@ -239,6 +239,13 @@
       "when": 1785274923127,
       "tag": "0033_vengeful_purifiers",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "5",
+      "when": 1786607901876,
+      "tag": "0034_third_tattoo",
+      "breakpoints": true
     }
   ]
 }

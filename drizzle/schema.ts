@@ -373,6 +373,12 @@ export const equipment3 = mysqlTable("equipment3", {
   recoveryEn: varchar("recoveryEn", { length: 50 }).default(""),
   recoveryJa: varchar("recoveryJa", { length: 50 }).default(""),
   recoveryZh: varchar("recoveryZh", { length: 50 }).default(""),
+  // 상세 FAQ (JSON 배열: [{ question, answer }]) — 언어별 독립 저장
+  faqs: text("faqs"),
+  faqsEn: text("faqsEn"),
+  faqsJa: text("faqsJa"),
+  faqsZh: text("faqsZh"),
+  faqsZhTw: text("faqsZhTw"),
   // 미디어
   imageUrl: text("imageUrl"),
   bgImageUrl: text("bgImageUrl"),          // 배경 전용 이미지 (텍스트 오버레이용)

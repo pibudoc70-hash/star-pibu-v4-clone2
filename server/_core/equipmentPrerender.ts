@@ -6,6 +6,7 @@ import { getEquipment3BySlug } from "../db/equipment3";
 import type { Equipment3Item } from "../../drizzle/schema";
 import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
+import { getLocalizedEquipmentFaqs } from "../../shared/equipmentFaq";
 
 const BASE_URL = "https://star-pibu.com";
 type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -69,11 +70,11 @@ function localized(item: Equipment3Item, base: "name" | "desc" | "detail" | "eff
 
 function labels(lang: Lang) {
   const all: Record<Lang, Record<string, string>> = {
-    ko: { overview: "시술 설명", target: "적합한 대상", duration: "효과 지속 기간", time: "시술 소요 시간", recovery: "회복 기간", caution: "부작용·주의사항", sessions: "권장 횟수·간격" },
-    en: { overview: "What it is", target: "Who it may suit", duration: "Effect duration", time: "Treatment time", recovery: "Recovery time", caution: "Side effects and precautions", sessions: "Recommended sessions and interval" },
-    ja: { overview: "施術説明", target: "適した方", duration: "効果の持続", time: "施術時間", recovery: "回復期間", caution: "副作用・注意事項", sessions: "推奨回数・間隔" },
-    zh: { overview: "治疗说明", target: "适合人群", duration: "效果持续时间", time: "治疗所需时间", recovery: "恢复期", caution: "副作用与注意事项", sessions: "建议次数与间隔" },
-    "zh-TW": { overview: "療程說明", target: "適合對象", duration: "效果持續時間", time: "療程所需時間", recovery: "恢復期", caution: "副作用與注意事項", sessions: "建議次數與間隔" },
+    ko: { overview: "시술 설명", target: "적합한 대상", duration: "효과 지속 기간", time: "시술 소요 시간", recovery: "회복 기간", caution: "부작용·주의사항", sessions: "권장 횟수·간격", faq: "자주 묻는 질문" },
+    en: { overview: "What it is", target: "Who it may suit", duration: "Effect duration", time: "Treatment time", recovery: "Recovery time", caution: "Side effects and precautions", sessions: "Recommended sessions and interval", faq: "Frequently Asked Questions" },
+    ja: { overview: "施術説明", target: "適した方", duration: "効果の持続", time: "施術時間", recovery: "回復期間", caution: "副作用・注意事項", sessions: "推奨回数・間隔", faq: "よくある質問" },
+    zh: { overview: "治疗说明", target: "适合人群", duration: "效果持续时间", time: "治疗所需时间", recovery: "恢复期", caution: "副作用与注意事项", sessions: "建议次数与间隔", faq: "常见问题" },
+    "zh-TW": { overview: "療程說明", target: "適合對象", duration: "效果持續時間", time: "療程所需時間", recovery: "恢復期", caution: "副作用與注意事項", sessions: "建議次數與間隔", faq: "常見問題" },
   };
   return all[lang];
 }
@@ -104,15 +105,18 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   ].filter(([, value]) => value);
   const canonical = `${BASE_URL}${pathName}`;
   const hasLiftingPainCare = isPainSensitiveLifting(item.slug) || isPainSensitiveLifting(item.name);
+  const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
+  const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
+  const allFaqs = [...managedFaqs, ...positioningFaqs];
   const procedure = {
     "@context": "https://schema.org", "@type": "MedicalProcedure", name, alternateName: item.nameEn || item.name,
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
     preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#medical-clinic` }, relevantSpecialty: "https://schema.org/Dermatology",
   };
-  const liftingFaq = hasLiftingPainCare ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: LIFTING_FAQS[lang].map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
-  const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure, ...(liftingFaq ? [liftingFaq] : [])]).replace(/</g, "\\u003c");
-  const faqBody = hasLiftingPainCare ? `<section><h2>리프팅 시술과 통증 관리 FAQ</h2><dl>${LIFTING_FAQS[lang].map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
+  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
+  const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
+  const faqBody = allFaqs.length > 0 ? `<section><h2>${escapeHtml(text.faq)}</h2><dl>${allFaqs.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;
 
   const rendered = template

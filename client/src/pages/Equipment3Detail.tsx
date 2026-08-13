@@ -17,6 +17,7 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { LiftingFaqSection } from "@/components/LiftingPositioning";
 import { withVersion } from "@/lib/imageUrl";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
+import { getLocalizedEquipmentFaqs } from "@shared/equipmentFaq";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -89,6 +90,7 @@ export default function Equipment3Detail() {
     caution:   getText("주의사항",          "Precautions",                   "注意事項",           "注意事项"),
     gallery:   getText("시술 사례",         "Before & After",                "施術事例",           "施术案例"),
     video:     getText("가이드 영상",         "Guide Video",                   "ガイド動画",         "指南视频"),
+    faq:       getText("자주 묻는 질문",     "Frequently Asked Questions",   "よくある質問",       "常见问题"),
     backList:  getText("목록으로 돌아가기",  "Back to list",                  "一覧に戻る",         "返回列表"),
     bodyLoc:   getText("피부",             "Skin",                          "皮膚",               "皮肤"),
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
@@ -156,6 +158,9 @@ export default function Equipment3Detail() {
   const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
   const localizedSessions = getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh);
   const hasLiftingPainCare = isPainSensitiveLifting(slug) || isPainSensitiveLifting(item.name);
+  const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
+  const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
+  const allFaqs = [...managedFaqs, ...positioningFaqs];
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -216,10 +221,10 @@ export default function Equipment3Detail() {
   };
   const jsonLd = [
     medicalProcedureJsonLd,
-    ...(hasLiftingPainCare ? [{
+    ...(allFaqs.length > 0 ? [{
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": LIFTING_FAQS[lang].map(({ question, answer }) => ({
+      "mainEntity": allFaqs.map(({ question, answer }) => ({
         "@type": "Question",
         "name": question,
         "acceptedAnswer": { "@type": "Answer", "text": answer },
@@ -436,7 +441,23 @@ export default function Equipment3Detail() {
           </section>
         )}
 
-        {hasLiftingPainCare && <LiftingFaqSection lang={lang} />}
+        {managedFaqs.length > 0 && (
+          <section className="mb-12" aria-labelledby="equipment-faq-heading">
+            <h2 id="equipment-faq-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
+            <div className="space-y-3">
+              {managedFaqs.map(({ question, answer }, index) => (
+                <details key={`${question}-${index}`} className="group rounded-xl border border-gray-200 bg-white px-5 py-4">
+                  <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-800">
+                    <span className="mr-2 text-blue-600" aria-hidden="true">Q.</span>{question}
+                  </summary>
+                  <p className="mt-4 whitespace-pre-line leading-relaxed text-slate-700"><span className="mr-2 font-semibold text-blue-600" aria-hidden="true">A.</span>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} />}
 
         {/* 추가 이미지 갤러리 */}
         {images.length > 0 && (

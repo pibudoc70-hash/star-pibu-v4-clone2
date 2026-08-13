@@ -19,6 +19,11 @@ import { z } from "zod/v4";
 import { storagePut } from "../storage";
 import { TRPCError } from "@trpc/server";
 import { optimizeImage } from "../_core/imageOptimizer";
+import { isEquipmentFaqJson } from "../../shared/equipmentFaq";
+
+const faqJsonSchema = z.string().refine(isEquipmentFaqJson, {
+  message: "FAQ는 질문과 답변으로 이루어진 JSON 배열이어야 합니다.",
+});
 
 // 공통 시술 필드 스키마 (생성/수정 공용)
 const itemFieldsSchema = z.object({
@@ -59,6 +64,11 @@ const itemFieldsSchema = z.object({
   recoveryEn: z.string().max(50).optional(),
   recoveryJa: z.string().max(50).optional(),
   recoveryZh: z.string().max(50).optional(),
+  faqs: faqJsonSchema.optional(),
+  faqsEn: faqJsonSchema.optional(),
+  faqsJa: faqJsonSchema.optional(),
+  faqsZh: faqJsonSchema.optional(),
+  faqsZhTw: faqJsonSchema.optional(),
   imageUrl: z.string().optional(),
   bgImageUrl: z.string().optional(),    // 배경 전용 이미지 (텍스트 오버레이용)
   images: z.string().optional(),       // JSON 배열 문자열
@@ -149,6 +159,11 @@ export const equipment3Router = router({
         recoveryEn: input.recoveryEn ?? "",
         recoveryJa: input.recoveryJa ?? "",
         recoveryZh: input.recoveryZh ?? "",
+        faqs: input.faqs ?? "[]",
+        faqsEn: input.faqsEn ?? "[]",
+        faqsJa: input.faqsJa ?? "[]",
+        faqsZh: input.faqsZh ?? "[]",
+        faqsZhTw: input.faqsZhTw ?? "[]",
         imageUrl: input.imageUrl ?? null,
         bgImageUrl: input.bgImageUrl ?? null,
         images: input.images ?? "[]",

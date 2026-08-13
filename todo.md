@@ -4449,7 +4449,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 예약·OTP 제외 코드베이스의 개발·디자인 개선 기회 감사 및 우선순위 권고안 작성 — 정적 후기·평점 표시, placeholder VideoObject JSON-LD, lint 경고 220건, 대형 Home/CSS/정적 데이터 파일, 테스트 coverage 부재, 디자인 토큰·동작 일관성을 점검 완료
 - [x] 신뢰성: 정적 후기·평점 UI와 다국어 후기 데이터를 제거하고 중립적인 외부 리뷰 링크로 대체 — 출처 검증이 되지 않은 static 리뷰·평점은 링크로 대체하지 않고 완전히 제거, MedicalClinic/LocalBusiness JSON-LD에서도 review·aggregateRating 제거
 - [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지
-- [ ] 접근성: 공개 Hero·시술 상세·공용 UI의 비시맨틱 클릭 요소와 라벨 연결 경고를 안전하게 해소
+- [x] 접근성: 공개 Hero·시술 상세·공용 UI의 비시맨틱 클릭 요소와 라벨 연결 경고를 안전하게 해소 — 공개 모달·공유·시술 카드·이벤트 카드·시설 라이트박스를 시맨틱 button/link 구조로 정리하고 회귀 테스트를 추가해 운영 배포 완료
 - [x] 접근성: WelcomePopup 배경 닫기 영역을 시맨틱 button으로 교체하고, dialog 레이어·Escape 닫기·포커스 복귀를 유지. 해당 컴포넌트 lint 경고 0·타입 검사 통과
 - [x] 접근성: ManagementDevicesSection 모달 배경 닫기 영역을 시맨틱 button으로 교체하고, dialog 역할을 콘텐츠 레이어로 이동. 해당 컴포넌트 lint 경고 0·타입 검사 통과
 - [x] 접근성: EventShareButton의 전파 차단을 캡처 단계로 이동해 공유 버튼·패널의 클릭 동작을 유지하면서 해당 컴포넌트 lint 경고 0·타입 검사 통과
@@ -4469,15 +4469,21 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Directions 수정 후 타입·PC 실제 화면·다국어 및 모바일 회귀 확인, 로컬 Git 롤백 커밋 생성 — 타입·lint(오류 0)·diff check 통과. 개발 PC 화면에서 header 하단 60px, 제목 상단 128px로 68px 간격 확보. 모바일 기본 `py-12` 및 다국어 콘텐츠 경로는 변경하지 않음
 - [x] 울쎄라피 프라임을 포함한 시술·장비 상세의 YouTube 영상 URL 데이터·embed 변환·실제 응답 상태 점검 — 울쎄라피 프라임(`VeADRwws0e8`)은 공개 oEmbed 200·watch URL 정상. 공통 no-cookie iframe 도메인이 CSP `frame-src`에 누락된 것이 차단 원인임을 확인
 - [x] 깨진 YouTube 가이드 영상의 URL 변환 또는 데이터 연결을 복구하고 대체 링크·대표 상세 재생 검증 — `www.youtube-nocookie.com`을 CSP에 추가하고 보안 헤더 회귀 테스트 보완. 개발 상세에서 player title·채널·Play 버튼이 정상 렌더링되며 YouTube 새 탭 대체 링크 유지
-- [ ] YouTube CSP 복구와 공개 화면 접근성 개선을 운영 배포하고 울쎄라피 프라임 실제 iframe 재생 상태 확인
+- [x] YouTube CSP 복구와 공개 화면 접근성 개선을 운영 배포하고 울쎄라피 프라임 실제 iframe 재생 상태 확인 — 체크포인트 6d8c7a28로 운영 배포 후 no-cookie iframe과 올바른 영상 ID 로드 확인
 
 ## 장비 상세 FAQ 데이터·관리자·SEO 반영 (2026-08-13)
 - [x] FAQ 저장 구조 사전 점검 — `equipment3` DB에 `faqs`, `faqsEn`, `faqsJa`, `faqsZh`, `faqsZhTw` 컬럼 존재 확인; 복구된 코드에는 아직 모델·UI·렌더링 반영이 필요
 - [x] Drizzle 스키마·공통 FAQ 파서·관리자 장비 등록/수정 폼·tRPC 검증을 다시 반영
 - [x] Equipment3 공개 상세·서버 프리렌더 원본 HTML·FAQPage JSON-LD에 저장 FAQ를 동일하게 반영
 - [x] 첨부 리프팅 FAQ의 검수 완료 항목만 9개 장비 상세에 저장하고 의료·운영 검수 필요 문구는 제외 — 대상 불일치가 확인된 복합 시술 FAQ #2는 보류하고, slug 매핑이 확인된 8개 단일 시술만 저장
-- [ ] 타입·라우터·프리렌더·관리자·공개 상세·원본 HTML 통합 검증 후 로컬 롤백 커밋 생성 — check·lint·75 files/1,511 tests·개발 상세 FAQ/FAQPage 검증은 통과. production build는 Vite chunk rendering 중 3회 SIGTERM(143)으로 종료돼 환경 원인 추가 확인 필요
+- [x] 타입·라우터·프리렌더·관리자·공개 상세·원본 HTML 통합 검증 후 로컬 롤백 커밋 생성 — check·lint·75 files/1,511 tests·audit·production build 통과. 운영 원본 HTML에서 울쎄라피 프라임 FAQ 7건과 복합 리프팅·리쥬란 FAQ #2의 FAQPage JSON-LD 확인
 - [x] 복합 리프팅·리쥬란 상세의 실제 slug·명칭·기존 본문을 확인하고 FAQ #2의 정확한 반영 대상 확정 — 실제 대상은 `ultherapy-thermage-lift-rejuran`, 장비명은 ‘울써마지 리프팅 + 리쥬란’으로 확인
 - [x] FAQ #2를 고민·병행 판단 기준·개별 상담 필요성을 담은 검색 친화적·의료 신중 문구로 작성해 FAQPage JSON-LD와 함께 검증 — 공개 상세의 question·answer와 `FAQPage.mainEntity` 1건에 같은 내용이 렌더링되는 것을 개발 환경에서 확인
 - [x] Vite production build의 SIGTERM(143) 환경 원인을 분리·안정화하고 FAQ 변경을 포함한 build 통과 확인 — 불필요한 TypeScript watch를 종료해 2.3GiB 가용 메모리를 확보하고 Rollup `maxParallelFileOps: 8`로 build-time 파일 작업 피크를 제한. production build가 27.26초에 통과
 - [x] production 원본 HTML에서 울쎄라피 프라임 및 복합 리프팅 FAQ·FAQPage JSON-LD 확인 후 운영 배포 — 프리렌더 빌더 회귀 테스트에서 저장 FAQ·FAQPage를 검증했고, 배포 후 운영 응답을 GPTBot User-Agent로 재확인 예정
+- [x] 체크포인트 06309420 이후 운영 도메인이 이전 JavaScript entry를 반환하는 자산 불일치 원인 확인 및 최신 FAQ 배포본 반영 재검증 — 배포 완료 신호 후 최신 운영 응답에서 새 entry `index-BtOWgDkM.js`, 울쎄라피 FAQ 7건과 FAQPage, 복합 리프팅·리쥬란 FAQ #2와 FAQPage가 모두 확인됨
+- [x] 첨부 FAQ의 색소·여드름·흉터·보톡스·필러·스킨부스터·바디·제모 항목을 실제 장비 상세 slug와 매핑하고 의료·운영 표현 검토 — 실제 등록된 눈밑·줄기세포·액취증·다한증·손발톱무좀·아토피 상세까지 함께 매핑. 원문에 바디·제모 FAQ는 없었고, 백반증 엑시머 V7·전신 UVB는 현재 상세 레코드가 없어 임의 생성하지 않음
+- [x] 색소·여드름·흉터 FAQ를 실제 상세·FAQPage JSON-LD·크롤러 원본 HTML에 반영 — 색소·문신 8개(32문항), 홍조·혈관 6개(24문항), 흉터·모공 7개(21문항), 여드름 6개(18문항)를 저장하고 BBL 공개 상세 FAQ 4건 렌더링 확인
+- [x] 보톡스·필러·스킨부스터 FAQ를 실제 상세·FAQPage JSON-LD·크롤러 원본 HTML에 반영 — 보톡스·필러·윤곽 주사·리쥬란·스킨부스터·스컬트라 등 11개 상세에 33문항을 저장하고 보톡스 공개 상세 FAQ 3건 렌더링 확인
+- [x] 바디·제모 FAQ를 실제 상세·FAQPage JSON-LD·크롤러 원본 HTML에 반영 — 실제 등록된 인접 카테고리(눈밑 2개, 줄기세포 3개, 액취증·다한증 3개, 손발톱무좀 4개, 아토피 1개)에 각 3문항을 저장. 미등록 백반증·UVB와 첨부 원문에 없는 바디·제모는 별도 데이터 등록 후 반영 필요
+- [x] 순차 FAQ 반영 후 전체 타입·테스트·build·운영 원본 HTML 검증 및 체크포인트 배포 — 타입·lint·75 files/1,511 tests·production build·audit 통과. FAQ는 60개 상세페이지·207문항 저장, 운영 미라드라이 원본 HTML과 FAQPage JSON-LD 3건 확인. FAQ 렌더링 코드는 체크포인트 06309420에 이미 운영 배포되어 있어 이후 DB FAQ 저장분도 즉시 반영됨

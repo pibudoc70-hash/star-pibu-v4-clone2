@@ -130,7 +130,7 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
           mimeType: img.mimeType ?? "image/jpeg",
           sortOrder: img.sortOrder,
         });
-      } catch (e) {
+      } catch {
         toast.error(`이미지 ${i + 1} 업로드 실패`);
       }
     }
@@ -295,7 +295,8 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
               </div>
 
               {/* 드래그앤드롭 영역 */}
-              <div
+              <button
+                type="button"
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -315,15 +316,16 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
                     JPG, PNG, GIF, WEBP 지원 · 최대 10장 · PNG/JPEG는 WebP로 자동 변환
                   </p>
                 </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => e.target.files && addImageFiles(e.target.files)}
-                />
-              </div>
+              </button>
+              <input
+                id="notice-image-upload"
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => e.target.files && addImageFiles(e.target.files)}
+              />
 
               {/* 이미지 미리보기 그리드 */}
               {images.length > 0 && (
@@ -381,6 +383,7 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
             {/* 고정 여부 */}
             <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
               <button
+                id="notice-pinned"
                 type="button"
                 role="switch"
                 aria-checked={isPinned}
@@ -395,12 +398,9 @@ export default function NoticeEdit({ id }: NoticeEditProps) {
                   }`}
                 />
               </button>
-              <label
-                onClick={() => setIsPinned(!isPinned)}
-                className="cursor-pointer text-sm text-gray-700"
-              >
+              <Label htmlFor="notice-pinned" className="cursor-pointer text-sm text-gray-700">
                 상단 고정 (중요 공지사항에 사용)
-              </label>
+              </Label>
             </div>
 
             {/* 버튼 */}

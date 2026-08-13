@@ -7,8 +7,8 @@
  * PAGE LIFECYCLE POLICY
  * Only pages registered here are live and canonical.
  * Files in client/src/pages/ that are NOT listed below are:
- *   - dormant  : kept for future activation (Doctors, Directions, Facilities, Events)
- *   - legacy   : superseded by current UX (Reserve, Login, Equipment)
+ *   - dormant  : kept for potential activation after route and Header review (Facilities, Events)
+ *   - legacy   : superseded implementation retained only for compatibility or migration
  *   - candidate: dev-only or removal candidate (ComponentShowcase, MyPage)
  * To activate a dormant page, add its entry here and update Header.tsx.
  * Do NOT connect page files to routes without reviewing their status comment.

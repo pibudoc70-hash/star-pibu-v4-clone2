@@ -241,10 +241,11 @@ describe("Directions 다국어·지도 회귀 방지", () => {
 
   it("Directions의 길찾기 버튼은 링크와 버튼을 중첩하지 않는다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/<Button asChild className="w-full bg-yellow-400/);
-    expect(src).toMatch(/<Button asChild className="w-full bg-green-600/);
-    expect(src).toMatch(/<Button asChild className="w-full bg-\[#4285F4\]/);
-    expect(src).toMatch(/<Button asChild[\s\S]{0,180}<a href=\{HOSPITAL\.kakaoMapUrl\}/);
+    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-yellow-400/);
+    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-green-600/);
+    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-\[#4285F4\]/);
+    expect(src).not.toMatch(/<Button/);
+    expect(src).not.toMatch(/<a[\s\S]{0,80}<button/);
   });
 
   it("외국어 Directions는 언어별 Google Maps 길찾기를, 한국어는 카카오·네이버 지도를 유지한다", () => {

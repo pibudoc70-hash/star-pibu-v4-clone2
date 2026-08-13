@@ -20,7 +20,7 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { buildHreflangs } from '@/components/SeoHead';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import type { Lang } from '@/lib/i18n.types';
@@ -158,23 +158,32 @@ export default function Directions() {
                 <div className="space-y-3">
                   {lang === 'ko' ? (
                     <>
-                      <Button asChild className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300">
-                        <a href={HOSPITAL.kakaoMapUrl} target="_blank" rel="noopener noreferrer">
-                          {t.directions.kakaoMap}
-                        </a>
-                      </Button>
-                      <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
-                        <a href={HOSPITAL.naverMapUrl} target="_blank" rel="noopener noreferrer">
-                          {t.directions.naverMap}
-                        </a>
-                      </Button>
+                      <a
+                        href={HOSPITAL.kakaoMapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={buttonVariants({ className: "w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300" })}
+                      >
+                        {t.directions.kakaoMap}
+                      </a>
+                      <a
+                        href={HOSPITAL.naverMapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={buttonVariants({ className: "w-full bg-green-600 hover:bg-green-700 text-white mt-2" })}
+                      >
+                        {t.directions.naverMap}
+                      </a>
                     </>
                   ) : (
-                    <Button asChild className="w-full bg-[#4285F4] text-white hover:bg-[#3367D6]">
-                      <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
-                        {t.directions.googleMaps}
-                      </a>
-                    </Button>
+                    <a
+                      href={googleMapsDirectionsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={buttonVariants({ className: "w-full bg-[#4285F4] text-white hover:bg-[#3367D6]" })}
+                    >
+                      {t.directions.googleMaps}
+                    </a>
                   )}
                 </div>
               </div>

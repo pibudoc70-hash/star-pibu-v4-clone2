@@ -4506,3 +4506,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 1~8단계 최종 통합 검증 — 예약·OTP 변경 0건 확인, 타입·lint·전체 테스트·build·audit·운영 주요 경로 및 원본 HTML 검증
 - [x] 긴급: 최종 audit에서 발견된 PostCSS 경로 nanoid 고위험 취약점 수정 — workspace override로 postcss 하위 nanoid를 3.3.18로 고정, frozen install·audit·전체 품질 재검증 통과
 - [x] 긴급: 운영 Directions 지도 타일 미초기화 시 대체 UI 미표시 재발 복구 — 타일 이벤트와 실제 지도 DOM을 함께 검증해 빈 회색 영역 대신 한국어 카카오맵·외국어 Google Maps 대체 UI로 전환되는 미리보기 검증 완료
+- [x] 보수적 개선 1~8단계의 수정 범위·검증 결과·제약 사항을 정리한 최종 보고서 작성 및 전달

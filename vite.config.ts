@@ -261,6 +261,9 @@ export default defineConfig({
     // 불필요한 preload 링크 생성 방지
     chunkSizeWarningLimit: 800, // 기본 500KB → 800KB (초대형 청크만 경고)
     rollupOptions: {
+      // 대형 의료 콘텐츠 번들에서 동시 파일 작업이 과도하게 늘어나는 것을 방지한다.
+      // 산출물과 런타임 청크 구성은 유지하고 build-time 메모리 피크만 낮춘다.
+      maxParallelFileOps: 8,
       output: {
         manualChunks: (id) => {
           // ── 1. React 코어 (거의 모든 페이지가 사용) ──

@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import type { Lang } from '@/lib/i18n.types';
+import { MapView } from '@/components/Map';
 
 const HOSPITAL = {
   phone: '051-818-2300',
@@ -35,8 +36,9 @@ export default function Directions() {
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
   const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
-  const mapEmbedUrl = `https://maps.google.com/maps?q=35.1572312,129.0581932&z=17&output=embed&hl=${mapLanguage[lang]}`;
   const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
+  const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
+  const mapFallbackLabel = lang === 'ko' ? t.directions.kakaoMap : t.directions.googleMaps;
 
   const handleCopyAddress = () => {
     // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
@@ -74,15 +76,23 @@ export default function Directions() {
               {/* 지도 */}
               <div className="md:col-span-2">
                 <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: '400px', minHeight: '400px' }}>
-                  <iframe
-                    src={mapEmbedUrl}
-                    title={t.directions.mapTitle}
-                    width="100%"
-                    height="100%"
-                    className="block h-full w-full border-0"
-                    loading="eager"
-                    allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
+                  <MapView
+                    initialCenter={{ lat: 35.1572312, lng: 129.0581932 }}
+                    initialZoom={17}
+                    className="h-full w-full"
+                    style={{ height: '100%' }}
+                    errorFallback={(
+                      <a
+                        href={mapFallbackUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700"
+                      >
+                        <MapPin size={28} className="text-amber-600" aria-hidden="true" />
+                        <span className="font-bold text-gray-800 text-lg">{t.directions.mapTitle}</span>
+                        <span className="text-amber-700 font-semibold text-sm">{mapFallbackLabel}</span>
+                      </a>
+                    )}
                   />
                 </div>
               </div>
@@ -148,23 +158,23 @@ export default function Directions() {
                 <div className="space-y-3">
                   {lang === 'ko' ? (
                     <>
-                      <a href={HOSPITAL.kakaoMapUrl} target="_blank" rel="noopener noreferrer">
-                        <Button className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300">
+                      <Button asChild className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300">
+                        <a href={HOSPITAL.kakaoMapUrl} target="_blank" rel="noopener noreferrer">
                           {t.directions.kakaoMap}
-                        </Button>
-                      </a>
-                      <a href={HOSPITAL.naverMapUrl} target="_blank" rel="noopener noreferrer">
-                        <Button className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
+                        </a>
+                      </Button>
+                      <Button asChild className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
+                        <a href={HOSPITAL.naverMapUrl} target="_blank" rel="noopener noreferrer">
                           {t.directions.naverMap}
-                        </Button>
-                      </a>
+                        </a>
+                      </Button>
                     </>
                   ) : (
-                    <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
-                      <Button className="w-full bg-[#4285F4] text-white hover:bg-[#3367D6]">
+                    <Button asChild className="w-full bg-[#4285F4] text-white hover:bg-[#3367D6]">
+                      <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer">
                         {t.directions.googleMaps}
-                      </Button>
-                    </a>
+                      </a>
+                    </Button>
                   )}
                 </div>
               </div>

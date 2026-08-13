@@ -225,12 +225,26 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     }
   });
 
-  it("Directions는 불안정한 MapView 대신 접근 가능한 지도 iframe을 사용한다", () => {
+  it("Directions는 공통 지도 SDK와 언어별 오류 대체 링크를 사용한다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/<iframe/);
-    expect(src).toMatch(/maps\.google\.com\/maps/);
-    expect(src).not.toMatch(/<MapView/);
-    expect(src).toMatch(/title=\{t\.directions\.mapTitle\}/);
+    const mapSrc = readFileSync(nodePath.resolve(process.cwd(), "client/src/components/Map.tsx"), "utf8");
+    expect(src).toMatch(/import \{ MapView \} from '@\/components\/Map'/);
+    expect(src).toMatch(/<MapView/);
+    expect(src).toMatch(/initialCenter=\{\{ lat: 35\.1572312, lng: 129\.0581932 \}\}/);
+    expect(src).toMatch(/errorFallback=\{\(/);
+    expect(src).toMatch(/mapFallbackUrl/);
+    expect(src).toMatch(/mapFallbackLabel/);
+    expect(src).not.toMatch(/maps\.google\.com\/maps/);
+    expect(mapSrc).toMatch(/addListener\(map, 'tilesloaded'/);
+    expect(mapSrc).toMatch(/setMapError\(true\)/);
+  });
+
+  it("Directions의 길찾기 버튼은 링크와 버튼을 중첩하지 않는다", () => {
+    const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
+    expect(src).toMatch(/<Button asChild className="w-full bg-yellow-400/);
+    expect(src).toMatch(/<Button asChild className="w-full bg-green-600/);
+    expect(src).toMatch(/<Button asChild className="w-full bg-\[#4285F4\]/);
+    expect(src).toMatch(/<Button asChild[\s\S]{0,180}<a href=\{HOSPITAL\.kakaoMapUrl\}/);
   });
 
   it("외국어 Directions는 언어별 Google Maps 길찾기를, 한국어는 카카오·네이버 지도를 유지한다", () => {

@@ -61,7 +61,7 @@
 
 /// <reference types="@types/google.maps" />
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LangContext";
 
@@ -149,6 +149,7 @@ interface MapViewProps {
   initialCenter?: google.maps.LatLngLiteral;
   initialZoom?: number;
   onMapReady?: (map: google.maps.Map) => void;
+  errorFallback?: ReactNode;
 }
 
 export function MapView({
@@ -157,6 +158,7 @@ export function MapView({
   initialCenter = { lat: 37.7749, lng: -122.4194 },
   initialZoom = 12,
   onMapReady,
+  errorFallback,
 }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<google.maps.Map | null>(null);
@@ -173,6 +175,8 @@ export function MapView({
     if (initialized.current) return;
 
     let cancelled = false;
+    let mapRenderTimer: ReturnType<typeof setTimeout> | null = null;
+    let tilesListener: google.maps.MapsEventListener | null = null;
 
     async function initMap() {
       try {
@@ -204,6 +208,25 @@ export function MapView({
         });
 
         mapInstance.current = map;
+
+        // 일부 네트워크·브라우저 환경에서는 Map 생성자만 성공하고 타일이 끝내
+        // 렌더링되지 않아 빈 영역이 남을 수 있다. 이 경우 상위 화면의 명시적
+        // 외부 지도 대체 UI로 전환한다.
+        tilesListener = g.maps.event.addListener(map, 'tilesloaded', () => {
+          if (mapRenderTimer) {
+            clearTimeout(mapRenderTimer);
+            mapRenderTimer = null;
+          }
+          if (tilesListener) {
+            g.maps.event.removeListener(tilesListener);
+            tilesListener = null;
+          }
+        });
+        mapRenderTimer = setTimeout(() => {
+          if (!cancelled) {
+            setMapError(true);
+          }
+        }, 8000);
 
         // 지도 렌더링을 위해 리사이즈 이벤트 트리거
         setTimeout(() => {
@@ -245,6 +268,10 @@ export function MapView({
     return () => {
       cancelled = true;
       if (pollTimer) clearTimeout(pollTimer);
+      if (mapRenderTimer) clearTimeout(mapRenderTimer);
+      if (tilesListener && window.google?.maps?.event) {
+        window.google.maps.event.removeListener(tilesListener);
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -259,20 +286,22 @@ export function MapView({
         className={cn("w-full h-[500px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
         style={style}
       >
-        <a
-          href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors"
-        >
-          <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#FFCD00" }}>
-            <span className="text-2xl font-bold" style={{ color: "#3C1E1E" }}>K</span>
-          </div>
-          <div>
-            <p className="font-bold text-gray-800 text-lg">{mapLabel}</p>
-            <p className="text-gray-500 text-sm mt-1">{mapAddress}</p>
-          </div>
-        </a>
+        {errorFallback ?? (
+          <a
+            href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors"
+          >
+            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#FFCD00" }}>
+              <span className="text-2xl font-bold" style={{ color: "#3C1E1E" }}>K</span>
+            </div>
+            <div>
+              <p className="font-bold text-gray-800 text-lg">{mapLabel}</p>
+              <p className="text-gray-500 text-sm mt-1">{mapAddress}</p>
+            </div>
+          </a>
+        )}
       </div>
     );
   }

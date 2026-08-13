@@ -68,6 +68,13 @@ describe("securityHeadersMiddleware", () => {
     expect(csp).toContain("https://fonts.gstatic.com");
   });
 
+  it("CSP에 지도 SDK의 최소 Google Maps 출처가 포함되어야 한다", () => {
+    securityHeadersMiddleware(req as Request, res as unknown as Response, next);
+    const csp = res._headers["Content-Security-Policy"];
+    expect(csp).toContain("img-src 'self' data: blob: https://*.cloudfront.net https://images.unsplash.com https://img.youtube.com https://i.ytimg.com https://lh3.googleusercontent.com https://maps.googleapis.com https://maps.gstatic.com");
+    expect(csp).toContain("connect-src 'self' https://forge.manus.ai https://api.manus.im https://manus.im https://manus-analytics.com https://challenges.cloudflare.com https://*.cloudfront.net https://files.manuscdn.com https://maps.googleapis.com https://maps.gstatic.com");
+  });
+
   it("CSP에 Manus 스토리지 CDN img-src가 포함되어야 한다", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
     const csp = res._headers["Content-Security-Policy"];

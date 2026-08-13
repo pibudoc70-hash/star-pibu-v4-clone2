@@ -72,6 +72,9 @@ function buildCSP(isDev: boolean): string {
     "https://img.youtube.com",
     "https://i.ytimg.com",
     "https://lh3.googleusercontent.com",
+    // Google Maps JavaScript SDK 지도 타일·마커 리소스
+    "https://maps.googleapis.com",
+    "https://maps.gstatic.com",
     // Manus 스토리지 (상대 경로 /api/storage/ 는 self로 커버)
   ].join(" ");
 
@@ -86,6 +89,9 @@ function buildCSP(isDev: boolean): string {
     "https://*.cloudfront.net",
     // Manus CDN (콘솔 에러에서 발견)
     "https://files.manuscdn.com",
+    // Google Maps JavaScript SDK의 CSP 검사·지도 데이터 요청
+    "https://maps.googleapis.com",
+    "https://maps.gstatic.com",
     isDev ? "ws://localhost:*" : "",
     isDev ? "wss://localhost:*" : "",
     isDev ? "ws://*.manus.computer" : "",

@@ -4469,3 +4469,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Directions 수정 후 타입·PC 실제 화면·다국어 및 모바일 회귀 확인, 로컬 Git 롤백 커밋 생성 — 타입·lint(오류 0)·diff check 통과. 개발 PC 화면에서 header 하단 60px, 제목 상단 128px로 68px 간격 확보. 모바일 기본 `py-12` 및 다국어 콘텐츠 경로는 변경하지 않음
 - [x] 울쎄라피 프라임을 포함한 시술·장비 상세의 YouTube 영상 URL 데이터·embed 변환·실제 응답 상태 점검 — 울쎄라피 프라임(`VeADRwws0e8`)은 공개 oEmbed 200·watch URL 정상. 공통 no-cookie iframe 도메인이 CSP `frame-src`에 누락된 것이 차단 원인임을 확인
 - [x] 깨진 YouTube 가이드 영상의 URL 변환 또는 데이터 연결을 복구하고 대체 링크·대표 상세 재생 검증 — `www.youtube-nocookie.com`을 CSP에 추가하고 보안 헤더 회귀 테스트 보완. 개발 상세에서 player title·채널·Play 버튼이 정상 렌더링되며 YouTube 새 탭 대체 링크 유지
+- [ ] YouTube CSP 복구와 공개 화면 접근성 개선을 운영 배포하고 울쎄라피 프라임 실제 iframe 재생 상태 확인

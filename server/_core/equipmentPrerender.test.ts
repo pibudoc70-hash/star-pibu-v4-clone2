@@ -24,6 +24,20 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("FAQPage");
   });
 
+  it("언어별 위치·진료시간·전문의·통증 관리 고정 인용 블록을 원본 HTML에 넣는다", () => {
+    const english = buildEquipmentPrerenderedHtml(template, item, "en", "/en/equipment3/rejuran");
+    const japanese = buildEquipmentPrerenderedHtml(template, item, "ja", "/ja/equipment3/rejuran");
+    const simplified = buildEquipmentPrerenderedHtml(template, item, "zh", "/zh/equipment3/rejuran");
+    const traditional = buildEquipmentPrerenderedHtml(template, item, "zh-TW", "/zh-tw/equipment3/rejuran");
+
+    expect(english).toContain("Clinic &amp; Treatment Information");
+    expect(english).toContain("74 Seomyeon-ro");
+    expect(english).toContain("Pain &amp; Sedation Management");
+    expect(japanese).toContain("診療・施術のご案内");
+    expect(simplified).toContain("诊疗与治疗信息");
+    expect(traditional).toContain("診療與療程資訊");
+  });
+
   it("병원·시술·FAQ 엔터티 ID를 클라이언트 스키마와 같은 표준 URL로 연결한다", () => {
     const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
 

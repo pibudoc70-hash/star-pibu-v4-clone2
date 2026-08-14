@@ -18,6 +18,7 @@ import { LiftingFaqSection } from "@/components/LiftingPositioning";
 import { withVersion } from "@/lib/imageUrl";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
 import { getLocalizedEquipmentFaqs } from "@shared/equipmentFaq";
+import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -188,6 +189,7 @@ export default function Equipment3Detail() {
   const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
+  const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -469,6 +471,16 @@ export default function Equipment3Detail() {
             </div>
           </section>
         )}
+
+        <aside className="mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-6" aria-labelledby="equipment-detail-quote-heading">
+          <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
+          <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
+            <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.hoursLabel}</dt><dd>{detailQuote.hours}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.providerLabel}</dt><dd>{detailQuote.provider}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.painManagementLabel}</dt><dd>{detailQuote.painManagement}</dd></div>
+          </dl>
+        </aside>
 
         {managedFaqs.length > 0 && (
           <section className="mb-12" aria-labelledby="equipment-faq-heading">

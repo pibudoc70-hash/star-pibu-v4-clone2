@@ -472,16 +472,6 @@ export default function Equipment3Detail() {
           </section>
         )}
 
-        <aside className="mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-6" aria-labelledby="equipment-detail-quote-heading">
-          <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
-          <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
-            <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.hoursLabel}</dt><dd>{detailQuote.hours}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.providerLabel}</dt><dd>{detailQuote.provider}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.painManagementLabel}</dt><dd>{detailQuote.painManagement}</dd></div>
-          </dl>
-        </aside>
-
         {managedFaqs.length > 0 && (
           <section className="mb-12" aria-labelledby="equipment-faq-heading">
             <h2 id="equipment-faq-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
@@ -499,6 +489,16 @@ export default function Equipment3Detail() {
         )}
 
         {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} />}
+
+        <aside className="mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-6" aria-labelledby="equipment-detail-quote-heading">
+          <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
+          <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
+            <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.hoursLabel}</dt><dd>{detailQuote.hours}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.providerLabel}</dt><dd>{detailQuote.provider}</dd></div>
+            <div><dt className="font-semibold text-slate-900">{detailQuote.painManagementLabel}</dt><dd>{detailQuote.painManagement}</dd></div>
+          </dl>
+        </aside>
 
         {/* 추가 이미지 갤러리 */}
         {images.length > 0 && (

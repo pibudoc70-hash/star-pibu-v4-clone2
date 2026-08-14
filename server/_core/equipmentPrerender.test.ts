@@ -24,6 +24,12 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("FAQPage");
   });
 
+  it("원본 HTML에서 FAQ를 진료·시술 안내보다 먼저 배치한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
+
+    expect(html.indexOf("저장 FAQ 질문")).toBeLessThan(html.indexOf("진료·시술 안내"));
+  });
+
   it("언어별 위치·진료시간·전문의·통증 관리 고정 인용 블록을 원본 HTML에 넣는다", () => {
     const english = buildEquipmentPrerenderedHtml(template, item, "en", "/en/equipment3/rejuran");
     const japanese = buildEquipmentPrerenderedHtml(template, item, "ja", "/ja/equipment3/rejuran");

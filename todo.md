@@ -4446,6 +4446,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 9단계: 최종 통합 검증 및 종합 보고 — frozen lockfile 설치, tsc, lint(오류 0·경고 220), 전체 Vitest 72 files/1,499 tests, production build, moderate 이상 audit 0건, diff check를 통과. 홈·울쎄라 상세·영문 Directions의 개발 렌더링을 재확인했고, 예약·OTP 관련 변경 파일 0건을 확인 완료
 - [x] GitHub 백업 디렉터리의 구식 상태 표시 원인과 활성 동기화 영향 점검 — `.github/star-pibu-github-backup/workflows/ci.yml`은 2026-07-02 기준의 단순 보관본으로 nested Git 저장소가 아니며 활성 Actions 경로가 아님. 실제 GitHub `main`은 로컬 `main`의 조상(원격 `6e4f377`, 로컬 `cadd478`)으로 5~9단계 로컬 커밋이 아직 원격에 반영되지 않은 상태임을 확인
 - [ ] 검증된 로컬 main 커밋을 force push 없이 GitHub main에 반영하고 원격 일치 상태 확인 — 사용자 권한 설정 완료 후 GitHub App/PAT 인증과 workflow 파일을 포함한 일반 push 재시도 예정
+- [ ] 사용자 승인: 현재 `star-pibu-v4-clone2` 원격 main에 일반 push 실행 후 로컬·원격 HEAD 일치 및 force push 미사용 확인
 - [x] 예약·OTP 제외 코드베이스의 개발·디자인 개선 기회 감사 및 우선순위 권고안 작성 — 정적 후기·평점 표시, placeholder VideoObject JSON-LD, lint 경고 220건, 대형 Home/CSS/정적 데이터 파일, 테스트 coverage 부재, 디자인 토큰·동작 일관성을 점검 완료
 - [x] 신뢰성: 정적 후기·평점 UI와 다국어 후기 데이터를 제거하고 중립적인 외부 리뷰 링크로 대체 — 출처 검증이 되지 않은 static 리뷰·평점은 링크로 대체하지 않고 완전히 제거, MedicalClinic/LocalBusiness JSON-LD에서도 review·aggregateRating 제거
 - [x] 신뢰성: placeholder VideoObject JSON-LD를 실제 영상 ID가 있을 때만 생성하도록 변경 — placeholder VideoObject 생성 경로 제거 및 회귀 테스트로 재도입 방지

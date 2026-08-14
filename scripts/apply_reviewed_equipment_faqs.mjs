@@ -11,8 +11,9 @@ if (!reviewFile || !column || !["--dry-run", "--apply"].includes(mode)) {
 const reviewResults = JSON.parse(fs.readFileSync(reviewFile, "utf8")).results;
 const updates = reviewResults.map((result) => {
   const source = JSON.parse(fs.readFileSync(result.input, "utf8"));
+  const sourceFaqs = source.sourceFaqs ?? source.faqs;
   const faqs = JSON.parse(result.output.reviewed_json ?? result.output.translation_json);
-  if (!Array.isArray(faqs) || faqs.length !== source.sourceFaqs.length || faqs.some((faq) => !faq || typeof faq.question !== "string" || typeof faq.answer !== "string" || !faq.question.trim() || !faq.answer.trim())) {
+  if (!Array.isArray(sourceFaqs) || !Array.isArray(faqs) || faqs.length !== sourceFaqs.length || faqs.some((faq) => !faq || typeof faq.question !== "string" || typeof faq.answer !== "string" || !faq.question.trim() || !faq.answer.trim())) {
     throw new Error(`Invalid translated FAQ payload for equipment ${source.id}`);
   }
   return { id: source.id, faqCount: faqs.length, value: JSON.stringify(faqs) };

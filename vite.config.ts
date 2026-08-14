@@ -263,7 +263,7 @@ export default defineConfig({
     rollupOptions: {
       // 대형 의료 콘텐츠 번들에서 동시 파일 작업이 과도하게 늘어나는 것을 방지한다.
       // 산출물과 런타임 청크 구성은 유지하고 build-time 메모리 피크만 낮춘다.
-      maxParallelFileOps: 4,
+      maxParallelFileOps: 1,
       output: {
         manualChunks: (id) => {
           // ── 1. React 코어 (거의 모든 페이지가 사용) ──

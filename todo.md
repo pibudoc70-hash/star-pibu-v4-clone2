@@ -4507,3 +4507,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 긴급: 최종 audit에서 발견된 PostCSS 경로 nanoid 고위험 취약점 수정 — workspace override로 postcss 하위 nanoid를 3.3.18로 고정, frozen install·audit·전체 품질 재검증 통과
 - [x] 긴급: 운영 Directions 지도 타일 미초기화 시 대체 UI 미표시 재발 복구 — 타일 이벤트와 실제 지도 DOM을 함께 검증해 빈 회색 영역 대신 한국어 카카오맵·외국어 Google Maps 대체 UI로 전환되는 미리보기 검증 완료
 - [x] 보수적 개선 1~8단계의 수정 범위·검증 결과·제약 사항을 정리한 최종 보고서 작성 및 전달
+- [x] 첨부 FAQ 추가: BBL 스킨타이트·버츄RF·슈링크 유니버스·온다 상세 레코드와 리프팅·탄력 매핑 확인 후 FAQ 반영 — 4개 상세 각 6문항, 총 24문항 저장
+- [x] 첨부 FAQ 추가: 자가줄기세포·엑소좀·쥬베룩 볼륨 상세 레코드와 볼륨·부스터 매핑 확인 후 FAQ 반영 — 실제 `줄기세포 치료` 상세의 자가줄기세포 설명을 확인해 매핑, 3개 상세 각 6문항, 총 18문항 저장
+- [x] 첨부 FAQ 추가: 모래알 피부이식·벨로시티 엑시머 V7·전신 자외선 광선 치료기 상세 레코드와 백반증·건선/아토피 매핑 확인 후 FAQ 반영 — 카테고리별 중복 장비 5개 상세 각 6문항, 총 30문항 저장
+- [x] 첨부 FAQ 추가: 공개 상세·FAQPage JSON-LD·프리렌더 원본 HTML의 문항 수와 텍스트 회귀 검증, 예약·OTP 비변경 확인 — 12개 상세 72문항 DB 확인, BBL 공개 렌더링과 production 원본 HTML 12개 FAQPage·대표 문항 전수 확인
+- [x] 긴급: FAQ 반영 검증 중 재발한 production build SIGTERM(143) 원인 진단·메모리 안정화 후 재빌드 확인 — 비필수 TypeScript 검사 감시 프로세스를 종료하고 Rollup 파일 작업 병렬성을 1로 제한한 뒤 production build·전체 81 files/1,529 tests·audit 통과

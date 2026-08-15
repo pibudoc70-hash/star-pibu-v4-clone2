@@ -4582,6 +4582,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 긴급 보류: CI 격리 MySQL의 `pnpm drizzle-kit migrate` 실패 원인과 migration journal·SQL 충돌을 읽기 전용으로 진단하고, 예약·OTP migration 비변경 원칙 아래 안전한 해결 절차 승인 대기
 - [ ] 승인 반영: 테스트 전용 CI MySQL에서 실패 SQL을 재현하고, 운영 DB 비접촉·예약 흐름 비변경의 최소 migration repair를 적용한 뒤 CI unit·integration 검증
 - [ ] 승인 반영: `0008_create_treatments.sql`의 독립 DDL 사이 statement breakpoint 누락만 보완하고 CI fresh MySQL 전체 migration·unit·예약 integration 재검증
+- [ ] 추가 승인 필요: 0007에서 이미 생성한 `treatmentCategories`·`treatments`를 0008이 중복 생성하는 fresh migration 충돌을, 0008 중복 DDL 제거/무해화 방식으로 최소 정리 후 CI 재검증
+- [ ] 사용자 승인: 0008의 중복 treatment DDL을 주석 기반 no-op로 무해화하고 CI fresh MySQL 전체 migration·unit·예약 integration 재검증
 - [ ] 개선 3: 초기 번들 파일 수·전송 크기·최대 청크·CSS·build 시간을 측정하고 실제 초기 로딩 병목만 개선
 - [ ] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리
 - [ ] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존

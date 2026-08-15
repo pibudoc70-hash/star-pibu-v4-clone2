@@ -5,7 +5,7 @@
  * - 모바일: EventTableMobile (하나의 카드에 모든 시술 목록 + 상세 모달)
  * - 데스크톱: EventCard 그리드 (기존 카드 레이아웃 유지)
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Sparkles, RefreshCw, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
@@ -16,6 +16,33 @@ import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
 import { parseEventListError } from "@/lib/errorMessages";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
+
+/** 뷰포트 근접 시점까지 데이터 조회를 미뤄 초기 홈 요청을 줄인다. */
+function useVisibleFetch(rootMargin = "300px 0px"): [RefObject<HTMLElement>, boolean] {
+  const ref = useRef<HTMLElement>(null!);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (visible) return;
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [visible, rootMargin]);
+
+  return [ref, visible];
+}
 
 // ── Empty State ───────────────────────────────────────────────────────────────
 function EventEmptyState({ lang }: { lang: string }) {
@@ -97,10 +124,14 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
 
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
 export default function SpecialEventSection() {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
   const sectionRef = useSectionReveal(60); // [Step64]
-  const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery({ lang });
+  const [fetchRef, isFetchVisible] = useVisibleFetch();
+  const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery(
+    { lang },
+    { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
+  );
   const [showMore, setShowMore] = useState(false);
 
   // 에러 발생 시 토스트 알림
@@ -109,9 +140,10 @@ export default function SpecialEventSection() {
     toast.error(parseEventListError(error, lang), { duration: 5000 });
   }, [error, lang]);
 
-  if (isLoading) {
+  if (!isFetchVisible || isLoading) {
     return (
       <section className="py-20 md:py-28" aria-label="스페셔 이벤트" aria-busy="true">
+        <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
@@ -160,6 +192,7 @@ export default function SpecialEventSection() {
 
   return (
     <section ref={sectionRef} id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
+      <span ref={fetchRef} aria-hidden="true" />
       <div className="container">
         <SectionHeader lang={lang} />
         {allEvents.length === 0 ? (

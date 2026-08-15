@@ -350,7 +350,7 @@ export default function AdminNotices() {
 
               {/* 이미지 첨부 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="notice-images" className="block text-sm font-medium text-gray-700 mb-2">
                   이미지 첨부
                   <span className="ml-2 text-xs text-gray-400 font-normal">
                     최대 5장 · JPG/PNG/WebP · 10MB 이하
@@ -398,6 +398,7 @@ export default function AdminNotices() {
                 {totalImageCount < 5 && (
                   <>
                     <input
+                      id="notice-images"
                       ref={fileInputRef}
                       type="file"
                       accept="image/jpeg,image/png,image/webp,image/gif"

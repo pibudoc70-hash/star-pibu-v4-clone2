@@ -268,10 +268,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
             <div className="p-6 space-y-4">
               {/* 카테고리 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-category" className="block text-sm font-medium text-gray-700 mb-2">
                   카테고리 *
                 </label>
                 <select
+                  id="treatment-category"
                   value={form.categoryId}
                   onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -287,10 +288,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               {/* 이름 */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-name" className="block text-sm font-medium text-gray-700 mb-2">
                     시술명 (한글) *
                   </label>
                   <input
+                    id="treatment-name"
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -299,10 +301,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-name-en" className="block text-sm font-medium text-gray-700 mb-2">
                     시술명 (영문) *
                   </label>
                   <input
+                    id="treatment-name-en"
                     type="text"
                     value={form.nameEn}
                     onChange={(e) => setForm({ ...form, nameEn: e.target.value })}
@@ -314,10 +317,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* 설명 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-desc" className="block text-sm font-medium text-gray-700 mb-2">
                   짧은 설명 *
                 </label>
                 <textarea
+                  id="treatment-desc"
                   value={form.desc}
                   onChange={(e) => setForm({ ...form, desc: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -329,10 +333,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               {/* 시간, 회복 */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-time" className="block text-sm font-medium text-gray-700 mb-2">
                     시술 시간 *
                   </label>
                   <input
+                    id="treatment-time"
                     type="text"
                     value={form.time}
                     onChange={(e) => setForm({ ...form, time: e.target.value })}
@@ -341,10 +346,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-recovery" className="block text-sm font-medium text-gray-700 mb-2">
                     회복 기간 *
                   </label>
                   <input
+                    id="treatment-recovery"
                     type="text"
                     value={form.recovery}
                     onChange={(e) => setForm({ ...form, recovery: e.target.value })}
@@ -356,10 +362,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* URL 슬러그 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-slug" className="block text-sm font-medium text-gray-700 mb-2">
                   URL 슬러그 (선택사항)
                 </label>
                 <input
+                  id="treatment-slug"
                   type="text"
                   value={form.slug || ""}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
@@ -372,10 +379,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               {/* 배지 */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-badge" className="block text-sm font-medium text-gray-700 mb-2">
                     배지 텍스트
                   </label>
                   <input
+                    id="treatment-badge"
                     type="text"
                     value={form.badge}
                     onChange={(e) => setForm({ ...form, badge: e.target.value })}
@@ -384,10 +392,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-badge-color" className="block text-sm font-medium text-gray-700 mb-2">
                     배지 색상
                   </label>
                   <input
+                    id="treatment-badge-color"
                     type="color"
                     value={form.badgeColor || "#4A6FA5"}
                     onChange={(e) => setForm({ ...form, badgeColor: e.target.value })}
@@ -398,14 +407,15 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* 이미지 업로드 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <p className="block text-sm font-medium text-gray-700 mb-2">
                   이미지
-                </label>
+                </p>
                 <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 cursor-pointer transition">
+                  <label htmlFor="treatment-image" className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 cursor-pointer transition">
                     <Upload size={18} />
                     {imageUploading ? "업로드 중..." : "이미지 선택"}
                     <input
+                      id="treatment-image"
                       type="file"
                       accept="image/*"
                       onChange={handleImageUpload}
@@ -423,6 +433,7 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                         decoding="async"
                       />
                       <button type="button"
+                        aria-label="선택한 이미지 제거"
                         onClick={() => setForm({ ...form, image: "" })}
                         className="text-red-600 hover:text-red-700"
                       >
@@ -435,10 +446,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* 상세 설명 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-detail" className="block text-sm font-medium text-gray-700 mb-2">
                   상세 설명
                 </label>
                 <textarea
+                  id="treatment-detail"
                   value={form.detail}
                   onChange={(e) => setForm({ ...form, detail: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -449,10 +461,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* 주의사항 */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-caution" className="block text-sm font-medium text-gray-700 mb-2">
                   기대효과
                 </label>
                 <textarea
+                  id="treatment-caution"
                   value={form.caution}
                   onChange={(e) => setForm({ ...form, caution: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -463,10 +476,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
 
               {/* YouTube URL */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="treatment-youtube-url" className="block text-sm font-medium text-gray-700 mb-2">
                   YouTube 영상 URL
                 </label>
                 <input
+                  id="treatment-youtube-url"
                   type="url"
                   value={form.youtubeUrl}
                   onChange={(e) => setForm({ ...form, youtubeUrl: e.target.value })}
@@ -478,10 +492,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
               {/* Section, Best, 정렬순서, 활성화 */}
               <div className="grid grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-section" className="block text-sm font-medium text-gray-700 mb-2">
                     섹션 *
                   </label>
                   <select
+                    id="treatment-section"
                     value={form.section || "v1"}
                     onChange={(e) => setForm({ ...form, section: e.target.value as "v1" | "v2" })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -491,10 +506,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-best" className="block text-sm font-medium text-gray-700 mb-2">
                     Best 시술
                   </label>
                   <select
+                    id="treatment-best"
                     value={form.best}
                     onChange={(e) => setForm({ ...form, best: e.target.value as "0" | "1" })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -504,10 +520,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-sort-order" className="block text-sm font-medium text-gray-700 mb-2">
                     정렬 순서
                   </label>
                   <input
+                    id="treatment-sort-order"
                     type="number"
                     value={form.sortOrder}
                     onChange={(e) => setForm({ ...form, sortOrder: parseInt(e.target.value) || 0 })}
@@ -515,10 +532,11 @@ export default function TreatmentsManager({ section = "v1" }: TreatmentsManagerP
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="treatment-active" className="block text-sm font-medium text-gray-700 mb-2">
                     활성화
                   </label>
                   <select
+                    id="treatment-active"
                     value={form.isActive}
                     onChange={(e) => setForm({ ...form, isActive: e.target.value as "0" | "1" })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

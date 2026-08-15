@@ -4576,6 +4576,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 기준선·동결 목록: 브랜치·HEAD·작업 트리·검증 상태·예약/OTP 파일·외부 예약 URL·CTA 위치를 기록하고 롤백 체크포인트 저장 — `docs/image-proxy-security-baseline-2026-08-15.md`에 main/ad3f680 기준선, 예약·OTP 동결 목록, 네이버·카카오·위챗·전화 CTA, TypeScript·lint·1,543개 테스트·audit·로컬 build SIGTERM(143) 환경 제한을 기록
 - [x] 개선 1: 사용 중인 정상 이미지 근거를 수집한 뒤 이미지 프록시의 hostname·protocol·redirect·Content-Type·응답 크기 경계를 최소 강화하고 공개 이미지 smoke test — 실제 storage host·WebP MIME을 확인해 정책화하고, host spoofing·HTTP·MIME 불일치를 차단. 개발·배포·운영 도메인에서 정상 이미지 200·차단 요청 400 확인
 - [x] 승인 반영: 로컬 Vite build SIGTERM(143) 환경 제한을 기록한 상태에서 개선 1 전용 체크포인트를 저장·자동 배포하고 배포 산출물·운영 이미지 응답으로 코드 상태 재검증 — 체크포인트 9c0fd7b5 자동 배포 후 프로젝트·운영 도메인 모두 정상 이미지 200·비허용 popup URL 400 확인
+- [ ] 사용자 승인: 개선 2~6을 예약·OTP·외부 예약·운영 DB 동결 원칙으로 한 항목씩 구현·검증·체크포인트 저장 후 순차 진행
 - [ ] 개선 2: 예약 테스트를 보존한 채 비예약 단위·통합 테스트 실행 체계를 분리하고 테스트 DB 필요 조건을 명시
 - [ ] 개선 3: 초기 번들 파일 수·전송 크기·최대 청크·CSS·build 시간을 측정하고 실제 초기 로딩 병목만 개선
 - [ ] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리

@@ -4562,3 +4562,11 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P5: 예약·OTP·OAuth/CSP 설계는 보존하면서 healthz·오류 노출·로그 마스킹·스토리지 입력 검증·공개 파일 제공을 감사하고 저위험 보안 개선 적용 — 인증 문맥·tRPC·스토리지 프록시의 raw console 오류를 공통 마스킹 logger로 통일하고 upstream 본문 로그를 제거. API key 헤더·key=value 마스킹 추가. OAuth state·health 최소 payload·storage key/URL 검증·예약·OTP 비변경을 15개 보안 테스트와 실제 healthz 응답으로 확인
 - [x] P6: 반복 상수·죽은 코드·오래된 주석·문서·CI 위생을 공개 동작 비변경 원칙으로 정리 — CI의 Node 22·pnpm 10.34.5·frozen lockfile·type/lint/unit/integration/build/audit 파이프라인을 확인. LangContext의 빈 catch 의도를 문서화하고 인증 문맥의 불필요한 초기 null 할당을 제거해 lint 경고 154→150건. 타입 검사·인증·i18n 5개 테스트·실제 홈 렌더링 확인
 - [x] 통합 검증·배포: 단계별 실제 화면·전체 회귀·production build·healthz·변경 범위 점검 후 롤백 가능한 운영 체크포인트 저장 및 종합 보고 — TypeScript 통과, lint 오류 0·경고 150, 전체 Vitest 86 파일·1,542개 테스트 통과, moderate 이상 audit 0건, diff check 통과. 개발 서버와 독립 production 산출물에서 healthz·sitemap·번체 외국인 안내 canonical을 확인하고 최종 체크포인트 저장 예정
+
+## 후속 품질·성능·번체 본문 현지화 (2026-08-15)
+- [ ] 기준선: 최신 배포본의 예약·OTP·외부 예약·DB·URL 보호 범위와 lint·성능·번체 본문 현황 감사, 롤백 체크포인트 저장
+- [ ] 잔여 lint: eslint-disable 없이 저위험 미사용 변수·불필요 escape·명백한 정적 표현 경고를 정리하고 테스트로 동작 비변경 확인
+- [ ] 모바일 Lighthouse: 대표 공개 경로의 모바일 성능·접근성·SEO·모범사례를 측정하고 실제 병목만 최소 개선
+- [ ] 번체 본문 스키마: `descriptionZhTw`·`effectZhTw`·`cautionZhTw` 등 번체 전용 본문 필드를 스키마·마이그레이션·DB에 안전하게 추가하고 기존 간체 폴백과 구분
+- [ ] 번체 본문 현지화: 72개 상세의 본문을 대만 사용자 기준으로 현지화해 수치·장비명·부산·서면·개인차·의료광고 준수 표현을 전수 검증
+- [ ] 통합 검증·배포: 다국어 원본 HTML·FAQPage·canonical·모바일 화면·전체 회귀·production build·healthz·보호 파일 비변경 확인 후 운영 체크포인트 저장

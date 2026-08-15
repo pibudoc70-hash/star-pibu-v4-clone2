@@ -11,6 +11,8 @@ CREATE TABLE `treatmentCategories` (
 	CONSTRAINT `treatmentCategories_id` PRIMARY KEY(`id`)
 );
 
+--> statement-breakpoint
+
 CREATE TABLE `treatments` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`categoryId` varchar(50) NOT NULL,

@@ -1,6 +1,7 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
 import { sdk } from "./sdk";
+import { logger } from "./logger";
 
 export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
@@ -45,10 +46,7 @@ export async function createContext(
   } catch (error) {
     // 인증 실패는 공개 프로시저에서 정상 케이스이므로 요청을 막지 않는다.
     // 단, 인증 서버 장애를 관측할 수 있도록 로그는 남긴다.
-    console.warn(
-      "[Auth] authenticateRequest failed:",
-      error instanceof Error ? error.message : String(error),
-    );
+    logger.warn("Auth", "authenticateRequest failed", error);
     user = null;
   }
 

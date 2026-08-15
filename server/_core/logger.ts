@@ -13,7 +13,7 @@ const IS_PROD = process.env.NODE_ENV === "production";
 export function maskSensitiveForLog(msg: string): string {
   return msg
     // Header values can contain multiple tokens/cookies: redact the whole value.
-    .replace(/\b(authorization|cookie|set-cookie)\s*:\s*[^\r\n]+/gi, "$1: [REDACTED]")
+    .replace(/\b(authorization|cookie|set-cookie|x-api-key|x-auth-token)\s*:\s*[^\r\n]+/gi, "$1: [REDACTED]")
     // 전화번호 패턴 (010-1234-5678 / 01012345678 / +82-10-...)
     .replace(/(\+?82[-\s]?)?0?1[0-9][-\s]?\d{3,4}[-\s]?\d{4}/g, "[PHONE]")
     // 이메일 패턴
@@ -26,7 +26,7 @@ export function maskSensitiveForLog(msg: string): string {
     // OAuth authorization code in query strings
     .replace(/([?&](?:code|oauth_?code)=)[^&#\s]+/gi, "$1[REDACTED]")
     // 민감 key=value 형태
-    .replace(/\b(password|secret|token|authorization|cookie|database_url|access_?token|refresh_?token|id_?token|oauth_?code)\s*([:=])\s*[^\s,;]+/gi, "$1$2[REDACTED]")
+    .replace(/\b(password|secret|token|authorization|cookie|database_url|api[_-]?key|access_?token|refresh_?token|id_?token|oauth_?code)\s*([:=])\s*[^\s,;]+/gi, "$1$2[REDACTED]")
     // MySQL·postgres 형태의 connection URI
     .replace(/\b(?:mysql|postgres(?:ql)?):\/\/[^\s]+/gi, "[DATABASE_URL]");
 }

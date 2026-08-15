@@ -70,6 +70,16 @@ describe("logger masking", () => {
     expect(value).toMatch(/Authorization:\s*\[REDACTED\]/);
     expect(value).toMatch(/Cookie:\s*\[REDACTED\]/);
   });
+
+  it("masks API key headers and key-value tokens without masking ordinary status values", () => {
+    const value = maskSensitiveForLog(
+      "X-API-Key: super-secret\napi_key=another-secret status=503 retry=2",
+    );
+
+    expect(value).toMatch(/X-API-Key:\s*\[REDACTED\]/);
+    expect(value).toContain("api_key=[REDACTED]");
+    expect(value).toContain("status=503 retry=2");
+  });
 });
 
 describe("storage boundary validation", () => {

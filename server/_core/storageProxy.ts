@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import crypto from "crypto";
 import { ENV } from "./env";
+import { logger } from "./logger";
 import { imageCache, imageNotFoundCache } from "./imageCache"; // [Step51-hotfix-D] imageNotFoundCache 추가
 
 // 파일 확장자 → MIME 타입 매핑
@@ -159,14 +160,13 @@ export function registerStorageProxy(app: Express) {
       });
 
       if (!forgeResp.ok) {
-        const body = await forgeResp.text().catch(() => "");
         // [Step51-hotfix-D3] presign 404/403 → 음수 캐시 등록
         if (forgeResp.status === 404 || forgeResp.status === 403) {
           imageNotFoundCache.set(notFoundKey, true);
           res.status(404).type("text/plain").send("Not found");
           return;
         }
-        console.error(`[StorageProxy] forge error: ${forgeResp.status} ${body}`);
+        logger.warn("StorageProxy", `Presign request failed (${forgeResp.status})`);
         res.status(502).send("Storage backend error");
         return;
       }
@@ -190,7 +190,7 @@ export function registerStorageProxy(app: Express) {
           res.status(404).type("text/plain").send("Not found");
           return;
         }
-        console.error(`[StorageProxy] image fetch error: ${imgResp.status} key=${key}`);
+        logger.warn("StorageProxy", `Image fetch failed (${imgResp.status}) for key=${key}`);
         res.status(502).send("Failed to fetch image from storage");
         return;
       }
@@ -246,11 +246,11 @@ export function registerStorageProxy(app: Express) {
         err instanceof Error &&
         (err.name === "TimeoutError" || err.name === "AbortError");
       if (isTimeout) {
-        console.error(`[StorageProxy] upstream timeout key=${key}`);
+        logger.warn("StorageProxy", `Upstream timeout for key=${key}`, err);
         res.status(504).type("text/plain").send("Upstream timeout");
         return;
       }
-      console.error("[StorageProxy] failed:", err);
+      logger.warn("StorageProxy", "Storage proxy request failed", err);
       res.status(502).send("Storage proxy error");
     }
   });

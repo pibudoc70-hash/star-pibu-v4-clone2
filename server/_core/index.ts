@@ -375,11 +375,11 @@ async function startServer() {
       onError({ error, path, type }) {
         // INTERNAL_SERVER_ERROR 만 기록 (클라이언트 입력 오류는 로그 노이즈이므로 제외)
         if (error.code === "INTERNAL_SERVER_ERROR") {
-          console.error(
-            `[tRPC:ERROR] ${type} ${path ?? "<no-path>"} — ${error.message}`,
+          logger.error(
+            "tRPC",
+            `${type} ${path ?? "<no-path>"} failed`,
+            error.cause ?? error,
           );
-          if (error.cause) console.error("[tRPC:CAUSE]", error.cause);
-          if (error.stack) console.error(error.stack);
         }
       },
     })

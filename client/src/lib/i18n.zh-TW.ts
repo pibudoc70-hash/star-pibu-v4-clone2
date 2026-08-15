@@ -496,9 +496,45 @@ export const zhTW: I18nContent = {
     ],
   },
   foreignGuide: {
-    ...zh.foreignGuide,
     title: "外語服務",
-    cta: "微信諮詢",
+    subtitle: "STAR皮膚科誠摯歡迎海外患者",
+    steps: [
+      { step: "01", title: "預約", desc: "請透過NAVER預約或電話預約。我們提供中文諮詢服務。" },
+      { step: "02", title: "到院", desc: "捷運西面站5、7號出口步行3分鐘，愛奧城市大廈4樓。" },
+      { step: "03", title: "諮詢・療程", desc: "皮膚科專科醫師會親自評估肌膚狀況，建議合適的療程方向。" },
+      { step: "04", title: "術後照護", desc: "將提供詳細的術後照護說明，返國後亦可進行線上諮詢。" },
+    ],
+    tips: ["預約時需提供護照資訊", "支援信用卡（Visa/Mastercard）付款", "可開立收據", "愛奧城市大廈內設有停車場"],
+    cta: "立即預約",
+    transportation: {
+      title: "交通資訊",
+      methods: [
+        { name: "捷運", desc: "西面站1、2號線5號、7號出口步行3分鐘" },
+        { name: "公車", desc: "於西面十字路口公車站下車後步行2分鐘" },
+        { name: "計程車", desc: "釜山鎮區西面路74號 愛奧城市大廈4樓" },
+        { name: "自行開車", desc: "可使用愛奧城市大廈內停車場（首小時免費）" },
+      ],
+    },
+    currency: {
+      title: "付款與換匯",
+      info: "使用信用卡付款時，會依當下匯率自動換匯；亦可使用韓元現金。",
+      methods: [
+        { name: "信用卡", desc: "支援Visa、Mastercard、American Express" },
+        { name: "現金", desc: "可使用韓元（KRW）現金付款" },
+        { name: "換匯", desc: "西面站周邊的銀行與換匯所可辦理換匯" },
+        { name: "國際匯款", desc: "可於事前諮詢後安排銀行匯款" },
+      ],
+    },
+    interpretation: {
+      title: "翻譯服務",
+      desc: "為海外患者提供多語諮詢與翻譯服務",
+      services: [
+        { name: "中文諮詢", desc: "可安排中文醫療諮詢或專業口譯（請於預約時提出）" },
+        { name: "日語諮詢", desc: "可透過OTOMO釜山（otomo-busan.com）安排專業口譯服務" },
+        { name: "英語諮詢", desc: "可安排英語醫療諮詢或專業口譯" },
+        { name: "其他語言", desc: "請於預約時提出，可協助安排口譯人員" },
+      ],
+    },
   },
   footer: {
     ...zh.footer,

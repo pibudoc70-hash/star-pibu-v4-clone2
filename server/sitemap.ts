@@ -68,7 +68,13 @@ function hreflangBlock(
 }
 
 /** 고정 URL 목록 */
-const STATIC_URLS = [
+const FOREIGN_GUIDE_HREFLANG = `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/foreign-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`;
+
+export const STATIC_URLS = [
   // ── 홈 (다국어) ──────────────────────────────────────────────
   {
     loc: `${SITE_URL}/`,
@@ -90,10 +96,10 @@ const STATIC_URLS = [
     priority: "0.9",
     hreflang: hreflangBlock("/equipment3"),
   },
-  { loc: `${SITE_URL}/en/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
-  { loc: `${SITE_URL}/ja/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
-  { loc: `${SITE_URL}/zh/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
-  { loc: `${SITE_URL}/zh-tw/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8" },
+  { loc: `${SITE_URL}/en/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
+  { loc: `${SITE_URL}/ja/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
+  { loc: `${SITE_URL}/zh/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
+  { loc: `${SITE_URL}/zh-tw/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
 
   // ── 공지사항 ─────────────────────────────────────────────────
   {
@@ -110,15 +116,11 @@ const STATIC_URLS = [
     lastmod: BUILD_DATE,
     changefreq: "monthly",
     priority: "0.8",
-    hreflang: `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`,
+    hreflang: FOREIGN_GUIDE_HREFLANG,
   },
-  { loc: `${SITE_URL}/ja/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/zh/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
-  { loc: `${SITE_URL}/zh-tw/foreign-guide`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/ja/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
+  { loc: `${SITE_URL}/zh/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
+  { loc: `${SITE_URL}/zh-tw/foreign-guide`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
 
   // ── 병원 소개 ────────────────────────────────────────────────
   {
@@ -128,10 +130,10 @@ const STATIC_URLS = [
     priority: "0.7",
     hreflang: hreflangBlock("/about"),
   },
-  { loc: `${SITE_URL}/en/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
-  { loc: `${SITE_URL}/ja/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
-  { loc: `${SITE_URL}/zh/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
-  { loc: `${SITE_URL}/zh-tw/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/en/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
+  { loc: `${SITE_URL}/ja/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
+  { loc: `${SITE_URL}/zh/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
+  { loc: `${SITE_URL}/zh-tw/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
 
   // ── 연구 및 발표 ─────────────────────────────────────────────
   {
@@ -141,10 +143,10 @@ const STATIC_URLS = [
     priority: "0.6",
     hreflang: hreflangBlock("/research"),
   },
-  { loc: `${SITE_URL}/en/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
-  { loc: `${SITE_URL}/ja/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
-  { loc: `${SITE_URL}/zh/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
-  { loc: `${SITE_URL}/zh-tw/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/en/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
+  { loc: `${SITE_URL}/ja/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
+  { loc: `${SITE_URL}/zh/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
+  { loc: `${SITE_URL}/zh-tw/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
 
   // ── 비급여 진료안내 ──────────────────────────────────────────
   {
@@ -154,6 +156,10 @@ const STATIC_URLS = [
     priority: "0.5",
     hreflang: hreflangBlock("/non-covered"),
   },
+  { loc: `${SITE_URL}/en/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
+  { loc: `${SITE_URL}/ja/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
+  { loc: `${SITE_URL}/zh/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
+  { loc: `${SITE_URL}/zh-tw/non-covered`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
 
   // ── 개인정보처리방침 ─────────────────────────────────────────
   {
@@ -163,10 +169,36 @@ const STATIC_URLS = [
     priority: "0.3",
     hreflang: hreflangBlock("/privacy"),
   },
-  { loc: `${SITE_URL}/en/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
-  { loc: `${SITE_URL}/ja/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
-  { loc: `${SITE_URL}/zh/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
-  { loc: `${SITE_URL}/zh-tw/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2" },
+  { loc: `${SITE_URL}/en/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
+  { loc: `${SITE_URL}/ja/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
+  { loc: `${SITE_URL}/zh/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
+  { loc: `${SITE_URL}/zh-tw/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
+
+  // ── 의료진 소개 ───────────────────────────────────────────────
+  {
+    loc: `${SITE_URL}/doctors`,
+    lastmod: BUILD_DATE,
+    changefreq: "monthly",
+    priority: "0.7",
+    hreflang: hreflangBlock("/doctors"),
+  },
+  { loc: `${SITE_URL}/en/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
+  { loc: `${SITE_URL}/ja/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
+  { loc: `${SITE_URL}/zh/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
+  { loc: `${SITE_URL}/zh-tw/doctors`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
+
+  // ── 찾아오시는 길 ─────────────────────────────────────────────
+  {
+    loc: `${SITE_URL}/directions`,
+    lastmod: BUILD_DATE,
+    changefreq: "monthly",
+    priority: "0.7",
+    hreflang: hreflangBlock("/directions"),
+  },
+  { loc: `${SITE_URL}/en/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
+  { loc: `${SITE_URL}/ja/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
+  { loc: `${SITE_URL}/zh/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
+  { loc: `${SITE_URL}/zh-tw/directions`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
 ];
 
 /** client/src/data/treatments/index.ts의 정적 시술 상세 라우트와 동기화한다. */

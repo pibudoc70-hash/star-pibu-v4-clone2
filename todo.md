@@ -4558,7 +4558,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] P1: 예약·OTP 비접촉 범위에서 lint 경고·테스트 품질을 분류하고 저위험 정적 분석·테스트 개선 적용 — lint 경고를 규칙·파일별 분류하고 App·ContactSection·TreatmentsManager·SeoHead의 실제 미사용 import만 제거해 185→165건으로 축소. 타입 검사와 SEO·라우팅 관련 70개 테스트, 실제 홈 화면 확인 완료
 - [x] P2: 다국어·모바일 접근성·오류/로딩 상태·키보드 탐색을 감사하고 저위험 신뢰성 개선 적용 — 관리자 팝업 11개 label·입력 연결과 이미지 제거 버튼 이름을 추가하고, 모바일 이벤트 상세 모달을 배경 닫기 버튼·dialog·제목 연결 구조로 변경. 실제 홈 렌더링과 새 모달 상호작용 테스트 통과, lint 경고 165→154건
 - [x] P3: 실제 측정 기반으로 큰 번들·불필요한 초기 로딩·이미지/폰트 LCP 위험을 개선하되 프리렌더·URL·SEO 보존 — production 산출물·초기 HTML을 분석해 기존 route lazy loading·이미지·폰트 preload가 적용된 상태를 확인하고, SPECIAL EVENT API 조회를 300px 뷰포트 근접 시점까지 지연. 새 활성화 회귀 테스트·타입 검사·실제 홈 렌더링을 통과. 로컬 Vite production build는 6,779개 모듈 변환 후 샌드박스 메모리 SIGTERM(143)으로 중단되어 통합 단계에서 플랫폼 배포 산출물로 재확인 예정
-- [ ] P4: canonical·hreflang·sitemap·robots·프리렌더·구조화 데이터·NAP 정합성을 감사하고 코드로 해결 가능한 부분만 최소 수정
+- [x] P4: canonical·hreflang·sitemap·robots·프리렌더·구조화 데이터·NAP 정합성을 감사하고 코드로 해결 가능한 부분만 최소 수정 — sitemap에 누락된 doctors·directions 5개 언어 경로를 추가하고, 공개 다국어 sitemap 각 항목에 상호 hreflang을 보강. `/zh-tw/foreign-guide`의 간체 언어 판별을 번체 리소스·자기 canonical·zh-TW hreflang으로 정정. 관련 56개 테스트와 실제 서버 canonical·sitemap 응답 확인 완료
 - [ ] P5: 예약·OTP·OAuth/CSP 설계는 보존하면서 healthz·오류 노출·로그 마스킹·스토리지 입력 검증·공개 파일 제공을 감사하고 저위험 보안 개선 적용
 - [ ] P6: 반복 상수·죽은 코드·오래된 주석·문서·CI 위생을 공개 동작 비변경 원칙으로 정리
 - [ ] 통합 검증·배포: 단계별 실제 화면·전체 회귀·production build·healthz·변경 범위 점검 후 롤백 가능한 운영 체크포인트 저장 및 종합 보고

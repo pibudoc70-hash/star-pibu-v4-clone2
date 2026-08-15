@@ -1,10 +1,10 @@
 /**
  * ForeignGuide Page - STAR 피부과 외국어 안내
  * 디자인: 모던 클리니컬 엣지 - 민트-네이비 듀오톤
- * 영어·일본어·중국어 방문객을 위한 전용 안내 페이지 (3개 언어 지원)
+ * 영어·일본어·중국어 간체·중국어 번체 방문객을 위한 전용 안내 페이지
  *
  * [PAGE LIFECYCLE] localized live page (PR-39 alias 정책 확정)
- * - route: /foreign-guide, /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide (App.tsx live)
+ * - route: /foreign-guide, /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide, /zh-tw/foreign-guide (App.tsx live)
  *
  * [ALIAS POLICY] /foreign-guide = /en/foreign-guide 의 영어 alias
  * - 이 페이지는 en/ja/zh 전용 콘텐츠로, ko 콘텐츠가 없음
@@ -14,6 +14,7 @@
  *   · /en/foreign-guide → canonical = /en/foreign-guide
  *   · /ja/foreign-guide → canonical = /ja/foreign-guide
  *   · /zh/foreign-guide → canonical = /zh/foreign-guide
+ *   · /zh-tw/foreign-guide → canonical = /zh-tw/foreign-guide
  * - 별도 HTTP redirect 없음: SPA 환경에서 canonical 자동 정렬으로 충분
  *
  * - ogUrl: canonical과 동일
@@ -22,9 +23,10 @@
  *   · en  -> /en/foreign-guide
  *   · ja  -> /ja/foreign-guide
  *   · zh  -> /zh/foreign-guide
+ *   · zh-TW -> /zh-tw/foreign-guide
  *   · x-default -> /en/foreign-guide
  *   · ko hreflang 없음 (ko 콘텐츠 없는 페이지이므로 sitemap 정책과 동일)
- * - 본문: en/ja/zh 3개 언어 전체 제공 (한국어 콘텐츠 없음)
+ * - 본문: en/ja/zh/zh-TW 4개 언어 전체 제공 (한국어 콘텐츠 없음)
  * - noindex: 없음 (전체 색인 허용)
  */
 import { useEffect } from "react";
@@ -36,15 +38,23 @@ import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
 import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 
-type ForeignLang = "en" | "ja" | "zh";
+type ForeignLang = "en" | "ja" | "zh" | "zh-TW";
 
-const FOREIGN_LANGS: ForeignLang[] = ["en", "ja", "zh"];
+const FOREIGN_LANGS: ForeignLang[] = ["en", "ja", "zh", "zh-TW"];
 
 const LANG_COLORS: Record<ForeignLang, { bg: string; text: string; accent: string }> = {
   en: { bg: "linear-gradient(135deg, #1a3a5c 0%, #2563EB 60%, #60A5FA 100%)", text: "#2563EB", accent: "#DBEAFE" },
   ja: { bg: "linear-gradient(135deg, #1F2937 0%, #4A6FA5 60%, #81C7C9 100%)", text: "#4A6FA5", accent: "#EEF7F7" },
   zh: { bg: "linear-gradient(135deg, #7f1d1d 0%, #DC2626 60%, #F87171 100%)", text: "#DC2626", accent: "#FEE2E2" },
+  "zh-TW": { bg: "linear-gradient(135deg, #7f1d1d 0%, #B91C1C 60%, #FCA5A5 100%)", text: "#B91C1C", accent: "#FEE2E2" },
 };
+
+export function getForeignGuideLanguage(location: string): ForeignLang {
+  if (location.startsWith("/zh-tw")) return "zh-TW";
+  if (location.startsWith("/ja")) return "ja";
+  if (location.startsWith("/zh")) return "zh";
+  return "en";
+}
 
 export default function ForeignGuide() {
   const { setLang } = useLang();
@@ -56,11 +66,7 @@ export default function ForeignGuide() {
    * - /foreign-guide = /en/foreign-guide alias → en
    * - 상태(useState)가 아닌 computed value이므로 동기화 불일치 불가
    */
-  const activeLang: ForeignLang = (() => {
-    if (location.startsWith("/ja")) return "ja";
-    if (location.startsWith("/zh")) return "zh";
-    return "en"; // /foreign-guide 또는 /en/foreign-guide → en
-  })();
+  const activeLang = getForeignGuideLanguage(location);
 
   // LangContext를 route 기준으로 항상 동기화 (persist=false: localStorage 오염 방지)
   useEffect(() => {
@@ -92,6 +98,11 @@ export default function ForeignGuide() {
       title: "外国患者就诊指南 | 釜山星皮肤科",
       description: "釜山西面星皮肤科提供中文就诊服务。热玛吉FLX、皮秒激光、眼袋脂肪重置等高端医疗项目，欢迎中文咨询。",
       keywords: "釜山皮肤科, 星皮肤科, 热玛吉釜山, 皮秒激光釜山, 外国患者, 中文咨询",
+    },
+    "zh-TW": {
+      title: "外國患者就診指南｜釜山STAR皮膚科",
+      description: "釜山西面的STAR皮膚科提供繁體中文就診諮詢。可了解Thermage FLX、皮秒雷射、眼袋脂肪重置等療程資訊。",
+      keywords: "釜山皮膚科, STAR皮膚科, Thermage釜山, 皮秒雷射釜山, 外國患者, 繁體中文諮詢",
     },
   };
   const seo = SEO_META[activeLang];
@@ -128,6 +139,7 @@ export default function ForeignGuide() {
           { hreflang: "en",        href: `${BASE_URL}/en/foreign-guide` },
           { hreflang: "ja",        href: `${BASE_URL}/ja/foreign-guide` },
           { hreflang: "zh",        href: `${BASE_URL}/zh/foreign-guide` },
+          { hreflang: "zh-TW",     href: `${BASE_URL}/zh-tw/foreign-guide` },
           { hreflang: "x-default", href: `${BASE_URL}/en/foreign-guide` },
         ]}
         pageType="treatment"

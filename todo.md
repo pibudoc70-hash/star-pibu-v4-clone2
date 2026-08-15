@@ -4592,5 +4592,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리 — `useHomeInitialScrollRestore`, `homeSectionFallbacks`, `homeSeo`로 동작·구성·schema 조합을 분리. 홈 유지보수성·SEO helper·prerender·redirect 15개 테스트와 실제 FAQ sessionStorage 스크롤 복원 확인. 의료 검수 이력의 FAQ 원문은 페이지 가까이에 보존
 - [x] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존 — reservation/OTP와 무관한 스크롤 애니메이션·reduced-motion·모바일 timing 규칙만 `styles/scroll-animations.css`로 무손실 분리하고, import·핵심 selector·접근성 fallback을 검증하는 2개 회귀 테스트 추가. TypeScript·4개 관련 테스트와 실제 홈 히어로·CTA 렌더링 확인
 - [x] 개선 6: 첨부 지시의 나머지 항목을 예약 영향 여부를 먼저 판별해 하나씩만 구현·검증·체크포인트 저장 — 비예약 관리자 치료·공지 폼의 18개 label/input 연결과 이미지 제거 버튼 이름을 추가해 label 경고 25→7건으로 축소. 남은 7건은 `MyReservations.tsx` 예약 화면이므로 사용자 지시대로 수정하지 않고 별도 보고
-- [ ] 개선 7: 서비스 워커 캐시 안정성을 읽기 전용으로 감사하고, 예약·API·tRPC·인증·관리자 응답 비캐시 원칙을 유지하는 최소 보완만 단독 진행
+- [x] 개선 7: 서비스 워커 캐시 안정성을 읽기 전용으로 감사하고, 예약·API·tRPC·인증·관리자 응답 비캐시 원칙을 유지하는 최소 보완만 단독 진행 — 일반 `/api/*`(reservation·tRPC 포함), auth, admin은 명시 비캐시하고 `/api/storage/*` 이미지만 예외 허용. HTML network-first 유지, cache.put 비치명 처리·이미지 60개 상한 추가. 정책 2개 테스트·TypeScript·lint 오류 0과 운영 SW controller·524 CSS rules·computed style 확인
 - [ ] 단계별 보호 검증·보고: 각 개선 후 대상 테스트·타입·lint·build·공개 화면·로그·예약 영역 비변경을 확인하고 실패 시 승인 전 다음 항목 보류

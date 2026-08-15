@@ -160,7 +160,7 @@ function DeviceCard({
       >
         <OptimizedImage
           src={imgUrl}
-          alt={displayName}
+          alt=""
           className="w-full h-full object-cover"
           width={80}
           height={80}

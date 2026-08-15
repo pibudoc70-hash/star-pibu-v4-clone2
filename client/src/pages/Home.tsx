@@ -540,6 +540,8 @@ export default function Home() {
                 src="/manus-storage/regen-medicine-banner-pc2_430fd36f.webp"
                 alt="보건복지부 지정 체담재생의료 실시기관 — 스타피부과는 보건복지부로부터 체담재생의료 실시기관에 지정됐습니다"
                 className="w-full h-auto block"
+                width={800}
+                height={296}
                 loading="eager"
                 fetchPriority="high"
               />

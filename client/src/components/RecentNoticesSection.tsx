@@ -58,6 +58,7 @@ function RecentNoticesSection({ lang }: Props) {
             href={`${langPrefix}/notice`}
             className="flex items-center gap-0.5 text-xs font-medium transition-colors hover:opacity-70"
             style={{ color: "var(--color-gold-primary)" }}
+            aria-label={`${labels.section} ${labels.more}`}
           >
             {labels.more}
             <ChevronRight size={13} />

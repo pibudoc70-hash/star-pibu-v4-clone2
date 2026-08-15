@@ -252,13 +252,13 @@ export default function Footer() {
             <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: "1.6" }}>
               {t.footer.address}
             </p>
-            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}>
               {t.footer.subwayInfo}
             </p>
             {/* 영업시간 요약 */}
             <div style={{ display: "flex", flexDirection: "column", gap: "3px", paddingTop: "4px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
               {t.hours.rows.slice(0, 3).map((row) => (
-                <p key={row.day} style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>
+                <p key={row.day} style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}>
                   {row.day} {row.time}
                 </p>
               ))}
@@ -278,7 +278,7 @@ export default function Footer() {
         }}
       >
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
-          <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", lineHeight: "1.7" }}>
+          <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)", lineHeight: "1.7" }}>
               {t.footer.bizInfo}
           </p>
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
@@ -286,7 +286,7 @@ export default function Footer() {
               type="button"
               onClick={() => handleNavClick("/non-covered")}
               className="transition-colors hover:text-white"
-              style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
+              style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}
             >
               {t.footer.nonCovered}
             </button>
@@ -294,13 +294,13 @@ export default function Footer() {
               type="button"
               onClick={() => handleNavClick("/privacy")}
               className="transition-colors hover:text-white"
-              style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}
+              style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}
             >
               {t.footer.privacy}
             </button>
           </div>
         </div>
-        <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.15)" }}>
+        <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.62)" }}>
           {t.footer.copyright}
         </p>
       </div>

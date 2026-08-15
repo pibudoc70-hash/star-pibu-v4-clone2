@@ -50,7 +50,7 @@ export function DoctorMobileLayout({
     <div className="lg:hidden">
 
       {/* ── 상단 의사 선택 탭 (슬라이더 위) ── */}
-      <div className="dr-mob-top-selector">
+      <div className="dr-mob-top-selector" role="tablist">
         {mergedDoctors.map((d) => (
           <button
             type="button"
@@ -71,7 +71,7 @@ export function DoctorMobileLayout({
             >
               <OptimizedImage
                 src={d.mobileImage || d.cardImage || d.image}
-                alt={d.name}
+                alt=""
                 priority={activeDoctor === d.id}
                 usePicture={false}
                 style={{

@@ -4590,6 +4590,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 개선 3: 초기 번들 파일 수·전송 크기·최대 청크·CSS·build 시간을 측정하고 실제 초기 로딩 병목만 개선 — 운영 초기 내부 자산 6개·약 716.9KB(CSS 260.7KB, React 193.1KB, tRPC 103.5KB, Radix 90.2KB 등)를 기준 기록. 공개 헤더의 미사용 `useAuth`를 제거해 초기 auth/oAuth 요청을 없애고 회귀 테스트 추가. CI run 31911968917의 production build·fresh DB·unit·예약 integration 통과
 - [x] 긴급 회귀 진단: 자동 배포 뒤 대표 도메인 CSS 미적용과 프로젝트 도메인 timeout의 자산 응답·캐시·배포 상태를 진단하고 예약 동결 상태로 최소 복구 — 대표 도메인 CSS는 200·text/css·524 rules이며 재방문에서 히어로·헤더·외부 예약 CTA·본문·푸터 정상 렌더링 확인. 프로젝트 도메인의 반복 timeout은 플랫폼 라우팅 상태로 분리 기록, 대표 운영 사이트에는 재현되지 않음
 - [x] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리 — `useHomeInitialScrollRestore`, `homeSectionFallbacks`, `homeSeo`로 동작·구성·schema 조합을 분리. 홈 유지보수성·SEO helper·prerender·redirect 15개 테스트와 실제 FAQ sessionStorage 스크롤 복원 확인. 의료 검수 이력의 FAQ 원문은 페이지 가까이에 보존
-- [ ] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존
+- [x] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존 — reservation/OTP와 무관한 스크롤 애니메이션·reduced-motion·모바일 timing 규칙만 `styles/scroll-animations.css`로 무손실 분리하고, import·핵심 selector·접근성 fallback을 검증하는 2개 회귀 테스트 추가. TypeScript·4개 관련 테스트와 실제 홈 히어로·CTA 렌더링 확인
 - [ ] 개선 6: 첨부 지시의 나머지 항목을 예약 영향 여부를 먼저 판별해 하나씩만 구현·검증·체크포인트 저장
 - [ ] 단계별 보호 검증·보고: 각 개선 후 대상 테스트·타입·lint·build·공개 화면·로그·예약 영역 비변경을 확인하고 실패 시 승인 전 다음 항목 보류

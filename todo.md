@@ -4554,8 +4554,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 예약·OTP 보존 전제의 코드·보안·성능·접근성·SEO 개선 후보를 우선순위와 검증 기준으로 정리한 실행 프롬프트 작성 — `docs/manus-safe-improvement-prompt-2026-08-15.md` 작성 완료
 
 ## P1~P6 안전 개선 실행 (2026-08-15)
-- [ ] 기준선: 최신 체크포인트·작업 트리·보호 대상·타입·lint·테스트·build·audit 기준 상태 확인 및 롤백 지점 저장
-- [ ] P1: 예약·OTP 비접촉 범위에서 lint 경고·테스트 품질을 분류하고 저위험 정적 분석·테스트 개선 적용
+- [x] 기준선: 최신 체크포인트·작업 트리·보호 대상·타입·lint·테스트·build·audit 기준 상태 확인 및 롤백 지점 저장 — 체크포인트 125ad286 저장, `pnpm install --frozen-lockfile`·타입 검사·moderate 이상 audit 통과, 현재 보호 대상은 예약 경로 테스트의 사용자 승인 변경 외 비변경
+- [x] P1: 예약·OTP 비접촉 범위에서 lint 경고·테스트 품질을 분류하고 저위험 정적 분석·테스트 개선 적용 — lint 경고를 규칙·파일별 분류하고 App·ContactSection·TreatmentsManager·SeoHead의 실제 미사용 import만 제거해 185→165건으로 축소. 타입 검사와 SEO·라우팅 관련 70개 테스트, 실제 홈 화면 확인 완료
 - [ ] P2: 다국어·모바일 접근성·오류/로딩 상태·키보드 탐색을 감사하고 저위험 신뢰성 개선 적용
 - [ ] P3: 실제 측정 기반으로 큰 번들·불필요한 초기 로딩·이미지/폰트 LCP 위험을 개선하되 프리렌더·URL·SEO 보존
 - [ ] P4: canonical·hreflang·sitemap·robots·프리렌더·구조화 데이터·NAP 정합성을 감사하고 코드로 해결 가능한 부분만 최소 수정

@@ -15,8 +15,6 @@ import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { useMapHeight } from "@/hooks/useMapHeight";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
-// [Step59-B] 네이버 플레이스 상시 링크 — 리뷰·길찾기 유입 경로
-import { NAVER_PLACE_URL } from "@/lib/constants";
 // 후행 호환성을 위해 re-export 유지
 export { buildMarkerPinElement } from "@/lib/mapHelpers";
 

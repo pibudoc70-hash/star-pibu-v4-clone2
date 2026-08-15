@@ -4585,6 +4585,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [ ] 추가 승인 필요: 0007에서 이미 생성한 `treatmentCategories`·`treatments`를 0008이 중복 생성하는 fresh migration 충돌을, 0008 중복 DDL 제거/무해화 방식으로 최소 정리 후 CI 재검증
 - [ ] 사용자 승인: 0008의 중복 treatment DDL을 주석 기반 no-op로 무해화하고 CI fresh MySQL 전체 migration·unit·예약 integration 재검증
 - [ ] 사용자 승인: 0032에서 authIdentities CREATE·reservations privacyAgreed ADD·auth_identities_user_id_idx CREATE 중복 DDL 3개만 제거하고 CI fresh MySQL 재검증
+- [ ] 추가 승인 필요: 0034의 equipment3 FAQ 열 5개에 대한 `ADD COLUMN IF NOT EXISTS`를 fresh MySQL 호환 `ADD COLUMN`으로만 교체하고 CI 재검증
+- [ ] 사용자 승인: 0034 FAQ 열 5개의 `IF NOT EXISTS`만 제거하고 CI fresh MySQL 전체 migration·unit·예약 integration 재검증
 - [ ] 개선 3: 초기 번들 파일 수·전송 크기·최대 청크·CSS·build 시간을 측정하고 실제 초기 로딩 병목만 개선
 - [ ] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리
 - [ ] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존

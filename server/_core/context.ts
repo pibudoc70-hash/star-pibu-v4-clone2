@@ -40,15 +40,13 @@ export async function createContext(
     return { req: opts.req, res: opts.res, user: null };
   }
 
-  let user: User | null = null;
   try {
-    user = await sdk.authenticateRequest(opts.req);
+    const user = await sdk.authenticateRequest(opts.req);
+    return { req: opts.req, res: opts.res, user };
   } catch (error) {
     // 인증 실패는 공개 프로시저에서 정상 케이스이므로 요청을 막지 않는다.
     // 단, 인증 서버 장애를 관측할 수 있도록 로그는 남긴다.
     logger.warn("Auth", "authenticateRequest failed", error);
-    user = null;
+    return { req: opts.req, res: opts.res, user: null };
   }
-
-  return { req: opts.req, res: opts.res, user };
 }

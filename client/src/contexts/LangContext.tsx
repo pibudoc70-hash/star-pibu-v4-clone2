@@ -14,14 +14,20 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem("star-lang");
       if (stored && ["ko", "en", "ja", "zh", "zh-TW"].includes(stored)) return stored as Lang;
-    } catch {}
+    } catch {
+      // Storage access can be unavailable in privacy-restricted browsers.
+    }
     return "ko";
   });
 
   const setLang = (l: Lang, persist = true) => {
     setLangState(l);
     if (persist) {
-      try { localStorage.setItem("star-lang", l); } catch {}
+      try {
+        localStorage.setItem("star-lang", l);
+      } catch {
+        // Keep the in-memory language even when browser storage is unavailable.
+      }
     }
   };
 

@@ -50,14 +50,21 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      className="fixed inset-0 z-50 flex items-end justify-center relative"
       style={{ touchAction: "none" }}
     >
+      <button
+        type="button"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        aria-label="이벤트 상세 닫기"
+        onClick={onClose}
+      />
       <div
-        className="bg-white w-full rounded-t-3xl overflow-y-auto"
+        className="relative bg-white w-full rounded-t-3xl overflow-y-auto"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="event-detail-modal-title"
         style={{ maxHeight: "88dvh", WebkitOverflowScrolling: "touch", touchAction: "pan-y" }}
-        onClick={(e) => e.stopPropagation()}
       >
         {/* 핸들 바 */}
         <div className="flex justify-center pt-3 pb-1">
@@ -66,7 +73,7 @@ function EventDetailModal({ event, getLocalizedText, onClose }: EventDetailModal
 
         {/* 헤더 */}
         <div className="sticky top-0 flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white">
-          <h3 className="text-base font-bold text-gray-900 leading-tight">
+          <h3 id="event-detail-modal-title" className="text-base font-bold text-gray-900 leading-tight">
             {getLocalizedText(event, "title")}
           </h3>
           <button

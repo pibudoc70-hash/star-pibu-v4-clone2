@@ -64,6 +64,7 @@ function parsePath(pathname: string): { lang: Lang; slug: string } | null {
 }
 
 function localized(item: Equipment3Item, base: "name" | "desc" | "detail" | "effect" | "caution" | "sessions" | "time" | "recovery" | "category", lang: Lang): string {
+  if (base === "name" && lang === "zh-TW" && item.nameZhTw?.trim()) return item.nameZhTw;
   const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh" || lang === "zh-TW" ? "Zh" : "";
   const localizedKey = `${base}${suffix}` as keyof Equipment3Item;
   const localizedValue = item[localizedKey];

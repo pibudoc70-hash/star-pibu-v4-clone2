@@ -333,6 +333,7 @@ export const equipment3 = mysqlTable("equipment3", {
   nameEn: varchar("nameEn", { length: 200 }).notNull().default(""),
   nameJa: varchar("nameJa", { length: 200 }).default(""),
   nameZh: varchar("nameZh", { length: 200 }).default(""),
+  nameZhTw: varchar("nameZhTw", { length: 200 }).default(""),
   // 카테고리
   category: varchar("category", { length: 100 }).notNull().default(""),
   categoryEn: varchar("categoryEn", { length: 100 }).default(""),

@@ -176,7 +176,9 @@ export default function Equipment3Detail() {
   }
 
   // ── 다국어 텍스트 ────────────────────────────────────────────────────────────
-  const localizedName     = getText(item.name,    item.nameEn,    item.nameJa,    item.nameZh);
+  const localizedName     = lang === "zh-TW" && item.nameZhTw?.trim()
+    ? item.nameZhTw
+    : getText(item.name, item.nameEn, item.nameJa, item.nameZh);
   const localizedDesc     = getText(item.desc,    item.descEn,    item.descJa,    item.descZh);
   const localizedDetail   = getText(item.detail,  item.detailEn,  item.detailJa,  item.detailZh);
   const localizedEffect   = getText(item.effect,  item.effectEn,  item.effectJa,  item.effectZh);

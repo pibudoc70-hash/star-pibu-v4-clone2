@@ -29,7 +29,7 @@ export const zh: I18nContent = {
     floor: "釜山西面 爱恩城大厦 4楼 接待·诊疗 | 2楼 干细胞研究中心",
     cta_call: "+82-51-818-2300",
     cta_kakao: "微信咨询",
-    cta_reserve: "在线预约",
+    cta_reserve: "NAVER预约",
     scrollLabel: "滚动",
   },
   about: {
@@ -228,7 +228,7 @@ export const zh: I18nContent = {
     title: "外国患者服务",
     subtitle: "STAR皮肤科欢迎外国患者",
     steps: [
-      { step: "01", title: "预约", desc: "请通过微信或电话预约。我们提供中文咨询服务。" },
+      { step: "01", title: "预约", desc: "请通过NAVER预约或电话预约。我们提供中文咨询服务。" },
       { step: "02", title: "到院", desc: "地铁西面站5·7号出口步行3分钟。爱恩城大厦4楼。" },
       { step: "03", title: "咨询·治疗", desc: "专科医生将直接诊断您的皮肤状况，为您推荐最适合的治疗方案。" },
       { step: "04", title: "术后护理", desc: "我们将为您提供详细的术后护理指导，回国后也可进行在线咨询。" },
@@ -289,7 +289,7 @@ export const zh: I18nContent = {
   floatingCta: {
     call: "电话",
     kakao: "微信",
-    reserve: "在线预约",
+    reserve: "NAVER预约",
     callAria: "电话咨询",
     kakaoAria: "微信咨询",
     reserveAria: "在线预约",
@@ -396,7 +396,7 @@ export const zh: I18nContent = {
     title: "STAR皮肤科活动",
     subtitle: "立即查看",
     cta_kakao: "微信咨询",
-    cta_reserve: "在线预约",
+    cta_reserve: "NAVER预约",
     cta_call: "电话预约",
     dismiss: "关闭",
     dismissToday: "今日不再显示",

@@ -14,7 +14,7 @@ import { pickLocalized, pickLocalizedFaq } from "@/lib/i18nText";
 import type { SupportedLang } from "@/lib/i18nText";
 import { getTreatmentBySlug, getAllTreatments } from "@/data/treatments";
 import type { TreatmentI18n } from "@/data/treatments";
-import { getReservationPath } from "@/lib/reservationPath";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
 
 // ── lang → URL prefix 매핑 ────────────────────────────────────────────────────
@@ -447,21 +447,16 @@ export default function TreatmentPage() {
             <span>📞</span>
             {currentLang === "ko" ? lbl.ctaCall : lbl.ctaCallIntl}
           </a>
-          <button type="button"
-            onClick={() => {
-              const el = document.getElementById("reservation");
-              if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
-              } else {
-                window.location.href = getReservationPath(currentLang);
-              }
-            }}
+          <a
+            href={EXTERNAL_BOOKING_URLS.naver}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
             style={{ background: "linear-gradient(135deg, #C8860A 0%, #e6a832 100%)" }}
           >
             <CalendarDays size={20} />
             {lbl.ctaBook}
-          </button>
+          </a>
         </div>
 
         {/* 다른 시술 보기 */}

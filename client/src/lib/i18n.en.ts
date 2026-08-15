@@ -228,7 +228,7 @@ export const en: I18nContent = {
     title: "Foreign Patient Guide",
     subtitle: "STAR Dermatology Welcomes International Patients",
     steps: [
-      { step: "01", title: "Book", desc: "Reserve via KakaoTalk or phone. Consultations available in English, Chinese, and Japanese." },
+      { step: "01", title: "Book", desc: "Book through Naver Booking or call us. Consultations are available in English, Chinese, and Japanese." },
       { step: "02", title: "Visit", desc: "3-min walk from Seomyeon Station Exit 5 or 7. ION City Building, 4th Floor." },
       { step: "03", title: "Consult & Treat", desc: "Our specialists personally assess your skin and recommend the most suitable treatment." },
       { step: "04", title: "Aftercare", desc: "We provide detailed post-treatment care instructions. Online consultations available after you return home." },
@@ -289,7 +289,7 @@ export const en: I18nContent = {
   floatingCta: {
     call: "Call",
     kakao: "Kakao",
-    reserve: "Book",
+    reserve: "Naver Booking",
     callAria: "Call Us",
     kakaoAria: "KakaoTalk",
     reserveAria: "Naver Booking",
@@ -396,7 +396,7 @@ export const en: I18nContent = {
     title: "STAR Dermatology Event",
     subtitle: "Check it out now",
     cta_kakao: "KakaoTalk Consultation",
-    cta_reserve: "Online Booking",
+    cta_reserve: "Naver Booking",
     cta_call: "Phone Booking",
     dismiss: "Close",
     dismissToday: "Don't show today",

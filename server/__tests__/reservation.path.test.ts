@@ -7,6 +7,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { getReservationPath } from "../../client/src/lib/reservationPath";
+import { EXTERNAL_BOOKING_URLS, isSafeExternalBookingUrl } from "../../client/src/lib/externalBooking";
 
 describe("getReservationPath", () => {
   it("ko => /#reservation", () => {
@@ -60,12 +61,23 @@ describe("dead link audit: /reserve 참조 0건", () => {
     });
   });
 
-  it("getReservationPath 헬퍼가 모든 CTA 파일에서 사용됨", () => {
-    const filesUsingHelper = TARGET_FILES.filter((file) => {
+  it("공개 예약 CTA는 공통 네이버 외부 예약 URL을 사용한다", () => {
+    const publicBookingCtaFiles = [
+      "pages/Equipment2Detail.tsx",
+      "pages/MyPage.tsx",
+      "pages/MyReservations.tsx",
+      "pages/TreatmentPage.tsx",
+      "pages/TreatmentDetail.tsx",
+      "pages/ForeignGuide.tsx",
+    ];
+    const filesUsingExternalBooking = publicBookingCtaFiles.filter((file) => {
       const content = readSource(file);
-      return content.includes("getReservationPath");
+      return content.includes("EXTERNAL_BOOKING_URLS.naver");
     });
-    // Equipment2Detail, MyPage, MyReservations, TreatmentPage 4개 이상 사용
-    expect(filesUsingHelper.length).toBeGreaterThanOrEqual(4);
+    expect(filesUsingExternalBooking).toHaveLength(publicBookingCtaFiles.length);
+    expect(isSafeExternalBookingUrl(EXTERNAL_BOOKING_URLS.naver)).toBe(true);
+    expect(isSafeExternalBookingUrl(EXTERNAL_BOOKING_URLS.kakao)).toBe(true);
+    expect(isSafeExternalBookingUrl("http://example.com")).toBe(false);
+    expect(isSafeExternalBookingUrl("#reservation")).toBe(false);
   });
 });

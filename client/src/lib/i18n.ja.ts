@@ -29,7 +29,7 @@ export const ja: I18nContent = {
     floor: "釜山西面 アイオンシティビル 4F 受付・診療 | 2F 幹細胞研究センター",
     cta_call: "+82-51-818-2300",
     cta_kakao: "OTOMO",
-    cta_reserve: "OTOMO 相談",
+    cta_reserve: "NAVER予約",
     scrollLabel: "スクロール",
   },
   about: {
@@ -228,7 +228,7 @@ export const ja: I18nContent = {
     title: "外国人患者様へ",
     subtitle: "スター皮膚科は外国人患者様を歓迎いたします",
     steps: [
-      { step: "01", title: "ご予約", desc: "OTOMOを通じてご予約ください。日本語でのお問い合わせはOTOMO（https://otomo-busan.com/star）をご利用ください。" },
+      { step: "01", title: "ご予約", desc: "NAVER予約またはお電話をご利用ください。日本語でのお問い合わせはOTOMO（https://otomo-busan.com/star）をご利用ください。" },
       { step: "02", title: "ご来院", desc: "西面駅5・7番出口から徒歩3分。アイオンシティビル4階です。" },
       { step: "03", title: "カウンセリング・施術", desc: "専門医が直接お肌の状態を診断し、最適な施術をご提案いたします。" },
       { step: "04", title: "アフターケア", desc: "施術後のケア方法をご案内いたします。帰国後もオンライン相談が可能です。" },
@@ -289,10 +289,10 @@ export const ja: I18nContent = {
   floatingCta: {
     call: "電話",
     kakao: "LINE",
-    reserve: "LINE予約",
+    reserve: "NAVER予約",
     callAria: "電話相談",
     kakaoAria: "LINE相談",
-    reserveAria: "LINE予約",
+    reserveAria: "NAVER予約",
   },
   results: {
     sectionTitle: "スター皮膚科を選ぶ理由",
@@ -396,7 +396,7 @@ export const ja: I18nContent = {
     title: "スター皮膚科イベント",
     subtitle: "今すぐ確認する",
     cta_kakao: "KakaoTalk相談",
-    cta_reserve: "オンライン予約",
+    cta_reserve: "NAVER予約",
     cta_call: "電話予約",
     dismiss: "閉じる",
     dismissToday: "本日は表示しない",

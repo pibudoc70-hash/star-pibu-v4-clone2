@@ -389,7 +389,7 @@ export const ko: I18nContent = {
     title: "스타피부과 이벤트",
     subtitle: "지금 확인하세요",
     cta_kakao: "카카오톡 상담",
-    cta_reserve: "온라인 예약",
+    cta_reserve: "네이버 예약",
     cta_call: "전화 예약",
     dismiss: "닫기",
     dismissToday: "오늘은 표시하지 않기",

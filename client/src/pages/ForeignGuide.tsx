@@ -34,6 +34,7 @@ import Header from "@/components/Header";
 import SeoHead, { BASE_URL, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 
 type ForeignLang = "en" | "ja" | "zh";
 
@@ -450,7 +451,7 @@ export default function ForeignGuide() {
           <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
             {activeLang === "ja" ? (
               <>
-                OTOMOを通じてご利用ください。日本語でのお問い合わせは
+                ご予約はNAVER予約をご利用ください。日本語でのお問い合わせは
                 <a
                   href="https://otomo-busan.com/star"
                   target="_blank"
@@ -462,9 +463,9 @@ export default function ForeignGuide() {
                 をご利用ください。
               </>
             ) : activeLang === "zh" ? (
-              "欢迎随时联系我们，我们提供中文咨询服务。"
+              "请通过NAVER预约。我们提供中文咨询服务。"
             ) : (
-              "Contact us anytime. We offer consultation services in English."
+              "Book through Naver Booking. We offer consultation services in English."
             )}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -488,7 +489,7 @@ export default function ForeignGuide() {
               </a>
             ) : (
               <a
-                href="https://pf.kakao.com/_HNyGC"
+                href={EXTERNAL_BOOKING_URLS.kakao}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
@@ -497,28 +498,15 @@ export default function ForeignGuide() {
                 KakaoTalk
               </a>
             )}
-            {activeLang === "ja" && (
-              <a
-                href="https://otomo-busan.com/star"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
-                style={{ background: "#4A6FA5", color: "white" }}
-              >
-                🇯🇵 OTOMO で予約
-              </a>
-            )}
-            {activeLang === "en" && (
-              <a
-                href="https://booking.naver.com/booking/13/bizes/1122956"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5 border"
-                style={{ background: "white", color: colors.text, borderColor: colors.text }}
-              >
-                Online Booking (Naver)
-              </a>
-            )}
+            <a
+              href={EXTERNAL_BOOKING_URLS.naver}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
+              style={{ background: "#03C75A", color: "white" }}
+            >
+              {activeLang === "ja" ? "NAVERで予約" : activeLang === "zh" ? "NAVER预约" : "Online Booking (Naver)"}
+            </a>
           </div>
         </section>
 

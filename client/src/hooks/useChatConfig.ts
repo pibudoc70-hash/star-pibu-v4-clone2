@@ -11,12 +11,13 @@
  */
 import { useLang } from "@/contexts/LangContext";
 import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 
 /** 언어별 채팅/예약 URL 상수 */
 export const CHAT_URLS = {
-  kakao: "https://pf.kakao.com/_HNyGC",
+  kakao: EXTERNAL_BOOKING_URLS.kakao,
   kakaoOld: "http://pf.kakao.com/_xnxmKxj/chat",
-  naver: "https://booking.naver.com/booking/13/bizes/209080",
+  naver: EXTERNAL_BOOKING_URLS.naver,
   naverAlt: "https://booking.naver.com/booking/13/bizes/1122956",
   lineZH: "https://line.me/ti/p/~star2006derm",
   lineJA: "https://lin.ee/tyuRdUc",
@@ -74,11 +75,9 @@ export function useChatConfig(): ChatConfig {
   const phoneDisplay = isKO ? CLINIC_TEL : CLINIC_TEL_INTL;
 
   const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? "https://otomo-busan.com/star" : CHAT_URLS.kakao;
-  const reserveUrl = isZH
-    ? CHAT_URLS.lineZH
-    : isJA
-    ? CHAT_URLS.lineJA
-    : CHAT_URLS.naver;
+  // 일반 고객 예약은 언어와 관계없이 네이버 외부 예약으로만 연결한다.
+  // 기존 LINE·OTOMO·WeChat 상담 채널과 내부 예약/OTP 기능은 보존한다.
+  const reserveUrl = EXTERNAL_BOOKING_URLS.naver;
 
   const chatBg = isZH ? CHAT_STYLES.wechat.bg : isJA ? "#4A6FA5" : CHAT_STYLES.kakao.bg;
   const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? "#FFFFFF" : CHAT_STYLES.kakao.color;

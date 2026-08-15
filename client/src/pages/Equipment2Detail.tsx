@@ -17,7 +17,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader } from "lucide-react";
 import { lazy, Suspense, useEffect } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
-import { getReservationPath } from "@/lib/reservationPath";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 import { getLocalizedUrl } from "@/lib/localizedPath";
 
 // Lazy load Streamdown to avoid bundling it in the initial page load
@@ -280,12 +280,14 @@ export default function Equipment2Detail() {
               )}
             </div>
 
-            <button type="button"
-              onClick={() => window.location.href = getReservationPath(lang)}
+            <a
+              href={EXTERNAL_BOOKING_URLS.naver}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
               {LABELS.book}
-            </button>
+            </a>
           </div>
         </div>
 

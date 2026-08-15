@@ -9,7 +9,7 @@ import { getLoginUrl } from "@/const";
 import { Calendar, Clock, Phone, User, AlertCircle, CheckCircle, XCircle, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { getReservationPath } from "@/lib/reservationPath";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 import type { Reservation } from "../../../drizzle/schema";
 
 const STATUS_CONFIG = {
@@ -72,7 +72,9 @@ export default function MyReservations() {
             <h2 className="text-xl font-bold text-[#1F2937] mb-2">예약이 없습니다</h2>
             <p className="text-[#6B7280] mb-6">아직 예약하신 내역이 없습니다.</p>
             <a
-              href={getReservationPath("ko")}
+              href={EXTERNAL_BOOKING_URLS.naver}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block px-6 py-2 rounded-lg font-semibold text-white transition-colors"
               style={{ background: "#4A6FA5" }}
             >

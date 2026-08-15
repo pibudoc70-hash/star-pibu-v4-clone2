@@ -39,6 +39,7 @@ import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
@@ -618,7 +619,7 @@ export default function TreatmentDetail() {
                   {td.ctaConsult}
                 </Button>
               </a>
-              <a href="https://booking.naver.com/booking/13/bizes/1122956" target="_blank" rel="noopener noreferrer" className="flex-1">
+              <a href={EXTERNAL_BOOKING_URLS.naver} target="_blank" rel="noopener noreferrer" className="flex-1">
                 <Button
                   variant="outline"
                   className="w-full py-6 text-base font-bold"

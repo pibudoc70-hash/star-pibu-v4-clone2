@@ -4577,7 +4577,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 개선 1: 사용 중인 정상 이미지 근거를 수집한 뒤 이미지 프록시의 hostname·protocol·redirect·Content-Type·응답 크기 경계를 최소 강화하고 공개 이미지 smoke test — 실제 storage host·WebP MIME을 확인해 정책화하고, host spoofing·HTTP·MIME 불일치를 차단. 개발·배포·운영 도메인에서 정상 이미지 200·차단 요청 400 확인
 - [x] 승인 반영: 로컬 Vite build SIGTERM(143) 환경 제한을 기록한 상태에서 개선 1 전용 체크포인트를 저장·자동 배포하고 배포 산출물·운영 이미지 응답으로 코드 상태 재검증 — 체크포인트 9c0fd7b5 자동 배포 후 프로젝트·운영 도메인 모두 정상 이미지 200·비허용 popup URL 400 확인
 - [x] 긴급 회귀 복구: storage 프록시의 정상 WOFF2 폰트 MIME을 명시적으로 허용하고, 이미지 보안 차단 정책·공개 폰트·운영 렌더링을 재검증 — 실제 upstream `font/woff2` 확인 후 WOFF2 확장자에만 명시 허용. 정책 4개 테스트·타입 검사 통과, 개발 서버에서 폰트·WebP 200과 HTTP popup host 400 유지 확인
-- [ ] 사용자 승인: 개선 2~6을 예약·OTP·외부 예약·운영 DB 동결 원칙으로 한 항목씩 구현·검증·체크포인트 저장 후 순차 진행
+- [x] 사용자 승인: 개선 2~6을 예약·OTP·외부 예약·운영 DB 동결 원칙으로 한 항목씩 구현·검증·체크포인트 저장 후 순차 진행 — 개선 2~7을 각 독립 체크포인트·실제 화면·CI 검증으로 완료
 - [x] 개선 2: 예약 테스트를 보존한 채 비예약 단위·통합 테스트 실행 체계를 분리하고 테스트 DB 필요 조건을 명시 — `test:unit`·`test:integration`·`test:reservation-integration`을 분리하고 CI 전용 MySQL·TEST_DATABASE_URL을 문서화. GitHub CI에서 fresh migration·unit·예약 integration 모두 통과
 - [x] 긴급 보류: CI 격리 MySQL의 `pnpm drizzle-kit migrate` 실패 원인과 migration journal·SQL 충돌을 읽기 전용으로 진단하고, 예약·OTP migration 비변경 원칙 아래 안전한 해결 절차 승인 대기 — CI diagnostic으로 0008·0032 중복 DDL과 0034 MySQL 비호환 구문을 식별해 사용자 승인 절차 완료
 - [x] 승인 반영: 테스트 전용 CI MySQL에서 실패 SQL을 재현하고, 운영 DB 비접촉·예약 흐름 비변경의 최소 migration repair를 적용한 뒤 CI unit·integration 검증 — GitHub Actions run 31911279789에서 fresh migration·unit·DB integration 통과
@@ -4593,4 +4593,4 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존 — reservation/OTP와 무관한 스크롤 애니메이션·reduced-motion·모바일 timing 규칙만 `styles/scroll-animations.css`로 무손실 분리하고, import·핵심 selector·접근성 fallback을 검증하는 2개 회귀 테스트 추가. TypeScript·4개 관련 테스트와 실제 홈 히어로·CTA 렌더링 확인
 - [x] 개선 6: 첨부 지시의 나머지 항목을 예약 영향 여부를 먼저 판별해 하나씩만 구현·검증·체크포인트 저장 — 비예약 관리자 치료·공지 폼의 18개 label/input 연결과 이미지 제거 버튼 이름을 추가해 label 경고 25→7건으로 축소. 남은 7건은 `MyReservations.tsx` 예약 화면이므로 사용자 지시대로 수정하지 않고 별도 보고
 - [x] 개선 7: 서비스 워커 캐시 안정성을 읽기 전용으로 감사하고, 예약·API·tRPC·인증·관리자 응답 비캐시 원칙을 유지하는 최소 보완만 단독 진행 — 일반 `/api/*`(reservation·tRPC 포함), auth, admin은 명시 비캐시하고 `/api/storage/*` 이미지만 예외 허용. HTML network-first 유지, cache.put 비치명 처리·이미지 60개 상한 추가. 정책 2개 테스트·TypeScript·lint 오류 0과 운영 SW controller·524 CSS rules·computed style 확인
-- [ ] 단계별 보호 검증·보고: 각 개선 후 대상 테스트·타입·lint·build·공개 화면·로그·예약 영역 비변경을 확인하고 실패 시 승인 전 다음 항목 보류
+- [x] 단계별 보호 검증·보고: 각 개선 후 대상 테스트·타입·lint·build·공개 화면·로그·예약 영역 비변경을 확인하고 실패 시 승인 전 다음 항목 보류 — 최종 CI run 31914163805에서 dependency audit·type·lint·fresh migration unit·DB integration·production build 모두 통과. 로컬 91개 파일/1,545개 테스트·audit·diff check 통과, 보호 예약·OTP 경로의 최종 diff 0건

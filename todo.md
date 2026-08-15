@@ -4576,6 +4576,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 기준선·동결 목록: 브랜치·HEAD·작업 트리·검증 상태·예약/OTP 파일·외부 예약 URL·CTA 위치를 기록하고 롤백 체크포인트 저장 — `docs/image-proxy-security-baseline-2026-08-15.md`에 main/ad3f680 기준선, 예약·OTP 동결 목록, 네이버·카카오·위챗·전화 CTA, TypeScript·lint·1,543개 테스트·audit·로컬 build SIGTERM(143) 환경 제한을 기록
 - [x] 개선 1: 사용 중인 정상 이미지 근거를 수집한 뒤 이미지 프록시의 hostname·protocol·redirect·Content-Type·응답 크기 경계를 최소 강화하고 공개 이미지 smoke test — 실제 storage host·WebP MIME을 확인해 정책화하고, host spoofing·HTTP·MIME 불일치를 차단. 개발·배포·운영 도메인에서 정상 이미지 200·차단 요청 400 확인
 - [x] 승인 반영: 로컬 Vite build SIGTERM(143) 환경 제한을 기록한 상태에서 개선 1 전용 체크포인트를 저장·자동 배포하고 배포 산출물·운영 이미지 응답으로 코드 상태 재검증 — 체크포인트 9c0fd7b5 자동 배포 후 프로젝트·운영 도메인 모두 정상 이미지 200·비허용 popup URL 400 확인
+- [x] 긴급 회귀 복구: storage 프록시의 정상 WOFF2 폰트 MIME을 명시적으로 허용하고, 이미지 보안 차단 정책·공개 폰트·운영 렌더링을 재검증 — 실제 upstream `font/woff2` 확인 후 WOFF2 확장자에만 명시 허용. 정책 4개 테스트·타입 검사 통과, 개발 서버에서 폰트·WebP 200과 HTTP popup host 400 유지 확인
 - [ ] 사용자 승인: 개선 2~6을 예약·OTP·외부 예약·운영 DB 동결 원칙으로 한 항목씩 구현·검증·체크포인트 저장 후 순차 진행
 - [ ] 개선 2: 예약 테스트를 보존한 채 비예약 단위·통합 테스트 실행 체계를 분리하고 테스트 DB 필요 조건을 명시
 - [ ] 긴급 보류: CI 격리 MySQL의 `pnpm drizzle-kit migrate` 실패 원인과 migration journal·SQL 충돌을 읽기 전용으로 진단하고, 예약·OTP migration 비변경 원칙 아래 안전한 해결 절차 승인 대기

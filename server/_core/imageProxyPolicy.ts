@@ -26,6 +26,7 @@ const STORAGE_CONTENT_TYPES: Record<string, readonly string[]> = {
   mp4: ["video/mp4"],
   pdf: ["application/pdf"],
   png: ["image/png"],
+  woff2: ["font/woff2"],
   webm: ["video/webm"],
   webp: ["image/webp"],
 };

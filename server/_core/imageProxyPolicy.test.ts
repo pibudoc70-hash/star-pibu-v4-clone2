@@ -26,6 +26,8 @@ describe("image proxy policy", () => {
     expect(getSafeStorageContentType("photo.webp", "text/html")).toBeNull();
     expect(getSafeStorageContentType("photo.png", "image/jpeg")).toBeNull();
     expect(getSafeStorageContentType("document.pdf", "application/pdf")).toBe("application/pdf");
+    expect(getSafeStorageContentType("PretendardVariable.woff2", "font/woff2")).toBe("font/woff2");
+    expect(getSafeStorageContentType("PretendardVariable.woff2", "application/octet-stream")).toBeNull();
     expect(getSafeStorageContentType("asset.svg", "image/svg+xml")).toBeNull();
   });
 

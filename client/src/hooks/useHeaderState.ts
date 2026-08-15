@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react";
 import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import { Lang } from "@/lib/i18n";
 import { getLocaleBase } from "../../../shared/pathUtils";
@@ -29,8 +28,6 @@ export function useHeaderState() {
 
   const { t, lang, setLang } = useLang();
   const [location, setLocation] = useLocation();
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
   const isHome = location === "/" || location === "/en" || location === "/ja" || location === "/zh" || location === "/zh-tw";
 
   const langDropRef = useRef<HTMLDivElement>(null);

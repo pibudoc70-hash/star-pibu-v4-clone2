@@ -26,22 +26,12 @@ import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { logger } from "./logger";
 import { buildDegradedPayload, buildHealthyPayload } from "./health";
+import { getSafeImageContentType, isAllowedPopupImageUrl } from "./imageProxyPolicy";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
-// [Step51-C] 팝업 이미지 SSRF 화이트리스트 호스트 패턴
-// iitm.ac.in 은 이 사이트와 무관한 템플릿 잔재이므로 제거.
-const POPUP_IMAGE_WHITELIST = [
-  /\.cloudfront\.net$/,
-  /^img\.youtube\.com$/,
-];
-
 // [Step51-C] 이미지 프록시 응답 크기 상한 (storageProxy 와 동일 기준)
 const MAX_POPUP_BYTES = 5 * 1024 * 1024;
-
-function isAllowedPopupHost(hostname: string): boolean {
-  return POPUP_IMAGE_WHITELIST.some((pattern) => pattern.test(hostname));
-}
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -205,6 +195,11 @@ async function startServer() {
         return;
       }
 
+      if (!getSafeImageContentType(imgResp.headers.get("content-type"))) {
+        res.status(415).type("text/plain").send("Unsupported thumbnail content type");
+        return;
+      }
+
       // 3. 이미지 바이트 가져오기
       // [Step51-C] Content-Length 기반 사전 차단
       const ytDeclaredLen = Number(imgResp.headers.get("content-length") || 0);
@@ -250,21 +245,8 @@ async function startServer() {
       return;
     }
 
-    // SSRF 방어: URL 파싱 및 화이트리스트 검증
-    let parsedUrl: URL;
-    try {
-      parsedUrl = new URL(url);
-    } catch (_e) {
-      res.status(400).send('Invalid url parameter');
-      return;
-    }
-
-    if (parsedUrl.protocol !== 'https:') {
-      res.status(400).send('Only https URLs are allowed');
-      return;
-    }
-
-    if (!isAllowedPopupHost(parsedUrl.hostname)) {
+    // SSRF 방어: HTTPS·명시적 host·기본 포트·비자격증명 URL만 허용한다.
+    if (!isAllowedPopupImageUrl(url)) {
       res.status(400).send('URL host not allowed');
       return;
     }
@@ -315,7 +297,11 @@ async function startServer() {
         res.status(413).type("text/plain").send("Payload too large");
         return;
       }
-      const contentType = resp.headers.get('content-type') || 'image/jpeg';
+      const contentType = getSafeImageContentType(resp.headers.get('content-type'));
+      if (!contentType) {
+        res.status(415).type("text/plain").send("Unsupported image content type");
+        return;
+      }
       const buffer = Buffer.from(await resp.arrayBuffer());
       // [Step51-C] 실제 버퍼 크기 검사 (캐시에 넣기 전)
       if (buffer.byteLength > MAX_POPUP_BYTES) {

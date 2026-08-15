@@ -3,26 +3,7 @@ import crypto from "crypto";
 import { ENV } from "./env";
 import { logger } from "./logger";
 import { imageCache, imageNotFoundCache } from "./imageCache"; // [Step51-hotfix-D] imageNotFoundCache 추가
-
-// 파일 확장자 → MIME 타입 매핑
-const MIME_MAP: Record<string, string> = {
-  webp: "image/webp",
-  jpg: "image/jpeg",
-  jpeg: "image/jpeg",
-  png: "image/png",
-  gif: "image/gif",
-  svg: "image/svg+xml",
-  avif: "image/avif",
-  ico: "image/x-icon",
-  mp4: "video/mp4",
-  webm: "video/webm",
-  pdf: "application/pdf",
-};
-
-function getMimeType(key: string): string {
-  const ext = key.split(".").pop()?.toLowerCase() ?? "";
-  return MIME_MAP[ext] ?? "application/octet-stream";
-}
+import { getSafeStorageContentType, isAllowedStorageUrl } from "./imageProxyPolicy";
 
 // [Step51-A] 스토리지 키 검증
 // 전제: 이 함수에는 반드시 "디코딩이 끝난" 키를 넘긴다.
@@ -171,9 +152,10 @@ export function registerStorageProxy(app: Express) {
         return;
       }
 
-      const { url } = (await forgeResp.json()) as { url: string };
-      if (!url) {
-        res.status(502).send("Empty signed URL from backend");
+      const { url } = (await forgeResp.json()) as { url?: unknown };
+      if (typeof url !== "string" || !isAllowedStorageUrl(url)) {
+        logger.warn("StorageProxy", "Storage backend returned an unapproved signed URL");
+        res.status(502).send("Invalid storage backend response");
         return;
       }
 
@@ -192,6 +174,13 @@ export function registerStorageProxy(app: Express) {
         }
         logger.warn("StorageProxy", `Image fetch failed (${imgResp.status}) for key=${key}`);
         res.status(502).send("Failed to fetch image from storage");
+        return;
+      }
+
+      const contentType = getSafeStorageContentType(key, imgResp.headers.get("content-type"));
+      if (!contentType) {
+        logger.warn("StorageProxy", `Unexpected upstream content type for key=${key}`);
+        res.status(415).type("text/plain").send("Unsupported storage content type");
         return;
       }
 
@@ -216,8 +205,7 @@ export function registerStorageProxy(app: Express) {
       const etag = crypto.createHash("sha1").update(bufferData).digest("hex").slice(0, 16);
 
       // 6. LRU 캐시에 저장
-      const mimeType = getMimeType(key);
-      imageCache.set(cacheKey, { buffer: bufferData, contentType: mimeType, etag });
+      imageCache.set(cacheKey, { buffer: bufferData, contentType, etag });
 
       // 7. If-None-Match 헤더 확인 (캐시 유효성 검사)
       const ifNoneMatch = req.get("If-None-Match");
@@ -232,7 +220,7 @@ export function registerStorageProxy(app: Express) {
       const cacheControl = getCacheControl(key);
 
       // 9. 응답 헤더 설정
-      res.set("Content-Type", mimeType);
+      res.set("Content-Type", contentType);
       res.set("Cache-Control", cacheControl);
       res.set("ETag", `"${etag}"`);
       res.set("Vary", "Accept, Accept-Encoding");

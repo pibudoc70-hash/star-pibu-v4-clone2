@@ -53,6 +53,7 @@ jobs:
           --health-retries=10
     env:
       DATABASE_URL: mysql://root:root@127.0.0.1:3306/star_pibu_test
+      TEST_DATABASE_URL: mysql://root:root@127.0.0.1:3306/star_pibu_test
       JWT_SECRET: ci-test-secret-32-chars-minimum
       VITE_APP_ID: ci-test-app-id
       OAUTH_SERVER_URL: https://api.manus.im
@@ -76,6 +77,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm drizzle-kit migrate
+      - name: Diagnose fresh migration failure
+        if: failure()
+        run: node scripts/diagnose-ci-migrations.mjs
       - run: pnpm test:unit
 
   test-integration:

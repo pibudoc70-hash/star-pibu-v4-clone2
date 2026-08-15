@@ -4578,6 +4578,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 승인 반영: 로컬 Vite build SIGTERM(143) 환경 제한을 기록한 상태에서 개선 1 전용 체크포인트를 저장·자동 배포하고 배포 산출물·운영 이미지 응답으로 코드 상태 재검증 — 체크포인트 9c0fd7b5 자동 배포 후 프로젝트·운영 도메인 모두 정상 이미지 200·비허용 popup URL 400 확인
 - [ ] 사용자 승인: 개선 2~6을 예약·OTP·외부 예약·운영 DB 동결 원칙으로 한 항목씩 구현·검증·체크포인트 저장 후 순차 진행
 - [ ] 개선 2: 예약 테스트를 보존한 채 비예약 단위·통합 테스트 실행 체계를 분리하고 테스트 DB 필요 조건을 명시
+- [ ] 긴급 보류: CI 격리 MySQL의 `pnpm drizzle-kit migrate` 실패 원인과 migration journal·SQL 충돌을 읽기 전용으로 진단하고, 예약·OTP migration 비변경 원칙 아래 안전한 해결 절차 승인 대기
+- [ ] 승인 반영: 테스트 전용 CI MySQL에서 실패 SQL을 재현하고, 운영 DB 비접촉·예약 흐름 비변경의 최소 migration repair를 적용한 뒤 CI unit·integration 검증
 - [ ] 개선 3: 초기 번들 파일 수·전송 크기·최대 청크·CSS·build 시간을 측정하고 실제 초기 로딩 병목만 개선
 - [ ] 개선 4: 홈 SEO 데이터·SectionFallback·스크롤 복원 책임을 화면·JSON-LD·FAQ·경로 비변경 원칙으로 분리
 - [ ] 개선 5: 전역 CSS를 기능·도메인 기준으로 점진 분리하되 디자인 토큰·반응형 화면 결과를 보존

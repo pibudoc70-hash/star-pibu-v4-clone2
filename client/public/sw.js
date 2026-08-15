@@ -23,6 +23,7 @@ const CACHE_NAMES = {
   image: `image-${CACHE_VERSION}`,     // 이미지
   html: `html-${CACHE_VERSION}`,       // HTML 폴백
 };
+const MAX_IMAGE_CACHE_ENTRIES = 60;
 
 // ── install: 새 SW 설치 즉시 활성화 대기 ─────────────────────────────────
 self.addEventListener("install", (event) => {
@@ -58,8 +59,9 @@ self.addEventListener("fetch", (event) => {
   // 2. 외부 도메인은 건드리지 않음 (CORS/opaque 응답 캐시 문제 방지)
   if (url.origin !== self.location.origin) return;
 
-  // 3. tRPC API 는 캐시 안 함 (실시간 데이터)
-  if (url.pathname.startsWith("/api/trpc")) return;
+  // 3. API 는 캐시 안 함. /api/storage 이미지만 아래 image 전략의 예외로 허용.
+  // 예약·tRPC·인증·사용자별 API 응답은 Service Worker가 절대 저장하지 않는다.
+  if (url.pathname.startsWith("/api/") && !url.pathname.startsWith("/api/storage/")) return;
 
   // 4. 관리자 페이지 및 관리자 리소스는 캐시 안 함
   if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/admin")) {
@@ -111,7 +113,7 @@ async function handleHtml(request) {
     const networkResp = await fetch(request);
     if (networkResp && networkResp.ok) {
       const cache = await caches.open(CACHE_NAMES.html);
-      cache.put(request, networkResp.clone());
+      await putSafely(cache, request, networkResp.clone());
     }
     return networkResp;
   } catch (err) {
@@ -133,7 +135,7 @@ async function handleStatic(request) {
 
   const networkResp = await fetch(request);
   if (networkResp && networkResp.ok) {
-    cache.put(request, networkResp.clone());
+    await putSafely(cache, request, networkResp.clone());
   }
   return networkResp;
 }
@@ -146,13 +148,36 @@ async function handleImage(request) {
   const networkFetch = fetch(request)
     .then((resp) => {
       if (resp && resp.ok) {
-        cache.put(request, resp.clone());
+        await putSafely(cache, request, resp.clone());
+        await trimImageCache(cache);
       }
       return resp;
     })
     .catch(() => null);
 
   return cached || (await networkFetch) || Promise.reject(new Error("Image fetch failed"));
+}
+
+/** Cache Storage quota/errors must never fail a navigation or asset response. */
+async function putSafely(cache, request, response) {
+  try {
+    await cache.put(request, response);
+  } catch {
+    // Cache write failures are non-fatal: the successful network response is returned.
+  }
+}
+
+/** Keep stale-while-revalidate image storage bounded by oldest cache entry. */
+async function trimImageCache(cache) {
+  try {
+    const keys = await cache.keys();
+    const surplus = keys.length - MAX_IMAGE_CACHE_ENTRIES;
+    if (surplus > 0) {
+      await Promise.all(keys.slice(0, surplus).map((key) => cache.delete(key)));
+    }
+  } catch {
+    // Cache maintenance must not affect image delivery.
+  }
 }
 
 // ── 메시지: 강제 갱신 트리거 ─────────────────────────────────────────────

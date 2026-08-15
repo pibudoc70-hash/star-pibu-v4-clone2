@@ -82,7 +82,6 @@ export async function optimizeImage(
     // 메타데이터로 원본 크기 확인
     const meta = await sharp(buffer).metadata();
     const origWidth = meta.width ?? 0;
-    const origHeight = meta.height ?? 0;
 
     // 1600px 초과 시 리사이즈
     if (origWidth > MAX_WIDTH) {

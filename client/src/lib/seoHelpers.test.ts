@@ -371,15 +371,18 @@ describe("SEO_PRESETS — admin noindex 자동 정책", () => {
   });
 
   it("non-admin pageType에서 noindex=false이면 effectiveNoindex가 false여야 한다", () => {
+    const noindex = false;
     const pageTypes = ["home", "treatment", "default"] as const;
     for (const pt of pageTypes) {
-      const effectiveNoindex = false || pt === "admin";
+      const effectiveNoindex = noindex || pt === "admin";
       expect(effectiveNoindex).toBe(false);
     }
   });
 
   it("non-admin pageType에서 noindex=true이면 effectiveNoindex가 true여야 한다", () => {
-    const effectiveNoindex = true || "home" === "admin";
+    const noindex = true;
+    const pageType = "home";
+    const effectiveNoindex = noindex || pageType === "admin";
     expect(effectiveNoindex).toBe(true);
   });
 

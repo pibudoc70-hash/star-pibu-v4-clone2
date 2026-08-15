@@ -3,7 +3,7 @@
  * - 공개: list (활성 목록), bySlug (단건 조회)
  * - 관리자: all (전체 목록), create, update, delete, reorder, uploadImage
  */
-import { adminProcedure, publicProcedure, protectedProcedure, router } from "../_core/trpc";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import { invokeLLM } from "../_core/llm";
 import {
   getEquipment3List,

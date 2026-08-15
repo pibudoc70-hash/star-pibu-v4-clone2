@@ -184,7 +184,7 @@ export default function ConsultationFormSection() {
     if (!form.name.trim()) newErrors.name = c.errorRequired;
     if (!form.phone.trim()) {
       newErrors.phone = c.errorRequired;
-    } else if (!/^[0-9\-\s\+\(\)]{9,20}$/.test(form.phone)) {
+    } else if (!/^[0-9\s+()-]{9,20}$/.test(form.phone)) {
       newErrors.phone = c.errorPhone;
     }
     if (!form.concern) newErrors.concern = c.errorRequired;

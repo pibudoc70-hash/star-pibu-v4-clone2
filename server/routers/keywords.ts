@@ -1,7 +1,7 @@
 /**
  * server/routers/keywords.ts — 키워드 트렌드 tRPC 라우터
  */
-import { router, publicProcedure, adminProcedure } from "../_core/trpc";
+import { router, adminProcedure } from "../_core/trpc";
 import { z } from "zod";
 import {
   saveKeywordTrend,
@@ -25,7 +25,7 @@ export const keywordsRouter = router({
       try {
         const trends = await getLatestKeywordTrends(input.limit, input.category);
         return trends;
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to fetch keyword trends",
@@ -45,7 +45,7 @@ export const keywordsRouter = router({
       try {
         const trends = await getTopTrendingKeywords(input.limit, input.category);
         return trends;
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to fetch top trending keywords",
@@ -107,7 +107,7 @@ export const keywordsRouter = router({
           source: input.source,
         });
         return { success: true };
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to save keyword trend",
@@ -126,7 +126,7 @@ export const keywordsRouter = router({
       try {
         await deleteOldKeywordTrends(input.daysOld);
         return { success: true };
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to delete old keyword trends",

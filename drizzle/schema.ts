@@ -344,36 +344,43 @@ export const equipment3 = mysqlTable("equipment3", {
   descEn: text("descEn").default(""),
   descJa: text("descJa").default(""),
   descZh: text("descZh").default(""),
+  descZhTw: text("descZhTw"),
   // 상세 설명 (마크다운)
   detail: text("detail").default(""),
   detailEn: text("detailEn").default(""),
   detailJa: text("detailJa").default(""),
   detailZh: text("detailZh").default(""),
+  detailZhTw: text("detailZhTw"),
   // 기대 효과
   effect: text("effect").default(""),
   effectEn: text("effectEn").default(""),
   effectJa: text("effectJa").default(""),
   effectZh: text("effectZh").default(""),
+  effectZhTw: text("effectZhTw"),
   // 주의사항
   caution: text("caution").default(""),
   cautionEn: text("cautionEn").default(""),
   cautionJa: text("cautionJa").default(""),
   cautionZh: text("cautionZh").default(""),
+  cautionZhTw: text("cautionZhTw"),
   // 권장 횟수
   sessions: varchar("sessions", { length: 200 }).default(""),
   sessionsEn: varchar("sessionsEn", { length: 200 }).default(""),
   sessionsJa: varchar("sessionsJa", { length: 200 }).default(""),
   sessionsZh: varchar("sessionsZh", { length: 200 }).default(""),
+  sessionsZhTw: varchar("sessionsZhTw", { length: 200 }).default(""),
   // 시술 시간
   time: varchar("time", { length: 50 }).default(""),
   timeEn: varchar("timeEn", { length: 50 }).default(""),
   timeJa: varchar("timeJa", { length: 50 }).default(""),
   timeZh: varchar("timeZh", { length: 50 }).default(""),
+  timeZhTw: varchar("timeZhTw", { length: 50 }).default(""),
   // 회복 기간
   recovery: varchar("recovery", { length: 50 }).default(""),
   recoveryEn: varchar("recoveryEn", { length: 50 }).default(""),
   recoveryJa: varchar("recoveryJa", { length: 50 }).default(""),
   recoveryZh: varchar("recoveryZh", { length: 50 }).default(""),
+  recoveryZhTw: varchar("recoveryZhTw", { length: 50 }).default(""),
   // 상세 FAQ (JSON 배열: [{ question, answer }]) — 언어별 독립 저장
   faqs: text("faqs"),
   faqsEn: text("faqsEn"),

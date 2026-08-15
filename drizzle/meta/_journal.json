@@ -253,6 +253,20 @@
       "when": 1786758576585,
       "tag": "0035_secret_vertigo",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "5",
+      "when": 1786798520902,
+      "tag": "0036_mute_nightshade",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "5",
+      "when": 1786798565412,
+      "tag": "0037_tiny_lord_tyger",
+      "breakpoints": true
     }
   ]
 }

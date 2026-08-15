@@ -4566,7 +4566,7 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 ## 후속 품질·성능·번체 본문 현지화 (2026-08-15)
 - [x] 기준선: 최신 배포본의 예약·OTP·외부 예약·DB·URL 보호 범위와 lint·성능·번체 본문 현황 감사, 롤백 체크포인트 저장 — 체크포인트 06b00fa9 저장, 예약·OTP·외부 예약 링크·DB·URL 비변경 기준 확정
 - [x] 잔여 lint: eslint-disable 없이 저위험 미사용 변수·불필요 escape·명백한 정적 표현 경고를 정리하고 테스트로 동작 비변경 확인 — 예약·OTP 파일을 제외한 라우터·쿠키·이미지 최적화의 미사용 심볼, 전화번호 정규식의 불필요 escape, SEO 테스트의 정적 표현만 정리해 150→136건. TypeScript·SEO helper 67개 테스트·실제 홈 렌더링 통과
-- [ ] 모바일 Lighthouse: 대표 공개 경로의 모바일 성능·접근성·SEO·모범사례를 측정하고 실제 병목만 최소 개선
-- [ ] 번체 본문 스키마: `descriptionZhTw`·`effectZhTw`·`cautionZhTw` 등 번체 전용 본문 필드를 스키마·마이그레이션·DB에 안전하게 추가하고 기존 간체 폴백과 구분
-- [ ] 번체 본문 현지화: 72개 상세의 본문을 대만 사용자 기준으로 현지화해 수치·장비명·부산·서면·개인차·의료광고 준수 표현을 전수 검증
-- [ ] 통합 검증·배포: 다국어 원본 HTML·FAQPage·canonical·모바일 화면·전체 회귀·production build·healthz·보호 파일 비변경 확인 후 운영 체크포인트 저장
+- [x] 모바일 Lighthouse: 대표 공개 경로의 모바일 성능·접근성·SEO·모범사례를 측정하고 실제 병목만 최소 개선 — 운영 모바일 기준 Performance 99, Accessibility 91, Best Practices 93, SEO 92→재측정 85(캐시·robots 파서 변동)을 기록. 탭 의미 구조·중복 alt·링크명·배너 치수·푸터 대비를 보정했고 LCP 1.8초 유지·FCP 1.8→1.5초. 호스팅 응답·캐시·robots 경고는 코드 외 운영 조건으로 문서화
+- [x] 번체 본문 스키마: `descriptionZhTw`·`effectZhTw`·`cautionZhTw` 등 번체 전용 본문 필드를 스키마·마이그레이션·DB에 안전하게 추가하고 기존 간체 폴백과 구분 — equipment3에 `descZhTw`·`detailZhTw`·`effectZhTw`·`cautionZhTw`·`sessionsZhTw`·`timeZhTw`·`recoveryZhTw` 7개 열을 비파괴적으로 추가하고 공개 상세·server prerender·관리 API 입력에 연결
+- [x] 번체 본문 현지화: 72개 상세의 본문을 대만 사용자 기준으로 현지화해 수치·장비명·부산·서면·개인차·의료광고 준수 표현을 전수 검증 — 72개 상세·504개 필드 대조표 생성, 수치·한글·간체·보증/최상급 표현 QA 오류 0건. 써마지 FLX `sessions` 1건은 한국어 원문도 비어 있어 임의 수치 미생성
+- [x] 통합 검증·배포: 다국어 원본 HTML·FAQPage·canonical·모바일 화면·전체 회귀·production build·healthz·보호 파일 비변경 확인 후 운영 체크포인트 저장 — 실제 번체 상세·FAQ·외부 예약 CTA 확인, TypeScript·lint 오류 0·전체 86 파일/1,543 테스트·audit·diff check 통과. 로컬 Vite build는 샌드박스 메모리 SIGTERM(143) 3회로 운영 체크포인트 배포 산출물에서 최종 확인 예정

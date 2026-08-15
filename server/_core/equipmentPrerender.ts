@@ -64,12 +64,16 @@ function parsePath(pathname: string): { lang: Lang; slug: string } | null {
 }
 
 function localized(item: Equipment3Item, base: "name" | "desc" | "detail" | "effect" | "caution" | "sessions" | "time" | "recovery" | "category", lang: Lang): string {
-  if (base === "name" && lang === "zh-TW" && item.nameZhTw?.trim()) return item.nameZhTw;
-  const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh" || lang === "zh-TW" ? "Zh" : "";
+  const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh-TW" ? "ZhTw" : lang === "zh" ? "Zh" : "";
   const localizedKey = `${base}${suffix}` as keyof Equipment3Item;
   const localizedValue = item[localizedKey];
+  if (typeof localizedValue === "string" && localizedValue.trim()) return localizedValue;
+  if (lang === "zh-TW") {
+    const simplifiedValue = item[`${base}Zh` as keyof Equipment3Item];
+    if (typeof simplifiedValue === "string" && simplifiedValue.trim()) return simplifiedValue;
+  }
   const fallback = item[base];
-  return typeof localizedValue === "string" && localizedValue.trim() ? localizedValue : typeof fallback === "string" ? fallback : "";
+  return typeof fallback === "string" ? fallback : "";
 }
 
 function labels(lang: Lang) {

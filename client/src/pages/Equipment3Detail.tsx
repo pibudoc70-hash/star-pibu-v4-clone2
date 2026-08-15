@@ -102,9 +102,9 @@ export default function Equipment3Detail() {
   );
   const katexContent = item
     ? [
-        item.detail, item.detailEn, item.detailJa, item.detailZh,
-        item.effect, item.effectEn, item.effectJa, item.effectZh,
-        item.caution, item.cautionEn, item.cautionJa, item.cautionZh,
+        item.detail, item.detailEn, item.detailJa, item.detailZh, item.detailZhTw,
+        item.effect, item.effectEn, item.effectJa, item.effectZh, item.effectZhTw,
+        item.caution, item.cautionEn, item.cautionJa, item.cautionZh, item.cautionZhTw,
       ].filter((value): value is string => typeof value === "string").join("\n")
     : "";
   useKatexCss(katexContent);
@@ -114,13 +114,13 @@ export default function Equipment3Detail() {
     loading:   getText("로딩 중...",       "Loading...",                    "読み込み中...",      "加载中..."),
     notFound:  getText("시술 정보를 찾을 수 없습니다.", "Treatment information not found.", "施術情報が見つかりませんでした。", "未找到该项目信息。"),
     error:     getText("데이터를 불러오는 중 오류가 발생했습니다.", "Failed to load treatment data.", "データの読み込みに失敗しました。", "加载数据时出错。"),
-    time:      getText("시술 시간",         "Duration",                      "施術時間",           "施术时间"),
-    recovery:  getText("회복 기간",         "Recovery",                      "回復期間",           "恢复期"),
-    sessions:  getText("권장 횟수",         "Recommended Sessions",          "推奨回数",           "建议次数"),
+    time:      getText("시술 시간",         "Duration",                      "施術時間",           "施术时间",           "療程時間"),
+    recovery:  getText("회복 기간",         "Recovery",                      "回復期間",           "恢复期",             "恢復期"),
+    sessions:  getText("권장 횟수",         "Recommended Sessions",          "推奨回数",           "建议次数",           "建議次數"),
     book:      getText("예약하기",          "Book Now",                      "予約する",           "立即预约"),
-    overview:  getText("시술 소개",         "Treatment Overview",            "施術のご紹介",       "项目介绍"),
-    effect:    getText("기대 효과",         "Expected Results",              "期待できる効果",     "预期效果"),
-    caution:   getText("주의사항",          "Precautions",                   "注意事項",           "注意事项"),
+    overview:  getText("시술 소개",         "Treatment Overview",            "施術のご紹介",       "项目介绍",           "療程介紹"),
+    effect:    getText("기대 효과",         "Expected Results",              "期待できる効果",     "预期效果",           "預期效果"),
+    caution:   getText("주의사항",          "Precautions",                   "注意事項",           "注意事项",           "注意事項"),
     gallery:   getText("시술 사례",         "Before & After",                "施術事例",           "施术案例"),
     video:     getText("가이드 영상",         "Guide Video",                   "ガイド動画",         "指南视频"),
     faq:       getText("자주 묻는 질문",     "Frequently Asked Questions",   "よくある質問",       "常见问题"),
@@ -179,14 +179,16 @@ export default function Equipment3Detail() {
   const localizedName     = lang === "zh-TW" && item.nameZhTw?.trim()
     ? item.nameZhTw
     : getText(item.name, item.nameEn, item.nameJa, item.nameZh);
-  const localizedDesc     = getText(item.desc,    item.descEn,    item.descJa,    item.descZh);
-  const localizedDetail   = getText(item.detail,  item.detailEn,  item.detailJa,  item.detailZh);
-  const localizedEffect   = getText(item.effect,  item.effectEn,  item.effectJa,  item.effectZh);
-  const localizedCaution  = getText(item.caution, item.cautionEn, item.cautionJa, item.cautionZh);
+  const localized = (ko: string | null | undefined, en: string | null | undefined, ja: string | null | undefined, zh: string | null | undefined, zhTw: string | null | undefined) =>
+    lang === "zh-TW" && zhTw?.trim() ? zhTw : getText(ko ?? "", en ?? "", ja ?? "", zh ?? "");
+  const localizedDesc     = localized(item.desc,    item.descEn,    item.descJa,    item.descZh,    item.descZhTw);
+  const localizedDetail   = localized(item.detail,  item.detailEn,  item.detailJa,  item.detailZh,  item.detailZhTw);
+  const localizedEffect   = localized(item.effect,  item.effectEn,  item.effectJa,  item.effectZh,  item.effectZhTw);
+  const localizedCaution  = localized(item.caution, item.cautionEn, item.cautionJa, item.cautionZh, item.cautionZhTw);
   const localizedCategory = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
-  const localizedTime     = getText(item.time,    item.timeEn,    item.timeJa,    item.timeZh);
-  const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
-  const localizedSessions = getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh);
+  const localizedTime     = localized(item.time,    item.timeEn,    item.timeJa,    item.timeZh,    item.timeZhTw);
+  const localizedRecovery = localized(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
+  const localizedSessions = localized(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh, item.sessionsZhTw);
   const hasLiftingPainCare = isPainSensitiveLifting(slug) || isPainSensitiveLifting(item.name);
   const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];

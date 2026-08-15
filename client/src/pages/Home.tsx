@@ -10,10 +10,10 @@
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
 import { lazy, Suspense, useEffect, useState } from "react";
-import { useAnchorScroll } from "@/hooks/useAnchorScroll";
+import { useHomeInitialScrollRestore } from "@/hooks/useHomeInitialScrollRestore";
 import { CLINIC_STATS } from "../lib/constants";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalBusinessJsonLd, buildPersonListJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
-import { CLINIC_DOCTORS } from "@/lib/clinic-data";
+import SeoHead from "@/components/SeoHead";
+import { buildHomeJsonLd, HOME_SEO_META } from "@/lib/homeSeo";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
@@ -39,6 +39,7 @@ const RecentNoticesSection = lazy(() => import("@/components/RecentNoticesSectio
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 import { useNewNoticeToast } from "@/hooks/useNewNoticeToast";
 import { useLocation } from "wouter";
+import { HOME_SECTION_FALLBACKS } from "@/lib/homeSectionFallbacks";
 
 /** 셉션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선
  * variant="dark": 어두운 배경 섹션(ManagementDevices, YouTube, Contact)
@@ -302,51 +303,7 @@ export default function Home() {
   // 새 공지사항 알림 토스트 (세션당 1회)
   useNewNoticeToast(navigate);
 
-  const { scrollToSelector } = useAnchorScroll();
-
-  // 다른 페이지에서 섹션 메뉴 클릭 시 해당 섹션으로 자동 스크롤
-  // [FIX v2] URL hash 대신 sessionStorage(__star_scroll_to)를 사용해
-  // URL에 hash가 남지 않도록 한다.
-  useEffect(() => {
-    // [FIX v4] 언어 변경 시 scroll restoration 무시 → 강제 최상단
-    const forceScrollTop = sessionStorage.getItem("__star_force_scroll_top");
-    if (forceScrollTop) {
-      sessionStorage.removeItem("__star_force_scroll_top");
-      history.scrollRestoration = "manual";
-      window.scrollTo({ top: 0, behavior: "instant" });
-      return;
-    }
-
-    // [FIX v9] __star_doctor_tab → __star_dr_target 방식으로 통일
-    const storedTab = sessionStorage.getItem("__star_doctor_tab");
-    if (storedTab) {
-      sessionStorage.removeItem("__star_doctor_tab");
-      const slugMap = ['cho', 'woo', 'lee'];
-      const slug = slugMap[parseInt(storedTab, 10)];
-      if (slug) {
-        sessionStorage.setItem('__star_dr_target', `dr-${slug}`);
-        return;
-      }
-    }
-
-    // URL hash 처리: index.html에서 #dr-* 는 이미 제거됨
-    if (window.location.hash) {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
-
-    // [FIX v12] __star_dr_target이 있으면 useDoctorViewModel이 스크롤 담당
-    if (sessionStorage.getItem('__star_dr_target')) return;
-
-    // 일반 섹션 스크롤: sessionStorage(__star_scroll_to) → useAnchorScroll
-    const sessionTarget = sessionStorage.getItem("__star_scroll_to");
-    if (!sessionTarget) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-      return;
-    }
-    sessionStorage.removeItem("__star_scroll_to");
-    scrollToSelector(`#${sessionTarget}`, { block: "start" });
-  }, []); // 반드시 빈 배열 — 마운트 시 1회만 실행
+  useHomeInitialScrollRestore();
 
   return (
     <div className="min-h-screen">
@@ -357,24 +314,8 @@ export default function Home() {
        * 신호 희석이 분산되어 Sitelinks Searchbox 인식률이 낮아집니다.
        */}
       <SeoHead
-        title="부산 서면 스타피부과 | 피부과 전문의 울쎄라 써마지 리프팅, 색소질환, 다양한 레이저 보유"
-        description="부산 서면 스타피부과(서면로 74 아이온시티빌딩 4F)는 20년 이상 경력 피부과 전문의 3인이 울세라피·써마지 FLX·눈밑지방재배치·리주란힐러·피코레이저 등 50종 프리미엄 레이저를 직접 담당합니다. 영어·일본어·중국어 외국인 환자 진료 가능. 전화 051-818-2300."
-        keywords="부산피부과, 울쎄라, 써마지, 리프팅, 색소질환, 레이저치료, 리주란, 눈밑지방, 피부과전문의, 부산리프팅, 피부관리"
-        canonical="https://star-pibu.com"
-        ogImage={OG_IMAGE_LOCALIZED.ko}
-        ogImageWidth={1200}
-        ogImageHeight={630}
-        ogSiteName={SITE_NAME_LOCALIZED.ko}
-        ogLocale="ko_KR"
-        ogLocaleAlternates={["en_US", "ja_JP", "zh_CN"]}
-        hreflangs={COMMON_HREFLANGS}
-        pageType="home"
-        jsonLd={[
-          buildLocalBusinessJsonLd(),
-          buildBreadcrumbJsonLd([
-            { name: "홈", url: "https://star-pibu.com" },
-          ]),
-          buildFAQPageJsonLd([
+        {...HOME_SEO_META}
+        jsonLd={buildHomeJsonLd([
             /* ── 병원 기본 정보 ── */
             {
               question: "스타피부과는 어디에 위치하나요?",
@@ -490,9 +431,7 @@ export default function Home() {
               question: "스타피부과의 환자 편의 시설은 어떤가요?",
               answer: "부산 서면 스타피부과는 시술 대기실, 프라이버시가 확보된 개별 시술실, 시술 후 회복 공간, 진정 시술을 위한 모니터링 설비를 갖추고 있습니다."
             },
-                    ]),
-          buildPersonListJsonLd(CLINIC_DOCTORS),
-        ]}
+                    ])}
       />
       {/* Fixed Header */}
       <Header />
@@ -551,7 +490,7 @@ export default function Home() {
 
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
         <div className="section-bg-cream">
-          <Suspense fallback={<SectionFallback minH="min-h-[640px]" layout="cards-3" bg="#ffffff" />}>
+          <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
             <SpecialEventSection />
           </Suspense>
         </div>
@@ -561,7 +500,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback minH="min-h-[520px]" layout="cards-3" bg="linear-gradient(180deg, #F9F6F2 0%, #F5F1ED 100%)" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
               <DoctorsSection />
             </Suspense>
           </div>
@@ -572,7 +511,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-cream-soft">
-            <Suspense fallback={<SectionFallback minH="min-h-[720px]" layout="cards-3" bg="#ffffff" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>
@@ -583,7 +522,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-brown">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" layout="cards-4" bg="linear-gradient(180deg, #1A2744 0%, #243358 100%)" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
               <ManagementDevicesSection />
             </Suspense>
           </div>
@@ -594,7 +533,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-cream">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" layout="stats" bg="#FAFAFA" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
               <PhilosophySection />
             </Suspense>
           </div>
@@ -605,7 +544,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-gold-soft">
-            <Suspense fallback={<SectionFallback minH="min-h-[440px]" layout="cards-3" bg="linear-gradient(135deg, #F5F1ED 0%, #EDE8E2 100%)" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
               <ResultsStatisticsSection />
             </Suspense>
           </div>
@@ -616,7 +555,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-warm-alt">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="gallery" bg="#ffffff" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
               <FacilitySection />
             </Suspense>
           </div>
@@ -627,7 +566,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-brown-mid">
-            <Suspense fallback={<SectionFallback minH="min-h-[400px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
               <YouTubeSection />
             </Suspense>
           </div>
@@ -638,7 +577,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-cream">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" layout="list" bg="#ffffff" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
               <FAQSection />
             </Suspense>
           </div>
@@ -648,7 +587,7 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <Suspense fallback={<SectionFallback minH="min-h-[300px]" layout="list" bg="#FAF8F5" />}>
+          <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
             <RecentNoticesSection lang="ko" />
           </Suspense>
         </ScrollAnimationWrapper>
@@ -658,7 +597,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <div className="section-bg-dark-brown">
-            <Suspense fallback={<SectionFallback minH="min-h-[560px]" variant="dark" bg="linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
               <ContactSection />
             </Suspense>
           </div>

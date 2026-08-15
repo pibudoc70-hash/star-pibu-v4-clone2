@@ -4594,3 +4594,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 개선 6: 첨부 지시의 나머지 항목을 예약 영향 여부를 먼저 판별해 하나씩만 구현·검증·체크포인트 저장 — 비예약 관리자 치료·공지 폼의 18개 label/input 연결과 이미지 제거 버튼 이름을 추가해 label 경고 25→7건으로 축소. 남은 7건은 `MyReservations.tsx` 예약 화면이므로 사용자 지시대로 수정하지 않고 별도 보고
 - [x] 개선 7: 서비스 워커 캐시 안정성을 읽기 전용으로 감사하고, 예약·API·tRPC·인증·관리자 응답 비캐시 원칙을 유지하는 최소 보완만 단독 진행 — 일반 `/api/*`(reservation·tRPC 포함), auth, admin은 명시 비캐시하고 `/api/storage/*` 이미지만 예외 허용. HTML network-first 유지, cache.put 비치명 처리·이미지 60개 상한 추가. 정책 2개 테스트·TypeScript·lint 오류 0과 운영 SW controller·524 CSS rules·computed style 확인
 - [x] 단계별 보호 검증·보고: 각 개선 후 대상 테스트·타입·lint·build·공개 화면·로그·예약 영역 비변경을 확인하고 실패 시 승인 전 다음 항목 보류 — 최종 CI run 31914163805에서 dependency audit·type·lint·fresh migration unit·DB integration·production build 모두 통과. 로컬 91개 파일/1,545개 테스트·audit·diff check 통과, 보호 예약·OTP 경로의 최종 diff 0건
+
+## 현재 main 기준 이미지 프록시 단일 감사 (사용자 지시, 2026-08-15)
+- [x] 현재 브랜치·HEAD·작업 트리·최근 10개 commit·2c55f56 이후 변경·다른 작업공간 여부 확인 후, 팝업 이미지 프록시 보안 정책·집중 테스트·예약 동결 범위를 한 항목으로만 감사 — 현재 main HEAD f80e9752, worktree 1개 확인. 2c55f56 이후 개선 결과가 현재 main에 실제 존재하며, popup host exact Set·HTTPS·자격증명/포트 차단·MIME allowlist·SVG/비이미지 차단·redirect/timeout/5MB 보호가 index 라우트에 연결됨. 집중 4개 테스트·TypeScript 통과, lint 오류 0, 예약 동결 경로의 현재 diff 0건

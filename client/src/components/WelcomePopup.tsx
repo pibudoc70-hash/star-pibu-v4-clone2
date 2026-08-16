@@ -110,10 +110,32 @@ export default function WelcomePopup() {
   useEffect(() => {
     if (!visible || !dialogRef.current) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') dismiss();
+      if (e.key === "Escape") {
+        dismiss();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const focusable = Array.from(
+        dialogRef.current!.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, [visible, dismiss]);
 
   if (!visible || !events || events.length === 0) return null;

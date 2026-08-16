@@ -113,7 +113,7 @@ describe("EventsSection query states", () => {
     expect(container.querySelectorAll(".skeleton-shimmer")).toHaveLength(12);
   });
 
-  it("shows an accessible retry UI instead of the empty state when the API fails without data", () => {
+  it("shows an accessible retry UI instead of the empty state when both queries fail without data", () => {
     featuredState = queryState({ error: new Error("failed") });
     listState = queryState({ error: new Error("failed") });
 
@@ -122,6 +122,30 @@ describe("EventsSection query states", () => {
     expect(screen.getByRole("alert")).toHaveTextContent("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     expect(screen.queryByText("등록된 이벤트가 없습니다.")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "다시 시도" })).toBeEnabled();
+  });
+
+  it("keeps successful general event cards when only the featured query fails", async () => {
+    featuredState = queryState({ error: new Error("featured failed") });
+    listState = queryState({
+      data: [{ ...event, id: 2, title: "일반 이벤트", isFeatured: "0" }],
+    });
+
+    render(<EventsSection />);
+
+    await waitFor(() => expect(screen.getByText("일반 이벤트")).toBeInTheDocument());
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(screen.queryByText("등록된 이벤트가 없습니다.")).not.toBeInTheDocument();
+  });
+
+  it("keeps successful featured cards when only the general events query fails", () => {
+    featuredState = queryState({ data: [event] });
+    listState = queryState({ error: new Error("list failed") });
+
+    render(<EventsSection />);
+
+    expect(screen.getByText("테스트 이벤트")).toBeInTheDocument();
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(screen.queryByText("등록된 이벤트가 없습니다.")).not.toBeInTheDocument();
   });
 
   it("calls each existing query refetch exactly once and disables the retry button while fetching", () => {
@@ -140,6 +164,43 @@ describe("EventsSection query states", () => {
 
     expect(screen.getByRole("button", { name: "로딩 중..." })).toBeDisabled();
     expect(screen.getByRole("button", { name: "로딩 중..." })).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("keeps the error UI without exposing refetch failure details", async () => {
+    const featuredRefetch = vi.fn().mockResolvedValue({ error: new Error("featured retry failed") });
+    const listRefetch = vi.fn().mockResolvedValue({ error: new Error("list retry failed") });
+    const onUnhandledRejection = vi.fn();
+    window.addEventListener("unhandledrejection", onUnhandledRejection);
+    featuredState = queryState({ error: new Error("failed"), refetch: featuredRefetch });
+    listState = queryState({ error: new Error("failed"), refetch: listRefetch });
+
+    render(<EventsSection />);
+    fireEvent.click(screen.getByRole("button", { name: "다시 시도" }));
+
+    await waitFor(() => {
+      expect(featuredRefetch).toHaveBeenCalledTimes(1);
+      expect(listRefetch).toHaveBeenCalledTimes(1);
+    });
+    await Promise.resolve();
+
+    expect(onUnhandledRejection).not.toHaveBeenCalled();
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.queryByText("featured retry failed")).not.toBeInTheDocument();
+    expect(screen.queryByText("list retry failed")).not.toBeInTheDocument();
+    window.removeEventListener("unhandledrejection", onUnhandledRejection);
+  });
+
+  it("does not call refetch again while the retry button is disabled during an active request", () => {
+    featuredState = queryState({ error: new Error("failed"), isFetching: true });
+    listState = queryState({ error: new Error("failed"), isFetching: true });
+
+    render(<EventsSection />);
+    const retryButton = screen.getByRole("button", { name: "로딩 중..." });
+    fireEvent.click(retryButton);
+
+    expect(retryButton).toBeDisabled();
+    expect(featuredState.refetch).not.toHaveBeenCalled();
+    expect(listState.refetch).not.toHaveBeenCalled();
   });
 
   it("uses a non-empty generic error message and retry label for every supported locale", () => {

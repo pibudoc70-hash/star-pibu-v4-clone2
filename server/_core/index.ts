@@ -26,7 +26,8 @@ import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { logger } from "./logger";
 import { buildDegradedPayload, buildHealthyPayload } from "./health";
-import { getSafeImageContentType, isAllowedPopupImageUrl } from "./imageProxyPolicy";
+import { getSafeImageContentType } from "./imageProxyPolicy";
+import { createPopupImageProxyHandler } from "./popupImageProxy";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -238,99 +239,7 @@ async function startServer() {
   });
   
   // 팝업 이미지 프록시 라우터 (LRU 캐시 + SSRF 방어)
-  app.get('/api/popup-image', async (req, res) => {
-    const { url } = req.query;
-    if (!url || typeof url !== 'string') {
-      res.status(400).send('Missing or invalid url parameter');
-      return;
-    }
-
-    // SSRF 방어: HTTPS·명시적 host·기본 포트·비자격증명 URL만 허용한다.
-    if (!isAllowedPopupImageUrl(url)) {
-      res.status(400).send('URL host not allowed');
-      return;
-    }
-
-    const cacheKey = `popup:${url}`;
-    try {
-      // 0. 음수 캐시: 최근 404 로 확인된 리소스는 외부 요청 없이 즉시 404
-      if (imageNotFoundCache.has(cacheKey)) {
-        res.status(404).send("Not found (cached)");
-        return;
-      }
-      // 1. LRU 캐시 조회
-      const cached = imageCache.get(cacheKey);
-      if (cached) {
-        console.log(`[PopupImageProxy] [cache hit] url=${url}`);
-        const ifNoneMatch = req.get("If-None-Match");
-        if (ifNoneMatch === `"${cached.etag}"`) {
-          res.status(304).end();
-          return;
-        }
-        res.set('Content-Type', cached.contentType);
-        res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
-        res.set('ETag', `"${cached.etag}"`);
-        res.set('Vary', 'Accept, Accept-Encoding');
-        res.set('Access-Control-Allow-Origin', '*');
-        res.send(cached.buffer);
-        return;
-      }
-
-      // 2. 원본 이미지 가져오기
-      const resp = await fetch(url, {
-        redirect: "error", // [Step51-C] 화이트리스트 밖으로의 리다이렉트 차단
-        signal: AbortSignal.timeout(8000),
-      });
-      if (!resp.ok) {
-        // 404 실패 시에만 음수 캐시 기록 (SSRF 403 등 다른 오류는 제외)
-        if (resp.status === 404) {
-          imageNotFoundCache.set(cacheKey, true);
-        }
-        res.status(resp.status).send('Failed to fetch image');
-        return;
-      }
-
-      // 3. 이미지 바이트 가져오기
-      // [Step51-C] Content-Length 기반 사전 차단
-      const popupDeclaredLen = Number(resp.headers.get("content-length") || 0);
-      if (popupDeclaredLen > MAX_POPUP_BYTES) {
-        res.status(413).type("text/plain").send("Payload too large");
-        return;
-      }
-      const contentType = getSafeImageContentType(resp.headers.get('content-type'));
-      if (!contentType) {
-        res.status(415).type("text/plain").send("Unsupported image content type");
-        return;
-      }
-      const buffer = Buffer.from(await resp.arrayBuffer());
-      // [Step51-C] 실제 버퍼 크기 검사 (캐시에 넣기 전)
-      if (buffer.byteLength > MAX_POPUP_BYTES) {
-        res.status(413).type("text/plain").send("Payload too large");
-        return;
-      }
-      const etag = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 16);
-
-      // 4. LRU 캐시에 저장
-      imageCache.set(cacheKey, { buffer, contentType, etag });
-
-      // 5. If-None-Match 확인
-      const ifNoneMatch = req.get("If-None-Match");
-      if (ifNoneMatch === `"${etag}"`) {
-        res.status(304).end();
-        return;
-      }
-
-      res.set('Content-Type', contentType);
-      res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
-      res.set('ETag', `"${etag}"`);
-      res.set('Vary', 'Accept, Accept-Encoding');
-      res.set('Access-Control-Allow-Origin', '*');
-      res.send(buffer);
-    } catch (err) {
-      console.error('[PopupImageProxy] error:', err);
-      res.status(502).send('Failed to fetch image');
-    }
-  });
+  app.get('/api/popup-image', createPopupImageProxyHandler());
   
   registerOAuthRoutes(app);
   registerRssFeed(app);

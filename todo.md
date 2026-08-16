@@ -4597,3 +4597,10 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 
 ## 현재 main 기준 이미지 프록시 단일 감사 (사용자 지시, 2026-08-15)
 - [x] 현재 브랜치·HEAD·작업 트리·최근 10개 commit·2c55f56 이후 변경·다른 작업공간 여부 확인 후, 팝업 이미지 프록시 보안 정책·집중 테스트·예약 동결 범위를 한 항목으로만 감사 — 현재 main HEAD f80e9752, worktree 1개 확인. 2c55f56 이후 개선 결과가 현재 main에 실제 존재하며, popup host exact Set·HTTPS·자격증명/포트 차단·MIME allowlist·SVG/비이미지 차단·redirect/timeout/5MB 보호가 index 라우트에 연결됨. 집중 4개 테스트·TypeScript 통과, lint 오류 0, 예약 동결 경로의 현재 diff 0건
+
+## 팝업 이미지 프록시 캐시 회귀 테스트 단일 작업 (사용자 지시, 2026-08-15)
+- [x] 시작 상태·캐시 설정 감사: f80e9752 기준 main·clean worktree·기존 정책 테스트·imageCache positive/negative 설정을 확인하고, 무배포 원칙 아래 cache behavior 테스트만 보강 — 기준 code commit f80e9752를 detached worktree에서 사용, 현재 audit-only checkpoint ecdf1bd는 production code 변경 0건 확인
+- [x] positive LRU·ETag·cache-key 분리 및 404 negative cache·비캐시 오류·TTL 집중 테스트 추가 — production handler를 최소 추출하고 positive reuse·ETag 304·key 분리·MIME 비캐시·404만 negative cache·500/차단 URL 비캐시를 6개 테스트로 추가; 기존 정책 4개와 합계 10개 통과
+- [x] 비예약·비DB 검증·local production build·예약 동결 diff 확인 후 성공 시 로컬 독립 커밋만 생성하고 배포하지 않음 — build는 기준·현재 모두 6,782 모듈 변환 후 rendering chunks에서 SIGTERM(143)으로 미통과, 환경 한계로 판정. TypeScript·lint 오류 0·비DB 90 파일/1,535 테스트·diff check 통과, 예약 동결 diff 0건
+- [x] 사용자 승인: 메모리 정리 후 production build를 한 번만 재시도하고, 성공 시에만 cache 테스트 변경을 로컬 독립 커밋으로 저장 — 승인된 단일 재시도도 동일 SIGTERM(143)으로 종료되어 기준 worktree 비교를 수행
+- [x] 사용자 승인: 현재 변경을 보존한 detached f80e9752 임시 worktree에서 동일 build를 한 번 비교하고, 동일 SIGTERM 환경 한계일 때만 최소 재검증 후 무배포 로컬 커밋 — `/tmp/star-pibu-baseline-f80e9752`를 생성·node_modules symlink 재사용·build 1회·worktree 제거 완료. 결과 A에 따라 local commit 9d91add 생성, push·deploy 0건

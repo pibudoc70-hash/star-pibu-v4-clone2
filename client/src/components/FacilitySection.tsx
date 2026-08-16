@@ -108,7 +108,22 @@ export default function FacilitySection() {
   // A11y: ESC 키로 라이트박스 닫기
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeLightbox(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const dialog = document.querySelector<HTMLElement>('[role="dialog"][aria-modal="true"]');
+      const focusable = dialog?.querySelectorAll<HTMLElement>('button:not([disabled]):not([tabindex="-1"]), [href]:not([tabindex="-1"]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]):not([tabindex="-1"])');
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if ((e.shiftKey && document.activeElement === first) || (!e.shiftKey && document.activeElement === last)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [lightboxIndex]);

@@ -2,6 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { i18n } from "@/lib/i18n";
 import EventsSection from "./EventsSection";
 
 const event = {
@@ -61,9 +62,16 @@ vi.mock("@/contexts/LangContext", () => ({
         filterEvent: "이벤트",
         filterNotice: "공지사항",
         filterEtc: "기타",
+        loading: "로딩 중...",
         empty: "등록된 이벤트가 없습니다.",
         viewDetail: "자세히 보기",
         views: "조회",
+      },
+      consultation: {
+        errorGeneric: "오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+      },
+      youtube: {
+        retry: "다시 시도",
       },
     },
   }),
@@ -111,7 +119,7 @@ describe("EventsSection query states", () => {
 
     render(<EventsSection />);
 
-    expect(screen.getByRole("alert")).toHaveTextContent("이벤트 정보를 불러오지 못했습니다.");
+    expect(screen.getByRole("alert")).toHaveTextContent("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     expect(screen.queryByText("등록된 이벤트가 없습니다.")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "다시 시도" })).toBeEnabled();
   });
@@ -130,8 +138,16 @@ describe("EventsSection query states", () => {
     listState = queryState({ error: new Error("failed"), isFetching: true });
     rerender(<EventsSection />);
 
-    expect(screen.getByRole("button", { name: "다시 불러오는 중..." })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "다시 불러오는 중..." })).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("button", { name: "로딩 중..." })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "로딩 중..." })).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("uses a non-empty generic error message and retry label for every supported locale", () => {
+    for (const locale of ["ko", "en", "ja", "zh", "zh-TW"] as const) {
+      expect(i18n[locale].consultation.errorGeneric.trim()).not.toBe("");
+      expect(i18n[locale].youtube.retry.trim()).not.toBe("");
+      expect(i18n[locale].events.loading.trim()).not.toBe("");
+    }
   });
 
   it("shows the empty state only after a successful empty result", () => {

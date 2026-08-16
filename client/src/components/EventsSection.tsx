@@ -48,6 +48,8 @@ function EventIcon({ type, size = 22 }: { type?: string; size?: number }) {
 export default function EventsSection() {
   const { t } = useLang();
   const ev_t = t.events;
+  const errorMessage = t.consultation.errorGeneric;
+  const retryLabel = t.youtube.retry;
   const sectionRef = useSectionReveal(60); // [Step64]
 
   const [activeCategory, setActiveCategory] = useState(ev_t.filterAll);
@@ -168,8 +170,7 @@ export default function EventsSection() {
         {/* ── Error State ── */}
         {showError && (
           <div className="text-center py-12" role="alert">
-            <h3 className="text-base font-normal text-[var(--brand-text,#2C2C2C)]">이벤트 정보를 불러오지 못했습니다.</h3>
-            <p className="mt-2 text-sm text-[var(--brand-text-mid,#666666)]">잠시 후 다시 시도해 주세요.</p>
+            <p className="text-base font-normal text-[var(--brand-text,#2C2C2C)]">{errorMessage}</p>
             <button
               type="button"
               onClick={retryEvents}
@@ -177,7 +178,7 @@ export default function EventsSection() {
               aria-busy={isRetrying}
               className="mt-5 min-h-11 rounded-lg border border-[var(--color-gold-primary)] px-5 text-sm font-normal text-[var(--color-gold-primary)] transition-colors hover:bg-[var(--brand-bg-alt,#F5F0EB)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isRetrying ? "다시 불러오는 중..." : "다시 시도"}
+              {isRetrying ? ev_t.loading : retryLabel}
             </button>
           </div>
         )}

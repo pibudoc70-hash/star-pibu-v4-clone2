@@ -8,7 +8,7 @@
  * - CategoryTabList + CategoryTabButton 재사용
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { useSearch } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -94,6 +94,7 @@ function Equipment3Card({
   detailPath: string;
   showCategory?: boolean;
 }) {
+  const [, setLocation] = useLocation();
   const { getText } = useLocalizedText();
   const { lang } = useLang();  // 현재 언어 감지
 
@@ -105,15 +106,18 @@ function Equipment3Card({
   const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
 
   return (
-    <a
-      href={detailPath}
+    <div
       className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
       style={{
         animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
         minHeight: "380px",
         background: "#fff",
       }}
+      onClick={() => setLocation(detailPath)}
+      role="button"
+      tabIndex={0}
       aria-label={`${name} ${detail}`}
+      onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}
     >
       {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어: bgImageUrl+텍스트 오버레이 */}
       <div className="relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
@@ -231,7 +235,7 @@ function Equipment3Card({
           <span style={{ fontSize: 13 }}>›</span>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 

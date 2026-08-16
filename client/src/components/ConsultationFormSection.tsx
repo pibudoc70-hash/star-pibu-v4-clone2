@@ -161,11 +161,11 @@ export default function ConsultationFormSection() {
       setErrors({});
     },
     onError: (err) => {
-      const msg = err.message || "";
+      const msg = err.message || c.errorGeneric;
       if (msg.includes("잠시") || msg.includes("rate") || msg.includes("too many")) {
         setErrors({ general: c.errorRateLimit });
       } else if (msg.includes("보안") || msg.includes("Turnstile") || msg.includes("token")) {
-        setErrors({ general: c.errorGeneric });
+        setErrors({ general: msg });
         // Turnstile 리셋
         if (widgetIdRef.current && window.turnstile) {
           window.turnstile.reset(widgetIdRef.current);
@@ -173,7 +173,7 @@ export default function ConsultationFormSection() {
           setTurnstileReady(false);
         }
       } else {
-        setErrors({ general: c.errorGeneric });
+        setErrors({ general: msg });
       }
     },
   });

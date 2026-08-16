@@ -26,7 +26,7 @@ import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { logger } from "./logger";
 import { buildDegradedPayload, buildHealthyPayload } from "./health";
-import { getSafeImageContentType, isValidYouTubeVideoId } from "./imageProxyPolicy";
+import { getSafeImageContentType } from "./imageProxyPolicy";
 import { createPopupImageProxyHandler } from "./popupImageProxy";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
@@ -136,8 +136,8 @@ async function startServer() {
   // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)
   app.get('/api/youtube-thumbnail/:videoId', async (req, res) => {
     const { videoId } = req.params;
-    if (!isValidYouTubeVideoId(videoId)) {
-      res.status(400).send('Invalid video ID');
+    if (!videoId) {
+      res.status(400).send('Missing videoId');
       return;
     }
 

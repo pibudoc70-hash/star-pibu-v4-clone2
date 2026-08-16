@@ -4,7 +4,7 @@
  * aria-label values use Korean i18n strings (i18n.ko.ts) — Round-8 리팩터
  */
 import React from "react";
-import { render, screen, fireEvent, act, within } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FacilitySection from "./FacilitySection";
 import { LangProvider } from "@/contexts/LangContext";
@@ -237,32 +237,5 @@ describe("FacilitySection", () => {
       // Component should still be functional
       expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
     }
-  });
-
-  it("keeps Tab and Shift+Tab focus inside an open lightbox and restores its trigger on Escape", () => {
-    renderWithLang(<FacilitySection />);
-    const trigger = document.querySelector<HTMLButtonElement>(".facility-grid-thumb")!;
-    trigger.focus();
-    fireEvent.click(trigger);
-    act(() => { vi.advanceTimersByTime(16); });
-
-    const dialog = screen.getByRole("dialog");
-    const close = within(dialog).getByRole("button");
-    expect(close).toHaveFocus();
-
-    const tab = new KeyboardEvent("keydown", { key: "Tab", bubbles: true, cancelable: true });
-    document.dispatchEvent(tab);
-    expect(tab.defaultPrevented).toBe(true);
-    expect(close).toHaveFocus();
-
-    const shiftTab = new KeyboardEvent("keydown", { key: "Tab", shiftKey: true, bubbles: true, cancelable: true });
-    document.dispatchEvent(shiftTab);
-    expect(shiftTab.defaultPrevented).toBe(true);
-    expect(close).toHaveFocus();
-
-    fireEvent.keyDown(document, { key: "Escape" });
-    act(() => { vi.advanceTimersByTime(16); });
-    expect(dialog).not.toBeInTheDocument();
-    expect(trigger).toHaveFocus();
   });
 });

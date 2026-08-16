@@ -156,6 +156,17 @@ export default function YouTubeSection() {
     setModalType(null);
   }, []);
 
+  // viewport 진입 전에는 query가 아직 시작되지 않았으므로 loading/error/empty UI를 노출하지 않는다.
+  if (!isVisible) {
+    return (
+      <section
+        ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
+        className="py-16 md:py-24 bg-white"
+        aria-hidden="true"
+      />
+    );
+  }
+
   // S1-T4: 로딩 상태 — skeleton UI
   if (isLoading) {
     return (
@@ -236,10 +247,8 @@ export default function YouTubeSection() {
     );
   }
 
-  // 빈 상태 — 데이터 없을 때 섹션 제목만 표시하고 나머지는 숨김
-  if (!videos.length && !shorts.length) {
-    console.warn('[YouTubeSection] No videos or shorts found!', { allVideos, videos, shorts });
-    // 섹션 제목만 표시하고 영상 그리드는 숨김
+  // 성공한 빈 상태 — 오류/재시도 UI와 구분하고 채널 방문 경로만 제공
+  if (allVideos && !videos.length && !shorts.length) {
     return (
       <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -255,27 +264,15 @@ export default function YouTubeSection() {
               {yt.sectionSubtitle}
             </p>
           </div>
-          <div className="mt-12 text-center text-gray-500">
-            <p className="mb-4">{yt.errorMessage || 'YouTube 영상을 불러올 수 없습니다.'}</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => refetch()}
-                className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
-                style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
-              >
-                <RefreshCw size={16} aria-hidden="true" />
-                {yt.retry}
-              </button>
-              <a
-                href="https://www.youtube.com/@starpibu"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-2 rounded-full border border-slate-300 text-slate-700 font-semibold transition-all hover:border-slate-500 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
-              >
-                {yt.visitChannel}
-              </a>
-            </div>
+          <div className="mt-12 text-center">
+            <a
+              href="https://www.youtube.com/@starpibu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-2 rounded-full border border-slate-300 text-slate-700 font-semibold transition-all hover:border-slate-500 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
+            >
+              {yt.visitChannel}
+            </a>
           </div>
         </div>
       </section>

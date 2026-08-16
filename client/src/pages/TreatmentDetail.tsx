@@ -34,7 +34,7 @@ import { useRoute } from "wouter";
 import { CLINIC_STATS } from "../lib/constants";
 const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import { ArrowLeft, Clock, RefreshCw, DollarSign, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -339,42 +339,11 @@ const NAME_TO_SLUG: Record<string, string> = {
 
 export default function TreatmentDetail() {
   const [match, params] = useRoute("/treatment/:name");
-  const [treatment, setTreatment] = useState<{
-    name: string;
-    nameEn: string;
-    category: string;
-    desc: string;
-    time: string;
-    recovery: string;
-    price: string;
-    badge: string | null;
-    image: string;
-    effect: string;
-    detailedDesc: string;
-    faqs: Array<{ question: string; answer: string }>;
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
   const { t, lang } = useLang();
   const td = t.treatmentDetail;
-
-  useEffect(() => {
-    if (match && params?.name) {
-      const decodedName = decodeURIComponent(params.name);
-      const allTreatments = getAllTreatments();
-      const found = allTreatments.find((tr) => tr.name === decodedName);
-      setTreatment(found ?? null);
-
-    }
-    setLoading(false);
-  }, [match, params]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
+  const treatment = match && params?.name
+    ? getAllTreatments().find((item) => item.name === decodeURIComponent(params.name)) ?? null
+    : null;
 
   if (!treatment) {
     return (

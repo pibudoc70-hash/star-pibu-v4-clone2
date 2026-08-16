@@ -7,6 +7,7 @@ type QueryState = {
   data?: Array<{ id: number; title: string; videoId: string; type: "video" | "shorts" }>;
   isLoading: boolean;
   isError: boolean;
+  isFetching: boolean;
   refetch: ReturnType<typeof vi.fn>;
 };
 
@@ -69,6 +70,7 @@ function state(overrides: Partial<QueryState> = {}): QueryState {
     data: undefined,
     isLoading: false,
     isError: false,
+    isFetching: false,
     refetch: vi.fn(),
     ...overrides,
   };
@@ -130,5 +132,21 @@ describe("YouTubeSection viewport query states", () => {
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(trigger).toHaveFocus();
+  });
+
+  it("disables retry and announces progress while a YouTube retry request is active", async () => {
+    queryState = state({ isError: true, isFetching: true });
+    render(<YouTubeSection />);
+
+    await act(async () => {
+      observerCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+    });
+
+    const retry = await screen.findByRole("button", { name: "YouTube loading" });
+    fireEvent.click(retry);
+
+    expect(retry).toBeDisabled();
+    expect(retry).toHaveAttribute("aria-busy", "true");
+    expect(queryState.refetch).not.toHaveBeenCalled();
   });
 });

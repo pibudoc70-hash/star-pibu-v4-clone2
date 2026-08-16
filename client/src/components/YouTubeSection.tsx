@@ -54,7 +54,7 @@ export default function YouTubeSection() {
   const [sectionRef, isVisible] = useVisibleFetch('300px 0px');
 
   // S1-T4: tRPC 직접 사용 — 이중 state 제거
-  const { data: allVideos, isLoading, isError, refetch } = trpc.youtube.getAll.useQuery(
+  const { data: allVideos, isLoading, isError, isFetching, refetch } = trpc.youtube.getAll.useQuery(
     undefined,
     { enabled: isVisible, staleTime: 10 * 60 * 1000 }
   );
@@ -225,12 +225,14 @@ export default function YouTubeSection() {
           <div className="flex flex-wrap justify-center gap-3">
             <button
               type="button"
-              onClick={() => refetch()}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
+              onClick={() => void refetch()}
+              disabled={isFetching}
+              aria-busy={isFetching}
+              className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
               style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
             >
               <RefreshCw size={16} aria-hidden="true" />
-              {yt.retry}
+              {isFetching ? yt.loadingLabel : yt.retry}
             </button>
             <a
               href="https://www.youtube.com/@starpibu"
@@ -270,12 +272,14 @@ export default function YouTubeSection() {
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 type="button"
-                onClick={() => refetch()}
-                className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg"
+                onClick={() => void refetch()}
+                disabled={isFetching}
+                aria-busy={isFetching}
+                className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
                 style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
               >
                 <RefreshCw size={16} aria-hidden="true" />
-                {yt.retry}
+                {isFetching ? yt.loadingLabel : yt.retry}
               </button>
               <a
                 href="https://www.youtube.com/@starpibu"

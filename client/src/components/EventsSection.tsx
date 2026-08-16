@@ -55,8 +55,20 @@ export default function EventsSection() {
   const [filteredList, setFilteredList] = useState<Event[]>([]);
 
   // tRPC 쿼리
-  const { data: featuredData, isLoading: featuredLoading, error: featuredError } = trpc.events.featured.useQuery();
-  const { data: listData, isLoading: listLoading, error: listError } = trpc.events.listEvents.useQuery();
+  const {
+    data: featuredData,
+    isLoading: featuredLoading,
+    isFetching: featuredFetching,
+    error: featuredError,
+    refetch: refetchFeatured,
+  } = trpc.events.featured.useQuery();
+  const {
+    data: listData,
+    isLoading: listLoading,
+    isFetching: listFetching,
+    error: listError,
+    refetch: refetchList,
+  } = trpc.events.listEvents.useQuery();
 
   // 언어 변경 시 activeCategory 리셋
   useEffect(() => {
@@ -91,6 +103,14 @@ export default function EventsSection() {
 
   const isLoading = featuredLoading || listLoading;
   const isError = !isLoading && (!!featuredError || !!listError);
+  const hasEvents = (featuredData?.length ?? 0) > 0 || (listData?.length ?? 0) > 0;
+  const showError = isError && !hasEvents;
+  const isRetrying = featuredFetching || listFetching;
+
+  const retryEvents = () => {
+    void refetchFeatured();
+    void refetchList();
+  };
 
   const filterTabs = [
     ev_t.filterAll,
@@ -146,14 +166,24 @@ export default function EventsSection() {
         )}
 
         {/* ── Error State ── */}
-        {isError && (
-          <div className="text-center py-12">
-            <p className="text-gray-500">{ev_t.empty}</p>
+        {showError && (
+          <div className="text-center py-12" role="alert">
+            <h3 className="text-base font-normal text-[var(--brand-text,#2C2C2C)]">이벤트 정보를 불러오지 못했습니다.</h3>
+            <p className="mt-2 text-sm text-[var(--brand-text-mid,#666666)]">잠시 후 다시 시도해 주세요.</p>
+            <button
+              type="button"
+              onClick={retryEvents}
+              disabled={isRetrying}
+              aria-busy={isRetrying}
+              className="mt-5 min-h-11 rounded-lg border border-[var(--color-gold-primary)] px-5 text-sm font-normal text-[var(--color-gold-primary)] transition-colors hover:bg-[var(--brand-bg-alt,#F5F0EB)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isRetrying ? "다시 불러오는 중..." : "다시 시도"}
+            </button>
           </div>
         )}
 
         {/* ── Featured 이벤트 카드 (상단) ── */}
-        {!isLoading && !isError && showFeatured && featuredData && featuredData.length > 0 && (
+        {!isLoading && showFeatured && featuredData && featuredData.length > 0 && (
           <div
             className="grid gap-6 mb-8"
             style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))" }}
@@ -242,7 +272,7 @@ export default function EventsSection() {
         )}
 
         {/* ── 일반 이벤트/공지 리스트 (하단) ── */}
-        {!isLoading && !isError && filteredList.length > 0 && (
+        {!isLoading && filteredList.length > 0 && (
           <div className="space-y-4">
             {filteredList.map((ev) => (
               <div
@@ -301,7 +331,7 @@ export default function EventsSection() {
         )}
 
         {/* ── Empty State ── */}
-        {!isLoading && !isError && filteredList.length === 0 && (!showFeatured || !featuredData || featuredData.length === 0) && (
+        {!isLoading && !showError && filteredList.length === 0 && (!showFeatured || !featuredData || featuredData.length === 0) && (
           <div className="text-center py-12">
             <p className="text-gray-500">{ev_t.empty}</p>
           </div>

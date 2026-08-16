@@ -146,7 +146,7 @@ async function handleImage(request) {
   const cached = await cache.match(request);
 
   const networkFetch = fetch(request)
-    .then((resp) => {
+    .then(async (resp) => {
       if (resp && resp.ok) {
         await putSafely(cache, request, resp.clone());
         await trimImageCache(cache);

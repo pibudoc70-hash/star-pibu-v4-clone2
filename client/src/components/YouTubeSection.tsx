@@ -27,7 +27,7 @@ function useVisibleFetch(rootMargin = '200px 0px'): [React.RefObject<HTMLElement
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [visible]); // ✅ rootMargin 제거: 문자열은 매번 새로 생성되므로 의존성에서 제외
+  }, [visible, rootMargin]);
   return [ref, visible];
 }
 
@@ -59,13 +59,6 @@ export default function YouTubeSection() {
     { enabled: isVisible, staleTime: 10 * 60 * 1000 }
   );
   
-  // 디버깅: API 응답 로깅
-  useEffect(() => {
-    if (isVisible) {
-      console.log('[YouTubeSection] API Response:', { allVideos, isLoading, isError, isVisible, videoCount: allVideos?.length });
-    }
-  }, [allVideos, isLoading, isError, isVisible]);
-
   // 파생 상태 — useEffect + 중간 state 불필요
   const videos = (allVideos ?? []).filter((v) => v.type === 'video') as YouTubeVideo[];
   const shorts = (allVideos ?? []).filter((v) => v.type === 'shorts') as YouTubeVideo[];
@@ -250,7 +243,6 @@ export default function YouTubeSection() {
 
   // 빈 상태 — 데이터 없을 때 섹션 제목만 표시하고 나머지는 숨김
   if (!videos.length && !shorts.length) {
-    console.warn('[YouTubeSection] No videos or shorts found!', { allVideos, videos, shorts });
     // 섹션 제목만 표시하고 영상 그리드는 숨김
     return (
       <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24">

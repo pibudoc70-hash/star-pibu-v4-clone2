@@ -157,12 +157,13 @@ export default function YouTubeSection() {
   }, []);
 
   // S1-T4: 로딩 상태 — skeleton UI
-  if (isLoading) {
+  if (!isVisible || isLoading) {
     return (
       <section
         ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
         className="py-16 md:py-24 bg-white"
         aria-label={yt.loadingLabel}
+        aria-busy="true"
       >
         <div className="container mx-auto px-4">
           {/* 섹션 제목 스켈레톤 */}

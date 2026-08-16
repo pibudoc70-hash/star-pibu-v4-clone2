@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import YouTubeSection from "./YouTubeSection";
@@ -110,5 +110,25 @@ describe("YouTubeSection viewport query states", () => {
     await waitFor(() => expect(queryOptions.at(-1)).toMatchObject({ enabled: true }));
     expect(screen.getByText("Unable to load YouTube videos.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeEnabled();
+  });
+
+  it("closes an opened video dialog when Escape is pressed", async () => {
+    queryState = state({
+      data: [{ id: 1, title: "Test video", videoId: "abc123", type: "video" }],
+    });
+    render(<YouTubeSection />);
+
+    await act(async () => {
+      observerCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+    });
+
+    const trigger = await screen.findByRole("button", { name: "Test video Play video" });
+    fireEvent.click(trigger);
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(trigger).toHaveFocus();
   });
 });

@@ -104,6 +104,20 @@ export default function YouTubeSection() {
     }
   }, [selectedVideo]);
 
+  const closeModal = useCallback(() => {
+    setSelectedVideo(null);
+    setModalType(null);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedVideo) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeModal();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [selectedVideo, closeModal]);
+
   // S1-T5: focus trap — Tab/Shift+Tab 모달 내부 순환
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== 'Tab') return;
@@ -150,11 +164,6 @@ export default function YouTubeSection() {
     
     triggerRef.current = triggerElement as HTMLButtonElement;
   }, [calculateModalPosition]);
-
-  const closeModal = useCallback(() => {
-    setSelectedVideo(null);
-    setModalType(null);
-  }, []);
 
   // S1-T4: 로딩 상태 — skeleton UI
   if (!isVisible || isLoading) {

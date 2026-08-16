@@ -15,11 +15,16 @@
  */
 import type { Request, Response, NextFunction } from "express";
 
+const MANUS_CLOUDFRONT_SOURCES = [
+  "https://d2xsxph8kpxj0f.cloudfront.net",
+  "https://d36hbw14aib5lz.cloudfront.net",
+] as const;
+
 /**
  * CSP 정책 구성
  *
  * 이 사이트에서 사용하는 외부 리소스:
- * - 이미지: d2xsxph8kpxj0f.cloudfront.net (Manus 스토리지 CDN), images.unsplash.com
+ * - 이미지: d2xsxph8kpxj0f.cloudfront.net, d36hbw14aib5lz.cloudfront.net (Manus 스토리지 CDN), images.unsplash.com
  * - 폰트: fonts.googleapis.com, fonts.gstatic.com
  * - 스크립트: challenges.cloudflare.com (Turnstile), forge.manus.ai (Maps 프록시)
  * - 미디어(iframe): www.youtube.com (YouTube embed)
@@ -58,7 +63,7 @@ function buildCSP(isDev: boolean): string {
     // KaTeX 폰트 파일 (CDN에서 로드되는 woff2/woff/ttf)
     "https://cdn.jsdelivr.net",
     // Manus 스토리지 CDN: /manus-storage/ 307 리다이렉트 대상 (Pretendard 등)
-    "https://*.cloudfront.net",
+    ...MANUS_CLOUDFRONT_SOURCES,
     "data:",
   ].join(" ");
 
@@ -66,8 +71,8 @@ function buildCSP(isDev: boolean): string {
     self,
     "data:",
     "blob:",
-    // Manus 스토리지 CDN: 여러 CloudFront 서브도메인 허용
-    "https://*.cloudfront.net",
+    // Manus 스토리지 CDN: 실제 사용 중인 두 host만 허용
+    ...MANUS_CLOUDFRONT_SOURCES,
     "https://images.unsplash.com",
     "https://img.youtube.com",
     "https://i.ytimg.com",
@@ -86,7 +91,7 @@ function buildCSP(isDev: boolean): string {
     "https://manus-analytics.com",
     "https://challenges.cloudflare.com",
     // Manus 스토리지 CDN: SW fetch → /api/storage/ → 307 → CloudFront 리다이렉트 대상
-    "https://*.cloudfront.net",
+    ...MANUS_CLOUDFRONT_SOURCES,
     // Manus CDN (콘솔 에러에서 발견)
     "https://files.manuscdn.com",
     // Google Maps JavaScript SDK의 CSP 검사·지도 데이터 요청
@@ -115,8 +120,7 @@ function buildCSP(isDev: boolean): string {
 
   const mediaSrc = [
     self,
-    // 와일드카드로 모든 CloudFront 서브도메인 허용 (d2xsxph8kpxj0f, d36hbw14aib5lz 등)
-    "https://*.cloudfront.net",
+    ...MANUS_CLOUDFRONT_SOURCES,
     "blob:",
   ].join(" ");
 

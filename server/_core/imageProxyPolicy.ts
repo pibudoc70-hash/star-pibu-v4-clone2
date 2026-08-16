@@ -56,6 +56,10 @@ export function isAllowedPopupImageUrl(rawUrl: string): boolean {
   return Boolean(url && POPUP_IMAGE_HOSTS.has(url.hostname));
 }
 
+export function isValidYouTubeVideoId(videoId: string): boolean {
+  return /^[A-Za-z0-9_-]{11}$/.test(videoId);
+}
+
 export function getSafeStorageContentType(key: string, header: string | null): string | null {
   const extension = key.split(".").pop()?.toLowerCase() ?? "";
   const actual = normalizeContentType(header);

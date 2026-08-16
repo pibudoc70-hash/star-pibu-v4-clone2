@@ -4,6 +4,7 @@ import {
   getSafeStorageContentType,
   isAllowedPopupImageUrl,
   isAllowedStorageUrl,
+  isValidYouTubeVideoId,
 } from "./imageProxyPolicy";
 
 describe("image proxy policy", () => {
@@ -36,5 +37,13 @@ describe("image proxy policy", () => {
     expect(getSafeImageContentType("image/webp; charset=binary")).toBe("image/webp");
     expect(getSafeImageContentType("text/html")).toBeNull();
     expect(getSafeImageContentType("image/svg+xml")).toBeNull();
+  });
+
+  it("YouTube thumbnail videoId는 정확히 11자 allowlist 형식만 허용한다", () => {
+    expect(isValidYouTubeVideoId("dQw4w9WgXcQ")).toBe(true);
+    expect(isValidYouTubeVideoId("A1b2C3d4_E-")).toBe(true);
+    for (const invalidId of ["", "dQw4w9WgXc", "dQw4w9WgXcQQ", "dQw4 w9WgXc", "dQw4w9WgX/", "dQw4w9WgX\\", "dQw4w9WgX.", "%2Fpayload", "dQw4w9WgXc?", "가나다라마바사", "dQw4w9Wg\nX"]) {
+      expect(isValidYouTubeVideoId(invalidId)).toBe(false);
+    }
   });
 });

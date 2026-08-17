@@ -6,6 +6,24 @@
     <style id="initial-style-gate">
       html[data-initial-style="pending"] body { background: #0A1228; }
       html[data-initial-style="pending"] #root { visibility: hidden; }
+      #initial-loading {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        align-items: center;
+        justify-content: center;
+        background: #0A1228;
+        color: #F8FAFC;
+        font-family: Arial, sans-serif;
+      }
+      html[data-initial-style="pending"] #initial-loading { display: flex; }
+      .initial-loading-content { display: grid; justify-items: center; gap: 14px; }
+      .initial-loading-mark { font-size: 13px; font-weight: 600; letter-spacing: 0.32em; padding-left: 0.32em; }
+      .initial-loading-spinner { width: 24px; height: 24px; border: 2px solid rgba(248, 250, 252, 0.26); border-top-color: #D7B55C; border-radius: 50%; animation: initial-loading-spin 0.8s linear infinite; }
+      .initial-loading-label { margin: 0; font-size: 13px; letter-spacing: 0.02em; color: rgba(248, 250, 252, 0.78); }
+      @keyframes initial-loading-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .initial-loading-spinner { animation: none; } }
     </style>
     <script>
       (function () {
@@ -16,6 +34,8 @@
           document.documentElement.removeAttribute('data-initial-style');
           var gate = document.getElementById('initial-style-gate');
           if (gate) gate.remove();
+          var loading = document.getElementById('initial-loading');
+          if (loading) loading.remove();
         };
         var hasAppStyle = function () {
           if (document.querySelector('style[data-vite-dev-id$="/client/src/index.css"]')) return true;
@@ -376,6 +396,13 @@
   </head>
 
   <body>
+    <div id="initial-loading" role="status" aria-live="polite">
+      <div class="initial-loading-content">
+        <span class="initial-loading-mark" aria-hidden="true">STAR</span>
+        <span class="initial-loading-spinner" aria-hidden="true"></span>
+        <p class="initial-loading-label">스타피부과를 준비하고 있습니다</p>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- S1-T2: analytics 스크립트는 main.tsx에서 조건부 동적 삽입으로 이동 -->

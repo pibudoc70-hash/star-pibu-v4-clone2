@@ -14,4 +14,13 @@ describe("홈 초기 스타일 적용 게이트", () => {
     expect(indexHtml).toContain('style[data-vite-dev-id$="/client/src/index.css"]');
     expect(indexHtml).not.toContain('window.setTimeout(release, 4000)');
   });
+
+  it("서버 응답 대기 중 브랜드 로딩 상태를 알리고 앱 준비 뒤 함께 제거한다", () => {
+    expect(indexHtml).toContain('id="initial-loading"');
+    expect(indexHtml).toContain('role="status"');
+    expect(indexHtml).toContain('aria-live="polite"');
+    expect(indexHtml).toContain("스타피부과를 준비하고 있습니다");
+    expect(indexHtml).toContain("document.getElementById('initial-loading')");
+    expect(indexHtml).toContain("if (loading) loading.remove();");
+  });
 });

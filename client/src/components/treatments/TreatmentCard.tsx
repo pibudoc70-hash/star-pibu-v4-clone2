@@ -342,22 +342,20 @@ export default function TreatmentCard({
   return (
     <>
       {/* 카드 */}
-      <div
-        className="treatment-card card card--treatment group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+      <button
+        type="button"
+        className="treatment-card card card--treatment group cursor-pointer flex flex-col w-full text-left p-0 border-0 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
         style={{
           animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
           minHeight: "380px",
           background: "#fff",
         }}
         onClick={() => setOpen(true)}
-        role="button"
-        tabIndex={0}
         aria-label={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${t.events.viewDetail}`}
-        onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
       >
         <TreatmentCardImage item={item} imgBg={imgBg} />
         <TreatmentCardBody item={item} />
-      </div>
+      </button>
 
       {/* 상세 Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>

@@ -1,8 +1,39 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-initial-style="pending">
 
   <head>
     <meta charset="UTF-8" />
+    <style id="initial-style-gate">
+      html[data-initial-style="pending"] body { background: #0A1228; }
+      html[data-initial-style="pending"] #root { visibility: hidden; }
+    </style>
+    <script>
+      (function () {
+        var released = false;
+        var release = function () {
+          if (released) return;
+          released = true;
+          document.documentElement.removeAttribute('data-initial-style');
+          var gate = document.getElementById('initial-style-gate');
+          if (gate) gate.remove();
+        };
+        var hasAppStyle = function () {
+          return Array.prototype.some.call(document.styleSheets, function (sheet) {
+            var href = sheet.href || '';
+            return /\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1;
+          });
+        };
+        var waitForStyle = function () {
+          if (hasAppStyle()) {
+            release();
+            return;
+          }
+          window.requestAnimationFrame(waitForStyle);
+        };
+        window.requestAnimationFrame(waitForStyle);
+        window.setTimeout(release, 4000);
+      })();
+    </script>
     <!-- [CRITICAL] 브라우저 자동 스크롤 복원을 JS 번들 로드 전에 즉시 비활성화
          이 스크립트가 없으면 브라우저가 이전 스크롤 위치를 복원한 후 JS가 로드되어
          새로고침/재접속 시 메인이 아닌 중간 섹션에서 시작하는 버그 발생 -->

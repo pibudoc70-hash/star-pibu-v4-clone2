@@ -207,48 +207,32 @@ describe("D. CategoryTabButton: 인라인 style → CSS class-variant", () => {
 });
 
 // ─── E. CategoryTabList ───────────────────────────────────────────────────────
-describe("E. CategoryTabList: WAI-ARIA tablist + roving tabindex", () => {
+describe("E. CategoryTabList: native pressed-button filter", () => {
   const catListSrc = readClient("components/treatments/CategoryTabList.tsx");
 
-  it("E-1: role=\"tablist\"가 CategoryTabList에 있어야 한다", () => {
-    expect(catListSrc).toContain('role="tablist"');
+  it("E-1: filter controls를 group으로 묶는다", () => {
+    expect(catListSrc).toContain('role="group"');
   });
 
-  it("E-2: aria-label이 CategoryTabList에 있어야 한다", () => {
+  it("E-2: filter group에 aria-label이 있다", () => {
     expect(catListSrc).toContain("aria-label");
   });
 
-  it("E-3: aria-orientation=\"horizontal\"이 있어야 한다", () => {
-    expect(catListSrc).toContain('aria-orientation="horizontal"');
+  it("E-3: tablist/panel 연결을 사용하지 않는다", () => {
+    expect(catListSrc).not.toContain('role="tablist"');
+    expect(catListSrc).not.toContain('role="tab"');
   });
 
-  it("E-4: role=\"tab\"이 CategoryTabButton에 전달되어야 한다", () => {
-    expect(catListSrc).toContain('role="tab"');
+  it("E-4: roving tabindex을 사용하지 않는다", () => {
+    expect(catListSrc).not.toContain("tabIndex={activeId === cat.id ? 0 : -1}");
   });
 
-  it("E-5: aria-selected가 CategoryTabButton에 전달되어야 한다", () => {
-    expect(catListSrc).toContain("aria-selected");
-  });
-
-  it("E-6: roving tabindex가 구현되어야 한다 (tabIndex: activeId === cat.id ? 0 : -1)", () => {
-    expect(catListSrc).toContain("tabIndex={activeId === cat.id ? 0 : -1}");
-  });
-
-  it("E-7: ArrowRight 키보드 네비게이션이 구현되어야 한다", () => {
-    expect(catListSrc).toContain('"ArrowRight"');
-  });
-
-  it("E-8: ArrowLeft 키보드 네비게이션이 구현되어야 한다", () => {
-    expect(catListSrc).toContain('"ArrowLeft"');
-  });
-
-  it("E-9: Home/End 키보드 네비게이션이 구현되어야 한다", () => {
-    expect(catListSrc).toContain('"Home"');
-    expect(catListSrc).toContain('"End"');
-  });
-
-  it("E-10: onKeyDown 핸들러가 CategoryTabButton에 전달되어야 한다", () => {
-    expect(catListSrc).toContain("onKeyDown");
+  it("E-5: Arrow/Home/End 키를 selection 단축키로 가로채지 않는다", () => {
+    expect(catListSrc).not.toContain('"ArrowRight"');
+    expect(catListSrc).not.toContain('"ArrowLeft"');
+    expect(catListSrc).not.toContain('"Home"');
+    expect(catListSrc).not.toContain('"End"');
+    expect(catListSrc).not.toContain("onKeyDown");
   });
 });
 

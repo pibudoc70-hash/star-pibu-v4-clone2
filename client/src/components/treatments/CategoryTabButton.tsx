@@ -6,9 +6,9 @@
  * icon prop: CATEGORY_ICON_MAP에서 전달받은 lucide-react 아이콘 컴포넌트.
  *            미전달 시 기본 Star 아이콘 사용.
  *
- * [R17-P2] 인라인 style → CSS class-variant 재설계
+ * 인라인 style → CSS class-variant 재설계
  * - .cat-tab-btn / .cat-tab-btn[data-active] / .cat-tab-btn-sm / .cat-tab-btn-md (index.css)
- * - WAI-ARIA: role, aria-selected, tabIndex prop 추가 (CategoryTabList에서 roving tabindex 구현)
+ * - WAI-ARIA: filter button의 선택 상태는 aria-pressed로 제공
  */
 import React from "react";
 import { Star } from "lucide-react";
@@ -22,14 +22,12 @@ interface CategoryTabButtonProps {
   icon?: React.ComponentType<{ size?: number; className?: string }>;
   /** "sm" = 모바일 compact, "md" = 데스크탑 default */
   size?: "sm" | "md";
-  /** [R17-P2] WAI-ARIA: role="tab" 전달 시 tablist 패턴 활성화 */
+  /** 독립된 legacy tab UI에서만 명시적으로 전달하는 역할 */
   role?: "tab";
-  /** [R17-P2] WAI-ARIA: aria-selected */
+  /** legacy tab UI의 선택 상태 */
   "aria-selected"?: boolean;
-  /** [R17-P2] roving tabindex */
+  /** legacy tab UI의 roving tabindex */
   tabIndex?: number;
-  /** [R17-P2] keyboard navigation */
-  onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
 }
 
 export default function CategoryTabButton({
@@ -42,20 +40,18 @@ export default function CategoryTabButton({
   role,
   "aria-selected": ariaSelected,
   tabIndex,
-  onKeyDown,
 }: CategoryTabButtonProps) {
   const isSm = size === "sm";
 
   return (
     <button
       type="button"
-      id={`cat-tab-${id}`}
       role={role}
       aria-selected={ariaSelected}
       tabIndex={tabIndex}
+      aria-pressed={isActive}
       data-active={isActive ? "true" : "false"}
       onClick={() => onClick(id)}
-      onKeyDown={onKeyDown}
       className={`cat-tab-btn ${isSm ? "cat-tab-btn-sm" : "cat-tab-btn-md"}${isSm ? " w-full" : ""}`}
     >
       <span className="cat-tab-icon">

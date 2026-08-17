@@ -3,12 +3,10 @@
  * TreatmentsEquipmentSection의 모바일(2열 그리드) + 데스크탑(flex-wrap) 탭 렌더 중복을
  * 단일 컴포넌트로 통합한다. 반응형 표시는 Tailwind CSS 클래스로 처리한다.
  *
- * [R17-P2] WAI-ARIA tablist + roving tabindex 추가
- * - role="tablist" + aria-label
- * - 각 버튼에 role="tab", aria-selected, tabIndex (roving)
- * - Arrow Left/Right/Home/End 키보드 네비게이션
+ * 같은 카드 collection을 필터링하는 native button group으로 렌더링한다.
+ * - 선택 상태는 aria-pressed로 전달한다.
+ * - native button의 Tab/Shift+Tab 및 Space/Enter 동작을 그대로 보존한다.
  */
-import { useCallback, useRef } from "react";
 import { Star } from "lucide-react";
 import type { Category } from "@/types/treatment";
 import CategoryTabButton from "./CategoryTabButton";
@@ -35,43 +33,8 @@ export default function CategoryTabList({
   containerRef,
   ariaLabel = "시술 카테고리",
 }: CategoryTabListProps) {
-  const listRef = useRef<HTMLDivElement>(null);
-
-  // [R17-P2] roving tabindex 키보드 네비게이션
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLButtonElement>, currentIdx: number) => {
-      const count = categories.length;
-      let nextIdx: number | null = null;
-
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        nextIdx = (currentIdx + 1) % count;
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        nextIdx = (currentIdx - 1 + count) % count;
-      } else if (e.key === "Home") {
-        nextIdx = 0;
-      } else if (e.key === "End") {
-        nextIdx = count - 1;
-      }
-
-      if (nextIdx !== null) {
-        e.preventDefault();
-        const nextId = categories[nextIdx].id;
-        onTabChange(nextId);
-        // DOM 포커스 이동
-        const container = listRef.current ?? containerRef?.current;
-        if (container) {
-          const nextBtn = container.querySelector<HTMLButtonElement>(
-            `#cat-tab-${nextId}`
-          );
-          nextBtn?.focus();
-        }
-      }
-    },
-    [categories, onTabChange, containerRef]
-  );
-
   const renderTabs = (sizeVariant: "sm" | "md") =>
-    categories.map((cat, idx) => (
+    categories.map((cat) => (
       <CategoryTabButton
         key={cat.id}
         id={cat.id}
@@ -80,20 +43,15 @@ export default function CategoryTabList({
         onClick={onTabChange}
         icon={CATEGORY_ICON_MAP[cat.id] ?? Star}
         size={sizeVariant}
-        role="tab"
-        aria-selected={activeId === cat.id}
-        tabIndex={activeId === cat.id ? 0 : -1}
-        onKeyDown={(e) => handleKeyDown(e, idx)}
       />
     ));
 
   return (
-    <div ref={listRef} className="mb-4">
+    <div className="mb-4">
       {/* 모바일: 2열 그리드 */}
       <div
-        role="tablist"
+        role="group"
         aria-label={ariaLabel}
-        aria-orientation="horizontal"
         className="grid grid-cols-2 gap-2 sm:hidden"
       >
         {renderTabs("sm")}
@@ -103,9 +61,8 @@ export default function CategoryTabList({
       {/* mt-2 ≈ 8px (9px 근사), mr-1 ≈ 4px (5px 근사) — 표준 Tailwind 토큰 사용 */}
       <div
         ref={containerRef}
-        role="tablist"
+        role="group"
         aria-label={ariaLabel}
-        aria-orientation="horizontal"
         className="hidden sm:flex sm:flex-wrap gap-2 mt-2 mr-1 -mb-1 ml-4"
       >
         {renderTabs("md")}

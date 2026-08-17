@@ -180,12 +180,13 @@ describe("D. P2 실측 결함 없음 확인 (reduced-motion/focus-visible/Catego
     expect(matches.length).toBeGreaterThanOrEqual(2);
   });
 
-  it("D-2: CategoryTabList에 Arrow 키 네비게이션이 구현되어 있다", () => {
+  it("D-2: CategoryTabList가 native pressed-button filter semantics를 사용한다", () => {
     const content = readClient("components/treatments/CategoryTabList.tsx");
-    expect(content).toContain("ArrowRight");
-    expect(content).toContain("ArrowLeft");
-    expect(content).toContain('role="tab"');
-    expect(content).toContain("aria-selected");
+    expect(content).toContain('role="group"');
+    expect(content).toContain("aria-pressed");
+    expect(content).not.toContain("ArrowRight");
+    expect(content).not.toContain('role="tab"');
+    expect(content).not.toContain("aria-selected");
   });
 
   it("D-3: DoctorTabButton에 focus-visible 스타일이 있다 (index.css)", () => {

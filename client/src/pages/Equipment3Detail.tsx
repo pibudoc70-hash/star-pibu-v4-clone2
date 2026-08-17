@@ -148,13 +148,12 @@ export default function Equipment3Detail() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
         <p className="text-red-600">{LABELS.error}</p>
-        <button
-          type="button"
-          onClick={() => setLocation(getBackPath())}
+        <a
+          href={getBackPath()}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           {LABELS.backList}
-        </button>
+        </a>
       </div>
     );
   }
@@ -164,13 +163,12 @@ export default function Equipment3Detail() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
         <p className="text-gray-600">{LABELS.notFound}</p>
-        <button
-          type="button"
-          onClick={() => setLocation(getBackPath())}
+        <a
+          href={getBackPath()}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           {LABELS.backList}
-        </button>
+        </a>
       </div>
     );
   }

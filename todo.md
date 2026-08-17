@@ -4604,3 +4604,8 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 비예약·비DB 검증·local production build·예약 동결 diff 확인 후 성공 시 로컬 독립 커밋만 생성하고 배포하지 않음 — build는 기준·현재 모두 6,782 모듈 변환 후 rendering chunks에서 SIGTERM(143)으로 미통과, 환경 한계로 판정. TypeScript·lint 오류 0·비DB 90 파일/1,535 테스트·diff check 통과, 예약 동결 diff 0건
 - [x] 사용자 승인: 메모리 정리 후 production build를 한 번만 재시도하고, 성공 시에만 cache 테스트 변경을 로컬 독립 커밋으로 저장 — 승인된 단일 재시도도 동일 SIGTERM(143)으로 종료되어 기준 worktree 비교를 수행
 - [x] 사용자 승인: 현재 변경을 보존한 detached f80e9752 임시 worktree에서 동일 build를 한 번 비교하고, 동일 SIGTERM 환경 한계일 때만 최소 재검증 후 무배포 로컬 커밋 — `/tmp/star-pibu-baseline-f80e9752`를 생성·node_modules symlink 재사용·build 1회·worktree 제거 완료. 결과 A에 따라 local commit 9d91add 생성, push·deploy 0건
+- [x] 공개 Equipment2Detail 오류·not-found 복귀를 native link semantics로 전환하고 focused 회귀 테스트 검증 — 오류·not-found의 `/equipment2` native link와 focused regression test 통과
+- [x] 공개 Equipment3Detail 오류·not-found 복귀를 tab 경로 보존 native link semantics로 전환하고 focused 회귀 테스트 검증 — 오류·not-found의 `getBackPath()` native link와 tab 보존 focused regression test 통과
+- [x] 로컬 production build SIGTERM 143의 프로세스·메모리·실패 로그 원인을 비파괴적으로 진단하고 자원 정리 후 단일 재시도 — watcher·dev server·browser가 동시 상주한 3.8GiB sandbox에서 Vite 6,782개 모듈 변환 뒤 rendering chunks 단계가 SIGTERM 143으로 종료됨. Node heap 1.5GiB 상한 재시도도 같은 단계·결과로 종료되어 코드 오류가 아닌 sandbox 자원·감시 제한으로 판정
+- [x] 빌드와 무관한 상주 background watcher만 종료하고 메모리 회수 후 production build를 한 번 재시도 — `tsc --noEmit --watch` 약 606MiB를 종료해 사용 메모리 1.9GiB→1.3GiB로 낮췄고, heap 1.5GiB 상한 build가 Vite 6,782개 모듈 변환·chunk rendering·server esbuild까지 성공
+- [x] 공개 detail navigation 개선 전체 검증을 재확인하고, commit·원격 반영·checkpoint·배포의 허용 범위를 확정 — 사용자 전체 실행 승인 후 TypeScript·ESLint·DB 없는 unit 96 files/1,561 tests·local production build를 확인하고 local commit 및 checkpoint/자동 publish를 진행

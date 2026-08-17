@@ -22,9 +22,10 @@ import MainLayout from '@/components/MainLayout';
 import SeoHead, { buildHreflangs } from '@/components/SeoHead';
 import { buttonVariants } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { Lang } from '@/lib/i18n.types';
 import { MapView } from '@/components/Map';
+import { trackMapFallback } from '@/lib/mapFallbackAnalytics';
 
 const HOSPITAL = {
   phone: '051-818-2300',
@@ -39,6 +40,9 @@ export default function Directions() {
   const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
   const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
   const mapFallbackLabel = lang === 'ko' ? t.directions.kakaoMap : t.directions.googleMaps;
+  const handleMapFallback = useCallback(() => {
+    trackMapFallback({ locale: lang, surface: 'directions' });
+  }, [lang]);
 
   const handleCopyAddress = () => {
     // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
@@ -81,6 +85,7 @@ export default function Directions() {
                     initialZoom={17}
                     className="h-full w-full"
                     style={{ height: '100%' }}
+                    onFallback={handleMapFallback}
                     errorFallback={(
                       <a
                         href={mapFallbackUrl}

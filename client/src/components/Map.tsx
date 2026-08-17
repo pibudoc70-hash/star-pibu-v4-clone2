@@ -149,6 +149,7 @@ interface MapViewProps {
   initialCenter?: google.maps.LatLngLiteral;
   initialZoom?: number;
   onMapReady?: (map: google.maps.Map) => void;
+  onFallback?: () => void;
   errorFallback?: ReactNode;
 }
 
@@ -158,11 +159,13 @@ export function MapView({
   initialCenter = { lat: 37.7749, lng: -122.4194 },
   initialZoom = 12,
   onMapReady,
+  onFallback,
   errorFallback,
 }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<google.maps.Map | null>(null);
   const initialized = useRef(false);
+  const fallbackReported = useRef(false);
   const [mapError, setMapError] = useState(false);
 
   // onMapReady를 ref로 저장하여 stale closure 방지
@@ -171,12 +174,23 @@ export function MapView({
     onMapReadyRef.current = onMapReady;
   });
 
+  const onFallbackRef = useRef(onFallback);
+  useEffect(() => {
+    onFallbackRef.current = onFallback;
+  });
+
   useEffect(() => {
     if (initialized.current) return;
 
     let cancelled = false;
     let mapRenderTimer: ReturnType<typeof setTimeout> | null = null;
     let tilesListener: google.maps.MapsEventListener | null = null;
+
+    const reportFallback = () => {
+      if (fallbackReported.current) return;
+      fallbackReported.current = true;
+      onFallbackRef.current?.();
+    };
 
     const hasRenderedMapDom = () => {
       const mapRoot = mapContainer.current?.querySelector(".gm-style");
@@ -191,6 +205,7 @@ export function MapView({
         if (!mapContainer.current) {
           console.error('[MapView] Container not found after script load');
           setMapError(true);
+          reportFallback();
           return;
         }
         if (mapInstance.current) return;
@@ -232,6 +247,7 @@ export function MapView({
         mapRenderTimer = setTimeout(() => {
           if (!cancelled) {
             setMapError(true);
+            reportFallback();
           }
         }, 8000);
 
@@ -250,6 +266,7 @@ export function MapView({
         if (!cancelled) {
           console.error('[MapView] Failed to initialize map:', err instanceof Error ? err.message : err);
           setMapError(true);
+          reportFallback();
         }
       }
     }
@@ -267,6 +284,7 @@ export function MapView({
       } else {
         console.error('[MapView] Container never mounted');
         setMapError(true);
+        reportFallback();
       }
     }
 

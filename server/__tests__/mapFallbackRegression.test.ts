@@ -20,6 +20,12 @@ describe("지도 빈 영역 대체 UI 회귀 방지", () => {
     expect(source).toContain('}, 8000);');
   });
 
+  it("fallback 전환을 상위 화면에 한 번만 알릴 수 있다", () => {
+    expect(source).toContain('onFallback?: () => void;');
+    expect(source).toContain('const fallbackReported = useRef(false);');
+    expect(source).toContain('onFallbackRef.current?.();');
+  });
+
   it("proxy 기반 기본 지도를 특정 demo map ID에 강제 결합하지 않는다", () => {
     expect(source).not.toContain("mapId: 'DEMO_MAP_ID'");
   });

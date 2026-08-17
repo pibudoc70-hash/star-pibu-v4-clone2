@@ -192,10 +192,8 @@ export function MapView({
       onFallbackRef.current?.();
     };
 
-    const hasRenderedMapDom = () => {
-      const mapRoot = mapContainer.current?.querySelector(".gm-style");
-      return Boolean(mapRoot && mapRoot.querySelector("img, canvas"));
-    };
+	    const hasRenderedMapDom = () =>
+	      Boolean(mapContainer.current?.querySelector("img, canvas"));
 
     async function initMap() {
       try {
@@ -244,12 +242,12 @@ export function MapView({
             tilesListener = null;
           }
         });
-        mapRenderTimer = setTimeout(() => {
-          if (!cancelled) {
-            setMapError(true);
-            reportFallback();
-          }
-        }, 8000);
+	        mapRenderTimer = setTimeout(() => {
+	          if (!cancelled && !hasRenderedMapDom()) {
+	            setMapError(true);
+	            reportFallback();
+	          }
+	        }, 8000);
 
         // 지도 렌더링을 위해 리사이즈 이벤트 트리거
         setTimeout(() => {
@@ -308,6 +306,7 @@ export function MapView({
   if (mapError) {
     return (
       <div
+		key="map-error"
         className={cn("w-full h-[500px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
         style={style}
       >
@@ -333,6 +332,7 @@ export function MapView({
 
   return (
     <div
+		key="map-canvas"
       ref={mapContainer}
       className={cn("w-full", !style?.height && "h-[500px]", className)}
       style={style}

@@ -36,9 +36,10 @@ const HOSPITAL = {
 export default function Directions() {
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
-  const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
-  const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
-  const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
+	const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
+	const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
+	const googleMapsEmbedUrl = `https://maps.google.com/maps?q=35.1572312%2C129.0581932&z=17&output=embed&hl=${mapLanguage[lang]}`;
+	const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
   const mapFallbackLabel = lang === 'ko' ? t.directions.kakaoMap : t.directions.googleMaps;
   const handleMapFallback = useCallback(() => {
     trackMapFallback({ locale: lang, surface: 'directions' });
@@ -85,19 +86,18 @@ export default function Directions() {
                     initialZoom={17}
                     className="h-full w-full"
                     style={{ height: '100%' }}
-                    onFallback={handleMapFallback}
-                    errorFallback={(
-                      <a
-                        href={mapFallbackUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700"
-                      >
-                        <MapPin size={28} className="text-amber-600" aria-hidden="true" />
-                        <span className="font-bold text-gray-800 text-lg">{t.directions.mapTitle}</span>
-                        <span className="text-amber-700 font-semibold text-sm">{mapFallbackLabel}</span>
-                      </a>
-                    )}
+	                    onFallback={handleMapFallback}
+	                    errorFallback={(
+	                      <div className="h-full w-full" style={{ height: '100%' }}>
+	                        <iframe
+	                          title={t.directions.mapTitle}
+	                          src={googleMapsEmbedUrl}
+	                          className="block h-full w-full border-0"
+	                          style={{ height: '100%' }}
+	                          referrerPolicy="no-referrer-when-downgrade"
+	                        />
+	                      </div>
+	                    )}
                   />
                 </div>
               </div>

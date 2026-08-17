@@ -8,17 +8,18 @@ const source = fs.readFileSync(
 );
 
 describe("지도 빈 영역 대체 UI 회귀 방지", () => {
-  it("tilesloaded 이벤트만으로 성공 처리하지 않고 실제 지도 DOM을 확인한다", () => {
-    expect(source).toContain('const hasRenderedMapDom = () =>');
-    expect(source).toContain('querySelector(".gm-style")');
-    expect(source).toContain('querySelector("img, canvas")');
-    expect(source).toContain('if (!hasRenderedMapDom()) return;');
-  });
+	 it("Maps Proxy의 StaticMapService tile 이미지도 성공한 지도 렌더링으로 인정한다", () => {
+	   expect(source).toContain('const hasRenderedMapDom = () =>');
+	   expect(source).toContain('mapContainer.current?.querySelector("img, canvas")');
+	   expect(source).not.toContain('mapRoot && mapRoot.querySelector("img, canvas")');
+	   expect(source).toContain('if (!hasRenderedMapDom()) return;');
+	 });
 
-  it("타일 DOM이 끝내 생성되지 않으면 시간 제한 후 기존 오류 대체 UI로 전환한다", () => {
-    expect(source).toContain('setMapError(true);');
-    expect(source).toContain('}, 8000);');
-  });
+	 it("8초 timeout 시점에 tile 이미지가 이미 있으면 fallback으로 교체하지 않는다", () => {
+	   expect(source).toContain('!hasRenderedMapDom()');
+	   expect(source).toContain('setMapError(true);');
+	   expect(source).toContain('}, 8000);');
+	 });
 
   it("fallback 전환을 상위 화면에 한 번만 알릴 수 있다", () => {
     expect(source).toContain('onFallback?: () => void;');
@@ -28,5 +29,10 @@ describe("지도 빈 영역 대체 UI 회귀 방지", () => {
 
   it("proxy 기반 기본 지도를 특정 demo map ID에 강제 결합하지 않는다", () => {
     expect(source).not.toContain("mapId: 'DEMO_MAP_ID'");
+  });
+
+  it("imperative map canvas를 error fallback iframe과 다른 React node로 교체한다", () => {
+    expect(source).toContain('key="map-error"');
+    expect(source).toContain('key="map-canvas"');
   });
 });

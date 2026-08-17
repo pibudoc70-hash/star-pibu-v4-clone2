@@ -18,20 +18,29 @@
           if (gate) gate.remove();
         };
         var hasAppStyle = function () {
+          if (document.querySelector('style[data-vite-dev-id$="/client/src/index.css"]')) return true;
           return Array.prototype.some.call(document.styleSheets, function (sheet) {
             var href = sheet.href || '';
             return /\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1;
           });
         };
+        var isAppStylesheet = function (node) {
+          var href = (node && node.href) || '';
+          return /\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1;
+        };
         var waitForStyle = function () {
           if (hasAppStyle()) {
-            release();
+            window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });
             return;
           }
           window.requestAnimationFrame(waitForStyle);
         };
         window.requestAnimationFrame(waitForStyle);
-        window.setTimeout(release, 4000);
+        window.addEventListener('error', function (event) {
+          if (event.target && event.target.tagName === 'LINK' && isAppStylesheet(event.target)) {
+            release();
+          }
+        }, true);
       })();
     </script>
     <!-- [CRITICAL] 브라우저 자동 스크롤 복원을 JS 번들 로드 전에 즉시 비활성화

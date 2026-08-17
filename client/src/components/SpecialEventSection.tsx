@@ -142,7 +142,7 @@ export default function SpecialEventSection() {
 
   if (!isFetchVisible || isLoading) {
     return (
-      <section className="py-20 md:py-28" aria-label="스페셔 이벤트" aria-busy="true">
+      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트" aria-busy="true">
         <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
           <SectionHeader lang={lang} />

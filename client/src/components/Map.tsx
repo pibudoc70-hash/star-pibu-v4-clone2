@@ -209,7 +209,6 @@ export function MapView({
           fullscreenControl: true,
           zoomControl: true,
           streetViewControl: true,
-          mapId: 'DEMO_MAP_ID',
         });
 
         mapInstance.current = map;

@@ -38,7 +38,7 @@ export default function Directions() {
   const [copied, setCopied] = useState(false);
 	const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
 	const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
-	const googleMapsEmbedUrl = `https://maps.google.com/maps?q=35.1572312%2C129.0581932&z=17&output=embed&hl=${mapLanguage[lang]}`;
+	const googleMapsEmbedUrl = `https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3261.9755226137463!2d129.0581932!3d35.157231200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDA5JzI2LjAiTiAxMjnCsDAzJzI5LjUiRQ!5e0!3m2!1suk!2sua!4v1786971719314!5m2!1suk!2sua&hl=${mapLanguage[lang]}`;
 	const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
   const mapFallbackLabel = lang === 'ko' ? t.directions.kakaoMap : t.directions.googleMaps;
   const handleMapFallback = useCallback(() => {
@@ -94,7 +94,7 @@ export default function Directions() {
 	                          src={googleMapsEmbedUrl}
 	                          className="block h-full w-full border-0"
 	                          style={{ height: '100%' }}
-	                          referrerPolicy="no-referrer-when-downgrade"
+	                          referrerPolicy="strict-origin-when-cross-origin"
 	                        />
 	                      </div>
 	                    )}

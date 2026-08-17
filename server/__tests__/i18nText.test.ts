@@ -262,7 +262,7 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     expect(src).toMatch(/errorFallback=\{\(/);
     expect(src).toMatch(/mapFallbackUrl/);
     expect(src).toMatch(/mapFallbackLabel/);
-    expect(src).toMatch(/maps\.google\.com\/maps/);
+    expect(src).toMatch(/www\.google\.com\/maps\/embed\?pb=/);
     expect(mapSrc).toMatch(/addListener\(map, 'tilesloaded'/);
     expect(mapSrc).toMatch(/setMapError\(true\)/);
   });

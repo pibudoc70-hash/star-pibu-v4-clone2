@@ -8,7 +8,7 @@
  * - CategoryTabList + CategoryTabButton 재사용
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { useLocation, useSearch } from "wouter";
+import { useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -94,7 +94,6 @@ function Equipment3Card({
   detailPath: string;
   showCategory?: boolean;
 }) {
-  const [, setLocation] = useLocation();
   const { getText } = useLocalizedText();
   const { lang } = useLang();  // 현재 언어 감지
 
@@ -106,18 +105,15 @@ function Equipment3Card({
   const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
 
   return (
-    <div
-      className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+    <a
+      href={detailPath}
+      className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 no-underline"
       style={{
         animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
         minHeight: "380px",
         background: "#fff",
       }}
-      onClick={() => setLocation(detailPath)}
-      role="button"
-      tabIndex={0}
       aria-label={`${name} ${detail}`}
-      onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}
     >
       {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어: bgImageUrl+텍스트 오버레이 */}
       <div className="relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
@@ -235,7 +231,7 @@ function Equipment3Card({
           <span style={{ fontSize: 13 }}>›</span>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -463,8 +459,21 @@ export default function Equipment3() {
 
             {/* 로딩 */}
             {isLoading && (
-              <div className="flex items-center justify-center py-24">
-                <Loader className="animate-spin mr-3" size={32} />
+              <div
+                className="flex flex-col items-center justify-center gap-3 py-24 text-center"
+                role="status"
+                aria-live="polite"
+                aria-busy="true"
+              >
+                <Loader className="animate-spin text-[var(--color-gold-primary)]" size={32} aria-hidden="true" />
+                <p className="text-sm text-gray-500">
+                  {getText(
+                    "시술·장비 정보를 불러오는 중입니다.",
+                    "Loading treatments and equipment.",
+                    "施術・機器情報を読み込んでいます。",
+                    "正在加载项目与设备信息。"
+                  )}
+                </p>
               </div>
             )}
 

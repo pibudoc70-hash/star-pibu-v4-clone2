@@ -39,7 +39,6 @@ type QueryState = {
 
 let featuredState: QueryState;
 let listState: QueryState;
-const navigate = vi.fn();
 
 vi.mock("@/lib/trpc", () => ({
   trpc: {
@@ -77,7 +76,6 @@ vi.mock("@/contexts/LangContext", () => ({
   }),
 }));
 
-vi.mock("wouter", () => ({ useLocation: () => ["/", navigate] }));
 vi.mock("@/hooks/useScrollReveal", () => ({ useSectionReveal: () => vi.fn() }));
 vi.mock("@/components/EventShareButton", () => ({ default: () => <button type="button">공유</button> }));
 vi.mock("@/components/ui/badge", () => ({ Badge: ({ children }: { children: React.ReactNode }) => <span>{children}</span> }));
@@ -97,7 +95,6 @@ describe("EventsSection query states", () => {
   beforeEach(() => {
     featuredState = queryState();
     listState = queryState();
-    navigate.mockReset();
   });
 
   afterEach(() => {
@@ -221,7 +218,7 @@ describe("EventsSection query states", () => {
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   });
 
-  it("keeps existing cards and event navigation when stale data has a refetch error", async () => {
+  it("keeps existing cards as native detail links when stale data has a refetch error", async () => {
     featuredState = queryState({ data: [event], error: new Error("background refresh failed") });
     listState = queryState({ data: [event], error: new Error("background refresh failed") });
 
@@ -229,7 +226,9 @@ describe("EventsSection query states", () => {
 
     await waitFor(() => expect(screen.getAllByText("테스트 이벤트")).toHaveLength(2));
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
-    fireEvent.click(screen.getAllByText("테스트 이벤트")[0]!);
-    expect(navigate).toHaveBeenCalledWith("/events/1");
+    expect(screen.getAllByRole("link", { name: "테스트 이벤트 자세히 보기" })).toHaveLength(2);
+    for (const link of screen.getAllByRole("link", { name: "테스트 이벤트 자세히 보기" })) {
+      expect(link).toHaveAttribute("href", "/events/1");
+    }
   });
 });

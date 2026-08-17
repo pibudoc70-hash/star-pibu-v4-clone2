@@ -6,7 +6,6 @@
  * 데이터: tRPC events.featured, events.listEvents에서 동적 로드
  */
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
 import { Calendar, Bell, ArrowRight, Tag, Zap, Sparkles, ChevronRight, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -53,7 +52,6 @@ export default function EventsSection() {
   const sectionRef = useSectionReveal(60); // [Step64]
 
   const [activeCategory, setActiveCategory] = useState(ev_t.filterAll);
-  const [, navigate] = useLocation();
   const [filteredList, setFilteredList] = useState<Event[]>([]);
 
   // tRPC 쿼리
@@ -190,11 +188,10 @@ export default function EventsSection() {
             style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))" }}
           >
             {featuredData.map((ev) => (
-              <div
+              <article
                 key={ev.id}
                 className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
                 style={{ backgroundColor: ev.accentBg }}
-                onClick={() => navigate(`/events/${ev.id}`)}
               >
                 {/* 배경 그래디언트 */}
                 <div
@@ -204,7 +201,11 @@ export default function EventsSection() {
                   }}
                 />
 
-                <div className="relative p-6 sm:p-8">
+                <a
+                  href={`/events/${ev.id}`}
+                  aria-label={`${ev.title} ${ev_t.viewDetail}`}
+                  className="relative block rounded-2xl p-6 sm:p-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
+                >
                   {/* Badge + Hot */}
                   <div className="flex items-center gap-2 mb-3">
                     {ev.badge && (
@@ -249,25 +250,24 @@ export default function EventsSection() {
                   </p>
 
                   {/* Date + CTA + Share */}
-                  <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: ev.accentBg }}>
+                  <div className="flex items-center justify-between pt-4 pr-11 border-t" style={{ borderColor: ev.accentBg }}>
                     <div className="flex items-center gap-2 text-xs" style={{ color: ev.accent }}>
                       <Calendar size={16} />
                       <span>{ev.date}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
-                      <button type="button"
-                        className="flex items-center gap-1 px-4 py-2 rounded-lg font-normal text-white transition-all group-hover:gap-2"
-                        style={{ backgroundColor: ev.accent }}
-                        onClick={(e) => { e.stopPropagation(); navigate(`/events/${ev.id}`); }}
-                      >
-                        {ev_t.viewDetail}
-                        <ArrowRight size={16} />
-                      </button>
-                    </div>
+                    <span
+                      className="flex items-center gap-1 px-4 py-2 rounded-lg font-normal text-white transition-all group-hover:gap-2"
+                      style={{ backgroundColor: ev.accent }}
+                    >
+                      {ev_t.viewDetail}
+                      <ArrowRight size={16} />
+                    </span>
                   </div>
+                </a>
+                <div className="absolute right-6 bottom-6 z-10">
+                  <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         )}
@@ -276,12 +276,16 @@ export default function EventsSection() {
         {!isLoading && filteredList.length > 0 && (
           <div className="space-y-4">
             {filteredList.map((ev) => (
-              <div
+              <article
                 key={ev.id}
-                className="group p-4 sm:p-6 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 cursor-pointer bg-white"
-                onClick={() => navigate(`/events/${ev.id}`)}
+                className="group relative rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 cursor-pointer bg-white"
               >
-                <div className="flex items-start justify-between gap-4">
+                <a
+                  href={`/events/${ev.id}`}
+                  aria-label={`${ev.title} ${ev_t.viewDetail}`}
+                  className="block rounded-xl p-4 sm:p-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
+                >
+                  <div className="flex items-start justify-between gap-4 pr-11">
                   {/* Left: Icon + Content */}
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     <div
@@ -317,16 +321,19 @@ export default function EventsSection() {
                     </div>
                   </div>
 
-                  {/* Right: Share + Arrow */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
+                    {/* Right: Arrow */}
+                    <div className="flex items-center flex-shrink-0">
                     <ChevronRight
                       size={20}
                       className="text-gray-500 group-hover:text-gray-600 group-hover:translate-x-1 transition-all"
                     />
                   </div>
                 </div>
-              </div>
+                </a>
+                <div className="absolute right-4 sm:right-6 top-1/2 z-10 -translate-y-1/2">
+                  <EventShareButton eventId={ev.id} eventTitle={ev.title} size="sm" />
+                </div>
+              </article>
             ))}
           </div>
         )}

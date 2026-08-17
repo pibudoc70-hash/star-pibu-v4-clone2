@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
@@ -23,6 +23,8 @@ function DeviceModal({
   onClose: () => void;
 }) {
   const { getText } = useLocalizedText();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
@@ -34,6 +36,41 @@ function DeviceModal({
     device.shortDescZh,
     device.shortDescZhTw,
   );
+
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => element.offsetParent !== null);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   return (
     <div
@@ -47,6 +84,7 @@ function DeviceModal({
         onClick={onClose}
       />
       <div
+        ref={dialogRef}
         className="relative z-10 w-full max-w-xl rounded-2xl overflow-hidden"
         aria-modal="true"
         role="dialog"
@@ -59,6 +97,7 @@ function DeviceModal({
         {/* 닫기 버튼 */}
         <button
           type="button"
+          ref={closeButtonRef}
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-colors hover:bg-black/10"
           style={{ color: "var(--brand-text-mid, #666)" }}
@@ -130,7 +169,7 @@ function DeviceCard({
   onClick,
 }: {
   device: ManagementDevice;
-  onClick: () => void;
+  onClick: (trigger: HTMLButtonElement) => void;
 }) {
   const imgUrl =
     deviceImages[device.imgId] ??
@@ -140,7 +179,7 @@ function DeviceCard({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(event) => onClick(event.currentTarget)}
       className="group flex flex-col items-center gap-2 p-2 sm:p-3 rounded-xl transition-all duration-200 w-full hover:bg-black/5"
       style={{
         background: "transparent",
@@ -193,6 +232,12 @@ export default function ManagementDevicesSection() {
   const md = t.managementDevices;
   const sectionRef = useSectionReveal(60); // [Step64]
   const [selectedDevice, setSelectedDevice] = useState<ManagementDevice | null>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const closeModal = () => {
+    setSelectedDevice(null);
+    lastTriggerRef.current?.focus();
+  };
 
   return (
     <>
@@ -229,7 +274,10 @@ export default function ManagementDevicesSection() {
                 <DeviceCard
                   key={device.id}
                   device={device}
-                  onClick={() => setSelectedDevice(device)}
+                  onClick={(trigger) => {
+                    lastTriggerRef.current = trigger;
+                    setSelectedDevice(device);
+                  }}
                 />
               ))}
             </div>
@@ -241,7 +289,7 @@ export default function ManagementDevicesSection() {
       {selectedDevice && (
         <DeviceModal
           device={selectedDevice}
-          onClose={() => setSelectedDevice(null)}
+          onClose={closeModal}
         />
       )}
     </>

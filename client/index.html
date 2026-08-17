@@ -155,11 +155,8 @@
          수식 렌더링은 Equipment2Detail/Equipment3Detail 페이지에서만 필요.
          해당 컴포넌트 마운트 시 useEffect로 dynamic 로드 처리. -->
     <!-- Pretendard — 한국어 본문 최적화 sans-serif (variable font, self-host)
-         /api/storage/ 경로 사용 (/manus-storage/는 외부 307 리다이렉트로 브라우저 로드 실패)
-         @font-face 선언은 client/src/index.css 에서 처리 -->
-    <link rel="preload" as="font" type="font/woff2"
-      href="/api/storage/PretendardVariable_1ede78f7.woff2"
-      crossorigin="anonymous" />
+         @font-face의 font-display: swap이 첫 글자 렌더를 막지 않도록 전체 variable font는
+         HTML에서 preload하지 않고, 본문이 실제 사용할 때 요청한다. -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <!-- OpenAI 광고 전환 측정 픽셀 초기화 -->

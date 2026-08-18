@@ -1154,8 +1154,11 @@
   }
   .dr-intro-mobile {
     color: var(--brand-text-mid, #555555);
-    line-height: 1.85;
-    font-size: 0.9rem;
+    line-height: 1.75;
+    font-size: clamp(0.95rem, 3.9vw, 1rem);
+  }
+  .dr-intro-mobile .dr-intro-para:not(:last-child) {
+    margin-bottom: 0.75em;
   }
   .dr-specialty-chip-desktop {
     font-weight: 500;

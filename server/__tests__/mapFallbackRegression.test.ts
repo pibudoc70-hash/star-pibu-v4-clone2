@@ -8,7 +8,7 @@ const source = fs.readFileSync(
 );
 
 describe("지도 빈 영역 대체 UI 회귀 방지", () => {
-	 it("Maps Proxy의 StaticMapService tile 이미지도 성공한 지도 렌더링으로 인정한다", () => {
+	 it("Maps Proxy의 vector root·tile 이미지·canvas를 성공한 지도 렌더링으로 인정한다", () => {
 	   expect(source).toContain('const hasRenderedMapDom = () =>');
 	   expect(source).toContain('mapContainer.current?.querySelector(".gm-style, img, canvas")');
 	   expect(source).not.toContain('mapRoot && mapRoot.querySelector("img, canvas")');

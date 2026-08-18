@@ -45,6 +45,9 @@ function buildCSP(isDev: boolean): string {
     "https://challenges.cloudflare.com",
     "https://forge.manus.ai",
     "https://manus-analytics.com",
+    // Maps Proxy가 로드한 SDK의 동적 Google Maps 모듈
+    "https://maps.googleapis.com",
+    "https://maps.gstatic.com",
   ]
     .filter(Boolean)
     .join(" ");

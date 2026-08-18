@@ -6,6 +6,24 @@
     <style id="initial-style-gate">
       html[data-initial-style="pending"] body { background: #0A1228; }
       html[data-initial-style="pending"] #root { visibility: hidden; }
+      #initial-loading {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        align-items: center;
+        justify-content: center;
+        background: #0A1228;
+        color: #F8FAFC;
+        font-family: Arial, sans-serif;
+      }
+      html[data-initial-style="pending"] #initial-loading { display: flex; }
+      .initial-loading-content { display: grid; justify-items: center; gap: 14px; }
+      .initial-loading-mark { font-size: 13px; font-weight: 600; letter-spacing: 0.32em; padding-left: 0.32em; }
+      .initial-loading-spinner { width: 24px; height: 24px; border: 2px solid rgba(248, 250, 252, 0.26); border-top-color: #D7B55C; border-radius: 50%; animation: initial-loading-spin 0.8s linear infinite; }
+      .initial-loading-label { margin: 0; font-size: 13px; letter-spacing: 0.02em; color: rgba(248, 250, 252, 0.78); }
+      @keyframes initial-loading-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .initial-loading-spinner { animation: none; } }
     </style>
     <script>
       (function () {
@@ -16,22 +34,33 @@
           document.documentElement.removeAttribute('data-initial-style');
           var gate = document.getElementById('initial-style-gate');
           if (gate) gate.remove();
+          var loading = document.getElementById('initial-loading');
+          if (loading) loading.remove();
         };
         var hasAppStyle = function () {
+          if (document.querySelector('style[data-vite-dev-id$="/client/src/index.css"]')) return true;
           return Array.prototype.some.call(document.styleSheets, function (sheet) {
             var href = sheet.href || '';
             return /\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1;
           });
         };
+        var isAppStylesheet = function (node) {
+          var href = (node && node.href) || '';
+          return /\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1;
+        };
         var waitForStyle = function () {
           if (hasAppStyle()) {
-            release();
+            window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });
             return;
           }
           window.requestAnimationFrame(waitForStyle);
         };
         window.requestAnimationFrame(waitForStyle);
-        window.setTimeout(release, 4000);
+        window.addEventListener('error', function (event) {
+          if (event.target && event.target.tagName === 'LINK' && isAppStylesheet(event.target)) {
+            release();
+          }
+        }, true);
       })();
     </script>
     <!-- [CRITICAL] 브라우저 자동 스크롤 복원을 JS 번들 로드 전에 즉시 비활성화
@@ -130,17 +159,6 @@
     <!-- 실제 HeroSection 컴포넌트 URL과 동일해야 preload 재사용 가능 -->
     <link rel="preload" as="image" type="image/webp"
       href="/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"
-      fetchpriority="high" />
-    <!-- [PROD-P1-3] LCP 최적화: 재생의료 배너 preload (히어로 다음 첫 화면 노출 이미지) -->
-    <!-- PC (768px 이상): WebP 변환본 사용 (374KB PNG → 36KB WebP, 90% 절감) -->
-    <link rel="preload" as="image" type="image/webp"
-      href="/api/storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"
-      media="(min-width: 768px)"
-      fetchpriority="high" />
-    <!-- 모바일 (767px 이하): WebP 변환본 사용 (273KB PNG → 24KB WebP, 91% 절감) -->
-    <link rel="preload" as="image" type="image/webp"
-      href="/api/storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
-      media="(max-width: 767px)"
       fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
     <link rel="alternate" hreflang="ko" href="https://star-pibu.com/" />
@@ -378,6 +396,13 @@
   </head>
 
   <body>
+    <div id="initial-loading" role="status" aria-live="polite">
+      <div class="initial-loading-content">
+        <span class="initial-loading-mark" aria-hidden="true">STAR</span>
+        <span class="initial-loading-spinner" aria-hidden="true"></span>
+        <p class="initial-loading-label">스타피부과를 준비하고 있습니다</p>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- S1-T2: analytics 스크립트는 main.tsx에서 조건부 동적 삽입으로 이동 -->

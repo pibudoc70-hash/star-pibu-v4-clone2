@@ -8,7 +8,8 @@ describe("homePrerender", () => {
     const html = buildHomePrerenderedHtml(template, "/");
 
     expect(html).toContain("자주 묻는 질문");
-    expect(html).toContain("울쎄라는 어떤 시술인가요?");
+    expect(html).toContain("울쎄라피 프라임은 어떤 시술인가요?");
+    expect(html).not.toContain("울쎄라는 어떤 시술인가요?");
     expect(html).toContain("피부과전문의가 알려주는 피부이야기");
     expect(html).toContain('type="application/ld+json"');
     expect(html).toContain('href="https://star-pibu.com"');

@@ -1200,8 +1200,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
-    background: linear-gradient(to top, white 0%, transparent 100%);
+    height: 56px;
+    background: linear-gradient(to top, var(--dr-panel-bg, #FAF8F5) 0%, transparent 100%);
     z-index: 2;
   }
   .dr-mob-name-h3 {

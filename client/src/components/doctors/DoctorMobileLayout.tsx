@@ -116,11 +116,12 @@ export function DoctorMobileLayout({
           {mergedDoctors.map((d) => (
             <div
               key={d.id}
-              className="w-full flex-shrink-0"
+              className="w-full flex-shrink-0 dr-mob-slide-panel"
               role="tabpanel"
               id={`doctor-mob-panel-${d.id}`}
               aria-labelledby={`doctor-mob-tab-${d.id}`}
               aria-hidden={activeDoctor !== d.id}
+              data-active={String(activeDoctor === d.id)}
             >
               {/* 사진 */}
               <div className="dr-mob-photo-wrap">

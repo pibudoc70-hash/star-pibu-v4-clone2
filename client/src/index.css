@@ -1187,6 +1187,10 @@
     background: #111;
     overflow: hidden;
   }
+  .dr-mob-slide-panel[data-active="false"] {
+    height: 0;
+    overflow: hidden;
+  }
   .dr-mob-photo-img {
     position: absolute;
     inset: 0;

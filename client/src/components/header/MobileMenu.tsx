@@ -43,7 +43,7 @@ interface MobileMenuProps {
 // 메뉴 항목별 아이콘 매핑 (href 기준)
 const NAV_ICONS: Record<string, React.ElementType> = {
   "#treatments": Stethoscope,
-  "#doctors":    Users,
+  "/doctors":    Users,
   "#events":     Calendar,
   "/about":      Building2,
   "#contact":    MapPin,

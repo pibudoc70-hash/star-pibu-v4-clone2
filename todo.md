@@ -4657,4 +4657,6 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] 홈 FAQ 탭과 선택된 FAQ 질문의 ‘울쎄라’ 표기를 ‘울쎄라피 프라임’으로 최소 변경하고 다른 시술명·FAQ 데이터·레이아웃을 보존한 채 회귀 테스트·local 검증 — 탭, 선택 질문, 관련 비교 표기를 일관되게 갱신하고 focused·전체 품질 gate를 통과
 - [x] 피부과 전문의 탭에서 우혜진·이기욱 선택 시 조시형 탭보다 큰 상단·하단 여백이 생기는 원인을 재현하고 최소 보정 — desktop panel 최소 높이를 741px로 안정화하고 세 탭의 computed height 일치를 확인
 - [x] 모바일 전문의 슬라이드에서 우혜진·이기욱 선택 시 조시형과 다른 과도한 여백을 재현하고 최소 보정 — 흰색 가운 사진에서 빈 여백처럼 보이던 하단 fade를 100px에서 56px로 축소하고 panel background와 일치시킴
+- [x] 모바일 전문의 섹션에서 우혜진·이기욱 선택 시 남는 소개 여백을 조시형과 비교 재현하고, 이미지 영역·슬라이드 콘텐츠 높이·전환을 최소 보완 — 기존 slider는 비활성 패널도 전체 콘텐츠 높이를 유지해 가장 긴 조시형 소개가 우혜진·이기욱 선택 시 여백으로 남았음. 비활성 panel을 CSS `height: 0; overflow: hidden`으로 보완했고 local DOM에서 조시형만 auto, 우혜진·이기욱은 0px임을 확인. focused 3/3, TypeScript·ESLint error 0, DB 없는 Unit 110 files/1,566 tests, production build 28.45초 통과
+- [x] 모바일 카테고리 메뉴에서 다른 카테고리와 달리 빠진 ‘피부과 전문의’ 심볼을 기존 아이콘 체계 안에서 최소 추가하고 접근성 이름을 검증 — 실제 메뉴 href는 `/doctors`인데 기존 mapping은 `#doctors`여서 Users icon이 누락됨. `/doctors`: Users로 교정. focused 1/1과 전체 품질 gate 통과
 - [ ] 사용자 승인에 따라 user_github/main을 일반 merge하고 충돌 시 양쪽 변경을 보존해 해소한 뒤, 체크포인트 저장과 최신 수정본 게시·공개 도메인 반영을 확인

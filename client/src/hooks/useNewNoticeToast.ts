@@ -9,7 +9,7 @@
  * - 새 공지가 있으면 토스트를 표시하고 클릭 시 /notice 페이지로 이동합니다.
  * - 토스트는 세션당 1회만 표시합니다 (sessionStorage 활용).
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -20,16 +20,33 @@ const SESSION_KEY = "star_notice_toast_shown";
 export function useNewNoticeToast(navigate: (path: string) => void) {
   const { lang } = useLang();
   const shownRef = useRef(false);
+  const [isIdle, setIsIdle] = useState(false);
+
+  useEffect(() => {
+    if (typeof window.requestIdleCallback === "function") {
+      const idleId = window.requestIdleCallback(() => setIsIdle(true), { timeout: 2000 });
+      return () => {
+        if (typeof window.cancelIdleCallback === "function") {
+          window.cancelIdleCallback(idleId);
+        }
+      };
+    }
+
+    const timeoutId = window.setTimeout(() => setIsIdle(true), 1200);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   const { data: notices } = trpc.notices.list.useQuery(
     { lang },
     {
+      enabled: isIdle,
       staleTime: 5 * 60 * 1000, // 5분 캐시
       refetchOnWindowFocus: false,
     }
   );
 
   useEffect(() => {
+    if (!isIdle) return;
     if (!notices || notices.length === 0) return;
     if (shownRef.current) return;
 
@@ -80,5 +97,5 @@ export function useNewNoticeToast(navigate: (path: string) => void) {
         },
       });
     }
-  }, [notices, lang, navigate]);
+  }, [notices, lang, navigate, isIdle]);
 }

@@ -15,7 +15,21 @@ describe("Home 유지보수성 경계", () => {
   });
 
   it("지연 섹션의 fallback preset을 공통 구성에서 사용한다", () => {
-    expect(homeSource.match(/HOME_SECTION_FALLBACKS\./g)).toHaveLength(11);
+    for (const fallback of [
+      "specialEvent",
+      "doctors",
+      "treatments",
+      "managementDevices",
+      "philosophy",
+      "results",
+      "facility",
+      "youtube",
+      "faq",
+      "notices",
+      "contact",
+    ]) {
+      expect(homeSource).toContain(`HOME_SECTION_FALLBACKS.${fallback}`);
+    }
     expect(fallbackSource).toContain("specialEvent");
     expect(fallbackSource).toContain("managementDevices");
     expect(fallbackSource).toContain("contact");

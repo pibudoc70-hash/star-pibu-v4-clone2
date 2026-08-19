@@ -40,6 +40,7 @@ import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 import { useNewNoticeToast } from "@/hooks/useNewNoticeToast";
 import { useLocation } from "wouter";
 import { HOME_SECTION_FALLBACKS } from "@/lib/homeSectionFallbacks";
+import { DeferredMount } from "@/components/DeferredMount";
 
 /** 셉션 로딩 중 표시할 스켈레톤 — CLS 방지 + perceived performance 개선
  * variant="dark": 어두운 배경 섹션(ManagementDevices, YouTube, Contact)
@@ -521,33 +522,39 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-brown">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
-              <ManagementDevicesSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
+            <div className="section-bg-dark-brown">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
+                <ManagementDevicesSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 6. Philosophy — [Option A] offwhite→크림 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-cream">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
-              <PhilosophySection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
+            <div className="section-bg-cream">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
+                <PhilosophySection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 6-2. Results & Statistics */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-gold-soft">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
-              <ResultsStatisticsSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
+            <div className="section-bg-gold-soft">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
+                <ResultsStatisticsSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 7. Facility Gallery — [Option A] 순백→웜 알트 */}
@@ -565,31 +572,37 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-brown-mid">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
-              <YouTubeSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
+            <div className="section-bg-dark-brown-mid">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
+                <YouTubeSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 9. FAQ — [Option A] 순백→크림 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-cream">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
-              <FAQSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
+            <div className="section-bg-cream">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
+                <FAQSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 최근 공지사항 섹션 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
-            <RecentNoticesSection lang="ko" />
-          </Suspense>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
+              <RecentNoticesSection lang="ko" />
+            </Suspense>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 10. Location & Contact — [Option B] 다크 딥→다크 브라운 */}

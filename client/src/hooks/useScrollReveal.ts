@@ -46,6 +46,8 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
   } = options;
 
   const ref = useRef<T>(null);
+  const staggerTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const isActiveRef = useRef(false);
 
   // [FM-P2-1] useCallback으로 observer 콜백 안정화 → 의존성 변경 시에만 재생성
   const handleIntersect = useCallback(
@@ -73,9 +75,12 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
           cards.forEach((card, i) => {
             // 이미 visible인 카드는 스킵
             if (card.classList.contains("visible")) return;
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
+              staggerTimeoutsRef.current.delete(timeoutId);
+              if (!isActiveRef.current) return;
               card.classList.add("visible");
             }, i * stagger);
+            staggerTimeoutsRef.current.add(timeoutId);
           });
         }
 
@@ -88,6 +93,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    isActiveRef.current = true;
 
     // prefers-reduced-motion: 모션 감소 설정 시 즉시 visible 처리
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -107,7 +113,12 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
     // 자기 자신 관찰
     observer.observe(el);
 
-    return () => observer.disconnect();
+    return () => {
+      isActiveRef.current = false;
+      observer.disconnect();
+      staggerTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
+      staggerTimeoutsRef.current.clear();
+    };
   }, [threshold, rootMargin, handleIntersect]);
 
   return ref;
@@ -124,6 +135,8 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
 // [FM-P1-7] staggerMs 기본값 80 → 50: 카드 등장 간격 단축으로 전체 섹션 완료 시간 감소
 export function useSectionReveal(staggerMs = 50) {
   const ref = useRef<HTMLElement>(null);
+  const animationFramesRef = useRef<Set<number>>(new Set());
+  const isActiveRef = useRef(false);
 
   // [FM-P2-2] useCallback으로 observer 콜백 안정화 → staggerMs 변경 시에만 재생성
   const handleIntersect = useCallback(
@@ -145,12 +158,14 @@ export function useSectionReveal(staggerMs = 50) {
           if (existingDelay === 0) {
             el.style.transitionDelay = `${i * staggerMs}ms`;
           }
-          // 다음 프레임에서 visible 추가 (transition이 작동하도록)
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              el.classList.add("visible");
-            });
+          // 다음 frame에서 visible을 추가해 transition이 동작하도록 한다.
+          let frameId = 0;
+          frameId = requestAnimationFrame(() => {
+            animationFramesRef.current.delete(frameId);
+            if (!isActiveRef.current) return;
+            el.classList.add("visible");
           });
+          animationFramesRef.current.add(frameId);
         });
 
         observer.unobserve(target);
@@ -162,6 +177,7 @@ export function useSectionReveal(staggerMs = 50) {
   useEffect(() => {
     const section = ref.current;
     if (!section) return;
+    isActiveRef.current = true;
 
     // prefers-reduced-motion: 즉시 visible 처리
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -181,7 +197,12 @@ export function useSectionReveal(staggerMs = 50) {
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      isActiveRef.current = false;
+      observer.disconnect();
+      animationFramesRef.current.forEach((frameId) => cancelAnimationFrame(frameId));
+      animationFramesRef.current.clear();
+    };
   }, [handleIntersect]);
 
   return ref;

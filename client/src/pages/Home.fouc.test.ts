@@ -11,6 +11,7 @@ describe("홈 초기 스타일 적용 게이트", () => {
     expect(indexHtml).toContain("document.documentElement.removeAttribute('data-initial-style')");
     expect(indexHtml).toContain("window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });");
     expect(indexHtml).toContain('style[data-vite-dev-id$="/client/src/index.css"]');
+    expect(indexHtml).toContain("sheet.cssRules && sheet.cssRules.length > 0");
     expect(indexHtml).not.toContain('window.setTimeout(release, 4000)');
     expect(indexHtml).not.toContain("window.addEventListener('error', function (event)");
   });

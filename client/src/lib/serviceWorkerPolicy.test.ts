@@ -122,7 +122,8 @@ function createWorkerHarness({
   return {
     imageCache,
     nonImageCache,
-    async dispatchImageFetch(request: MockRequest) {
+    lastBackgroundPromiseCount: 0,
+    async dispatchImageFetch(request: MockRequest, waitForBackground = true) {
       let responsePromise: Promise<MockResponse> | undefined;
       const backgroundPromises: Promise<unknown>[] = [];
       const listener = listeners.get("fetch");
@@ -140,7 +141,8 @@ function createWorkerHarness({
 
       if (!responsePromise) throw new Error("Service Worker did not respond to image fetch");
       const response = await responsePromise;
-      await Promise.all(backgroundPromises);
+      this.lastBackgroundPromiseCount = backgroundPromises.length;
+      if (waitForBackground) await Promise.all(backgroundPromises);
       return response;
     },
   };
@@ -223,8 +225,9 @@ describe("service worker cache policy", () => {
       fetchImpl,
     });
 
-    await expect(harness.dispatchImageFetch(cachedRequest)).resolves.toBe(cachedResponse);
+    await expect(harness.dispatchImageFetch(cachedRequest, false)).resolves.toBe(cachedResponse);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
+    expect(harness.lastBackgroundPromiseCount).toBe(1);
 
     resolveNetwork(new MockResponse("network"));
     await flushBackgroundWork();

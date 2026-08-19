@@ -98,7 +98,9 @@ self.addEventListener("fetch", (event) => {
     url.pathname.startsWith("/api/storage/") ||
     /\.(png|jpe?g|webp|avif|svg|ico|gif)$/i.test(url.pathname)
   ) {
-    event.respondWith(handleImage(request));
+    const imageResult = handleImage(request);
+    event.respondWith(imageResult.then(({ response }) => response));
+    event.waitUntil(imageResult.then(({ revalidation }) => revalidation));
     return;
   }
 
@@ -155,7 +157,13 @@ async function handleImage(request) {
     })
     .catch(() => null);
 
-  return cached || (await networkFetch) || Promise.reject(new Error("Image fetch failed"));
+  if (cached) {
+    return { response: cached, revalidation: networkFetch };
+  }
+
+  const networkResponse = await networkFetch;
+  if (!networkResponse) throw new Error("Image fetch failed");
+  return { response: networkResponse, revalidation: Promise.resolve() };
 }
 
 /** Cache Storage quota/errors must never fail a navigation or asset response. */

@@ -37,29 +37,9 @@
           var loading = document.getElementById('initial-loading');
           if (loading) loading.remove();
         };
-        var hasUsableRules = function (sheet) {
-          try {
-            return Boolean(sheet.cssRules && sheet.cssRules.length > 0);
-          } catch (_) {
-            return false;
-          }
-        };
-        var hasAppStyle = function () {
-          var viteStyle = document.querySelector('style[data-vite-dev-id$="/client/src/index.css"]');
-          if (viteStyle && viteStyle.sheet && hasUsableRules(viteStyle.sheet)) return true;
-          return Array.prototype.some.call(document.styleSheets, function (sheet) {
-            var href = sheet.href || '';
-            return (/\/assets\/index-[^/]+\.css$/.test(href) || href.indexOf('/src/index.css') !== -1) && hasUsableRules(sheet);
-          });
-        };
-        var waitForStyle = function () {
-          if (hasAppStyle()) {
-            window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });
-            return;
-          }
-          window.requestAnimationFrame(waitForStyle);
-        };
-        window.requestAnimationFrame(waitForStyle);
+        window.addEventListener('star-pibu:app-ready', function () {
+          window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });
+        }, { once: true });
       })();
     </script>
     <!-- [CRITICAL] 브라우저 자동 스크롤 복원을 JS 번들 로드 전에 즉시 비활성화

@@ -1,5 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
+import { useLayoutEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
@@ -12,6 +13,14 @@ import "./index.css";
 // Core Web Vitals 모니터링
 import { initWebVitals } from './lib/webVitals';
 import { registerServiceWorker } from './lib/swRegister';
+
+function InitialAppReadySignal() {
+  useLayoutEffect(() => {
+    window.dispatchEvent(new Event("star-pibu:app-ready"));
+  }, []);
+
+  return null;
+}
 
 // [FIX] 브라우저 자동 스크롤 복원 비활성화
 // 브라우저가 이전 스크롤 위치를 기억해 자동 복원하는 기능을 끔
@@ -112,6 +121,7 @@ createRoot(document.getElementById("root")!).render(
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <App />
+        <InitialAppReadySignal />
       </QueryClientProvider>
     </trpc.Provider>
   </HelmetProvider>

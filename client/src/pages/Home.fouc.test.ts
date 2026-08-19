@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const indexHtml = readFileSync(resolve(process.cwd(), "client/index.html"), "utf8");
+const mainSource = readFileSync(resolve(process.cwd(), "client/src/main.tsx"), "utf8");
 
 describe("홈 초기 스타일 적용 게이트", () => {
   it("첫 스타일시트가 준비될 때까지 prerender 텍스트를 숨기는 FOUC 방지 게이트를 둔다", () => {
@@ -10,10 +11,12 @@ describe("홈 초기 스타일 적용 게이트", () => {
     expect(indexHtml).toContain("#root { visibility: hidden; }");
     expect(indexHtml).toContain("document.documentElement.removeAttribute('data-initial-style')");
     expect(indexHtml).toContain("window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });");
-    expect(indexHtml).toContain('style[data-vite-dev-id$="/client/src/index.css"]');
-    expect(indexHtml).toContain("sheet.cssRules && sheet.cssRules.length > 0");
+    expect(indexHtml).toContain("window.addEventListener('star-pibu:app-ready', function () {");
+    expect(indexHtml).not.toContain("var hasAppStyle = function");
     expect(indexHtml).not.toContain('window.setTimeout(release, 4000)');
     expect(indexHtml).not.toContain("window.addEventListener('error', function (event)");
+    expect(mainSource).toContain('useLayoutEffect');
+    expect(mainSource).toContain('window.dispatchEvent(new Event("star-pibu:app-ready"))');
   });
 
   it("서버 응답 대기 중 브랜드 로딩 상태를 알리고 앱 준비 뒤 함께 제거한다", () => {

@@ -17,4 +17,11 @@ describe("홈 초기 Pretendard 전달 정책", () => {
       /font-family:\s*["']Pretendard Variable["'];[\s\S]*?font-display:\s*swap;/,
     );
   });
+
+  it("OpenAI tracking script는 load 이후 idle에 가져와 critical asset과 경쟁하지 않는다", () => {
+    expect(indexHtml).not.toContain('<script async src="https://bzrcdn.openai.com/sdk/oaiq.min.js"></script>');
+    expect(indexHtml).toMatch(/window\.addEventListener\(['"]load['"]/);
+    expect(indexHtml).toContain("requestIdleCallback");
+    expect(indexHtml).toContain("https://bzrcdn.openai.com/sdk/oaiq.min.js");
+  });
 });

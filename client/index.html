@@ -214,8 +214,20 @@
         (window.oaiq.q = window.oaiq.q || []).push(arguments);
       };
       oaiq("init", { pixelId: "Ci5P3hg9XSP2sJHhJCVh67" });
+      window.addEventListener('load', function () {
+        var loadPixel = function () {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://bzrcdn.openai.com/sdk/oaiq.min.js';
+          document.head.appendChild(script);
+        };
+        if (typeof window.requestIdleCallback === 'function') {
+          window.requestIdleCallback(loadPixel, { timeout: 3000 });
+        } else {
+          window.setTimeout(loadPixel, 1200);
+        }
+      }, { once: true });
     </script>
-    <script async src="https://bzrcdn.openai.com/sdk/oaiq.min.js"></script>
     <!-- JSON-LD Structured Data: 정적 기본 스키마 (크롤러 JS 미실행 대응) -->
     <!-- SeoHead 컴포넌트가 페이지별 추가 JSON-LD를 동적으로 삽입합니다 -->
     <script type="application/ld+json">

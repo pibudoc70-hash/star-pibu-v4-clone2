@@ -9,10 +9,10 @@ describe("홈 초기 스타일 적용 게이트", () => {
     expect(indexHtml).toContain('data-initial-style="pending"');
     expect(indexHtml).toContain("#root { visibility: hidden; }");
     expect(indexHtml).toContain("document.documentElement.removeAttribute('data-initial-style')");
-    expect(indexHtml).toContain("window.addEventListener('error', function (event)");
     expect(indexHtml).toContain("window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });");
     expect(indexHtml).toContain('style[data-vite-dev-id$="/client/src/index.css"]');
     expect(indexHtml).not.toContain('window.setTimeout(release, 4000)');
+    expect(indexHtml).not.toContain("window.addEventListener('error', function (event)");
   });
 
   it("서버 응답 대기 중 브랜드 로딩 상태를 알리고 앱 준비 뒤 함께 제거한다", () => {

@@ -52,10 +52,17 @@ export function useHeaderState() {
   const chatUrl = isZH ? "#" : rawChatUrl;
 
   // ── 1차 메뉴 ──────────────────────────────────────────────────────────────
+  const priceListLabel: Partial<Record<Lang, string>> = {
+    en: "PRICE LIST",
+    ja: "料金表",
+    zh: "价格表",
+    "zh-TW": "價格表",
+  };
+
   const primaryNav: NavItem[] = [
     { label: t.nav.treatments, href: "/equipment3", sectionId: null },
     { label: t.nav.doctors,    href: "/doctors",    sectionId: null         },
-    ...(lang === "en" ? [{ label: "PRICE LIST", href: "/price-list", sectionId: null }] : []),
+    ...(priceListLabel[lang] ? [{ label: priceListLabel[lang], href: "/price-list", sectionId: null }] : []),
     { label: "EVENT",          href: "#events",     sectionId: "events"     },
     { label: t.nav.about,      href: "/about",      sectionId: null         },
     { label: t.nav.contact,    href: "/directions", sectionId: null         },

@@ -147,8 +147,11 @@ function Router() {
                 <Route path="/en"  component={LandingEN} />
                 <Route path="/en/price-list" component={ForeignPriceList} />
                 <Route path="/ja"  component={LandingJA} />
+                <Route path="/ja/price-list" component={ForeignPriceList} />
                 <Route path="/zh"    component={LandingZH} />
+                <Route path="/zh/price-list" component={ForeignPriceList} />
                 <Route path="/zh-tw" component={LandingZHTW} />
+                <Route path="/zh-tw/price-list" component={ForeignPriceList} />
 
                 {/* 이벤트 상세 */}
                 <Route path="/events/:id" component={EventDetail} />

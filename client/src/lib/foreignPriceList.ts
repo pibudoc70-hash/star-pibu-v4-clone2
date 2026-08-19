@@ -102,3 +102,74 @@ export const FOREIGN_PRICE_CATEGORIES: ForeignPriceCategory[] = [
     ],
   },
 ];
+
+export type ForeignPriceLocale = "en" | "ja" | "zh" | "zh-TW";
+
+type LocalizedPriceText = {
+  categoryLabels: string[];
+  names: Record<string, string>;
+  details: Record<string, string>;
+  notes: Record<string, string>;
+};
+
+const LOCALIZED_PRICE_TEXT: Record<Exclude<ForeignPriceLocale, "en">, LocalizedPriceText> = {
+  ja: {
+    categoryLabels: ["リフティング", "シミ・そばかす", "ニキビ", "毛穴・傷跡・小じわ", "赤み・血管", "スキンブースター", "ボトックス", "フィラー", "その他"],
+    names: {
+      "Sedation fee": "睡眠麻酔費", "Capri + scaling": "カプリ＋スケーリング", "Skinjet + Juvelook": "スキンジェット＋ジュベルック",
+      "Redness & vessels": "赤み・血管", "White injection": "白玉注射", "Vitamin injection": "ビタミン注射",
+      "Spot / dark spot / age spot": "ほくろ・シミ・老人性色素斑",
+    },
+    details: {
+      "100 lines": "100ライン", "300 lines": "300ライン", "600 lines": "600ライン", "Face · 600 shots": "顔 · 600ショット", "Eye · 450 shots": "目元 · 450ショット",
+      "300 shots": "300ショット", "600 shots": "600ショット", "From 100 kJ": "100 kJ〜", "Per lifting procedure": "リフティング施術ごと",
+      "Includes care": "ケア込み", "Includes soothing care": "鎮静ケア込み", "3 cc · Includes soothing care": "3 cc · 鎮静ケア込み",
+      "Domestic / imported": "国内製 / 輸入製", "Domestic · per 1 cc": "国内製 · 1 ccあたり", "Imported · per 1 cc": "輸入製 · 1 ccあたり", "Partial removal · per area": "部分除去 · 部位ごと",
+    },
+    notes: { "Includes Ultra Duo + hydration therapy": "ウルトラデュオ＋保湿・鎮静ケア込み", "Separate fee for lifting procedures": "リフティング施術時は別途必要" },
+  },
+  zh: {
+    categoryLabels: ["提升紧致", "色斑·暗沉", "痘痘", "毛孔·痘疤·细纹", "泛红·血管", "水光针", "肉毒杆菌", "玻尿酸填充", "其他"],
+    names: {
+      "Sedation fee": "睡眠麻醉费", "Capri + scaling": "Capri＋清洁管理", "Skinjet + Juvelook": "Skinjet＋Juvelook",
+      "White injection": "白玉注射", "Vitamin injection": "维生素注射", "Spot / dark spot / age spot": "痣·色斑·老年斑",
+    },
+    details: {
+      "100 lines": "100发", "300 lines": "300发", "600 lines": "600发", "Face · 600 shots": "面部 · 600发", "Eye · 450 shots": "眼周 · 450发",
+      "300 shots": "300发", "600 shots": "600发", "From 100 kJ": "100 kJ起", "Per lifting procedure": "每项提升治疗",
+      "Includes care": "含管理", "Includes soothing care": "含镇静管理", "3 cc · Includes soothing care": "3 cc · 含镇静管理",
+      "Domestic / imported": "国产 / 进口", "Domestic · per 1 cc": "国产 · 每1 cc", "Imported · per 1 cc": "进口 · 每1 cc", "Partial removal · per area": "局部去除 · 每部位",
+    },
+    notes: { "Includes Ultra Duo + hydration therapy": "含Ultra Duo＋补水舒缓管理", "Separate fee for lifting procedures": "提升治疗需另付" },
+  },
+  "zh-TW": {
+    categoryLabels: ["拉提緊緻", "斑點·暗沉", "痘痘", "毛孔·痘疤·細紋", "泛紅·血管", "肌膚增生療程", "肉毒桿菌", "玻尿酸填充", "其他"],
+    names: {
+      "Sedation fee": "睡眠麻醉費", "Capri + scaling": "Capri＋深層清潔管理", "Skinjet + Juvelook": "Skinjet＋Juvelook",
+      "White injection": "白玉注射", "Vitamin injection": "維他命注射", "Spot / dark spot / age spot": "痣·斑點·老人斑",
+    },
+    details: {
+      "100 lines": "100發", "300 lines": "300發", "600 lines": "600發", "Face · 600 shots": "臉部 · 600發", "Eye · 450 shots": "眼周 · 450發",
+      "300 shots": "300發", "600 shots": "600發", "From 100 kJ": "100 kJ起", "Per lifting procedure": "每項拉提療程",
+      "Includes care": "含管理", "Includes soothing care": "含舒緩管理", "3 cc · Includes soothing care": "3 cc · 含舒緩管理",
+      "Domestic / imported": "國產 / 進口", "Domestic · per 1 cc": "國產 · 每1 cc", "Imported · per 1 cc": "進口 · 每1 cc", "Partial removal · per area": "局部去除 · 每部位",
+    },
+    notes: { "Includes Ultra Duo + hydration therapy": "含Ultra Duo＋保濕舒緩管理", "Separate fee for lifting procedures": "拉提療程需另付" },
+  },
+};
+
+export function getLocalizedForeignPriceCategories(locale: ForeignPriceLocale): ForeignPriceCategory[] {
+  if (locale === "en") return FOREIGN_PRICE_CATEGORIES;
+  const localized = LOCALIZED_PRICE_TEXT[locale];
+
+  return FOREIGN_PRICE_CATEGORIES.map((category, categoryIndex) => ({
+    ...category,
+    label: localized.categoryLabels[categoryIndex] ?? category.label,
+    items: category.items.map((item) => ({
+      ...item,
+      name: localized.names[item.name] ?? item.name,
+      details: item.details ? localized.details[item.details] ?? item.details : undefined,
+      note: item.note ? localized.notes[item.note] ?? item.note : undefined,
+    })),
+  }));
+}

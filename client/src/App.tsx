@@ -18,6 +18,7 @@ import {
   AdminYouTube,
   Directions,
   EventDetail,
+  ForeignPriceList,
   LANG_ROUTES,
   LandingEN,
   LandingJA,
@@ -144,6 +145,7 @@ function Router() {
                 {/* 홈 / 언어별 루트 */}
                 <Route path="/"    component={Home} />
                 <Route path="/en"  component={LandingEN} />
+                <Route path="/en/price-list" component={ForeignPriceList} />
                 <Route path="/ja"  component={LandingJA} />
                 <Route path="/zh"    component={LandingZH} />
                 <Route path="/zh-tw" component={LandingZHTW} />

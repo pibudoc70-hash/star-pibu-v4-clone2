@@ -36,6 +36,7 @@ export const pages = {
   Equipment3Detail:   () => import("@/pages/Equipment3Detail"),
   About:              () => import("@/pages/About"),
   ForeignGuide:       () => import("@/pages/ForeignGuide"),
+  ForeignPriceList:   () => import("@/pages/ForeignPriceList"),
   Research:           () => import("@/pages/Research"),
   Privacy:            () => import("@/pages/Privacy"),
   NonCoveredGuide:    () => import("@/pages/NonCoveredGuide"),
@@ -55,6 +56,7 @@ export const pages = {
 // ─── Lazy components ──────────────────────────────────────────────────────────
 
 export const ForeignGuide       = lazy(pages.ForeignGuide);
+export const ForeignPriceList   = lazy(pages.ForeignPriceList);
 export const NotFound           = lazy(pages.NotFound);
 export const Notice             = lazy(pages.Notice);
 export const NoticeDetail       = lazy(pages.NoticeDetail);

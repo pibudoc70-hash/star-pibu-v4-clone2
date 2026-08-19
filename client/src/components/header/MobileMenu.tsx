@@ -7,7 +7,7 @@
  * - Focus trap 구현 (Tab 키 제어)
  * - ESC 키 닫기 구현
  */
-import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical } from "lucide-react";
+import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical, CircleDollarSign } from "lucide-react";
 import type { RefObject } from "react";
 import { useEffect } from "react";
 import type { NavItem, LangOption } from "@/hooks/useHeaderState";
@@ -49,6 +49,7 @@ const NAV_ICONS: Record<string, React.ElementType> = {
   "#contact":    MapPin,
   "#facility":   Building2,
   "/foreign-guide": Globe2,
+  "/price-list": CircleDollarSign,
   "/research":   BookOpen,
   "/equipment3": FlaskConical,
   "/equipment2": FlaskConical,

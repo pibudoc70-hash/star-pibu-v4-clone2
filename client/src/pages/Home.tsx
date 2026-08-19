@@ -482,8 +482,8 @@ export default function Home() {
                 className="w-full h-auto block"
                 width={800}
                 height={296}
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
+                fetchPriority="low"
               />
             </picture>
           </a>

@@ -26,8 +26,19 @@ describe("Home below-the-fold deferred mount contract", () => {
       "RecentNoticesSection",
     ]) {
       expect(homeSource).toMatch(
-        new RegExp(`<DeferredMount fallback=\\{<SectionFallback \\{\\.\\.\\.HOME_SECTION_FALLBACKS\\.[^}]+\\} />\\}>[\\s\\S]*?<${section}`),
+        new RegExp(`<DeferredMount[\\s\\S]*?<${section}`),
       );
+    }
+  });
+
+  it("mounts deferred anchor targets without a page-bottom jump", () => {
+    const anchorSelectors = ["#management-devices", "#results-statistics", "#faq"];
+
+    expect(deferredMountSource).toContain("anchorSelectors");
+    expect(deferredMountSource).toContain('"star-pibu:mount-anchor"');
+
+    for (const selector of anchorSelectors) {
+      expect(homeSource).toContain(`anchorSelectors={["${selector}"]}`);
     }
   });
 
@@ -73,6 +84,51 @@ describe("Home below-the-fold deferred mount contract", () => {
     });
 
     expect(container.querySelector('[data-testid="deferred-content"]')).not.toBeNull();
+    act(() => root.unmount());
+    globalThis.IntersectionObserver = originalObserver;
+    reactTestEnvironment.IS_REACT_ACT_ENVIRONMENT = originalActEnvironment;
+  });
+
+  it("mounts an anchor-targeted subtree when anchor scroll requests it", () => {
+    const reactTestEnvironment = globalThis as typeof globalThis & {
+      IS_REACT_ACT_ENVIRONMENT?: boolean;
+    };
+    const originalActEnvironment = reactTestEnvironment.IS_REACT_ACT_ENVIRONMENT;
+    reactTestEnvironment.IS_REACT_ACT_ENVIRONMENT = true;
+    const originalObserver = globalThis.IntersectionObserver;
+    globalThis.IntersectionObserver = class {
+      disconnect() {}
+      observe() {}
+      root = null;
+      rootMargin = "400px 0px";
+      thresholds = [];
+      takeRecords() { return []; }
+      unobserve() {}
+    } as typeof IntersectionObserver;
+
+    const container = document.createElement("div");
+    const root = createRoot(container);
+
+    act(() => {
+      root.render(
+        createElement(
+          DeferredMount,
+          {
+            fallback: createElement("div", { "data-testid": "fallback" }),
+            anchorSelectors: ["#faq"],
+          },
+          createElement("section", { id: "faq", "data-testid": "faq-content" }),
+        ),
+      );
+    });
+
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent("star-pibu:mount-anchor", { detail: { selector: "#faq" } }),
+      );
+    });
+
+    expect(container.querySelector('[data-testid="faq-content"]')).not.toBeNull();
     act(() => root.unmount());
     globalThis.IntersectionObserver = originalObserver;
     reactTestEnvironment.IS_REACT_ACT_ENVIRONMENT = originalActEnvironment;

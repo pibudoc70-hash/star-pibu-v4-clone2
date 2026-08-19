@@ -522,7 +522,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}
+            anchorSelectors={["#management-devices"]}
+          >
             <div className="section-bg-dark-brown">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
                 <ManagementDevicesSection />
@@ -548,7 +551,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}
+            anchorSelectors={["#results-statistics"]}
+          >
             <div className="section-bg-gold-soft">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
                 <ResultsStatisticsSection />
@@ -585,7 +591,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}
+            anchorSelectors={["#faq"]}
+          >
             <div className="section-bg-cream">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
                 <FAQSection />

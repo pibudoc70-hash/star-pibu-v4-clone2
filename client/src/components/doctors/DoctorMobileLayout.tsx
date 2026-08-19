@@ -71,7 +71,7 @@ export function DoctorMobileLayout({
             >
               <OptimizedImage
                 src={d.mobileImage || d.cardImage || d.image}
-                alt=""
+                alt={d.name}
                 priority={activeDoctor === d.id}
                 usePicture={false}
                 style={{

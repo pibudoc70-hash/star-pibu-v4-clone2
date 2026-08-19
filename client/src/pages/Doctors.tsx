@@ -74,23 +74,20 @@ export default function Doctors() {
 
       {/* ── 페이지 헤더 ─────────────────────────────────────────────────────── */}
       <section
-        className="py-12 sm:py-16 text-center"
-        style={{ background: "linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%)" }}
+        className="dr-page-header py-12 sm:py-16 text-center"
       >
         <div className="container">
           <p
-            className="font-montserrat text-xs tracking-[0.3em] uppercase mb-3"
-            style={{ color: "#b89a5a" }}
+            className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3"
           >
             STAR DERMATOLOGY · {t.doctors.label}
           </p>
           <h1
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ color: "#1a1a1a" }}
+            className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"
           >
             {seo.pageTitle}
           </h1>
-          <p className="text-sm sm:text-base" style={{ color: "#6b5c3e" }}>
+          <p className="dr-page-header-tagline text-sm sm:text-base">
             {seo.pageTagline}
           </p>
         </div>

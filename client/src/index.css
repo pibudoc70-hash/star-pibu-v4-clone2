@@ -5434,3 +5434,11 @@ body.font-lang-zh .hero-stat-label {
   pointer-events: none;
   background: linear-gradient(to bottom, transparent, #fff);
 }
+
+/* `/doctors` direct-page header: static visual tokens stay out of JSX. */
+.dr-page-header {
+  background: linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%);
+}
+.dr-page-header-eyebrow { color: #b89a5a; }
+.dr-page-header-title { color: #1a1a1a; }
+.dr-page-header-tagline { color: #6b5c3e; }

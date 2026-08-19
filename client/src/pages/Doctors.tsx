@@ -19,45 +19,12 @@ import SeoHead, {
   BASE_URL,
 } from "@/components/SeoHead";
 import OptimizedImage from "@/components/OptimizedImage";
+import { buildPhysicianJsonLd, getDoctorsSeoContent } from "@/lib/doctorsSeo";
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useDoctorViewModel } from "@/hooks/useDoctorViewModel";
 import { DoctorCredentials } from "@/components/doctors/DoctorCredentials";
 import { DoctorTabButton } from "@/components/doctors/DoctorTabButton";
 import { Zap } from "lucide-react";
-
-// ── SEO 다국어 메타 ────────────────────────────────────────────────────────────
-const SEO_TITLE: Record<string, string> = {
-  ko: "피부과전문의 3인 | 부산 서면 스타피부과",
-  en: "3 Board-Certified Dermatologists | Star Dermatology Busan",
-  ja: "皮膚科専門医3名 | 釜山 서면 スター皮膚科",
-  zh: "3位皮肤科专科医生 | 釜山서면 STAR皮肤科",
-};
-const SEO_DESC: Record<string, string> = {
-  ko: "부산 서면 스타피부과 피부과전문의 3인 소개. 조시형 원장(써마지 FLX 자문의, 눈밑지방재배치 4,000례), 우혜진 원장, 이기욱 원장. 20년 이상의 임상 경험으로 안전하고 자연스러운 피부 치료를 제공합니다.",
-  en: "Meet the 3 board-certified dermatologists at Star Dermatology, Seomyeon, Busan. Dr. Jo Si-Hyung (Thermage FLX advisor, 4,000+ under-eye fat repositioning cases), Dr. Woo Hye-Jin, Dr. Lee Gi-Wook. Over 20 years of clinical expertise.",
-  ja: "釜山서면スター皮膚科の皮膚科専門医3名をご紹介します。趙時亨院長（써마지FLX顧問医、目の下の脂肪再配置4,000例以上）、禹惠珍院長、李基旭院長。20年以上の臨床経験。",
-  zh: "釜山서면STAR皮肤科三位皮肤科专科医生介绍。赵时亨院长（써마지FLX顾问医、眼下脂肪重置4,000例以上）、禹慧珍院长、李基旭院长。20年以上临床经验。",
-};
-const SEO_KEYWORDS: Record<string, string> = {
-  ko: "스타피부과 의료진, 부산 피부과전문의, 조시형 원장, 우혜진 원장, 이기욱 원장, 서면피부과 전문의, 부산피부과 의사, 써마지 자문의, 눈밑지방재배치 전문의",
-  en: "Star Dermatology doctors, Busan dermatologist, Dr Jo Si-Hyung, board-certified dermatologist Busan, Seomyeon dermatology",
-  ja: "スター皮膚科 医師, 釜山皮膚科専門医, 趙時亨院長, 皮膚科専門医 釜山",
-  zh: "STAR皮肤科 医生, 釜山皮肤科专科医生, 赵时亨院长, 皮肤科专科医生 釜山",
-};
-
-// ── 페이지 제목 다국어 ─────────────────────────────────────────────────────────
-const PAGE_TITLE: Record<string, string> = {
-  ko: "피부과전문의 3인",
-  en: "3 Board-Certified Dermatologists",
-  ja: "皮膚科専門医 3名",
-  zh: "3位皮肤科专科医生",
-};
-const PAGE_TAGLINE: Record<string, string> = {
-  ko: "피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.",
-  en: "When your skin transforms, the specialist's insight makes all the difference.",
-  ja: "肌の格が変わる瞬間、専門医の眼力が違いを生む。",
-  zh: "肌肤蜕变的瞬间，专科医生的眼光创造不同。",
-};
 
 export default function Doctors() {
   const { t, lang } = useLang();
@@ -77,50 +44,24 @@ export default function Doctors() {
 
   // ── SEO ──────────────────────────────────────────────────────────────────────
   const pageUrl = getLocalizedUrl(lang, "/doctors");
-  const seoTitle = SEO_TITLE[lang] ?? SEO_TITLE.ko;
-  const seoDesc = SEO_DESC[lang] ?? SEO_DESC.ko;
-  const seoKeywords = SEO_KEYWORDS[lang] ?? SEO_KEYWORDS.ko;
+  const seo = getDoctorsSeoContent(lang);
   const ogLocale = LANG_TO_OG_LOCALE[lang as keyof typeof LANG_TO_OG_LOCALE] ?? "ko_KR";
   const ogImage = OG_IMAGE_LOCALIZED[lang as keyof typeof OG_IMAGE_LOCALIZED] ?? OG_IMAGE_LOCALIZED.ko;
   const siteName = SITE_NAME_LOCALIZED[lang as keyof typeof SITE_NAME_LOCALIZED] ?? SITE_NAME_LOCALIZED.ko;
 
-  // ── JSON-LD: Person 스키마 3인 ────────────────────────────────────────────────
-  const personSchemas = mergedDoctors.map((d) => ({
-    "@context": "https://schema.org",
-    "@type": "Physician",
-    name: d.name,
-    jobTitle: d.jobTitleEn ?? "Dermatologist",
-    description: d.schemaDescription ?? d.intro?.[0] ?? "",
-    image: `${BASE_URL}${d.image}`,
-    worksFor: {
-      "@type": "MedicalBusiness",
-      name: siteName,
-      url: BASE_URL,
-    },
-    ...(d.alumniOf && {
-      alumniOf: d.alumniOf.map((a) => ({ "@type": "EducationalOrganization", name: a.name, ...(a.url && { url: a.url }) })),
-    }),
-    ...(d.memberOf && {
-      memberOf: d.memberOf.map((m) => ({ "@type": "Organization", name: m.name, ...(m.url && { url: m.url }) })),
-    }),
-    ...(d.award && { award: d.award }),
-    ...(d.sameAs && { sameAs: d.sameAs }),
-    ...(d.availableService && {
-      availableService: d.availableService.map((s) => ({ "@type": "MedicalProcedure", name: s })),
-    }),
-  }));
+  const personSchemas = buildPhysicianJsonLd(mergedDoctors, siteName, BASE_URL);
 
   const breadcrumbSchema = buildBreadcrumbJsonLd([
     { name: siteName, url: BASE_URL },
-    { name: PAGE_TITLE[lang] ?? PAGE_TITLE.ko, url: `${BASE_URL}${pageUrl}` },
+    { name: seo.pageTitle, url: `${BASE_URL}${pageUrl}` },
   ]);
 
   return (
     <MainLayout>
       <SeoHead
-        title={seoTitle}
-        description={seoDesc}
-        keywords={seoKeywords}
+        title={seo.title}
+        description={seo.description}
+        keywords={seo.keywords}
         canonical={`${BASE_URL}${pageUrl}`}
         ogUrl={`${BASE_URL}${pageUrl}`}
         ogLocale={ogLocale}
@@ -147,10 +88,10 @@ export default function Doctors() {
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"
             style={{ color: "#1a1a1a" }}
           >
-            {PAGE_TITLE[lang] ?? PAGE_TITLE.ko}
+            {seo.pageTitle}
           </h1>
           <p className="text-sm sm:text-base" style={{ color: "#6b5c3e" }}>
-            {PAGE_TAGLINE[lang] ?? PAGE_TAGLINE.ko}
+            {seo.pageTagline}
           </p>
         </div>
       </section>

@@ -1,7 +1,9 @@
 # 스타피부과 복제 프로젝트 TODO
 
 - [x] 지연 mount된 홈 시술·장비 섹션의 fallback을 실제 tab·search·card layout 기반 skeleton과 reduced-motion 대응 전환으로 보완 — Suspense와 DB query loading이 동일한 tab·search·6-card skeleton을 사용하고 `aria-busy`·상태 안내·reduced-motion을 지원. actual home에서 Hero·section 정상 전환, source-focused skeleton 1/1·DeferredMount 4/4·query state 2/2, TypeScript, ESLint 오류 0(기존 경고 116), DB 없는 unit 124 files/1,605 tests 통과. build는 6,789 modules 변환 뒤 sandbox 외부 SIGTERM 143으로 종료되어 기존 환경 한계로 기록. 한국어 콘텐츠·예약 CTA 변경 없음
-- [ ] `/en`·`/ja`·`/zh`·`/zh-tw` Price List의 모바일 4G 환경 table을 touch-friendly horizontal scroll·sticky first column·scroll affordance·locale-safe wrapping으로 최적화 — 34개 가격과 데스크톱 디자인은 유지
+- [x] `/en`·`/ja`·`/zh`·`/zh-tw` Price List의 모바일 4G 환경 table을 touch-friendly horizontal scroll·sticky first column·scroll affordance·locale-safe wrapping으로 최적화 — locale별 swipe 안내를 추가하고 category pills를 mobile horizontal scroll로 전환했으며 table은 touch pan·overscroll containment·sticky treatment column을 지원. 390px 일본어 viewport에서 hero·수정일 카드·안내 카드·가로 filter 시작 상태가 정상 표시됨. mobile/locale focused 11/11, TypeScript, ESLint 오류 0(기존 경고 116), DB 없는 unit 128 files/1,614 tests 통과. build는 6,789 modules 변환 뒤 sandbox 외부 SIGTERM 143으로 종료되어 기존 환경 한계로 기록. 34개 가격과 데스크톱 디자인 유지
+- [x] Price List 모바일 QA 보강 1: `/en`·`/zh`·`/zh-tw`를 390px viewport에서 실제 렌더해 locale별 scroll hint·가로 category filter·table overflow·첫 열 sticky 상태를 확인 — 영문은 initial loading placeholder만 포착된 첫 시도를 제외하고 virtual-time 대기 뒤 안정된 UI를 재확인. 영문·중국어 간체·번체 모두 390px에서 hero·수정일·안내 card·CJK/English long text가 container overflow 없이 정상 줄바꿈됨을 실제 캡처로 확인. 4 locale 실제 DOM render test에서 scroll hint·filter wrapper·table scroll wrapper·sticky first column을 검증
+- [x] Price List 모바일 QA 보강 2: table first column과 locale별 category pill·details cell의 줄바꿈 규칙을 명시하고 source string이 아닌 DOM 수준 회귀 테스트로 mobile scroll contract를 강화 — scroll hint를 mobile에 표시하고 horizontal filter는 `shrink-0` pills, table은 `touch-pan-x`·overscroll containment·sticky treatment column, first/details cell은 `break-words`로 명시. DOM mobile test 4/4·locale/data tests 9/9 통과
 
 ## Phase 1: DB 스키마 & 마이그레이션
 - [x] drizzle/schema.ts에 events, popupEvents 테이블 추가

@@ -1,21 +1,13 @@
 /**
- * [DORMANT PAGE - NOT ROUTED]
+ * [LIVE ROUTED PAGE]
  *
- * STATUS: dormant/orphan — not registered in App.tsx.
- * Location info is currently surfaced via ContactSection on the home page.
+ * STATUS: active. App.tsx registers `/directions` and the four locale-prefixed
+ * directions routes. ContactSection is a separate home-page map surface, not a
+ * replacement for this standalone access page.
  *
- * CLASSIFICATION: dormant (future activation candidate)
- *   The /directions standalone page was replaced by the ContactSection
- *   embedded in the home landing flow (with Google Maps integration).
- *   This file is kept as a candidate for a dedicated directions/access page.
- *
- * TO ACTIVATE:
- *   Add <Route path="/directions" component={Directions} /> to App.tsx
- *   and add a nav link in Header.tsx.
- *
- * DO NOT:
- *   - Treat the SeoHead canonical below as an active SEO signal
- *     (canonical is preserved for reference only; page is not live)
+ * This page owns the active SeoHead canonical/hreflang output and the MapView →
+ * embed fallback for its route. Keep route, locale, map fallback, and external
+ * directions links in sync when making a separately approved access-page change.
  */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';

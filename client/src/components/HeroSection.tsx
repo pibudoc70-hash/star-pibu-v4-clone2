@@ -33,6 +33,7 @@ import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
 import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
+import { HOME_SEO_META } from "@/lib/homeSeo";
 export { HERO_DELAYS } from "@/components/hero/constants";
 
 // 슬로건 영한 교차 애니메이션 훅
@@ -47,6 +48,7 @@ function useSloganToggle(intervalMs = 3200) {
 
 function HeroSection() {
   const { t, lang } = useLang();
+  const seoHeading = lang === "ko" ? HOME_SEO_META.title : t.hero.title;
   const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
   const chatUrl = isZH ? "#" : rawChatUrl;
   const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
@@ -107,6 +109,7 @@ function HeroSection() {
       id="home"
       className="relative flex flex-col items-center justify-center overflow-hidden min-h-svh hero-section-root"
     >
+      <h1 className="sr-only">{seoHeading}</h1>
       {/* ── 배경 레이어 ── */}
 
       {/* 데스크톱: 이미지 배경 */}
@@ -168,9 +171,9 @@ function HeroSection() {
           </div>
           {/* 병원명: 글자별 charReveal */}
           {/* [LCP-FIX] startDelay 300→30, charGap 60→6: 마지막 글자 완료 540ms→54ms, LCP 개선 */}
-          <h1 className="font-medium hero-title">
+          <div className="font-medium hero-title" aria-hidden="true">
             <CharReveal text={t.hero.title} startDelay={30} charGap={6} />
-          </h1>
+          </div>
           {/* 슬로건: 단어별 wordReveal */}
           {/* [LCP-FIX] startDelay 900→90, wordGap 85→8 */}
           <p className="font-light hero-subtitle">
@@ -216,7 +219,7 @@ function HeroSection() {
             />
           </div>
           {/* 병원명 */}
-          <h1 className="hero-mobile-title">{t.hero.title}</h1>
+          <div className="hero-mobile-title" aria-hidden="true">{t.hero.title}</div>
           {/* STAR DERMATOLOGY — 사진 배경에 이미 표시되므로 제거 */}
           {/* 슬로건 — 한국어일 때만 영한 교차, 외국어에서는 해당 언어 슬로건만 표시 */}
           <div className="hero-mobile-slogan-wrap">

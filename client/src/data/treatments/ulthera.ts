@@ -90,14 +90,14 @@ export const ulthera: TreatmentI18n = {
   },
 
   seoTitle: {
-    ko: "울쎄라피 프라임 | 부산 서면 스타피부과 · 피부과 전문의 직접 진료",
+    ko: "부산울쎄라 | 울쎄라피 프라임 | 부산 서면 스타피부과",
     en: "Ultherapy Prime | Star Dermatology Seomyeon Busan – Focused Ultrasound Lifting",
     ja: "ウルセラピー プライム | 釜山西面 スター皮膚科 – 集束超音波リフティング",
     zh: "超声刀 Prime | 釜山西面 STAR 皮肤科 – 聚焦超声波提升",
   },
 
   seoDescription: {
-    ko: "울쎄라피 프라임은 HIFU 집속 초음파로 SMAS층까지 자극하는 FDA 승인 비수술 리프팅. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술. 서면역 5·7번 출구 도보 1분.",
+    ko: "부산울쎄라 시술을 찾는 분을 위한 울쎄라피 프라임 안내. 부산 서면 스타피부과에서 피부과 전문의가 직접 시술하며, 마취 옵션 상담이 가능합니다. 서면역 5·7번 출구 도보 1분.",
     en: "Ultherapy Prime at Star Dermatology, Seomyeon, Busan. FDA-cleared non-surgical lifting using HIFU to stimulate the SMAS layer. Same-day return to daily activities. Performed directly by board-certified dermatologists.",
     ja: "釜山西面スター皮膚科のウルセラピー プライム施術案内。HIFUでSMAS層まで刺激するFDA承認の非手術リフティング。施術当日から日常生活に復帰可能。皮膚科専門医が直接施術。",
     zh: "釜山西面STAR皮肤科超声刀Prime施术介绍。HIFU集束超声波刺激SMAS层，经FDA认证的非手术提升疗程。当天可恢复日常生活，由皮肤科专科医生亲自操作。",

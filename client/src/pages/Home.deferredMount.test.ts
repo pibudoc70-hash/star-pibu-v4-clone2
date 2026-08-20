@@ -18,17 +18,26 @@ describe("Home below-the-fold deferred mount contract", () => {
     expect(deferredMountSource).toContain("shouldMount ? children : fallback");
 
     for (const section of [
+      "SpecialEventSection",
+      "DoctorsSection",
+      "TreatmentsEquipmentSection",
       "ManagementDevicesSection",
       "PhilosophySection",
       "ResultsStatisticsSection",
+      "FacilitySection",
       "YouTubeSection",
       "FAQSection",
       "RecentNoticesSection",
+      "ContactSection",
     ]) {
       expect(homeSource).toMatch(
         new RegExp(`<DeferredMount[\\s\\S]*?<${section}`),
       );
     }
+  });
+
+  it("keeps the below-fold Google Maps iframe behind ContactSection's deferred mount", () => {
+    expect(homeSource).toMatch(/<DeferredMount[\s\S]*?<ContactSection/);
   });
 
   it("mounts deferred anchor targets without a page-bottom jump", () => {

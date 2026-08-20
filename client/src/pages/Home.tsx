@@ -490,32 +490,38 @@ export default function Home() {
         </div>
 
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
-        <div className="section-bg-cream">
-          <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
-            <SpecialEventSection />
-          </Suspense>
-        </div>
+        <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
+          <div className="section-bg-cream">
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
+              <SpecialEventSection />
+            </Suspense>
+          </div>
+        </DeferredMount>
 
         {/* 3. Doctors */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
-              <DoctorsSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
+            <div className="section-bg-warm">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
+                <DoctorsSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 4. Treatments + Equipment — [Option A] 순백→크림 소프트 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-cream-soft">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
-              <TreatmentsEquipmentSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
+            <div className="section-bg-cream-soft">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
+                <TreatmentsEquipmentSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 5. Management Devices — [Option B] 다크 네이비→다크 브라운 */}
@@ -567,11 +573,13 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-warm-alt">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
-              <FacilitySection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
+            <div className="section-bg-warm-alt">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
+                <FacilitySection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 8-2. YouTube Channel — [Option B] 다크 딥→다크 브라운 미드 */}
@@ -618,11 +626,13 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-brown">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
-              <ContactSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
+            <div className="section-bg-dark-brown">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
+                <ContactSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
       </main>
 

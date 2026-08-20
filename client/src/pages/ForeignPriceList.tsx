@@ -63,6 +63,7 @@ export default function ForeignPriceList() {
   const copy = PRICE_COPY[locale];
   const categories = getLocalizedForeignPriceCategories(locale);
   const pageUrl = `${BASE_URL}/${locale === "zh-TW" ? "zh-tw" : locale}/price-list`;
+  const showHeroContext = locale !== "ja";
   const [activeFilter, setActiveFilter] = useState<FilterId>("all");
   const visibleCategories = activeFilter === "all"
     ? categories
@@ -98,16 +99,20 @@ export default function ForeignPriceList() {
         <section className="relative overflow-hidden bg-[#101C38] px-5 pb-14 pt-32 text-white md:px-8 md:pb-20 md:pt-36">
           <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" style={{ background: "radial-gradient(circle at 84% 12%, rgba(201,169,98,.34), transparent 32%), radial-gradient(circle at 5% 100%, rgba(59,130,246,.26), transparent 42%)" }} />
           <div className="relative mx-auto max-w-6xl">
-            <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#E6D4A1]">
-              <CircleDollarSign size={17} aria-hidden="true" />
-              {copy.eyebrow}
-            </div>
+            {showHeroContext && (
+              <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#E6D4A1]">
+                <CircleDollarSign size={17} aria-hidden="true" />
+                {copy.eyebrow}
+              </div>
+            )}
             <div className="grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-end">
               <div>
                 <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.035em] md:text-6xl">{copy.title}</h1>
-                <p className="mt-5 max-w-2xl text-base leading-7 text-slate-200 md:text-lg">
-                  {copy.description}
-                </p>
+                {showHeroContext && (
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-200 md:text-lg">
+                    {copy.description}
+                  </p>
+                )}
               </div>
               <div className="rounded-2xl border border-white/15 bg-white/8 p-5 backdrop-blur-sm">
                 <div className="flex items-center gap-2 text-sm font-semibold text-[#F0DFAF]"><CalendarDays size={17} aria-hidden="true" /> {copy.updated}</div>

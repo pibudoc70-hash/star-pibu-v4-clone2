@@ -16,4 +16,9 @@ describe("ForeignPriceList locale rendering", () => {
     expect(pageSource).toContain('back: "返回首页"');
     expect(pageSource).toContain('back: "返回首頁"');
   });
+
+  it("일본어 hero에서는 지정된 외국인 환자 안내 eyebrow와 description을 렌더하지 않는다", () => {
+    expect(pageSource).toContain('const showHeroContext = locale !== "ja";');
+    expect(pageSource).toContain("{showHeroContext && (");
+  });
 });

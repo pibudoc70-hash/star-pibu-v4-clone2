@@ -18,7 +18,6 @@ describe("Home 유지보수성 경계", () => {
     for (const fallback of [
       "specialEvent",
       "doctors",
-      "treatments",
       "managementDevices",
       "philosophy",
       "results",
@@ -30,6 +29,7 @@ describe("Home 유지보수성 경계", () => {
     ]) {
       expect(homeSource).toContain(`HOME_SECTION_FALLBACKS.${fallback}`);
     }
+    expect(homeSource).toContain('fallback={<TreatmentsEquipmentSkeleton id="treatments" />}');
     expect(fallbackSource).toContain("specialEvent");
     expect(fallbackSource).toContain("managementDevices");
     expect(fallbackSource).toContain("contact");

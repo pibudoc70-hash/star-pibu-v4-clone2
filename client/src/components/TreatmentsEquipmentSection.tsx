@@ -21,6 +21,7 @@ import { useLang } from "@/contexts/LangContext";
 import { CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
 import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCard";
 import CategoryTabList from "@/components/treatments/CategoryTabList";
+import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import { useViewportTier } from "@/hooks/useViewportTier";
 import EmptyResultView from "@/components/treatments/EmptyResultView";
 import { sortTreatments } from "@/lib/treatmentSortUtils";
@@ -183,12 +184,8 @@ export default function TreatmentsEquipmentSection() {
           <p className="section-subtitle">{tr.subtitle}</p>
         </div>
 
-        {/* 로딩 스켈레톤 */}
-        {isLoading && (
-            <div className="rounded-2xl px-4 py-8 mb-4 text-center text-sm text-gray-500" style={{ background: "#F3EEE8" }}>
-            {lang === "ko" ? "시술·장비 정보를 불러오는 중..." : lang === "en" ? "Loading treatments..." : lang === "ja" ? "施術・機器情報を読み込み中..." : lang === "zh-TW" ? "療程資訊載入中..." : "正在加载项目信息..."}
-          </div>
-        )}
+        {/* 실제 tab·search·card 구조를 반영한 로딩 스켈레톤 */}
+        {isLoading && <TreatmentsEquipmentSkeleton lang={lang} variant="content" />}
 
         {/* 카테고리 탭 + 검색 */}
         {!isLoading && tabs.length > 0 && (

@@ -1,5 +1,8 @@
 # 스타피부과 복제 프로젝트 TODO
 
+- [x] 지연 mount된 홈 시술·장비 섹션의 fallback을 실제 tab·search·card layout 기반 skeleton과 reduced-motion 대응 전환으로 보완 — Suspense와 DB query loading이 동일한 tab·search·6-card skeleton을 사용하고 `aria-busy`·상태 안내·reduced-motion을 지원. actual home에서 Hero·section 정상 전환, source-focused skeleton 1/1·DeferredMount 4/4·query state 2/2, TypeScript, ESLint 오류 0(기존 경고 116), DB 없는 unit 124 files/1,605 tests 통과. build는 6,789 modules 변환 뒤 sandbox 외부 SIGTERM 143으로 종료되어 기존 환경 한계로 기록. 한국어 콘텐츠·예약 CTA 변경 없음
+- [ ] `/en`·`/ja`·`/zh`·`/zh-tw` Price List의 모바일 4G 환경 table을 touch-friendly horizontal scroll·sticky first column·scroll affordance·locale-safe wrapping으로 최적화 — 34개 가격과 데스크톱 디자인은 유지
+
 ## Phase 1: DB 스키마 & 마이그레이션
 - [x] drizzle/schema.ts에 events, popupEvents 테이블 추가
 - [x] DB 마이그레이션 실행

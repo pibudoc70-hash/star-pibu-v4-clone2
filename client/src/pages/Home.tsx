@@ -23,6 +23,7 @@ import MobileBottomCTA from "@/components/MobileBottomCTA";
 const SpecialEventSection = lazy(() => import("@/components/SpecialEventSection"));
 const DoctorsSection = lazy(() => import("@/components/DoctorsSection"));
 const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEquipmentSection"));
+import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import Footer from "@/components/Footer";
 const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));
 const eyeBagCasesText = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
@@ -512,7 +513,7 @@ export default function Home() {
           animationType="fade-in"
         >
           <div className="section-bg-cream-soft">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
+            <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
               <TreatmentsEquipmentSection />
             </Suspense>
           </div>

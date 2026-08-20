@@ -29,51 +29,30 @@ interface EventCardHeaderProps {
   priceRows: PriceRow[];
   displayPrice: { normalPrice: number; discountPrice: number };
   getLocalizedText: EventCardProps["getLocalizedText"];
-  isExpanded?: boolean;
 }
 
-function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isExpanded = false }: EventCardHeaderProps) {
+function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText }: EventCardHeaderProps) {
   return (
     <div className="flex flex-col">
       {/* 시술명 — 브랜드 골드, 절제된 크기 */}
-      <h3
-        className="font-normal leading-tight mb-2 text-[var(--brand-text,#2C2C2C)]"
-        style={{
-          fontSize: "clamp(1rem, 3.2vw, 1.15rem)",
-          letterSpacing: "-0.01em",
-          fontFamily: "'Noto Serif KR', 'Cormorant Garamond', serif",
-        }}
-      >
+      <h3 className="event-card__title font-normal leading-tight mb-2">
         {getLocalizedText(event, "title")}
       </h3>
 
       {/* 한 줄 카피 — 서브타이틀, 절제된 색상 */}
-      <p
-        className="leading-relaxed mb-3"
-        style={{
-          color: "var(--brand-text-mid, #666666)",
-          fontSize: "clamp(0.78rem, 2.2vw, 0.88rem)",
-          lineHeight: "1.6",
-        }}
-      >
+      <p className="event-card__subtitle leading-relaxed mb-3">
         {getLocalizedText(event, "subtitle")}
       </p>
 
       {/* 상품/시술 라벨 */}
       {priceRows.length > 0 ? (
-        <p
-          className="font-medium mb-4"
-          style={{ color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem", letterSpacing: "0.02em" }}
-        >
+        <p className="event-card__product-label font-medium mb-4">
           {priceRows[0].label}
         </p>
       ) : (
         event.productName && (
-          <p
-            className="font-medium mb-4"
-          style={{ color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem", letterSpacing: "0.02em" }}
-        >
-          {getLocalizedText(event, "productName")}
+          <p className="event-card__product-label font-medium mb-4">
+            {getLocalizedText(event, "productName")}
           </p>
         )
       )}
@@ -81,37 +60,17 @@ function EventCardHeader({ event, priceRows, displayPrice, getLocalizedText, isE
       {/* 가격 영역 — 할인가 강조, 정상가 절제, VAT 포함 배지 */}
       <div className="flex items-center gap-2 flex-wrap mb-0">
         <div className="flex items-baseline gap-2">
-          <span
-            className="font-bold"
-            style={{
-              color: "var(--color-gold-deep)",
-              fontSize: "clamp(1rem, 3vw, 1.2rem)",
-              letterSpacing: "-0.01em",
-            }}
-          >
+          <span className="event-card__discount-price font-bold">
             {displayPrice.discountPrice.toLocaleString()}원
           </span>
           {displayPrice.normalPrice > 0 && (
-            <span
-              className="line-through"
-              style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.78rem", fontWeight: 400 }}
-            >
+            <span className="event-card__normal-price line-through">
               {displayPrice.normalPrice.toLocaleString()}원
             </span>
           )}
         </div>
         {/* VAT 포함 배지 */}
-        <span
-          className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
-          style={{
-            fontSize: "0.68rem",
-            letterSpacing: "0.04em",
-            color: "var(--color-gold-dark, #7A5C35)",
-            background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
-            border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
-            whiteSpace: "nowrap",
-          }}
-        >
+        <span className="event-card__vat-badge inline-flex items-center px-1.5 py-0.5 rounded font-medium">
           VAT 포함
         </span>
       </div>
@@ -149,24 +108,18 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
   const title = getLocalizedText(event, "title");
 
   return (
-    <div
-      className="flex flex-col overflow-hidden card card--event"
-    >
+    <div className="flex flex-col overflow-hidden card card--event">
       {/* 이미지 — PC: 항상 표시 / 모바일: 확장 시에만 표시 */}
       {event.imageUrl && (
         <div
-          className={`overflow-hidden bg-gray-100 ${
+          className={`event-card__media overflow-hidden bg-gray-100 ${
             isExpanded ? "block" : "hidden md:block"
           }`}
-          style={{
-            aspectRatio: "10/6",
-            borderRadius: isExpanded ? "1rem 1rem 0 0" : "1rem 1rem 0 0",
-          }}
         >
           <OptimizedImage
             src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="event-card__media-image w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             width={800}
             height={533}
             priority={false}
@@ -176,7 +129,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
 
       {/* 축소 상태 */}
       {!isExpanded ? (
-        <div className="flex flex-col flex-1" style={{ padding: "1.5rem 1.5rem 1.25rem" }}>
+        <div className="event-card__content flex flex-col flex-1">
           <EventCardHeader
             event={event}
             priceRows={priceRows}
@@ -185,10 +138,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           />
 
           {/* 구분선 — 가격과 CTA 사이 */}
-          <div
-            className="my-4"
-            style={{ height: "1px", background: "linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08), transparent)" }}
-          />
+          <div className="event-card__divider my-4" />
 
           {/* CTA — 카드 구조에 자연스럽게 통합 */}
           <button
@@ -197,63 +147,42 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 자세히 보기`}
-            className="mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5 text-[var(--color-gold-deep)]"
-            style={{
-              background: "transparent",
-              border: "1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent)",
-              fontSize: "0.82rem",
-              letterSpacing: "0.06em",
-              fontWeight: 500,
-            }}
+            className="event-card__toggle mt-auto w-full py-3 font-semibold transition-all duration-300 rounded-xl hover:bg-[#F0EAE0] hover:-translate-y-0.5"
           >
             {event.cta}
           </button>
         </div>
       ) : (
         /* 확장 상태 */
-        <div id={`special-event-detail-${event.id}`} className="flex flex-col flex-1" style={{ padding: "1.5rem 1.5rem 1.25rem" }}>
+        <div id={`special-event-detail-${event.id}`} className="event-card__content flex flex-col flex-1">
           <EventCardHeader
             event={event}
             priceRows={priceRows}
             displayPrice={displayPrice}
             getLocalizedText={getLocalizedText}
-            isExpanded
           />
 
           {/* 구분선 */}
-          <div
-            className="my-4"
-            style={{ height: "1px", background: "linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08), transparent)" }}
-          />
+          <div className="event-card__divider my-4" />
 
           {/* 추가 가격 행 */}
           {hasMultipleRows && (
             <div className="mb-4 space-y-3">
               {priceRows.slice(1).map((row, idx) => (
                 <div key={idx} className="flex items-start justify-between gap-4">
-                  <p className="text-xs font-semibold" style={{ color: "var(--brand-text-mid, #666666)" }}>{row.label}</p>
+                  <p className="event-card__extra-label text-xs font-semibold">{row.label}</p>
                   <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
                     <div className="flex items-baseline gap-1.5">
-                      <p className="font-bold" style={{ color: "var(--color-gold-deep)", fontSize: "0.95rem" }}>
+                      <p className="event-card__discount-price event-card__discount-price--row font-bold">
                         {row.discountPrice.toLocaleString()}원
                       </p>
                       {row.normalPrice > 0 && (
-                        <p className="line-through" style={{ color: "var(--brand-text-light, #BBBBBB)", fontSize: "0.72rem" }}>
+                        <p className="event-card__normal-price event-card__normal-price--row line-through">
                           {row.normalPrice.toLocaleString()}원
                         </p>
                       )}
                     </div>
-                    <span
-                      className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
-                      style={{
-                        fontSize: "0.62rem",
-                        letterSpacing: "0.04em",
-                        color: "var(--color-gold-dark, #7A5C35)",
-                        background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
-                        border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
+                    <span className="event-card__vat-badge event-card__vat-badge--compact inline-flex items-center px-1.5 py-0.5 rounded font-medium">
                       VAT 포함
                     </span>
                   </div>
@@ -265,14 +194,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
           {/* 상세 설명 */}
           {event.desc && (
             <div className="mb-3">
-              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)" }}>{event.desc}</p>
+              <p className="event-card__details text-xs whitespace-pre-wrap leading-relaxed">{event.desc}</p>
             </div>
           )}
 
           {/* 내용 */}
           {event.content && (
             <div className="mb-4">
-              <p className="text-xs whitespace-pre-wrap leading-relaxed" style={{ color: "var(--brand-text-mid, #666666)" }}>{event.content}</p>
+              <p className="event-card__details text-xs whitespace-pre-wrap leading-relaxed">{event.content}</p>
             </div>
           )}
 
@@ -282,15 +211,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
               href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 px-4 py-2.5 font-semibold rounded-xl transition-all duration-200 text-center hover:opacity-85"
-              style={{ background: chatBg, color: chatColor, fontSize: "0.82rem", letterSpacing: "0.02em" }}
+              className="event-card__consult-link flex-1 px-4 py-2.5 font-semibold rounded-xl transition-all duration-200 text-center hover:opacity-85"
+              style={{ background: chatBg, color: chatColor }}
             >
               {chatLabel}
             </a>
             <a
               href={phoneHref}
-              className="flex-1 px-4 py-2.5 font-medium rounded-xl transition-all duration-200 text-center hover:opacity-85"
-              style={{ backgroundColor: "var(--brand-bg-alt, #F5F0EB)", color: "var(--brand-text-mid, #666666)", fontSize: "0.82rem" }}
+              className="event-card__consult-link event-card__consult-link--phone flex-1 px-4 py-2.5 font-medium rounded-xl transition-all duration-200 text-center hover:opacity-85"
             >
               {phoneLabel}
             </a>
@@ -303,8 +231,7 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
             aria-expanded={isExpanded}
             aria-controls={`special-event-detail-${event.id}`}
             aria-label={`${title} 접기`}
-            className="w-full py-2.5 font-medium rounded-xl transition-colors text-sm text-[var(--brand-text-light,#BBBBBB)]"
-            style={{ background: "transparent", border: "1px solid rgba(201,168,76,0.12)", fontSize: "0.78rem", letterSpacing: "0.04em" }}
+            className="event-card__collapse w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
           >
             접기
           </button>

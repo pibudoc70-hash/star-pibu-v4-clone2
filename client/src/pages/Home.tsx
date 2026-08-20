@@ -436,9 +436,15 @@ export default function Home() {
       />
       {/* Fixed Header */}
       <Header />
+      <a
+        href="#main-content"
+        className="sr-only fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--color-star-navy)] px-4 py-3 text-sm font-semibold text-white shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold-primary)] focus:ring-offset-2"
+      >
+        본문으로 건너뛰기
+      </a>
 
       {/* Main Content */}
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
         <LiftingPositioningSummary />

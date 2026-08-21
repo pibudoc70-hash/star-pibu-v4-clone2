@@ -21,6 +21,18 @@ interface PopupEvent {
   updatedAt?: Date | number | null;
 }
 
+function getSafePopupClickUrl(value: string): string | null {
+  const url = value.trim();
+  if (url.startsWith("/") && !url.startsWith("//")) return url;
+
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "https:" || protocol === "http:" ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function WelcomePopup() {
   const { lang } = useLang();
   const [visible, setVisible] = useState(false);
@@ -42,12 +54,6 @@ export default function WelcomePopup() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
-
-  useEffect(() => {
-    if (error) {
-      console.warn("[WelcomePopup] 팡업 데이터 로드 실패:", error.message);
-    }
-  }, [error]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -91,20 +97,22 @@ export default function WelcomePopup() {
 
   useEffect(() => {
     if (visible) {
+      const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       lastFocusedRef.current = document.activeElement as HTMLElement;
       requestAnimationFrame(() => {
         const btn = dialogRef.current?.querySelector<HTMLElement>('button[aria-label]');
         btn?.focus();
       });
-    } else {
-      document.body.style.overflow = "";
-      requestAnimationFrame(() => {
-        lastFocusedRef.current?.focus();
-        lastFocusedRef.current = null;
-      });
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
     }
-    return () => { document.body.style.overflow = ""; };
+
+    requestAnimationFrame(() => {
+      lastFocusedRef.current?.focus();
+      lastFocusedRef.current = null;
+    });
   }, [visible]);
 
   useEffect(() => {
@@ -145,8 +153,9 @@ export default function WelcomePopup() {
   if (!ev) return null;
 
   const handleImageClick = () => {
-    if (ev.clickUrl) {
-      window.open(ev.clickUrl, '_blank');
+    const safeUrl = ev.clickUrl ? getSafePopupClickUrl(ev.clickUrl) : null;
+    if (safeUrl) {
+      window.open(safeUrl, "_blank", "noopener,noreferrer");
     }
     dismiss();
   };

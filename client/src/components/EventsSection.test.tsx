@@ -231,4 +231,19 @@ describe("EventsSection query states", () => {
       expect(link).toHaveAttribute("href", "/events/1");
     }
   });
+
+  it("keeps featured and list detail links separate from their share controls", async () => {
+    featuredState = queryState({ data: [event] });
+    listState = queryState({ data: [event] });
+
+    render(<EventsSection />);
+
+    await waitFor(() => expect(screen.getAllByRole("link", { name: "테스트 이벤트 자세히 보기" })).toHaveLength(2));
+    for (const link of screen.getAllByRole("link", { name: "테스트 이벤트 자세히 보기" })) {
+      expect(link).toHaveAttribute("href", "/events/1");
+    }
+    for (const shareButton of screen.getAllByRole("button", { name: "공유" })) {
+      expect(shareButton.closest("a")).toBeNull();
+    }
+  });
 });

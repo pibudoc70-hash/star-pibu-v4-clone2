@@ -46,4 +46,10 @@ describe("useEventSkeletonTiming", () => {
     expect(clearMarks).toHaveBeenCalledWith(EVENT_SKELETON_VISIBLE_MARK);
     expect(clearMeasures).toHaveBeenCalledWith(EVENT_SKELETON_DURATION_MEASURE);
   });
+
+  it("fresh 또는 stale cached data처럼 skeleton이 처음부터 없으면 metric을 전송하지 않는다", () => {
+    render(<TimingProbe visible={false} />);
+
+    expect(trackEventSkeleton).not.toHaveBeenCalled();
+  });
 });

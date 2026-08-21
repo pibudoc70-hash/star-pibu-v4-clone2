@@ -41,7 +41,7 @@ describe("Home below-the-fold deferred mount contract", () => {
   });
 
   it("mounts deferred anchor targets without a page-bottom jump", () => {
-    const anchorSelectors = ["#events", "#management-devices", "#results-statistics", "#faq"];
+    const anchorSelectors = ["#events", "#facility", "#management-devices", "#results-statistics", "#faq"];
 
     expect(deferredMountSource).toContain("anchorSelectors");
     expect(deferredMountSource).toContain('"star-pibu:mount-anchor"');

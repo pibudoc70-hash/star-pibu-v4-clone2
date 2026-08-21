@@ -583,7 +583,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}
+            anchorSelectors={["#facility"]}
+          >
             <div className="section-bg-warm-alt">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
                 <FacilitySection />

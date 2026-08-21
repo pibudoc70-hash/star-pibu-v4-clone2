@@ -295,24 +295,20 @@ export default function FacilitySection() {
                 <button type="button"
                   key={i}
                   onClick={() => setCurrentIndex(i)}
-                  className="transition-all duration-300"
-                  style={{
-                    width: i === currentIndex ? "10px" : "8px",
-                    height: i === currentIndex ? "10px" : "8px",
-                    minWidth: i === currentIndex ? "10px" : "8px",
-                    minHeight: i === currentIndex ? "10px" : "8px",
-                    maxWidth: i === currentIndex ? "10px" : "8px",
-                    maxHeight: i === currentIndex ? "10px" : "8px",
-                    borderRadius: "50%",
-                    background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
-                    cursor: "pointer",
-                    padding: 0,
-                    border: "none",
-                    flexShrink: 0,
-                    display: "block",
-                  }}
+                  className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A961] focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
                   aria-label={fc.goToSlideLabel.replace("{n}", String(i + 1))}
-                />
+                  aria-current={i === currentIndex ? "true" : undefined}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="block rounded-full transition-all duration-300"
+                    style={{
+                      width: i === currentIndex ? "10px" : "8px",
+                      height: i === currentIndex ? "10px" : "8px",
+                      background: i === currentIndex ? "#C9A961" : "rgba(255,255,255,0.4)",
+                    }}
+                  />
+                </button>
               ))}
             </div>
           </div>

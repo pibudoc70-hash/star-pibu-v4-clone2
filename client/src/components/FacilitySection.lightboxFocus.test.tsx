@@ -76,4 +76,20 @@ describe("Facility lightbox focus lifecycle", () => {
     expect(trigger).toHaveFocus();
     expect(document.body.style.overflow).toBe("");
   });
+
+  it("does not intercept keyboard focus when the lightbox is closed", () => {
+    const { container } = renderFacility();
+    const trigger = container.querySelector<HTMLButtonElement>(".facility-grid-thumb");
+    expect(trigger).not.toBeNull();
+    trigger?.focus();
+
+    const tab = new KeyboardEvent("keydown", { key: "Tab", bubbles: true, cancelable: true });
+    document.dispatchEvent(tab);
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(tab.defaultPrevented).toBe(false);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(document.body.style.overflow).toBe("");
+  });
 });

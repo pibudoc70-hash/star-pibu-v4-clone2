@@ -497,7 +497,10 @@ export default function Home() {
         </div>
 
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
-        <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
+        <DeferredMount
+          fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
+          anchorSelectors={["#events"]}
+        >
           <div className="section-bg-cream">
             <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
               <SpecialEventSection />

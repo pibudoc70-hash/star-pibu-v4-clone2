@@ -3210,14 +3210,23 @@
   overflow-y: auto;
 }
 .consultation-select-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
   padding: 0.625rem 1rem;
   font-size: 0.9375rem;
+  font: inherit;
+  text-align: left;
   color: var(--brand-text);
   cursor: pointer;
   transition: background 0.15s ease;
   min-height: 44px;
   display: flex;
   align-items: center;
+}
+.consultation-select-item:focus-visible {
+  outline: 2px solid var(--color-gold-primary);
+  outline-offset: -2px;
 }
 .consultation-select-item:hover {
   background: color-mix(in srgb, var(--color-gold-primary) 8%, transparent);

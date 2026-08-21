@@ -406,8 +406,9 @@ export default function ConsultationFormSection() {
                     className="consultation-select-list"
                   >
                     {c.concerns.map((item: string) => (
-                      <li
+                      <button
                         key={item}
+                        type="button"
                         role="option"
                         aria-selected={form.concern === item}
                         onClick={() => {
@@ -418,7 +419,7 @@ export default function ConsultationFormSection() {
                         className={`consultation-select-item${form.concern === item ? " consultation-select-item--selected" : ""}`}
                       >
                         {item}
-                      </li>
+                      </button>
                     ))}
                   </ul>
                 )}

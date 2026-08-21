@@ -96,30 +96,30 @@ export default function YouTubeSection() {
 
   useEffect(() => {
     if (!selectedVideo) return;
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeModal();
-    };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [selectedVideo, closeModal]);
+    const handleModalKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (event.key !== "Tab") return;
 
-  // S1-T5: focus trap — Tab/Shift+Tab 모달 내부 순환
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== 'Tab') return;
-    const focusable = modalRef.current?.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (!focusable?.length) return;
-    const first = focusable[0] as HTMLElement;
-    const last = focusable[focusable.length - 1] as HTMLElement;
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }, []);
+      const focusable = modalRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0] as HTMLElement;
+      const last = focusable[focusable.length - 1] as HTMLElement;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleModalKeyDown);
+    return () => document.removeEventListener("keydown", handleModalKeyDown);
+  }, [selectedVideo, closeModal]);
 
   const openModal = useCallback((video: YouTubeVideo, triggerElement: HTMLElement) => {
     setSelectedVideo(video);
@@ -376,9 +376,15 @@ export default function YouTubeSection() {
           role="dialog"
           aria-modal="true"
           aria-labelledby={MODAL_TITLE_ID}
-          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
-          onKeyDown={handleKeyDown}
         >
+          <button
+            type="button"
+            data-testid="youtube-modal-backdrop"
+            aria-label={yt.closeModal}
+            tabIndex={-1}
+            onClick={closeModal}
+            className="absolute inset-0 cursor-default border-0 bg-transparent p-0"
+          />
           {/* 모달 컨테이너 - viewport 중앙에 고정 */}
           <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 w-full max-w-4xl px-4 flex justify-center">
           {modalType === 'video' ? (

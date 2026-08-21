@@ -58,6 +58,8 @@ export interface UseEquipment3AsTreatmentsReturn {
   /** 전체 Treatment 목록 (탭 필터 없음) */
   allTreatments: Treatment[];
   isLoading: boolean;
+  isError: boolean;
+  refetch: () => void;
 }
 
 /**
@@ -165,7 +167,11 @@ function toTreatment(item: {
 }
 
 export function useEquipment3AsTreatments(): UseEquipment3AsTreatmentsReturn {
-  const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
+  const { data: rawItems = [], isLoading, isError, refetch: queryRefetch } = trpc.equipment3.list.useQuery();
+
+  const refetch = () => {
+    void queryRefetch();
+  };
 
   // 탭 목록 생성 (Equipment3 페이지와 동일한 로직)
   const tabs = useMemo<Equipment3Tab[]>(() => {
@@ -228,5 +234,5 @@ export function useEquipment3AsTreatments(): UseEquipment3AsTreatmentsReturn {
     return map;
   }, [tabs, allTreatments, rawItems]);
 
-  return { tabs, treatmentsByTab, allTreatments, isLoading };
+  return { tabs, treatmentsByTab, allTreatments, isLoading, isError, refetch };
 }

@@ -16,6 +16,7 @@ import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
 import { parseEventListError } from "@/lib/errorMessages";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
+import { useEventSkeletonTiming } from "@/hooks/useEventSkeletonTiming";
 
 /** 뷰포트 근접 시점까지 데이터 조회를 미뤄 초기 홈 요청을 줄인다. */
 function useVisibleFetch(rootMargin = "300px 0px"): [RefObject<HTMLElement>, boolean] {
@@ -133,6 +134,8 @@ export default function SpecialEventSection() {
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
   const [showMore, setShowMore] = useState(false);
+  const isInitialSkeletonVisible = !isFetchVisible || isLoading;
+  useEventSkeletonTiming(isInitialSkeletonVisible);
 
   // 에러 발생 시 토스트 알림
   useEffect(() => {
@@ -140,7 +143,7 @@ export default function SpecialEventSection() {
     toast.error(parseEventListError(error, lang), { duration: 5000 });
   }, [error, lang]);
 
-  if (!isFetchVisible || isLoading) {
+  if (isInitialSkeletonVisible) {
     return (
       <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트" aria-busy="true">
         <span ref={fetchRef} aria-hidden="true" />

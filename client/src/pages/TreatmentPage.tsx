@@ -232,6 +232,7 @@ export default function TreatmentPage() {
   const seoTitle = pickLocalized(treatment.seoTitle, currentLang);
   const seoDescription = pickLocalized(treatment.seoDescription, currentLang);
   const seoKeywords = pickLocalized(treatment.seoKeywords, currentLang);
+  const treatmentH1 = currentLang === "ko" ? seoTitle : treatmentName;
   const faqItems = [
     ...pickLocalizedFaq(treatment.faq, currentLang),
     ...(isPainSensitiveLifting(treatment.slug) ? LIFTING_FAQS[currentLang] : []),
@@ -290,7 +291,7 @@ export default function TreatmentPage() {
               <p className="text-xs font-semibold tracking-widest mb-2 text-white/70 uppercase">
                 {treatmentCategory} · {treatment.nameEn}
               </p>
-              <h1 className="text-3xl md:text-4xl font-bold mb-3">{treatmentName}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold mb-3">{treatmentH1}</h1>
               <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
                 {treatmentDesc}
               </p>

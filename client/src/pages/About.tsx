@@ -2,12 +2,12 @@
  * About Page - 피부과 소개
  *
  * [PAGE LIFECYCLE] localized live page (정책 확정: PR-38)
- * - route: /about, /en/about, /ja/about, /zh/about (App.tsx live)
+ * - route: /about, /en/about, /ja/about, /zh/about, /zh-tw/about (App.tsx live)
  * - canonical: lang 기반 동적 계산 (ko → /about, 기타 → /{lang}/about)
  * - ogUrl: canonical과 동일
  * - ogLocale: LANG_TO_OG_LOCALE[lang] (언어별 정렬)
- * - hreflangs: buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")
- * - title/description/keywords: ko/en/ja/zh 언어별 정렬
+ * - hreflangs: buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about", "/zh-tw/about")
+ * - title/description/keywords: ko/en/ja/zh/zh-TW 언어별 정렬
  * - 본문: t.about.desc / t.about.values / t.access (i18n 중앙화 완료)
  * - noindex: 없음 (전체 색인 허용)
  *
@@ -30,18 +30,21 @@ export default function About() {
   const seoTitle =
     lang === "ja" ? "クリニック紹介 | 釜山西面スター皮膚科 - 20年の経験を持つ皮膚科専門医" :
     lang === "zh" ? "诊所介绍 | 釜山西面星皮肤科 - 20年经验皮肤科专科医生" :
+    lang === "zh-TW" ? "診所介紹｜釜山西面STAR皮膚科" :
     lang === "en" ? "About Us | Star Dermatology Clinic Busan - 20 Years of Expert Care" :
     "피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의";
 
   const seoDescription =
     lang === "ja" ? "釜山西面スター皮膚科をご紹介します。20年の経験を持つ皮膚科専門医が直接診療し、ウルセラピー・サーマジ・リフティング・色素治療などプレミアム治療を提供しています。" :
     lang === "zh" ? "介绍釜山西面星皮肤科。拥有20年经验的皮肤科专科医生亲自诊疗，提供热玛吉、提升、色素治疗等高端治疗项目。" :
+    lang === "zh-TW" ? "介紹釜山西面STAR皮膚科的診療理念、醫師團隊、診療時間與交通資訊。" :
     lang === "en" ? "About Star Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more." :
     "부산 서면 스타피부과를 소개합니다. 20년 경력의 피부과 전문의가 직접 진료하며, 울쎄라, 써마지, 리프팅, 색소질환 등 프리미엄 시술을 제공합니다.";
 
   const seoKeywords =
     lang === "ja" ? "釜山皮膚科, スター皮膚科, 皮膚科専門医, 西面皮膚科, 釜山リフティング" :
     lang === "zh" ? "釜山皮肤科, 星皮肤科, 皮肤科专科, 西面皮肤科, 釜山提升" :
+    lang === "zh-TW" ? "釜山皮膚科, STAR皮膚科, 西面皮膚科, 皮膚科專科, 診所介紹" :
     lang === "en" ? "Busan dermatology, Star Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
     "부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅";
 
@@ -49,6 +52,7 @@ export default function About() {
   const accessLabels =
     lang === "ja" ? { address: "住所", subway: "地下鉄", bus: "バス", parking: "駐車場" } :
     lang === "zh" ? { address: "地址", subway: "地铁", bus: "公交", parking: "停车" } :
+    lang === "zh-TW" ? { address: "地址", subway: "地鐵", bus: "公車", parking: "停車" } :
     lang === "en" ? { address: "Address", subway: "Subway", bus: "Bus", parking: "Parking" } :
     { address: "주소", subway: "지하철", bus: "버스", parking: "주차" };
 
@@ -56,18 +60,21 @@ export default function About() {
   const aboutUsLabel =
     lang === "ja" ? "クリニック紹介" :
     lang === "zh" ? "诊所介绍" :
+    lang === "zh-TW" ? "診所介紹" :
     lang === "en" ? "About Us" :
     "피부과 소개";
 
   const medicalTeamAlt =
     lang === "ja" ? "医療チーム" :
     lang === "zh" ? "医疗团队" :
+    lang === "zh-TW" ? "醫療團隊" :
     lang === "en" ? "Medical Team" :
     "의료진";
 
   const sinceLabel =
     lang === "ja" ? "2006年創業" :
     lang === "zh" ? "创立于2006年" :
+    lang === "zh-TW" ? "自2006年起" :
     lang === "en" ? "Est. 2006" :
     "Since 2006";
 
@@ -82,11 +89,11 @@ export default function About() {
         ogImage={OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko}
         ogSiteName={SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko}
         ogLocale={LANG_TO_OG_LOCALE[lang] ?? "ko_KR"}
-        hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about")}
+        hreflangs={buildHreflangs("/about", "/en/about", "/ja/about", "/zh/about", "/zh-tw/about")}
         pageType="treatment"
         jsonLd={[buildBreadcrumbJsonLd([
-          { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈", url: BASE_URL + "/" },
-          { name: lang === "en" ? "About" : lang === "ja" ? "クリニック紹介" : lang === "zh" ? "关于我们" : "병원 소개", url: pageUrl },
+          { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : lang === "zh-TW" ? "首頁" : "홈", url: BASE_URL + "/" },
+          { name: lang === "en" ? "About" : lang === "ja" ? "クリニック紹介" : lang === "zh" ? "关于我们" : lang === "zh-TW" ? "診所介紹" : "병원 소개", url: pageUrl },
         ])]}
       />
       {/* 피부과 소개 섹션 - About Us */}
@@ -135,6 +142,7 @@ export default function About() {
                 >
                   {lang === "ja" ? "医療陣を見る →"
                    : lang === "zh" ? "查看医疗团队 →"
+                   : lang === "zh-TW" ? "查看醫師團隊 →"
                    : lang === "en" ? "Meet Our Doctors →"
                    : "의료진 소개 보기 →"}
                 </a>

@@ -14,6 +14,7 @@ import {
 import { updateAdminReservationStatus, normalizeYouTubeCreatePayload, getAdminStats } from "../services/admin.service";
 import { invalidateCache } from "../_core/cache";
 import { logger } from "../_core/logger";
+import { YOUTUBE_VIDEO_ID_PATTERN } from "../_core/imageProxyPolicy";
 
 export const adminRouter = router({
   // 회원 목록 조회
@@ -129,7 +130,7 @@ export const adminRouter = router({
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
-        videoId: z.string().min(1).max(50),
+        videoId: z.string().regex(YOUTUBE_VIDEO_ID_PATTERN),
         type: z.enum(["video", "shorts"]),
         sortOrder: z.number().optional(),
       }))
@@ -143,7 +144,7 @@ export const adminRouter = router({
       .input(z.object({
         id: z.number(),
         title: z.string().min(1).max(255).optional(),
-        videoId: z.string().min(1).max(50).optional(),
+        videoId: z.string().regex(YOUTUBE_VIDEO_ID_PATTERN).optional(),
         type: z.enum(["video", "shorts"]).optional(),
         sortOrder: z.number().optional(),
         isActive: z.enum(["0", "1"]).optional(),

@@ -18,12 +18,17 @@ describe("Home below-the-fold deferred mount contract", () => {
     expect(deferredMountSource).toContain("shouldMount ? children : fallback");
 
     for (const section of [
+      "SpecialEventSection",
+      "DoctorsSection",
+      "TreatmentsEquipmentSection",
       "ManagementDevicesSection",
       "PhilosophySection",
       "ResultsStatisticsSection",
+      "FacilitySection",
       "YouTubeSection",
       "FAQSection",
       "RecentNoticesSection",
+      "ContactSection",
     ]) {
       expect(homeSource).toMatch(
         new RegExp(`<DeferredMount[\\s\\S]*?<${section}`),
@@ -31,8 +36,12 @@ describe("Home below-the-fold deferred mount contract", () => {
     }
   });
 
+  it("keeps the below-fold Google Maps iframe behind ContactSection's deferred mount", () => {
+    expect(homeSource).toMatch(/<DeferredMount[\s\S]*?<ContactSection/);
+  });
+
   it("mounts deferred anchor targets without a page-bottom jump", () => {
-    const anchorSelectors = ["#management-devices", "#results-statistics", "#faq"];
+    const anchorSelectors = ["#events", "#facility", "#management-devices", "#results-statistics", "#faq"];
 
     expect(deferredMountSource).toContain("anchorSelectors");
     expect(deferredMountSource).toContain('"star-pibu:mount-anchor"');
@@ -40,6 +49,9 @@ describe("Home below-the-fold deferred mount contract", () => {
     for (const selector of anchorSelectors) {
       expect(homeSource).toContain(`anchorSelectors={["${selector}"]}`);
     }
+
+    expect(homeSource).toContain('telemetrySurface="home_events"');
+    expect(homeSource).toContain('telemetrySurface="home_facility"');
   });
 
   it("mounts a subtree only after its observer enters the viewport margin", () => {

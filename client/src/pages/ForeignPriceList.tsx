@@ -12,14 +12,14 @@ type FilterId = "all" | (typeof FOREIGN_PRICE_CATEGORIES)[number]["id"];
 const PRICE_COPY: Record<ForeignPriceLocale, {
   eyebrow: string; title: string; description: string; updated: string; vat: string; back: string;
   noteTitle: string; noteText: string; careTitle: string; careText: string; sectionEyebrow: string;
-  sectionTitle: string; listed: string; all: string; treatment: string; details: string; price: string;
+  sectionTitle: string; listed: string; all: string; treatment: string; details: string; price: string; scrollHint: string;
   reference: string; seoTitle: string; seoDescription: string; seoKeywords: string;
 }> = {
   en: {
     eyebrow: "Foreign patient information", title: "Price List", description: "A clear overview of treatment pricing for international patients. All amounts are shown in Korean won (KRW).",
     updated: "Last updated", vat: "Prices include VAT unless a row specifically notes otherwise.", back: "Back to English home",
     noteTitle: "Please note:", noteText: "Treatment suitability and the final care plan are determined after an in-person consultation.", careTitle: "Included care", careText: "is shown only where it appears in the source price list.",
-    sectionEyebrow: "Treatment pricing", sectionTitle: "Find a treatment category", listed: "listed prices", all: "All treatments", treatment: "Treatment", details: "Details", price: "Price (VAT incl.)",
+    sectionEyebrow: "Treatment pricing", sectionTitle: "Find a treatment category", listed: "listed prices", all: "All treatments", treatment: "Treatment", details: "Details", price: "Price (VAT incl.)", scrollHint: "Swipe horizontally to view all price details.",
     reference: "Price information is provided for reference. Please confirm the most current treatment plan and any applicable additional fees during your consultation.",
     seoTitle: "Foreign Patient Price List | Star Dermatology Busan", seoDescription: "Foreign patient treatment prices at Star Dermatology in Busan. Prices are shown in KRW and include VAT unless noted.", seoKeywords: "Busan dermatology price list, foreign patient skin clinic price, Ultherapy Prime price Busan, Thermage FLX price Korea, Star Dermatology",
   },
@@ -27,7 +27,7 @@ const PRICE_COPY: Record<ForeignPriceLocale, {
     eyebrow: "患者向け情報", title: "料金表", description: "すべての金額は韓国ウォン（KRW）で表示しています。",
     updated: "最終更新日", vat: "特記がない限り、料金はVAT込みです。", back: "ホームへ戻る",
     noteTitle: "ご案内：", noteText: "施術の適応と最終的なケアプランは、ご来院後の診察で決定します。", careTitle: "含まれるケア", careText: "は、料金表に記載がある場合に限ります。",
-    sectionEyebrow: "施術料金", sectionTitle: "施術カテゴリーを選択", listed: "件の料金", all: "すべての施術", treatment: "施術", details: "詳細", price: "料金（VAT込み）",
+    sectionEyebrow: "施術料金", sectionTitle: "施術カテゴリーを選択", listed: "件の料金", all: "すべての施術", treatment: "施術", details: "詳細", price: "料金（VAT込み）", scrollHint: "横にスワイプして料金詳細を確認できます。",
     reference: "料金はご案内用です。最新の施術プランおよび追加費用の有無は、診察時にご確認ください。",
     seoTitle: "外国人患者料金表｜釜山STAR皮膚科", seoDescription: "釜山STAR皮膚科の外国人患者向け施術料金表です。金額は韓国ウォン表示、特記がない限りVAT込みです。", seoKeywords: "釜山皮膚科料金, 外国人患者料金表, ウルセラピー釜山, サーマジFLX韓国, STAR皮膚科",
   },
@@ -35,7 +35,7 @@ const PRICE_COPY: Record<ForeignPriceLocale, {
     eyebrow: "外籍患者信息", title: "价格表", description: "为国际患者提供清晰的治疗价格参考。所有金额均以韩元（KRW）标示。",
     updated: "最后更新", vat: "除非特别注明，价格均含增值税。", back: "返回首页",
     noteTitle: "请注意：", noteText: "治疗适用性及最终护理方案将在到院面诊后确定。", careTitle: "含管理", careText: "仅在价格表明确标示时提供。",
-    sectionEyebrow: "治疗价格", sectionTitle: "选择治疗分类", listed: "项价格", all: "全部治疗", treatment: "治疗项目", details: "详情", price: "价格（含税）",
+    sectionEyebrow: "治疗价格", sectionTitle: "选择治疗分类", listed: "项价格", all: "全部治疗", treatment: "治疗项目", details: "详情", price: "价格（含税）", scrollHint: "左右滑动即可查看完整价格详情。",
     reference: "价格信息仅供参考。请在咨询时确认最新治疗方案及可能产生的额外费用。",
     seoTitle: "外籍患者价格表｜釜山STAR皮肤科", seoDescription: "釜山STAR皮肤科外籍患者治疗价格表。金额以韩元标示，除非另有说明均含增值税。", seoKeywords: "釜山皮肤科价格, 外籍患者价格表, 超声刀釜山, 热玛吉FLX韩国, STAR皮肤科",
   },
@@ -43,7 +43,7 @@ const PRICE_COPY: Record<ForeignPriceLocale, {
     eyebrow: "外國患者資訊", title: "價格表", description: "為國際患者提供清晰的療程價格參考。所有金額均以韓元（KRW）標示。",
     updated: "最後更新", vat: "除非特別註明，價格均含加值稅。", back: "返回首頁",
     noteTitle: "請注意：", noteText: "療程適用性及最終照護方案將於到院面診後確認。", careTitle: "含管理", careText: "僅於價格表明確標示時提供。",
-    sectionEyebrow: "療程價格", sectionTitle: "選擇療程分類", listed: "項價格", all: "全部療程", treatment: "療程項目", details: "詳細內容", price: "價格（含稅）",
+    sectionEyebrow: "療程價格", sectionTitle: "選擇療程分類", listed: "項價格", all: "全部療程", treatment: "療程項目", details: "詳細內容", price: "價格（含稅）", scrollHint: "左右滑動即可查看完整價格詳情。",
     reference: "價格資訊僅供參考。請於諮詢時確認最新療程方案及可能產生的額外費用。",
     seoTitle: "外國患者價格表｜釜山STAR皮膚科", seoDescription: "釜山STAR皮膚科外國患者療程價格表。金額以韓元標示，除非另有說明均含加值稅。", seoKeywords: "釜山皮膚科價格, 外國患者價格表, Ultherapy釜山, Thermage FLX韓國, STAR皮膚科",
   },
@@ -151,13 +151,13 @@ export default function ForeignPriceList() {
             <p className="text-sm text-slate-500">{visibleCategories.reduce((count, category) => count + category.items.length, 0)} {copy.listed}</p>
           </div>
 
-          <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Filter price categories">
+          <div className="mb-8 -mx-1 flex gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" role="tablist" aria-label="Filter price categories">
             <button
               type="button"
               role="tab"
               aria-selected={activeFilter === "all"}
               onClick={() => setActiveFilter("all")}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === "all" ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
+              className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === "all" ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
             >
               <ListFilter className="mr-1.5 inline" size={15} aria-hidden="true" /> {copy.all}
             </button>
@@ -168,7 +168,7 @@ export default function ForeignPriceList() {
                 key={category.id}
                 aria-selected={activeFilter === category.id}
                 onClick={() => setActiveFilter(category.id)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === category.id ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
+                className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === category.id ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
               >
                 {category.label}
               </button>
@@ -181,11 +181,12 @@ export default function ForeignPriceList() {
                 <header className="border-b border-[#E8EDF3] bg-[#FCFBF8] px-5 py-4 md:px-7">
                   <h3 id={`price-category-${category.id}`} className="text-xl font-bold tracking-[-0.02em] text-[#172033]">{category.label}</h3>
                 </header>
-                <div className="overflow-x-auto">
+                <p className="border-b border-[#E8EDF3] px-5 py-2 text-xs font-medium text-slate-500 md:hidden">{copy.scrollHint}</p>
+                <div className="overflow-x-auto overscroll-x-contain touch-pan-x" aria-label={copy.scrollHint} tabIndex={0}>
                   <table className="w-full min-w-[640px] border-collapse text-left">
                     <thead className="bg-[#F7F9FC] text-xs uppercase tracking-[0.12em] text-slate-500">
                       <tr>
-                        <th scope="col" className="px-5 py-3 font-semibold md:px-7">{copy.treatment}</th>
+                        <th scope="col" className="sticky left-0 z-10 bg-[#F7F9FC] px-5 py-3 font-semibold shadow-[2px_0_8px_rgba(23,32,51,.05)] md:px-7">{copy.treatment}</th>
                         <th scope="col" className="px-5 py-3 font-semibold">{copy.details}</th>
                         <th scope="col" className="px-5 py-3 text-right font-semibold md:px-7">{copy.price}</th>
                       </tr>
@@ -193,8 +194,8 @@ export default function ForeignPriceList() {
                     <tbody>
                       {category.items.map((item) => (
                         <tr key={`${item.name}-${item.details ?? ""}`} className="border-t border-[#EDF1F5] align-top">
-                          <td className="px-5 py-4 text-sm font-semibold text-[#172033] md:px-7">{item.name}</td>
-                          <td className="px-5 py-4 text-sm leading-5 text-slate-600">
+                          <td className="sticky left-0 z-10 max-w-[12rem] break-words bg-white px-5 py-4 text-sm font-semibold text-[#172033] shadow-[2px_0_8px_rgba(23,32,51,.05)] md:px-7">{item.name}</td>
+                          <td className="break-words px-5 py-4 text-sm leading-5 text-slate-600">
                             {item.details ?? "—"}
                             {item.note && <span className="mt-1 block text-xs leading-5 text-[#9A7123]">{item.note}</span>}
                           </td>

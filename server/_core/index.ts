@@ -20,13 +20,15 @@ import { registerTreatmentPrerender } from "./treatmentPrerender";
 import { registerHomePrerender } from "./homePrerender";
 import { registerEquipmentPrerender } from "./equipmentPrerender";
 import { registerContentPrerender } from "./contentPrerender";
+import { registerDoctorsPrerender } from "./doctorsPrerender";
+import { registerAboutPrerender } from "./aboutPrerender";
 import { registerStaticMapRoute } from "./staticMapRoute"; // [Step67-C]
 import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
 import { validateEnv } from "./envSchema";
 import { logger } from "./logger";
 import { buildDegradedPayload, buildHealthyPayload } from "./health";
-import { getSafeImageContentType } from "./imageProxyPolicy";
+import { getSafeImageContentType, isValidYouTubeVideoId } from "./imageProxyPolicy";
 import { createPopupImageProxyHandler } from "./popupImageProxy";
 import { sql as sqlRaw } from "drizzle-orm";
 import crypto from "crypto";
@@ -136,8 +138,8 @@ async function startServer() {
   // YouTube 썸네일 프록시 라우터 (LRU 캐시 적용)
   app.get('/api/youtube-thumbnail/:videoId', async (req, res) => {
     const { videoId } = req.params;
-    if (!videoId) {
-      res.status(400).send('Missing videoId');
+    if (!videoId || !isValidYouTubeVideoId(videoId)) {
+      res.status(400).send('Invalid videoId');
       return;
     }
 
@@ -249,6 +251,8 @@ async function startServer() {
   registerHomePrerender(app);
   registerEquipmentPrerender(app);
   registerContentPrerender(app);
+  registerAboutPrerender(app);
+  registerDoctorsPrerender(app);
   // [Step61-B] 시술 상세 크롤러 대응. 정적 서빙보다 먼저 등록해야 한다.
   registerTreatmentPrerender(app);
   registerSitemapDynamic(app);

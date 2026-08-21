@@ -21,6 +21,7 @@ import { useLang } from "@/contexts/LangContext";
 import { CAT_IMG_BG, CAT_TAB_TEXT } from "@/data/treatments/categories";
 import EquipmentTreatmentCard from "@/components/treatments/EquipmentTreatmentCard";
 import CategoryTabList from "@/components/treatments/CategoryTabList";
+import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import { useViewportTier } from "@/hooks/useViewportTier";
 import EmptyResultView from "@/components/treatments/EmptyResultView";
 import { sortTreatments } from "@/lib/treatmentSortUtils";
@@ -28,6 +29,7 @@ import type { SortBy } from "@/lib/treatmentSortUtils";
 import type { Treatment } from "@/types/treatment";
 // [DB 통합] equipment3 DB 어댑터 훅
 import { useEquipment3AsTreatments } from "@/hooks/useEquipment3AsTreatments";
+import { useTreatmentsSkeletonTiming } from "@/hooks/useTreatmentsSkeletonTiming";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // [R22-P0-2] 3단계 breakpoint 정책 (Tailwind sm/md 동기화)
@@ -55,7 +57,8 @@ export default function TreatmentsEquipmentSection() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // [DB 통합] equipment3 DB에서 데이터 로드
-  const { tabs, treatmentsByTab, isLoading } = useEquipment3AsTreatments();
+  const { tabs, treatmentsByTab, isLoading, isError, refetch } = useEquipment3AsTreatments();
+  useTreatmentsSkeletonTiming(isLoading);
 
   // 첫 탭 자동 선택 (DB 로드 후)
   useEffect(() => {
@@ -170,6 +173,15 @@ export default function TreatmentsEquipmentSection() {
   // 검색 중일 때 표시할 안내 문구
   const searchPlaceholder = lang === "ko" ? "시술·장비 검색" : lang === "en" ? "Search treatments" : lang === "ja" ? "施術・機器を検索" : lang === "zh-TW" ? "搜尋療程" : "搜索项目";
   const searchResultLabel = lang === "ko" ? `"${searchQuery}" 검색 결과 ${filteredTreatments.length}건` : lang === "en" ? `${filteredTreatments.length} results for "${searchQuery}"` : lang === "ja" ? `「${searchQuery}」の検索結果 ${filteredTreatments.length}件` : lang === "zh-TW" ? `「${searchQuery}」的搜尋結果 ${filteredTreatments.length} 筆` : `"${searchQuery}" 的搜索结果 ${filteredTreatments.length} 条`;
+  const queryStateCopy = lang === "ko"
+    ? { error: "시술·장비 정보를 불러오지 못했습니다.", retry: "다시 시도", empty: "현재 등록된 시술·장비 정보가 없습니다." }
+    : lang === "en"
+      ? { error: "Treatment and equipment information could not be loaded.", retry: "Try again", empty: "No treatment and equipment information is available." }
+      : lang === "ja"
+        ? { error: "施術・機器情報を読み込めませんでした。", retry: "再試行", empty: "現在、登録されている施術・機器情報はありません。" }
+        : lang === "zh-TW"
+          ? { error: "無法載入療程與儀器資訊。", retry: "重新載入", empty: "目前沒有已登錄的療程與儀器資訊。" }
+          : { error: "无法加载项目与设备信息。", retry: "重试", empty: "目前没有已登记的项目与设备信息。" };
 
   return (
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label={tr.label} role="region">
@@ -183,15 +195,30 @@ export default function TreatmentsEquipmentSection() {
           <p className="section-subtitle">{tr.subtitle}</p>
         </div>
 
-        {/* 로딩 스켈레톤 */}
-        {isLoading && (
-            <div className="rounded-2xl px-4 py-8 mb-4 text-center text-sm text-gray-500" style={{ background: "#F3EEE8" }}>
-            {lang === "ko" ? "시술·장비 정보를 불러오는 중..." : lang === "en" ? "Loading treatments..." : lang === "ja" ? "施術・機器情報を読み込み中..." : lang === "zh-TW" ? "療程資訊載入中..." : "正在加载项目信息..."}
+        {/* 실제 tab·search·card 구조를 반영한 로딩 스켈레톤 */}
+        {isLoading && <TreatmentsEquipmentSkeleton lang={lang} variant="content" />}
+
+        {isError && (
+          <div role="alert" aria-live="assertive" className="rounded-2xl px-4 py-8 mb-4 text-center" style={{ background: "#F3EEE8" }}>
+            <p className="text-sm text-[var(--color-star-text-mid)]">{queryStateCopy.error}</p>
+            <button
+              type="button"
+              onClick={refetch}
+              className="mt-4 rounded-xl border border-[var(--color-gold-light)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-star-text)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"
+            >
+              {queryStateCopy.retry}
+            </button>
+          </div>
+        )}
+
+        {!isLoading && !isError && tabs.length === 0 && (
+          <div role="status" aria-live="polite" className="rounded-2xl px-4 py-8 mb-4 text-center text-sm text-[var(--color-star-text-mid)]" style={{ background: "#F3EEE8" }}>
+            {queryStateCopy.empty}
           </div>
         )}
 
         {/* 카테고리 탭 + 검색 */}
-        {!isLoading && tabs.length > 0 && (
+        {!isLoading && !isError && tabs.length > 0 && (
           <>
               <div className="rounded-2xl px-4 py-4 mb-4" style={{ background: "#F3EEE8" }}>
               {/* 검색 입력 */}

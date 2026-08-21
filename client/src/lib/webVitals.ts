@@ -5,9 +5,12 @@
 const isDev = import.meta.env.DEV;
 
 export type WebVitalMetric = "lcp" | "inp";
+export type LazyMountSurface = "home_events" | "home_facility";
+type PerformanceMetric = WebVitalMetric | "lazy_mount" | "event_skeleton" | "treatments_skeleton";
+type PerformanceSurface = LazyMountSurface | "home_special_event" | "home_treatments_equipment";
 
 type UmamiTracker = {
-  track?: (eventName: string, data: { metric: WebVitalMetric; value: number; locale: string }) => void;
+  track?: (eventName: string, data: { metric: PerformanceMetric; value: number; locale: string; surface?: PerformanceSurface }) => void;
 };
 
 function getUmamiTracker() {
@@ -22,6 +25,42 @@ export function trackWebVital(metric: WebVitalMetric, value: number) {
     metric,
     value: Math.round(value),
     locale: document.documentElement.lang || "ko",
+  });
+}
+
+/** Emits an anonymous anchor-driven lazy-mount duration without selectors, URLs, or user data. */
+export function trackLazyMount(surface: LazyMountSurface, value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("lazy_mount", {
+    metric: "lazy_mount",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface,
+  });
+}
+
+/** Emits only the rounded initial EVENT skeleton duration and document language. */
+export function trackEventSkeleton(value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("event_skeleton", {
+    metric: "event_skeleton",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface: "home_special_event",
+  });
+}
+
+/** Emits only the rounded initial treatments/equipment skeleton duration and document language. */
+export function trackTreatmentsSkeleton(value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("treatments_skeleton", {
+    metric: "treatments_skeleton",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface: "home_treatments_equipment",
   });
 }
 

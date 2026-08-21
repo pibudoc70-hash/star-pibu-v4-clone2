@@ -23,6 +23,7 @@ import MobileBottomCTA from "@/components/MobileBottomCTA";
 const SpecialEventSection = lazy(() => import("@/components/SpecialEventSection"));
 const DoctorsSection = lazy(() => import("@/components/DoctorsSection"));
 const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEquipmentSection"));
+import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import Footer from "@/components/Footer";
 const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));
 const eyeBagCasesText = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
@@ -436,9 +437,15 @@ export default function Home() {
       />
       {/* Fixed Header */}
       <Header />
+      <a
+        href="#main-content"
+        className="sr-only fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--color-star-navy)] px-4 py-3 text-sm font-semibold text-white shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold-primary)] focus:ring-offset-2"
+      >
+        본문으로 건너뛰기
+      </a>
 
       {/* Main Content */}
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
         <LiftingPositioningSummary />
@@ -490,32 +497,42 @@ export default function Home() {
         </div>
 
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
-        <div className="section-bg-cream">
-          <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
-            <SpecialEventSection />
-          </Suspense>
-        </div>
+        <DeferredMount
+          fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
+          anchorSelectors={["#events"]}
+          telemetrySurface="home_events"
+        >
+          <div className="section-bg-cream">
+            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
+              <SpecialEventSection />
+            </Suspense>
+          </div>
+        </DeferredMount>
 
         {/* 3. Doctors */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-warm">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
-              <DoctorsSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
+            <div className="section-bg-warm">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
+                <DoctorsSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 4. Treatments + Equipment — [Option A] 순백→크림 소프트 */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-cream-soft">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.treatments} />}>
-              <TreatmentsEquipmentSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
+            <div className="section-bg-cream-soft">
+              <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
+                <TreatmentsEquipmentSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 5. Management Devices — [Option B] 다크 네이비→다크 브라운 */}
@@ -567,11 +584,17 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <div className="section-bg-warm-alt">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
-              <FacilitySection />
-            </Suspense>
-          </div>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}
+            anchorSelectors={["#facility"]}
+            telemetrySurface="home_facility"
+          >
+            <div className="section-bg-warm-alt">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
+                <FacilitySection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
 
         {/* 8-2. YouTube Channel — [Option B] 다크 딥→다크 브라운 미드 */}
@@ -618,11 +641,13 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
-          <div className="section-bg-dark-brown">
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
-              <ContactSection />
-            </Suspense>
-          </div>
+          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
+            <div className="section-bg-dark-brown">
+              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
+                <ContactSection />
+              </Suspense>
+            </div>
+          </DeferredMount>
         </ScrollAnimationWrapper>
       </main>
 

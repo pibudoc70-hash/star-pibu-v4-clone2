@@ -2609,6 +2609,130 @@
   transform: translateY(calc(var(--card-hover-lift, -6px) + 2px));
   box-shadow: 0 16px 40px color-mix(in srgb, var(--color-gold-primary) 16%, transparent), 0 4px 12px rgba(0, 0, 0, 0.06);
 }
+
+/* EventCard pilot — component-scoped static visual rules only.
+   Event data, dynamic image URL, price values, expanded state, and CTA colors stay in EventCard.tsx. */
+.event-card__media {
+  aspect-ratio: 10 / 6;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.event-card__content {
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.event-card__title {
+  color: var(--brand-text, #2C2C2C);
+  font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
+  letter-spacing: -0.01em;
+}
+
+.event-card__subtitle {
+  color: var(--brand-text-mid, #666666);
+  font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+  line-height: 1.6;
+}
+
+.event-card__product-label,
+.event-card__extra-label,
+.event-card__details {
+  color: var(--brand-text-mid, #666666);
+}
+
+.event-card__product-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.event-card__discount-price {
+  color: var(--color-gold-deep);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  letter-spacing: -0.01em;
+}
+
+.event-card__discount-price--row {
+  font-size: 0.95rem;
+}
+
+.event-card__normal-price {
+  color: var(--brand-text-light, #BBBBBB);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.event-card__normal-price--row {
+  font-size: 0.72rem;
+}
+
+.event-card__vat-badge {
+  color: var(--color-gold-dark, #7A5C35);
+  background: color-mix(in srgb, var(--color-gold-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.event-card__vat-badge--compact {
+  font-size: 0.62rem;
+}
+
+.event-card__divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08), transparent);
+}
+
+.event-card__toggle {
+  color: var(--color-gold-deep);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.event-card__toggle:focus-visible,
+.event-card__collapse:focus-visible,
+.event-card__consult-link:focus-visible {
+  outline: 2px solid var(--color-gold-primary);
+  outline-offset: 3px;
+}
+
+.event-card__details {
+  line-height: 1.625;
+}
+
+.event-card__consult-link {
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.event-card__consult-link--phone {
+  color: var(--brand-text-mid, #666666);
+  background-color: var(--brand-bg-alt, #F5F0EB);
+}
+
+.event-card__collapse {
+  color: var(--brand-text-light, #BBBBBB);
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-card__media-image,
+  .event-card__toggle {
+    transition-duration: 0.01ms;
+  }
+
+  .event-card__media-image:hover,
+  .event-card__toggle:hover {
+    transform: none;
+  }
+}
+
 /* .card--doctor: 의사 카드 변형 (dr-panel-card 별칭 — 하위 호환) */
 .card--doctor {
   background: white;

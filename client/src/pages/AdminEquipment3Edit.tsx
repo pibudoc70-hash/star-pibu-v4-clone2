@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EquipmentFaqEditor } from "@/components/admin/EquipmentFaqEditor";
 import { ArrowLeft, Upload, X, Loader, Languages, CheckCircle } from "lucide-react";
+import { getAdminErrorDetails } from "@/lib/errorMessages";
 
 // 카테고리 목록 (Equipment3와 동일)
 const CATEGORY_OPTIONS = [
@@ -221,8 +222,8 @@ export default function AdminEquipment3Edit() {
       });
       setTranslateDone(true);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "알 수 없는 오류";
-      alert(`❌ 자동 번역 실패: ${msg}`);
+      const { message, code } = getAdminErrorDetails(err, "equipment3.translate");
+      alert(`❌ 자동 번역 실패\n${message}\n오류 코드: ${code}`);
     } finally {
       setTranslating(false);
     }
@@ -262,8 +263,8 @@ export default function AdminEquipment3Edit() {
       setSeoDone(true);
       setTimeout(() => setSeoDone(false), 4000);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "알 수 없는 오류";
-      alert(`❌ SEO 자동생성 실패: ${msg}`);
+      const { message, code } = getAdminErrorDetails(err, "equipment3.seo-generate");
+      alert(`❌ SEO 자동생성 실패\n${message}\n오류 코드: ${code}`);
     } finally {
       setGeneratingSeo(false);
     }
@@ -372,8 +373,8 @@ export default function AdminEquipment3Edit() {
       alert("✅ 시술 정보가 수정되었습니다!");
       navigate("/admin/equipment3");
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "알 수 없는 오류";
-      alert(`❌ 수정 실패: ${msg}`);
+      const { message, code } = getAdminErrorDetails(err, "equipment3.update");
+      alert(`❌ 수정 실패\n${message}\n오류 코드: ${code}`);
     } finally {
       setSubmitting(false);
     }

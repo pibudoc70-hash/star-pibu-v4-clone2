@@ -17,7 +17,14 @@ export {
 import type { TRPCClientErrorLike } from "@trpc/client";
 import { parseTRPCError, type Lang } from "@/components/reservation/errorMessages";
 
-export type AdminErrorOperation = "equipment3.load" | "equipment3.update" | "equipment3.delete" | "equipment3.reorder";
+export type AdminErrorOperation =
+  | "equipment3.load"
+  | "equipment3.create"
+  | "equipment3.update"
+  | "equipment3.delete"
+  | "equipment3.reorder"
+  | "equipment3.translate"
+  | "equipment3.seo-generate";
 
 export type AdminErrorDetails = {
   code: string;

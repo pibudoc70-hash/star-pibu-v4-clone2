@@ -135,4 +135,17 @@ describe("getAdminErrorDetails", () => {
     expect(details.code).toBe("ADM-EQUIPMENT3-LOAD-UNEXPECTED");
     expect(details.message).not.toContain("/srv/private");
   });
+
+  it("creates stable codes for Equipment3 create and SEO generation without exposing raw backend details", () => {
+    const details = getAdminErrorDetails(
+      makeTRPCError("token=secret&stack=/srv/private.ts", "BAD_REQUEST"),
+      "equipment3.create"
+    );
+
+    expect(details).toEqual({
+      code: "ADM-EQUIPMENT3-CREATE-INVALID",
+      message: "입력 내용을 확인한 후 다시 시도해 주세요.",
+    });
+    expect(details.message).not.toContain("secret");
+  });
 });

@@ -17,6 +17,8 @@ const SAFE_IMAGE_CONTENT_TYPES = new Set([
   "image/x-icon",
 ]);
 
+export const YOUTUBE_VIDEO_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
+
 const STORAGE_CONTENT_TYPES: Record<string, readonly string[]> = {
   avif: ["image/avif"],
   gif: ["image/gif"],
@@ -54,6 +56,10 @@ export function isAllowedStorageUrl(rawUrl: string): boolean {
 export function isAllowedPopupImageUrl(rawUrl: string): boolean {
   const url = parseApprovedHttpsUrl(rawUrl);
   return Boolean(url && POPUP_IMAGE_HOSTS.has(url.hostname));
+}
+
+export function isValidYouTubeVideoId(videoId: string): boolean {
+  return YOUTUBE_VIDEO_ID_PATTERN.test(videoId);
 }
 
 export function getSafeStorageContentType(key: string, header: string | null): string | null {

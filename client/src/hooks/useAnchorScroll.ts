@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 const MIN_ANCHOR_SCROLL_DURATION_MS = 650;
 const MAX_ANCHOR_SCROLL_DURATION_MS = 2400;
+const FINAL_PIN_DELAY_MS = 800;
 
 function getStartOffset(element: Element): number {
   const scrollMarginTop = Number.parseFloat(window.getComputedStyle(element).scrollMarginTop);
@@ -32,11 +33,16 @@ interface ScrollOptions {
 
 export function useAnchorScroll() {
   const activeFrameRef = useRef<number | null>(null);
+  const activePinTimerRef = useRef<number | null>(null);
 
   const cancel = useCallback(() => {
     if (activeFrameRef.current !== null) {
       cancelAnimationFrame(activeFrameRef.current);
       activeFrameRef.current = null;
+    }
+    if (activePinTimerRef.current !== null) {
+      window.clearTimeout(activePinTimerRef.current);
+      activePinTimerRef.current = null;
     }
   }, []);
 
@@ -74,6 +80,14 @@ export function useAnchorScroll() {
           MAX_ANCHOR_SCROLL_DURATION_MS,
           Math.max(MIN_ANCHOR_SCROLL_DURATION_MS, Math.abs(initialTargetTop - initialTop) / 4),
         );
+        const pinTimerId = window.setTimeout(() => {
+          activePinTimerRef.current = null;
+          const finalTop = Math.max(0, getTargetTop(element));
+          if (Math.abs(window.scrollY - finalTop) > 4) {
+            window.scrollTo({ top: finalTop, behavior: "auto" });
+          }
+        }, duration + FINAL_PIN_DELAY_MS);
+        activePinTimerRef.current = pinTimerId;
         let startedAt: number | null = null;
         const animate = (now: number) => {
           startedAt ??= now;

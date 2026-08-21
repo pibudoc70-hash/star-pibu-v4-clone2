@@ -24,6 +24,7 @@ describe("useAnchorScroll", () => {
   });
 
   beforeEach(() => {
+    vi.useFakeTimers();
     scrollY = 0;
     queuedFrame = null;
     Object.defineProperty(window, "scrollY", { configurable: true, get: () => scrollY });
@@ -38,6 +39,7 @@ describe("useAnchorScroll", () => {
 
   afterEach(() => {
     scrollTo.mockClear();
+    vi.useRealTimers();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
@@ -88,24 +90,28 @@ describe("useAnchorScroll", () => {
     const finalFrame = queuedFrame;
     finalFrame?.(650);
 
-    expect(scrollTo).toHaveBeenLastCalledWith({ top: 1504, behavior: "auto" });
+    facilityAbsoluteTop = 1800;
+    vi.advanceTimersByTime(1450);
+
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: 1704, behavior: "auto" });
   });
 
   it("EVENT anchor에도 동일한 단일 연속 animation 계약을 적용한다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
     const events = document.querySelector("#events") as HTMLElement;
     const eventButton = getByRole("button", { name: "EVENT" });
-    vi.spyOn(events, "getBoundingClientRect").mockReturnValue({
-      top: 700,
-      bottom: 1100,
+    const eventAbsoluteTop = 700;
+    vi.spyOn(events, "getBoundingClientRect").mockImplementation(() => ({
+      top: eventAbsoluteTop - scrollY,
+      bottom: eventAbsoluteTop - scrollY + 400,
       height: 400,
       left: 0,
       right: 0,
       width: 100,
       x: 0,
-      y: 700,
+      y: eventAbsoluteTop - scrollY,
       toJSON: () => ({}),
-    });
+    }));
 
     mockScrollMargin();
     fireEvent.click(eventButton);

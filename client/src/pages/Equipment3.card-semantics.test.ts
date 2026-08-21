@@ -17,6 +17,8 @@ describe("Equipment3 detail card navigation semantics", () => {
     expect(cardSource).toContain("aria-label={`${name} ${detail}`}");
     expect(cardSource).toContain("focus-visible:ring-2");
     expect(cardSource).toContain("focus-visible:ring-offset-2");
+    expect(cardSource).toContain("focus-visible:ring-[var(--focus-ring)]");
+    expect(cardSource).not.toContain("focus-visible:ring-[#d1ab67]");
     expect(cardSource).not.toContain('role="button"');
     expect(cardSource).not.toContain('onClick={() => setLocation(detailPath)}');
     expect(cardSource).not.toContain('onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}');

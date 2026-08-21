@@ -551,7 +551,7 @@ export default function Equipment3() {
                       <button
                         type="button"
                         onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
-                        className="pr-4 pl-2 text-gray-400 hover:text-gray-600 flex-shrink-0 transition-colors"
+                        className="min-w-11 min-h-11 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 flex-shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                         aria-label={getText("검색어 지우기", "Clear search", "検索をクリア", "清除搜索")}
                       >
                         <X size={16} />

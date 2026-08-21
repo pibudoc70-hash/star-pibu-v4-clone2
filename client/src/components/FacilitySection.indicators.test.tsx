@@ -46,6 +46,8 @@ describe("FacilitySection carousel indicators", () => {
       expect(indicator.className).toContain("w-11");
       expect(indicator.className).toContain("h-11");
       expect(indicator.className).toContain("focus-visible:ring-2");
+      expect(indicator.className).toContain("focus-visible:ring-[var(--focus-ring)]");
+      expect(indicator.className).not.toContain("focus-visible:ring-[#C9A961]");
     }
   });
 

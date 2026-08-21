@@ -295,7 +295,7 @@ export default function FacilitySection() {
                 <button type="button"
                   key={i}
                   onClick={() => setCurrentIndex(i)}
-                  className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A961] focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                  className="w-11 h-11 shrink-0 flex items-center justify-center rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
                   aria-label={fc.goToSlideLabel.replace("{n}", String(i + 1))}
                   aria-current={i === currentIndex ? "true" : undefined}
                 >

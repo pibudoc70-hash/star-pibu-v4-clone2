@@ -54,3 +54,9 @@
 `clinic-stats.ts`로 이미 보호되는 2006, 20년, 3인, 4,000례, 50종은 병원이 새 기준을 제공하기 전까지 변경하지 않는다. 1:1, 누적 10,000명+, 원장 직접 담당의 세부 범위, 결과·안전성·통증/진정 서술은 근거·허용 wording·locale source가 확정되기 전까지 정본화하거나 자동 번역하지 않는다.
 
 이 대장은 변경 승인 요청서의 입력 양식이며, 그 자체는 병원 확인이나 의료광고 적합성 승인을 대체하지 않는다.
+
+## 2026-08 실행 상태
+
+이번 작업 범위에서 병원·원장이 승인한 evidence, Korean approved wording, approver, verified date는 제공되지 않았다. 따라서 1:1 진료·상담, 누적 10,000명+, 원장 직접 진료/시술의 세부 범위, 결과·안전성·통증/진정 문구는 현재 wording을 변경하거나 다른 source로 복사하지 않는다.
+
+> **보류 결정:** 이 claim family들은 code, database, JSON-LD, `llms*.txt`, locale copy, CTA에서 변경 0건으로 유지한다. 병원이 대장의 필수 승인 정보를 제공한 뒤에만 claim family별로 독립된 change set과 regression 검증을 시작한다.

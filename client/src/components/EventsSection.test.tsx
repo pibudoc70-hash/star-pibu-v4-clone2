@@ -1,9 +1,13 @@
 import React from "react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { i18n } from "@/lib/i18n";
 import EventsSection from "./EventsSection";
+
+const eventsSectionSource = readFileSync(resolve(process.cwd(), "client/src/components/EventsSection.tsx"), "utf8");
 
 const event = {
   id: 1,
@@ -216,6 +220,31 @@ describe("EventsSection query states", () => {
 
     expect(screen.getByText("등록된 이벤트가 없습니다.")).toBeInTheDocument();
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("derives filtered events without filteredList effect state", () => {
+    expect(eventsSectionSource).not.toContain("const [filteredList, setFilteredList]");
+    expect(eventsSectionSource).not.toMatch(/useEffect\(\(\) => \{[\s\S]*setFilteredList/);
+  });
+
+  it("updates the visible list immediately for category changes and fresh query data", () => {
+    const newTreatment = { ...event, id: 2, title: "신규 시술", category: "신규시술" as const, isFeatured: "0" as const };
+    const notice = { ...event, id: 3, title: "공지", category: "공지사항" as const, isFeatured: "0" as const };
+    listState = queryState({ data: [event, newTreatment, notice] });
+    const { rerender } = render(<EventsSection />);
+
+    expect(screen.getByText("테스트 이벤트")).toBeInTheDocument();
+    expect(screen.getByText("신규 시술")).toBeInTheDocument();
+    expect(screen.getByText("공지")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "신규시술" }));
+    expect(screen.getByText("신규 시술")).toBeInTheDocument();
+    expect(screen.queryByText("공지")).not.toBeInTheDocument();
+
+    listState = queryState({ data: [{ ...newTreatment, title: "갱신된 신규 시술" }] });
+    rerender(<EventsSection />);
+    expect(screen.getByText("갱신된 신규 시술")).toBeInTheDocument();
+    expect(screen.queryByText("신규 시술")).not.toBeInTheDocument();
   });
 
   it("keeps existing cards as native detail links when stale data has a refetch error", async () => {

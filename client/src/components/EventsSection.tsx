@@ -5,7 +5,7 @@
  * 반응형: 모바일 1열 → 태블릿/데스크탑 2열 Featured 카드
  * 데이터: tRPC events.featured, events.listEvents에서 동적 로드
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Calendar, Bell, ArrowRight, Tag, Zap, Sparkles, ChevronRight, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -52,7 +52,6 @@ export default function EventsSection() {
   const sectionRef = useSectionReveal(60); // [Step64]
 
   const [activeCategory, setActiveCategory] = useState(ev_t.filterAll);
-  const [filteredList, setFilteredList] = useState<Event[]>([]);
 
   // tRPC 쿼리
   const {
@@ -76,28 +75,27 @@ export default function EventsSection() {
   }, [ev_t.filterAll]);
 
   // 필터링 로직 - DB 카테고리 값은 고정(한국어)이므로 카테고리 매핑 사용
-  const categoryMap: Record<string, string> = {
-    [ev_t.filterAll]: "전체",
-    [ev_t.filterNew]: "신규시술",
-    [ev_t.filterEvent]: "이벤트",
-    [ev_t.filterNotice]: "공지사항",
-    [ev_t.filterEtc]: "기타",
-  };
-
-  useEffect(() => {
-    if (!listData) {
-      setFilteredList([]);
-      return;
-    }
-    const dbCategory = categoryMap[activeCategory] ?? "전체";
-    if (dbCategory === "전체") {
-      setFilteredList(listData);
-    } else {
-      setFilteredList(listData.filter((e) => e.category === dbCategory));
-    }
-  }, [activeCategory, listData]);
+  const categoryMap = useMemo<Record<string, string>>(
+    () => ({
+      [ev_t.filterAll]: "전체",
+      [ev_t.filterNew]: "신규시술",
+      [ev_t.filterEvent]: "이벤트",
+      [ev_t.filterNotice]: "공지사항",
+      [ev_t.filterEtc]: "기타",
+    }),
+    [ev_t.filterAll, ev_t.filterNew, ev_t.filterEvent, ev_t.filterNotice, ev_t.filterEtc],
+  );
 
   const dbActiveCategory = categoryMap[activeCategory] ?? "전체";
+  const filteredList = useMemo(
+    () =>
+      !listData
+        ? []
+        : dbActiveCategory === "전체"
+          ? listData
+          : listData.filter((event) => event.category === dbActiveCategory),
+    [dbActiveCategory, listData],
+  );
   const showFeatured =
     dbActiveCategory === "전체" || dbActiveCategory === "이벤트" || dbActiveCategory === "신규시술";
 

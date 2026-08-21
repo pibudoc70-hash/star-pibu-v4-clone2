@@ -172,7 +172,7 @@ export default function EventsSection() {
               onClick={retryEvents}
               disabled={isRetrying}
               aria-busy={isRetrying}
-              className="mt-5 min-h-11 rounded-lg border border-[var(--color-gold-primary)] px-5 text-sm font-normal text-[var(--color-gold-primary)] transition-colors hover:bg-[var(--brand-bg-alt,#F5F0EB)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-5 min-h-11 rounded-lg border border-[var(--color-gold-primary)] px-5 text-sm font-normal text-[var(--color-gold-primary)] transition-colors hover:bg-[var(--brand-bg-alt,#F5F0EB)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isRetrying ? ev_t.loading : retryLabel}
             </button>
@@ -202,7 +202,7 @@ export default function EventsSection() {
                 <a
                   href={`/events/${ev.id}`}
                   aria-label={`${ev.title} ${ev_t.viewDetail}`}
-                  className="relative block rounded-2xl p-6 sm:p-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
+                  className="relative block rounded-2xl p-6 sm:p-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
                 >
                   {/* Badge + Hot */}
                   <div className="flex items-center gap-2 mb-3">
@@ -281,7 +281,7 @@ export default function EventsSection() {
                 <a
                   href={`/events/${ev.id}`}
                   aria-label={`${ev.title} ${ev_t.viewDetail}`}
-                  className="block rounded-xl p-4 sm:p-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
+                  className="block rounded-xl p-4 sm:p-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
                 >
                   <div className="flex items-start justify-between gap-4 pr-11">
                   {/* Left: Icon + Content */}

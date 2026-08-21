@@ -65,6 +65,7 @@
   --color-gold-pale: #F0EAE0;
   --color-gold-deep: #A8895E;
   --color-gold-dark: #7A5C35;
+  --focus-ring: var(--color-gold-primary);
   /* Brand Backgrounds */
   --brand-bg: #FAF8F5;
   --brand-bg-alt: #F5F0EB;

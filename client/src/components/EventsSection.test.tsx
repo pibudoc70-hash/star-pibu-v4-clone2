@@ -8,6 +8,7 @@ import { i18n } from "@/lib/i18n";
 import EventsSection from "./EventsSection";
 
 const eventsSectionSource = readFileSync(resolve(process.cwd(), "client/src/components/EventsSection.tsx"), "utf8");
+const indexCssSource = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 const event = {
   id: 1,
@@ -225,6 +226,12 @@ describe("EventsSection query states", () => {
   it("derives filtered events without filteredList effect state", () => {
     expect(eventsSectionSource).not.toContain("const [filteredList, setFilteredList]");
     expect(eventsSectionSource).not.toMatch(/useEffect\(\(\) => \{[\s\S]*setFilteredList/);
+  });
+
+  it("uses the semantic focus-ring token without changing the existing gold focus color", () => {
+    expect(indexCssSource).toContain("--focus-ring: var(--color-gold-primary);");
+    expect(eventsSectionSource).toContain("focus-visible:outline-[var(--focus-ring)]");
+    expect(eventsSectionSource).not.toContain("focus-visible:outline-[var(--color-gold-primary)]");
   });
 
   it("updates the visible list immediately for category changes and fresh query data", () => {

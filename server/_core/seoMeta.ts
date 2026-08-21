@@ -75,11 +75,11 @@ export function injectPageSeoMeta(template: string, pathname: string): string {
     .join("\n    ");
 
   return template
-    .replace(/<link\s+rel="canonical"[^>]*\/?>(\s*)/i, "")
-    .replace(/<link\s+rel="alternate"\s+hreflang="[^"]+"[^>]*\/?>(\s*)/gi, "")
-    .replace(/<meta\s+property="og:locale:alternate"[^>]*\/?>(\s*)/gi, "")
+    .replace(/<link\b(?=[^>]*\brel="canonical")[^>]*\/?>(\s*)/gi, "")
+    .replace(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="[^"]+")[^>]*\/?>(\s*)/gi, "")
+    .replace(/<meta\b(?=[^>]*\bproperty="og:locale:alternate")[^>]*\/?>(\s*)/gi, "")
     .replace(
-      /<meta\s+property="og:locale"[^>]*\/?>(\s*)/i,
+      /<meta\b(?=[^>]*\bproperty="og:locale")[^>]*\/?>(\s*)/i,
       `<meta data-server-seo="true" property="og:locale" content="${OG_LOCALES[locale]}" />$1`,
     )
     .replace(

@@ -8,8 +8,8 @@ import { ABOUT_PRERENDER_CACHE_CONTROL, buildAboutPrerenderedHtml, registerAbout
 
 const template = `<!doctype html><html lang="ko"><head>
 <title>fallback</title>
-<meta name="description" content="fallback" />
-<meta name="keywords" content="fallback" />
+<meta data-rh="true" data-seo-fallback="home" name="description" content="fallback" />
+<meta data-rh="true" data-seo-fallback="home" name="keywords" content="fallback" />
 <meta property="og:title" content="fallback" />
 <meta property="og:description" content="fallback" />
 <meta property="og:url" content="https://star-pibu.com" />
@@ -17,6 +17,7 @@ const template = `<!doctype html><html lang="ko"><head>
 <meta name="twitter:title" content="fallback" />
 <meta name="twitter:description" content="fallback" />
 <link rel="canonical" href="https://star-pibu.com/" />
+<link rel="alternate" data-rh="true" data-seo-fallback="home" hreflang="zh-TW" href="https://star-pibu.com/zh-tw" />
 </head><body><div id="root"></div></body></html>`;
 
 const originalNodeEnv = process.env.NODE_ENV;
@@ -56,8 +57,11 @@ describe("About prerender", () => {
     expect(html).toContain('lang="zh-Hant"');
     expect(html).toContain(zhTW.about.title);
     expect(html).toContain("診所介紹｜釜山西面STAR皮膚科");
+    expect(html).toContain('name="description" content="介紹釜山西面STAR皮膚科的診療理念、醫師團隊、診療時間與交通資訊。"');
+    expect(html).not.toContain('data-seo-fallback="home"');
     expect(html).toContain('property="og:locale" content="zh_TW"');
     expect(html).toContain('hreflang="zh-TW" href="https://star-pibu.com/zh-tw/about"');
+    expect(html).not.toContain('href="https://star-pibu.com/zh-tw"');
   });
 
   it("rejects paths outside the five About routes and keeps a short shared cache policy", () => {
@@ -93,7 +97,10 @@ describe("About prerender", () => {
         expect(html).toContain('data-prerender="about"');
         expect(html).toContain('"@type":"BreadcrumbList"');
         expect(html.match(/<title>/g)).toHaveLength(1);
+        expect(html.match(/name="description"/g)).toHaveLength(1);
         expect(html.match(/rel="canonical"/g)).toHaveLength(1);
+        expect(html.match(/<link\b(?=[^>]*\bhreflang=)[^>]*>/g)).toHaveLength(6);
+        expect(html).not.toMatch(/data-seo-fallback="home"[^>]*name="description"/);
         expect(html).toContain(`href="https://star-pibu.com${route}"`);
         expect(html).toContain('hreflang="x-default" href="https://star-pibu.com/about"');
       }

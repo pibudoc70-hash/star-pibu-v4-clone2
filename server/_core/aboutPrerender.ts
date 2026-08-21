@@ -104,8 +104,8 @@ function getSeo(locale: Locale) {
 }
 
 function replaceMetaContent(template: string, selector: "name" | "property", key: string, content: string): string {
-  const pattern = new RegExp(`<meta\\s+${selector}="${key}"\\s+content="[^"]*"\\s*/?>`, "i");
-  return template.replace(pattern, `<meta ${selector}="${key}" content="${escapeHtml(content)}" />`);
+  const pattern = new RegExp(`<meta\\b(?=[^>]*\\b${selector}="${key}")(?=[^>]*\\bcontent="[^"]*")[^>]*\\/?>`, "i");
+  return template.replace(pattern, `<meta data-server-seo="true" ${selector}="${key}" content="${escapeHtml(content)}" />`);
 }
 
 export function buildAboutPrerenderedHtml(template: string, pathname: string): string | null {

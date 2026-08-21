@@ -43,6 +43,7 @@ export default function FacilitySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
+  const [canAutoPlay, setCanAutoPlay] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
@@ -53,10 +54,31 @@ export default function FacilitySection() {
     desc: fc.images[i]?.desc ?? "",
   }));
 
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateAutoPlayAvailability = () => {
+      setCanAutoPlay(mobileQuery.matches && !reducedMotionQuery.matches);
+    };
+
+    updateAutoPlayAvailability();
+    mobileQuery.addEventListener("change", updateAutoPlayAvailability);
+    reducedMotionQuery.addEventListener("change", updateAutoPlayAvailability);
+    return () => {
+      mobileQuery.removeEventListener("change", updateAutoPlayAvailability);
+      reducedMotionQuery.removeEventListener("change", updateAutoPlayAvailability);
+    };
+  }, []);
+
   // 자동 슬라이드 (모바일에서만)
   useEffect(() => {
-    if (!isAutoPlay || isHovering) {
-      if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
+    if (!canAutoPlay || !isAutoPlay || isHovering) {
+      if (autoPlayTimer.current) {
+        clearInterval(autoPlayTimer.current);
+        autoPlayTimer.current = null;
+      }
       return;
     }
 
@@ -65,9 +87,12 @@ export default function FacilitySection() {
     }, 5000);
 
     return () => {
-      if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
+      if (autoPlayTimer.current) {
+        clearInterval(autoPlayTimer.current);
+        autoPlayTimer.current = null;
+      }
     };
-  }, [isAutoPlay, isHovering, galleryImages.length]);
+  }, [canAutoPlay, isAutoPlay, isHovering, galleryImages.length]);
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % galleryImages.length);

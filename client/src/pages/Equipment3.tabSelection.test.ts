@@ -7,7 +7,7 @@ const equipment3Source = readFileSync(resolve(process.cwd(), "client/src/pages/E
 describe("Equipment3 tab selection", () => {
   it("derives the initial tab from explicit user choice, a valid URL tab, or the first tab without an effect state write", () => {
     expect(equipment3Source).toContain('const [requestedTabId, setActiveId] = useState<string>("");');
-    expect(equipment3Source).toContain("if (requestedTabId) return requestedTabId;");
+    expect(equipment3Source).toContain("if (requestedTabId && tabs.some((tab) => tab.id === requestedTabId)) return requestedTabId;");
     expect(equipment3Source).toContain("if (urlTab && tabs.some((tab) => tab.id === urlTab)) return urlTab;");
     expect(equipment3Source).toContain('return tabs[0]?.id ?? "";');
   });

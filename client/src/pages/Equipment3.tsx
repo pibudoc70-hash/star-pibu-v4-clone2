@@ -285,7 +285,7 @@ export default function Equipment3() {
   const urlTab = useMemo(() => new URLSearchParams(search).get("tab") ?? "", [search]);
   const [requestedTabId, setActiveId] = useState<string>("");
   const activeId = useMemo(() => {
-    if (requestedTabId) return requestedTabId;
+    if (requestedTabId && tabs.some((tab) => tab.id === requestedTabId)) return requestedTabId;
     if (urlTab && tabs.some((tab) => tab.id === urlTab)) return urlTab;
     return tabs[0]?.id ?? "";
   }, [requestedTabId, tabs, urlTab]);

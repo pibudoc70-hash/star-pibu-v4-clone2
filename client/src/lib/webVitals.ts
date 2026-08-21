@@ -6,8 +6,8 @@ const isDev = import.meta.env.DEV;
 
 export type WebVitalMetric = "lcp" | "inp";
 export type LazyMountSurface = "home_events" | "home_facility";
-type PerformanceMetric = WebVitalMetric | "lazy_mount" | "event_skeleton";
-type PerformanceSurface = LazyMountSurface | "home_special_event";
+type PerformanceMetric = WebVitalMetric | "lazy_mount" | "event_skeleton" | "treatments_skeleton";
+type PerformanceSurface = LazyMountSurface | "home_special_event" | "home_treatments_equipment";
 
 type UmamiTracker = {
   track?: (eventName: string, data: { metric: PerformanceMetric; value: number; locale: string; surface?: PerformanceSurface }) => void;
@@ -49,6 +49,18 @@ export function trackEventSkeleton(value: number) {
     value: Math.round(value),
     locale: document.documentElement.lang || "ko",
     surface: "home_special_event",
+  });
+}
+
+/** Emits only the rounded initial treatments/equipment skeleton duration and document language. */
+export function trackTreatmentsSkeleton(value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("treatments_skeleton", {
+    metric: "treatments_skeleton",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface: "home_treatments_equipment",
   });
 }
 

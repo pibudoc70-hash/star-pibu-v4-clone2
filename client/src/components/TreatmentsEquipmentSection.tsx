@@ -29,6 +29,7 @@ import type { SortBy } from "@/lib/treatmentSortUtils";
 import type { Treatment } from "@/types/treatment";
 // [DB 통합] equipment3 DB 어댑터 훅
 import { useEquipment3AsTreatments } from "@/hooks/useEquipment3AsTreatments";
+import { useTreatmentsSkeletonTiming } from "@/hooks/useTreatmentsSkeletonTiming";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // [R22-P0-2] 3단계 breakpoint 정책 (Tailwind sm/md 동기화)
@@ -57,6 +58,7 @@ export default function TreatmentsEquipmentSection() {
 
   // [DB 통합] equipment3 DB에서 데이터 로드
   const { tabs, treatmentsByTab, isLoading, isError, refetch } = useEquipment3AsTreatments();
+  useTreatmentsSkeletonTiming(isLoading);
 
   // 첫 탭 자동 선택 (DB 로드 후)
   useEffect(() => {

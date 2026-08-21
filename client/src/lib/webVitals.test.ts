@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { trackEventSkeleton, trackLazyMount, trackWebVital } from "./webVitals";
+import { trackEventSkeleton, trackLazyMount, trackTreatmentsSkeleton, trackWebVital } from "./webVitals";
 
 describe("trackWebVital", () => {
   afterEach(() => {
@@ -53,6 +53,21 @@ describe("trackWebVital", () => {
       value: 81,
       locale: "ko",
       surface: "home_special_event",
+    });
+  });
+
+  it("시술·장비 skeleton은 고정 surface·반올림한 시간·locale만 전송한다", () => {
+    const track = vi.fn();
+    document.documentElement.lang = "ja";
+    vi.stubGlobal("umami", { track });
+
+    trackTreatmentsSkeleton(205.8);
+
+    expect(track).toHaveBeenCalledWith("treatments_skeleton", {
+      metric: "treatments_skeleton",
+      value: 206,
+      locale: "ja",
+      surface: "home_treatments_equipment",
     });
   });
 });

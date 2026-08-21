@@ -116,7 +116,7 @@ describe("YouTubeSection viewport query states", () => {
 
   it("closes an opened video dialog when Escape is pressed", async () => {
     queryState = state({
-      data: [{ id: 1, title: "Test video", videoId: "abc123", type: "video" }],
+      data: [{ id: 1, title: "Test video", videoId: "dQw4w9WgXcQ", type: "video" }],
     });
     render(<YouTubeSection />);
 
@@ -127,11 +127,30 @@ describe("YouTubeSection viewport query states", () => {
     const trigger = await screen.findByRole("button", { name: "Test video Play video" });
     fireEvent.click(trigger);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByTitle("Test video")).toHaveAttribute("src", "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1");
+    expect(document.body.style.overflow).toBe("hidden");
 
     fireEvent.keyDown(document, { key: "Escape" });
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(trigger).toHaveFocus();
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("does not create a playable card or iframe for an invalid video ID", async () => {
+    queryState = state({
+      data: [{ id: 1, title: "Unsafe video", videoId: "https://evil.example/iframe", type: "video" }],
+    });
+    render(<YouTubeSection />);
+
+    await act(async () => {
+      observerCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+    });
+
+    await waitFor(() => expect(queryOptions.at(-1)).toMatchObject({ enabled: true }));
+    expect(screen.queryByRole("button", { name: "Unsafe video Play video" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.querySelector('iframe[src*="evil.example"]')).toBeNull();
   });
 
   it("disables retry and announces progress while a YouTube retry request is active", async () => {

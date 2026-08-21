@@ -21,6 +21,7 @@ import { registerHomePrerender } from "./homePrerender";
 import { registerEquipmentPrerender } from "./equipmentPrerender";
 import { registerContentPrerender } from "./contentPrerender";
 import { registerDoctorsPrerender } from "./doctorsPrerender";
+import { registerAboutPrerender } from "./aboutPrerender";
 import { registerStaticMapRoute } from "./staticMapRoute"; // [Step67-C]
 import { registerRedirects } from "../redirects";
 import { securityHeadersMiddleware } from "./securityHeaders";
@@ -250,6 +251,7 @@ async function startServer() {
   registerHomePrerender(app);
   registerEquipmentPrerender(app);
   registerContentPrerender(app);
+  registerAboutPrerender(app);
   registerDoctorsPrerender(app);
   // [Step61-B] 시술 상세 크롤러 대응. 정적 서빙보다 먼저 등록해야 한다.
   registerTreatmentPrerender(app);

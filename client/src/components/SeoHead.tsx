@@ -1,5 +1,6 @@
 // SeoHead.tsx — SEO 메타 컴포넌트 (STRUCT-SEO-2)
 // 상수/헬퍼는 @/lib/seoHelpers에서 관리, 기존 import 경로 유지를 위해 re-export
+import { useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   JsonLdSchema,
@@ -97,6 +98,47 @@ export default function SeoHead({
   ogImageAlt,
   pageType = "default",
 }: SeoHeadProps) {
+  useLayoutEffect(() => {
+    document.head.querySelectorAll('[data-seo-fallback="home"]').forEach((node) => node.remove());
+
+    const frame = window.requestAnimationFrame(() => {
+      const keepLastByKey = (selector: string, key: (node: Element) => string) => {
+        const latest = new Map<string, Element>();
+        document.head.querySelectorAll(selector).forEach((node) => {
+          const duplicate = latest.get(key(node));
+          duplicate?.remove();
+          latest.set(key(node), node);
+        });
+      };
+
+      [
+        'meta[name="description"]',
+        'meta[name="keywords"]',
+        'meta[property="og:title"]',
+        'meta[property="og:description"]',
+        'meta[property="og:type"]',
+        'meta[property="og:url"]',
+        'meta[property="og:image"]',
+        'meta[property="og:image:secure_url"]',
+        'meta[property="og:image:type"]',
+        'meta[property="og:image:width"]',
+        'meta[property="og:image:height"]',
+        'meta[property="og:image:alt"]',
+        'meta[property="og:locale"]',
+        'meta[name="twitter:card"]',
+        'meta[name="twitter:title"]',
+        'meta[name="twitter:description"]',
+        'meta[name="twitter:image"]',
+        'link[rel="canonical"]',
+      ].forEach((selector) => keepLastByKey(selector, () => selector));
+
+      keepLastByKey('link[rel="alternate"][hreflang]', (node) => node.getAttribute("hreflang") ?? "");
+      keepLastByKey('meta[property="og:locale:alternate"]', (node) => node.getAttribute("content") ?? "");
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
   const resolvedSiteName = ogSiteName ?? SITE_NAME;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { trackWebVital } from "./webVitals";
+import { trackLazyMount, trackWebVital } from "./webVitals";
 
 describe("trackWebVital", () => {
   afterEach(() => {
@@ -24,5 +24,20 @@ describe("trackWebVital", () => {
   it("Umami가 없거나 metric value가 유효하지 않으면 예외 없이 무시한다", () => {
     expect(() => trackWebVital("inp", Number.NaN)).not.toThrow();
     expect(() => trackWebVital("inp", 32)).not.toThrow();
+  });
+
+  it("lazy mount는 표면 이름·반올림한 시간·locale만 전송하고 selector나 URL을 포함하지 않는다", () => {
+    const track = vi.fn();
+    document.documentElement.lang = "zh-Hant";
+    vi.stubGlobal("umami", { track });
+
+    trackLazyMount("home_events", 47.6);
+
+    expect(track).toHaveBeenCalledWith("lazy_mount", {
+      metric: "lazy_mount",
+      value: 48,
+      locale: "zh-Hant",
+      surface: "home_events",
+    });
   });
 });

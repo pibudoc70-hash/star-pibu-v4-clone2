@@ -5,9 +5,11 @@
 const isDev = import.meta.env.DEV;
 
 export type WebVitalMetric = "lcp" | "inp";
+export type LazyMountSurface = "home_events" | "home_facility";
+type PerformanceMetric = WebVitalMetric | "lazy_mount";
 
 type UmamiTracker = {
-  track?: (eventName: string, data: { metric: WebVitalMetric; value: number; locale: string }) => void;
+  track?: (eventName: string, data: { metric: PerformanceMetric; value: number; locale: string; surface?: LazyMountSurface }) => void;
 };
 
 function getUmamiTracker() {
@@ -22,6 +24,18 @@ export function trackWebVital(metric: WebVitalMetric, value: number) {
     metric,
     value: Math.round(value),
     locale: document.documentElement.lang || "ko",
+  });
+}
+
+/** Emits an anonymous anchor-driven lazy-mount duration without selectors, URLs, or user data. */
+export function trackLazyMount(surface: LazyMountSurface, value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("lazy_mount", {
+    metric: "lazy_mount",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface,
   });
 }
 

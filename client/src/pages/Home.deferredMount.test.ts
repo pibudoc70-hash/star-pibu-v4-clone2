@@ -49,6 +49,9 @@ describe("Home below-the-fold deferred mount contract", () => {
     for (const selector of anchorSelectors) {
       expect(homeSource).toContain(`anchorSelectors={["${selector}"]}`);
     }
+
+    expect(homeSource).toContain('telemetrySurface="home_events"');
+    expect(homeSource).toContain('telemetrySurface="home_facility"');
   });
 
   it("mounts a subtree only after its observer enters the viewport margin", () => {

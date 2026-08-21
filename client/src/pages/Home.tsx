@@ -500,6 +500,7 @@ export default function Home() {
         <DeferredMount
           fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
           anchorSelectors={["#events"]}
+          telemetrySurface="home_events"
         >
           <div className="section-bg-cream">
             <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
@@ -586,6 +587,7 @@ export default function Home() {
           <DeferredMount
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}
             anchorSelectors={["#facility"]}
+            telemetrySurface="home_facility"
           >
             <div className="section-bg-warm-alt">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>

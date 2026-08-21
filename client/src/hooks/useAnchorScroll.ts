@@ -22,12 +22,15 @@ interface ScrollOptions {
 
 export function useAnchorScroll() {
   const activeFrameRef = useRef<number | null>(null);
+  const activeSettleTimersRef = useRef<number[]>([]);
 
   const cancel = useCallback(() => {
     if (activeFrameRef.current !== null) {
       cancelAnimationFrame(activeFrameRef.current);
       activeFrameRef.current = null;
     }
+    activeSettleTimersRef.current.forEach((timerId) => window.clearTimeout(timerId));
+    activeSettleTimersRef.current = [];
   }, []);
 
   const scrollToSelector = useCallback(
@@ -65,6 +68,19 @@ export function useAnchorScroll() {
             }
             activeFrameRef.current = null;
           });
+        });
+
+        // Deferred sections can expand while images and adjacent lazy sections settle.
+        // Re-align a few fixed times instead of keeping an open-ended polling loop.
+        [180, 480, 1000, 2000].forEach((delay) => {
+          const timerId = window.setTimeout(() => {
+            activeSettleTimersRef.current = activeSettleTimersRef.current.filter((id) => id !== timerId);
+            const settledTop = getTargetTop();
+            if (settledTop !== null && Math.abs(window.scrollY - settledTop) > 10) {
+              window.scrollTo({ top: Math.max(0, settledTop), behavior: "auto" });
+            }
+          }, delay);
+          activeSettleTimersRef.current.push(timerId);
         });
 
         return true;

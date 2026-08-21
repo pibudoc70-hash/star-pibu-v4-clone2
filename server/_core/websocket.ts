@@ -3,6 +3,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { logger } from "./logger";
 import { sdk } from "./sdk";
 import { getUserByOpenId } from "../db/users";
+import { applySubscriptionRequest } from "./websocketSubscriptionPolicy";
 
 // [Step53-B] 리소스 한계
 const MAX_CLIENTS = 100;
@@ -162,17 +163,22 @@ class KeywordTrendWebSocketServer {
           break;
         }
 
-        case "subscribe":
-          if (message.channel) {
-            connection.subscriptions.add(message.channel);
-            connection.ws.send(
-              JSON.stringify({
-                type: "subscribed",
-                channel: message.channel,
-              })
-            );
-          }
+        case "subscribe": {
+          const result = applySubscriptionRequest({
+            isAdmin: connection.isAdmin,
+            channel: message.channel,
+            subscriptions: connection.subscriptions,
+          });
+          connection.subscriptions = result.subscriptions;
+          connection.ws.send(
+            JSON.stringify(
+              result.accepted
+                ? { type: "subscribed", channel: message.channel }
+                : { type: "subscription_rejected", reason: result.reason },
+            ),
+          );
           break;
+        }
 
         case "unsubscribe":
           if (message.channel) {

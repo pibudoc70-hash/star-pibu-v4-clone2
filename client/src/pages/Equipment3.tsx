@@ -283,7 +283,12 @@ export default function Equipment3() {
 
   const search = useSearch();
   const urlTab = useMemo(() => new URLSearchParams(search).get("tab") ?? "", [search]);
-  const [activeId, setActiveId] = useState<string>("");
+  const [requestedTabId, setActiveId] = useState<string>("");
+  const activeId = useMemo(() => {
+    if (requestedTabId) return requestedTabId;
+    if (urlTab && tabs.some((tab) => tab.id === urlTab)) return urlTab;
+    return tabs[0]?.id ?? "";
+  }, [requestedTabId, tabs, urlTab]);
   // sessionStorage에서 초기 expanded 탭 목록 복원
   const [expandedTabs, setExpandedTabsState] = useState<Set<string>>(() => getExpandedTabs());
 
@@ -302,20 +307,6 @@ export default function Equipment3() {
     const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
     window.history.replaceState(null, "", window.location.pathname + newSearch);
   }, []);
-
-  // 탭 목록이 로드되면 URL ?tab= 파라미터 또는 첫 번째 탭 자동 선택
-  useEffect(() => {
-    if (tabs.length === 0) return;
-    if (urlTab && tabs.some((t) => t.id === urlTab)) {
-      setActiveId(urlTab);
-    } else if (!activeId) {
-      setActiveId(tabs[0].id);
-    }
-  // activeId는 의도적으로 제외 — URL 파라미터 변경 시에만 재실행
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabs, urlTab]);
-
-  // (handleTabChange는 위 검색 상태 블록에서 정의됨)
 
   const handleShowMore = useCallback(() => {
     if (!activeId) return;

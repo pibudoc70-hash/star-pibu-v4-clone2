@@ -161,19 +161,24 @@ export default function ConsultationFormSection() {
       setErrors({});
     },
     onError: (err) => {
-      const msg = err.message || c.errorGeneric;
-      if (msg.includes("잠시") || msg.includes("rate") || msg.includes("too many")) {
+      const rawMessage = err.message ?? "";
+      const normalizedMessage = rawMessage.toLowerCase();
+      const isRateLimit = rawMessage.includes("잠시") || normalizedMessage.includes("rate") || normalizedMessage.includes("too many");
+      const isTurnstileError = rawMessage.includes("보안") || normalizedMessage.includes("turnstile") || normalizedMessage.includes("token");
+
+      if (isRateLimit) {
         setErrors({ general: c.errorRateLimit });
-      } else if (msg.includes("보안") || msg.includes("Turnstile") || msg.includes("token")) {
-        setErrors({ general: msg });
+      } else {
+        setErrors({ general: c.errorGeneric });
+
+        if (!isTurnstileError) return;
+
         // Turnstile 리셋
         if (widgetIdRef.current && window.turnstile) {
           window.turnstile.reset(widgetIdRef.current);
           setTurnstileToken("");
           setTurnstileReady(false);
         }
-      } else {
-        setErrors({ general: msg });
       }
     },
   });
@@ -205,7 +210,7 @@ export default function ConsultationFormSection() {
       // Turnstile 토큰이 없으면 테스트 토큰 사용 (개발 환경)
       const token = turnstileToken || (TURNSTILE_SITE_KEY ? "" : "XXXX.DUMMY.TOKEN.XXXX");
       if (!token) {
-        setErrors({ general: "보안 인증을 완료해주세요." });
+        setErrors({ general: c.errorGeneric });
         return;
       }
 

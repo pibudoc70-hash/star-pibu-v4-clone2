@@ -24,7 +24,8 @@ export type AdminErrorOperation =
   | "equipment3.delete"
   | "equipment3.reorder"
   | "equipment3.translate"
-  | "equipment3.seo-generate";
+  | "equipment3.seo-generate"
+  | "notices.translate";
 
 export type AdminErrorDetails = {
   code: string;

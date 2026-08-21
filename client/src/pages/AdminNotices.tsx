@@ -3,6 +3,7 @@ import { Plus, Trash2, Edit2, Pin, Languages, Loader2, ImagePlus, X } from 'luci
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useLocation } from 'wouter';
+import { getAdminErrorDetails } from '@/lib/errorMessages';
 
 type TargetLang = 'all' | 'ko' | 'en' | 'ja' | 'zh';
 
@@ -153,7 +154,10 @@ export default function AdminNotices() {
       refetch();
       utils.notices.list.invalidate();
     },
-    onError: (err) => { alert(`번역 실패: ${err.message}`); },
+    onError: (err) => {
+      const { message, code } = getAdminErrorDetails(err, "notices.translate");
+      alert(`번역 실패\n${message}\n오류 코드: ${code}`);
+    },
   });
 
   // 관리자 권한 확인

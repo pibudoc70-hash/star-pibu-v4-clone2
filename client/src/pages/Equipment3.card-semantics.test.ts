@@ -6,12 +6,19 @@ const source = readFileSync(
   resolve(process.cwd(), "client/src/pages/Equipment3.tsx"),
   "utf8",
 );
+const cardSource = source.slice(
+  source.indexOf("function Equipment3Card"),
+  source.indexOf("// ─────────────────────────────────────────────────────────────────────────────"),
+);
 
 describe("Equipment3 detail card navigation semantics", () => {
   it("uses a native detail link instead of div role button navigation", () => {
-    expect(source).toContain('<a\n      href={detailPath}');
-    expect(source).not.toContain('role="button"');
-    expect(source).not.toContain('onClick={() => setLocation(detailPath)}');
-    expect(source).not.toContain('onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}');
+    expect(cardSource).toContain('<a\n      href={detailPath}');
+    expect(cardSource).toContain("aria-label={`${name} ${detail}`}");
+    expect(cardSource).not.toContain('role="button"');
+    expect(cardSource).not.toContain('onClick={() => setLocation(detailPath)}');
+    expect(cardSource).not.toContain('onKeyDown={(e) => e.key === "Enter" && setLocation(detailPath)}');
+    expect(cardSource).not.toContain("<button");
+    expect(cardSource).not.toContain("<a href=");
   });
 });

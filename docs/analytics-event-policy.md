@@ -23,10 +23,13 @@
 | `web_vital` / `lcp` | Umami | Largest Contentful Paint 개선 효과 관찰 | 정수 밀리초와 document language만 전송 |
 | `web_vital` / `inp` | Umami | Interaction to Next Paint 개선 효과 관찰 | 정수 밀리초와 document language만 전송 |
 | `lazy_mount` | Umami | anchor 요청 뒤 lazy target이 실제 DOM에 나타날 때까지의 지연 관찰 | `metric: "lazy_mount"`, 정수 밀리초, document language, 고정 surface (`home_events` 또는 `home_facility`) |
+| `event_skeleton` | Umami | 최초 Special Event skeleton이 보인 뒤 query가 settled될 때까지의 지연 관찰 | `metric: "event_skeleton"`, 정수 밀리초, document language, 고정 surface `home_special_event` |
 
 개발 환경의 TTFB·FCP console 출력과 `getPerformanceMetrics()` 반환은 진단용이며 현재 analytics event로 전송하지 않는다.
 
 `lazy_mount`는 IntersectionObserver의 일반 viewport mount가 아니라 `star-pibu:mount-anchor`의 명시적 anchor 요청에서만 기록한다. selector 문자열, pathname, URL parameter, event/시술 data, card price, 사용자 입력, 예약·상담 정보는 payload에 포함하지 않는다. target이 4초 안에 DOM에 나타나지 않으면 event를 전송하지 않는다.
+
+`event_skeleton`은 최초 visible skeleton 시점에 local Performance mark를 남기고 query가 data·empty·error 중 어느 terminal state로 settled될 때 한 번만 계산한다. query payload, event ID, 제목, 가격, error message, retry count는 전송하지 않는다. component unmount 시 local mark/measure를 cleanup한다.
 
 ## 금지 데이터와 구현 제약
 

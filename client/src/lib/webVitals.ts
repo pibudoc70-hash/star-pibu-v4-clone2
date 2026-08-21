@@ -6,10 +6,11 @@ const isDev = import.meta.env.DEV;
 
 export type WebVitalMetric = "lcp" | "inp";
 export type LazyMountSurface = "home_events" | "home_facility";
-type PerformanceMetric = WebVitalMetric | "lazy_mount";
+type PerformanceMetric = WebVitalMetric | "lazy_mount" | "event_skeleton";
+type PerformanceSurface = LazyMountSurface | "home_special_event";
 
 type UmamiTracker = {
-  track?: (eventName: string, data: { metric: PerformanceMetric; value: number; locale: string; surface?: LazyMountSurface }) => void;
+  track?: (eventName: string, data: { metric: PerformanceMetric; value: number; locale: string; surface?: PerformanceSurface }) => void;
 };
 
 function getUmamiTracker() {
@@ -36,6 +37,18 @@ export function trackLazyMount(surface: LazyMountSurface, value: number) {
     value: Math.round(value),
     locale: document.documentElement.lang || "ko",
     surface,
+  });
+}
+
+/** Emits only the rounded initial EVENT skeleton duration and document language. */
+export function trackEventSkeleton(value: number) {
+  if (typeof window === "undefined" || !Number.isFinite(value) || value < 0) return;
+
+  getUmamiTracker()?.track?.("event_skeleton", {
+    metric: "event_skeleton",
+    value: Math.round(value),
+    locale: document.documentElement.lang || "ko",
+    surface: "home_special_event",
   });
 }
 

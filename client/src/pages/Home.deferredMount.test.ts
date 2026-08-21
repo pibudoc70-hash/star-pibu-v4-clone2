@@ -47,11 +47,27 @@ describe("Home below-the-fold deferred mount contract", () => {
     expect(deferredMountSource).toContain('"star-pibu:mount-anchor"');
 
     for (const selector of anchorSelectors) {
-      expect(homeSource).toContain(`anchorSelectors={["${selector}"]}`);
+      expect(homeSource).toMatch(
+        new RegExp(`anchorSelectors=\\{\\[[^\\]]*"${selector}"`),
+      );
     }
 
     expect(homeSource).toContain('telemetrySurface="home_events"');
     expect(homeSource).toContain('telemetrySurface="home_facility"');
+  });
+
+  it("pre-mounts lazy sections above facility before the facility anchor starts scrolling", () => {
+    for (const section of [
+      "DoctorsSection",
+      "TreatmentsEquipmentSection",
+      "ManagementDevicesSection",
+      "PhilosophySection",
+      "ResultsStatisticsSection",
+    ]) {
+      expect(homeSource).toMatch(
+        new RegExp(`<DeferredMount[\\s\\S]*?anchorSelectors=\\{\\[[^\\]]*"#facility"[^\\]]*\\]\\}[\\s\\S]*?<${section}`),
+      );
+    }
   });
 
   it("mounts a subtree only after its observer enters the viewport margin", () => {

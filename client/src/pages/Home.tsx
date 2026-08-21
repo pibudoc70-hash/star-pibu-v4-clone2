@@ -513,7 +513,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}
+            anchorSelectors={["#facility"]}
+          >
             <div className="section-bg-warm">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
                 <DoctorsSection />
@@ -526,7 +529,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
+          <DeferredMount
+            fallback={<TreatmentsEquipmentSkeleton id="treatments" />}
+            anchorSelectors={["#facility"]}
+          >
             <div className="section-bg-cream-soft">
               <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
                 <TreatmentsEquipmentSection />
@@ -541,7 +547,7 @@ export default function Home() {
         >
           <DeferredMount
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}
-            anchorSelectors={["#management-devices"]}
+            anchorSelectors={["#management-devices", "#facility"]}
           >
             <div className="section-bg-dark-brown">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
@@ -555,7 +561,10 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
+          <DeferredMount
+            fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}
+            anchorSelectors={["#facility"]}
+          >
             <div className="section-bg-cream">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
                 <PhilosophySection />
@@ -570,7 +579,7 @@ export default function Home() {
         >
           <DeferredMount
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}
-            anchorSelectors={["#results-statistics"]}
+            anchorSelectors={["#results-statistics", "#facility"]}
           >
             <div className="section-bg-gold-soft">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>

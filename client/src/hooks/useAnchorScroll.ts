@@ -3,14 +3,9 @@
  *
  * Lazy section anchor 이동을 지원하는 스크롤 훅.
  * 아직 mount되지 않은 대상에는 명시적 mount event를 전달하고,
- * 렌더 직후와 bounded final settle만 수행해 하단 jump·interval polling을 피한다.
+ * 대상 mount 직후 한 번만 native smooth scroll을 수행해 재이동을 피한다.
  */
 import { useCallback, useEffect, useRef } from "react";
-
-function getHeaderOffset(): number {
-  const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
-  return header ? header.offsetHeight + 8 : 80;
-}
 
 export type AnchorScrollBlock = "start" | "center";
 
@@ -43,39 +38,24 @@ export function useAnchorScroll() {
 
       cancel();
 
-      const getTargetTop = (): number | null => {
+      const scrollToTarget = () => {
         const element = document.querySelector(selector);
-        if (!element) return null;
+        if (!element) return false;
 
-        const rect = element.getBoundingClientRect();
         if (block === "center") {
-          return rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
+          const rect = element.getBoundingClientRect();
+          const targetTop = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+          return true;
         }
 
-        return rect.top + window.scrollY - getHeaderOffset();
-      };
-
-      const scrollAndSettle = () => {
-        const targetTop = getTargetTop();
-        if (targetTop === null) return false;
-
-        window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-
-        // Deferred sections can expand while images and adjacent lazy sections settle.
-        // One final smooth re-alignment avoids the visibly stepped motion of repeated auto-scrolls.
-        const timerId = window.setTimeout(() => {
-          activeSettleTimersRef.current = activeSettleTimersRef.current.filter((id) => id !== timerId);
-          const settledTop = getTargetTop();
-          if (settledTop !== null && Math.abs(window.scrollY - settledTop) > 10) {
-            window.scrollTo({ top: Math.max(0, settledTop), behavior: "smooth" });
-          }
-        }, 2000);
-        activeSettleTimersRef.current.push(timerId);
-
+        // Section scroll-margin-top keeps the target clear of the fixed header.
+        // Native anchor motion prevents a second delayed scroll after the first arrival.
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
         return true;
       };
 
-      if (scrollAndSettle()) return;
+      if (scrollToTarget()) return;
       if (!triggerLazyMount) return;
 
       window.dispatchEvent(
@@ -84,7 +64,7 @@ export function useAnchorScroll() {
 
       const startedAt = performance.now();
       const waitForMount = () => {
-        if (scrollAndSettle()) return;
+        if (scrollToTarget()) return;
         if (performance.now() - startedAt >= maxWaitMs) {
           activeFrameRef.current = null;
           return;

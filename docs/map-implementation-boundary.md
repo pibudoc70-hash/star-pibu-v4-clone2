@@ -48,3 +48,9 @@ static map backend는 현재 화면의 primary path는 아니지만, binary imag
 5. 지도 좌표, 주소, external map link, 예약·CTA 동작을 추정 변경하지 않는다.
 
 통합 또는 제거를 검토하려면 다음 증거가 필요하다: repository·deployed client·external integration의 caller graph, HTTP access/observability 확인, locale directions render와 keyboard fallback QA, route/endpoint focused tests, cache/ETag behavior 검증, rollback 가능한 별도 checkpoint. 이 문서는 지도 구현·CSP·route를 변경하지 않는다.
+
+## 2026-08 첨부 제안 재검토: static snapshot 삭제 보류
+
+첨부 제안의 static snapshot 삭제 가능성을 다시 현재 호출 경계와 대조했다. repository상 현재 client direct caller가 없다는 사실은 변하지 않았지만, `/api/staticmap.png`는 Express에 등록된 live HTTP surface이고 `mapCache.ts`는 `locationRouter`의 deprecated base64 compatibility contract와 공유된다. repository 검색만으로 deployed legacy client, external consumer, cached URL을 배제할 수 없으므로 운영 의존성 0을 입증하지 못했다.
+
+> **결론:** static route·cache·location compatibility는 이번 단계에서 삭제하지 않는다. removal은 access/observability data와 external caller audit, endpoint/cache focused regression, locale directions fallback QA를 갖춘 별도 change set에서만 검토한다.

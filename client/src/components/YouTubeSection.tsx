@@ -38,11 +38,6 @@ interface YouTubeVideo {
   type: 'video' | 'shorts';
 }
 
-interface ModalPosition {
-  top: number;
-  left: number;
-}
-
 // 모달 ID — 단일 aria-labelledby 참조 보장
 const MODAL_TITLE_ID = 'yt-modal-title';
 const YOUTUBE_VIDEO_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
@@ -68,14 +63,9 @@ export default function YouTubeSection() {
   // S1-T5: modal state + trigger ref (focus restore용)
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
   const [modalType, setModalType] = useState<'video' | 'shorts' | null>(null);
-  const [modalPosition, setModalPosition] = useState<ModalPosition>({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  // P3: 섹션별 ref 추가 — Portal 위치 계산용
-  const videosContainerRef = useRef<HTMLDivElement | null>(null);
-  const shortsContainerRef = useRef<HTMLDivElement | null>(null);
 
   // P1-A: body scroll lock — 모달 열릴 때 스크롤 차단, 닫힐 때 복원
   useEffect(() => {
@@ -131,34 +121,11 @@ export default function YouTubeSection() {
     }
   }, []);
 
-  // P3: 섹션 기준 모달 위치 계산
-  const calculateModalPosition = useCallback((containerRef: React.RefObject<HTMLDivElement | null>) => {
-    if (!containerRef.current) return { top: 0, left: 0 };
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const containerCenterY = rect.top + rect.height / 2 + window.scrollY;
-    const containerCenterX = rect.left + rect.width / 2;
-    
-    // 모달 높이 추정 (실제 모달 높이에 따라 조정 가능)
-    const estimatedModalHeight = modalType === 'shorts' ? 600 : 500;
-    
-    return {
-      top: containerCenterY - estimatedModalHeight / 2,
-      left: containerCenterX,
-    };
-  }, [modalType]);
-
   const openModal = useCallback((video: YouTubeVideo, triggerElement: HTMLElement) => {
     setSelectedVideo(video);
     setModalType(video.type);
-    
-    // 위치 계산
-    const containerRef = video.type === 'video' ? videosContainerRef : shortsContainerRef;
-    const position = calculateModalPosition(containerRef);
-    setModalPosition(position);
-    
     triggerRef.current = triggerElement as HTMLButtonElement;
-  }, [calculateModalPosition]);
+  }, []);
 
   // S1-T4: 로딩 상태 — skeleton UI
   if (!isVisible || isLoading) {
@@ -309,7 +276,7 @@ export default function YouTubeSection() {
 
         {/* 상단 영상 4개 */}
         {videos.length > 0 && (
-          <div className="mb-16" ref={videosContainerRef}>
+          <div className="mb-16">
             <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
@@ -349,7 +316,7 @@ export default function YouTubeSection() {
 
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
-          <div ref={shortsContainerRef}>
+          <div>
             <h3 className="text-lg md:text-xl font-semibold mb-6" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (

@@ -98,6 +98,13 @@ describe("YouTubeSection viewport query states", () => {
     expect(youtubeSectionSource).not.toMatch(/console\.(log|debug|info|warn|error)\s*\(/);
   });
 
+  it("does not retain unused modal position state or calculations", () => {
+    expect(youtubeSectionSource).not.toContain("interface ModalPosition");
+    expect(youtubeSectionSource).not.toContain("modalPosition");
+    expect(youtubeSectionSource).not.toContain("setModalPosition");
+    expect(youtubeSectionSource).not.toContain("calculateModalPosition");
+  });
+
   it("keeps a neutral loading state and disables the query before the section is visible", () => {
     render(<YouTubeSection />);
 

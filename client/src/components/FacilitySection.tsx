@@ -93,25 +93,53 @@ export default function FacilitySection() {
 
   const triggerBtnRef = useRef<HTMLButtonElement | null>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const lightboxDialogRef = useRef<HTMLDivElement>(null);
 
   const openLightbox = (i: number, btn: HTMLButtonElement) => {
     triggerBtnRef.current = btn;
     setLightboxIndex(i);
-    requestAnimationFrame(() => lightboxCloseRef.current?.focus());
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxIndex(null);
-    requestAnimationFrame(() => triggerBtnRef.current?.focus());
-  };
+  }, []);
 
-  // A11y: ESC 키로 라이트박스 닫기
+  // A11y: focus trap, ESC 닫기, 스크롤 잠금과 trigger focus 복원
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeLightbox(); };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.requestAnimationFrame(() => lightboxCloseRef.current?.focus());
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeLightbox();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const dialog = lightboxDialogRef.current;
+      if (!dialog) return;
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        "button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex='-1'])",
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+
+      if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [lightboxIndex]);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previousOverflow;
+      window.requestAnimationFrame(() => triggerBtnRef.current?.focus());
+    };
+  }, [lightboxIndex, closeLightbox]);
 
   return (
     <section ref={sectionRef} id="facility" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label="클리닉 시설 갤러리">
@@ -293,15 +321,15 @@ export default function FacilitySection() {
         {/* Lightbox Modal (PC Only) */}
         {lightboxIndex !== null && (
           <div
+            ref={lightboxDialogRef}
             role="dialog"
             aria-modal="true"
             aria-label={fc.zoomHint}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
-            onClick={closeLightbox}
           >
+            <div aria-hidden="true" className="absolute inset-0" onClick={closeLightbox} />
             <div
               className="relative max-w-4xl w-full"
-              onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button type="button"

@@ -1,7 +1,11 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import YouTubeSection from "./YouTubeSection";
+
+const youtubeSectionSource = readFileSync(resolve(process.cwd(), "client/src/components/YouTubeSection.tsx"), "utf8");
 
 type QueryState = {
   data?: Array<{ id: number; title: string; videoId: string; type: "video" | "shorts" }>;
@@ -87,6 +91,11 @@ describe("YouTubeSection viewport query states", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
     document.body.innerHTML = "";
+  });
+
+  it("does not retain production debug logging for YouTube query responses", () => {
+    expect(youtubeSectionSource).not.toContain("[YouTubeSection]");
+    expect(youtubeSectionSource).not.toMatch(/console\.(log|debug|info|warn|error)\s*\(/);
   });
 
   it("keeps a neutral loading state and disables the query before the section is visible", () => {

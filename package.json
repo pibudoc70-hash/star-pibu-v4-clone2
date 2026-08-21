@@ -15,7 +15,10 @@
     "test:all": "pnpm test:unit && pnpm test:integration",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "drizzle-kit migrate",
+    "db:migrate:ci": "drizzle-kit migrate",
+    "db:migrate:production": "drizzle-kit migrate",
     "audit:pii": "node scripts/audit-pii.mjs"
   },
   "dependencies": {

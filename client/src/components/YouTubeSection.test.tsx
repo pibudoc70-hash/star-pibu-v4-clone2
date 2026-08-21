@@ -7,6 +7,13 @@ import YouTubeSection from "./YouTubeSection";
 
 const youtubeSectionSource = readFileSync(resolve(process.cwd(), "client/src/components/YouTubeSection.tsx"), "utf8");
 
+describe("YouTubeSection focus token contract", () => {
+  it("uses the semantic focus-ring token for gold interactive focus states", () => {
+    expect(youtubeSectionSource).toContain("focus-visible:ring-[var(--focus-ring)]");
+    expect(youtubeSectionSource).not.toContain("focus-visible:ring-[var(--color-gold-primary)]");
+  });
+});
+
 type QueryState = {
   data?: Array<{ id: number; title: string; videoId: string; type: "video" | "shorts" }>;
   isLoading: boolean;

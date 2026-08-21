@@ -190,7 +190,7 @@ export default function YouTubeSection() {
               onClick={() => void refetch()}
               disabled={isFetching}
               aria-busy={isFetching}
-              className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+              className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
             >
               <RefreshCw size={16} aria-hidden="true" />
@@ -236,7 +236,7 @@ export default function YouTubeSection() {
                 onClick={() => void refetch()}
                 disabled={isFetching}
                 aria-busy={isFetching}
-                className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                className="inline-flex min-h-11 items-center gap-2 px-6 py-2 rounded-full font-semibold transition-all hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                 style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
               >
                 <RefreshCw size={16} aria-hidden="true" />
@@ -285,7 +285,7 @@ export default function YouTubeSection() {
                   key={video.id}
                   onClick={(e) => openModal(video, e.currentTarget)}
                   aria-label={`${video.title} ${yt.playVideo}`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
@@ -325,7 +325,7 @@ export default function YouTubeSection() {
                   key={short.id}
                   onClick={(e) => openModal(short, e.currentTarget)}
                   aria-label={`${short.title} ${yt.playShorts}`}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                  className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                 >
                   {/* 썸네일 */}
                   <div className="relative w-full aspect-[9/16] bg-gray-200 overflow-hidden">
@@ -360,7 +360,7 @@ export default function YouTubeSection() {
             href="https://www.youtube.com/@starpibu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
             style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
           >
             {yt.visitChannel}

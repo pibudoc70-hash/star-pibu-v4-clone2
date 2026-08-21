@@ -17,6 +17,36 @@ export {
 import type { TRPCClientErrorLike } from "@trpc/client";
 import { parseTRPCError, type Lang } from "@/components/reservation/errorMessages";
 
+export type AdminErrorOperation = "equipment3.load" | "equipment3.update" | "equipment3.delete" | "equipment3.reorder";
+
+export type AdminErrorDetails = {
+  code: string;
+  message: string;
+};
+
+function getTrpcErrorCode(error: unknown): string | null {
+  if (!error || typeof error !== "object" || !("data" in error)) return null;
+  const { data } = error as { data?: unknown };
+  if (!data || typeof data !== "object" || !("code" in data)) return null;
+  const { code } = data as { code?: unknown };
+  return typeof code === "string" ? code : null;
+}
+
+/** 관리자 UI용 안전 오류 정보. 원본 backend message나 stack은 사용자 화면에 전달하지 않는다. */
+export function getAdminErrorDetails(error: unknown, operation: AdminErrorOperation): AdminErrorDetails {
+  const suffix = operation.replace(".", "-").toUpperCase();
+  const trpcCode = getTrpcErrorCode(error);
+
+  if (trpcCode === "UNAUTHORIZED") return { code: `ADM-${suffix}-UNAUTHORIZED`, message: "로그인이 필요합니다. 다시 로그인한 후 시도해 주세요." };
+  if (trpcCode === "FORBIDDEN") return { code: `ADM-${suffix}-FORBIDDEN`, message: "이 작업을 수행할 권한이 없습니다." };
+  if (trpcCode === "BAD_REQUEST") return { code: `ADM-${suffix}-INVALID`, message: "입력 내용을 확인한 후 다시 시도해 주세요." };
+  if (trpcCode === "NOT_FOUND") return { code: `ADM-${suffix}-NOT-FOUND`, message: "요청한 데이터를 찾을 수 없습니다." };
+  if (trpcCode === "CONFLICT") return { code: `ADM-${suffix}-CONFLICT`, message: "다른 변경과 충돌했습니다. 새로고침 후 다시 시도해 주세요." };
+  if (trpcCode === "TOO_MANY_REQUESTS") return { code: `ADM-${suffix}-RATE-LIMIT`, message: "요청이 많습니다. 잠시 후 다시 시도해 주세요." };
+
+  return { code: `ADM-${suffix}-UNEXPECTED`, message: "처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요." };
+}
+
 // ─── 이벤트 페이지 에러 파서 ──────────────────────────────────────────────────
 
 /** 이벤트 목록/상세 조회 에러에 특화된 메시지 반환 */

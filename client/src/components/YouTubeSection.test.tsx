@@ -168,4 +168,26 @@ describe("YouTubeSection viewport query states", () => {
     expect(retry).toHaveAttribute("aria-busy", "true");
     expect(queryState.refetch).not.toHaveBeenCalled();
   });
+
+  it("recovers from a retry error to normal content without repeating the request", async () => {
+    queryState = state({ isError: true });
+    const { rerender } = render(<YouTubeSection />);
+
+    await act(async () => {
+      observerCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+    });
+
+    const retry = await screen.findByRole("button", { name: "Retry" });
+    fireEvent.click(retry);
+    expect(queryState.refetch).toHaveBeenCalledTimes(1);
+
+    queryState = state({
+      data: [{ id: 1, title: "Recovered video", videoId: "dQw4w9WgXcQ", type: "video" }],
+    });
+    rerender(<YouTubeSection />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: "Recovered video Play video" })).toBeInTheDocument());
+    expect(screen.queryByRole("button", { name: "Retry" })).not.toBeInTheDocument();
+    expect(queryState.refetch).toHaveBeenCalledTimes(0);
+  });
 });

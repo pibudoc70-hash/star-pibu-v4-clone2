@@ -92,4 +92,19 @@ describe("Facility lightbox focus lifecycle", () => {
     expect(trigger).toHaveFocus();
     expect(document.body.style.overflow).toBe("");
   });
+
+  it("restores the pre-existing body overflow value when unmounted while open", () => {
+    document.body.style.overflow = "scroll";
+    const { container, unmount } = renderFacility();
+    const trigger = container.querySelector<HTMLButtonElement>(".facility-grid-thumb");
+    expect(trigger).not.toBeNull();
+
+    act(() => {
+      fireEvent.click(trigger!);
+    });
+    expect(document.body.style.overflow).toBe("hidden");
+
+    unmount();
+    expect(document.body.style.overflow).toBe("scroll");
+  });
 });

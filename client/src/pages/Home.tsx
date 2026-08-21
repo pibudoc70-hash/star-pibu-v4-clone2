@@ -499,7 +499,7 @@ export default function Home() {
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
         <DeferredMount
           fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
-          anchorSelectors={["#events"]}
+          anchorSelectors={["#events", "#facility"]}
           telemetrySurface="home_events"
         >
           <div className="section-bg-cream">

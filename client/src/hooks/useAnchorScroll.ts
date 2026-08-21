@@ -3,9 +3,24 @@
  *
  * Lazy section anchor 이동을 지원하는 스크롤 훅.
  * 아직 mount되지 않은 대상에는 명시적 mount event를 전달하고,
- * 대상 mount 직후 한 번만 native smooth scroll을 수행해 재이동을 피한다.
+ * 이동 중 layout shift가 발생해도 단일 연속 animation으로 target을 따라간다.
  */
 import { useCallback, useEffect, useRef } from "react";
+
+const MIN_ANCHOR_SCROLL_DURATION_MS = 650;
+const MAX_ANCHOR_SCROLL_DURATION_MS = 2400;
+
+function getStartOffset(element: Element): number {
+  const scrollMarginTop = Number.parseFloat(window.getComputedStyle(element).scrollMarginTop);
+  if (Number.isFinite(scrollMarginTop) && scrollMarginTop > 0) return scrollMarginTop;
+
+  const header = document.querySelector('header[role="banner"]') as HTMLElement | null;
+  return header ? header.offsetHeight + 8 : 80;
+}
+
+function easeOutCubic(progress: number): number {
+  return 1 - (1 - progress) ** 3;
+}
 
 export type AnchorScrollBlock = "start" | "center";
 
@@ -17,15 +32,12 @@ interface ScrollOptions {
 
 export function useAnchorScroll() {
   const activeFrameRef = useRef<number | null>(null);
-  const activeSettleTimersRef = useRef<number[]>([]);
 
   const cancel = useCallback(() => {
     if (activeFrameRef.current !== null) {
       cancelAnimationFrame(activeFrameRef.current);
       activeFrameRef.current = null;
     }
-    activeSettleTimersRef.current.forEach((timerId) => window.clearTimeout(timerId));
-    activeSettleTimersRef.current = [];
   }, []);
 
   const scrollToSelector = useCallback(
@@ -38,20 +50,46 @@ export function useAnchorScroll() {
 
       cancel();
 
+      const getTargetTop = (element: Element): number => {
+        const rect = element.getBoundingClientRect();
+        if (block === "center") {
+          return rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
+        }
+
+        return rect.top + window.scrollY - getStartOffset(element);
+      };
+
       const scrollToTarget = () => {
         const element = document.querySelector(selector);
         if (!element) return false;
 
-        if (block === "center") {
-          const rect = element.getBoundingClientRect();
-          const targetTop = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.scrollTo({ top: Math.max(0, getTargetTop(element)), behavior: "auto" });
           return true;
         }
 
-        // Section scroll-margin-top keeps the target clear of the fixed header.
-        // Native anchor motion prevents a second delayed scroll after the first arrival.
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        const initialTop = window.scrollY;
+        const initialTargetTop = getTargetTop(element);
+        const duration = Math.min(
+          MAX_ANCHOR_SCROLL_DURATION_MS,
+          Math.max(MIN_ANCHOR_SCROLL_DURATION_MS, Math.abs(initialTargetTop - initialTop) / 4),
+        );
+        let startedAt: number | null = null;
+        const animate = (now: number) => {
+          startedAt ??= now;
+          const progress = Math.min(1, (now - startedAt) / duration);
+          const targetTop = Math.max(0, getTargetTop(element));
+          const nextTop = initialTop + (targetTop - initialTop) * easeOutCubic(progress);
+          window.scrollTo({ top: nextTop, behavior: "auto" });
+
+          if (progress < 1) {
+            activeFrameRef.current = requestAnimationFrame(animate);
+          } else {
+            activeFrameRef.current = null;
+          }
+        };
+
+        activeFrameRef.current = requestAnimationFrame(animate);
         return true;
       };
 

@@ -7,48 +7,110 @@ function AnchorScrollProbe() {
 
   return (
     <>
+      <header role="banner" />
       <button onClick={() => scrollToSelector("#facility")}>시설안내</button>
       <button onClick={() => scrollToSelector("#events")}>EVENT</button>
-      <section id="facility" className="scroll-mt-24" />
-      <section id="events" className="scroll-mt-24" />
+      <section id="facility" />
+      <section id="events" />
     </>
   );
 }
 
 describe("useAnchorScroll", () => {
-  const scrollIntoView = vi.fn();
+  let scrollY = 0;
+  let queuedFrame: FrameRequestCallback | null = null;
+  const scrollTo = vi.fn(({ top }: ScrollToOptions) => {
+    scrollY = Number(top ?? 0);
+  });
 
   beforeEach(() => {
-    vi.useFakeTimers();
-    Object.defineProperty(Element.prototype, "scrollIntoView", {
-      configurable: true,
-      value: scrollIntoView,
+    scrollY = 0;
+    queuedFrame = null;
+    Object.defineProperty(window, "scrollY", { configurable: true, get: () => scrollY });
+    Object.defineProperty(window, "scrollTo", { configurable: true, value: scrollTo });
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+      queuedFrame = callback;
+      return 1;
     });
+    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: false }));
   });
 
   afterEach(() => {
-    scrollIntoView.mockClear();
-    vi.useRealTimers();
+    scrollTo.mockClear();
+    vi.unstubAllGlobals();
     vi.restoreAllMocks();
   });
 
-  it("시설안내 anchor를 지연 재보정 없이 한 번의 native smooth scroll로 이동한다", () => {
+  function runAnimationToEnd() {
+    const firstFrame = queuedFrame;
+    expect(firstFrame).not.toBeNull();
+    firstFrame?.(0);
+    const finalFrame = queuedFrame;
+    expect(finalFrame).not.toBeNull();
+    finalFrame?.(650);
+  }
+
+  function mockScrollMargin() {
+    const originalGetComputedStyle = window.getComputedStyle.bind(window);
+    vi.spyOn(window, "getComputedStyle").mockImplementation((element) => {
+      const style = originalGetComputedStyle(element);
+      return new Proxy(style, {
+        get(target, property, receiver) {
+          return property === "scrollMarginTop" ? "96px" : Reflect.get(target, property, receiver);
+        },
+      });
+    });
+  }
+
+  it("시설안내 anchor가 layout shift 후에도 단일 연속 animation으로 target을 따라간다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
+    const facility = document.querySelector("#facility") as HTMLElement;
+    const facilityButton = getByRole("button", { name: "시설안내" });
+    let facilityAbsoluteTop = 500;
+    vi.spyOn(facility, "getBoundingClientRect").mockImplementation(() => ({
+      top: facilityAbsoluteTop - scrollY,
+      bottom: facilityAbsoluteTop - scrollY + 400,
+      height: 400,
+      left: 0,
+      right: 0,
+      width: 100,
+      x: 0,
+      y: facilityAbsoluteTop - scrollY,
+      toJSON: () => ({}),
+    }));
 
-    fireEvent.click(getByRole("button", { name: "시설안내" }));
-    vi.advanceTimersByTime(5000);
+    mockScrollMargin();
+    fireEvent.click(facilityButton);
+    const firstFrame = queuedFrame;
+    firstFrame?.(0);
+    facilityAbsoluteTop = 1600;
+    const finalFrame = queuedFrame;
+    finalFrame?.(650);
 
-    expect(scrollIntoView).toHaveBeenCalledTimes(1);
-    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: 1504, behavior: "auto" });
   });
 
-  it("EVENT anchor에도 동일한 단일 native smooth scroll 계약을 적용한다", () => {
+  it("EVENT anchor에도 동일한 단일 연속 animation 계약을 적용한다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
+    const events = document.querySelector("#events") as HTMLElement;
+    const eventButton = getByRole("button", { name: "EVENT" });
+    vi.spyOn(events, "getBoundingClientRect").mockReturnValue({
+      top: 700,
+      bottom: 1100,
+      height: 400,
+      left: 0,
+      right: 0,
+      width: 100,
+      x: 0,
+      y: 700,
+      toJSON: () => ({}),
+    });
 
-    fireEvent.click(getByRole("button", { name: "EVENT" }));
-    vi.advanceTimersByTime(5000);
+    mockScrollMargin();
+    fireEvent.click(eventButton);
+    runAnimationToEnd();
 
-    expect(scrollIntoView).toHaveBeenCalledTimes(1);
-    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: 604, behavior: "auto" });
   });
 });

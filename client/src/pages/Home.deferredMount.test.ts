@@ -58,6 +58,7 @@ describe("Home below-the-fold deferred mount contract", () => {
 
   it("pre-mounts lazy sections above facility before the facility anchor starts scrolling", () => {
     for (const section of [
+      "SpecialEventSection",
       "DoctorsSection",
       "TreatmentsEquipmentSection",
       "ManagementDevicesSection",

@@ -19,7 +19,10 @@ describe("YouTube video ID validation policy", () => {
     "dQw4w9WgXcQ1",
     "dQw4 w9WgXcQ",
     "dQw4w9/WgXc",
+    "dQw4w9.WgXc",
     "dQw4w9WgXcQ?x=1",
+    "dQw4w9WgXcQ#fragment",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "%2Fetc%2Fpass",
     "한글비디오아이디",
   ])("rejects invalid ID before it can become a thumbnail resource: %s", (videoId) => {

@@ -19,6 +19,7 @@ function AnchorScrollProbe() {
 describe("useAnchorScroll", () => {
   let scrollY = 0;
   let queuedFrame: FrameRequestCallback | null = null;
+  let cancelAnimationFrameMock: ReturnType<typeof vi.fn>;
   const scrollTo = vi.fn(({ top }: ScrollToOptions) => {
     scrollY = Number(top ?? 0);
   });
@@ -33,7 +34,8 @@ describe("useAnchorScroll", () => {
       queuedFrame = callback;
       return 1;
     });
-    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    cancelAnimationFrameMock = vi.fn();
+    vi.stubGlobal("cancelAnimationFrame", cancelAnimationFrameMock);
     vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: false }));
   });
 
@@ -118,5 +120,24 @@ describe("useAnchorScroll", () => {
     runAnimationToEnd();
 
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 604, behavior: "auto" });
+  });
+
+  it.each([
+    ["wheel", () => fireEvent.wheel(window)],
+    ["touchstart", () => fireEvent.touchStart(window)],
+    ["pointerdown", () => fireEvent.pointerDown(window)],
+    ["keyboard scroll", () => fireEvent.keyDown(window, { key: "PageDown" })],
+  ])("cancels animation and final pin after user %s input", (_name, interrupt) => {
+    const { getByRole } = render(<AnchorScrollProbe />);
+    mockScrollMargin();
+
+    fireEvent.click(getByRole("button", { name: "시설안내" }));
+    interrupt();
+    const scrollCallsBeforeFinalPin = scrollTo.mock.calls.length;
+
+    vi.advanceTimersByTime(4000);
+
+    expect(cancelAnimationFrameMock).toHaveBeenCalledWith(1);
+    expect(scrollTo).toHaveBeenCalledTimes(scrollCallsBeforeFinalPin);
   });
 });

@@ -43,7 +43,7 @@ describe("useAnchorScroll", () => {
     vi.restoreAllMocks();
   });
 
-  it("lazy layout shift 뒤 fixed header offset으로 target을 bounded settle한다", () => {
+  it("lazy layout shift 뒤 한 번의 부드러운 final settle로 target을 정렬한다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
     const header = document.querySelector('header[role="banner"]') as HTMLElement;
     const facility = document.querySelector("#facility") as HTMLElement;
@@ -65,13 +65,13 @@ describe("useAnchorScroll", () => {
     expect(scrollTo).toHaveBeenCalledWith({ top: 432, behavior: "smooth" });
 
     facilityAbsoluteTop = 1000;
-    vi.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1999);
 
-    expect(scrollTo).toHaveBeenLastCalledWith({ top: 932, behavior: "auto" });
+    expect(scrollTo).toHaveBeenCalledTimes(1);
 
     facilityAbsoluteTop = 1600;
-    vi.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1);
 
-    expect(scrollTo).toHaveBeenLastCalledWith({ top: 1532, behavior: "auto" });
+    expect(scrollTo).toHaveBeenLastCalledWith({ top: 1532, behavior: "smooth" });
   });
 });

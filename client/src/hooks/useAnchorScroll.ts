@@ -3,7 +3,7 @@
  *
  * Lazy section anchor 이동을 지원하는 스크롤 훅.
  * 아직 mount되지 않은 대상에는 명시적 mount event를 전달하고,
- * 렌더 직후 한 번의 보정만 수행해 하단 jump·interval polling을 피한다.
+ * 렌더 직후와 bounded final settle만 수행해 하단 jump·interval polling을 피한다.
  */
 import { useCallback, useEffect, useRef } from "react";
 
@@ -60,28 +60,17 @@ export function useAnchorScroll() {
         if (targetTop === null) return false;
 
         window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-        activeFrameRef.current = requestAnimationFrame(() => {
-          activeFrameRef.current = requestAnimationFrame(() => {
-            const settledTop = getTargetTop();
-            if (settledTop !== null && Math.abs(window.scrollY - settledTop) > 10) {
-              window.scrollTo({ top: Math.max(0, settledTop), behavior: "auto" });
-            }
-            activeFrameRef.current = null;
-          });
-        });
 
         // Deferred sections can expand while images and adjacent lazy sections settle.
-        // Re-align a few fixed times instead of keeping an open-ended polling loop.
-        [180, 480, 1000, 2000].forEach((delay) => {
-          const timerId = window.setTimeout(() => {
-            activeSettleTimersRef.current = activeSettleTimersRef.current.filter((id) => id !== timerId);
-            const settledTop = getTargetTop();
-            if (settledTop !== null && Math.abs(window.scrollY - settledTop) > 10) {
-              window.scrollTo({ top: Math.max(0, settledTop), behavior: "auto" });
-            }
-          }, delay);
-          activeSettleTimersRef.current.push(timerId);
-        });
+        // One final smooth re-alignment avoids the visibly stepped motion of repeated auto-scrolls.
+        const timerId = window.setTimeout(() => {
+          activeSettleTimersRef.current = activeSettleTimersRef.current.filter((id) => id !== timerId);
+          const settledTop = getTargetTop();
+          if (settledTop !== null && Math.abs(window.scrollY - settledTop) > 10) {
+            window.scrollTo({ top: Math.max(0, settledTop), behavior: "smooth" });
+          }
+        }, 2000);
+        activeSettleTimersRef.current.push(timerId);
 
         return true;
       };

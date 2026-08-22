@@ -284,6 +284,7 @@ export default function TreatmentsEquipmentSection() {
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
                 onMobileTabToggle={handleMobileTabToggle}
+                onMobileDetailClose={handleMobileCategoryClose}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
                   <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">
@@ -322,7 +323,8 @@ export default function TreatmentsEquipmentSection() {
                       <button
                         type="button"
                         onClick={handleMobileCategoryClose}
-                        className="rounded-xl border border-[var(--color-gold-light)] bg-white px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                        data-testid="mobile-category-detail-close-footer"
+                        className="min-h-11 rounded-xl border border-[var(--color-gold-light)] bg-white px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
                       >
                         {tr.collapseBtn}
                       </button>

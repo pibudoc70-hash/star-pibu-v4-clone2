@@ -8,7 +8,7 @@
  * - native button의 Tab/Shift+Tab 및 Space/Enter 동작을 그대로 보존한다.
  */
 import { Fragment, type ReactNode } from "react";
-import { Star } from "lucide-react";
+import { ChevronUp, Star } from "lucide-react";
 import type { Category } from "@/types/treatment";
 import CategoryTabButton from "./CategoryTabButton";
 import { CATEGORY_ICON_MAP, getCatLabel } from "@/data/treatments/categories";
@@ -25,6 +25,7 @@ interface CategoryTabListProps {
   mobileActiveId?: TreatmentTabId | null;
   onMobileTabToggle?: (id: TreatmentTabId) => void;
   renderMobileDetail?: (id: TreatmentTabId) => ReactNode;
+  onMobileDetailClose?: () => void;
   mobileContainerRef?: React.RefObject<HTMLDivElement | null>;
   containerRef?: React.RefObject<HTMLDivElement | null>;
   /** WAI-ARIA: tablist의 aria-label */
@@ -39,6 +40,7 @@ export default function CategoryTabList({
   mobileActiveId = activeId,
   onMobileTabToggle,
   renderMobileDetail,
+  onMobileDetailClose,
   mobileContainerRef,
   containerRef,
   ariaLabel = "시술 카테고리",
@@ -72,6 +74,17 @@ export default function CategoryTabList({
           />
           {isMobileActive && renderMobileDetail ? (
             <div className="col-span-2" data-testid={`mobile-category-detail-${cat.id}`}>
+              <div className="flex justify-end px-1 pt-2">
+                <button
+                  type="button"
+                  data-testid="mobile-category-detail-close-top"
+                  onClick={onMobileDetailClose ?? (() => onMobileTabToggle?.(cat.id))}
+                  className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                >
+                  <ChevronUp size={15} aria-hidden="true" />
+                  접기
+                </button>
+              </div>
               {renderMobileDetail(cat.id)}
             </div>
           ) : null}

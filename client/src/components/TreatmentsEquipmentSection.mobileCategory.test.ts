@@ -32,4 +32,11 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(sectionSource).toContain('block: "center"');
     expect(tabListSource).toContain('id="treatment-mobile-category-list"');
   });
+
+  it("offers one selected-row close control and one footer close control after category content", () => {
+    expect(tabListSource).toContain("onMobileDetailClose");
+    expect(tabListSource).toContain("mobile-category-detail-close-top");
+    expect(sectionSource).toContain("mobile-category-detail-close-footer");
+    expect(sectionSource).toContain("onMobileDetailClose={handleMobileCategoryClose}");
+  });
 });

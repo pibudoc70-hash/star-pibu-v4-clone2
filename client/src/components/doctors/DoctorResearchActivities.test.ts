@@ -52,4 +52,13 @@ describe("Doctor research activities disclosure contract", () => {
     expect(doctorData).toContain('title: "한관종 절연침 치료 연구"');
     expect(doctorData).toContain('title: "선형 국소 탄력섬유증 증례 보고"');
   });
+
+  it("restores Lee's profile-sourced publication and EADV activity without inventing individual paper titles", () => {
+    expect(doctorData).toContain('title: "국내외 학술논문 게재 활동"');
+    expect(doctorData).toContain('title: "EADV Congress Milan 2022 연수 및 발표"');
+    expect(doctorData).toContain("https://www.kskin.kr/Kskin/staff");
+    expect(doctorData).toContain("SCI/SCI-E급 논문 8편");
+    expect(doctorData).toContain("국내학술논문 22편");
+    expect(doctorData).not.toContain("RID=2232149");
+  });
 });

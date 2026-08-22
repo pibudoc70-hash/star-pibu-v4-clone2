@@ -86,5 +86,18 @@ describe("EventTableMobile", () => {
     expect(styles).toContain("grid-template-rows: 0fr");
     expect(styles).toContain(".event-mobile-detail.is-open");
     expect(styles).toContain("grid-template-rows: 1fr");
+    expect(styles).toContain(".event-mobile-detail__body");
+    expect(styles).toContain("opacity: 0");
+    expect(styles).toContain("translateY(8px)");
+    expect(styles).toContain(".event-mobile-detail.is-open .event-mobile-detail__body");
+  });
+
+  it("returns footer close to the expanded event row start with smooth scrolling", () => {
+    const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
+
+    expect(source).toContain("handleFooterClose");
+    expect(source).toContain("scrollIntoView");
+    expect(source).toContain('behavior: "smooth"');
+    expect(source).toContain('block: "start"');
   });
 });

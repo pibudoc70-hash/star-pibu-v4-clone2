@@ -3,7 +3,7 @@
  *
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
@@ -47,10 +47,10 @@ interface EventInlineDetailProps {
   event: SpecialEvent;
   isOpen: boolean;
   getLocalizedText: EventTableMobileProps["getLocalizedText"];
-  onClose: () => void;
+  onFooterClose: () => void;
 }
 
-function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventInlineDetailProps) {
+function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: EventInlineDetailProps) {
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const priceRows = parsePriceRows(event);
@@ -69,7 +69,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventIn
       inert={!isOpen}
     >
       <div className="event-mobile-detail__content">
-        <section className="border-t border-gray-100 bg-white/70 px-5 py-5" aria-label={`${title} 상세`}>
+        <section className="event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 py-5" aria-label={`${title} 상세`}>
           <div className="mb-4">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
@@ -128,7 +128,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventIn
           <div data-testid="mobile-event-detail-footer" className="mt-3 flex justify-center border-t border-gray-100 pt-3">
             <button
               type="button"
-              onClick={onClose}
+              onClick={onFooterClose}
               className="min-h-11 min-w-28 rounded-xl border border-gray-200 px-4 text-sm font-medium text-gray-600 transition-colors active:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
               aria-label={`${title} 상세 접기`}
             >
@@ -143,6 +143,15 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventIn
 
 export default function EventTableMobile({ events, getLocalizedText }: EventTableMobileProps) {
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
+  const eventRowRefs = useRef(new Map<number, HTMLDivElement>());
+
+  const handleFooterClose = (eventId: number) => {
+    setExpandedEventId(null);
+
+    requestAnimationFrame(() => {
+      eventRowRefs.current.get(eventId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   return (
     <div
@@ -173,7 +182,17 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
 
           return (
             <div key={event.id} className="event-mobile-entry">
-              <div data-event-row={event.id} className="flex items-center gap-3 px-5 py-4 active:bg-gray-50 transition-colors">
+              <div
+                ref={(node) => {
+                  if (node) {
+                    eventRowRefs.current.set(event.id, node);
+                  } else {
+                    eventRowRefs.current.delete(event.id);
+                  }
+                }}
+                data-event-row={event.id}
+                className="flex scroll-mt-24 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
+              >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-gray-900 truncate">{title}</p>
                   <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
@@ -210,7 +229,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 </button>
               </div>
 
-              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onClose={() => setExpandedEventId(null)} />
+              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={() => handleFooterClose(event.id)} />
             </div>
           );
         })}

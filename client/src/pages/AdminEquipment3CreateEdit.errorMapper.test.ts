@@ -19,4 +19,3 @@ describe("AdminEquipment3 create/edit error mapper", () => {
     expect(editSource).toContain("오류 코드:");
   });
 });
-

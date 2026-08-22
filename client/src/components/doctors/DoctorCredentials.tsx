@@ -7,7 +7,7 @@
  * - variant="mobile": 아코디언 토글 레이아웃
  */
 import React from "react";
-import { ChevronDown, GraduationCap } from "lucide-react";
+import { BookOpen, ChevronDown, ExternalLink, GraduationCap } from "lucide-react";
 import type { DoctorViewModel } from "@/hooks/useDoctorViewModel";
 
 interface DoctorCredentialsProps {
@@ -18,6 +18,31 @@ interface DoctorCredentialsProps {
   onToggle?: () => void;
   collapseLabel?: string;
   expandLabel?: string;
+}
+
+function DoctorResearchActivities({ doctor }: Pick<DoctorCredentialsProps, "doctor">) {
+  if (!doctor.researchActivities || doctor.researchActivities.length === 0) return null;
+
+  return (
+    <details className="group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white">
+      <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-semibold text-stone-800 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67] focus-visible:ring-inset">
+        <BookOpen size={16} aria-hidden="true" className="text-[#b8924c]" />
+        <span>연구·발표 및 연수 활동</span>
+        <ChevronDown size={16} aria-hidden="true" className="ml-auto transition-transform duration-200 group-open:rotate-180" />
+      </summary>
+      <div className="space-y-3 border-t border-stone-200 px-4 py-4">
+        {doctor.researchActivities.map((activity) => (
+          <article key={activity.sourceUrl} className="border-l-2 border-[#d2ac67]/70 pl-3">
+            <h4 className="text-sm font-semibold text-stone-800">{activity.title}</h4>
+            <p className="mt-1 text-xs leading-relaxed text-stone-600">{activity.detail}</p>
+            <a href={activity.sourceUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#8f6b31] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67]">
+              {activity.sourceLabel}<ExternalLink size={12} aria-hidden="true" />
+            </a>
+          </article>
+        ))}
+      </div>
+    </details>
+  );
 }
 
 export function DoctorCredentials({
@@ -51,6 +76,7 @@ export function DoctorCredentials({
             );
           })}
         </div>
+        <DoctorResearchActivities doctor={doctor} />
       </div>
     );
   }
@@ -91,6 +117,7 @@ export function DoctorCredentials({
           })}
         </div>
       )}
+      <DoctorResearchActivities doctor={doctor} />
     </div>
   );
 }

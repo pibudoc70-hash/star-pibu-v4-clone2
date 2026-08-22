@@ -46,6 +46,13 @@ export interface Doctor {
   intro: string[];
   credentials: { icon: React.ElementType; label: string; text: string }[];
   specialties: string[];
+  /** 공식 학술 DB 또는 병원 연구 페이지로 교차 확인된 연구·발표·연수 활동 */
+  researchActivities?: {
+    title: string;
+    detail: string;
+    sourceLabel: string;
+    sourceUrl: string;
+  }[];
 
   // ── JSON-LD 스키마 전용 필드 (신규) ──
   /** schema.org Person.jobTitle (영문) */
@@ -96,6 +103,26 @@ export const doctors: Doctor[] = [
     specialties: [
       "눈밑지방재배치", "리프팅", "울쎄라", "써마지",
       "흉터치료", "색소치료", "백반증", "문신제거", "보톡스", "필러",
+    ],
+    researchActivities: [
+      {
+        title: "액취증·다한증 치료 연구",
+        detail: "액취증·다한증 치료 관련 공동연구로, PubMed에서 저자 Si-Hyung Cho와 논문 서지를 확인할 수 있습니다.",
+        sourceLabel: "PubMed",
+        sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16681657/",
+      },
+      {
+        title: "피부과 학회 발표 활동",
+        detail: "스타피부과 연구 및 발표 활동 페이지에 정리된 국내외 학회 발표 목록을 확인할 수 있습니다.",
+        sourceLabel: "스타피부과 연구·발표",
+        sourceUrl: "/research",
+      },
+      {
+        title: "해외 전문가 과정 및 연수",
+        detail: "스타피부과 연구 및 발표 활동 페이지에 기재된 국소마취 지방흡입, 지방이식, 화학박피, 실리프팅 관련 전문가 과정입니다.",
+        sourceLabel: "스타피부과 연구·발표",
+        sourceUrl: "/research",
+      },
     ],
 
     // ── JSON-LD 스키마 전용 필드 ──
@@ -154,6 +181,14 @@ export const doctors: Doctor[] = [
       "리프팅", "울쎄라", "써마지", "흉터치료",
       "색소치료", "피부질환", "문신제거", "손발톱무좀", "보톡스",
     ],
+    researchActivities: [
+      {
+        title: "분절상 신경섬유종증 증례 보고",
+        detail: "가톨릭대학교 소속 저자로 확인되는 피부과 증례 보고이며, KCI에서 논문 서지를 확인할 수 있습니다.",
+        sourceLabel: "KCI",
+        sourceUrl: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000885244",
+      },
+    ],
 
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD",
@@ -207,6 +242,14 @@ export const doctors: Doctor[] = [
     specialties: [
       "리프팅", "울쎄라", "써마지", "색소치료",
       "백반증", "피부질환", "문신제거", "손발톱무좀",
+    ],
+    researchActivities: [
+      {
+        title: "동상의 임상·조직병리학적 특성 연구",
+        detail: "고신의대 피부과 소속 Ki Wook Lee 저자로 확인되는 동상 관련 임상·조직병리학 연구입니다.",
+        sourceLabel: "KoMCI",
+        sourceUrl: "https://www.komci.org/GSResult.php?RID=2232149&DT=1",
+      },
     ],
 
     // ── JSON-LD 스키마 전용 필드 ──

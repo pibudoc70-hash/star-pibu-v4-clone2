@@ -102,4 +102,11 @@ describe("EventTableMobile", () => {
     expect(source).toContain("scroll-mt-16");
     expect(source).not.toContain("scroll-mt-24 items-center");
   });
+
+  it("keeps the expanded detail close to its clicked event row", () => {
+    const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
+
+    expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 pt-3 pb-5");
+    expect(source).not.toContain("event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 py-5");
+  });
 });

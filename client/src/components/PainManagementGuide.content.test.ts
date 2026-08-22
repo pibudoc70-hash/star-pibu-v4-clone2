@@ -81,6 +81,16 @@ describe("PainManagementGuide content and placement", () => {
     expect(globalCssSource).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
+  it("adds an accessible, localized visual explainer without introducing unsupported medical claims", () => {
+    expect(guideSource).toContain("pain-management-infographic");
+    expect(guideSource).toContain("visualHeading");
+    expect(guideSource).toContain("visualCaption");
+    expect(guideSource).toContain("careCheckpoints");
+    expect(guideSource).toContain("aria-label={copy.visualHeading}");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.visualHeading).toContain("3단계");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints).toHaveLength(3);
+  });
+
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');

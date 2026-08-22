@@ -11,6 +11,9 @@ type GuideCopy = {
   heroTitle: string;
   title: string;
   intro: string;
+  visualHeading: string;
+  visualCaption: string;
+  careCheckpoints: string[];
   steps: Step[];
   experienceHeading: string;
   experienceBody: string;
@@ -33,6 +36,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     heroTitle: "통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다",
     title: "개인별 통증관리 3단계",
     intro: "통증에 대한 걱정까지 고려하는 것이 시술 계획의 중요한 시작입니다. 스타피부과는 시술 특성과 환자 상태를 함께 살펴 통증관리 방법을 단계적으로 검토합니다.",
+    visualHeading: "한눈에 보는 개인별 통증관리 3단계",
+    visualCaption: "시술 특성과 개인 상태를 확인한 뒤, 필요한 단계만 의료진이 검토합니다.",
+    careCheckpoints: ["사전 확인", "시술 중 관찰", "회복 안내"],
     steps: [
       { icon: "도포로 부담 완화", title: "① 연고마취", body: "시술 부위와 방법을 고려해 연고마취 적용 여부를 검토합니다. 적용 시간과 범위는 개인 상태와 의료진 안내에 따라 달라질 수 있습니다." },
       { icon: "필요 부위 진통", title: "② 주사 진통", body: "통증 조절이 더 필요한 부위에는 주사 진통 방법을 검토할 수 있습니다. 적용 여부와 방법은 시술 계획 및 개인 상태를 바탕으로 의료진이 안내합니다." },
@@ -62,6 +68,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     heroTitle: "Considering fear of discomfort is an important beginning to a procedure plan.",
     title: "Three Steps of Individualized Pain Management",
     intro: "Considering concerns about discomfort is an important first step in planning a procedure. Star Dermatology reviews the procedure and each patient’s condition to consider pain-management options in stages.",
+    visualHeading: "Individualized pain-management path at a glance",
+    visualCaption: "After reviewing the procedure and individual condition, the medical team considers only the steps that may be needed.",
+    careCheckpoints: ["Pre-procedure review", "Observation during care", "Recovery guidance"],
     steps: [
       { icon: "Topical support", title: "1. Topical anesthetic", body: "The care team reviews whether topical anesthetic is appropriate for the treatment area and procedure. The timing and coverage may vary according to individual condition and medical guidance." },
       { icon: "Local pain control", title: "2. Injectable pain control", body: "For areas that may require additional pain control, an injectable option may be considered. The approach is explained by the medical team based on the treatment plan and individual condition." },
@@ -91,6 +100,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     heroTitle: "痛みに対する不安まで考えることが、施術計画の大切な出発点です。",
     title: "個別の痛み管理・3段階",
     intro: "痛みに対するご不安まで考えることが、施術計画の大切な出発点です。スター皮膚科では、施術の特性と患者様の状態を確認しながら、痛み管理の方法を段階的に検討します。",
+    visualHeading: "ひと目でわかる個別の痛み管理の流れ",
+    visualCaption: "施術の特性と個別の状態を確認し、必要な段階だけを医療スタッフが検討します。",
+    careCheckpoints: ["施術前確認", "施術中の観察", "回復のご案内"],
     steps: [
       { icon: "塗布による配慮", title: "1. 麻酔クリーム", body: "施術部位と方法を考慮し、麻酔クリームの適用を検討します。適用時間と範囲は、個別の状態と医療スタッフの案内によって異なる場合があります。" },
       { icon: "必要部位の鎮痛", title: "2. 注射による鎮痛", body: "より痛みの調整が必要な部位には、注射による鎮痛を検討することがあります。適用の可否と方法は、施術計画と個別の状態をもとに医療スタッフがご案内します。" },
@@ -120,6 +132,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     heroTitle: "将对不适的恐惧纳入考虑，是制定治疗计划的重要起点。",
     title: "个性化疼痛管理 3 个步骤",
     intro: "将对不适的担忧纳入考虑，是制定治疗计划的重要起点。STAR皮肤科会结合治疗特点与患者状态，分阶段评估疼痛管理方式。",
+    visualHeading: "一目了然的个性化疼痛管理流程",
+    visualCaption: "确认治疗特点和个人状态后，医护人员仅评估可能需要的阶段。",
+    careCheckpoints: ["治疗前确认", "治疗中观察", "恢复说明"],
     steps: [
       { icon: "表麻舒缓", title: "1. 表面麻醉膏", body: "会根据治疗部位和方式评估是否使用表面麻醉膏。使用时间和范围可能因个人状态及医护人员说明而有所不同。" },
       { icon: "局部镇痛", title: "2. 注射镇痛", body: "对于可能需要进一步疼痛控制的部位，可评估注射镇痛方式。是否适用及具体方法将由医护人员依据治疗计划和个人状态说明。" },
@@ -149,6 +164,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     heroTitle: "將對不適的恐懼納入考量，是規劃療程的重要起點。",
     title: "個人化疼痛管理 3 個步驟",
     intro: "將對不適的擔憂納入考量，是規劃療程的重要起點。STAR皮膚科會綜合療程特性與患者狀態，分階段評估疼痛管理方式。",
+    visualHeading: "一目瞭然的個人化疼痛管理流程",
+    visualCaption: "確認療程特性與個人狀態後，醫護人員僅評估可能需要的階段。",
+    careCheckpoints: ["療程前確認", "療程中觀察", "恢復說明"],
     steps: [
       { icon: "表麻舒緩", title: "1. 表面麻醉膏", body: "會依療程部位與方式評估是否使用表面麻醉膏。使用時間與範圍可能因個人狀態及醫護人員說明而有所不同。" },
       { icon: "局部鎮痛", title: "2. 注射鎮痛", body: "對於可能需要進一步疼痛控制的部位，可評估注射鎮痛方式。是否適用及具體方法將由醫護人員依療程計畫與個人狀態說明。" },
@@ -197,6 +215,28 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         <h2 id={headingId} className="mt-3 text-2xl font-semibold leading-snug text-[var(--color-star-text)] sm:text-3xl">{copy.heroTitle}</h2>
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
+
+      <section className="pain-management-infographic mb-5 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-4 sm:p-5" aria-label={copy.visualHeading}>
+        <div className="text-center sm:text-left">
+          <h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>
+          <p className="mt-1 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
+        </div>
+        <ol className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+          {copy.steps.map((step, index) => {
+            const Icon = STEP_ICONS[index] ?? Stethoscope;
+            return (
+              <li key={step.title} className="relative rounded-lg bg-white px-2 py-3 text-center shadow-sm">
+                <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-xs font-bold text-white">{index + 1}</span>
+                <Icon size={18} className="mx-auto mt-2 text-[var(--color-gold-deep)]" aria-hidden="true" />
+                <span className="mt-1 block text-xs font-semibold leading-5 text-[var(--color-star-text)]">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
+              </li>
+            );
+          })}
+        </ol>
+        <ul className="mt-4 grid gap-2 border-t border-[var(--color-gold-light)] pt-4 sm:grid-cols-3">
+          {copy.careCheckpoints.map((checkpoint) => <li key={checkpoint} className="flex items-center justify-center gap-1.5 text-xs font-medium text-[var(--color-star-text-mid)]"><ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{checkpoint}</li>)}
+        </ul>
+      </section>
 
       <div className="rounded-xl border border-[var(--color-gold-light)] px-4">
         {copy.steps.map((step, index) => {

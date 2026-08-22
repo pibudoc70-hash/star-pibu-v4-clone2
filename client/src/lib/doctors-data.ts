@@ -279,15 +279,6 @@ export const doctors: Doctor[] = [
       "리프팅", "울쎄라", "써마지", "색소치료",
       "백반증", "피부질환", "문신제거", "손발톱무좀",
     ],
-    researchActivities: [
-      {
-        title: "동상의 임상·조직병리학적 특성 연구",
-        detail: "고신의대 피부과 소속 Ki Wook Lee 저자로 확인되는 동상 관련 임상·조직병리학 연구입니다.",
-        sourceLabel: "KoMCI",
-        sourceUrl: "https://www.komci.org/GSResult.php?RID=2232149&DT=1",
-      },
-    ],
-
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD, PhD",
     schemaDescription:

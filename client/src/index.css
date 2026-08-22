@@ -2536,10 +2536,15 @@
   font-weight: 400;
   letter-spacing: 0.05em;
 }
-.hero-btn-reserve:hover {
-  background: #02b852;
-  box-shadow: 0 6px 28px rgba(3, 199, 90, 0.55);
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .hero-btn-reserve {
+    transition: background-color 240ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1), transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-btn-reserve:hover {
+    background: #08d764;
+    box-shadow: 0 7px 30px rgba(3, 199, 90, 0.52);
+    transform: translateY(-1px);
+  }
 }
 /* HeroActions: WeChat reserve button */
 .hero-btn-reserve-zh {

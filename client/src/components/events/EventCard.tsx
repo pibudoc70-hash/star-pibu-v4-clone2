@@ -112,14 +112,14 @@ export default function EventCard({ event, getLocalizedText }: EventCardProps) {
       {/* 이미지 — PC: 항상 표시 / 모바일: 확장 시에만 표시 */}
       {event.imageUrl && (
         <div
-          className={`event-card__media overflow-hidden bg-gray-100 ${
+          className={`event-card__media event-card__media--hoverable overflow-hidden bg-gray-100 ${
             isExpanded ? "block" : "hidden md:block"
           }`}
         >
           <OptimizedImage
             src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
             alt={title}
-            className="event-card__media-image w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="event-card__media-image w-full h-full object-cover"
             width={800}
             height={533}
             priority={false}

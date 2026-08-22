@@ -79,7 +79,7 @@ describe("EventCard design pilot", () => {
     expect(source).not.toContain('fontSize: "0.82rem"');
     expect(source).not.toContain('aspectRatio: "10/6"');
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
-    expect(styles).toContain(".event-card__media-image:hover");
+    expect(styles).toContain(".event-card__media--hoverable:hover .event-card__media-image");
   });
 
   it("keeps the collapsed mobile card compact and supports keyboard disclosure", async () => {

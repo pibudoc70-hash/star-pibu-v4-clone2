@@ -98,6 +98,14 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("label: copy.categoryLabel");
   });
 
+  it("uses mobile-specific spacing and typography so the visual explainer stays balanced on narrow screens", () => {
+    expect(guideSource).toContain("p-4 sm:p-7");
+    expect(guideSource).toContain("text-[1.7rem]");
+    expect(guideSource).toContain("min-h-[110px]");
+    expect(guideSource).toContain("text-[11px]");
+    expect(guideSource).toContain("text-[10px]");
+  });
+
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');

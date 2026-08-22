@@ -215,32 +215,32 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
   const headingId = "pain-management-guide-title";
 
   return (
-    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-5 sm:p-7" aria-labelledby={headingId}>
-      <div className="mb-5 text-center sm:text-left">
+    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7" aria-labelledby={headingId}>
+      <div className="mb-4 text-center sm:mb-5 sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-        <h2 id={headingId} className="mt-3 text-2xl font-semibold leading-snug text-[var(--color-star-text)] sm:text-3xl">{copy.heroTitle}</h2>
+        <h2 id={headingId} className="mt-3 text-[1.7rem] font-semibold leading-[1.35] tracking-tight text-[var(--color-star-text)] sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
-      <section className="pain-management-infographic mb-5 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-4 sm:p-5" aria-label={copy.visualHeading}>
+      <section className="pain-management-infographic mb-4 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-3.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
         <div className="text-center sm:text-left">
           <h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>
           <p className="mt-1 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
         </div>
-        <ol className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+        <ol className="mt-3 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <li key={step.title} className="relative rounded-lg bg-white px-2 py-3 text-center shadow-sm">
+              <li key={step.title} className="relative flex min-h-[110px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-2.5 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
                 <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-xs font-bold text-white">{index + 1}</span>
                 <Icon size={18} className="mx-auto mt-2 text-[var(--color-gold-deep)]" aria-hidden="true" />
-                <span className="mt-1 block text-xs font-semibold leading-5 text-[var(--color-star-text)]">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
+                <span className="mt-1 block break-keep text-[11px] font-semibold leading-4 text-[var(--color-star-text)] sm:text-xs sm:leading-5">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
               </li>
             );
           })}
         </ol>
-        <ul className="mt-4 grid gap-2 border-t border-[var(--color-gold-light)] pt-4 sm:grid-cols-3">
-          {copy.careCheckpoints.map((checkpoint) => <li key={checkpoint} className="flex items-center justify-center gap-1.5 text-xs font-medium text-[var(--color-star-text-mid)]"><ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{checkpoint}</li>)}
+        <ul className="mt-3 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-3 sm:mt-4 sm:gap-2 sm:pt-4">
+          {copy.careCheckpoints.map((checkpoint) => <li key={checkpoint} className="flex flex-col items-center justify-center gap-1 text-center text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:flex-row sm:gap-1.5 sm:text-left sm:text-xs"><ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{checkpoint}</li>)}
         </ul>
       </section>
 
@@ -256,7 +256,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
                 </span>
                 <ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
               </summary>
-              <div className="pb-4 pl-8 text-sm text-[var(--color-star-text-mid)]"><p className="leading-6">{step.body}</p></div>
+              <div className="pb-4 pt-1 text-sm text-[var(--color-star-text-mid)] sm:pl-8"><p className="leading-6">{step.body}</p></div>
             </details>
           );
         })}

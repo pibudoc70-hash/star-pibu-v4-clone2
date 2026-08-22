@@ -1,6 +1,6 @@
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import FacilitySection from "./FacilitySection";
 
 const listeners = new Map<string, Set<() => void>>();
@@ -100,5 +100,17 @@ describe("FacilitySection reduced motion autoplay", () => {
     render(<FacilitySection />);
 
     expect(intervalSpy).not.toHaveBeenCalled();
+  });
+
+  it("advances one slide after a touch pointer swipe", () => {
+    const { container } = render(<FacilitySection />);
+    const carousel = container.querySelector(".facility-carousel-wrap");
+    const mobileHeading = container.querySelector(".md\\:hidden h3");
+
+    expect(carousel).not.toBeNull();
+    fireEvent.pointerDown(carousel!, { pointerType: "touch", clientX: 200 });
+    fireEvent.pointerUp(carousel!, { pointerType: "touch", clientX: 100 });
+
+    expect(mobileHeading?.textContent).toBe("시설 2");
   });
 });

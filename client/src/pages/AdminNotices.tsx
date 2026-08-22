@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Plus, Trash2, Edit2, Pin, Languages, Loader2, ImagePlus, X } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useLocation } from 'wouter';
+import { getAdminErrorDetails } from '@/lib/errorMessages';
 
 type TargetLang = 'all' | 'ko' | 'en' | 'ja' | 'zh';
 
@@ -153,8 +154,22 @@ export default function AdminNotices() {
       refetch();
       utils.notices.list.invalidate();
     },
-    onError: (err) => { alert(`번역 실패: ${err.message}`); },
+    onError: (err) => {
+      const { message, code } = getAdminErrorDetails(err, "notices.translate");
+      alert(`번역 실패\n${message}\n오류 코드: ${code}`);
+    },
   });
+
+  useEffect(() => {
+    if (!showTranslateModal) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowTranslateModal(false);
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showTranslateModal]);
 
   // 관리자 권한 확인
   if (!user || user.role !== 'admin') {
@@ -616,15 +631,20 @@ export default function AdminNotices() {
 
       {/* 자동번역 모달 */}
       {showTranslateModal && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-label="자동번역 모달 닫기"
+            onClick={() => setShowTranslateModal(false)}
+            className="absolute inset-0 cursor-default"
+          />
+          <div
+            className="relative bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4"
           role="dialog"
           aria-modal="true"
           aria-label="자동번역 설정"
-          onClick={(e) => { if (e.target === e.currentTarget) setShowTranslateModal(false); }}
-          onKeyDown={(e) => { if (e.key === 'Escape') setShowTranslateModal(false); }}
         >
-          <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
             <h3 className="text-lg font-bold text-gray-900 mb-2">🌐 자동번역 등록</h3>
             <p className="text-sm text-gray-600 mb-4">
               한글 공지사항을 AI가 자동으로 번역하여 각 언어 페이지에 등록합니다.

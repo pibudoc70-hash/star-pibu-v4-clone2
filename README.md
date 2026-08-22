@@ -54,11 +54,13 @@ pnpm build        # dist/ 디렉토리 생성
 pnpm start        # 프로덕션 서버 실행
 ```
 
-### 데이터베이스 마이그레이션
+### 데이터베이스 schema artifact 생성과 마이그레이션
 
 ```bash
-pnpm db:push      # drizzle-kit generate + migrate
+pnpm db:generate  # schema 변경에서 migration artifact만 생성하며 DB에 적용하지 않음
 ```
+
+마이그레이션 적용은 대상 환경을 명시하는 별도 명령으로만 수행합니다. 운영 환경에는 승인된 배포 절차에서만 `pnpm db:migrate:production`을 사용하며, 이 명령은 빌드·테스트·schema artifact 생성 과정에서 자동 실행되지 않습니다.
 
 ### 타입 검사 / 테스트
 
@@ -76,11 +78,11 @@ pnpm format       # Prettier 포맷팅
 
 ```bash
 export DATABASE_URL='mysql://root:root@127.0.0.1:3306/star_pibu_test'
-pnpm drizzle-kit migrate
+pnpm db:migrate:local
 pnpm test:integration
 ```
 
-`pnpm audit --audit-level moderate`는 CI의 독립 검사 단계이며, 보통 이상 취약점이 있으면 실패합니다. `.github/star-pibu-github-backup/workflows/ci.yml`은 활성 Actions 경로 밖에 보관된 이전 설정으로, 현재 CI 기준은 `.github/workflows/ci.yml`입니다.
+CI는 `pnpm db:migrate:ci`와 동등한 migration 명령을 테스트 전용 MySQL에만 적용합니다. `pnpm audit --audit-level moderate`는 CI의 독립 검사 단계이며, 보통 이상 취약점이 있으면 실패합니다. `.github/star-pibu-github-backup/workflows/ci.yml`은 활성 Actions 경로 밖에 보관된 이전 설정으로, 현재 CI 기준은 `.github/workflows/ci.yml`입니다.
 
 ---
 

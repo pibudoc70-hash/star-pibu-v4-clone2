@@ -11,6 +11,7 @@
  *  - 신규 등록 / 수정 페이지로 이동
  */
 import { useState, useEffect, useRef } from "react";
+import { getAdminErrorDetails } from "@/lib/errorMessages";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -255,12 +256,18 @@ export default function AdminEquipment3() {
       utils.equipment3.all.invalidate();
       toast({ title: "삭제 완료", description: "시술이 삭제되었습니다." });
     },
-    onError: (err) => toast({ title: "삭제 실패", description: err.message, variant: "destructive" }),
+    onError: (err) => {
+      const details = getAdminErrorDetails(err, "equipment3.delete");
+      toast({ title: "삭제 실패", description: `${details.message} (${details.code})`, variant: "destructive" });
+    },
   });
 
   const updateMutation = trpc.equipment3.update.useMutation({
     onSuccess: () => utils.equipment3.all.invalidate(),
-    onError: (err) => toast({ title: "업데이트 실패", description: err.message, variant: "destructive" }),
+    onError: (err) => {
+      const details = getAdminErrorDetails(err, "equipment3.update");
+      toast({ title: "업데이트 실패", description: `${details.message} (${details.code})`, variant: "destructive" });
+    },
   });
 
   const reorderMutation = trpc.equipment3.reorder.useMutation({
@@ -273,7 +280,8 @@ export default function AdminEquipment3() {
     },
     onError: (err) => {
       setSaving(false);
-      toast({ title: "순서 저장 실패", description: err.message, variant: "destructive" });
+      const details = getAdminErrorDetails(err, "equipment3.reorder");
+      toast({ title: "순서 저장 실패", description: `${details.message} (${details.code})`, variant: "destructive" });
     },
   });
 
@@ -508,12 +516,16 @@ export default function AdminEquipment3() {
         {/* 목록 */}
         {categoryReordering ? null : isLoading ? (
           <div className="text-center py-20 text-gray-500">로딩 중...</div>
-        ) : error ? (
+        ) : error ? (() => {
+          const details = getAdminErrorDetails(error, "equipment3.load");
+          return (
           <div className="text-center py-20 text-red-500">
             <p className="mb-4">⚠️ 데이터 로드 실패</p>
-            <p className="text-sm">{error.message}</p>
+            <p className="text-sm">{details.message}</p>
+            <p className="mt-2 text-xs text-red-400">오류 코드: {details.code}</p>
           </div>
-        ) : localItems.length === 0 ? (
+          );
+        })() : localItems.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <p className="mb-4">등록된 시술이 없습니다.</p>
             <Button onClick={() => navigate("/admin/equipment3/new")}>

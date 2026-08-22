@@ -102,18 +102,31 @@ export default function FacilitySection() {
     setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
   }, [galleryImages.length]);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse") setIsHovering(true);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
+  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse") setIsHovering(false);
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "touch") return;
+    touchStartX.current = e.clientX;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "touch" || touchStartX.current === null) return;
+    const dx = e.clientX - touchStartX.current;
     if (Math.abs(dx) > 40) {
       if (dx > 0) goPrev();
       else goNext();
     }
     touchStartX.current = null;
+  };
+
+  const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") touchStartX.current = null;
   };
 
   const triggerBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -220,10 +233,11 @@ export default function FacilitySection() {
           {/* Carousel Container */}
           <div
             className="relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl w-full facility-carousel-wrap"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
           >
             {/* Slides */}
             <div className="relative w-full h-full">

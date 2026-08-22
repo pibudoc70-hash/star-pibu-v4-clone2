@@ -55,10 +55,10 @@ describe("securityHeadersMiddleware", () => {
     expect(csp).toContain("https://www.youtube-nocookie.com");
   });
 
-  it("CSP에 Cloudflare Turnstile script-src가 포함되어야 한다", () => {
+  it("CSP에 삭제된 CAPTCHA provider가 남지 않아야 한다", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
     const csp = res._headers["Content-Security-Policy"];
-    expect(csp).toContain("https://challenges.cloudflare.com");
+    expect(csp).not.toContain("challenges.cloudflare.com");
   });
 
   it("CSP에 Google Fonts style-src/font-src가 포함되어야 한다", () => {
@@ -71,9 +71,9 @@ describe("securityHeadersMiddleware", () => {
   it("CSP에 지도 SDK의 최소 Google Maps 출처가 포함되어야 한다", () => {
     securityHeadersMiddleware(req as Request, res as unknown as Response, next);
     const csp = res._headers["Content-Security-Policy"];
-    expect(csp).toContain("script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://forge.manus.ai https://manus-analytics.com https://maps.googleapis.com https://maps.gstatic.com");
+    expect(csp).toContain("script-src 'self' 'unsafe-inline' https://forge.manus.ai https://manus-analytics.com https://maps.googleapis.com https://maps.gstatic.com");
     expect(csp).toContain("img-src 'self' data: blob: https://d2xsxph8kpxj0f.cloudfront.net https://d36hbw14aib5lz.cloudfront.net https://images.unsplash.com https://img.youtube.com https://i.ytimg.com https://lh3.googleusercontent.com https://maps.googleapis.com https://maps.gstatic.com");
-    expect(csp).toContain("connect-src 'self' https://forge.manus.ai https://api.manus.im https://manus.im https://manus-analytics.com https://challenges.cloudflare.com https://d2xsxph8kpxj0f.cloudfront.net https://d36hbw14aib5lz.cloudfront.net https://files.manuscdn.com https://maps.googleapis.com https://maps.gstatic.com");
+    expect(csp).toContain("connect-src 'self' https://forge.manus.ai https://api.manus.im https://manus.im https://manus-analytics.com https://d2xsxph8kpxj0f.cloudfront.net https://d36hbw14aib5lz.cloudfront.net https://files.manuscdn.com https://maps.googleapis.com https://maps.gstatic.com");
   });
 
   it("CSP에는 확인된 Manus 스토리지 CDN host만 포함되어야 한다", () => {

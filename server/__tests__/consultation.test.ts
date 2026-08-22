@@ -2,37 +2,12 @@
  * server/__tests__/consultation.test.ts
  *
  * 상담 폼 라우터 통합 테스트
- * - Turnstile 테스트 키(1x00000000000000000000AA / 1x0000000000000000000000000000000AA) 환경 검증
  * - honeypot 차단 검증
  * - 입력 유효성 검증
  * - 정상 제출 흐름 검증
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { z } from "zod/v4";
-
-// ── 환경 변수 설정 (테스트 키) ────────────────────────────────────────────────
-process.env.TURNSTILE_SECRET_KEY = "1x0000000000000000000000000000000AA";
-process.env.VITE_TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
-
-// ── Cloudflare Turnstile API mock ─────────────────────────────────────────────
-// 테스트 시크릿 키로 호출하면 Cloudflare가 success: true를 반환하는 것을 시뮬레이션
-vi.stubGlobal("fetch", vi.fn(async (url: string, opts: RequestInit) => {
-  if (url === "https://challenges.cloudflare.com/turnstile/v0/siteverify") {
-    const body = opts?.body?.toString() ?? "";
-    // 테스트 시크릿 키 + 유효한 토큰이면 성공
-    if (body.includes("1x0000000000000000000000000000000AA")) {
-      return {
-        ok: true,
-        json: async () => ({ success: true }),
-      };
-    }
-    return {
-      ok: true,
-      json: async () => ({ success: false, "error-codes": ["invalid-input-secret"] }),
-    };
-  }
-  throw new Error(`Unexpected fetch: ${url}`);
-}));
 
 // ── DB mock ───────────────────────────────────────────────────────────────────
 vi.mock("../db", () => ({
@@ -48,32 +23,6 @@ vi.mock("../_core/notification", () => ({
   notifyOwner: vi.fn(async () => true),
 }));
 
-// ── verifyTurnstile 직접 테스트 ───────────────────────────────────────────────
-describe("Turnstile 시크릿 키 환경 검증", () => {
-  it("TURNSTILE_SECRET_KEY 환경 변수가 설정되어 있어야 한다", () => {
-    expect(process.env.TURNSTILE_SECRET_KEY).toBeTruthy();
-    expect(process.env.TURNSTILE_SECRET_KEY).toBe("1x0000000000000000000000000000000AA");
-  });
-
-  it("VITE_TURNSTILE_SITE_KEY 환경 변수가 설정되어 있어야 한다", () => {
-    expect(process.env.VITE_TURNSTILE_SITE_KEY).toBeTruthy();
-    expect(process.env.VITE_TURNSTILE_SITE_KEY).toBe("1x00000000000000000000AA");
-  });
-
-  it("Turnstile API가 테스트 시크릿 키로 success: true를 반환해야 한다", async () => {
-    const body = new URLSearchParams({
-      secret: process.env.TURNSTILE_SECRET_KEY!,
-      response: "test-token-123",
-    });
-    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      body,
-    });
-    const data = await res.json() as { success: boolean };
-    expect(data.success).toBe(true);
-  });
-});
-
 // ── 입력 유효성 검증 ──────────────────────────────────────────────────────────
 describe("상담 폼 입력 유효성 검증", () => {
   it("이름이 비어있으면 유효성 검사에 실패해야 한다", () => {
@@ -83,7 +32,6 @@ describe("상담 폼 입력 유효성 검증", () => {
       concern: z.string().min(1).max(200),
       message: z.string().min(5).max(2000),
       privacyAgreed: z.boolean().refine((v: boolean) => v === true),
-      turnstileToken: z.string().min(1),
       website: z.string().max(0).optional(),
     });
     const result = schema.safeParse({
@@ -92,7 +40,6 @@ describe("상담 폼 입력 유효성 검증", () => {
       concern: "피부 관리",
       message: "상담 내용입니다",
       privacyAgreed: true,
-      turnstileToken: "test-token",
     });
     expect(result.success).toBe(false);
   });
@@ -158,7 +105,6 @@ describe("상담 DB 헬퍼", () => {
       message: "상담 내용입니다",
       privacyAgreed: "1",
       ipAddress: "127.0.0.1",
-      turnstileVerified: "1",
       lang: "ko",
       status: "pending",
     });

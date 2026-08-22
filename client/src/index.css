@@ -3237,12 +3237,6 @@
   font-weight: 400;
 }
 
-/* Turnstile 위젯 */
-.consultation-turnstile {
-  margin: 0.75rem 0;
-  min-height: 0;
-}
-
 /* 개인정보 동의 */
 .consultation-privacy {
   margin-bottom: 1.5rem;

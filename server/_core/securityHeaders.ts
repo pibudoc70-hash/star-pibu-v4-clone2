@@ -26,11 +26,11 @@ const MANUS_CLOUDFRONT_SOURCES = [
  * 이 사이트에서 사용하는 외부 리소스:
  * - 이미지: d2xsxph8kpxj0f.cloudfront.net, d36hbw14aib5lz.cloudfront.net (Manus 스토리지 CDN), images.unsplash.com
  * - 폰트: fonts.googleapis.com, fonts.gstatic.com
- * - 스크립트: challenges.cloudflare.com (Turnstile), forge.manus.ai (Maps 프록시)
+ * - 스크립트: forge.manus.ai (Maps 프록시)
  * - 미디어(iframe): www.youtube.com (YouTube embed)
  * - 연결(fetch/XHR): manus-analytics.com (Umami), forge.manus.ai, api.manus.im, manus.im
  * - 인라인 스타일: React 컴포넌트에서 style={{ }} 광범위 사용 → 'unsafe-inline' 필요
- * - 인라인 스크립트: index.html scrollRestoration 스크립트, Turnstile 콜백 → 'unsafe-inline' 필요
+ * - 인라인 스크립트: index.html scrollRestoration 스크립트 → 'unsafe-inline' 필요
  *
  * 개발 환경에서는 Vite HMR을 위해 'unsafe-eval' 추가 허용
  */
@@ -42,7 +42,6 @@ function buildCSP(isDev: boolean): string {
     self,
     unsafeInline,
     isDev ? unsafeEval : "",
-    "https://challenges.cloudflare.com",
     "https://forge.manus.ai",
     "https://manus-analytics.com",
     // Maps Proxy가 로드한 SDK의 동적 Google Maps 모듈
@@ -92,7 +91,6 @@ function buildCSP(isDev: boolean): string {
     "https://api.manus.im",
     "https://manus.im",
     "https://manus-analytics.com",
-    "https://challenges.cloudflare.com",
     // Manus 스토리지 CDN: SW fetch → /api/storage/ → 307 → CloudFront 리다이렉트 대상
     ...MANUS_CLOUDFRONT_SOURCES,
     // Manus CDN (콘솔 에러에서 발견)
@@ -114,7 +112,6 @@ function buildCSP(isDev: boolean): string {
     "https://youtube.com",
     // 시술 상세의 개인정보 보호 YouTube 임베드
     "https://www.youtube-nocookie.com",
-    "https://challenges.cloudflare.com",
     // Google Maps iframe embed
     "https://maps.google.com",
     "https://www.google.com",

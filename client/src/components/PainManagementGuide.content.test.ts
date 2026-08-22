@@ -91,11 +91,12 @@ describe("PainManagementGuide content and placement", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints).toHaveLength(3);
   });
 
-  it("makes each visual care checkpoint a localized native disclosure with individual-condition guidance", () => {
+  it("keeps each visual care checkpoint as a concise localized static label card", () => {
     expect(guideSource).toContain("type Checkpoint");
-    expect(guideSource).toContain("checkpoint-detail-");
+    expect(guideSource).not.toContain("checkpoint-detail-");
+    expect(guideSource).toContain("pain-management-checkpoint");
     expect(guideSource).toContain("checkpoint.label");
-    expect(guideSource).toContain("checkpoint.detail");
+    expect(guideSource).not.toContain("{checkpoint.detail}");
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[0].label).toBe("사전 확인");
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[0].detail).toContain("건강상태·복용약·알레르기·과거력");
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[1].detail).toContain("Kohden SpO₂ 모니터");
@@ -122,8 +123,8 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("uses a denser mobile infographic and a clear Korean anesthesia-experience disclosure title with icon", () => {
-    expect(guideSource).toContain("mb-3 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-2.5");
-    expect(guideSource).toContain("mt-2 grid grid-cols-3");
+    expect(guideSource).toContain("mb-2 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-1.5");
+    expect(guideSource).toContain("mt-1.5 grid grid-cols-3");
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취 운영경험 20여년");
     expect(guideSource).toContain("Moon");
     expect(guideSource).toContain("data-testid=\"pain-experience\"");
@@ -132,7 +133,7 @@ describe("PainManagementGuide content and placement", () => {
   it("tightens mobile stage and checkpoint spacing while giving guidance and FAQ headings matching icons", () => {
     expect(guideSource).toContain("mt-1.5 text-[var(--color-gold-deep)]");
     expect(guideSource).toContain("mt-0.5 block break-keep");
-    expect(guideSource).toContain("gap-0.5 py-0.5 text-center");
+    expect(guideSource).toContain("min-h-9 flex-col items-center justify-center gap-0.5");
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody).toContain("20여년 동안");
     expect(guideSource).toContain("FileText");
     expect(guideSource).toContain("CircleHelp");

@@ -244,12 +244,12 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
-      <section className="pain-management-infographic mb-3 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-2.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
+      <section className="pain-management-infographic mb-2 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-1.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
         <div className="text-center sm:text-left">
           <h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>
           <p className="mt-1 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
         </div>
-        <ol className="mt-2 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
+        <ol className="mt-1.5 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
@@ -261,17 +261,13 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
             );
           })}
         </ol>
-        <ul className="mt-2 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-2 sm:mt-4 sm:gap-2 sm:pt-4">
+        <ul className="mt-1.5 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-1.5 sm:mt-4 sm:gap-2 sm:pt-4">
           {copy.careCheckpoints.map((checkpoint, index) => (
             <li key={checkpoint.label}>
-              <details data-testid={`checkpoint-detail-${index + 1}`} className="pain-management-disclosure group h-full rounded-md bg-white/60 px-1.5 text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:px-2 sm:text-xs">
-                <summary className="flex min-h-11 cursor-pointer list-none flex-col items-center justify-center gap-0.5 py-0.5 text-center outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset sm:flex-row sm:gap-1.5 sm:text-left">
-                  <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
-                  <span>{checkpoint.label}</span>
-                  <ChevronDown size={13} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
-                </summary>
-                <div className="pb-2 text-left text-[11px] font-normal leading-4 text-[var(--color-star-text-mid)] sm:text-xs sm:leading-5"><p>{checkpoint.detail}</p></div>
-              </details>
+              <div className="pain-management-checkpoint flex min-h-9 flex-col items-center justify-center gap-0.5 rounded-md bg-white/60 px-1.5 py-1 text-center text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:flex-row sm:gap-1.5 sm:px-2 sm:text-left sm:text-xs">
+                <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
+                <span>{checkpoint.label}</span>
+              </div>
             </li>
           ))}
         </ul>

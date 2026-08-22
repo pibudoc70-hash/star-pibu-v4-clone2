@@ -24,9 +24,11 @@ function easeOutCubic(progress: number): number {
 }
 
 export type AnchorScrollBlock = "start" | "center";
+export type AnchorScrollBehavior = "smooth" | "instant";
 
 interface ScrollOptions {
   block?: AnchorScrollBlock;
+  behavior?: AnchorScrollBehavior;
   maxWaitMs?: number;
   triggerLazyMount?: boolean;
 }
@@ -53,6 +55,7 @@ export function useAnchorScroll() {
     (selector: string, opts: ScrollOptions = {}) => {
       const {
         block = "start",
+        behavior = "smooth",
         maxWaitMs = 6000,
         triggerLazyMount = true,
       } = opts;
@@ -72,7 +75,7 @@ export function useAnchorScroll() {
         const element = document.querySelector(selector);
         if (!element) return false;
 
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (behavior === "instant" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           window.scrollTo({ top: Math.max(0, getTargetTop(element)), behavior: "auto" });
           return true;
         }

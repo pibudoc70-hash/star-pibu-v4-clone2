@@ -9,7 +9,7 @@ function AnchorScrollProbe() {
     <>
       <header role="banner" />
       <button onClick={() => scrollToSelector("#facility")}>시설안내</button>
-      <button onClick={() => scrollToSelector("#events")}>EVENT</button>
+      <button onClick={() => scrollToSelector("#events", { behavior: "instant" })}>EVENT</button>
       <section id="facility" />
       <section id="events" />
     </>
@@ -98,7 +98,7 @@ describe("useAnchorScroll", () => {
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 1704, behavior: "auto" });
   });
 
-  it("EVENT anchor에도 동일한 단일 연속 animation 계약을 적용한다", () => {
+  it("instant EVENT anchor는 animation frame과 final pin 없이 즉시 target으로 이동한다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
     const events = document.querySelector("#events") as HTMLElement;
     const eventButton = getByRole("button", { name: "EVENT" });
@@ -117,8 +117,9 @@ describe("useAnchorScroll", () => {
 
     mockScrollMargin();
     fireEvent.click(eventButton);
-    runAnimationToEnd();
 
+    expect(queuedFrame).toBeNull();
+    expect(scrollTo).toHaveBeenCalledTimes(1);
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 604, behavior: "auto" });
   });
 

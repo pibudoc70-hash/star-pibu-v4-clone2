@@ -70,19 +70,9 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventIn
     >
       <div className="event-mobile-detail__content">
         <section className="border-t border-gray-100 bg-white/70 px-5 py-5" aria-label={`${title} 상세`}>
-          <div className="flex items-start justify-between gap-4 mb-4">
-            <div>
-              <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
-              <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-shrink-0 px-2.5 py-1.5 rounded-full text-xs font-medium border border-gray-200 text-gray-600 transition-colors active:bg-gray-100"
-              aria-label={`${title} 상세 접기`}
-            >
-              접기
-            </button>
+          <div className="mb-4">
+            <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
+            <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>
 
           {event.imageUrl && (
@@ -127,13 +117,23 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onClose }: EventIn
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="grid grid-cols-2 gap-3 pt-4">
             <a href={chatUrl} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-3 font-semibold rounded-xl text-center text-sm" style={{ background: chatBg, color: chatColor }}>
               {chatLabel}
             </a>
             <a href={phoneHref} className="flex-1 px-4 py-3 font-medium rounded-xl text-center text-sm border border-gray-200" style={{ color: "var(--brand-text-mid, #666666)" }}>
               {phoneLabel}
             </a>
+          </div>
+          <div data-testid="mobile-event-detail-footer" className="mt-3 flex justify-center border-t border-gray-100 pt-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="min-h-11 min-w-28 rounded-xl border border-gray-200 px-4 text-sm font-medium text-gray-600 transition-colors active:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+              aria-label={`${title} 상세 접기`}
+            >
+              접기
+            </button>
           </div>
         </section>
       </div>
@@ -188,7 +188,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 <button
                   type="button"
                   onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                  className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-all active:scale-95"
+                  className="flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-xs font-medium transition-all active:scale-95"
                   style={{
                     borderColor: "var(--color-gold-light)",
                     color: "var(--color-gold-deep)",

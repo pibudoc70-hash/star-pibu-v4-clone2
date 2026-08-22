@@ -66,7 +66,12 @@ describe("EventTableMobile", () => {
     expect(indicator).toHaveAttribute("data-expanded", "true");
     expect(indicator).toHaveClass("is-expanded");
 
-    fireEvent.click(within(screen.getByTestId("mobile-event-detail-1")).getByRole("button", { name: "테스트 이벤트 상세 접기" }));
+    const detail = screen.getByTestId("mobile-event-detail-1");
+    const detailClose = within(detail).getByRole("button", { name: "테스트 이벤트 상세 접기" });
+    expect(within(detail).getByTestId("mobile-event-detail-footer")).toContainElement(detailClose);
+    expect(within(detail).getAllByRole("button", { name: "테스트 이벤트 상세 접기" })).toHaveLength(1);
+
+    fireEvent.click(detailClose);
 
     expect(screen.getByTestId("mobile-event-detail-1")).not.toHaveClass("is-open");
     expect(detailButton).toHaveAttribute("aria-expanded", "false");

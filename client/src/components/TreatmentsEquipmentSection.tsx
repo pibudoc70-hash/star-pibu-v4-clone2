@@ -284,7 +284,6 @@ export default function TreatmentsEquipmentSection() {
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
                 onMobileTabToggle={handleMobileTabToggle}
-                onMobileDetailClose={handleMobileCategoryClose}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
                   <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">
@@ -297,7 +296,7 @@ export default function TreatmentsEquipmentSection() {
                       {filteredTreatments.length === 0 ? (
                         <EmptyResultView message={tr.noResults} hint={tr.noResultsHint} />
                       ) : (
-                        (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
+                        filteredTreatments.map((item, i) => (
                           <EquipmentTreatmentCard
                             key={`${activeId}-mobile-t-${i}`}
                             item={item}
@@ -309,17 +308,6 @@ export default function TreatmentsEquipmentSection() {
                       )}
                     </div>
                     <div className="flex items-center justify-center gap-3 border-t border-[var(--color-gold-light)] px-4 py-3">
-                      {filteredTreatments.length > INITIAL_SHOW && (
-                        <button
-                          type="button"
-                          onClick={() => setShowAll((current) => !current)}
-                          aria-expanded={showAll}
-                          aria-controls="treatments-mobile-grid"
-                          className="rounded-xl px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
-                        >
-                          {showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
-                        </button>
-                      )}
                       <button
                         type="button"
                         onClick={handleMobileCategoryClose}

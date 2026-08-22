@@ -180,7 +180,21 @@ function HeroSection() {
           {/* 슬로건: 단어별 wordReveal */}
           {/* [LCP-FIX] startDelay 900→90, wordGap 85→8 */}
           <p className="font-light hero-subtitle">
-            <WordReveal text={t.hero.subtitle} startDelay={90} wordGap={8} />
+            {lang === "ko" ? (
+              <span className="hero-desktop-slogan-toggle">
+                <span className="sr-only">{t.hero.subtitle}</span>
+                <span aria-hidden="true" className="hero-desktop-slogan-visual">
+                  <span className="hero-desktop-slogan-line hero-desktop-slogan-en">
+                    {t.hero.subtitle}
+                  </span>
+                  <span className="hero-desktop-slogan-line hero-desktop-slogan-ko">
+                    신뢰와 과학이 경험으로 완성되는 곳
+                  </span>
+                </span>
+              </span>
+            ) : (
+              <WordReveal text={t.hero.subtitle} startDelay={90} wordGap={8} />
+            )}
           </p>
           {/* 통계 스트립 */}
           <HeroStatsStrip statsRef={desktopStatsRef} stats={statsData} />

@@ -1019,6 +1019,47 @@
     word-break: keep-all;
   }
 
+  /* PC Korean Hero: English/Korean slogan cross-fade without timer-dependent remounts. */
+  @media (min-width: 641px) {
+    .hero-desktop-slogan-toggle {
+      display: inline-grid;
+      min-width: min(42vw, 38ch);
+      min-height: 1.5em;
+    }
+    .hero-desktop-slogan-visual {
+      display: grid;
+      grid-area: 1 / 1;
+      place-items: center;
+    }
+    .hero-desktop-slogan-line {
+      grid-area: 1 / 1;
+      white-space: nowrap;
+      will-change: opacity, transform;
+      animation-duration: 10s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .hero-desktop-slogan-en { animation-name: heroDesktopSloganEn; }
+    .hero-desktop-slogan-ko { animation-name: heroDesktopSloganKo; }
+  }
+
+  @keyframes heroDesktopSloganEn {
+    0%, 42% { opacity: 1; transform: translateY(0); }
+    48%, 94% { opacity: 0; transform: translateY(-0.35em); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroDesktopSloganKo {
+    0%, 48% { opacity: 0; transform: translateY(0.35em); }
+    54%, 92% { opacity: 1; transform: translateY(0); }
+    98%, 100% { opacity: 0; transform: translateY(-0.35em); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-desktop-slogan-line { animation: none; }
+    .hero-desktop-slogan-ko { display: none; }
+  }
+
   /* [R16-P0-3] DoctorsSection layout utility classes — replaces inline style magic numbers */
   /* 해시 앵커 타겟: /#dr-{slug} 직접 접근 시 스크롤 목적지 (높이 0, 레이아웃 영향 없음) */
   .dr-hash-anchor { position: relative; top: 0; height: 0; }

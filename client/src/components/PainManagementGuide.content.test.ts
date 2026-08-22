@@ -34,7 +34,7 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("uses only the confirmed 20-year operating history and monitoring devices", () => {
-    expect(guideSource).toContain("20년 수면진정/수면마취 운영 경험");
+    expect(guideSource).toContain("수면마취 운영경험 20여년");
     expect(guideSource).toContain("Kohden SpO₂ 모니터");
     expect(guideSource).toContain("혈압측정기");
     expect(guideSource).toContain("환자 상태를 지속적으로 살핍니다");
@@ -116,9 +116,17 @@ describe("PainManagementGuide content and placement", () => {
   it("uses mobile-specific spacing and typography so the visual explainer stays balanced on narrow screens", () => {
     expect(guideSource).toContain("p-4 sm:p-7");
     expect(guideSource).toContain("text-[1.7rem]");
-    expect(guideSource).toContain("min-h-[110px]");
+    expect(guideSource).toContain("min-h-[96px]");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[10px]");
+  });
+
+  it("uses a denser mobile infographic and a clear Korean anesthesia-experience disclosure title with icon", () => {
+    expect(guideSource).toContain("mb-3 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-2.5");
+    expect(guideSource).toContain("mt-2 grid grid-cols-3");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취 운영경험 20여년");
+    expect(guideSource).toContain("Moon");
+    expect(guideSource).toContain("data-testid=\"pain-experience\"");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {

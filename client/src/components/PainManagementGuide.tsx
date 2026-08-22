@@ -1,4 +1,4 @@
-import { Activity, ChevronDown, ClipboardCheck, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
+import { Activity, ChevronDown, ClipboardCheck, HeartPulse, Moon, ShieldCheck, Stethoscope } from "lucide-react";
 import type { Lang } from "@/lib/i18n.types";
 
 export const PAIN_MANAGEMENT_CATEGORY_ID = "pain-management";
@@ -51,7 +51,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
       { icon: "필요 부위 진통", title: "② 주사 진통", body: "통증 조절이 더 필요한 부위에는 주사 진통 방법을 검토할 수 있습니다. 적용 여부와 방법은 시술 계획 및 개인 상태를 바탕으로 의료진이 안내합니다." },
       { icon: "사전 평가 후 검토", title: "③ 수면진정/수면마취", body: "수면진정/수면마취는 모든 시술에 일괄 적용되는 방법이 아닙니다. 필요 시 의료진의 사전 평가 후 시술 특성과 환자 상태에 맞는 선택지로 검토합니다." },
     ],
-    experienceHeading: "20년 수면진정/수면마취 운영 경험",
+    experienceHeading: "수면마취 운영경험 20여년",
     experienceBody: "스타피부과는 20년 동안 수면진정/수면마취 시술을 운영하며, 시술 전에는 건강 상태와 복용약, 알레르기, 과거력을 확인하고 의료진의 판단에 따라 개별 계획을 검토해 왔습니다. 시술 중에는 환자 상태를 지속적으로 살피고, 회복 단계에서는 필요한 안내와 귀가 관련 확인을 중요하게 관리합니다.",
     monitoringHeading: "시술 중 모니터링",
     monitoringIntro: "Kohden SpO₂ 모니터와 혈압측정기를 갖추고 환자 상태를 지속적으로 살핍니다. 관찰의 범위와 방법은 시술 및 개인 상태에 따라 달라질 수 있습니다.",
@@ -243,16 +243,16 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
-      <section className="pain-management-infographic mb-4 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-3.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
+      <section className="pain-management-infographic mb-3 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-2.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
         <div className="text-center sm:text-left">
           <h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>
           <p className="mt-1 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
         </div>
-        <ol className="mt-3 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
+        <ol className="mt-2 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <li key={step.title} className="relative flex min-h-[110px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-2.5 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
+              <li key={step.title} className="relative flex min-h-[96px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-2 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
                 <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-xs font-bold text-white">{index + 1}</span>
                 <Icon size={18} className="mx-auto mt-2 text-[var(--color-gold-deep)]" aria-hidden="true" />
                 <span className="mt-1 block break-keep text-[11px] font-semibold leading-4 text-[var(--color-star-text)] sm:text-xs sm:leading-5">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
@@ -260,7 +260,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
             );
           })}
         </ol>
-        <ul className="mt-3 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-3 sm:mt-4 sm:gap-2 sm:pt-4">
+        <ul className="mt-2 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-2 sm:mt-4 sm:gap-2 sm:pt-4">
           {copy.careCheckpoints.map((checkpoint, index) => (
             <li key={checkpoint.label}>
               <details data-testid={`checkpoint-detail-${index + 1}`} className="pain-management-disclosure group h-full rounded-md bg-white/60 px-1.5 text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:px-2 sm:text-xs">
@@ -293,7 +293,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           );
         })}
         <details data-testid="pain-experience" className="pain-management-disclosure group border-b last:border-b-0">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><Moon size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.experienceHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="pb-4 text-sm text-[var(--color-star-text-mid)]"><p className="leading-7">{copy.experienceBody}</p></div>
         </details>
 

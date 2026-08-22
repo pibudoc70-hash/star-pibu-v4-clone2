@@ -7,7 +7,8 @@ const homeSource = readFileSync(resolve(process.cwd(), "client/src/pages/Home.ts
 
 describe("홈 초기 이미지 preload 우선순위", () => {
   it("LCP hero만 high-priority preload하고 below-fold 배너는 preload하지 않는다", () => {
-    expect(indexHtml).toContain('href="/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"');
+    expect(indexHtml).toContain('href="/manus-storage/hero_ae3f2e80.avif"');
+    expect(indexHtml).toContain('type="image/avif"');
     expect(indexHtml).toContain('fetchpriority="high"');
     expect(indexHtml).not.toContain('href="/api/storage/regen-medicine-banner-pc2_e6271aa5_5f2ea459.webp"');
     expect(indexHtml).not.toContain('href="/api/storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"');

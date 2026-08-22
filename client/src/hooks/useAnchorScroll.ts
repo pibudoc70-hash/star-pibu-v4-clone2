@@ -24,9 +24,11 @@ function easeOutCubic(progress: number): number {
 }
 
 export type AnchorScrollBlock = "start" | "center";
+export type AnchorScrollBehavior = "smooth" | "instant";
 
 interface ScrollOptions {
   block?: AnchorScrollBlock;
+  behavior?: AnchorScrollBehavior;
   maxWaitMs?: number;
   triggerLazyMount?: boolean;
 }
@@ -34,6 +36,7 @@ interface ScrollOptions {
 export function useAnchorScroll() {
   const activeFrameRef = useRef<number | null>(null);
   const activePinTimerRef = useRef<number | null>(null);
+  const activeInteractionCleanupRef = useRef<(() => void) | null>(null);
 
   const cancel = useCallback(() => {
     if (activeFrameRef.current !== null) {
@@ -44,12 +47,15 @@ export function useAnchorScroll() {
       window.clearTimeout(activePinTimerRef.current);
       activePinTimerRef.current = null;
     }
+    activeInteractionCleanupRef.current?.();
+    activeInteractionCleanupRef.current = null;
   }, []);
 
   const scrollToSelector = useCallback(
     (selector: string, opts: ScrollOptions = {}) => {
       const {
         block = "start",
+        behavior = "smooth",
         maxWaitMs = 6000,
         triggerLazyMount = true,
       } = opts;
@@ -69,7 +75,7 @@ export function useAnchorScroll() {
         const element = document.querySelector(selector);
         if (!element) return false;
 
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (behavior === "instant" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           window.scrollTo({ top: Math.max(0, getTargetTop(element)), behavior: "auto" });
           return true;
         }
@@ -82,12 +88,33 @@ export function useAnchorScroll() {
         );
         const pinTimerId = window.setTimeout(() => {
           activePinTimerRef.current = null;
+          activeInteractionCleanupRef.current?.();
+          activeInteractionCleanupRef.current = null;
           const finalTop = Math.max(0, getTargetTop(element));
           if (Math.abs(window.scrollY - finalTop) > 4) {
             window.scrollTo({ top: finalTop, behavior: "auto" });
           }
         }, duration + FINAL_PIN_DELAY_MS);
         activePinTimerRef.current = pinTimerId;
+
+        const cancelForUserScroll = () => cancel();
+        const cancelForScrollKey = (event: KeyboardEvent) => {
+          if ([" ", "Spacebar", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"].includes(event.key)) {
+            cancel();
+          }
+        };
+        const removeInteractionListeners = () => {
+          window.removeEventListener("wheel", cancelForUserScroll);
+          window.removeEventListener("touchstart", cancelForUserScroll);
+          window.removeEventListener("pointerdown", cancelForUserScroll);
+          window.removeEventListener("keydown", cancelForScrollKey);
+        };
+        activeInteractionCleanupRef.current = removeInteractionListeners;
+        window.addEventListener("wheel", cancelForUserScroll, { passive: true });
+        window.addEventListener("touchstart", cancelForUserScroll, { passive: true });
+        window.addEventListener("pointerdown", cancelForUserScroll, { passive: true });
+        window.addEventListener("keydown", cancelForScrollKey);
+
         let startedAt: number | null = null;
         const animate = (now: number) => {
           startedAt ??= now;

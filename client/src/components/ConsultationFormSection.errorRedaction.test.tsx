@@ -61,7 +61,6 @@ vi.mock("@/contexts/LangContext", () => ({
 describe("ConsultationFormSection error redaction", () => {
   afterEach(() => {
     mutationOptions = undefined;
-    window.turnstile = undefined;
     document.body.innerHTML = "";
   });
 
@@ -69,10 +68,6 @@ describe("ConsultationFormSection error redaction", () => {
     {
       rawMessage: "Failed to connect mysql://admin:secret@internal-db:3306/production",
       prohibited: ["mysql://", "internal-db", "secret"],
-    },
-    {
-      rawMessage: "TURNSTILE_SECRET_KEY invalid: sk-secret-value",
-      prohibited: ["TURNSTILE_SECRET_KEY", "sk-secret-value"],
     },
     {
       rawMessage: "Error at /app/server/routers/consultation.ts:205",
@@ -94,25 +89,6 @@ describe("ConsultationFormSection error redaction", () => {
     for (const value of prohibited) {
       expect(document.body).not.toHaveTextContent(value);
     }
-  });
-
-  it("resets Turnstile while keeping its raw security failure detail out of the DOM", async () => {
-    const reset = vi.fn();
-    window.turnstile = {
-      render: vi.fn(() => "turnstile-widget"),
-      reset,
-      remove: vi.fn(),
-    };
-
-    render(<ConsultationFormSection />);
-
-    await act(async () => {
-      mutationOptions?.onError?.(new Error("TURNSTILE_SECRET_KEY invalid: sk-secret-value"));
-    });
-
-    expect(reset).toHaveBeenCalledWith("turnstile-widget");
-    expect(screen.getByRole("alert")).toHaveTextContent("Unable to send your consultation. Please try again later.");
-    expect(document.body).not.toHaveTextContent("sk-secret-value");
   });
 
   it("keeps the locale rate-limit message for clearly identifiable rate errors", async () => {

@@ -7,7 +7,7 @@
  * - parsePopupError: parseTRPCError 위임 확인
  */
 import { describe, it, expect } from "vitest";
-import { parseEventError, parseEventListError, parsePopupError } from "./errorMessages";
+import { getAdminErrorDetails, parseEventError, parseEventListError, parsePopupError } from "./errorMessages";
 
 // ── 테스트 헬퍼 ───────────────────────────────────────────────────────────────
 
@@ -113,5 +113,39 @@ describe("parsePopupError", () => {
     const withLang = parsePopupError(err, "ko");
     const withoutLang = parsePopupError(err);
     expect(withLang).toBe(withoutLang);
+  });
+});
+
+describe("getAdminErrorDetails", () => {
+  it("maps TRPC code to a stable admin code without exposing the raw backend message", () => {
+    const details = getAdminErrorDetails(
+      makeTRPCError("DATABASE_URL=mysql://admin:secret@internal.example/equipment", "FORBIDDEN"),
+      "equipment3.delete"
+    );
+
+    expect(details).toEqual({
+      code: "ADM-EQUIPMENT3-DELETE-FORBIDDEN",
+      message: "이 작업을 수행할 권한이 없습니다.",
+    });
+  });
+
+  it("uses an operation-specific unexpected code for unknown backend failures", () => {
+    const details = getAdminErrorDetails(new Error("/srv/private/stack.ts:10"), "equipment3.load");
+
+    expect(details.code).toBe("ADM-EQUIPMENT3-LOAD-UNEXPECTED");
+    expect(details.message).not.toContain("/srv/private");
+  });
+
+  it("creates stable codes for Equipment3 create and SEO generation without exposing raw backend details", () => {
+    const details = getAdminErrorDetails(
+      makeTRPCError("token=secret&stack=/srv/private.ts", "BAD_REQUEST"),
+      "equipment3.create"
+    );
+
+    expect(details).toEqual({
+      code: "ADM-EQUIPMENT3-CREATE-INVALID",
+      message: "입력 내용을 확인한 후 다시 시도해 주세요.",
+    });
+    expect(details.message).not.toContain("secret");
   });
 });

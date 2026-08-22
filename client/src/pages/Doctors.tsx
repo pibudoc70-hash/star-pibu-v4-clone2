@@ -7,7 +7,6 @@
  * - 목적: SEO — "부산 피부과전문의", "스타피부과 의료진" 키워드 노출
  * - 레이아웃: 좌측 세로 탭 사이드바 + 우측 상세 패널 (DoctorsSection 동일 패턴)
  */
-import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import MainLayout from "@/components/MainLayout";
 import SeoHead, {

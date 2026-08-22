@@ -77,8 +77,6 @@ jobs:
       BUILT_IN_FORGE_API_KEY: ci-test-key
       VITE_FRONTEND_FORGE_API_KEY: ci-test-key
       VITE_FRONTEND_FORGE_API_URL: https://api.manus.im
-      TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
-      VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
       OWNER_OPEN_ID: ci-test-owner
       OWNER_NAME: CI Test Owner
     steps:
@@ -124,3 +122,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm audit --audit-level moderate
+
+  release-gate:
+    name: Release Gate
+    runs-on: ubuntu-latest
+    needs: [check, lint, test-unit, test-integration, build, audit]
+    steps:
+      - run: echo "All release gates passed"

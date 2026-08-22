@@ -27,6 +27,16 @@ export async function collectKeywordTrendsHandler(req: Request, res: Response) {
       return res.status(403).json({ error: "cron-only" });
     }
 
+    // Placeholder values must never become production data. Keep the authenticated
+    // handler inert there until a verified external trend source replaces this sample.
+    if (process.env.NODE_ENV === "production") {
+      return res.json({
+        ok: true,
+        skipped: "sample-placeholder-production",
+        taskUid: user.taskUid,
+      });
+    }
+
     // [Step56-B] getDb 는 실패 시 throw 한다. 위 try/catch 가 처리한다.
     // if (!database) 도달 불가 널체크 제거.
     const database = await getDb();

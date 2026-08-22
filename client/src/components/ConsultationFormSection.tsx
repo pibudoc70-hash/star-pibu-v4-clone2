@@ -1,10 +1,9 @@
 /**
  * ConsultationFormSection.tsx — 프리미엄 상담 폼 섹션
  *
- * 스팸 방지 3중 레이어:
+ * 스팸 방지 2중 레이어:
  *   1. honeypot  — 숨겨진 website 필드 (봇이 채우면 서버에서 조용히 거부)
- *   2. Turnstile — Cloudflare invisible/managed 위젯 (사용자 경험 0 마찰)
- *   3. rate limit — 서버단 IP/연락처 기반 (10분 3회 / 2회)
+ *   2. rate limit — 서버단 IP/연락처 기반 (10분 3회 / 2회)
  *
  * 배치: ReservationSection 바로 위, 기존 전환 흐름(Hero→FAQ→카카오→예약) 유지
  */
@@ -12,34 +11,6 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { CheckCircle2, Loader2, ChevronDown } from "lucide-react";
-
-// ── Turnstile 위젯 타입 선언 ────────────────────────────────────────────────
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (
-        container: string | HTMLElement,
-        options: {
-          sitekey: string;
-          callback?: (token: string) => void;
-          "error-callback"?: () => void;
-          "expired-callback"?: () => void;
-          theme?: "light" | "dark" | "auto";
-          size?: "normal" | "compact" | "invisible";
-          appearance?: "always" | "execute" | "interaction-only";
-        }
-      ) => string;
-      reset: (widgetId?: string) => void;
-      remove: (widgetId?: string) => void;
-    };
-    onTurnstileLoad?: () => void;
-  }
-}
-
-// ── 상수 ────────────────────────────────────────────────────────────────────
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
-// Cloudflare 공식 테스트 키 (항상 성공, 개발용)
-const TURNSTILE_TEST_KEY = "1x00000000000000000000AA";
 
 // ── 연락처 자동 포맷 (010-1234-5678) ──────────────────────────────────────
 function formatPhone(raw: string): string {
@@ -84,63 +55,10 @@ export default function ConsultationFormSection() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string>("");
-  const [turnstileReady, setTurnstileReady] = useState(false);
   const [concernOpen, setConcernOpen] = useState(false);
 
-  const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const concernRef = useRef<HTMLDivElement>(null);
-
-  // ── Turnstile 스크립트 로드 ──────────────────────────────────────────────
-  useEffect(() => {
-    const siteKey = TURNSTILE_SITE_KEY || TURNSTILE_TEST_KEY;
-
-    const initWidget = () => {
-      if (!turnstileRef.current || !window.turnstile) return;
-      if (widgetIdRef.current) return; // 이미 렌더링됨
-
-      widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
-        sitekey: siteKey,
-        callback: (token: string) => {
-          setTurnstileToken(token);
-          setTurnstileReady(true);
-        },
-        "error-callback": () => {
-          setTurnstileToken("");
-          setTurnstileReady(false);
-        },
-        "expired-callback": () => {
-          setTurnstileToken("");
-          setTurnstileReady(false);
-        },
-        theme: "light",
-        size: "normal",
-        appearance: "interaction-only",
-      });
-    };
-
-    if (window.turnstile) {
-      initWidget();
-    } else {
-      window.onTurnstileLoad = initWidget;
-      if (!document.querySelector('script[src*="turnstile"]')) {
-        const script = document.createElement("script");
-        script.src =
-          "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit";
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-      }
-    }
-
-    return () => {
-      if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
-        widgetIdRef.current = null;
-      }
-    };
-  }, []);
 
   // ── 드롭다운 외부 클릭 닫기 ──────────────────────────────────────────────
   useEffect(() => {
@@ -164,22 +82,11 @@ export default function ConsultationFormSection() {
       const rawMessage = err.message ?? "";
       const normalizedMessage = rawMessage.toLowerCase();
       const isRateLimit = rawMessage.includes("잠시") || normalizedMessage.includes("rate") || normalizedMessage.includes("too many");
-      const isTurnstileError = rawMessage.includes("보안") || normalizedMessage.includes("turnstile") || normalizedMessage.includes("token");
-
-      if (isRateLimit) {
-        setErrors({ general: c.errorRateLimit });
-      } else {
-        setErrors({ general: c.errorGeneric });
-
-        if (!isTurnstileError) return;
-
-        // Turnstile 리셋
-        if (widgetIdRef.current && window.turnstile) {
-          window.turnstile.reset(widgetIdRef.current);
-          setTurnstileToken("");
-          setTurnstileReady(false);
+        if (isRateLimit) {
+          setErrors({ general: c.errorRateLimit });
+        } else {
+          setErrors({ general: c.errorGeneric });
         }
-      }
     },
   });
 
@@ -207,25 +114,17 @@ export default function ConsultationFormSection() {
       e.preventDefault();
       if (!validate()) return;
 
-      // Turnstile 토큰이 없으면 테스트 토큰 사용 (개발 환경)
-      const token = turnstileToken || (TURNSTILE_SITE_KEY ? "" : "XXXX.DUMMY.TOKEN.XXXX");
-      if (!token) {
-        setErrors({ general: c.errorGeneric });
-        return;
-      }
-
       submitMutation.mutate({
         name: form.name.trim(),
         phone: form.phone,
         concern: form.concern,
         message: form.message.trim(),
         privacyAgreed: form.privacyAgreed,
-        turnstileToken: token,
         website: form.website, // honeypot
         lang: "ko",
       });
     },
-    [form, turnstileToken, validate, submitMutation]
+    [form, validate, submitMutation]
   );
 
   // ── 폼 리셋 ──────────────────────────────────────────────────────────────
@@ -233,11 +132,6 @@ export default function ConsultationFormSection() {
     setForm({ name: "", phone: "", concern: "", message: "", privacyAgreed: false, website: "" });
     setErrors({});
     setSubmitted(false);
-    setTurnstileToken("");
-    setTurnstileReady(false);
-    if (widgetIdRef.current && window.turnstile) {
-      window.turnstile.reset(widgetIdRef.current);
-    }
   };
 
   const isLoading = submitMutation.isPending;
@@ -406,8 +300,9 @@ export default function ConsultationFormSection() {
                     className="consultation-select-list"
                   >
                     {c.concerns.map((item: string) => (
-                      <li
+                      <button
                         key={item}
+                        type="button"
                         role="option"
                         aria-selected={form.concern === item}
                         onClick={() => {
@@ -418,7 +313,7 @@ export default function ConsultationFormSection() {
                         className={`consultation-select-item${form.concern === item ? " consultation-select-item--selected" : ""}`}
                       >
                         {item}
-                      </li>
+                      </button>
                     ))}
                   </ul>
                 )}
@@ -460,13 +355,6 @@ export default function ConsultationFormSection() {
                 </span>
               )}
             </div>
-
-            {/* Turnstile 위젯 */}
-            <div
-              ref={turnstileRef}
-              className="consultation-turnstile"
-              aria-label="보안 인증"
-            />
 
             {/* 개인정보 동의 */}
             <div className="consultation-privacy">

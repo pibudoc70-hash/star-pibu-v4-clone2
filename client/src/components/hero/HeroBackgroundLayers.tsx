@@ -11,12 +11,13 @@
  * 배경 레이어 구성 변경 시 이 파일만 수정하면 된다.
  */
 import GoldParticles from "@/components/hero/GoldParticles";
-import { HeroDarkOverlay, HeroVignette, HeroGoldGlow } from "@/components/hero/HeroOverlays";
+import { HeroDarkOverlay, HeroTextContrastOverlay, HeroVignette, HeroGoldGlow } from "@/components/hero/HeroOverlays";
 
 export function HeroBackgroundLayers() {
   return (
     <>
       <HeroDarkOverlay />
+      <HeroTextContrastOverlay />
       <HeroVignette />
       <HeroGoldGlow />
       <GoldParticles />

@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useParams, useLocation } from "wouter";
-import { ArrowLeft, Calendar, Eye, Tag, Zap, Sparkles, Bell, MessageCircle, Phone, MapPin, Loader2 } from "lucide-react";
+import { ArrowLeft, Calendar, Eye, Tag, MessageCircle, Phone, MapPin, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,13 +17,6 @@ import SeoHead, { BASE_URL, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED, LANG_TO_OG_
 import { parseEventError } from "@/lib/errorMessages";
 
 const KAKAO_URL = "https://pf.kakao.com/_HNyGC";
-
-function IconByType({ type, size = 20 }: { type?: string; size?: number }) {
-  if (type === "zap") return <Zap size={size} />;
-  if (type === "sparkles") return <Sparkles size={size} />;
-  if (type === "bell") return <Bell size={size} />;
-  return <Tag size={size} />;
-}
 
 export default function EventDetail() {
   const params = useParams<{ id: string }>();

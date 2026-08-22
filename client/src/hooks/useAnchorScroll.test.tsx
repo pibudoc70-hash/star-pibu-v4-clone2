@@ -9,7 +9,7 @@ function AnchorScrollProbe() {
     <>
       <header role="banner" />
       <button onClick={() => scrollToSelector("#facility")}>시설안내</button>
-      <button onClick={() => scrollToSelector("#events")}>EVENT</button>
+      <button onClick={() => scrollToSelector("#events", { behavior: "instant" })}>EVENT</button>
       <section id="facility" />
       <section id="events" />
     </>
@@ -19,6 +19,7 @@ function AnchorScrollProbe() {
 describe("useAnchorScroll", () => {
   let scrollY = 0;
   let queuedFrame: FrameRequestCallback | null = null;
+  let cancelAnimationFrameMock: ReturnType<typeof vi.fn>;
   const scrollTo = vi.fn(({ top }: ScrollToOptions) => {
     scrollY = Number(top ?? 0);
   });
@@ -33,7 +34,8 @@ describe("useAnchorScroll", () => {
       queuedFrame = callback;
       return 1;
     });
-    vi.stubGlobal("cancelAnimationFrame", vi.fn());
+    cancelAnimationFrameMock = vi.fn();
+    vi.stubGlobal("cancelAnimationFrame", cancelAnimationFrameMock);
     vi.stubGlobal("matchMedia", vi.fn().mockReturnValue({ matches: false }));
   });
 
@@ -96,7 +98,7 @@ describe("useAnchorScroll", () => {
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 1704, behavior: "auto" });
   });
 
-  it("EVENT anchor에도 동일한 단일 연속 animation 계약을 적용한다", () => {
+  it("instant EVENT anchor는 animation frame과 final pin 없이 즉시 target으로 이동한다", () => {
     const { getByRole } = render(<AnchorScrollProbe />);
     const events = document.querySelector("#events") as HTMLElement;
     const eventButton = getByRole("button", { name: "EVENT" });
@@ -115,8 +117,28 @@ describe("useAnchorScroll", () => {
 
     mockScrollMargin();
     fireEvent.click(eventButton);
-    runAnimationToEnd();
 
+    expect(queuedFrame).toBeNull();
+    expect(scrollTo).toHaveBeenCalledTimes(1);
     expect(scrollTo).toHaveBeenLastCalledWith({ top: 604, behavior: "auto" });
+  });
+
+  it.each([
+    ["wheel", () => fireEvent.wheel(window)],
+    ["touchstart", () => fireEvent.touchStart(window)],
+    ["pointerdown", () => fireEvent.pointerDown(window)],
+    ["keyboard scroll", () => fireEvent.keyDown(window, { key: "PageDown" })],
+  ])("cancels animation and final pin after user %s input", (_name, interrupt) => {
+    const { getByRole } = render(<AnchorScrollProbe />);
+    mockScrollMargin();
+
+    fireEvent.click(getByRole("button", { name: "시설안내" }));
+    interrupt();
+    const scrollCallsBeforeFinalPin = scrollTo.mock.calls.length;
+
+    vi.advanceTimersByTime(4000);
+
+    expect(cancelAnimationFrameMock).toHaveBeenCalledWith(1);
+    expect(scrollTo).toHaveBeenCalledTimes(scrollCallsBeforeFinalPin);
   });
 });

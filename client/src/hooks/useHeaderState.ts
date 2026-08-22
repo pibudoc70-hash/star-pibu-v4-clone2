@@ -181,8 +181,9 @@ export function useHeaderState() {
         setLocation(homePath || "/");
         return;
       }
-      // useAnchorScroll: 페이지 하단 이동 → lazy 섹션 강제 마운트 → 폴링 재보정
-      scrollToSelector(href, { block: "start" });
+      // EVENT는 desktop에서 즉시 final target으로, 다른 anchor·mobile은 기존 smooth policy를 유지한다.
+      const isDesktopEvent = href === "#events" && window.matchMedia("(min-width: 768px)").matches;
+      scrollToSelector(href, { block: "start", behavior: isDesktopEvent ? "instant" : "smooth" });
       return;
     }
     // 절대 경로 (/about, /foreign-guide 등) — wouter setLocation으로 SPA 라우팅

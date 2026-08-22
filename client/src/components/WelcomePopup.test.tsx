@@ -12,6 +12,16 @@ const popupEvent = {
   updatedAt: 1,
 };
 
+let popupQueryResult: {
+  data: typeof popupEvent[] | undefined;
+  isLoading: boolean;
+  error: Error | null;
+} = {
+  data: [popupEvent],
+  isLoading: false,
+  error: null,
+};
+
 vi.mock("@/contexts/useLang", () => ({
   useLang: () => ({ lang: "ko" }),
 }));
@@ -20,7 +30,7 @@ vi.mock("@/lib/trpc", () => ({
   trpc: {
     popup: {
       list: {
-        useQuery: () => ({ data: [popupEvent], isLoading: false, error: null }),
+        useQuery: () => popupQueryResult,
       },
     },
   },
@@ -40,6 +50,7 @@ describe("WelcomePopup keyboard focus", () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
+    popupQueryResult = { data: [popupEvent], isLoading: false, error: null };
     window.requestAnimationFrame = ((callback: FrameRequestCallback) => {
       callback(0);
       return 1;
@@ -51,6 +62,7 @@ describe("WelcomePopup keyboard focus", () => {
     vi.useRealTimers();
     window.requestAnimationFrame = originalRequestAnimationFrame;
     window.open = originalOpen;
+    document.body.style.overflow = "";
     document.body.innerHTML = "";
   });
 
@@ -92,11 +104,51 @@ describe("WelcomePopup keyboard focus", () => {
     expect(document.activeElement).toBe(opener);
   });
 
-  it("keeps popup image clicks opening the configured URL", () => {
+  it("opens configured popup URLs with an isolated new-window policy", () => {
     renderVisiblePopup();
 
     fireEvent.click(screen.getByLabelText("팝업 이미지 클릭"));
 
-    expect(window.open).toHaveBeenCalledWith("https://example.com/popup", "_blank");
+    expect(window.open).toHaveBeenCalledWith("https://example.com/popup", "_blank", "noopener,noreferrer");
+  });
+
+  it("does not open unsafe popup URL schemes", () => {
+    popupQueryResult = {
+      data: [{ ...popupEvent, clickUrl: "javascript:alert(document.domain)" }],
+      isLoading: false,
+      error: null,
+    };
+
+    renderVisiblePopup();
+    fireEvent.click(screen.getByLabelText("팝업 이미지 클릭"));
+
+    expect(window.open).not.toHaveBeenCalled();
+  });
+
+  it("restores the original body overflow value when an open popup unmounts", () => {
+    document.body.style.overflow = "scroll";
+    const { unmount } = render(<WelcomePopup />);
+    act(() => {
+      vi.advanceTimersByTime(1200);
+    });
+
+    expect(document.body.style.overflow).toBe("hidden");
+    unmount();
+    expect(document.body.style.overflow).toBe("scroll");
+  });
+
+  it("silently falls back when the optional popup query fails", () => {
+    const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    popupQueryResult = {
+      data: undefined,
+      isLoading: false,
+      error: new Error("DATABASE_URL=mysql://user:secret@internal.example/popup"),
+    };
+
+    render(<WelcomePopup />);
+
+    expect(screen.queryByRole("dialog", { name: "팝업 이벤트" })).toBeNull();
+    expect(consoleWarn).not.toHaveBeenCalled();
+    consoleWarn.mockRestore();
   });
 });

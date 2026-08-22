@@ -55,6 +55,9 @@ describe("SpecialEventSection anchor target", () => {
   it("keeps the events anchor available while the lazy query is loading", () => {
     render(<SpecialEventSection />);
 
-    expect(document.getElementById("events")).toHaveAttribute("aria-busy", "true");
+    const events = document.getElementById("events");
+
+    expect(events).toHaveAttribute("aria-busy", "true");
+    expect(events).toHaveClass("md:scroll-mt-40");
   });
 });

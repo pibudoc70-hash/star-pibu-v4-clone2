@@ -279,20 +279,6 @@ export const doctors: Doctor[] = [
       "리프팅", "울쎄라", "써마지", "색소치료",
       "백반증", "피부질환", "문신제거", "손발톱무좀",
     ],
-    researchActivities: [
-      {
-        title: "국내외 학술논문 게재 활동",
-        detail: "외부 전문의 profile에 해외 SCI/SCI-E급 논문 8편과 국내학술논문 22편 게재로 공개되어 있습니다. 개별 논문 제목은 해당 profile에 제시되지 않아 별도로 귀속하지 않습니다.",
-        sourceLabel: "이기욱 원장 외부 profile",
-        sourceUrl: "https://www.kskin.kr/Kskin/staff",
-      },
-      {
-        title: "EADV Congress Milan 2022 연수 및 발표",
-        detail: "외부 전문의 profile에 유럽피부과학회(EADV) Milan congress 2022 연수 및 발표 활동으로 기재되어 있습니다.",
-        sourceLabel: "이기욱 원장 외부 profile",
-        sourceUrl: "https://www.kskin.kr/Kskin/staff",
-      },
-    ],
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD, PhD",
     schemaDescription:

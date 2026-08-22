@@ -69,6 +69,14 @@ interface TreatmentSeoRecord {
 
 const BASE_URL = "https://star-pibu.com";
 
+const BREADCRUMB_LABELS: Record<Lang, { home: string; treatments: string }> = {
+  ko: { home: "홈", treatments: "시술·장비소개" },
+  en: { home: "Home", treatments: "Treatments" },
+  ja: { home: "ホーム", treatments: "施術・機器紹介" },
+  zh: { home: "首页", treatments: "治疗与设备" },
+  "zh-TW": { home: "首頁", treatments: "療程與設備" },
+};
+
 const LEGACY_TREATMENT_REDIRECTS: Readonly<Record<string, string>> = {
   "울쎄라": "/treatments/ulthera-classic",
   "울쎄라피 프라임": "/treatments/ulthera",
@@ -469,6 +477,17 @@ function injectJsonLd(
   const recovery = pick(t.recovery, lang);
   const bodyLocation = pick(t.schemaBodyLocation, lang) || "피부";
   const hasLiftingPainCare = isPainSensitiveLifting(t.slug);
+  const langPrefix = lang === "ko" ? "" : `/${lang === "zh-TW" ? "zh-tw" : lang}`;
+  const breadcrumbLabels = BREADCRUMB_LABELS[lang];
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", position: 1, name: breadcrumbLabels.home, item: `${BASE_URL}${langPrefix || "/"}` },
+      { "@type": "ListItem", position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/treatments` },
+      { "@type": "ListItem", position: 3, name, item: pageUrl },
+    ],
+  };
 
   const medicalProcedure = {
     "@context": "https://schema.org",
@@ -489,7 +508,7 @@ function injectJsonLd(
     relevantSpecialty: "https://schema.org/Dermatology",
   };
 
-  const schemas: object[] = [CLINIC_SCHEMA, PHYSICIAN_SCHEMA, medicalProcedure];
+  const schemas: object[] = [CLINIC_SCHEMA, PHYSICIAN_SCHEMA, medicalProcedure, breadcrumbList];
 
   // FAQPage 스키마
   if (t.faq) {

@@ -26,6 +26,14 @@ const LANG_PREFIX: Record<SupportedLang, string> = {
   "zh-TW": "/zh-tw",
 };
 
+const BREADCRUMB_LABELS: Record<SupportedLang, { home: string; treatments: string }> = {
+  ko: { home: "홈", treatments: "시술·장비소개" },
+  en: { home: "Home", treatments: "Treatments" },
+  ja: { home: "ホーム", treatments: "施術・機器紹介" },
+  zh: { home: "首页", treatments: "治疗与设备" },
+  "zh-TW": { home: "首頁", treatments: "療程與設備" },
+};
+
 // ── JSON-LD 구조화 데이터 생성 (MedicalProcedure + FAQ) ──────────────────────
 function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
   const name = pickLocalized(t.name, lang);
@@ -35,6 +43,17 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
   const recovery = pickLocalized(t.recovery, lang);
   const bodyLocation = t.schemaBodyLocation ? pickLocalized(t.schemaBodyLocation, lang) : "피부";
   const hasLiftingPainCare = isPainSensitiveLifting(t.slug);
+  const langPrefix = LANG_PREFIX[lang];
+  const breadcrumbLabels = BREADCRUMB_LABELS[lang];
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", position: 1, name: breadcrumbLabels.home, item: `${BASE_URL}${langPrefix || "/"}` },
+      { "@type": "ListItem", position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/treatments` },
+      { "@type": "ListItem", position: 3, name, item: pageUrl },
+    ],
+  };
 
   const medicalProcedure = {
     "@context": "https://schema.org",
@@ -77,7 +96,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     ...pickLocalizedFaq(t.faq, lang),
     ...(hasLiftingPainCare ? LIFTING_FAQS[lang] : []),
   ];
-  if (faqItems.length === 0) return [medicalProcedure];
+  if (faqItems.length === 0) return [medicalProcedure, breadcrumbList];
 
   const faqPage = {
     "@context": "https://schema.org",
@@ -92,7 +111,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     }))
   };
 
-  return [medicalProcedure, faqPage];
+  return [medicalProcedure, faqPage, breadcrumbList];
 }
 
 

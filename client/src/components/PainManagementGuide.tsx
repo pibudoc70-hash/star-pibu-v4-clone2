@@ -10,6 +10,7 @@ type GuideCopy = {
   eyebrow: string;
   heroTitle: string;
   title: string;
+  categoryLabel: string;
   intro: string;
   visualHeading: string;
   visualCaption: string;
@@ -35,6 +36,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     eyebrow: "PAIN MANAGEMENT",
     heroTitle: "통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다",
     title: "개인별 통증관리 3단계",
+    categoryLabel: "통증관리",
     intro: "통증에 대한 걱정까지 고려하는 것이 시술 계획의 중요한 시작입니다. 스타피부과는 시술 특성과 환자 상태를 함께 살펴 통증관리 방법을 단계적으로 검토합니다.",
     visualHeading: "한눈에 보는 개인별 통증관리 3단계",
     visualCaption: "시술 특성과 개인 상태를 확인한 뒤, 필요한 단계만 의료진이 검토합니다.",
@@ -67,6 +69,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     eyebrow: "PAIN MANAGEMENT",
     heroTitle: "Considering fear of discomfort is an important beginning to a procedure plan.",
     title: "Three Steps of Individualized Pain Management",
+    categoryLabel: "Pain Management",
     intro: "Considering concerns about discomfort is an important first step in planning a procedure. Star Dermatology reviews the procedure and each patient’s condition to consider pain-management options in stages.",
     visualHeading: "Individualized pain-management path at a glance",
     visualCaption: "After reviewing the procedure and individual condition, the medical team considers only the steps that may be needed.",
@@ -99,6 +102,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     eyebrow: "PAIN MANAGEMENT",
     heroTitle: "痛みに対する不安まで考えることが、施術計画の大切な出発点です。",
     title: "個別の痛み管理・3段階",
+    categoryLabel: "痛み管理",
     intro: "痛みに対するご不安まで考えることが、施術計画の大切な出発点です。スター皮膚科では、施術の特性と患者様の状態を確認しながら、痛み管理の方法を段階的に検討します。",
     visualHeading: "ひと目でわかる個別の痛み管理の流れ",
     visualCaption: "施術の特性と個別の状態を確認し、必要な段階だけを医療スタッフが検討します。",
@@ -131,6 +135,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     eyebrow: "PAIN MANAGEMENT",
     heroTitle: "将对不适的恐惧纳入考虑，是制定治疗计划的重要起点。",
     title: "个性化疼痛管理 3 个步骤",
+    categoryLabel: "疼痛管理",
     intro: "将对不适的担忧纳入考虑，是制定治疗计划的重要起点。STAR皮肤科会结合治疗特点与患者状态，分阶段评估疼痛管理方式。",
     visualHeading: "一目了然的个性化疼痛管理流程",
     visualCaption: "确认治疗特点和个人状态后，医护人员仅评估可能需要的阶段。",
@@ -163,6 +168,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     eyebrow: "PAIN MANAGEMENT",
     heroTitle: "將對不適的恐懼納入考量，是規劃療程的重要起點。",
     title: "個人化疼痛管理 3 個步驟",
+    categoryLabel: "疼痛管理",
     intro: "將對不適的擔憂納入考量，是規劃療程的重要起點。STAR皮膚科會綜合療程特性與患者狀態，分階段評估疼痛管理方式。",
     visualHeading: "一目瞭然的個人化疼痛管理流程",
     visualCaption: "確認療程特性與個人狀態後，醫護人員僅評估可能需要的階段。",
@@ -201,7 +207,7 @@ function resolveLang(lang: Lang): PainManagementLang {
 
 export function getPainManagementCategory(lang: Lang) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
-  return { id: PAIN_MANAGEMENT_CATEGORY_ID, label: copy.title };
+  return { id: PAIN_MANAGEMENT_CATEGORY_ID, label: copy.categoryLabel };
 }
 
 export default function PainManagementGuide({ lang }: { lang: Lang }) {

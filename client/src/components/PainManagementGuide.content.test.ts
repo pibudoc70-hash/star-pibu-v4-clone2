@@ -91,6 +91,13 @@ describe("PainManagementGuide content and placement", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints).toHaveLength(3);
   });
 
+  it("uses the concise pain-management label for the category while preserving the three-step guide title", () => {
+    expect(guideSource).toContain("categoryLabel");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.categoryLabel).toBe("통증관리");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.title).toBe("개인별 통증관리 3단계");
+    expect(guideSource).toContain("label: copy.categoryLabel");
+  });
+
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');

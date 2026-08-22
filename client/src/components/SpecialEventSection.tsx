@@ -145,7 +145,7 @@ export default function SpecialEventSection() {
 
   if (isInitialSkeletonVisible) {
     return (
-      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트" aria-busy="true">
+      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트" aria-busy="true">
         <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
           <SectionHeader lang={lang} />
@@ -169,7 +169,7 @@ export default function SpecialEventSection() {
       "zh-TW": "重試",
     };
     return (
-      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
+      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
         <div className="container">
           <SectionHeader lang={lang} />
           <div className="text-center py-16 flex flex-col items-center gap-4">
@@ -194,7 +194,7 @@ export default function SpecialEventSection() {
   const hasMoreDesktop = allEvents.length > 6;
 
   return (
-    <section ref={sectionRef} id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-28" aria-label="스페셔 이벤트">
+    <section ref={sectionRef} id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
       <span ref={fetchRef} aria-hidden="true" />
       <div className="container">
         <SectionHeader lang={lang} />

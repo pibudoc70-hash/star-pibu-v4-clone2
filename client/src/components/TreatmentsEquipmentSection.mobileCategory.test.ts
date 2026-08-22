@@ -29,6 +29,7 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
   it("returns the mobile viewport to the category list after close", () => {
     expect(sectionSource).toContain("scrollIntoView");
     expect(sectionSource).toContain('behavior: "smooth"');
+    expect(sectionSource).toContain('block: "center"');
     expect(tabListSource).toContain('id="treatment-mobile-category-list"');
   });
 });

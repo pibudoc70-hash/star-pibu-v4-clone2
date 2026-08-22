@@ -120,7 +120,7 @@ export default function TreatmentsEquipmentSection() {
     setMobileExpandedId(null);
     setShowAll(false);
     requestAnimationFrame(() => {
-      mobileCategoryListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      mobileCategoryListRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
 

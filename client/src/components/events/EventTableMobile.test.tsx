@@ -1,7 +1,7 @@
 import React from "react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import EventTableMobile from "./EventTableMobile";
 import type { SpecialEvent } from "@/hooks/useLocalizedEvent";
@@ -50,7 +50,7 @@ describe("EventTableMobile", () => {
   it("클릭한 행 바로 아래에 상세를 펼치고 이후 행을 정상 레이아웃으로 밀어낸다", () => {
     render(<EventTableMobile events={[event, secondEvent]} getLocalizedText={getLocalizedText} />);
 
-    const detailButton = screen.getByRole("button", { name: "테스트 이벤트 자세히 보기" });
+    const detailButton = screen.getByRole("button", { name: "테스트 이벤트 상세 펼치기" });
     fireEvent.click(detailButton);
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -62,10 +62,16 @@ describe("EventTableMobile", () => {
     expect(orderedItems[1]).toHaveAttribute("data-event-detail", "1");
     expect(orderedItems[2]).toHaveAttribute("data-event-row", "2");
 
-    fireEvent.click(screen.getByRole("button", { name: "테스트 이벤트 상세 접기" }));
+    const indicator = screen.getByTestId("mobile-event-expand-indicator-1");
+    expect(indicator).toHaveAttribute("data-expanded", "true");
+    expect(indicator).toHaveClass("is-expanded");
+
+    fireEvent.click(within(screen.getByTestId("mobile-event-detail-1")).getByRole("button", { name: "테스트 이벤트 상세 접기" }));
 
     expect(screen.getByTestId("mobile-event-detail-1")).not.toHaveClass("is-open");
     expect(detailButton).toHaveAttribute("aria-expanded", "false");
+    expect(indicator).toHaveAttribute("data-expanded", "false");
+    expect(indicator).not.toHaveClass("is-expanded");
   });
 
   it("keeps inline detail height and opacity motion scoped to the mobile list", () => {

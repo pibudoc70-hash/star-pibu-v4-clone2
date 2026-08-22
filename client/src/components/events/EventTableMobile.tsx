@@ -4,7 +4,7 @@
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
 import { useState } from "react";
-import { ChevronRight, Sparkles } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -194,12 +194,19 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                     color: "var(--color-gold-deep)",
                     background: "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)",
                   }}
-                  aria-label={`${title} 자세히 보기`}
+                  aria-label={`${title} 상세 ${isOpen ? "접기" : "펼치기"}`}
                   aria-expanded={isOpen}
                   aria-controls={`mobile-event-detail-${event.id}`}
                 >
-                  상세
-                  <ChevronRight size={12} className={`transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                  {isOpen ? "접기" : "상세"}
+                  <span
+                    data-testid={`mobile-event-expand-indicator-${event.id}`}
+                    data-expanded={isOpen}
+                    aria-hidden="true"
+                    className={`event-mobile-entry__indicator inline-flex transition-transform duration-300 ease-out motion-reduce:transition-none ${isOpen ? "is-expanded rotate-180" : ""}`}
+                  >
+                    <ChevronDown size={16} strokeWidth={2.25} />
+                  </span>
                 </button>
               </div>
 

@@ -24,4 +24,12 @@ describe("PC Hero bilingual slogan motion", () => {
     expect(mobileSection).toMatch(/showKo\s*\?\s*<>신뢰와 과학이<br\s*\/>경험으로 완성되는 곳<\/>/);
     expect(mobileSection).toMatch(/:\s*<>Where Experience,<br\s*\/>Trust, and Science Meet<\/>}/);
   });
+
+  it("gives the desktop Korean alternate an explicit readable visual hierarchy", () => {
+    expect(css).toMatch(/\.hero-desktop-slogan-ko\s*\{[\s\S]*font-family:\s*'Noto Sans KR'/);
+    expect(css).toContain("font-size: clamp(0.98rem, 1.75vw, 1.08rem);");
+    expect(css).toContain("font-weight: 500;");
+    expect(css).toContain("letter-spacing: 0.08em;");
+    expect(css).toContain("color: rgba(255, 255, 255, 0.92);");
+  });
 });

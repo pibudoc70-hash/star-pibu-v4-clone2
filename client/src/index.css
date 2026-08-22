@@ -1040,7 +1040,16 @@
       animation-iteration-count: infinite;
     }
     .hero-desktop-slogan-en { animation-name: heroDesktopSloganEn; }
-    .hero-desktop-slogan-ko { animation-name: heroDesktopSloganKo; }
+    .hero-desktop-slogan-ko {
+      animation-name: heroDesktopSloganKo;
+      font-family: 'Noto Sans KR', 'Pretendard', sans-serif;
+      font-size: clamp(0.98rem, 1.75vw, 1.08rem);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.92);
+      text-transform: none;
+    }
   }
 
   @keyframes heroDesktopSloganEn {

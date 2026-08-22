@@ -191,7 +191,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   }
                 }}
                 data-event-row={event.id}
-                className="flex scroll-mt-24 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
+                className="flex scroll-mt-16 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-gray-900 truncate">{title}</p>

@@ -99,5 +99,7 @@ describe("EventTableMobile", () => {
     expect(source).toContain("scrollIntoView");
     expect(source).toContain('behavior: "smooth"');
     expect(source).toContain('block: "start"');
+    expect(source).toContain("scroll-mt-16");
+    expect(source).not.toContain("scroll-mt-24 items-center");
   });
 });

@@ -7,6 +7,7 @@
  * - 선택 상태는 aria-pressed로 전달한다.
  * - native button의 Tab/Shift+Tab 및 Space/Enter 동작을 그대로 보존한다.
  */
+import { Fragment, type ReactNode } from "react";
 import { Star } from "lucide-react";
 import type { Category } from "@/types/treatment";
 import CategoryTabButton from "./CategoryTabButton";
@@ -20,6 +21,10 @@ interface CategoryTabListProps {
   activeId: TreatmentTabId;
   lang: Lang;
   onTabChange: (id: TreatmentTabId) => void;
+  /** 모바일에서만 선택한 카테고리의 inline detail을 연다. null이면 모두 닫힌 상태다. */
+  mobileActiveId?: TreatmentTabId | null;
+  onMobileTabToggle?: (id: TreatmentTabId) => void;
+  renderMobileDetail?: (id: TreatmentTabId) => ReactNode;
   containerRef?: React.RefObject<HTMLDivElement | null>;
   /** WAI-ARIA: tablist의 aria-label */
   ariaLabel?: string;
@@ -30,6 +35,9 @@ export default function CategoryTabList({
   activeId,
   lang,
   onTabChange,
+  mobileActiveId = activeId,
+  onMobileTabToggle,
+  renderMobileDetail,
   containerRef,
   ariaLabel = "시술 카테고리",
 }: CategoryTabListProps) {
@@ -46,6 +54,29 @@ export default function CategoryTabList({
       />
     ));
 
+  const renderMobileTabs = () =>
+    categories.map((cat) => {
+      const isMobileActive = mobileActiveId === cat.id;
+
+      return (
+        <Fragment key={cat.id}>
+          <CategoryTabButton
+            id={cat.id}
+            label={getCatLabel(cat, lang)}
+            isActive={isMobileActive}
+            onClick={onMobileTabToggle ?? onTabChange}
+            icon={CATEGORY_ICON_MAP[cat.id] ?? Star}
+            size="sm"
+          />
+          {isMobileActive && renderMobileDetail ? (
+            <div className="col-span-2" data-testid={`mobile-category-detail-${cat.id}`}>
+              {renderMobileDetail(cat.id)}
+            </div>
+          ) : null}
+        </Fragment>
+      );
+    });
+
   return (
     <div className="mb-4">
       {/* 모바일: 2열 그리드 */}
@@ -54,7 +85,7 @@ export default function CategoryTabList({
         aria-label={ariaLabel}
         className="grid grid-cols-2 gap-2 sm:hidden"
       >
-        {renderTabs("sm")}
+        {renderMobileTabs()}
       </div>
       {/* 데스크탑: flex-wrap */}
       {/* [R15-P1-1] margin inline style → Tailwind 클래스 치환 */}

@@ -49,6 +49,7 @@ export default function TreatmentsEquipmentSection() {
 
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
+  const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -105,6 +106,17 @@ export default function TreatmentsEquipmentSection() {
   // 탭 변경 핸들러
   const handleTabChange = useCallback((id: string) => {
     setActiveId(id);
+    setShowAll(false);
+  }, []);
+
+  const handleMobileTabToggle = useCallback((id: string) => {
+    setActiveId(id);
+    setShowAll(false);
+    setMobileExpandedId((current) => (current === id ? null : id));
+  }, []);
+
+  const handleMobileCategoryClose = useCallback(() => {
+    setMobileExpandedId(null);
     setShowAll(false);
   }, []);
 
@@ -261,13 +273,59 @@ export default function TreatmentsEquipmentSection() {
 
               {/* 탭 — 검색 중이 아닐 때만 표시 */}
               {!searchQuery && (
-                <CategoryTabList
-                  categories={categoriesForTabList}
-                  activeId={activeId}
-                  lang={lang}
-                  onTabChange={handleTabChange}
-                  containerRef={tabContainerRef}
-                />
+              <CategoryTabList
+                categories={categoriesForTabList}
+                activeId={activeId}
+                lang={lang}
+                onTabChange={handleTabChange}
+                mobileActiveId={mobileExpandedId}
+                onMobileTabToggle={handleMobileTabToggle}
+                renderMobileDetail={() => (
+                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">
+                    <div
+                      id="treatments-mobile-grid"
+                      aria-live="polite"
+                      aria-label="선택한 카테고리 시술 목록"
+                      className="grid gap-4 px-4 py-4"
+                    >
+                      {filteredTreatments.length === 0 ? (
+                        <EmptyResultView message={tr.noResults} hint={tr.noResultsHint} />
+                      ) : (
+                        (showAll ? filteredTreatments : filteredTreatments.slice(0, INITIAL_SHOW)).map((item, i) => (
+                          <EquipmentTreatmentCard
+                            key={`${activeId}-mobile-t-${i}`}
+                            item={item}
+                            index={i}
+                            imgBg={CAT_IMG_BG[activeId] ?? "var(--color-star-mint-pale)"}
+                            catTextColor={CAT_TAB_TEXT[activeId] ?? "var(--color-star-navy)"}
+                          />
+                        ))
+                      )}
+                    </div>
+                    <div className="flex items-center justify-center gap-3 border-t border-[var(--color-gold-light)] px-4 py-3">
+                      {filteredTreatments.length > INITIAL_SHOW && (
+                        <button
+                          type="button"
+                          onClick={() => setShowAll((current) => !current)}
+                          aria-expanded={showAll}
+                          aria-controls="treatments-mobile-grid"
+                          className="rounded-xl px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                        >
+                          {showAll ? tr.collapseBtn : tr.moreBtn.replace("{n}", String(filteredTreatments.length - INITIAL_SHOW))}
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleMobileCategoryClose}
+                        className="rounded-xl border border-[var(--color-gold-light)] bg-white px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+                      >
+                        {tr.collapseBtn}
+                      </button>
+                    </div>
+                  </div>
+                )}
+                containerRef={tabContainerRef}
+              />
               )}
               {/* 검색 중일 때 결과 수 표시 */}
               {searchQuery && (
@@ -281,7 +339,7 @@ export default function TreatmentsEquipmentSection() {
             {activeId && (
               <div
                 key={`content-${activeId}`}
-                className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade"
+                className={`rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade ${searchQuery ? "" : "hidden sm:block"}`}
               >
                 <div className="px-5 pt-5 pb-5 rounded-b-2xl" style={{ background: "#F3EEE8" }}>
                   <div

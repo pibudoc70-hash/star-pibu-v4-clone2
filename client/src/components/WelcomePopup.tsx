@@ -228,7 +228,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           willChange: "transform",
         }}
       >
-        <button type="button" onClick={handleClose} className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-full bg-white/95 text-[var(--color-star-text)] shadow-md transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
+        <button type="button" onClick={handleClose} className="popup-close-control absolute right-3 top-3 z-10 flex size-11 items-center justify-center rounded-full bg-white/95 text-[var(--color-star-text)] shadow-md transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
           <X size={18} aria-hidden="true" />
         </button>
         {/* 이미지 */}
@@ -249,8 +249,8 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
         </div>
 
         <div className="flex items-center px-5 py-3 flex-shrink-0 border-t border-gray-200">
-          <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 hover:text-gray-800">
-            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-4 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
+          <label className="popup-today-hide flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2 text-xs font-medium text-gray-600 hover:bg-[var(--color-gold-pale)] hover:text-gray-800 focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)]">
+            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-5 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
             오늘은 보지 않음
           </label>
         </div>
@@ -312,7 +312,7 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
         </div>
 
         <div className="flex items-center px-6 py-4 flex-shrink-0 border-t border-gray-200">
-          <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 transition-colors hover:text-gray-800">
+          <label className="popup-today-hide flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2 text-xs font-medium text-gray-600 transition-colors hover:bg-[var(--color-gold-pale)] hover:text-gray-800 focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)]">
             <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-4 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
             오늘은 보지 않음
           </label>

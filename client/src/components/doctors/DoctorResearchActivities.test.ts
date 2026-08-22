@@ -34,7 +34,7 @@ describe("Doctor research activities disclosure contract", () => {
   it("keeps credentials visible on mobile while reserving disclosure behavior for research activities", () => {
     expect(credentials).not.toContain("aria-expanded={expanded}");
     expect(credentials).not.toContain("onClick={onToggle}");
-    expect(credentials).toContain('className="px-4 py-6 grid grid-cols-1 gap-4"');
+    expect(credentials).toContain('className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2"');
     expect(credentials).toContain("<DoctorResearchActivities doctor={doctor} />");
   });
 

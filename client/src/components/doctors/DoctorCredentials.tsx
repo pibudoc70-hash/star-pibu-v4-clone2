@@ -59,7 +59,7 @@ export function DoctorCredentials({
             {credentialsTitle}
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
           {doctor.credentials.map((c) => {
             const Icon = c.icon;
             return (
@@ -86,13 +86,13 @@ export function DoctorCredentials({
         </span>
         <span className="text-xs text-stone-500">{doctor.credentials.length}</span>
       </div>
-      <div className="px-4 py-6 grid grid-cols-1 gap-4">
+      <div className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2">
         {doctor.credentials.map((c) => {
           const Icon = c.icon;
           return (
             <div
               key={c.text}
-              className="flex items-start gap-3 py-4 px-4 rounded-xl dr-credentials-item-mobile"
+              className="flex items-start gap-2.5 py-3 px-3 rounded-lg dr-credentials-item-mobile"
             >
               <Icon size={15} className="dr-credentials-icon-mobile" />
               <span className="dr-credentials-text-mobile">

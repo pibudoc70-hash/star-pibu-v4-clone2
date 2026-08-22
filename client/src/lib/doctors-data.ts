@@ -112,14 +112,44 @@ export const doctors: Doctor[] = [
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16681657/",
       },
       {
-        title: "피부과 학회 발표 활동",
-        detail: "스타피부과 연구 및 발표 활동 페이지에 정리된 국내외 학회 발표 목록을 확인할 수 있습니다.",
+        title: "융합성 망상 유두종증 항생제 치료 증례",
+        detail: "JAAD에 게재된 융합성 망상 유두종증의 항생제 치료 증례 연구입니다.",
+        sourceLabel: "PubMed",
+        sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11260541/",
+      },
+      {
+        title: "한관종 절연침 치료 연구",
+        detail: "표피 손상을 줄이는 절연침을 이용한 한관종 치료 관련 국제 학술지 연구입니다.",
+        sourceLabel: "PubMed",
+        sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/20711282/",
+      },
+      {
+        title: "남성형 탈모 임상 연구",
+        detail: "대한피부과학회지에 수록된 남성형 탈모 임상 양상 연구입니다.",
+        sourceLabel: "스타피부과 연구·발표",
+        sourceUrl: "/research",
+      },
+      {
+        title: "고주파 주사요법 라이브 시연",
+        detail: "대경피부미용치료 심포지엄에서 이마·미간·하안검 주름 치료 관련 라이브 시연과 발표를 진행했습니다.",
+        sourceLabel: "스타피부과 연구·발표",
+        sourceUrl: "/research",
+      },
+      {
+        title: "아시아 미용피부외과 학술대회 초청 발표",
+        detail: "Asian Academy of Cosmetic & Dermatologic Surgery에서 미용피부과·피부외과 주제로 초청 발표했습니다.",
+        sourceLabel: "스타피부과 연구·발표",
+        sourceUrl: "/research",
+      },
+      {
+        title: "국내 피부과 학회 임상 발표",
+        detail: "대한피부과학회 학술대회에서 희귀 증례와 흉터 레이저박피·프락셀 병합치료 관련 공동 발표를 확인할 수 있습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
       {
         title: "해외 전문가 과정 및 연수",
-        detail: "스타피부과 연구 및 발표 활동 페이지에 기재된 국소마취 지방흡입, 지방이식, 화학박피, 실리프팅 관련 전문가 과정입니다.",
+        detail: "미국·브라질·독일·싱가포르에서 국소마취 지방흡입, 지방이식, 화학박피, 실리프팅 관련 전문가 과정을 이수했습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
@@ -183,10 +213,16 @@ export const doctors: Doctor[] = [
     ],
     researchActivities: [
       {
-        title: "분절상 신경섬유종증 증례 보고",
+        title: "두피 분절상 신경섬유종증 증례 보고",
         detail: "가톨릭대학교 소속 저자로 확인되는 피부과 증례 보고이며, KCI에서 논문 서지를 확인할 수 있습니다.",
         sourceLabel: "KCI",
         sourceUrl: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000885244",
+      },
+      {
+        title: "선형 국소 탄력섬유증 증례 보고",
+        detail: "가톨릭대학교 의과대학 피부과 소속 Hye Jin Woo 저자로 확인되는 피부과 증례 논문입니다.",
+        sourceLabel: "PubMed",
+        sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10759963/",
       },
     ],
 

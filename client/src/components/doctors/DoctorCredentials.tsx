@@ -49,10 +49,6 @@ export function DoctorCredentials({
   doctor,
   variant,
   credentialsTitle,
-  expanded,
-  onToggle,
-  collapseLabel,
-  expandLabel,
 }: DoctorCredentialsProps) {
   if (variant === "desktop") {
     return (
@@ -81,42 +77,31 @@ export function DoctorCredentials({
     );
   }
 
-  // mobile: accordion
+  // mobile: credentials stay visible; research remains the only disclosure.
   return (
     <div className="dr-credentials-accordion dr-accordion-border">
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={expanded}
-        aria-label={expanded ? collapseLabel : expandLabel}
-        data-expanded={String(expanded)}
-        className="w-full flex items-center justify-between px-4 py-3 dr-accordion-btn"
-      >
+      <div className="flex items-center justify-between px-4 py-3 dr-accordion-btn">
         <span className="text-xs font-bold tracking-wider dr-accordion-label">
-          {`${credentialsTitle} (${doctor.credentials.length})`}
+          {credentialsTitle}
         </span>
-        <div className="dr-accordion-chevron" data-expanded={String(expanded)}>
-          <ChevronDown size={16} />
-        </div>
-      </button>
-      {expanded && (
-        <div className="px-4 py-6 grid grid-cols-1 gap-4">
-          {doctor.credentials.map((c) => {
-            const Icon = c.icon;
-            return (
-              <div
-                key={c.text}
-                className="flex items-start gap-3 py-4 px-4 rounded-xl dr-credentials-item-mobile"
-              >
-                <Icon size={15} className="dr-credentials-icon-mobile" />
-                <span className="dr-credentials-text-mobile">
-                  {c.text}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      )}
+        <span className="text-xs text-stone-500">{doctor.credentials.length}</span>
+      </div>
+      <div className="px-4 py-6 grid grid-cols-1 gap-4">
+        {doctor.credentials.map((c) => {
+          const Icon = c.icon;
+          return (
+            <div
+              key={c.text}
+              className="flex items-start gap-3 py-4 px-4 rounded-xl dr-credentials-item-mobile"
+            >
+              <Icon size={15} className="dr-credentials-icon-mobile" />
+              <span className="dr-credentials-text-mobile">
+                {c.text}
+              </span>
+            </div>
+          );
+        })}
+      </div>
       <DoctorResearchActivities doctor={doctor} />
     </div>
   );

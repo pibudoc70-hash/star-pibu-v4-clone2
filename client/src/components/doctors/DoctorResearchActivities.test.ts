@@ -30,9 +30,25 @@ describe("Doctor research activities disclosure contract", () => {
     expect(credentials).not.toContain('key={activity.sourceUrl}');
   });
 
+  it("keeps credentials visible on mobile while reserving disclosure behavior for research activities", () => {
+    expect(credentials).not.toContain("aria-expanded={expanded}");
+    expect(credentials).not.toContain("onClick={onToggle}");
+    expect(credentials).toContain('className="px-4 py-6 grid grid-cols-1 gap-4"');
+    expect(credentials).toContain("<DoctorResearchActivities doctor={doctor} />");
+  });
+
   it("keeps visible activity titles concise without years or coauthor lists", () => {
     expect(doctorData).toContain('title: "액취증·다한증 치료 연구"');
-    expect(doctorData).toContain('title: "분절상 신경섬유종증 증례 보고"');
+    expect(doctorData).toContain('title: "두피 분절상 신경섬유종증 증례 보고"');
     expect(doctorData).toContain('title: "동상의 임상·조직병리학적 특성 연구"');
+  });
+
+  it("includes additional official research and academic activity records for verified doctor identities", () => {
+    expect(doctorData).toContain("11260541");
+    expect(doctorData).toContain("20711282");
+    expect(doctorData).toContain("10759963");
+    expect(doctorData).toContain('title: "융합성 망상 유두종증 항생제 치료 증례"');
+    expect(doctorData).toContain('title: "한관종 절연침 치료 연구"');
+    expect(doctorData).toContain('title: "선형 국소 탄력섬유증 증례 보고"');
   });
 });

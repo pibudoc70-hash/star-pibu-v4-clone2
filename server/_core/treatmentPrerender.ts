@@ -69,6 +69,15 @@ interface TreatmentSeoRecord {
 
 const BASE_URL = "https://star-pibu.com";
 
+const LEGACY_TREATMENT_REDIRECTS: Readonly<Record<string, string>> = {
+  "울쎄라": "/treatments/ulthera-classic",
+  "울쎄라피 프라임": "/treatments/ulthera",
+};
+
+export function getLegacyTreatmentRedirectPath(name: string): string | null {
+  return LEGACY_TREATMENT_REDIRECTS[name] ?? null;
+}
+
 /** Structured data에는 상대 경로 대신 crawler-resolvable HTTPS image URL을 사용한다. */
 export function toAbsoluteTreatmentImageUrl(image: string): string {
   return image.startsWith("https://") ? image : new URL(image, BASE_URL).toString();
@@ -511,6 +520,14 @@ function injectJsonLd(
 // ── 등록 함수 (A-5) ───────────────────────────────────────────────────────────
 
 export function registerTreatmentPrerender(app: Express): void {
+  // JavaScript를 실행하지 않는 crawler도 legacy Korean treatment names를
+  // distinct canonical content로 영구 정규화한다. Unknown names stay on the SPA 404 path.
+  app.get("/treatment/:name", (req: Request, res: Response, next: NextFunction) => {
+    const target = getLegacyTreatmentRedirectPath(req.params.name);
+    if (!target) return next();
+    return res.redirect(301, target);
+  });
+
   app.get(
     ["/treatments/:slug", "/:lang/treatments/:slug"],
     (req: Request, res: Response, next: NextFunction) => {

@@ -1,5 +1,6 @@
 import { Activity, ClipboardCheck, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import type { Lang } from "@/lib/i18n.types";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const PAIN_MANAGEMENT_CATEGORY_ID = "pain-management";
 export type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -8,6 +9,7 @@ type Step = { icon: string; title: string; body: string };
 type Faq = { question: string; answer: string };
 type GuideCopy = {
   eyebrow: string;
+  heroTitle: string;
   title: string;
   intro: string;
   steps: Step[];
@@ -29,6 +31,7 @@ type GuideCopy = {
 export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
   ko: {
     eyebrow: "PAIN MANAGEMENT",
+    heroTitle: "통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다",
     title: "개인별 통증관리 3단계",
     intro: "통증에 대한 걱정까지 고려하는 것이 시술 계획의 중요한 시작입니다. 스타피부과는 시술 특성과 환자 상태를 함께 살펴 통증관리 방법을 단계적으로 검토합니다.",
     steps: [
@@ -57,6 +60,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
   },
   en: {
     eyebrow: "PAIN MANAGEMENT",
+    heroTitle: "Considering fear of discomfort is an important beginning to a procedure plan.",
     title: "Three Steps of Individualized Pain Management",
     intro: "Considering concerns about discomfort is an important first step in planning a procedure. Star Dermatology reviews the procedure and each patient’s condition to consider pain-management options in stages.",
     steps: [
@@ -85,6 +89,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
   },
   ja: {
     eyebrow: "PAIN MANAGEMENT",
+    heroTitle: "痛みに対する不安まで考えることが、施術計画の大切な出発点です。",
     title: "個別の痛み管理・3段階",
     intro: "痛みに対するご不安まで考えることが、施術計画の大切な出発点です。スター皮膚科では、施術の特性と患者様の状態を確認しながら、痛み管理の方法を段階的に検討します。",
     steps: [
@@ -113,6 +118,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
   },
   zh: {
     eyebrow: "PAIN MANAGEMENT",
+    heroTitle: "将对不适的恐惧纳入考虑，是制定治疗计划的重要起点。",
     title: "个性化疼痛管理 3 个步骤",
     intro: "将对不适的担忧纳入考虑，是制定治疗计划的重要起点。STAR皮肤科会结合治疗特点与患者状态，分阶段评估疼痛管理方式。",
     steps: [
@@ -141,6 +147,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
   },
   "zh-TW": {
     eyebrow: "PAIN MANAGEMENT",
+    heroTitle: "將對不適的恐懼納入考量，是規劃療程的重要起點。",
     title: "個人化疼痛管理 3 個步驟",
     intro: "將對不適的擔憂納入考量，是規劃療程的重要起點。STAR皮膚科會綜合療程特性與患者狀態，分階段評估疼痛管理方式。",
     steps: [
@@ -180,69 +187,53 @@ export function getPainManagementCategory(lang: Lang) {
   return { id: PAIN_MANAGEMENT_CATEGORY_ID, label: copy.title };
 }
 
-export default function PainManagementGuide({ lang, mode = "full" }: { lang: Lang; mode?: "summary" | "full" }) {
+export default function PainManagementGuide({ lang }: { lang: Lang }) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
-  const headingId = mode === "full" ? "pain-management-guide-title" : "pain-management-event-title";
+  const headingId = "pain-management-guide-title";
 
   return (
     <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-5 sm:p-7" aria-labelledby={headingId}>
       <div className="mb-5 text-center sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-        <h2 id={headingId} className="mt-2 text-xl font-semibold text-[var(--color-star-text)] sm:text-2xl">{copy.title}</h2>
-        <p className="mt-3 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.intro}</p>
+        <h2 id={headingId} className="mt-3 text-2xl font-semibold leading-snug text-[var(--color-star-text)] sm:text-3xl">{copy.heroTitle}</h2>
+        <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <Accordion type="multiple" className="rounded-xl border border-[var(--color-gold-light)] px-4">
         {copy.steps.map((step, index) => {
           const Icon = STEP_ICONS[index] ?? Stethoscope;
           return (
-            <article key={step.title} className="rounded-xl bg-[var(--color-gold-pale)] p-4">
-              <Icon size={20} className="text-[var(--color-gold-primary)]" aria-hidden="true" />
-              <p className="mt-3 text-xs font-semibold text-[var(--color-star-text-mid)]">{step.icon}</p>
-              <h3 className="mt-1 text-base font-semibold text-[var(--color-star-text)]">{step.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-[var(--color-star-text-mid)]">{step.body}</p>
-            </article>
+            <AccordionItem key={step.title} value={`pain-stage-${index + 1}`}>
+              <AccordionTrigger className="py-4 no-underline hover:no-underline">
+                <span className="flex items-center gap-3 text-left">
+                  <Icon size={20} className="shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />
+                  <span><span className="block text-sm font-semibold text-[var(--color-star-text)]">{step.title}</span><span className="mt-0.5 block text-xs font-medium text-[var(--color-star-text-mid)]">{step.icon}</span></span>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pl-8 text-[var(--color-star-text-mid)]"><p className="leading-6">{step.body}</p></AccordionContent>
+            </AccordionItem>
           );
         })}
-      </div>
+        <AccordionItem value="pain-experience">
+          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</span></AccordionTrigger>
+          <AccordionContent className="text-[var(--color-star-text-mid)]"><p className="leading-7">{copy.experienceBody}</p></AccordionContent>
+        </AccordionItem>
 
-      {mode === "full" && (
-        <div className="mt-6 space-y-6">
-          <section>
-            <h2 className="text-lg font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</h2>
-            <p className="mt-2 text-sm leading-7 text-[var(--color-star-text-mid)]">{copy.experienceBody}</p>
-          </section>
+        <AccordionItem value="pain-monitoring">
+          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><Activity size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.monitoringHeading}</span></AccordionTrigger>
+          <AccordionContent className="text-[var(--color-star-text-mid)]"><p className="leading-6">{copy.monitoringIntro}</p><ul className="mt-4 grid gap-2 sm:grid-cols-2">{copy.monitoringPoints.map((point) => <li key={point} className="flex gap-2 leading-6"><ClipboardCheck size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />{point}</li>)}</ul></AccordionContent>
+        </AccordionItem>
 
-          <section className="rounded-xl border border-[var(--color-gold-light)] p-4">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-star-text)]"><Activity size={20} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.monitoringHeading}</h2>
-            <p className="mt-2 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.monitoringIntro}</p>
-            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-              {copy.monitoringPoints.map((point) => <li key={point} className="flex gap-2 text-sm leading-6 text-[var(--color-star-text-mid)]"><ClipboardCheck size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />{point}</li>)}
-            </ul>
-          </section>
+        <AccordionItem value="pain-guidance">
+          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</span></AccordionTrigger>
+          <AccordionContent className="text-[var(--color-star-text-mid)]"><div className="grid gap-3 sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div></AccordionContent>
+        </AccordionItem>
 
-          <section>
-            <h2 className="text-lg font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</h2>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              {[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => (
-                <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4">
-                  <h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--color-star-text-mid)]">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h2>
-            <dl className="mt-3 divide-y divide-[var(--color-gold-light)] rounded-xl border border-[var(--color-gold-light)] px-4">
-              {copy.faqs.map((faq) => <div key={faq.question} className="py-4"><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-2 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</dd></div>)}
-            </dl>
-          </section>
-        </div>
-      )}
-
-      <p className="mt-6 border-t border-[var(--color-gold-light)] pt-4 text-center text-sm font-medium text-[var(--color-star-text)]">{copy.closing}</p>
+        <AccordionItem value="pain-faq">
+          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</span></AccordionTrigger>
+          <AccordionContent className="text-[var(--color-star-text-mid)]"><dl className="space-y-4">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl></AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </section>
   );
 }

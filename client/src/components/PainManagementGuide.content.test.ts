@@ -54,6 +54,19 @@ describe("PainManagementGuide content and placement", () => {
     });
   });
 
+  it("puts the fear-aware core message first and keeps every detail behind a native accordion trigger", () => {
+    expect(guideSource).toContain("heroTitle");
+    expect(guideSource).toContain("통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다");
+    expect(guideSource).toContain("<Accordion type=\"multiple\"");
+    expect(guideSource).toContain("AccordionTrigger");
+    expect(guideSource).toContain("AccordionContent");
+    expect(guideSource).toContain("pain-stage-");
+    expect(guideSource).toContain("pain-experience");
+    expect(guideSource).toContain("pain-monitoring");
+    expect(guideSource).toContain("pain-guidance");
+    expect(guideSource).toContain("pain-faq");
+  });
+
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');

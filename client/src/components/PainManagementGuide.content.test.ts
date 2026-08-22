@@ -91,6 +91,21 @@ describe("PainManagementGuide content and placement", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints).toHaveLength(3);
   });
 
+  it("makes each visual care checkpoint a localized native disclosure with individual-condition guidance", () => {
+    expect(guideSource).toContain("type Checkpoint");
+    expect(guideSource).toContain("checkpoint-detail-");
+    expect(guideSource).toContain("checkpoint.label");
+    expect(guideSource).toContain("checkpoint.detail");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[0].label).toBe("사전 확인");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[0].detail).toContain("건강상태·복용약·알레르기·과거력");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[1].detail).toContain("Kohden SpO₂ 모니터");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.careCheckpoints[2].detail).toContain("운전·중요 의사결정 제한");
+    Object.values(PAIN_MANAGEMENT_CONTENT).forEach(({ careCheckpoints }) => {
+      expect(careCheckpoints).toHaveLength(3);
+      careCheckpoints.forEach((checkpoint) => expect(checkpoint.detail.length).toBeGreaterThan(30));
+    });
+  });
+
   it("uses the concise pain-management label for the category while preserving the three-step guide title", () => {
     expect(guideSource).toContain("categoryLabel");
     expect(PAIN_MANAGEMENT_CONTENT.ko.categoryLabel).toBe("통증관리");

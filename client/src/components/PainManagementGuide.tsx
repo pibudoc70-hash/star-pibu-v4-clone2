@@ -6,6 +6,7 @@ export type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 type Step = { icon: string; title: string; body: string };
 type Faq = { question: string; answer: string };
+type Checkpoint = { label: string; detail: string };
 type GuideCopy = {
   eyebrow: string;
   heroTitle: string;
@@ -14,7 +15,7 @@ type GuideCopy = {
   intro: string;
   visualHeading: string;
   visualCaption: string;
-  careCheckpoints: string[];
+  careCheckpoints: Checkpoint[];
   steps: Step[];
   experienceHeading: string;
   experienceBody: string;
@@ -40,7 +41,11 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "통증에 대한 걱정까지 고려하는 것이 시술 계획의 중요한 시작입니다. 스타피부과는 시술 특성과 환자 상태를 함께 살펴 통증관리 방법을 단계적으로 검토합니다.",
     visualHeading: "한눈에 보는 개인별 통증관리 3단계",
     visualCaption: "시술 특성과 개인 상태를 확인한 뒤, 필요한 단계만 의료진이 검토합니다.",
-    careCheckpoints: ["사전 확인", "시술 중 관찰", "회복 안내"],
+    careCheckpoints: [
+      { label: "사전 확인", detail: "건강상태·복용약·알레르기·과거력을 확인하고, 의료진과 시술·통증관리 계획을 검토합니다. 확인 범위와 안내는 개인 상태에 따라 달라질 수 있습니다." },
+      { label: "시술 중 관찰", detail: "Kohden SpO₂ 모니터와 혈압측정기를 바탕으로 환자 상태를 지속적으로 살핍니다. 관찰 방법과 범위는 시술 및 개인 상태에 따라 달라질 수 있습니다." },
+      { label: "회복 안내", detail: "회복 단계에서 상태와 의료진 안내를 확인하고, 보호자와의 귀가 여부를 검토합니다. 운전·중요 의사결정 제한 등 안내는 개인 상태에 따라 달라질 수 있습니다." },
+    ],
     steps: [
       { icon: "도포로 부담 완화", title: "① 연고마취", body: "시술 부위와 방법을 고려해 연고마취 적용 여부를 검토합니다. 적용 시간과 범위는 개인 상태와 의료진 안내에 따라 달라질 수 있습니다." },
       { icon: "필요 부위 진통", title: "② 주사 진통", body: "통증 조절이 더 필요한 부위에는 주사 진통 방법을 검토할 수 있습니다. 적용 여부와 방법은 시술 계획 및 개인 상태를 바탕으로 의료진이 안내합니다." },
@@ -73,7 +78,11 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "Considering concerns about discomfort is an important first step in planning a procedure. Star Dermatology reviews the procedure and each patient’s condition to consider pain-management options in stages.",
     visualHeading: "Individualized pain-management path at a glance",
     visualCaption: "After reviewing the procedure and individual condition, the medical team considers only the steps that may be needed.",
-    careCheckpoints: ["Pre-procedure review", "Observation during care", "Recovery guidance"],
+    careCheckpoints: [
+      { label: "Pre-procedure review", detail: "Health status, medications, allergies, and medical history are reviewed with the medical team alongside the procedure and pain-management plan. The review and guidance may vary by individual condition." },
+      { label: "Observation during care", detail: "A Kohden SpO₂ monitor and blood-pressure monitor support continuous observation of the patient’s condition. The method and scope of observation may vary by procedure and individual condition." },
+      { label: "Recovery guidance", detail: "During recovery, the patient’s condition and medical guidance are reviewed, including whether discharge with a guardian is appropriate. Limits on driving and important decision-making may vary by individual condition." },
+    ],
     steps: [
       { icon: "Topical support", title: "1. Topical anesthetic", body: "The care team reviews whether topical anesthetic is appropriate for the treatment area and procedure. The timing and coverage may vary according to individual condition and medical guidance." },
       { icon: "Local pain control", title: "2. Injectable pain control", body: "For areas that may require additional pain control, an injectable option may be considered. The approach is explained by the medical team based on the treatment plan and individual condition." },
@@ -106,7 +115,11 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "痛みに対するご不安まで考えることが、施術計画の大切な出発点です。スター皮膚科では、施術の特性と患者様の状態を確認しながら、痛み管理の方法を段階的に検討します。",
     visualHeading: "ひと目でわかる個別の痛み管理の流れ",
     visualCaption: "施術の特性と個別の状態を確認し、必要な段階だけを医療スタッフが検討します。",
-    careCheckpoints: ["施術前確認", "施術中の観察", "回復のご案内"],
+    careCheckpoints: [
+      { label: "施術前確認", detail: "健康状態・服用薬・アレルギー・既往歴を確認し、医療スタッフと施術・痛み管理の計画を検討します。確認範囲とご案内は個別の状態により異なる場合があります。" },
+      { label: "施術中の観察", detail: "Kohden SpO₂モニターと血圧計をもとに、患者様の状態を継続して確認します。観察方法と範囲は、施術および個別の状態により異なる場合があります。" },
+      { label: "回復のご案内", detail: "回復段階で状態と医療スタッフの案内を確認し、保護者との帰宅が適切かを検討します。運転や重要な意思決定の制限などは個別の状態により異なる場合があります。" },
+    ],
     steps: [
       { icon: "塗布による配慮", title: "1. 麻酔クリーム", body: "施術部位と方法を考慮し、麻酔クリームの適用を検討します。適用時間と範囲は、個別の状態と医療スタッフの案内によって異なる場合があります。" },
       { icon: "必要部位の鎮痛", title: "2. 注射による鎮痛", body: "より痛みの調整が必要な部位には、注射による鎮痛を検討することがあります。適用の可否と方法は、施術計画と個別の状態をもとに医療スタッフがご案内します。" },
@@ -139,7 +152,11 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "将对不适的担忧纳入考虑，是制定治疗计划的重要起点。STAR皮肤科会结合治疗特点与患者状态，分阶段评估疼痛管理方式。",
     visualHeading: "一目了然的个性化疼痛管理流程",
     visualCaption: "确认治疗特点和个人状态后，医护人员仅评估可能需要的阶段。",
-    careCheckpoints: ["治疗前确认", "治疗中观察", "恢复说明"],
+    careCheckpoints: [
+      { label: "治疗前确认", detail: "会确认健康状态、用药、过敏与既往病史，并与医护人员评估治疗及疼痛管理计划。确认范围与说明可能因个人状态而有所不同。" },
+      { label: "治疗中观察", detail: "会使用Kohden SpO₂监测仪与血压计持续观察患者状态。观察方式与范围可能因治疗及个人状态而有所不同。" },
+      { label: "恢复说明", detail: "恢复阶段会确认状态与医护人员说明，并评估是否适合与陪护人员一同回家。驾驶及重要决策限制等说明可能因个人状态而有所不同。" },
+    ],
     steps: [
       { icon: "表麻舒缓", title: "1. 表面麻醉膏", body: "会根据治疗部位和方式评估是否使用表面麻醉膏。使用时间和范围可能因个人状态及医护人员说明而有所不同。" },
       { icon: "局部镇痛", title: "2. 注射镇痛", body: "对于可能需要进一步疼痛控制的部位，可评估注射镇痛方式。是否适用及具体方法将由医护人员依据治疗计划和个人状态说明。" },
@@ -172,7 +189,11 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "將對不適的擔憂納入考量，是規劃療程的重要起點。STAR皮膚科會綜合療程特性與患者狀態，分階段評估疼痛管理方式。",
     visualHeading: "一目瞭然的個人化疼痛管理流程",
     visualCaption: "確認療程特性與個人狀態後，醫護人員僅評估可能需要的階段。",
-    careCheckpoints: ["療程前確認", "療程中觀察", "恢復說明"],
+    careCheckpoints: [
+      { label: "療程前確認", detail: "會確認健康狀態、用藥、過敏與既往病史，並與醫護人員評估療程及疼痛管理計畫。確認範圍與說明可能因個人狀態而有所不同。" },
+      { label: "療程中觀察", detail: "會使用Kohden SpO₂監測儀與血壓計持續觀察患者狀態。觀察方式與範圍可能因療程及個人狀態而有所不同。" },
+      { label: "恢復說明", detail: "恢復階段會確認狀態與醫護人員說明，並評估是否適合與陪同者一同返家。駕駛及重要決策限制等說明可能因個人狀態而有所不同。" },
+    ],
     steps: [
       { icon: "表麻舒緩", title: "1. 表面麻醉膏", body: "會依療程部位與方式評估是否使用表面麻醉膏。使用時間與範圍可能因個人狀態及醫護人員說明而有所不同。" },
       { icon: "局部鎮痛", title: "2. 注射鎮痛", body: "對於可能需要進一步疼痛控制的部位，可評估注射鎮痛方式。是否適用及具體方法將由醫護人員依療程計畫與個人狀態說明。" },
@@ -240,7 +261,18 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </ol>
         <ul className="mt-3 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-3 sm:mt-4 sm:gap-2 sm:pt-4">
-          {copy.careCheckpoints.map((checkpoint) => <li key={checkpoint} className="flex flex-col items-center justify-center gap-1 text-center text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:flex-row sm:gap-1.5 sm:text-left sm:text-xs"><ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{checkpoint}</li>)}
+          {copy.careCheckpoints.map((checkpoint, index) => (
+            <li key={checkpoint.label}>
+              <details data-testid={`checkpoint-detail-${index + 1}`} className="pain-management-disclosure group h-full rounded-md bg-white/60 px-1.5 text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:px-2 sm:text-xs">
+                <summary className="flex min-h-11 cursor-pointer list-none flex-col items-center justify-center gap-1 py-1.5 text-center outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset sm:flex-row sm:gap-1.5 sm:text-left">
+                  <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
+                  <span>{checkpoint.label}</span>
+                  <ChevronDown size={13} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <div className="pb-2 text-left text-[11px] font-normal leading-4 text-[var(--color-star-text-mid)] sm:text-xs sm:leading-5"><p>{checkpoint.detail}</p></div>
+              </details>
+            </li>
+          ))}
         </ul>
       </section>
 

@@ -1,6 +1,5 @@
-import { Activity, ClipboardCheck, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
+import { Activity, ChevronDown, ClipboardCheck, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import type { Lang } from "@/lib/i18n.types";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const PAIN_MANAGEMENT_CATEGORY_ID = "pain-management";
 export type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -199,41 +198,42 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
-      <Accordion type="multiple" className="rounded-xl border border-[var(--color-gold-light)] px-4">
+      <div className="rounded-xl border border-[var(--color-gold-light)] px-4">
         {copy.steps.map((step, index) => {
           const Icon = STEP_ICONS[index] ?? Stethoscope;
           return (
-            <AccordionItem key={step.title} value={`pain-stage-${index + 1}`}>
-              <AccordionTrigger className="py-4 no-underline hover:no-underline">
+            <details key={step.title} data-testid={`pain-stage-${index + 1}`} className="group border-b last:border-b-0">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2">
                 <span className="flex items-center gap-3 text-left">
                   <Icon size={20} className="shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />
                   <span><span className="block text-sm font-semibold text-[var(--color-star-text)]">{step.title}</span><span className="mt-0.5 block text-xs font-medium text-[var(--color-star-text-mid)]">{step.icon}</span></span>
                 </span>
-              </AccordionTrigger>
-              <AccordionContent className="pl-8 text-[var(--color-star-text-mid)]"><p className="leading-6">{step.body}</p></AccordionContent>
-            </AccordionItem>
+                <ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="pb-4 pl-8 text-sm text-[var(--color-star-text-mid)]"><p className="leading-6">{step.body}</p></div>
+            </details>
           );
         })}
-        <AccordionItem value="pain-experience">
-          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</span></AccordionTrigger>
-          <AccordionContent className="text-[var(--color-star-text-mid)]"><p className="leading-7">{copy.experienceBody}</p></AccordionContent>
-        </AccordionItem>
+        <details data-testid="pain-experience" className="group border-b last:border-b-0">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <div className="pb-4 text-sm text-[var(--color-star-text-mid)]"><p className="leading-7">{copy.experienceBody}</p></div>
+        </details>
 
-        <AccordionItem value="pain-monitoring">
-          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><Activity size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.monitoringHeading}</span></AccordionTrigger>
-          <AccordionContent className="text-[var(--color-star-text-mid)]"><p className="leading-6">{copy.monitoringIntro}</p><ul className="mt-4 grid gap-2 sm:grid-cols-2">{copy.monitoringPoints.map((point) => <li key={point} className="flex gap-2 leading-6"><ClipboardCheck size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />{point}</li>)}</ul></AccordionContent>
-        </AccordionItem>
+        <details data-testid="pain-monitoring" className="group border-b last:border-b-0">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><Activity size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.monitoringHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <div className="pb-4 text-sm text-[var(--color-star-text-mid)]"><p className="leading-6">{copy.monitoringIntro}</p><ul className="mt-4 grid gap-2 sm:grid-cols-2">{copy.monitoringPoints.map((point) => <li key={point} className="flex gap-2 leading-6"><ClipboardCheck size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />{point}</li>)}</ul></div>
+        </details>
 
-        <AccordionItem value="pain-guidance">
-          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</span></AccordionTrigger>
-          <AccordionContent className="text-[var(--color-star-text-mid)]"><div className="grid gap-3 sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div></AccordionContent>
-        </AccordionItem>
+        <details data-testid="pain-guidance" className="group border-b last:border-b-0">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <div className="grid gap-3 pb-4 text-sm text-[var(--color-star-text-mid)] sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div>
+        </details>
 
-        <AccordionItem value="pain-faq">
-          <AccordionTrigger className="py-4 no-underline hover:no-underline"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</span></AccordionTrigger>
-          <AccordionContent className="text-[var(--color-star-text-mid)]"><dl className="space-y-4">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl></AccordionContent>
-        </AccordionItem>
-      </Accordion>
+        <details data-testid="pain-faq" className="group">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl>
+        </details>
+      </div>
     </section>
   );
 }

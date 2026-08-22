@@ -54,12 +54,13 @@ describe("PainManagementGuide content and placement", () => {
     });
   });
 
-  it("puts the fear-aware core message first and keeps every detail behind a native accordion trigger", () => {
+  it("puts the fear-aware core message first and keeps every detail behind native hook-free disclosure", () => {
     expect(guideSource).toContain("heroTitle");
     expect(guideSource).toContain("통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다");
-    expect(guideSource).toContain("<Accordion type=\"multiple\"");
-    expect(guideSource).toContain("AccordionTrigger");
-    expect(guideSource).toContain("AccordionContent");
+    expect(guideSource).not.toContain("@/components/ui/accordion");
+    expect(guideSource).not.toContain("AccordionCollectionProvider");
+    expect(guideSource).toContain("<details");
+    expect(guideSource).toContain("<summary");
     expect(guideSource).toContain("pain-stage-");
     expect(guideSource).toContain("pain-experience");
     expect(guideSource).toContain("pain-monitoring");

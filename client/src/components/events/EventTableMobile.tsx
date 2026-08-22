@@ -69,8 +69,8 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
       inert={!isOpen}
     >
       <div className="event-mobile-detail__content">
-        <section className="event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 pt-3 pb-5" aria-label={`${title} 상세`}>
-          <div className="mb-4">
+        <section className="event-mobile-detail__body border-t border-gray-100 bg-slate-50/95 px-5 pt-3 pb-5" aria-label={`${title} 상세`}>
+          <div className="mb-2">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>

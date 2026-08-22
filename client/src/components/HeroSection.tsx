@@ -32,7 +32,7 @@ import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
-import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
+import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_MOBILE_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
 import { HOME_SEO_META } from "@/lib/homeSeo";
 export { HERO_DELAYS } from "@/components/hero/constants";
 
@@ -213,11 +213,11 @@ function HeroSection() {
           {/* 로고 — 단일 렌더링 (68px) */}
           <div className="hero-mobile-logo-wrap">
             <OptimizedImage
-              src={HERO_LOGO_IMAGE}
+              src={HERO_MOBILE_LOGO_IMAGE}
               alt="스타피부과 로고"
               priority={true}
-              width={136}
-              height={136}
+              width={96}
+              height={96}
               className="hero-mobile-logo-img"
             />
           </div>

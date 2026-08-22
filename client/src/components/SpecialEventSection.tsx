@@ -14,6 +14,7 @@ import { useLocalizedEvent, type SpecialEvent } from "@/hooks/useLocalizedEvent"
 import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
+import PainManagementGuide from "@/components/PainManagementGuide";
 import { parseEventListError } from "@/lib/errorMessages";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useEventSkeletonTiming } from "@/hooks/useEventSkeletonTiming";
@@ -246,6 +247,9 @@ export default function SpecialEventSection() {
             )}
           </>
         )}
+        <div className="mt-10">
+          <PainManagementGuide lang={lang} />
+        </div>
       </div>
     </section>
   );

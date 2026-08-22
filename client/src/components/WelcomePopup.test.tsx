@@ -50,6 +50,7 @@ describe("WelcomePopup keyboard focus", () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
+    localStorage.clear();
     popupQueryResult = { data: [popupEvent], isLoading: false, error: null };
     window.requestAnimationFrame = ((callback: FrameRequestCallback) => {
       callback(0);
@@ -76,9 +77,8 @@ describe("WelcomePopup keyboard focus", () => {
 
   it("keeps Tab and Shift+Tab focus inside the dialog", () => {
     const dialog = renderVisiblePopup();
-    const buttons = within(dialog).getAllByRole("button");
-    const first = buttons[0]!;
-    const last = buttons[buttons.length - 1]!;
+    const first = within(dialog).getByRole("button", { name: "닫기" });
+    const last = within(dialog).getByRole("checkbox", { name: "오늘은 보지 않음" });
 
     last.focus();
     fireEvent.keyDown(document, { key: "Tab" });
@@ -102,6 +102,25 @@ describe("WelcomePopup keyboard focus", () => {
     });
 
     expect(document.activeElement).toBe(opener);
+  });
+
+  it("offers a close button and today-hide checkbox that persists until local midnight", () => {
+    vi.setSystemTime(new Date("2026-08-22T14:30:00"));
+    const dialog = renderVisiblePopup();
+    const todayHide = within(dialog).getByRole("checkbox", { name: "오늘은 보지 않음" });
+
+    expect(todayHide).not.toBeChecked();
+    fireEvent.click(todayHide);
+    expect(todayHide).toBeChecked();
+    fireEvent.click(within(dialog).getByRole("button", { name: "닫기" }));
+    act(() => {
+      vi.advanceTimersByTime(260);
+    });
+
+    const expiry = new Date(localStorage.getItem("star-popup-v2-dismissed")!);
+    expect(expiry.getHours()).toBe(0);
+    expect(expiry.getMinutes()).toBe(0);
+    expect(expiry.getSeconds()).toBe(0);
   });
 
   it("opens configured popup URLs with an isolated new-window policy", () => {

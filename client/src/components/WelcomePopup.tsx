@@ -33,6 +33,12 @@ function getSafePopupClickUrl(value: string): string | null {
   }
 }
 
+function getNextLocalMidnight() {
+  const expiry = new Date();
+  expiry.setHours(24, 0, 0, 0);
+  return expiry;
+}
+
 export default function WelcomePopup() {
   const { lang } = useLang();
   const [visible, setVisible] = useState(false);
@@ -90,9 +96,7 @@ export default function WelcomePopup() {
 
   const dismissToday = () =>
     triggerClose(() => {
-      const expiry = new Date();
-      expiry.setDate(expiry.getDate() + 1);
-      localStorage.setItem("star-popup-v2-dismissed", expiry.toISOString());
+      localStorage.setItem("star-popup-v2-dismissed", getNextLocalMidnight().toISOString());
     });
 
   useEffect(() => {
@@ -195,6 +199,9 @@ interface PopupProps {
 }
 
 function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
+  const [hideToday, setHideToday] = useState(false);
+  const handleClose = () => (hideToday ? dismissToday() : dismiss());
+
   return (
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
@@ -204,7 +211,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label="팝업 닫기"
-        onClick={dismiss}
+        onClick={handleClose}
       />
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
@@ -221,6 +228,9 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           willChange: "transform",
         }}
       >
+        <button type="button" onClick={handleClose} className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-full bg-white/95 text-[var(--color-star-text)] shadow-md transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
+          <X size={18} aria-hidden="true" />
+        </button>
         {/* 이미지 */}
         <div className="flex-1 flex items-center justify-center overflow-hidden relative">
           <button
@@ -238,10 +248,11 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           </button>
         </div>
 
-        {/* 하단 버튼 */}
-        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0 border-t border-gray-200">
-          <button type="button" onClick={dismissToday} className="text-xs text-gray-500 hover:text-gray-700">오늘 보지 않기</button>
-          <button type="button" onClick={dismiss} className="text-xs text-gray-500 hover:text-gray-700">닫기</button>
+        <div className="flex items-center px-5 py-3 flex-shrink-0 border-t border-gray-200">
+          <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 hover:text-gray-800">
+            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-4 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
+            오늘은 보지 않음
+          </label>
         </div>
       </div>
     </div>
@@ -250,13 +261,16 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
 function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
+  const [hideToday, setHideToday] = useState(false);
+  const handleClose = () => (hideToday ? dismissToday() : dismiss());
+
   return (
     <div className={`popup-overlay${closing ? " closing" : ""}`}>
       <button
         type="button"
         className="absolute inset-0 cursor-default"
         aria-label="팝업 닫기"
-        onClick={dismiss}
+        onClick={handleClose}
       />
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
@@ -275,7 +289,7 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
       >
         {/* 닫기 버튼 */}
         <div className="absolute top-4 right-4 z-10">
-          <button type="button" onClick={dismiss} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all" aria-label="닫기">
+          <button type="button" onClick={handleClose} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
             <X size={18} className="text-gray-600" />
           </button>
         </div>
@@ -297,10 +311,11 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
           </button>
         </div>
 
-        {/* 하단 버튼 */}
-        <div className="flex items-center justify-between px-6 py-4 flex-shrink-0 border-t border-gray-200">
-          <button type="button" onClick={dismissToday} className="text-xs text-gray-500 hover:text-gray-700 transition-colors">오늘 보지 않기</button>
-          <button type="button" onClick={dismiss} className="text-xs text-gray-500 hover:text-gray-700 transition-colors">닫기</button>
+        <div className="flex items-center px-6 py-4 flex-shrink-0 border-t border-gray-200">
+          <label className="flex cursor-pointer items-center gap-2 text-xs font-medium text-gray-600 transition-colors hover:text-gray-800">
+            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-4 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
+            오늘은 보지 않음
+          </label>
         </div>
       </div>
     </div>

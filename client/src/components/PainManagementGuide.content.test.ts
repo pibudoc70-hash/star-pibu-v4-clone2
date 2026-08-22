@@ -18,6 +18,11 @@ const eventSectionSource = readFileSync(
   "utf8",
 );
 
+const globalCssSource = readFileSync(
+  resolve(process.cwd(), "client/src/index.css"),
+  "utf8",
+);
+
 describe("PainManagementGuide content and placement", () => {
   it("keeps the approved three-stage approach and makes sedation conditional on medical evaluation", () => {
     expect(guideSource).toContain("연고마취");
@@ -66,6 +71,14 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("pain-monitoring");
     expect(guideSource).toContain("pain-guidance");
     expect(guideSource).toContain("pain-faq");
+  });
+
+  it("animates native disclosure content while respecting reduced-motion preferences", () => {
+    expect(guideSource).toContain("pain-management-disclosure");
+    expect(globalCssSource).toContain(".pain-management-disclosure::details-content");
+    expect(globalCssSource).toContain(".pain-management-disclosure[open]::details-content");
+    expect(globalCssSource).toContain("interpolate-size: allow-keywords");
+    expect(globalCssSource).toContain("@media (prefers-reduced-motion: reduce)");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {

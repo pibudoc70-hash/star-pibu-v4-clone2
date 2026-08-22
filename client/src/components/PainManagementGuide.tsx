@@ -202,7 +202,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         {copy.steps.map((step, index) => {
           const Icon = STEP_ICONS[index] ?? Stethoscope;
           return (
-            <details key={step.title} data-testid={`pain-stage-${index + 1}`} className="group border-b last:border-b-0">
+            <details key={step.title} data-testid={`pain-stage-${index + 1}`} className="pain-management-disclosure group border-b last:border-b-0">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2">
                 <span className="flex items-center gap-3 text-left">
                   <Icon size={20} className="shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />
@@ -214,22 +214,22 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
             </details>
           );
         })}
-        <details data-testid="pain-experience" className="group border-b last:border-b-0">
+        <details data-testid="pain-experience" className="pain-management-disclosure group border-b last:border-b-0">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.experienceHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="pb-4 text-sm text-[var(--color-star-text-mid)]"><p className="leading-7">{copy.experienceBody}</p></div>
         </details>
 
-        <details data-testid="pain-monitoring" className="group border-b last:border-b-0">
+        <details data-testid="pain-monitoring" className="pain-management-disclosure group border-b last:border-b-0">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><Activity size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.monitoringHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="pb-4 text-sm text-[var(--color-star-text-mid)]"><p className="leading-6">{copy.monitoringIntro}</p><ul className="mt-4 grid gap-2 sm:grid-cols-2">{copy.monitoringPoints.map((point) => <li key={point} className="flex gap-2 leading-6"><ClipboardCheck size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />{point}</li>)}</ul></div>
         </details>
 
-        <details data-testid="pain-guidance" className="group border-b last:border-b-0">
+        <details data-testid="pain-guidance" className="pain-management-disclosure group border-b last:border-b-0">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="grid gap-3 pb-4 text-sm text-[var(--color-star-text-mid)] sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div>
         </details>
 
-        <details data-testid="pain-faq" className="group">
+        <details data-testid="pain-faq" className="pain-management-disclosure group">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl>
         </details>

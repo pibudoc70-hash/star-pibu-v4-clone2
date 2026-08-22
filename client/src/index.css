@@ -5698,3 +5698,19 @@ body.font-lang-zh .hero-stat-label {
 .dr-page-header-eyebrow { color: #b89a5a; }
 .dr-page-header-title { color: #1a1a1a; }
 .dr-page-header-tagline { color: #6b5c3e; }
+
+/* 통증관리 native disclosure: React hook 없이 details content의 open/close를 부드럽게 전환한다. */
+:root { interpolate-size: allow-keywords; }
+.pain-management-disclosure::details-content {
+  block-size: 0;
+  opacity: 0;
+  overflow: clip;
+  transition: block-size 220ms cubic-bezier(0.16, 1, 0.3, 1), opacity 180ms ease-out, content-visibility 220ms allow-discrete;
+}
+.pain-management-disclosure[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pain-management-disclosure::details-content { transition: none; }
+}

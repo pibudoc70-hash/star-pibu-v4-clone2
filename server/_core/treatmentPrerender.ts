@@ -241,7 +241,7 @@ function parsePath(p: string): { lang: Lang; slug: string } | null {
  * 치환 대상 6개 + twitter 2개 = 8개 태그.
  * data-rh="true" 를 붙여 react-helmet-async 가 하이드레이션 시 재교체하도록 한다.
  */
-function injectMeta(
+export function injectTreatmentMeta(
   html: string,
   t: TreatmentSeoRecord,
   lang: Lang,
@@ -266,58 +266,58 @@ function injectMeta(
       `<title data-rh="true">${et}</title>`
     )
     .replace(
-      /<meta\s+name="description"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bname="description")[^>]*\/?>/i,
       `<meta data-rh="true" name="description" content="${ed}" />`
     )
     .replace(
-      /<meta\s+name="keywords"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bname="keywords")[^>]*\/?>/i,
       `<meta data-rh="true" name="keywords" content="${ek}" />`
     )
     .replace(
-      /<link\s+rel="canonical"[^>]*\/?>/i,
+      /<link\b(?=[^>]*\brel="canonical")[^>]*\/?>/i,
       `<link data-rh="true" rel="canonical" href="${canonical}" />`
     )
     .replace(
-      /<meta\s+property="og:title"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:title")[^>]*\/?>/i,
       `<meta data-rh="true" property="og:title" content="${et}" />`
     )
     .replace(
-      /<meta\s+property="og:description"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:description")[^>]*\/?>/i,
       `<meta data-rh="true" property="og:description" content="${ed}" />`
     )
     .replace(
-      /<meta\s+property="og:url"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:url")[^>]*\/?>/i,
       `<meta data-rh="true" property="og:url" content="${canonical}" />`
     )
     .replace(
-      /<meta\s+name="twitter:title"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bname="twitter:title")[^>]*\/?>/i,
       `<meta data-rh="true" name="twitter:title" content="${et}" />`
     )
     .replace(
-      /<meta\s+name="twitter:description"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bname="twitter:description")[^>]*\/?>/i,
       `<meta data-rh="true" name="twitter:description" content="${ed}" />`
     )
     // [Step61b-B] 카카오톡 공유 카드. 환자들이 카톡으로 링크를 많이 공유하므로
     // 홈 제목이 아니라 시술 제목이 나와야 한다.
     .replace(
-      /<meta\s+property="kakao:title"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="kakao:title")[^>]*\/?>/i,
       `<meta data-rh="true" property="kakao:title" content="${et}" />`
     )
     .replace(
-      /<meta\s+property="kakao:description"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="kakao:description")[^>]*\/?>/i,
       `<meta data-rh="true" property="kakao:description" content="${ed}" />`
     )
     // [Step61b-B] og:image / kakao:image / twitter:image — 시술 이미지가 있으면 절대 URL 로 변환 후 치환
     // t.image 는 /api/storage/... 형태의 상대경로이므로 BASE_URL 을 붙인다.
     // 이미지가 없으면 치환하지 않아 홈 이미지가 그대로 유지된다.
     .replace(
-      /<meta\s+property="og:image"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:image")[^>]*\/?>/i,
       t.image
         ? `<meta data-rh="true" property="og:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
         : "$&"
     )
     .replace(
-      /<meta\s+property="kakao:image"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="kakao:image")[^>]*\/?>/i,
       t.image
         ? `<meta data-rh="true" property="kakao:image" content="${t.image.startsWith('http') ? t.image : BASE_URL + t.image}" />`
         : "$&"
@@ -328,7 +328,7 @@ function injectMeta(
     // 따라서 A-3 에서 width/height 는 제거한다 (잘못된 값보다 없는 편이 낙다).
     // og:image / kakao:image / twitter:image 는 반드시 PNG/JPEG 유지 (카카오톡·페이스북 WebP 지원 불안정).
     .replace(
-      /<meta\s+property="og:image:type"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:image:type")[^>]*\/?>/i,
       t.image
         ? (() => {
             const imgType = t.image.endsWith(".webp") ? "image/webp"
@@ -340,7 +340,7 @@ function injectMeta(
         : "$&"
     )
     .replace(
-      /<meta\s+property="og:image:alt"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bproperty="og:image:alt")[^>]*\/?>/i,
       t.image
         ? (() => {
             // [Step68-B2] seoTitle 의 " | " 앞부분만 사용해 시술별 alt 생성
@@ -353,7 +353,7 @@ function injectMeta(
     // [Step68-B3] twitter:image:alt 동일 값으로 설정 (인덱스.html에 없으므로 삽입 방식 사용)
     // twitter:image 태그 내용을 twitter:image + twitter:image:alt 로 확장
     .replace(
-      /<meta\s+name="twitter:image"[^>]*\/?>/i,
+      /<meta\b(?=[^>]*\bname="twitter:image")[^>]*\/?>/i,
       t.image
         ? (() => {
             const rawTitle = pick(t.seoTitle, lang);
@@ -368,8 +368,8 @@ function injectMeta(
     )
     // [Step62-A3] 실제 크기를 알 수 없으므로 잘못된 홈 배경(1200×630) 값을 제거한다.
     // 플랫폼이 이미지 파일에서 직접 크기를 읽는다. 시술 페이지 응답에서만 제거되며 홈 index.html 은 건드리지 않는다.
-    .replace(/<meta\s+property="og:image:width"[^>]*\/?>/i, t.image ? "" : "$&")
-    .replace(/<meta\s+property="og:image:height"[^>]*\/?>/i, t.image ? "" : "$&")
+    .replace(/<meta\b(?=[^>]*\bproperty="og:image:width")[^>]*\/?>/i, t.image ? "" : "$&")
+    .replace(/<meta\b(?=[^>]*\bproperty="og:image:height")[^>]*\/?>/i, t.image ? "" : "$&")
     // [Step61b-C] hreflang 을 시술 페이지 기준으로 재작성.
     // 기존 5줄(ko/en/ja/zh/x-default)을 통째로 치환한다.
     .replace(
@@ -539,7 +539,7 @@ export function registerTreatmentPrerender(app: Express): void {
             ? `${BASE_URL}/treatments/${parsed.slug}`
             : `${BASE_URL}/${parsed.lang === "zh-TW" ? "zh-tw" : parsed.lang}/treatments/${parsed.slug}`;
 
-        let out = injectMeta(html, t, parsed.lang, parsed.slug);
+        let out = injectTreatmentMeta(html, t, parsed.lang, parsed.slug);
         out = injectJsonLd(out, t, parsed.lang, pageUrl);
         out = out.replace(
           '<div id="root"></div>',

@@ -115,7 +115,7 @@ describe("PainManagementGuide content and placement", () => {
 
   it("uses mobile-specific spacing and typography so the visual explainer stays balanced on narrow screens", () => {
     expect(guideSource).toContain("p-4 sm:p-7");
-    expect(guideSource).toContain("text-[1.7rem]");
+    expect(guideSource).toContain("text-[1.65rem]");
     expect(guideSource).toContain("min-h-[88px]");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[10px]");
@@ -138,6 +138,15 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("CircleHelp");
     expect(guideSource).toContain("data-testid=\"pain-guidance\"");
     expect(guideSource).toContain("data-testid=\"pain-faq\"");
+  });
+
+  it("balances the mobile core heading and gives each FAQ question a semantic icon with stronger heading contrast", () => {
+    expect(guideSource).toContain("max-w-[18ch] break-keep text-balance");
+    expect(guideSource).toContain("leading-[1.42]");
+    expect(guideSource).toContain("FAQ_ICONS");
+    expect(guideSource).toContain("const Icon = FAQ_ICONS[index]");
+    expect(guideSource).toContain("<Icon size={17}");
+    expect(guideSource).toContain("text-[var(--color-gold-deep)]");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {

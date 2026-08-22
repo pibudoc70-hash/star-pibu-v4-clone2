@@ -221,6 +221,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
 };
 
 const STEP_ICONS = [Stethoscope, HeartPulse, ShieldCheck];
+const FAQ_ICONS = [Moon, Stethoscope, Activity, ClipboardCheck];
 
 function resolveLang(lang: Lang): PainManagementLang {
   return lang === "ko" || lang === "en" || lang === "ja" || lang === "zh" || lang === "zh-TW" ? lang : "ko";
@@ -239,7 +240,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
     <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7" aria-labelledby={headingId}>
       <div className="mb-4 text-center sm:mb-5 sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-        <h2 id={headingId} className="mt-3 text-[1.7rem] font-semibold leading-[1.35] tracking-tight text-[var(--color-star-text)] sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
+        <h2 id={headingId} className="mx-auto mt-3 max-w-[18ch] break-keep text-balance text-[1.65rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:mx-0 sm:max-w-none sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
         <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
       </div>
 
@@ -303,13 +304,13 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         </details>
 
         <details data-testid="pain-guidance" className="pain-management-disclosure group border-b last:border-b-0">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><FileText size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><FileText size={19} className="text-[var(--color-gold-deep)] drop-shadow-sm" aria-hidden="true" />{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="grid gap-3 pb-4 text-sm text-[var(--color-star-text-mid)] sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div>
         </details>
 
         <details data-testid="pain-faq" className="pain-management-disclosure group">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><CircleHelp size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
-          <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><CircleHelp size={19} className="text-[var(--color-gold-deep)] drop-shadow-sm" aria-hidden="true" />{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq, index) => { const Icon = FAQ_ICONS[index] ?? CircleHelp; return <div key={faq.question}><dt className="flex items-start gap-2 font-semibold text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" /><span>{faq.question}</span></dt><dd className="mt-1 leading-6 sm:pl-6">{faq.answer}</dd></div>; })}</dl>
         </details>
       </div>
     </section>

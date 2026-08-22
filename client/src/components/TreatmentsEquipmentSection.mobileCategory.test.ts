@@ -12,6 +12,11 @@ const tabListSource = readFileSync(
   "utf8",
 );
 
+const stylesSource = readFileSync(
+  resolve(process.cwd(), "client/src/index.css"),
+  "utf8",
+);
+
 describe("TreatmentsEquipmentSection mobile category detail", () => {
   it("keeps mobile category content inline with a row-local expand and close contract", () => {
     expect(sectionSource).toContain("mobileExpandedId");
@@ -26,10 +31,10 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabListSource).toContain("col-span-2");
   });
 
-  it("returns the mobile viewport to the category list after close", () => {
-    expect(sectionSource).toContain("scrollIntoView");
+  it("returns the mobile viewport to the precisely centered category list after close", () => {
+    expect(sectionSource).toContain("window.visualViewport?.height");
+    expect(sectionSource).toContain("window.scrollTo");
     expect(sectionSource).toContain('behavior: "smooth"');
-    expect(sectionSource).toContain('block: "center"');
     expect(tabListSource).toContain('id="treatment-mobile-category-list"');
   });
 
@@ -45,5 +50,20 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(sectionSource).toContain("filteredTreatments.map((item, i) => (");
     expect(sectionSource).not.toContain('aria-controls="treatments-mobile-grid"');
     expect(sectionSource).toContain("mobile-category-detail-close-footer");
+  });
+
+  it("uses the existing localized collapse label for both mobile close controls", () => {
+    expect(tabListSource).toContain("mobileCloseLabel");
+    expect(tabListSource).toContain("{mobileCloseLabel}");
+    expect(sectionSource).toContain("mobileCloseLabel={tr.collapseBtn}");
+  });
+
+  it("keeps detail mounted through an accessible fade-out lifecycle before returning to the grid", () => {
+    expect(sectionSource).toContain("mobileClosingId");
+    expect(tabListSource).toContain("mobile-category-detail-shell");
+    expect(tabListSource).toContain('data-state={isClosing ? "closing" : "open"}');
+    expect(stylesSource).toContain(".mobile-category-detail-shell");
+    expect(stylesSource).toContain(".mobile-category-detail-shell[data-state=\"closing\"]");
+    expect(stylesSource).toContain("prefers-reduced-motion: reduce");
   });
 });

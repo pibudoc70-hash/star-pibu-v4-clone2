@@ -39,6 +39,7 @@ const TABLET_SHOW  = 4;
 const DESKTOP_SHOW = 6;
 
 const SCROLL_COMPLETE_FALLBACK_MS = 500;
+const MOBILE_CATEGORY_CLOSE_MOTION_MS = 220;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
@@ -50,6 +51,7 @@ export default function TreatmentsEquipmentSection() {
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
+  const [mobileClosingId, setMobileClosingId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -113,16 +115,35 @@ export default function TreatmentsEquipmentSection() {
   const handleMobileTabToggle = useCallback((id: string) => {
     setActiveId(id);
     setShowAll(false);
+    setMobileClosingId(null);
     setMobileExpandedId((current) => (current === id ? null : id));
   }, []);
 
   const handleMobileCategoryClose = useCallback(() => {
+    if (!mobileExpandedId || mobileClosingId) return;
     setMobileExpandedId(null);
     setShowAll(false);
-    requestAnimationFrame(() => {
-      mobileCategoryListRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-  }, []);
+    setMobileClosingId(mobileExpandedId);
+  }, [mobileClosingId, mobileExpandedId]);
+
+  useEffect(() => {
+    if (!mobileClosingId) return;
+
+    const closeTimer = window.setTimeout(() => {
+      setMobileClosingId(null);
+      window.requestAnimationFrame(() => {
+        const categoryList = mobileCategoryListRef.current;
+        if (!categoryList) return;
+
+        const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+        const targetTop = window.scrollY + categoryList.getBoundingClientRect().top
+          - Math.max(0, (viewportHeight - categoryList.offsetHeight) / 2);
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      });
+    }, MOBILE_CATEGORY_CLOSE_MOTION_MS);
+
+    return () => window.clearTimeout(closeTimer);
+  }, [mobileClosingId]);
 
   // 검색어 변경 시 더보기 초기화
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -283,11 +304,13 @@ export default function TreatmentsEquipmentSection() {
                 lang={lang}
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
+                mobileClosingId={mobileClosingId}
                 onMobileTabToggle={handleMobileTabToggle}
                 onMobileDetailClose={handleMobileCategoryClose}
+                mobileCloseLabel={tr.collapseBtn}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
-                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">
+                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white" data-testid="treatment-mobile-category-detail">
                     <div
                       id="treatments-mobile-grid"
                       aria-live="polite"

@@ -767,6 +767,34 @@
     animation: cardFadeIn 0.35s ease var(--delay, 0s) both;
   }
 
+  @keyframes mobileCategoryDetailFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes mobileCategoryDetailFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-4px); }
+  }
+
+  .mobile-category-detail-shell {
+    overflow: hidden;
+    animation: mobileCategoryDetailFadeIn 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  .mobile-category-detail-shell[data-state="closing"] {
+    pointer-events: none;
+    animation: mobileCategoryDetailFadeOut 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-category-detail-shell,
+    .mobile-category-detail-shell[data-state="closing"] {
+      animation: none;
+      transform: none;
+    }
+  }
+
   /* Hero text animation */
   @keyframes heroSlideUp {
     from { opacity: 0; transform: translateY(50px); }

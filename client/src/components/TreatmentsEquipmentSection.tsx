@@ -284,6 +284,7 @@ export default function TreatmentsEquipmentSection() {
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
                 onMobileTabToggle={handleMobileTabToggle}
+                onMobileDetailClose={handleMobileCategoryClose}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
                   <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">

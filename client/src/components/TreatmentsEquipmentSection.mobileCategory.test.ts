@@ -33,17 +33,17 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabListSource).toContain('id="treatment-mobile-category-list"');
   });
 
-  it("keeps the selected category row as state control and offers one footer close after category content", () => {
+  it("offers one top close below the selected category row and one footer close after category content", () => {
     expect(tabListSource).toContain("onMobileTabToggle");
-    expect(tabListSource).not.toContain("mobile-category-detail-close-top");
+    expect(tabListSource).toContain("onMobileDetailClose");
+    expect(tabListSource).toContain("mobile-category-detail-close-top");
     expect(sectionSource).toContain("mobile-category-detail-close-footer");
-    expect(sectionSource).not.toContain("onMobileDetailClose={handleMobileCategoryClose}");
+    expect(sectionSource).toContain("onMobileDetailClose={handleMobileCategoryClose}");
   });
 
-  it("shows all mobile category items at once and keeps only the footer close control", () => {
+  it("shows all mobile category items at once while retaining the footer close control", () => {
     expect(sectionSource).toContain("filteredTreatments.map((item, i) => (");
     expect(sectionSource).not.toContain('aria-controls="treatments-mobile-grid"');
-    expect(tabListSource).not.toContain("mobile-category-detail-close-top");
     expect(sectionSource).toContain("mobile-category-detail-close-footer");
   });
 });

@@ -1035,7 +1035,7 @@
       grid-area: 1 / 1;
       white-space: nowrap;
       will-change: opacity, transform;
-      animation-duration: 10s;
+      animation-duration: 15s;
       animation-timing-function: ease-in-out;
       animation-iteration-count: infinite;
     }

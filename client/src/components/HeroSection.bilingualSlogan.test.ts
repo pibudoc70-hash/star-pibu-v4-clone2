@@ -32,4 +32,9 @@ describe("PC Hero bilingual slogan motion", () => {
     expect(css).toContain("letter-spacing: 0.08em;");
     expect(css).toContain("color: rgba(255, 255, 255, 0.92);");
   });
+
+  it("slows the desktop cross-fade cycle to a 15 second cadence without changing mobile timing", () => {
+    expect(css).toMatch(/\.hero-desktop-slogan-line\s*\{[\s\S]*animation-duration:\s*15s;/);
+    expect(css).toContain("animation: heroSubtitleToggle 8s");
+  });
 });

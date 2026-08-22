@@ -25,6 +25,7 @@ interface CategoryTabListProps {
   mobileActiveId?: TreatmentTabId | null;
   onMobileTabToggle?: (id: TreatmentTabId) => void;
   renderMobileDetail?: (id: TreatmentTabId) => ReactNode;
+  mobileContainerRef?: React.RefObject<HTMLDivElement | null>;
   containerRef?: React.RefObject<HTMLDivElement | null>;
   /** WAI-ARIA: tablist의 aria-label */
   ariaLabel?: string;
@@ -38,6 +39,7 @@ export default function CategoryTabList({
   mobileActiveId = activeId,
   onMobileTabToggle,
   renderMobileDetail,
+  mobileContainerRef,
   containerRef,
   ariaLabel = "시술 카테고리",
 }: CategoryTabListProps) {
@@ -81,6 +83,8 @@ export default function CategoryTabList({
     <div className="mb-4">
       {/* 모바일: 2열 그리드 */}
       <div
+        ref={mobileContainerRef}
+        id="treatment-mobile-category-list"
         role="group"
         aria-label={ariaLabel}
         className="grid grid-cols-2 gap-2 sm:hidden"

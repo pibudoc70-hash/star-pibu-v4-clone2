@@ -25,4 +25,10 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabListSource).toContain("renderMobileDetail");
     expect(tabListSource).toContain("col-span-2");
   });
+
+  it("returns the mobile viewport to the category list after close", () => {
+    expect(sectionSource).toContain("scrollIntoView");
+    expect(sectionSource).toContain('behavior: "smooth"');
+    expect(tabListSource).toContain('id="treatment-mobile-category-list"');
+  });
 });

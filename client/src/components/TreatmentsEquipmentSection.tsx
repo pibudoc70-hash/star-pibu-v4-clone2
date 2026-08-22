@@ -55,6 +55,7 @@ export default function TreatmentsEquipmentSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);
+  const mobileCategoryListRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // [DB 통합] equipment3 DB에서 데이터 로드
@@ -118,6 +119,9 @@ export default function TreatmentsEquipmentSection() {
   const handleMobileCategoryClose = useCallback(() => {
     setMobileExpandedId(null);
     setShowAll(false);
+    requestAnimationFrame(() => {
+      mobileCategoryListRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }, []);
 
   // 검색어 변경 시 더보기 초기화
@@ -280,6 +284,7 @@ export default function TreatmentsEquipmentSection() {
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
                 onMobileTabToggle={handleMobileTabToggle}
+                mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
                   <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white animate-card-fade" data-testid="treatment-mobile-category-detail">
                     <div

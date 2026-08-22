@@ -264,7 +264,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         <ul className="mt-1.5 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-1.5 sm:mt-4 sm:gap-2 sm:pt-4">
           {copy.careCheckpoints.map((checkpoint, index) => (
             <li key={checkpoint.label}>
-              <div className="pain-management-checkpoint flex min-h-9 flex-col items-center justify-center gap-0.5 rounded-md bg-white/60 px-1.5 py-1 text-center text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:flex-row sm:gap-1.5 sm:px-2 sm:text-left sm:text-xs">
+              <div className="pain-management-checkpoint flex min-h-9 flex-col items-center justify-center gap-0.5 rounded-md border border-[var(--color-gold-light)] bg-white/90 px-1.5 py-1 text-center text-[11px] font-medium leading-4 text-[var(--color-star-text-mid)] shadow-[0_1px_0_rgba(155,122,43,0.08)] sm:flex-row sm:gap-1.5 sm:px-2 sm:text-left sm:text-xs">
                 <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
                 <span>{checkpoint.label}</span>
               </div>
@@ -277,15 +277,15 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         {copy.steps.map((step, index) => {
           const Icon = STEP_ICONS[index] ?? Stethoscope;
           return (
-            <details key={step.title} data-testid={`pain-stage-${index + 1}`} className="pain-management-disclosure group border-b last:border-b-0">
+            <details key={step.title} data-testid={`pain-stage-${index + 1}`} className="pain-management-disclosure pain-management-stage group border-b last:border-b-0">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2">
                 <span className="flex items-center gap-3 text-left">
                   <Icon size={20} className="shrink-0 text-[var(--color-gold-primary)]" aria-hidden="true" />
-                  <span><span className="block text-sm font-semibold text-[var(--color-star-text)]">{step.title}</span><span className="mt-0.5 block text-xs font-medium text-[var(--color-star-text-mid)]">{step.icon}</span></span>
+                  <span><span className="block text-[13px] leading-5 font-semibold text-[var(--color-star-text)] sm:text-sm">{step.title}</span><span className="mt-0.5 block text-[11px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:text-xs">{step.icon}</span></span>
                 </span>
                 <ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
               </summary>
-              <div className="pb-4 pt-1 text-sm text-[var(--color-star-text-mid)] sm:pl-8"><p className="leading-6">{step.body}</p></div>
+              <div className="pb-4 pt-1 text-[15px] leading-7 text-[var(--color-star-text-mid)] sm:pl-8 sm:text-sm"><p>{step.body}</p></div>
             </details>
           );
         })}

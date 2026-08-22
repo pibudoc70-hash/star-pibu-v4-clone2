@@ -5711,6 +5711,13 @@ body.font-lang-zh .hero-stat-label {
   block-size: auto;
   opacity: 1;
 }
+.pain-management-stage::details-content {
+  transform: translateY(-4px);
+  transition: block-size 260ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease-out, transform 220ms ease-out, content-visibility 260ms allow-discrete;
+}
+.pain-management-stage[open]::details-content {
+  transform: translateY(0);
+}
 @media (prefers-reduced-motion: reduce) {
-  .pain-management-disclosure::details-content { transition: none; }
+  .pain-management-disclosure::details-content { transition: none; transform: none; }
 }

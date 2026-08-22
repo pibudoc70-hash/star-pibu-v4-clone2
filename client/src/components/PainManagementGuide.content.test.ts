@@ -119,7 +119,7 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("text-[1.65rem]");
     expect(guideSource).toContain("min-h-[88px]");
     expect(guideSource).toContain("text-[11px]");
-    expect(guideSource).toContain("text-[10px]");
+    expect(guideSource).toContain("text-[11px]");
   });
 
   it("uses a denser mobile infographic and a clear Korean anesthesia-experience disclosure title with icon", () => {
@@ -148,6 +148,15 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("const Icon = FAQ_ICONS[index]");
     expect(guideSource).toContain("<Icon size={17}");
     expect(guideSource).toContain("text-[var(--color-gold-deep)]");
+  });
+
+  it("adds a distinct stage-detail reveal while improving static card distinction and mobile reading size", () => {
+    expect(guideSource).toContain("pain-management-stage");
+    expect(globalCssSource).toContain(".pain-management-stage::details-content");
+    expect(globalCssSource).toContain("transform: translateY(-4px)");
+    expect(guideSource).toContain("border border-[var(--color-gold-light)] bg-white/90");
+    expect(guideSource).toContain("text-[13px] leading-5");
+    expect(guideSource).toContain("text-[15px] leading-7");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {

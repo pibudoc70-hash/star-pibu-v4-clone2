@@ -75,7 +75,11 @@ const LEGACY_TREATMENT_REDIRECTS: Readonly<Record<string, string>> = {
 };
 
 export function getLegacyTreatmentRedirectPath(name: string): string | null {
-  return LEGACY_TREATMENT_REDIRECTS[name] ?? null;
+  try {
+    return LEGACY_TREATMENT_REDIRECTS[decodeURIComponent(name)] ?? null;
+  } catch {
+    return LEGACY_TREATMENT_REDIRECTS[name] ?? null;
+  }
 }
 
 /** Structured data에는 상대 경로 대신 crawler-resolvable HTTPS image URL을 사용한다. */

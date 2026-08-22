@@ -36,6 +36,20 @@ export function HeroDarkOverlay() {
   );
 }
 
+/** Hero 중앙 text area의 국소 대비를 높이는 은은한 dark gradient */
+export function HeroTextContrastOverlay() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(ellipse 58% 42% at 50% 47%, rgba(3,8,20,0.34) 0%, rgba(3,8,20,0.16) 48%, transparent 78%)",
+      }}
+    />
+  );
+}
+
 /** 좌우 비네팅 — 사진 중앙 집중
  * 모바일: 좌우 비네팅으로 시선 중앙 집중
  */

@@ -69,6 +69,11 @@ interface TreatmentSeoRecord {
 
 const BASE_URL = "https://star-pibu.com";
 
+/** Structured data에는 상대 경로 대신 crawler-resolvable HTTPS image URL을 사용한다. */
+export function toAbsoluteTreatmentImageUrl(image: string): string {
+  return image.startsWith("https://") ? image : new URL(image, BASE_URL).toString();
+}
+
 const CLINIC_PROVIDER = {
   "@type": "MedicalBusiness",
   "@id": `${BASE_URL}/#organization`,
@@ -459,7 +464,7 @@ function injectJsonLd(
     alternateName: t.nameEn,
     description,
     procedureType: "https://schema.org/CosmeticProcedure",
-    image: t.image,
+    image: toAbsoluteTreatmentImageUrl(t.image),
     url: pageUrl,
     bodyLocation,
     preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : caution,

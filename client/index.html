@@ -133,11 +133,9 @@
     <!-- 의료 기관 분류 (AI 검색 카테고리 인식) -->
     <meta name="classification" content="Health, Medical, Dermatology" />
     <meta name="category" content="피부과, 피부과의원, 의료기관" />
-    <!-- [PROD-P1-2] LCP 최적화: 히어로 배경 이미지 preload + fetchpriority="high" -->
-    <!-- fetchpriority="high": 브라우저가 다른 리소스보다 이 이미지를 먼저 다운로드하도록 지시 -->
-    <!-- 실제 HeroSection 컴포넌트 URL과 동일해야 preload 재사용 가능 -->
-    <link rel="preload" as="image" type="image/webp"
-      href="/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"
+    <!-- LCP 최적화: Hero picture의 AVIF source와 동일 resource를 preload해 중복 요청 방지 -->
+    <link rel="preload" as="image" type="image/avif"
+      href="/manus-storage/hero_ae3f2e80.avif"
       fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
     <link rel="alternate" data-rh="true" data-seo-fallback="home" hreflang="ko" href="https://star-pibu.com/" />

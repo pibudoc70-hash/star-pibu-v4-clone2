@@ -32,7 +32,7 @@ import { HeroFloorBadge } from "@/components/hero/HeroFloorBadge";
 import { HeroStatsStrip } from "@/components/hero/HeroStatsStrip";
 import { HeroActions } from "@/components/hero/HeroActions";
 import { HeroScrollIndicator } from "@/components/hero/HeroScrollIndicator";
-import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_DELAYS } from "@/components/hero/constants";
+import { HERO_IMAGES, HERO_LOGO_IMAGE, HERO_LOGO_IMAGE_AVIF, HERO_DELAYS } from "@/components/hero/constants";
 import { HOME_SEO_META } from "@/lib/homeSeo";
 export { HERO_DELAYS } from "@/components/hero/constants";
 
@@ -115,9 +115,11 @@ function HeroSection() {
       {/* 데스크톱: 이미지 배경 */}
       <div className="absolute inset-0 block pointer-events-none overflow-hidden hidden md:block">
         <picture className="absolute inset-0 block w-full h-full">
+          <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopAvif} type="image/avif" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
           {/* 모바일 이미지 소스 (테스트 참조용 — 실제 모바일은 별자리 배경 사용) */}
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitAvif} type="image/avif" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
@@ -134,6 +136,7 @@ function HeroSection() {
       {/* 모바일: 병원 사진 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
         <picture className="absolute inset-0 block w-full h-full">
+          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitAvif} type="image/avif" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
@@ -159,14 +162,18 @@ function HeroSection() {
           {/* 로고 */}
           <div className="hero-fade hero-logo-wrap">
             <div className="relative">
-              <OptimizedImage
-                src={HERO_LOGO_IMAGE}
-                alt="스타피부과 로고"
-                priority={true}
-                width={220}
-                height={220}
-                className="hero-logo-img"
-              />
+              <picture>
+                <source srcSet={HERO_LOGO_IMAGE_AVIF} type="image/avif" />
+                <OptimizedImage
+                  src={HERO_LOGO_IMAGE}
+                  alt="스타피부과 로고"
+                  priority={true}
+                  usePicture={false}
+                  width={220}
+                  height={220}
+                  className="hero-logo-img"
+                />
+              </picture>
             </div>
           </div>
           {/* 병원명: 글자별 charReveal */}
@@ -209,14 +216,18 @@ function HeroSection() {
         <div className="hero-mobile-top-group">
           {/* 로고 — 단일 렌더링 (68px) */}
           <div className="hero-mobile-logo-wrap">
-            <OptimizedImage
-              src={HERO_LOGO_IMAGE}
-              alt="스타피부과 로고"
-              priority={true}
-              width={136}
-              height={136}
-              className="hero-mobile-logo-img"
-            />
+            <picture>
+              <source srcSet={HERO_LOGO_IMAGE_AVIF} type="image/avif" />
+              <OptimizedImage
+                src={HERO_LOGO_IMAGE}
+                alt="스타피부과 로고"
+                priority={true}
+                usePicture={false}
+                width={136}
+                height={136}
+                className="hero-mobile-logo-img"
+              />
+            </picture>
           </div>
           {/* 병원명 */}
           <div className="hero-mobile-title" aria-hidden="true">{t.hero.title}</div>

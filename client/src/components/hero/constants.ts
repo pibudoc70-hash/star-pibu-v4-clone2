@@ -17,10 +17,14 @@
 
 /** 히어로 배경 이미지 URL 모음 */
 export const HERO_IMAGES = {
+  /** 데스크톱 배경 (AVIF, min-width: 641px) */
+  desktopAvif: "/manus-storage/hero_ae3f2e80.avif",
   /** 데스크톱 배경 (WebP, min-width: 641px) */
   desktopWebp: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
   /** 데스크톱 배경 (JPEG 폴백) */
   desktopJpg: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
+  /** 모바일 세로 배경 (AVIF, max-width: 640px) */
+  mobilePortraitAvif: "/manus-storage/hero_ae3f2e80.avif",
   /** 모바일 세로 배경 (WebP, max-width: 640px) — 데스크탑 이미지 공용 사용 (STAR DERMATOLOGY 글자 노출) */
   mobilePortraitWebp: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
   /** 모바일 세로 배경 (JPEG 폴백) */
@@ -30,6 +34,8 @@ export const HERO_IMAGES = {
 /** 스타피부과 AI 로고 이미지 URL */
 // [P0-OPT] PNG (118 KB) → WebP (42.5 KB) 변환으로 73.3 KB 절감
 export const HERO_LOGO_IMAGE = "/api/storage/star_logo_d0ae8bbf.webp";
+/** 스타피부과 AI 로고 AVIF 우선 source (WebP fallback은 HERO_LOGO_IMAGE) */
+export const HERO_LOGO_IMAGE_AVIF = "/manus-storage/logo_38e43878.avif";
 
 /**
  * HERO_DELAYS — HeroSection 애니메이션 딜레이 상수

@@ -25,6 +25,11 @@ describe("Doctor research activities disclosure contract", () => {
     expect(credentials).not.toContain("@/components/ui/accordion");
   });
 
+  it("derives each activity key from both the source URL and its distinct title", () => {
+    expect(credentials).toContain('key={`${activity.sourceUrl}-${activity.title}`}');
+    expect(credentials).not.toContain('key={activity.sourceUrl}');
+  });
+
   it("keeps visible activity titles concise without years or coauthor lists", () => {
     expect(doctorData).toContain('title: "액취증·다한증 치료 연구"');
     expect(doctorData).toContain('title: "분절상 신경섬유종증 증례 보고"');

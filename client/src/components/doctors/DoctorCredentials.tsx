@@ -32,7 +32,7 @@ function DoctorResearchActivities({ doctor }: Pick<DoctorCredentialsProps, "doct
       </summary>
       <div className="space-y-3 border-t border-stone-200 px-4 py-4">
         {doctor.researchActivities.map((activity) => (
-          <article key={activity.sourceUrl} className="border-l-2 border-[#d2ac67]/70 pl-3">
+          <article key={`${activity.sourceUrl}-${activity.title}`} className="border-l-2 border-[#d2ac67]/70 pl-3">
             <h4 className="text-sm font-semibold text-stone-800">{activity.title}</h4>
             <p className="mt-1 text-xs leading-relaxed text-stone-600">{activity.detail}</p>
             <a href={activity.sourceUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#8f6b31] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67]">

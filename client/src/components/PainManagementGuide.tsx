@@ -1,4 +1,4 @@
-import { Activity, ChevronDown, ClipboardCheck, HeartPulse, Moon, ShieldCheck, Stethoscope } from "lucide-react";
+import { Activity, ChevronDown, CircleHelp, ClipboardCheck, FileText, HeartPulse, Moon, ShieldCheck, Stethoscope } from "lucide-react";
 import type { Lang } from "@/lib/i18n.types";
 
 export const PAIN_MANAGEMENT_CATEGORY_ID = "pain-management";
@@ -52,7 +52,7 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
       { icon: "사전 평가 후 검토", title: "③ 수면진정/수면마취", body: "수면진정/수면마취는 모든 시술에 일괄 적용되는 방법이 아닙니다. 필요 시 의료진의 사전 평가 후 시술 특성과 환자 상태에 맞는 선택지로 검토합니다." },
     ],
     experienceHeading: "수면마취 운영경험 20여년",
-    experienceBody: "스타피부과는 20년 동안 수면진정/수면마취 시술을 운영하며, 시술 전에는 건강 상태와 복용약, 알레르기, 과거력을 확인하고 의료진의 판단에 따라 개별 계획을 검토해 왔습니다. 시술 중에는 환자 상태를 지속적으로 살피고, 회복 단계에서는 필요한 안내와 귀가 관련 확인을 중요하게 관리합니다.",
+    experienceBody: "스타피부과는 20여년 동안 수면진정/수면마취 시술을 운영하며, 시술 전에는 건강 상태와 복용약, 알레르기, 과거력을 확인하고 의료진의 판단에 따라 개별 계획을 검토해 왔습니다. 시술 중에는 환자 상태를 지속적으로 살피고, 회복 단계에서는 필요한 안내와 귀가 관련 확인을 중요하게 관리합니다.",
     monitoringHeading: "시술 중 모니터링",
     monitoringIntro: "Kohden SpO₂ 모니터와 혈압측정기를 갖추고 환자 상태를 지속적으로 살핍니다. 관찰의 범위와 방법은 시술 및 개인 상태에 따라 달라질 수 있습니다.",
     monitoringPoints: ["Kohden SpO₂ 모니터를 통한 산소포화도 확인", "혈압측정기를 통한 혈압 변화 확인", "시술 전 확인사항을 바탕으로 한 의료진 관찰", "회복 단계의 상태 확인과 개별 안내"],
@@ -252,10 +252,10 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <li key={step.title} className="relative flex min-h-[96px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-2 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
+              <li key={step.title} className="relative flex min-h-[88px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-1 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
                 <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-xs font-bold text-white">{index + 1}</span>
-                <Icon size={18} className="mx-auto mt-2 text-[var(--color-gold-deep)]" aria-hidden="true" />
-                <span className="mt-1 block break-keep text-[11px] font-semibold leading-4 text-[var(--color-star-text)] sm:text-xs sm:leading-5">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
+                <Icon size={18} className="mx-auto mt-1.5 text-[var(--color-gold-deep)]" aria-hidden="true" />
+                <span className="mt-0.5 block break-keep text-[11px] font-semibold leading-4 text-[var(--color-star-text)] sm:text-xs sm:leading-5">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
               </li>
             );
           })}
@@ -264,7 +264,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           {copy.careCheckpoints.map((checkpoint, index) => (
             <li key={checkpoint.label}>
               <details data-testid={`checkpoint-detail-${index + 1}`} className="pain-management-disclosure group h-full rounded-md bg-white/60 px-1.5 text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:px-2 sm:text-xs">
-                <summary className="flex min-h-11 cursor-pointer list-none flex-col items-center justify-center gap-1 py-1.5 text-center outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset sm:flex-row sm:gap-1.5 sm:text-left">
+                <summary className="flex min-h-11 cursor-pointer list-none flex-col items-center justify-center gap-0.5 py-0.5 text-center outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset sm:flex-row sm:gap-1.5 sm:text-left">
                   <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
                   <span>{checkpoint.label}</span>
                   <ChevronDown size={13} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
@@ -303,12 +303,12 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         </details>
 
         <details data-testid="pain-guidance" className="pain-management-disclosure group border-b last:border-b-0">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><FileText size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.beforeAfterHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <div className="grid gap-3 pb-4 text-sm text-[var(--color-star-text-mid)] sm:grid-cols-2">{[[copy.beforeTitle, copy.before], [copy.afterTitle, copy.after]].map(([title, items]) => <div key={title as string} className="rounded-xl bg-[var(--color-gold-pale)] p-4"><h3 className="font-semibold text-[var(--color-star-text)]">{title}</h3><ul className="mt-3 space-y-2 leading-6">{(items as string[]).map((item) => <li key={item}>• {item}</li>)}</ul></div>)}</div>
         </details>
 
         <details data-testid="pain-faq" className="pain-management-disclosure group">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="text-left text-sm font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><CircleHelp size={19} className="text-[var(--color-gold-primary)]" aria-hidden="true" />{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq) => <div key={faq.question}><dt className="font-semibold text-[var(--color-star-text)]">{faq.question}</dt><dd className="mt-1 leading-6">{faq.answer}</dd></div>)}</dl>
         </details>
       </div>

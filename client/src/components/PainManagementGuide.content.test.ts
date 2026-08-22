@@ -116,7 +116,7 @@ describe("PainManagementGuide content and placement", () => {
   it("uses mobile-specific spacing and typography so the visual explainer stays balanced on narrow screens", () => {
     expect(guideSource).toContain("p-4 sm:p-7");
     expect(guideSource).toContain("text-[1.7rem]");
-    expect(guideSource).toContain("min-h-[96px]");
+    expect(guideSource).toContain("min-h-[88px]");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[10px]");
   });
@@ -127,6 +127,17 @@ describe("PainManagementGuide content and placement", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취 운영경험 20여년");
     expect(guideSource).toContain("Moon");
     expect(guideSource).toContain("data-testid=\"pain-experience\"");
+  });
+
+  it("tightens mobile stage and checkpoint spacing while giving guidance and FAQ headings matching icons", () => {
+    expect(guideSource).toContain("mt-1.5 text-[var(--color-gold-deep)]");
+    expect(guideSource).toContain("mt-0.5 block break-keep");
+    expect(guideSource).toContain("gap-0.5 py-0.5 text-center");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody).toContain("20여년 동안");
+    expect(guideSource).toContain("FileText");
+    expect(guideSource).toContain("CircleHelp");
+    expect(guideSource).toContain("data-testid=\"pain-guidance\"");
+    expect(guideSource).toContain("data-testid=\"pain-faq\"");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {

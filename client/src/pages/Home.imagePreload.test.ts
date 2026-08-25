@@ -16,8 +16,8 @@ describe("홈 초기 이미지 preload 우선순위", () => {
 
   it("LCP hero 아래 재생의료 배너는 lazy·low priority로 가져온다", () => {
     const bannerImage = homeSource.slice(
-      homeSource.indexOf('regen-medicine-banner-pc2_430fd36f.webp'),
-      homeSource.indexOf('{/* 2. SPECIAL EVENT', homeSource.indexOf('regen-medicine-banner-pc2_430fd36f.webp'))
+      homeSource.indexOf('regen-medicine-banner-pc2_430fd36f_89f4a3e5.webp'),
+      homeSource.indexOf('{/* 2. SPECIAL EVENT', homeSource.indexOf('regen-medicine-banner-pc2_430fd36f_89f4a3e5.webp'))
     );
 
     expect(bannerImage).toContain('loading="lazy"');

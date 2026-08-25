@@ -460,39 +460,15 @@ export default function Home() {
             className="block w-full max-w-[92%] md:w-[70%] md:max-w-none mx-auto rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.30)]"
             aria-label="보건복지부 지정 첨단재생의료 실시기관 공지 보기"
           >
-            <picture>
-              {/* 모바일 WebP (768px 미만) — 273KB PNG → 24KB WebP */}
-              <source
-                media="(max-width: 767px)"
-                srcSet="/api/storage/regen-medicine-banner-mobile_1fe7ea14_b3d1a716.webp"
-                type="image/webp"
-              />
-              {/* 모바일 PNG 폴백 (768px 미만) */}
-              <source
-                media="(max-width: 767px)"
-                srcSet="/api/storage/regen-medicine-banner-mobile_1fe7ea14.png"
-              />
-              {/* PC WebP (768px 이상) — 새로운 보건복지부 지정 배너 */}
-              <source
-                media="(min-width: 768px)"
-                srcSet="/manus-storage/regen-medicine-banner-pc2_430fd36f.webp"
-                type="image/webp"
-              />
-              {/* PC PNG 폴백 (768px 이상) */}
-              <source
-                media="(min-width: 768px)"
-                srcSet="/api/storage/regen-medicine-banner-pc2_e6271aa5.png"
-              />
-              <img
-                src="/manus-storage/regen-medicine-banner-pc2_430fd36f.webp"
-                alt="보건복지부 지정 체담재생의료 실시기관 — 스타피부과는 보건복지부로부터 체담재생의료 실시기관에 지정됐습니다"
-                className="w-full h-auto block"
-                width={800}
-                height={296}
-                loading="lazy"
-                fetchPriority="low"
-              />
-            </picture>
+            <img
+              src="/manus-storage/regen-medicine-banner-pc2_430fd36f_89f4a3e5.webp"
+              alt="보건복지부 지정 첨단재생의료 실시기관 — 스타피부과는 보건복지부로부터 첨단재생의료 실시기관에 지정됐습니다"
+              className="w-full h-auto block"
+              width={1470}
+              height={368}
+              loading="lazy"
+              fetchPriority="low"
+            />
           </a>
         </div>
 

@@ -13,6 +13,8 @@ import { DoctorCredentials } from "./DoctorCredentials";
 import type { DoctorViewModel } from "@/hooks/useDoctorViewModel";
 import type { I18nContent } from "@/lib/i18n.types";
 
+const DERM_SPECIALIST_BADGE = "/manus-storage/derm-specialist-badge_6d75896e.webp";
+
 interface DoctorDesktopLayoutProps {
   mergedDoctors: DoctorViewModel[];
   doctor: DoctorViewModel;
@@ -115,7 +117,7 @@ export function DoctorDesktopLayout({
               </div>
             </div>
             <img
-              src="/api/storage/derm-specialist-badge_9b9bcf96.png"
+              src={DERM_SPECIALIST_BADGE}
               alt={t.doctors.dermBadge.replace("\n", " ")}
               className="dr-derm-badge-img dr-derm-badge-img-desktop"
               draggable={false}

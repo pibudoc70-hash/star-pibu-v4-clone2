@@ -14,6 +14,8 @@ import type { DoctorViewModel } from "@/hooks/useDoctorViewModel";
 import type { I18nContent } from "@/lib/i18n.types";
 import { doctors } from "@/lib/doctors-data";
 
+const DERM_SPECIALIST_BADGE = "/manus-storage/derm-specialist-badge_6d75896e.webp";
+
 interface DoctorMobileLayoutProps {
   mergedDoctors: DoctorViewModel[];
   doctor: DoctorViewModel;
@@ -146,7 +148,7 @@ export function DoctorMobileLayout({
                     <p className="font-montserrat mt-0.5 dr-mob-name-en">{d.nameEn}</p>
                   </div>
                   <img
-                    src="/api/storage/derm-specialist-badge_9b9bcf96.png"
+                    src={DERM_SPECIALIST_BADGE}
                     alt={t.doctors.dermBadge.replace("\n", " ")}
                     className="dr-derm-badge-img dr-derm-badge-img-mobile"
                     draggable={false}

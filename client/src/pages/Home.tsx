@@ -17,6 +17,7 @@ import { buildHomeJsonLd, HOME_SEO_META } from "@/lib/homeSeo";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
+import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
 // [P1-OPT] SpecialEventSection, DoctorsSection을 lazy import로 전환
 // 폴드 아래 섹션이므로 초기 로딩 시 필요 없음
@@ -31,7 +32,6 @@ const eyeBagCasesText = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 // 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
 const ManagementDevicesSection = lazy(() => import("@/components/ManagementDevicesSection"));
 const PhilosophySection = lazy(() => import("@/components/PhilosophySection"));
-const ResultsStatisticsSection = lazy(() => import("@/components/ResultsStatisticsSection"));
 const FacilitySection = lazy(() => import("@/components/FacilitySection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));

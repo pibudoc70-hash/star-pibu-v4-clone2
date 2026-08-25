@@ -3,8 +3,8 @@
  *
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
-import { useRef, useState } from "react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -14,6 +14,14 @@ interface EventTableMobileProps {
   events: SpecialEvent[];
   getLocalizedText: (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => string;
 }
+
+const CAROUSEL_COPY = {
+  ko: { label: "스페셜 이벤트 캐러셀", hint: "좌우로 밀어 다른 이벤트 보기", previous: "이전 이벤트", next: "다음 이벤트", position: "이벤트" },
+  en: { label: "Special event carousel", hint: "Swipe to explore more events", previous: "Previous event", next: "Next event", position: "Event" },
+  ja: { label: "スペシャルイベントカルーセル", hint: "左右にスワイプしてイベントを見る", previous: "前のイベント", next: "次のイベント", position: "イベント" },
+  zh: { label: "特别活动轮播", hint: "左右滑动查看其他活动", previous: "上一个活动", next: "下一个活动", position: "活动" },
+  "zh-TW": { label: "特別活動輪播", hint: "左右滑動查看其他活動", previous: "上一個活動", next: "下一個活動", position: "活動" },
+} as const;
 
 function parsePriceRows(event: SpecialEvent): PriceRow[] {
   if (!event.priceRows) return [];
@@ -142,8 +150,38 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
 }
 
 export default function EventTableMobile({ events, getLocalizedText }: EventTableMobileProps) {
+  const { lang } = useLang();
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
   const eventRowRefs = useRef(new Map<number, HTMLDivElement>());
+  const carouselViewportRef = useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(events.length > 1);
+  const carouselCopy = CAROUSEL_COPY[lang] ?? CAROUSEL_COPY.ko;
+
+  const updateCarouselState = useCallback(() => {
+    const viewport = carouselViewportRef.current;
+    if (!viewport) return;
+
+    const slideWidth = viewport.clientWidth * 0.88;
+    const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+    setSelectedIndex(Math.min(events.length - 1, Math.max(0, Math.round(viewport.scrollLeft / slideWidth))));
+    setCanScrollPrev(viewport.scrollLeft > 2);
+    setCanScrollNext(viewport.scrollLeft < maxScrollLeft - 2);
+  }, [events.length]);
+
+  useEffect(() => {
+    updateCarouselState();
+    window.addEventListener("resize", updateCarouselState);
+    return () => window.removeEventListener("resize", updateCarouselState);
+  }, [updateCarouselState]);
+
+  const scrollCarousel = (direction: "prev" | "next") => {
+    const viewport = carouselViewportRef.current;
+    if (!viewport) return;
+
+    viewport.scrollBy({ left: viewport.clientWidth * 0.88 * (direction === "next" ? 1 : -1), behavior: "smooth" });
+  };
 
   const handleFooterClose = (eventId: number) => {
     setExpandedEventId(null);
@@ -162,37 +200,79 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
       }}
     >
       <div
-        className="flex items-center gap-2 px-5 py-4 border-b"
+        className="flex items-center justify-between gap-3 px-4 py-3.5 border-b"
         style={{
           borderColor: "var(--color-gold-light)",
           background: "linear-gradient(135deg, color-mix(in srgb, var(--color-gold-primary) 12%, transparent) 0%, color-mix(in srgb, var(--color-gold-primary) 4%, transparent) 100%)",
         }}
       >
-        <Sparkles size={14} style={{ color: "var(--color-gold-primary)" }} />
-        <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
+        <div className="flex min-w-0 items-center gap-2">
+          <Sparkles size={14} className="shrink-0" style={{ color: "var(--color-gold-primary)" }} />
+          <div className="min-w-0">
+            <span className="block text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
+            <span className="mt-0.5 block text-[11px] leading-snug text-gray-500">{carouselCopy.hint}</span>
+          </div>
+        </div>
+        <div className="flex shrink-0 items-center gap-1" aria-label={`${carouselCopy.position} navigation`}>
+          <button
+            type="button"
+            data-testid="mobile-event-carousel-prev"
+            onClick={() => scrollCarousel("prev")}
+            disabled={!canScrollPrev}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full border transition-colors active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+            style={{ borderColor: "var(--color-gold-light)", color: "var(--color-gold-deep)", background: "var(--brand-bg-card, #FDFAF7)" }}
+            aria-label={carouselCopy.previous}
+          >
+            <ChevronLeft size={18} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            data-testid="mobile-event-carousel-next"
+            onClick={() => scrollCarousel("next")}
+            disabled={!canScrollNext}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full border transition-colors active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+            style={{ borderColor: "var(--color-gold-light)", color: "var(--color-gold-deep)", background: "var(--brand-bg-card, #FDFAF7)" }}
+            aria-label={carouselCopy.next}
+          >
+            <ChevronRight size={18} aria-hidden="true" />
+          </button>
+        </div>
       </div>
 
-      <div data-testid="mobile-event-list" className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
-        {events.map((event) => {
-          const priceRows = parsePriceRows(event);
-          const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
-          const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
-          const title = getLocalizedText(event, "title");
-          const isOpen = expandedEventId === event.id;
+      <p id="mobile-event-carousel-status" data-testid="mobile-event-carousel-status" className="sr-only" aria-live="polite">
+        {`${carouselCopy.position} ${selectedIndex + 1} / ${events.length}`}
+      </p>
+
+      <div
+        ref={carouselViewportRef}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={carouselCopy.label}
+        onScroll={updateCarouselState}
+        className="overflow-x-auto snap-x snap-mandatory scroll-smooth touch-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div data-testid="mobile-event-list" className="flex -ml-3 px-4 py-4">
+          {events.map((event) => {
+            const priceRows = parsePriceRows(event);
+            const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
+            const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
+            const title = getLocalizedText(event, "title");
+            const isOpen = expandedEventId === event.id;
 
           return (
-            <div key={event.id} className="event-mobile-entry">
-              <div
-                ref={(node) => {
-                  if (node) {
-                    eventRowRefs.current.set(event.id, node);
-                  } else {
-                    eventRowRefs.current.delete(event.id);
-                  }
-                }}
-                data-event-row={event.id}
-                className="flex scroll-mt-16 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
-              >
+            <div key={event.id} className="event-mobile-carousel__slide min-w-0 flex-[0_0_88%] snap-start pl-3">
+              <article className="event-mobile-entry overflow-hidden rounded-xl border" style={{ borderColor: "var(--color-gold-light)", background: "var(--brand-bg-card, #FDFAF7)" }}>
+                <div
+                  ref={(node) => {
+                    if (node) {
+                      eventRowRefs.current.set(event.id, node);
+                    } else {
+                      eventRowRefs.current.delete(event.id);
+                    }
+                  }}
+                  data-event-row={event.id}
+                  className="flex scroll-mt-16 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
+                >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-gray-900 truncate">{title}</p>
                   <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
@@ -227,13 +307,15 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                     <ChevronDown size={16} strokeWidth={2.25} />
                   </span>
                 </button>
-              </div>
+                </div>
 
-              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={() => handleFooterClose(event.id)} />
+                <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={() => handleFooterClose(event.id)} />
+              </article>
             </div>
           );
         })}
       </div>
+    </div>
     </div>
   );
 }

@@ -10,12 +10,12 @@ import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 
 const galleryImageSrcs = [
-  { srcWebP: "/api/storage/metaview_room_535d3491.jpg", srcJPG: "/api/storage/metaview_room_535d3491.jpg" },
-  { srcWebP: "/api/storage/waiting_room_ce355737.jpg", srcJPG: "/api/storage/waiting_room_ce355737.jpg" },
-  { srcWebP: "/api/storage/multi_skincare_room_ebebe73e.jpg", srcJPG: "/api/storage/multi_skincare_room_ebebe73e.jpg" },
-  { srcWebP: "/api/storage/laser_corridor_9e114a15.jpg", srcJPG: "/api/storage/laser_corridor_9e114a15.jpg" },
-  { srcWebP: "/api/storage/reception_desk_f4dd56dc.jpg", srcJPG: "/api/storage/reception_desk_f4dd56dc.jpg" },
-  { srcWebP: "/api/storage/reception_desk_02_1fe4bedc.jpg", srcJPG: "/api/storage/reception_desk_02_1fe4bedc.jpg" },
+  { srcWebP: "/manus-storage/facility-metaview-room_535d3491_540aa29f.webp", srcJPG: "/manus-storage/facility-metaview-room_535d3491_540aa29f.webp" },
+  { srcWebP: "/manus-storage/facility-waiting-room_ce355737_f1c9c5e4.webp", srcJPG: "/manus-storage/facility-waiting-room_ce355737_f1c9c5e4.webp" },
+  { srcWebP: "/manus-storage/facility-multi-skincare-room_ebebe73e_6e67b69a.webp", srcJPG: "/manus-storage/facility-multi-skincare-room_ebebe73e_6e67b69a.webp" },
+  { srcWebP: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3.webp", srcJPG: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3.webp" },
+  { srcWebP: "/manus-storage/facility-reception-desk_f4dd56dc_df6ccf98.webp", srcJPG: "/manus-storage/facility-reception-desk_f4dd56dc_df6ccf98.webp" },
+  { srcWebP: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp", srcJPG: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp" },
 ];
 
 // PC 버전용 제목 (사용자 요청대로)

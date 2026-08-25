@@ -12,8 +12,8 @@ describe("Hero next-generation image delivery", () => {
     expect(constantsSource).toContain('desktopAvif: "/manus-storage/hero_ae3f2e80.avif"');
     expect(constantsSource).toContain('mobilePortraitAvif: "/manus-storage/hero_ae3f2e80.avif"');
     expect(constantsSource).toContain('desktopWebp: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp"');
-    expect(constantsSource).toContain('HERO_LOGO_IMAGE = "/api/storage/star_logo_d0ae8bbf.webp"');
-    expect(constantsSource).toContain('HERO_MOBILE_LOGO_IMAGE = "/manus-storage/star-logo-mobile_77b7502d.webp"');
+    expect(constantsSource).toContain('HERO_LOGO_IMAGE = "/manus-storage/star_logo_d0ae8bbf_8a004167.webp"');
+    expect(constantsSource).toContain('HERO_MOBILE_LOGO_IMAGE = "/manus-storage/star-logo-mobile_77b7502d_83869d29.webp"');
     expect(constantsSource).not.toContain("HERO_LOGO_IMAGE_AVIF");
   });
 

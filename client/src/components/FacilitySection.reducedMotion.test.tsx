@@ -84,14 +84,14 @@ describe("FacilitySection reduced motion autoplay", () => {
 
   it("stops autoplay when the reduced-motion preference changes", () => {
     const { container } = render(<FacilitySection />);
-    const mobileHeading = container.querySelector(".md\\:hidden h3");
-    expect(mobileHeading?.textContent).toBe("시설 1");
+    const activeSlide = () => container.querySelector('[aria-current="true"]');
+    expect(activeSlide()?.getAttribute("aria-label")).toBe("슬라이드 1");
 
     reducedMotionMatches = true;
     act(() => dispatchMediaChange("(prefers-reduced-motion: reduce)"));
     act(() => vi.advanceTimersByTime(5000));
 
-    expect(mobileHeading?.textContent).toBe("시설 1");
+    expect(activeSlide()?.getAttribute("aria-label")).toBe("슬라이드 1");
   });
 
   it("does not create mobile carousel autoplay on desktop", () => {
@@ -105,12 +105,12 @@ describe("FacilitySection reduced motion autoplay", () => {
   it("advances one slide after a touch pointer swipe", () => {
     const { container } = render(<FacilitySection />);
     const carousel = container.querySelector(".facility-carousel-wrap");
-    const mobileHeading = container.querySelector(".md\\:hidden h3");
+    const activeSlide = () => container.querySelector('[aria-current="true"]');
 
     expect(carousel).not.toBeNull();
     fireEvent.pointerDown(carousel!, { pointerType: "touch", clientX: 200 });
     fireEvent.pointerUp(carousel!, { pointerType: "touch", clientX: 100 });
 
-    expect(mobileHeading?.textContent).toBe("시설 2");
+    expect(activeSlide()?.getAttribute("aria-label")).toBe("슬라이드 2");
   });
 });

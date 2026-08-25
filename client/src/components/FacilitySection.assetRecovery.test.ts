@@ -32,4 +32,13 @@ describe("FacilitySection approved gallery assets", () => {
     expect(source).not.toContain("/api/storage/reception_desk_f4dd56dc.jpg");
     expect(source).not.toContain("/api/storage/reception_desk_02_1fe4bedc.jpg");
   });
+
+  it("keeps facility labels for image accessibility without rendering visible gallery captions", () => {
+    expect(source).toContain("alt={img.label}");
+    expect(source).toContain("aria-label={`${img.label} ${fc.zoomHint}`}");
+    expect(source).not.toContain("pcCardTitles");
+    expect(source).not.toContain("{img.label}\n                </h3>");
+    expect(source).not.toContain("{galleryImages[currentIndex].label}\n                </h3>");
+    expect(source).not.toContain("{galleryImages[lightboxIndex].label}\n                </h3>");
+  });
 });

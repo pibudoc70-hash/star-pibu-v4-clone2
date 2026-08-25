@@ -18,16 +18,6 @@ const galleryImageSrcs = [
   { srcWebP: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp", srcJPG: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp" },
 ];
 
-// PC 버전용 제목 (사용자 요청대로)
-const pcCardTitles = [
-  "메타뷰촬영실",
-  "피부대기실",
-  "다인피부관리실",
-  "레이저실 복도",
-  "안내데스크",
-  "안내데스크",
-];
-
 const highlights = [
   { num: "50+" },
   { num: "3인" },
@@ -216,14 +206,6 @@ export default function FacilitySection() {
               <div
                 className="absolute inset-0 facility-dark-overlay"
               />
-              {/* Content Overlay - Title Only */}
-              <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
-                <h3
-                  className="font-normal facility-img-label"
-                >
-                  {img.label}
-                </h3>
-              </div>
             </button>
           ))}
         </div>
@@ -260,17 +242,6 @@ export default function FacilitySection() {
                   />
                 </div>
               ))}
-            </div>
-
-            {/* Content Overlay - Title Only */}
-            <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 pointer-events-none">
-              <div className="max-w-2xl">
-                <h3
-                  className="text-2xl sm:text-4xl font-normal text-white"
-                >
-                  {galleryImages[currentIndex].label}
-                </h3>
-              </div>
             </div>
 
             {/* Navigation Buttons */}
@@ -379,18 +350,11 @@ export default function FacilitySection() {
               {/* Image */}
                 <OptimizedImage
                   src={galleryImageSrcs[lightboxIndex].srcJPG}
-                  alt={pcCardTitles[lightboxIndex]}
+                  alt={galleryImages[lightboxIndex].label}
                   className="w-full h-auto rounded-lg"
                   width={1200}
                   height={675}
                 />
-
-              {/* Title */}
-              <div className="text-center mt-4">
-                <h3 className="text-white text-xl font-normal">
-                  {galleryImages[lightboxIndex].label}
-                </h3>
-              </div>
             </div>
           </div>
         )}

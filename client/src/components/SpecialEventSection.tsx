@@ -16,7 +16,6 @@ import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
 import PainManagementGuide from "@/components/PainManagementGuide";
 import { parseEventListError } from "@/lib/errorMessages";
-import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useEventSkeletonTiming } from "@/hooks/useEventSkeletonTiming";
 
 /** 뷰포트 근접 시점까지 데이터 조회를 미뤄 초기 홈 요청을 줄인다. */
@@ -128,7 +127,6 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
 export default function SpecialEventSection() {
   const { lang } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
-  const sectionRef = useSectionReveal(60); // [Step64]
   const [fetchRef, isFetchVisible] = useVisibleFetch();
   const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery(
     { lang },
@@ -195,7 +193,7 @@ export default function SpecialEventSection() {
   const hasMoreDesktop = allEvents.length > 6;
 
   return (
-    <section ref={sectionRef} id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
+    <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
       <span ref={fetchRef} aria-hidden="true" />
       <div className="container">
         <SectionHeader lang={lang} />

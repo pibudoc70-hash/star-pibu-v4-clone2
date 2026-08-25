@@ -115,13 +115,7 @@ function HeroSection() {
       {/* 데스크톱: 이미지 배경 */}
       <div className="absolute inset-0 block pointer-events-none overflow-hidden hidden md:block">
         <picture className="absolute inset-0 block w-full h-full">
-          <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopAvif} type="image/avif" />
           <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopWebp} type="image/webp" />
-          <source media="(min-width: 641px)" srcSet={HERO_IMAGES.desktopJpg} type="image/jpeg" />
-          {/* 모바일 이미지 소스 (테스트 참조용 — 실제 모바일은 별자리 배경 사용) */}
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitAvif} type="image/avif" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
             src={HERO_IMAGES.desktopJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
@@ -136,9 +130,7 @@ function HeroSection() {
       {/* 모바일: 병원 사진 배경 */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
         <picture className="absolute inset-0 block w-full h-full">
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitAvif} type="image/avif" />
           <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitWebp} type="image/webp" />
-          <source media="(max-width: 640px)" srcSet={HERO_IMAGES.mobilePortraitJpg} type="image/jpeg" />
           <img
             src={HERO_IMAGES.mobilePortraitJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"

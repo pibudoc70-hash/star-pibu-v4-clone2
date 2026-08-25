@@ -54,9 +54,9 @@ describe("[A] HeroSection 이미지 URL constants 분리", () => {
       expect(constantsSrc).toMatch(/export\s+const\s+HERO_LOGO_IMAGE/);
     });
 
-    it("CDN 기반 URL이 포함되어야 한다", () => {
-      // cloudfront.net 또는 api/storage 경로 모두 허용 (이미지 CDN 마이그레이션 이후)
-      expect(constantsSrc).toMatch(/cloudfront\.net|api\/storage/);
+    it("관리형 이미지 URL이 포함되어야 한다", () => {
+      // CDN·legacy storage·관리형 manus-storage 경로를 모두 허용한다.
+      expect(constantsSrc).toMatch(/cloudfront\.net|api\/storage|manus-storage/);
     });
 
     it("as const로 불변 선언되어야 한다", () => {

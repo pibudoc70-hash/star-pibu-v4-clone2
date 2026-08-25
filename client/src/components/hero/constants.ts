@@ -15,20 +15,19 @@
  */
 
 
+/** 사용자가 제공한 승인 히어로 배경 원본 (데스크톱·모바일 공용 WebP) */
+export const HERO_BACKGROUND_IMAGE = "/manus-storage/hero-background-0000_d3dee03d.webp";
+
 /** 히어로 배경 이미지 URL 모음 */
 export const HERO_IMAGES = {
-  /** 데스크톱 배경 (AVIF, min-width: 641px) */
-  desktopAvif: "/manus-storage/hero_ae3f2e80.avif",
   /** 데스크톱 배경 (WebP, min-width: 641px) */
-  desktopWebp: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
-  /** 데스크톱 배경 (JPEG 폴백) */
-  desktopJpg: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
-  /** 모바일 세로 배경 (AVIF, max-width: 640px) */
-  mobilePortraitAvif: "/manus-storage/hero_ae3f2e80.avif",
-  /** 모바일 세로 배경 (WebP, max-width: 640px) — 데스크탑 이미지 공용 사용 (STAR DERMATOLOGY 글자 노출) */
-  mobilePortraitWebp: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
-  /** 모바일 세로 배경 (JPEG 폴백) */
-  mobilePortraitJpg: "/api/storage/hero-bg-new-desktop_2f8a8ccf_482fcfca.webp",
+  desktopWebp: HERO_BACKGROUND_IMAGE,
+  /** img fallback */
+  desktopJpg: HERO_BACKGROUND_IMAGE,
+  /** 모바일 세로 배경 (WebP, max-width: 640px) */
+  mobilePortraitWebp: HERO_BACKGROUND_IMAGE,
+  /** img fallback */
+  mobilePortraitJpg: HERO_BACKGROUND_IMAGE,
 } as const;
 
 /** 스타피부과 AI 로고 이미지 URL */

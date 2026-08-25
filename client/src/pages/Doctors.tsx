@@ -9,6 +9,8 @@
  */
 import { useLang } from "@/contexts/LangContext";
 import MainLayout from "@/components/MainLayout";
+
+const DERM_SPECIALIST_BADGE = "/manus-storage/derm-specialist-badge_6d75896e.webp";
 import SeoHead, {
   buildHreflangs,
   buildBreadcrumbJsonLd,
@@ -173,7 +175,7 @@ export default function Doctors() {
                       </div>
                     </div>
                     <img
-                      src="/api/storage/derm-specialist-badge_9b9bcf96.png"
+                      src={DERM_SPECIALIST_BADGE}
                       alt={t.doctors.dermBadge?.replace("\n", " ") ?? "피부과 전문의"}
                       className="dr-derm-badge-img dr-derm-badge-img-desktop"
                       draggable={false}
@@ -264,7 +266,7 @@ export default function Doctors() {
                     </div>
                   </div>
                   <img
-                    src="/api/storage/derm-specialist-badge_9b9bcf96.png"
+                    src={DERM_SPECIALIST_BADGE}
                     alt={t.doctors.dermBadge?.replace("\n", " ") ?? "피부과 전문의"}
                     className="dr-derm-badge-img dr-derm-badge-img-mobile"
                     draggable={false}

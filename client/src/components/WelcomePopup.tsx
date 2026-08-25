@@ -8,7 +8,7 @@
  */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { withVersion } from "@/lib/imageUrl";
-import { X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/useLang";
@@ -46,6 +46,7 @@ export default function WelcomePopup() {
   const [isMobile, setIsMobile] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   // 현재 언어를 서버에 전달하여 해당 언어용 팝업만 수신
@@ -105,8 +106,7 @@ export default function WelcomePopup() {
       document.body.style.overflow = "hidden";
       lastFocusedRef.current = document.activeElement as HTMLElement;
       requestAnimationFrame(() => {
-        const btn = dialogRef.current?.querySelector<HTMLElement>('button[aria-label]');
-        btn?.focus();
+        closeButtonRef.current?.focus();
       });
       return () => {
         document.body.style.overflow = originalOverflow;
@@ -183,8 +183,8 @@ export default function WelcomePopup() {
   };
 
   return isMobile
-    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />
-    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />;
+    ? <MobilePopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} closeButtonRef={closeButtonRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />
+    : <DesktopPopup ev={ev} closing={closing} dismiss={dismiss} dismissToday={dismissToday} handleImageClick={handleImageClick} dialogRef={dialogRef} closeButtonRef={closeButtonRef} getProxiedImageUrl={(url) => getProxiedImageUrl(url, ev.updatedAt)} />;
 }
 
 // ── 모바일 팝업 ───────────────────────────────────────────────────────────────
@@ -195,10 +195,11 @@ interface PopupProps {
   dismissToday: () => void;
   handleImageClick: () => void;
   dialogRef: React.RefObject<HTMLDivElement | null>;
+  closeButtonRef: React.RefObject<HTMLButtonElement | null>;
   getProxiedImageUrl: (url: string | null) => string;
 }
 
-function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
+function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, closeButtonRef, getProxiedImageUrl }: PopupProps) {
   const [hideToday, setHideToday] = useState(false);
   const handleClose = () => (hideToday ? dismissToday() : dismiss());
 
@@ -206,13 +207,10 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
     <div
       className={`popup-overlay${closing ? " closing" : ""}`}
       style={{ alignItems: "flex-start", padding: 0, paddingTop: "15%" }}
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) handleClose();
+      }}
     >
-      <button
-        type="button"
-        className="absolute inset-0 cursor-default"
-        aria-label="팝업 닫기"
-        onClick={handleClose}
-      />
       <div
         ref={dialogRef as React.RefObject<HTMLDivElement>}
         role="dialog"
@@ -228,7 +226,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
           willChange: "transform",
         }}
       >
-        <button type="button" onClick={handleClose} className="popup-close-control absolute right-3 top-3 z-10 flex size-11 items-center justify-center rounded-full bg-white/95 text-[var(--color-star-text)] shadow-md transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
+        <button ref={closeButtonRef} type="button" onClick={handleClose} className="popup-close-control absolute right-3 top-3 z-10 flex size-11 items-center justify-center rounded-full bg-white/95 text-[var(--color-star-text)] shadow-md transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
           <X size={18} aria-hidden="true" />
         </button>
         {/* 이미지 */}
@@ -250,7 +248,8 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
 
         <div className="flex items-center px-5 py-3 flex-shrink-0 border-t border-gray-200">
           <label className="popup-today-hide flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2 text-xs font-medium text-gray-600 hover:bg-[var(--color-gold-pale)] hover:text-gray-800 focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)]">
-            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-5 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
+            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="sr-only" />
+            <span data-testid="today-hide-indicator" className={`today-hide-check-indicator${hideToday ? " is-checked" : ""}`} aria-hidden="true"><Check size={14} strokeWidth={3} /></span>
             오늘은 보지 않음
           </label>
         </div>
@@ -260,7 +259,7 @@ function MobilePopup({ ev, closing, dismiss, dismissToday, handleImageClick, dia
 }
 
 // ── 데스크톱 팝업 ─────────────────────────────────────────────────────────────
-function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, getProxiedImageUrl }: PopupProps) {
+function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, dialogRef, closeButtonRef, getProxiedImageUrl }: PopupProps) {
   const [hideToday, setHideToday] = useState(false);
   const handleClose = () => (hideToday ? dismissToday() : dismiss());
 
@@ -289,7 +288,7 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
       >
         {/* 닫기 버튼 */}
         <div className="absolute top-4 right-4 z-10">
-          <button type="button" onClick={handleClose} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
+          <button ref={closeButtonRef} type="button" onClick={handleClose} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/90 hover:bg-white shadow-md transition-all focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]" aria-label="닫기">
             <X size={18} className="text-gray-600" />
           </button>
         </div>
@@ -313,7 +312,8 @@ function DesktopPopup({ ev, closing, dismiss, dismissToday, handleImageClick, di
 
         <div className="flex items-center px-6 py-4 flex-shrink-0 border-t border-gray-200">
           <label className="popup-today-hide flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2 text-xs font-medium text-gray-600 transition-colors hover:bg-[var(--color-gold-pale)] hover:text-gray-800 focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)]">
-            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="size-4 rounded border-gray-300 text-[var(--color-gold-primary)] focus:ring-[var(--color-gold-primary)]" />
+            <input type="checkbox" checked={hideToday} onChange={(event) => setHideToday(event.target.checked)} className="sr-only" />
+            <span data-testid="today-hide-indicator" className={`today-hide-check-indicator${hideToday ? " is-checked" : ""}`} aria-hidden="true"><Check size={14} strokeWidth={3} /></span>
             오늘은 보지 않음
           </label>
         </div>

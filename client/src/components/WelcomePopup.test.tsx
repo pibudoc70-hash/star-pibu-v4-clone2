@@ -42,6 +42,7 @@ vi.mock("@/components/OptimizedImage", () => ({
 
 vi.mock("lucide-react", () => ({
   X: () => <span aria-hidden="true">×</span>,
+  Check: () => <span aria-hidden="true">✓</span>,
 }));
 
 describe("WelcomePopup keyboard focus", () => {
@@ -112,6 +113,7 @@ describe("WelcomePopup keyboard focus", () => {
     expect(todayHide).not.toBeChecked();
     fireEvent.click(todayHide);
     expect(todayHide).toBeChecked();
+    expect(screen.getByTestId("today-hide-indicator")).toHaveClass("is-checked");
     fireEvent.click(within(dialog).getByRole("button", { name: "닫기" }));
     act(() => {
       vi.advanceTimersByTime(260);
@@ -121,6 +123,23 @@ describe("WelcomePopup keyboard focus", () => {
     expect(expiry.getHours()).toBe(0);
     expect(expiry.getMinutes()).toBe(0);
     expect(expiry.getSeconds()).toBe(0);
+  });
+
+  it("focuses the close control when opening and closes from the mobile dim backdrop", () => {
+    const originalInnerWidth = window.innerWidth;
+    Object.defineProperty(window, "innerWidth", { configurable: true, value: 375 });
+    window.dispatchEvent(new Event("resize"));
+
+    const dialog = renderVisiblePopup();
+    expect(document.activeElement).toBe(within(dialog).getByRole("button", { name: "닫기" }));
+
+    fireEvent.pointerDown(dialog.parentElement!);
+    act(() => {
+      vi.advanceTimersByTime(260);
+    });
+
+    expect(screen.queryByRole("dialog", { name: "팝업 이벤트" })).toBeNull();
+    Object.defineProperty(window, "innerWidth", { configurable: true, value: originalInnerWidth });
   });
 
   it("opens configured popup URLs with an isolated new-window policy", () => {

@@ -758,6 +758,32 @@
     }
   }
 
+  @keyframes popupTodayHideCheck {
+    0% { transform: scale(0.6) rotate(-12deg); }
+    65% { transform: scale(1.15) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
+  .today-hide-check-indicator {
+    display: grid;
+    width: 1.25rem;
+    height: 1.25rem;
+    place-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.3125rem;
+    background: #ffffff;
+    color: transparent;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+
+  .today-hide-check-indicator.is-checked {
+    border-color: var(--color-gold-deep);
+    background: var(--color-gold-primary);
+    color: #ffffff;
+    animation: popupTodayHideCheck 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .popup-overlay,
     .popup-overlay.closing,
@@ -767,6 +793,10 @@
     .popup-modal-mobile.closing {
       animation: none;
       transform: none;
+    }
+
+    .today-hide-check-indicator.is-checked {
+      animation: none;
     }
   }
 

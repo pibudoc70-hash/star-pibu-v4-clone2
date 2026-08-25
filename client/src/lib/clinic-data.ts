@@ -144,27 +144,27 @@ export interface ManagementDevice {
   imgId: string;
 }
 
-// ── 관리 장비 CDN 경로 ────────────────────────────────────────────────────────
-export const MANAGEMENT_DEVICE_CDN = "/api/storage";
+// ── 관리 장비 관리형 자산 경로 ────────────────────────────────────────────────
+export const MANAGEMENT_DEVICE_CDN = "/manus-storage";
 
 // ── 관리 장비 이미지 맵 ───────────────────────────────────────────────────────
 export const MANAGEMENT_DEVICE_IMAGES: Record<string, string> = {
-  sonopeel: `/api/storage/sonopeel_53d2c9d1_98e548a0.jpg`,
-  porederm: `/api/storage/porederm_new_896695b4_2bd9152b.jpg`,
-  airbubble: `/api/storage/airbubble_9631da26_03e03b84.jpg`,
-  oxyjet: `/api/storage/oxyet_a81daa05_06a40b0e.jpg`,
-  inbio: `/api/storage/inbio_new_f3628f96_da0b433c.jpg`,
-  flawless: `/api/storage/flawless_48eb550e_5e78910f.jpg`,
-  dermalight: `/api/storage/dermalight_new_0effb3eb_2b192086.jpg`,
-  fray: `/api/storage/fray_66504ffe_6a6a0764.jpg`,
-  ionzyme: `/api/storage/ionzyme_ec731187_aeb6531a.png`,
-  healingbright: `/api/storage/healingbright_d060a2aa_ac3bcf4b.jpg`,
-  mesoskin: `/api/storage/mesoskin_new_32137830_3a93cfe5.jpg`,
-  ultraduo: `/api/storage/ultraduo_af289409_e79e4dfa.jpg`,
-  triplemultigel: `/api/storage/supersonic_5df47d2e_38e98bb4.jpg`,
-  ldm: `/api/storage/ldm_ac66d69e_8129485d.jpg`,
-  ilumi: `/api/storage/ilumi_new_3d286596_5121300a.jpg`,
-  transkin: `/api/storage/transskin_67357f56_e00fae32.jpg`,
+  sonopeel: "/manus-storage/sonopeel_53d2c9d1_98e548a0_2d394c93.webp",
+  porederm: "/manus-storage/porederm_new_896695b4_2bd9152b_e1ab97a7.webp",
+  airbubble: "/manus-storage/airbubble_9631da26_03e03b84_c3f307df.webp",
+  oxyjet: "/manus-storage/oxyet_a81daa05_06a40b0e_639b23d3.webp",
+  inbio: "/manus-storage/inbio_new_f3628f96_da0b433c_6aa54dba.webp",
+  flawless: "/manus-storage/flawless_48eb550e_5e78910f_96599179.webp",
+  dermalight: "/manus-storage/dermalight_new_0effb3eb_2b192086_fee610c2.webp",
+  fray: "/manus-storage/fray_66504ffe_6a6a0764_4e62538d.webp",
+  ionzyme: "/manus-storage/ionzyme_ec731187_aeb6531a_1552a51c.webp",
+  healingbright: "/manus-storage/healingbright_d060a2aa_ac3bcf4b_fb4994e8.webp",
+  mesoskin: "/manus-storage/mesoskin_new_32137830_3a93cfe5_190392e4.webp",
+  ultraduo: "/manus-storage/ultraduo_af289409_e79e4dfa_972c28cb.webp",
+  triplemultigel: "/manus-storage/supersonic_5df47d2e_38e98bb4_78f3ba9f.webp",
+  ldm: "/manus-storage/ldm_ac66d69e_8129485d_d0de0a08.webp",
+  ilumi: "/manus-storage/ilumi_new_3d286596_5121300a_cb42041e.webp",
+  transkin: "/manus-storage/transskin_67357f56_e00fae32_a3ea02c1.webp",
 };
 
 // ── 관리 장비 목록 (4개 언어 완전 번역) ──────────────────────────────────────

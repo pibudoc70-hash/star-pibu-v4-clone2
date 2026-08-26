@@ -41,4 +41,11 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).toContain('className="event-card__preview"');
     expect(source).toContain("key={selectedEvent.id}");
   });
+
+  it("shows the full desktop event selector list by default and keeps the preview aligned while scanning", () => {
+    expect(source).toContain("const desktopEvents = allEvents;");
+    expect(source).toContain("md:sticky md:top-28 md:self-start");
+    expect(source).not.toContain("const [showMore");
+    expect(source).not.toContain("hasMoreDesktop");
+  });
 });

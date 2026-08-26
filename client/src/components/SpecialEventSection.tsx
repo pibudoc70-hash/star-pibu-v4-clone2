@@ -6,7 +6,7 @@
  * - 데스크톱: 우측 이벤트 선택 목록 + 좌측 hover/focus 연동 상세 패널
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { Sparkles, RefreshCw, ChevronDown } from "lucide-react";
+import { Sparkles, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -143,7 +143,6 @@ export default function SpecialEventSection() {
     { lang },
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
-  const [showMore, setShowMore] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
   useEventSkeletonTiming(isInitialSkeletonVisible);
@@ -204,9 +203,8 @@ export default function SpecialEventSection() {
   }
 
   const allEvents = specialEvents as SpecialEvent[];
-  const desktopEvents = showMore ? allEvents : allEvents.slice(0, 6);
+  const desktopEvents = allEvents;
   const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
-  const hasMoreDesktop = allEvents.length > 6;
   const compactHintMap: Record<string, { title: string; hint: string }> = {
     ko: {
       title: "이벤트 선택",
@@ -251,7 +249,7 @@ export default function SpecialEventSection() {
             {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
               {selectedEvent && (
-                <div className="md:col-span-5">
+                <div className="md:col-span-5 md:sticky md:top-28 md:self-start">
                   <div key={selectedEvent.id} className="event-card__preview">
                     <EventCard
                       event={selectedEvent}
@@ -289,29 +287,6 @@ export default function SpecialEventSection() {
               </div>
             </div>
 
-            {/* 데스크톱 더보기 버튼 */}
-            {hasMoreDesktop && (
-              <div className="hidden md:flex justify-center mt-10">
-                <button
-                  type="button"
-                  onClick={() => setShowMore(!showMore)}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-colors hover:opacity-90"
-                  style={{ backgroundColor: "var(--color-gold-primary)" } as React.CSSProperties}
-                >
-                  {showMore ? (
-                    <>
-                      {lang === "ko" ? "접기" : lang === "en" ? "Show Less" : lang === "ja" ? "閉じる" : lang === "zh-TW" ? "收起" : "隐藏"}
-                      <ChevronDown size={18} className="rotate-180" />
-                    </>
-                  ) : (
-                    <>
-                      {lang === "ko" ? "더보기" : lang === "en" ? "Show More" : lang === "ja" ? "もっと見る" : lang === "zh-TW" ? "更多內容" : "更多"}
-                      <ChevronDown size={18} />
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
           </>
         )}
         <div className="mt-10">

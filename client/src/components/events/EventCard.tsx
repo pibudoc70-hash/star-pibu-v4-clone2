@@ -226,18 +226,18 @@ function LeadEventCard({
   return (
     <article id={previewPanelId} className="card card--event flex flex-col overflow-hidden">
       {event.imageUrl && (
-        <div className="event-card__media event-card__media--lead event-card__media--hoverable overflow-hidden bg-gray-100">
+        <div className="event-card__media event-card__media--lead event-card__media--natural event-card__media--hoverable overflow-hidden bg-gray-100">
           <OptimizedImage
             src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
             alt={title}
-            className="event-card__media-image w-full h-full object-cover"
+            className="event-card__media-image w-full h-auto object-cover"
             width={800}
             height={533}
             priority={false}
           />
         </div>
       )}
-      <div className="event-card__content flex flex-1 flex-col">
+      <div className="event-card__content event-card__content--lead flex flex-1 flex-col">
         <EventCardHeader
           event={event}
           priceRows={priceRows}

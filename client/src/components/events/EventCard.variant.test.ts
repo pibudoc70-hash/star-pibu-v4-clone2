@@ -20,10 +20,16 @@ describe("EventCard desktop variants", () => {
     expect(cardSource).toContain("event-card__media--hoverable");
     expect(cardSource).toContain("event-card__media--lead");
     expect(cssSource).toContain(".event-card__media--lead");
-    expect(cssSource).toContain("aspect-ratio: 3 / 2");
     expect(cardSource).toContain("CompactEventRow");
     expect(cardSource).toContain('aria-expanded={isExpanded}');
     expect(cardSource).toContain('aria-controls={`special-event-compact-detail-${event.id}`}');
+  });
+
+  it("lets the sticky detail preview preserve each event image ratio with compact lead spacing", () => {
+    expect(cardSource).toContain("event-card__media--natural");
+    expect(cardSource).toContain("event-card__content--lead");
+    expect(cssSource).toContain(".event-card__media--natural");
+    expect(cssSource).toContain("aspect-ratio: auto");
   });
 
   it("does not introduce scale or translate hover effects into the compact flow", () => {

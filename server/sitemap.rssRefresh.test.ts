@@ -4,7 +4,6 @@ import { join } from "node:path";
 import { buildGlobalEntries } from "./sitemap";
 
 const root = process.cwd();
-const sitemapSource = readFileSync(join(root, "server/sitemap.ts"), "utf8");
 const rssSource = readFileSync(join(root, "server/rss.ts"), "utf8");
 
 describe("Naver Search Advisor sitemap and RSS refresh", () => {

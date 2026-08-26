@@ -4,7 +4,7 @@
  * 박스 테두리 제거 완료
  */
 
-const LOGO_URL = "/api/storage/star-logo_64a097b7_50456ffb.gif";
+const LOGO_URL = "/manus-storage/star_logo_d0ae8bbf_8a004167.webp";
 
 interface StarLogoProps {
   variant?: "color" | "white" | "dark";

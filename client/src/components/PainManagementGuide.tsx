@@ -241,31 +241,27 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       <div className="mb-4 text-center sm:mb-5 sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
         <h2 id={headingId} className="mx-auto mt-3 max-w-[18ch] break-keep text-balance text-[1.65rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:mx-0 sm:max-w-none sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
-        <p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>
+        <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)] sm:mx-0">{copy.visualCaption}</p>
       </div>
 
-      <section className="pain-management-infographic mb-2 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-1.5 sm:mb-5 sm:p-5" aria-label={copy.visualHeading}>
-        <div className="text-center sm:text-left">
-          <h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>
-          <p className="mt-1 text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
-        </div>
-        <ol className="mt-1.5 grid grid-cols-3 gap-1.5 sm:mt-4 sm:gap-3">
+      <section data-testid="pain-management-summary" className="pain-management-summary mb-4 rounded-xl bg-[var(--color-gold-pale)]/65 p-3 sm:mb-5 sm:p-5" aria-label={copy.visualHeading} aria-describedby="pain-management-summary-caption">
+        <ol className="grid grid-cols-3 gap-2 sm:gap-3">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <li key={step.title} className="relative flex min-h-[88px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-1 text-center shadow-sm sm:min-h-0 sm:px-2 sm:py-3">
-                <span className="mx-auto flex size-7 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-xs font-bold text-white">{index + 1}</span>
-                <Icon size={18} className="mx-auto mt-1.5 text-[var(--color-gold-deep)]" aria-hidden="true" />
+              <li key={step.title} className="relative flex min-h-[74px] flex-col items-center justify-center rounded-lg bg-white px-1.5 py-2 text-center shadow-[0_1px_2px_rgba(46,41,34,0.06)] sm:min-h-0 sm:px-3 sm:py-3">
+                <span className="mx-auto flex size-6 items-center justify-center rounded-full bg-[var(--color-gold-primary)] text-[11px] font-bold text-white">{index + 1}</span>
+                <Icon size={17} className="mx-auto mt-1 text-[var(--color-gold-deep)]" aria-hidden="true" />
                 <span className="mt-0.5 block break-keep text-[11px] font-semibold leading-4 text-[var(--color-star-text)] sm:text-xs sm:leading-5">{step.title.replace(/^[①②③]|^\d\.\s*/, "")}</span>
               </li>
             );
           })}
         </ol>
-        <ul className="mt-1.5 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-1.5 sm:mt-4 sm:gap-2 sm:pt-4">
+        <ul className="mt-3 grid grid-cols-3 gap-1.5 border-t border-[var(--color-gold-light)] pt-3 sm:mt-4 sm:gap-3 sm:pt-4">
           {copy.careCheckpoints.map((checkpoint, index) => (
             <li key={checkpoint.label}>
-              <div className="pain-management-checkpoint flex min-h-9 flex-col items-center justify-center gap-0.5 rounded-md border border-[var(--color-gold-light)] bg-white/90 px-1.5 py-1 text-center text-[11px] font-medium leading-4 text-[var(--color-star-text-mid)] shadow-[0_1px_0_rgba(155,122,43,0.08)] sm:flex-row sm:gap-1.5 sm:px-2 sm:text-left sm:text-xs">
-                <ClipboardCheck size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
+              <div className="pain-management-checkpoint flex min-h-8 flex-col items-center justify-center gap-0.5 rounded-full bg-white/70 px-1.5 py-1 text-center text-[10px] font-medium leading-4 text-[var(--color-star-text-mid)] sm:flex-row sm:gap-1.5 sm:px-3 sm:text-left sm:text-xs">
+                <ClipboardCheck size={14} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />
                 <span>{checkpoint.label}</span>
               </div>
             </li>

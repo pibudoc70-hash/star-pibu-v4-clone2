@@ -82,7 +82,7 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("adds an accessible, localized visual explainer without introducing unsupported medical claims", () => {
-    expect(guideSource).toContain("pain-management-infographic");
+    expect(guideSource).toContain("pain-management-summary");
     expect(guideSource).toContain("visualHeading");
     expect(guideSource).toContain("visualCaption");
     expect(guideSource).toContain("careCheckpoints");
@@ -117,23 +117,23 @@ describe("PainManagementGuide content and placement", () => {
   it("uses mobile-specific spacing and typography so the visual explainer stays balanced on narrow screens", () => {
     expect(guideSource).toContain("p-4 sm:p-7");
     expect(guideSource).toContain("text-[1.65rem]");
-    expect(guideSource).toContain("min-h-[88px]");
+    expect(guideSource).toContain("min-h-[74px]");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[11px]");
   });
 
   it("uses a denser mobile infographic and a clear Korean anesthesia-experience disclosure title with icon", () => {
-    expect(guideSource).toContain("mb-2 rounded-xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] px-3 py-1.5");
-    expect(guideSource).toContain("mt-1.5 grid grid-cols-3");
+    expect(guideSource).toContain("pain-management-summary mb-4 rounded-xl bg-[var(--color-gold-pale)]/65 p-3");
+    expect(guideSource).toContain("grid grid-cols-3 gap-2");
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취 운영경험 20여년");
     expect(guideSource).toContain("Moon");
     expect(guideSource).toContain("data-testid=\"pain-experience\"");
   });
 
   it("tightens mobile stage and checkpoint spacing while giving guidance and FAQ headings matching icons", () => {
-    expect(guideSource).toContain("mt-1.5 text-[var(--color-gold-deep)]");
+    expect(guideSource).toContain("mt-1 text-[var(--color-gold-deep)]");
     expect(guideSource).toContain("mt-0.5 block break-keep");
-    expect(guideSource).toContain("min-h-9 flex-col items-center justify-center gap-0.5");
+    expect(guideSource).toContain("min-h-8 flex-col items-center justify-center gap-0.5 rounded-full bg-white/70");
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody).toContain("20여년 동안");
     expect(guideSource).toContain("FileText");
     expect(guideSource).toContain("CircleHelp");
@@ -154,7 +154,7 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("pain-management-stage");
     expect(globalCssSource).toContain(".pain-management-stage::details-content");
     expect(globalCssSource).toContain("transform: translateY(-4px)");
-    expect(guideSource).toContain("border border-[var(--color-gold-light)] bg-white/90");
+    expect(guideSource).toContain("rounded-full bg-white/70");
     expect(guideSource).toContain("text-[13px] leading-5");
     expect(guideSource).toContain("text-[15px] leading-7");
   });
@@ -167,5 +167,12 @@ describe("PainManagementGuide content and placement", () => {
     expect(eventSectionSource).toContain("PainManagementGuide");
     expect(eventSectionSource).toContain("<PainManagementGuide lang={lang} />");
     expect(eventSectionSource).not.toContain('mode="summary"');
+  });
+
+  it("uses one concise visual summary instead of repeating the guide title and explanatory heading", () => {
+    expect(guideSource).toContain('data-testid="pain-management-summary"');
+    expect(guideSource).toContain('id="pain-management-summary-caption"');
+    expect(guideSource).not.toContain('<p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>');
+    expect(guideSource).not.toContain('<h3 className="text-base font-semibold text-[var(--color-star-text)]">{copy.visualHeading}</h3>');
   });
 });

@@ -29,4 +29,11 @@ describe("choosing Star Dermatology card images", () => {
     expect(source).toContain("alt={doctor.title}");
     expect(source).toContain('className="w-full h-full object-cover"');
   });
+
+  it("removes the visible experience, treatment-count, and direct-treatment statistic cards", () => {
+    expect(source).not.toContain("statistics.map(");
+    expect(source).not.toContain("useClinicStats");
+    expect(source).not.toContain("StatisticCardSkeleton");
+    expect(source).toContain("doctors.map(");
+  });
 });

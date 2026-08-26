@@ -4,10 +4,8 @@
  * - 상단: 다크 배경 + 에디토리얼 통계 인터루드
  * - 하단: 라이트 배경 + 2컬럼 브랜드 서사
  */
-import { ScanEye, Award, Cpu } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
-import { useClinicStats } from "@/hooks/useClinicStats";
 
 const NEW_IMAGE = "/manus-storage/patient-consultation-mobile_e2474e05_fb420943_2114c946.webp";
 const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;
@@ -17,164 +15,13 @@ const PATIENT_IMAGE_TABLET_JPG = NEW_IMAGE;
 const PATIENT_IMAGE_DESKTOP_WEBP = NEW_IMAGE;
 const PATIENT_IMAGE_DESKTOP_JPG = NEW_IMAGE;
 
-const statIcons = [Award, ScanEye, Cpu];
-
 export default function PhilosophySection() {
   const { t, lang } = useLang();
-  const stats = useClinicStats();
   const leftRef = useScrollReveal<HTMLDivElement>();
   const rightRef = useScrollReveal<HTMLDivElement>();
-  const statsRef = useScrollReveal<HTMLDivElement>();
 
   return (
     <>
-      {/* ── 다크 인터루드 — 신뢰지표 에디토리얼 스트립 ── */}
-      <div
-        ref={statsRef}
-        className="reveal"
-        style={{
-          background: "linear-gradient(135deg, #1a1410 0%, #2a1f14 50%, #1a1410 100%)",
-          padding: "clamp(3rem, 8vw, 5rem) 0",
-        }}
-      >
-        <div className="container">
-          <p
-            className="text-center font-montserrat mb-8 sm:mb-12"
-            style={{
-              color: "color-mix(in srgb, var(--color-gold-primary) 70%, transparent)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-            }}
-          >
-            {t.about.sectionLabels?.trustedSince ?? "TRUSTED BY PATIENTS SINCE 2006"}
-          </p>
-          <div className="grid grid-cols-3 gap-0">
-            {[
-              { num: stats.years.value, suffix: stats.years.unit, label: t.about.stats[0].label, Icon: Award },
-              { num: stats.cases.value, suffix: stats.cases.unit, label: t.about.stats[1].label, Icon: ScanEye },
-              { num: stats.types.value, suffix: stats.types.unit, label: t.about.stats[2].label, Icon: Cpu },
-            ].map((s, idx) => (
-              <div
-                key={s.label}
-                className="text-center flex flex-col items-center"
-                style={{
-                  padding: "clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1.5rem)",
-                  borderRight: idx < 2 ? "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" : "none",
-                }}
-              >
-                <s.Icon
-                  size={20}
-                  style={{ color: "color-mix(in srgb, var(--color-gold-primary) 50%, transparent)", marginBottom: "0.75rem" }}
-                  strokeWidth={1.2}
-                />
-                <div className="philosophy-stat-num" style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)" }}>
-                  {s.num}
-                  <span style={{ fontSize: "55%", fontWeight: 300, opacity: 0.75, letterSpacing: "0.02em" }}>
-                    {s.suffix}
-                  </span>
-                </div>
-                <div className="philosophy-stat-label">
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── 20년 마일스톤 타임라인 스트립 ── */}
-      <div
-        style={{
-          background: "var(--brand-bg-alt, #F5F0EB)",
-          borderTop: "1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
-          borderBottom: "1px solid color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
-          padding: "clamp(2rem, 5vw, 3rem) 0",
-          overflow: "hidden",
-        }}
-      >
-        <div className="container">
-          <p
-            className="text-center font-montserrat mb-6 sm:mb-8"
-            style={{
-              color: "color-mix(in srgb, var(--color-gold-primary) 65%, transparent)",
-              fontSize: "0.6rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-            }}
-          >
-            {t.about.sectionLabels?.journey ?? "OUR JOURNEY"}
-          </p>
-          <div
-            className="grid grid-cols-2 sm:grid-cols-4 gap-0"
-            style={{ borderTop: "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" }}
-          >
-            {(t.about.journeyItems ?? [
-              { year: "2006", label: "서면 개원", sub: "부산 서면에서 시작" },
-              { year: "2010", label: "레이저 전문화", sub: "프리미엄 장비 도입" },
-              { year: "2016", label: "10주년", sub: "누적 환자 10,000명+" },
-              { year: "2026", label: "20주년", sub: "한결같은 신뢰" },
-            ]).map((m, idx, arr) => (
-              <div
-                key={m.year}
-                style={{
-                  padding: "clamp(1.25rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.5rem)",
-                  borderRight: idx < arr.length - 1 ? "1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent)" : "none",
-                  position: "relative",
-                }}
-              >
-                {/* 타임라인 닷 */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "-5px",
-                    left: "clamp(1rem, 2.5vw, 1.5rem)",
-                    width: "9px",
-                    height: "9px",
-                    borderRadius: "50%",
-                    background: idx === arr.length - 1 ? "var(--color-gold-primary)" : "color-mix(in srgb, var(--color-gold-primary) 35%, transparent)",
-                    border: "1px solid color-mix(in srgb, var(--color-gold-primary) 50%, transparent)",
-                  }}
-                />
-                <p
-                  className="font-montserrat"
-                  style={{
-                    color: "var(--color-gold-primary)",
-                    fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
-                    fontWeight: 400,
-                    letterSpacing: "-0.02em",
-                    lineHeight: 1,
-                    marginBottom: "0.4rem",
-                  }}
-                >
-                  {m.year}
-                </p>
-                <p
-                  style={{
-                    color: "var(--brand-text, #2C2C2C)",
-                    fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
-                    fontWeight: 300,
-                    marginBottom: "0.2rem",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {m.label}
-                </p>
-                <p
-                  style={{
-                    color: "var(--brand-text-mid, #666666)",
-                    fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {m.sub}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── 라이트 섹션 — 브랜드 서사 + 이미지 ── */}
       <section id="about" className="py-16 sm:py-24 overflow-hidden" aria-label="클리닉 철학 및 소개">
         <div className="container">

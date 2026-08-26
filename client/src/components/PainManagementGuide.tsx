@@ -237,14 +237,15 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
   const headingId = "pain-management-guide-title";
 
   return (
-    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7" aria-labelledby={headingId}>
-      <div className="mb-4 text-center sm:mb-5 sm:text-left">
+    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7 lg:p-10" aria-labelledby={headingId}>
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="mb-4 text-center sm:mb-5 sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
         <h2 id={headingId} className="mx-auto mt-3 max-w-[18ch] break-keep text-balance text-[1.65rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:mx-0 sm:max-w-none sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
         <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)] sm:mx-0">{copy.visualCaption}</p>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-gold-light)] px-4">
+        <div className="rounded-xl border border-[var(--color-gold-light)] px-4">
         {copy.steps.map((step, index) => {
           const Icon = STEP_ICONS[index] ?? Stethoscope;
           return (
@@ -279,6 +280,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-center gap-2 text-left text-sm font-semibold text-[var(--color-star-text)]"><CircleHelp size={19} className="text-[var(--color-gold-deep)] drop-shadow-sm" aria-hidden="true" />{copy.faqHeading}</span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary>
           <dl className="space-y-4 pb-4 text-sm text-[var(--color-star-text-mid)]">{copy.faqs.map((faq, index) => { const Icon = FAQ_ICONS[index] ?? CircleHelp; return <div key={faq.question}><dt className="flex items-start gap-2 font-semibold text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" /><span>{faq.question}</span></dt><dd className="mt-1 leading-6 sm:pl-6">{faq.answer}</dd></div>; })}</dl>
         </details>
+        </div>
       </div>
     </section>
   );

@@ -164,4 +164,9 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("data-testid={`pain-stage-${index + 1}`}");
     expect(guideSource).not.toContain('<p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>');
   });
+
+  it("uses a deliberate desktop reading measure for the heading and disclosure list", () => {
+    expect(guideSource).toContain('className="mx-auto w-full max-w-6xl"');
+    expect(guideSource).toContain("lg:p-10");
+  });
 });

@@ -237,7 +237,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
   const headingId = "pain-management-guide-title";
 
   return (
-    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7 lg:p-10" aria-labelledby={headingId}>
+    <section className="rounded-2xl border border-[var(--color-gold-light)] bg-white p-4 sm:p-7 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-4 text-center sm:mb-5 sm:text-left">
         <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>

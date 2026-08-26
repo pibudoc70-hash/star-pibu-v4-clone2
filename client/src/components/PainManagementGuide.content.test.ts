@@ -169,4 +169,8 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain('className="mx-auto w-full max-w-6xl"');
     expect(guideSource).toContain("lg:p-10");
   });
+
+  it("constrains the outer desktop card instead of only its inner reading axis", () => {
+    expect(guideSource).toContain("lg:mx-auto lg:max-w-5xl");
+  });
 });

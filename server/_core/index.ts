@@ -257,11 +257,8 @@ async function startServer() {
   registerTreatmentPrerender(app);
   registerSitemapDynamic(app);
 
-  // NOTE: /sitemap.xml is served as a static file from client/public/sitemap.xml
-  // (via express.static in serveStatic). The dynamic route that was here has been
-  // removed because it only contained fragment URLs (#about, #doctors, etc.) and
-  // was shadowing the comprehensive static sitemap.xml.
-  // Source of truth: client/public/sitemap.xml
+  // /sitemap.xml is the canonical dynamic sitemap index. Its five child urlsets
+  // are registered by registerSitemapDynamic and must precede the SPA fallback.
   // Heartbeat 스케줄러 핸들러
   app.post("/api/scheduled/collectKeywordTrends", collectKeywordTrendsHandler);
 

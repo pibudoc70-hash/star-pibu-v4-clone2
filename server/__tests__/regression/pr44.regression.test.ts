@@ -8,7 +8,7 @@
  *   1. ForeignGuide SEO — ko hreflang 없음, x-default = /en/foreign-guide
  *   2. Email template — fallback host = https://star-pibu.com
  *   3. Sitemap 정책 — /foreign-guide alias 없음, localized URLs 있음,
- *                     /privacy 없음, /treatment/* 없음
+ *                     /privacy 있음, /treatment/* 없음
  *
  * [Step56-A] 정적 sitemap.xml 삭제 후 동적 server/sitemap.ts 소스를 검사한다.
  * STATIC_URLS 배열에 URL 문자열이 있는지 확인하는 방식으로 동일한 정책을 보호한다.
@@ -16,6 +16,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { buildGlobalEntries, buildPagesEntries, buildTreatmentEntries } from "../../sitemap";
 
 const root = process.cwd();
 
@@ -107,39 +108,37 @@ describe("Email template fallback host 정책 (PR-44)", () => {
 // 3. Sitemap 정책 (PR-43/44) — [Step56-A] 동적 sitemap.ts 소스 검사
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Sitemap 정책 (PR-43) — server/sitemap.ts 소스 검사", () => {
+  const globalPaths = buildGlobalEntries().map((entry) => entry.path);
+  const pagesPaths = buildPagesEntries().map((entry) => entry.path);
+  const treatmentPaths = buildTreatmentEntries().map((entry) => entry.path);
+
   it("/foreign-guide alias URL이 STATIC_URLS에 없어야 한다", () => {
     // /foreign-guide (단수, 비로컬라이즈드) 형태가 없어야 함
     // /en/foreign-guide, /ja/foreign-guide, /zh/foreign-guide 는 허용
-    expect(sitemapSource).not.toMatch(
-      /`\$\{SITE_URL\}\/foreign-guide`/,
-    );
+    expect(globalPaths).not.toContain("/foreign-guide");
   });
 
   it("/en/foreign-guide canonical URL이 STATIC_URLS에 있어야 한다", () => {
-    expect(sitemapSource).toMatch(/\/en\/foreign-guide/);
+    expect(globalPaths).toContain("/en/foreign-guide");
   });
 
   it("/ja/foreign-guide canonical URL이 STATIC_URLS에 있어야 한다", () => {
-    expect(sitemapSource).toMatch(/\/ja\/foreign-guide/);
+    expect(globalPaths).toContain("/ja/foreign-guide");
   });
 
   it("/zh/foreign-guide canonical URL이 STATIC_URLS에 있어야 한다", () => {
-    expect(sitemapSource).toMatch(/\/zh\/foreign-guide/);
+    expect(globalPaths).toContain("/zh/foreign-guide");
   });
 
   it("/privacy URL이 STATIC_URLS에 있어야 한다 ([Step56b-A] 의료기관 필수 페이지)", () => {
     // [Step56b-A] 개인정보처리방침은 의료기관 필수 페이지이므로 sitemap에 포함한다.
-    expect(sitemapSource).toMatch(
-      /loc:\s*`\$\{SITE_URL\}\/privacy`/,
-    );
+    expect(pagesPaths).toContain("/privacy");
   });
 
   it("/treatment/ legacy bridge URL이 STATIC_URLS에 없어야 한다", () => {
     // /treatment/ (단수) 경로는 legacy bridge이므로 sitemap에 없어야 함
     // /treatments/ (복수)는 허용
-    expect(sitemapSource).not.toMatch(
-      /`\$\{SITE_URL\}\/treatment\/[^`]+`/,
-    );
+    expect(treatmentPaths.every((entry) => !entry.startsWith("/treatment/"))).toBe(true);
   });
 
   it("모든 loc URL이 https://star-pibu.com으로 시작해야 한다 (non-www 정책)", () => {

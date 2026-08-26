@@ -1,223 +1,34 @@
 /**
- * sitemap.ts — 동적 사이트맵 생성 엔드포인트
+ * Canonical sitemap index for Search Advisor and general crawlers.
  *
- * 포함 항목:
- *   1. 고정 페이지 (홈, 다국어, 시술, 공지, 외국인 안내, 소개 등)
- *   2. equipment3 세부 페이지 (DB에서 동적으로 생성)
- *   3. 공지 상세 페이지 (DB에서 동적으로 생성, 최근 100건)
- *
- * robots.txt 선언: Sitemap: https://star-pibu.com/sitemap.xml
- *
- * 지원 언어: ko, en, ja, zh, zh-TW (5개)
+ * Each URL is emitted from the live public route registry or published data only.
+ * Parameter, redirect, admin, login, temporary, and non-canonical paths never enter
+ * these collections. Static page lastmods come from their own source files rather
+ * than sitemap generation time; dynamic entries use their database updatedAt value.
  */
 
+import { statSync } from "node:fs";
+import { resolve } from "node:path";
 import type { Express, Request, Response } from "express";
-import { getEquipment3List } from "./db/equipment3";
-import { getRecentNoticeIdsForSitemap } from "./db/notices";
 import type { Equipment3Item } from "../drizzle/schema";
+import { getEquipment3List } from "./db/equipment3";
+import { getAllNotices } from "./db/notices";
 
 const SITE_URL = "https://star-pibu.com";
+const XML_CONTENT_TYPE = "application/xml; charset=UTF-8";
+const SITEMAP_CACHE_CONTROL = "public, max-age=3600";
+const MAX_URLS_PER_SITEMAP = 50_000;
 
-// 모듈 로드 시 1회만 계산 (요청마다 계산하면 매일 수정됨으로 오해됨)
-const BUILD_DATE = new Date().toISOString().slice(0, 10);
+type SitemapEntry = {
+  path: string;
+  lastmod: string;
+};
 
-/** XML 특수문자 이스케이프 */
-function escapeXml(str: string | null | undefined): string {
-  if (!str) return "";
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
+type SitemapDocument = {
+  path: string;
+  entries: SitemapEntry[];
+};
 
-/** YYYY-MM-DD 형식 날짜 반환 */
-function toDateStr(date: Date | null | undefined): string {
-  if (!date) return BUILD_DATE;
-  return new Date(date).toISOString().split("T")[0];
-}
-
-/** 트레일링 슬래시 정규화: /en/ → /en, 단 루트 / 는 유지 */
-function normalizeTrailingSlash(url: string): string {
-  // 루트 URL(https://star-pibu.com/)은 그대로 유지
-  if (url === `${SITE_URL}/`) return url;
-  // 그 외 트레일링 슬래시 제거
-  return url.replace(/\/+$/, "");
-}
-
-/** hreflang 다국어 링크 블록 생성 (5개 언어: ko, en, ja, zh, zh-TW) */
-function hreflangBlock(
-  koPath: string,
-  enPath?: string,
-  jaPath?: string,
-  zhPath?: string,
-  zhTwPath?: string
-): string {
-  const ko   = normalizeTrailingSlash(`${SITE_URL}${koPath}`);
-  const en   = normalizeTrailingSlash(enPath   ? `${SITE_URL}${enPath}`   : `${SITE_URL}/en${koPath}`);
-  const ja   = normalizeTrailingSlash(jaPath   ? `${SITE_URL}${jaPath}`   : `${SITE_URL}/ja${koPath}`);
-  const zh   = normalizeTrailingSlash(zhPath   ? `${SITE_URL}${zhPath}`   : `${SITE_URL}/zh${koPath}`);
-  const zhTw = normalizeTrailingSlash(zhTwPath ? `${SITE_URL}${zhTwPath}` : `${SITE_URL}/zh-tw${koPath}`);
-  return `    <xhtml:link rel="alternate" hreflang="ko"    href="${escapeXml(ko)}" />
-    <xhtml:link rel="alternate" hreflang="en"    href="${escapeXml(en)}" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="${escapeXml(ja)}" />
-    <xhtml:link rel="alternate" hreflang="zh"    href="${escapeXml(zh)}" />
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="${escapeXml(zhTw)}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(ko)}" />`;
-}
-
-/** 고정 URL 목록 */
-const FOREIGN_GUIDE_HREFLANG = `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/foreign-guide" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`;
-
-const FOREIGN_PRICE_LIST_HREFLANG = `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/price-list" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/price-list" />
-    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/price-list" />
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/price-list" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/price-list" />`;
-
-export const STATIC_URLS = [
-  // ── 홈 (다국어) ──────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/`,
-    lastmod: BUILD_DATE,
-    changefreq: "weekly",
-    priority: "1.0",
-    hreflang: hreflangBlock("/"),
-  },
-  { loc: `${SITE_URL}/en`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
-  { loc: `${SITE_URL}/ja`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
-  { loc: `${SITE_URL}/zh`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
-  { loc: `${SITE_URL}/zh-tw`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.9", hreflang: hreflangBlock("/", "/en", "/ja", "/zh", "/zh-tw") },
-
-  // ── 장비·시술 소개 목록 ───────────────────────────────────────
-  {
-    loc: `${SITE_URL}/equipment3`,
-    lastmod: BUILD_DATE,
-    changefreq: "weekly",
-    priority: "0.9",
-    hreflang: hreflangBlock("/equipment3"),
-  },
-  { loc: `${SITE_URL}/en/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
-  { loc: `${SITE_URL}/ja/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
-  { loc: `${SITE_URL}/zh/equipment3`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
-  { loc: `${SITE_URL}/zh-tw/equipment3`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.8", hreflang: hreflangBlock("/equipment3") },
-
-  // ── 공지사항 ─────────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/notice`,
-    lastmod: BUILD_DATE,
-    changefreq: "weekly",
-    priority: "0.8",
-    hreflang: hreflangBlock("/notice"),
-  },
-  { loc: `${SITE_URL}/en/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
-  { loc: `${SITE_URL}/ja/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
-  { loc: `${SITE_URL}/zh/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
-  { loc: `${SITE_URL}/zh-tw/notice`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
-
-  // ── 외국인 안내 ──────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/en/foreign-guide`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.8",
-    hreflang: FOREIGN_GUIDE_HREFLANG,
-  },
-  { loc: `${SITE_URL}/ja/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
-  { loc: `${SITE_URL}/zh/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
-  { loc: `${SITE_URL}/zh-tw/foreign-guide`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
-
-  // ── 외국인 시술 금액 안내 ─────────────────────────────────────
-  { loc: `${SITE_URL}/en/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
-  { loc: `${SITE_URL}/ja/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
-  { loc: `${SITE_URL}/zh/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
-  { loc: `${SITE_URL}/zh-tw/price-list`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
-
-  // ── 병원 소개 ────────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/about`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.7",
-    hreflang: hreflangBlock("/about"),
-  },
-  { loc: `${SITE_URL}/en/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
-  { loc: `${SITE_URL}/ja/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
-  { loc: `${SITE_URL}/zh/about`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
-  { loc: `${SITE_URL}/zh-tw/about`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/about") },
-
-  // ── 연구 및 발표 ─────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/research`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.6",
-    hreflang: hreflangBlock("/research"),
-  },
-  { loc: `${SITE_URL}/en/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
-  { loc: `${SITE_URL}/ja/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
-  { loc: `${SITE_URL}/zh/research`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
-  { loc: `${SITE_URL}/zh-tw/research`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.6", hreflang: hreflangBlock("/research") },
-
-  // ── 비급여 진료안내 ──────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/non-covered`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.5",
-    hreflang: hreflangBlock("/non-covered"),
-  },
-  { loc: `${SITE_URL}/en/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
-  { loc: `${SITE_URL}/ja/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
-  { loc: `${SITE_URL}/zh/non-covered`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
-  { loc: `${SITE_URL}/zh-tw/non-covered`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.5", hreflang: hreflangBlock("/non-covered") },
-
-  // ── 개인정보처리방침 ─────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/privacy`,
-    lastmod: BUILD_DATE,
-    changefreq: "yearly",
-    priority: "0.3",
-    hreflang: hreflangBlock("/privacy"),
-  },
-  { loc: `${SITE_URL}/en/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
-  { loc: `${SITE_URL}/ja/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
-  { loc: `${SITE_URL}/zh/privacy`,    lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
-  { loc: `${SITE_URL}/zh-tw/privacy`, lastmod: BUILD_DATE, changefreq: "yearly", priority: "0.2", hreflang: hreflangBlock("/privacy") },
-
-  // ── 의료진 소개 ───────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/doctors`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.7",
-    hreflang: hreflangBlock("/doctors"),
-  },
-  { loc: `${SITE_URL}/en/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
-  { loc: `${SITE_URL}/ja/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
-  { loc: `${SITE_URL}/zh/doctors`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
-  { loc: `${SITE_URL}/zh-tw/doctors`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/doctors") },
-
-  // ── 찾아오시는 길 ─────────────────────────────────────────────
-  {
-    loc: `${SITE_URL}/directions`,
-    lastmod: BUILD_DATE,
-    changefreq: "monthly",
-    priority: "0.7",
-    hreflang: hreflangBlock("/directions"),
-  },
-  { loc: `${SITE_URL}/en/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
-  { loc: `${SITE_URL}/ja/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
-  { loc: `${SITE_URL}/zh/directions`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
-  { loc: `${SITE_URL}/zh-tw/directions`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: hreflangBlock("/directions") },
-];
-
-/** client/src/data/treatments/index.ts의 정적 시술 상세 라우트와 동기화한다. */
 export const STATIC_TREATMENT_SLUGS = [
   "ulthera",
   "thermage",
@@ -228,117 +39,243 @@ export const STATIC_TREATMENT_SLUGS = [
   "rosacea",
 ] as const;
 
-export function buildStaticTreatmentSection(): string {
-  return STATIC_TREATMENT_SLUGS.map((slug) => {
-    const koPath = `/treatments/${slug}`;
-    return `
-  <url>
-    <loc>${SITE_URL}${koPath}</loc>
-    <lastmod>${BUILD_DATE}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-${hreflangBlock(koPath)}
-  </url>`;
-  }).join("");
+const KOREAN_PAGE_SOURCES: Record<string, string[]> = {
+  "/": ["client/src/pages/Home.tsx"],
+  "/about": ["client/src/pages/About.tsx"],
+  "/doctors": ["client/src/pages/Doctors.tsx"],
+  "/directions": ["client/src/pages/Directions.tsx"],
+  "/research": ["client/src/pages/Research.tsx"],
+  "/non-covered": ["client/src/pages/NonCoveredGuide.tsx"],
+  "/privacy": ["client/src/pages/Privacy.tsx"],
+  "/notice": ["client/src/pages/Notice.tsx"],
+  "/equipment3": ["client/src/pages/Equipment3.tsx"],
+};
+
+const GLOBAL_CORE_PATHS = [
+  "/about",
+  "/doctors",
+  "/directions",
+  "/research",
+  "/non-covered",
+  "/privacy",
+  "/notice",
+  "/equipment3",
+] as const;
+
+const GLOBAL_PREFIXES = ["/en", "/ja", "/zh", "/zh-tw"] as const;
+
+/**
+ * Mirrors the project canonical policy: root is the only trailing-slash URL and
+ * unsupported/private/query/legacy redirect paths are never sitemap candidates.
+ */
+export function isSitemapEligiblePath(input: string): boolean {
+  if (!input.startsWith("/") || input.includes("?") || input.includes("#")) return false;
+  if (input !== "/" && input.endsWith("/")) return false;
+  return !(
+    input.startsWith("/api/") ||
+    input.startsWith("/admin") ||
+    input.startsWith("/my-reservations") ||
+    input.startsWith("/404") ||
+    input.startsWith("/treatment/") ||
+    input.startsWith("/sitemap") ||
+    input.startsWith("/rss")
+  );
 }
 
-function buildUrlEntry(entry: {
-  loc: string;
-  lastmod: string;
-  changefreq: string;
-  priority: string;
-  hreflang?: string;
-}): string {
-  return `
-  <url>
-    <loc>${escapeXml(entry.loc)}</loc>
-    <lastmod>${entry.lastmod}</lastmod>
-    <changefreq>${entry.changefreq}</changefreq>
-    <priority>${entry.priority}</priority>${
-      entry.hreflang
-        ? `\n${entry.hreflang}`
-        : ""
+function toLastmod(value: Date): string {
+  return value.toISOString();
+}
+
+function sourceLastmod(sourcePaths: string[]): string {
+  const dates = sourcePaths.flatMap((sourcePath) => {
+    try {
+      return [statSync(resolve(process.cwd(), sourcePath)).mtime];
+    } catch {
+      return [];
     }
-  </url>`;
+  });
+
+  // The source lists above are committed project files. This fallback applies only
+  // to an unavailable local source file and is deliberately stable, never "now".
+  return toLastmod(dates.sort((a, b) => b.getTime() - a.getTime())[0] ?? new Date("2026-01-01T00:00:00.000Z"));
+}
+
+function absoluteUrl(path: string): string {
+  return encodeURI(path === "/" ? SITE_URL : `${SITE_URL}${path}`);
+}
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function dedupeEligibleEntries(entries: SitemapEntry[]): SitemapEntry[] {
+  const deduped = new Map<string, SitemapEntry>();
+  for (const entry of entries) {
+    if (!isSitemapEligiblePath(entry.path)) continue;
+    const existing = deduped.get(entry.path);
+    if (!existing || new Date(entry.lastmod) > new Date(existing.lastmod)) {
+      deduped.set(entry.path, entry);
+    }
+  }
+  return Array.from(deduped.values()).sort((a, b) => a.path.localeCompare(b.path));
+}
+
+function renderUrlset(entries: SitemapEntry[]): string {
+  const eligibleEntries = dedupeEligibleEntries(entries).slice(0, MAX_URLS_PER_SITEMAP);
+  if (eligibleEntries.length === 0) {
+    throw new Error("Refusing to emit an empty sitemap document");
+  }
+
+  const body = eligibleEntries
+    .map(
+      ({ path, lastmod }) => `  <url>
+    <loc>${escapeXml(absoluteUrl(path))}</loc>
+    <lastmod>${escapeXml(lastmod)}</lastmod>
+  </url>`,
+    )
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${body}
+</urlset>`;
+}
+
+function renderSitemapIndex(documents: SitemapDocument[]): string {
+  const body = documents
+    .map(({ path, entries }) => {
+      const latest = entries.reduce(
+        (newest, entry) => (new Date(entry.lastmod) > new Date(newest) ? entry.lastmod : newest),
+        entries[0]?.lastmod ?? "2026-01-01T00:00:00.000Z",
+      );
+      return `  <sitemap>
+    <loc>${escapeXml(absoluteUrl(path))}</loc>
+    <lastmod>${escapeXml(latest)}</lastmod>
+  </sitemap>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${body}
+</sitemapindex>`;
+}
+
+export function buildPagesEntries(): SitemapEntry[] {
+  return Object.entries(KOREAN_PAGE_SOURCES)
+    .filter(([path]) => path !== "/notice" && path !== "/equipment3")
+    .map(([path, sourcePaths]) => ({ path, lastmod: sourceLastmod(sourcePaths) }));
+}
+
+export function buildTreatmentEntries(): SitemapEntry[] {
+  const lastmod = sourceLastmod(["client/src/data/treatments/index.ts"]);
+  return STATIC_TREATMENT_SLUGS.map((slug) => ({
+    path: `/treatments/${slug}`,
+    lastmod,
+  }));
+}
+
+export function buildEquipmentEntries(items: Equipment3Item[]): SitemapEntry[] {
+  return [
+    { path: "/equipment3", lastmod: sourceLastmod(KOREAN_PAGE_SOURCES["/equipment3"]) },
+    ...items.map((item) => ({
+      path: `/equipment3/${item.slug}`,
+      lastmod: toLastmod(new Date(item.updatedAt)),
+    })),
+  ];
+}
+
+export function buildNoticeEntries(notices: Array<{ id: number; updatedAt: Date }>): SitemapEntry[] {
+  return [
+    { path: "/notice", lastmod: sourceLastmod(KOREAN_PAGE_SOURCES["/notice"]) },
+    ...notices.map((notice) => ({
+      path: `/notice/${notice.id}`,
+      lastmod: toLastmod(new Date(notice.updatedAt)),
+    })),
+  ];
+}
+
+export function buildGlobalEntries(): SitemapEntry[] {
+  return GLOBAL_PREFIXES.flatMap((prefix) => {
+    const landingSource = prefix === "/en"
+      ? "client/src/pages/LandingEN.tsx"
+      : prefix === "/ja"
+        ? "client/src/pages/LandingJA.tsx"
+        : prefix === "/zh"
+          ? "client/src/pages/LandingZH.tsx"
+          : "client/src/pages/LandingZHTW.tsx";
+    const localePages = [
+      { path: prefix, sources: [landingSource] },
+      ...GLOBAL_CORE_PATHS.map((path) => ({ path: `${prefix}${path}`, sources: KOREAN_PAGE_SOURCES[path] })),
+      { path: `${prefix}/foreign-guide`, sources: ["client/src/pages/ForeignGuide.tsx"] },
+      { path: `${prefix}/price-list`, sources: ["client/src/pages/ForeignPriceList.tsx"] },
+    ];
+    return localePages.map(({ path, sources }) => ({ path, lastmod: sourceLastmod(sources) }));
+  });
+}
+
+/** Backward-compatible test helper for the static treatment urlset. */
+export function buildStaticTreatmentSection(): string {
+  return renderUrlset(buildTreatmentEntries());
+}
+
+/** Backward-compatible public static-page view without meta-value inflation. */
+export const STATIC_URLS = buildPagesEntries().map((entry) => ({
+  loc: absoluteUrl(entry.path),
+  lastmod: entry.lastmod,
+}));
+
+async function buildSitemapDocuments(): Promise<SitemapDocument[]> {
+  const [equipment, notices] = await Promise.all([
+    getEquipment3List(),
+    getAllNotices("ko"),
+  ]);
+
+  return [
+    { path: "/sitemap-pages.xml", entries: buildPagesEntries() },
+    { path: "/sitemap-treatments.xml", entries: buildTreatmentEntries() },
+    { path: "/sitemap-equipment.xml", entries: buildEquipmentEntries(equipment) },
+    { path: "/sitemap-notice.xml", entries: buildNoticeEntries(notices) },
+    { path: "/sitemap-global.xml", entries: buildGlobalEntries() },
+  ];
+}
+
+function sendXml(res: Response, xml: string): void {
+  res.setHeader("Content-Type", XML_CONTENT_TYPE);
+  res.setHeader("Cache-Control", SITEMAP_CACHE_CONTROL);
+  res.status(200).send(xml);
 }
 
 export function registerSitemapDynamic(app: Express): void {
   app.get("/sitemap.xml", async (_req: Request, res: Response) => {
     try {
-      const [items, noticeRows] = await Promise.all([
-        getEquipment3List(),
-        getRecentNoticeIdsForSitemap(100),
-      ]);
-
-      // 고정 URL 섹션
-      const staticSection = STATIC_URLS.map(buildUrlEntry).join("");
-      const staticTreatmentSection = buildStaticTreatmentSection();
-
-      // equipment3 세부 페이지 동적 섹션 (5개 언어 hreflang 포함)
-      const dynamicSection = items
-        .map((item: Equipment3Item) => {
-          const slug = escapeXml(item.slug);
-          const lastmod = toDateStr(item.updatedAt ? new Date(item.updatedAt) : null);
-          const koPath = `/equipment3/${slug}`;
-          return `
-  <!-- ${escapeXml(item.name)} -->
-  <url>
-    <loc>${SITE_URL}${koPath}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ko"    href="${SITE_URL}${koPath}" />
-    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en${koPath}" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja${koPath}" />
-    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh${koPath}" />
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw${koPath}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${koPath}" />
-  </url>`;
-        })
-        .join("");
-
-      // 공지 상세 페이지 동적 섹션
-      const noticeSection = noticeRows
-        .map((n) => {
-          const lastmod = toDateStr(n.updatedAt ? new Date(n.updatedAt) : null);
-          return `
-  <url>
-    <loc>${SITE_URL}/notice/${n.id}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>`;
-        })
-        .join("");
-
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  sitemap.xml — 스타피부과 동적 사이트맵
-  빌드일자: ${BUILD_DATE}
-  포함: 고정 페이지 + equipment3 세부 페이지 + 공지 상세 페이지 (DB 동적 생성)
-  지원 언어: ko, en, ja, zh, zh-TW (5개)
-  robots.txt: Sitemap: https://star-pibu.com/sitemap.xml
--->
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${staticSection}
-  <!-- ── 정적 시술 상세 페이지 ── -->${staticTreatmentSection}
-  <!-- ── equipment3 세부 페이지 (DB 동적 생성) ── -->${dynamicSection}
-  <!-- ── 공지 상세 페이지 (DB 동적 생성, 최근 100건) ── -->${noticeSection}
-</urlset>`;
-
-      res.setHeader("Content-Type", "application/xml; charset=UTF-8");
-      res.setHeader("Cache-Control", "public, max-age=3600"); // 1시간 캐시
-      res.status(200).send(xml);
-    } catch (err) {
-      console.error("[Sitemap] Generation error:", err);
+      sendXml(res, renderSitemapIndex(await buildSitemapDocuments()));
+    } catch (error) {
+      console.error("[Sitemap] Index generation error:", error);
       res.status(500).send("Sitemap generation failed");
     }
   });
 
-  // 하위 호환 리다이렉트: 기존 /sitemap-dynamic.xml → /sitemap.xml
-  app.get("/sitemap-dynamic.xml", (_req: Request, res: Response) => {
-    res.redirect(301, "/sitemap.xml");
-  });
+  const childRoute = (path: SitemapDocument["path"], select: (documents: SitemapDocument[]) => SitemapDocument) => {
+    app.get(path, async (_req: Request, res: Response) => {
+      try {
+        const document = select(await buildSitemapDocuments());
+        sendXml(res, renderUrlset(document.entries));
+      } catch (error) {
+        console.error(`[Sitemap] ${path} generation error:`, error);
+        res.status(500).send("Sitemap generation failed");
+      }
+    });
+  };
+
+  childRoute("/sitemap-pages.xml", (documents) => documents[0]!);
+  childRoute("/sitemap-treatments.xml", (documents) => documents[1]!);
+  childRoute("/sitemap-equipment.xml", (documents) => documents[2]!);
+  childRoute("/sitemap-notice.xml", (documents) => documents[3]!);
+  childRoute("/sitemap-global.xml", (documents) => documents[4]!);
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { buildGlobalEntries } from "./sitemap";
 
 const root = process.cwd();
 const sitemapSource = readFileSync(join(root, "server/sitemap.ts"), "utf8");
@@ -8,6 +9,7 @@ const rssSource = readFileSync(join(root, "server/rss.ts"), "utf8");
 
 describe("Naver Search Advisor sitemap and RSS refresh", () => {
   it("includes live foreign price-list and localized notice listing URLs in the sitemap", () => {
+    const globalPaths = buildGlobalEntries().map((entry) => entry.path);
     for (const path of [
       "/en/price-list",
       "/ja/price-list",
@@ -18,7 +20,7 @@ describe("Naver Search Advisor sitemap and RSS refresh", () => {
       "/zh/notice",
       "/zh-tw/notice",
     ]) {
-      expect(sitemapSource).toContain(`\`${"${SITE_URL}"}${path}\``);
+      expect(globalPaths).toContain(path);
     }
   });
 

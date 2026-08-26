@@ -14,6 +14,7 @@ import { useHomeInitialScrollRestore } from "@/hooks/useHomeInitialScrollRestore
 import { CLINIC_STATS } from "../lib/constants";
 import SeoHead from "@/components/SeoHead";
 import { buildHomeJsonLd, HOME_SEO_META } from "@/lib/homeSeo";
+import { PAIN_MANAGEMENT_KO_FAQS } from "@/lib/painManagementFaq";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
@@ -335,6 +336,8 @@ export default function Home() {
               question: "스타피부과에서 외국인 환자도 진료가 가능한가요?",
               answer: "네, 영어·일본어·중국어 안내를 제공합니다. 외국인 환자 전용 안내 페이지(https://star-pibu.com/en/foreign-guide)를 참고하세요."
             },
+            /* ── PAIN MANAGEMENT 전용 FAQ ── */
+            ...PAIN_MANAGEMENT_KO_FAQS,
             /* ── 울쎄라피 ── */
             {
               question: "울쎄라피 프라임이란 무엇인가요?",

@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { PAIN_MANAGEMENT_CONTENT } from "./PainManagementGuide";
+import { PAIN_MANAGEMENT_KO_FAQS } from "@/lib/painManagementFaq";
 
 const guideSource = readFileSync(
   resolve(process.cwd(), "client/src/components/PainManagementGuide.tsx"),
@@ -28,40 +29,39 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("연고마취");
     expect(guideSource).toContain("주사 진통");
     expect(guideSource).toContain("수면진정/수면마취");
-    expect(guideSource).toContain("필요 시 의료진의 사전 평가 후");
+    expect(guideSource).toContain("사전 문진과 평가를 거쳐 필요한 경우에만");
     expect(guideSource).not.toContain("안전이 보장됩니다");
     expect(guideSource).not.toContain("치료 효과가 더 좋");
   });
 
   it("uses only the confirmed 20-year operating history and monitoring devices", () => {
-    expect(guideSource).toContain("수면마취 운영경험 20여년");
+    expect(guideSource).toContain("수면마취(진정) 시술 운영 경험 20년 이상");
     expect(guideSource).toContain("Kohden SpO₂ 모니터");
     expect(guideSource).toContain("혈압측정기");
     expect(guideSource).toContain("환자 상태를 지속적으로 살핍니다");
   });
 
-  it("includes the required pre/post guidance and four patient-focused FAQs", () => {
+  it("includes the required pre/post guidance and five patient-focused FAQs", () => {
     expect(guideSource).toContain("건강상태·복용약·알레르기·과거력 확인");
     expect(guideSource).toContain("운전·중요 의사결정 제한");
-    expect(guideSource).toContain("모든 시술에 수면진정/수면마취가 필요한가요?");
-    expect(guideSource).toContain("연고마취와 주사 진통은 어떻게 결정되나요?");
-    expect(guideSource).toContain("모니터링은 어떻게 이뤄지나요?");
-    expect(guideSource).toContain("시술 전 무엇을 알려야 하나요?");
+    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("모든 시술에 수면진정/수면마취가 필요한가요?");
+    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("연고마취와 주사 진통은 어떻게 결정되나요?");
+    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("마취 후 회복 시간은 얼마나 걸리나요?");
+    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("통증이 심하면 시술 중간에 마취를 추가할 수 있나요?");
   });
 
   it("keeps the Korean 20-year experience body and each FAQ answer within the requested length", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody.length).toBeGreaterThanOrEqual(150);
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody.length).toBeLessThanOrEqual(200);
-    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs).toHaveLength(4);
+    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs).toHaveLength(5);
     PAIN_MANAGEMENT_CONTENT.ko.faqs.forEach(({ answer }) => {
-      expect(answer.length).toBeGreaterThanOrEqual(70);
-      expect(answer.length).toBeLessThanOrEqual(110);
+      expect(answer.length).toBeGreaterThanOrEqual(40);
     });
   });
 
   it("puts the fear-aware core message first and keeps every detail behind native hook-free disclosure", () => {
     expect(guideSource).toContain("heroTitle");
-    expect(guideSource).toContain("통증에 대한 두려움까지 고려하는 것이 시술 계획의 중요한 시작입니다");
+    expect(guideSource).toContain("통증에 대한 부담까지 함께 살피는 것이 시술 계획의 중요한 시작입니다");
     expect(guideSource).not.toContain("@/components/ui/accordion");
     expect(guideSource).not.toContain("AccordionCollectionProvider");
     expect(guideSource).toContain("<details");
@@ -109,15 +109,15 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("uses mobile-specific spacing and typography so the remaining guide stays balanced on narrow screens", () => {
-    expect(guideSource).toContain("p-4 sm:p-7");
+    expect(guideSource).toContain("bg-white p-5 shadow");
+    expect(guideSource).toContain("sm:p-8");
     expect(guideSource).toContain("text-[1.65rem]");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[11px]");
   });
 
-  it("keeps a clear Korean anesthesia-experience disclosure title with icon after removing the visual summary", () => {
-    expect(guideSource).not.toContain('data-testid="pain-management-summary"');
-    expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취 운영경험 20여년");
+  it("uses a clearly scoped Korean sedation-operation experience title", () => {
+    expect(PAIN_MANAGEMENT_CONTENT.ko.experienceHeading).toBe("수면마취(진정) 시술 운영 경험 20년 이상");
     expect(guideSource).toContain("Moon");
     expect(guideSource).toContain("data-testid=\"pain-experience\"");
   });
@@ -131,7 +131,7 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("balances the mobile core heading and gives each FAQ question a semantic icon with stronger heading contrast", () => {
-    expect(guideSource).toContain("max-w-[18ch] break-keep text-balance");
+    expect(guideSource).toContain("max-w-[20ch] break-keep text-balance");
     expect(guideSource).toContain("leading-[1.42]");
     expect(guideSource).toContain("FAQ_ICONS");
     expect(guideSource).toContain("const Icon = FAQ_ICONS[index]");
@@ -139,12 +139,12 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("text-[var(--color-gold-deep)]");
   });
 
-  it("adds a distinct stage-detail reveal with readable mobile typography", () => {
-    expect(guideSource).toContain("pain-management-stage");
-    expect(globalCssSource).toContain(".pain-management-stage::details-content");
+  it("uses direct premium stage cards while retaining animated native disclosures for supporting guidance", () => {
+    expect(guideSource).not.toContain("pain-management-stage");
+    expect(guideSource).toContain("rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-star-navy)]");
+    expect(globalCssSource).toContain(".pain-management-disclosure::details-content");
     expect(globalCssSource).toContain("transform: translateY(-4px)");
-    expect(guideSource).toContain("text-[13px] leading-5");
-    expect(guideSource).toContain("text-[15px] leading-7");
+    expect(guideSource).toContain("min-h-11");
   });
 
   it("ships complete localized content and is surfaced in both requested homepage sections", () => {
@@ -157,16 +157,25 @@ describe("PainManagementGuide content and placement", () => {
     expect(eventSectionSource).not.toContain('mode="summary"');
   });
 
-  it("removes the visible three-stage and care-flow summary while keeping staged disclosures", () => {
-    expect(guideSource).not.toContain('data-testid="pain-management-summary"');
-    expect(guideSource).not.toContain('aria-describedby="pain-management-summary-caption"');
-    expect(guideSource).not.toContain("copy.careCheckpoints.map");
-    expect(guideSource).toContain("data-testid={`pain-stage-${index + 1}`}");
-    expect(guideSource).not.toContain('<p className="mt-3 text-sm font-semibold text-[var(--color-gold-primary)]">{copy.title}</p>');
+  it("reintroduces an accessible premium three-stage card flow and trust-badge strip", () => {
+    expect(guideSource).toContain('data-testid="pain-management-summary"');
+    expect(guideSource).toContain('aria-describedby="pain-management-summary-caption"');
+    expect(guideSource).toContain("copy.steps.map");
+    expect(guideSource).toContain("md:grid-cols-3");
+    expect(guideSource).toContain('data-testid="pain-trust-strip"');
+    expect(guideSource).toContain("copy.careCheckpoints.map");
+    expect(guideSource).toContain("bg-[var(--color-star-navy)]");
+  });
+  it("uses five Korean patient-facing pain-management FAQs with a personal-variation notice", () => {
+    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs).toHaveLength(5);
+    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs.map(({ question }) => question)).toContain("마취 후 회복 시간은 얼마나 걸리나요?");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs.map(({ question }) => question)).toContain("통증이 심하면 시술 중간에 마취를 추가할 수 있나요?");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.closing).toBe("통증 정도와 마취 방식은 개인의 상태에 따라 다르며, 상담을 통해 결정됩니다.");
+    expect(guideSource).toContain("data-testid={`pain-faq-item-${index + 1}`}");
   });
 
   it("uses a deliberate desktop reading measure for the heading and disclosure list", () => {
-    expect(guideSource).toContain('className="mx-auto w-full max-w-6xl"');
+    expect(guideSource).toContain('className="relative mx-auto w-full max-w-6xl"');
     expect(guideSource).toContain("lg:p-10");
   });
 

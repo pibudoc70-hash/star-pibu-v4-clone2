@@ -58,4 +58,10 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).toContain("md:whitespace-nowrap");
     expect(source).toContain("md:hidden");
   });
+
+  it("keeps every locale subtitle on one desktop line and gives the event header more breathing room", () => {
+    expect(source).toContain("section-subtitle !mx-0 mt-5 md:whitespace-nowrap");
+    expect(source).toContain("Experience premium skin care at Star's exclusive prices.");
+    expect(source).toContain("スターの特別価格で、ワンランク上のスキンケアを。");
+  });
 });

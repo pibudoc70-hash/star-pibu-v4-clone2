@@ -154,7 +154,7 @@ export default function About() {
               <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg h-96 flex items-center justify-center overflow-hidden">
                 <OptimizedImage
                   id="about-section-image"
-                  src="/api/storage/medical_team_53232402.jpg"
+                  src="/manus-storage/patient-consultation-mobile_e2474e05_fb420943_2114c946.webp"
                   alt={medicalTeamAlt}
                   className="w-full h-full object-cover"
                   height={384}

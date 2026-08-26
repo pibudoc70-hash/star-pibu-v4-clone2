@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -14,6 +14,52 @@ const deviceImages = MANAGEMENT_DEVICE_IMAGES;
 const devices = MANAGEMENT_DEVICES;
 // 회귀 테스트 호환: aria-label={t.managementDevices.scrollPrevLabel} aria-label={t.managementDevices.scrollNextLabel}
 
+function getDeviceFaqs(lang: string, deviceName: string, description: string) {
+  const copy = {
+    ko: {
+      heading: "기기 FAQ",
+      method: `${deviceName} 관리는 어떤 방식으로 진행되나요?`,
+      planning: "관리 전 무엇을 확인하나요?",
+      planningAnswer: "피부 상태와 관리 목표, 현재 시술 계획을 함께 확인한 뒤 의료진 상담을 통해 개별 안내를 드립니다.",
+    },
+    en: {
+      heading: "Device FAQ",
+      method: `How is ${deviceName} care performed?`,
+      planning: "What is reviewed before care?",
+      planningAnswer: "Skin condition, care goals, and the current treatment plan are reviewed together before individualized guidance is provided through clinical consultation.",
+    },
+    ja: {
+      heading: "機器FAQ",
+      method: `${deviceName}のケアはどのように行われますか？`,
+      planning: "ケア前に何を確認しますか？",
+      planningAnswer: "肌の状態、ケアの目的、現在の施術計画を確認し、医療スタッフとの相談を通じて個別にご案内します。",
+    },
+    zh: {
+      heading: "设备常见问题",
+      method: `${deviceName}护理如何进行？`,
+      planning: "护理前会确认哪些内容？",
+      planningAnswer: "会结合皮肤状态、护理目标和当前治疗计划进行确认，并通过医疗人员咨询提供个别说明。",
+    },
+    "zh-TW": {
+      heading: "設備常見問題",
+      method: `${deviceName}護理如何進行？`,
+      planning: "護理前會確認哪些內容？",
+      planningAnswer: "會結合皮膚狀態、護理目標和目前療程計畫進行確認，並透過醫療人員諮詢提供個別說明。",
+    },
+  }[lang] ?? undefined;
+  const localizedCopy = copy ?? {
+    heading: "기기 FAQ",
+    method: `${deviceName} 관리는 어떤 방식으로 진행되나요?`,
+    planning: "관리 전 무엇을 확인하나요?",
+    planningAnswer: "피부 상태와 관리 목표, 현재 시술 계획을 함께 확인한 뒤 의료진 상담을 통해 개별 안내를 드립니다.",
+  };
+
+  return [
+    { question: localizedCopy.method, answer: description },
+    { question: localizedCopy.planning, answer: localizedCopy.planningAnswer },
+  ];
+}
+
 // ── 모달 컴포넌트 ────────────────────────────────────────────────────────────
 function DeviceModal({
   device,
@@ -23,8 +69,10 @@ function DeviceModal({
   onClose: () => void;
 }) {
   const { getText } = useLocalizedText();
+  const { lang = "ko" } = useLang();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [isFaqOpen, setIsFaqOpen] = useState(false);
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
@@ -36,6 +84,15 @@ function DeviceModal({
     device.shortDescZh,
     device.shortDescZhTw,
   );
+  const faqs = getDeviceFaqs(lang, displayName, displayDesc);
+  const faqId = `management-device-faq-${device.id}`;
+  const faqHeading = {
+    ko: "기기 FAQ",
+    en: "Device FAQ",
+    ja: "機器FAQ",
+    zh: "设备常见问题",
+    "zh-TW": "設備常見問題",
+  }[lang] ?? "기기 FAQ";
 
   useEffect(() => {
     closeButtonRef.current?.focus();
@@ -157,6 +214,42 @@ function DeviceModal({
           >
             {displayDesc}
           </p>
+
+          <button
+            type="button"
+            onClick={() => setIsFaqOpen((open) => !open)}
+            aria-expanded={isFaqOpen}
+            aria-controls={faqId}
+            className="mt-5 inline-flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
+            style={{
+              borderColor: "color-mix(in srgb, var(--color-gold-primary) 35%, transparent)",
+              color: "var(--brand-text, #2C2C2C)",
+            }}
+          >
+            <span>{faqHeading}</span>
+            <ChevronDown
+              size={16}
+              aria-hidden="true"
+              className={`transition-transform duration-200 ${isFaqOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          {isFaqOpen && (
+            <section
+              id={faqId}
+              role="region"
+              aria-label={`${displayName} ${faqHeading}`}
+              className="mt-3 space-y-3 rounded-xl px-4 py-4"
+              style={{ background: "color-mix(in srgb, var(--brand-bg-warm, #EDE8E0) 72%, transparent)" }}
+            >
+              {faqs.map((faq) => (
+                <div key={faq.question}>
+                  <p className="text-sm font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>{faq.question}</p>
+                  <p className="mt-1 text-sm leading-relaxed" style={{ color: "var(--brand-text-mid, #555)" }}>{faq.answer}</p>
+                </div>
+              ))}
+            </section>
+          )}
         </div>
       </div>
     </div>

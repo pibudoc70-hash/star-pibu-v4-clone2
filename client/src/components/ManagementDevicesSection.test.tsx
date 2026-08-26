@@ -59,4 +59,19 @@ describe("ManagementDevicesSection dialog keyboard focus", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
   });
+
+  it("opens device-specific FAQ content from the photo-description dialog", () => {
+    render(<ManagementDevicesSection />);
+
+    fireEvent.click(screen.getAllByRole("button")[0]!);
+    const dialog = screen.getByRole("dialog");
+    const faqButton = within(dialog).getByRole("button", { name: "기기 FAQ" });
+
+    expect(faqButton).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(faqButton);
+
+    expect(faqButton).toHaveAttribute("aria-expanded", "true");
+    expect(within(dialog).getByText("소노필 관리는 어떤 방식으로 진행되나요?")).toBeInTheDocument();
+    expect(within(dialog).getByText(/피부 상태와 관리 목표, 현재 시술 계획을 함께 확인/)).toBeInTheDocument();
+  });
 });

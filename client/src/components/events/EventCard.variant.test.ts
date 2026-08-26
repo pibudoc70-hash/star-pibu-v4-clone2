@@ -46,4 +46,13 @@ describe("EventCard desktop variants", () => {
     expect(compactSource).toContain("focus-visible:outline-2");
     expect(compactSource).toContain("focus-visible:outline-[var(--color-gold-primary)]");
   });
+
+  it("exposes a non-mobile selector row that previews its event on mouse and keyboard focus", () => {
+    expect(cardSource).toContain('"selector"');
+    expect(cardSource).toContain("function SelectorEventRow");
+    expect(cardSource).toContain("onMouseEnter={onPreview}");
+    expect(cardSource).toContain("onFocus={onPreview}");
+    expect(cardSource).toContain("aria-pressed={isSelected}");
+    expect(cardSource).toContain("id={previewPanelId}");
+  });
 });

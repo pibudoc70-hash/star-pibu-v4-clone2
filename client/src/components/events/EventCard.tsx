@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 
-export type EventCardVariant = "lead" | "compact" | "legacy";
+export type EventCardVariant = "lead" | "compact" | "legacy" | "selector";
 
 interface EventCardProps {
   event: SpecialEvent;
   getLocalizedText: (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => string;
   variant?: EventCardVariant;
+  alwaysExpanded?: boolean;
+  isSelected?: boolean;
+  onPreview?: () => void;
+  previewPanelId?: string;
 }
 
 type DisplayPrice = { normalPrice: number; discountPrice: number };
@@ -101,6 +105,7 @@ interface EventDetailProps {
   onCollapse: () => void;
   compact?: boolean;
   hideLinksOnMobile?: boolean;
+  showCollapse?: boolean;
 }
 
 function EventDetail({
@@ -117,6 +122,7 @@ function EventDetail({
   onCollapse,
   compact = false,
   hideLinksOnMobile = false,
+  showCollapse = true,
 }: EventDetailProps) {
   return (
     <div
@@ -167,16 +173,18 @@ function EventDetail({
           {phoneLabel}
         </a>
       </div>
-      <button
-        type="button"
-        onClick={onCollapse}
-        aria-expanded="true"
-        aria-controls={detailId}
-        aria-label={`${title} 접기`}
-        className="event-card__collapse w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
-      >
-        접기
-      </button>
+      {showCollapse && (
+        <button
+          type="button"
+          onClick={onCollapse}
+          aria-expanded="true"
+          aria-controls={detailId}
+          aria-label={`${title} 접기`}
+          className="event-card__collapse w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
+        >
+          접기
+        </button>
+      )}
     </div>
   );
 }
@@ -193,6 +201,7 @@ interface VariantCardProps extends Omit<EventCardProps, "variant"> {
   chatLabel: string;
   phoneHref: string;
   phoneLabel: string;
+  showCollapse?: boolean;
 }
 
 function LeadEventCard({
@@ -209,11 +218,13 @@ function LeadEventCard({
   chatLabel,
   phoneHref,
   phoneLabel,
+  showCollapse,
+  previewPanelId,
 }: VariantCardProps) {
   const detailId = `special-event-detail-${event.id}`;
 
   return (
-    <article className="card card--event flex flex-col overflow-hidden">
+    <article id={previewPanelId} className="card card--event flex flex-col overflow-hidden">
       {event.imageUrl && (
         <div className="event-card__media event-card__media--lead event-card__media--hoverable overflow-hidden bg-gray-100">
           <OptimizedImage
@@ -261,6 +272,7 @@ function LeadEventCard({
           phoneLabel={phoneLabel}
           detailId={detailId}
           onCollapse={onToggle}
+          showCollapse={showCollapse}
         />
       )}
     </article>
@@ -323,6 +335,42 @@ function CompactEventRow({
         />
       )}
     </article>
+  );
+}
+
+interface SelectorEventRowProps extends Omit<VariantCardProps, "isExpanded" | "onToggle"> {
+  isSelected: boolean;
+  onPreview: () => void;
+  previewPanelId?: string;
+}
+
+function SelectorEventRow({
+  event,
+  displayPrice,
+  title,
+  isSelected,
+  onPreview,
+  previewPanelId,
+}: SelectorEventRowProps) {
+  return (
+    <button
+      type="button"
+      onClick={onPreview}
+      onMouseEnter={onPreview}
+      onFocus={onPreview}
+      aria-pressed={isSelected}
+      aria-controls={previewPanelId}
+      className={`event-card__selector-row flex min-h-14 w-full items-center justify-between gap-4 border-b border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-gold-primary)] ${isSelected ? "bg-[color-mix(in_srgb,var(--color-gold-primary)_12%,transparent)]" : "hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_8%,transparent)]"}`}
+    >
+      <span className="min-w-0 truncate text-sm font-semibold text-[var(--brand-text)]">{title}</span>
+      <span className="flex shrink-0 items-center gap-2">
+        <span className="event-card__discount-price text-base font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
+        {displayPrice.normalPrice > 0 && (
+          <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>
+        )}
+        <ChevronRight aria-hidden="true" size={16} className="text-brand-mid" />
+      </span>
+    </button>
   );
 }
 
@@ -398,7 +446,15 @@ function LegacyEventCard({
   );
 }
 
-export default function EventCard({ event, getLocalizedText, variant = "legacy" }: EventCardProps) {
+export default function EventCard({
+  event,
+  getLocalizedText,
+  variant = "legacy",
+  alwaysExpanded = false,
+  isSelected = false,
+  onPreview,
+  previewPanelId,
+}: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
@@ -408,13 +464,14 @@ export default function EventCard({ event, getLocalizedText, variant = "legacy" 
   const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
   const phoneHref = lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300";
   const phoneLabel = lang === "ko" ? "051-818-2300" : "+82-51-818-2300";
+  const effectiveExpanded = alwaysExpanded || isExpanded;
   const sharedProps: VariantCardProps = {
     event,
     getLocalizedText,
     priceRows,
     displayPrice,
-    isExpanded,
-    onToggle: () => setIsExpanded((previous) => !previous),
+    isExpanded: effectiveExpanded,
+    onToggle: alwaysExpanded ? () => undefined : () => setIsExpanded((previous) => !previous),
     title,
     chatUrl,
     chatBg,
@@ -422,9 +479,14 @@ export default function EventCard({ event, getLocalizedText, variant = "legacy" 
     chatLabel,
     phoneHref,
     phoneLabel,
+    showCollapse: !alwaysExpanded,
+    previewPanelId,
   };
 
   if (variant === "lead") return <LeadEventCard {...sharedProps} />;
   if (variant === "compact") return <CompactEventRow {...sharedProps} />;
+  if (variant === "selector") {
+    return <SelectorEventRow {...sharedProps} isSelected={isSelected} onPreview={onPreview ?? (() => undefined)} previewPanelId={previewPanelId} />;
+  }
   return <LegacyEventCard {...sharedProps} />;
 }

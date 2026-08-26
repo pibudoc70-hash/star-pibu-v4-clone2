@@ -8,11 +8,13 @@ const source = readFileSync(
 );
 
 describe("SpecialEventSection conservative desktop layout", () => {
-  it("uses the first event as lead and routes only following events to compact rows", () => {
-    expect(source).toContain("const leadEvent = allEvents[0]");
-    expect(source).toContain("allEvents.slice(1");
+  it("uses a hover and focus controlled desktop selection state for the left detail panel", () => {
+    expect(source).toContain("selectedEventId");
+    expect(source).toContain("setSelectedEventId");
+    expect(source).toContain("selectedEvent");
+    expect(source).toContain('variant="selector"');
     expect(source).toContain('variant="lead"');
-    expect(source).toContain('variant="compact"');
+    expect(source).toContain("onPreview={() => setSelectedEventId(event.id)}");
   });
 
   it("preserves the frozen mobile surface and removes the equal desktop three-card grid", () => {

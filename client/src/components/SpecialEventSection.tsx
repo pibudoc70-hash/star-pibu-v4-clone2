@@ -3,7 +3,7 @@
  *
  * 리팩토링 내역:
  * - 모바일: EventTableMobile (하나의 카드에 모든 시술 목록 + 상세 모달)
- * - 데스크톱: 첫 이벤트 lead 카드 + 나머지 compact 가격 목록
+ * - 데스크톱: 우측 이벤트 선택 목록 + 좌측 hover/focus 연동 상세 패널
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Sparkles, RefreshCw, ChevronDown } from "lucide-react";
@@ -144,6 +144,7 @@ export default function SpecialEventSection() {
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
   const [showMore, setShowMore] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
   useEventSkeletonTiming(isInitialSkeletonVisible);
 
@@ -203,29 +204,29 @@ export default function SpecialEventSection() {
   }
 
   const allEvents = specialEvents as SpecialEvent[];
-  const leadEvent = allEvents[0];
-  const compactEvents = allEvents.slice(1, showMore ? 7 : 6);
+  const desktopEvents = showMore ? allEvents : allEvents.slice(0, 6);
+  const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
   const hasMoreDesktop = allEvents.length > 6;
   const compactHintMap: Record<string, { title: string; hint: string }> = {
     ko: {
-      title: "이벤트 가격 비교",
-      hint: "행을 눌러 상세 조건을 확인하세요. 모든 이벤트 금액은 VAT 포함입니다.",
+      title: "이벤트 선택",
+      hint: "항목에 커서를 올리거나 선택해 상세 조건을 확인하세요. 모든 이벤트 금액은 VAT 포함입니다.",
     },
     en: {
-      title: "Compare event prices",
-      hint: "Select a row to view details. All event prices include VAT.",
+      title: "Select an event",
+      hint: "Hover over or select a row to view details. All event prices include VAT.",
     },
     ja: {
-      title: "イベント料金を比較",
-      hint: "行を選択して詳細をご確認ください。すべての料金はVAT込みです。",
+      title: "イベントを選択",
+      hint: "行にカーソルを合わせるか選択して詳細をご確認ください。すべての料金はVAT込みです。",
     },
     zh: {
-      title: "对比活动价格",
-      hint: "点击条目查看详情。所有活动价格均含增值税。",
+      title: "选择活动",
+      hint: "悬停或点击条目查看详情。所有活动价格均含增值税。",
     },
     "zh-TW": {
-      title: "比較活動價格",
-      hint: "點選項目查看詳細內容。所有活動價格均含增值稅。",
+      title: "選擇活動",
+      hint: "將游標移至項目上或點選查看詳細內容。所有活動價格均含增值稅。",
     },
   };
   const compactHint = compactHintMap[lang] ?? compactHintMap.ko;
@@ -247,15 +248,17 @@ export default function SpecialEventSection() {
               />
             </div>
 
-            {/* 데스크톱: 첫 이벤트 lead 카드 + 나머지 compact 가격 목록 */}
+            {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
-              {leadEvent && (
+              {selectedEvent && (
                 <div className="md:col-span-5">
                   <EventCard
-                    key={leadEvent.id}
-                    event={leadEvent}
+                    key={selectedEvent.id}
+                    event={selectedEvent}
                     getLocalizedText={getLocalizedText}
                     variant="lead"
+                    alwaysExpanded
+                    previewPanelId="special-event-desktop-preview"
                   />
                 </div>
               )}
@@ -270,12 +273,15 @@ export default function SpecialEventSection() {
                   <span data-testid="event-vat-notice" className="shrink-0 text-xs font-medium text-brand-mid">VAT 포함</span>
                 </div>
                 <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white">
-                  {compactEvents.map((event) => (
+                  {desktopEvents.map((event) => (
                     <EventCard
                       key={event.id}
                       event={event}
                       getLocalizedText={getLocalizedText}
-                      variant="compact"
+                      variant="selector"
+                      isSelected={selectedEvent?.id === event.id}
+                      onPreview={() => setSelectedEventId(event.id)}
+                      previewPanelId="special-event-desktop-preview"
                     />
                   ))}
                 </div>

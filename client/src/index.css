@@ -2743,10 +2743,6 @@
   border-radius: 1rem 1rem 0 0;
 }
 
-.event-card__media--lead {
-  aspect-ratio: 3 / 2;
-}
-
 .event-card__media-image {
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }

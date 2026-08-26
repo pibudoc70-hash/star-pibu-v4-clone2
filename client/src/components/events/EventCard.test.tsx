@@ -104,7 +104,7 @@ describe("EventCard design pilot", () => {
 
     expect(sectionSource).toContain('<div className="md:hidden">');
     expect(sectionSource).toContain("<EventTableMobile");
-    expect(sectionSource).toContain('<div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">');
+    expect(sectionSource).toContain('<div className="hidden md:grid grid-cols-3 gap-12 items-start">');
     expect(sectionSource).toContain("<EventCard");
   });
 });

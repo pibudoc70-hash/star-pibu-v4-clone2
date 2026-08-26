@@ -3509,6 +3509,23 @@
   to { transform: rotate(360deg); }
 }
 
+/* SPECIAL EVENT desktop selector: selected detail changes should read as a calm content swap. */
+@keyframes eventPreviewFade {
+  from { opacity: 0.12; }
+  to { opacity: 1; }
+}
+.event-card__preview {
+  animation: eventPreviewFade 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.event-card__selector-row--selected {
+  box-shadow: inset 3px 0 0 var(--color-gold-primary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .event-card__preview {
+    animation: none;
+  }
+}
+
 /* 성공 화면 */
 .consultation-success {
   max-width: 480px;

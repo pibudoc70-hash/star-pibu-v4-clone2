@@ -252,14 +252,15 @@ export default function SpecialEventSection() {
             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
               {selectedEvent && (
                 <div className="md:col-span-5">
-                  <EventCard
-                    key={selectedEvent.id}
-                    event={selectedEvent}
-                    getLocalizedText={getLocalizedText}
-                    variant="lead"
-                    alwaysExpanded
-                    previewPanelId="special-event-desktop-preview"
-                  />
+                  <div key={selectedEvent.id} className="event-card__preview">
+                    <EventCard
+                      event={selectedEvent}
+                      getLocalizedText={getLocalizedText}
+                      variant="lead"
+                      alwaysExpanded
+                      previewPanelId="special-event-desktop-preview"
+                    />
+                  </div>
                 </div>
               )}
               <div className="md:col-span-7">

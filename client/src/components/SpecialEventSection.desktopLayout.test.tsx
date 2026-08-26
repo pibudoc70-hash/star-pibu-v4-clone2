@@ -36,4 +36,9 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).toContain('data-testid="event-compact-hint"');
     expect(source).toContain("모든 이벤트 금액은 VAT 포함");
   });
+
+  it("keys the selected preview so each desktop event change replays its fade transition", () => {
+    expect(source).toContain('className="event-card__preview"');
+    expect(source).toContain("key={selectedEvent.id}");
+  });
 });

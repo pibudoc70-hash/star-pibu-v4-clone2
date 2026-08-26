@@ -360,7 +360,7 @@ function SelectorEventRow({
       onFocus={onPreview}
       aria-pressed={isSelected}
       aria-controls={previewPanelId}
-      className={`event-card__selector-row flex min-h-14 w-full items-center justify-between gap-4 border-b border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-gold-primary)] ${isSelected ? "bg-[color-mix(in_srgb,var(--color-gold-primary)_12%,transparent)]" : "hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_8%,transparent)]"}`}
+      className={`event-card__selector-row flex min-h-14 w-full items-center justify-between gap-4 border-b border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] px-4 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-gold-primary)] ${isSelected ? "event-card__selector-row--selected bg-[color-mix(in_srgb,var(--color-gold-primary)_18%,transparent)] text-[var(--color-gold-deep)]" : "hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_10%,transparent)] hover:text-[var(--color-gold-deep)]"}`}
     >
       <span className="min-w-0 truncate text-sm font-semibold text-[var(--brand-text)]">{title}</span>
       <span className="flex shrink-0 items-center gap-2">

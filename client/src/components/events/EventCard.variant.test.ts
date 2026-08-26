@@ -54,5 +54,6 @@ describe("EventCard desktop variants", () => {
     expect(cardSource).toContain("onFocus={onPreview}");
     expect(cardSource).toContain("aria-pressed={isSelected}");
     expect(cardSource).toContain("id={previewPanelId}");
+    expect(cardSource).toContain("event-card__selector-row--selected");
   });
 });

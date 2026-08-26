@@ -345,7 +345,6 @@ interface SelectorEventRowProps extends Omit<VariantCardProps, "isExpanded" | "o
 }
 
 function SelectorEventRow({
-  event,
   displayPrice,
   title,
   isSelected,

@@ -53,4 +53,9 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).toContain('data-testid="event-compact-context"');
     expect(source.indexOf('data-testid="event-compact-context"')).toBeLessThan(source.indexOf('hidden md:grid md:grid-cols-12'));
   });
+
+  it("keeps the Korean section subtitle on one desktop line while preserving mobile wrapping", () => {
+    expect(source).toContain("md:whitespace-nowrap");
+    expect(source).toContain("md:hidden");
+  });
 });

@@ -71,7 +71,12 @@ function SectionHeader({ lang }: { lang: string }) {
     ja: "スターの特別価格で、ワンランク上のスキンケアを。",
     zh: "以STAR独家优惠价，享受顶级皮肤护理。",
     "zh-TW": "以STAR獨家優惠價，享受頂級皮膚護理。",
-    ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
+    ko: (
+      <>
+        <span className="hidden md:inline md:whitespace-nowrap">스타만의 특별한 가격으로 한 단계 높은 피부 관리를 시작해보세요.</span>
+        <span className="md:hidden">스타만의 특별한 가격으로,<br />한 단계 높은 피부 관리를 시작해보세요.</span>
+      </>
+    ),
   };
   return (
     <div className="section-header-block !text-left">

@@ -60,18 +60,26 @@ describe("ManagementDevicesSection dialog keyboard focus", () => {
     expect(trigger).toHaveFocus();
   });
 
-  it("opens device-specific FAQ content from the photo-description dialog", () => {
+  it("keeps the photo-description dialog focused on the device description", () => {
     render(<ManagementDevicesSection />);
 
     fireEvent.click(screen.getAllByRole("button")[0]!);
     const dialog = screen.getByRole("dialog");
-    const faqButton = within(dialog).getByRole("button", { name: "기기 FAQ" });
 
+    expect(within(dialog).getByText("초음파 진동에너지와 이온의 전기적 특성을 이용하여 피부 각질을 제거하고 영양 성분을 깊이 침투시키는 복합 관리 장비입니다.")).toBeInTheDocument();
+    expect(within(dialog).queryByRole("button", { name: "기기 FAQ" })).not.toBeInTheDocument();
+  });
+
+  it("expands device FAQ below the card photo without opening the photo-description dialog", () => {
+    render(<ManagementDevicesSection />);
+
+    const faqButton = screen.getByRole("button", { name: "소노필 기기 FAQ" });
     expect(faqButton).toHaveAttribute("aria-expanded", "false");
+
     fireEvent.click(faqButton);
 
     expect(faqButton).toHaveAttribute("aria-expanded", "true");
-    expect(within(dialog).getByText("소노필 관리는 어떤 방식으로 진행되나요?")).toBeInTheDocument();
-    expect(within(dialog).getByText(/피부 상태와 관리 목표, 현재 시술 계획을 함께 확인/)).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "소노필 기기 FAQ" })).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });

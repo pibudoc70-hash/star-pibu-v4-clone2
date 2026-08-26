@@ -60,6 +60,16 @@ function getDeviceFaqs(lang: string, deviceName: string, description: string) {
   ];
 }
 
+function getDeviceFaqHeading(lang: string) {
+  return {
+    ko: "기기 FAQ",
+    en: "Device FAQ",
+    ja: "機器FAQ",
+    zh: "设备常见问题",
+    "zh-TW": "設備常見問題",
+  }[lang] ?? "기기 FAQ";
+}
+
 // ── 모달 컴포넌트 ────────────────────────────────────────────────────────────
 function DeviceModal({
   device,
@@ -69,10 +79,8 @@ function DeviceModal({
   onClose: () => void;
 }) {
   const { getText } = useLocalizedText();
-  const { lang = "ko" } = useLang();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [isFaqOpen, setIsFaqOpen] = useState(false);
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
@@ -84,15 +92,6 @@ function DeviceModal({
     device.shortDescZh,
     device.shortDescZhTw,
   );
-  const faqs = getDeviceFaqs(lang, displayName, displayDesc);
-  const faqId = `management-device-faq-${device.id}`;
-  const faqHeading = {
-    ko: "기기 FAQ",
-    en: "Device FAQ",
-    ja: "機器FAQ",
-    zh: "设备常见问题",
-    "zh-TW": "設備常見問題",
-  }[lang] ?? "기기 FAQ";
 
   useEffect(() => {
     closeButtonRef.current?.focus();
@@ -214,42 +213,6 @@ function DeviceModal({
           >
             {displayDesc}
           </p>
-
-          <button
-            type="button"
-            onClick={() => setIsFaqOpen((open) => !open)}
-            aria-expanded={isFaqOpen}
-            aria-controls={faqId}
-            className="mt-5 inline-flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
-            style={{
-              borderColor: "color-mix(in srgb, var(--color-gold-primary) 35%, transparent)",
-              color: "var(--brand-text, #2C2C2C)",
-            }}
-          >
-            <span>{faqHeading}</span>
-            <ChevronDown
-              size={16}
-              aria-hidden="true"
-              className={`transition-transform duration-200 ${isFaqOpen ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          {isFaqOpen && (
-            <section
-              id={faqId}
-              role="region"
-              aria-label={`${displayName} ${faqHeading}`}
-              className="mt-3 space-y-3 rounded-xl px-4 py-4"
-              style={{ background: "color-mix(in srgb, var(--brand-bg-warm, #EDE8E0) 72%, transparent)" }}
-            >
-              {faqs.map((faq) => (
-                <div key={faq.question}>
-                  <p className="text-sm font-semibold" style={{ color: "var(--brand-text, #2C2C2C)" }}>{faq.question}</p>
-                  <p className="mt-1 text-sm leading-relaxed" style={{ color: "var(--brand-text-mid, #555)" }}>{faq.answer}</p>
-                </div>
-              ))}
-            </section>
-          )}
         </div>
       </div>
     </div>
@@ -267,37 +230,64 @@ function DeviceCard({
   const imgUrl =
     deviceImages[device.imgId] ??
     `/api/storage/${device.imgId}.png`;
-    const { getText } = useLocalizedText();
+  const { getText } = useLocalizedText();
+  const { lang = "ko" } = useLang();
+  const [isFaqOpen, setIsFaqOpen] = useState(false);
   const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
+  const displayDesc = getText(
+    device.shortDesc,
+    device.shortDescEn,
+    device.shortDescJa,
+    device.shortDescZh,
+    device.shortDescZhTw,
+  );
+  const faqHeading = getDeviceFaqHeading(lang);
+  const faqId = `management-device-card-faq-${device.id}`;
+  const faqs = getDeviceFaqs(lang, displayName, displayDesc);
+
   return (
-    <button
-      type="button"
-      onClick={(event) => onClick(event.currentTarget)}
-      className="group flex flex-col items-center gap-2 p-2 sm:p-3 rounded-xl transition-all duration-200 w-full hover:bg-black/5"
-      style={{
-        background: "transparent",
-        border: "none",
-        cursor: "pointer",
-      }}
-      aria-label={displayName}
-    >
-      {/* 원형 이미지 */}
-      <div
-        className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
+    <div className="flex w-full flex-col items-center gap-2 rounded-xl p-2 sm:p-3">
+      <button
+        type="button"
+        onClick={(event) => onClick(event.currentTarget)}
+        className="group flex flex-col items-center"
+        style={{ background: "transparent", border: "none", cursor: "pointer" }}
+        aria-label={displayName}
+      >
+        {/* 원형 이미지 */}
+        <div
+          className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
+          style={{
+            background: "rgba(201, 168, 105, 0.15)",
+            border: "2px solid rgba(160, 120, 55, 0.65)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.12), 0 0 0 1px rgba(201,168,105,0.25)",
+          }}
+        >
+          <OptimizedImage
+            src={imgUrl}
+            alt=""
+            className="w-full h-full object-cover"
+            width={80}
+            height={80}
+          />
+        </div>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setIsFaqOpen((open) => !open)}
+        aria-label={`${displayName} ${faqHeading}`}
+        aria-expanded={isFaqOpen}
+        aria-controls={faqId}
+        className="inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold transition-colors hover:bg-[#f4ede1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)]"
         style={{
-          background: "rgba(201, 168, 105, 0.15)",
-          border: "2px solid rgba(160, 120, 55, 0.65)",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.12), 0 0 0 1px rgba(201,168,105,0.25)",
+          borderColor: "color-mix(in srgb, var(--color-gold-primary) 48%, transparent)",
+          color: "var(--brand-text, #2C2C2C)",
         }}
       >
-        <OptimizedImage
-          src={imgUrl}
-          alt=""
-          className="w-full h-full object-cover"
-          width={80}
-          height={80}
-        />
-      </div>
+        <span>{faqHeading}</span>
+        <ChevronDown size={12} aria-hidden="true" className={`transition-transform duration-200 ${isFaqOpen ? "rotate-180" : ""}`} />
+      </button>
 
       {/* 이름 */}
       <div className="text-center">
@@ -315,7 +305,24 @@ function DeviceCard({
           {device.nameEn}
         </span>
       </div>
-    </button>
+
+      {isFaqOpen && (
+        <section
+          id={faqId}
+          role="region"
+          aria-label={`${displayName} ${faqHeading}`}
+          className="w-full space-y-2 rounded-xl px-3 py-3 text-left"
+          style={{ background: "rgba(255,255,255,0.56)" }}
+        >
+          {faqs.map((faq) => (
+            <div key={faq.question}>
+              <p className="text-[11px] font-semibold leading-snug" style={{ color: "var(--brand-text, #2C2C2C)" }}>{faq.question}</p>
+              <p className="mt-1 text-[10px] leading-relaxed" style={{ color: "var(--brand-text-mid, #555)" }}>{faq.answer}</p>
+            </div>
+          ))}
+        </section>
+      )}
+    </div>
   );
 }
 

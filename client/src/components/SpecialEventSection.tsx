@@ -246,8 +246,17 @@ export default function SpecialEventSection() {
               />
             </div>
 
-            {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
-            <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
+             {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
+             <div data-testid="event-compact-context" className="mb-3 hidden items-end justify-between gap-4 md:flex">
+               <div>
+                 <p className="text-sm font-semibold text-brand">{compactHint.title}</p>
+                 <p data-testid="event-compact-hint" className="mt-1 max-w-md text-xs leading-relaxed text-brand-mid">
+                   {compactHint.hint}
+                 </p>
+               </div>
+               <span data-testid="event-vat-notice" className="shrink-0 text-xs font-medium text-brand-mid">VAT 포함</span>
+             </div>
+             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
               {selectedEvent && (
                 <div className="md:col-span-5 md:sticky md:top-28 md:self-start">
                   <div key={selectedEvent.id} className="event-card__preview">
@@ -262,15 +271,6 @@ export default function SpecialEventSection() {
                 </div>
               )}
               <div className="md:col-span-7">
-                <div className="mb-3 flex items-end justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-semibold text-brand">{compactHint.title}</p>
-                    <p data-testid="event-compact-hint" className="mt-1 max-w-md text-xs leading-relaxed text-brand-mid">
-                      {compactHint.hint}
-                    </p>
-                  </div>
-                  <span data-testid="event-vat-notice" className="shrink-0 text-xs font-medium text-brand-mid">VAT 포함</span>
-                </div>
                 <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white">
                   {desktopEvents.map((event) => (
                     <EventCard

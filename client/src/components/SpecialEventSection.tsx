@@ -206,6 +206,29 @@ export default function SpecialEventSection() {
   const leadEvent = allEvents[0];
   const compactEvents = allEvents.slice(1, showMore ? 7 : 6);
   const hasMoreDesktop = allEvents.length > 6;
+  const compactHintMap: Record<string, { title: string; hint: string }> = {
+    ko: {
+      title: "이벤트 가격 비교",
+      hint: "행을 눌러 상세 조건을 확인하세요. 모든 이벤트 금액은 VAT 포함입니다.",
+    },
+    en: {
+      title: "Compare event prices",
+      hint: "Select a row to view details. All event prices include VAT.",
+    },
+    ja: {
+      title: "イベント料金を比較",
+      hint: "行を選択して詳細をご確認ください。すべての料金はVAT込みです。",
+    },
+    zh: {
+      title: "对比活动价格",
+      hint: "点击条目查看详情。所有活动价格均含增值税。",
+    },
+    "zh-TW": {
+      title: "比較活動價格",
+      hint: "點選項目查看詳細內容。所有活動價格均含增值稅。",
+    },
+  };
+  const compactHint = compactHintMap[lang] ?? compactHintMap.ko;
 
   return (
     <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
@@ -237,8 +260,14 @@ export default function SpecialEventSection() {
                 </div>
               )}
               <div className="md:col-span-7">
-                <div className="mb-3 flex items-center justify-end">
-                  <span data-testid="event-vat-notice" className="text-xs text-brand-mid">VAT 포함</span>
+                <div className="mb-3 flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-brand">{compactHint.title}</p>
+                    <p data-testid="event-compact-hint" className="mt-1 max-w-md text-xs leading-relaxed text-brand-mid">
+                      {compactHint.hint}
+                    </p>
+                  </div>
+                  <span data-testid="event-vat-notice" className="shrink-0 text-xs font-medium text-brand-mid">VAT 포함</span>
                 </div>
                 <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white">
                   {compactEvents.map((event) => (

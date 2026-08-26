@@ -35,4 +35,15 @@ describe("EventCard desktop variants", () => {
     expect(compactSource).not.toContain("hover:scale");
     expect(compactSource).not.toContain("hover:-translate");
   });
+
+  it("gives compact rows an explicit disclosure icon and visible keyboard focus treatment", () => {
+    const compactSource = cardSource.slice(
+      cardSource.indexOf("function CompactEventRow"),
+      cardSource.indexOf("function LegacyEventCard"),
+    );
+
+    expect(compactSource).toContain("ChevronDown");
+    expect(compactSource).toContain("focus-visible:outline-2");
+    expect(compactSource).toContain("focus-visible:outline-[var(--color-gold-primary)]");
+  });
 });

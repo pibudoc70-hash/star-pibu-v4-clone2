@@ -28,4 +28,10 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).toContain('data-testid="event-vat-notice"');
     expect(source).not.toContain("hover:scale-105");
   });
+
+  it("adds a localized compact-list comparison hint without changing the mobile table", () => {
+    expect(source).toContain("compactHintMap");
+    expect(source).toContain('data-testid="event-compact-hint"');
+    expect(source).toContain("모든 이벤트 금액은 VAT 포함");
+  });
 });

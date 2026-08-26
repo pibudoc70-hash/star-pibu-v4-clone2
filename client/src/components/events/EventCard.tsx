@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
@@ -120,6 +121,8 @@ function EventDetail({
   return (
     <div
       id={detailId}
+      role={compact ? "region" : undefined}
+      aria-label={compact ? `${title} 상세 내용` : undefined}
       className={compact
         ? "event-card__compact-detail border-t border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] px-4 py-4"
         : "event-card__content flex flex-1 flex-col"}
@@ -288,14 +291,19 @@ function CompactEventRow({
         aria-expanded={isExpanded}
         aria-controls={`special-event-compact-detail-${event.id}`}
         aria-label={`${title} 상세 ${isExpanded ? "접기" : "펼치기"}`}
-        className="event-card__compact-row flex min-h-14 w-full items-center justify-between gap-4 px-4 py-3 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_8%,transparent)]"
+        className="event-card__compact-row flex min-h-14 w-full items-center justify-between gap-4 px-4 py-3 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_8%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-gold-primary)]"
       >
         <span className="min-w-0 truncate text-sm font-semibold text-[var(--brand-text)]">{title}</span>
-        <span className="flex shrink-0 items-baseline gap-2">
+        <span className="flex shrink-0 items-center gap-2">
           <span className="event-card__discount-price text-base font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
           {displayPrice.normalPrice > 0 && (
             <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>
           )}
+          <ChevronDown
+            aria-hidden="true"
+            size={16}
+            className={`text-brand-mid transition-transform ${isExpanded ? "rotate-180" : ""}`}
+          />
         </span>
       </button>
       {isExpanded && (

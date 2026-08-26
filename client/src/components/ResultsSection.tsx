@@ -4,14 +4,11 @@
  */
 // [FM-P2-3] React.memo: 부모 리렌더 시 불필요한 재렌더 방지 (통계 카드 카운팅 애니메이션 보호)
 import { memo } from "react";
-import { CheckCircle, TrendingUp, Users, Award, Sparkles, Heart, Shield } from "lucide-react";
+import { CheckCircle, Sparkles, Heart, Shield } from "lucide-react";
 import { useSectionReveal } from "@/hooks/useScrollReveal";
-import { useCountUp } from "@/hooks/useCountUp";
 import { useLang } from "@/contexts/LangContext";
-import { useClinicStats } from "@/hooks/useClinicStats";
 import { STAR_COLORS } from "../../../shared/colors";
 
-const statIcons = [Award, TrendingUp, Users];
 const { dark, gray, muted } = STAR_COLORS;
 /* 브랜드 웜 뉴트럴 컬러 시스템 */
 const brandGold = 'var(--color-gold-primary)';
@@ -19,8 +16,6 @@ const brandGoldPale = '#F0EAE0';
 const brandGoldDeep = '#A8895E';
 const brandBg = '#FAF8F5';
 const brandBgAlt = '#F5F0EB';
-const statColors = [brandGold, brandGoldDeep, brandGold];
-const statBgs = [brandBgAlt, brandBg, brandBgAlt];
 const whyIcons = [Shield, Heart, Sparkles];
 const whyColors = [brandGold, brandGoldDeep, brandGold];
 const treatmentAccents = [brandGold, brandGoldDeep, brandGold, brandGoldDeep, brandGold, brandGoldDeep];
@@ -28,16 +23,8 @@ const treatmentBgs = [brandBgAlt, brandBg, brandBgAlt, brandBg, brandBgAlt, bran
 
 function ResultsSection() {
   const sectionRef = useSectionReveal(60) // [FM-P1-7] 100 → 60;
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const r = t.results;
-  // [STATS-P1-1] CLINIC_STATS 하드코딩 제거 → useClinicStats 연동
-  const clinicStats = useClinicStats();
-
-  // 카운팅 애니메이션 적용
-  const { value: countValue1 } = useCountUp(clinicStats.years.value, 2000, clinicStats.years.unit, 0, undefined, lang);
-  const { value: countValue2 } = useCountUp(clinicStats.cases.value, 2000, clinicStats.cases.unit, 0, undefined, lang);
-
-  const countValues = [countValue1, countValue2, `1:${clinicStats.ratio.value}`];
 
   return (
     <section ref={sectionRef} id="results" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: '#FAF8F5' }}>
@@ -89,51 +76,6 @@ function ResultsSection() {
                   className="mt-5 h-px w-10 group-hover:w-full transition-all duration-500"
                   style={{ backgroundColor: `color-mix(in srgb, var(--color-gold-primary) 40%, transparent)` }}
                 />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16">
-          {r.stats.map((s, i) => {
-            const Icon = statIcons[i];
-            const color = statColors[i];
-            const bg = statBgs[i];
-            return (
-              <div
-                key={i}
-                className="reveal-card group relative rounded-2xl p-6 sm:p-8 text-center overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-default"
-                style={{
-                  background: bg,
-                  transitionDelay: `${i * 0.1}s`,
-                  border: `1px solid ${color}22`,
-                }}
-              >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: `linear-gradient(135deg, ${color}08 0%, ${color}04 100%)` }}
-                />
-                <div className="relative z-10">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300"
-                    style={{ background: brandGoldPale }}
-                  >
-                    <Icon size={22} style={{ color: brandGoldDeep }} />
-                  </div>
-                  <div
-                    className="font-montserrat font-normal mb-2 group-hover:scale-105 transition-transform duration-300"
-                    style={{ fontSize: "clamp(1.7rem, 4.5vw, 2.2rem)", color: brandGoldDeep }}
-                  >
-                    {countValues[i]}
-                  </div>
-                  <div className="font-normal text-sm mb-1" style={{ color: dark }}>
-                    {s.label}
-                  </div>
-                  <div className="text-xs" style={{ color: muted }}>
-                    {s.desc}
-                  </div>
-                </div>
               </div>
             );
           })}

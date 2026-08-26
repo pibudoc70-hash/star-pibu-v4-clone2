@@ -433,14 +433,15 @@ describe("PR-QA-P1: useCountUp locale 파라미터 추가 검증", () => {
     expect(src).toMatch(/useCountUp\(.*lang\)/);
   });
 
-  it("ResultsSection.tsx가 useCountUp에 lang을 전달해야 한다", () => {
+  it("ResultsSection.tsx는 통계 카드 제거 후 useCountUp을 렌더링하지 않아야 한다", () => {
     // readFileSync via top-level import (see below)
     // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/ResultsSection.tsx"),
       "utf8",
     );
-    expect(src).toMatch(/useCountUp\(.*lang\)/);
+    expect(src).not.toMatch(/useCountUp\(/);
+    expect(src).not.toMatch(/useClinicStats\(/);
   });
 });
 

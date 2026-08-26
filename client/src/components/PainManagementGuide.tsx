@@ -244,7 +244,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       <div className="relative mx-auto w-full max-w-6xl">
         <header className="mb-7 text-center sm:mb-8">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-          <h2 id={headingId} className="mx-auto mt-3 max-w-[20ch] break-keep text-balance text-[1.65rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
+          <h2 id={headingId} className="mx-auto mt-3 max-w-[20ch] break-keep text-balance text-[1.55rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
           <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
         </header>
 

@@ -111,7 +111,8 @@ describe("PainManagementGuide content and placement", () => {
   it("uses mobile-specific spacing and typography so the remaining guide stays balanced on narrow screens", () => {
     expect(guideSource).toContain("bg-white p-5 shadow");
     expect(guideSource).toContain("sm:p-8");
-    expect(guideSource).toContain("text-[1.65rem]");
+    expect(guideSource).toContain("text-[1.55rem]");
+    expect(guideSource).toContain("sm:text-3xl");
     expect(guideSource).toContain("text-[11px]");
     expect(guideSource).toContain("text-[11px]");
   });

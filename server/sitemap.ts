@@ -74,6 +74,12 @@ const FOREIGN_GUIDE_HREFLANG = `    <xhtml:link rel="alternate" hreflang="en"   
     <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/foreign-guide" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/foreign-guide" />`;
 
+const FOREIGN_PRICE_LIST_HREFLANG = `    <xhtml:link rel="alternate" hreflang="en"    href="${SITE_URL}/en/price-list" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="${SITE_URL}/ja/price-list" />
+    <xhtml:link rel="alternate" hreflang="zh"    href="${SITE_URL}/zh/price-list" />
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="${SITE_URL}/zh-tw/price-list" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/en/price-list" />`;
+
 export const STATIC_URLS = [
   // ── 홈 (다국어) ──────────────────────────────────────────────
   {
@@ -109,6 +115,10 @@ export const STATIC_URLS = [
     priority: "0.8",
     hreflang: hreflangBlock("/notice"),
   },
+  { loc: `${SITE_URL}/en/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
+  { loc: `${SITE_URL}/ja/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
+  { loc: `${SITE_URL}/zh/notice`,    lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
+  { loc: `${SITE_URL}/zh-tw/notice`, lastmod: BUILD_DATE, changefreq: "weekly", priority: "0.7", hreflang: hreflangBlock("/notice") },
 
   // ── 외국인 안내 ──────────────────────────────────────────────
   {
@@ -121,6 +131,12 @@ export const STATIC_URLS = [
   { loc: `${SITE_URL}/ja/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
   { loc: `${SITE_URL}/zh/foreign-guide`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
   { loc: `${SITE_URL}/zh-tw/foreign-guide`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.8", hreflang: FOREIGN_GUIDE_HREFLANG },
+
+  // ── 외국인 시술 금액 안내 ─────────────────────────────────────
+  { loc: `${SITE_URL}/en/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
+  { loc: `${SITE_URL}/ja/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
+  { loc: `${SITE_URL}/zh/price-list`,    lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
+  { loc: `${SITE_URL}/zh-tw/price-list`, lastmod: BUILD_DATE, changefreq: "monthly", priority: "0.7", hreflang: FOREIGN_PRICE_LIST_HREFLANG },
 
   // ── 병원 소개 ────────────────────────────────────────────────
   {

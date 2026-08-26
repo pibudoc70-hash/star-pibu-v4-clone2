@@ -9,6 +9,7 @@
 
 import type { Express, Request, Response } from "express";
 import { getEquipment3List } from "./db/equipment3";
+import { getAllNotices } from "./db/notices";
 import type { Equipment3Item } from "../drizzle/schema";
 
 const SITE_URL = "https://star-pibu.com";
@@ -34,15 +35,32 @@ function toRfc822(date: Date): string {
   return date.toUTCString();
 }
 
+function imageMimeType(imageUrl: string): string {
+  const pathname = imageUrl.split(/[?#]/, 1)[0].toLowerCase();
+  if (pathname.endsWith(".webp")) return "image/webp";
+  if (pathname.endsWith(".png")) return "image/png";
+  if (pathname.endsWith(".avif")) return "image/avif";
+  if (pathname.endsWith(".gif")) return "image/gif";
+  return "image/jpeg";
+}
+
+type RssFeedItem = {
+  updatedAt: Date;
+  xml: string;
+};
+
 export function registerRssFeed(app: Express): void {
   app.get("/rss.xml", async (_req: Request, res: Response) => {
     try {
-      const items = await getEquipment3List();
+      const [equipmentItems, notices] = await Promise.all([
+        getEquipment3List(),
+        getAllNotices("ko"),
+      ]);
 
       const now = new Date();
 
-      // 각 아이템의 RSS <item> 생성
-      const rssItems = items
+      // 장비·시술과 최신 한국어 공지를 하나의 최신순 피드로 제공한다.
+      const equipmentFeedItems: RssFeedItem[] = equipmentItems
         .map((item: Equipment3Item) => {
           const url = `${SITE_URL}/equipment3/${escapeXml(item.slug)}`;
           const title = escapeXml(
@@ -55,11 +73,14 @@ export function registerRssFeed(app: Express): void {
           );
           const category = escapeXml(item.category || "시술·장비");
           const imageUrl = item.ogImageUrl || item.imageUrl || "";
+          const imageType = imageMimeType(imageUrl);
           const pubDate = toRfc822(
             item.updatedAt ? new Date(item.updatedAt) : now
           );
 
-          return `
+          return {
+            updatedAt: item.updatedAt ? new Date(item.updatedAt) : now,
+            xml: `
     <item>
       <title>${title}</title>
       <link>${url}</link>
@@ -69,11 +90,37 @@ export function registerRssFeed(app: Express): void {
       <category>${category}</category>${
         imageUrl
           ? `
-      <enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" length="0"/>`
+      <enclosure url="${escapeXml(imageUrl)}" type="${imageType}" length="0"/>`
           : ""
       }
-    </item>`;
-        })
+    </item>`,
+          };
+        });
+
+      const noticeFeedItems: RssFeedItem[] = notices.map((notice) => {
+        const url = `${SITE_URL}/notice/${notice.id}`;
+        const noticeTitle = `[공지] ${notice.title}`;
+        const description = notice.content.replace(/\s+/g, " ").trim().slice(0, 500);
+        const updatedAt = notice.updatedAt ? new Date(notice.updatedAt) : now;
+
+        return {
+          updatedAt,
+          xml: `
+    <item>
+      <title>${escapeXml(noticeTitle)}</title>
+      <link>${url}</link>
+      <description>${escapeXml(description)}</description>
+      <pubDate>${toRfc822(updatedAt)}</pubDate>
+      <guid isPermaLink="true">${url}</guid>
+      <category>공지</category>
+    </item>`,
+        };
+      });
+
+      const rssItems = [...equipmentFeedItems, ...noticeFeedItems]
+        .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+        .slice(0, 100)
+        .map((item) => item.xml)
         .join("");
 
       const xml = `<?xml version="1.0" encoding="UTF-8"?>

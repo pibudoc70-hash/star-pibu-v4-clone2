@@ -3,7 +3,7 @@
  *
  * 리팩토링 내역:
  * - 모바일: EventTableMobile (하나의 카드에 모든 시술 목록 + 상세 모달)
- * - 데스크톱: EventCard 그리드 (기존 카드 레이아웃 유지)
+ * - 데스크톱: 첫 이벤트 lead 카드 + 나머지 compact 가격 목록
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Sparkles, RefreshCw, ChevronDown } from "lucide-react";
@@ -74,11 +74,10 @@ function SectionHeader({ lang }: { lang: string }) {
     ko: <><span>스타만의 특별한 가격으로,</span><br /><span>한 단계 높은 피부 관리를 시작해보세요.</span></>,
   };
   return (
-    <div className="section-header-block">
+    <div className="section-header-block !text-left">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
-      <div className="star-divider mx-auto" />
-      <p className="section-subtitle">
+      <p className="section-subtitle !mx-0">
         {subtitleMap[lang] ?? subtitleMap.ko}
       </p>
     </div>
@@ -86,10 +85,19 @@ function SectionHeader({ lang }: { lang: string }) {
 }
 
 // ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
-function EventCardSkeleton({ index = 0 }: { index?: number }) {
+function EventCardSkeleton({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="flex min-h-14 items-center justify-between gap-4 border-b border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] px-4 py-3" aria-hidden="true">
+        <div className="skeleton-shimmer h-4 w-2/5 rounded" />
+        <div className="skeleton-shimmer h-4 w-20 rounded" />
+      </div>
+    );
+  }
+
   return (
     <div
-      className={`rounded-2xl overflow-hidden${index > 0 ? ' hidden md:block' : ''}`}
+      className="overflow-hidden rounded-2xl"
       style={{
         background: 'var(--color-white, #ffffff)',
         boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
@@ -112,12 +120,12 @@ function EventCardSkeleton({ index = 0 }: { index?: number }) {
       </div>
       <div className="p-4 md:p-5 flex flex-col gap-2.5">
         <div style={{ height: '11px', width: '3.2rem', borderRadius: '999px', background: 'color-mix(in srgb, var(--color-gold-primary) 35%, transparent)' }} />
-        <div className="skeleton-shimmer rounded" style={{ height: '19px', width: '80%', animationDelay: `${index * 0.08 + 0.06}s` }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '19px', width: '80%' }} />
         <div className="flex items-center gap-2 mt-0.5">
-          <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '3rem', animationDelay: `${index * 0.08 + 0.12}s` }} />
+          <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '3rem' }} />
           <div style={{ height: '13px', width: '3.5rem', borderRadius: '4px', background: 'color-mix(in srgb, var(--color-gold-primary) 30%, transparent)' }} />
         </div>
-        <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '55%', animationDelay: `${index * 0.08 + 0.16}s` }} />
+        <div className="skeleton-shimmer rounded" style={{ height: '13px', width: '55%' }} />
       </div>
     </div>
   );
@@ -148,10 +156,13 @@ export default function SpecialEventSection() {
         <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
           <SectionHeader lang={lang} />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
-            <EventCardSkeleton index={0} />
-            <EventCardSkeleton index={1} />
-            <EventCardSkeleton index={2} />
+          <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-5"><EventCardSkeleton /></div>
+            <div className="hidden overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white md:col-span-7 md:block">
+              <EventCardSkeleton compact />
+              <EventCardSkeleton compact />
+              <EventCardSkeleton compact />
+            </div>
           </div>
         </div>
       </section>
@@ -189,7 +200,8 @@ export default function SpecialEventSection() {
   }
 
   const allEvents = specialEvents as SpecialEvent[];
-  const visibleDesktopEvents = showMore ? allEvents : allEvents.slice(0, 6);
+  const leadEvent = allEvents[0];
+  const compactEvents = allEvents.slice(1, showMore ? 7 : 6);
   const hasMoreDesktop = allEvents.length > 6;
 
   return (
@@ -209,15 +221,23 @@ export default function SpecialEventSection() {
               />
             </div>
 
-            {/* 데스크톱: 카드 그리드 */}
-            <div className="hidden md:grid grid-cols-3 gap-12 items-start">
-              {visibleDesktopEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  getLocalizedText={getLocalizedText}
-                />
-              ))}
+            {/* 데스크톱: 첫 이벤트 lead 카드 + 나머지 compact 가격 목록 */}
+            <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
+              {leadEvent && (
+                <div className="md:col-span-5">
+                  <EventCard key={leadEvent.id} event={leadEvent} getLocalizedText={getLocalizedText} variant="lead" />
+                </div>
+              )}
+              <div className="md:col-span-7">
+                <div className="mb-3 flex items-center justify-end">
+                  <span data-testid="event-vat-notice" className="text-xs text-brand-mid">VAT 포함</span>
+                </div>
+                <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white">
+                  {compactEvents.map((event) => (
+                    <EventCard key={event.id} event={event} getLocalizedText={getLocalizedText} variant="compact" />
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* 데스크톱 더보기 버튼 */}
@@ -226,7 +246,7 @@ export default function SpecialEventSection() {
                 <button
                   type="button"
                   onClick={() => setShowMore(!showMore)}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-all hover:scale-105"
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-colors hover:opacity-90"
                   style={{ backgroundColor: "var(--color-gold-primary)" } as React.CSSProperties}
                 >
                   {showMore ? (

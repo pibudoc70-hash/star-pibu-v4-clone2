@@ -23,18 +23,15 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).not.toContain("grid-cols-3");
   });
 
-  it("keeps lazy-fetch accessibility contracts and shows one desktop VAT notice", () => {
+  it("keeps lazy-fetch accessibility contracts without the removable desktop instruction copy", () => {
     expect(source).toContain('id="events"');
     expect(source).toContain('aria-busy="true"');
     expect(source).toContain("md:scroll-mt-40");
-    expect(source).toContain('data-testid="event-vat-notice"');
+    expect(source).not.toContain('data-testid="event-vat-notice"');
+    expect(source).not.toContain('data-testid="event-compact-hint"');
+    expect(source).not.toContain('data-testid="event-compact-context"');
+    expect(source).not.toContain("모든 이벤트 금액은 VAT 포함");
     expect(source).not.toContain("hover:scale-105");
-  });
-
-  it("adds a localized compact-list comparison hint without changing the mobile table", () => {
-    expect(source).toContain("compactHintMap");
-    expect(source).toContain('data-testid="event-compact-hint"');
-    expect(source).toContain("모든 이벤트 금액은 VAT 포함");
   });
 
   it("keys the selected preview so each desktop event change replays its fade transition", () => {
@@ -49,9 +46,9 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).not.toContain("hasMoreDesktop");
   });
 
-  it("places desktop comparison context above the two-column grid so the preview and first selector share a top edge", () => {
-    expect(source).toContain('data-testid="event-compact-context"');
-    expect(source.indexOf('data-testid="event-compact-context"')).toBeLessThan(source.indexOf('hidden md:grid md:grid-cols-12'));
+  it("keeps the preview and first selector on the same shared desktop grid top edge", () => {
+    expect(source).toContain('hidden md:grid md:grid-cols-12');
+    expect(source).not.toContain('data-testid="event-compact-context"');
   });
 
   it("keeps the Korean section subtitle on one desktop line while preserving mobile wrapping", () => {

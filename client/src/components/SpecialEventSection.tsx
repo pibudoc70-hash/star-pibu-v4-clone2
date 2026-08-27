@@ -210,29 +210,6 @@ export default function SpecialEventSection() {
   const allEvents = specialEvents as SpecialEvent[];
   const desktopEvents = allEvents;
   const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
-  const compactHintMap: Record<string, { title: string; hint: string }> = {
-    ko: {
-      title: "이벤트 선택",
-      hint: "항목에 커서를 올리거나 선택해 상세 조건을 확인하세요. 모든 이벤트 금액은 VAT 포함입니다.",
-    },
-    en: {
-      title: "Select an event",
-      hint: "Hover over or select a row to view details. All event prices include VAT.",
-    },
-    ja: {
-      title: "イベントを選択",
-      hint: "行にカーソルを合わせるか選択して詳細をご確認ください。すべての料金はVAT込みです。",
-    },
-    zh: {
-      title: "选择活动",
-      hint: "悬停或点击条目查看详情。所有活动价格均含增值税。",
-    },
-    "zh-TW": {
-      title: "選擇活動",
-      hint: "將游標移至項目上或點選查看詳細內容。所有活動價格均含增值稅。",
-    },
-  };
-  const compactHint = compactHintMap[lang] ?? compactHintMap.ko;
 
   return (
     <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셔 이벤트">
@@ -250,18 +227,8 @@ export default function SpecialEventSection() {
                 getLocalizedText={getLocalizedText}
               />
             </div>
-
-             {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
-             <div data-testid="event-compact-context" className="mb-3 hidden items-end justify-between gap-4 md:flex">
-               <div>
-                 <p className="text-sm font-semibold text-brand">{compactHint.title}</p>
-                 <p data-testid="event-compact-hint" className="mt-1 max-w-md text-xs leading-relaxed text-brand-mid">
-                   {compactHint.hint}
-                 </p>
-               </div>
-               <span data-testid="event-vat-notice" className="shrink-0 text-xs font-medium text-brand-mid">VAT 포함</span>
-             </div>
-             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
+            {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
+            <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
               {selectedEvent && (
                 <div className="md:col-span-5 md:sticky md:top-28 md:self-start">
                   <div key={selectedEvent.id} className="event-card__preview">

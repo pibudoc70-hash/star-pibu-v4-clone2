@@ -6,7 +6,7 @@
  * 책임:
  * - Dialog 열림/닫힘 상태 수신 (open, onOpenChange)
  * - 시술 상세 정보 표시 (이미지, 유튜브, 시간/회복, 효과, 주의사항)
- * - 상세 페이지 이동 버튼 (detailSlug 있을 때만)
+ * - 확인된 Equipment3 상세 페이지 이동 버튼 (detailUrl 있을 때만)
  * - 전화 상담 버튼
  */
 import {
@@ -32,14 +32,14 @@ interface EquipmentTreatmentModalProps {
   item: Treatment;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  detailSlug: string | undefined;
+  detailUrl: string | undefined;
 }
 
 export function EquipmentTreatmentModal({
   item,
   open,
   onOpenChange,
-  detailSlug,
+  detailUrl,
 }: EquipmentTreatmentModalProps) {
   const { t, lang } = useLang();
   const tr = t.treatments;
@@ -148,6 +148,21 @@ export function EquipmentTreatmentModal({
             </div>
           )}
 
+          {/* 상세 페이지 이동 버튼 */}
+          {detailUrl && (
+            <button
+              type="button"
+              onClick={() => {
+                onOpenChange(false);
+                setLocation(detailUrl);
+              }}
+              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 bg-[var(--card-accent)]"
+            >
+              <ExternalLink size={14} />
+              {tr.modalDetailBtn}
+            </button>
+          )}
+
           {/* 상세 설명 */}
           {getText(item.detail, item.detailEn, item.detailJa, item.detailZh) && (
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -198,22 +213,6 @@ export function EquipmentTreatmentModal({
               </p>
             </div>
           )}
-
-          {/* 상세 페이지 이동 버튼 */}
-          {detailSlug && (
-            <button
-              type="button"
-              onClick={() => {
-                onOpenChange(false);
-                setLocation(`/treatment/${detailSlug}`);
-              }}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 bg-[var(--card-accent)]"
-            >
-              <ExternalLink size={14} />
-              {tr.modalDetailBtn}
-            </button>
-          )}
-
 
         </div>
       </DialogContent>

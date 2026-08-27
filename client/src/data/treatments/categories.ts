@@ -145,10 +145,3 @@ export const CAT_TAB_TEXT: Record<string, string> = {
   psoriasis:  "#9A3412",
   stem_cell:  "#4338CA",
 };
-
-/** 상세 페이지가 있는 시술 slug 매핑 */
-export const DETAIL_PAGE_SLUGS: Record<string, string> = {
-  "울쎄라피 프라임": "ulthera",
-  "써마지 FLX":     "thermage",
-  "눈밑지방재배치": "under-eye-fat",
-};

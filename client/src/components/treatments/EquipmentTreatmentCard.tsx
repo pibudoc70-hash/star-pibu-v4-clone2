@@ -19,7 +19,6 @@ import React, { useState } from "react";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useLang } from "@/contexts/LangContext";
 import type { Treatment } from "@/types/treatment";
-import { DETAIL_PAGE_SLUGS } from "@/data/treatments/categories";
 import { EquipmentTreatmentModal } from "@/components/treatments/EquipmentTreatmentModal";
 import { TreatmentCardMedia } from "@/components/treatments/TreatmentCardMedia";
 import { TreatmentMeta } from "@/components/treatments/TreatmentMeta";
@@ -40,7 +39,6 @@ export default function EquipmentTreatmentCard({
   const [open, setOpen] = useState(false);
   const { t } = useLang();
   const tr = t.treatments;
-  const detailSlug = DETAIL_PAGE_SLUGS[item.name];
   const { getText } = useLocalizedText();
 
   // [R15-P1-1] CSS custom property 기반: 동적 색상/딜레이를 CSS 변수로 전달
@@ -83,7 +81,7 @@ export default function EquipmentTreatmentCard({
         item={item}
         open={open}
         onOpenChange={setOpen}
-        detailSlug={detailSlug}
+        detailUrl={item.detailUrl}
       />
     </>
   );

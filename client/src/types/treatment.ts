@@ -53,6 +53,7 @@ export interface Treatment {
   steps?: { step: number; title: string; desc: string }[]; // 치료 단계
   youtubeUrl?: string;        // 상세 모달 내 YouTube 영상 URL
   modalImage?: string;        // 유튜브 대신 모달에 표시할 이미지 URL
+  detailUrl?: string;         // 활성 Equipment3 상세 페이지 URL
 }
 
 export interface Equipment {

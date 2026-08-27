@@ -16,6 +16,7 @@
  */
 import { useMemo } from "react";
 import { trpc } from "@/lib/trpc";
+import { buildEquipment3DetailUrl } from "@/lib/equipment3DetailUrl";
 import type { Treatment } from "@/types/treatment";
 
 // Equipment3 페이지와 동일한 카테고리 번역 테이블
@@ -107,6 +108,8 @@ function toTreatment(item: {
   youtubeUrl?: string | null;
   modalImage?: string | null;
   isBest?: string | null;
+  slug: string;
+  category?: string | null;
 }): Treatment {
   // images JSON 문자열 → string[]
   let parsedImages: string[] | undefined;
@@ -162,6 +165,7 @@ function toTreatment(item: {
     images: parsedImages,
     youtubeUrl: item.youtubeUrl ?? undefined,
     modalImage: item.modalImage ?? undefined,
+    detailUrl: buildEquipment3DetailUrl(item.slug, item.category),
     best: String(item.isBest) === "1",
   };
 }

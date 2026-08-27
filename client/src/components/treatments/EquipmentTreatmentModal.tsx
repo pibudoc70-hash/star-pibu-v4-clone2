@@ -10,8 +10,9 @@
  * - 전화 상담 버튼
  */
 import {
-  Clock, RefreshCw, AlertCircle, Repeat, Sparkles, ExternalLink,
+  Clock, RefreshCw, AlertCircle, Repeat, Sparkles, ExternalLink, LoaderCircle,
 } from "lucide-react";
+import { useState } from "react";
 
 // YouTube URL → embed URL 변환 (watch?v= / youtu.be / shorts 모두 지원)
 function toEmbedUrl(url: string | null | undefined): string | null {
@@ -33,6 +34,7 @@ interface EquipmentTreatmentModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   detailUrl: string | undefined;
+  accentColor: string;
 }
 
 export function EquipmentTreatmentModal({
@@ -40,11 +42,13 @@ export function EquipmentTreatmentModal({
   open,
   onOpenChange,
   detailUrl,
+  accentColor,
 }: EquipmentTreatmentModalProps) {
   const { t, lang } = useLang();
   const tr = t.treatments;
   const { getText } = useLocalizedText();
   const [, setLocation] = useLocation();
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // 언어별 헤더 이미지: ko는 imageUrl 썬네일, 비ko는 bgImageUrl 풀배경
   const isNonKo = lang !== "ko";
@@ -153,13 +157,30 @@ export function EquipmentTreatmentModal({
             <button
               type="button"
               onClick={() => {
-                onOpenChange(false);
-                setLocation(detailUrl);
+                if (isNavigating) return;
+                setIsNavigating(true);
+                window.setTimeout(() => {
+                  onOpenChange(false);
+                  setLocation(detailUrl);
+                }, 160);
               }}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 bg-[var(--card-accent)]"
+              disabled={isNavigating}
+              aria-busy={isNavigating}
+              aria-label={isNavigating ? tr.modalDetailLoading : tr.modalDetailBtn}
+              className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-black/10 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-[transform,filter,box-shadow] duration-200 hover:brightness-110 hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-95"
+              style={{ backgroundColor: accentColor }}
             >
-              <ExternalLink size={14} />
-              {tr.modalDetailBtn}
+              {isNavigating ? (
+                <>
+                  <LoaderCircle size={16} className="animate-spin motion-reduce:animate-none" aria-hidden="true" />
+                  {tr.modalDetailLoading}
+                </>
+              ) : (
+                <>
+                  <ExternalLink size={16} aria-hidden="true" />
+                  {tr.modalDetailBtn}
+                </>
+              )}
             </button>
           )}
 

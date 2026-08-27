@@ -203,6 +203,7 @@ export const zhTW: I18nContent = {
     modalSessions: "建議次數",
     modalEffect: "預期效果",
     modalDetailBtn: "查看詳情頁面",
+    modalDetailLoading: "正在開啟頁面…",
     modalConsultBtn: "微信諮詢",
     collapseBtn: "收起",
     moreBtn: "再顯示{n}個",

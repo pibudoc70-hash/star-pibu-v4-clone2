@@ -204,6 +204,7 @@ export const ja: I18nContent = {
     modalSessions: "推奨回数",
     modalEffect: "期待できる効果",
     modalDetailBtn: "詳細ページを見る",
+    modalDetailLoading: "ページを開いています…",
     modalConsultBtn: "LINEで相談する",
     collapseBtn: "閉じる",
     moreBtn: "さらに{n}件",

@@ -210,6 +210,7 @@ export interface I18nContent {
     modalSessions: string;
     modalEffect: string;
     modalDetailBtn: string;
+    modalDetailLoading: string;
     modalConsultBtn: string;
     collapseBtn: string;
     moreBtn: string;

@@ -204,6 +204,7 @@ export const zh: I18nContent = {
     modalSessions: "建议次数",
     modalEffect: "预期效果",
     modalDetailBtn: "查看详情页面",
+    modalDetailLoading: "正在打开页面…",
     modalConsultBtn: "微信咨询",
     collapseBtn: "收起",
     moreBtn: "再显示{n}个",

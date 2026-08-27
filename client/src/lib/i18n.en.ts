@@ -204,6 +204,7 @@ export const en: I18nContent = {
     modalSessions: "Recommended Sessions",
     modalEffect: "Expected Results",
     modalDetailBtn: "View Detail Page",
+    modalDetailLoading: "Opening page…",
     modalConsultBtn: "Consult via KakaoTalk",
     collapseBtn: "Collapse",
     moreBtn: "{n} more",

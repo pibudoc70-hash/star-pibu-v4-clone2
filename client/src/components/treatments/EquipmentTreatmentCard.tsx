@@ -82,6 +82,7 @@ export default function EquipmentTreatmentCard({
         open={open}
         onOpenChange={setOpen}
         detailUrl={item.detailUrl}
+        accentColor={catTextColor}
       />
     </>
   );

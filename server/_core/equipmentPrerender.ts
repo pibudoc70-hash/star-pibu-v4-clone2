@@ -174,6 +174,7 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     rendered = upsertMetaTag(rendered, "name", "twitter:image", `<meta data-rh="true" name="twitter:image" content="${escapedImage}" />`);
   }
   rendered = rendered
+    .replace(/\sdata-seo-fallback=(["'])home\1/gi, "")
     .replace("</head>", `    <script type="application/ld+json" data-prerender="equipment-medical">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
   return injectPageSeoMeta(rendered, pathName);

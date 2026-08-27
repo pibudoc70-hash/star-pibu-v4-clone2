@@ -3,7 +3,7 @@ import { buildEquipmentPrerenderedHtml, EQUIPMENT_PRERENDER_CACHE_CONTROL } from
 
 const template = `<!doctype html><html><head><title>스타피부과</title><meta name="description" content="" /><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="root"></div></body></html>`;
 const homeMetaTemplate = `<!doctype html><html><head><title data-seo-fallback="home">홈페이지 제목</title><meta data-seo-fallback="home" name="description" content="홈페이지 공통 설명" /><meta content="홈페이지 공통 키워드" name="keywords" data-seo-fallback="home" /><meta data-seo-fallback="home" property="og:title" content="홈페이지 OG 제목" /><meta content="홈페이지 OG 설명" property="og:description" data-seo-fallback="home" /><meta property="og:url" content="https://star-pibu.com" data-seo-fallback="home" /><meta property="og:image" content="https://star-pibu.com/home.webp" data-seo-fallback="home" /><meta property="og:image:secure_url" content="https://star-pibu.com/home.webp" data-seo-fallback="home" /><meta property="og:image:type" content="image/webp" data-seo-fallback="home" /><meta name="twitter:title" content="홈페이지 Twitter 제목" data-seo-fallback="home" /><meta data-seo-fallback="home" name="twitter:description" content="홈페이지 Twitter 설명" /><meta content="https://star-pibu.com/home.webp" name="twitter:image" data-seo-fallback="home" /><link href="https://star-pibu.com" rel="canonical" /></head><body><div id="root"></div></body></html>`;
-const homeMetaTemplateWithResidualTags = homeMetaTemplate.replace("</head>", `<meta data-seo-fallback="home" property="og:site_name" content="스타피부과" /><meta data-seo-fallback="home" property="og:type" content="website" /><meta data-seo-fallback="home" name="twitter:card" content="summary_large_image" /></head>`);
+const homeMetaTemplateWithResidualTags = homeMetaTemplate.replace("</head>", `<meta data-seo-fallback="home" property="og:site_name" content="스타피부과" /><meta data-seo-fallback="home" property="og:type" content="website" /><meta data-seo-fallback="home" property="og:image:width" content="1200" /><meta data-seo-fallback="home" property="og:image:height" content="630" /><meta data-seo-fallback="home" property="og:image:alt" content="홈페이지 대표 이미지" /><meta data-seo-fallback="home" name="twitter:card" content="summary_large_image" /></head>`);
 const item = {
   id: 1, slug: "rejuran", name: "리쥬란힐러", nameEn: "Rejuran Healer", nameJa: "リジュラン", nameZh: "丽珠兰", nameZhTw: "", category: "스킨부스터", categoryEn: "Skin Booster", categoryJa: "", categoryZh: "",
   desc: "피부 재생을 돕는 주사 시술", descEn: "A skin regeneration injection treatment", descJa: "", descZh: "", descZhTw: "", detail: "PDRN 성분을 피부에 주입합니다.", detailEn: "PDRN is injected into the skin.", detailJa: "", detailZh: "", detailZhTw: "", effect: "피부결 개선", effectEn: "Texture improvement", effectJa: "", effectZh: "", effectZhTw: "", caution: "시술 후 자외선 차단이 필요합니다.", cautionEn: "Use sunscreen after treatment.", cautionJa: "", cautionZh: "", cautionZhTw: "", sessions: "3회", sessionsEn: "3 sessions", sessionsJa: "", sessionsZh: "", sessionsZhTw: "", time: "30분", timeEn: "30 min", timeJa: "", timeZh: "", timeZhTw: "", recovery: "2~3일", recoveryEn: "2–3 days", recoveryJa: "", recoveryZh: "", recoveryZhTw: "", faqs: JSON.stringify([{ question: "저장 FAQ 질문", answer: "저장 FAQ 답변" }]), faqsEn: "[]", faqsJa: "[]", faqsZh: "[]", faqsZhTw: "[]", imageUrl: "/image.webp", bgImageUrl: null, images: "[]", youtubeUrl: null, modalImage: null, badge: "", badgeColor: "#000", seoTitle: "", seoDescription: "", seoKeywords: "", ogImageUrl: null, sortOrder: 1, isActive: "1" as const, isBest: "0" as const, isNew: "0" as const, createdAt: new Date(), updatedAt: new Date(),
@@ -43,12 +43,15 @@ describe("equipmentPrerender", () => {
     expect(html).not.toContain("홈페이지 OG 설명");
   });
 
-  it("현재 페이지에도 유효한 공통 OG 태그에서는 홈 fallback 표식만 제거한다", () => {
+  it("현재 페이지에도 유효한 공통 OG 태그에서는 홈 fallback 표식만 제거하고, 부정확한 홈 이미지 메타는 제거한다", () => {
     const html = buildEquipmentPrerenderedHtml(homeMetaTemplateWithResidualTags, item, "ko", "/equipment3/rejuran");
 
     expect(html).toContain('property="og:site_name" content="스타피부과"');
     expect(html).toContain('property="og:type" content="website"');
     expect(html).toContain('name="twitter:card" content="summary_large_image"');
+    expect(html).not.toContain('property="og:image:width"');
+    expect(html).not.toContain('property="og:image:height"');
+    expect(html).not.toContain('property="og:image:alt"');
     expect(html).not.toContain('data-seo-fallback="home"');
   });
 

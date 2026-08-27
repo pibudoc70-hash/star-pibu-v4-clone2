@@ -68,6 +68,14 @@ function upsertMetaTag(html: string, attribute: "name" | "property", value: stri
   return upsertHeadTag(html, matcher, markup);
 }
 
+function removeFallbackMetaTag(html: string, attribute: "name" | "property", value: string): string {
+  const matcher = new RegExp(
+    `<meta\\b(?=[^>]*\\bdata-seo-fallback\\s*=\\s*["']home["'])(?=[^>]*\\b${attribute}\\s*=\\s*["']${escapeRegExp(value)}["'])[^>]*\\/?>(?:\\s*)`,
+    "i",
+  );
+  return html.replace(matcher, "");
+}
+
 function imageMimeType(url: string): string {
   const pathname = url.split("?")[0]?.toLowerCase() ?? "";
   if (pathname.endsWith(".webp")) return "image/webp";
@@ -173,7 +181,10 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     rendered = upsertMetaTag(rendered, "property", "og:image:type", `<meta data-rh="true" property="og:image:type" content="${imageMimeType(ogImage)}" />`);
     rendered = upsertMetaTag(rendered, "name", "twitter:image", `<meta data-rh="true" name="twitter:image" content="${escapedImage}" />`);
   }
-  rendered = rendered
+  rendered = ["og:image:width", "og:image:height", "og:image:alt"].reduce(
+    (html, property) => removeFallbackMetaTag(html, "property", property),
+    rendered,
+  )
     .replace(/\sdata-seo-fallback=(["'])home\1/gi, "")
     .replace("</head>", `    <script type="application/ld+json" data-prerender="equipment-medical">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`);

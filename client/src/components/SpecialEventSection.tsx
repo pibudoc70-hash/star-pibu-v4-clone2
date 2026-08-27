@@ -230,7 +230,7 @@ export default function SpecialEventSection() {
             {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
             <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
               {selectedEvent && (
-                <div className="md:col-span-5 md:sticky md:top-28 md:self-start">
+                <div className="event-card__desktop-preview-frame md:col-span-5 md:sticky md:top-28 md:self-start">
                   <div key={selectedEvent.id} className="event-card__preview">
                     <EventCard
                       event={selectedEvent}

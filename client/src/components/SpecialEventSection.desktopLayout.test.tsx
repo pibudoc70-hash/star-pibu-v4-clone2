@@ -6,6 +6,10 @@ const source = readFileSync(
   resolve(process.cwd(), "client/src/components/SpecialEventSection.tsx"),
   "utf8",
 );
+const styles = readFileSync(
+  resolve(process.cwd(), "client/src/index.css"),
+  "utf8",
+);
 
 describe("SpecialEventSection conservative desktop layout", () => {
   it("uses a hover and focus controlled desktop selection state for the left detail panel", () => {
@@ -37,6 +41,13 @@ describe("SpecialEventSection conservative desktop layout", () => {
   it("keys the selected preview so each desktop event change replays its fade transition", () => {
     expect(source).toContain('className="event-card__preview"');
     expect(source).toContain("key={selectedEvent.id}");
+  });
+
+  it("reserves one consistent desktop preview-media frame so event image changes do not move the next section", () => {
+    expect(source).toContain("event-card__desktop-preview-frame");
+    expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--lead.event-card__media--natural");
+    expect(styles).toContain("aspect-ratio: 3 / 2;");
+    expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--natural .event-card__media-image");
   });
 
   it("shows the full desktop event selector list by default and keeps the preview aligned while scanning", () => {

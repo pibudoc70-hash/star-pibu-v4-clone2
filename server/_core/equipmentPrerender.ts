@@ -51,6 +51,31 @@ function escapeHtml(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function upsertHeadTag(html: string, matcher: RegExp, markup: string): string {
+  if (matcher.test(html)) return html.replace(matcher, markup);
+  return html.replace("</head>", `    ${markup}\n  </head>`);
+}
+
+function upsertMetaTag(html: string, attribute: "name" | "property", value: string, markup: string): string {
+  const matcher = new RegExp(
+    `<meta\\b(?=[^>]*\\b${attribute}\\s*=\\s*["']${escapeRegExp(value)}["'])[^>]*\\/?>(?:\\s*)`,
+    "i",
+  );
+  return upsertHeadTag(html, matcher, markup);
+}
+
+function imageMimeType(url: string): string {
+  const pathname = url.split("?")[0]?.toLowerCase() ?? "";
+  if (pathname.endsWith(".webp")) return "image/webp";
+  if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return "image/jpeg";
+  if (pathname.endsWith(".gif")) return "image/gif";
+  return "image/png";
+}
+
 function parsePath(pathname: string): { lang: Lang; slug: string } | null {
   const match = pathname.match(/^\/(?:(en|ja|zh|zh-tw)\/)?equipment3\/([^/?#]+)\/?$/);
   if (!match) return null;
@@ -104,6 +129,9 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const text = labels(lang);
   const name = localized(item, "name", lang);
   const detail = localized(item, "detail", lang) || localized(item, "desc", lang);
+  const seoTitle = item.seoTitle?.trim() || `${name} | 스타피부과`;
+  const seoDescription = item.seoDescription?.trim() || localized(item, "desc", lang);
+  const seoKeywords = item.seoKeywords?.trim() || [name, item.nameEn, "부산피부과", "서면피부과", "스타피부과"].filter(Boolean).join(", ");
   const effect = localized(item, "effect", lang);
   const duration = localized(item, "sessions", lang) || "개인 피부 상태와 시술 범위에 따라 의료진 상담 후 안내합니다.";
   const target = effect ? `${effect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.` : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.";
@@ -112,6 +140,7 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     [text.recovery, localized(item, "recovery", lang)], [text.caution, localized(item, "caution", lang)], [text.sessions, localized(item, "sessions", lang)],
   ].filter(([, value]) => value);
   const canonical = `${BASE_URL}${pathName}`;
+  const ogImage = item.ogImageUrl?.trim() || item.imageUrl || "";
   const hasLiftingPainCare = isPainSensitiveLifting(item.slug) || isPainSensitiveLifting(item.name);
   const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
@@ -129,10 +158,22 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const quoteBody = `<aside><h2>${escapeHtml(detailQuote.heading)}</h2><dl><dt>${escapeHtml(detailQuote.locationLabel)}</dt><dd>${escapeHtml(detailQuote.location)}</dd><dt>${escapeHtml(detailQuote.hoursLabel)}</dt><dd>${escapeHtml(detailQuote.hours)}</dd><dt>${escapeHtml(detailQuote.providerLabel)}</dt><dd>${escapeHtml(detailQuote.provider)}</dd><dt>${escapeHtml(detailQuote.painManagementLabel)}</dt><dd>${escapeHtml(detailQuote.painManagement)}</dd></dl></aside>`;
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}${quoteBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;
 
-  const rendered = template
-    .replace(/<title>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(`${name} | 스타피부과`)}</title>`)
-    .replace(/<meta\s+name="description"[^>]*\/?>/i, `<meta data-rh="true" name="description" content="${escapeHtml(localized(item, "desc", lang))}" />`)
-    .replace(/<link\s+rel="canonical"[^>]*\/?>/i, `<link data-rh="true" rel="canonical" href="${canonical}" />`)
+  let rendered = upsertHeadTag(template, /<title\b[^>]*>[\s\S]*?<\/title>/i, `<title data-rh="true">${escapeHtml(seoTitle)}</title>`);
+  rendered = upsertMetaTag(rendered, "name", "description", `<meta data-rh="true" name="description" content="${escapeHtml(seoDescription)}" />`);
+  rendered = upsertMetaTag(rendered, "name", "keywords", `<meta data-rh="true" name="keywords" content="${escapeHtml(seoKeywords)}" />`);
+  rendered = upsertMetaTag(rendered, "property", "og:title", `<meta data-rh="true" property="og:title" content="${escapeHtml(seoTitle)}" />`);
+  rendered = upsertMetaTag(rendered, "property", "og:description", `<meta data-rh="true" property="og:description" content="${escapeHtml(seoDescription)}" />`);
+  rendered = upsertMetaTag(rendered, "property", "og:url", `<meta data-rh="true" property="og:url" content="${canonical}" />`);
+  rendered = upsertMetaTag(rendered, "name", "twitter:title", `<meta data-rh="true" name="twitter:title" content="${escapeHtml(seoTitle)}" />`);
+  rendered = upsertMetaTag(rendered, "name", "twitter:description", `<meta data-rh="true" name="twitter:description" content="${escapeHtml(seoDescription)}" />`);
+  if (ogImage) {
+    const escapedImage = escapeHtml(ogImage);
+    rendered = upsertMetaTag(rendered, "property", "og:image", `<meta data-rh="true" property="og:image" content="${escapedImage}" />`);
+    rendered = upsertMetaTag(rendered, "property", "og:image:secure_url", `<meta data-rh="true" property="og:image:secure_url" content="${escapedImage}" />`);
+    rendered = upsertMetaTag(rendered, "property", "og:image:type", `<meta data-rh="true" property="og:image:type" content="${imageMimeType(ogImage)}" />`);
+    rendered = upsertMetaTag(rendered, "name", "twitter:image", `<meta data-rh="true" name="twitter:image" content="${escapedImage}" />`);
+  }
+  rendered = rendered
     .replace("</head>", `    <script type="application/ld+json" data-prerender="equipment-medical">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
   return injectPageSeoMeta(rendered, pathName);

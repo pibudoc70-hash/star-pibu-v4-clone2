@@ -2,12 +2,46 @@ import { describe, expect, it } from "vitest";
 import { buildEquipmentPrerenderedHtml, EQUIPMENT_PRERENDER_CACHE_CONTROL } from "./equipmentPrerender";
 
 const template = `<!doctype html><html><head><title>스타피부과</title><meta name="description" content="" /><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="root"></div></body></html>`;
+const homeMetaTemplate = `<!doctype html><html><head><title data-seo-fallback="home">홈페이지 제목</title><meta data-seo-fallback="home" name="description" content="홈페이지 공통 설명" /><meta content="홈페이지 공통 키워드" name="keywords" data-seo-fallback="home" /><meta data-seo-fallback="home" property="og:title" content="홈페이지 OG 제목" /><meta content="홈페이지 OG 설명" property="og:description" data-seo-fallback="home" /><meta property="og:url" content="https://star-pibu.com" data-seo-fallback="home" /><meta property="og:image" content="https://star-pibu.com/home.webp" data-seo-fallback="home" /><meta property="og:image:secure_url" content="https://star-pibu.com/home.webp" data-seo-fallback="home" /><meta property="og:image:type" content="image/webp" data-seo-fallback="home" /><meta name="twitter:title" content="홈페이지 Twitter 제목" data-seo-fallback="home" /><meta data-seo-fallback="home" name="twitter:description" content="홈페이지 Twitter 설명" /><meta content="https://star-pibu.com/home.webp" name="twitter:image" data-seo-fallback="home" /><link href="https://star-pibu.com" rel="canonical" /></head><body><div id="root"></div></body></html>`;
 const item = {
   id: 1, slug: "rejuran", name: "리쥬란힐러", nameEn: "Rejuran Healer", nameJa: "リジュラン", nameZh: "丽珠兰", nameZhTw: "", category: "스킨부스터", categoryEn: "Skin Booster", categoryJa: "", categoryZh: "",
   desc: "피부 재생을 돕는 주사 시술", descEn: "A skin regeneration injection treatment", descJa: "", descZh: "", descZhTw: "", detail: "PDRN 성분을 피부에 주입합니다.", detailEn: "PDRN is injected into the skin.", detailJa: "", detailZh: "", detailZhTw: "", effect: "피부결 개선", effectEn: "Texture improvement", effectJa: "", effectZh: "", effectZhTw: "", caution: "시술 후 자외선 차단이 필요합니다.", cautionEn: "Use sunscreen after treatment.", cautionJa: "", cautionZh: "", cautionZhTw: "", sessions: "3회", sessionsEn: "3 sessions", sessionsJa: "", sessionsZh: "", sessionsZhTw: "", time: "30분", timeEn: "30 min", timeJa: "", timeZh: "", timeZhTw: "", recovery: "2~3일", recoveryEn: "2–3 days", recoveryJa: "", recoveryZh: "", recoveryZhTw: "", faqs: JSON.stringify([{ question: "저장 FAQ 질문", answer: "저장 FAQ 답변" }]), faqsEn: "[]", faqsJa: "[]", faqsZh: "[]", faqsZhTw: "[]", imageUrl: "/image.webp", bgImageUrl: null, images: "[]", youtubeUrl: null, modalImage: null, badge: "", badgeColor: "#000", seoTitle: "", seoDescription: "", seoKeywords: "", ogImageUrl: null, sortOrder: 1, isActive: "1" as const, isBest: "0" as const, isNew: "0" as const, createdAt: new Date(), updatedAt: new Date(),
 };
 
 describe("equipmentPrerender", () => {
+  it("저장된 페이지별 SEO 값을 속성 순서와 무관하게 description·OG·Twitter 태그에 주입한다", () => {
+    const html = buildEquipmentPrerenderedHtml(homeMetaTemplate, {
+      ...item,
+      seoTitle: "리쥬란힐러 | 부산 서면 스타피부과",
+      seoDescription: "리쥬란힐러 시술의 원리와 회복 안내를 확인하세요.",
+      seoKeywords: "리쥬란힐러, 부산피부과",
+      ogImageUrl: "https://star-pibu.com/rejuran.webp",
+    }, "ko", "/equipment3/rejuran");
+
+    expect(html).toContain("<title data-rh=\"true\">리쥬란힐러 | 부산 서면 스타피부과</title>");
+    expect(html).toContain('name="description" content="리쥬란힐러 시술의 원리와 회복 안내를 확인하세요."');
+    expect(html).toContain('name="keywords" content="리쥬란힐러, 부산피부과"');
+    expect(html).toContain('property="og:title" content="리쥬란힐러 | 부산 서면 스타피부과"');
+    expect(html).toContain('property="og:description" content="리쥬란힐러 시술의 원리와 회복 안내를 확인하세요."');
+    expect(html).toContain('property="og:url" content="https://star-pibu.com/equipment3/rejuran"');
+    expect(html).toContain('property="og:image" content="https://star-pibu.com/rejuran.webp"');
+    expect(html).toContain('name="twitter:title" content="리쥬란힐러 | 부산 서면 스타피부과"');
+    expect(html).toContain('name="twitter:description" content="리쥬란힐러 시술의 원리와 회복 안내를 확인하세요."');
+    expect(html).toContain('name="twitter:image" content="https://star-pibu.com/rejuran.webp"');
+    expect(html).not.toContain("홈페이지 공통 설명");
+    expect(html).not.toContain('data-seo-fallback="home"');
+  });
+
+  it("저장 SEO 필드가 비어 있어도 장비 자체 정보로 고유한 설명·OG·Twitter 태그를 만든다", () => {
+    const html = buildEquipmentPrerenderedHtml(homeMetaTemplate, item, "ko", "/equipment3/rejuran");
+
+    expect(html).toContain('name="description" content="피부 재생을 돕는 주사 시술"');
+    expect(html).toContain('property="og:title" content="리쥬란힐러 | 스타피부과"');
+    expect(html).toContain('property="og:image" content="/image.webp"');
+    expect(html).toContain('name="twitter:description" content="피부 재생을 돕는 주사 시술"');
+    expect(html).not.toContain("홈페이지 OG 설명");
+  });
+
   it("장비 상세 원본 HTML에 표 본문과 MedicalClinic·Physician·MedicalProcedure를 넣는다", () => {
     const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
     expect(html).toContain("시술 설명");

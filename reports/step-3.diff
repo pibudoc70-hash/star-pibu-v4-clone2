@@ -1,0 +1,20 @@
+# Step 3 diff 기록
+
+## 애플리케이션 소스
+
+```text
+client/src/components/SpecialEventSection.tsx
+client/src/components/SpecialEventSection.test.tsx
+```
+
+## 변경 금지 범위
+
+예약·OTP·외부 채널·`EventTableMobile*`·`Home.tsx`·`PainManagementGuide.tsx`·`painManagementFaq.ts`·동결 레이아웃·`dist/`·`server/_generated/`에는 변경이 없습니다.
+
+## 작업 추적·보고 산출물
+
+```text
+reports/step-3.md
+reports/step-3.diff
+todo.md
+```

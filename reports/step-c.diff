@@ -1,0 +1,21 @@
+diff --git a/client/src/index.css b/client/src/index.css
+index 115e1be..6f5f930 100644
+--- a/client/src/index.css
++++ b/client/src/index.css
+@@ -3545,6 +3545,7 @@
+     object-position: center center;
+   }
+
++  /* 이 블록은 이벤트 DB ID에 의존 — docs/event-preview-focal-points.md 참조 */
+   /* 이벤트 배너의 인물·장비가 3:2 미리보기 프레임의 중심에 남도록 개별 초점을 지정한다. */
+   .event-card__desktop-preview-frame [data-event-id="10560001"] .event-card__media-image { object-position: 62% center; }
+   .event-card__desktop-preview-frame [data-event-id="300001"] .event-card__media-image { object-position: 46% center; }
+diff --git a/docs/event-preview-focal-points.md b/docs/event-preview-focal-points.md
+new file mode 100644
+index 0000000..docstepc
+--- /dev/null
++++ b/docs/event-preview-focal-points.md
+@@
++# 데스크톱 이벤트 미리보기 이미지 초점 관리
++
++이 문서는 9개 이벤트 DB ID별 CSS `object-position` 규칙, 중앙 크롭 fallback, ID 변경 위험, 재설정 절차 및 별도 승인 필요한 데이터 기반 장기 개선안을 기록한다.

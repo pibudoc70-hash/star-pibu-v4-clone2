@@ -3545,6 +3545,7 @@
     object-position: center center;
   }
 
+  /* 이 블록은 이벤트 DB ID에 의존 — docs/event-preview-focal-points.md 참조 */
   /* 이벤트 배너의 인물·장비가 3:2 미리보기 프레임의 중심에 남도록 개별 초점을 지정한다. */
   .event-card__desktop-preview-frame [data-event-id="10560001"] .event-card__media-image { object-position: 62% center; }
   .event-card__desktop-preview-frame [data-event-id="300001"] .event-card__media-image { object-position: 46% center; }

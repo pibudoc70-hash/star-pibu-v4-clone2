@@ -1,0 +1,19 @@
+# Step 4 diff 기록
+
+## 애플리케이션 소스·빌드 산출물 diff
+
+```text
+변경 없음
+```
+
+## 작업 추적·보고 산출물
+
+```text
+reports/step-4.md
+reports/step-4.diff
+todo.md
+```
+
+## 동결 파일 확인
+
+예약·OTP·외부 채널·`EventTableMobile*`·`Home.tsx`·`vite.config.ts`·import 파일·`dist/`·`server/_generated/` 변경은 0건입니다.

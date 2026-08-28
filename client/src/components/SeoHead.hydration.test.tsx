@@ -5,8 +5,11 @@ import { buildHreflangs, LANG_TO_OG_LOCALE } from "@/lib/seoHelpers";
 import SeoHead from "./SeoHead";
 
 type Locale = "ko" | "en" | "ja" | "zh" | "zh-TW";
+type SeoSurface = "home" | "about" | "doctors" | "equipment";
 
-const localeRoutes: Array<{ surface: "home" | "about" | "doctors"; locale: Locale; path: string }> = [
+const equipmentSlug = "ultherapy-prime";
+
+const localeRoutes: Array<{ surface: SeoSurface; locale: Locale; path: string }> = [
   ...(["ko", "en", "ja", "zh", "zh-TW"] as Locale[]).map((locale) => ({
     surface: "home" as const,
     locale,
@@ -21,6 +24,13 @@ const localeRoutes: Array<{ surface: "home" | "about" | "doctors"; locale: Local
     surface: "doctors" as const,
     locale,
     path: locale === "ko" ? "/doctors" : `/${locale === "zh-TW" ? "zh-tw" : locale}/doctors`,
+  })),
+  ...(["ko", "en", "ja", "zh", "zh-TW"] as Locale[]).map((locale) => ({
+    surface: "equipment" as const,
+    locale,
+    path: locale === "ko"
+      ? `/equipment3/${equipmentSlug}`
+      : `/${locale === "zh-TW" ? "zh-tw" : locale}/equipment3/${equipmentSlug}`,
   })),
 ];
 
@@ -67,12 +77,25 @@ describe("SeoHead hydrated locale ownership", () => {
   it.each(localeRoutes)("keeps one localized head contract after $surface $locale hydrates", async ({ locale, path }) => {
     appendHomeFallback();
     const canonical = `${BASE_URL}${path === "/" ? "" : path}`;
+    const routePaths = path.includes(`/equipment3/${equipmentSlug}`)
+      ? {
+          ko: `/equipment3/${equipmentSlug}`,
+          en: `/en/equipment3/${equipmentSlug}`,
+          ja: `/ja/equipment3/${equipmentSlug}`,
+          zh: `/zh/equipment3/${equipmentSlug}`,
+          zhTW: `/zh-tw/equipment3/${equipmentSlug}`,
+        }
+      : path.endsWith("/about")
+        ? { ko: "/about", en: "/en/about", ja: "/ja/about", zh: "/zh/about", zhTW: "/zh-tw/about" }
+        : path.endsWith("/doctors")
+          ? { ko: "/doctors", en: "/en/doctors", ja: "/ja/doctors", zh: "/zh/doctors", zhTW: "/zh-tw/doctors" }
+          : { ko: "/", en: "/en", ja: "/ja", zh: "/zh", zhTW: "/zh-tw" };
     const hreflangs = buildHreflangs(
-      path.endsWith("/about") ? "/about" : path.endsWith("/doctors") ? "/doctors" : "/",
-      path.endsWith("/about") ? "/en/about" : path.endsWith("/doctors") ? "/en/doctors" : "/en",
-      path.endsWith("/about") ? "/ja/about" : path.endsWith("/doctors") ? "/ja/doctors" : "/ja",
-      path.endsWith("/about") ? "/zh/about" : path.endsWith("/doctors") ? "/zh/doctors" : "/zh",
-      path.endsWith("/about") ? "/zh-tw/about" : path.endsWith("/doctors") ? "/zh-tw/doctors" : "/zh-tw",
+      routePaths.ko,
+      routePaths.en,
+      routePaths.ja,
+      routePaths.zh,
+      routePaths.zhTW,
     );
 
     render(
@@ -95,6 +118,13 @@ describe("SeoHead hydrated locale ownership", () => {
       expect(document.head.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(6);
       expect(document.head.querySelectorAll('meta[property="og:locale"]')).toHaveLength(1);
       expect(document.head.querySelector('meta[property="og:locale"]')?.getAttribute("content")).toBe(LANG_TO_OG_LOCALE[locale]);
+
+      hreflangs.forEach(({ hreflang, href }) => {
+        const alternate = document.head.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);
+        expect(alternate?.getAttribute("href")).toBe(href);
+        expect(href).not.toContain("?");
+        expect(href).not.toContain("#");
+      });
     });
   });
 

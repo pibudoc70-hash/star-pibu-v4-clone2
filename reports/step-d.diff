@@ -1,0 +1,33 @@
+diff --git a/server/_core/storageProxy.ts b/server/_core/storageProxy.ts
+index 521f4fb..dstep01 100644
+--- a/server/_core/storageProxy.ts
++++ b/server/_core/storageProxy.ts
+@@ -101,11 +101,6 @@ export function registerStorageProxy(app: Express) {
+       // 1. LRU 캐시 조회
+       const cached = imageCache.get(cacheKey);
+       if (cached) {
+-        // [Step49-C] 캐시 히트 로그 프로덕션 억제
+-        if (process.env.NODE_ENV !== "production") {
+-          console.log(`[StorageProxy] [cache hit] key=${key}`);
+-        }
+-
+         // If-None-Match 헤더 확인 (캐시 유효성 검사)
+         const ifNoneMatch = req.get("If-None-Match");
+         if (ifNoneMatch === `"${cached.etag}"`) {
+diff --git a/server/_core/storageProxy.cacheHitLog.test.ts b/server/_core/storageProxy.cacheHitLog.test.ts
+new file mode 100644
+index 0000000..dstep02
+--- /dev/null
++++ b/server/_core/storageProxy.cacheHitLog.test.ts
+@@
++import { readFileSync } from "node:fs";
++import { resolve } from "node:path";
++import { describe, expect, it } from "vitest";
++
++const source = readFileSync(resolve(process.cwd(), "server/_core/storageProxy.ts"), "utf8");
++
++describe("storage proxy cache-hit observability", () => {
++  it("does not write storage keys to console for cache hits", () => {
++    expect(source).not.toContain("[StorageProxy] [cache hit] key=");
++  });
++});

@@ -101,11 +101,6 @@ export function registerStorageProxy(app: Express) {
       // 1. LRU 캐시 조회
       const cached = imageCache.get(cacheKey);
       if (cached) {
-        // [Step49-C] 캐시 히트 로그 프로덕션 억제
-        if (process.env.NODE_ENV !== "production") {
-          console.log(`[StorageProxy] [cache hit] key=${key}`);
-        }
-
         // If-None-Match 헤더 확인 (캐시 유효성 검사)
         const ifNoneMatch = req.get("If-None-Match");
         if (ifNoneMatch === `"${cached.etag}"`) {

@@ -8,9 +8,9 @@ const restoredAssets = [
   "facility-metaview-room_535d3491_540aa29f-opt-q78_aec54ae1.webp",
   "facility-waiting-room_ce355737_f1c9c5e4-opt-q78_01ca2a55.webp",
   "facility-multi-skincare-room_ebebe73e_6e67b69a-opt-q78_ae572edd.webp",
-  "facility-laser-corridor_9e114a15",
+  "facility-laser-corridor_9e114a15_8ce233f3-optimized_8b5f346e.webp",
   "facility-reception-desk_f4dd56dc_df6ccf98-opt-q78_55c3f6a4.webp",
-  "facility-reception-desk-02_1fe4bedc",
+  "facility-reception-desk-02_1fe4bedc_49736365-optimized_42134ead.webp",
 ];
 
 describe("FacilitySection approved gallery assets", () => {

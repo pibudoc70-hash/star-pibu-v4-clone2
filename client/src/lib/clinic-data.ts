@@ -159,7 +159,7 @@ export const MANAGEMENT_DEVICE_IMAGES: Record<string, string> = {
   fray: "/manus-storage/fray_66504ffe_6a6a0764_4e62538d.webp",
   ionzyme: "/manus-storage/ionzyme_ec731187_aeb6531a_1552a51c.webp",
   healingbright: "/manus-storage/healingbright_d060a2aa_ac3bcf4b_fb4994e8.webp",
-  mesoskin: "/manus-storage/mesoskin_new_32137830_3a93cfe5_190392e4.webp",
+  mesoskin: "/manus-storage/mesoskin_new_32137830_3a93cfe5_190392e4-optimized_24f768af.webp",
   ultraduo: "/manus-storage/ultraduo_af289409_e79e4dfa_972c28cb.webp",
   triplemultigel: "/manus-storage/supersonic_5df47d2e_38e98bb4_78f3ba9f.webp",
   ldm: "/manus-storage/ldm_ac66d69e_8129485d_d0de0a08.webp",

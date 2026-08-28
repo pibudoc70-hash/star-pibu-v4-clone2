@@ -13,9 +13,9 @@ const galleryImageSrcs = [
   { srcWebP: "/manus-storage/facility-metaview-room_535d3491_540aa29f-opt-q78_aec54ae1.webp", srcJPG: "/manus-storage/facility-metaview-room_535d3491_540aa29f-opt-q78_aec54ae1.webp" },
   { srcWebP: "/manus-storage/facility-waiting-room_ce355737_f1c9c5e4-opt-q78_01ca2a55.webp", srcJPG: "/manus-storage/facility-waiting-room_ce355737_f1c9c5e4-opt-q78_01ca2a55.webp" },
   { srcWebP: "/manus-storage/facility-multi-skincare-room_ebebe73e_6e67b69a-opt-q78_ae572edd.webp", srcJPG: "/manus-storage/facility-multi-skincare-room_ebebe73e_6e67b69a-opt-q78_ae572edd.webp" },
-  { srcWebP: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3.webp", srcJPG: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3.webp" },
+  { srcWebP: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3-optimized_8b5f346e.webp", srcJPG: "/manus-storage/facility-laser-corridor_9e114a15_8ce233f3-optimized_8b5f346e.webp" },
   { srcWebP: "/manus-storage/facility-reception-desk_f4dd56dc_df6ccf98-opt-q78_55c3f6a4.webp", srcJPG: "/manus-storage/facility-reception-desk_f4dd56dc_df6ccf98-opt-q78_55c3f6a4.webp" },
-  { srcWebP: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp", srcJPG: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365.webp" },
+  { srcWebP: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365-optimized_42134ead.webp", srcJPG: "/manus-storage/facility-reception-desk-02_1fe4bedc_49736365-optimized_42134ead.webp" },
 ];
 
 const highlights = [

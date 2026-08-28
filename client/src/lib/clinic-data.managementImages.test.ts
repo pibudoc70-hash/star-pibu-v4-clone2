@@ -15,6 +15,7 @@ describe("approved management-device image assets", () => {
     expect(imageMap).toContain('porederm: "/manus-storage/');
     expect(imageMap).toContain('airbubble: "/manus-storage/');
     expect(imageMap).toContain('transkin: "/manus-storage/');
+    expect(imageMap).toContain('mesoskin: "/manus-storage/mesoskin_new_32137830_3a93cfe5_190392e4-optimized_24f768af.webp"');
     expect(imageMap).not.toContain("/api/storage/");
   });
 

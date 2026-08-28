@@ -1,0 +1,24 @@
+# Step 6 이미지 최적화 diff 기록
+
+## 허용된 애플리케이션 참조·테스트 변경
+
+```text
+client/src/components/ResultsStatisticsSection.tsx
+client/src/components/FacilitySection.tsx
+client/src/lib/clinic-data.ts
+client/src/components/ResultsStatisticsSection.choosingStarImages.test.ts
+client/src/components/FacilitySection.assetRecovery.test.ts
+client/src/lib/clinic-data.managementImages.test.ts
+```
+
+## 작업 추적·보고 산출물
+
+```text
+reports/step-6-image-opt.md
+reports/step-6-image-opt.diff
+todo.md
+```
+
+## 변경 금지 범위 확인
+
+원본 이미지 삭제, 마크업·레이아웃 구조, `srcset`, 예약·OTP·외부 채널·`EventTableMobile*`·FAQ JSON-LD·`dist/`·`server/_generated/` 변경은 0건입니다.

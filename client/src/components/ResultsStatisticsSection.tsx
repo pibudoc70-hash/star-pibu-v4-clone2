@@ -13,19 +13,19 @@ export default function ResultsStatisticsSection() {
   const doctors = [
     {
       id: 1,
-      image: '/manus-storage/choosing-star-01_cd3dce52_18c438e7.webp',
+      image: '/manus-storage/choosing-star-01_cd3dce52_18c438e7-optimized_90c3e2a4.webp',
       title: r.whyItems[0].title,
       description: r.whyItems[0].desc,
     },
     {
       id: 2,
-      image: '/manus-storage/choosing-star-02_92c1e337_7f575d87.webp',
+      image: '/manus-storage/choosing-star-02_92c1e337_7f575d87-optimized_8a7385f0.webp',
       title: r.whyItems[1].title,
       description: r.whyItems[1].desc,
     },
     {
       id: 3,
-      image: '/manus-storage/choosing-star-03_a440359e_f67b000c.webp',
+      image: '/manus-storage/choosing-star-03_a440359e_f67b000c-optimized_6294b5b8.webp',
       title: r.whyItems[2].title,
       description: r.whyItems[2].desc,
     },

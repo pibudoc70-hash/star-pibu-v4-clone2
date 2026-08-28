@@ -5,9 +5,9 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(resolve(process.cwd(), "client/src/components/ResultsStatisticsSection.tsx"), "utf8");
 
 const approvedImages = [
-  "/manus-storage/choosing-star-01_cd3dce52_18c438e7.webp",
-  "/manus-storage/choosing-star-02_92c1e337_7f575d87.webp",
-  "/manus-storage/choosing-star-03_a440359e_f67b000c.webp",
+  "/manus-storage/choosing-star-01_cd3dce52_18c438e7-optimized_90c3e2a4.webp",
+  "/manus-storage/choosing-star-02_92c1e337_7f575d87-optimized_8a7385f0.webp",
+  "/manus-storage/choosing-star-03_a440359e_f67b000c-optimized_6294b5b8.webp",
 ];
 
 const legacyImages = [

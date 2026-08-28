@@ -1,0 +1,12 @@
+# Step 0-FIX diff 기록
+
+## 소스 diff
+
+```text
+ client/src/pages/Home.fouc.test.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+## 동결 파일 확인
+
+R1 동결 대상 파일의 변경은 0건입니다. `todo.md`와 `reports/` 변경은 작업 추적 및 보고 산출물입니다.

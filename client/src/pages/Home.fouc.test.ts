@@ -23,7 +23,7 @@ describe("홈 초기 스타일 적용 게이트", () => {
     expect(indexHtml).toContain('id="initial-loading"');
     expect(indexHtml).toContain('role="status"');
     expect(indexHtml).toContain('aria-live="polite"');
-    expect(indexHtml).toContain("스타피부과를 준비하고 있습니다");
+    expect(indexHtml).toContain("콘텐츠를 불러오는 중입니다");
     expect(indexHtml).toContain("document.getElementById('initial-loading')");
     expect(indexHtml).toContain("if (loading) loading.remove();");
   });

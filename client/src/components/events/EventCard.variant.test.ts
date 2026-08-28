@@ -62,4 +62,29 @@ describe("EventCard desktop variants", () => {
     expect(cardSource).toContain("id={previewPanelId}");
     expect(cardSource).toContain("event-card__selector-row--selected");
   });
+
+  it("announces only the lead preview title changes through a polite live region", () => {
+    const headerSource = cardSource.slice(
+      cardSource.indexOf("interface EventCardHeaderProps"),
+      cardSource.indexOf("interface EventDetailProps"),
+    );
+    const leadSource = cardSource.slice(
+      cardSource.indexOf("function LeadEventCard"),
+      cardSource.indexOf("function CompactEventRow"),
+    );
+    const compactSource = cardSource.slice(
+      cardSource.indexOf("function CompactEventRow"),
+      cardSource.indexOf("function SelectorEventRow"),
+    );
+    const legacySource = cardSource.slice(
+      cardSource.indexOf("function LegacyEventCard"),
+      cardSource.indexOf("export default function EventCard"),
+    );
+
+    expect(headerSource).toContain("announceTitle?: boolean");
+    expect(headerSource).toContain('aria-live={announceTitle ? "polite" : undefined}');
+    expect(leadSource).toContain("announceTitle");
+    expect(compactSource).not.toContain("announceTitle");
+    expect(legacySource).not.toContain("announceTitle");
+  });
 });

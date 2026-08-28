@@ -1,0 +1,71 @@
+diff --git a/client/src/components/events/EventCard.tsx b/client/src/components/events/EventCard.tsx
+index a18fcf9..8af7c12 100644
+--- a/client/src/components/events/EventCard.tsx
++++ b/client/src/components/events/EventCard.tsx
+@@
+ interface EventCardHeaderProps {
+   event: SpecialEvent;
+   priceRows: PriceRow[];
+   displayPrice: DisplayPrice;
+   getLocalizedText: EventCardProps["getLocalizedText"];
+   showProductLabel?: boolean;
+   showVat?: boolean;
++  announceTitle?: boolean;
+ }
+@@
+   getLocalizedText,
+   showProductLabel = true,
+   showVat = true,
++  announceTitle = false,
+ }: EventCardHeaderProps) {
+@@
+-      <h3 className="event-card__title font-normal leading-tight mb-2">
++      <h3 className="event-card__title font-normal leading-tight mb-2" aria-live={announceTitle ? "polite" : undefined}>
+         {getLocalizedText(event, "title")}
+       </h3>
+@@
+           getLocalizedText={getLocalizedText}
+           showProductLabel={false}
+           showVat={false}
++          announceTitle
+         />
+diff --git a/client/src/components/events/EventCard.variant.test.ts b/client/src/components/events/EventCard.variant.test.ts
+index ea4bb0b..2809e9a 100644
+--- a/client/src/components/events/EventCard.variant.test.ts
++++ b/client/src/components/events/EventCard.variant.test.ts
+@@
+   it("exposes a non-mobile selector row that previews its event on mouse and keyboard focus", () => {
+     expect(cardSource).toContain('"selector"');
+     expect(cardSource).toContain("function SelectorEventRow");
+     expect(cardSource).toContain("onMouseEnter={onPreview}");
+     expect(cardSource).toContain("onFocus={onPreview}");
+     expect(cardSource).toContain("aria-pressed={isSelected}");
+     expect(cardSource).toContain("id={previewPanelId}");
+     expect(cardSource).toContain("event-card__selector-row--selected");
+   });
++
++  it("announces only the lead preview title changes through a polite live region", () => {
++    const headerSource = cardSource.slice(
++      cardSource.indexOf("interface EventCardHeaderProps"),
++      cardSource.indexOf("interface EventDetailProps"),
++    );
++    const leadSource = cardSource.slice(
++      cardSource.indexOf("function LeadEventCard"),
++      cardSource.indexOf("function CompactEventRow"),
++    );
++    const compactSource = cardSource.slice(
++      cardSource.indexOf("function CompactEventRow"),
++      cardSource.indexOf("function SelectorEventRow"),
++    );
++    const legacySource = cardSource.slice(
++      cardSource.indexOf("function LegacyEventCard"),
++      cardSource.indexOf("export default function EventCard"),
++    );
++
++    expect(headerSource).toContain("announceTitle?: boolean");
++    expect(headerSource).toContain('aria-live={announceTitle ? "polite" : undefined}');
++    expect(leadSource).toContain("announceTitle");
++    expect(compactSource).not.toContain("announceTitle");
++    expect(legacySource).not.toContain("announceTitle");
++  });
+ });

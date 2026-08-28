@@ -43,6 +43,7 @@ interface EventCardHeaderProps {
   getLocalizedText: EventCardProps["getLocalizedText"];
   showProductLabel?: boolean;
   showVat?: boolean;
+  announceTitle?: boolean;
 }
 
 function EventCardHeader({
@@ -52,12 +53,13 @@ function EventCardHeader({
   getLocalizedText,
   showProductLabel = true,
   showVat = true,
+  announceTitle = false,
 }: EventCardHeaderProps) {
   const subtitle = getLocalizedText(event, "subtitle");
 
   return (
     <div className="flex flex-col">
-      <h3 className="event-card__title font-normal leading-tight mb-2">
+      <h3 className="event-card__title font-normal leading-tight mb-2" aria-live={announceTitle ? "polite" : undefined}>
         {getLocalizedText(event, "title")}
       </h3>
       {subtitle && <p className="event-card__subtitle leading-relaxed mb-3">
@@ -247,6 +249,7 @@ function LeadEventCard({
           getLocalizedText={getLocalizedText}
           showProductLabel={false}
           showVat={false}
+          announceTitle
         />
         {!isExpanded && (
           <button

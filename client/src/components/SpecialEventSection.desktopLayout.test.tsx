@@ -10,6 +10,10 @@ const styles = readFileSync(
   resolve(process.cwd(), "client/src/index.css"),
   "utf8",
 );
+const eventCardSource = readFileSync(
+  resolve(process.cwd(), "client/src/components/events/EventCard.tsx"),
+  "utf8",
+);
 
 describe("SpecialEventSection conservative desktop layout", () => {
   it("uses a hover and focus controlled desktop selection state for the left detail panel", () => {
@@ -48,6 +52,21 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--lead.event-card__media--natural");
     expect(styles).toContain("aspect-ratio: 3 / 2;");
     expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--natural .event-card__media-image");
+  });
+
+  it("keeps the desktop preview crop focused on each event's subject rather than blindly cropping all images at one point", () => {
+    expect(eventCardSource).toContain("data-event-id={event.id}");
+    expect(styles).toContain('.event-card__desktop-preview-frame [data-event-id="10560001"] .event-card__media-image');
+    expect(styles).toContain("object-position: 62% center;");
+    expect(styles).toContain('.event-card__desktop-preview-frame [data-event-id="90001"] .event-card__media-image');
+    expect(styles).toContain("object-position: 42% center;");
+  });
+
+  it("uses an opacity-only desktop preview fade that can replay during rapid sequential selection", () => {
+    expect(styles).toContain(".event-card__preview {");
+    expect(styles).toContain("animation: eventPreviewFade 220ms");
+    expect(styles).toContain("will-change: opacity;");
+    expect(styles).not.toContain("@keyframes eventPreviewFade {\n  from { opacity: 0.12;");
   });
 
   it("shows the full desktop event selector list by default and keeps the preview aligned while scanning", () => {

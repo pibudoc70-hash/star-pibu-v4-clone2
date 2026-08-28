@@ -226,7 +226,7 @@ function LeadEventCard({
   const detailId = `special-event-detail-${event.id}`;
 
   return (
-    <article id={previewPanelId} className="card card--event flex flex-col overflow-hidden">
+    <article id={previewPanelId} data-event-id={event.id} className="card card--event flex flex-col overflow-hidden">
       {event.imageUrl && (
         <div className="event-card__media event-card__media--lead event-card__media--natural event-card__media--hoverable overflow-hidden bg-gray-100">
           <OptimizedImage

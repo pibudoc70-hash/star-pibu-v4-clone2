@@ -3524,11 +3524,12 @@
 
 /* SPECIAL EVENT desktop selector: selected detail changes should read as a calm content swap. */
 @keyframes eventPreviewFade {
-  from { opacity: 0.12; }
+  from { opacity: 0; }
   to { opacity: 1; }
 }
 .event-card__preview {
-  animation: eventPreviewFade 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: eventPreviewFade 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  will-change: opacity;
 }
 
 /* 데스크톱 선택 미리보기는 원본 이미지 비율과 무관하게 같은 프레임을 사용한다.
@@ -3541,7 +3542,19 @@
   .event-card__desktop-preview-frame .event-card__media--natural .event-card__media-image {
     height: 100%;
     object-fit: cover;
+    object-position: center center;
   }
+
+  /* 이벤트 배너의 인물·장비가 3:2 미리보기 프레임의 중심에 남도록 개별 초점을 지정한다. */
+  .event-card__desktop-preview-frame [data-event-id="10560001"] .event-card__media-image { object-position: 62% center; }
+  .event-card__desktop-preview-frame [data-event-id="300001"] .event-card__media-image { object-position: 46% center; }
+  .event-card__desktop-preview-frame [data-event-id="10590001"] .event-card__media-image { object-position: 68% center; }
+  .event-card__desktop-preview-frame [data-event-id="360002"] .event-card__media-image { object-position: 54% center; }
+  .event-card__desktop-preview-frame [data-event-id="120002"] .event-card__media-image { object-position: 59% center; }
+  .event-card__desktop-preview-frame [data-event-id="330002"] .event-card__media-image { object-position: 61% center; }
+  .event-card__desktop-preview-frame [data-event-id="90001"] .event-card__media-image { object-position: 42% center; }
+  .event-card__desktop-preview-frame [data-event-id="330001"] .event-card__media-image { object-position: 47% center; }
+  .event-card__desktop-preview-frame [data-event-id="360001"] .event-card__media-image { object-position: 55% center; }
 }
 
 .event-card__selector-row--selected {

@@ -4796,6 +4796,76 @@ body.font-lang-zh .hero-stat-label {
   border-color: var(--color-gold-primary);
 }
 
+/* ── Equipment detail off-white pilot: FAQ, information cards and actions ── */
+.equipment-detail__faq-item,
+.equipment-detail__info-card {
+  background: #F7F5F0;
+  border-color: #E3DCCE;
+  box-shadow: 0 2px 8px rgba(26, 39, 68, 0.04);
+}
+
+.equipment-detail__faq-item > summary {
+  transition: background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.equipment-detail__contact-action,
+.equipment-detail__back-button {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.equipment-detail__back-button {
+  background: #1A2744;
+  border: 1px solid #1A2744;
+  color: #FCFBF8;
+}
+
+@media (hover: hover) {
+  .equipment-detail__faq-item > summary:hover {
+    background: #F0EAE0;
+    color: #1A2744;
+  }
+
+  .equipment-detail__contact-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(26, 39, 68, 0.18), 0 0 0 2px rgba(196, 168, 130, 0.24);
+  }
+
+  .equipment-detail__back-button:hover {
+    background: #7A5C35;
+    border-color: #7A5C35;
+    color: #FCFBF8;
+    box-shadow: 0 10px 22px rgba(122, 92, 53, 0.24), 0 0 0 2px rgba(196, 168, 130, 0.24);
+    transform: translateY(-2px);
+  }
+}
+
+.equipment-detail__contact-action:active,
+.equipment-detail__back-button:active {
+  transform: scale(0.97);
+}
+
+.equipment-detail__contact-action:focus-visible,
+.equipment-detail__back-button:focus-visible,
+.equipment-detail__faq-item > summary:focus-visible {
+  outline: 3px solid #7A5C35;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipment-detail__faq-item > summary,
+  .equipment-detail__contact-action,
+  .equipment-detail__back-button {
+    transition: none;
+  }
+
+  .equipment-detail__contact-action:hover,
+  .equipment-detail__back-button:hover,
+  .equipment-detail__contact-action:active,
+  .equipment-detail__back-button:active {
+    transform: none;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────────
    FacilitySection CSS 클래스
    ───────────────────────────────────────────────────────────────────── */

@@ -415,7 +415,7 @@ export default function Equipment3Detail() {
                 href={chatUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition hover:opacity-90 hover:scale-[1.02] shadow-sm"
+                className="equipment-detail__contact-action flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm shadow-sm"
                 style={{ background: chatBg, color: chatColor }}
               >
                 <MessageCircle size={17} strokeWidth={2} />
@@ -431,7 +431,7 @@ export default function Equipment3Detail() {
                 href={reserveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition hover:opacity-90 hover:scale-[1.02] shadow-sm bg-[#03C75A] text-white"
+                className="equipment-detail__contact-action flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm shadow-sm bg-[#03C75A] text-white"
               >
                 <Calendar size={17} strokeWidth={2} />
                 <span>
@@ -504,7 +504,7 @@ export default function Equipment3Detail() {
             <h2 id="equipment-faq-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
             <div className="space-y-3">
               {managedFaqs.map(({ question, answer }, index) => (
-                <details key={`${question}-${index}`} className="group rounded-xl border border-gray-200 bg-white px-5 py-4">
+                <details key={`${question}-${index}`} className="equipment-detail__faq-item group rounded-xl border px-5 py-4">
                   <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-800">
                     <span className="mr-2 text-blue-600" aria-hidden="true">Q.</span>{question}
                   </summary>
@@ -517,7 +517,7 @@ export default function Equipment3Detail() {
 
         {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} />}
 
-        <aside className="mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-6" aria-labelledby="equipment-detail-quote-heading">
+        <aside className="equipment-detail__info-card mb-12 rounded-2xl border p-6" aria-labelledby="equipment-detail-quote-heading">
           <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
           <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
             <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
@@ -587,7 +587,7 @@ export default function Equipment3Detail() {
           <button
             type="button"
             onClick={() => setLocation(getBackPath(item.category))}
-            className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition text-sm font-medium"
+            className="equipment-detail__back-button px-6 py-3 rounded-xl text-sm font-medium"
           >
             ← {LABELS.backList}
           </button>

@@ -6,7 +6,7 @@ const source = readFileSync(resolve(process.cwd(), "client/src/components/Philos
 
 describe("approved patient consultation image", () => {
   it("uses the managed WebP for each responsive consultation image source", () => {
-    expect(source).toContain('const NEW_IMAGE = "/manus-storage/patient-consultation-mobile_e2474e05_fb420943_');
+    expect(source).toContain('const NEW_IMAGE = "/manus-storage/patient-consultation-mobile_e2474e05_fb420943_2114c946-opt-q78_fbcc2b8c.webp";');
     expect(source).toContain('const PATIENT_IMAGE_MOBILE_JPG = NEW_IMAGE;');
     expect(source).toContain('const PATIENT_IMAGE_DESKTOP_WEBP = NEW_IMAGE;');
     expect(source).not.toContain('/api/storage/patient-consultation-mobile_e2474e05_fb420943.jpg');

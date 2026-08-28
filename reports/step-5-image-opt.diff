@@ -1,0 +1,23 @@
+# Step 5 이미지 최적화 diff 기록
+
+## 애플리케이션 참조 변경
+
+```text
+client/src/components/FacilitySection.tsx
+client/src/components/PhilosophySection.tsx
+```
+
+두 파일에서는 승인된 최적화 WebP의 `/manus-storage/` URL 문자열만 교체했습니다. 마크업, 레이아웃, alt, 이미지 크기 속성, CTA 및 이벤트 처리는 변경하지 않았습니다.
+
+## 직접 관련 테스트
+
+```text
+client/src/components/FacilitySection.assetRecovery.test.ts
+client/src/components/PhilosophySection.patientConsultation.test.ts
+```
+
+자산 변환·비교에 사용한 일회성 스크립트는 스토리지 업로드가 성공한 뒤 프로젝트에서 제거했습니다. 따라서 최종 커밋에는 포함되지 않습니다.
+
+## 제외 범위
+
+예약·OTP·외부 채널·`EventTableMobile*`·`Home.tsx`·FAQ JSON-LD·`dist/`·`server/_generated/`에는 변경이 없습니다.

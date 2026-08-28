@@ -40,6 +40,7 @@
         window.addEventListener('star-pibu:app-ready', function () {
           window.requestAnimationFrame(function () { window.requestAnimationFrame(release); });
         }, { once: true });
+        window.setTimeout(release, 10000);
       })();
     </script>
     <!-- [CRITICAL] 브라우저 자동 스크롤 복원을 JS 번들 로드 전에 즉시 비활성화
@@ -389,7 +390,7 @@
       <div class="initial-loading-content">
         <span class="initial-loading-mark" aria-hidden="true">STAR</span>
         <span class="initial-loading-spinner" aria-hidden="true"></span>
-        <p class="initial-loading-label">스타피부과를 준비하고 있습니다</p>
+        <p class="initial-loading-label">콘텐츠를 불러오는 중입니다</p>
       </div>
     </div>
     <div id="root"></div>

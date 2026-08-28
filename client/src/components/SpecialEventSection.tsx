@@ -182,6 +182,7 @@ export default function SpecialEventSection() {
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const allEvents = specialEvents as SpecialEvent[];
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
   useEventSkeletonTiming(isInitialSkeletonVisible);
 
@@ -190,6 +191,13 @@ export default function SpecialEventSection() {
     if (!error) return;
     toast.error(parseEventListError(error, lang), { duration: 5000 });
   }, [error, lang]);
+
+  useEffect(() => {
+    if (selectedEventId !== null && allEvents.find((event) => event.id === selectedEventId) === undefined) {
+      const resetSelection = window.setTimeout(() => setSelectedEventId(null), 0);
+      return () => window.clearTimeout(resetSelection);
+    }
+  }, [allEvents, selectedEventId]);
 
   if (isInitialSkeletonVisible) {
     return (
@@ -247,7 +255,6 @@ export default function SpecialEventSection() {
     );
   }
 
-  const allEvents = specialEvents as SpecialEvent[];
   const desktopEvents = allEvents;
   const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
 

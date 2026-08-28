@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SpecialEventSection from "./SpecialEventSection";
@@ -26,7 +26,26 @@ vi.mock("@/hooks/useScrollReveal", () => ({
   useSectionReveal: () => vi.fn(),
 }));
 
-vi.mock("@/components/events/EventCard", () => ({ default: () => null }));
+vi.mock("@/components/events/EventCard", () => ({
+  default: ({
+    event,
+    variant,
+    isSelected,
+    onPreview,
+  }: {
+    event: { id: number; title: string };
+    variant?: string;
+    isSelected?: boolean;
+    onPreview?: () => void;
+  }) => {
+    if (variant !== "selector") return null;
+    return (
+      <button type="button" aria-pressed={isSelected} onClick={onPreview}>
+        {event.title}
+      </button>
+    );
+  },
+}));
 vi.mock("@/components/events/EventTableMobile", () => ({ default: () => null }));
 vi.mock("@/components/PainManagementGuide", () => ({
   default: () => <div data-testid="pain-management-guide" />,
@@ -102,6 +121,44 @@ describe("SpecialEventSection anchor target", () => {
       const events = document.getElementById("events");
       expect(events).toHaveAttribute("aria-label", "스페셜 이벤트");
       expect(screen.getByTestId("pain-management-guide")).toBeInTheDocument();
+    });
+  });
+
+  it("clears a removed selected event so the refreshed selector falls back to the first available event", async () => {
+    class VisibleIntersectionObserverMock extends IntersectionObserverMock {
+      observe() {
+        this.callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+      }
+    }
+
+    const eventA = { id: 101, title: "이벤트 A" };
+    const eventB = { id: 202, title: "이벤트 B" };
+    const queryResult = { isLoading: false, error: null, refetch: vi.fn() };
+
+    vi.stubGlobal("IntersectionObserver", VisibleIntersectionObserverMock);
+    specialQuery.mockReturnValue({ ...queryResult, data: [eventA, eventB] });
+
+    const { rerender } = render(<SpecialEventSection />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: "이벤트 A" })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole("button", { name: "이벤트 A" }));
+    expect(screen.getByRole("button", { name: "이벤트 A" })).toHaveAttribute("aria-pressed", "true");
+
+    specialQuery.mockReturnValue({ ...queryResult, data: [eventB] });
+    rerender(<SpecialEventSection />);
+
+    await waitFor(() => {
+      const refreshedRows = screen.getAllByRole("button");
+      expect(refreshedRows).toHaveLength(1);
+      expect(refreshedRows[0]).toHaveAttribute("aria-pressed", "true");
+    });
+
+    specialQuery.mockReturnValue({ ...queryResult, data: [eventB, eventA] });
+    rerender(<SpecialEventSection />);
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "이벤트 B" })).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("button", { name: "이벤트 A" })).toHaveAttribute("aria-pressed", "false");
     });
   });
 });

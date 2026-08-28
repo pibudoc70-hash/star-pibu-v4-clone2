@@ -1,0 +1,49 @@
+diff --git a/client/src/components/SpecialEventSection.tsx b/client/src/components/SpecialEventSection.tsx
+index 89dfd14..estep01 100644
+--- a/client/src/components/SpecialEventSection.tsx
++++ b/client/src/components/SpecialEventSection.tsx
+@@ -181,6 +181,7 @@ export default function SpecialEventSection() {
+     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
+   );
+   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
++  const allEvents = specialEvents as SpecialEvent[];
+   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
+   useEventSkeletonTiming(isInitialSkeletonVisible);
+@@ -191,6 +192,13 @@ export default function SpecialEventSection() {
+     toast.error(parseEventListError(error, lang), { duration: 5000 });
+   }, [error, lang]);
+
++  useEffect(() => {
++    if (selectedEventId !== null && allEvents.find((event) => event.id === selectedEventId) === undefined) {
++      const resetSelection = window.setTimeout(() => setSelectedEventId(null), 0);
++      return () => window.clearTimeout(resetSelection);
++    }
++  }, [allEvents, selectedEventId]);
++
+   if (isInitialSkeletonVisible) {
+@@ -247,7 +255,6 @@ export default function SpecialEventSection() {
+     );
+   }
+
+-  const allEvents = specialEvents as SpecialEvent[];
+   const desktopEvents = allEvents;
+   const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
+diff --git a/client/src/components/SpecialEventSection.test.tsx b/client/src/components/SpecialEventSection.test.tsx
+index 8ba5c5b..estep02 100644
+--- a/client/src/components/SpecialEventSection.test.tsx
++++ b/client/src/components/SpecialEventSection.test.tsx
+@@
+-import { render, screen, waitFor } from "@testing-library/react";
++import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+@@
+-vi.mock("@/components/events/EventCard", () => ({ default: () => null }));
++vi.mock("@/components/events/EventCard", () => ({
++  default: ({ event, variant, isSelected, onPreview }) => {
++    if (variant !== "selector") return null;
++    return <button type="button" aria-pressed={isSelected} onClick={onPreview}>{event.title}</button>;
++  },
++}));
+@@
++  it("clears a removed selected event so the refreshed selector falls back to the first available event", async () => {
++    // A·B 목록에서 A 선택 → B만 남김 → B·A 재도입 시 B 선택이 유지되는지 검증한다.
++  });

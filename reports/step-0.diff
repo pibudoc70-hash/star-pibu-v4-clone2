@@ -1,0 +1,12 @@
+# Step 0 diff 기록
+
+## git diff --stat
+
+```text
+ todo.md | 2 ++
+ 1 file changed, 2 insertions(+)
+```
+
+## 동결 파일 확인
+
+첨부 제안 R1의 동결 대상 파일에는 변경이 없습니다. 위 변경은 작업 추적용 `todo.md`이며, Step 0 보고 산출물은 `reports/step-0.md`와 이 파일입니다.

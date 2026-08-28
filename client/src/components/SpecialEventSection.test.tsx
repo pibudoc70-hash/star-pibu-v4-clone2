@@ -72,6 +72,15 @@ describe("SpecialEventSection anchor target", () => {
     expect(screen.getByTestId("pain-management-guide")).toBeInTheDocument();
   });
 
+  it("renders a mobile list-shaped skeleton while the event query is loading", () => {
+    render(<SpecialEventSection />);
+
+    const skeleton = screen.getByTestId("mobile-event-list-skeleton");
+
+    expect(skeleton).toHaveClass("md:hidden", "rounded-2xl", "border");
+    expect(screen.getAllByTestId("mobile-event-list-skeleton-row")).toHaveLength(3);
+  });
+
   it("keeps the pain-management guide and corrected label available after an empty event query fails", async () => {
     class VisibleIntersectionObserverMock extends IntersectionObserverMock {
       observe() {

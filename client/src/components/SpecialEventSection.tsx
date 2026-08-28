@@ -139,6 +139,39 @@ function EventCardSkeleton({ compact = false }: { compact?: boolean }) {
   );
 }
 
+function MobileEventListSkeleton() {
+  return (
+    <div
+      data-testid="mobile-event-list-skeleton"
+      className="rounded-2xl overflow-hidden border md:hidden"
+      style={{
+        borderColor: "var(--color-gold-light)",
+        background: "var(--brand-bg-card, #FDFAF7)",
+      }}
+      aria-hidden="true"
+    >
+      <div
+        className="flex items-center gap-2 px-5 py-4 border-b"
+        style={{
+          borderColor: "var(--color-gold-light)",
+          background: "linear-gradient(135deg, color-mix(in srgb, var(--color-gold-primary) 12%, transparent) 0%, color-mix(in srgb, var(--color-gold-primary) 4%, transparent) 100%)",
+        }}
+      >
+        <div className="h-3.5 w-3.5 rounded-full" style={{ background: "color-mix(in srgb, var(--color-gold-primary) 45%, transparent)" }} />
+        <div className="skeleton-shimmer h-3 w-24 rounded" />
+      </div>
+      <div className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
+        {[0, 1, 2].map((index) => (
+          <div key={index} data-testid="mobile-event-list-skeleton-row" className="flex items-center gap-3 px-5 py-4">
+            <div className="skeleton-shimmer h-4 w-2/5 rounded" />
+            <div className="skeleton-shimmer ml-auto h-11 w-11 rounded-full" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
 export default function SpecialEventSection() {
   const { lang } = useLang();
@@ -164,9 +197,10 @@ export default function SpecialEventSection() {
         <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
           <SectionHeader lang={lang} />
-          <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12 md:gap-8">
+          <MobileEventListSkeleton />
+          <div className="hidden items-start gap-10 md:grid md:grid-cols-12 md:gap-8">
             <div className="md:col-span-5"><EventCardSkeleton /></div>
-            <div className="hidden overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white md:col-span-7 md:block">
+            <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white md:col-span-7">
               <EventCardSkeleton compact />
               <EventCardSkeleton compact />
               <EventCardSkeleton compact />

@@ -53,14 +53,16 @@ function EventCardHeader({
   showProductLabel = true,
   showVat = true,
 }: EventCardHeaderProps) {
+  const subtitle = getLocalizedText(event, "subtitle");
+
   return (
     <div className="flex flex-col">
       <h3 className="event-card__title font-normal leading-tight mb-2">
         {getLocalizedText(event, "title")}
       </h3>
-      <p className="event-card__subtitle leading-relaxed mb-3">
-        {getLocalizedText(event, "subtitle")}
-      </p>
+      {subtitle && <p className="event-card__subtitle leading-relaxed mb-3">
+        {subtitle}
+      </p>}
       {showProductLabel && (priceRows.length > 0 ? (
         <p className="event-card__product-label font-medium mb-4">{priceRows[0].label}</p>
       ) : (

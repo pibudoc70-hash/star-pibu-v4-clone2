@@ -5,9 +5,10 @@ import path from "node:path";
 import { getEquipment3BySlug } from "../db/equipment3";
 import type { Equipment3Item } from "../../drizzle/schema";
 import { injectPageSeoMeta } from "./seoMeta";
-import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
 import { getLocalizedEquipmentFaqs } from "../../shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "../../shared/equipmentDetailQuote";
+import { buildClinicJsonLd } from "../../client/src/lib/seoHelpers";
 
 const BASE_URL = "https://star-pibu.com";
 // 관리자에서 상세 정보를 수정할 수 있으므로 장비 페이지는 홈보다 짧은 공유 캐시를 사용한다.
@@ -15,37 +16,6 @@ export const EQUIPMENT_PRERENDER_CACHE_CONTROL = "public, max-age=0, s-maxage=60
 type Lang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 let cachedHtml: string | null = null;
-
-const CLINIC_AND_PHYSICIAN = [
-  {
-    "@context": "https://schema.org",
-    "@type": "MedicalClinic",
-    "@id": `${BASE_URL}/#organization`,
-    name: "스타피부과",
-    url: BASE_URL,
-    telephone: "+82-51-818-2300",
-    medicalSpecialty: "Dermatology",
-    address: { "@type": "PostalAddress", streetAddress: "서면로 74 아이온시티빌딩 4층", addressLocality: "부산진구", addressRegion: "부산광역시", postalCode: "47280", addressCountry: "KR" },
-    geo: { "@type": "GeoCoordinates", latitude: 35.1579, longitude: 129.0597 },
-    openingHoursSpecification: [
-      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "19:00" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:30", closes: "15:00" },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Physician",
-    "@id": `${BASE_URL}/#physician-cho-si-hyung`,
-    name: "조시형",
-    alternateName: "Cho Si-hyung",
-    jobTitle: "피부과 전문의 · 의학박사",
-    description: `20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다. ${LIFTING_DIRECT_CARE_DESCRIPTION}`,
-    medicalSpecialty: "Dermatology",
-    knowsAbout: ["리프팅 시술", "통증 관리"],
-    memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
-    worksFor: { "@id": `${BASE_URL}/#organization` },
-  },
-] as const;
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -158,10 +128,10 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     "@context": "https://schema.org", "@type": "MedicalProcedure", "@id": `${canonical}#medical-procedure`, name, alternateName: item.nameEn || item.name,
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
     preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
-    duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#medical-clinic` }, relevantSpecialty: "https://schema.org/Dermatology",
+    duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#organization` }, relevantSpecialty: "https://schema.org/Dermatology",
   };
   const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonical}#faq`, mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
-  const jsonLd = JSON.stringify([...CLINIC_AND_PHYSICIAN, procedure, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
+  const jsonLd = JSON.stringify([buildClinicJsonLd(), procedure, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
   const faqBody = allFaqs.length > 0 ? `<section><h2>${escapeHtml(text.faq)}</h2><dl>${allFaqs.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
   const quoteBody = `<aside><h2>${escapeHtml(detailQuote.heading)}</h2><dl><dt>${escapeHtml(detailQuote.locationLabel)}</dt><dd>${escapeHtml(detailQuote.location)}</dd><dt>${escapeHtml(detailQuote.hoursLabel)}</dt><dd>${escapeHtml(detailQuote.hours)}</dd><dt>${escapeHtml(detailQuote.providerLabel)}</dt><dd>${escapeHtml(detailQuote.provider)}</dd><dt>${escapeHtml(detailQuote.painManagementLabel)}</dt><dd>${escapeHtml(detailQuote.painManagement)}</dd></dl></aside>`;
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}${quoteBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;

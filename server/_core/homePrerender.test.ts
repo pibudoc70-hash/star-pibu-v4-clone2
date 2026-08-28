@@ -13,6 +13,9 @@ describe("homePrerender", () => {
     expect(html).toContain("피부과전문의가 알려주는 피부이야기");
     expect(html).toContain('type="application/ld+json"');
     expect(html).toContain('href="https://star-pibu.com"');
+    expect(html).toContain('data-prerender="home-schema"');
+    expect(html).toContain('https://star-pibu.com/#organization');
+    expect(html).toContain('https://star-pibu.com/#website');
   });
 
   it("다국어 홈도 해당 언어 FAQ와 표준 URL을 주입한다", () => {

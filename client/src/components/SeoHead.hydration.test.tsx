@@ -41,6 +41,13 @@ function appendHomeFallback() {
   );
 }
 
+function appendHomePrerenderSchema() {
+  document.head.insertAdjacentHTML(
+    "beforeend",
+    '<script type="application/ld+json" data-prerender="home-schema">{"@type":"MedicalClinic"}</script>',
+  );
+}
+
 describe("SeoHead hydrated locale ownership", () => {
   beforeEach(() => {
     document.head.innerHTML = originalHead;
@@ -88,6 +95,21 @@ describe("SeoHead hydrated locale ownership", () => {
       expect(document.head.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(6);
       expect(document.head.querySelectorAll('meta[property="og:locale"]')).toHaveLength(1);
       expect(document.head.querySelector('meta[property="og:locale"]')?.getAttribute("content")).toBe(LANG_TO_OG_LOCALE[locale]);
+    });
+  });
+
+  it("replaces server-injected home schema with the shared client schema after hydration", async () => {
+    appendHomeFallback();
+    appendHomePrerenderSchema();
+
+    render(
+      <HelmetProvider>
+        <SeoHead title="SEO ko" description="Description ko" pageType="home" />
+      </HelmetProvider>,
+    );
+
+    await waitFor(() => {
+      expect(document.head.querySelectorAll('[data-prerender="home-schema"]')).toHaveLength(0);
     });
   });
 });

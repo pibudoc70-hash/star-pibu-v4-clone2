@@ -2,7 +2,6 @@ import {
   COMMON_HREFLANGS,
   buildBreadcrumbJsonLd,
   buildFAQPageJsonLd,
-  buildLocalBusinessJsonLd,
   buildPersonListJsonLd,
   OG_IMAGE_LOCALIZED,
   SITE_NAME_LOCALIZED,
@@ -29,7 +28,6 @@ type HomeFaqItem = { question: string; answer: string };
 
 export function buildHomeJsonLd(faqItems: HomeFaqItem[]) {
   return [
-    buildLocalBusinessJsonLd(),
     buildBreadcrumbJsonLd([{ name: "홈", url: "https://star-pibu.com" }]),
     buildFAQPageJsonLd(faqItems),
     buildPersonListJsonLd(CLINIC_DOCTORS),

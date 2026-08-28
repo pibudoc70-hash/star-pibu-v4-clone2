@@ -14,6 +14,8 @@ import { en } from "../../client/src/lib/i18n.en";
 import { ja } from "../../client/src/lib/i18n.ja";
 import { zh } from "../../client/src/lib/i18n.zh";
 import { zhTW } from "../../client/src/lib/i18n.zh-TW";
+import { CLINIC_DOCTORS } from "../../client/src/lib/clinic-data";
+import { buildBreadcrumbJsonLd, buildClinicJsonLd, buildFAQPageJsonLd, buildPersonListJsonLd, buildWebSiteJsonLd } from "../../client/src/lib/seoHelpers";
 import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY } from "../../shared/liftingPositioning";
 
@@ -148,20 +150,18 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
     "</main>",
   ].join("\n");
 
-  const jsonLd = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: allFaqQuestions.map((question) => ({
-      "@type": "Question",
-      name: question.q,
-      acceptedAnswer: { "@type": "Answer", text: question.a },
-    })),
-  }).replace(/</g, "\\u003c");
+  const jsonLd = JSON.stringify([
+    buildClinicJsonLd(),
+    buildWebSiteJsonLd(),
+    buildBreadcrumbJsonLd([{ name: "홈", url: BASE_URL }]),
+    buildFAQPageJsonLd(allFaqQuestions.map((question) => ({ question: question.q, answer: question.a }))),
+    buildPersonListJsonLd(CLINIC_DOCTORS),
+  ]).replace(/</g, "\\u003c");
 
   const rendered = template
     .replace(/<html([^>]*)>/i, `<html$1 lang="${lang}">`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>(\s*)/i, `<link data-rh="true" rel="canonical" href="${canonical}" />$1`)
-    .replace("</head>", `    <script type="application/ld+json" data-prerender="home-faq">${jsonLd}</script>\n  </head>`)
+    .replace("</head>", `    <script type="application/ld+json" data-prerender="home-schema">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">\n    ${noscriptBody}\n  </div>`);
   return injectPageSeoMeta(rendered, pathname);
 }

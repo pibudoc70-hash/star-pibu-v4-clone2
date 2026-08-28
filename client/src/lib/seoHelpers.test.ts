@@ -265,27 +265,11 @@ describe("buildClinicJsonLd — 구조 심층 검증", () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// buildWebSiteJsonLd — SearchAction 구조 검증
+// buildWebSiteJsonLd — 기본 엔터티 계약 검증
 // ─────────────────────────────────────────────────────────────────────────────
-describe("buildWebSiteJsonLd — SearchAction 구조", () => {
-  it("potentialAction이 SearchAction 타입이어야 한다", () => {
-    const schema = buildWebSiteJsonLd();
-    const action = schema["potentialAction"] as Record<string, unknown>;
-    expect(action["@type"]).toBe("SearchAction");
-  });
-
-  it("SearchAction target이 urlTemplate을 포함해야 한다", () => {
-    const schema = buildWebSiteJsonLd();
-    const action = schema["potentialAction"] as Record<string, unknown>;
-    const target = action["target"] as Record<string, unknown>;
-    expect(target["urlTemplate"]).toContain("{search_term_string}");
-    expect(target["urlTemplate"]).toContain(BASE_URL);
-  });
-
-  it("query-input 필드가 required name=search_term_string 이어야 한다", () => {
-    const schema = buildWebSiteJsonLd();
-    const action = schema["potentialAction"] as Record<string, unknown>;
-    expect(action["query-input"]).toBe("required name=search_term_string");
+describe("buildWebSiteJsonLd — 기본 엔터티 계약", () => {
+  it("구현되지 않은 사이트 검색을 SearchAction으로 선언하지 않는다", () => {
+    expect(buildWebSiteJsonLd()).not.toHaveProperty("potentialAction");
   });
 
   it("@id가 BASE_URL/#website 형식이어야 한다", () => {
@@ -299,13 +283,14 @@ describe("buildWebSiteJsonLd — SearchAction 구조", () => {
     expect(publisher["@id"]).toBe(`${BASE_URL}/#organization`);
   });
 
-  it("inLanguage가 4개 언어를 포함해야 한다", () => {
+  it("inLanguage가 공개 지원 언어 5개를 모두 포함해야 한다", () => {
     const schema = buildWebSiteJsonLd();
     const langs = schema["inLanguage"] as string[];
     expect(langs).toContain("ko");
     expect(langs).toContain("en");
     expect(langs).toContain("ja");
     expect(langs).toContain("zh");
+    expect(langs).toContain("zh-TW");
   });
 });
 

@@ -18,12 +18,11 @@ describe("homeSeo", () => {
     expect(HOME_SEO_META.keywords.split(",")).toHaveLength(5);
   });
 
-  it("MedicalClinic·Breadcrumb·FAQPage·Physician JSON-LD를 함께 생성한다", () => {
+  it("SeoHead의 clinic 정본과 결합될 Breadcrumb·FAQPage·Physician JSON-LD만 생성한다", () => {
     const jsonLd = buildHomeJsonLd([{ question: "질문", answer: "답변" }]);
-    expect(jsonLd).toHaveLength(4);
-    expect(jsonLd[0]).toMatchObject({ "@type": ["LocalBusiness", "MedicalBusiness"] });
-    expect(jsonLd[1]).toMatchObject({ "@type": "BreadcrumbList" });
-    expect(jsonLd[2]).toMatchObject({ "@type": "FAQPage" });
-    expect(jsonLd[3]).toMatchObject({ "@type": "ItemList" });
+    expect(jsonLd).toHaveLength(3);
+    expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });
+    expect(jsonLd[1]).toMatchObject({ "@type": "FAQPage" });
+    expect(jsonLd[2]).toMatchObject({ "@type": "ItemList" });
   });
 });

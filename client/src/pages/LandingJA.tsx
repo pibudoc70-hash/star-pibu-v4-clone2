@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { CLINIC_STATS } from "../lib/constants";
 const _n = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 import Header from "@/components/Header";
-import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildLocalBusinessJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
+import SeoHead, { COMMON_HREFLANGS, buildBreadcrumbJsonLd, buildFAQPageJsonLd, SITE_NAME_LOCALIZED, OG_IMAGE_LOCALIZED } from "@/components/SeoHead";
 import HeroSection from "@/components/HeroSection";
 import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
 import PhilosophySection from "@/components/PhilosophySection";
@@ -74,7 +74,6 @@ export default function LandingJA() {
         ogImage={OG_IMAGE_LOCALIZED.ja}
         ogSiteName={SITE_NAME_LOCALIZED.ja}
         jsonLd={[
-          buildLocalBusinessJsonLd(),
           buildBreadcrumbJsonLd([
             { name: "ホーム", url: "https://star-pibu.com/ja" },
           ]),

@@ -13,6 +13,7 @@ import type { Express, Request, Response } from "express";
 import type { Equipment3Item } from "../drizzle/schema";
 import { getEquipment3List } from "./db/equipment3";
 import { getAllNotices } from "./db/notices";
+import { parseEquipmentFaqs } from "../shared/equipmentFaq";
 
 const SITE_URL = "https://star-pibu.com";
 const XML_CONTENT_TYPE = "application/xml; charset=UTF-8";
@@ -63,6 +64,20 @@ const GLOBAL_CORE_PATHS = [
 ] as const;
 
 const GLOBAL_PREFIXES = ["/en", "/ja", "/zh", "/zh-tw"] as const;
+
+type EquipmentLocale = "en" | "ja" | "zh" | "zh-TW";
+
+const EQUIPMENT_LOCALE_FIELDS: Record<EquipmentLocale, {
+  prefix: (typeof GLOBAL_PREFIXES)[number];
+  name: keyof Equipment3Item;
+  description: keyof Equipment3Item;
+  faqs: keyof Equipment3Item;
+}> = {
+  en: { prefix: "/en", name: "nameEn", description: "descEn", faqs: "faqsEn" },
+  ja: { prefix: "/ja", name: "nameJa", description: "descJa", faqs: "faqsJa" },
+  zh: { prefix: "/zh", name: "nameZh", description: "descZh", faqs: "faqsZh" },
+  "zh-TW": { prefix: "/zh-tw", name: "nameZhTw", description: "descZhTw", faqs: "faqsZhTw" },
+};
 
 /**
  * Mirrors the project canonical policy: root is the only trailing-slash URL and
@@ -190,6 +205,25 @@ export function buildEquipmentEntries(items: Equipment3Item[]): SitemapEntry[] {
   ];
 }
 
+function hasLocalizedText(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+/** 한국어 fallback 없이 제목·소개·FAQ가 모두 있는 현지화 장비 상세만 색인 후보로 만든다. */
+export function buildLocalizedEquipmentEntries(items: Equipment3Item[]): SitemapEntry[] {
+  return (Object.keys(EQUIPMENT_LOCALE_FIELDS) as EquipmentLocale[]).flatMap((locale) => {
+    const fields = EQUIPMENT_LOCALE_FIELDS[locale];
+    return items.flatMap((item) => {
+      const faqRaw = item[fields.faqs];
+      const hasLocalizedFaqs = typeof faqRaw === "string" && parseEquipmentFaqs(faqRaw).length > 0;
+      if (!hasLocalizedText(item[fields.name]) || !hasLocalizedText(item[fields.description]) || !hasLocalizedFaqs) {
+        return [];
+      }
+      return [{ path: `${fields.prefix}/equipment3/${item.slug}`, lastmod: toLastmod(new Date(item.updatedAt)) }];
+    });
+  });
+}
+
 export function buildNoticeEntries(notices: Array<{ id: number; updatedAt: Date }>): SitemapEntry[] {
   return [
     { path: "/notice", lastmod: sourceLastmod(KOREAN_PAGE_SOURCES["/notice"]) },
@@ -200,8 +234,8 @@ export function buildNoticeEntries(notices: Array<{ id: number; updatedAt: Date 
   ];
 }
 
-export function buildGlobalEntries(): SitemapEntry[] {
-  return GLOBAL_PREFIXES.flatMap((prefix) => {
+export function buildGlobalEntries(items: Equipment3Item[] = []): SitemapEntry[] {
+  const coreEntries = GLOBAL_PREFIXES.flatMap((prefix) => {
     const landingSource = prefix === "/en"
       ? "client/src/pages/LandingEN.tsx"
       : prefix === "/ja"
@@ -217,6 +251,7 @@ export function buildGlobalEntries(): SitemapEntry[] {
     ];
     return localePages.map(({ path, sources }) => ({ path, lastmod: sourceLastmod(sources) }));
   });
+  return [...coreEntries, ...buildLocalizedEquipmentEntries(items)];
 }
 
 /** Backward-compatible test helper for the static treatment urlset. */
@@ -241,7 +276,7 @@ async function buildSitemapDocuments(): Promise<SitemapDocument[]> {
     { path: "/sitemap-treatments.xml", entries: buildTreatmentEntries() },
     { path: "/sitemap-equipment.xml", entries: buildEquipmentEntries(equipment) },
     { path: "/sitemap-notice.xml", entries: buildNoticeEntries(notices) },
-    { path: "/sitemap-global.xml", entries: buildGlobalEntries() },
+    { path: "/sitemap-global.xml", entries: buildGlobalEntries(equipment) },
   ];
 }
 

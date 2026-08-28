@@ -17,4 +17,10 @@ describe("index SEO fallback metadata", () => {
     expect(indexHtml).toContain(`<meta data-rh="true" data-seo-fallback="home" name="twitter:title" content="${homeTitle}" />`);
     expect(indexHtml).toContain(`<meta property="kakao:title" content="${homeTitle}" />`);
   });
+
+  it("정적 fallback은 메타데이터만 제공하고 구조화 데이터는 공유 런타임 정본에 맡긴다", () => {
+    expect(indexHtml).not.toContain('<script type="application/ld+json">');
+    expect(indexHtml).toContain('/manus-storage/hero-background-0000_d3dee03d.webp');
+    expect(indexHtml).not.toContain('hero-bg-new-desktop_2f8a8ccf.webp');
+  });
 });

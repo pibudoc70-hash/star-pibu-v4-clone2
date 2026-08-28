@@ -421,17 +421,9 @@ export function buildWebSiteJsonLd(): JsonLdSchema {
     url: BASE_URL,
     name: SITE_NAME,
     description: "부산 서면 스타피부과 공식 홈페이지",
-    inLanguage: ["ko", "en", "ja", "zh"],
+    inLanguage: ["ko", "en", "ja", "zh", "zh-TW"],
     publisher: {
       "@id": `${BASE_URL}/#organization`,
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/treatments?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
     },
   };
 }
@@ -470,87 +462,8 @@ export function buildBreadcrumbJsonLd(
  * - 기본값 = 현재 상수 (프로덕션 코드 동일하게 동작)
  * - 테스트에서는 목(mock) 데이터를 주입하여 외부 의존성 격리 가능
  */
-export function buildLocalBusinessJsonLd(
-  clinicInfo = CLINIC_INFO,
-  clinicStats = CLINIC_STATS,
-  seoClinicMeta = SEO_CLINIC_META,
-): JsonLdSchema {
-  return {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "MedicalBusiness"],
-    "@id": `${clinicInfo.url}/#local-business`,
-    name: clinicInfo.name,
-    alternateName: clinicInfo.legalName,
-    description: clinicInfo.description,
-    url: clinicInfo.url,
-    telephone: clinicInfo.telephone,
-    email: clinicInfo.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: clinicInfo.address.streetAddress,
-      addressLocality: clinicInfo.address.addressLocality,
-      addressRegion: clinicInfo.address.addressRegion,
-      postalCode: clinicInfo.address.postalCode,
-      addressCountry: clinicInfo.address.addressCountry,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: clinicInfo.geo.latitude,
-      longitude: clinicInfo.geo.longitude,
-    },
-    hasMap: `https://maps.google.com/?q=${clinicInfo.geo.latitude},${clinicInfo.geo.longitude}`,
-    image: clinicInfo.image,
-    logo: {
-      "@type": "ImageObject",
-      url: clinicInfo.logo,
-      width: 200,
-      height: 200,
-    },
-    priceRange: clinicInfo.priceRange,
-    currenciesAccepted: clinicInfo.currenciesAccepted,
-    paymentAccepted: clinicInfo.paymentAccepted,
-    // [DRY] buildOpeningHoursSpec 공통 헬퍼 사용 (buildClinicJsonLd와 동일 로직 공유)
-    openingHoursSpecification: buildOpeningHoursSpec(clinicInfo.openingHours),
-    // 점심시간 특별 영업시간 (지역 검색 최적화)
-    specialOpeningHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: seoClinicMeta.lunchBreak.dayOfWeek,
-        opens: seoClinicMeta.lunchBreak.opens,
-        closes: seoClinicMeta.lunchBreak.closes,
-        description: seoClinicMeta.lunchBreak.description,
-      },
-    ],
-    // 서비스 제공 지역 세분화 (지역 검색 범위 확장)
-    areaServed: seoClinicMeta.areaServed.map((area) => ({
-      "@type": area.type,
-      name: area.name,
-      alternateName: area.nameKo,
-    })),
-    sameAs: [...clinicInfo.sameAs],
-    // 편의시설 정보 (주차, 엘리베이터, 다국어 상담 등)
-    amenityFeature: seoClinicMeta.amenityFeature.map((f) => ({
-      "@type": "LocationFeatureSpecification",
-      name: f.name,
-      value: f.value,
-    })),
-    // 시술 카탈로그 (제공 서비스 목록)
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: seoClinicMeta.offerCatalog.name,
-      itemListElement: seoClinicMeta.offerCatalog.itemListElement.map((item) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "MedicalProcedure",
-          name: item.name,
-          url: item.url,
-        },
-      })),
-    },
-    medicalSpecialty: "Dermatology",
-    knowsAbout: [...seoClinicMeta.knowsAbout],
-  };
-}
+/** @deprecated 기존 호출부 호환용 별칭입니다. 병원 entity는 buildClinicJsonLd가 단일 정본입니다. */
+export const buildLocalBusinessJsonLd = buildClinicJsonLd;
 
 /**
  * FAQPage JSON-LD 스키마 생성 헬퍼 (AI 검색 최적화)

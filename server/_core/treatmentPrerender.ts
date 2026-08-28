@@ -19,7 +19,8 @@ import type { Express, Request, Response, NextFunction } from "express";
 import fs from "node:fs";
 import path from "node:path";
 import { injectPageSeoMeta } from "./seoMeta";
-import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_DIRECT_CARE_DESCRIPTION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
+import { buildClinicJsonLd } from "../../client/src/lib/seoHelpers";
 
 // ── 타입 정의 ────────────────────────────────────────────────────────────────
 
@@ -94,68 +95,6 @@ export function getLegacyTreatmentRedirectPath(name: string): string | null {
 export function toAbsoluteTreatmentImageUrl(image: string): string {
   return image.startsWith("https://") ? image : new URL(image, BASE_URL).toString();
 }
-
-const CLINIC_PROVIDER = {
-  "@type": "MedicalBusiness",
-  "@id": `${BASE_URL}/#organization`,
-  "name": "스타피부과",
-  "url": BASE_URL,
-  "telephone": "+82-51-818-2300",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "서면로 74 아이온시티빌딩 4층",
-    "addressLocality": "부산진구",
-    "addressRegion": "부산광역시",
-    "postalCode": "47280",
-    "addressCountry": "KR",
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 35.1579,
-    "longitude": 129.0597,
-  },
-  "sameAs": [
-    "https://place.naver.com/hospital/12020103",
-    "https://map.kakao.com/?itemId=1523764",
-  ],
-} as const;
-
-const CLINIC_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "MedicalClinic",
-  "@id": `${BASE_URL}/#medical-clinic`,
-  name: "스타피부과",
-  url: BASE_URL,
-  telephone: "+82-51-818-2300",
-  medicalSpecialty: "Dermatology",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "서면로 74 아이온시티빌딩 4층",
-    addressLocality: "부산진구",
-    addressRegion: "부산광역시",
-    postalCode: "47280",
-    addressCountry: "KR",
-  },
-  geo: { "@type": "GeoCoordinates", latitude: 35.1579, longitude: 129.0597 },
-  openingHoursSpecification: [
-    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "19:00" },
-    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:30", closes: "15:00" },
-  ],
-} as const;
-
-const PHYSICIAN_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Physician",
-  "@id": `${BASE_URL}/#physician-cho-si-hyung`,
-  name: "조시형",
-  alternateName: "Cho Si-hyung",
-  jobTitle: "피부과 전문의 · 의학박사",
-  description: `20년 이상의 임상 경험을 보유한 피부과 전문의이며 써마지 FLX 공식 자문의로 활동 중입니다. ${LIFTING_DIRECT_CARE_DESCRIPTION}`,
-  medicalSpecialty: "Dermatology",
-  knowsAbout: ["리프팅 시술", "통증 관리"],
-  memberOf: ["대한피부과학회", "대한피부과의사회", "미국피부과학회(AAD)"].map((name) => ({ "@type": "MedicalOrganization", name })),
-  worksFor: { "@id": `${BASE_URL}/#medical-clinic` },
-} as const;
 
 // ── 데이터 로딩 ───────────────────────────────────────────────────────────────
 
@@ -503,12 +442,12 @@ function injectJsonLd(
     followup: recovery ? `회복 기간: ${recovery}. ${caution}` : caution,
     howPerformed: detail,
     status: "https://schema.org/ActiveActionStatus",
-    provider: CLINIC_PROVIDER,
+    provider: { "@id": `${BASE_URL}/#organization` },
     duration: pick(t.time, lang),
     relevantSpecialty: "https://schema.org/Dermatology",
   };
 
-  const schemas: object[] = [CLINIC_SCHEMA, PHYSICIAN_SCHEMA, medicalProcedure, breadcrumbList];
+  const schemas: object[] = [buildClinicJsonLd(), medicalProcedure, breadcrumbList];
 
   // FAQPage 스키마
   if (t.faq) {

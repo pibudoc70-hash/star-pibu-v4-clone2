@@ -89,7 +89,7 @@ export const CLINIC_INFO = {
   name: "스타피부과",
   legalName: "의료법인 스타피부과",
   url: "https://star-pibu.com",
-  logo: "https://star-pibu.com/logo.png",
+  logo: "https://star-pibu.com/favicon.png",
   // [R21-P1-7] 클리닉 대표 이미지 단일 소스: assetConfig.CLINIC_REPRESENTATIVE_IMAGE
   // 이미지 URL 변경 시 assetConfig.ts만 수정하면 자동 반영됨
   image: CLINIC_REPRESENTATIVE_IMAGE,
@@ -227,12 +227,10 @@ export const SEO_CLINIC_META = {
   offerCatalog: {
     name: "스타피부과 시술 메뉴",
     itemListElement: [
-      { name: "울쎄라피 프라임", url: "https://star-pibu.com/equipment3/울써라피-프라임" },
-      { name: "써마지 FLX", url: "https://star-pibu.com/equipment3/써마지-flx" },
-      { name: "눈밑지방재배치", url: "https://star-pibu.com/equipment3/눈밑지방재배치" },
-      { name: "리주란힐러", url: "https://star-pibu.com/equipment3/리주란힐러" },
-      { name: "피코레이저 토닝", url: "https://star-pibu.com/equipment3/피코레이저" },
-      { name: "보톡스", url: "https://star-pibu.com/equipment3/보톡스" },
+      { name: "울쎄라피 프라임", url: "https://star-pibu.com/equipment3/울쎄라피프라임" },
+      { name: "써마지 FLX", url: "https://star-pibu.com/equipment3/써마지FLX" },
+      { name: "눈밑지방재배치", url: "https://star-pibu.com/equipment3/under-eye-fat-repositioning" },
+      { name: "보톡스", url: "https://star-pibu.com/equipment3/botox-injection" },
       { name: "필러", url: "https://star-pibu.com/equipment3/필러" },
     ],
   },

@@ -100,6 +100,7 @@ export default function SeoHead({
 }: SeoHeadProps) {
   useLayoutEffect(() => {
     document.head.querySelectorAll('[data-seo-fallback="home"]').forEach((node) => node.remove());
+    document.head.querySelectorAll('[data-prerender="home-schema"]').forEach((node) => node.remove());
 
     const frame = window.requestAnimationFrame(() => {
       const keepLastByKey = (selector: string, key: (node: Element) => string) => {

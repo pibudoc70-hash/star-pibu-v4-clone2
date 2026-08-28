@@ -22,4 +22,14 @@ describe("Equipment3Detail localized canonical and hreflang contract", () => {
     expect(seoBlock).toContain("`/zh/equipment3/${slug}`");
     expect(seoBlock).not.toContain("`/zh-tw/equipment3/${slug}`");
   });
+
+  it("passes locale-aware BreadcrumbList and FAQPage schema with the same self URL to SeoHead", () => {
+    expect(seoBlock).toContain("buildBreadcrumbJsonLd");
+    expect(seoBlock).toContain("buildFAQPageJsonLd");
+    expect(seoBlock).toContain('"@id": `${pageUrl}#breadcrumb`');
+    expect(seoBlock).toContain('"@id": `${pageUrl}#faq`');
+    expect(seoBlock).toContain("withSchemaLanguage");
+    expect(seoBlock).toContain("breadcrumbJsonLd,");
+    expect(seoBlock).toContain("...(faqJsonLd ? [faqJsonLd] : [])");
+  });
 });

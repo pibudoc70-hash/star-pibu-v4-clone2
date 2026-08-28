@@ -8,7 +8,7 @@ import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
 import { getLocalizedEquipmentFaqs } from "../../shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "../../shared/equipmentDetailQuote";
-import { buildLocalizedClinicJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
+import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalizedClinicJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 
 const BASE_URL = "https://star-pibu.com";
 // 관리자에서 상세 정보를 수정할 수 있으므로 장비 페이지는 홈보다 짧은 공유 캐시를 사용한다.
@@ -77,11 +77,11 @@ function localized(item: Equipment3Item, base: "name" | "desc" | "detail" | "eff
 
 function labels(lang: Lang) {
   const all: Record<Lang, Record<string, string>> = {
-    ko: { overview: "시술 설명", target: "적합한 대상", duration: "효과 지속 기간", time: "시술 소요 시간", recovery: "회복 기간", caution: "부작용·주의사항", sessions: "권장 횟수·간격", faq: "자주 묻는 질문" },
-    en: { overview: "What it is", target: "Who it may suit", duration: "Effect duration", time: "Treatment time", recovery: "Recovery time", caution: "Side effects and precautions", sessions: "Recommended sessions and interval", faq: "Frequently Asked Questions" },
-    ja: { overview: "施術説明", target: "適した方", duration: "効果の持続", time: "施術時間", recovery: "回復期間", caution: "副作用・注意事項", sessions: "推奨回数・間隔", faq: "よくある質問" },
-    zh: { overview: "治疗说明", target: "适合人群", duration: "效果持续时间", time: "治疗所需时间", recovery: "恢复期", caution: "副作用与注意事项", sessions: "建议次数与间隔", faq: "常见问题" },
-    "zh-TW": { overview: "療程說明", target: "適合對象", duration: "效果持續時間", time: "療程所需時間", recovery: "恢復期", caution: "副作用與注意事項", sessions: "建議次數與間隔", faq: "常見問題" },
+    ko: { home: "홈", overview: "시술 설명", target: "적합한 대상", duration: "효과 지속 기간", time: "시술 소요 시간", recovery: "회복 기간", caution: "부작용·주의사항", sessions: "권장 횟수·간격", faq: "자주 묻는 질문" },
+    en: { home: "Home", overview: "What it is", target: "Who it may suit", duration: "Effect duration", time: "Treatment time", recovery: "Recovery time", caution: "Side effects and precautions", sessions: "Recommended sessions and interval", faq: "Frequently Asked Questions" },
+    ja: { home: "ホーム", overview: "施術説明", target: "適した方", duration: "効果の持続", time: "施術時間", recovery: "回復期間", caution: "副作用・注意事項", sessions: "推奨回数・間隔", faq: "よくある質問" },
+    zh: { home: "首页", overview: "治疗说明", target: "适合人群", duration: "效果持续时间", time: "治疗所需时间", recovery: "恢复期", caution: "副作用与注意事项", sessions: "建议次数与间隔", faq: "常见问题" },
+    "zh-TW": { home: "首頁", overview: "療程說明", target: "適合對象", duration: "效果持續時間", time: "療程所需時間", recovery: "恢復期", caution: "副作用與注意事項", sessions: "建議次數與間隔", faq: "常見問題" },
   };
   return all[lang];
 }
@@ -120,6 +120,7 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
+  const localeHomePath = lang === "ko" ? "/" : lang === "zh-TW" ? "/zh-tw" : `/${lang}`;
   const procedure = {
     "@context": "https://schema.org", "@type": "MedicalProcedure", "@id": `${canonical}#medical-procedure`, name, alternateName: item.nameEn || item.name,
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
@@ -127,8 +128,18 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#organization` }, relevantSpecialty: "https://schema.org/Dermatology",
     inLanguage: lang,
   };
-  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonical}#faq`, inLanguage: lang, mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
-  const jsonLd = JSON.stringify([buildLocalizedClinicJsonLd(lang), withSchemaLanguage(procedure, lang), ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
+  const breadcrumbSchema = withSchemaLanguage({
+    ...buildBreadcrumbJsonLd([
+      { name: text.home, url: `${BASE_URL}${localeHomePath}` },
+      { name, url: canonical },
+    ]),
+    "@id": `${canonical}#breadcrumb`,
+  }, lang);
+  const faqSchema = allFaqs.length > 0 ? withSchemaLanguage({
+    ...buildFAQPageJsonLd(allFaqs),
+    "@id": `${canonical}#faq`,
+  }, lang) : null;
+  const jsonLd = JSON.stringify([buildLocalizedClinicJsonLd(lang), withSchemaLanguage(procedure, lang), breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
   const faqBody = allFaqs.length > 0 ? `<section><h2>${escapeHtml(text.faq)}</h2><dl>${allFaqs.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
   const quoteBody = `<aside><h2>${escapeHtml(detailQuote.heading)}</h2><dl><dt>${escapeHtml(detailQuote.locationLabel)}</dt><dd>${escapeHtml(detailQuote.location)}</dd><dt>${escapeHtml(detailQuote.hoursLabel)}</dt><dd>${escapeHtml(detailQuote.hours)}</dd><dt>${escapeHtml(detailQuote.providerLabel)}</dt><dd>${escapeHtml(detailQuote.provider)}</dd><dt>${escapeHtml(detailQuote.painManagementLabel)}</dt><dd>${escapeHtml(detailQuote.painManagement)}</dd></dl></aside>`;
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}${quoteBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;

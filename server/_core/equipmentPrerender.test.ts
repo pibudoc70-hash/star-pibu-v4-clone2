@@ -71,6 +71,33 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("FAQPage");
   });
 
+  it.each([
+    ["ko", "/equipment3/rejuran", "홈"],
+    ["en", "/en/equipment3/rejuran", "Home"],
+    ["ja", "/ja/equipment3/rejuran", "ホーム"],
+    ["zh", "/zh/equipment3/rejuran", "首页"],
+    ["zh-TW", "/zh-tw/equipment3/rejuran", "首頁"],
+  ] as const)("%s 장비 상세 원본 HTML은 self URL과 FAQ 기본값을 갖는 Breadcrumb·FAQ schema를 함께 제공한다", (locale, pathName, homeName) => {
+    const html = buildEquipmentPrerenderedHtml(template, item, locale, pathName);
+    const canonical = `https://star-pibu.com${pathName}`;
+
+    expect(html).toContain('"@type":"BreadcrumbList"');
+    expect(html).toContain(`"@id":"${canonical}#breadcrumb"`);
+    expect(html).toContain(`"item":"${canonical}"`);
+    expect(html).toContain(`"name":"${homeName}"`);
+    expect(html).toContain(`"@id":"${canonical}#faq"`);
+    expect(html).toContain(`"inLanguage":"${locale}"`);
+    expect(html).toContain('"name":"저장 FAQ 질문"');
+    expect(html).toContain('"text":"저장 FAQ 답변"');
+  });
+
+  it("현지화된 FAQ가 있으면 Breadcrumb·FAQ schema에 그 번역을 사용한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, { ...item, faqsEn: JSON.stringify([{ question: "Stored English question", answer: "Stored English answer" }]) }, "en", "/en/equipment3/rejuran");
+
+    expect(html).toContain('"name":"Stored English question"');
+    expect(html).toContain('"text":"Stored English answer"');
+  });
+
   it("원본 HTML에서 FAQ를 진료·시술 안내보다 먼저 배치한다", () => {
     const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
 

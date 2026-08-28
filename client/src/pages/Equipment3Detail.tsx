@@ -22,6 +22,7 @@ import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
+import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -128,6 +129,7 @@ export default function Equipment3Detail() {
     backList:  getText("목록으로 돌아가기",  "Back to list",                  "一覧に戻る",         "返回列表"),
     bodyLoc:   getText("피부",             "Skin",                          "皮膚",               "皮肤"),
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
+    home:      getText("홈",               "Home",                          "ホーム",             "首页",               "首頁"),
   } as const;
 
   // ── 목록 복귀 경로 헬퍼 ─────────────────────────────────────────────────────
@@ -253,18 +255,21 @@ export default function Equipment3Detail() {
     "preparation": hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : (localizedCaution || ""),
     "followup": localizedRecovery || "",
   };
+  const breadcrumbJsonLd = withSchemaLanguage({
+    ...buildBreadcrumbJsonLd([
+      { name: LABELS.home, url: getLocalizedUrl(lang, "/") },
+      { name: localizedName, url: pageUrl },
+    ]),
+    "@id": `${pageUrl}#breadcrumb`,
+  }, lang);
+  const faqJsonLd = allFaqs.length > 0 ? withSchemaLanguage({
+    ...buildFAQPageJsonLd(allFaqs),
+    "@id": `${pageUrl}#faq`,
+  }, lang) : null;
   const jsonLd = [
     medicalProcedureJsonLd,
-    ...(allFaqs.length > 0 ? [{
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "@id": `${pageUrl}#faq`,
-      "mainEntity": allFaqs.map(({ question, answer }) => ({
-        "@type": "Question",
-        "name": question,
-        "acceptedAnswer": { "@type": "Answer", "text": answer },
-      })),
-    }] : []),
+    breadcrumbJsonLd,
+    ...(faqJsonLd ? [faqJsonLd] : []),
   ];
 
   return (

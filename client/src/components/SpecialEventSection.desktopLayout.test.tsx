@@ -69,6 +69,13 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(styles).not.toContain("@keyframes eventPreviewFade {\n  from { opacity: 0.12;");
   });
 
+  it("gives keyboard focus on the desktop event selector a distinct high-visibility state", () => {
+    expect(styles).toContain(".event-card__selector-row:focus-visible {");
+    expect(styles).toContain("outline: 3px solid var(--color-gold-primary);");
+    expect(styles).toContain("outline-offset: -3px;");
+    expect(styles).toContain("background: color-mix(in srgb, var(--color-gold-primary) 16%, white);");
+  });
+
   it("shows the full desktop event selector list by default and keeps the preview aligned while scanning", () => {
     expect(source).toContain("const desktopEvents = allEvents;");
     expect(source).toContain("md:sticky md:top-28 md:self-start");

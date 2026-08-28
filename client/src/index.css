@@ -3560,6 +3560,15 @@
 .event-card__selector-row--selected {
   box-shadow: inset 3px 0 0 var(--color-gold-primary);
 }
+
+/* 마우스 hover와 구분되는 키보드 포커스 상태: 선택 목록에서 현재 조작 대상을 즉시 인식한다. */
+.event-card__selector-row:focus-visible {
+  outline: 3px solid var(--color-gold-primary);
+  outline-offset: -3px;
+  background: color-mix(in srgb, var(--color-gold-primary) 16%, white);
+  box-shadow: inset 4px 0 0 var(--color-gold-primary), 0 0 0 2px color-mix(in srgb, var(--color-gold-primary) 25%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .event-card__preview {
     animation: none;

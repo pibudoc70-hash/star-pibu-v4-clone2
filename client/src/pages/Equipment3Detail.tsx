@@ -19,6 +19,7 @@ import { withVersion } from "@/lib/imageUrl";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
 import { getLocalizedEquipmentFaqs } from "@shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
+import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { useChatConfig } from "@/hooks/useChatConfig";
@@ -192,6 +193,7 @@ export default function Equipment3Detail() {
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
+  const explanatoryInfographic = lang === "ko" ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -447,6 +449,24 @@ export default function Equipment3Detail() {
                 <Streamdown>{localizedDetail}</Streamdown>
               </Suspense>
             </div>
+          </section>
+        )}
+
+        {explanatoryInfographic && (
+          <section className="mb-12" aria-labelledby="equipment-infographic-heading">
+            <h2 id="equipment-infographic-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
+            <figure className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">
+              <OptimizedImage
+                src={explanatoryInfographic.src}
+                alt={explanatoryInfographic.alt}
+                width={1440}
+                height={1800}
+                className="block h-auto w-full"
+              />
+              <figcaption className="border-t border-slate-100 bg-white px-5 py-4 text-center text-sm leading-relaxed text-slate-600">
+                본 이미지는 시술 원리에 대한 이해를 돕기 위한 자료이며, 적용 방법과 결과는 개인 상태에 따라 달라질 수 있습니다.
+              </figcaption>
+            </figure>
           </section>
         )}
 

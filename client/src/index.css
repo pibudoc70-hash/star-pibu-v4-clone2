@@ -4804,6 +4804,103 @@ body.font-lang-zh .hero-stat-label {
   box-shadow: 0 2px 8px rgba(26, 39, 68, 0.04);
 }
 
+/* ── Equipment listing warm-greige pilot: scoped surfaces and actions ── */
+.equipment-list-page,
+.equipment-list__content-surface {
+  background: #F4F1EA;
+}
+
+.equipment-list__tab-panel,
+.equipment-list__search,
+.equipment-list-page .animate-card-fade,
+.equipment-list__card-grid,
+.equipment-list__card {
+  background: #EEEBE4;
+  border: 1px solid #D8D0C2;
+  box-shadow: 0 2px 8px rgba(26, 39, 68, 0.04);
+}
+
+.equipment-list__card-panel {
+  background: #E6E1D8;
+}
+
+.equipment-list__card,
+.equipment-list__detail-link,
+.equipment-list__more-button,
+.equipment-list__search-clear {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.equipment-list__detail-link {
+  color: #7A5C35;
+}
+
+.equipment-list__more-button {
+  background: #1A2744;
+  border: 1px solid #1A2744;
+  color: #FCFBF8;
+}
+
+.equipment-list__more-button--expanded {
+  background: #EEEBE4;
+  border-color: #7A5C35;
+  color: #1A2744;
+}
+
+@media (hover: hover) {
+  .equipment-list__card:hover {
+    box-shadow: 0 10px 22px rgba(26, 39, 68, 0.12), 0 0 0 2px rgba(196, 168, 130, 0.18);
+    transform: translateY(-2px);
+  }
+
+  .equipment-list__card:hover .equipment-list__detail-link,
+  .equipment-list__search-clear:hover {
+    color: #1A2744;
+  }
+
+  .equipment-list__more-button:not(.equipment-list__more-button--expanded):hover {
+    background: #7A5C35;
+    border-color: #7A5C35;
+    color: #FCFBF8;
+    box-shadow: 0 10px 22px rgba(122, 92, 53, 0.24), 0 0 0 2px rgba(196, 168, 130, 0.24);
+    transform: translateY(-2px);
+  }
+
+  .equipment-list__more-button--expanded:hover {
+    background: #F4F1EA;
+    box-shadow: 0 8px 18px rgba(26, 39, 68, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.equipment-list__card:active,
+.equipment-list__more-button:active {
+  transform: scale(0.97);
+}
+
+.equipment-list__card:focus-visible,
+.equipment-list__more-button:focus-visible,
+.equipment-list__search-clear:focus-visible {
+  outline: 3px solid #7A5C35;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipment-list__card,
+  .equipment-list__detail-link,
+  .equipment-list__more-button,
+  .equipment-list__search-clear {
+    transition: none;
+  }
+
+  .equipment-list__card:hover,
+  .equipment-list__card:active,
+  .equipment-list__more-button:hover,
+  .equipment-list__more-button:active {
+    transform: none;
+  }
+}
+
 .equipment-detail__faq-item > summary {
   transition: background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
 }

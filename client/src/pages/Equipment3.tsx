@@ -107,11 +107,10 @@ function Equipment3Card({
   return (
     <a
       href={detailPath}
-      className="treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
+      className="equipment-list__card treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
       style={{
         animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,
         minHeight: "380px",
-        background: "#fff",
       }}
       aria-label={`${name} ${detail}`}
     >
@@ -226,7 +225,7 @@ function Equipment3Card({
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: "#d1ab67" }}>
+        <div className="equipment-list__detail-link flex items-center gap-1 text-xs font-semibold">
           <span>{detail}</span>
           <span style={{ fontSize: 13 }}>›</span>
         </div>
@@ -406,7 +405,7 @@ export default function Equipment3() {
   );
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+    <div className="equipment-list-page min-h-screen">
       <SeoHead
         title={seoTitle}
         description={seoDesc}
@@ -433,7 +432,7 @@ export default function Equipment3() {
       <main className="pt-20">
         <h1 className="sr-only">{pageTitle}</h1>
 
-        <section className="py-16 sm:py-24 bg-white" aria-label={pageTitle}>
+        <section className="equipment-list__content-surface py-16 sm:py-24" aria-label={pageTitle}>
           <div className="container">
             {/* 섹션 헤더 */}
             <div className="text-center mb-8 sm:mb-12">
@@ -472,7 +471,7 @@ export default function Equipment3() {
             {!isLoading && (
               <>
                 {/* 카테고리 탭 */}
-                <div className="rounded-2xl px-4 py-6 mb-4 bg-white overflow-hidden">
+                <div className="equipment-list__tab-panel rounded-2xl px-4 py-6 mb-4 overflow-hidden">
                   {/* 모바일: 2열 그리드 */}
                   <div
                     role="tablist"
@@ -521,7 +520,7 @@ export default function Equipment3() {
                 {/* 검색창 */}
                 <div className="mb-4">
                   <div
-                    className="relative flex items-center rounded-2xl bg-white shadow-sm border border-gray-100 overflow-hidden"
+                    className="equipment-list__search relative flex items-center rounded-2xl shadow-sm overflow-hidden"
                     style={{ transition: "box-shadow 0.2s" }}
                   >
                     <span className="pl-4 pr-2 text-gray-400 flex-shrink-0">
@@ -551,7 +550,7 @@ export default function Equipment3() {
                       <button
                         type="button"
                         onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
-                        className="min-w-11 min-h-11 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 flex-shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                        className="equipment-list__search-clear min-w-11 min-h-11 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 flex-shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
                         aria-label={getText("검색어 지우기", "Clear search", "検索をクリア", "清除搜索")}
                       >
                         <X size={16} />
@@ -670,8 +669,8 @@ export default function Equipment3() {
 
                 {/* 카드 그리드 — 검색 중에는 탭에 관계없이 표시 */}
                 {(activeId || isSearching) && (
-                  <div className="rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade">
-                    <div className="px-5 pt-5 pb-5 bg-white rounded-b-2xl">
+                  <div className="equipment-list__card-panel rounded-2xl mb-8 overflow-hidden animate-card-fade">
+                    <div className="equipment-list__card-grid px-5 pt-5 pb-5 rounded-b-2xl">
                       {filteredItems.length === 0 ? (
                         <div className="text-center py-16">
                           {searchQuery.trim() ? (
@@ -732,10 +731,10 @@ export default function Equipment3() {
                             type="button"
                             onClick={handleShowMore}
                             className={[
-                              "flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
+                              "equipment-list__more-button flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-md active:scale-95",
                               showAll
-                                ? "bg-white text-[var(--color-star-text-mid)] border border-[1.5px] border-[var(--color-gold-light)]"
-                                : "bg-[var(--color-gold-primary)] text-white border-none",
+                                ? "equipment-list__more-button--expanded"
+                                : "",
                             ].join(" ")}
                           >
                             {showAll ? (

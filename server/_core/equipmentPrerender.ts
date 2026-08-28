@@ -8,7 +8,7 @@ import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
 import { getLocalizedEquipmentFaqs } from "../../shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "../../shared/equipmentDetailQuote";
-import { buildClinicJsonLd } from "../../client/src/lib/seoHelpers";
+import { buildLocalizedClinicJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 
 const BASE_URL = "https://star-pibu.com";
 // 관리자에서 상세 정보를 수정할 수 있으므로 장비 페이지는 홈보다 짧은 공유 캐시를 사용한다.
@@ -71,10 +71,6 @@ function localized(item: Equipment3Item, base: "name" | "desc" | "detail" | "eff
   const localizedKey = `${base}${suffix}` as keyof Equipment3Item;
   const localizedValue = item[localizedKey];
   if (typeof localizedValue === "string" && localizedValue.trim()) return localizedValue;
-  if (lang === "zh-TW") {
-    const simplifiedValue = item[`${base}Zh` as keyof Equipment3Item];
-    if (typeof simplifiedValue === "string" && simplifiedValue.trim()) return simplifiedValue;
-  }
   const fallback = item[base];
   return typeof fallback === "string" ? fallback : "";
 }
@@ -129,9 +125,10 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
     preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#organization` }, relevantSpecialty: "https://schema.org/Dermatology",
+    inLanguage: lang,
   };
-  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonical}#faq`, mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
-  const jsonLd = JSON.stringify([buildClinicJsonLd(), procedure, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
+  const faqSchema = allFaqs.length > 0 ? { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${canonical}#faq`, inLanguage: lang, mainEntity: allFaqs.map(({ question, answer }) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) } : null;
+  const jsonLd = JSON.stringify([buildLocalizedClinicJsonLd(lang), withSchemaLanguage(procedure, lang), ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");
   const faqBody = allFaqs.length > 0 ? `<section><h2>${escapeHtml(text.faq)}</h2><dl>${allFaqs.map(({ question, answer }) => `<dt>${escapeHtml(question)}</dt><dd>${escapeHtml(answer)}</dd>`).join("")}</dl></section>` : "";
   const quoteBody = `<aside><h2>${escapeHtml(detailQuote.heading)}</h2><dl><dt>${escapeHtml(detailQuote.locationLabel)}</dt><dd>${escapeHtml(detailQuote.location)}</dd><dt>${escapeHtml(detailQuote.hoursLabel)}</dt><dd>${escapeHtml(detailQuote.hours)}</dd><dt>${escapeHtml(detailQuote.providerLabel)}</dt><dd>${escapeHtml(detailQuote.provider)}</dd><dt>${escapeHtml(detailQuote.painManagementLabel)}</dt><dd>${escapeHtml(detailQuote.painManagement)}</dd></dl></aside>`;
   const body = `<main id="crawler-content" lang="${lang}"><article><header><h1>${escapeHtml(name)}</h1><p>${escapeHtml(localized(item, "desc", lang))}</p></header><section><h2>${escapeHtml(text.overview)}</h2><table><tbody>${rows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("\n")}</tbody></table></section>${faqBody}${quoteBody}<footer><p>부산 서면 스타피부과 · 부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300</p></footer></article></main>`;

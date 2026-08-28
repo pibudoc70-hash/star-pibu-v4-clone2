@@ -30,6 +30,46 @@ export const SITE_NAME_LOCALIZED: Record<string, string> = {
   "zh-TW": "釜山STAR皮膚科",
 };
 
+export type SchemaLocale = "ko" | "en" | "ja" | "zh" | "zh-TW";
+
+const SCHEMA_LOCALES: readonly SchemaLocale[] = ["ko", "en", "ja", "zh", "zh-TW"];
+
+const CLINIC_SCHEMA_COPY: Record<SchemaLocale, { name: string; description: string }> = {
+  ko: {
+    name: SITE_NAME_LOCALIZED.ko,
+    description: "부산 서면 위치한 피부과 전문의 클리닉. 눈밑지방재배치술, 울쎄라피, 써마지, 리주란 등 전문의가 직접 시술합니다.",
+  },
+  en: {
+    name: SITE_NAME_LOCALIZED.en,
+    description: "Star Dermatology is a dermatologist-led clinic in Seomyeon, Busan, providing individualized dermatologic care plans.",
+  },
+  ja: {
+    name: SITE_NAME_LOCALIZED.ja,
+    description: "釜山・西面の皮膚科専門医によるクリニックです。お一人おひとりの肌状態に合わせた診療計画をご案内します。",
+  },
+  zh: {
+    name: SITE_NAME_LOCALIZED.zh,
+    description: "STAR皮肤科位于釜山西面，由皮肤科专科医生根据个人皮肤状况提供诊疗方案。",
+  },
+  "zh-TW": {
+    name: SITE_NAME_LOCALIZED["zh-TW"],
+    description: "STAR皮膚科位於釜山西面，由皮膚科專科醫師依個人膚況提供診療規劃。",
+  },
+};
+
+export function normalizeSchemaLocale(locale: string | undefined): SchemaLocale {
+  return SCHEMA_LOCALES.includes(locale as SchemaLocale) ? locale as SchemaLocale : "ko";
+}
+
+export function schemaLocaleFromOgLocale(ogLocale: string | undefined): SchemaLocale {
+  const matched = Object.entries(LANG_TO_OG_LOCALE).find(([, value]) => value === ogLocale)?.[0];
+  return normalizeSchemaLocale(matched);
+}
+
+export function withSchemaLanguage(schema: JsonLdSchema, locale: string | undefined): JsonLdSchema {
+  return { ...schema, inLanguage: normalizeSchemaLocale(locale) };
+}
+
 /**
  * 언어별 OG 이미지 URL (SNS 공유 시 사용, 1200×630px)
  *
@@ -426,6 +466,18 @@ export function buildWebSiteJsonLd(): JsonLdSchema {
       "@id": `${BASE_URL}/#organization`,
     },
   };
+}
+
+export function buildLocalizedClinicJsonLd(locale: string | undefined): JsonLdSchema {
+  const normalizedLocale = normalizeSchemaLocale(locale);
+  const copy = CLINIC_SCHEMA_COPY[normalizedLocale];
+  return withSchemaLanguage({ ...buildClinicJsonLd(), name: copy.name, description: copy.description }, normalizedLocale);
+}
+
+export function buildLocalizedWebSiteJsonLd(locale: string | undefined): JsonLdSchema {
+  const normalizedLocale = normalizeSchemaLocale(locale);
+  const copy = CLINIC_SCHEMA_COPY[normalizedLocale];
+  return withSchemaLanguage({ ...buildWebSiteJsonLd(), name: copy.name, description: copy.description }, normalizedLocale);
 }
 
 /**

@@ -175,11 +175,11 @@ export default function Equipment3Detail() {
   }
 
   // ── 다국어 텍스트 ────────────────────────────────────────────────────────────
-  const localizedName     = lang === "zh-TW" && item.nameZhTw?.trim()
-    ? item.nameZhTw
+  const localizedName     = lang === "zh-TW"
+    ? item.nameZhTw?.trim() || item.name
     : getText(item.name, item.nameEn, item.nameJa, item.nameZh);
   const localized = (ko: string | null | undefined, en: string | null | undefined, ja: string | null | undefined, zh: string | null | undefined, zhTw: string | null | undefined) =>
-    lang === "zh-TW" && zhTw?.trim() ? zhTw : getText(ko ?? "", en ?? "", ja ?? "", zh ?? "");
+    lang === "zh-TW" ? zhTw?.trim() || ko || "" : getText(ko ?? "", en ?? "", ja ?? "", zh ?? "");
   const localizedDesc     = localized(item.desc,    item.descEn,    item.descJa,    item.descZh,    item.descZhTw);
   const localizedDetail   = localized(item.detail,  item.detailEn,  item.detailJa,  item.detailZh,  item.detailZhTw);
   const localizedEffect   = localized(item.effect,  item.effectEn,  item.effectJa,  item.effectZh,  item.effectZhTw);

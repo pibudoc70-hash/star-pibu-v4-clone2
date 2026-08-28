@@ -18,12 +18,18 @@ describe("homePrerender", () => {
     expect(html).toContain('https://star-pibu.com/#website');
   });
 
-  it("다국어 홈도 해당 언어 FAQ와 표준 URL을 주입한다", () => {
-    const html = buildHomePrerenderedHtml(template, "/en");
+  it.each([
+    ["/", "ko", "ko", "부산 서면 스타피부과"],
+    ["/en", "en", "en", "Star Dermatology Busan"],
+    ["/ja", "ja", "ja", "釜山スター皮膚科"],
+    ["/zh", "zh", "zh", "釜山STAR皮肤科"],
+    ["/zh-tw", "zh-Hant", "zh-TW", "釜山STAR皮膚科"],
+  ])("%s 홈 schema는 %s HTML 언어와 %s JSON-LD 언어를 사용한다", (pathName, htmlLang, schemaLang, clinicName) => {
+    const html = buildHomePrerenderedHtml(template, pathName);
 
-    expect(html).toContain("Frequently Asked Questions");
-    expect(html).toContain('href="https://star-pibu.com/en"');
-    expect(html).toContain('lang="en"');
+    expect(html).toContain(`lang="${htmlLang}"`);
+    expect(html).toContain(`"inLanguage":"${schemaLang}"`);
+    expect(html).toContain(`"name":"${clinicName}"`);
   });
 
   it("홈 언어 루트가 아닌 경로는 처리하지 않는다", () => {

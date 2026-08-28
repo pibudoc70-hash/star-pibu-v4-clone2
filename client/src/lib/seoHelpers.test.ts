@@ -15,6 +15,8 @@ import {
   SITE_NAME,
   buildHreflangs,
   buildClinicJsonLd,
+  buildLocalizedClinicJsonLd,
+  buildLocalizedWebSiteJsonLd,
   buildWebSiteJsonLd,
   buildBreadcrumbJsonLd,
   buildLocalBusinessJsonLd,
@@ -291,6 +293,27 @@ describe("buildWebSiteJsonLd — 기본 엔터티 계약", () => {
     expect(langs).toContain("ja");
     expect(langs).toContain("zh");
     expect(langs).toContain("zh-TW");
+  });
+});
+
+describe("locale-aware shared schema", () => {
+  it.each([
+    ["ko", "부산 서면 스타피부과"],
+    ["en", "Star Dermatology Busan"],
+    ["ja", "釜山スター皮膚科"],
+    ["zh", "釜山STAR皮肤科"],
+    ["zh-TW", "釜山STAR皮膚科"],
+  ] as const)("uses %s as the inLanguage and localized clinic name", (locale, name) => {
+    const clinic = buildLocalizedClinicJsonLd(locale);
+    const website = buildLocalizedWebSiteJsonLd(locale);
+
+    expect(clinic).toMatchObject({ inLanguage: locale, name });
+    expect(website).toMatchObject({ inLanguage: locale, name });
+  });
+
+  it("uses Korean when the requested schema locale is absent or unsupported", () => {
+    expect(buildLocalizedClinicJsonLd(undefined)).toMatchObject({ inLanguage: "ko", name: "부산 서면 스타피부과" });
+    expect(buildLocalizedWebSiteJsonLd("unsupported")).toMatchObject({ inLanguage: "ko", name: "부산 서면 스타피부과" });
   });
 });
 

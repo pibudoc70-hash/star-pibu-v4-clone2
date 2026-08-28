@@ -20,7 +20,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "../../shared/liftingPositioning";
-import { buildClinicJsonLd } from "../../client/src/lib/seoHelpers";
+import { buildLocalizedClinicJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 
 // ── 타입 정의 ────────────────────────────────────────────────────────────────
 
@@ -171,12 +171,13 @@ function escapeHtml(s: string): string {
 /** LocalizedString 에서 언어값을 뽑는다 (pickLocalized 와 동일 규칙) */
 function pick(v: LocalizedString | null | undefined, lang: Lang): string {
   if (!v) return "";
-  return lang === "zh-TW" ? v.zh ?? v.ko ?? "" : v[lang] ?? v.ko ?? "";
+  const localizedValue = lang === "zh-TW" ? undefined : v[lang];
+  return localizedValue?.trim() || v.ko?.trim() || "";
 }
 
 function pickFaq(t: TreatmentSeoRecord, lang: Lang): FaqItem[] {
-  const baseLang: keyof LocalizedFaq = lang === "zh-TW" ? "zh" : lang as keyof LocalizedFaq;
-  return t.faq?.[baseLang] ?? t.faq?.ko ?? [];
+  const localizedFaqs = lang === "zh-TW" ? undefined : t.faq?.[lang as keyof LocalizedFaq];
+  return localizedFaqs?.length ? localizedFaqs : t.faq?.ko ?? [];
 }
 
 /** 경로에서 언어·slug 추출. 실패 시 null */
@@ -445,9 +446,10 @@ function injectJsonLd(
     provider: { "@id": `${BASE_URL}/#organization` },
     duration: pick(t.time, lang),
     relevantSpecialty: "https://schema.org/Dermatology",
+    inLanguage: lang,
   };
 
-  const schemas: object[] = [buildClinicJsonLd(), medicalProcedure, breadcrumbList];
+  const schemas: object[] = [buildLocalizedClinicJsonLd(lang), withSchemaLanguage(medicalProcedure, lang), withSchemaLanguage(breadcrumbList, lang)];
 
   // FAQPage 스키마
   if (t.faq) {
@@ -459,6 +461,7 @@ function injectJsonLd(
       const faqPage = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        inLanguage: lang,
         mainEntity: list.map((item) => ({
           "@type": "Question",
           name: item.question,

@@ -134,8 +134,8 @@ describe("SeoHead includeClinicSchema=false (PR-46)", () => {
   });
 
   it("SeoHead 구현에서 includeMedicalSchema=false 시 MedicalBusiness 스키마가 제외되어야 한다 (STRUCT-SEO-2)", () => {
-    // shouldIncludeMedical 조건으로 buildClinicJsonLd를 제어해야 함
-    expect(seoHeadSource).toMatch(/shouldIncludeMedical[\s\S]*buildClinicJsonLd/);
+    // shouldIncludeMedical 조건으로 기본 또는 locale-aware clinic builder를 제어해야 함
+    expect(seoHeadSource).toMatch(/shouldIncludeMedical[\s\S]*build(?:Localized)?ClinicJsonLd/);
     // includeMedicalSchema ?? true 패턴으로 기본값 true
     expect(seoHeadSource).toMatch(/shouldIncludeMedical/);
   });

@@ -125,6 +125,26 @@ describe("equipmentPrerender", () => {
     expect(html).not.toContain("简体疗程说明");
   });
 
+  it("다국어 상세 schema는 페이지 언어를 표시하고 누락 본문은 한국어 기본값으로 폴백한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, { ...item, nameEn: "", descEn: "", detailEn: "" }, "en", "/en/equipment3/rejuran");
+
+    expect(html).toContain('<h1>리쥬란힐러</h1>');
+    expect(html).toContain('"inLanguage":"en"');
+    expect(html).toContain('"description":"피부 재생을 돕는 주사 시술"');
+  });
+
+  it.each([
+    ["en", "/en/equipment3/rejuran", "Rejuran Healer"],
+    ["ja", "/ja/equipment3/rejuran", "リジュラン"],
+    ["zh", "/zh/equipment3/rejuran", "丽珠兰"],
+    ["zh-TW", "/zh-tw/equipment3/rejuran", "리쥬란힐러"],
+  ] as const)("%s 상세 schema는 locale을 표시하고 전용 번역이 없으면 한국어 이름을 쓴다", (locale, pathName, expectedName) => {
+    const html = buildEquipmentPrerenderedHtml(template, item, locale, pathName);
+
+    expect(html).toContain(`"inLanguage":"${locale}"`);
+    expect(html).toContain(`<h1>${expectedName}</h1>`);
+  });
+
   it("병원·시술·FAQ 엔터티 ID를 클라이언트 스키마와 같은 표준 URL로 연결한다", () => {
     const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
 

@@ -15,7 +15,7 @@ import { ja } from "../../client/src/lib/i18n.ja";
 import { zh } from "../../client/src/lib/i18n.zh";
 import { zhTW } from "../../client/src/lib/i18n.zh-TW";
 import { CLINIC_DOCTORS } from "../../client/src/lib/clinic-data";
-import { buildBreadcrumbJsonLd, buildClinicJsonLd, buildFAQPageJsonLd, buildPersonListJsonLd, buildWebSiteJsonLd } from "../../client/src/lib/seoHelpers";
+import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalizedClinicJsonLd, buildLocalizedWebSiteJsonLd, buildPersonListJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY } from "../../shared/liftingPositioning";
 
@@ -130,6 +130,7 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
   ];
   const canonical = locale === "ko" ? BASE_URL : `${BASE_URL}/${pathname.slice(1)}`;
   const lang = locale === "zh-TW" ? "zh-Hant" : locale;
+  const homeLabels: Record<Locale, string> = { ko: "홈", en: "Home", ja: "ホーム", zh: "首页", "zh-TW": "首頁" };
 
   const faqMarkup = faqItems.map((item) => [
     `<h3>${escapeHtml(item.equipment)}</h3>`,
@@ -151,11 +152,11 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
   ].join("\n");
 
   const jsonLd = JSON.stringify([
-    buildClinicJsonLd(),
-    buildWebSiteJsonLd(),
-    buildBreadcrumbJsonLd([{ name: "홈", url: BASE_URL }]),
-    buildFAQPageJsonLd(allFaqQuestions.map((question) => ({ question: question.q, answer: question.a }))),
-    buildPersonListJsonLd(CLINIC_DOCTORS),
+    buildLocalizedClinicJsonLd(locale),
+    buildLocalizedWebSiteJsonLd(locale),
+    withSchemaLanguage(buildBreadcrumbJsonLd([{ name: homeLabels[locale], url: BASE_URL }]), locale),
+    withSchemaLanguage(buildFAQPageJsonLd(allFaqQuestions.map((question) => ({ question: question.q, answer: question.a }))), locale),
+    withSchemaLanguage(buildPersonListJsonLd(CLINIC_DOCTORS), locale),
   ]).replace(/</g, "\\u003c");
 
   const rendered = template

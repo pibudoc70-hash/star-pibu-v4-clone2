@@ -8,7 +8,11 @@ import {
   BASE_URL,
   ALL_OG_LOCALES,
   buildClinicJsonLd,
+  buildLocalizedClinicJsonLd,
+  buildLocalizedWebSiteJsonLd,
   buildWebSiteJsonLd,
+  schemaLocaleFromOgLocale,
+  withSchemaLanguage,
   SEO_PRESETS,
   type SeoPageType,
 } from "@/lib/seoHelpers";
@@ -26,7 +30,12 @@ export {
   ALL_OG_LOCALES,
   buildHreflangs,
   buildClinicJsonLd,
+  buildLocalizedClinicJsonLd,
+  buildLocalizedWebSiteJsonLd,
   buildWebSiteJsonLd,
+  normalizeSchemaLocale,
+  schemaLocaleFromOgLocale,
+  withSchemaLanguage,
   buildBreadcrumbJsonLd,
   buildFAQPageJsonLd,
   buildLocalBusinessJsonLd,
@@ -152,11 +161,12 @@ export default function SeoHead({
   // pageType="admin"이면 noindex prop을 명시하지 않아도 noindex 적용
   // 이로 인해 실수로 noindex를 빠뜨려도 admin 페이지는 항상 noindex
   const effectiveNoindex = noindex || pageType === "admin";
+  const schemaLocale = schemaLocaleFromOgLocale(ogLocale);
   const baseSchemas: JsonLdSchema[] = [
-    ...(shouldIncludeMedical ? [buildClinicJsonLd()] : []),
-    ...(shouldIncludeWebSite ? [buildWebSiteJsonLd()] : []),
+    ...(shouldIncludeMedical ? [buildLocalizedClinicJsonLd(schemaLocale)] : []),
+    ...(shouldIncludeWebSite ? [buildLocalizedWebSiteJsonLd(schemaLocale)] : []),
   ];
-  const allSchemas = [...baseSchemas, ...(jsonLd ?? [])];
+  const allSchemas = [...baseSchemas, ...(jsonLd ?? [])].map((schema) => withSchemaLanguage(schema, schemaLocale));
   return (
     <Helmet>
       {/* 기본 메타 */}

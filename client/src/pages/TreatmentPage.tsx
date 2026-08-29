@@ -135,6 +135,8 @@ const LABELS = {
     faqTitle: "자주 묻는 질문",
     heroSummaryExpand: "더보기",
     heroSummaryCollapse: "접기",
+    faqAnswerExpand: "더보기",
+    faqAnswerCollapse: "접기",
   },
   en: {
     backHome: "Back to Home",
@@ -153,6 +155,8 @@ const LABELS = {
     faqTitle: "Frequently Asked Questions",
     heroSummaryExpand: "Show more",
     heroSummaryCollapse: "Show less",
+    faqAnswerExpand: "Show more",
+    faqAnswerCollapse: "Show less",
   },
   ja: {
     backHome: "ホームへ",
@@ -171,6 +175,8 @@ const LABELS = {
     faqTitle: "よくある質問",
     heroSummaryExpand: "もっと見る",
     heroSummaryCollapse: "閉じる",
+    faqAnswerExpand: "もっと見る",
+    faqAnswerCollapse: "閉じる",
   },
   zh: {
     backHome: "返回首页",
@@ -189,6 +195,8 @@ const LABELS = {
     faqTitle: "常见问题",
     heroSummaryExpand: "展开更多",
     heroSummaryCollapse: "收起",
+    faqAnswerExpand: "展开更多",
+    faqAnswerCollapse: "收起",
   },
   "zh-TW": {
     backHome: "返回首頁",
@@ -207,8 +215,76 @@ const LABELS = {
     faqTitle: "常見問題",
     heroSummaryExpand: "展開更多",
     heroSummaryCollapse: "收起",
+    faqAnswerExpand: "展開更多",
+    faqAnswerCollapse: "收起",
   },
 } as const;
+
+type FaqAnswerWithToggleProps = {
+  answer: string;
+  contentId: string;
+  expandLabel: string;
+  collapseLabel: string;
+};
+
+function FaqAnswerWithToggle({ answer, contentId, expandLabel, collapseLabel }: FaqAnswerWithToggleProps) {
+  const answerRef = useRef<HTMLParagraphElement>(null);
+  const [isExpandable, setIsExpandable] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 639px)");
+    const updateAnswerControl = () => {
+      const answerElement = answerRef.current;
+      if (!mobileQuery.matches || !answerElement) {
+        setIsExpandable(false);
+        setIsExpanded(false);
+        return;
+      }
+
+      const lineHeight = Number.parseFloat(window.getComputedStyle(answerElement).lineHeight);
+      const collapsedHeight = Number.isFinite(lineHeight) ? lineHeight * 4 : 0;
+      const isOverflowing = collapsedHeight > 0 && answerElement.scrollHeight > collapsedHeight + 1;
+      setIsExpandable(isOverflowing);
+      if (!isOverflowing) setIsExpanded(false);
+    };
+
+    const animationFrame = window.requestAnimationFrame(updateAnswerControl);
+    window.addEventListener("resize", updateAnswerControl);
+    mobileQuery.addEventListener("change", updateAnswerControl);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", updateAnswerControl);
+      mobileQuery.removeEventListener("change", updateAnswerControl);
+    };
+  }, [answer]);
+
+  return (
+    <>
+      <p
+        ref={answerRef}
+        id={contentId}
+        className="treatment-page__faq-answer text-sm leading-relaxed pl-6"
+        data-collapsed={isExpandable && !isExpanded}
+      >
+        {answer}
+      </p>
+      {isExpandable && (
+        <button
+          type="button"
+          className="treatment-page__faq-answer-toggle"
+          aria-controls={contentId}
+          aria-expanded={isExpanded}
+          onClick={() => setIsExpanded((expanded) => !expanded)}
+        >
+          <span>{isExpanded ? collapseLabel : expandLabel}</span>
+          <ChevronDown aria-hidden="true" size={16} />
+        </button>
+      )}
+    </>
+  );
+}
 
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
 export default function TreatmentPage() {
@@ -495,9 +571,12 @@ export default function TreatmentPage() {
                     <span className="text-[#4A6FA5] font-bold flex-shrink-0">Q.</span>
                     {item.question}
                   </p>
-                  <p className="treatment-page__faq-answer text-sm leading-relaxed pl-6">
-                    {item.answer}
-                  </p>
+                  <FaqAnswerWithToggle
+                    answer={item.answer}
+                    contentId={`treatment-faq-answer-${slug}-${i}`}
+                    expandLabel={lbl.faqAnswerExpand}
+                    collapseLabel={lbl.faqAnswerCollapse}
+                  />
                 </div>
               ))}
             </div>

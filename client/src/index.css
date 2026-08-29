@@ -5688,11 +5688,59 @@ body.font-lang-zh .hero-stat-label {
     transform: scale(0.97);
   }
 
+  .treatment-page__faq-answer[data-collapsed="true"] {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .treatment-page__faq-answer-toggle {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 0.25rem;
+    margin-inline-start: 1.5rem;
+    padding: 0.5rem 0.625rem;
+    border: 1px solid var(--treatment-page-border);
+    border-radius: 999px;
+    background: var(--treatment-page-soft-surface);
+    color: var(--treatment-page-accent);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .treatment-page__faq-answer-toggle svg {
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .treatment-page__faq-answer-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  .treatment-page__faq-answer-toggle:focus-visible {
+    outline: 3px solid var(--treatment-page-focus);
+    outline-offset: 3px;
+  }
+
+  .treatment-page__faq-answer-toggle:active {
+    transform: scale(0.97);
+  }
+
   @media (hover: hover) {
     .treatment-page__hero-summary-toggle:hover {
       border-color: #FFD54A;
       background: rgba(215, 181, 109, 0.16);
       color: #FFFFFF;
+    }
+
+    .treatment-page__faq-answer-toggle:hover {
+      border-color: var(--treatment-page-accent);
+      background: #E6E1D8;
+      color: var(--treatment-page-navy);
     }
   }
 
@@ -5714,12 +5762,16 @@ body.font-lang-zh .hero-stat-label {
 
 @media (prefers-reduced-motion: reduce) {
   .treatment-page__hero-summary-toggle,
-  .treatment-page__hero-summary-toggle svg {
+  .treatment-page__hero-summary-toggle svg,
+  .treatment-page__faq-answer-toggle,
+  .treatment-page__faq-answer-toggle svg {
     transition: none;
   }
 
   .treatment-page__hero-summary-toggle:active,
-  .treatment-page__hero-summary-toggle[aria-expanded="true"] svg {
+  .treatment-page__hero-summary-toggle[aria-expanded="true"] svg,
+  .treatment-page__faq-answer-toggle:active,
+  .treatment-page__faq-answer-toggle[aria-expanded="true"] svg {
     transform: none;
   }
 }

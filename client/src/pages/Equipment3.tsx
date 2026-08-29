@@ -17,7 +17,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
-import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X } from "lucide-react";
+import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X, Moon, Sun } from "lucide-react";
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -38,6 +38,17 @@ import HyperhidrosisGuide from "@/components/treatments/HyperhidrosisGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 9;
+const EQUIPMENT_LIST_COLOR_SCHEME_KEY = "equipment3_color_scheme";
+type EquipmentListColorScheme = "light" | "dark";
+
+function getEquipmentListColorScheme(): EquipmentListColorScheme {
+  if (typeof window === "undefined") return "light";
+  try {
+    return window.localStorage.getItem(EQUIPMENT_LIST_COLOR_SCHEME_KEY) === "dark" ? "dark" : "light";
+  } catch {
+    return "light";
+  }
+}
 
 // ── 카테고리 번역 폴백 맵 (DB에 번역이 없을 때 사용) ─────────────────────────
 const CATEGORY_TRANS: Record<string, { en: string; ja: string; zh: string }> = {
@@ -115,7 +126,7 @@ function Equipment3Card({
       aria-label={`${name} ${detail}`}
     >
       {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어: bgImageUrl+텍스트 오버레이 */}
-      <div className="relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
+      <div className="equipment-list__card-media relative overflow-hidden" style={{ height: "200px", background: imgBg }}>
         {lang !== "ko" && item.bgImageUrl ? (
           /* ── 비한국어: 배경+텍스트 오버레이 ── */
           <>
@@ -205,15 +216,15 @@ function Equipment3Card({
       </div>
 
       {/* 카드 본문 */}
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "#1F2937" }}>
+      <div className="equipment-list__card-body p-4 flex flex-col flex-1">
+        <h3 className="equipment-list__card-title font-bold text-base mb-1 line-clamp-2">
           {name}
         </h3>
-        <p className="text-xs line-clamp-2 mb-3 flex-1" style={{ color: "#6B7280" }}>
+        <p className="equipment-list__card-description text-xs line-clamp-2 mb-3 flex-1">
           {desc}
         </p>
         {/* 메타 정보 */}
-        <div className="flex gap-3 text-xs mb-3" style={{ color: "#9CA3AF" }}>
+        <div className="equipment-list__card-meta flex gap-3 text-xs mb-3">
           {time && (
             <span className="flex items-center gap-1">
               <Clock size={12} />{time}
@@ -238,8 +249,22 @@ function Equipment3Card({
 export default function Equipment3() {
   const { lang, t } = useLang();
   const { getText } = useLocalizedText();
+  const [colorScheme, setColorScheme] = useState<EquipmentListColorScheme>(getEquipmentListColorScheme);
 
   const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
+
+  const isDarkMode = colorScheme === "dark";
+  const toggleColorScheme = useCallback(() => {
+    setColorScheme((current) => {
+      const next: EquipmentListColorScheme = current === "light" ? "dark" : "light";
+      try {
+        window.localStorage.setItem(EQUIPMENT_LIST_COLOR_SCHEME_KEY, next);
+      } catch {
+        // 저장소를 사용할 수 없으면 현재 방문 중인 화면에서만 모드를 전환한다.
+      }
+      return next;
+    });
+  }, []);
 
   // ── 탭: category 필드 기반 동적 생성 + Best 시술 탭 ─────────────────────────
   const tabs = useMemo(() => {
@@ -403,9 +428,15 @@ export default function Equipment3() {
     "釜山西面スター皮膚科の施術・機器をご紹介します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。"
   );
+  const colorSchemeLabel = isDarkMode
+    ? getText("라이트 모드", "Light mode", "ライトモード", "浅色模式", "淺色模式")
+    : getText("다크 모드", "Dark mode", "ダークモード", "深色模式", "深色模式");
+  const colorSchemeAction = isDarkMode
+    ? getText("라이트 모드로 전환", "Switch to light mode", "ライトモードに切り替え", "切换到浅色模式", "切換至淺色模式")
+    : getText("다크 모드로 전환", "Switch to dark mode", "ダークモードに切り替え", "切换到深色模式", "切換至深色模式");
 
   return (
-    <div className="equipment-list-page min-h-screen">
+    <div className={`equipment-list-page min-h-screen${isDarkMode ? " equipment-list-page--dark" : ""}`}>
       <SeoHead
         title={seoTitle}
         description={seoDesc}
@@ -439,12 +470,24 @@ export default function Equipment3() {
               <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
                 {t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}
               </p>
-              <h2 className="mb-4 text-gray-800 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
+              <h2 className="equipment-list__heading mb-4 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
                 {pageTitle}
               </h2>
-              <p className="text-base max-w-2xl mx-auto leading-snug sm:leading-normal text-[var(--color-gold-primary)] pt-2">
+              <p className="equipment-list__subtitle text-base max-w-2xl mx-auto leading-snug sm:leading-normal pt-2">
                 <span className="text-lg">{pageSubtitle}</span>
               </p>
+              <div className="equipment-list__appearance-control">
+                <button
+                  type="button"
+                  className="equipment-list__appearance-toggle"
+                  onClick={toggleColorScheme}
+                  aria-pressed={isDarkMode}
+                  aria-label={colorSchemeAction}
+                >
+                  {isDarkMode ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+                  <span>{colorSchemeLabel}</span>
+                </button>
+              </div>
             </div>
 
             {/* 로딩 */}
@@ -456,7 +499,7 @@ export default function Equipment3() {
                 aria-busy="true"
               >
                 <Loader className="animate-spin text-[var(--color-gold-primary)]" size={32} aria-hidden="true" />
-                <p className="text-sm text-gray-500">
+                <p className="equipment-list__loading-copy text-sm">
                   {getText(
                     "시술·장비 정보를 불러오는 중입니다.",
                     "Loading treatments and equipment.",

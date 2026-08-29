@@ -22,6 +22,7 @@ import {
   buildLocalBusinessJsonLd,
   buildOpeningHoursSpec,
   buildVideoObjectListJsonLd,
+  buildEventJsonLd,
   SEO_PRESETS,
   COMMON_HREFLANGS,
 } from "./seoHelpers";
@@ -528,7 +529,7 @@ describe("buildVideoObjectListJsonLd — 검증된 영상 식별자", () => {
 
   it("유효한 11자리 YouTube 식별자만 ItemList에 포함해야 한다", () => {
     const schema = buildVideoObjectListJsonLd([
-      { title: "유효 영상", videoId: "dQw4w9WgXcQ" },
+      { title: "유효 영상", videoId: "dQw4w9WgXcQ", uploadDate: "2024-01-01" },
       { title: "임시 영상", videoId: "PLACEHOLDER_VIDEO" },
     ]);
     expect(schema).not.toBeNull();
@@ -536,6 +537,38 @@ describe("buildVideoObjectListJsonLd — 검증된 영상 식별자", () => {
     expect(items).toHaveLength(1);
     const video = items[0]["item"] as Record<string, unknown>;
     expect(video["contentUrl"]).toBe("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    expect(video["uploadDate"]).toBe("2024-01-01");
+  });
+
+  it("실제 공개일이 없는 영상은 VideoObject에 넣지 않는다", () => {
+    expect(buildVideoObjectListJsonLd([
+      { title: "공개일 미확인", videoId: "dQw4w9WgXcQ" },
+    ])).toBeNull();
+  });
+});
+
+describe("buildEventJsonLd — 실제 날짜가 있는 행사만 생성", () => {
+  const baseEvent = {
+    name: "실제 행사",
+    description: "날짜가 확인된 행사입니다.",
+    url: "https://star-pibu.com/events/1",
+  };
+
+  it("시작일이 없으면 현재 날짜를 만들지 않고 Event를 생략한다", () => {
+    expect(buildEventJsonLd(baseEvent)).toBeNull();
+  });
+
+  it("유효한 시작일만으로 Event를 생성하고 Offer validFrom에 같은 사실값을 사용한다", () => {
+    const schema = buildEventJsonLd({ ...baseEvent, startDate: "2026-09-01" });
+    expect(schema).toMatchObject({ startDate: "2026-09-01" });
+    expect((schema?.offers as Record<string, unknown>).validFrom).toBe("2026-09-01");
+    expect(schema).not.toHaveProperty("endDate");
+  });
+
+  it("종료일이 시작일보다 이르면 종료일을 추론하거나 출력하지 않는다", () => {
+    const schema = buildEventJsonLd({ ...baseEvent, startDate: "2026-09-01", endDate: "2026-08-31" });
+    expect(schema).toMatchObject({ startDate: "2026-09-01" });
+    expect(schema).not.toHaveProperty("endDate");
   });
 });
 

@@ -10,9 +10,9 @@ describe("Equipment3 detail section order", () => {
     );
 
     expect(source.indexOf("{managedFaqs.length > 0 && (")).toBeGreaterThan(-1);
-    expect(source.indexOf("<aside className=\"mb-12 rounded-2xl border border-slate-200")).toBeGreaterThan(-1);
+    expect(source.indexOf("<aside className=\"equipment-detail__info-card mb-12 rounded-2xl border p-6\"")).toBeGreaterThan(-1);
     expect(source.indexOf("{managedFaqs.length > 0 && (")).toBeLessThan(
-      source.indexOf("<aside className=\"mb-12 rounded-2xl border border-slate-200"),
+      source.indexOf("<aside className=\"equipment-detail__info-card mb-12 rounded-2xl border p-6\""),
     );
   });
 });

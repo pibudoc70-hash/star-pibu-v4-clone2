@@ -15,9 +15,10 @@ import { ja } from "../../client/src/lib/i18n.ja";
 import { zh } from "../../client/src/lib/i18n.zh";
 import { zhTW } from "../../client/src/lib/i18n.zh-TW";
 import { CLINIC_DOCTORS } from "../../client/src/lib/clinic-data";
-import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalizedClinicJsonLd, buildLocalizedWebSiteJsonLd, buildPersonListJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
+import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalizedClinicJsonLd, buildLocalizedWebSiteJsonLd, buildPersonListJsonLd, buildVideoObjectListJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 import { injectPageSeoMeta } from "./seoMeta";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY } from "../../shared/liftingPositioning";
+import { VERIFIED_YOUTUBE_VIDEO_SEO } from "../../shared/verifiedYoutubeVideoSeo";
 
 const BASE_URL = "https://star-pibu.com";
 // 브라우저는 항상 최신 HTML을 확인하되, CDN은 짧게 재사용해 반복 프리렌더 비용을 줄인다.
@@ -151,12 +152,16 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
     "</main>",
   ].join("\n");
 
+  const verifiedVideoSchema = locale === "ko"
+    ? buildVideoObjectListJsonLd([...VERIFIED_YOUTUBE_VIDEO_SEO])
+    : null;
   const jsonLd = JSON.stringify([
     buildLocalizedClinicJsonLd(locale),
     buildLocalizedWebSiteJsonLd(locale),
     withSchemaLanguage(buildBreadcrumbJsonLd([{ name: homeLabels[locale], url: BASE_URL }]), locale),
     withSchemaLanguage(buildFAQPageJsonLd(allFaqQuestions.map((question) => ({ question: question.q, answer: question.a }))), locale),
     withSchemaLanguage(buildPersonListJsonLd(CLINIC_DOCTORS), locale),
+    ...(verifiedVideoSchema ? [verifiedVideoSchema] : []),
   ]).replace(/</g, "\\u003c");
 
   const rendered = template

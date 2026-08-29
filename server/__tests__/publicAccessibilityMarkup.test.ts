@@ -50,7 +50,7 @@ describe("공개 화면 접근성 마크업 회귀 방지", () => {
     expect(source).toContain("function EquipmentDetailLoading");
     expect(source).toContain('<main id="main-content" aria-busy="true" aria-label={label}>');
     expect(source).toContain('<p className="sr-only" role="status">{label}</p>');
-    expect(source).toContain("return <EquipmentDetailLoading label={LABELS.loading} />;");
+    expect(source).toContain("return <EquipmentDetailLoading label={LABELS.loading} isDarkMode={isDarkMode} />;");
     expect(source).not.toContain('className="flex items-center justify-center min-h-screen"');
   });
 });

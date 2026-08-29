@@ -16,6 +16,8 @@ describe("homePrerender", () => {
     expect(html).toContain('data-prerender="home-schema"');
     expect(html).toContain('https://star-pibu.com/#organization');
     expect(html).toContain('https://star-pibu.com/#website');
+    expect(html).toContain('"@type":"VideoObject"');
+    expect(html).toContain('"uploadDate":"2024-09-06"');
   });
 
   it.each([
@@ -30,6 +32,10 @@ describe("homePrerender", () => {
     expect(html).toContain(`lang="${htmlLang}"`);
     expect(html).toContain(`"inLanguage":"${schemaLang}"`);
     expect(html).toContain(`"name":"${clinicName}"`);
+  });
+
+  it("비한국어 홈 prerender에는 한국어 원본 YouTube VideoObject를 추가하지 않는다", () => {
+    expect(buildHomePrerenderedHtml(template, "/en")).not.toContain('"@type":"VideoObject"');
   });
 
   it("홈 언어 루트가 아닌 경로는 처리하지 않는다", () => {

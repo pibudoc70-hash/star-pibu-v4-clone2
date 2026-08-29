@@ -628,10 +628,10 @@ export function buildPersonListJsonLd(
  * YouTube 영상을 구조화하여 Google Video 검색 노출 강화
  */
 export function buildVideoObjectListJsonLd(
-  videos: { title: string; videoId: string; description?: string }[],
+  videos: { title: string; videoId: string; description?: string; uploadDate?: string }[],
 ): JsonLdSchema | null {
-  const validVideos = videos.filter(({ videoId }) =>
-    /^[A-Za-z0-9_-]{11}$/.test(videoId),
+  const validVideos = videos.filter(({ videoId, uploadDate }) =>
+    /^[A-Za-z0-9_-]{11}$/.test(videoId) && isValidIsoDate(uploadDate),
   );
   if (validVideos.length === 0) return null;
 
@@ -648,7 +648,7 @@ export function buildVideoObjectListJsonLd(
         name: v.title,
         description: v.description ?? `스타피부과 ${v.title} 영상`,
         thumbnailUrl: `https://img.youtube.com/vi/${v.videoId}/maxresdefault.jpg`,
-        uploadDate: "2024-01-01",
+        uploadDate: v.uploadDate,
         contentUrl: `https://www.youtube.com/watch?v=${v.videoId}`,
         embedUrl: `https://www.youtube.com/embed/${v.videoId}`,
         publisher: {
@@ -669,6 +669,10 @@ export function buildVideoObjectListJsonLd(
  * Event JSON-LD 스키마 생성 헬퍼
  * 이벤트/프로모션 페이지에서 Google 이벤트 검색 결과 노출 강화
  */
+function isValidIsoDate(value: string | undefined): value is string {
+  return Boolean(value && /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?)?$/.test(value) && !Number.isNaN(Date.parse(value)));
+}
+
 export function buildEventJsonLd(event: {
   name: string;
   description: string;
@@ -676,14 +680,19 @@ export function buildEventJsonLd(event: {
   endDate?: string;
   url: string;
   image?: string;
-}): JsonLdSchema {
+}): JsonLdSchema | null {
+  if (!isValidIsoDate(event.startDate)) return null;
+  const endDate = isValidIsoDate(event.endDate) && Date.parse(event.endDate) >= Date.parse(event.startDate)
+    ? event.endDate
+    : undefined;
+
   return {
     "@context": "https://schema.org",
     "@type": "Event",
     name: event.name,
     description: event.description,
-    startDate: event.startDate ?? new Date().toISOString().split("T")[0],
-    ...(event.endDate && { endDate: event.endDate }),
+    startDate: event.startDate,
+    ...(endDate && { endDate }),
     url: event.url,
     ...(event.image && { image: event.image }),
     eventStatus: "https://schema.org/EventScheduled",
@@ -711,7 +720,7 @@ export function buildEventJsonLd(event: {
       "@type": "Offer",
       url: event.url,
       availability: "https://schema.org/InStock",
-      validFrom: event.startDate ?? new Date().toISOString().split("T")[0],
+      validFrom: event.startDate,
     },
   };
 }

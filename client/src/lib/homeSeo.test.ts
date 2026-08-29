@@ -18,11 +18,23 @@ describe("homeSeo", () => {
     expect(HOME_SEO_META.keywords.split(",")).toHaveLength(5);
   });
 
-  it("SeoHead의 clinic 정본과 결합될 Breadcrumb·FAQPage·Physician JSON-LD만 생성한다", () => {
+  it("한국어 홈은 검증된 YouTube 공개일을 포함한 Breadcrumb·FAQPage·Physician·VideoObject JSON-LD를 생성한다", () => {
     const jsonLd = buildHomeJsonLd([{ question: "질문", answer: "답변" }]);
-    expect(jsonLd).toHaveLength(3);
+    expect(jsonLd).toHaveLength(4);
     expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });
     expect(jsonLd[1]).toMatchObject({ "@type": "FAQPage" });
     expect(jsonLd[2]).toMatchObject({ "@type": "ItemList" });
+    const videoList = jsonLd[3] as Record<string, unknown>;
+    const items = videoList.itemListElement as Array<{ item: Record<string, unknown> }>;
+    expect(items).toHaveLength(4);
+    expect(items[0]?.item).toMatchObject({
+      "@type": "VideoObject",
+      uploadDate: "2024-09-06",
+      contentUrl: "https://www.youtube.com/watch?v=XiOTXhPx7qw",
+    });
+  });
+
+  it("비한국어 홈에는 한국어 원본 YouTube VideoObject를 넣지 않는다", () => {
+    expect(buildHomeJsonLd([{ question: "Question", answer: "Answer" }], "en")).toHaveLength(3);
   });
 });

@@ -11,6 +11,7 @@
  */
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useHomeInitialScrollRestore } from "@/hooks/useHomeInitialScrollRestore";
+import { useLang } from "@/contexts/LangContext";
 import { CLINIC_STATS } from "../lib/constants";
 import SeoHead from "@/components/SeoHead";
 import { buildHomeJsonLd, HOME_SEO_META } from "@/lib/homeSeo";
@@ -300,6 +301,7 @@ function useIdleMount(delayMs = 2000): boolean {
 }
 
 export default function Home() {
+  const { lang } = useLang();
   const popupReady = useIdleMount(2000);
   const [, navigate] = useLocation();
 
@@ -436,7 +438,7 @@ export default function Home() {
               question: "스타피부과의 환자 편의 시설은 어떤가요?",
               answer: "부산 서면 스타피부과는 시술 대기실, 프라이버시가 확보된 개별 시술실, 시술 후 회복 공간, 진정 시술을 위한 모니터링 설비를 갖추고 있습니다."
             },
-                    ])}
+                    ], lang)}
       />
       {/* Fixed Header */}
       <Header />

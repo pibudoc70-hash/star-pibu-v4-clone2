@@ -92,6 +92,14 @@ export default function EventDetail() {
   const siteName = SITE_NAME_LOCALIZED[lang] ?? SITE_NAME_LOCALIZED.ko;
   const ogImg = event.imageUrl ?? OG_IMAGE_LOCALIZED[lang] ?? OG_IMAGE_LOCALIZED.ko;
   const koPath = `/events/${eventId}`;
+  const eventJsonLd = buildEventJsonLd({
+    name: eventTitle,
+    description: String(eventDesc).slice(0, 300),
+    url: `${BASE_URL}${lang === "ko" ? koPath : `/${lang}${koPath}`}`,
+    ...(ogImg && { image: ogImg }),
+    startDate: (event as Record<string, unknown>).startDate as string | undefined,
+    endDate: (event as Record<string, unknown>).endDate as string | undefined,
+  });
 
   return (
     <div className="min-h-screen bg-[#F4F7FA] flex flex-col">
@@ -107,14 +115,7 @@ export default function EventDetail() {
         hreflangs={buildHreflangs(koPath, `/en${koPath}`, `/ja${koPath}`, `/zh${koPath}`)}
         pageType="treatment"
         jsonLd={[
-          buildEventJsonLd({
-            name: eventTitle,
-            description: String(eventDesc).slice(0, 300),
-            url: `${BASE_URL}${lang === "ko" ? koPath : `/${lang}${koPath}`}`,
-            ...(ogImg && { image: ogImg }),
-            startDate: (event as Record<string, unknown>).startDate as string | undefined,
-            endDate: (event as Record<string, unknown>).endDate as string | undefined,
-          }),
+          ...(eventJsonLd ? [eventJsonLd] : []),
           buildBreadcrumbJsonLd([
             { name: lang === "en" ? "Home" : lang === "ja" ? "ホーム" : lang === "zh" ? "首页" : "홈", url: BASE_URL + "/" },
             { name: lang === "en" ? "Events" : lang === "ja" ? "イベント" : lang === "zh" ? "活动" : "이벤트", url: `${BASE_URL}/events` },

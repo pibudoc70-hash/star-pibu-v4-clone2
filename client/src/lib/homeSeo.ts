@@ -3,9 +3,11 @@ import {
   buildBreadcrumbJsonLd,
   buildFAQPageJsonLd,
   buildPersonListJsonLd,
+  buildVideoObjectListJsonLd,
   OG_IMAGE_LOCALIZED,
   SITE_NAME_LOCALIZED,
 } from "@/lib/seoHelpers";
+import { VERIFIED_YOUTUBE_VIDEO_SEO } from "@shared/verifiedYoutubeVideoSeo";
 import { CLINIC_DOCTORS } from "@/lib/clinic-data";
 
 export const HOME_SEO_META = {
@@ -26,10 +28,15 @@ export const HOME_SEO_META = {
 
 type HomeFaqItem = { question: string; answer: string };
 
-export function buildHomeJsonLd(faqItems: HomeFaqItem[]) {
+export function buildHomeJsonLd(faqItems: HomeFaqItem[], locale = "ko") {
+  const verifiedVideoSchema = locale === "ko"
+    ? buildVideoObjectListJsonLd([...VERIFIED_YOUTUBE_VIDEO_SEO])
+    : null;
+
   return [
     buildBreadcrumbJsonLd([{ name: "홈", url: "https://star-pibu.com" }]),
     buildFAQPageJsonLd(faqItems),
     buildPersonListJsonLd(CLINIC_DOCTORS),
+    ...(verifiedVideoSchema ? [verifiedVideoSchema] : []),
   ];
 }

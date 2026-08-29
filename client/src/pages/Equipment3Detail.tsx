@@ -11,8 +11,8 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useParams, useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { MessageCircle, Calendar } from "lucide-react";
-import { lazy, Suspense, useEffect } from "react";
+import { MessageCircle, Calendar, Moon, Sun } from "lucide-react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { LiftingFaqSection } from "@/components/LiftingPositioning";
 import { withVersion } from "@/lib/imageUrl";
@@ -55,28 +55,40 @@ function safeParseJson<T>(raw: string | null | undefined, fallback: T): T {
   try { return JSON.parse(raw) as T; } catch { return fallback; }
 }
 
-function EquipmentDetailLoading({ label }: { label: string }) {
+const EQUIPMENT_COLOR_SCHEME_KEY = "equipment3_color_scheme";
+type EquipmentColorScheme = "light" | "dark";
+
+function getEquipmentColorScheme(): EquipmentColorScheme {
+  if (typeof window === "undefined") return "light";
+  try {
+    return window.localStorage.getItem(EQUIPMENT_COLOR_SCHEME_KEY) === "dark" ? "dark" : "light";
+  } catch {
+    return "light";
+  }
+}
+
+function EquipmentDetailLoading({ label, isDarkMode }: { label: string; isDarkMode: boolean }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`equipment-detail-page min-h-screen${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
       <Header />
       <main id="main-content" aria-busy="true" aria-label={label}>
-        <section className="bg-gradient-to-r from-slate-800 to-slate-900 pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
+        <section className="equipment-detail__loading-hero bg-gradient-to-r from-slate-800 to-slate-900 pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
           <div className="container mx-auto px-4 animate-pulse" aria-hidden="true">
             <div className="h-4 w-28 rounded bg-slate-600" />
             <div className="mt-4 h-10 max-w-md rounded bg-slate-600" />
             <div className="mt-3 h-5 w-48 rounded bg-slate-700" />
           </div>
         </section>
-        <section className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 md:grid-cols-2" aria-hidden="true">
-          <div className="aspect-[4/3] rounded-2xl bg-slate-100 animate-pulse" />
+        <section className="equipment-detail__loading-content container mx-auto grid grid-cols-1 gap-10 px-4 py-12 md:grid-cols-2" aria-hidden="true">
+          <div className="equipment-detail__loading-surface aspect-[4/3] rounded-2xl bg-slate-100 animate-pulse" />
           <div className="space-y-5 pt-2">
-            <div className="h-6 w-28 rounded bg-slate-100 animate-pulse" />
-            <div className="h-4 w-full rounded bg-slate-100 animate-pulse" />
-            <div className="h-4 w-5/6 rounded bg-slate-100 animate-pulse" />
-            <div className="h-4 w-2/3 rounded bg-slate-100 animate-pulse" />
+            <div className="equipment-detail__loading-surface h-6 w-28 rounded bg-slate-100 animate-pulse" />
+            <div className="equipment-detail__loading-surface h-4 w-full rounded bg-slate-100 animate-pulse" />
+            <div className="equipment-detail__loading-surface h-4 w-5/6 rounded bg-slate-100 animate-pulse" />
+            <div className="equipment-detail__loading-surface h-4 w-2/3 rounded bg-slate-100 animate-pulse" />
             <div className="grid grid-cols-2 gap-3 pt-4">
-              <div className="h-12 rounded-xl bg-slate-100 animate-pulse" />
-              <div className="h-12 rounded-xl bg-slate-100 animate-pulse" />
+              <div className="equipment-detail__loading-surface h-12 rounded-xl bg-slate-100 animate-pulse" />
+              <div className="equipment-detail__loading-surface h-12 rounded-xl bg-slate-100 animate-pulse" />
             </div>
           </div>
         </section>
@@ -95,6 +107,19 @@ export default function Equipment3Detail() {
   const { chatUrl, reserveUrl, chatBg, chatColor } = useChatConfig();
   const slug = params.slug as string;
   const search = useSearch();
+  const [colorScheme, setColorScheme] = useState<EquipmentColorScheme>(getEquipmentColorScheme);
+  const isDarkMode = colorScheme === "dark";
+  const toggleColorScheme = useCallback(() => {
+    setColorScheme((current) => {
+      const next: EquipmentColorScheme = current === "light" ? "dark" : "light";
+      try {
+        window.localStorage.setItem(EQUIPMENT_COLOR_SCHEME_KEY, next);
+      } catch {
+        // 저장소를 사용할 수 없으면 현재 상세 화면에서만 모드를 전환한다.
+      }
+      return next;
+    });
+  }, []);
   // URL에 ?tab= 파라미터가 있으면 그 탭으로, 없으면 item.category로 복원
   const tabFromUrl = new URLSearchParams(search).get("tab") ?? "";
 
@@ -130,6 +155,10 @@ export default function Equipment3Detail() {
     bodyLoc:   getText("피부",             "Skin",                          "皮膚",               "皮肤"),
     caseAlt:   getText("사례",             "case",                          "事例",               "案例"),
     home:      getText("홈",               "Home",                          "ホーム",             "首页",               "首頁"),
+    lightMode: getText("라이트 모드",      "Light mode",                    "ライトモード",       "浅色模式",           "淺色模式"),
+    darkMode:  getText("다크 모드",        "Dark mode",                     "ダークモード",       "深色模式",           "深色模式"),
+    toLightMode: getText("라이트 모드로 전환", "Switch to light mode",        "ライトモードに切り替え", "切换到浅色模式", "切換至淺色模式"),
+    toDarkMode: getText("다크 모드로 전환",   "Switch to dark mode",          "ダークモードに切り替え", "切换到深色模式", "切換至深色模式"),
   } as const;
 
   // ── 목록 복귀 경로 헬퍼 ─────────────────────────────────────────────────────
@@ -143,17 +172,17 @@ export default function Equipment3Detail() {
 
   // ── 로딩 ────────────────────────────────────────────────────────────────────
   if (isLoading) {
-    return <EquipmentDetailLoading label={LABELS.loading} />;
+    return <EquipmentDetailLoading label={LABELS.loading} isDarkMode={isDarkMode} />;
   }
 
   // ── 에러 ────────────────────────────────────────────────────────────────────
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-red-600">{LABELS.error}</p>
+      <div className={`equipment-detail-page equipment-detail__state-page flex flex-col items-center justify-center min-h-screen gap-4${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
+        <p className="equipment-detail__state-error text-red-600">{LABELS.error}</p>
         <a
           href={getBackPath()}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="equipment-detail__back-button px-4 py-2 rounded-lg"
         >
           {LABELS.backList}
         </a>
@@ -164,11 +193,11 @@ export default function Equipment3Detail() {
   // ── notFound ─────────────────────────────────────────────────────────────────
   if (!item) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-gray-600">{LABELS.notFound}</p>
+      <div className={`equipment-detail-page equipment-detail__state-page flex flex-col items-center justify-center min-h-screen gap-4${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
+        <p className="equipment-detail__state-copy text-gray-600">{LABELS.notFound}</p>
         <a
           href={getBackPath()}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="equipment-detail__back-button px-4 py-2 rounded-lg"
         >
           {LABELS.backList}
         </a>
@@ -273,7 +302,7 @@ export default function Equipment3Detail() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`equipment-detail-page min-h-screen${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
       <SeoHead
         title={seoTitle}
         description={seoDesc}
@@ -295,7 +324,7 @@ export default function Equipment3Detail() {
       <Header />
 
       {/* 히어로 헤더 */}
-      <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
+      <div className="equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
         <div className="container mx-auto px-4">
           {localizedCategory && (
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">
@@ -306,12 +335,24 @@ export default function Equipment3Detail() {
           {item.nameEn && lang === "ko" && (
             <p className="text-slate-300 text-lg">{item.nameEn}</p>
           )}
+          <div className="equipment-detail__appearance-control">
+            <button
+              type="button"
+              className="equipment-detail__appearance-toggle"
+              onClick={toggleColorScheme}
+              aria-pressed={isDarkMode}
+              aria-label={isDarkMode ? LABELS.toLightMode : LABELS.toDarkMode}
+            >
+              {isDarkMode ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+              <span>{isDarkMode ? LABELS.lightMode : LABELS.darkMode}</span>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <main id="main-content" className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
+      <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
+        <div className="equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>
             {lang !== "ko" && item.bgImageUrl ? (
@@ -366,7 +407,7 @@ export default function Equipment3Detail() {
                 className="w-full h-auto rounded-2xl shadow-lg"
               />
             ) : (
-              <div className="w-full h-72 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+              <div className="equipment-detail__image-placeholder w-full h-72 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
                 <span className="text-slate-400 text-5xl">✦</span>
               </div>
             )}
@@ -384,26 +425,26 @@ export default function Equipment3Detail() {
             )}
 
             {localizedDesc && (
-              <p className="text-gray-700 leading-relaxed">{localizedDesc}</p>
+              <p className="equipment-detail__description text-gray-700 leading-relaxed">{localizedDesc}</p>
             )}
 
             <div className="space-y-3">
               {localizedTime && (
-                <div className="flex items-center gap-3 text-sm">
-                  <span className="font-semibold text-gray-500 w-24">{LABELS.time}</span>
-                  <span className="text-gray-900">{localizedTime}</span>
+                <div className="equipment-detail__meta-row flex items-center gap-3 text-sm">
+                  <span className="equipment-detail__meta-label font-semibold text-gray-500 w-24">{LABELS.time}</span>
+                  <span className="equipment-detail__meta-value text-gray-900">{localizedTime}</span>
                 </div>
               )}
               {localizedRecovery && (
-                <div className="flex items-center gap-3 text-sm">
-                  <span className="font-semibold text-gray-500 w-24">{LABELS.recovery}</span>
-                  <span className="text-gray-900">{localizedRecovery}</span>
+                <div className="equipment-detail__meta-row flex items-center gap-3 text-sm">
+                  <span className="equipment-detail__meta-label font-semibold text-gray-500 w-24">{LABELS.recovery}</span>
+                  <span className="equipment-detail__meta-value text-gray-900">{localizedRecovery}</span>
                 </div>
               )}
               {localizedSessions && (
-                <div className="flex items-center gap-3 text-sm">
-                  <span className="font-semibold text-gray-500 w-24">{LABELS.sessions}</span>
-                  <span className="text-gray-900">{localizedSessions}</span>
+                <div className="equipment-detail__meta-row flex items-center gap-3 text-sm">
+                  <span className="equipment-detail__meta-label font-semibold text-gray-500 w-24">{LABELS.sessions}</span>
+                  <span className="equipment-detail__meta-value text-gray-900">{localizedSessions}</span>
                 </div>
               )}
             </div>
@@ -448,8 +489,8 @@ export default function Equipment3Detail() {
         {/* 상세 설명 */}
         {localizedDetail && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
-            <div className="prose max-w-none">
+            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
+            <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
                 <Streamdown>{localizedDetail}</Streamdown>
               </Suspense>
@@ -459,8 +500,8 @@ export default function Equipment3Detail() {
 
         {explanatoryInfographic && (
           <section className="mb-12" aria-labelledby="equipment-infographic-heading">
-            <h2 id="equipment-infographic-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
-            <figure className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">
+            <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
+            <figure className="equipment-detail__infographic mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">
               <OptimizedImage
                 src={explanatoryInfographic.src}
                 alt={explanatoryInfographic.alt}
@@ -468,7 +509,7 @@ export default function Equipment3Detail() {
                 height={1800}
                 className="block h-auto w-full"
               />
-              <figcaption className="border-t border-slate-100 bg-white px-5 py-4 text-center text-sm leading-relaxed text-slate-600">
+              <figcaption className="equipment-detail__infographic-caption border-t border-slate-100 bg-white px-5 py-4 text-center text-sm leading-relaxed text-slate-600">
                 본 이미지는 시술 원리에 대한 이해를 돕기 위한 자료이며, 적용 방법과 결과는 개인 상태에 따라 달라질 수 있습니다.
               </figcaption>
             </figure>
@@ -478,8 +519,8 @@ export default function Equipment3Detail() {
         {/* 기대 효과 */}
         {localizedEffect && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
-            <div className="prose max-w-none">
+            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
+            <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
                 <Streamdown>{localizedEffect}</Streamdown>
               </Suspense>
@@ -489,9 +530,9 @@ export default function Equipment3Detail() {
 
         {/* 주의사항 */}
         {localizedCaution && (
-          <section className="mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
-            <div className="prose max-w-none text-amber-900">
+          <section className="equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+            <h2 className="equipment-detail__caution-heading text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
+            <div className="equipment-detail__caution-copy prose max-w-none text-amber-900">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
                 <Streamdown>{localizedCaution}</Streamdown>
               </Suspense>
@@ -501,7 +542,7 @@ export default function Equipment3Detail() {
 
         {managedFaqs.length > 0 && (
           <section className="mb-12" aria-labelledby="equipment-faq-heading">
-            <h2 id="equipment-faq-heading" className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
+            <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
             <div className="space-y-3">
               {managedFaqs.map(({ question, answer }, index) => (
                 <details key={`${question}-${index}`} className="equipment-detail__faq-item group rounded-xl border px-5 py-4">
@@ -530,7 +571,7 @@ export default function Equipment3Detail() {
         {/* 추가 이미지 갤러리 */}
         {images.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.gallery}</h2>
+            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.gallery}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {images.map((imgSrc, idx) => (
                 <OptimizedImage
@@ -553,8 +594,8 @@ export default function Equipment3Detail() {
           const getWatchUrl = () => videoId ? `https://www.youtube.com/watch?v=${videoId}` : sourceUrl;
           const embedUrl = getEmbedUrl();
           return (
-            <section className="mt-4 mb-16 py-8 border-t border-b border-gray-100">
-              <h2 className="text-2xl font-bold mb-8 text-center">{LABELS.video}</h2>
+            <section className="equipment-detail__video mt-4 mb-16 py-8 border-t border-b border-gray-100">
+              <h2 className="equipment-detail__section-heading text-2xl font-bold mb-8 text-center">{LABELS.video}</h2>
               <div className="md:w-4/5 md:mx-auto">
                 <div className="aspect-video rounded-xl overflow-hidden shadow-xl">
                   <iframe
@@ -567,7 +608,7 @@ export default function Equipment3Detail() {
                     allowFullScreen
                   />
                 </div>
-                <p className="mt-3 text-sm text-slate-600">
+                <p className="equipment-detail__video-caption mt-3 text-sm text-slate-600">
                   <a
                     href={getWatchUrl()}
                     target="_blank"

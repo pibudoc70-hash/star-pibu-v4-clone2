@@ -24,7 +24,7 @@ export function LiftingFaqSection({ lang }: { lang?: string }) {
   const localizedLang = toPositioningLang(lang ?? context.lang);
   const title = localizedLang === "ko" ? "리프팅 시술과 통증 관리 FAQ" : "Lifting & pain-management FAQ";
   return (
-    <section className="mb-12 rounded-2xl border border-[#e8dcc8] bg-[#fffcf7] p-6 md:p-8" aria-labelledby="lifting-faq-title">
+    <section className="equipment-detail__positioning-faq mb-12 rounded-2xl border border-[#e8dcc8] bg-[#fffcf7] p-6 md:p-8" aria-labelledby="lifting-faq-title">
       <h2 id="lifting-faq-title" className="text-xl font-bold text-[#3a2d1e] mb-5">{title}</h2>
       <dl className="space-y-5">
         {LIFTING_FAQS[localizedLang].map((item) => (

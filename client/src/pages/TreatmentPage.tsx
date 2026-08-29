@@ -4,11 +4,12 @@
  * SEO: SeoHead로 각 페이지마다 고유 title, description, JSON-LD MedicalProcedure 스키마 적용
  * 다국어: i18nText.ts의 pickLocalized / pickLocalizedFaq 헬퍼로 ko/en/ja/zh 분기
  */
+import { useEffect, useRef, useState } from "react";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, BASE_URL } from "@/components/SeoHead";
 import { CLINIC_INFO } from "@/lib/constants";
 import { useLang } from "@/contexts/LangContext";
 import { useParams, useLocation } from "wouter";
-import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronRight } from "lucide-react";
+import { ArrowLeft, Clock, RefreshCw, CalendarDays, MessageCircle, CheckCircle2, AlertCircle, ChevronDown, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { pickLocalized, pickLocalizedFaq } from "@/lib/i18nText";
 import type { SupportedLang } from "@/lib/i18nText";
@@ -132,6 +133,8 @@ const LABELS = {
     notFound: "시술 정보를 찾을 수 없습니다.",
     notFoundBack: "홈으로 돌아가기",
     faqTitle: "자주 묻는 질문",
+    heroSummaryExpand: "더보기",
+    heroSummaryCollapse: "접기",
   },
   en: {
     backHome: "Back to Home",
@@ -148,6 +151,8 @@ const LABELS = {
     notFound: "Treatment information not found.",
     notFoundBack: "Back to Home",
     faqTitle: "Frequently Asked Questions",
+    heroSummaryExpand: "Show more",
+    heroSummaryCollapse: "Show less",
   },
   ja: {
     backHome: "ホームへ",
@@ -164,6 +169,8 @@ const LABELS = {
     notFound: "施術情報が見つかりません。",
     notFoundBack: "ホームへ戻る",
     faqTitle: "よくある質問",
+    heroSummaryExpand: "もっと見る",
+    heroSummaryCollapse: "閉じる",
   },
   zh: {
     backHome: "返回首页",
@@ -180,6 +187,8 @@ const LABELS = {
     notFound: "未找到治疗信息。",
     notFoundBack: "返回首页",
     faqTitle: "常见问题",
+    heroSummaryExpand: "展开更多",
+    heroSummaryCollapse: "收起",
   },
   "zh-TW": {
     backHome: "返回首頁",
@@ -196,6 +205,8 @@ const LABELS = {
     notFound: "找不到療程資訊。",
     notFoundBack: "返回首頁",
     faqTitle: "常見問題",
+    heroSummaryExpand: "展開更多",
+    heroSummaryCollapse: "收起",
   },
 } as const;
 
@@ -208,6 +219,11 @@ export default function TreatmentPage() {
   const treatment = getTreatmentBySlug(slug);
   const lbl = LABELS[lang as keyof typeof LABELS] ?? LABELS.ko;
   const currentLang = (lang as SupportedLang) ?? "ko";
+  const treatmentDesc = treatment ? pickLocalized(treatment.desc, currentLang) : "";
+  const heroSummaryId = `treatment-hero-summary-${slug}`;
+  const heroSummaryRef = useRef<HTMLParagraphElement>(null);
+  const [isHeroSummaryExpandable, setIsHeroSummaryExpandable] = useState(false);
+  const [isHeroSummaryExpanded, setIsHeroSummaryExpanded] = useState(false);
 
   // ── URL / SEO 계산 블록 ─────────────────────────────────────────────────────
   const langPrefix = LANG_PREFIX[currentLang];
@@ -220,6 +236,34 @@ export default function TreatmentPage() {
     `/zh/treatments/${slug}`,
   );
   const jsonLdArray = treatment ? buildJsonLd(treatment, currentLang, pageUrl) : null;
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 639px)");
+    const updateSummaryControl = () => {
+      const summary = heroSummaryRef.current;
+      if (!mobileQuery.matches || !summary) {
+        setIsHeroSummaryExpandable(false);
+        setIsHeroSummaryExpanded(false);
+        return;
+      }
+
+      const lineHeight = Number.parseFloat(window.getComputedStyle(summary).lineHeight);
+      const collapsedHeight = Number.isFinite(lineHeight) ? lineHeight * 3 : 0;
+      const isOverflowing = collapsedHeight > 0 && summary.scrollHeight > collapsedHeight + 1;
+      setIsHeroSummaryExpandable(isOverflowing);
+      if (!isOverflowing) setIsHeroSummaryExpanded(false);
+    };
+
+    const animationFrame = window.requestAnimationFrame(updateSummaryControl);
+    window.addEventListener("resize", updateSummaryControl);
+    mobileQuery.addEventListener("change", updateSummaryControl);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", updateSummaryControl);
+      mobileQuery.removeEventListener("change", updateSummaryControl);
+    };
+  }, [slug, treatmentDesc]);
 
   // 시술을 찾지 못한 경우
   if (!treatment) {
@@ -239,7 +283,6 @@ export default function TreatmentPage() {
 
   // 다국어 텍스트 추출
   const treatmentName = pickLocalized(treatment.name, currentLang);
-  const treatmentDesc = pickLocalized(treatment.desc, currentLang);
   const treatmentDetail = pickLocalized(treatment.detail, currentLang);
   const treatmentEffect = pickLocalized(treatment.effect, currentLang);
   const treatmentCaution = pickLocalized(treatment.caution, currentLang);
@@ -311,9 +354,26 @@ export default function TreatmentPage() {
                 {treatmentCategory} · {treatment.nameEn}
               </p>
               <h1 className="treatment-page__hero-title text-3xl md:text-4xl font-bold mb-3">{treatmentH1}</h1>
-              <p className="treatment-page__hero-summary text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
+              <p
+                ref={heroSummaryRef}
+                id={heroSummaryId}
+                className="treatment-page__hero-summary text-white/80 text-sm md:text-base leading-relaxed max-w-xl"
+                data-collapsed={isHeroSummaryExpandable && !isHeroSummaryExpanded}
+              >
                 {treatmentDesc}
               </p>
+              {isHeroSummaryExpandable && (
+                <button
+                  type="button"
+                  className="treatment-page__hero-summary-toggle"
+                  aria-controls={heroSummaryId}
+                  aria-expanded={isHeroSummaryExpanded}
+                  onClick={() => setIsHeroSummaryExpanded((expanded) => !expanded)}
+                >
+                  <span>{isHeroSummaryExpanded ? lbl.heroSummaryCollapse : lbl.heroSummaryExpand}</span>
+                  <ChevronDown aria-hidden="true" size={16} />
+                </button>
+              )}
             </div>
             {treatmentBadge && (
               <span

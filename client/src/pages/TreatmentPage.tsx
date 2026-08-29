@@ -224,11 +224,11 @@ export default function TreatmentPage() {
   // 시술을 찾지 못한 경우
   if (!treatment) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <p className="text-gray-600 text-lg">{lbl.notFound}</p>
+      <div className="treatment-page treatment-page__not-found min-h-screen flex flex-col items-center justify-center gap-4">
+        <p className="treatment-page__body-copy text-lg">{lbl.notFound}</p>
         <button type="button"
           onClick={() => setLocation(localizedHomePath)}
-          className="flex items-center gap-2 text-[#4A6FA5] hover:underline"
+          className="treatment-page__not-found-link flex items-center gap-2 hover:underline"
         >
           <ArrowLeft size={16} />
           {lbl.notFoundBack}
@@ -261,7 +261,7 @@ export default function TreatmentPage() {
   const cautionItems = treatmentCaution.split(".").map((s) => s.trim()).filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="treatment-page min-h-screen">
       {/* ── SeoHead: 페이지별 고유 메타 태그 ── */}
       <SeoHead
         title={seoTitle}
@@ -278,7 +278,7 @@ export default function TreatmentPage() {
 
       {/* ── 히어로 배너 ── */}
       <div
-        className="relative text-white overflow-hidden"
+        className="treatment-page__hero relative text-white overflow-hidden"
         style={{
           background: "linear-gradient(135deg, #1a2a4a 0%, #2D4A7A 60%, #4A6FA5 100%)",
           minHeight: "280px",
@@ -299,7 +299,7 @@ export default function TreatmentPage() {
           {/* 뒤로가기 */}
         <button type="button"
           onClick={() => setLocation(localizedHomePath)}
-          className="inline-flex items-center gap-2 mb-6 text-white/80 hover:text-white transition-colors text-sm"
+          className="treatment-page__back-link inline-flex items-center gap-2 mb-6 text-white/80 hover:text-white transition-colors text-sm"
         >
             <ArrowLeft size={16} />
             {lbl.backHome}
@@ -344,11 +344,11 @@ export default function TreatmentPage() {
       </div>
 
       {/* ── 메인 콘텐츠 ── */}
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="treatment-page__content container mx-auto px-4 py-12 max-w-4xl">
         <div className="grid md:grid-cols-5 gap-10 mb-14">
           {/* 이미지 */}
           <div className="md:col-span-2">
-            <div className="rounded-2xl overflow-hidden bg-gray-50 shadow-md">
+            <div className="treatment-page__image-surface rounded-2xl overflow-hidden shadow-md">
               <OptimizedImage
                 src={treatment.image}
                 alt={`${treatmentName} 시술 이미지`}
@@ -363,22 +363,22 @@ export default function TreatmentPage() {
           {/* 상세 설명 */}
           <div className="md:col-span-3 space-y-6">
             <div>
-              <h2 className="text-xl font-bold mb-3" style={{ color: "#1F2937" }}>
+              <h2 className="treatment-page__section-heading text-xl font-bold mb-3">
                 {lbl.intro}
               </h2>
-              <p className="text-gray-600 leading-relaxed">{treatmentDetail}</p>
+              <p className="treatment-page__body-copy leading-relaxed">{treatmentDetail}</p>
             </div>
 
             {/* 기대 효과 */}
             <div>
-              <h2 className="text-xl font-bold mb-3" style={{ color: "#1F2937" }}>
+              <h2 className="treatment-page__section-heading text-xl font-bold mb-3">
                 {lbl.effects}
               </h2>
               <ul className="space-y-2">
                 {effectItems.map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <CheckCircle2 size={16} className="mt-0.5 flex-shrink-0" style={{ color: "#4A6FA5" }} />
-                    <span className="text-gray-700 text-sm">{item}</span>
+                    <CheckCircle2 size={16} className="treatment-page__effect-icon mt-0.5 flex-shrink-0" />
+                    <span className="treatment-page__effect-copy text-sm">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -389,10 +389,10 @@ export default function TreatmentPage() {
         {/* YouTube 영상 */}
         {treatment.youtubeUrl && (
           <div className="mb-14">
-            <h2 className="text-xl font-bold mb-4" style={{ color: "#1F2937" }}>
+            <h2 className="treatment-page__section-heading text-xl font-bold mb-4">
               {lbl.video}
             </h2>
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-md">
+            <div className="treatment-page__video-surface aspect-video rounded-2xl overflow-hidden shadow-md">
               <iframe
                 width="100%"
                 height="100%"
@@ -407,7 +407,7 @@ export default function TreatmentPage() {
         )}
 
         {/* 주의사항 */}
-        <div className="mb-14 rounded-2xl p-6 border border-amber-200 bg-amber-50">
+        <div className="treatment-page__caution mb-14 rounded-2xl p-6 border border-amber-200 bg-amber-50">
           <h2 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "#92400E" }}>
             <AlertCircle size={20} />
             {lbl.caution}
@@ -425,17 +425,17 @@ export default function TreatmentPage() {
         {/* FAQ 섹션 */}
         {faqItems.length > 0 && (
           <div className="mb-14">
-            <h2 className="text-xl font-bold mb-6" style={{ color: "#1F2937" }}>
+            <h2 className="treatment-page__section-heading text-xl font-bold mb-6">
               {lbl.faqTitle}
             </h2>
             <div className="space-y-4">
               {faqItems.map((item, i) => (
-                <div key={i} className="rounded-xl border border-gray-200 p-5">
-                  <p className="font-semibold text-gray-800 mb-2 flex items-start gap-2">
+                <div key={i} className="treatment-page__faq-item rounded-xl border p-5">
+                  <p className="treatment-page__faq-question font-semibold mb-2 flex items-start gap-2">
                     <span className="text-[#4A6FA5] font-bold flex-shrink-0">Q.</span>
                     {item.question}
                   </p>
-                  <p className="text-gray-600 text-sm leading-relaxed pl-6">
+                  <p className="treatment-page__faq-answer text-sm leading-relaxed pl-6">
                     {item.answer}
                   </p>
                 </div>
@@ -450,7 +450,7 @@ export default function TreatmentPage() {
             href={currentLang === "ja" ? "https://lin.ee/tyuRdUc" : currentLang === "zh" ? "#wechat" : "https://pf.kakao.com/_HNyGC"}
             target={currentLang === "zh" ? undefined : "_blank"}
             rel={currentLang === "zh" ? undefined : "noopener noreferrer"}
-            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md"
+            className="treatment-page__contact-action flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md"
             style={{
               background: currentLang === "zh" ? "#07C160" : currentLang === "ja" ? "#06C755" : "#FEE500",
               color: currentLang === "zh" || currentLang === "ja" ? "white" : "#1F2937"
@@ -461,7 +461,7 @@ export default function TreatmentPage() {
           </a>
           <a
             href={currentLang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
-            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
+            className="treatment-page__contact-action flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
             style={{ background: "linear-gradient(135deg, #2D4A7A 0%, #4A6FA5 100%)" }}
           >
             <span>📞</span>
@@ -471,7 +471,7 @@ export default function TreatmentPage() {
             href={EXTERNAL_BOOKING_URLS.naver}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
+            className="treatment-page__contact-action flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md text-white"
             style={{ background: "linear-gradient(135deg, #C8860A 0%, #e6a832 100%)" }}
           >
             <CalendarDays size={20} />
@@ -480,8 +480,8 @@ export default function TreatmentPage() {
         </div>
 
         {/* 다른 시술 보기 */}
-        <div className="mt-14 pt-10 border-t">
-          <h2 className="text-lg font-bold mb-6" style={{ color: "#1F2937" }}>
+        <div className="treatment-page__related-section mt-14 pt-10 border-t">
+          <h2 className="treatment-page__section-heading text-lg font-bold mb-6">
             {lbl.otherTreatments}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -491,21 +491,21 @@ export default function TreatmentPage() {
                 <button type="button"
                   key={t.slug}
                   onClick={() => setLocation(`${langPrefix}/treatments/${t.slug}`)}
-                  className="text-left p-4 rounded-xl border border-gray-200 hover:border-[#4A6FA5] hover:shadow-md transition-all group"
+                  className="treatment-page__related-card text-left p-4 rounded-xl border transition-all group"
                 >
-                  <p className="text-xs text-gray-500 mb-1">{pickLocalized(t.category, currentLang)}</p>
-                  <p className="font-bold text-gray-800 group-hover:text-[#4A6FA5] transition-colors">
+                  <p className="treatment-page__related-category text-xs mb-1">{pickLocalized(t.category, currentLang)}</p>
+                  <p className="treatment-page__related-title font-bold transition-colors">
                     {pickLocalized(t.name, currentLang)}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">{pickLocalized(t.desc, currentLang)}</p>
+                  <p className="treatment-page__related-description text-xs mt-1 line-clamp-2">{pickLocalized(t.desc, currentLang)}</p>
                 </button>
               ))}
           </div>
         </div>
 
         {/* 의료광고 가이드 문구 */}
-        <div className="mt-10 p-4 rounded-xl text-xs leading-relaxed" style={{ background: "#F8F9FA", border: "1px solid #E5E7EB", color: "#6B7280" }}>
-          <p className="font-semibold mb-1" style={{ color: "#374151" }}>⚠️ 의료광고 안내</p>
+        <div className="treatment-page__medical-notice mt-10 p-4 rounded-xl text-xs leading-relaxed">
+          <p className="treatment-page__medical-notice-heading font-semibold mb-1">⚠️ 의료광고 안내</p>
           <p>• 시술 효과는 개인의 피부 상태, 생활 습관, 시술 횟수 등에 따라 다를 수 있습니다.</p>
           <p>• 본 페이지의 시술 정보는 일반적인 안내를 목적으로 하며, 실제 진료 결과와 다를 수 있습니다.</p>
           <p>• 정확한 진단과 시술 계획은 전문의 상담 후 결정됩니다.</p>

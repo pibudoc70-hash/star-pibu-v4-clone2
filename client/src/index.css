@@ -5470,6 +5470,137 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
+/* ── Canonical treatment detail warm-greige palette: isolated from equipment and legacy routes. ── */
+.treatment-page {
+  --treatment-page-bg: #F4F1EA;
+  --treatment-page-surface: #EEEBE4;
+  --treatment-page-soft-surface: #F7F5F0;
+  --treatment-page-border: #D8D0C2;
+  --treatment-page-soft-border: #E3DCCE;
+  --treatment-page-text: #2C2C2C;
+  --treatment-page-muted: #5A5A5A;
+  --treatment-page-accent: #7A5C35;
+  --treatment-page-navy: #1A2744;
+  --treatment-page-focus: #7A5C35;
+  background: var(--treatment-page-bg);
+  color: var(--treatment-page-text);
+}
+
+.treatment-page__not-found,
+.treatment-page__content {
+  background: var(--treatment-page-bg);
+}
+
+.treatment-page__image-surface,
+.treatment-page__video-surface,
+.treatment-page__faq-item,
+.treatment-page__related-card {
+  background: var(--treatment-page-surface);
+  border-color: var(--treatment-page-border);
+}
+
+.treatment-page__image-surface,
+.treatment-page__video-surface {
+  box-shadow: 0 2px 8px rgba(26, 39, 68, 0.08);
+}
+
+.treatment-page__section-heading,
+.treatment-page__faq-question,
+.treatment-page__related-title,
+.treatment-page__medical-notice-heading {
+  color: var(--treatment-page-text);
+}
+
+.treatment-page__body-copy,
+.treatment-page__faq-answer,
+.treatment-page__related-description {
+  color: var(--treatment-page-muted);
+}
+
+.treatment-page__effect-copy {
+  color: var(--treatment-page-text);
+}
+
+.treatment-page__faq-item {
+  border-color: var(--treatment-page-soft-border);
+  box-shadow: 0 2px 8px rgba(26, 39, 68, 0.04);
+}
+
+.treatment-page__faq-item span,
+.treatment-page__related-category,
+.treatment-page__not-found-link,
+.treatment-page__effect-icon {
+  color: var(--treatment-page-accent);
+}
+
+.treatment-page__related-section {
+  border-color: var(--treatment-page-border);
+}
+
+.treatment-page__medical-notice {
+  background: var(--treatment-page-soft-surface);
+  border: 1px solid var(--treatment-page-soft-border);
+  color: var(--treatment-page-muted);
+}
+
+.treatment-page__contact-action,
+.treatment-page__related-card,
+.treatment-page__back-link,
+.treatment-page__not-found-link {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1), border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.treatment-page__contact-action:focus-visible,
+.treatment-page__related-card:focus-visible,
+.treatment-page__back-link:focus-visible,
+.treatment-page__not-found-link:focus-visible {
+  outline: 3px solid var(--treatment-page-focus);
+  outline-offset: 3px;
+}
+
+.treatment-page__contact-action:active,
+.treatment-page__related-card:active,
+.treatment-page__back-link:active,
+.treatment-page__not-found-link:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .treatment-page__related-card:hover {
+    border-color: var(--treatment-page-accent);
+    box-shadow: 0 10px 22px rgba(26, 39, 68, 0.12), 0 0 0 2px rgba(196, 168, 130, 0.18);
+    transform: translateY(-2px);
+  }
+
+  .treatment-page__related-card:hover .treatment-page__related-title,
+  .treatment-page__not-found-link:hover {
+    color: var(--treatment-page-navy);
+  }
+
+  .treatment-page__contact-action:hover {
+    box-shadow: 0 10px 22px rgba(26, 39, 68, 0.18), 0 0 0 2px rgba(196, 168, 130, 0.24);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .treatment-page__contact-action,
+  .treatment-page__related-card,
+  .treatment-page__back-link,
+  .treatment-page__not-found-link {
+    transition: none;
+  }
+
+  .treatment-page__contact-action:hover,
+  .treatment-page__contact-action:active,
+  .treatment-page__related-card:hover,
+  .treatment-page__related-card:active,
+  .treatment-page__back-link:active,
+  .treatment-page__not-found-link:active {
+    transform: none;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────────
    FacilitySection CSS 클래스
    ───────────────────────────────────────────────────────────────────── */

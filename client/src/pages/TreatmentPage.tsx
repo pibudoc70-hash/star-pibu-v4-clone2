@@ -307,17 +307,17 @@ export default function TreatmentPage() {
 
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold tracking-widest mb-2 text-white/70 uppercase">
+              <p className="treatment-page__hero-eyebrow text-xs font-semibold tracking-widest mb-2 text-white/70 uppercase">
                 {treatmentCategory} · {treatment.nameEn}
               </p>
-              <h1 className="text-3xl md:text-4xl font-bold mb-3">{treatmentH1}</h1>
-              <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
+              <h1 className="treatment-page__hero-title text-3xl md:text-4xl font-bold mb-3">{treatmentH1}</h1>
+              <p className="treatment-page__hero-summary text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
                 {treatmentDesc}
               </p>
             </div>
             {treatmentBadge && (
               <span
-                className="px-4 py-2 rounded-full text-sm font-bold text-white flex-shrink-0"
+                className="treatment-page__hero-badge px-4 py-2 rounded-full text-sm font-bold text-white flex-shrink-0"
                 style={{ backgroundColor: treatment.badgeColor || "#4A6FA5", opacity: 0.95 }}
               >
                 {treatmentBadge}

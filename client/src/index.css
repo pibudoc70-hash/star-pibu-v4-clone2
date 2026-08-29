@@ -5543,6 +5543,22 @@ body.font-lang-zh .hero-stat-label {
   color: var(--treatment-page-muted);
 }
 
+.treatment-page__hero-title,
+.treatment-page__hero-eyebrow,
+.treatment-page__hero-summary,
+.treatment-page__related-title,
+.treatment-page__related-description {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.treatment-page__hero-title,
+.treatment-page__related-title {
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
 .treatment-page__contact-action,
 .treatment-page__related-card,
 .treatment-page__back-link,
@@ -5598,6 +5614,52 @@ body.font-lang-zh .hero-stat-label {
   .treatment-page__back-link:active,
   .treatment-page__not-found-link:active {
     transform: none;
+  }
+}
+
+/* Long localized names remain complete at 390px; ellipsis is reserved for existing summary copy only. */
+@media (max-width: 639px) {
+  .treatment-page__hero {
+    min-height: 0 !important;
+  }
+
+  .treatment-page__hero .container {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .treatment-page__hero-eyebrow {
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    letter-spacing: 0.11em;
+  }
+
+  .treatment-page__hero-title {
+    font-size: clamp(1.6rem, 7.4vw, 1.875rem);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .treatment-page__hero-summary {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .treatment-page__hero-badge {
+    align-self: flex-start;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .treatment-page__related-card {
+    min-inline-size: 0;
+  }
+
+  .treatment-page__related-title {
+    line-height: 1.45;
+    text-wrap: pretty;
   }
 }
 

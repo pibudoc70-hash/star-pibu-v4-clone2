@@ -131,6 +131,7 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
   ];
   const canonical = locale === "ko" ? BASE_URL : `${BASE_URL}/${pathname.slice(1)}`;
   const lang = locale === "zh-TW" ? "zh-Hant" : locale;
+  const localizedEquipmentListUrl = `${BASE_URL}${locale === "ko" ? "" : pathname}/equipment3`;
   const homeLabels: Record<Locale, string> = { ko: "홈", en: "Home", ja: "ホーム", zh: "首页", "zh-TW": "首頁" };
 
   const faqMarkup = faqItems.map((item) => [
@@ -144,7 +145,7 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
     `<main id="crawler-content" lang="${lang}">`,
     `<header><h1>${escapeHtml(content.hero.title)}</h1><p>${escapeHtml(content.hero.subtitle)}</p><p>${escapeHtml(localizedCopy.clinicIntro)}</p></header>`,
     `<section aria-labelledby="crawler-lifting-care"><h2 id="crawler-lifting-care">${locale === "ko" ? "피부과 전문의 직접 리프팅 진료" : "Dermatologist-led lifting care"}</h2><p>${escapeHtml(LIFTING_HOME_SUMMARY[locale])}</p></section>`,
-    `<section aria-labelledby="crawler-treatments"><h2 id="crawler-treatments">${escapeHtml(content.nav.treatments)}</h2><p>${escapeHtml(localizedCopy.treatmentIntro)}</p><p><a href="${BASE_URL}/treatments">${escapeHtml(content.nav.treatments)}</a></p></section>`,
+    `<section aria-labelledby="crawler-treatments"><h2 id="crawler-treatments">${escapeHtml(content.nav.treatments)}</h2><p>${escapeHtml(localizedCopy.treatmentIntro)}</p><p><a href="${localizedEquipmentListUrl}">${escapeHtml(content.nav.treatments)}</a></p></section>`,
     `<section aria-labelledby="crawler-story"><h2 id="crawler-story">${escapeHtml(localizedCopy.storyTitle)}</h2><p>${escapeHtml(content.faq.sectionSubtitle)}</p></section>`,
     `<section aria-labelledby="crawler-faq"><h2 id="crawler-faq">${escapeHtml(content.faq.sectionTitle)}</h2><p>${escapeHtml(content.faq.sectionSubtitle)}</p>${faqMarkup}</section>`,
     `<section aria-labelledby="crawler-lifting-faq"><h2 id="crawler-lifting-faq">${locale === "ko" ? "리프팅 시술과 통증 관리 FAQ" : "Lifting & pain-management FAQ"}</h2><p>${escapeHtml(LIFTING_ANESTHESIA_PREPARATION[locale])}</p><dl>${liftingFaqs.map((item) => `<dt>${escapeHtml(item.question)}</dt><dd>${escapeHtml(item.answer)}</dd>`).join("")}</dl></section>`,
@@ -165,7 +166,6 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
   ]).replace(/</g, "\\u003c");
 
   const rendered = template
-    .replace(/<html([^>]*)>/i, `<html$1 lang="${lang}">`)
     .replace(/<link\s+rel="canonical"[^>]*\/?>(\s*)/i, `<link data-rh="true" rel="canonical" href="${canonical}" />$1`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="home-schema">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">\n    ${noscriptBody}\n  </div>`);

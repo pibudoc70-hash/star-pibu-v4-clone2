@@ -20,6 +20,15 @@ const OG_LOCALES: Record<SeoLocale, string> = {
   "zh-TW": "zh_TW",
 };
 
+/** Raw crawler HTML 문서 언어는 공용 SEO injector만 소유한다. */
+const DOCUMENT_LANGUAGES: Record<SeoLocale, string> = {
+  ko: "ko",
+  en: "en",
+  ja: "ja",
+  zh: "zh-Hans",
+  "zh-TW": "zh-Hant",
+};
+
 function normalizePathname(value: string): string {
   const pathname = value.split("?")[0].split("#")[0] || "/";
   if (pathname === "/") return "/";
@@ -75,7 +84,11 @@ export function injectPageSeoMeta(template: string, pathname: string): string {
     .join("\n    ");
 
   return template
-    .replace(/<link\b(?=[^>]*\brel="canonical")[^>]*\/?>(\s*)/gi, "")
+    .replace(/<html\b([^>]*)>/i, (_match, attributes: string) => {
+      const withoutLang = attributes.replace(/\s+lang\s*=\s*(?:"[^"]*"|'[^']*')/i, "");
+      return `<html${withoutLang} lang="${DOCUMENT_LANGUAGES[locale]}">`;
+    })
+    .replace(/<link\b(?=[^>]*\brel="canonical")[^>]*\/?>\s*/gi, "")
     .replace(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="[^"]+")[^>]*\/?>(\s*)/gi, "")
     .replace(/<meta\b(?=[^>]*\bproperty="og:locale:alternate")[^>]*\/?>(\s*)/gi, "")
     .replace(

@@ -5384,7 +5384,7 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .equipment-list__card-title {
-    font-size: 0.9375rem;
+    font-size: clamp(0.9375rem, 4.1vw, 1.0625rem);
     line-height: 1.45;
     margin-bottom: 0.25rem;
     min-inline-size: 0;

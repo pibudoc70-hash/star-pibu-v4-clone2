@@ -21,4 +21,20 @@ describe("SEO raw HTML meta injection", () => {
     expect(html).toContain('property="og:locale:alternate" content="en_US"');
     expect(html).toContain('property="og:locale:alternate" content="zh_TW"');
   });
+
+  it.each([
+    ["/", "ko"],
+    ["/en/treatments/ulthera", "en"],
+    ["/ja/treatments/ulthera", "ja"],
+    ["/zh/treatments/ulthera", "zh-Hans"],
+    ["/zh-tw/treatments/ulthera", "zh-Hant"],
+  ])("%s raw HTML의 lang은 공용 locale owner가 %s로 한 번만 설정한다", (pathname, expectedLang) => {
+    const html = injectPageSeoMeta(
+      '<!doctype html><html data-shell="true" lang="ko"><head><link rel="canonical" href="https://star-pibu.com/" /></head><body></body></html>',
+      pathname,
+    );
+
+    expect(html).toContain(`<html data-shell="true" lang="${expectedLang}">`);
+    expect(html.match(/<html\b[^>]*\blang=/gi)).toHaveLength(1);
+  });
 });

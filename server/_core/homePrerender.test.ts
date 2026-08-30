@@ -13,6 +13,7 @@ describe("homePrerender", () => {
     expect(html).toContain("피부과전문의가 알려주는 피부이야기");
     expect(html).toContain('type="application/ld+json"');
     expect(html).toContain('href="https://star-pibu.com"');
+    expect(html).toContain('href="https://star-pibu.com/equipment3"');
     expect(html).toContain('data-prerender="home-schema"');
     expect(html).toContain('https://star-pibu.com/#organization');
     expect(html).toContain('https://star-pibu.com/#website');
@@ -36,6 +37,18 @@ describe("homePrerender", () => {
 
   it("비한국어 홈 prerender에는 한국어 원본 YouTube VideoObject를 추가하지 않는다", () => {
     expect(buildHomePrerenderedHtml(template, "/en")).not.toContain('"@type":"VideoObject"');
+  });
+
+  it.each([
+    ["/", ""],
+    ["/en", "/en"],
+    ["/ja", "/ja"],
+    ["/zh", "/zh"],
+    ["/zh-tw", "/zh-tw"],
+  ])("%s 홈 crawler 시술 안내는 실제 localized equipment 목록으로 연결한다", (pathname, prefix) => {
+    const html = buildHomePrerenderedHtml(template, pathname);
+    expect(html).toContain(`href="https://star-pibu.com${prefix}/equipment3"`);
+    expect(html).not.toContain(`href="https://star-pibu.com${prefix}/treatments"`);
   });
 
   it("홈 언어 루트가 아닌 경로는 처리하지 않는다", () => {

@@ -140,8 +140,7 @@ export function buildDoctorsPrerenderedHtml(template: string, pathname: string):
         replaceMetaContent(
           replaceMetaContent(
             replaceMetaContent(
-              template.replace(/<html\s+lang="[^"]*"([^>]*)>/i, `<html lang="${documentLanguages[locale]}"$1>`)
-                .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(seo.title)}</title>`),
+              template.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(seo.title)}</title>`),
               "name", "description", seo.description,
             ),
             "name", "keywords", seo.keywords,

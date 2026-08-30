@@ -23,6 +23,7 @@ describe("Equipment3 mobile multilingual card titles", () => {
     const mobileCss = cssSource.slice(mobileStart);
 
     expect(mobileCss).toContain(".equipment-list__card-title");
+    expect(mobileCss).toContain("font-size: clamp(0.9375rem, 4.1vw, 1.0625rem)");
     expect(mobileCss).toContain("-webkit-line-clamp: unset");
     expect(mobileCss).toContain("overflow-wrap: anywhere");
     expect(mobileCss).toContain("word-break: keep-all");

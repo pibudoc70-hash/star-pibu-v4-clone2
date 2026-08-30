@@ -5387,6 +5387,22 @@ body.font-lang-zh .hero-stat-label {
     font-size: 0.9375rem;
     line-height: 1.45;
     margin-bottom: 0.25rem;
+    min-inline-size: 0;
+    overflow: visible;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+    -webkit-box-orient: initial;
+    -webkit-line-clamp: unset;
+    display: block;
+    text-wrap: balance;
+  }
+
+  .equipment-list__card-overlay-title {
+    max-inline-size: 100%;
+    font-size: clamp(1.05rem, 5.4vw, 1.25rem);
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .equipment-list__card-description {

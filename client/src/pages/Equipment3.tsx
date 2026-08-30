@@ -149,7 +149,7 @@ function Equipment3Card({
                 </p>
               )}
               <h3
-                className="text-xl font-black leading-tight"
+                className="equipment-list__card-overlay-title text-xl font-black leading-tight"
                 style={{ color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
               >
                 {name}

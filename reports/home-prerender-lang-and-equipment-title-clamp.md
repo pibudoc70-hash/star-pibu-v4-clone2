@@ -29,3 +29,15 @@ Raw HTML root language는 prerender마다 중복·누락 상태였습니다. Hom
 ## 보존 범위
 
 시술/장비 제목 데이터, metadata copy, MedicalProcedure·FAQPage·clinic/website JSON-LD, canonical/hreflang, Hero/Header/Footer UI, Equipment3 light/dark palette·저장값, images, treatment UI, external CTA, 예약/OTP 코드는 변경하지 않았습니다.
+
+## 공개 배포 재검증 상태
+
+`ae42d8dd` checkpoint의 자동 게시 완료 뒤 `star-pibu.com`, `www.star-pibu.com`, `starpibu-qdq7tysk.manus.space`를 `Cache-Control: no-cache`로 재조회했습니다. 세 도메인 모두 `/en`에서 기존 중복 `<html lang="ko" ... lang="en">`을, representative non-ko treatment 페이지에서 기존 `lang="ko"`을 반환했고, homepage crawler link도 새 absolute `/equipment3` markup을 아직 반환하지 않았습니다. 응답은 `cache-control: no-cache, no-store, must-revalidate`와 새 `Date` header를 보내 일반 HTML cache hit로 단정할 근거는 없었습니다.
+
+| 항목 | 코드·자동 테스트 | 공개 raw 재조회 | 결론 |
+|---|---|---|---|
+| localized homepage crawler link | locale 5개 focused test 통과 | 이전 `/treatments` markup 유지 | 배포 runtime 반영 대기/확인 필요 |
+| root HTML lang 단일 owner | 5개 locale focused test 통과 | 기존 duplicate 또는 `ko` 유지 | 배포 runtime 반영 대기/확인 필요 |
+| Equipment3 title clamp | focused card test 통과 | raw HTML 검사 대상 아님 | client CSS artifact, preview/실기기 QA 필요 |
+
+Production log 조회는 해당 시점에 Cloud Run service `not_found`로 실패해 runtime revision을 직접 대조하지 못했습니다. 이 문서는 코드를 되돌리거나 platform 설정을 변경하지 않으며, 이후 자동 게시본에서도 같은 raw 응답이 유지되면 관리형 배포 라우팅/실행 환경 상태를 별도로 점검해야 합니다.

@@ -48,10 +48,10 @@ export default function EquipmentTreatmentCard({
     "--delay": `${Math.min(index * 0.07, 0.42)}s`,
   } as React.CSSProperties;
 
-  const localizedName = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
-  const localizedDesc = getText(item.desc, item.descEn, item.descJa, item.descZh);
-  const localizedTime = getText(item.time, item.timeEn, item.timeJa, item.timeZh);
-  const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
+  const localizedName = getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw);
+  const localizedDesc = getText(item.desc, item.descEn, item.descJa, item.descZh, item.descZhTw);
+  const localizedTime = getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw);
+  const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
 
   return (
     <>

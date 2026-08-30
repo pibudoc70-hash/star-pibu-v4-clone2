@@ -9,7 +9,7 @@ import { DoctorDesktopLayout } from "./doctors/DoctorDesktopLayout";
 import { DoctorMobileLayout } from "./doctors/DoctorMobileLayout";
 
 function DoctorsSection() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   const {
     mergedDoctors,
@@ -22,7 +22,7 @@ function DoctorsSection() {
     handleTouchStart,
     handleTouchEnd,
     handleTabKeyDown,
-  } = useDoctorViewModel(t);
+  } = useDoctorViewModel(t, lang);
 
   const badgeLabel = t.doctors.badge;
   const sectionRef = useSectionReveal(60);

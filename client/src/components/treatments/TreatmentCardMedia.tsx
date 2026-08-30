@@ -21,7 +21,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
   const { getText } = useLocalizedText();
   const { lang } = useLang();
   const localizedBadge = item.badge
-    ? getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh)
+    ? getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh, item.badgeZhTw)
     : null;
 
   // 비한국어 + bgImageUrl 있음 → equipment3 카드와 동일한 오버레이 방식

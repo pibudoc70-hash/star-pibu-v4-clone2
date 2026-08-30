@@ -108,12 +108,13 @@ function Equipment3Card({
   const { getText } = useLocalizedText();
   const { lang } = useLang();  // 현재 언어 감지
 
-  const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh);
-  const desc     = getText(item.desc, item.descEn, item.descJa, item.descZh);
-  const time     = getText(item.time, item.timeEn, item.timeJa, item.timeZh);
-  const recovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh);
-  const detail   = getText("자세히 보기", "Learn More", "詳しく見る", "了解详情");
-  const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
+  const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw);
+  const desc     = getText(item.desc, item.descEn, item.descJa, item.descZh, item.descZhTw);
+  const time     = getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw);
+  const recovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
+  const detail   = getText("자세히 보기", "Learn More", "詳しく見る", "了解详情", "查看詳情");
+  const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh, item.categoryZhTw);
+  const badge = getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh, item.badgeZhTw);
 
   return (
     <a
@@ -173,20 +174,20 @@ function Equipment3Card({
           />
         ) : null}
         {/* badge 필드 — isBest/isNew 없을 때만 좌상단, 있으면 우상단 */}
-        {item.badge && !String(item.isBest) && !String(item.isNew) && (
+        {badge && !String(item.isBest) && !String(item.isNew) && (
           <span
             className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
             style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
           >
-            {item.badge}
+            {badge}
           </span>
         )}
-        {item.badge && (String(item.isBest) === "1" || String(item.isNew) === "1") && (
+        {badge && (String(item.isBest) === "1" || String(item.isNew) === "1") && (
           <span
             className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
             style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
           >
-            {item.badge}
+            {badge}
           </span>
         )}
         {/* isBest / isNew 시스템 뱃지 — 가로 나란히 */}

@@ -72,35 +72,47 @@ function toTreatment(item: {
   nameEn: string;
   nameJa?: string | null;
   nameZh?: string | null;
+  nameZhTw?: string | null;
   desc: string;
   descEn?: string | null;
   descJa?: string | null;
   descZh?: string | null;
+  descZhTw?: string | null;
   detail?: string | null;
   detailEn?: string | null;
   detailJa?: string | null;
   detailZh?: string | null;
+  detailZhTw?: string | null;
   effect?: string | null;
   effectEn?: string | null;
   effectJa?: string | null;
   effectZh?: string | null;
+  effectZhTw?: string | null;
   caution?: string | null;
   cautionEn?: string | null;
   cautionJa?: string | null;
   cautionZh?: string | null;
+  cautionZhTw?: string | null;
   sessions?: string | null;
   sessionsEn?: string | null;
   sessionsJa?: string | null;
   sessionsZh?: string | null;
+  sessionsZhTw?: string | null;
   time?: string | null;
   timeEn?: string | null;
   timeJa?: string | null;
   timeZh?: string | null;
+  timeZhTw?: string | null;
   recovery?: string | null;
   recoveryEn?: string | null;
   recoveryJa?: string | null;
   recoveryZh?: string | null;
+  recoveryZhTw?: string | null;
   badge?: string | null;
+  badgeEn?: string | null;
+  badgeJa?: string | null;
+  badgeZh?: string | null;
+  badgeZhTw?: string | null;
   badgeColor?: string | null;
   imageUrl?: string | null;
   bgImageUrl?: string | null;
@@ -127,35 +139,47 @@ function toTreatment(item: {
     nameEn: item.nameEn ?? "",
     nameJa: item.nameJa ?? undefined,
     nameZh: item.nameZh ?? undefined,
+    nameZhTw: item.nameZhTw ?? undefined,
     desc: item.desc ?? "",
     descEn: item.descEn ?? undefined,
     descJa: item.descJa ?? undefined,
     descZh: item.descZh ?? undefined,
+    descZhTw: item.descZhTw ?? undefined,
     detail: item.detail ?? undefined,
     detailEn: item.detailEn ?? undefined,
     detailJa: item.detailJa ?? undefined,
     detailZh: item.detailZh ?? undefined,
+    detailZhTw: item.detailZhTw ?? undefined,
     effect: item.effect ?? undefined,
     effectEn: item.effectEn ?? undefined,
     effectJa: item.effectJa ?? undefined,
     effectZh: item.effectZh ?? undefined,
+    effectZhTw: item.effectZhTw ?? undefined,
     caution: item.caution ?? undefined,
     cautionEn: item.cautionEn ?? undefined,
     cautionJa: item.cautionJa ?? undefined,
     cautionZh: item.cautionZh ?? undefined,
+    cautionZhTw: item.cautionZhTw ?? undefined,
     sessions: item.sessions ?? undefined,
     sessionsEn: item.sessionsEn ?? undefined,
     sessionsJa: item.sessionsJa ?? undefined,
     sessionsZh: item.sessionsZh ?? undefined,
+    sessionsZhTw: item.sessionsZhTw ?? undefined,
     time: item.time ?? "",
     timeEn: item.timeEn ?? undefined,
     timeJa: item.timeJa ?? undefined,
     timeZh: item.timeZh ?? undefined,
+    timeZhTw: item.timeZhTw ?? undefined,
     recovery: item.recovery ?? "",
     recoveryEn: item.recoveryEn ?? undefined,
     recoveryJa: item.recoveryJa ?? undefined,
     recoveryZh: item.recoveryZh ?? undefined,
+    recoveryZhTw: item.recoveryZhTw ?? undefined,
     badge: item.badge ?? undefined,
+    badgeEn: item.badgeEn ?? undefined,
+    badgeJa: item.badgeJa ?? undefined,
+    badgeZh: item.badgeZh ?? undefined,
+    badgeZhTw: item.badgeZhTw ?? undefined,
     badgeColor: item.badgeColor ?? undefined,
     // 이미지 필드 매핑
     image: item.imageUrl ?? "",

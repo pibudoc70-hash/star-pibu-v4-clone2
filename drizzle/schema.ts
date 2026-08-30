@@ -395,6 +395,7 @@ export const equipment3 = mysqlTable("equipment3", {
   modalImage: text("modalImage"),
   // 뱃지
   badge: varchar("badge", { length: 100 }).default(""),
+  badgeZhTw: varchar("badgeZhTw", { length: 100 }).default(""),
   badgeColor: varchar("badgeColor", { length: 20 }).default("#4A6FA5"),
   // SEO 메타 정보 (관리자 직접 입력 — 미입력 시 자동 생성값 사용)
   seoTitle: varchar("seoTitle", { length: 120 }).default(""),        // 페이지 타이틀 (60자 이내 권장)

@@ -28,6 +28,8 @@ import { useDoctorSwipe } from "@/hooks/useDoctorSwipe";
 export interface DoctorViewModel extends Doctor {
   /** i18n에서 병합된 badge 텍스트 */
   badge: string;
+  /** locale에서 병합된 연구·발표·연수 활동 제목 */
+  researchActivitiesTitle?: string;
 }
 
 export interface UseDoctorViewModelReturn {
@@ -89,7 +91,7 @@ function preloadDoctorImages() {
 /**
  * @param t - useLang()에서 받은 번역 객체
  */
-export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
+export function useDoctorViewModel(t: I18nContent, lang = "ko"): UseDoctorViewModelReturn {
   // 마운트 시 sessionStorage에서 의사 탭 인덱스 읽기 (#dr-{slug} 직접 접근 지원)
   const [activeDoctor, setActiveDoctor] = useState(() => {
     const stored = sessionStorage.getItem("__star_doctor_tab");
@@ -388,10 +390,16 @@ export function useDoctorViewModel(t: I18nContent): UseDoctorViewModelReturn {
             }))
           : d.credentials,
         specialties: locale?.specialties ?? d.specialties,
+        researchActivities: lang === "zh-TW" && d.researchActivitiesZhTw
+          ? d.researchActivitiesZhTw
+          : d.researchActivities,
+        researchActivitiesTitle: lang === "zh-TW" && d.researchActivitiesZhTw
+          ? "研究・發表與進修活動"
+          : undefined,
         badge: badgeLabel,
       };
     });
-  }, [t.doctors, badgeLabel]);
+  }, [t.doctors, badgeLabel, lang]);
 
   const doctor = mergedDoctors[activeDoctor];
 

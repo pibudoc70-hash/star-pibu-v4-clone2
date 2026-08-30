@@ -13,7 +13,7 @@ describe("Equipment3 mobile multilingual card titles", () => {
       pageSource.indexOf("// ─────────────────────────────────────────────────────────────────────────────"),
     );
 
-    expect(cardSource).toContain("const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh)");
+    expect(cardSource).toContain("const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)");
     expect(cardSource).toContain("aria-label={`${name} ${detail}`}");
     expect(cardSource).toContain("equipment-list__card-overlay-title");
   });

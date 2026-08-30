@@ -98,9 +98,9 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
     );
   });
 
-  it('카드 desc 렌더링에 getText(item.desc, item.descEn, item.descJa, item.descZh)를 사용해야 한다', () => {
+  it('카드 desc 렌더링에 zh-TW 필드를 포함한 getText를 사용해야 한다', () => {
     // Step 4 리팩토링: 카드 렌더링은 EquipmentTreatmentCard.tsx에 위치
-    expect(equipmentTreatmentCardSource).toContain('getText(item.desc, item.descEn, item.descJa, item.descZh)');
+    expect(equipmentTreatmentCardSource).toContain('getText(item.desc, item.descEn, item.descJa, item.descZh, item.descZhTw)');
   });
 
   it('장비 패널 desc 렌더링에 getEqText를 사용해야 한다', () => {
@@ -108,9 +108,9 @@ describe('TreatmentsEquipmentSection 다국어 번역 완전성 검증', () => {
     expect(equipmentPanelSource).toContain('getEqText(selectedEq, "desc")');
   });
 
-  it('카드 제목 렌더링에 getText(item.name, item.nameEn, item.nameJa, item.nameZh)를 사용해야 한다', () => {
+  it('카드 제목 렌더링에 zh-TW 필드를 포함한 getText를 사용해야 한다', () => {
     // Step 4 리팩토링: 카드 렌더링은 EquipmentTreatmentCard.tsx에 위치
-    expect(equipmentTreatmentCardSource).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh)');
+    expect(equipmentTreatmentCardSource).toContain('getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)');
   });
 
   it('커테고리 탭 label 렌더링에 getCatLabel(cat, lang)을 사용해야 한다 (Round-10: CategoryTabList으로 추출됨)', () => {

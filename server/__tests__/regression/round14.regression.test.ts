@@ -185,7 +185,7 @@ describe("[B] DoctorsSection useDoctorViewModel 훅 분리", () => {
     });
 
     it("useDoctorViewModel 훅을 호출해야 한다", () => {
-      expect(doctorsSrc).toMatch(/useDoctorViewModel\(t\)/);
+      expect(doctorsSrc).toMatch(/useDoctorViewModel\(t, lang\)/);
     });
 
     it("[R14] DoctorsSection에 인라인 useState 상태 선언이 없어야 한다", () => {

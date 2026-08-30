@@ -40,7 +40,7 @@ export default function Doctors() {
     handleTouchStart,
     handleTouchEnd,
     handleTabKeyDown,
-  } = useDoctorViewModel(t);
+  } = useDoctorViewModel(t, lang);
   const badgeLabel = t.doctors.badge;
 
   // ── SEO ──────────────────────────────────────────────────────────────────────

@@ -27,7 +27,7 @@ function DoctorResearchActivities({ doctor }: Pick<DoctorCredentialsProps, "doct
     <details className="group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white">
       <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-semibold text-stone-800 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67] focus-visible:ring-inset">
         <BookOpen size={16} aria-hidden="true" className="text-[#b8924c]" />
-        <span>연구·발표 및 연수 활동</span>
+        <span>{doctor.researchActivitiesTitle ?? "연구·발표 및 연수 활동"}</span>
         <ChevronDown size={16} aria-hidden="true" className="ml-auto transition-transform duration-200 group-open:rotate-180" />
       </summary>
       <div className="space-y-3 border-t border-stone-200 px-4 py-4">

@@ -58,7 +58,7 @@ export function EquipmentTreatmentModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
         <DialogTitle className="sr-only">
-          {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}{" "}
+          {getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)}{" "}
           {tr.modalDetailBtn}
         </DialogTitle>
         <div className="space-y-4">
@@ -82,17 +82,17 @@ export function EquipmentTreatmentModal({
                 )}
                 <h3 className="text-xl font-black leading-tight"
                   style={{ color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
-                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
+                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)}
                 </h3>
                 <div className="flex items-center gap-3 text-xs mt-1.5"
                   style={{ color: "rgba(255,255,255,0.85)" }}>
                   <span className="flex items-center gap-1">
                     <Clock size={11} />
-                    {tr.modalTime}: {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
+                    {tr.modalTime}: {getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw)}
                   </span>
                   <span className="flex items-center gap-1">
                     <RefreshCw size={11} />
-                    {tr.modalRecovery}: {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                    {tr.modalRecovery}: {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw)}
                   </span>
                 </div>
               </div>
@@ -109,18 +109,18 @@ export function EquipmentTreatmentModal({
               </div>
               <div>
                 <h3 className="text-lg font-bold text-slate-800">
-                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh)}
+                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)}
                 </h3>
                 <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
                   <span className="flex items-center gap-1">
                     <Clock size={12} />
                     {tr.modalTime}:{" "}
-                    {getText(item.time, item.timeEn, item.timeJa, item.timeZh)}
+                    {getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw)}
                   </span>
                   <span className="flex items-center gap-1">
                     <RefreshCw size={12} />
                     {tr.modalRecovery}:{" "}
-                    {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh)}
+                    {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw)}
                   </span>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export function EquipmentTreatmentModal({
             <div className="rounded-xl overflow-hidden">
               <OptimizedImage
                 src={item.modalImage}
-                alt={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh)} ${tr.modalDetailBtn}`}
+                alt={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)} ${tr.modalDetailBtn}`}
                 className="w-full object-contain"
               />
             </div>
@@ -185,40 +185,40 @@ export function EquipmentTreatmentModal({
           )}
 
           {/* 상세 설명 */}
-          {getText(item.detail, item.detailEn, item.detailJa, item.detailZh) && (
+          {getText(item.detail, item.detailEn, item.detailJa, item.detailZh, item.detailZhTw) && (
             <p className="text-sm text-slate-600 leading-relaxed">
-              {getText(item.detail, item.detailEn, item.detailJa, item.detailZh)}
+              {getText(item.detail, item.detailEn, item.detailJa, item.detailZh, item.detailZhTw)}
             </p>
           )}
 
           {/* 효과 */}
-          {getText(item.effect, item.effectEn, item.effectJa, item.effectZh) && (
+          {getText(item.effect, item.effectEn, item.effectJa, item.effectZh, item.effectZhTw) && (
             <div>
               <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
                 <Sparkles size={14} className="text-amber-500" />
                 {tr.modalEffect}
               </h4>
               <p className="text-sm text-slate-600">
-                {getText(item.effect, item.effectEn, item.effectJa, item.effectZh)}
+                {getText(item.effect, item.effectEn, item.effectJa, item.effectZh, item.effectZhTw)}
               </p>
             </div>
           )}
 
           {/* 시술 횟수 */}
-          {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh) && (
+          {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh, item.sessionsZhTw) && (
             <div>
               <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
                 <Repeat size={14} className="text-blue-500" />
                 {tr.modalSessions}
               </h4>
               <p className="text-sm text-slate-600">
-                {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh)}
+                {getText(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh, item.sessionsZhTw)}
               </p>
             </div>
           )}
 
           {/* 주의사항 */}
-          {(item.caution || item.cautionEn || item.cautionJa || item.cautionZh) && (
+          {(item.caution || item.cautionEn || item.cautionJa || item.cautionZh || item.cautionZhTw) && (
             <div>
               <h4 className="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">
                 <AlertCircle size={14} className="text-red-400" />
@@ -230,6 +230,7 @@ export function EquipmentTreatmentModal({
                   item.cautionEn ?? "",
                   item.cautionJa ?? "",
                   item.cautionZh ?? "",
+                  item.cautionZhTw ?? "",
                 )}
               </p>
             </div>

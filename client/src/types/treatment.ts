@@ -9,22 +9,27 @@ export interface Treatment {
   nameEn: string;
   nameJa?: string;
   nameZh?: string;
+  nameZhTw?: string;
   desc: string;
   descEn?: string;
   descJa?: string;
   descZh?: string;
+  descZhTw?: string;
   time: string;
   timeEn?: string;
   timeJa?: string;
   timeZh?: string;
+  timeZhTw?: string;
   recovery: string;
   recoveryEn?: string;
   recoveryJa?: string;
   recoveryZh?: string;
+  recoveryZhTw?: string;
   badge?: string | null;
   badgeEn?: string | null;
   badgeJa?: string | null;
   badgeZh?: string | null;
+  badgeZhTw?: string | null;
   badgeColor?: string;
   image: string;
   images?: string[];          // 복수 이미지 (나란히 표시)
@@ -37,18 +42,22 @@ export interface Treatment {
   detailEn?: string;          // 상세 설명 (en)
   detailJa?: string;          // 상세 설명 (ja)
   detailZh?: string;          // 상세 설명 (zh)
+  detailZhTw?: string;        // 상세 설명 (zh-TW)
   caution?: string;           // 주의사항 (ko)
   cautionEn?: string;         // 주의사항 (en)
   cautionJa?: string;         // 주의사항 (ja)
   cautionZh?: string;         // 주의사항 (zh)
+  cautionZhTw?: string;       // 주의사항 (zh-TW)
   sessions?: string;          // 권장 횟수/주기 (ko)
   sessionsEn?: string;        // 권장 횟수/주기 (en)
   sessionsJa?: string;        // 권장 횟수/주기 (ja)
   sessionsZh?: string;        // 권장 횟수/주기 (zh)
+  sessionsZhTw?: string;      // 권장 횟수/주기 (zh-TW)
   effect?: string;            // 기대 효과 (ko)
   effectEn?: string;          // 기대 효과 (en)
   effectJa?: string;          // 기대 효과 (ja)
   effectZh?: string;          // 기대 효과 (zh)
+  effectZhTw?: string;        // 기대 효과 (zh-TW)
   related?: string[];         // 연관 시술 추천
   steps?: { step: number; title: string; desc: string }[]; // 치료 단계
   youtubeUrl?: string;        // 상세 모달 내 YouTube 영상 URL

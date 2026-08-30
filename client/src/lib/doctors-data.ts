@@ -47,12 +47,9 @@ export interface Doctor {
   credentials: { icon: React.ElementType; label: string; text: string }[];
   specialties: string[];
   /** 공식 학술 DB 또는 병원 연구 페이지로 교차 확인된 연구·발표·연수 활동 */
-  researchActivities?: {
-    title: string;
-    detail: string;
-    sourceLabel: string;
-    sourceUrl: string;
-  }[];
+  researchActivities?: DoctorResearchActivity[];
+  /** 대만 번체 전용 연구·발표·연수 활동 번역 */
+  researchActivitiesZhTw?: DoctorResearchActivity[];
 
   // ── JSON-LD 스키마 전용 필드 (신규) ──
   /** schema.org Person.jobTitle (영문) */
@@ -69,6 +66,13 @@ export interface Doctor {
   sameAs?: string[];
   /** schema.org Person.availableService */
   availableService?: string[];
+}
+
+export interface DoctorResearchActivity {
+    title: string;
+    detail: string;
+    sourceLabel: string;
+    sourceUrl: string;
 }
 
 // ── 의료진 데이터 ─────────────────────────────────────────────────────────────
@@ -154,6 +158,16 @@ export const doctors: Doctor[] = [
         sourceUrl: "/research",
       },
     ],
+    researchActivitiesZhTw: [
+      { title: "腋臭與多汗症治療研究", detail: "這項腋臭與多汗症治療的共同研究，可於 PubMed 以作者 Si-Hyung Cho 查閱論文書目。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16681657/" },
+      { title: "融合性網狀乳頭瘤症的抗生素治療病例", detail: "這是刊登於 JAAD、探討融合性網狀乳頭瘤症抗生素治療病例的研究。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11260541/" },
+      { title: "以絕緣針治療汗管瘤的研究", detail: "這是關於使用絕緣針治療汗管瘤、以減少表皮損傷的國際期刊研究。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/20711282/" },
+      { title: "男性型落髮臨床研究", detail: "這是收錄於《大韓皮膚科學會誌》的男性型落髮臨床表現研究。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
+      { title: "高頻注射療法現場示範", detail: "於大慶皮膚美容治療研討會，進行額頭、眉間與下眼瞼皺紋治療的現場示範與發表。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
+      { title: "亞洲美容皮膚外科學術大會受邀發表", detail: "於 Asian Academy of Cosmetic & Dermatologic Surgery 以美容皮膚科與皮膚外科為主題受邀發表。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
+      { title: "國內皮膚科學會臨床發表", detail: "可確認於大韓皮膚科學會學術大會共同發表罕見病例及疤痕雷射磨皮與飛梭雷射合併治療。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
+      { title: "海外專家課程與研修", detail: "於美國、巴西、德國及新加坡完成局部麻醉抽脂、脂肪移植、化學換膚與埋線拉提相關專家課程。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
+    ],
 
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD, PhD",
@@ -224,6 +238,10 @@ export const doctors: Doctor[] = [
         sourceLabel: "PubMed",
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10759963/",
       },
+    ],
+    researchActivitiesZhTw: [
+      { title: "頭皮節段型神經纖維瘤症病例報告", detail: "這是可確認作者所屬為天主教大學的皮膚科病例報告，論文書目可於 KCI 查閱。", sourceLabel: "KCI", sourceUrl: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000885244" },
+      { title: "線狀局限性彈力纖維症病例報告", detail: "這是作者所屬為天主教大學醫學院皮膚科的 Hye Jin Woo 皮膚科病例論文。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10759963/" },
     ],
 
     // ── JSON-LD 스키마 전용 필드 ──

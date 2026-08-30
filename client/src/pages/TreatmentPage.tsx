@@ -51,7 +51,7 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", position: 1, name: breadcrumbLabels.home, item: `${BASE_URL}${langPrefix || "/"}` },
-      { "@type": "ListItem", position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/treatments` },
+      { "@type": "ListItem", position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/equipment3` },
       { "@type": "ListItem", position: 3, name, item: pageUrl },
     ],
   };

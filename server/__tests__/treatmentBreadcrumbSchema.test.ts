@@ -12,8 +12,11 @@ describe("treatment BreadcrumbList JSON-LD", () => {
 
     for (const source of [clientSource, ssrSource]) {
       expect(source).toContain('"@type": "BreadcrumbList"');
-      expect(source).toContain("/treatments");
       expect(source).toContain("itemListElement");
+      expect(source).toContain('position: 1, name: breadcrumbLabels.home, item: `${BASE_URL}${langPrefix || "/"}`');
+      expect(source).toContain('position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/equipment3`');
+      expect(source).not.toContain('position: 2, name: breadcrumbLabels.treatments, item: `${BASE_URL}${langPrefix}/treatments`');
+      expect(source).toContain('position: 3, name, item: pageUrl');
     }
   });
 });

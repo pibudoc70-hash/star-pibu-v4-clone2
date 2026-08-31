@@ -29,6 +29,22 @@
 
 `pnpm check`, `pnpm lint`(오류 0, 기존 경고 106), `pnpm test:unit`(219 files, 1,956 tests), `pnpm build`가 통과했다. `HeroImageFormats.test.ts`는 constants의 mobile logo/desktop background URL과 `client/index.html`의 viewport-specific preload href가 정확히 일치하고, 숨겨진 두 Hero background renderer가 high priority를 설정하지 않는지를 보호한다. build artifact와 Lighthouse JSON은 검증용이며 커밋하지 않는다.
 
+## 승인 후 direct endpoint 검증
+
+승인된 후속 검토에서 `/api/storage/star-logo-mobile_77b7502d_83869d29.webp`는 공개·개발 HTTPS 환경 모두에서 redirect 없이 HTTP 200, `image/webp`, 동일 ETag를 반환했다. 개발 endpoint에는 1년 immutable cache-control이 확인됐고, 공개 endpoint도 1년 cache-control을 반환했다. 이 route는 source상 검증된 storage key만 처리하고, image bytes·content type·ETag·cache control을 직접 반환하므로 mobile Hero asset의 기존 same-origin delivery 계약과 호환된다.
+
+따라서 mobile Hero logo constant와 mobile preload href를 같은 direct `/api/storage/` URL로 함께 전환했다. 최종 HTTPS mobile Lighthouse에서 LCP element는 같은 `img.hero-mobile-logo-img`였고, 세 checklist가 모두 true로 통과했다.
+
+| Lighthouse LCP request discovery checklist | 최종 결과 |
+|---|---|
+| `requestDiscoverable` | true |
+| `priorityHinted` | true (`fetchpriority=high applied`) |
+| `eagerlyLoaded` | true |
+
+network audit에서도 mobile logo는 `/api/storage/` HTTP 200 한 번만, High priority로 요청됐다. background는 legacy `manus-storage` 301→API 200 redirect chain을 유지하지만 Low priority이므로 mobile LCP logo와 경쟁하지 않는다. 최종 single-run lab LCP는 8.4초로 이전 9.8초 기준선보다 1.4초 낮았다. 단일 lab 값은 field/CrUX를 대체하지 않으며, 다음 운영 검토는 실제 production release 뒤 PageSpeed Insights 및 field data로 진행해야 한다.[2]
+
+`pnpm check`, `pnpm lint`(오류 0, 기존 경고 106), `pnpm test:unit`(219 files, 1,956 tests), `pnpm build`도 direct endpoint 전환 뒤 다시 통과했다.
+
 ## References
 
 [1]: https://raw.githubusercontent.com/ChromeDevTools/devtools-frontend/main/front_end/models/trace/insights/LCPDiscovery.ts "Chromium DevTools — LCPDiscovery priority hint evaluation"

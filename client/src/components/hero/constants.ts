@@ -33,8 +33,8 @@ export const HERO_IMAGES = {
 /** 스타피부과 AI 로고 이미지 URL */
 // [P0-OPT] PNG (118 KB) → WebP (42.5 KB) 변환으로 73.3 KB 절감
 export const HERO_LOGO_IMAGE = "/manus-storage/star_logo_d0ae8bbf_8a004167.webp";
-/** 모바일 Hero 전용 경량 WebP logo; desktop은 HERO_LOGO_IMAGE를 유지한다. */
-export const HERO_MOBILE_LOGO_IMAGE = "/manus-storage/star-logo-mobile_77b7502d_83869d29.webp";
+/** 모바일 Hero 전용 경량 WebP logo; LCP priority hint 보존을 위해 direct storage endpoint를 사용한다. */
+export const HERO_MOBILE_LOGO_IMAGE = "/api/storage/star-logo-mobile_77b7502d_83869d29.webp";
 
 /**
  * HERO_DELAYS — HeroSection 애니메이션 딜레이 상수

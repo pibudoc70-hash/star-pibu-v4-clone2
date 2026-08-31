@@ -119,7 +119,7 @@ function HeroSection() {
           <img
             src={HERO_IMAGES.desktopJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
-            fetchPriority="high"
+            fetchPriority="low"
             loading="eager"
             decoding="sync"
             className="hero-bg-img"
@@ -134,7 +134,7 @@ function HeroSection() {
           <img
             src={HERO_IMAGES.mobilePortraitJpg}
             alt="스타피부과 클리닉 내부 - 현대적인 진료 환경"
-            fetchPriority="high"
+            fetchPriority="low"
             loading="eager"
             decoding="sync"
             className="hero-bg-img"

@@ -132,9 +132,14 @@
     <!-- 의료 기관 분류 (AI 검색 카테고리 인식) -->
     <meta name="classification" content="Health, Medical, Dermatology" />
     <meta name="category" content="피부과, 피부과의원, 의료기관" />
-    <!-- LCP 최적화: Hero picture의 승인 WebP source와 동일 resource를 preload해 중복 요청 방지 -->
+    <!-- LCP 최적화: 뷰포트별 실제 Hero LCP resource만 preload해 중복 요청과 high-priority 경쟁 방지 -->
     <link rel="preload" as="image" type="image/webp"
       href="/manus-storage/hero-background-0000_d3dee03d.webp"
+      media="(min-width: 768px)"
+      fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp"
+      href="/manus-storage/star-logo-mobile_77b7502d_83869d29.webp"
+      media="(max-width: 767px)"
       fetchpriority="high" />
     <!-- hreflang: 다국어 SEO 언어별 URL 연결 (non-www canonical — Cloudflare www→non-www 301) -->
     <link rel="alternate" data-rh="true" data-seo-fallback="home" hreflang="ko" href="https://star-pibu.com/" />

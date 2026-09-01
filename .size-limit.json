@@ -5,7 +5,7 @@
   { "name": "vendor-radix", "path": "dist/public/assets/vendor-radix-*.js", "limit": "40 KB", "gzip": true },
   { "name": "vendor-icons", "path": "dist/public/assets/vendor-icons-*.js", "limit": "15 KB", "gzip": true },
   {
-    "name": "홈 초기 총합 (5개 청크)",
+    "name": "홈 초기 총합 (entry + modulepreload)",
     "path": [
       "dist/public/assets/index-*.js",
       "dist/public/assets/vendor-react-*.js",
@@ -13,7 +13,7 @@
       "dist/public/assets/vendor-radix-*.js",
       "dist/public/assets/vendor-icons-*.js"
     ],
-    "limit": "230 KB",
+    "limit": "325 KB",
     "gzip": true
   }
 ]

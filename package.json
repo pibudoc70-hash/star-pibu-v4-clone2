@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "test": "pnpm test:unit",
     "test:unit": "vitest run --exclude=server/__tests__/reservation.test.ts --exclude=server/__tests__/events.test.ts --exclude=server/__tests__/starpibu.test.ts",
+    "test:size": "node scripts/check-home-initial-budget.mjs",
     "test:integration": "node scripts/run-reservation-integration-tests.mjs",
     "test:all": "pnpm test:unit && pnpm test:integration",
     "lint": "eslint .",

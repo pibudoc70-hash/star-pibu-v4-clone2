@@ -229,11 +229,8 @@ const plugins = [
   // 홈에 불필요한 청크의 modulepreload 링크를 index.html에서 제거
   // 이 청크들은 실제 라우트 이동 시 lazy 로드됨
   stripUnusedModulePreloadPlugin([
-    "page-admin",      // 관리자 페이지 (일반 방문자는 접근 안 함)
-    "page-landings",   // /en, /ja, /zh 진입 시에만 필요
     "vendor-heavy",    // xlsx, katex (관리자·특수 페이지)
     "vendor-charts",   // recharts (관리자 통계 페이지)
-    "data-treatments", // 시술 상세 페이지 진입 시에만 필요
   ]),
 ];
 
@@ -327,28 +324,7 @@ export default defineConfig({
             return "vendor-heavy";
           }
 
-          // ── 9. 관리자 페이지 코드 (홈 초기 청크에서 완전 분리) ──
-          if (id.includes("/pages/Admin") || id.includes("/pages/admin/")) {
-            return "page-admin";
-          }
-
-          // ── 10. 언어별 랜딩 페이지 (홈에서는 불필요) ──
-          if (
-            id.includes("/pages/LandingEN") ||
-            id.includes("/pages/LandingJA") ||
-            id.includes("/pages/LandingZH")
-          ) {
-            return "page-landings";
-          }
-
-          // ── 11. 시술·장비 상세 데이터 ──
-          // [Circular chunk 해소] page-landings ↔ data-treatments 순환 의존 방지를 위해
-          // data-treatments 청크 규칙을 제거하고 Rollup 자동 분할에 맡김.
-          // 랜딩 페이지와 treatments 데이터가 서로 참조하는 구조에서 별도 청크를 강제하면
-          // Rollup이 순환 경고를 발생시키므로, 자동 분할로 각 페이지 청크에 포함시킴.
-          // (총 번들 크기는 동일하나 청크 그래프가 단순해짐)
-
-          // ── 12. 나머지 node_modules 는 Rollup 자동 분할에 맡김 ──
+          // ── 9. 나머지 node_modules 는 Rollup 자동 분할에 맡김 ──
           //     (return 없으면 Rollup 이 청크 그래프 기반으로 알아서 분리)
         },
       },

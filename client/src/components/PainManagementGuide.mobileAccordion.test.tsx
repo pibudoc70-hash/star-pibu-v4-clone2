@@ -36,4 +36,14 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(within(firstStage).getByText("Collapse")).toBeInTheDocument();
     expect(within(firstStage).getByText("1. Topical anesthetic")).toBeInTheDocument();
   });
+
+  it("uses compact implicit rows and vertical padding for the mobile guidance panel", () => {
+    render(<PainManagementGuide lang="ko" />);
+
+    const guidancePanel = screen.getByTestId("pain-trust-strip");
+    const firstBadge = within(guidancePanel).getByText("수면마취 운영 경험 20년 이상").closest("article");
+
+    expect(guidancePanel).toHaveClass("mt-3", "auto-rows-max", "content-start", "sm:mt-4");
+    expect(firstBadge).toHaveClass("items-center", "px-4", "py-3", "sm:p-4");
+  });
 });

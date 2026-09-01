@@ -297,11 +297,11 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <section data-testid="pain-trust-strip" aria-label="통증관리 안내" className="mt-4 grid overflow-hidden rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] sm:grid-cols-3">
+        <section data-testid="pain-trust-strip" aria-label="통증관리 안내" className="mt-3 grid auto-rows-max content-start overflow-hidden rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] sm:mt-4 sm:grid-cols-3">
           {trustBadges.map((badge, index) => {
             const Icon = badge.icon;
             return (
-              <article key={badge.title} className="flex min-w-0 gap-3 border-b border-[var(--color-gold-light)] p-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+              <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"><Icon size={19} aria-hidden="true" /></div>
                 <div className="min-w-0"><h3 className="text-sm font-semibold leading-5 text-[var(--color-star-text)]">{badge.title}</h3><p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</p></div>
               </article>

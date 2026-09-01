@@ -19,3 +19,11 @@ The focused accordion suite passed after this adjustment. TypeScript, ESLint (0 
 The supplied tall light-greige panel corresponds to the three-row `pain-trust-strip` beneath the stage cards. On mobile, its implicit grid rows can now use only their content height through `auto-rows-max content-start`. Each row's vertical padding is reduced from `p-4` to `py-3`, and the preceding section margin is reduced from `mt-4` to `mt-3`. This removes the visually excessive top/bottom air without reducing the 40px icon, two-line text allowance, row dividers, or reading contrast.
 
 The desktop breakpoint explicitly restores the previous `sm:mt-4` and `sm:p-4` values, so the three-column desktop guide is unaffected. The mobile accordion test now protects the compact implicit rows, content-start alignment, and the desktop spacing restoration. Focused tests passed 22/22; TypeScript, ESLint with 0 errors, the full unit test command, and production build completed successfully. The 390px screenshot service did not return an image, and that environment limitation is recorded rather than represented as a visual pass.
+
+## Mobile heading and FAQ density refinement
+
+The mobile heading block now uses a smaller heading-to-caption rhythm: header bottom margin is `mb-4`, while the heading and caption each use `mt-2`. The pre-existing desktop `sm:mb-8` and `sm:mt-3` values remain explicit. This shortens the transition into the first summary card without changing title size, line height, wording, or the mobile accordion target height.
+
+The FAQ card is aligned to the same compact language. On mobile, its preceding margin is `mt-4`, outer padding is `p-3.5`, header gap is `mb-1.5`, question summary padding is `py-2.5`, and expanded answer bottom padding is `pb-3`. The 44px minimum interactive height remains in place. At the `sm` breakpoint the prior `mt-5`, `p-5`, header spacing, `py-3`, and `pb-4` values are restored, so the desktop FAQ remains unchanged.
+
+The mobile regression suite now tests the title/caption compact classes, the FAQ outer spacing, question target height/padding, expanded-answer spacing, and their desktop restoration values. Focused tests passed 23/23. The full suite passed 223 files / 1,972 tests; TypeScript, ESLint with 0 errors, and production build completed successfully.

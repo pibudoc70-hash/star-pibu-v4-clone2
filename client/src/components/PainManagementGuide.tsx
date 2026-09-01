@@ -260,10 +260,10 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
     <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-white p-5 shadow-[0_20px_50px_rgba(10,18,40,0.06)] sm:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(135deg,rgba(10,18,40,0.05),rgba(215,181,92,0.14),transparent)]" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="mb-6 text-center sm:mb-8">
+        <header className="mb-4 text-center sm:mb-8">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-          <h2 id={headingId} className="mx-auto mt-3 max-w-[20ch] break-keep text-balance text-[1.55rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
-          <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
+          <h2 id={headingId} className="mx-auto mt-2 max-w-[20ch] break-keep text-balance text-[1.55rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:mt-3 sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
+          <p id="pain-management-summary-caption" className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)] sm:mt-3">{copy.visualCaption}</p>
         </header>
 
         <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-3 md:hidden">
@@ -309,11 +309,11 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-5 rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-4 sm:p-5">
-          <div className="mb-2 flex items-center gap-2"><CircleHelp size={20} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="text-base font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
+        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-4 rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-3.5 sm:mt-5 sm:p-5">
+          <div className="mb-1.5 flex items-center gap-2 sm:mb-2"><CircleHelp size={20} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="text-base font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
           {copy.faqs.map((faq, index) => {
             const Icon = FAQ_ICONS[index] ?? CircleHelp;
-            return <details key={faq.question} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] last:border-b-0"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-start gap-2 text-left text-sm font-semibold leading-6 text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{faq.question}</span><ChevronDown size={18} className="mt-1 shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-4 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</p></details>;
+            return <details key={faq.question} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] last:border-b-0"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 sm:py-3"><span className="flex items-start gap-2 text-left text-sm font-semibold leading-6 text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{faq.question}</span><ChevronDown size={18} className="mt-1 shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)] sm:pb-4">{faq.answer}</p></details>;
           })}
         </section>
         <p className="mt-4 text-center text-xs leading-5 text-[var(--color-star-text-mid)]">{copy.closing}</p>

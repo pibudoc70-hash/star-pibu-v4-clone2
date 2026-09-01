@@ -46,4 +46,21 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(guidancePanel).toHaveClass("mt-3", "auto-rows-max", "content-start", "sm:mt-4");
     expect(firstBadge).toHaveClass("items-center", "px-4", "py-3", "sm:p-4");
   });
+
+  it("keeps mobile heading and FAQ spacing compact while restoring desktop spacing", () => {
+    render(<PainManagementGuide lang="ko" />);
+
+    const caption = document.getElementById("pain-management-summary-caption");
+    const heading = document.getElementById("pain-management-guide-title");
+    const faq = screen.getByTestId("pain-faq");
+    const firstFaq = screen.getByTestId("pain-faq-item-1");
+    const firstFaqSummary = firstFaq.querySelector("summary");
+    const firstFaqAnswer = firstFaq.querySelector("p");
+
+    expect(heading).toHaveClass("mt-2", "sm:mt-3");
+    expect(caption).toHaveClass("mt-2", "sm:mt-3");
+    expect(faq).toHaveClass("mt-4", "p-3.5", "sm:mt-5", "sm:p-5");
+    expect(firstFaqSummary).toHaveClass("min-h-11", "py-2.5", "sm:py-3");
+    expect(firstFaqAnswer).toHaveClass("pb-3", "sm:pb-4");
+  });
 });

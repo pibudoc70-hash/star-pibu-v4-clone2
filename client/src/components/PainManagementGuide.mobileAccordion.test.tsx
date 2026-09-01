@@ -15,6 +15,7 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(screen.getByTestId("pain-management-summary-desktop")).toHaveClass("hidden", "md:grid");
     expect(firstStage).not.toHaveAttribute("open");
     expect(firstSummary).toBeInTheDocument();
+    expect(firstSummary).toHaveClass("grid", "min-h-[68px]", "grid-cols-[2.5rem_minmax(0,1fr)_auto]");
     expect(within(firstStage).getByText("자세히 보기")).toBeInTheDocument();
 
     fireEvent.click(firstSummary!);

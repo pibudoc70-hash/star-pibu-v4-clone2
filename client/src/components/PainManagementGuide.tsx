@@ -260,7 +260,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
     <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-white p-5 shadow-[0_20px_50px_rgba(10,18,40,0.06)] sm:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(135deg,rgba(10,18,40,0.05),rgba(215,181,92,0.14),transparent)]" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="mb-7 text-center sm:mb-8">
+        <header className="mb-6 text-center sm:mb-8">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
           <h2 id={headingId} className="mx-auto mt-3 max-w-[20ch] break-keep text-balance text-[1.55rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
           <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
@@ -270,13 +270,13 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <details key={step.title} data-testid={`pain-mobile-stage-${index + 1}`} className="group overflow-hidden rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-star-navy)] text-white shadow-sm">
-                <summary className="flex min-h-16 cursor-pointer list-none items-center gap-3 p-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
+              <details key={step.title} data-testid={`pain-mobile-stage-${index + 1}`} className="group overflow-hidden rounded-[1.15rem] border border-[var(--color-gold-light)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(10,18,40,0.12)]">
+                <summary className="grid min-h-[68px] cursor-pointer list-none grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(215,181,92,0.14)] text-[var(--color-gold-primary)]"><Icon size={20} aria-hidden="true" /></div>
-                  <div className="min-w-0 flex-1 text-left"><p className="truncate text-[11px] font-semibold tracking-[0.08em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="mt-1 text-base font-semibold leading-5 tracking-tight">{step.title}</h3></div>
-                  <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-gold-primary)]"><span className="group-open:hidden">{copy.expandStep}</span><span className="hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
+                  <div className="min-w-0 text-left"><p className="truncate text-[10px] font-semibold leading-4 tracking-[0.08em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="mt-0.5 text-base font-semibold leading-5 tracking-tight">{step.title}</h3></div>
+                  <span className="flex shrink-0 items-center gap-1 rounded-lg px-1.5 py-1 text-xs font-semibold text-[var(--color-gold-primary)]"><span className="group-open:hidden">{copy.expandStep}</span><span className="hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
                 </summary>
-                <div className="border-t border-[rgba(215,181,92,0.24)] px-4 pb-4 pt-3"><p className="text-sm leading-6 text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
+                <div className="border-t border-[rgba(215,181,92,0.24)] px-3.5 pb-4 pt-3"><p className="max-w-prose text-sm leading-6 text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
               </details>
             );
           })}

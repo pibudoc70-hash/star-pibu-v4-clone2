@@ -37,6 +37,15 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(within(firstStage).getByText("1. Topical anesthetic")).toBeInTheDocument();
   });
 
+  it("uses a compact, locale-safe mobile title treatment without changing desktop type", () => {
+    render(<PainManagementGuide lang="ko" />);
+
+    const thirdStageTitle = within(screen.getByTestId("pain-mobile-stage-3")).getByRole("heading", { name: "수면진정 / 수면마취" });
+
+    expect(thirdStageTitle).toHaveClass("break-keep", "text-[15px]", "leading-[1.25]", "sm:text-base", "sm:leading-5");
+    expect(within(screen.getByTestId("pain-mobile-stage-3")).getByText("자세히 보기")).toHaveClass("sr-only", "sm:not-sr-only");
+  });
+
   it("uses compact implicit rows and vertical padding for the mobile guidance panel", () => {
     render(<PainManagementGuide lang="ko" />);
 

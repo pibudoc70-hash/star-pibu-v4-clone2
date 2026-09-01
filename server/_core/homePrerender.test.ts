@@ -35,6 +35,18 @@ describe("homePrerender", () => {
     expect(html).toContain(`"name":"${clinicName}"`);
   });
 
+  it.each([
+    ["/ja", "皮膚科専門医によるリフトアップ診療", "リフトアップ施術と痛みの管理に関するよくある質問"],
+    ["/zh", "皮肤科专科医生亲诊的提升治疗", "提升治疗与疼痛管理常见问题"],
+  ])("%s 홈 crawler는 locale별 lifting 제목을 사용한다", (pathname, summaryTitle, faqTitle) => {
+    const html = buildHomePrerenderedHtml(template, pathname);
+
+    expect(html).toContain(summaryTitle);
+    expect(html).toContain(faqTitle);
+    expect(html).not.toContain("Dermatologist-led lifting care");
+    expect(html).not.toContain("Lifting & pain-management FAQ");
+  });
+
   it("비한국어 홈 prerender에는 한국어 원본 YouTube VideoObject를 추가하지 않는다", () => {
     expect(buildHomePrerenderedHtml(template, "/en")).not.toContain('"@type":"VideoObject"');
   });

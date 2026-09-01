@@ -17,7 +17,7 @@ import { zhTW } from "../../client/src/lib/i18n.zh-TW";
 import { CLINIC_DOCTORS } from "../../client/src/lib/clinic-data";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, buildLocalizedClinicJsonLd, buildLocalizedWebSiteJsonLd, buildPersonListJsonLd, buildVideoObjectListJsonLd, withSchemaLanguage } from "../../client/src/lib/seoHelpers";
 import { injectPageSeoMeta } from "./seoMeta";
-import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY } from "../../shared/liftingPositioning";
+import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, LIFTING_HOME_SUMMARY, LIFTING_POSITIONING_TITLES } from "../../shared/liftingPositioning";
 import { VERIFIED_YOUTUBE_VIDEO_SEO } from "../../shared/verifiedYoutubeVideoSeo";
 
 const BASE_URL = "https://star-pibu.com";
@@ -144,11 +144,11 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
   const noscriptBody = [
     `<main id="crawler-content" lang="${lang}">`,
     `<header><h1>${escapeHtml(content.hero.title)}</h1><p>${escapeHtml(content.hero.subtitle)}</p><p>${escapeHtml(localizedCopy.clinicIntro)}</p></header>`,
-    `<section aria-labelledby="crawler-lifting-care"><h2 id="crawler-lifting-care">${locale === "ko" ? "피부과 전문의 직접 리프팅 진료" : "Dermatologist-led lifting care"}</h2><p>${escapeHtml(LIFTING_HOME_SUMMARY[locale])}</p></section>`,
+    `<section aria-labelledby="crawler-lifting-care"><h2 id="crawler-lifting-care">${escapeHtml(LIFTING_POSITIONING_TITLES[locale].summary)}</h2><p>${escapeHtml(LIFTING_HOME_SUMMARY[locale])}</p></section>`,
     `<section aria-labelledby="crawler-treatments"><h2 id="crawler-treatments">${escapeHtml(content.nav.treatments)}</h2><p>${escapeHtml(localizedCopy.treatmentIntro)}</p><p><a href="${localizedEquipmentListUrl}">${escapeHtml(content.nav.treatments)}</a></p></section>`,
     `<section aria-labelledby="crawler-story"><h2 id="crawler-story">${escapeHtml(localizedCopy.storyTitle)}</h2><p>${escapeHtml(content.faq.sectionSubtitle)}</p></section>`,
     `<section aria-labelledby="crawler-faq"><h2 id="crawler-faq">${escapeHtml(content.faq.sectionTitle)}</h2><p>${escapeHtml(content.faq.sectionSubtitle)}</p>${faqMarkup}</section>`,
-    `<section aria-labelledby="crawler-lifting-faq"><h2 id="crawler-lifting-faq">${locale === "ko" ? "리프팅 시술과 통증 관리 FAQ" : "Lifting & pain-management FAQ"}</h2><p>${escapeHtml(LIFTING_ANESTHESIA_PREPARATION[locale])}</p><dl>${liftingFaqs.map((item) => `<dt>${escapeHtml(item.question)}</dt><dd>${escapeHtml(item.answer)}</dd>`).join("")}</dl></section>`,
+    `<section aria-labelledby="crawler-lifting-faq"><h2 id="crawler-lifting-faq">${escapeHtml(LIFTING_POSITIONING_TITLES[locale].faq)}</h2><p>${escapeHtml(LIFTING_ANESTHESIA_PREPARATION[locale])}</p><dl>${liftingFaqs.map((item) => `<dt>${escapeHtml(item.question)}</dt><dd>${escapeHtml(item.answer)}</dd>`).join("")}</dl></section>`,
     `<section aria-labelledby="crawler-location"><h2 id="crawler-location">${escapeHtml(localizedCopy.locationTitle)}</h2><address>${escapeHtml(localizedCopy.contactLabel)}</address><p><a href="tel:+82518182300">+82-51-818-2300</a></p></section>`,
     "</main>",
   ].join("\n");

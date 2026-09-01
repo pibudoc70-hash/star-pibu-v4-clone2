@@ -451,17 +451,17 @@ export const en: I18nContent = {
         ]
       },
       {
-        equipment: "XERF (Serf)",
+        equipment: "XERF",
         questions: [
           { q: "What is XERF?", a: "XERF is a cutting-edge RF lifting technology featuring fast treatment time and excellent results. It simultaneously improves skin elasticity and provides a lifting effect." },
           { q: "Can I see results after one treatment?", a: "Yes, you can see immediate results after one treatment. Regular treatments help maintain and improve results over time." },
-          { q: "What are the post-treatment precautions?", a: "Avoid strong sun exposure for 2-3 days after treatment and maintain proper moisturizing care." },
+          { q: "What are the post-treatment precautions?", a: "Avoid strong sun exposure for 2-3 days after treatment and keep the skin well moisturized." },
         ]
       },
       {
-        equipment: "Lower Eyelid Fat Repositioning",
+        equipment: "Under-eye Fat Repositioning",
         questions: [
-          { q: "What is lower eyelid fat repositioning?", a: "This procedure repositions the protruding fat under the eyes to improve hollowness. Natural-looking results can be achieved without incisions." },
+          { q: "What is under-eye fat repositioning?", a: "This procedure repositions the protruding fat under the eyes to reduce under-eye hollows. Natural-looking results can be achieved without incisions." },
           { q: "What is the recovery time?", a: "Swelling and bruising may occur for 1-2 weeks, with full recovery to a natural appearance in 2-4 weeks." },
           { q: "Is recurrence possible?", a: "Since the fat is repositioned rather than removed, the recurrence rate is very low." },
         ]
@@ -509,7 +509,7 @@ export const en: I18nContent = {
     naverPlaceLabel: "Naver Place",
   },
   youtube: {
-    sectionTitle: "Skin Stories from Our Dermatologists",
+    sectionTitle: "Skin Care Tips from Our Dermatologists",
     sectionSubtitle: "Visit our YouTube channel for more skin care tips",
     latestVideos: "Latest Videos",
     shorts: "Shorts",

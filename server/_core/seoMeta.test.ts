@@ -20,6 +20,13 @@ describe("SEO raw HTML meta injection", () => {
     expect(html).toContain('property="og:locale" content="ja_JP"');
     expect(html).toContain('property="og:locale:alternate" content="en_US"');
     expect(html).toContain('property="og:locale:alternate" content="zh_TW"');
+    expect(html).toContain('property="og:site_name" content="釜山スター皮膚科"');
+  });
+
+  it("영어 raw HTML에는 canonical 브랜드 표기의 OG site name을 한 번만 출력한다", () => {
+    const html = injectPageSeoMeta(`${template}<meta property="og:site_name" content="legacy" />`, "/en/equipment3/rejuran");
+    expect(html.match(/property="og:site_name"/g)).toHaveLength(1);
+    expect(html).toContain('property="og:site_name" content="STAR Dermatology Busan"');
   });
 
   it.each([

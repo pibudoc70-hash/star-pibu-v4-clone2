@@ -74,7 +74,7 @@ describe("SITE_NAME_LOCALIZED", () => {
   });
 
   it("en 사이트명이 영어여야 한다", () => {
-    expect(SITE_NAME_LOCALIZED.en).toBe("Star Dermatology Busan");
+    expect(SITE_NAME_LOCALIZED.en).toBe("STAR Dermatology Busan");
   });
 
   it("ja 사이트명이 일본어여야 한다", () => {

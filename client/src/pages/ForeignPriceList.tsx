@@ -21,7 +21,7 @@ const PRICE_COPY: Record<ForeignPriceLocale, {
     noteTitle: "Please note:", noteText: "Treatment suitability and the final care plan are determined after an in-person consultation.", careTitle: "Included care", careText: "is shown only where it appears in the source price list.",
     sectionEyebrow: "Treatment pricing", sectionTitle: "Find a treatment category", listed: "listed prices", all: "All treatments", treatment: "Treatment", details: "Details", price: "Price (VAT incl.)", scrollHint: "Swipe horizontally to view all price details.",
     reference: "Price information is provided for reference. Please confirm the most current treatment plan and any applicable additional fees during your consultation.",
-    seoTitle: "Foreign Patient Price List | Star Dermatology Busan", seoDescription: "Foreign patient treatment prices at Star Dermatology in Busan. Prices are shown in KRW and include VAT unless noted.", seoKeywords: "Busan dermatology price list, foreign patient skin clinic price, Ultherapy Prime price Busan, Thermage FLX price Korea, Star Dermatology",
+    seoTitle: "Foreign Patient Price List | STAR Dermatology Busan", seoDescription: "Foreign patient treatment prices at STAR Dermatology in Busan. Prices are shown in KRW and include VAT unless noted.", seoKeywords: "Busan dermatology price list, foreign patient skin clinic price, Ultherapy Prime price Busan, Thermage FLX price Korea, STAR Dermatology",
   },
   ja: {
     eyebrow: "患者向け情報", title: "料金表", description: "すべての金額は韓国ウォン（KRW）で表示しています。",

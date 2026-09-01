@@ -103,9 +103,16 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const text = labels(lang);
   const name = localized(item, "name", lang);
   const detail = localized(item, "detail", lang) || localized(item, "desc", lang);
-  const seoTitle = item.seoTitle?.trim() || `${name} | 스타피부과`;
-  const seoDescription = item.seoDescription?.trim() || localized(item, "desc", lang);
-  const seoKeywords = item.seoKeywords?.trim() || [name, item.nameEn, "부산피부과", "서면피부과", "스타피부과"].filter(Boolean).join(", ");
+  const normalizeEnglishBrand = (value: string) => lang === "en"
+    ? value.replace(/\bStar Dermatology\b/g, "STAR Dermatology")
+    : value;
+  const seoTitle = normalizeEnglishBrand(item.seoTitle?.trim() || (lang === "en" ? `${name} | STAR Dermatology, Seomyeon, Busan` : `${name} | 스타피부과`));
+  const seoDescription = normalizeEnglishBrand(item.seoDescription?.trim() || (lang === "en"
+    ? `STAR Dermatology Clinic in Seomyeon, Busan offers ${name}. ${localized(item, "desc", lang)}`
+    : localized(item, "desc", lang)));
+  const seoKeywords = normalizeEnglishBrand(item.seoKeywords?.trim() || (lang === "en"
+    ? [name, item.nameEn, "Busan dermatology", "Seomyeon dermatologist", "STAR Dermatology"].filter(Boolean).join(", ")
+    : [name, item.nameEn, "부산피부과", "서면피부과", "스타피부과"].filter(Boolean).join(", ")));
   const effect = localized(item, "effect", lang);
   const duration = localized(item, "sessions", lang) || "개인 피부 상태와 시술 범위에 따라 의료진 상담 후 안내합니다.";
   const target = effect ? `${effect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.` : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.";
@@ -119,12 +126,15 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
   const managedFaqs = getLocalizedEquipmentFaqs(item, lang);
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
+  const schemaFaqs = lang === "en"
+    ? allFaqs.map(({ question, answer }) => ({ question: normalizeEnglishBrand(question), answer: normalizeEnglishBrand(answer) }))
+    : allFaqs;
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
   const localeHomePath = lang === "ko" ? "/" : lang === "zh-TW" ? "/zh-tw" : `/${lang}`;
   const procedure = {
     "@context": "https://schema.org", "@type": "MedicalProcedure", "@id": `${canonical}#medical-procedure`, name, alternateName: item.nameEn || item.name,
-    description: localized(item, "desc", lang), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
-    preparation: hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang), followup: localized(item, "recovery", lang), howPerformed: detail,
+    description: normalizeEnglishBrand(localized(item, "desc", lang)), procedureType: "https://schema.org/CosmeticProcedure", image: item.imageUrl || "", url: canonical,
+    preparation: normalizeEnglishBrand(hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : localized(item, "caution", lang)), followup: normalizeEnglishBrand(localized(item, "recovery", lang)), howPerformed: normalizeEnglishBrand(detail),
     duration: localized(item, "time", lang), provider: { "@id": `${BASE_URL}/#organization` }, relevantSpecialty: "https://schema.org/Dermatology",
     inLanguage: lang,
   };
@@ -136,7 +146,7 @@ export function buildEquipmentPrerenderedHtml(template: string, item: Equipment3
     "@id": `${canonical}#breadcrumb`,
   }, lang);
   const faqSchema = allFaqs.length > 0 ? withSchemaLanguage({
-    ...buildFAQPageJsonLd(allFaqs),
+    ...buildFAQPageJsonLd(schemaFaqs),
     "@id": `${canonical}#faq`,
   }, lang) : null;
   const jsonLd = JSON.stringify([buildLocalizedClinicJsonLd(lang), withSchemaLanguage(procedure, lang), breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]).replace(/</g, "\\u003c");

@@ -1,7 +1,7 @@
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { buildHreflangs, LANG_TO_OG_LOCALE } from "@/lib/seoHelpers";
+import { buildHreflangs, LANG_TO_OG_LOCALE, SITE_NAME_LOCALIZED } from "@/lib/seoHelpers";
 import SeoHead from "./SeoHead";
 
 type Locale = "ko" | "en" | "ja" | "zh" | "zh-TW";
@@ -118,6 +118,8 @@ describe("SeoHead hydrated locale ownership", () => {
       expect(document.head.querySelectorAll('link[rel="alternate"][hreflang]')).toHaveLength(6);
       expect(document.head.querySelectorAll('meta[property="og:locale"]')).toHaveLength(1);
       expect(document.head.querySelector('meta[property="og:locale"]')?.getAttribute("content")).toBe(LANG_TO_OG_LOCALE[locale]);
+      expect(document.head.querySelectorAll('meta[property="og:site_name"]')).toHaveLength(1);
+      expect(document.head.querySelector('meta[property="og:site_name"]')?.getAttribute("content")).toBe(SITE_NAME_LOCALIZED[locale]);
 
       hreflangs.forEach(({ hreflang, href }) => {
         const alternate = document.head.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);

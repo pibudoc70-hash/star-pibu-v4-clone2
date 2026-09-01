@@ -20,6 +20,15 @@ const OG_LOCALES: Record<SeoLocale, string> = {
   "zh-TW": "zh_TW",
 };
 
+/** Raw crawler HTML과 hydrated OG meta가 공유하는 locale별 브랜드 표기. */
+const OG_SITE_NAMES: Record<SeoLocale, string> = {
+  ko: "부산 서면 스타피부과",
+  en: "STAR Dermatology Busan",
+  ja: "釜山スター皮膚科",
+  zh: "釜山STAR皮肤科",
+  "zh-TW": "釜山STAR皮膚科",
+};
+
 /** Raw crawler HTML 문서 언어는 공용 SEO injector만 소유한다. */
 const DOCUMENT_LANGUAGES: Record<SeoLocale, string> = {
   ko: "ko",
@@ -91,13 +100,14 @@ export function injectPageSeoMeta(template: string, pathname: string): string {
     .replace(/<link\b(?=[^>]*\brel="canonical")[^>]*\/?>\s*/gi, "")
     .replace(/<link\b(?=[^>]*\brel="alternate")(?=[^>]*\bhreflang="[^"]+")[^>]*\/?>(\s*)/gi, "")
     .replace(/<meta\b(?=[^>]*\bproperty="og:locale:alternate")[^>]*\/?>(\s*)/gi, "")
+    .replace(/<meta\b(?=[^>]*\bproperty="og:site_name")[^>]*\/?>(\s*)/gi, "")
     .replace(
       /<meta\b(?=[^>]*\bproperty="og:locale")[^>]*\/?>(\s*)/i,
       `<meta data-server-seo="true" property="og:locale" content="${OG_LOCALES[locale]}" />$1`,
     )
     .replace(
       "</head>",
-      `    <link data-server-seo="true" rel="canonical" href="${canonical}" />\n    ${alternateLocaleMarkup}\n    ${hreflangMarkup}\n  </head>`,
+      `    <link data-server-seo="true" rel="canonical" href="${canonical}" />\n    <meta data-server-seo="true" property="og:site_name" content="${OG_SITE_NAMES[locale]}" />\n    ${alternateLocaleMarkup}\n    ${hreflangMarkup}\n  </head>`,
     );
 }
 

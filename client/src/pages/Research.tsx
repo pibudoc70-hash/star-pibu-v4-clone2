@@ -251,7 +251,7 @@ export default function Research() {
         title={lang === "ko"
           ? "연구 및 발표 활동 | 스타피부과 조시형 원장"
           : lang === "en"
-          ? "Research & Publications | Star Dermatology Dr. Cho Si-Hyung"
+          ? "Research & Publications | STAR Dermatology Dr. Cho Si-Hyung"
           : lang === "ja"
           ? "研究・発表活動 | スター皮膚科 趙時亨院長"
           : "研究及学术活动 | Star皮肤科 赵时亨院长"}
@@ -260,7 +260,7 @@ export default function Research() {
         ogUrl={canonicalPath}
         ogImage={CONTENT_OG_IMAGES.research}
         ogType="article"
-        ogImageAlt={lang === "ko" ? "스타피부과 연구 및 발표 활동" : "Star Dermatology research and publications"}
+        ogImageAlt={lang === "ko" ? "스타피부과 연구 및 발표 활동" : "STAR Dermatology research and publications"}
         ogLocale={LANG_TO_OG_LOCALE[lang]}
         hreflangs={hreflangs}
         keywords={

@@ -5,7 +5,7 @@
  * 각 시술별 독립적인 SEO 페이지.
  * pageType="treatment" → noindex 해제, 검색 엔진 인덱싱 허용.
  */
-import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
+import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { CLINIC_INFO } from "@/lib/constants";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -230,30 +230,36 @@ export default function Equipment3Detail() {
 
   // ── SEO ─────────────────────────────────────────────────────────────────────
   const pageUrl = getLocalizedUrl(lang, `/equipment3/${slug}`);
+  const normalizeEnglishBrand = (value: string) => lang === "en"
+    ? value.replace(/\bStar Dermatology\b/g, "STAR Dermatology")
+    : value;
+  const schemaFaqs = lang === "en"
+    ? allFaqs.map(({ question, answer }) => ({ question: normalizeEnglishBrand(question), answer: normalizeEnglishBrand(answer) }))
+    : allFaqs;
 
   // DB에 저장된 SEO 필드를 우선 사용, 없으면 자동 생성
-  const seoTitle = item.seoTitle?.trim() || (() => {
+  const seoTitle = normalizeEnglishBrand(item.seoTitle?.trim() || (() => {
     switch (lang) {
-      case "en": return `${localizedName} | Star Dermatology, Seomyeon, Busan`;
+      case "en": return `${localizedName} | STAR Dermatology, Seomyeon, Busan`;
       case "ja": return `${localizedName} | 釜山西面 スター皮膚科`;
       case "zh": return `${localizedName} | 釜山西面 STAR 皮肤科`;
       default:   return `${item.name} | 부산 서면 스타피부과`;
     }
-  })();
+  })());
 
-  const seoDesc = item.seoDescription?.trim() || (() => {
+  const seoDesc = normalizeEnglishBrand(item.seoDescription?.trim() || (() => {
     const d = localizedDesc || "";
     switch (lang) {
-      case "en": return `Star Dermatology Clinic in Seomyeon, Busan offers ${localizedName}. ${d} Performed by board-certified dermatologist.`;
+      case "en": return `STAR Dermatology Clinic in Seomyeon, Busan offers ${localizedName}. ${d} Performed by board-certified dermatologist.`;
       case "ja": return `釜山西面スター皮膚科の${localizedName}施術案内。${d} 皮膚科専門医が直接施術。`;
       case "zh": return `釜山西面STAR皮肤科${localizedName}项目介绍。${d} 由皮肤科专科医生亲自操作。`;
       default:   return `부산 서면 스타피부과의 ${item.name} 시술 안내. ${item.desc || ""} 피부과 전문의가가 직접 시술합니다.`;
     }
-  })();
+  })());
 
-  const seoKeywords = item.seoKeywords?.trim() || (lang === "ko"
+  const seoKeywords = normalizeEnglishBrand(item.seoKeywords?.trim() || (lang === "ko"
     ? `${item.name}, ${item.nameEn || ""}, 부산피부과, 스타피부과, 서면피부과, 피부과전문의`
-    : `${localizedName}, Busan dermatology, Star Dermatology, Seomyeon`);
+    : `${localizedName}, Busan dermatology, STAR Dermatology, Seomyeon`));
 
   const medicalProcedureJsonLd = {
     "@context": "https://schema.org",
@@ -261,14 +267,14 @@ export default function Equipment3Detail() {
     "@id": `${pageUrl}#medical-procedure`,
     "name": localizedName,
     "alternateName": lang === "ko" ? (item.nameEn || "") : item.name,
-    "description": localizedDesc || "",
+    "description": normalizeEnglishBrand(localizedDesc || ""),
     "procedureType": "https://schema.org/CosmeticProcedure",
     "image": item.imageUrl || "",
     "url": pageUrl,
     "provider": {
       "@type": "MedicalBusiness",
       "@id": `${CLINIC_INFO.url}/#organization`,
-      "name": CLINIC_INFO.name,
+      "name": SITE_NAME_LOCALIZED[lang] ?? CLINIC_INFO.name,
       "url": CLINIC_INFO.url,
       "telephone": CLINIC_INFO.telephone,
       "address": {
@@ -281,8 +287,8 @@ export default function Equipment3Detail() {
       },
     },
     "bodyLocation": LABELS.bodyLoc,
-    "preparation": hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : (localizedCaution || ""),
-    "followup": localizedRecovery || "",
+    "preparation": normalizeEnglishBrand(hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : (localizedCaution || "")),
+    "followup": normalizeEnglishBrand(localizedRecovery || ""),
   };
   const breadcrumbJsonLd = withSchemaLanguage({
     ...buildBreadcrumbJsonLd([
@@ -292,7 +298,7 @@ export default function Equipment3Detail() {
     "@id": `${pageUrl}#breadcrumb`,
   }, lang);
   const faqJsonLd = allFaqs.length > 0 ? withSchemaLanguage({
-    ...buildFAQPageJsonLd(allFaqs),
+    ...buildFAQPageJsonLd(schemaFaqs),
     "@id": `${pageUrl}#faq`,
   }, lang) : null;
   const jsonLd = [

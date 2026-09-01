@@ -111,13 +111,13 @@ export default function NonCoveredGuide() {
   const seoTitle =
     lang === "ja" ? "非保険診療案内 | 釜山西面スター皮膚科" :
     lang === "zh" ? "非医保诊疗指南 | 釜山西面星皮肤科" :
-    lang === "en" ? "Non-Covered Medical Services | Star Dermatology Busan" :
+    lang === "en" ? "Non-Covered Medical Services | STAR Dermatology Busan" :
     "비급여 진료안내 | 부산 서면 스타피부과";
 
   const seoDescription =
     lang === "ja" ? "釜山西面スター皮膚科の非保険診療案内です。ウルセラ・サーマジ・リフティング・レーザーなど非保険診療項目と費用をご案内します。医療法第45条遵守。" :
     lang === "zh" ? "釜山西面星皮肤科的非医保诊疗项目指南。超声刀、热玛吉、提升、激光等项目及费用说明。遵守医疗法第45条。" :
-    lang === "en" ? "Non-covered medical service guide at Star Dermatology Clinic, Seomyeon Busan. Ultherapy, Thermage, lifting, laser treatments and pricing. Compliant with Medical Act Article 45." :
+    lang === "en" ? "Non-covered medical service guide at STAR Dermatology Clinic, Seomyeon Busan. Ultherapy, Thermage, lifting, laser treatments and pricing. Compliant with Medical Act Article 45." :
     "부산 서면 스타피부과의 비급여 진료안내입니다. 울쎄라, 써마지, 리프팅, 레이저 시술 등 비급여 진료 항목과 비용을 안내합니다. 의료법 제45조 준수.";
 
   const seoKeywords =

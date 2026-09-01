@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import {
   JsonLdSchema,
   SITE_NAME,
+  SITE_NAME_LOCALIZED,
   BASE_URL,
   ALL_OG_LOCALES,
   buildClinicJsonLd,
@@ -135,6 +136,7 @@ export default function SeoHead({
         'meta[property="og:image:height"]',
         'meta[property="og:image:alt"]',
         'meta[property="og:locale"]',
+        'meta[property="og:site_name"]',
         'meta[name="twitter:card"]',
         'meta[name="twitter:title"]',
         'meta[name="twitter:description"]',
@@ -150,7 +152,8 @@ export default function SeoHead({
   }, []);
 
   const resolvedOgUrl = ogUrl ?? canonical ?? BASE_URL;
-  const resolvedSiteName = ogSiteName ?? SITE_NAME;
+  const schemaLocale = schemaLocaleFromOgLocale(ogLocale);
+  const resolvedSiteName = ogSiteName ?? SITE_NAME_LOCALIZED[schemaLocale] ?? SITE_NAME;
   const alternates = ogLocaleAlternates ?? ALL_OG_LOCALES.filter((l) => l !== ogLocale);
   // [R21-P1-4] deprecated boolean fallback 제거 완료
   // includeMedicalSchema/includeWebSiteSchema prop 제거 → pageType 프리셋만 사용
@@ -161,7 +164,6 @@ export default function SeoHead({
   // pageType="admin"이면 noindex prop을 명시하지 않아도 noindex 적용
   // 이로 인해 실수로 noindex를 빠뜨려도 admin 페이지는 항상 noindex
   const effectiveNoindex = noindex || pageType === "admin";
-  const schemaLocale = schemaLocaleFromOgLocale(ogLocale);
   const baseSchemas: JsonLdSchema[] = [
     ...(shouldIncludeMedical ? [buildLocalizedClinicJsonLd(schemaLocale)] : []),
     ...(shouldIncludeWebSite ? [buildLocalizedWebSiteJsonLd(schemaLocale)] : []),

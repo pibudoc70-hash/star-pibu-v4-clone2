@@ -35,7 +35,7 @@ export const LIFTING_FAQS: Record<LiftingPositioningLang, LiftingFaq[]> = {
     { question: "수면마취와 국소마취 중 어떤 걸 선택해야 하나요?", answer: "통증 민감도와 시술 부위에 따라 다르며, 상담 시 원장님이 개인 상태에 맞는 마취 방식을 제안해드립니다." },
   ],
   en: [
-    { question: "Are lifting procedures in Busan performed directly by a dermatologist?", answer: "At Star Dermatology, a board-certified dermatologist directly provides the consultation and procedure." },
+    { question: "Are lifting procedures in Busan performed directly by a dermatologist?", answer: "At STAR Dermatology, a board-certified dermatologist directly provides the consultation and procedure." },
     { question: "Is sedation available for lifting procedures?", answer: "For potentially uncomfortable lifting procedures such as Ultherapy Prime and Thermage FLX, topical anesthetic cream, local anesthesia, or sedation may be selected according to your needs. The physician determines and manages the option through consultation." },
     { question: "How do I choose between sedation and local anesthesia?", answer: "The choice depends on pain sensitivity and the treatment area. During consultation, the physician recommends an approach suited to your individual condition." },
   ],

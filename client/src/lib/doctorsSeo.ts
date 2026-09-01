@@ -17,9 +17,9 @@ const DOCTORS_SEO_CONTENT: Record<string, DoctorsSeoContent> = {
     pageTagline: "피부의 격(格)이 바뀌는 순간, 전문의의 안목이 차이를 만듭니다.",
   },
   en: {
-    title: "3 Board-Certified Dermatologists | Star Dermatology Busan",
-    description: "Meet the 3 board-certified dermatologists at Star Dermatology, Seomyeon, Busan. Dr. Jo Si-Hyung (Thermage FLX advisor, 4,000+ under-eye fat repositioning cases), Dr. Woo Hye-Jin, Dr. Lee Gi-Wook. Over 20 years of clinical expertise.",
-    keywords: "Star Dermatology doctors, Busan dermatologist, Dr Jo Si-Hyung, board-certified dermatologist Busan, Seomyeon dermatology",
+    title: "3 Board-Certified Dermatologists | STAR Dermatology Busan",
+    description: "Meet the 3 board-certified dermatologists at STAR Dermatology, Seomyeon, Busan. Dr. Jo Si-Hyung (Thermage FLX advisor, 4,000+ under-eye fat repositioning cases), Dr. Woo Hye-Jin, Dr. Lee Gi-Wook. Over 20 years of clinical expertise.",
+    keywords: "STAR Dermatology doctors, Busan dermatologist, Dr Jo Si-Hyung, board-certified dermatologist Busan, Seomyeon dermatology",
     pageTitle: "3 Board-Certified Dermatologists",
     pageTagline: "When your skin transforms, the specialist's insight makes all the difference.",
   },

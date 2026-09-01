@@ -43,10 +43,28 @@ describe("equipmentPrerender", () => {
     expect(html).not.toContain("홈페이지 OG 설명");
   });
 
+  it("영어 상세는 DB-first metadata의 브랜드 대소문자만 정규화하고 의학적 원문은 보존한다", () => {
+    const html = buildEquipmentPrerenderedHtml(homeMetaTemplate, {
+      ...item,
+      descEn: "Star Dermatology treatment information.",
+      detailEn: "Star Dermatology performs this procedure.",
+      seoTitle: "Rejuran Healer | Star Dermatology, Seomyeon, Busan",
+      seoDescription: "Star Dermatology Clinic treatment information.",
+      seoKeywords: "Rejuran, Star Dermatology",
+    }, "en", "/en/equipment3/rejuran");
+
+    expect(html).toContain("Rejuran Healer | STAR Dermatology, Seomyeon, Busan");
+    expect(html).toContain("STAR Dermatology Clinic treatment information.");
+    expect(html).toContain("Rejuran, STAR Dermatology");
+    expect(html).toContain('"description":"STAR Dermatology treatment information."');
+    expect(html).toContain('"howPerformed":"STAR Dermatology performs this procedure."');
+    expect(html).toContain("<p>Star Dermatology treatment information.</p>");
+  });
+
   it("현재 페이지에도 유효한 공통 OG 태그에서는 홈 fallback 표식만 제거하고, 부정확한 홈 이미지 메타는 제거한다", () => {
     const html = buildEquipmentPrerenderedHtml(homeMetaTemplateWithResidualTags, item, "ko", "/equipment3/rejuran");
 
-    expect(html).toContain('property="og:site_name" content="스타피부과"');
+    expect(html).toContain('property="og:site_name" content="부산 서면 스타피부과"');
     expect(html).toContain('property="og:type" content="website"');
     expect(html).toContain('name="twitter:card" content="summary_large_image"');
     expect(html).not.toContain('property="og:image:width"');
@@ -91,11 +109,12 @@ describe("equipmentPrerender", () => {
     expect(html).toContain('"text":"저장 FAQ 답변"');
   });
 
-  it("현지화된 FAQ가 있으면 Breadcrumb·FAQ schema에 그 번역을 사용한다", () => {
-    const html = buildEquipmentPrerenderedHtml(template, { ...item, faqsEn: JSON.stringify([{ question: "Stored English question", answer: "Stored English answer" }]) }, "en", "/en/equipment3/rejuran");
+  it("영문 FAQ JSON-LD는 DB 원문을 보존한 채 브랜드 대소문자만 정규화한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, { ...item, faqsEn: JSON.stringify([{ question: "Stored English question", answer: "At Star Dermatology" }]) }, "en", "/en/equipment3/rejuran");
 
     expect(html).toContain('"name":"Stored English question"');
-    expect(html).toContain('"text":"Stored English answer"');
+    expect(html).toContain('"text":"At STAR Dermatology"');
+    expect(html).toContain("<dd>At Star Dermatology</dd>");
   });
 
   it("원본 HTML에서 FAQ를 진료·시술 안내보다 먼저 배치한다", () => {

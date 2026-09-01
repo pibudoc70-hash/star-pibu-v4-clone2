@@ -5,7 +5,7 @@ import { buildPhysicianJsonLd, getDoctorsSeoContent } from "./doctorsSeo";
 describe("Doctors SEO 순수 데이터", () => {
   it.each([
     ["ko", "피부과전문의 3인 | 부산 서면 스타피부과"],
-    ["en", "3 Board-Certified Dermatologists | Star Dermatology Busan"],
+    ["en", "3 Board-Certified Dermatologists | STAR Dermatology Busan"],
     ["ja", "皮膚科専門医3名 | 釜山 서면 スター皮膚科"],
     ["zh", "3位皮肤科专科医生 | 釜山서면 STAR皮肤科"],
   ])("%s locale의 기존 page title을 보존한다", (lang, expectedTitle) => {

@@ -85,9 +85,9 @@ export default function ForeignGuide() {
   // 언어별 SEO 메타 (title/description/keywords)
   const SEO_META: Record<ForeignLang, { title: string; description: string; keywords: string }> = {
     en: {
-      title: "Foreign Patient Guide | Star Dermatology Clinic Busan",
-      description: "Star Dermatology Clinic in Seomyeon, Busan offers English-language consultations. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning and more.",
-      keywords: "Busan dermatology, Star Dermatology Clinic, Ultherapy Busan, Thermage Busan, skin clinic Busan, foreign patient guide",
+      title: "Foreign Patient Guide | STAR Dermatology Clinic Busan",
+      description: "STAR Dermatology Clinic in Seomyeon, Busan offers English-language consultations. Ultherapy Prime, Thermage FLX, Under-Eye Fat Repositioning and more.",
+      keywords: "Busan dermatology, STAR Dermatology Clinic, Ultherapy Busan, Thermage Busan, skin clinic Busan, foreign patient guide",
     },
     ja: {
       title: "外国人患者ガイド | 釜山スター皮膚科",

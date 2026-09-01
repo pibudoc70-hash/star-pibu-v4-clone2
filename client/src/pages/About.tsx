@@ -31,21 +31,21 @@ export default function About() {
     lang === "ja" ? "クリニック紹介 | 釜山西面スター皮膚科 - 20年の経験を持つ皮膚科専門医" :
     lang === "zh" ? "诊所介绍 | 釜山西面星皮肤科 - 20年经验皮肤科专科医生" :
     lang === "zh-TW" ? "診所介紹｜釜山西面STAR皮膚科" :
-    lang === "en" ? "About Us | Star Dermatology Clinic Busan - 20 Years of Expert Care" :
+    lang === "en" ? "About Us | STAR Dermatology Clinic Busan - 20 Years of Expert Care" :
     "피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의";
 
   const seoDescription =
     lang === "ja" ? "釜山西面スター皮膚科をご紹介します。20年の経験を持つ皮膚科専門医が直接診療し、ウルセラピー・サーマジ・リフティング・色素治療などプレミアム治療を提供しています。" :
     lang === "zh" ? "介绍釜山西面星皮肤科。拥有20年经验的皮肤科专科医生亲自诊疗，提供热玛吉、提升、色素治疗等高端治疗项目。" :
     lang === "zh-TW" ? "介紹釜山西面STAR皮膚科的診療理念、醫師團隊、診療時間與交通資訊。" :
-    lang === "en" ? "About Star Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more." :
+    lang === "en" ? "About STAR Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more." :
     "부산 서면 스타피부과를 소개합니다. 20년 경력의 피부과 전문의가 직접 진료하며, 울쎄라, 써마지, 리프팅, 색소질환 등 프리미엄 시술을 제공합니다.";
 
   const seoKeywords =
     lang === "ja" ? "釜山皮膚科, スター皮膚科, 皮膚科専門医, 西面皮膚科, 釜山リフティング" :
     lang === "zh" ? "釜山皮肤科, 星皮肤科, 皮肤科专科, 西面皮肤科, 釜山提升" :
     lang === "zh-TW" ? "釜山皮膚科, STAR皮膚科, 西面皮膚科, 皮膚科專科, 診所介紹" :
-    lang === "en" ? "Busan dermatology, Star Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
+    lang === "en" ? "Busan dermatology, STAR Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
     "부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅";
 
   // access 섹션 레이블 (언어별 분기)

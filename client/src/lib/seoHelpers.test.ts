@@ -300,7 +300,7 @@ describe("buildWebSiteJsonLd — 기본 엔터티 계약", () => {
 describe("locale-aware shared schema", () => {
   it.each([
     ["ko", "부산 서면 스타피부과"],
-    ["en", "Star Dermatology Busan"],
+    ["en", "STAR Dermatology Busan"],
     ["ja", "釜山スター皮膚科"],
     ["zh", "釜山STAR皮肤科"],
     ["zh-TW", "釜山STAR皮膚科"],

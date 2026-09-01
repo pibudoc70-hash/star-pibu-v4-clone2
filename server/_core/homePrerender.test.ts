@@ -23,7 +23,7 @@ describe("homePrerender", () => {
 
   it.each([
     ["/", "ko", "ko", "부산 서면 스타피부과"],
-    ["/en", "en", "en", "Star Dermatology Busan"],
+    ["/en", "en", "en", "STAR Dermatology Busan"],
     ["/ja", "ja", "ja", "釜山スター皮膚科"],
     ["/zh", "zh", "zh", "釜山STAR皮肤科"],
     ["/zh-tw", "zh-Hant", "zh-TW", "釜山STAR皮膚科"],

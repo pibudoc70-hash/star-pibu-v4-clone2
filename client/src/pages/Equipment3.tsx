@@ -406,13 +406,13 @@ export default function Equipment3() {
   const pageUrl = getLocalizedUrl(lang, "/equipment3");
   const seoTitle = getText(
     "시술·장비 소개 | 부산 서면 스타피부과",
-    "Treatments & Equipment | Star Dermatology Busan",
+    "Treatments & Equipment | STAR Dermatology Busan",
     "施術・機器のご案内 | 釜山西面スター皮膚科",
     "项目与设备介绍 | 釜山西面STAR皮肤科"
   );
   const seoDesc = getText(
     "부산 서면 스타피부과의 다양한 시술과 장비를 소개합니다. 피부과 전문의가 직접 시술합니다.",
-    "Explore our wide range of treatments and equipment at Star Dermatology Clinic, Seomyeon, Busan. Performed by board-certified dermatologists.",
+    "Explore our wide range of treatments and equipment at STAR Dermatology Clinic, Seomyeon, Busan. Performed by board-certified dermatologists.",
     "釜山西面スター皮膚科の施術・機器をご紹介します。皮膚科専門医が直接施術します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。由皮肤科专科医生亲自操作。"
   );
@@ -425,7 +425,7 @@ export default function Equipment3() {
   );
   const pageSubtitle = getText(
     "부산 서면 스타피부과의 다양한 시술과 장비를 소개합니다.",
-    "Explore our wide range of treatments and equipment at Star Dermatology, Seomyeon, Busan.",
+    "Explore our wide range of treatments and equipment at STAR Dermatology, Seomyeon, Busan.",
     "釜山西面スター皮膚科の施術・機器をご紹介します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。"
   );

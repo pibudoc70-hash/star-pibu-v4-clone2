@@ -46,7 +46,7 @@ const copy: Record<Locale, {
     contactLabel: "부산광역시 부산진구 서면로 74 아이온시티빌딩 4층 · 051-818-2300",
   },
   en: {
-    clinicIntro: "Star Dermatology is a dermatologist-led clinic in Seomyeon, Busan, offering tailored care plans based on each patient's skin condition and lifestyle.",
+    clinicIntro: "STAR Dermatology is a dermatologist-led clinic in Seomyeon, Busan, offering tailored care plans based on each patient's skin condition and lifestyle.",
     storyTitle: "Skin Stories from Our Dermatology Specialists",
     locationTitle: "Directions",
     treatmentIntro: "Explore treatments and devices for lifting, pigmentation, tattoos, scars, pores, volume, and skin boosters.",

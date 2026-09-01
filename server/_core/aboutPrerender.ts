@@ -88,9 +88,9 @@ function getSeo(locale: Locale) {
     homeLabel: "首頁",
   };
   if (locale === "en") return {
-    title: "About Us | Star Dermatology Clinic Busan - 20 Years of Expert Care",
-    description: "About Star Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more.",
-    keywords: "Busan dermatology, Star Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us",
+    title: "About Us | STAR Dermatology Clinic Busan - 20 Years of Expert Care",
+    description: "About STAR Dermatology Clinic in Seomyeon, Busan. A board-certified dermatologist with 20+ years of experience provides Ultherapy, Thermage, lifting, pigmentation treatments and more.",
+    keywords: "Busan dermatology, STAR Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us",
     label: "About",
     homeLabel: "Home",
   };

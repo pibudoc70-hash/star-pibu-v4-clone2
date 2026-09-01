@@ -24,7 +24,7 @@ export const BASE_URL = "https://star-pibu.com";
 /** 언어별 사이트명 (og:site_name, JSON-LD name 필드에 사용) */
 export const SITE_NAME_LOCALIZED: Record<string, string> = {
   ko: "부산 서면 스타피부과",
-  en: "Star Dermatology Busan",
+  en: "STAR Dermatology Busan",
   ja: "釜山スター皮膚科",
   zh: "釜山STAR皮肤科",
   "zh-TW": "釜山STAR皮膚科",
@@ -41,7 +41,7 @@ const CLINIC_SCHEMA_COPY: Record<SchemaLocale, { name: string; description: stri
   },
   en: {
     name: SITE_NAME_LOCALIZED.en,
-    description: "Star Dermatology is a dermatologist-led clinic in Seomyeon, Busan, providing individualized dermatologic care plans.",
+    description: "STAR Dermatology is a dermatologist-led clinic in Seomyeon, Busan, providing individualized dermatologic care plans.",
   },
   ja: {
     name: SITE_NAME_LOCALIZED.ja,

@@ -195,6 +195,8 @@ export function securityHeadersMiddleware(
       "magnetometer=()",
       "accelerometer=()",
       "gyroscope=()",
+      // bfcache를 막는 unload listener가 first/third-party script에서 다시 등록되지 않도록 차단
+      "unload=()",
     ].join(", ")
   );
 

@@ -113,6 +113,7 @@ describe("securityHeadersMiddleware", () => {
     expect(pp).toContain("microphone=()");
     expect(pp).toContain("geolocation=()");
     expect(pp).toContain("payment=()");
+    expect(pp).toContain("unload=()");
   });
 
   it("X-XSS-Protection을 설정해야 한다 (Step49-G: 구형 XSS 필터 비활성화)", () => {

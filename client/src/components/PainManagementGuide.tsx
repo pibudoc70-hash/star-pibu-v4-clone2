@@ -16,6 +16,8 @@ type GuideCopy = {
   intro: string;
   visualHeading: string;
   visualCaption: string;
+  expandStep: string;
+  collapseStep: string;
   careCheckpoints: Checkpoint[];
   steps: Step[];
   experienceHeading: string;
@@ -42,6 +44,8 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "리프팅 시술에서 통증에 대한 걱정은 자연스러운 일입니다. 스타피부과는 시술 특성과 개인의 통증 민감도를 먼저 확인한 뒤, 꼭 필요한 단계만 원장님이 직접 검토하고 결정합니다.",
     visualHeading: "한눈에 보는 개인별 통증관리 3단계",
     visualCaption: "시술 특성과 개인의 통증 민감도를 먼저 확인한 뒤, 꼭 필요한 단계만 원장님이 직접 검토하고 결정합니다.",
+    expandStep: "자세히 보기",
+    collapseStep: "접기",
     careCheckpoints: [
       { label: "사전 확인", detail: "건강상태·복용약·알레르기·과거력을 확인하고, 의료진과 시술·통증관리 계획을 검토합니다. 확인 범위와 안내는 개인 상태에 따라 달라질 수 있습니다." },
       { label: "시술 중 관찰", detail: "Kohden SpO₂ 모니터와 혈압측정기를 바탕으로 환자 상태를 지속적으로 살핍니다. 관찰 방법과 범위는 시술 및 개인 상태에 따라 달라질 수 있습니다." },
@@ -74,6 +78,8 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "Considering concerns about discomfort is an important first step in planning a procedure. Star Dermatology reviews the procedure and each patient’s condition to consider pain-management options in stages.",
     visualHeading: "Individualized pain-management path at a glance",
     visualCaption: "After reviewing the procedure and individual condition, the medical team considers only the steps that may be needed.",
+    expandStep: "View details",
+    collapseStep: "Collapse",
     careCheckpoints: [
       { label: "Pre-procedure review", detail: "Health status, medications, allergies, and medical history are reviewed with the medical team alongside the procedure and pain-management plan. The review and guidance may vary by individual condition." },
       { label: "Observation during care", detail: "A Kohden SpO₂ monitor and blood-pressure monitor support continuous observation of the patient’s condition. The method and scope of observation may vary by procedure and individual condition." },
@@ -111,6 +117,8 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "痛みに対するご不安まで考えることが、施術計画の大切な出発点です。スター皮膚科では、施術の特性と患者様の状態を確認しながら、痛み管理の方法を段階的に検討します。",
     visualHeading: "ひと目でわかる個別の痛み管理の流れ",
     visualCaption: "施術の特性と個別の状態を確認し、必要な段階だけを医療スタッフが検討します。",
+    expandStep: "詳細を見る",
+    collapseStep: "閉じる",
     careCheckpoints: [
       { label: "施術前確認", detail: "健康状態・服用薬・アレルギー・既往歴を確認し、医療スタッフと施術・痛み管理の計画を検討します。確認範囲とご案内は個別の状態により異なる場合があります。" },
       { label: "施術中の観察", detail: "Kohden SpO₂モニターと血圧計をもとに、患者様の状態を継続して確認します。観察方法と範囲は、施術および個別の状態により異なる場合があります。" },
@@ -148,6 +156,8 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "将对不适的担忧纳入考虑，是制定治疗计划的重要起点。STAR皮肤科会结合治疗特点与患者状态，分阶段评估疼痛管理方式。",
     visualHeading: "一目了然的个性化疼痛管理流程",
     visualCaption: "确认治疗特点和个人状态后，医护人员仅评估可能需要的阶段。",
+    expandStep: "查看详情",
+    collapseStep: "收起",
     careCheckpoints: [
       { label: "治疗前确认", detail: "会确认健康状态、用药、过敏与既往病史，并与医护人员评估治疗及疼痛管理计划。确认范围与说明可能因个人状态而有所不同。" },
       { label: "治疗中观察", detail: "会使用Kohden SpO₂监测仪与血压计持续观察患者状态。观察方式与范围可能因治疗及个人状态而有所不同。" },
@@ -185,6 +195,8 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     intro: "將對不適的擔憂納入考量，是規劃療程的重要起點。STAR皮膚科會綜合療程特性與患者狀態，分階段評估疼痛管理方式。",
     visualHeading: "一目瞭然的個人化疼痛管理流程",
     visualCaption: "確認療程特性與個人狀態後，醫護人員僅評估可能需要的階段。",
+    expandStep: "查看詳情",
+    collapseStep: "收合",
     careCheckpoints: [
       { label: "療程前確認", detail: "會確認健康狀態、用藥、過敏與既往病史，並與醫護人員評估療程及疼痛管理計畫。確認範圍與說明可能因個人狀態而有所不同。" },
       { label: "療程中觀察", detail: "會使用Kohden SpO₂監測儀與血壓計持續觀察患者狀態。觀察方式與範圍可能因療程及個人狀態而有所不同。" },
@@ -254,7 +266,23 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           <p id="pain-management-summary-caption" className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
         </header>
 
-        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-3 md:grid-cols-3 md:gap-4">
+        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-3 md:hidden">
+          {copy.steps.map((step, index) => {
+            const Icon = STEP_ICONS[index] ?? Stethoscope;
+            return (
+              <details key={step.title} data-testid={`pain-mobile-stage-${index + 1}`} className="group overflow-hidden rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-star-navy)] text-white shadow-sm">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center gap-3 p-4 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(215,181,92,0.14)] text-[var(--color-gold-primary)]"><Icon size={20} aria-hidden="true" /></div>
+                  <div className="min-w-0 flex-1 text-left"><p className="truncate text-[11px] font-semibold tracking-[0.08em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="mt-1 text-base font-semibold leading-5 tracking-tight">{step.title}</h3></div>
+                  <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--color-gold-primary)]"><span className="group-open:hidden">{copy.expandStep}</span><span className="hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
+                </summary>
+                <div className="border-t border-[rgba(215,181,92,0.24)] px-4 pb-4 pt-3"><p className="text-sm leading-6 text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
+              </details>
+            );
+          })}
+        </section>
+
+        <section data-testid="pain-management-summary-desktop" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="hidden gap-3 md:grid md:grid-cols-3 md:gap-4">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (

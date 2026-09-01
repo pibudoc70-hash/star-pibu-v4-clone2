@@ -61,3 +61,11 @@ The only confirmed polish issue was the third Korean stage title, `수면진정 
 ## Reference
 
 [1]: https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html "WCAG 2.2 — Target Size (Minimum)"
+
+## Residual whitespace refinement
+
+The repeat 390px review found no hidden min-height or unresolved blank container within the Pain Management content. The remaining perception of excess space came from the outer mobile panel padding, the visual gradient depth, the header-to-summary separation, and the final closing-message margin. These are presentation surfaces rather than content or interaction height.
+
+The mobile panel now uses 16px outer padding (`p-4`), 12px header-to-summary spacing (`mb-3`), a shallower 128px top gradient (`h-32`), and a 12px final note margin (`mt-3`). Desktop restores the preceding 32px outer padding, 32px header separation, 160px gradient, and 16px closing margin at `sm`. The existing 68px stage targets, 44px FAQ targets, text, dividers, native accordion behavior, and all localized content remain unchanged.
+
+The final 390px Chrome measurement retained an exact 390px document width with no horizontal overflow; the third stage title stayed as one 22px-high line. The focused Pain Management suite passed 5/5 after the adjustment. TypeScript, ESLint (0 errors; pre-existing warnings unchanged), the complete unit-test command, and production build passed after the updated source-contract test.

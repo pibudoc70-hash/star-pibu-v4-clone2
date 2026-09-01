@@ -59,6 +59,8 @@ describe("PainManagementGuide mobile accordion", () => {
   it("keeps mobile heading and FAQ spacing compact while restoring desktop spacing", () => {
     render(<PainManagementGuide lang="ko" />);
 
+    const panel = document.getElementById("pain-management-guide-title")?.closest("section");
+    const header = document.getElementById("pain-management-guide-title")?.closest("header");
     const caption = document.getElementById("pain-management-summary-caption");
     const heading = document.getElementById("pain-management-guide-title");
     const faq = screen.getByTestId("pain-faq");
@@ -66,10 +68,13 @@ describe("PainManagementGuide mobile accordion", () => {
     const firstFaqSummary = firstFaq.querySelector("summary");
     const firstFaqAnswer = firstFaq.querySelector("p");
 
+    expect(panel).toHaveClass("p-4", "sm:p-8");
+    expect(header).toHaveClass("mb-3", "sm:mb-8");
     expect(heading).toHaveClass("mt-2", "sm:mt-3");
     expect(caption).toHaveClass("mt-2", "sm:mt-3");
     expect(faq).toHaveClass("mt-4", "p-3.5", "sm:mt-5", "sm:p-5");
     expect(firstFaqSummary).toHaveClass("min-h-11", "py-2.5", "sm:py-3");
     expect(firstFaqAnswer).toHaveClass("pb-3", "sm:pb-4");
+    expect(screen.getByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).toHaveClass("mt-3", "sm:mt-4");
   });
 });

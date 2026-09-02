@@ -61,19 +61,19 @@ export default function UltheraThermagePromotionPopup() {
         role="dialog"
         aria-modal="true"
         aria-label="울쎄라피 프라임 및 써마지 FLX 이벤트"
-        className="ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] md:max-w-[960px]"
+        className="ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] md:max-w-[960px]"
       >
         <button
           ref={closeButtonRef}
           type="button"
           onClick={dismiss}
           aria-label="닫기"
-          className="absolute right-3 top-3 z-20 flex size-11 items-center justify-center rounded-full border border-white/35 bg-[rgba(10,18,40,0.86)] text-white shadow-lg transition-colors hover:bg-[var(--color-star-navy)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)]"
+          className="absolute right-0 -top-14 z-30 flex size-11 items-center justify-center rounded-full border-2 border-[var(--color-star-navy)] bg-white text-[var(--color-star-navy)] shadow-[0_6px_18px_rgba(0,0,0,0.34)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:-right-14 md:top-0"
         >
           <X size={18} aria-hidden="true" />
         </button>
 
-        <div className="relative">
+        <div className="relative overflow-hidden rounded-[1.25rem]">
           <picture>
             <source media="(min-width: 768px)" srcSet={ULTHERA_THERMAGE_PROMOTIONS.desktopImage} />
             <img

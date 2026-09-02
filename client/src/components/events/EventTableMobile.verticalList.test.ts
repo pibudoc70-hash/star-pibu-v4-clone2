@@ -13,7 +13,8 @@ describe("EventTableMobile vertical list", () => {
     expect(source).toContain("event-mobile-entry overflow-hidden bg-white transition-colors");
     expect(source).toContain('index > 0 ? "border-t" : ""');
     expect(source).toContain("mobile-event-price-${event.id}");
-    expect(source).not.toContain("mobile-event-expand-indicator");
+    expect(source).toContain("mobile-event-expand-indicator-${event.id}");
+    expect(source).toContain("size-6 shrink-0");
     expect(source).not.toContain("snap-x snap-mandatory");
     expect(source).not.toContain('aria-roledescription="carousel"');
   });

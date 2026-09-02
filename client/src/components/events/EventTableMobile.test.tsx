@@ -62,7 +62,9 @@ describe("EventTableMobile", () => {
     expect(orderedItems[1]).toHaveAttribute("data-event-detail", "1");
     expect(orderedItems[2]).toHaveAttribute("data-event-row", "2");
 
-    expect(screen.queryByTestId("mobile-event-expand-indicator-1")).not.toBeInTheDocument();
+    const indicator = screen.getByTestId("mobile-event-expand-indicator-1");
+    expect(indicator).toHaveAttribute("data-expanded", "true");
+    expect(indicator).toHaveClass("size-6", "rotate-180");
     expect(screen.getByTestId("mobile-event-price-1")).toHaveClass("shrink-0", "text-right");
 
     const detail = screen.getByTestId("mobile-event-detail-1");
@@ -74,6 +76,8 @@ describe("EventTableMobile", () => {
 
     expect(screen.getByTestId("mobile-event-detail-1")).not.toHaveClass("is-open");
     expect(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" })).toHaveAttribute("aria-expanded", "false");
+    expect(indicator).toHaveAttribute("data-expanded", "false");
+    expect(indicator).not.toHaveClass("rotate-180");
   });
 
   it("각 이벤트 행에 상세 확인 안내를 표시하고 하나의 행만 확장한다", () => {
@@ -126,12 +130,12 @@ describe("EventTableMobile", () => {
   it("uses a spacious left-title right-price rhythm and a distinct white detail surface", () => {
     const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
 
-    expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-3 pb-4");
-    expect(source).toContain('<div className="mb-2">');
+    expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4");
+    expect(source).toContain('<div className="mb-1.5">');
     expect(source).toContain('style={{ aspectRatio: "16/9" }}');
     expect(source).toContain('className="flex min-w-0 flex-1 items-center justify-between gap-4"');
     expect(source).toContain('className="flex shrink-0 items-baseline justify-end gap-1 text-right"');
-    expect(source).not.toContain("mobile-event-expand-indicator");
+    expect(source).toContain("mobile-event-expand-indicator-${event.id}");
     expect(source).toContain('"!h-auto !min-h-[5.5rem] !py-5"');
     expect(source).not.toContain("function VatBadge");
   });

@@ -4,7 +4,7 @@
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
 import { useRef, useState } from "react";
-import { Sparkles } from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -113,8 +113,8 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
       inert={!isOpen}
     >
       <div className="event-mobile-detail__content">
-        <section className="event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-3 pb-4" aria-label={`${title} ${copy.detail}`}>
-          <div className="mb-2">
+        <div className="event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4">
+          <div className="mb-1.5">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>
@@ -177,7 +177,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
               {copy.close}
             </button>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
@@ -263,7 +263,6 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                    {isPriority && <span className="text-[10px] font-bold tracking-[0.14em] text-[var(--color-gold-deep)]" aria-hidden="true">0{priorityIndex + 1}</span>}
                     <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
                     </div>
                   </div>
@@ -271,6 +270,14 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                       <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
                       {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
                   </div>
+                  <span
+                    data-testid={`mobile-event-expand-indicator-${event.id}`}
+                    data-expanded={isOpen}
+                    aria-hidden="true"
+                    className={`ml-2 inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-light)] text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}
+                  >
+                    <ChevronDown size={14} strokeWidth={2.25} />
+                  </span>
                 </div>
               </button>
 

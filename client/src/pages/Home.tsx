@@ -621,7 +621,7 @@ export default function Home() {
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
+          <DeferredMount fallback={<div aria-hidden="true" className="h-px" />}>
             <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
               <RecentNoticesSection lang="ko" />
             </Suspense>

@@ -27,13 +27,21 @@ describe("Home below-the-fold deferred mount contract", () => {
       "FacilitySection",
       "YouTubeSection",
       "FAQSection",
-      "RecentNoticesSection",
       "ContactSection",
     ]) {
       expect(homeSource).toMatch(
         new RegExp(`<DeferredMount[\\s\\S]*?<${section}`),
       );
     }
+  });
+
+  it("keeps the optional recent-notices deferred mount surface-free before content is ready", () => {
+    expect(homeSource).toContain(
+      '<DeferredMount fallback={<div aria-hidden="true" className="h-px" />}>',
+    );
+    expect(homeSource).toMatch(
+      /<DeferredMount fallback=\{<div aria-hidden="true" className="h-px" \/>\}>[\s\S]*?<RecentNoticesSection/,
+    );
   });
 
   it("keeps the below-fold Google Maps iframe behind ContactSection's deferred mount", () => {

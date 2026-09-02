@@ -10,6 +10,49 @@ import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useChatConfig } from "@/hooks/useChatConfig";
 
+const MOBILE_EVENT_COPY = {
+  ko: {
+    hint: "원하는 이벤트를 누르면 상세 내용과 가격을 확인할 수 있어요.",
+    open: "상세 보기",
+    close: "상세 접기",
+    detail: "상세",
+    pricing: "가격 안내",
+    treatment: "시술",
+  },
+  en: {
+    hint: "Tap an event to view its details and pricing.",
+    open: "View details",
+    close: "Close details",
+    detail: "details",
+    pricing: "Pricing",
+    treatment: "Treatment",
+  },
+  ja: {
+    hint: "イベントをタップすると、詳細と料金をご確認いただけます。",
+    open: "詳細を見る",
+    close: "詳細を閉じる",
+    detail: "詳細",
+    pricing: "料金案内",
+    treatment: "施術",
+  },
+  zh: {
+    hint: "点击活动即可查看详情和价格。",
+    open: "查看详情",
+    close: "收起详情",
+    detail: "详情",
+    pricing: "价格说明",
+    treatment: "治疗项目",
+  },
+  "zh-TW": {
+    hint: "點選活動即可查看詳細內容與價格。",
+    open: "查看詳細",
+    close: "收起詳細",
+    detail: "詳細",
+    pricing: "價格說明",
+    treatment: "療程",
+  },
+} as const;
+
 interface EventTableMobileProps {
   events: SpecialEvent[];
   getLocalizedText: (event: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => string;
@@ -53,6 +96,7 @@ interface EventInlineDetailProps {
 function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: EventInlineDetailProps) {
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
+  const copy = MOBILE_EVENT_COPY[lang];
   const priceRows = parsePriceRows(event);
   const title = getLocalizedText(event, "title");
   const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
@@ -69,7 +113,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
       inert={!isOpen}
     >
       <div className="event-mobile-detail__content">
-        <section className="event-mobile-detail__body border-t border-gray-100 bg-slate-50/95 px-5 pt-3 pb-5" aria-label={`${title} 상세`}>
+        <section className="event-mobile-detail__body border-t border-gray-100 bg-slate-50/95 px-5 pt-3 pb-5" aria-label={`${title} ${copy.detail}`}>
           <div className="mb-2">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
@@ -86,7 +130,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
 
           <div className="rounded-xl overflow-hidden border border-gray-100">
             <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100">
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">가격 안내</span>
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{copy.pricing}</span>
             </div>
             <div className="divide-y divide-gray-100">
               {priceRows.length > 0 ? (
@@ -104,7 +148,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
                 ))
               ) : (
                 <div className="flex items-center justify-between gap-3 px-4 py-3">
-                  <span className="text-xs text-gray-600">{event.productName || "시술"}</span>
+                  <span className="text-xs text-gray-600">{event.productName || copy.treatment}</span>
                   <div className="flex items-center gap-1.5 flex-wrap justify-end">
                     <div className="flex items-baseline gap-1">
                       <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{event.discountPrice.toLocaleString()}원</span>
@@ -130,9 +174,9 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
               type="button"
               onClick={onFooterClose}
               className="min-h-11 min-w-28 rounded-xl border border-gray-200 px-4 text-sm font-medium text-gray-600 transition-colors active:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
-              aria-label={`${title} 상세 접기`}
+              aria-label={`${title} ${copy.close}`}
             >
-              접기
+              {copy.close}
             </button>
           </div>
         </section>
@@ -142,8 +186,10 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
 }
 
 export default function EventTableMobile({ events, getLocalizedText }: EventTableMobileProps) {
+  const { lang } = useLang();
+  const copy = MOBILE_EVENT_COPY[lang];
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
-  const eventRowRefs = useRef(new Map<number, HTMLDivElement>());
+  const eventRowRefs = useRef(new Map<number, HTMLButtonElement>());
 
   const handleFooterClose = (eventId: number) => {
     setExpandedEventId(null);
@@ -173,6 +219,9 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
       </div>
 
       <div data-testid="mobile-event-list" className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
+        <p data-testid="mobile-event-detail-hint" className="border-b px-5 py-2.5 text-[11px] leading-relaxed text-stone-500" style={{ borderColor: "var(--color-gold-light)" }}>
+          {copy.hint}
+        </p>
         {events.map((event) => {
           const priceRows = parsePriceRows(event);
           const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
@@ -182,7 +231,8 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
 
           return (
             <div key={event.id} className="event-mobile-entry">
-              <div
+              <button
+                type="button"
                 ref={(node) => {
                   if (node) {
                     eventRowRefs.current.set(event.id, node);
@@ -191,7 +241,11 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   }
                 }}
                 data-event-row={event.id}
-                className="flex scroll-mt-16 items-center gap-3 px-5 py-4 transition-colors active:bg-gray-50"
+                onClick={() => setExpandedEventId(isOpen ? null : event.id)}
+                className="flex w-full scroll-mt-16 items-center gap-3 px-5 py-4 text-left transition-colors active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
+                aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
+                aria-expanded={isOpen}
+                aria-controls={`mobile-event-detail-${event.id}`}
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-gray-900 truncate">{title}</p>
@@ -204,20 +258,16 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                  className="flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-xs font-medium transition-all active:scale-95"
+                <span
+                  className="flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-xs font-medium transition-all"
                   style={{
                     borderColor: "var(--color-gold-light)",
                     color: "var(--color-gold-deep)",
                     background: "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)",
                   }}
-                  aria-label={`${title} 상세 ${isOpen ? "접기" : "펼치기"}`}
-                  aria-expanded={isOpen}
-                  aria-controls={`mobile-event-detail-${event.id}`}
+                  aria-hidden="true"
                 >
-                  {isOpen ? "접기" : "상세"}
+                  {isOpen ? copy.close : copy.open}
                   <span
                     data-testid={`mobile-event-expand-indicator-${event.id}`}
                     data-expanded={isOpen}
@@ -226,8 +276,8 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   >
                     <ChevronDown size={16} strokeWidth={2.25} />
                   </span>
-                </button>
-              </div>
+                </span>
+              </button>
 
               <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={() => handleFooterClose(event.id)} />
             </div>

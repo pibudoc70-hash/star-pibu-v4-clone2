@@ -47,14 +47,14 @@ const secondEvent: SpecialEvent = {
 const getLocalizedText = (source: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => source[field];
 
 describe("EventTableMobile", () => {
-  it("클릭한 행 바로 아래에 상세를 펼치고 이후 행을 정상 레이아웃으로 밀어낸다", () => {
+  it("클릭한 이벤트 행 전체에서 해당 행 바로 아래 상세를 펼치고 이후 행을 정상 레이아웃으로 밀어낸다", () => {
     render(<EventTableMobile events={[event, secondEvent]} getLocalizedText={getLocalizedText} />);
 
-    const detailButton = screen.getByRole("button", { name: "테스트 이벤트 상세 펼치기" });
-    fireEvent.click(detailButton);
+    const eventRow = screen.getByRole("button", { name: "테스트 이벤트 상세 보기" });
+    fireEvent.click(eventRow);
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(detailButton).toHaveAttribute("aria-expanded", "true");
+    expect(eventRow).toHaveAttribute("aria-expanded", "true");
 
     const list = screen.getByTestId("mobile-event-list");
     const orderedItems = list.querySelectorAll("[data-event-row], [data-event-detail]");
@@ -74,9 +74,23 @@ describe("EventTableMobile", () => {
     fireEvent.click(detailClose);
 
     expect(screen.getByTestId("mobile-event-detail-1")).not.toHaveClass("is-open");
-    expect(detailButton).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" })).toHaveAttribute("aria-expanded", "false");
     expect(indicator).toHaveAttribute("data-expanded", "false");
     expect(indicator).not.toHaveClass("is-expanded");
+  });
+
+  it("각 이벤트 행에 상세 확인 안내를 표시하고 하나의 행만 확장한다", () => {
+    render(<EventTableMobile events={[event, secondEvent]} getLocalizedText={getLocalizedText} />);
+
+    expect(screen.getByTestId("mobile-event-detail-hint")).toHaveTextContent("원하는 이벤트를 누르면 상세 내용과 가격을 확인할 수 있어요.");
+
+    fireEvent.click(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" }));
+    expect(screen.getByTestId("mobile-event-detail-1")).toHaveClass("is-open");
+    expect(screen.getByTestId("mobile-event-detail-2")).not.toHaveClass("is-open");
+
+    fireEvent.click(screen.getByRole("button", { name: "두 번째 이벤트 상세 보기" }));
+    expect(screen.getByTestId("mobile-event-detail-1")).not.toHaveClass("is-open");
+    expect(screen.getByTestId("mobile-event-detail-2")).toHaveClass("is-open");
   });
 
   it("keeps inline detail height and opacity motion scoped to the mobile list", () => {

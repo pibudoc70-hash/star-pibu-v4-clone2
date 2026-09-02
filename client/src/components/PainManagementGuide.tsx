@@ -291,7 +291,7 @@ export default function PainManagementGuide({ lang, presentation = "full" }: { l
 
   if (presentation === "event-accordion") {
     return (
-      <section id={PAIN_MANAGEMENT_CATEGORY_ID} data-testid="pain-management-event-accordion" className="mt-4 !p-0 overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.42)] bg-[linear-gradient(135deg,#101a30_0%,#1d1a15_52%,#111827_100%)] text-white shadow-[0_14px_30px_rgba(10,18,40,0.16)] md:hidden" aria-label={copy.title}>
+      <section id={PAIN_MANAGEMENT_CATEGORY_ID} data-testid="pain-management-event-accordion" className="mt-12 !p-0 overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.42)] bg-[linear-gradient(135deg,#101a30_0%,#1d1a15_52%,#111827_100%)] text-white shadow-[0_14px_30px_rgba(10,18,40,0.16)] md:hidden" aria-label={copy.title}>
         <details className="group">
           <summary className="flex min-h-[76px] cursor-pointer list-none items-center gap-3 px-4 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-primary)] bg-[color-mix(in_srgb,var(--color-gold-primary)_14%,transparent)] text-[var(--color-gold-primary)]"><HeartPulse size={18} aria-hidden="true" /></span>

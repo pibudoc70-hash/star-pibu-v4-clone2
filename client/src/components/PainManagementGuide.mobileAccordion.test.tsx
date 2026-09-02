@@ -81,7 +81,7 @@ describe("PainManagementGuide mobile disclosure", () => {
     const disclosure = accordion.querySelector("details")!;
     const summary = disclosure.querySelector("summary");
 
-    expect(accordion).toHaveClass("!p-0", "md:hidden");
+    expect(accordion).toHaveClass("mt-12", "!p-0", "md:hidden");
     expect(disclosure).not.toHaveAttribute("open");
     expect(summary).toHaveClass("min-h-[76px]", "focus-visible:ring-2");
 
@@ -94,6 +94,7 @@ describe("PainManagementGuide mobile disclosure", () => {
     const styles = readFileSync("client/src/index.css", "utf8");
 
     expect(styles).toContain('section#pain-management[data-testid="pain-management-event-accordion"]');
+    expect(styles).toContain("section#events {\n      padding-bottom: 3rem !important;");
     expect(styles).toContain('[data-testid="pain-management-summary"]');
     expect(styles).toContain('[data-testid="pain-trust-strip"]');
     expect(styles).toContain('[data-testid="pain-faq"]');

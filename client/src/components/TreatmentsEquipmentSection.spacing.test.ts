@@ -10,7 +10,7 @@ describe("TreatmentsEquipmentSection spacing", () => {
     expect(treatmentsSource).toContain('id="treatments"');
     expect(treatmentsSource).toContain("<CategoryTabList");
     expect(treatmentsSource).toContain("<EquipmentTreatmentCard");
-    expect(treatmentsSource).toContain("<PainManagementGuide lang={lang} />");
+    expect(treatmentsSource).not.toContain("PainManagementGuide");
     expect(globalCss).toContain("section#treatments {\n      padding-top: 2.5rem !important;\n      padding-bottom: 2.5rem !important;");
     expect(globalCss).toContain("#treatments {\n    padding-top: 3rem !important;\n    padding-bottom: 3rem !important;");
   });

@@ -75,11 +75,9 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabListSource).toContain('min-h-11');
   });
 
-  it("opens and scrolls to the pain-management category when the same-page landmark hash is requested", () => {
-    expect(sectionSource).toContain('window.location.hash !== `#${PAIN_MANAGEMENT_CATEGORY_ID}`');
-    expect(sectionSource).toContain("setActiveId(PAIN_MANAGEMENT_CATEGORY_ID)");
-    expect(sectionSource).toContain("setMobileExpandedId(PAIN_MANAGEMENT_CATEGORY_ID)");
-    expect(sectionSource).toContain('mobile-category-detail-${PAIN_MANAGEMENT_CATEGORY_ID}');
-    expect(sectionSource).toContain('id={PAIN_MANAGEMENT_CATEGORY_ID}');
+  it("does not retain a pain-management category, hash handler, or inline guide in Treatments & Equipment", () => {
+    expect(sectionSource).not.toContain("PAIN_MANAGEMENT_CATEGORY_ID");
+    expect(sectionSource).not.toContain("PainManagementGuide");
+    expect(sectionSource).not.toContain("getPainManagementCategory");
   });
 });

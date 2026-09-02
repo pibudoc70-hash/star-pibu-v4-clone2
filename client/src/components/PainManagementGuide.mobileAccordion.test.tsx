@@ -73,4 +73,28 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(firstFaq).not.toHaveAttribute("open");
     expect(secondFaq).toHaveAttribute("open");
   });
+
+  it("supports a compact dark native accordion presentation for the Special Event area", () => {
+    render(<PainManagementGuide lang="ko" presentation="event-accordion" />);
+
+    const accordion = screen.getByTestId("pain-management-event-accordion");
+    const disclosure = accordion.querySelector("details")!;
+    const summary = disclosure.querySelector("summary");
+
+    expect(accordion).toHaveClass("!p-0", "md:hidden");
+    expect(disclosure).not.toHaveAttribute("open");
+    expect(summary).toHaveClass("min-h-[76px]", "focus-visible:ring-2");
+
+    fireEvent.click(summary!);
+    expect(disclosure).toHaveAttribute("open");
+    expect(within(accordion).getByText("리프팅 시술에서 통증에 대한 걱정은 자연스러운 일입니다. 스타피부과는 시술 특성과 개인의 통증 민감도를 먼저 확인한 뒤, 꼭 필요한 단계만 원장님이 직접 검토하고 결정합니다.")).toBeInTheDocument();
+  });
+
+  it("prevents global mobile section padding from increasing the closed Special Event accordion", () => {
+    const styles = readFileSync("client/src/index.css", "utf8");
+
+    expect(styles).toContain('section#pain-management[data-testid="pain-management-event-accordion"]');
+    expect(styles).toContain("padding-top: 0 !important;");
+    expect(styles).toContain("padding-bottom: 0 !important;");
+  });
 });

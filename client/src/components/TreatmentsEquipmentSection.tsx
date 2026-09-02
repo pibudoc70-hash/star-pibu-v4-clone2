@@ -24,7 +24,6 @@ import CategoryTabList from "@/components/treatments/CategoryTabList";
 import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import { useViewportTier } from "@/hooks/useViewportTier";
 import EmptyResultView from "@/components/treatments/EmptyResultView";
-import PainManagementGuide, { getPainManagementCategory, PAIN_MANAGEMENT_CATEGORY_ID } from "@/components/PainManagementGuide";
 import { sortTreatments } from "@/lib/treatmentSortUtils";
 import type { SortBy } from "@/lib/treatmentSortUtils";
 import type { Treatment } from "@/types/treatment";
@@ -92,7 +91,6 @@ export default function TreatmentsEquipmentSection() {
 
   // 검색어가 있으면 전체에서 검색, 없으면 현재 탭 목록
   const filteredTreatments = useMemo<Treatment[]>(() => {
-    if (activeId === PAIN_MANAGEMENT_CATEGORY_ID) return [];
     const q = searchQuery.trim().toLowerCase();
     if (q) {
       return allTreatments.filter((item) => {
@@ -127,41 +125,6 @@ export default function TreatmentsEquipmentSection() {
     setShowAll(false);
     setMobileClosingId(mobileExpandedId);
   }, [mobileClosingId, mobileExpandedId]);
-
-  useEffect(() => {
-    let animationFrameId: number | null = null;
-
-    const activatePainManagementFromHash = () => {
-      if (window.location.hash !== `#${PAIN_MANAGEMENT_CATEGORY_ID}`) return;
-
-      setActiveId(PAIN_MANAGEMENT_CATEGORY_ID);
-      setShowAll(false);
-
-      if (window.innerWidth < 640) {
-        setMobileClosingId(null);
-        setMobileExpandedId(PAIN_MANAGEMENT_CATEGORY_ID);
-      }
-
-      animationFrameId = window.requestAnimationFrame(() => {
-        animationFrameId = window.requestAnimationFrame(() => {
-          const target = document.querySelector(`#treatments [data-testid="mobile-category-detail-${PAIN_MANAGEMENT_CATEGORY_ID}"]`)
-            ?? document.querySelector('#treatments [data-testid="pain-management-summary-desktop"]')?.closest('section[aria-labelledby="pain-management-guide-title"]');
-          target?.scrollIntoView({
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-            block: "start",
-          });
-        });
-      });
-    };
-
-    activatePainManagementFromHash();
-    window.addEventListener("hashchange", activatePainManagementFromHash);
-
-    return () => {
-      window.removeEventListener("hashchange", activatePainManagementFromHash);
-      if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
 
   useEffect(() => {
     if (!mobileClosingId) return;
@@ -228,7 +191,7 @@ export default function TreatmentsEquipmentSection() {
 
   // Category[] 타입으로 변환 (CategoryTabList 호환)
   const categoriesForTabList = useMemo(
-    () => [...tabs.map((tab) => ({
+    () => tabs.map((tab) => ({
       id: tab.id,
       label: tab.label,
       labelEn: tab.labelEn,
@@ -240,21 +203,9 @@ export default function TreatmentsEquipmentSection() {
       descEn: "",
       descJa: "",
       descZh: "",
-    })), {
-      ...getPainManagementCategory(lang),
-      labelEn: "Individualized Pain Management",
-      labelJa: "個別の痛み管理",
-      labelZh: "个性化疼痛管理",
-      labelZhTw: "個人化疼痛管理",
-      desc: "",
-      descEn: "",
-      descJa: "",
-      descZh: "",
-    }],
-    [lang, tabs],
+    })),
+    [tabs],
   );
-
-  const isPainManagementCategory = activeId === PAIN_MANAGEMENT_CATEGORY_ID;
 
   // 검색 중일 때 표시할 안내 문구
   const searchPlaceholder = lang === "ko" ? "시술·장비 검색" : lang === "en" ? "Search treatments" : lang === "ja" ? "施術・機器を検索" : lang === "zh-TW" ? "搜尋療程" : "搜索项目";
@@ -273,8 +224,6 @@ export default function TreatmentsEquipmentSection() {
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
-        <span id={PAIN_MANAGEMENT_CATEGORY_ID} aria-hidden="true" className="block h-px scroll-mt-24 md:scroll-mt-28" />
-
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
           <span className="section-eyebrow text-[12px]">{t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}</span>
@@ -359,9 +308,7 @@ export default function TreatmentsEquipmentSection() {
                 onMobileDetailClose={handleMobileCategoryClose}
                 mobileCloseLabel={tr.collapseBtn}
                 mobileContainerRef={mobileCategoryListRef}
-                renderMobileDetail={(categoryId) => categoryId === PAIN_MANAGEMENT_CATEGORY_ID ? (
-                  <PainManagementGuide lang={lang} />
-                ) : (
+                renderMobileDetail={() => (
                   <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white" data-testid="treatment-mobile-category-detail">
                     <div
                       id="treatments-mobile-grid"
@@ -407,13 +354,7 @@ export default function TreatmentsEquipmentSection() {
             </div>
 
             {/* 시술 카드 그리드 */}
-            {activeId && isPainManagementCategory && (
-          <div className="mb-8 hidden sm:block" id={PAIN_MANAGEMENT_CATEGORY_ID}>
-                <PainManagementGuide lang={lang} />
-              </div>
-            )}
-
-            {activeId && !isPainManagementCategory && (
+            {activeId && (
               <div
                 key={`content-${activeId}`}
                 className={`rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade ${searchQuery ? "" : "hidden sm:block"}`}

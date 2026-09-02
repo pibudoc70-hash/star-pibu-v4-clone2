@@ -141,7 +141,7 @@ describe("PainManagementGuide content and placement", () => {
   it("balances the mobile core heading and gives each FAQ question a semantic icon with stronger heading contrast", () => {
     expect(guideSource).toContain("max-w-none break-keep text-balance");
     expect(guideSource).toContain("!text-[1.25rem]");
-    expect(globalCssSource).toContain('#treatments [data-testid="pain-management-header"] h2');
+    expect(globalCssSource).toContain('section#pain-management[data-testid="pain-management-event-accordion"]');
     expect(guideSource).toContain("FAQ_ICONS");
     expect(guideSource).toContain("const Icon = FAQ_ICONS[index]");
     expect(guideSource).toContain("<Icon size={17}");
@@ -169,18 +169,18 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("setOpenMobileFaqIndex");
     expect(guideSource).toContain("open={openMobileFaqIndex === index}");
     expect(guideSource).toContain("!py-0");
-    expect(globalCssSource).toContain('#treatments [data-testid="pain-trust-strip"] article');
+    expect(globalCssSource).not.toContain('#treatments [data-testid="pain-trust-strip"] article');
   });
 
-  it("ships complete localized content in Treatments while Special Event exposes only its existing-copy landmark", () => {
+  it("ships complete localized content below Special Event while Treatments omits the pain-management category", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');
-    expect(treatmentSectionSource).toContain("PAIN_MANAGEMENT_CATEGORY_ID");
-    expect(treatmentSectionSource).toContain("PainManagementGuide");
-    expect(eventSectionSource).toContain("PainManagementLandmark");
-    expect(eventSectionSource).toContain("PAIN_MANAGEMENT_CONTENT[lang].trustHeading");
-    expect(eventSectionSource).toContain('href={`#${PAIN_MANAGEMENT_CATEGORY_ID}`}');
-    expect(eventSectionSource).not.toContain("<PainManagementGuide");
+    expect(treatmentSectionSource).not.toContain("PAIN_MANAGEMENT_CATEGORY_ID");
+    expect(treatmentSectionSource).not.toContain("PainManagementGuide");
+    expect(eventSectionSource).not.toContain("PainManagementLandmark");
+    expect(eventSectionSource).toContain('<PainManagementGuide lang={lang} presentation="event-accordion" />');
+    expect(guideSource).toContain('data-testid="pain-management-event-accordion"');
+    expect(guideSource).toContain('presentation === "event-accordion"');
   });
 
   it("reintroduces an accessible premium three-stage card flow and trust-badge strip", () => {

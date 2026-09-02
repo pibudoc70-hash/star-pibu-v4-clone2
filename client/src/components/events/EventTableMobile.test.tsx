@@ -65,7 +65,7 @@ describe("EventTableMobile", () => {
     const indicator = screen.getByTestId("mobile-event-expand-indicator-1");
     expect(indicator).toHaveAttribute("data-expanded", "true");
     expect(indicator).toHaveClass("size-6", "rotate-180");
-    expect(screen.getByTestId("mobile-event-price-1")).toHaveClass("shrink-0", "text-right");
+    expect(screen.getByTestId("mobile-event-price-1")).toHaveClass("w-32", "shrink-0", "text-right", "tabular-nums");
 
     const detail = screen.getByTestId("mobile-event-detail-1");
     const detailClose = within(detail).getByRole("button", { name: "테스트 이벤트 상세 접기" });
@@ -133,8 +133,8 @@ describe("EventTableMobile", () => {
     expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4");
     expect(source).toContain('<div className="mb-1.5">');
     expect(source).toContain('style={{ aspectRatio: "16/9" }}');
-    expect(source).toContain('className="flex min-w-0 flex-1 items-center justify-between gap-4"');
-    expect(source).toContain('className="flex shrink-0 items-baseline justify-end gap-1 text-right"');
+    expect(source).toContain('className="min-w-0 flex-1"');
+    expect(source).toContain('className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums"');
     expect(source).toContain("mobile-event-expand-indicator-${event.id}");
     expect(source).toContain('"!h-auto !min-h-[5.5rem] !py-5"');
     expect(source).not.toContain("function VatBadge");

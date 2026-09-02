@@ -1744,6 +1744,12 @@
       border: 0 !important;
       box-shadow: none !important;
     }
+
+    /* 스페셜 이벤트 하단 통증관리 아코디언은 닫힌 안내 행만 차지한다. */
+    section#pain-management[data-testid="pain-management-event-accordion"] {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
     /* Hero 섹션은 section 기본 padding 제외 (100dvh 레이아웃) */
     #home {
       padding-top: 0 !important;
@@ -1806,37 +1812,6 @@
     /* 텍스트 줄바꿈 허용 */
     .whitespace-nowrap {
       white-space: normal !important;
-    }
-
-    /* 통증관리 내부 section은 페이지 섹션이 아니므로 전역 80px section padding에서 제외한다. */
-    #treatments [data-testid="pain-management-summary"],
-    #treatments [data-testid="pain-trust-strip"],
-    #treatments [data-testid="pain-faq"] {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-
-    /* 전역 heading scale·nowrap 해제는 통증관리 카드의 실제 줄 수와 밀도를 해치므로 component scope에서만 복원한다. */
-    #treatments [data-testid="pain-management-header"] h2 {
-      font-size: 1.25rem !important;
-      line-height: 1.35 !important;
-    }
-
-    #treatments [data-testid="pain-trust-strip"] article {
-      min-height: 2.75rem !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-
-    #treatments [data-testid="pain-trust-strip"] h3 {
-      font-size: 0.8125rem !important;
-      line-height: 1.25rem !important;
-      white-space: nowrap !important;
-    }
-
-    #treatments [data-testid="pain-management-summary"] .whitespace-nowrap,
-    #treatments [data-testid="pain-faq"] .whitespace-nowrap {
-      white-space: nowrap !important;
     }
 
     /* 모바일에서 큰 fixed 너비 방지 */

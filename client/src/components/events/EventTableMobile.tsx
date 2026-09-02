@@ -260,25 +260,23 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 aria-expanded={isOpen}
                 aria-controls={`mobile-event-detail-${event.id}`}
               >
-                <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                    <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
-                    </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                  <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
                   </div>
-                  <div data-testid={`mobile-event-price-${event.id}`} className="flex shrink-0 items-baseline justify-end gap-1 text-right">
-                      <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
-                      {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
-                  </div>
-                  <span
-                    data-testid={`mobile-event-expand-indicator-${event.id}`}
-                    data-expanded={isOpen}
-                    aria-hidden="true"
-                    className={`ml-2 inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-light)] text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}
-                  >
-                    <ChevronDown size={14} strokeWidth={2.25} />
-                  </span>
                 </div>
+                <div data-testid={`mobile-event-price-${event.id}`} className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums">
+                    <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
+                    {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
+                </div>
+                <span
+                  data-testid={`mobile-event-expand-indicator-${event.id}`}
+                  data-expanded={isOpen}
+                  aria-hidden="true"
+                  className={`ml-2 inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-light)] text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}
+                >
+                  <ChevronDown size={14} strokeWidth={2.25} />
+                </span>
               </button>
 
               <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />

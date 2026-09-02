@@ -481,7 +481,7 @@ export default function Home() {
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
         <DeferredMount
           fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
-          anchorSelectors={["#events", "#facility"]}
+          anchorSelectors={["#events", "#pain-management", "#facility"]}
           telemetrySurface="home_events"
         >
           <div className="section-bg-cream">
@@ -513,7 +513,7 @@ export default function Home() {
         >
           <DeferredMount
             fallback={<TreatmentsEquipmentSkeleton id="treatments" />}
-            anchorSelectors={["#pain-management", "#facility"]}
+            anchorSelectors={["#facility"]}
           >
             <div className="section-bg-cream-soft">
               <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>

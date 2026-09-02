@@ -272,7 +272,7 @@ export function getPainManagementCategory(lang: Lang) {
   return { id: PAIN_MANAGEMENT_CATEGORY_ID, label: copy.categoryLabel };
 }
 
-export default function PainManagementGuide({ lang }: { lang: Lang }) {
+export default function PainManagementGuide({ lang, presentation = "full" }: { lang: Lang; presentation?: "full" | "event-accordion" }) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
   const headingId = "pain-management-guide-title";
   const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({ 0: true });
@@ -288,6 +288,24 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       { title: copy.monitoringHeading, detail: copy.monitoringIntro, icon: TRUST_BADGE_ICONS[1] },
       { title: copy.beforeAfterHeading, detail: copy.careCheckpoints.map(({ label }) => label).join(" · "), icon: TRUST_BADGE_ICONS[2] },
     ];
+
+  if (presentation === "event-accordion") {
+    return (
+      <section id={PAIN_MANAGEMENT_CATEGORY_ID} data-testid="pain-management-event-accordion" className="mt-4 !p-0 overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.42)] bg-[linear-gradient(135deg,#101a30_0%,#1d1a15_52%,#111827_100%)] text-white shadow-[0_14px_30px_rgba(10,18,40,0.16)] md:hidden" aria-label={copy.title}>
+        <details className="group">
+          <summary className="flex min-h-[76px] cursor-pointer list-none items-center gap-3 px-4 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-primary)] bg-[color-mix(in_srgb,var(--color-gold-primary)_14%,transparent)] text-[var(--color-gold-primary)]"><HeartPulse size={18} aria-hidden="true" /></span>
+            <span className="min-w-0 flex-1 text-left"><span className="block text-[10px] font-semibold tracking-[0.16em] text-[var(--color-gold-primary)]">{copy.eyebrow}</span><span className="mt-0.5 block text-[16px] font-semibold leading-5 text-white">{copy.title}</span></span>
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center text-[var(--color-gold-primary)]"><span className="sr-only group-open:hidden">{copy.expandMobilePanel}</span><span className="sr-only hidden group-open:inline">{copy.collapseMobilePanel}</span><ChevronDown size={19} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
+          </summary>
+          <div className="border-t border-[rgba(215,181,92,0.26)] px-3 pb-3 pt-2.5">
+            <p className="px-1 pb-3 text-sm leading-6 text-[rgba(255,255,255,0.76)]">{copy.intro}</p>
+            <PainManagementGuide lang={lang} />
+          </div>
+        </details>
+      </section>
+    );
+  }
 
   const renderTrustBadges = (variant: "mobile" | "desktop") => trustBadges.map((badge, index) => {
     const Icon = badge.icon;

@@ -48,10 +48,7 @@ vi.mock("@/components/events/EventCard", () => ({
 }));
 vi.mock("@/components/events/EventTableMobile", () => ({ default: () => null }));
 vi.mock("@/components/PainManagementGuide", () => ({
-  PAIN_MANAGEMENT_CATEGORY_ID: "pain-management",
-  PAIN_MANAGEMENT_CONTENT: {
-    ko: { trustHeading: "안전한 관리를 위한 안내" },
-  },
+  default: ({ presentation }: { presentation?: string }) => <section data-testid={presentation ? "pain-management-event-accordion" : "pain-management-guide-desktop"} data-presentation={presentation} />,
 }));
 
 class IntersectionObserverMock {
@@ -104,7 +101,7 @@ describe("SpecialEventSection anchor target", () => {
     expect(screen.getAllByTestId("mobile-event-list-skeleton-row")).toHaveLength(3);
   });
 
-  it("does not mount a pain-management guide or landmark after an empty event query fails", async () => {
+  it("does not mount a pain-management guide after an empty event query fails", async () => {
     class VisibleIntersectionObserverMock extends IntersectionObserverMock {
       observe() {
         this.callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
@@ -125,11 +122,10 @@ describe("SpecialEventSection anchor target", () => {
       const events = document.getElementById("events");
       expect(events).toHaveAttribute("aria-label", "스페셜 이벤트");
       expect(screen.queryByTestId("pain-management-guide")).not.toBeInTheDocument();
-      expect(screen.queryByRole("link", { name: "안전한 관리를 위한 안내" })).not.toBeInTheDocument();
     });
   });
 
-  it("replaces the event-area guide with the existing localized pain-management landmark only after events load", async () => {
+  it("mounts the compact pain-management accordion only after events load", async () => {
     class VisibleIntersectionObserverMock extends IntersectionObserverMock {
       observe() {
         this.callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
@@ -146,10 +142,10 @@ describe("SpecialEventSection anchor target", () => {
 
     render(<SpecialEventSection />);
 
-    const landmark = await screen.findByRole("link", { name: "안전한 관리를 위한 안내" });
-    expect(landmark).toHaveAttribute("href", "#pain-management");
-    expect(landmark).toHaveClass("min-h-11");
-    expect(screen.queryByTestId("pain-management-guide")).not.toBeInTheDocument();
+    const accordion = await screen.findByTestId("pain-management-event-accordion");
+    expect(accordion).toHaveAttribute("data-presentation", "event-accordion");
+    expect(screen.getByTestId("pain-management-guide-desktop")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "안전한 관리를 위한 안내" })).not.toBeInTheDocument();
   });
 
   it("clears a removed selected event so the refreshed selector falls back to the first available event", async () => {

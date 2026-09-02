@@ -73,9 +73,9 @@ export default function CategoryTabList({
 
       return (
         <Fragment key={cat.id}>
-          <CategoryTabButton
-            id={cat.id}
-            label={getCatLabel(cat, lang)}
+              <CategoryTabButton
+                id={cat.id}
+                label={getCatLabel(cat, lang)}
             isActive={isMobileActive}
             onClick={isMobileActive ? () => onMobileDetailClose?.() : onMobileTabToggle ?? onTabChange}
             icon={CATEGORY_ICON_MAP[cat.id] ?? Star}

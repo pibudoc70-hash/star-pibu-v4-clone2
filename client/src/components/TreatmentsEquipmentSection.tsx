@@ -129,6 +129,41 @@ export default function TreatmentsEquipmentSection() {
   }, [mobileClosingId, mobileExpandedId]);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
+
+    const activatePainManagementFromHash = () => {
+      if (window.location.hash !== `#${PAIN_MANAGEMENT_CATEGORY_ID}`) return;
+
+      setActiveId(PAIN_MANAGEMENT_CATEGORY_ID);
+      setShowAll(false);
+
+      if (window.innerWidth < 640) {
+        setMobileClosingId(null);
+        setMobileExpandedId(PAIN_MANAGEMENT_CATEGORY_ID);
+      }
+
+      animationFrameId = window.requestAnimationFrame(() => {
+        animationFrameId = window.requestAnimationFrame(() => {
+          const target = document.querySelector(`#treatments [data-testid="mobile-category-detail-${PAIN_MANAGEMENT_CATEGORY_ID}"]`)
+            ?? document.querySelector('#treatments [data-testid="pain-management-summary-desktop"]')?.closest('section[aria-labelledby="pain-management-guide-title"]');
+          target?.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "start",
+          });
+        });
+      });
+    };
+
+    activatePainManagementFromHash();
+    window.addEventListener("hashchange", activatePainManagementFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", activatePainManagementFromHash);
+      if (animationFrameId !== null) window.cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!mobileClosingId) return;
 
     const closeTimer = window.setTimeout(() => {
@@ -238,6 +273,7 @@ export default function TreatmentsEquipmentSection() {
     <section ref={sectionRef} id="treatments" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label={tr.label} role="region">
       <div className="container">
         <div ref={sectionTopRef} />
+        <span id={PAIN_MANAGEMENT_CATEGORY_ID} aria-hidden="true" className="block h-px scroll-mt-24 md:scroll-mt-28" />
 
         {/* 섹션 헤더 */}
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
@@ -372,7 +408,7 @@ export default function TreatmentsEquipmentSection() {
 
             {/* 시술 카드 그리드 */}
             {activeId && isPainManagementCategory && (
-              <div className="mb-8 hidden sm:block">
+          <div className="mb-8 hidden sm:block" id={PAIN_MANAGEMENT_CATEGORY_ID}>
                 <PainManagementGuide lang={lang} />
               </div>
             )}

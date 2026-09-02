@@ -6,7 +6,7 @@
  * - 데스크톱: 우측 이벤트 선택 목록 + 좌측 hover/focus 연동 상세 패널
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { Sparkles, RefreshCw, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -14,7 +14,7 @@ import { useLocalizedEvent, type SpecialEvent } from "@/hooks/useLocalizedEvent"
 import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
-import PainManagementGuide from "@/components/PainManagementGuide";
+import { PAIN_MANAGEMENT_CATEGORY_ID, PAIN_MANAGEMENT_CONTENT, type PainManagementLang } from "@/components/PainManagementGuide";
 import { parseEventListError } from "@/lib/errorMessages";
 import { useEventSkeletonTiming } from "@/hooks/useEventSkeletonTiming";
 
@@ -86,6 +86,27 @@ function SectionHeader({ lang }: { lang: string }) {
         {subtitleMap[lang] ?? subtitleMap.ko}
       </p>
     </div>
+  );
+}
+
+function PainManagementLandmark({ lang }: { lang: PainManagementLang }) {
+  const label = PAIN_MANAGEMENT_CONTENT[lang].trustHeading;
+
+  const handleClick = () => {
+    window.dispatchEvent(
+      new CustomEvent("star-pibu:mount-anchor", { detail: { selector: `#${PAIN_MANAGEMENT_CATEGORY_ID}` } }),
+    );
+  };
+
+  return (
+    <a
+      href={`#${PAIN_MANAGEMENT_CATEGORY_ID}`}
+      onClick={handleClick}
+      className="group mt-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[var(--color-star-text-mid)] underline decoration-[var(--color-gold-light)] underline-offset-4 transition-colors hover:text-[var(--color-star-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"
+    >
+      <span>{label}</span>
+      <ChevronRight size={16} aria-hidden="true" className="transition-transform duration-200 motion-reduce:transition-none group-hover:translate-x-0.5" />
+    </a>
   );
 }
 
@@ -214,9 +235,6 @@ export default function SpecialEventSection() {
               <EventCardSkeleton compact />
             </div>
           </div>
-          <div className="mt-10">
-            <PainManagementGuide lang={lang} />
-          </div>
         </div>
       </section>
     );
@@ -246,9 +264,6 @@ export default function SpecialEventSection() {
               <RefreshCw size={15} />
               {retryLabel[lang] ?? retryLabel.ko}
             </button>
-          </div>
-          <div className="mt-10">
-            <PainManagementGuide lang={lang} />
           </div>
         </div>
       </section>
@@ -308,9 +323,7 @@ export default function SpecialEventSection() {
 
           </>
         )}
-        <div className="mt-10">
-          <PainManagementGuide lang={lang} />
-        </div>
+        <PainManagementLandmark lang={lang} />
       </div>
     </section>
   );

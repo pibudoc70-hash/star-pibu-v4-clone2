@@ -152,14 +152,15 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("min-h-11");
   });
 
-  it("ships complete localized content and is surfaced in both requested homepage sections", () => {
+  it("ships complete localized content in Treatments while Special Event exposes only its existing-copy landmark", () => {
     expect(guideSource).toContain('type PainManagementLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
     expect(guideSource).toContain('"zh-TW"');
     expect(treatmentSectionSource).toContain("PAIN_MANAGEMENT_CATEGORY_ID");
     expect(treatmentSectionSource).toContain("PainManagementGuide");
-    expect(eventSectionSource).toContain("PainManagementGuide");
-    expect(eventSectionSource).toContain("<PainManagementGuide lang={lang} />");
-    expect(eventSectionSource).not.toContain('mode="summary"');
+    expect(eventSectionSource).toContain("PainManagementLandmark");
+    expect(eventSectionSource).toContain("PAIN_MANAGEMENT_CONTENT[lang].trustHeading");
+    expect(eventSectionSource).toContain('href={`#${PAIN_MANAGEMENT_CATEGORY_ID}`}');
+    expect(eventSectionSource).not.toContain("<PainManagementGuide");
   });
 
   it("reintroduces an accessible premium three-stage card flow and trust-badge strip", () => {

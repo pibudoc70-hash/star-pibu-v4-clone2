@@ -512,7 +512,7 @@ export default function Home() {
         >
           <DeferredMount
             fallback={<TreatmentsEquipmentSkeleton id="treatments" />}
-            anchorSelectors={["#facility"]}
+            anchorSelectors={["#pain-management", "#facility"]}
           >
             <div className="section-bg-cream-soft">
               <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>

@@ -66,4 +66,12 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(stylesSource).toContain(".mobile-category-detail-shell[data-state=\"closing\"]");
     expect(stylesSource).toContain("prefers-reduced-motion: reduce");
   });
+
+  it("opens and scrolls to the pain-management category when the same-page landmark hash is requested", () => {
+    expect(sectionSource).toContain('window.location.hash !== `#${PAIN_MANAGEMENT_CATEGORY_ID}`');
+    expect(sectionSource).toContain("setActiveId(PAIN_MANAGEMENT_CATEGORY_ID)");
+    expect(sectionSource).toContain("setMobileExpandedId(PAIN_MANAGEMENT_CATEGORY_ID)");
+    expect(sectionSource).toContain('mobile-category-detail-${PAIN_MANAGEMENT_CATEGORY_ID}');
+    expect(sectionSource).toContain('id={PAIN_MANAGEMENT_CATEGORY_ID}');
+  });
 });

@@ -1788,6 +1788,37 @@
       white-space: normal !important;
     }
 
+    /* 통증관리 내부 section은 페이지 섹션이 아니므로 전역 80px section padding에서 제외한다. */
+    #treatments [data-testid="pain-management-summary"],
+    #treatments [data-testid="pain-trust-strip"],
+    #treatments [data-testid="pain-faq"] {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    /* 전역 heading scale·nowrap 해제는 통증관리 카드의 실제 줄 수와 밀도를 해치므로 component scope에서만 복원한다. */
+    #treatments [data-testid="pain-management-header"] h2 {
+      font-size: 1.25rem !important;
+      line-height: 1.35 !important;
+    }
+
+    #treatments [data-testid="pain-trust-strip"] article {
+      min-height: 2.75rem !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    #treatments [data-testid="pain-trust-strip"] h3 {
+      font-size: 0.8125rem !important;
+      line-height: 1.25rem !important;
+      white-space: nowrap !important;
+    }
+
+    #treatments [data-testid="pain-management-summary"] .whitespace-nowrap,
+    #treatments [data-testid="pain-faq"] .whitespace-nowrap {
+      white-space: nowrap !important;
+    }
+
     /* 모바일에서 큰 fixed 너비 방지 */
     [style*="width: 400px"],
     [style*="width:400px"],

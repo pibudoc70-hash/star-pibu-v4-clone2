@@ -111,13 +111,16 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("label: copy.categoryLabel");
   });
 
-  it("uses one whole mobile disclosure and a consistent md desktop boundary instead of spacing-only compaction", () => {
-    expect(guideSource).toContain('data-testid="pain-mobile-panel"');
-    expect(guideSource).toContain("expandMobilePanel");
-    expect(guideSource).toContain("collapseMobilePanel");
+  it("uses direct mobile information flow with the existing nested disclosures and a consistent desktop boundary", () => {
+    expect(guideSource).not.toContain('data-testid="pain-mobile-panel"');
+    expect(guideSource).toContain("openMobileStages");
+    expect(guideSource).toContain("{ 0: true }");
+    expect(guideSource).toContain('data-testid="pain-trust-strip"');
     expect(guideSource).toContain("md:hidden");
     expect(guideSource).toContain("hidden md:block");
-    expect(guideSource).not.toContain("sm:");
+    expect(guideSource).toContain("sr-only max-w-[35rem]");
+    expect(guideSource).toContain("sm:not-sr-only");
+    expect(guideSource).not.toContain("line-clamp-2 max-w-[35rem]");
   });
 
   it("uses the user-provided Korean sedation-operation experience title", () => {
@@ -136,8 +139,9 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("balances the mobile core heading and gives each FAQ question a semantic icon with stronger heading contrast", () => {
-    expect(guideSource).toContain("max-w-[21ch] break-keep text-balance");
-    expect(guideSource).toContain("leading-[1.34]");
+    expect(guideSource).toContain("max-w-none break-keep text-balance");
+    expect(guideSource).toContain("!text-[1.25rem]");
+    expect(globalCssSource).toContain('#treatments [data-testid="pain-management-header"] h2');
     expect(guideSource).toContain("FAQ_ICONS");
     expect(guideSource).toContain("const Icon = FAQ_ICONS[index]");
     expect(guideSource).toContain("<Icon size={17}");
@@ -150,6 +154,22 @@ describe("PainManagementGuide content and placement", () => {
     expect(globalCssSource).toContain(".pain-management-disclosure::details-content");
     expect(globalCssSource).toContain("transform: translateY(-4px)");
     expect(guideSource).toContain("min-h-11");
+  });
+
+  it("keeps a visible mobile three-stage timeline, makes only the first stage initially active, and distinguishes the conditional third stage", () => {
+    expect(guideSource).toContain("bottom-[2.125rem] left-[2.125rem] top-[2.125rem]");
+    expect(guideSource).toContain("grid-cols-[2.5rem_minmax(0,1fr)_1.25rem]");
+    expect(guideSource).toContain("h-5 w-5");
+    expect(guideSource).toContain('index === 0 ? "border-[var(--color-gold-primary)] bg-[var(--color-gold-primary)] text-[var(--color-star-navy)]"');
+    expect(guideSource).toContain('index === 2 ? "border-[var(--color-gold-primary)]" : "border-[var(--color-gold-light)]"');
+  });
+
+  it("keeps mobile trust guidance visible and controls only one mobile FAQ details element at a time", () => {
+    expect(guideSource).toContain('renderTrustBadges("mobile")');
+    expect(guideSource).toContain("setOpenMobileFaqIndex");
+    expect(guideSource).toContain("open={openMobileFaqIndex === index}");
+    expect(guideSource).toContain("!py-0");
+    expect(globalCssSource).toContain('#treatments [data-testid="pain-trust-strip"] article');
   });
 
   it("ships complete localized content in Treatments while Special Event exposes only its existing-copy landmark", () => {

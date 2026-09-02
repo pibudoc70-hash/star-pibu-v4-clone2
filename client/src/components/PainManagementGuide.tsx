@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Activity, ChevronDown, CircleHelp, ClipboardCheck, FileText, HeartPulse, Moon, ShieldCheck, Stethoscope } from "lucide-react";
 import type { Lang } from "@/lib/i18n.types";
 import { PAIN_MANAGEMENT_KO_FAQS } from "@/lib/painManagementFaq";
@@ -274,6 +275,8 @@ export function getPainManagementCategory(lang: Lang) {
 export default function PainManagementGuide({ lang }: { lang: Lang }) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
   const headingId = "pain-management-guide-title";
+  const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({ 0: true });
+  const [openMobileFaqIndex, setOpenMobileFaqIndex] = useState<number | null>(null);
   const trustBadges = lang === "ko"
     ? [
       { title: copy.experienceHeading, detail: "장기간 축적된 마취 관리 노하우", icon: TRUST_BADGE_ICONS[0] },
@@ -286,12 +289,18 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       { title: copy.beforeAfterHeading, detail: copy.careCheckpoints.map(({ label }) => label).join(" · "), icon: TRUST_BADGE_ICONS[2] },
     ];
 
-  const renderTrustBadges = () => trustBadges.map((badge, index) => {
+  const renderTrustBadges = (variant: "mobile" | "desktop") => trustBadges.map((badge, index) => {
     const Icon = badge.icon;
+    const isMobile = variant === "mobile";
     return (
-      <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 md:border-b-0 md:border-r md:p-4 md:last:border-r-0">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"><Icon size={19} aria-hidden="true" /></div>
-        <div className="min-w-0"><h3 className="text-sm font-semibold leading-5 text-[var(--color-star-text)]">{badge.title}</h3><p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</p></div>
+      <article
+        key={badge.title}
+        className={isMobile
+          ? `flex min-h-11 min-w-0 items-center gap-2 border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0 ${index === 2 ? "border-l-2 border-l-[var(--color-gold-primary)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)]" : ""}`
+          : "flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 md:border-b-0 md:border-r md:p-4 md:last:border-r-0"}
+      >
+        <div className={isMobile ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm" : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"}><Icon size={isMobile ? 15 : 19} aria-hidden="true" /></div>
+        <div className="min-w-0"><h3 className={isMobile ? "!whitespace-nowrap !text-[13px] font-semibold !leading-5 text-[var(--color-star-text)]" : "text-sm font-semibold leading-5 text-[var(--color-star-text)]"}>{badge.title}</h3><p className={isMobile ? "sr-only" : "mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]"}>{badge.detail}</p></div>
       </article>
     );
   });
@@ -302,26 +311,21 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       <div className="relative mx-auto w-full max-w-6xl">
         <header data-testid="pain-management-header" className="mb-4 border-l-2 border-[var(--color-gold-primary)] pl-3 text-left md:mb-8 md:border-l-0 md:pl-0 md:text-center">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-          <h2 id={headingId} className="mt-1.5 max-w-[21ch] break-keep text-balance text-[1.45rem] font-semibold leading-[1.34] tracking-tight text-[var(--color-star-text)] md:mx-auto md:mt-3 md:max-w-3xl md:text-3xl md:leading-snug">{copy.heroTitle}</h2>
-          <p id="pain-management-summary-caption" className="mt-2 line-clamp-2 max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] md:mx-auto md:mt-3 md:max-w-2xl md:line-clamp-none md:text-sm md:leading-6">{copy.visualCaption}</p>
+          <h2 id={headingId} className="mt-1.5 max-w-none break-keep text-balance !text-[1.25rem] font-semibold !leading-[1.35] tracking-tight text-[var(--color-star-text)] md:mx-auto md:mt-3 md:max-w-3xl md:text-3xl md:leading-snug">{copy.heroTitle}</h2>
+          <p id="pain-management-summary-caption" className="sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w-2xl sm:text-sm sm:leading-6">{copy.visualCaption}</p>
         </header>
 
-        <details data-testid="pain-mobile-panel" className="group overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white md:hidden">
-          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
-            <span className="text-left text-sm font-semibold leading-5 text-[var(--color-star-text)]"><span className="block text-[10px] font-semibold tracking-[0.1em] text-[var(--color-gold-deep)]">{copy.title}</span><span className="mt-0.5 block text-xs font-normal text-[var(--color-star-text-mid)] group-open:hidden">{copy.expandMobilePanel}</span><span className="mt-0.5 hidden text-xs font-normal text-[var(--color-star-text-mid)] group-open:block">{copy.collapseMobilePanel}</span></span>
-            <ChevronDown size={18} className="shrink-0 text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" />
-          </summary>
-          <div className="border-t border-[var(--color-gold-light)] px-3.5 py-3">
-        <p className="mb-3 text-xs leading-5 text-[var(--color-star-text-mid)]">{copy.visualCaption}</p>
-        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-2.5">
+        <div className="md:hidden">
+        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="relative grid !gap-2.5 !py-0">
+          <span aria-hidden="true" className="pointer-events-none absolute bottom-[2.125rem] left-[2.125rem] top-[2.125rem] w-px bg-[color-mix(in_srgb,var(--color-gold-primary)_58%,transparent)]" />
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
-              <details key={step.title} data-testid={`pain-mobile-stage-${index + 1}`} className="group overflow-hidden rounded-[1.15rem] border border-[var(--color-gold-light)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(10,18,40,0.12)]">
-                <summary className="grid min-h-[68px] cursor-pointer list-none grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[rgba(215,181,92,0.14)] text-[var(--color-gold-primary)]"><Icon size={20} aria-hidden="true" /></div>
-                  <div className="min-w-0 text-left"><p className="truncate text-[10px] font-semibold leading-4 tracking-[0.08em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="mt-0.5 break-keep text-[15px] font-semibold leading-[1.25] tracking-tight">{step.title}</h3></div>
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[var(--color-gold-primary)]"><span className="sr-only group-open:hidden">{copy.expandStep}</span><span className="sr-only hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
+              <details key={step.title} open={openMobileStages[index] || undefined} data-testid={`pain-mobile-stage-${index + 1}`} className={`group relative overflow-hidden rounded-[1.15rem] border bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(10,18,40,0.12)] ${index === 2 ? "border-[var(--color-gold-primary)]" : "border-[var(--color-gold-light)]"}`}>
+                <summary onClick={(event) => { event.preventDefault(); setOpenMobileStages(current => ({ ...current, [index]: !current[index] })); }} className="grid min-h-[68px] cursor-pointer list-none grid-cols-[2.5rem_minmax(0,1fr)_1.25rem] items-center gap-3 px-3.5 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
+                  <div className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border ${index === 0 ? "border-[var(--color-gold-primary)] bg-[var(--color-gold-primary)] text-[var(--color-star-navy)]" : "border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] text-[var(--color-gold-primary)]"}`}><Icon size={20} aria-hidden="true" /></div>
+                  <div className="min-w-0 text-left"><p className="!whitespace-nowrap text-[9px] font-semibold leading-4 tracking-[0.06em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="mt-0.5 !whitespace-nowrap break-keep text-[14px] font-semibold leading-[1.25] tracking-tight">{step.title}</h3></div>
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center text-[var(--color-gold-primary)]"><span className="sr-only group-open:hidden">{copy.expandStep}</span><span className="sr-only hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
                 </summary>
                 <div className="border-t border-[rgba(215,181,92,0.24)] px-3.5 pb-4 pt-3"><p className="max-w-prose text-sm leading-6 text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
               </details>
@@ -329,24 +333,19 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <details data-testid="pain-trust-strip" className="group mt-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec]">
-          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
-            <span className="text-sm font-semibold text-[var(--color-star-text)]">{copy.trustHeading}</span>
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[var(--color-gold-deep)]"><span className="sr-only group-open:hidden">{copy.expandTrust}</span><span className="sr-only hidden group-open:inline">{copy.collapseTrust}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
-          </summary>
-          <div className="border-t border-[var(--color-gold-light)]">{renderTrustBadges()}</div>
-        </details>
+        <section data-testid="pain-trust-strip" aria-label={copy.trustHeading} className="mt-3 !py-0 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec]">
+          {renderTrustBadges("mobile")}
+        </section>
 
-        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white">
-          <div className="flex items-center gap-2 border-b border-[var(--color-gold-light)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)] px-3.5 py-3"><CircleHelp size={19} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="text-base font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
+        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-3 !py-0 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white">
+          <div className="flex items-center gap-2 border-b border-[var(--color-gold-light)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)] px-3.5 py-3"><CircleHelp size={19} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="!text-base !leading-5 font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
           {copy.faqs.map((faq, index) => {
             const Icon = FAQ_ICONS[index] ?? CircleHelp;
-            return <details key={faq.question} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex items-start gap-2 text-left text-sm font-semibold leading-6 text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{faq.question}</span><ChevronDown size={18} className="mt-1 shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</p></details>;
+            return <details key={faq.question} open={openMobileFaqIndex === index} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0"><summary onClick={(event) => { event.preventDefault(); setOpenMobileFaqIndex(current => current === index ? null : index); }} className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex min-w-0 items-center gap-2 text-left text-[13px] font-semibold leading-5 text-[var(--color-star-text)]"><Icon size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" /><span className="!whitespace-nowrap">{faq.question}</span></span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</p></details>;
           })}
         </section>
         <p className="mt-2.5 px-1 text-center text-xs leading-5 text-[var(--color-star-text-mid)]">{copy.closing}</p>
-          </div>
-        </details>
+        </div>
 
         <div className="hidden md:block">
         <section data-testid="pain-management-summary-desktop" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-3 md:grid-cols-3 md:gap-4">
@@ -365,7 +364,7 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
         </section>
 
         <section data-testid="pain-trust-strip-desktop" aria-label="통증관리 안내" className="mt-4 grid auto-rows-max content-start overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] md:grid-cols-3">
-          {renderTrustBadges()}
+          {renderTrustBadges("desktop")}
         </section>
 
         <section data-testid="pain-faq-desktop" aria-labelledby="pain-faq-title-desktop" className="mt-5 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white">

@@ -67,6 +67,14 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(stylesSource).toContain("prefers-reduced-motion: reduce");
   });
 
+  it("keeps the mobile category controls compact without shrinking interactive targets", () => {
+    expect(sectionSource).toContain('rounded-2xl px-3 py-3 mb-3 sm:px-4 sm:py-4 sm:mb-4');
+    expect(sectionSource).toContain('gap-2 mb-2 px-3 py-2.5 rounded-xl transition-all duration-200 sm:mb-4');
+    expect(sectionSource).toContain('grid gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-4');
+    expect(tabListSource).toContain('grid grid-cols-2 gap-x-2 gap-y-1.5 sm:hidden');
+    expect(tabListSource).toContain('min-h-11');
+  });
+
   it("opens and scrolls to the pain-management category when the same-page landmark hash is requested", () => {
     expect(sectionSource).toContain('window.location.hash !== `#${PAIN_MANAGEMENT_CATEGORY_ID}`');
     expect(sectionSource).toContain("setActiveId(PAIN_MANAGEMENT_CATEGORY_ID)");

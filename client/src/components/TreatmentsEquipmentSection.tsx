@@ -307,10 +307,10 @@ export default function TreatmentsEquipmentSection() {
         {/* 카테고리 탭 + 검색 */}
         {!isLoading && !isError && tabs.length > 0 && (
           <>
-              <div className="rounded-2xl px-4 py-4 mb-4" style={{ background: "#F3EEE8" }}>
+              <div className="rounded-2xl px-3 py-3 mb-3 sm:px-4 sm:py-4 sm:mb-4" style={{ background: "#F3EEE8" }}>
               {/* 검색 입력 */}
               <div
-                className="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-xl transition-all duration-200"
+                className="flex items-center gap-2 mb-2 px-3 py-2.5 rounded-xl transition-all duration-200 sm:mb-4"
                 style={{
                   background: searchFocused
                     ? "color-mix(in srgb, var(--color-gold-primary) 6%, white)"
@@ -367,7 +367,7 @@ export default function TreatmentsEquipmentSection() {
                       id="treatments-mobile-grid"
                       aria-live="polite"
                       aria-label="선택한 카테고리 시술 목록"
-                      className="grid gap-4 px-4 py-4"
+                      className="grid gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-4"
                     >
                       {filteredTreatments.length === 0 ? (
                         <EmptyResultView message={tr.noResults} hint={tr.noResultsHint} />
@@ -383,7 +383,7 @@ export default function TreatmentsEquipmentSection() {
                         ))
                       )}
                     </div>
-                    <div className="flex items-center justify-center gap-3 border-t border-[var(--color-gold-light)] px-4 py-3">
+                    <div className="flex items-center justify-center gap-3 border-t border-[var(--color-gold-light)] px-3 py-2.5 sm:px-4 sm:py-3">
                       <button
                         type="button"
                         onClick={handleMobileCategoryClose}

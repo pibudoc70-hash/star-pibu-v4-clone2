@@ -21,5 +21,6 @@ describe("SeoHead homepage fallback ownership", () => {
     expect(indexHtml).toContain('rel="alternate" data-rh="true" data-seo-fallback="home" hreflang="zh-TW"');
     expect(indexHtml).toContain('<meta property="kakao:title"');
     expect(indexHtml).not.toContain('data-seo-fallback="home" property="kakao:title"');
+    expect(indexHtml).toContain('<meta name="naver-site-verification" content="d4d01bc7ce16cb93c07f7431b57a3fdcfbfaeebe" />');
   });
 });

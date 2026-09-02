@@ -117,7 +117,7 @@ export default function CategoryTabList({
         id="treatment-mobile-category-list"
         role="group"
         aria-label={ariaLabel}
-        className="grid grid-cols-2 gap-2 sm:hidden"
+        className="grid grid-cols-2 gap-x-2 gap-y-1.5 sm:hidden"
       >
         {renderMobileTabs()}
       </div>

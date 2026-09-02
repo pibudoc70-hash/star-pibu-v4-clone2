@@ -94,6 +94,9 @@ describe("PainManagementGuide mobile disclosure", () => {
     const styles = readFileSync("client/src/index.css", "utf8");
 
     expect(styles).toContain('section#pain-management[data-testid="pain-management-event-accordion"]');
+    expect(styles).toContain('[data-testid="pain-management-summary"]');
+    expect(styles).toContain('[data-testid="pain-trust-strip"]');
+    expect(styles).toContain('[data-testid="pain-faq"]');
     expect(styles).toContain("padding-top: 0 !important;");
     expect(styles).toContain("padding-bottom: 0 !important;");
   });

@@ -1750,6 +1750,13 @@
       padding-top: 0 !important;
       padding-bottom: 0 !important;
     }
+    /* 이벤트 안에서 열리는 통증관리의 하위 section도 generic 80px 여백을 상속하지 않는다. */
+    section#pain-management[data-testid="pain-management-event-accordion"] [data-testid="pain-management-summary"],
+    section#pain-management[data-testid="pain-management-event-accordion"] [data-testid="pain-trust-strip"],
+    section#pain-management[data-testid="pain-management-event-accordion"] [data-testid="pain-faq"] {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
     /* Hero 섹션은 section 기본 padding 제외 (100dvh 레이아웃) */
     #home {
       padding-top: 0 !important;

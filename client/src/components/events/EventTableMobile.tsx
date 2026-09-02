@@ -4,7 +4,7 @@
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
 import { useRef, useState } from "react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -255,42 +255,23 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 data-testid={`mobile-event-row-${event.id}`}
                 data-event-row={event.id}
                 onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                className={`flex w-full scroll-mt-16 items-center gap-3 px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "min-h-[4.75rem] py-3.5" : "min-h-[4.5rem] py-3"}`}
+                className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5.5rem] !py-5" : "!h-auto !min-h-[5rem] !py-4"}`}
                 aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
                 aria-expanded={isOpen}
                 aria-controls={`mobile-event-detail-${event.id}`}
               >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+                <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
                     {isPriority && <span className="text-[10px] font-bold tracking-[0.14em] text-[var(--color-gold-deep)]" aria-hidden="true">0{priorityIndex + 1}</span>}
                     <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
-                  </div>
-                  <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
-                      {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
                     </div>
                   </div>
+                  <div data-testid={`mobile-event-price-${event.id}`} className="flex shrink-0 items-baseline justify-end gap-1 text-right">
+                      <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
+                      {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
+                  </div>
                 </div>
-
-                <span
-                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border transition-all"
-                  style={{
-                    borderColor: "var(--color-gold-light)",
-                    color: "var(--color-gold-deep)",
-                    background: "color-mix(in srgb, var(--color-gold-primary) 8%, transparent)",
-                  }}
-                  aria-hidden="true"
-                >
-                  <span
-                    data-testid={`mobile-event-expand-indicator-${event.id}`}
-                    data-expanded={isOpen}
-                    aria-hidden="true"
-                    className={`event-mobile-entry__indicator inline-flex transition-transform duration-300 ease-out motion-reduce:transition-none ${isOpen ? "is-expanded rotate-180" : ""}`}
-                  >
-                    <ChevronDown size={16} strokeWidth={2.25} />
-                  </span>
-                </span>
               </button>
 
               <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />

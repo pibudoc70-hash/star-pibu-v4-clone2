@@ -12,6 +12,8 @@ describe("EventTableMobile vertical list", () => {
     expect(source).toContain('data-testid="mobile-event-list" className="bg-white"');
     expect(source).toContain("event-mobile-entry overflow-hidden bg-white transition-colors");
     expect(source).toContain('index > 0 ? "border-t" : ""');
+    expect(source).toContain("mobile-event-price-${event.id}");
+    expect(source).not.toContain("mobile-event-expand-indicator");
     expect(source).not.toContain("snap-x snap-mandatory");
     expect(source).not.toContain('aria-roledescription="carousel"');
   });

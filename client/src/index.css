@@ -1735,6 +1735,15 @@
       padding-top: 5rem !important;  /* 80px */
       padding-bottom: 5rem !important;  /* 80px */
     }
+
+    /* supplied mobile promotion is edge-to-edge inside its dialog; do not add generic section fill or gold line */
+    .ulthera-thermage-promotion-dialog {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
     /* Hero 섹션은 section 기본 padding 제외 (100dvh 레이아웃) */
     #home {
       padding-top: 0 !important;

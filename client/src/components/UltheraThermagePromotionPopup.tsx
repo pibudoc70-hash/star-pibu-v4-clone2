@@ -61,7 +61,7 @@ export default function UltheraThermagePromotionPopup() {
         role="dialog"
         aria-modal="true"
         aria-label="울쎄라피 프라임 및 써마지 FLX 이벤트"
-        className="relative w-full max-w-[420px] overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] md:max-w-[960px]"
+        className="ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-hidden rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] md:max-w-[960px]"
       >
         <button
           ref={closeButtonRef}

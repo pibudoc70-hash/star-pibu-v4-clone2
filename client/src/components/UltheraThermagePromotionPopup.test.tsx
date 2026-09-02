@@ -27,8 +27,9 @@ describe("UltheraThermagePromotionPopup", () => {
   }
 
   it("shows both promotions in one responsive popup and points each half to its specified new-tab URL", () => {
-    renderVisiblePopup();
+    const dialog = renderVisiblePopup();
 
+    expect(dialog).toHaveClass("ulthera-thermage-promotion-dialog");
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl);
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.thermageUrl);
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("target", "_blank");

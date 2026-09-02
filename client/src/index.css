@@ -1755,6 +1755,12 @@
       padding-top: 2.5rem !important;
     }
 
+    /* 시술·장비 카드 영역은 내용 높이는 보존하고, mobile 기본 80px 상하 section 여백만 절반으로 조정한다. */
+    section#treatments {
+      padding-top: 2.5rem !important;
+      padding-bottom: 2.5rem !important;
+    }
+
     /* 컨테이너 좌우 패딩 */
     .container {
       padding-left: 1rem !important;
@@ -2956,6 +2962,11 @@
 @media (min-width: 640px) {
   #doctors {
     padding-top: 3rem !important;
+  }
+
+  #treatments {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
   }
 }
 

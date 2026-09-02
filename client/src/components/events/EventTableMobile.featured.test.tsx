@@ -55,6 +55,8 @@ describe("EventTableMobile unified special event hierarchy", () => {
     expect(screen.getByTestId("mobile-event-entry-300001")).toHaveAttribute("data-priority", "1");
     expect(screen.getByTestId("mobile-event-entry-360001")).toHaveAttribute("data-priority", "2");
     expect(screen.getByTestId("mobile-event-entry-10560001")).toHaveAttribute("data-priority", "3");
+    expect(screen.getByTestId("mobile-event-entry-300001")).not.toHaveClass("rounded-xl", "border", "shadow-[0_8px_18px_rgba(10,18,40,0.08)]");
+    expect(screen.getByTestId("mobile-event-entry-360001")).toHaveClass("border-t");
   });
 
   it("keeps regular events in their original sortOrder after the requested priority entries", () => {

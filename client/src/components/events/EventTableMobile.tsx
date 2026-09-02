@@ -228,11 +228,11 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
         <span data-testid="mobile-event-vat-notice" className="ml-auto rounded-full border px-2 py-1 text-[10px] font-semibold" style={{ borderColor: "color-mix(in srgb, var(--color-gold-primary) 38%, transparent)", color: "var(--color-gold-deep)", background: "color-mix(in srgb, var(--color-gold-primary) 9%, transparent)" }}>{copy.vatIncluded}</span>
       </div>
 
-      <div data-testid="mobile-event-list" className="space-y-2.5 p-3" style={{ background: "color-mix(in srgb, var(--color-gold-primary) 3%, white)" }}>
-        <p data-testid="mobile-event-detail-hint" className="px-1.5 pb-1 text-[11px] leading-relaxed text-stone-500">
+      <div data-testid="mobile-event-list" className="bg-white">
+        <p data-testid="mobile-event-detail-hint" className="border-b px-4 py-3 text-[11px] leading-relaxed text-stone-500" style={{ borderColor: "var(--color-gold-light)" }}>
           {copy.hint}
         </p>
-        {orderedEvents.map((event) => {
+        {orderedEvents.map((event, index) => {
           const priceRows = parsePriceRows(event);
           const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
           const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
@@ -246,8 +246,8 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
               key={event.id}
               data-testid={`mobile-event-entry-${event.id}`}
               data-priority={isPriority ? priorityIndex + 1 : undefined}
-              className={`event-mobile-entry overflow-hidden rounded-xl border bg-white transition-shadow ${isPriority ? "border-[color-mix(in_srgb,var(--color-gold-primary)_56%,transparent)] shadow-[0_8px_18px_rgba(10,18,40,0.08)]" : ""}`}
-              style={{ borderColor: isPriority ? "color-mix(in srgb, var(--color-gold-primary) 56%, transparent)" : "var(--color-gold-light)" }}
+              className={`event-mobile-entry overflow-hidden bg-white transition-colors ${index > 0 ? "border-t" : ""} ${isPriority ? "bg-[color-mix(in_srgb,var(--color-gold-primary)_3%,white)]" : ""}`}
+              style={index > 0 ? { borderColor: "var(--color-gold-light)" } : undefined}
             >
               <button
                 type="button"

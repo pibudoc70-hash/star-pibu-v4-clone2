@@ -29,6 +29,7 @@ const TreatmentsEquipmentSection = lazy(() => import("@/components/TreatmentsEqu
 import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import Footer from "@/components/Footer";
 const WelcomePopup = lazy(() => import("@/components/WelcomePopup"));
+const UltheraThermagePromotionPopup = lazy(() => import("@/components/UltheraThermagePromotionPopup"));
 const eyeBagCasesText = CLINIC_STATS.eyeBagCases.toLocaleString("ko-KR");
 
 // 폴드 아래 섹션 — lazy loading으로 초기 번들 크기 감소
@@ -648,6 +649,7 @@ export default function Home() {
            첫 렌더 후 2초 idle 시점에 마운트하여 LCP/FID에 영향 없음 */}
       {popupReady && (
         <Suspense fallback={null}>
+          <UltheraThermagePromotionPopup />
           <WelcomePopup />
         </Suspense>
       )}

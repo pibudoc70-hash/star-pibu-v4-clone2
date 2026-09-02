@@ -20,4 +20,11 @@ describe("EventTableMobile vertical list", () => {
     expect(source).toContain("handleFooterClose");
     expect(source).toContain("scrollIntoView");
   });
+
+  it("uses the existing isFeatured field to make only the sortOrder-first featured event a mobile lead card", () => {
+    expect(source).toContain('event.isFeatured === "1"');
+    expect(source).toContain("left.sortOrder - right.sortOrder || left.id - right.id");
+    expect(source).toContain('data-testid="mobile-featured-event"');
+    expect(source).not.toMatch(/OFF/i);
+  });
 });

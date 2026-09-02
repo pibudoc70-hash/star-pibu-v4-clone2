@@ -73,11 +73,22 @@ function parsePriceRows(event: SpecialEvent): PriceRow[] {
   }
 }
 
+export function partitionMobileFeaturedEvent(events: SpecialEvent[]) {
+  const featuredEvent = [...events]
+    .filter((event) => event.isFeatured === "1")
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.id - right.id)[0];
+
+  return {
+    featuredEvent,
+    listEvents: featuredEvent ? events.filter((event) => event.id !== featuredEvent.id) : events,
+  };
+}
+
 interface EventInlineDetailProps {
   event: SpecialEvent;
   isOpen: boolean;
   getLocalizedText: EventTableMobileProps["getLocalizedText"];
-  onFooterClose: () => void;
+  onFooterClose: (eventId: number) => void;
 }
 
 function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: EventInlineDetailProps) {
@@ -157,7 +168,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
           <div data-testid="mobile-event-detail-footer" className="mt-2.5 flex justify-center border-t border-gray-100 pt-2.5">
             <button
               type="button"
-              onClick={onFooterClose}
+              onClick={() => onFooterClose(event.id)}
               className="min-h-11 min-w-28 rounded-xl border border-gray-200 px-4 text-sm font-medium text-gray-600 transition-colors active:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
               aria-label={`${title} ${copy.close}`}
             >
@@ -175,6 +186,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
   const copy = MOBILE_EVENT_COPY[lang];
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
   const eventRowRefs = useRef(new Map<number, HTMLButtonElement>());
+  const { featuredEvent, listEvents } = partitionMobileFeaturedEvent(events);
 
   const handleFooterClose = (eventId: number) => {
     setExpandedEventId(null);
@@ -184,8 +196,64 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
     });
   };
 
+  const registerEventRow = (eventId: number) => (node: HTMLButtonElement | null) => {
+    if (node) {
+      eventRowRefs.current.set(eventId, node);
+    } else {
+      eventRowRefs.current.delete(eventId);
+    }
+  };
+
   return (
-    <div
+    <>
+      {featuredEvent && (() => {
+        const priceRows = parsePriceRows(featuredEvent);
+        const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : featuredEvent.discountPrice;
+        const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : featuredEvent.normalPrice;
+        const title = getLocalizedText(featuredEvent, "title");
+        const subtitle = getLocalizedText(featuredEvent, "subtitle");
+        const isOpen = expandedEventId === featuredEvent.id;
+
+        return (
+          <section
+            data-testid="mobile-featured-event"
+            data-event-id={featuredEvent.id}
+            className="mb-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] shadow-[0_16px_32px_rgba(10,18,40,0.18)]"
+            aria-label={title}
+          >
+            <div className="flex items-center gap-2 border-b border-[rgba(215,181,92,0.34)] px-4 py-3 text-[var(--color-gold-primary)]">
+              <Sparkles size={15} aria-hidden="true" />
+              <span className="text-[11px] font-semibold tracking-[0.16em]">SPECIAL EVENT</span>
+            </div>
+            <button
+              type="button"
+              ref={registerEventRow(featuredEvent.id)}
+              data-testid={`mobile-featured-event-row-${featuredEvent.id}`}
+              data-event-row={featuredEvent.id}
+              onClick={() => setExpandedEventId(isOpen ? null : featuredEvent.id)}
+              className="flex min-h-24 w-full items-center gap-3 px-4 py-4 text-left outline-none transition-colors active:bg-white/8 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
+              aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
+              aria-expanded={isOpen}
+              aria-controls={`mobile-event-detail-${featuredEvent.id}`}
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-base font-semibold leading-6 text-white">{title}</p>
+                {subtitle && <p className="mt-1 text-xs leading-5 text-[rgba(255,255,255,0.72)]">{subtitle}</p>}
+                <div className="mt-2 flex items-baseline gap-1.5">
+                  <span className="text-base font-bold text-[var(--color-gold-primary)]">{displayPrice.toLocaleString()}원</span>
+                  {normalPrice > 0 && <span className="text-xs text-[rgba(255,255,255,0.52)] line-through">{normalPrice.toLocaleString()}원</span>}
+                </div>
+              </div>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(215,181,92,0.48)] bg-[rgba(215,181,92,0.12)] text-[var(--color-gold-primary)]" aria-hidden="true">
+                <ChevronDown size={18} className={`transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} />
+              </span>
+            </button>
+            <EventInlineDetail event={featuredEvent} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
+          </section>
+        );
+      })()}
+      {listEvents.length > 0 && <div
+      data-testid="mobile-event-regular-list"
       className="overflow-hidden rounded-[1.25rem] border shadow-[0_12px_30px_rgba(10,18,40,0.045)]"
       style={{
         borderColor: "var(--color-gold-light)",
@@ -208,7 +276,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
         <p data-testid="mobile-event-detail-hint" className="px-1.5 pb-0.5 text-[11px] leading-relaxed text-stone-500">
           {copy.hint}
         </p>
-        {events.map((event) => {
+        {listEvents.map((event) => {
           const priceRows = parsePriceRows(event);
           const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
           const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
@@ -219,13 +287,8 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
             <div key={event.id} className="event-mobile-entry overflow-hidden rounded-xl border bg-white" style={{ borderColor: "var(--color-gold-light)" }}>
               <button
                 type="button"
-                ref={(node) => {
-                  if (node) {
-                    eventRowRefs.current.set(event.id, node);
-                  } else {
-                    eventRowRefs.current.delete(event.id);
-                  }
-                }}
+                ref={registerEventRow(event.id)}
+                data-testid={`mobile-event-row-${event.id}`}
                 data-event-row={event.id}
                 onClick={() => setExpandedEventId(isOpen ? null : event.id)}
                 className="flex w-full scroll-mt-16 items-center gap-3 px-4 py-3 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
@@ -263,11 +326,12 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 </span>
               </button>
 
-              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={() => handleFooterClose(event.id)} />
+              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
             </div>
           );
         })}
       </div>
-    </div>
+      </div>}
+    </>
   );
 }

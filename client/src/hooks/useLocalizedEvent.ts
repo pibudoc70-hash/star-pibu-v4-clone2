@@ -18,6 +18,7 @@ export interface SpecialEvent {
   imageUrl?: string;
   cta: string;
   isActive: "0" | "1";
+  isFeatured?: "0" | "1";
   sortOrder: number;
   anesthesiaFee?: string;
   targetLang?: string;

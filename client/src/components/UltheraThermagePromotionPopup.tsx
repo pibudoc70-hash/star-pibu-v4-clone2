@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, X } from "lucide-react";
+import { X } from "lucide-react";
 
-const DISMISS_KEY = "star-ulthera-thermage-promo-dismissed";
 const SHOW_DELAY_MS = 700;
 
 export const ULTHERA_THERMAGE_PROMOTIONS = {
@@ -11,23 +10,12 @@ export const ULTHERA_THERMAGE_PROMOTIONS = {
   thermageUrl: "https://starpibuclinic.cafe24.com/event/thermage",
 } as const;
 
-function getNextLocalMidnight() {
-  const expiry = new Date();
-  expiry.setHours(24, 0, 0, 0);
-  return expiry;
-}
-
 export default function UltheraThermagePromotionPopup() {
   const [visible, setVisible] = useState(false);
-  const [hideToday, setHideToday] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const dismissedUntil = localStorage.getItem(DISMISS_KEY);
-    if (dismissedUntil && new Date(dismissedUntil) > new Date()) return;
-    if (dismissedUntil) localStorage.removeItem(DISMISS_KEY);
-
     const timer = window.setTimeout(() => setVisible(true), SHOW_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, []);
@@ -45,7 +33,6 @@ export default function UltheraThermagePromotionPopup() {
   }, [visible]);
 
   const dismiss = () => {
-    if (hideToday) localStorage.setItem(DISMISS_KEY, getNextLocalMidnight().toISOString());
     setVisible(false);
     window.requestAnimationFrame(() => {
       lastFocusedRef.current?.focus();
@@ -117,21 +104,6 @@ export default function UltheraThermagePromotionPopup() {
           >
             <span className="sr-only">써마지 FLX 이벤트 보기</span>
           </a>
-        </div>
-
-        <div className="flex min-h-14 items-center border-t border-white/20 bg-[var(--color-star-navy)] px-4 py-2.5">
-          <label className="flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-1.5 text-xs font-medium text-white/80 focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)]">
-            <input
-              type="checkbox"
-              checked={hideToday}
-              onChange={(event) => setHideToday(event.target.checked)}
-              className="sr-only"
-            />
-            <span className={`flex size-5 items-center justify-center rounded border ${hideToday ? "border-[var(--color-gold-primary)] bg-[var(--color-gold-primary)] text-[var(--color-star-navy)]" : "border-white/55"}`} aria-hidden="true">
-              {hideToday && <Check size={14} strokeWidth={3} />}
-            </span>
-            오늘은 보지 않음
-          </label>
         </div>
       </section>
     </div>

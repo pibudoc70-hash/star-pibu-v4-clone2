@@ -37,13 +37,13 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(document.querySelector(`source[srcset="${ULTHERA_THERMAGE_PROMOTIONS.desktopImage}"]`)).toHaveAttribute("media", "(min-width: 768px)");
   });
 
-  it("provides an accessible close control and persists an explicit today-hide choice", () => {
+  it("provides an accessible close control without a today-hide checkbox", () => {
     renderVisiblePopup();
 
-    fireEvent.click(screen.getByRole("checkbox"));
+    expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
+    expect(screen.queryByText("오늘은 보지 않음")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(new Date(localStorage.getItem("star-ulthera-thermage-promo-dismissed")!).getHours()).toBe(0);
   });
 });

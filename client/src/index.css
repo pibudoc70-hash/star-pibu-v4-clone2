@@ -1750,6 +1750,11 @@
       padding-bottom: 0 !important;
     }
 
+    /* 의료팀은 콘텐츠 시작점을 앞당겨 mobile 기본 section 상단 80px의 절반만 사용한다. */
+    section#doctors {
+      padding-top: 2.5rem !important;
+    }
+
     /* 컨테이너 좌우 패딩 */
     .container {
       padding-left: 1rem !important;
@@ -2945,6 +2950,13 @@
 .event-mobile-detail.is-open .event-mobile-detail__body {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* 의료팀은 콘텐츠 블록이 바로 이어져 상단만 기존 mobile 80px / desktop 96px의 절반으로 조정한다. */
+@media (min-width: 640px) {
+  #doctors {
+    padding-top: 3rem !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

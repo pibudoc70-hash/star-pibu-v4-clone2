@@ -9,8 +9,8 @@ const source = readFileSync(
 
 describe("EventTableMobile vertical list", () => {
   it("renders the original stacked event-list surface rather than a carousel", () => {
-    expect(source).toContain('data-testid="mobile-event-list" className="divide-y"');
-    expect(source).toContain('className="event-mobile-entry"');
+    expect(source).toContain('data-testid="mobile-event-list" className="space-y-2.5 p-2.5"');
+    expect(source).toContain('className="event-mobile-entry overflow-hidden rounded-xl border bg-white"');
     expect(source).not.toContain("snap-x snap-mandatory");
     expect(source).not.toContain('aria-roledescription="carousel"');
   });

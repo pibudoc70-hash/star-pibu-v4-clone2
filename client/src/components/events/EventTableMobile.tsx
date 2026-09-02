@@ -18,6 +18,7 @@ const MOBILE_EVENT_COPY = {
     detail: "상세",
     pricing: "가격 안내",
     treatment: "시술",
+    vatIncluded: "VAT 포함",
   },
   en: {
     hint: "Tap an event to view its details and pricing.",
@@ -26,6 +27,7 @@ const MOBILE_EVENT_COPY = {
     detail: "details",
     pricing: "Pricing",
     treatment: "Treatment",
+    vatIncluded: "VAT included",
   },
   ja: {
     hint: "イベントをタップすると、詳細と料金をご確認いただけます。",
@@ -34,6 +36,7 @@ const MOBILE_EVENT_COPY = {
     detail: "詳細",
     pricing: "料金案内",
     treatment: "施術",
+    vatIncluded: "VAT込み",
   },
   zh: {
     hint: "点击活动即可查看详情和价格。",
@@ -42,6 +45,7 @@ const MOBILE_EVENT_COPY = {
     detail: "详情",
     pricing: "价格说明",
     treatment: "治疗项目",
+    vatIncluded: "含 VAT",
   },
   "zh-TW": {
     hint: "點選活動即可查看詳細內容與價格。",
@@ -50,6 +54,7 @@ const MOBILE_EVENT_COPY = {
     detail: "詳細",
     pricing: "價格說明",
     treatment: "療程",
+    vatIncluded: "含 VAT",
   },
 } as const;
 
@@ -66,24 +71,6 @@ function parsePriceRows(event: SpecialEvent): PriceRow[] {
   } catch {
     return [];
   }
-}
-
-function VatBadge() {
-  return (
-    <span
-      className="inline-flex items-center px-1.5 py-0.5 rounded font-medium"
-      style={{
-        fontSize: "0.62rem",
-        letterSpacing: "0.04em",
-        color: "var(--color-gold-dark, #7A5C35)",
-        background: "color-mix(in srgb, var(--color-gold-primary) 12%, transparent)",
-        border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
-        whiteSpace: "nowrap",
-      }}
-    >
-      VAT 포함
-    </span>
-  );
 }
 
 interface EventInlineDetailProps {
@@ -142,7 +129,6 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
                         <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{row.discountPrice.toLocaleString()}원</span>
                         {row.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{row.normalPrice.toLocaleString()}원</span>}
                       </div>
-                      <VatBadge />
                     </div>
                   </div>
                 ))
@@ -154,7 +140,6 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
                       <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{event.discountPrice.toLocaleString()}원</span>
                       {event.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{event.normalPrice.toLocaleString()}원</span>}
                     </div>
-                    <VatBadge />
                   </div>
                 </div>
               )}
@@ -216,10 +201,11 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
       >
         <Sparkles size={14} style={{ color: "var(--color-gold-primary)" }} />
         <span className="text-[11px] font-semibold tracking-[0.16em] uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
+        <span data-testid="mobile-event-vat-notice" className="ml-auto rounded-full border px-2 py-1 text-[10px] font-semibold" style={{ borderColor: "color-mix(in srgb, var(--color-gold-primary) 38%, transparent)", color: "var(--color-gold-deep)", background: "color-mix(in srgb, var(--color-gold-primary) 9%, transparent)" }}>{copy.vatIncluded}</span>
       </div>
 
-      <div data-testid="mobile-event-list" className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
-        <p data-testid="mobile-event-detail-hint" className="border-b px-4 py-2 text-[11px] leading-relaxed text-stone-500" style={{ borderColor: "var(--color-gold-light)" }}>
+      <div data-testid="mobile-event-list" className="space-y-2.5 p-2.5" style={{ background: "color-mix(in srgb, var(--color-gold-primary) 3%, white)" }}>
+        <p data-testid="mobile-event-detail-hint" className="px-1.5 pb-0.5 text-[11px] leading-relaxed text-stone-500">
           {copy.hint}
         </p>
         {events.map((event) => {
@@ -230,7 +216,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
           const isOpen = expandedEventId === event.id;
 
           return (
-            <div key={event.id} className="event-mobile-entry">
+            <div key={event.id} className="event-mobile-entry overflow-hidden rounded-xl border bg-white" style={{ borderColor: "var(--color-gold-light)" }}>
               <button
                 type="button"
                 ref={(node) => {
@@ -254,7 +240,6 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                       <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
                       {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
                     </div>
-                    <VatBadge />
                   </div>
                 </div>
 

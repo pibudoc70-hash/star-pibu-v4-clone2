@@ -46,14 +46,22 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(within(screen.getByTestId("pain-mobile-stage-3")).getByText("자세히 보기")).toHaveClass("sr-only", "sm:not-sr-only");
   });
 
-  it("uses compact implicit rows and a distinct warm guidance surface", () => {
+  it("keeps mobile trust guidance collapsed until its native disclosure is opened", () => {
     render(<PainManagementGuide lang="ko" />);
 
     const guidancePanel = screen.getByTestId("pain-trust-strip");
-    const firstBadge = within(guidancePanel).getByText("수면마취 운영 경험 20년 이상").closest("article");
+    const trustSummary = guidancePanel.querySelector("summary");
 
-    expect(guidancePanel).toHaveClass("mt-3", "auto-rows-max", "content-start", "bg-[#fbf6ec]", "sm:mt-4");
-    expect(firstBadge).toHaveClass("items-center", "px-3.5", "py-3", "sm:p-4");
+    expect(guidancePanel).toHaveClass("group", "mt-3", "bg-[#fbf6ec]", "md:hidden");
+    expect(trustSummary).toHaveClass("min-h-12", "px-3.5");
+    expect(guidancePanel).not.toHaveAttribute("open");
+    expect(within(guidancePanel).getByText("관리 안내 보기")).toBeInTheDocument();
+
+    fireEvent.click(trustSummary!);
+
+    expect(guidancePanel).toHaveAttribute("open");
+    expect(within(guidancePanel).getByText("수면마취 운영 경험 20년 이상")).toBeInTheDocument();
+    expect(within(guidancePanel).getByText("관리 안내 접기")).toBeInTheDocument();
   });
 
   it("keeps mobile heading and FAQ spacing compact while restoring desktop spacing", () => {

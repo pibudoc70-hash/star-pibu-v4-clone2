@@ -83,6 +83,8 @@ describe("EventTableMobile", () => {
     render(<EventTableMobile events={[event, secondEvent]} getLocalizedText={getLocalizedText} />);
 
     expect(screen.getByTestId("mobile-event-detail-hint")).toHaveTextContent("원하는 이벤트를 누르면 상세 내용과 가격을 확인할 수 있어요.");
+    expect(screen.getByTestId("mobile-event-vat-notice")).toHaveTextContent("VAT 포함");
+    expect(screen.getAllByText("VAT 포함")).toHaveLength(1);
 
     fireEvent.click(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" }));
     expect(screen.getByTestId("mobile-event-detail-1")).toHaveClass("is-open");
@@ -131,5 +133,6 @@ describe("EventTableMobile", () => {
     expect(source).toContain('<div className="mb-2">');
     expect(source).toContain('style={{ aspectRatio: "16/9" }}');
     expect(source).toContain('className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border transition-all"');
+    expect(source).not.toContain("function VatBadge");
   });
 });

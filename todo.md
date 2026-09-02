@@ -5029,3 +5029,5 @@ TreatmentDetail (`/treatment/:name`) 은 legacy bridge route로 7개 시술 운�
 - [x] Replaced the mobile Special Event full-list detail behavior with an accessible per-card inline detail toggle and a concise “tap for details” cue. Preserved desktop layout, event prices, VAT labels, consultation links, locales, booking/OTP, and external reservations. Record: `reports/mobile-event-inline-detail-2026-09-02.md`.
 
 - [x] Reassessed and refined the confirmed 390px mobile visual hierarchy, spacing, card rhythm, and expanded-state presentation for Special Event and Pain Management. Preserved content, pricing/VAT, medical guidance, touch targets, native disclosures, locales, desktop layout, booking/OTP, and external reservations. Record: `reports/mobile-event-pain-design-refinement-2026-09-02.md`.
+
+- [x] Refined the 390px mobile Special Event card rhythm with breathable row spacing and one shared VAT-included notice, then reduced Pain Management to its essential mobile summary while preserving medical guidance, touch targets, locales, desktop layout, booking/OTP, and external reservations. Record: `reports/mobile-event-pain-compact-2026-09-02.md`.

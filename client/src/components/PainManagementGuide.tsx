@@ -18,6 +18,9 @@ type GuideCopy = {
   visualCaption: string;
   expandStep: string;
   collapseStep: string;
+  trustHeading: string;
+  expandTrust: string;
+  collapseTrust: string;
   careCheckpoints: Checkpoint[];
   steps: Step[];
   experienceHeading: string;
@@ -46,6 +49,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     visualCaption: "시술 특성과 개인의 통증 민감도를 먼저 확인한 뒤, 꼭 필요한 단계만 원장님이 직접 검토하고 결정합니다.",
     expandStep: "자세히 보기",
     collapseStep: "접기",
+    trustHeading: "안전한 관리를 위한 안내",
+    expandTrust: "관리 안내 보기",
+    collapseTrust: "관리 안내 접기",
     careCheckpoints: [
       { label: "사전 확인", detail: "건강상태·복용약·알레르기·과거력을 확인하고, 의료진과 시술·통증관리 계획을 검토합니다. 확인 범위와 안내는 개인 상태에 따라 달라질 수 있습니다." },
       { label: "시술 중 관찰", detail: "Kohden SpO₂ 모니터와 혈압측정기를 바탕으로 환자 상태를 지속적으로 살핍니다. 관찰 방법과 범위는 시술 및 개인 상태에 따라 달라질 수 있습니다." },
@@ -80,6 +86,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     visualCaption: "After reviewing the procedure and individual condition, the medical team considers only the steps that may be needed.",
     expandStep: "View details",
     collapseStep: "Collapse",
+    trustHeading: "Guidance for safe care",
+    expandTrust: "View care guidance",
+    collapseTrust: "Close care guidance",
     careCheckpoints: [
       { label: "Pre-procedure review", detail: "Health status, medications, allergies, and medical history are reviewed with the medical team alongside the procedure and pain-management plan. The review and guidance may vary by individual condition." },
       { label: "Observation during care", detail: "A Kohden SpO₂ monitor and blood-pressure monitor support continuous observation of the patient’s condition. The method and scope of observation may vary by procedure and individual condition." },
@@ -119,6 +128,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     visualCaption: "施術の特性と個別の状態を確認し、必要な段階だけを医療スタッフが検討します。",
     expandStep: "詳細を見る",
     collapseStep: "閉じる",
+    trustHeading: "安全な管理のためのご案内",
+    expandTrust: "管理の案内を見る",
+    collapseTrust: "管理の案内を閉じる",
     careCheckpoints: [
       { label: "施術前確認", detail: "健康状態・服用薬・アレルギー・既往歴を確認し、医療スタッフと施術・痛み管理の計画を検討します。確認範囲とご案内は個別の状態により異なる場合があります。" },
       { label: "施術中の観察", detail: "Kohden SpO₂モニターと血圧計をもとに、患者様の状態を継続して確認します。観察方法と範囲は、施術および個別の状態により異なる場合があります。" },
@@ -158,6 +170,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     visualCaption: "确认治疗特点和个人状态后，医护人员仅评估可能需要的阶段。",
     expandStep: "查看详情",
     collapseStep: "收起",
+    trustHeading: "安全管理说明",
+    expandTrust: "查看管理说明",
+    collapseTrust: "收起管理说明",
     careCheckpoints: [
       { label: "治疗前确认", detail: "会确认健康状态、用药、过敏与既往病史，并与医护人员评估治疗及疼痛管理计划。确认范围与说明可能因个人状态而有所不同。" },
       { label: "治疗中观察", detail: "会使用Kohden SpO₂监测仪与血压计持续观察患者状态。观察方式与范围可能因治疗及个人状态而有所不同。" },
@@ -197,6 +212,9 @@ export const PAIN_MANAGEMENT_CONTENT: Record<PainManagementLang, GuideCopy> = {
     visualCaption: "確認療程特性與個人狀態後，醫護人員僅評估可能需要的階段。",
     expandStep: "查看詳情",
     collapseStep: "收合",
+    trustHeading: "安全管理說明",
+    expandTrust: "查看管理說明",
+    collapseTrust: "收合管理說明",
     careCheckpoints: [
       { label: "療程前確認", detail: "會確認健康狀態、用藥、過敏與既往病史，並與醫護人員評估療程及疼痛管理計畫。確認範圍與說明可能因個人狀態而有所不同。" },
       { label: "療程中觀察", detail: "會使用Kohden SpO₂監測儀與血壓計持續觀察患者狀態。觀察方式與範圍可能因療程及個人狀態而有所不同。" },
@@ -256,6 +274,16 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
       { title: copy.beforeAfterHeading, detail: copy.careCheckpoints.map(({ label }) => label).join(" · "), icon: TRUST_BADGE_ICONS[2] },
     ];
 
+  const renderTrustBadges = () => trustBadges.map((badge, index) => {
+    const Icon = badge.icon;
+    return (
+      <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 md:border-b-0 md:border-r md:p-4 md:last:border-r-0">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"><Icon size={19} aria-hidden="true" /></div>
+        <div className="min-w-0"><h3 className="text-sm font-semibold leading-5 text-[var(--color-star-text)]">{badge.title}</h3><p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</p></div>
+      </article>
+    );
+  });
+
   return (
     <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] sm:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(135deg,rgba(10,18,40,0.04),rgba(215,181,92,0.1),transparent)] sm:h-40" aria-hidden="true" />
@@ -297,16 +325,16 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <section data-testid="pain-trust-strip" aria-label="통증관리 안내" className="mt-3 grid auto-rows-max content-start overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] sm:mt-4 sm:grid-cols-3">
-          {trustBadges.map((badge, index) => {
-            const Icon = badge.icon;
-            return (
-              <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"><Icon size={19} aria-hidden="true" /></div>
-                <div className="min-w-0"><h3 className="text-sm font-semibold leading-5 text-[var(--color-star-text)]">{badge.title}</h3><p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</p></div>
-              </article>
-            );
-          })}
+        <details data-testid="pain-trust-strip" className="group mt-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] md:hidden">
+          <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-inset">
+            <span className="text-sm font-semibold text-[var(--color-star-text)]">{copy.trustHeading}</span>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[var(--color-gold-deep)]"><span className="sr-only group-open:hidden">{copy.expandTrust}</span><span className="sr-only hidden group-open:inline">{copy.collapseTrust}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
+          </summary>
+          <div className="border-t border-[var(--color-gold-light)]">{renderTrustBadges()}</div>
+        </details>
+
+        <section data-testid="pain-trust-strip-desktop" aria-label="통증관리 안내" className="mt-3 hidden auto-rows-max content-start overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] md:grid md:grid-cols-3 md:mt-4">
+          {renderTrustBadges()}
         </section>
 
         <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white sm:mt-5">

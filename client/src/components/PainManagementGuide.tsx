@@ -257,16 +257,16 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
     ];
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-white p-4 shadow-[0_20px_50px_rgba(10,18,40,0.06)] sm:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[linear-gradient(135deg,rgba(10,18,40,0.05),rgba(215,181,92,0.14),transparent)] sm:h-40" aria-hidden="true" />
+    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] sm:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(135deg,rgba(10,18,40,0.04),rgba(215,181,92,0.1),transparent)] sm:h-40" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="mb-3 text-center sm:mb-8">
+        <header className="mb-4 border-l-2 border-[var(--color-gold-primary)] pl-3 text-left sm:mb-8 sm:border-l-0 sm:pl-0 sm:text-center">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-          <h2 id={headingId} className="mx-auto mt-2 max-w-[20ch] break-keep text-balance text-[1.55rem] font-semibold leading-[1.42] tracking-tight text-[var(--color-star-text)] sm:mt-3 sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
-          <p id="pain-management-summary-caption" className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-[var(--color-star-text-mid)] sm:mt-3">{copy.visualCaption}</p>
+          <h2 id={headingId} className="mt-1.5 max-w-[21ch] break-keep text-balance text-[1.45rem] font-semibold leading-[1.34] tracking-tight text-[var(--color-star-text)] sm:mx-auto sm:mt-3 sm:max-w-3xl sm:text-3xl sm:leading-snug">{copy.heroTitle}</h2>
+          <p id="pain-management-summary-caption" className="mt-2 max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:mx-auto sm:mt-3 sm:max-w-2xl sm:text-sm sm:leading-6">{copy.visualCaption}</p>
         </header>
 
-        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-3 md:hidden">
+        <section data-testid="pain-management-summary" aria-describedby="pain-management-summary-caption" aria-label={copy.title} className="grid gap-2.5 md:hidden">
           {copy.steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? Stethoscope;
             return (
@@ -297,11 +297,11 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <section data-testid="pain-trust-strip" aria-label="통증관리 안내" className="mt-3 grid auto-rows-max content-start overflow-hidden rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] sm:mt-4 sm:grid-cols-3">
+        <section data-testid="pain-trust-strip" aria-label="통증관리 안내" className="mt-3 grid auto-rows-max content-start overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] sm:mt-4 sm:grid-cols-3">
           {trustBadges.map((badge, index) => {
             const Icon = badge.icon;
             return (
-              <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-4 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0">
+              <article key={badge.title} className="flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 sm:border-b-0 sm:border-r sm:p-4 sm:last:border-r-0">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"><Icon size={19} aria-hidden="true" /></div>
                 <div className="min-w-0"><h3 className="text-sm font-semibold leading-5 text-[var(--color-star-text)]">{badge.title}</h3><p className="mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</p></div>
               </article>
@@ -309,14 +309,14 @@ export default function PainManagementGuide({ lang }: { lang: Lang }) {
           })}
         </section>
 
-        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-4 rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-gold-pale)] p-3.5 sm:mt-5 sm:p-5">
-          <div className="mb-1.5 flex items-center gap-2 sm:mb-2"><CircleHelp size={20} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="text-base font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
+        <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white sm:mt-5">
+          <div className="flex items-center gap-2 border-b border-[var(--color-gold-light)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)] px-3.5 py-3 sm:px-5 sm:py-4"><CircleHelp size={19} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="text-base font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
           {copy.faqs.map((faq, index) => {
             const Icon = FAQ_ICONS[index] ?? CircleHelp;
-            return <details key={faq.question} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] last:border-b-0"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 sm:py-3"><span className="flex items-start gap-2 text-left text-sm font-semibold leading-6 text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{faq.question}</span><ChevronDown size={18} className="mt-1 shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)] sm:pb-4">{faq.answer}</p></details>;
+            return <details key={faq.question} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0 sm:px-5"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2.5 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 sm:py-3"><span className="flex items-start gap-2 text-left text-sm font-semibold leading-6 text-[var(--color-star-text)]"><Icon size={17} className="mt-0.5 shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" />{faq.question}</span><ChevronDown size={18} className="mt-1 shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)] sm:pb-4">{faq.answer}</p></details>;
           })}
         </section>
-        <p className="mt-3 text-center text-xs leading-5 text-[var(--color-star-text-mid)] sm:mt-4">{copy.closing}</p>
+        <p className="mt-2.5 px-1 text-center text-xs leading-5 text-[var(--color-star-text-mid)] sm:mt-4">{copy.closing}</p>
       </div>
     </section>
   );

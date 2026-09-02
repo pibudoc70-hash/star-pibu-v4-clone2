@@ -46,14 +46,14 @@ describe("PainManagementGuide mobile accordion", () => {
     expect(within(screen.getByTestId("pain-mobile-stage-3")).getByText("자세히 보기")).toHaveClass("sr-only", "sm:not-sr-only");
   });
 
-  it("uses compact implicit rows and vertical padding for the mobile guidance panel", () => {
+  it("uses compact implicit rows and a distinct warm guidance surface", () => {
     render(<PainManagementGuide lang="ko" />);
 
     const guidancePanel = screen.getByTestId("pain-trust-strip");
     const firstBadge = within(guidancePanel).getByText("수면마취 운영 경험 20년 이상").closest("article");
 
-    expect(guidancePanel).toHaveClass("mt-3", "auto-rows-max", "content-start", "sm:mt-4");
-    expect(firstBadge).toHaveClass("items-center", "px-4", "py-3", "sm:p-4");
+    expect(guidancePanel).toHaveClass("mt-3", "auto-rows-max", "content-start", "bg-[#fbf6ec]", "sm:mt-4");
+    expect(firstBadge).toHaveClass("items-center", "px-3.5", "py-3", "sm:p-4");
   });
 
   it("keeps mobile heading and FAQ spacing compact while restoring desktop spacing", () => {
@@ -68,13 +68,13 @@ describe("PainManagementGuide mobile accordion", () => {
     const firstFaqSummary = firstFaq.querySelector("summary");
     const firstFaqAnswer = firstFaq.querySelector("p");
 
-    expect(panel).toHaveClass("p-4", "sm:p-8");
-    expect(header).toHaveClass("mb-3", "sm:mb-8");
-    expect(heading).toHaveClass("mt-2", "sm:mt-3");
+    expect(panel).toHaveClass("bg-[#fffdfa]", "p-4", "sm:p-8");
+    expect(header).toHaveClass("mb-4", "border-l-2", "text-left", "sm:text-center", "sm:mb-8");
+    expect(heading).toHaveClass("mt-1.5", "text-[1.45rem]", "sm:mt-3");
     expect(caption).toHaveClass("mt-2", "sm:mt-3");
-    expect(faq).toHaveClass("mt-4", "p-3.5", "sm:mt-5", "sm:p-5");
+    expect(faq).toHaveClass("mt-3", "bg-white", "overflow-hidden", "sm:mt-5");
     expect(firstFaqSummary).toHaveClass("min-h-11", "py-2.5", "sm:py-3");
     expect(firstFaqAnswer).toHaveClass("pb-3", "sm:pb-4");
-    expect(screen.getByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).toHaveClass("mt-3", "sm:mt-4");
+    expect(screen.getByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).toHaveClass("mt-2.5", "sm:mt-4");
   });
 });

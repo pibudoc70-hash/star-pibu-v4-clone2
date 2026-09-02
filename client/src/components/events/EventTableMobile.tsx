@@ -113,14 +113,14 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
       inert={!isOpen}
     >
       <div className="event-mobile-detail__content">
-        <section className="event-mobile-detail__body border-t border-gray-100 bg-slate-50/95 px-5 pt-3 pb-5" aria-label={`${title} ${copy.detail}`}>
+        <section className="event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-3 pb-4" aria-label={`${title} ${copy.detail}`}>
           <div className="mb-2">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>
 
           {event.imageUrl && (
-            <div className="mb-4 rounded-xl overflow-hidden bg-gray-100" style={{ aspectRatio: "3/2" }}>
+            <div className="mb-3 rounded-xl overflow-hidden bg-gray-100" style={{ aspectRatio: "16/9" }}>
               <OptimizedImage src={event.imageUrl} alt={title} className="w-full h-full object-cover" width={600} height={400} priority={false} />
             </div>
           )}
@@ -129,13 +129,13 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
           {event.content && <p className="mb-4 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.content}</p>}
 
           <div className="rounded-xl overflow-hidden border border-gray-100">
-            <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100">
+            <div className="px-3.5 py-2 bg-gray-50 border-b border-gray-100">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{copy.pricing}</span>
             </div>
             <div className="divide-y divide-gray-100">
               {priceRows.length > 0 ? (
                 priceRows.map((row, index) => (
-                  <div key={index} className="flex items-center justify-between gap-3 px-4 py-3">
+                  <div key={index} className="flex items-center justify-between gap-3 px-3.5 py-2.5">
                     <span className="text-xs text-gray-600">{row.label}</span>
                     <div className="flex items-center gap-1.5 flex-wrap justify-end">
                       <div className="flex items-baseline gap-1">
@@ -147,7 +147,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
                   </div>
                 ))
               ) : (
-                <div className="flex items-center justify-between gap-3 px-4 py-3">
+                <div className="flex items-center justify-between gap-3 px-3.5 py-2.5">
                   <span className="text-xs text-gray-600">{event.productName || copy.treatment}</span>
                   <div className="flex items-center gap-1.5 flex-wrap justify-end">
                     <div className="flex items-baseline gap-1">
@@ -161,15 +161,15 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 pt-4">
-            <a href={chatUrl} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-3 font-semibold rounded-xl text-center text-sm" style={{ background: chatBg, color: chatColor }}>
+          <div className="grid grid-cols-2 gap-2.5 pt-3">
+            <a href={chatUrl} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-2.5 font-semibold rounded-xl text-center text-sm" style={{ background: chatBg, color: chatColor }}>
               {chatLabel}
             </a>
-            <a href={phoneHref} className="flex-1 px-4 py-3 font-medium rounded-xl text-center text-sm border border-gray-200" style={{ color: "var(--brand-text-mid, #666666)" }}>
+            <a href={phoneHref} className="flex-1 px-4 py-2.5 font-medium rounded-xl text-center text-sm border border-gray-200" style={{ color: "var(--brand-text-mid, #666666)" }}>
               {phoneLabel}
             </a>
           </div>
-          <div data-testid="mobile-event-detail-footer" className="mt-3 flex justify-center border-t border-gray-100 pt-3">
+          <div data-testid="mobile-event-detail-footer" className="mt-2.5 flex justify-center border-t border-gray-100 pt-2.5">
             <button
               type="button"
               onClick={onFooterClose}
@@ -201,25 +201,25 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
 
   return (
     <div
-      className="rounded-2xl overflow-hidden border"
+      className="overflow-hidden rounded-[1.25rem] border shadow-[0_12px_30px_rgba(10,18,40,0.045)]"
       style={{
         borderColor: "var(--color-gold-light)",
         background: "var(--brand-bg-card, #FDFAF7)",
       }}
     >
       <div
-        className="flex items-center gap-2 px-5 py-4 border-b"
+        className="flex items-center gap-2 px-4 py-3 border-b"
         style={{
           borderColor: "var(--color-gold-light)",
           background: "linear-gradient(135deg, color-mix(in srgb, var(--color-gold-primary) 12%, transparent) 0%, color-mix(in srgb, var(--color-gold-primary) 4%, transparent) 100%)",
         }}
       >
         <Sparkles size={14} style={{ color: "var(--color-gold-primary)" }} />
-        <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
+        <span className="text-[11px] font-semibold tracking-[0.16em] uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
       </div>
 
       <div data-testid="mobile-event-list" className="divide-y" style={{ borderColor: "var(--color-gold-light)" }}>
-        <p data-testid="mobile-event-detail-hint" className="border-b px-5 py-2.5 text-[11px] leading-relaxed text-stone-500" style={{ borderColor: "var(--color-gold-light)" }}>
+        <p data-testid="mobile-event-detail-hint" className="border-b px-4 py-2 text-[11px] leading-relaxed text-stone-500" style={{ borderColor: "var(--color-gold-light)" }}>
           {copy.hint}
         </p>
         {events.map((event) => {
@@ -242,13 +242,13 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 }}
                 data-event-row={event.id}
                 onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                className="flex w-full scroll-mt-16 items-center gap-3 px-5 py-4 text-left transition-colors active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
+                className="flex w-full scroll-mt-16 items-center gap-3 px-4 py-3 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
                 aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
                 aria-expanded={isOpen}
                 aria-controls={`mobile-event-detail-${event.id}`}
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{title}</p>
+                  <p className="text-sm font-semibold leading-5 text-gray-900 truncate">{title}</p>
                   <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                     <div className="flex items-baseline gap-1">
                       <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
@@ -259,7 +259,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 </div>
 
                 <span
-                  className="flex min-h-11 min-w-11 flex-shrink-0 items-center justify-center gap-1 rounded-full border px-3 text-xs font-medium transition-all"
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border transition-all"
                   style={{
                     borderColor: "var(--color-gold-light)",
                     color: "var(--color-gold-deep)",
@@ -267,7 +267,6 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                   }}
                   aria-hidden="true"
                 >
-                  {isOpen ? copy.close : copy.open}
                   <span
                     data-testid={`mobile-event-expand-indicator-${event.id}`}
                     data-expanded={isOpen}

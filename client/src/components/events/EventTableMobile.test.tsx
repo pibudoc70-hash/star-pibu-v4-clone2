@@ -124,10 +124,12 @@ describe("EventTableMobile", () => {
     expect(source).not.toContain("event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 py-5");
   });
 
-  it("uses a compact title-price rhythm and a distinct light-gray detail surface", () => {
+  it("uses a compact title-price rhythm and a distinct white detail surface", () => {
     const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
 
-    expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-slate-50/95 px-5 pt-3 pb-5");
+    expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-3 pb-4");
     expect(source).toContain('<div className="mb-2">');
+    expect(source).toContain('style={{ aspectRatio: "16/9" }}');
+    expect(source).toContain('className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border transition-all"');
   });
 });

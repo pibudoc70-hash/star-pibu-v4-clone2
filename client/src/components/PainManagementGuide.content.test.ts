@@ -111,15 +111,13 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("label: copy.categoryLabel");
   });
 
-  it("uses mobile-specific spacing and typography so the remaining guide stays balanced on narrow screens", () => {
-    expect(guideSource).toContain("bg-[#fffdfa] p-4 shadow");
-    expect(guideSource).toContain("sm:p-8");
-    expect(guideSource).toContain("h-24");
-    expect(guideSource).toContain("sm:h-40");
-    expect(guideSource).toContain("text-[1.45rem]");
-    expect(guideSource).toContain("sm:text-3xl");
-    expect(guideSource).toContain("text-[11px]");
-    expect(guideSource).toContain("text-[11px]");
+  it("uses one whole mobile disclosure and a consistent md desktop boundary instead of spacing-only compaction", () => {
+    expect(guideSource).toContain('data-testid="pain-mobile-panel"');
+    expect(guideSource).toContain("expandMobilePanel");
+    expect(guideSource).toContain("collapseMobilePanel");
+    expect(guideSource).toContain("md:hidden");
+    expect(guideSource).toContain("hidden md:block");
+    expect(guideSource).not.toContain("sm:");
   });
 
   it("uses the user-provided Korean sedation-operation experience title", () => {

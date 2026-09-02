@@ -1,88 +1,71 @@
 import React from "react";
+import { readFileSync } from "node:fs";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, expect, it } from "vitest";
 import PainManagementGuide from "./PainManagementGuide";
 
-describe("PainManagementGuide mobile accordion", () => {
-  it("keeps the three mobile stages compact until their native disclosure is opened", () => {
+describe("PainManagementGuide mobile disclosure", () => {
+  it("keeps the full mobile guide collapsed behind one native disclosure until the user opens it", () => {
     render(<PainManagementGuide lang="ko" />);
 
-    const firstStage = screen.getByTestId("pain-mobile-stage-1");
-    const firstSummary = firstStage.querySelector("summary");
+    const panel = screen.getByTestId("pain-mobile-panel");
+    const summary = panel.querySelector("summary");
 
-    expect(screen.getByTestId("pain-management-summary")).toHaveClass("md:hidden");
-    expect(screen.getByTestId("pain-management-summary-desktop")).toHaveClass("hidden", "md:grid");
-    expect(firstStage).not.toHaveAttribute("open");
-    expect(firstSummary).toBeInTheDocument();
-    expect(firstSummary).toHaveClass("grid", "min-h-[68px]", "grid-cols-[2.5rem_minmax(0,1fr)_auto]");
-    expect(within(firstStage).getByText("자세히 보기")).toBeInTheDocument();
+    expect(panel).not.toHaveAttribute("open");
+    expect(summary).toBeInTheDocument();
+    expect(within(panel).getByText("통증관리 3단계와 FAQ 보기")).toBeInTheDocument();
+    expect(within(panel).getByText("개인별 통증관리 3단계")).toBeInTheDocument();
+    expect(screen.getByTestId("pain-management-summary")).toBeInTheDocument();
+    expect(screen.getByTestId("pain-trust-strip")).toBeInTheDocument();
+    expect(screen.getByTestId("pain-faq")).toBeInTheDocument();
 
-    fireEvent.click(firstSummary!);
+    fireEvent.click(summary!);
 
-    expect(firstStage).toHaveAttribute("open");
-    expect(within(firstStage).getByText("접기")).toBeInTheDocument();
-    expect(within(firstStage).getByText("시술 전 마취 크림을 충분히 도포해 표면 통증 부담을 낮춥니다. 대부분의 시술에서 기본으로 적용됩니다.")).toBeInTheDocument();
+    expect(panel).toHaveAttribute("open");
+    expect(within(panel).getByText("통증관리 접기")).toBeInTheDocument();
+    expect(within(panel).getByText("연고마취")).toBeInTheDocument();
+    expect(within(panel).getByText("수면마취 운영 경험 20년 이상")).toBeInTheDocument();
+    expect(within(panel).getByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).toBeInTheDocument();
   });
 
-  it("keeps localized accordion labels and the approved English step copy", () => {
+  it("retains localized whole-panel labels and approved localized detail copy", () => {
     render(<PainManagementGuide lang="en" />);
 
+    const panel = screen.getByTestId("pain-mobile-panel");
+    const summary = panel.querySelector("summary");
+
+    expect(within(panel).getByText("View pain-management steps and FAQ")).toBeInTheDocument();
+    fireEvent.click(summary!);
+    expect(within(panel).getByText("Close pain management")).toBeInTheDocument();
+    expect(within(panel).getByText("1. Topical anesthetic")).toBeInTheDocument();
+    expect(within(panel).getByText("Guidance for safe care")).toBeInTheDocument();
+  });
+
+  it("keeps the 68px stage target, nested native disclosures, and focus-visible treatment inside the opened panel", () => {
+    render(<PainManagementGuide lang="ko" />);
+
+    const panel = screen.getByTestId("pain-mobile-panel");
+    const panelSummary = panel.querySelector("summary");
+    fireEvent.click(panelSummary!);
+
     const firstStage = screen.getByTestId("pain-mobile-stage-1");
-    const firstSummary = firstStage.querySelector("summary");
+    const firstStageSummary = firstStage.querySelector("summary");
+    expect(firstStageSummary).toHaveClass("min-h-[68px]", "focus-visible:ring-2");
+    expect(firstStage).not.toHaveAttribute("open");
 
-    expect(within(firstStage).getByText("View details")).toBeInTheDocument();
-    fireEvent.click(firstSummary!);
-    expect(within(firstStage).getByText("Collapse")).toBeInTheDocument();
-    expect(within(firstStage).getByText("1. Topical anesthetic")).toBeInTheDocument();
+    fireEvent.click(firstStageSummary!);
+    expect(firstStage).toHaveAttribute("open");
+    expect(within(firstStage).getByText("접기")).toBeInTheDocument();
   });
 
-  it("uses a compact, locale-safe mobile title treatment without changing desktop type", () => {
+  it("uses md as the only mobile-to-desktop boundary while preserving the desktop three-column guide", () => {
     render(<PainManagementGuide lang="ko" />);
 
-    const thirdStageTitle = within(screen.getByTestId("pain-mobile-stage-3")).getByRole("heading", { name: "수면진정 / 수면마취" });
-
-    expect(thirdStageTitle).toHaveClass("break-keep", "text-[15px]", "leading-[1.25]", "sm:text-base", "sm:leading-5");
-    expect(within(screen.getByTestId("pain-mobile-stage-3")).getByText("자세히 보기")).toHaveClass("sr-only", "sm:not-sr-only");
-  });
-
-  it("keeps mobile trust guidance collapsed until its native disclosure is opened", () => {
-    render(<PainManagementGuide lang="ko" />);
-
-    const guidancePanel = screen.getByTestId("pain-trust-strip");
-    const trustSummary = guidancePanel.querySelector("summary");
-
-    expect(guidancePanel).toHaveClass("group", "mt-3", "bg-[#fbf6ec]", "md:hidden");
-    expect(trustSummary).toHaveClass("min-h-12", "px-3.5");
-    expect(guidancePanel).not.toHaveAttribute("open");
-    expect(within(guidancePanel).getByText("관리 안내 보기")).toBeInTheDocument();
-
-    fireEvent.click(trustSummary!);
-
-    expect(guidancePanel).toHaveAttribute("open");
-    expect(within(guidancePanel).getByText("수면마취 운영 경험 20년 이상")).toBeInTheDocument();
-    expect(within(guidancePanel).getByText("관리 안내 접기")).toBeInTheDocument();
-  });
-
-  it("keeps mobile heading and FAQ spacing compact while restoring desktop spacing", () => {
-    render(<PainManagementGuide lang="ko" />);
-
-    const panel = document.getElementById("pain-management-guide-title")?.closest("section");
-    const header = document.getElementById("pain-management-guide-title")?.closest("header");
-    const caption = document.getElementById("pain-management-summary-caption");
-    const heading = document.getElementById("pain-management-guide-title");
-    const faq = screen.getByTestId("pain-faq");
-    const firstFaq = screen.getByTestId("pain-faq-item-1");
-    const firstFaqSummary = firstFaq.querySelector("summary");
-    const firstFaqAnswer = firstFaq.querySelector("p");
-
-    expect(panel).toHaveClass("bg-[#fffdfa]", "p-4", "sm:p-8");
-    expect(header).toHaveClass("mb-4", "border-l-2", "text-left", "sm:text-center", "sm:mb-8");
-    expect(heading).toHaveClass("mt-1.5", "text-[1.45rem]", "sm:mt-3");
-    expect(caption).toHaveClass("mt-2", "sm:mt-3");
-    expect(faq).toHaveClass("mt-3", "bg-white", "overflow-hidden", "sm:mt-5");
-    expect(firstFaqSummary).toHaveClass("min-h-11", "py-2.5", "sm:py-3");
-    expect(firstFaqAnswer).toHaveClass("pb-3", "sm:pb-4");
-    expect(screen.getByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).toHaveClass("mt-2.5", "sm:mt-4");
+    const source = readFileSync("client/src/components/PainManagementGuide.tsx", "utf8");
+    expect(screen.getByTestId("pain-mobile-panel")).toHaveClass("md:hidden");
+    expect(screen.getByTestId("pain-management-summary-desktop").closest(".hidden")).toHaveClass("hidden", "md:block");
+    expect(screen.getByTestId("pain-management-summary-desktop")).toHaveClass("md:grid-cols-3");
+    expect(source).not.toContain("sm:");
   });
 });

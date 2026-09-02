@@ -73,15 +73,17 @@ function parsePriceRows(event: SpecialEvent): PriceRow[] {
   }
 }
 
-export function partitionMobileFeaturedEvent(events: SpecialEvent[]) {
-  const featuredEvent = [...events]
-    .filter((event) => event.isFeatured === "1")
-    .sort((left, right) => left.sortOrder - right.sortOrder || left.id - right.id)[0];
+export const MOBILE_PRIORITY_EVENT_IDS = [300001, 360001, 10560001] as const;
 
-  return {
-    featuredEvent,
-    listEvents: featuredEvent ? events.filter((event) => event.id !== featuredEvent.id) : events,
-  };
+export function orderMobileSpecialEvents(events: SpecialEvent[]) {
+  const priority = new Map<number, number>(MOBILE_PRIORITY_EVENT_IDS.map((id, index) => [id, index]));
+  const fallbackPriority = MOBILE_PRIORITY_EVENT_IDS.length;
+
+  return [...events].sort((left, right) => {
+    const leftPriority = priority.get(left.id) ?? fallbackPriority;
+    const rightPriority = priority.get(right.id) ?? fallbackPriority;
+    return leftPriority - rightPriority || left.sortOrder - right.sortOrder || left.id - right.id;
+  });
 }
 
 interface EventInlineDetailProps {
@@ -186,7 +188,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
   const copy = MOBILE_EVENT_COPY[lang];
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
   const eventRowRefs = useRef(new Map<number, HTMLButtonElement>());
-  const { featuredEvent, listEvents } = partitionMobileFeaturedEvent(events);
+  const orderedEvents = orderMobileSpecialEvents(events);
 
   const handleFooterClose = (eventId: number) => {
     setExpandedEventId(null);
@@ -206,62 +208,16 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
 
   return (
     <>
-      {featuredEvent && (() => {
-        const priceRows = parsePriceRows(featuredEvent);
-        const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : featuredEvent.discountPrice;
-        const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : featuredEvent.normalPrice;
-        const title = getLocalizedText(featuredEvent, "title");
-        const subtitle = getLocalizedText(featuredEvent, "subtitle");
-        const isOpen = expandedEventId === featuredEvent.id;
-
-        return (
-          <section
-            data-testid="mobile-featured-event"
-            data-event-id={featuredEvent.id}
-            className="mb-3 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] shadow-[0_16px_32px_rgba(10,18,40,0.18)]"
-            aria-label={title}
-          >
-            <div className="flex items-center gap-2 border-b border-[rgba(215,181,92,0.34)] px-4 py-3 text-[var(--color-gold-primary)]">
-              <Sparkles size={15} aria-hidden="true" />
-              <span className="text-[11px] font-semibold tracking-[0.16em]">SPECIAL EVENT</span>
-            </div>
-            <button
-              type="button"
-              ref={registerEventRow(featuredEvent.id)}
-              data-testid={`mobile-featured-event-row-${featuredEvent.id}`}
-              data-event-row={featuredEvent.id}
-              onClick={() => setExpandedEventId(isOpen ? null : featuredEvent.id)}
-              className="flex min-h-24 w-full items-center gap-3 px-4 py-4 text-left outline-none transition-colors active:bg-white/8 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
-              aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
-              aria-expanded={isOpen}
-              aria-controls={`mobile-event-detail-${featuredEvent.id}`}
-            >
-              <div className="min-w-0 flex-1">
-                <p className="text-base font-semibold leading-6 text-white">{title}</p>
-                {subtitle && <p className="mt-1 text-xs leading-5 text-[rgba(255,255,255,0.72)]">{subtitle}</p>}
-                <div className="mt-2 flex items-baseline gap-1.5">
-                  <span className="text-base font-bold text-[var(--color-gold-primary)]">{displayPrice.toLocaleString()}원</span>
-                  {normalPrice > 0 && <span className="text-xs text-[rgba(255,255,255,0.52)] line-through">{normalPrice.toLocaleString()}원</span>}
-                </div>
-              </div>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgba(215,181,92,0.48)] bg-[rgba(215,181,92,0.12)] text-[var(--color-gold-primary)]" aria-hidden="true">
-                <ChevronDown size={18} className={`transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} />
-              </span>
-            </button>
-            <EventInlineDetail event={featuredEvent} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
-          </section>
-        );
-      })()}
-      {listEvents.length > 0 && <div
+      {orderedEvents.length > 0 && <div
       data-testid="mobile-event-regular-list"
-      className="overflow-hidden rounded-[1.25rem] border shadow-[0_12px_30px_rgba(10,18,40,0.045)]"
+      className="overflow-hidden rounded-[1.25rem] border shadow-[0_16px_36px_rgba(10,18,40,0.06)]"
       style={{
         borderColor: "var(--color-gold-light)",
         background: "var(--brand-bg-card, #FDFAF7)",
       }}
     >
       <div
-        className="flex items-center gap-2 px-4 py-3 border-b"
+        className="flex items-center gap-2 px-4 py-3.5 border-b"
         style={{
           borderColor: "var(--color-gold-light)",
           background: "linear-gradient(135deg, color-mix(in srgb, var(--color-gold-primary) 12%, transparent) 0%, color-mix(in srgb, var(--color-gold-primary) 4%, transparent) 100%)",
@@ -272,32 +228,43 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
         <span data-testid="mobile-event-vat-notice" className="ml-auto rounded-full border px-2 py-1 text-[10px] font-semibold" style={{ borderColor: "color-mix(in srgb, var(--color-gold-primary) 38%, transparent)", color: "var(--color-gold-deep)", background: "color-mix(in srgb, var(--color-gold-primary) 9%, transparent)" }}>{copy.vatIncluded}</span>
       </div>
 
-      <div data-testid="mobile-event-list" className="space-y-2.5 p-2.5" style={{ background: "color-mix(in srgb, var(--color-gold-primary) 3%, white)" }}>
-        <p data-testid="mobile-event-detail-hint" className="px-1.5 pb-0.5 text-[11px] leading-relaxed text-stone-500">
+      <div data-testid="mobile-event-list" className="space-y-2.5 p-3" style={{ background: "color-mix(in srgb, var(--color-gold-primary) 3%, white)" }}>
+        <p data-testid="mobile-event-detail-hint" className="px-1.5 pb-1 text-[11px] leading-relaxed text-stone-500">
           {copy.hint}
         </p>
-        {listEvents.map((event) => {
+        {orderedEvents.map((event) => {
           const priceRows = parsePriceRows(event);
           const displayPrice = priceRows.length > 0 ? priceRows[0].discountPrice : event.discountPrice;
           const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
           const title = getLocalizedText(event, "title");
           const isOpen = expandedEventId === event.id;
+          const priorityIndex = MOBILE_PRIORITY_EVENT_IDS.findIndex((priorityId) => priorityId === event.id);
+          const isPriority = priorityIndex !== -1;
 
           return (
-            <div key={event.id} className="event-mobile-entry overflow-hidden rounded-xl border bg-white" style={{ borderColor: "var(--color-gold-light)" }}>
+            <div
+              key={event.id}
+              data-testid={`mobile-event-entry-${event.id}`}
+              data-priority={isPriority ? priorityIndex + 1 : undefined}
+              className={`event-mobile-entry overflow-hidden rounded-xl border bg-white transition-shadow ${isPriority ? "border-[color-mix(in_srgb,var(--color-gold-primary)_56%,transparent)] shadow-[0_8px_18px_rgba(10,18,40,0.08)]" : ""}`}
+              style={{ borderColor: isPriority ? "color-mix(in srgb, var(--color-gold-primary) 56%, transparent)" : "var(--color-gold-light)" }}
+            >
               <button
                 type="button"
                 ref={registerEventRow(event.id)}
                 data-testid={`mobile-event-row-${event.id}`}
                 data-event-row={event.id}
                 onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                className="flex w-full scroll-mt-16 items-center gap-3 px-4 py-3 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]"
+                className={`flex w-full scroll-mt-16 items-center gap-3 px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "min-h-[4.75rem] py-3.5" : "min-h-[4.5rem] py-3"}`}
                 aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
                 aria-expanded={isOpen}
                 aria-controls={`mobile-event-detail-${event.id}`}
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold leading-5 text-gray-900 truncate">{title}</p>
+                  <div className="flex items-center gap-2">
+                    {isPriority && <span className="text-[10px] font-bold tracking-[0.14em] text-[var(--color-gold-deep)]" aria-hidden="true">0{priorityIndex + 1}</span>}
+                    <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
+                  </div>
                   <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                     <div className="flex items-baseline gap-1">
                       <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>

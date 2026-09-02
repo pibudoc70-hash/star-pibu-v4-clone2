@@ -9,8 +9,8 @@ const source = readFileSync(
 
 describe("EventTableMobile vertical list", () => {
   it("renders the original stacked event-list surface rather than a carousel", () => {
-    expect(source).toContain('data-testid="mobile-event-list" className="space-y-2.5 p-2.5"');
-    expect(source).toContain('className="event-mobile-entry overflow-hidden rounded-xl border bg-white"');
+    expect(source).toContain('data-testid="mobile-event-list" className="space-y-2.5 p-3"');
+    expect(source).toContain("event-mobile-entry overflow-hidden rounded-xl border bg-white");
     expect(source).not.toContain("snap-x snap-mandatory");
     expect(source).not.toContain('aria-roledescription="carousel"');
   });
@@ -21,10 +21,10 @@ describe("EventTableMobile vertical list", () => {
     expect(source).toContain("scrollIntoView");
   });
 
-  it("uses the existing isFeatured field to make only the sortOrder-first featured event a mobile lead card", () => {
-    expect(source).toContain('event.isFeatured === "1"');
-    expect(source).toContain("left.sortOrder - right.sortOrder || left.id - right.id");
-    expect(source).toContain('data-testid="mobile-featured-event"');
+  it("keeps all events in a unified mobile Special Event list and prioritizes the approved sequence", () => {
+    expect(source).toContain("MOBILE_PRIORITY_EVENT_IDS = [300001, 360001, 10560001]");
+    expect(source).toContain("orderMobileSpecialEvents");
+    expect(source).not.toContain('data-testid="mobile-featured-event"');
     expect(source).not.toMatch(/OFF/i);
   });
 });

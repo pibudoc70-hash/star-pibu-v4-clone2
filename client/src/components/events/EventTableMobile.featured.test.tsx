@@ -1,7 +1,7 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, expect, it, vi } from "vitest";
-import EventTableMobile, { partitionMobileFeaturedEvent } from "./EventTableMobile";
+import EventTableMobile, { MOBILE_PRIORITY_EVENT_IDS, orderMobileSpecialEvents } from "./EventTableMobile";
 import type { SpecialEvent } from "@/hooks/useLocalizedEvent";
 
 vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: "ko" }) }));
@@ -28,35 +28,36 @@ function event(overrides: Partial<SpecialEvent>): SpecialEvent {
 
 const localizedTitle = (item: SpecialEvent, field: "title" | "subtitle" | "desc" | "productName") => item[field];
 
-describe("EventTableMobile featured event hierarchy", () => {
-  it("renders one featured record above the regular list and excludes that record from the list", () => {
-    const featured = event({ id: 7, title: "대표 이벤트", isFeatured: "1", sortOrder: 3, normalPrice: 990000 });
+describe("EventTableMobile unified special event hierarchy", () => {
+  it("keeps an isFeatured event inside the same Special Event list rather than splitting it into a separate lead card", () => {
+    const featured = event({ id: 300001, title: "써마지 FLX", isFeatured: "1", sortOrder: 3, normalPrice: 990000 });
     const regular = event({ id: 8, title: "일반 이벤트", sortOrder: 1 });
 
     render(<EventTableMobile events={[featured, regular]} getLocalizedText={localizedTitle} />);
 
-    expect(within(screen.getByTestId("mobile-featured-event")).getAllByText("대표 이벤트")).not.toHaveLength(0);
-    expect(screen.queryByTestId("mobile-event-row-7")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("mobile-featured-event")).not.toBeInTheDocument();
+    expect(screen.getByTestId("mobile-event-row-300001")).toBeInTheDocument();
     expect(screen.getByTestId("mobile-event-row-8")).toBeInTheDocument();
-    expect(within(screen.getByTestId("mobile-featured-event")).getAllByText("990,000원").some((element) => element.classList.contains("line-through"))).toBe(true);
     expect(screen.queryByText(/OFF/i)).not.toBeInTheDocument();
   });
 
-  it("selects the sortOrder-first record as the only featured card and leaves additional featured records in the list", () => {
-    const laterFeatured = event({ id: 10, title: "후순위 대표", isFeatured: "1", sortOrder: 9 });
-    const firstFeatured = event({ id: 9, title: "우선 대표", isFeatured: "1", sortOrder: 2 });
-    const regular = event({ id: 11, title: "일반 이벤트", sortOrder: 1 });
+  it("orders the requested mobile priority events as Thermage, Ultherapy, then Metacell", () => {
+    const thermage = event({ id: 300001, title: "써마지 FLX", sortOrder: 2 });
+    const ultherapy = event({ id: 360001, title: "울쎄라피 프라임", sortOrder: 1 });
+    const metacell = event({ id: 10560001, title: "메타셀", sortOrder: 0 });
+    const regular = event({ id: 11, title: "일반 이벤트", sortOrder: 0 });
 
-    const partition = partitionMobileFeaturedEvent([laterFeatured, firstFeatured, regular]);
-    render(<EventTableMobile events={[laterFeatured, firstFeatured, regular]} getLocalizedText={localizedTitle} />);
+    const ordered = orderMobileSpecialEvents([metacell, regular, ultherapy, thermage]);
+    render(<EventTableMobile events={[metacell, regular, ultherapy, thermage]} getLocalizedText={localizedTitle} />);
 
-    expect(partition.featuredEvent?.id).toBe(9);
-    expect(within(screen.getByTestId("mobile-featured-event")).getAllByText("우선 대표")).not.toHaveLength(0);
-    expect(screen.getByTestId("mobile-event-row-10")).toBeInTheDocument();
-    expect(screen.getByTestId("mobile-event-row-11")).toBeInTheDocument();
+    expect(ordered.map((item) => item.id).slice(0, 3)).toEqual(MOBILE_PRIORITY_EVENT_IDS);
+    expect(screen.getAllByTestId(/mobile-event-row-/).slice(0, 3).map((row) => row.getAttribute("data-event-row"))).toEqual(["300001", "360001", "10560001"]);
+    expect(screen.getByTestId("mobile-event-entry-300001")).toHaveAttribute("data-priority", "1");
+    expect(screen.getByTestId("mobile-event-entry-360001")).toHaveAttribute("data-priority", "2");
+    expect(screen.getByTestId("mobile-event-entry-10560001")).toHaveAttribute("data-priority", "3");
   });
 
-  it("renders no featured-card region when there are no featured records", () => {
+  it("keeps regular events in their original sortOrder after the requested priority entries", () => {
     const first = event({ id: 20, title: "첫 일반 이벤트", sortOrder: 1 });
     const second = event({ id: 21, title: "둘째 일반 이벤트", sortOrder: 2 });
 

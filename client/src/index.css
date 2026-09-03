@@ -6895,6 +6895,9 @@ body.font-lang-zh .hero-stat-label {
     white-space: normal !important;
     overflow-wrap: anywhere;
   }
+  .pain-management-stage-body {
+    line-height: 1.8 !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .pain-management-disclosure::details-content { transition: none; transform: none; }

@@ -345,7 +345,7 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
                   <div className="min-w-0 text-left"><p className="pain-management-stage-label text-[9px] font-semibold leading-4 tracking-[0.06em] text-[var(--color-gold-primary)]">{step.icon}</p><h3 className="pain-management-stage-title mt-0.5 break-keep font-semibold tracking-tight">{step.title}</h3></div>
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center text-[var(--color-gold-primary)]"><span className="sr-only group-open:hidden">{copy.expandStep}</span><span className="sr-only hidden group-open:inline">{copy.collapseStep}</span><ChevronDown size={18} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
                 </summary>
-                <div className="border-t border-[rgba(215,181,92,0.24)] px-3.5 pb-3 pt-2.5"><p className="max-w-prose text-sm leading-6 text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
+                <div className="border-t border-[rgba(215,181,92,0.24)] px-3.5 pb-3 pt-2.5"><p className="pain-management-stage-body max-w-prose text-sm text-[rgba(255,255,255,0.76)]">{step.body}</p></div>
               </details>
             );
           })}

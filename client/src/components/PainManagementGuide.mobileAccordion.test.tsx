@@ -44,6 +44,7 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(firstStageSummary).toHaveClass("min-h-[68px]", "focus-visible:ring-2");
     expect(firstStageSummary?.querySelector(".pain-management-stage-icon")).toHaveClass("bg-[var(--color-gold-primary)]", "text-[var(--color-star-navy)]");
     expect(firstStageSummary?.querySelector(".pain-management-stage-title")).toHaveClass("pain-management-stage-title");
+    expect(firstStage.querySelector(".pain-management-stage-body")).toBeInTheDocument();
     expect(firstStage).toHaveAttribute("open");
     expect(screen.getByTestId("pain-management-summary").querySelector('[aria-hidden="true"]')).toBeInTheDocument();
 

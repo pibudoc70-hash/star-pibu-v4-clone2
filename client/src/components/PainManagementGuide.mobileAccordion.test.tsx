@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import PainManagementGuide from "./PainManagementGuide";
 
 describe("PainManagementGuide mobile disclosure", () => {
-  it("keeps the three-stage guide visible without an outer mobile disclosure and opens only the first stage by default", () => {
+  it("keeps the three-stage guide visible without an outer mobile disclosure and keeps every stage closed by default", () => {
     render(<PainManagementGuide lang="ko" />);
 
     const firstStage = screen.getByTestId("pain-mobile-stage-1");
@@ -17,7 +17,7 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(screen.getByTestId("pain-management-summary")).toBeInTheDocument();
     expect(screen.getByTestId("pain-trust-strip")).toBeInTheDocument();
     expect(screen.getByTestId("pain-faq")).toBeInTheDocument();
-    expect(firstStage).toHaveAttribute("open");
+    expect(firstStage).not.toHaveAttribute("open");
     expect(secondStage).not.toHaveAttribute("open");
     expect(thirdStage).not.toHaveAttribute("open");
     expect(firstStage).toHaveClass("pain-management-stage");
@@ -45,11 +45,11 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(firstStageSummary?.querySelector(".pain-management-stage-icon")).toHaveClass("bg-[var(--color-gold-primary)]", "text-[var(--color-star-navy)]");
     expect(firstStageSummary?.querySelector(".pain-management-stage-title")).toHaveClass("pain-management-stage-title");
     expect(firstStage.querySelector(".pain-management-stage-body")).toBeInTheDocument();
-    expect(firstStage).toHaveAttribute("open");
+    expect(firstStage).not.toHaveAttribute("open");
     expect(screen.getByTestId("pain-management-summary").querySelector('[aria-hidden="true"]')).toBeInTheDocument();
 
     fireEvent.click(firstStageSummary!);
-    expect(firstStage).not.toHaveAttribute("open");
+    expect(firstStage).toHaveAttribute("open");
   });
 
   it("keeps the caption accessible while visually hiding it only below sm and preserves the desktop three-column guide", () => {

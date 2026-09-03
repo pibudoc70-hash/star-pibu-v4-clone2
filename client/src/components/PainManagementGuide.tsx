@@ -275,7 +275,7 @@ export function getPainManagementCategory(lang: Lang) {
 export default function PainManagementGuide({ lang, presentation = "full", hideHeroTitle = false }: { lang: Lang; presentation?: "full" | "event-accordion"; hideHeroTitle?: boolean }) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
   const headingId = "pain-management-guide-title";
-  const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({ 0: true });
+  const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({});
   const [openMobileFaqIndex, setOpenMobileFaqIndex] = useState<number | null>(null);
   const trustBadges = lang === "ko"
     ? [
@@ -318,7 +318,7 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
           : "flex min-w-0 items-center gap-3 border-b border-[var(--color-gold-light)] px-3.5 py-3 last:border-b-0 md:border-b-0 md:border-r md:p-4 md:last:border-r-0"}
       >
         <div className={isMobile ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm" : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-gold-deep)] shadow-sm"}><Icon size={isMobile ? 15 : 19} aria-hidden="true" /></div>
-        <div className="min-w-0"><h3 className={isMobile ? "!whitespace-nowrap !text-[13px] font-semibold !leading-5 text-[var(--color-star-text)]" : "text-sm font-semibold leading-5 text-[var(--color-star-text)]"}>{badge.title}</h3><p className={isMobile ? "sr-only" : "mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]"}>{badge.detail}</p></div>
+        <div className="min-w-0"><h3 className={isMobile ? "pain-management-trust-title text-[var(--color-star-text)]" : "text-sm font-semibold leading-5 text-[var(--color-star-text)]"}>{badge.title}</h3><p className={isMobile ? "sr-only" : "mt-1 line-clamp-2 text-xs leading-5 text-[var(--color-star-text-mid)]"}>{badge.detail}</p></div>
       </article>
     );
   });
@@ -356,10 +356,10 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
         </section>
 
         <section data-testid="pain-faq" aria-labelledby="pain-faq-title" className="mt-3 !py-0 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white">
-          <div className="flex items-center gap-2 border-b border-[var(--color-gold-light)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)] px-3.5 py-3"><CircleHelp size={19} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="!text-base !leading-5 font-semibold text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
+          <div className="flex items-center gap-2 border-b border-[var(--color-gold-light)] bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,white)] px-3.5 py-3"><CircleHelp size={19} className="text-[var(--color-gold-deep)]" aria-hidden="true" /><h3 id="pain-faq-title" className="pain-management-faq-heading text-[var(--color-star-text)]">{copy.faqHeading}</h3></div>
           {copy.faqs.map((faq, index) => {
             const Icon = FAQ_ICONS[index] ?? CircleHelp;
-            return <details key={faq.question} open={openMobileFaqIndex === index} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0"><summary onClick={(event) => { event.preventDefault(); setOpenMobileFaqIndex(current => current === index ? null : index); }} className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex min-w-0 items-center gap-2 text-left text-[13px] font-semibold leading-5 text-[var(--color-star-text)]"><Icon size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" /><span className="!whitespace-nowrap">{faq.question}</span></span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</p></details>;
+            return <details key={faq.question} open={openMobileFaqIndex === index} data-testid={`pain-faq-item-${index + 1}`} className="pain-management-disclosure group border-b border-[var(--color-gold-light)] px-3.5 last:border-b-0"><summary onClick={(event) => { event.preventDefault(); setOpenMobileFaqIndex(current => current === index ? null : index); }} className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2"><span className="flex min-w-0 items-center gap-2 text-left text-[var(--color-star-text)]"><Icon size={15} className="shrink-0 text-[var(--color-gold-deep)]" aria-hidden="true" /><span className="pain-management-faq-question break-keep">{faq.question}</span></span><ChevronDown size={18} className="shrink-0 text-[var(--color-star-text-mid)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" /></summary><p className="pb-3 pl-6 text-sm leading-6 text-[var(--color-star-text-mid)]">{faq.answer}</p></details>;
           })}
         </section>
         <p className="mt-2.5 px-1 text-center text-xs leading-5 text-[var(--color-star-text-mid)]">{copy.closing}</p>

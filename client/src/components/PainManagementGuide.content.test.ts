@@ -114,7 +114,7 @@ describe("PainManagementGuide content and placement", () => {
   it("uses direct mobile information flow with the existing nested disclosures and a consistent desktop boundary", () => {
     expect(guideSource).not.toContain('data-testid="pain-mobile-panel"');
     expect(guideSource).toContain("openMobileStages");
-    expect(guideSource).toContain("{ 0: true }");
+    expect(guideSource).toContain("useState<Record<number, boolean>>({})");
     expect(guideSource).toContain('data-testid="pain-trust-strip"');
     expect(guideSource).toContain("md:hidden");
     expect(guideSource).toContain("hidden md:block");
@@ -157,7 +157,7 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("min-h-11");
   });
 
-  it("keeps a visible mobile three-stage timeline, makes only the first stage initially active, and distinguishes the conditional third stage", () => {
+  it("keeps a visible mobile three-stage timeline with every stage initially closed and distinguishes the conditional third stage", () => {
     expect(guideSource).toContain("bottom-[2.125rem] left-[2.125rem] top-[2.125rem]");
     expect(guideSource).toContain("grid-cols-[2.5rem_minmax(0,1fr)_1.25rem]");
     expect(guideSource).toContain("h-5 w-5");

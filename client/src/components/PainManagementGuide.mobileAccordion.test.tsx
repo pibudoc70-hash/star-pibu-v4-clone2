@@ -24,6 +24,7 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(secondStage).toHaveClass("pain-management-stage");
     expect(thirdStage).toHaveClass("pain-management-stage");
     expect(within(firstStage).getByText("연고마취")).toBeInTheDocument();
+    expect(within(thirdStage).getByText("수면진정/수면마취")).toHaveClass("pain-management-stage-title-single-line");
     expect(within(screen.getByTestId("pain-trust-strip")).getByText("수면마취 운영 경험 20년 이상")).toBeInTheDocument();
     expect(screen.getAllByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).not.toHaveLength(0);
   });
@@ -50,6 +51,7 @@ describe("PainManagementGuide mobile disclosure", () => {
 
     fireEvent.click(firstStageSummary!);
     expect(firstStage).toHaveAttribute("open");
+    expect(screen.getByTestId("pain-faq-item-1").querySelector("summary")).toHaveClass("min-h-[56px]");
   });
 
   it("keeps the caption accessible while visually hiding it only below sm and preserves the desktop three-column guide", () => {

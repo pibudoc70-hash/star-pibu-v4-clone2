@@ -49,7 +49,7 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("운전·중요 의사결정 제한");
     expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("수면마취는 누구나 받을 수 있나요?");
     expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("마취 후 회복 시간은 얼마나 걸리나요?");
-    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("통증이 심하면 시술 중간에 마취를 추가할 수 있나요?");
+    expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("시술 중간에 마취를 추가할 수 있나요?");
     expect(PAIN_MANAGEMENT_KO_FAQS.map(({ question }) => question)).toContain("마취 방식은 누가, 어떻게 결정하나요?");
   });
 
@@ -198,7 +198,7 @@ describe("PainManagementGuide content and placement", () => {
   it("uses four Korean patient-facing pain-management FAQs with a personal-variation notice", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.faqs).toHaveLength(4);
     expect(PAIN_MANAGEMENT_CONTENT.ko.faqs.map(({ question }) => question)).toContain("마취 후 회복 시간은 얼마나 걸리나요?");
-    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs.map(({ question }) => question)).toContain("통증이 심하면 시술 중간에 마취를 추가할 수 있나요?");
+    expect(PAIN_MANAGEMENT_CONTENT.ko.faqs.map(({ question }) => question)).toContain("시술 중간에 마취를 추가할 수 있나요?");
     expect(PAIN_MANAGEMENT_CONTENT.ko.closing).toBe("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.");
     expect(guideSource).toContain("data-testid={`pain-faq-item-${index + 1}`}");
   });

@@ -68,10 +68,10 @@ export default function UltheraThermagePromotionPopup() {
           type="button"
           onClick={dismiss}
           aria-label="닫기"
-          className="absolute bottom-[-4rem] left-1/2 z-30 inline-flex h-12 min-w-28 -translate-x-1/2 items-center justify-center gap-1.5 rounded-full border border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] px-4 text-white shadow-[0_8px_20px_rgba(0,0,0,0.4)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.45)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:left-auto md:size-11 md:min-w-0 md:translate-x-0 md:px-0 md:-right-14 md:top-0 md:bottom-auto"
+          className="absolute bottom-3 right-3 z-30 inline-flex size-[52px] items-center justify-center rounded-full border-2 border-white/90 bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.45)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:bottom-auto md:right-auto md:size-11 md:-right-14 md:top-0"
         >
-          <X size={17} strokeWidth={2.4} aria-hidden="true" />
-          <span className="text-xs font-semibold tracking-[0.04em] md:sr-only">닫기</span>
+          <X size={22} strokeWidth={2.6} aria-hidden="true" />
+          <span className="sr-only">닫기</span>
         </button>
 
         <div className="relative overflow-hidden rounded-[1.25rem]">

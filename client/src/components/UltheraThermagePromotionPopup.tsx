@@ -68,9 +68,10 @@ export default function UltheraThermagePromotionPopup() {
           type="button"
           onClick={dismiss}
           aria-label="닫기"
-          className="absolute right-0 -bottom-14 z-30 flex size-11 items-center justify-center rounded-full border-2 border-[var(--color-star-navy)] bg-white text-[var(--color-star-navy)] shadow-[0_6px_18px_rgba(0,0,0,0.34)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:-right-14 md:top-0 md:bottom-auto"
+          className="absolute right-0 -bottom-14 z-30 inline-flex h-11 min-w-[76px] items-center justify-center gap-1.5 rounded-full border border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] px-3 text-white shadow-[0_8px_20px_rgba(0,0,0,0.4)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.45)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-11 md:min-w-0 md:px-0 md:-right-14 md:top-0 md:bottom-auto"
         >
-          <X size={18} aria-hidden="true" />
+          <X size={17} strokeWidth={2.4} aria-hidden="true" />
+          <span className="text-xs font-semibold tracking-[0.04em] md:sr-only">닫기</span>
         </button>
 
         <div className="relative overflow-hidden rounded-[1.25rem]">

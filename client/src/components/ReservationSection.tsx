@@ -55,7 +55,7 @@ export default function ReservationSection() {
             <Calendar size={22} style={{ color: "var(--color-gold-primary)" }} />
             <h2 className="section-title" style={{ margin: 0 }}>{r.sectionTitle}</h2>
           </div>
-          <p className="section-subtitle" style={{ maxWidth: "480px", margin: "0 auto" }}>
+          <p className="section-subtitle body-text" style={{ maxWidth: "480px", margin: "0 auto" }}>
             {r.sectionSubtitle}
           </p>
         </div>

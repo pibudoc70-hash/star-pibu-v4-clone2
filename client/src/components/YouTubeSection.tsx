@@ -224,7 +224,7 @@ export default function YouTubeSection() {
               {yt.sectionTitle}
             </h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle">
+            <p className="section-subtitle body-text">
               {yt.sectionSubtitle}
             </p>
           </div>
@@ -269,7 +269,7 @@ export default function YouTubeSection() {
             {yt.sectionTitle}
           </h2>
           <div className="star-divider mx-auto" />
-          <p className="section-subtitle">
+          <p className="section-subtitle body-text">
             {yt.sectionSubtitle}
           </p>
         </div>

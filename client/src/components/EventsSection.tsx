@@ -126,7 +126,7 @@ export default function EventsSection() {
           <span className="section-eyebrow">{ev_t.eyebrow}</span>
           <h2 className="section-title">{ev_t.sectionTitle}</h2>
           <div className="star-divider mx-auto" />
-          <p className="section-subtitle">{ev_t.sectionSubtitle}</p>
+          <p className="section-subtitle body-text">{ev_t.sectionSubtitle}</p>
         </div>
 
         {/* ── Filter Tabs ── */}

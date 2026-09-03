@@ -178,7 +178,7 @@ export default function ConsultationFormSection() {
         <div className="consultation-header">
           <span className="section-eyebrow">{c.eyebrow}</span>
           <h2 className="section-title">{c.title}</h2>
-          <p className="section-subtitle">{c.subtitle}</p>
+          <p className="section-subtitle body-text">{c.subtitle}</p>
         </div>
 
         {/* 폼 카드 */}

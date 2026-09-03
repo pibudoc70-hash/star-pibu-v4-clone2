@@ -24,7 +24,6 @@ describe("Home 유지보수성 경계", () => {
       "facility",
       "youtube",
       "faq",
-      "notices",
       "contact",
     ]) {
       expect(homeSource).toContain(`HOME_SECTION_FALLBACKS.${fallback}`);

@@ -43,7 +43,7 @@ export default function PhilosophySection() {
               <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>
                 {t.about.philosophyTagline ?? "20년의 안목, 한결같은 신뢰"}
               </p>
-              <p className="section-subtitle leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
+              <p className="section-subtitle body-text leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
                 {t.about.desc}
               </p>
 

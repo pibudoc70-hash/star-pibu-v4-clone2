@@ -4,6 +4,10 @@ import { describe, expect, it } from "vitest";
 
 const doctorsPage = readFileSync(resolve(process.cwd(), "client/src/pages/Doctors.tsx"), "utf8");
 const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
+const doctorsHeaderCss = globalCss.slice(
+  globalCss.indexOf("/* `/doctors` direct-page header"),
+  globalCss.indexOf("/* 통증관리 native disclosure"),
+);
 
 describe("Doctors direct-page header style contract", () => {
   it("정적 header style을 page-scoped class로 위임한다", () => {
@@ -19,6 +23,6 @@ describe("Doctors direct-page header style contract", () => {
     expect(globalCss).toContain('color: #b89a5a;');
     expect(globalCss).toContain('color: #1a1a1a;');
     expect(globalCss).toContain('color: #6b5c3e;');
-    expect(globalCss).not.toMatch(/\.dr-page-header[\s\S]*!important/);
+    expect(doctorsHeaderCss).not.toContain("!important");
   });
 });

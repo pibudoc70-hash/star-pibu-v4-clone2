@@ -81,7 +81,7 @@ export default function FAQSection() {
             <span className="section-eyebrow">FAQ</span>
             <h2 className="section-title">{faq.sectionTitle}</h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle">{faq.sectionSubtitle}</p>
+            <p className="section-subtitle body-text">{faq.sectionSubtitle}</p>
           </div>
 
           {/* 장비 탭 */}

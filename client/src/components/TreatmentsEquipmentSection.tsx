@@ -228,7 +228,7 @@ export default function TreatmentsEquipmentSection() {
         <div className="text-center mb-8 sm:mb-12 reveal-heading">
           <span className="section-eyebrow text-[12px]">{t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}</span>
           <h2 className="section-title mb-4">{tr.title}</h2>
-          <p className="section-subtitle">{tr.subtitle}</p>
+          <p className="section-subtitle body-text">{tr.subtitle}</p>
         </div>
 
         {/* 실제 tab·search·card 구조를 반영한 로딩 스켈레톤 */}

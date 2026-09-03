@@ -82,7 +82,7 @@ function SectionHeader({ lang }: { lang: string }) {
     <div className="section-header-block !text-left">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
-      <p className="section-subtitle !mx-0 mt-5 md:whitespace-nowrap">
+      <p className="section-subtitle body-text !mx-0 mt-5 md:whitespace-nowrap">
         {subtitleMap[lang] ?? subtitleMap.ko}
       </p>
     </div>

@@ -43,7 +43,8 @@ describe("UltheraThermagePromotionPopup", () => {
 
     expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
     expect(screen.queryByText("오늘은 보지 않음")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("-bottom-14", "md:-right-14", "md:top-0", "md:bottom-auto", "bg-white", "text-[var(--color-star-navy)]");
+    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("-bottom-14", "min-w-[76px]", "bg-[var(--color-star-navy)]", "text-white", "md:-right-14", "md:top-0", "md:bottom-auto");
+    expect(screen.getByText("닫기")).toHaveClass("md:sr-only");
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

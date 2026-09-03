@@ -355,7 +355,7 @@ export default function ManagementDevicesSection() {
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle text-[var(--color-gold-light)]">
+            <p className="section-subtitle body-text text-[var(--color-gold-light)]">
               {md.sectionSubtitle}
             </p>
           </div>

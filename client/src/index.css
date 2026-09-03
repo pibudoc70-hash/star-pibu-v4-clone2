@@ -3048,6 +3048,11 @@
   letter-spacing: 0.018em;
 }
 
+/* 읽기용 본문 문단만 최소 14px — 배지·라벨·캡션은 컴포넌트가 크기를 소유한다. */
+.body-text {
+  font-size: max(0.875rem, 14px);
+}
+
 /* ─── [R19-P0-3] Hero Stats / Floor Badge CSS 클래스 ─────────────────────── */
 
 /* HeroStatItem — 에디토리얼 신뢰 지표 스타일 (Cormorant Garamond 명조 숫자) */
@@ -3241,7 +3246,7 @@
     text-transform: uppercase;
     font-weight: 700;
   }
-  .section-subtitle {
+  .section-subtitle:not(.body-text) {
     font-size: clamp(0.75rem, 3.2vw, 0.85rem);
     line-height: 1.7;
     color: var(--brand-text-mid, #666666);
@@ -4568,11 +4573,6 @@ body.font-lang-zh .hero-stat-label {
   button:not(.mobile-menu-close-btn):not([aria-hidden="true"]),
   [role="button"] {
     min-height: 44px;
-  }
-
-  /* 본문 텍스트 가독성 — 최소 14px */
-  p, li, span:not(.section-eyebrow) {
-    font-size: max(0.875rem, 14px);
   }
 
   /* 카드 내부 텍스트 밀도 낮추기 */
@@ -6054,7 +6054,7 @@ body.font-lang-zh .hero-stat-label {
     word-break: keep-all !important;
   }
   /* 섹션 서브타이틀 — 가독성 강화 */
-  .section-subtitle {
+  .section-subtitle:not(.body-text) {
     font-size: clamp(0.8rem, 3.5vw, 0.88rem) !important;
     line-height: 1.75 !important;
     color: #555555 !important; /* #666666보다 약간 진하게 — WCAG AA 대비 확보 */
@@ -6066,10 +6066,6 @@ body.font-lang-zh .hero-stat-label {
   [style*="color: var(--brand-text-muted"],
   [style*="color: #999"] {
     color: #666666 !important; /* [A11Y] #999 → #666 (WCAG AA 4.5:1+ 달성) */
-  }
-  /* 카드 내부 설명 텍스트 */
-  .text-xs {
-    font-size: 0.8rem; /* 12px → 12.8px 가독성 개선 */
   }
   /* 숫자 강조 — 신뢰지표 숫자 크기 */
   .philosophy-stat-num {

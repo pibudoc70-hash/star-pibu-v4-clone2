@@ -39,7 +39,7 @@ function ResultsSection() {
           <h2 className="section-title">
             {r.sectionTitle}
           </h2>
-          <p className="section-subtitle">
+          <p className="section-subtitle body-text">
             {r.sectionSubtitle}
           </p>
         </div>

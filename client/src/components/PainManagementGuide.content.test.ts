@@ -149,9 +149,10 @@ describe("PainManagementGuide content and placement", () => {
   });
 
   it("uses direct premium stage cards while retaining animated native disclosures for supporting guidance", () => {
-    expect(guideSource).not.toContain("pain-management-stage");
+    expect(guideSource).toContain("pain-management-stage");
     expect(guideSource).toContain("rounded-2xl border border-[var(--color-gold-light)] bg-[var(--color-star-navy)]");
     expect(globalCssSource).toContain(".pain-management-disclosure::details-content");
+    expect(globalCssSource).toContain(".pain-management-stage::details-content");
     expect(globalCssSource).toContain("transform: translateY(-4px)");
     expect(guideSource).toContain("min-h-11");
   });
@@ -160,7 +161,9 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("bottom-[2.125rem] left-[2.125rem] top-[2.125rem]");
     expect(guideSource).toContain("grid-cols-[2.5rem_minmax(0,1fr)_1.25rem]");
     expect(guideSource).toContain("h-5 w-5");
-    expect(guideSource).toContain('index === 0 ? "border-[var(--color-gold-primary)] bg-[var(--color-gold-primary)] text-[var(--color-star-navy)]"');
+    expect(guideSource).toContain("pain-management-stage-icon");
+    expect(guideSource).toContain("bg-[var(--color-gold-primary)] text-[var(--color-star-navy)]");
+    expect(guideSource).toContain("pain-management-stage-title");
     expect(guideSource).toContain('index === 2 ? "border-[var(--color-gold-primary)]" : "border-[var(--color-gold-light)]"');
   });
 

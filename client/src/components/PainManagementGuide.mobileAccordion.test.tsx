@@ -20,6 +20,9 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(firstStage).toHaveAttribute("open");
     expect(secondStage).not.toHaveAttribute("open");
     expect(thirdStage).not.toHaveAttribute("open");
+    expect(firstStage).toHaveClass("pain-management-stage");
+    expect(secondStage).toHaveClass("pain-management-stage");
+    expect(thirdStage).toHaveClass("pain-management-stage");
     expect(within(firstStage).getByText("연고마취")).toBeInTheDocument();
     expect(within(screen.getByTestId("pain-trust-strip")).getByText("수면마취 운영 경험 20년 이상")).toBeInTheDocument();
     expect(screen.getAllByText("통증 정도와 마취 방식은 개인의 건강 상태 및 시술 부위에 따라 다르며, 상담을 통해 최종 결정됩니다.")).not.toHaveLength(0);
@@ -39,6 +42,8 @@ describe("PainManagementGuide mobile disclosure", () => {
     const firstStage = screen.getByTestId("pain-mobile-stage-1");
     const firstStageSummary = firstStage.querySelector("summary");
     expect(firstStageSummary).toHaveClass("min-h-[68px]", "focus-visible:ring-2");
+    expect(firstStageSummary?.querySelector(".pain-management-stage-icon")).toHaveClass("bg-[var(--color-gold-primary)]", "text-[var(--color-star-navy)]");
+    expect(firstStageSummary?.querySelector(".pain-management-stage-title")).toHaveClass("pain-management-stage-title");
     expect(firstStage).toHaveAttribute("open");
     expect(screen.getByTestId("pain-management-summary").querySelector('[aria-hidden="true"]')).toBeInTheDocument();
 

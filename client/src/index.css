@@ -1731,7 +1731,7 @@
     }
 
     /* 섹션 패딩 — 프리미엄 무드를 위한 상하 여백 확보 (mobile 80px 기준) */
-    section {
+    section:not(#contact) {
       padding-top: 5rem !important;  /* 80px */
       padding-bottom: 5rem !important;  /* 80px */
     }
@@ -6428,6 +6428,11 @@ body.font-lang-zh .hero-stat-label {
 
 /* ── P1: ContactSection 위치 정보 모바일 최적화 ── */
 @media (max-width: 640px) {
+  /* FAQ 다음 위치 섹션은 전역 80px보다 짧은 시작 여백으로 자연스럽게 연결 */
+  #contact {
+    padding-top: 3rem !important;
+  }
+
   /* 정보 카드 패딩 통일 */
   #contact .p-3,
   #contact .sm\:p-4 {

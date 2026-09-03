@@ -54,7 +54,7 @@ export default function ContactInfoPanel({
   return (
     <div
       ref={infoPanelRef}
-      className="reveal-right lg:col-span-2 flex flex-col gap-2 sm:gap-3 lg:h-full"
+      className="reveal-right lg:col-span-5 flex flex-col gap-2 sm:gap-3 lg:h-full"
       style={{ transitionDelay: "0.15s" }}
     >
       {/* Address + 복사 버튼 */}

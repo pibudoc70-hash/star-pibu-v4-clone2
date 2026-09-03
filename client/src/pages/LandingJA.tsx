@@ -20,7 +20,6 @@ import FacilitySection from "@/components/FacilitySection";
 import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
-import RecentNoticesSection from "@/components/RecentNoticesSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
@@ -159,9 +158,6 @@ export default function LandingJA() {
         <div style={{ background: "#F5F1ED" }}>
           <ContactSection />
         </div>
-
-        {/* 최근 공지사항 섹션 */}
-        <RecentNoticesSection lang="ja" />
       </main>
 
       <Footer />

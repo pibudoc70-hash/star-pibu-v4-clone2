@@ -40,7 +40,6 @@ const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
-import { useNewNoticeToast } from "@/hooks/useNewNoticeToast";
 import { useLocation } from "wouter";
 import { HOME_SECTION_FALLBACKS } from "@/lib/homeSectionFallbacks";
 import { DeferredMount } from "@/components/DeferredMount";
@@ -304,9 +303,6 @@ export default function Home() {
   const { lang } = useLang();
   const popupReady = useIdleMount(2000);
   const [, navigate] = useLocation();
-
-  // 새 공지사항 알림 토스트 (세션당 1회)
-  useNewNoticeToast(navigate);
 
   useHomeInitialScrollRestore();
 

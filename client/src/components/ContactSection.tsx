@@ -66,7 +66,7 @@ export default function ContactSection() {
   const closedLabel = t.hours.rows.at(-1)?.time ?? '휴진';
 
   return (
-    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 faq-section-bg scroll-mt-24 md:scroll-mt-28" aria-label="오시는 방법 및 연락처">
+    <section ref={sectionRef} id="contact" className="pt-12 pb-16 sm:pt-16 sm:pb-24 faq-section-bg scroll-mt-24 md:scroll-mt-28" aria-label="오시는 방법 및 연락처">
       <div className="container">
         {/* Section Header */}
         <div className="section-header-block">
@@ -86,11 +86,11 @@ export default function ContactSection() {
         </div>
 
         <div
-          className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-5"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
+          className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-12"} gap-6 sm:gap-8 ${isMobile ? "items-center" : "items-stretch"} auto-rows-max lg:auto-rows-fr`}
         >
           {/* 지도 영역 — Google Maps Embed API (iframe) */}
           <div
-            className="lg:col-span-3 flex flex-col rounded-2xl overflow-hidden shadow-lg relative w-full"
+            className="lg:col-span-7 flex flex-col rounded-2xl overflow-hidden shadow-lg relative w-full"
             style={{ height: mapHeight || '500px', minHeight: '400px' }}
             aria-label={mapTitle}
           >

@@ -35,13 +35,10 @@ describe("Home below-the-fold deferred mount contract", () => {
     }
   });
 
-  it("keeps the optional recent-notices deferred mount surface-free before content is ready", () => {
-    expect(homeSource).toContain(
-      '<DeferredMount fallback={<div aria-hidden="true" className="h-px" />}>',
-    );
-    expect(homeSource).toMatch(
-      /<DeferredMount fallback=\{<div aria-hidden="true" className="h-px" \/>\}>[\s\S]*?<RecentNoticesSection/,
-    );
+  it("removes the hidden recent-notices home surface so FAQ flows directly into contact", () => {
+    expect(homeSource).not.toContain("RecentNoticesSection");
+    expect(homeSource).not.toContain("HOME_SECTION_FALLBACKS.notices");
+    expect(homeSource).toMatch(/<FAQSection[\s\S]*?<ContactSection/);
   });
 
   it("keeps the below-fold Google Maps iframe behind ContactSection's deferred mount", () => {

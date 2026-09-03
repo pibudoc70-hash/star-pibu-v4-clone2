@@ -39,7 +39,6 @@ const FacilitySection = lazy(() => import("@/components/FacilitySection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
-const RecentNoticesSection = lazy(() => import("@/components/RecentNoticesSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 import { useNewNoticeToast } from "@/hooks/useNewNoticeToast";
 import { useLocation } from "wouter";
@@ -614,17 +613,6 @@ export default function Home() {
                 <FAQSection />
               </Suspense>
             </div>
-          </DeferredMount>
-        </ScrollAnimationWrapper>
-
-        {/* 최근 공지사항 섹션 */}
-        <ScrollAnimationWrapper
-          animationType="fade-in"
-        >
-          <DeferredMount fallback={<div aria-hidden="true" className="h-px" />}>
-            <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.notices} />}>
-              <RecentNoticesSection lang="ko" />
-            </Suspense>
           </DeferredMount>
         </ScrollAnimationWrapper>
 

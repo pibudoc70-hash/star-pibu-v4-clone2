@@ -272,7 +272,7 @@ export function getPainManagementCategory(lang: Lang) {
   return { id: PAIN_MANAGEMENT_CATEGORY_ID, label: copy.categoryLabel };
 }
 
-export default function PainManagementGuide({ lang, presentation = "full" }: { lang: Lang; presentation?: "full" | "event-accordion" }) {
+export default function PainManagementGuide({ lang, presentation = "full", hideHeroTitle = false }: { lang: Lang; presentation?: "full" | "event-accordion"; hideHeroTitle?: boolean }) {
   const copy = PAIN_MANAGEMENT_CONTENT[resolveLang(lang)];
   const headingId = "pain-management-guide-title";
   const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({ 0: true });
@@ -295,12 +295,12 @@ export default function PainManagementGuide({ lang, presentation = "full" }: { l
         <details className="group">
           <summary className="flex min-h-[76px] cursor-pointer list-none items-center gap-3 px-4 py-3 outline-none [&::-webkit-details-marker]:hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-primary)] bg-[color-mix(in_srgb,var(--color-gold-primary)_14%,transparent)] text-[var(--color-gold-primary)]"><HeartPulse size={18} aria-hidden="true" /></span>
-            <span className="min-w-0 flex-1 text-left"><span className="block text-[10px] font-semibold tracking-[0.16em] text-[var(--color-gold-primary)]">{copy.eyebrow}</span><span className="mt-0.5 block text-[16px] font-semibold leading-5 text-white">{copy.title}</span></span>
+            <span className="min-w-0 flex-1 text-left"><span className="block text-[15px] font-semibold leading-5 text-white">{copy.heroTitle}</span></span>
             <span className="flex h-6 w-6 shrink-0 items-center justify-center text-[var(--color-gold-primary)]"><span className="sr-only group-open:hidden">{copy.expandMobilePanel}</span><span className="sr-only hidden group-open:inline">{copy.collapseMobilePanel}</span><ChevronDown size={19} className="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180" aria-hidden="true" /></span>
           </summary>
           <div className="border-t border-[rgba(215,181,92,0.26)] px-3 pb-3 pt-2.5">
             <p className="px-1 pb-3 text-sm leading-6 text-[rgba(255,255,255,0.76)]">{copy.intro}</p>
-            <PainManagementGuide lang={lang} />
+            <PainManagementGuide lang={lang} hideHeroTitle />
           </div>
         </details>
       </section>
@@ -324,12 +324,12 @@ export default function PainManagementGuide({ lang, presentation = "full" }: { l
   });
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={headingId}>
+    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={hideHeroTitle ? undefined : headingId} aria-label={hideHeroTitle ? copy.title : undefined}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(135deg,rgba(10,18,40,0.04),rgba(215,181,92,0.1),transparent)] md:h-40" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-6xl">
         <header data-testid="pain-management-header" className="mb-4 border-l-2 border-[var(--color-gold-primary)] pl-3 text-left md:mb-8 md:border-l-0 md:pl-0 md:text-center">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
-          <h2 id={headingId} className="mt-1.5 max-w-none break-keep text-balance !text-[1.25rem] font-semibold !leading-[1.35] tracking-tight text-[var(--color-star-text)] md:mx-auto md:mt-3 md:max-w-3xl md:text-3xl md:leading-snug">{copy.heroTitle}</h2>
+          {!hideHeroTitle && <h2 id={headingId} className="mt-1.5 max-w-none break-keep text-balance !text-[1.25rem] font-semibold !leading-[1.35] tracking-tight text-[var(--color-star-text)] md:mx-auto md:mt-3 md:max-w-3xl md:text-3xl md:leading-snug">{copy.heroTitle}</h2>}
           <p id="pain-management-summary-caption" className="sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w-2xl sm:text-sm sm:leading-6">{copy.visualCaption}</p>
         </header>
 

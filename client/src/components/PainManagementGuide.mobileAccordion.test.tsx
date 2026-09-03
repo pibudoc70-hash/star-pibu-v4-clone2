@@ -80,14 +80,20 @@ describe("PainManagementGuide mobile disclosure", () => {
     const accordion = screen.getByTestId("pain-management-event-accordion");
     const disclosure = accordion.querySelector("details")!;
     const summary = disclosure.querySelector("summary");
+    const requestedSummary = "통증에 대한 부담까지 고려하는 것이 시술 계획의 중요한 시작입니다";
 
     expect(accordion).toHaveClass("mt-12", "!p-0", "md:hidden");
     expect(disclosure).not.toHaveAttribute("open");
     expect(summary).toHaveClass("min-h-[76px]", "focus-visible:ring-2");
+    expect(within(summary!).getByText(requestedSummary)).toBeInTheDocument();
+    expect(within(summary!).queryByText("PAIN MANAGEMENT")).not.toBeInTheDocument();
+    expect(within(summary!).queryByText("개인별 통증관리 3단계")).not.toBeInTheDocument();
 
     fireEvent.click(summary!);
     expect(disclosure).toHaveAttribute("open");
     expect(within(accordion).getByText("리프팅 시술에서 통증에 대한 걱정은 자연스러운 일입니다. 스타피부과는 시술 특성과 개인의 통증 민감도를 먼저 확인한 뒤, 꼭 필요한 단계만 원장님이 직접 검토하고 결정합니다.")).toBeInTheDocument();
+    expect(within(accordion).getAllByText(requestedSummary)).toHaveLength(1);
+    expect(accordion.querySelector('section[aria-label="개인별 통증관리 3단계"]')).toBeInTheDocument();
   });
 
   it("prevents global mobile section padding from increasing the closed Special Event accordion", () => {

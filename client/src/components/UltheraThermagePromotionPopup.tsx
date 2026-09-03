@@ -68,7 +68,7 @@ export default function UltheraThermagePromotionPopup() {
           type="button"
           onClick={dismiss}
           aria-label="닫기"
-          className="absolute right-0 -top-14 z-30 flex size-11 items-center justify-center rounded-full border-2 border-[var(--color-star-navy)] bg-white text-[var(--color-star-navy)] shadow-[0_6px_18px_rgba(0,0,0,0.34)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:-right-14 md:top-0"
+          className="absolute right-0 -bottom-14 z-30 flex size-11 items-center justify-center rounded-full border-2 border-[var(--color-star-navy)] bg-white text-[var(--color-star-navy)] shadow-[0_6px_18px_rgba(0,0,0,0.34)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:-right-14 md:top-0 md:bottom-auto"
         >
           <X size={18} aria-hidden="true" />
         </button>

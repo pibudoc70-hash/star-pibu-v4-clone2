@@ -68,7 +68,8 @@ export default function UltheraThermagePromotionPopup() {
           type="button"
           onClick={dismiss}
           aria-label="닫기"
-          className="absolute right-3 top-3 z-30 inline-flex size-[52px] items-center justify-center rounded-full border-2 border-white/90 bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:right-auto md:size-11 md:-right-14 md:top-0"
+          data-testid="promotion-popup-close"
+          className="absolute bottom-3 right-3 z-30 inline-flex size-[52px] items-center justify-center rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:bottom-auto md:right-auto md:size-11 md:-right-14 md:top-0"
         >
           <X size={22} strokeWidth={2.6} aria-hidden="true" />
           <span className="sr-only">닫기</span>

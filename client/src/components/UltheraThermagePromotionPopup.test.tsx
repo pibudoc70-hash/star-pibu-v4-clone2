@@ -55,7 +55,7 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(screen.getByTestId("promotion-popup-controls")).toHaveClass("bottom-3", "right-3", "md:-right-14", "md:top-0");
     expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");
-    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:size-[52px]");
+    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:hover:bg-[var(--color-gold-primary)]", "md:hover:scale-105", "md:size-[52px]");
     expect(screen.getByText("닫기")).toHaveClass("sr-only");
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 
@@ -93,5 +93,39 @@ describe("UltheraThermagePromotionPopup", () => {
     act(() => vi.advanceTimersByTime(0));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("starts hidden and transitions into the popup on its first rendered frame", () => {
+    const frames: FrameRequestCallback[] = [];
+    window.requestAnimationFrame = vi.fn((callback: FrameRequestCallback) => {
+      frames.push(callback);
+      return frames.length;
+    }) as typeof window.requestAnimationFrame;
+
+    render(<UltheraThermagePromotionPopup />);
+    act(() => vi.advanceTimersByTime(700));
+
+    const popup = screen.getByTestId("ulthera-thermage-promotion-popup");
+    expect(popup).toHaveAttribute("data-state", "opening");
+    expect(popup).toHaveClass("opacity-0", "transition-opacity", "motion-reduce:transition-none");
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "opening");
+
+    act(() => frames.forEach((callback) => callback(0)));
+
+    expect(popup).toHaveAttribute("data-state", "open");
+    expect(popup).toHaveClass("opacity-100");
+  });
+
+  it("uses a stronger desktop close-button hover state without applying it on mobile", () => {
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({ matches: query === "(min-width: 768px)" })) as typeof window.matchMedia;
+    renderVisiblePopup();
+    const closeButton = screen.getByRole("button", { name: "닫기" });
+
+    fireEvent.pointerEnter(closeButton);
+    expect(closeButton).toHaveAttribute("data-hovered", "true");
+    expect(closeButton).toHaveStyle({ color: "rgb(44, 44, 44)", scale: "1.05" });
+
+    fireEvent.pointerLeave(closeButton);
+    expect(closeButton).toHaveAttribute("data-hovered", "false");
   });
 });

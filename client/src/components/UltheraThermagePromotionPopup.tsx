@@ -22,7 +22,9 @@ export const ULTHERA_THERMAGE_PROMOTIONS = {
 export default function UltheraThermagePromotionPopup() {
   const [visible, setVisible] = useState(false);
   const [hideForToday, setHideForToday] = useState(false);
+  const [isEntering, setIsEntering] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isCloseHovered, setIsCloseHovered] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const dismissTimerRef = useRef<number | null>(null);
@@ -38,6 +40,12 @@ export default function UltheraThermagePromotionPopup() {
     const timer = window.setTimeout(() => setVisible(true), SHOW_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!visible || isClosing) return;
+    const animationFrame = window.requestAnimationFrame(() => setIsEntering(true));
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [visible, isClosing]);
 
   useEffect(() => () => {
     if (dismissTimerRef.current !== null) window.clearTimeout(dismissTimerRef.current);
@@ -69,7 +77,9 @@ export default function UltheraThermagePromotionPopup() {
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
     dismissTimerRef.current = window.setTimeout(() => {
       setVisible(false);
+      setIsEntering(false);
       setIsClosing(false);
+      setIsCloseHovered(false);
       dismissTimerRef.current = null;
       window.requestAnimationFrame(() => {
         lastFocusedRef.current?.focus();
@@ -92,18 +102,18 @@ export default function UltheraThermagePromotionPopup() {
   return (
     <div
       data-testid="ulthera-thermage-promotion-popup"
-      data-state={isClosing ? "closing" : "open"}
-      className={`fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(5,12,28,0.72)] px-4 py-6 backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none ${isClosing ? "pointer-events-none opacity-0" : "opacity-100"}`}
-      style={{ opacity: isClosing ? 0 : 1 }}
+      data-state={isClosing ? "closing" : isEntering ? "open" : "opening"}
+      className={`fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(5,12,28,0.72)] px-4 py-6 backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none ${isClosing ? "pointer-events-none opacity-0" : isEntering ? "opacity-100" : "opacity-0"}`}
+      style={{ opacity: isClosing || !isEntering ? 0 : 1 }}
       role="presentation"
     >
       <section
         role="dialog"
         aria-modal="true"
         aria-label="울쎄라피 프라임 및 써마지 FLX 이벤트"
-        data-state={isClosing ? "closing" : "open"}
-        className={`ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none md:max-w-[960px] ${isClosing ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"}`}
-        style={{ opacity: isClosing ? 0 : 1, scale: isClosing ? "0.985" : "1" }}
+        data-state={isClosing ? "closing" : isEntering ? "open" : "opening"}
+        className={`ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none md:max-w-[960px] ${isClosing || !isEntering ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"}`}
+        style={{ opacity: isClosing || !isEntering ? 0 : 1, scale: isClosing || !isEntering ? "0.985" : "1" }}
       >
         <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2 md:bottom-auto md:right-auto md:-right-14 md:top-0">
           <label
@@ -125,10 +135,16 @@ export default function UltheraThermagePromotionPopup() {
             ref={closeButtonRef}
             type="button"
             onClick={dismiss}
+            onPointerEnter={() => {
+              if (window.matchMedia?.("(min-width: 768px)")?.matches) setIsCloseHovered(true);
+            }}
+            onPointerLeave={() => setIsCloseHovered(false)}
             disabled={isClosing}
             aria-label="닫기"
             data-testid="promotion-popup-close"
-            className="inline-flex size-[52px] items-center justify-center rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-[var(--color-gold-primary)] hover:text-[var(--color-star-navy)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px]"
+            data-hovered={isCloseHovered ? "true" : "false"}
+            className="inline-flex size-[52px] items-center justify-center rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,border-color,color,transform,box-shadow] duration-200 md:hover:scale-105 md:hover:border-white md:hover:bg-[var(--color-gold-primary)] md:hover:text-[var(--color-star-navy)] md:hover:shadow-[0_12px_28px_rgba(0,0,0,0.6)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px]"
+            style={isCloseHovered ? { backgroundColor: "#C4A882", borderColor: "#FFFFFF", color: "#2C2C2C", scale: "1.05" } : undefined}
           >
             <X size={22} strokeWidth={2.6} aria-hidden="true" />
             <span className="sr-only">닫기</span>

@@ -10,7 +10,7 @@ describe("DoctorsSection upper spacing", () => {
     expect(doctorsSource).toContain('id="doctors"');
     expect(doctorsSource).toContain('className="py-16 sm:py-24 dr-section-bg scroll-mt-24 md:scroll-mt-28"');
     expect(globalCss).toContain("section#doctors {\n      padding-top: 2.5rem !important;");
-    expect(globalCss).toContain("@media (min-width: 640px) {\n  #doctors {\n    padding-top: 3rem !important;");
+    expect(globalCss).toContain("@media (min-width: 768px) {\n  #doctors {\n    padding-top: 3rem !important;");
     expect(globalCss).not.toContain("#doctors {\n  padding-bottom:");
   });
 });

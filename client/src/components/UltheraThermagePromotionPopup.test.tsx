@@ -61,7 +61,25 @@ describe("UltheraThermagePromotionPopup", () => {
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 
     expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "closing");
-    expect(screen.getByTestId("ulthera-thermage-promotion-popup")).toHaveClass("opacity-0", "pointer-events-none");
+    expect(screen.getByTestId("promotion-popup-overlay")).toHaveClass("opacity-0", "pointer-events-none");
+    act(() => vi.advanceTimersByTime(DISMISS_ANIMATION_MS));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("uses a dimmed overlay that dismisses only from the background", () => {
+    renderVisiblePopup();
+
+    const overlay = screen.getByTestId("promotion-popup-overlay");
+    expect(overlay).toHaveAttribute("aria-label", "이벤트 팝업 닫기");
+    expect(overlay).toHaveClass("absolute", "inset-0", "bg-[rgba(5,12,28,0.72)]", "backdrop-blur-[2px]");
+
+    fireEvent.click(screen.getByTestId("promotion-hide-today-control"));
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "open");
+
+    fireEvent.click(overlay);
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "closing");
+    expect(overlay).toHaveClass("pointer-events-none", "opacity-0");
+
     act(() => vi.advanceTimersByTime(DISMISS_ANIMATION_MS));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
@@ -107,14 +125,15 @@ describe("UltheraThermagePromotionPopup", () => {
     act(() => vi.advanceTimersByTime(700));
 
     const popup = screen.getByTestId("ulthera-thermage-promotion-popup");
+    const overlay = screen.getByTestId("promotion-popup-overlay");
     expect(popup).toHaveAttribute("data-state", "opening");
-    expect(popup).toHaveClass("opacity-0", "transition-opacity", "motion-reduce:transition-none");
+    expect(overlay).toHaveClass("opacity-0", "transition-opacity", "motion-reduce:transition-none");
     expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "opening");
 
     act(() => frames.forEach((callback) => callback(0)));
 
     expect(popup).toHaveAttribute("data-state", "open");
-    expect(popup).toHaveClass("opacity-100");
+    expect(overlay).toHaveClass("opacity-100");
   });
 
   it("uses a stronger desktop close-button hover state without applying it on mobile", () => {

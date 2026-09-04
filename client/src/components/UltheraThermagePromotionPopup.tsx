@@ -103,10 +103,17 @@ export default function UltheraThermagePromotionPopup() {
     <div
       data-testid="ulthera-thermage-promotion-popup"
       data-state={isClosing ? "closing" : isEntering ? "open" : "opening"}
-      className={`fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(5,12,28,0.72)] px-4 py-6 backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none ${isClosing ? "pointer-events-none opacity-0" : isEntering ? "opacity-100" : "opacity-0"}`}
-      style={{ opacity: isClosing || !isEntering ? 0 : 1 }}
+      className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-6"
       role="presentation"
     >
+      <button
+        type="button"
+        aria-label="이벤트 팝업 닫기"
+        data-testid="promotion-popup-overlay"
+        onClick={dismiss}
+        disabled={isClosing}
+        className={`absolute inset-0 bg-[rgba(5,12,28,0.72)] backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none ${isClosing ? "pointer-events-none opacity-0" : isEntering ? "opacity-100" : "opacity-0"}`}
+      />
       <section
         role="dialog"
         aria-modal="true"

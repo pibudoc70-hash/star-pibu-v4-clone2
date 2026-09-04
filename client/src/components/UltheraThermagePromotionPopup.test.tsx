@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import UltheraThermagePromotionPopup, {
+  DISMISS_ANIMATION_MS,
   getLocalCalendarDateKey,
   PROMOTION_HIDE_UNTIL_DATE_KEY,
   ULTHERA_THERMAGE_PROMOTIONS,
@@ -9,6 +10,7 @@ import UltheraThermagePromotionPopup, {
 
 describe("UltheraThermagePromotionPopup", () => {
   const originalRequestAnimationFrame = window.requestAnimationFrame;
+  const originalMatchMedia = window.matchMedia;
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -23,6 +25,7 @@ describe("UltheraThermagePromotionPopup", () => {
   afterEach(() => {
     vi.useRealTimers();
     window.requestAnimationFrame = originalRequestAnimationFrame;
+    window.matchMedia = originalMatchMedia;
   });
 
   function renderVisiblePopup() {
@@ -43,15 +46,22 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(document.querySelector(`source[srcset="${ULTHERA_THERMAGE_PROMOTIONS.desktopImage}"]`)).toHaveAttribute("media", "(min-width: 768px)");
   });
 
-  it("provides a mobile today-hide option beside the accessible close control", () => {
+  it("provides a cohesive today-hide control beside the accessible close control across breakpoints", () => {
     renderVisiblePopup();
 
-    expect(screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" })).not.toBeChecked();
+    const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
+    expect(checkbox).not.toBeChecked();
+    expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "border-[rgba(215,181,92,0.7)]");
+    expect(screen.getByTestId("promotion-popup-controls")).toHaveClass("bottom-3", "right-3", "md:-right-14", "md:top-0");
+    expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");
-    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:size-11");
+    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:size-[52px]");
     expect(screen.getByText("닫기")).toHaveClass("sr-only");
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "closing");
+    expect(screen.getByTestId("ulthera-thermage-promotion-popup")).toHaveClass("opacity-0", "pointer-events-none");
+    act(() => vi.advanceTimersByTime(DISMISS_ANIMATION_MS));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
@@ -59,6 +69,7 @@ describe("UltheraThermagePromotionPopup", () => {
     const firstRender = renderVisiblePopup();
     fireEvent.click(screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" }));
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
+    act(() => vi.advanceTimersByTime(DISMISS_ANIMATION_MS));
 
     expect(localStorage.getItem(PROMOTION_HIDE_UNTIL_DATE_KEY)).toBe(getLocalCalendarDateKey());
     firstRender.parentElement?.parentElement?.remove();
@@ -71,5 +82,16 @@ describe("UltheraThermagePromotionPopup", () => {
     render(<UltheraThermagePromotionPopup />);
     act(() => vi.advanceTimersByTime(700));
     expect(screen.getByRole("dialog", { name: "울쎄라피 프라임 및 써마지 FLX 이벤트" })).toBeInTheDocument();
+  });
+
+  it("skips the fade delay when the visitor prefers reduced motion", () => {
+    window.matchMedia = vi.fn().mockReturnValue({ matches: true }) as typeof window.matchMedia;
+    renderVisiblePopup();
+
+    fireEvent.click(screen.getByRole("button", { name: "닫기" }));
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "closing");
+    act(() => vi.advanceTimersByTime(0));
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });

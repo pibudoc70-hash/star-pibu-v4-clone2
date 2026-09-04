@@ -283,25 +283,32 @@ function SectionFallback({
   );
 }
 
-/** WelcomePopup을 첫 렌더 후 idle 시점에 마운트 — 초기 query 비용 제거 */
-function useIdleMount(delayMs = 2000): boolean {
+/** 초기 렌더 후 정확한 지연을 두고 팝업을 마운트해 첫 화면을 방해하지 않음 */
+function useDelayedMount(delayMs = 2000): boolean {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    // requestIdleCallback 지원 시 idle에 마운트, 미지원 시 delayMs 후 마운트
-    if (typeof requestIdleCallback !== 'undefined') {
-      const id = requestIdleCallback(() => setMounted(true), { timeout: delayMs });
-      return () => cancelIdleCallback(id);
+    let id: number | undefined;
+    const startDelay = () => {
+      id = window.setTimeout(() => setMounted(true), delayMs);
+    };
+
+    if (document.readyState === "complete") {
+      startDelay();
     } else {
-      const id = setTimeout(() => setMounted(true), delayMs);
-      return () => clearTimeout(id);
+      window.addEventListener("load", startDelay, { once: true });
     }
+
+    return () => {
+      window.removeEventListener("load", startDelay);
+      if (id !== undefined) window.clearTimeout(id);
+    };
   }, [delayMs]);
   return mounted;
 }
 
 export default function Home() {
   const { lang } = useLang();
-  const popupReady = useIdleMount(2000);
+  const popupReady = useDelayedMount(2000);
   const [, navigate] = useLocation();
 
   useHomeInitialScrollRestore();
@@ -630,7 +637,7 @@ export default function Home() {
       <Footer />
 
       {/* Welcome Popup — lazy loaded + idle mount: 초기 번들/query 비용 제거
-           첫 렌더 후 2초 idle 시점에 마운트하여 LCP/FID에 영향 없음 */}
+            첫 렌더 후 정확히 2초 뒤 마운트하여 LCP/FID에 영향 없음 */}
       {popupReady && (
         <Suspense fallback={null}>
           <UltheraThermagePromotionPopup />

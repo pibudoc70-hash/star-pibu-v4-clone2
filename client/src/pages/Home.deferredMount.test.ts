@@ -45,6 +45,16 @@ describe("Home below-the-fold deferred mount contract", () => {
     expect(homeSource).toMatch(/<DeferredMount[\s\S]*?<ContactSection/);
   });
 
+  it("waits a deterministic two seconds before mounting page-load popups", () => {
+    expect(homeSource).toContain("function useDelayedMount(delayMs = 2000): boolean");
+    expect(homeSource).toContain("const startDelay = () => {");
+    expect(homeSource).toContain("id = window.setTimeout(() => setMounted(true), delayMs)");
+    expect(homeSource).toContain('document.readyState === "complete"');
+    expect(homeSource).toContain('window.addEventListener("load", startDelay, { once: true })');
+    expect(homeSource).toContain("const popupReady = useDelayedMount(2000)");
+    expect(homeSource).not.toContain("requestIdleCallback(() => setMounted(true)");
+  });
+
   it("mounts deferred anchor targets without a page-bottom jump", () => {
     const anchorSelectors = ["#events", "#facility", "#management-devices", "#results-statistics", "#faq"];
 

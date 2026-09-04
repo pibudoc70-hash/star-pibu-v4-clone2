@@ -5,6 +5,7 @@ import UltheraThermagePromotionPopup, {
   DISMISS_ANIMATION_MS,
   getLocalCalendarDateKey,
   PROMOTION_HIDE_UNTIL_DATE_KEY,
+  SHOW_DELAY_MS,
   ULTHERA_THERMAGE_PROMOTIONS,
 } from "./UltheraThermagePromotionPopup";
 
@@ -30,7 +31,7 @@ describe("UltheraThermagePromotionPopup", () => {
 
   function renderVisiblePopup() {
     render(<UltheraThermagePromotionPopup />);
-    act(() => vi.advanceTimersByTime(700));
+    act(() => vi.advanceTimersByTime(SHOW_DELAY_MS));
     return screen.getByRole("dialog", { name: "울쎄라피 프라임 및 써마지 FLX 이벤트" });
   }
 

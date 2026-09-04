@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 
-const SHOW_DELAY_MS = 700;
+export const SHOW_DELAY_MS = 0;
 export const DISMISS_ANIMATION_MS = 200;
 export const PROMOTION_HIDE_UNTIL_DATE_KEY = "star-pibu:ulthera-thermage-promotion-hide-date";
 

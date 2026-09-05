@@ -31,3 +31,17 @@ curl -sS -D- -o /dev/null \
 ```
 
 정적 자산 Brotli는 플랫폼/프록시 설정 접근 권한이 확보된 경우에만 별도 단계로 재검토한다. 해당 시점에도 앱 소스의 `manualChunks`, modulepreload, KaTeX CSS, 기존 CSS 선언은 변경하지 않는다.
+
+## 배포 후 운영 검증
+
+자동 게시 버전 `bbd2d56e` 전파 후 `starpibu-qdq7tysk.manus.space`, `star-pibu.com`, `star-pibu.co.kr`에서 Pretendard 경로를 다시 요청했다. 세 도메인 모두 `200`, `Content-Type: font/woff2`, 2,057,688바이트, WOFF2 `wOF2` 시그니처를 반환했다. 따라서 최초 415는 정상 WOFF2를 잘못된 업스트림 MIME 때문에 거부하던 프록시 검증 경로였고, 이번 변경으로 복구되었다.
+
+| 운영 검증 항목 | 결과 |
+|---|---|
+| `GET /api/storage/PretendardVariable_1ede78f7.woff2` | `200`, `font/woff2`, immutable 1년 캐시, WOFF2 시그니처 확인 |
+| `/`, `/en`, `/ja`, `/doctors`, `/equipment3` | 모두 `200` |
+| `/treatments/ulthera-prime`, `/events/1` | 모두 `200` |
+| `Accept-Encoding: br`의 해시 JS | `identity` 응답 유지 |
+| `Accept-Encoding: gzip`의 해시 JS | `gzip` 응답 유지 |
+
+정적 자산의 Brotli 미제공은 여전히 `transparent-assets/1` 운영 프록시 계층의 동작이다. 이는 애플리케이션 코드로 안전하게 바꿀 수 있는 범위를 벗어나므로, 압축 관련 추가 변경은 하지 않았다. 이번 개선은 별도 WOFF2 요청의 415를 제거하는 범위이며, JS 번들 전송량 자체를 줄이는 변경은 아니다.

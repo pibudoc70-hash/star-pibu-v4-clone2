@@ -19,7 +19,7 @@ if (!limitMatch) {
 }
 
 const limitBytes = Number(limitMatch[1]) * 1024;
-const assetUrls = [...html.matchAll(/(?:src|href)="(\/assets\/[^"?]+\.js)"/g)]
+const assetUrls = [...html.matchAll(/(?:src|href)="(\/(?:__static\/)?assets\/[^"?]+\.js)"/g)]
   .map((match) => match[1])
   .filter((asset, index, values) => values.indexOf(asset) === index);
 
@@ -27,7 +27,7 @@ if (assetUrls.length === 0) {
   throw new Error("No JavaScript entry or modulepreload assets were found in dist/public/index.html.");
 }
 
-const assetNames = assetUrls.map((asset) => asset.replace("/assets/", ""));
+const assetNames = assetUrls.map((asset) => asset.replace(/^\/(?:__static\/)?assets\//, ""));
 const blockedInitialChunks = assetNames.filter((asset) => /^(page-landings|data-treatments)-/.test(asset));
 if (blockedInitialChunks.length > 0) {
   throw new Error(`Deferred route/data chunks leaked into the home initial HTML: ${blockedInitialChunks.join(", ")}`);

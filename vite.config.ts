@@ -234,7 +234,10 @@ const plugins = [
   ]),
 ];
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  // 운영에서만 /assets 투명 프록시를 우회해 앱 서버의 사전 압축 협상을 사용한다.
+  // 개발 서버와 HMR은 기존 루트 경로를 유지한다.
+  base: command === "build" ? "/__static/" : "/",
   plugins,
   resolve: {
     alias: {
@@ -346,4 +349,4 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-});
+}));

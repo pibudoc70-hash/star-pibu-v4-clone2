@@ -16,6 +16,7 @@ describe("production precompressed static assets", () => {
   });
 
   it("negotiates available Brotli assets while preserving source MIME, Vary, cache, and SPA fallback behavior", () => {
+    expect(viteServerSource).toContain('app.use("/__static", precompressedStatic)');
     expect(viteServerSource).toContain('enableBrotli: true');
     expect(viteServerSource).toContain('orderPreference: ["br"]');
     expect(viteServerSource).toContain('index: false');

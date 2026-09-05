@@ -67,15 +67,14 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(
-    expressStaticGzip(distPath, {
-      enableBrotli: true,
-      // Brotli가 준비된 해시 JS·CSS를 우선 전송하고, 지원하지 않는 클라이언트는
-      // 원본 파일을 global compression middleware의 기존 gzip/identity 경로로 보낸다.
-      orderPreference: ["br"],
-      // SPA shell은 아래 fallback에서 no-cache 정책으로만 제공한다.
-      index: false,
-      serveStatic: {
+  const precompressedStatic = expressStaticGzip(distPath, {
+    enableBrotli: true,
+    // Brotli가 준비된 해시 JS·CSS를 우선 전송하고, 지원하지 않는 클라이언트는
+    // 원본 파일을 global compression middleware의 기존 gzip/identity 경로로 보낸다.
+    orderPreference: ["br"],
+    // SPA shell은 아래 fallback에서 no-cache 정책으로만 제공한다.
+    index: false,
+    serveStatic: {
       // etag/lastModified 는 express-static 기본값(true) 유지
       setHeaders: (res, filePath) => {
         // 사전 압축 파일도 원본 확장자의 MIME 및 캐시 정책을 기준으로 제공한다.
@@ -107,9 +106,13 @@ export function serveStatic(app: Express) {
         // 그 외 (JSON, txt 등): 5분
         res.setHeader("Cache-Control", "public, max-age=300");
       },
-      },
-    }),
-  );
+    },
+  });
+
+  // 운영 빌드는 /__static/assets/* 를 사용한다. 플랫폼의 /assets 투명 프록시가
+  // 사전 압축 응답 헤더를 덮어쓰지 않도록 앱 정적 미들웨어를 먼저 통과시킨다.
+  app.use("/__static", precompressedStatic);
+  app.use(precompressedStatic);
 
   // fall through to index.html if the file doesn't exist
   // /api/* 경로는 SPA fallback에서 제외 — storage/tRPC 요청에 HTML 반환 방지

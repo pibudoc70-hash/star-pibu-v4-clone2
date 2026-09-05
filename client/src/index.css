@@ -14,15 +14,6 @@
   unicode-range: U+0000-2BFF, U+3000-303F;
 }
 
-@font-face {
-  font-family: "Pretendard Web";
-  font-weight: 45 920;
-  font-style: normal;
-  font-display: swap;
-  src: url("/manus-storage/PretendardVariable-korean-segment_87dfcb73.woff2") format("woff2-variations");
-  unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
-}
-
 /* 
  * STAR 피부과 디자인 시스템 — 프리미엄 브랜드 에디션
  * 컬러: 웜 뉴트럴 (#FAF8F5 배경, #C4A882 골드, #2C2C2C 텍스트)

@@ -215,6 +215,28 @@ function developmentOnly(plugin: Plugin): Plugin {
   return { ...plugin, apply: "serve" };
 }
 
+function auditedPretendardSegmentsPlugin(): Plugin {
+  const manifestPath = path.join(PROJECT_ROOT, "reports", "pretendard-db-segment-manifest.json");
+  const primaryUrl = "/manus-storage/PretendardVariable-korean-primary_693508b2.woff2";
+  const secondaryUrl = "/manus-storage/PretendardVariable-korean-secondary_441758ac.woff2";
+
+  return {
+    name: "audited-pretendard-segments",
+    transformIndexHtml(html) {
+      const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as {
+        primary: { unicodeRange: string[] };
+        secondary: { unicodeRange: string[] };
+      };
+      const face = (url: string, unicodeRange: string[]) => [
+        "@font-face{font-family:'Pretendard Web';font-weight:45 920;font-style:normal;font-display:swap;",
+        `src:url('${url}') format('woff2-variations');unicode-range:${unicodeRange.join(",")}}`,
+      ].join("");
+      const css = `${face(primaryUrl, manifest.primary.unicodeRange)}${face(secondaryUrl, manifest.secondary.unicodeRange)}`;
+      return html.replace("</head>", `<style data-pretendard-db-segments>${css}</style></head>`);
+    },
+  };
+}
+
 const plugins = [
   react(),
   tailwindcss(),
@@ -226,6 +248,7 @@ const plugins = [
   // KaTeX CSS를 CDN으로 전환: 폰트 파일 59개(~1MB) 배포 패키지 제외
   // KaTeX CSS는 client/index.html에서 jsDelivr CDN으로 직접 로드됨
   externalizeKatexCssPlugin(),
+  auditedPretendardSegmentsPlugin(),
   // 홈에 불필요한 청크의 modulepreload 링크를 index.html에서 제거
   // 이 청크들은 실제 라우트 이동 시 lazy 로드됨
   stripUnusedModulePreloadPlugin([

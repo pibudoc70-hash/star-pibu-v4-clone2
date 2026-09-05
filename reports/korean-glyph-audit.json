@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-05T16:57:20.003Z",
+  "generatedAt": "2026-09-05T17:38:49.279Z",
   "source": {
-    "fileCount": 415,
-    "uniqueHangulSyllables": 830
+    "fileCount": 427,
+    "uniqueHangulSyllables": 831
   },
   "database": {
     "tables": [
@@ -52,6 +52,39 @@
         ],
         "rowCount": 753,
         "uniqueHangulSyllables": 113
+      },
+      {
+        "tableName": "popupEvents",
+        "columns": [
+          "tab",
+          "badge",
+          "title",
+          "subtitle",
+          "desc",
+          "priceItems",
+          "note",
+          "imageUrl",
+          "accent",
+          "accentLight",
+          "clickUrl",
+          "titleEn",
+          "titleJa",
+          "titleZh",
+          "subtitleEn",
+          "subtitleJa",
+          "subtitleZh",
+          "descEn",
+          "descJa",
+          "descZh",
+          "badgeEn",
+          "badgeJa",
+          "badgeZh",
+          "noteEn",
+          "noteJa",
+          "noteZh"
+        ],
+        "rowCount": 0,
+        "uniqueHangulSyllables": 0
       },
       {
         "tableName": "treatments",
@@ -183,7 +216,7 @@
     "uniqueHangulSyllables": 660
   },
   "primarySubset": {
-    "uniqueHangulSyllables": 850,
+    "uniqueHangulSyllables": 852,
     "codePoints": [
       44032,
       44033,
@@ -509,6 +542,7 @@
       47931,
       47932,
       47933,
+      47952,
       48036,
       48044,
       48064,
@@ -918,6 +952,7 @@
       53748,
       53804,
       53812,
+      53820,
       53888,
       53909,
       53916,
@@ -1035,6 +1070,11 @@
       55184,
       55192,
       55193
+    ]
+  },
+  "runtimeVerification": {
+    "observedHangulOutsideSourceAndDatabase": [
+      "툼"
     ]
   },
   "uiSymbols": {

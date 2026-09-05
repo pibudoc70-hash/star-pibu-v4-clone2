@@ -4,12 +4,17 @@ import { fileURLToPath } from "node:url";
 import mysql from "mysql2/promise";
 
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SOURCE_ROOT = path.join(PROJECT_ROOT, "client", "src");
+const SOURCE_ROOTS = [
+  path.join(PROJECT_ROOT, "client", "src"),
+  path.join(PROJECT_ROOT, "shared"),
+];
 const OUTPUT_PATH = path.join(PROJECT_ROOT, "reports", "korean-glyph-audit.json");
-const TARGET_TABLES = ["notices", "events", "treatments", "equipment3"];
-const TEXT_TYPES = new Set(["char", "varchar", "text", "mediumtext", "longtext"]);
+const TARGET_TABLES = ["notices", "events", "popupEvents", "treatments", "equipment3"];
+const TEXT_TYPES = new Set(["char", "varchar", "text", "mediumtext", "longtext", "json"]);
 const HANGUL_SYLLABLE = /[\uAC00-\uD7A3]/gu;
 const UI_SYMBOLS = ["─", "々", "✅", "❌", "⚕", "✨", "⚡", "✦", "⭐", "⏳", "☰", "✈", "⏱"];
+// 2026-09 runtime QA: home event surface rendered ‘두툼했던…’; it is not present in the audited source/DB text.
+const OBSERVED_RUNTIME_HANGUL = ["툼"];
 
 function countChars(text, target) {
   const counts = new Map();
@@ -25,6 +30,12 @@ function mergeCounts(target, source) {
   }
 }
 
+function serialiseDatabaseText(value) {
+  if (typeof value === "string") return value;
+  if (value === null || value === undefined) return "";
+  return JSON.stringify(value);
+}
+
 async function listSourceFiles(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const nested = await Promise.all(entries.map(async entry => {
@@ -35,7 +46,7 @@ async function listSourceFiles(directory) {
   return nested.flat();
 }
 
-const sourceFiles = await listSourceFiles(SOURCE_ROOT);
+const sourceFiles = (await Promise.all(SOURCE_ROOTS.map(listSourceFiles))).flat();
 const sourceText = (await Promise.all(sourceFiles.map(file => fs.readFile(file, "utf8")))).join("\n");
 const sourceHangul = countChars(sourceText, HANGUL_SYLLABLE);
 
@@ -63,7 +74,7 @@ for (const [tableName, columnNames] of columnsByTable) {
   if (columnNames.length === 0) continue;
   const projection = columnNames.map(column => `\`${column.replaceAll("`", "``")}\``).join(", ");
   const [rows] = await connection.query(`SELECT ${projection} FROM \`${tableName}\``);
-  const text = rows.flatMap(row => columnNames.map(column => row[column] ?? "")).join("\n");
+  const text = rows.flatMap(row => columnNames.map(column => serialiseDatabaseText(row[column]))).join("\n");
   const counts = countChars(text, HANGUL_SYLLABLE);
   mergeCounts(databaseHangul, counts);
   tableSummaries.push({
@@ -75,7 +86,7 @@ for (const [tableName, columnNames] of columnsByTable) {
 }
 await connection.end();
 
-const primaryHangul = new Set([...sourceHangul.keys(), ...databaseHangul.keys()]);
+const primaryHangul = new Set([...sourceHangul.keys(), ...databaseHangul.keys(), ...OBSERVED_RUNTIME_HANGUL]);
 const presentUiSymbols = UI_SYMBOLS.filter(symbol => sourceText.includes(symbol));
 const report = {
   generatedAt: new Date().toISOString(),
@@ -90,6 +101,9 @@ const report = {
   primarySubset: {
     uniqueHangulSyllables: primaryHangul.size,
     codePoints: [...primaryHangul].map(char => char.codePointAt(0)).sort((a, b) => a - b),
+  },
+  runtimeVerification: {
+    observedHangulOutsideSourceAndDatabase: OBSERVED_RUNTIME_HANGUL,
   },
   uiSymbols: {
     reviewed: UI_SYMBOLS,

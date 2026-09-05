@@ -30,4 +30,6 @@
 
 새 Chromium 세션 세 번에서 홈 전체를 스크롤해 지연 섹션까지 mount한 뒤 Resource Timing을 확인했다. 매번 1차 WOFF2만 요청됐고 2차 WOFF2 요청, audited primary 밖 한글, 누락 text node는 모두 0이었다. `/equipment3`에서 후보 13개 중 `✨`는 실제 DOM에 표시되었다. 원본 Pretendard와 Latin·1차·2차 cmap 모두 해당 기호를 보유하지 않으므로, 이 기호는 기존 Noto/system fallback이 의도대로 렌더한다. 폰트에 존재하지 않는 emoji를 억지로 한국어 subset에 넣지 않았다.
 
+최종 공개 `https://star-pibu.com/`에서도 독립 Chromium 세션 3회가 모두 primary URL만 Resource Timing에 기록했고 secondary는 0회였다. 두 storage URL은 각각 최종 307 뒤 `font/woff2` 200으로 확인됐다. primary는 153,344B, secondary는 1,615,696B이며, secondary는 실제 필요할 때만 받을 수 있다.
+
 `audit-korean-glyphs.mjs`, `build-pretendard-db-segments.py`, `audit-pretendard-symbol-cmap.py`는 재감사·disjoint range 압축·생성 font cmap 검증을 재현한다. `PretendardDbSegmentManifest.test.ts`는 11,172 전체 coverage와 output missing 0을 CI에서 확인한다.

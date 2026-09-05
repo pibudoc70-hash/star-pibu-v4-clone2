@@ -6,14 +6,14 @@
 
 | 검증 항목 | 운영 관측값 |
 |---|---|
-| 검증 URL | `/__static/assets/index-CKebY_W7.js` |
-| `Accept-Encoding: br` | 200, `Content-Encoding: br`, `Content-Type: text/javascript; charset=utf-8`, `Vary: Accept-Encoding`, 106,013B |
+| 검증 URL | `/__static/assets/index-CroNMASE.js` |
+| `Accept-Encoding: br` | 200, `Content-Encoding: br`, `Content-Type: text/javascript; charset=utf-8`, `Vary: Accept-Encoding`, 105,969B |
 | `Accept-Encoding: gzip` | 200, `Content-Encoding: gzip`, 원본 JS MIME, `Vary: Accept-Encoding` |
 | `Accept-Encoding: identity` | 200, 원본 JS MIME, `Vary: Accept-Encoding`, encoding 없음 |
 | 캐시 | `Cache-Control: public, max-age=7776000`가 운영 프록시에서 유지됨. origin은 immutable도 설정함. |
 | 프록시 표식 | `x-manus-proxy-mode: transparent/1`; `/__static`에서는 브라우저 협상 헤더가 보존됨 |
 
-같은 br 요청을 세 번 반복해 모두 200과 106,013B를 받았다. TTFB는 5.487s, 2.602s, 2.166s로 변동했으며, 이는 HTML CDN 캐시 보류 문제와 별개인 공개 경로 연결 관측값이다. 이 작업은 전송 encoding만 바로잡았으며 HTML 캐시 정책은 변경하지 않았다.
+최종 배포 후 같은 br 요청도 200·105,969B와 동일한 headers로 재확인했다. 이 작업은 전송 encoding만 바로잡았으며 HTML CDN 캐시 정책은 변경하지 않았다.
 
 ## 로컬 최종 빌드 확인
 

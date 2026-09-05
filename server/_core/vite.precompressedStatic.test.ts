@@ -8,6 +8,12 @@ const buildManifest = fs.readFileSync(path.join(projectRoot, "package.json"), "u
 const precompressScript = fs.readFileSync(path.join(projectRoot, "scripts/precompress-static-assets.mjs"), "utf8");
 
 describe("production precompressed static assets", () => {
+  it("resolves the function-form Vite config in serve mode so the client root and development asset base remain valid", () => {
+    expect(viteServerSource).toContain('typeof viteConfig === "function"');
+    expect(viteServerSource).toContain('viteConfig({ command: "serve", mode: "development", isSsrBuild: false, isPreview: false })');
+    expect(viteServerSource).toContain("...resolvedViteConfig");
+  });
+
   it("builds Brotli variants for hashed JavaScript and CSS before bundling the server", () => {
     expect(buildManifest).toContain("vite build && node scripts/precompress-static-assets.mjs && esbuild");
     expect(precompressScript).toContain("dist", "public", "assets");

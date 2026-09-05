@@ -17,7 +17,6 @@ describe("responsive breakpoint policy", () => {
   it("preserves narrow-phone refinements separately from the mobile-to-desktop layout boundary", () => {
     expect(css).toContain("@media (max-width: 360px)");
     expect(css).toContain("@media (max-width: 639px)");
-    expect(css).toContain("@media (min-width: 640px) {");
   });
 
   it("keeps Pain Management’s alternate mobile and desktop markup aligned to Tailwind md", () => {

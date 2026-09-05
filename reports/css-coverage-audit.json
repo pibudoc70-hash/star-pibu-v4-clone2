@@ -1,0 +1,1269 @@
+{
+  "generatedAt": "2026-09-05T23:16:21.714Z",
+  "baseUrl": "http://127.0.0.1:3014",
+  "scope": {
+    "targetCount": 18,
+    "includesScroll": true,
+    "includesFirstDisclosure": true,
+    "includesForcedHoverAndFocus": true
+  },
+  "targets": [
+    {
+      "label": "home-desktop",
+      "path": "/",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1265,
+      "viewportWidth": 1280,
+      "rootTextLength": 3960,
+      "rootVisible": true,
+      "title": "부산 서면 스타피부과 | 부산울쎄라ㅣ부산써마지ㅣ부산 리프팅ㅣ피부과전문의 3인 진료",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1260,
+      "usedRules": 1260
+    },
+    {
+      "label": "home-mobile",
+      "path": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 3079,
+      "rootVisible": true,
+      "title": "부산 서면 스타피부과 | 부산울쎄라ㅣ부산써마지ㅣ부산 리프팅ㅣ피부과전문의 3인 진료",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1157,
+      "usedRules": 1157
+    },
+    {
+      "label": "equipment-list-desktop",
+      "path": "/equipment3",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1265,
+      "viewportWidth": 1280,
+      "rootTextLength": 1813,
+      "rootVisible": true,
+      "title": "시술·장비 소개 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 487,
+      "usedRules": 487
+    },
+    {
+      "label": "equipment-list-mobile",
+      "path": "/equipment3",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1897,
+      "rootVisible": true,
+      "title": "시술·장비 소개 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 576,
+      "usedRules": 576
+    },
+    {
+      "label": "equipment-detail",
+      "path": "/equipment3/ulthera-prime",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 34,
+      "rootVisible": true,
+      "title": "부산 서면 스타피부과 | 부산울쎄라ㅣ부산써마지ㅣ부산 리프팅ㅣ피부과전문의 3인 진료",
+      "noHorizontalOverflow": true,
+      "trackedRules": 232,
+      "usedRules": 232
+    },
+    {
+      "label": "treatment-detail",
+      "path": "/treatments/ulthera",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1265,
+      "viewportWidth": 1280,
+      "rootTextLength": 3180,
+      "rootVisible": true,
+      "title": "부산울쎄라 | 울쎄라피 프라임 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 293,
+      "usedRules": 293
+    },
+    {
+      "label": "about",
+      "path": "/about",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1265,
+      "viewportWidth": 1280,
+      "rootTextLength": 1285,
+      "rootVisible": true,
+      "title": "피부과 소개 | 부산 서면 스타피부과 - 20년 경력 피부과 전문의",
+      "noHorizontalOverflow": true,
+      "trackedRules": 308,
+      "usedRules": 308
+    },
+    {
+      "label": "doctors-mobile",
+      "path": "/doctors",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1198,
+      "rootVisible": true,
+      "title": "피부과전문의 3인 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 493,
+      "usedRules": 493
+    },
+    {
+      "label": "directions",
+      "path": "/directions",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 952,
+      "rootVisible": true,
+      "title": "찾아오시는 길 | STAR DERMATOLOGY",
+      "noHorizontalOverflow": true,
+      "trackedRules": 306,
+      "usedRules": 306
+    },
+    {
+      "label": "notice-list",
+      "path": "/notice",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 895,
+      "rootVisible": true,
+      "title": "공지사항 | STAR DERMATOLOGY",
+      "noHorizontalOverflow": true,
+      "trackedRules": 267,
+      "usedRules": 267
+    },
+    {
+      "label": "research",
+      "path": "/research",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 4344,
+      "rootVisible": true,
+      "title": "연구 및 발표 활동 | 스타피부과 조시형 원장",
+      "noHorizontalOverflow": true,
+      "trackedRules": 343,
+      "usedRules": 343
+    },
+    {
+      "label": "non-covered-mobile",
+      "path": "/non-covered",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2179,
+      "rootVisible": true,
+      "title": "비급여 진료안내 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 324,
+      "usedRules": 324
+    },
+    {
+      "label": "privacy",
+      "path": "/privacy",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 3849,
+      "rootVisible": true,
+      "title": "개인정보처리방침 | 부산 서면 스타피부과",
+      "noHorizontalOverflow": true,
+      "trackedRules": 216,
+      "usedRules": 216
+    },
+    {
+      "label": "landing-en",
+      "path": "/en",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 11283,
+      "rootVisible": true,
+      "title": "STAR Dermatology Busan | Ultherapy · Thermage FLX · Under-Eye Fat Repositioning | Seomyeon",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1331,
+      "usedRules": 1331
+    },
+    {
+      "label": "landing-ja-mobile",
+      "path": "/ja",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 4251,
+      "rootVisible": true,
+      "title": "釜山スター皮膚科 | ウルセラピープライム・サーマジFLX・目の下の脂肪再配置 | 西面クリニック",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1233,
+      "usedRules": 1233
+    },
+    {
+      "label": "landing-zh",
+      "path": "/zh",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 4457,
+      "rootVisible": true,
+      "title": "釜山STAR皮肤科 | 超声刀·热玛吉FLX·眼袋脂肪重置 | 西面诊所",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1140,
+      "usedRules": 1140
+    },
+    {
+      "label": "landing-zh-tw-mobile",
+      "path": "/zh-tw",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 3792,
+      "rootVisible": true,
+      "title": "釜山STAR皮膚科 | 超聲刀·熱瑪吉FLX·眼袋脂肪重置 | 西面診所",
+      "noHorizontalOverflow": true,
+      "trackedRules": 1132,
+      "usedRules": 1132
+    },
+    {
+      "label": "treatment-en",
+      "path": "/en/treatments/ulthera",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "pageMeasurementAvailable": true,
+      "documentWidth": 1280,
+      "viewportWidth": 1280,
+      "rootTextLength": 4842,
+      "rootVisible": true,
+      "title": "Ultherapy Prime | Star Dermatology Seomyeon Busan – Focused Ultrasound Lifting",
+      "noHorizontalOverflow": true,
+      "trackedRules": 294,
+      "usedRules": 294
+    }
+  ],
+  "styleSheets": [
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 221199,
+      "usedPercent": 70.87,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 234893,
+      "usedPercent": 75.26,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 214922,
+      "usedPercent": 68.86,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 226041,
+      "usedPercent": 72.42,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 213292,
+      "usedPercent": 68.34,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 214107,
+      "usedPercent": 68.6,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 211684,
+      "usedPercent": 67.82,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 221258,
+      "usedPercent": 70.89,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 211684,
+      "usedPercent": 67.82,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 211607,
+      "usedPercent": 67.8,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 211684,
+      "usedPercent": 67.82,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 218584,
+      "usedPercent": 70.03,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 211607,
+      "usedPercent": 67.8,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 222768,
+      "usedPercent": 71.37,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 236711,
+      "usedPercent": 75.84,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 222367,
+      "usedPercent": 71.25,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 236286,
+      "usedPercent": 75.71,
+      "neverUsedSimpleClassCandidates": []
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "totalBytes": 312110,
+      "usedBytes": 214377,
+      "usedPercent": 68.69,
+      "neverUsedSimpleClassCandidates": []
+    }
+  ],
+  "observedStyleSheets": [
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3/ulthera-prime",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/equipment3/ulthera-prime",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/treatments/ulthera",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/treatments/ulthera",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/about",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/about",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/doctors",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/doctors",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/directions",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/directions",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/notice",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/notice",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/research",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/research",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/non-covered",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/non-covered",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/privacy",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/privacy",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/en",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/en",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/ja",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/ja",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/zh",
+      "isInline": true
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/zh",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/zh-tw",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/zh-tw",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/__static/assets/index-Cgw7lcOW.css",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/en/treatments/ulthera",
+      "isInline": true
+    },
+    {
+      "sourceURL": "http://127.0.0.1:3014/en/treatments/ulthera",
+      "isInline": true
+    },
+    {
+      "sourceURL": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=optional",
+      "isInline": false
+    },
+    {
+      "sourceURL": "",
+      "isInline": false
+    }
+  ],
+  "limitation": "Coverage is evidence only. A rule absent from these interactions must be source-reference reviewed before removal."
+}

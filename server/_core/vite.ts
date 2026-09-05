@@ -8,6 +8,12 @@ import viteConfig from "../../vite.config";
 import { injectPageSeoMeta } from "./seoMeta";
 
 export async function setupVite(app: Express, server: Server) {
+  // vite.config.ts는 production `/__static/`과 development `/`를 함수형으로 분기한다.
+  // 직접 import한 UserConfigExport를 풀지 않으면 root가 프로젝트 최상위로 떨어져
+  // 개발 Vite가 `client/src/main.tsx` 대신 `/src/main.tsx`를 찾게 된다.
+  const resolvedViteConfig = typeof viteConfig === "function"
+    ? await viteConfig({ command: "serve", mode: "development", isSsrBuild: false, isPreview: false })
+    : viteConfig;
   const serverOptions = {
     middlewareMode: true,
     // HMR WebSocket을 Express 서버와 같은 HTTP 서버에 바인딩
@@ -21,7 +27,7 @@ export async function setupVite(app: Express, server: Server) {
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
+    ...resolvedViteConfig,
     configFile: false,
     server: serverOptions,
     appType: "custom",

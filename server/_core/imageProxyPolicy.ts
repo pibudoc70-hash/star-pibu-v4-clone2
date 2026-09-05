@@ -48,6 +48,17 @@ function normalizeContentType(value: string | null): string | null {
   return type || null;
 }
 
+function hasWoff2Signature(value: Uint8Array | undefined): boolean {
+  return Boolean(
+    value &&
+      value.byteLength >= 4 &&
+      value[0] === 0x77 &&
+      value[1] === 0x4f &&
+      value[2] === 0x46 &&
+      value[3] === 0x32,
+  );
+}
+
 export function isAllowedStorageUrl(rawUrl: string): boolean {
   const url = parseApprovedHttpsUrl(rawUrl);
   return Boolean(url && STORAGE_HOSTS.has(url.hostname));
@@ -62,11 +73,23 @@ export function isValidYouTubeVideoId(videoId: string): boolean {
   return YOUTUBE_VIDEO_ID_PATTERN.test(videoId);
 }
 
-export function getSafeStorageContentType(key: string, header: string | null): string | null {
+export function getSafeStorageContentType(
+  key: string,
+  header: string | null,
+  body?: Uint8Array,
+): string | null {
   const extension = key.split(".").pop()?.toLowerCase() ?? "";
   const actual = normalizeContentType(header);
   const allowed = STORAGE_CONTENT_TYPES[extension];
-  return actual && allowed?.includes(actual) ? actual : null;
+  if (actual && allowed?.includes(actual)) return actual;
+
+  // 일부 스토리지 객체는 정상 WOFF2 바이트를 application/octet-stream으로 반환한다.
+  // 파일 확장자·매직 바이트가 모두 일치할 때만 안전한 폰트 MIME으로 정규화한다.
+  if (extension === "woff2" && actual === "application/octet-stream" && hasWoff2Signature(body)) {
+    return "font/woff2";
+  }
+
+  return null;
 }
 
 export function getSafeImageContentType(header: string | null): string | null {

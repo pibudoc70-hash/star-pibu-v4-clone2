@@ -28,6 +28,20 @@ describe("image proxy policy", () => {
     expect(getSafeStorageContentType("document.pdf", "application/pdf")).toBe("application/pdf");
     expect(getSafeStorageContentType("PretendardVariable.woff2", "font/woff2")).toBe("font/woff2");
     expect(getSafeStorageContentType("PretendardVariable.woff2", "application/octet-stream")).toBeNull();
+    expect(
+      getSafeStorageContentType(
+        "PretendardVariable.woff2",
+        "application/octet-stream",
+        Uint8Array.from([0x77, 0x4f, 0x46, 0x32, 0x00]),
+      ),
+    ).toBe("font/woff2");
+    expect(
+      getSafeStorageContentType(
+        "PretendardVariable.woff2",
+        "application/octet-stream",
+        Uint8Array.from([0x3c, 0x68, 0x74, 0x6d, 0x6c]),
+      ),
+    ).toBeNull();
     expect(getSafeStorageContentType("asset.svg", "image/svg+xml")).toBeNull();
   });
 

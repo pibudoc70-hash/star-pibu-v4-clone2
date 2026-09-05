@@ -172,13 +172,6 @@ export function registerStorageProxy(app: Express) {
         return;
       }
 
-      const contentType = getSafeStorageContentType(key, imgResp.headers.get("content-type"));
-      if (!contentType) {
-        logger.warn("StorageProxy", `Unexpected upstream content type for key=${key}`);
-        res.status(415).type("text/plain").send("Unsupported storage content type");
-        return;
-      }
-
       // [Step49-B] Content-Length 기반 사전 차단
       const declaredLen = Number(imgResp.headers.get("content-length") || 0);
       if (declaredLen > MAX_PROXY_BYTES) {
@@ -194,6 +187,17 @@ export function registerStorageProxy(app: Express) {
       if (bufferData.byteLength > MAX_PROXY_BYTES) {
         res.status(413).type("text/plain").send("Payload too large");
         return; // 캐시에 저장하지 않는다
+      }
+
+      const contentType = getSafeStorageContentType(
+        key,
+        imgResp.headers.get("content-type"),
+        bufferData,
+      );
+      if (!contentType) {
+        logger.warn("StorageProxy", `Unexpected upstream content type for key=${key}`);
+        res.status(415).type("text/plain").send("Unsupported storage content type");
+        return;
       }
 
       // 5. ETag 생성 (SHA1 해시의 첫 16자)

@@ -39,11 +39,13 @@ describe("UltheraThermagePromotionPopup", () => {
     const dialog = renderVisiblePopup();
 
     expect(dialog).toHaveClass("ulthera-thermage-promotion-dialog");
+    expect(dialog).toHaveClass("max-w-[420px]", "md:max-w-[720px]", "lg:max-w-[960px]");
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl);
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.thermageUrl);
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("target", "_blank");
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("rel", "noopener noreferrer");
     expect(document.querySelector("picture img")).toHaveAttribute("src", ULTHERA_THERMAGE_PROMOTIONS.mobileImage);
+    expect(document.querySelector("picture img")).toHaveClass("h-full", "w-full", "object-cover");
     expect(document.querySelector(`source[srcset="${ULTHERA_THERMAGE_PROMOTIONS.desktopImage}"]`)).toHaveAttribute("media", "(min-width: 768px)");
   });
 
@@ -53,7 +55,8 @@ describe("UltheraThermagePromotionPopup", () => {
     const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
     expect(checkbox).not.toBeChecked();
     expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "border-[rgba(215,181,92,0.7)]");
-    expect(screen.getByTestId("promotion-popup-controls")).toHaveClass("bottom-3", "right-3", "md:-right-14", "md:top-0");
+    expect(screen.getByTestId("promotion-popup-controls")).toHaveClass("bottom-3", "right-3", "z-30");
+    expect(screen.getByTestId("promotion-popup-controls")).not.toHaveClass("md:-right-14", "md:top-0");
     expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:hover:bg-[var(--color-gold-primary)]", "md:hover:scale-105", "md:size-[52px]");

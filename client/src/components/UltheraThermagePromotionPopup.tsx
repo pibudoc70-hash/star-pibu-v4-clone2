@@ -119,10 +119,10 @@ export default function UltheraThermagePromotionPopup() {
         aria-modal="true"
         aria-label="울쎄라피 프라임 및 써마지 FLX 이벤트"
         data-state={isClosing ? "closing" : isEntering ? "open" : "opening"}
-        className={`ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none md:max-w-[960px] ${isClosing || !isEntering ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"}`}
+        className={`ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none md:max-w-[720px] lg:max-w-[960px] ${isClosing || !isEntering ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"}`}
         style={{ opacity: isClosing || !isEntering ? 0 : 1, scale: isClosing || !isEntering ? "0.985" : "1" }}
       >
-        <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2 md:bottom-auto md:right-auto md:-right-14 md:top-0">
+        <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2">
           <label
             data-testid="promotion-hide-today-control"
             className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] border border-[rgba(215,181,92,0.7)] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--color-gold-primary)] hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)]"
@@ -158,13 +158,13 @@ export default function UltheraThermagePromotionPopup() {
           </button>
         </div>
 
-        <div className="relative overflow-hidden rounded-[1.25rem]">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] md:aspect-[1370/748]">
           <picture>
             <source media="(min-width: 768px)" srcSet={ULTHERA_THERMAGE_PROMOTIONS.desktopImage} />
             <img
               src={ULTHERA_THERMAGE_PROMOTIONS.mobileImage}
               alt=""
-              className="block h-auto w-full"
+              className="block h-full w-full object-cover"
               width={800}
               height={1000}
             />

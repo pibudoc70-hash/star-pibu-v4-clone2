@@ -23,9 +23,9 @@ describe("database script responsibilities", () => {
     expect(readme).toContain("pnpm db:migrate:production");
   });
 
-  it("leaves existing build and test entry points unchanged", () => {
+  it("keeps database and test entry points stable while making static precompression explicit in builds", () => {
     expect(packageJson.scripts.build).toBe(
-      "node scripts/gen-treatment-seo.mjs && vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist"
+      "node scripts/gen-treatment-seo.mjs && vite build && node scripts/precompress-static-assets.mjs && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist"
     );
     expect(packageJson.scripts.test).toBe("pnpm test:unit");
     expect(packageJson.scripts["test:unit"]).toContain("vitest run");

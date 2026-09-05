@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "node scripts/gen-treatment-seo.mjs && vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build": "node scripts/gen-treatment-seo.mjs && vite build && node scripts/precompress-static-assets.mjs && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -64,6 +64,7 @@
     "drizzle-orm": "^0.45.2",
     "express": "^4.21.2",
     "express-rate-limit": "^8.6.0",
+    "express-static-gzip": "^3.0.2",
     "jose": "6.1.0",
     "lru-cache": "^11.5.2",
     "lucide-react": "^0.453.0",

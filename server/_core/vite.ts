@@ -1,7 +1,8 @@
-import express, { type Express } from "express";
+import { type Express } from "express";
 import fs from "fs";
 import { type Server } from "http";
 import path from "path";
+import expressStaticGzip from "express-static-gzip";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 import { injectPageSeoMeta } from "./seoMeta";
@@ -67,26 +68,45 @@ export function serveStatic(app: Express) {
   }
 
   app.use(
-    express.static(distPath, {
+    expressStaticGzip(distPath, {
+      enableBrotli: true,
+      // Brotli가 준비된 해시 JS·CSS를 우선 전송하고, 지원하지 않는 클라이언트는
+      // 원본 파일을 global compression middleware의 기존 gzip/identity 경로로 보낸다.
+      orderPreference: ["br"],
+      // SPA shell은 아래 fallback에서 no-cache 정책으로만 제공한다.
+      index: false,
+      serveStatic: {
       // etag/lastModified 는 express-static 기본값(true) 유지
       setHeaders: (res, filePath) => {
+        // 사전 압축 파일도 원본 확장자의 MIME 및 캐시 정책을 기준으로 제공한다.
+        const sourcePath = filePath.endsWith(".br") ? filePath.slice(0, -3) : filePath;
+        if (filePath.endsWith(".br")) {
+          res.setHeader(
+            "Content-Type",
+            sourcePath.endsWith(".css") ? "text/css; charset=utf-8" : "text/javascript; charset=utf-8",
+          );
+        }
+        if (/\.(js|css)$/i.test(sourcePath)) {
+          res.setHeader("Vary", "Accept-Encoding");
+        }
         // HTML: 배포 즉시 반영을 위해 캐시 안 함
-        if (filePath.endsWith(".html")) {
+        if (sourcePath.endsWith(".html")) {
           res.setHeader("Cache-Control", "no-cache, must-revalidate");
           return;
         }
-        // Vite 빌드 산출물: 파일명에 해시가 붙어있으므로 1년 immutable
-        if (/\.(js|css|woff2?|ttf|otf|eot)$/i.test(filePath)) {
-          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        // Vite 빌드 산출물: 파일명에 해시가 붙어있으므로 90일 immutable
+        if (/\.(js|css|woff2?|ttf|otf|eot)$/i.test(sourcePath)) {
+          res.setHeader("Cache-Control", "public, max-age=7776000, immutable");
           return;
         }
         // 이미지·미디어: 파일명에 해시가 없을 수도 있으므로 30일
-        if (/\.(png|jpe?g|webp|avif|svg|ico|gif|mp4|webm)$/i.test(filePath)) {
+        if (/\.(png|jpe?g|webp|avif|svg|ico|gif|mp4|webm)$/i.test(sourcePath)) {
           res.setHeader("Cache-Control", "public, max-age=2592000");
           return;
         }
         // 그 외 (JSON, txt 등): 5분
         res.setHeader("Cache-Control", "public, max-age=300");
+      },
       },
     }),
   );

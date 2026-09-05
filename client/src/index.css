@@ -4,13 +4,23 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Pretendard 자체 호스팅 (jsdelivr CDN 의존 제거) ──────────────────── */
+/* ── Pretendard 웹 서브셋 (Noto CJK가 희소 글리프를 안전하게 폴백) ─────── */
 @font-face {
-  font-family: "Pretendard Variable";
+  font-family: "Pretendard Web";
   font-weight: 45 920;
   font-style: normal;
   font-display: swap;
-  src: url("/api/storage/PretendardVariable_1ede78f7.woff2") format("woff2-variations");
+  src: url("/manus-storage/PretendardVariable-latin-subset_b24be58a.woff2") format("woff2-variations");
+  unicode-range: U+0000-2BFF, U+3000-303F;
+}
+
+@font-face {
+  font-family: "Pretendard Web";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("/manus-storage/PretendardVariable-korean-segment_87dfcb73.woff2") format("woff2-variations");
+  unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
 }
 
 /* 
@@ -110,9 +120,9 @@
   --font-display: 'Cormorant Garamond', 'Noto Serif KR', serif;             /* Hero/브랜드 헤드라인 — 명조체 존재감 */
   --font-serif: 'Cormorant Garamond', 'Noto Serif KR', serif;               /* 수치/영문 에디토리얼 */
   --font-serif-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;            /* 섹션 타이틀 — 한글 명조 */
-  --font-sans: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 — Pretendard 우선 */
+  --font-sans: 'Pretendard Web', 'Noto Sans KR', sans-serif;                /* 본문 — 서브셋 Pretendard 우선 */
   --font-sans-en: 'Montserrat', sans-serif;                                 /* 영문/숫자 전용 */
-  --font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;           /* 본문 */
+  --font-body: 'Pretendard Web', 'Noto Sans KR', sans-serif;                /* 본문 */
   --font-heading-kr: 'Noto Serif KR', 'Cormorant Garamond', serif;          /* 한글 섹션 헤딩 */
   /* ── Card Design Tokens ── */
   --card-radius: 1rem;          /* 카드 공통 border-radius */
@@ -166,7 +176,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
+    font-family: 'Noto Sans KR', 'Pretendard Web', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -174,7 +184,7 @@
   /* 언어별 폰트 통일 */
   body.font-lang-ko,
   body.font-lang-ko * {
-    font-family: 'Noto Sans KR', 'Pretendard Variable', sans-serif !important;
+    font-family: 'Noto Sans KR', 'Pretendard Web', sans-serif !important;
   }
   body.font-lang-ja,
   body.font-lang-ja * {
@@ -268,7 +278,7 @@
     font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; /* 한글 섹션 타이틀 */
   }
   .font-body {
-    font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif; /* 본문 */
+    font-family: 'Pretendard Web', 'Noto Sans KR', sans-serif; /* 본문 */
   }
   .font-heading-kr {
     font-family: 'Noto Serif KR', 'Cormorant Garamond', serif; /* 한글 섹션 헤딩 */
@@ -3036,7 +3046,7 @@
 }
 /* section-subtitle: 설명문 — 고딕 가독성, 저대비 회색 */
 .section-subtitle {
-  font-family: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+  font-family: 'Pretendard Web', 'Noto Sans KR', sans-serif;
   font-size: clamp(0.83rem, 1.7vw, 0.93rem);
   line-height: 1.95;
   /* [P2-FINISH] 색상 대비 소폭 강화: #666666 → #5a5a5a (WCAG AA 접근성 개선) */
@@ -6646,7 +6656,7 @@ body.font-lang-zh .hero-stat-label {
 
 /* ── 공통 CSS 변수 (언어별 오버라이드 기준값) ── */
 :root {
-  --typo-font-body: 'Noto Sans KR', 'Pretendard Variable', sans-serif;
+  --typo-font-body: 'Noto Sans KR', 'Pretendard Web', sans-serif;
   --typo-font-heading: 'Noto Serif KR', 'Cormorant Garamond', serif;
   --typo-font-display: 'Cormorant Garamond', 'Noto Serif KR', serif;
   --typo-font-mono: 'Montserrat', sans-serif;
@@ -6677,7 +6687,7 @@ body.font-lang-zh .hero-stat-label {
 
 /* ── 영어: Pretendard + Cormorant Garamond ── */
 :lang(en) {
-  --typo-font-body: 'Pretendard Variable', 'Noto Sans KR', sans-serif;
+  --typo-font-body: 'Pretendard Web', 'Noto Sans KR', sans-serif;
   --typo-font-heading: 'Cormorant Garamond', 'Noto Serif KR', serif;
   --typo-font-display: 'Cormorant Garamond', serif;
   --typo-line-height-body: 1.7;

@@ -12,9 +12,9 @@ describe("홈 초기 Pretendard 전달 정책", () => {
     );
   });
 
-  it("본문 폰트는 swap 정책을 유지해 글자 렌더링을 막지 않는다", () => {
+  it("본문 서브셋 폰트는 swap 정책을 유지해 글자 렌더링을 막지 않는다", () => {
     expect(globalCss).toMatch(
-      /font-family:\s*["']Pretendard Variable["'];[\s\S]*?font-display:\s*swap;/,
+      /font-family:\s*["']Pretendard Web["'];[\s\S]*?font-display:\s*swap;/,
     );
   });
 

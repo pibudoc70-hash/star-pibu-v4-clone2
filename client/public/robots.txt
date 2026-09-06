@@ -13,6 +13,9 @@ Disallow: /api/trpc/
 # ── 2. Googlebot (Crawl-delay 제거 — Google은 Search Console에서 직접 조절) ──
 User-agent: Googlebot
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /api/trpc/
 
 # ── 3. Naver ─────────────────────────────────────────────────────
 User-agent: Yeti

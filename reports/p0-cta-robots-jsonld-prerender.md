@@ -17,7 +17,14 @@
 
 ## 2. Googlebot robots 규칙
 
-진행 전.
+| 항목 | 결과 |
+|---|---|
+| 상태 | 적용 |
+| 변경 파일 | `client/public/robots.txt`, `client/public/robots.googlebot.test.ts` |
+| Googlebot 규칙 | `Allow: /` 유지, `/api/`·`/admin/`·`/api/trpc/`만 명시적 Disallow |
+| 동결 준수 | `*`, Yeti, Bingbot, AI crawler 그룹·Sitemap·Crawl-delay·공개 경로 변경 없음 |
+
+`robots.googlebot.test.ts`, TypeScript, production build를 통과했다. 빌드 출력 `dist/public/robots.txt`에서도 동일한 3개 Disallow를 확인했으며 lint는 신규 오류 없이 기존 경고 106건만 보고했다.
 
 ## 3. TreatmentPage JSON-LD 사실성
 

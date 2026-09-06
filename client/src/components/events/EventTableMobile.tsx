@@ -255,7 +255,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 data-testid={`mobile-event-row-${event.id}`}
                 data-event-row={event.id}
                 onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5.5rem] !py-5" : "!h-auto !min-h-[5rem] !py-4"}`}
+                className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.75rem] !py-3.5"}`}
                 aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
                 aria-expanded={isOpen}
                 aria-controls={`mobile-event-detail-${event.id}`}

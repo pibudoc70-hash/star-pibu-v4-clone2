@@ -127,7 +127,7 @@ describe("EventTableMobile", () => {
     expect(source).not.toContain("event-mobile-detail__body border-t border-gray-100 bg-white/70 px-5 py-5");
   });
 
-  it("uses a spacious left-title right-price rhythm and a distinct white detail surface", () => {
+  it("uses a compact left-title right-price rhythm and a distinct white detail surface", () => {
     const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
 
     expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4");
@@ -136,7 +136,7 @@ describe("EventTableMobile", () => {
     expect(source).toContain('className="min-w-0 flex-1"');
     expect(source).toContain('className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums"');
     expect(source).toContain("mobile-event-expand-indicator-${event.id}");
-    expect(source).toContain('"!h-auto !min-h-[5.5rem] !py-5"');
+    expect(source).toContain('isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.75rem] !py-3.5"');
     expect(source).not.toContain("function VatBadge");
   });
 });

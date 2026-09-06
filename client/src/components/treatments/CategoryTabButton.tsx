@@ -11,7 +11,7 @@
  * - WAI-ARIA: filter button의 선택 상태는 aria-pressed로 제공
  */
 import React from "react";
-import { Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Star } from "lucide-react";
 
 interface CategoryTabButtonProps {
   id: string;
@@ -50,6 +50,8 @@ export default function CategoryTabButton({
       aria-selected={ariaSelected}
       tabIndex={tabIndex}
       aria-pressed={isActive}
+      aria-expanded={isSm ? isActive : undefined}
+      aria-controls={isSm && isActive ? `mobile-category-detail-${id}` : undefined}
       data-active={isActive ? "true" : "false"}
       onClick={() => onClick(id)}
       className={`cat-tab-btn ${isSm ? "cat-tab-btn-sm" : "cat-tab-btn-md"}${isSm ? " w-full" : ""}`}
@@ -58,6 +60,11 @@ export default function CategoryTabButton({
         <Icon size={isSm ? 12 : 13} />
       </span>
       <span>{label}</span>
+      {isSm && (
+        <span className="ml-auto flex shrink-0 opacity-75 transition-transform duration-200" aria-hidden="true">
+          {isActive ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+        </span>
+      )}
     </button>
   );
 }

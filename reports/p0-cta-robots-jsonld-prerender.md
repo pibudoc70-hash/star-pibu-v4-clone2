@@ -41,4 +41,14 @@ focused parity test, TypeScript를 통과했다. production build를 별도 포�
 
 ## 4. prerender 본문 로딩 문구
 
-진행 전.
+| 항목 | 결과 |
+|---|---|
+| 상태 | 적용 |
+| 변경 파일 | `server/_core/seoMeta.ts`, `server/_core/seoMeta.test.ts` |
+| 읽기 전용 public 조사 | `/`, `/en`, `/ja`, `/zh`, `/zh-tw`, `/zh/treatments/ulthera` 모두 한국어 초기 로딩 label 포함 |
+| 원인 | `client/index.html`의 초기 loading shell이 모든 public prerender가 공유하는 `injectPageSeoMeta`를 통과 |
+| 보정 | 기존 i18n의 `Loading...`·`読み込み中...`·`加载中...`·`載入中...` 값을 raw HTML에 치환 |
+| 링크·전화 | locale별 `/equipment3` discovery link와 국제 전화 `tel:`은 이미 raw home HTML에 있어 추가하지 않음 |
+| 동결 준수 | 시술·장비 실데이터, DB, route, discovery UI, CTA 목적지, prerender 구조 변경 없음 |
+
+`seoMeta.test.ts`, TypeScript, production build를 통과했다. 별도 production 서버에서 지정한 6개 raw route를 재검증한 결과, 한국어 label은 `/`에만 남고 `/en`·`/ja`·`/zh`·`/zh-tw`·`/zh/treatments/ulthera`는 각각 기존 locale loading label을 사용한다. lint는 신규 오류 없이 기존 경고 106건만 보고했다.

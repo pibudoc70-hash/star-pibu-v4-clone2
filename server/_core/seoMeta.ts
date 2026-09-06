@@ -38,6 +38,15 @@ const DOCUMENT_LANGUAGES: Record<SeoLocale, string> = {
   "zh-TW": "zh-Hant",
 };
 
+/** client i18n 사전의 기존 loading 값을 raw crawler shell에도 동일하게 사용한다. */
+const INITIAL_LOADING_LABELS: Record<SeoLocale, string> = {
+  ko: "콘텐츠를 불러오는 중입니다",
+  en: "Loading...",
+  ja: "読み込み中...",
+  zh: "加载中...",
+  "zh-TW": "載入中...",
+};
+
 function normalizePathname(value: string): string {
   const pathname = value.split("?")[0].split("#")[0] || "/";
   if (pathname === "/") return "/";
@@ -108,6 +117,10 @@ export function injectPageSeoMeta(template: string, pathname: string): string {
     .replace(
       "</head>",
       `    <link data-server-seo="true" rel="canonical" href="${canonical}" />\n    <meta data-server-seo="true" property="og:site_name" content="${OG_SITE_NAMES[locale]}" />\n    ${alternateLocaleMarkup}\n    ${hreflangMarkup}\n  </head>`,
+    )
+    .replace(
+      /(<p class="initial-loading-label">)[\s\S]*?(<\/p>)/i,
+      `$1${INITIAL_LOADING_LABELS[locale]}$2`,
     );
 }
 

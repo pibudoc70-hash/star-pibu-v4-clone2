@@ -4,6 +4,21 @@ import { buildPageLanguageLinks, injectPageSeoMeta, SEO_BASE_URL } from "./seoMe
 const template = `<!doctype html><html><head><meta property="og:locale" content="ko_KR" /><meta property="og:locale:alternate" content="en_US" /><link rel="canonical" href="https://star-pibu.com/" /><link rel="alternate" hreflang="ko" href="https://star-pibu.com/" /><link rel="alternate" hreflang="x-default" href="https://star-pibu.com/" /></head><body><div id="root"></div></body></html>`;
 
 describe("SEO raw HTML meta injection", () => {
+  it.each([
+    ["/", "콘텐츠를 불러오는 중입니다"],
+    ["/en", "Loading..."],
+    ["/ja", "読み込み中..."],
+    ["/zh", "加载中..."],
+    ["/zh-tw", "載入中..."],
+    ["/zh/treatments/ulthera", "加载中..."],
+  ])("%s raw HTML uses the existing locale loading label", (pathname, expectedLabel) => {
+    const html = injectPageSeoMeta(
+      '<!doctype html><html lang="ko"><head><link rel="canonical" href="https://star-pibu.com/" /></head><body><div id="initial-loading"><p class="initial-loading-label">콘텐츠를 불러오는 중입니다</p></div><div id="root"></div></body></html>',
+      pathname,
+    );
+    expect(html).toContain(`<p class="initial-loading-label">${expectedLabel}</p>`);
+  });
+
   it("언어별 서브페이지에 6개 상호 hreflang과 자기 canonical을 생성한다", () => {
     const links = buildPageLanguageLinks("/zh-tw/directions");
     expect(links).toHaveLength(6);

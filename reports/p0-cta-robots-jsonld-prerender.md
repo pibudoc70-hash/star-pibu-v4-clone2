@@ -28,7 +28,16 @@
 
 ## 3. TreatmentPage JSON-LD 사실성
 
-진행 전.
+| 항목 | 결과 |
+|---|---|
+| 상태 | 적용 |
+| 변경 파일 | `client/src/pages/TreatmentPage.tsx`, `server/_core/treatmentPrerender.ts`, `server/_core/treatmentJsonLd.parity.test.ts` |
+| provider | client·prerender 모두 `https://star-pibu.com/#organization` 단일 `@id` 참조 |
+| followup | locale별 recovery와 caution만 빈 값 없이 조합, 한국어 접두어 삭제 |
+| image | client root-relative image를 절대 URL로 변환, prerender와 정합 |
+| 제외 | `status` 제거, SeoHead clinic schema·breadcrumb item 2·FAQ/Event schema·media 변경 없음 |
+
+focused parity test, TypeScript를 통과했다. production build를 별도 포트에서 실행해 `/zh/treatments/ulthera` raw HTML을 확인한 결과, MedicalProcedure의 provider는 organization `@id`만 보유했고 invalid status·`회복 기간:` 접두어·root-relative image는 없었다. lint는 신규 오류 없이 기존 경고 106건만 보고했다.
 
 ## 4. prerender 본문 로딩 문구
 

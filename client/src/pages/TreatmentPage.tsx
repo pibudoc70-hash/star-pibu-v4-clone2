@@ -63,34 +63,13 @@ function buildJsonLd(t: TreatmentI18n, lang: SupportedLang, pageUrl: string) {
     "alternateName": t.nameEn,
     "description": description,
     "procedureType": "https://schema.org/CosmeticProcedure",
-    "image": t.image,
+    "image": t.image.startsWith("/") ? new URL(t.image, BASE_URL).toString() : t.image,
     "url": pageUrl,
     "bodyLocation": bodyLocation,
     "preparation": hasLiftingPainCare ? LIFTING_ANESTHESIA_PREPARATION[lang] : caution,
-    "followup": `회복 기간: ${recovery}. ${caution}`,
+    "followup": [recovery, caution].filter(Boolean).join(" ") || undefined,
     "howPerformed": detail,
-    "status": "https://schema.org/ActiveActionStatus",
-    "provider": {
-      "@type": "MedicalBusiness",
-      "@id": `${CLINIC_INFO.url}/#organization`,
-      "name": CLINIC_INFO.name,
-      "url": CLINIC_INFO.url,
-      "telephone": CLINIC_INFO.telephone,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": CLINIC_INFO.address.streetAddress,
-        "addressLocality": CLINIC_INFO.address.addressLocality,
-        "addressRegion": CLINIC_INFO.address.addressRegion,
-        "postalCode": CLINIC_INFO.address.postalCode,
-        "addressCountry": CLINIC_INFO.address.addressCountry,
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": CLINIC_INFO.geo.latitude,
-        "longitude": CLINIC_INFO.geo.longitude,
-      },
-      "sameAs": [...CLINIC_INFO.sameAs],
-    }
+    "provider": { "@id": `${CLINIC_INFO.url}/#organization` },
   };
 
   const faqItems = [

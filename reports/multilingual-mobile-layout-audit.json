@@ -1,0 +1,4628 @@
+{
+  "baseUrl": "https://3000-iv3fexptaw6oytybjg5v1-0e278b5d.sg2.manus.computer",
+  "summary": {
+    "targetCount": 48,
+    "horizontalOverflowCount": 0,
+    "inlineOverflowCount": 8,
+    "clippedTextCount": 32,
+    "unmountedCount": 0
+  },
+  "results": [
+    {
+      "locale": "en",
+      "path": "/en",
+      "width": 375,
+      "label": "en/-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 6439,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 107,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 107,
+          "height": 18
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 16
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 61,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 80,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 83,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 112,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 100,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 113,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 112,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 91,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 58,
+          "height": 30
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 110,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 110,
+          "height": 18
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 68
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 16
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 61,
+          "height": 30
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 141,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 117,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 117,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 43,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 87,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 90,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 196,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 84,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 80,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 74,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/equipment3",
+      "width": 375,
+      "label": "en/equipment3-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 3781,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 153,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 153,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/treatments/ulthera",
+      "width": 375,
+      "label": "en/treatments/ulthera-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 4896,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/about",
+      "width": 375,
+      "label": "en/about-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 2213,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/doctors",
+      "width": 375,
+      "label": "en/doctors-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 2174,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/foreign-guide",
+      "width": 375,
+      "label": "en/foreign-guide-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 3067,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja",
+      "width": 375,
+      "label": "ja/-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 3184,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 86,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 156,
+          "height": 47
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 141,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 117,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 117,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 81,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 124,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 145,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 96,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 93,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/equipment3",
+      "width": 375,
+      "label": "ja/equipment3-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1973,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 153,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/treatments/ulthera",
+      "width": 375,
+      "label": "ja/treatments/ulthera-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 2188,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/about",
+      "width": 375,
+      "label": "ja/about-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1080,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/doctors",
+      "width": 375,
+      "label": "ja/doctors-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 992,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/foreign-guide",
+      "width": 375,
+      "label": "ja/foreign-guide-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1526,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "",
+          "width": 51,
+          "height": 20
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh",
+      "width": 375,
+      "label": "zh/-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 2749,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "dr-credentials-text-mobile",
+          "width": 216,
+          "height": 24
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 141,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 117,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 117,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 21,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 149,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 79,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 141,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/equipment3",
+      "width": 375,
+      "label": "zh/equipment3-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1727,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/treatments/ulthera",
+      "width": 375,
+      "label": "zh/treatments/ulthera-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1793,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/about",
+      "width": 375,
+      "label": "zh/about-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 967,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/doctors",
+      "width": 375,
+      "label": "zh/doctors-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 890,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "span",
+          "className": "dr-credentials-text-mobile",
+          "width": 216,
+          "height": 24
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/foreign-guide",
+      "width": 375,
+      "label": "zh/foreign-guide-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1205,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw",
+      "width": 375,
+      "label": "zh-tw/-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 2751,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 24
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 301,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 301,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "dr-credentials-text-mobile",
+          "width": 216,
+          "height": 24
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 141,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 117,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 117,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 21,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 81,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 149,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 79,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 125,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/equipment3",
+      "width": 375,
+      "label": "zh-tw/equipment3-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1818,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/treatments/ulthera",
+      "width": 375,
+      "label": "zh-tw/treatments/ulthera-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1793,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/about",
+      "width": 375,
+      "label": "zh-tw/about-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 950,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/doctors",
+      "width": 375,
+      "label": "zh-tw/doctors-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 886,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "span",
+          "className": "dr-credentials-text-mobile",
+          "width": 216,
+          "height": 24
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/foreign-guide",
+      "width": 375,
+      "label": "zh-tw/foreign-guide-375",
+      "documentWidth": 375,
+      "viewportWidth": 375,
+      "rootTextLength": 1258,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en",
+      "width": 390,
+      "label": "en/-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 6867,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 130,
+          "height": 26
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 130,
+          "height": 18
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 16
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 61,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 80,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 83,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 112,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 100,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 113,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 112,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 91,
+          "height": 30
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 58,
+          "height": 30
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 130,
+          "height": 26
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 130,
+          "height": 18
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 68
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 46
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 16
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 61,
+          "height": 30
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 163,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 163,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 147,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 122,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 122,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 43,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 87,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 90,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 196,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 84,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 80,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 74,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/equipment3",
+      "width": 390,
+      "label": "en/equipment3-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1463,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/treatments/ulthera",
+      "width": 390,
+      "label": "en/treatments/ulthera-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 4886,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/about",
+      "width": 390,
+      "label": "en/about-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2213,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/doctors",
+      "width": 390,
+      "label": "en/doctors-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2174,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 40,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "en",
+      "path": "/en/foreign-guide",
+      "width": 390,
+      "label": "en/foreign-guide-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 3067,
+      "rootVisible": true,
+      "documentLanguage": "en",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja",
+      "width": 390,
+      "label": "ja/-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 3184,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 86,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 98,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "span",
+          "className": "sr-only group-open:hidden",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "p",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "button",
+          "className": "cat-tab-btn cat-tab-btn-sm w-full",
+          "width": 163,
+          "height": 47
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 147,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 122,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 122,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 81,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 124,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 145,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 96,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 93,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/equipment3",
+      "width": 390,
+      "label": "ja/equipment3-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 760,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/treatments/ulthera",
+      "width": 390,
+      "label": "ja/treatments/ulthera-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2188,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/about",
+      "width": 390,
+      "label": "ja/about-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1080,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/doctors",
+      "width": 390,
+      "label": "ja/doctors-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 992,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "ja",
+      "path": "/ja/foreign-guide",
+      "width": 390,
+      "label": "ja/foreign-guide-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1526,
+      "rootVisible": true,
+      "documentLanguage": "ja",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "",
+          "width": 51,
+          "height": 20
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh",
+      "width": 390,
+      "label": "zh/-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2749,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 147,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 122,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 122,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 21,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 149,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 79,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 141,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/equipment3",
+      "width": 390,
+      "label": "zh/equipment3-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 695,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/treatments/ulthera",
+      "width": 390,
+      "label": "zh/treatments/ulthera-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1793,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/about",
+      "width": 390,
+      "label": "zh/about-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 967,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/doctors",
+      "width": 390,
+      "label": "zh/doctors-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 890,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh",
+      "path": "/zh/foreign-guide",
+      "width": 390,
+      "label": "zh/foreign-guide-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1205,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hans",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw",
+      "width": 390,
+      "label": "zh-tw/-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 2751,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 105,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 105,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 62,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 74,
+          "height": 35
+        },
+        {
+          "tag": "h3",
+          "className": "dr-mob-name-h3",
+          "width": 106,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "font-montserrat mt-0.5 dr-mob-name-en",
+          "width": 106,
+          "height": 21
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 49
+        },
+        {
+          "tag": "p",
+          "className": "dr-intro-para",
+          "width": 316,
+          "height": 25
+        },
+        {
+          "tag": "p",
+          "className": "text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title",
+          "width": 316,
+          "height": 21
+        },
+        {
+          "tag": "span",
+          "className": "px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile",
+          "width": 50,
+          "height": 35
+        }
+      ],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--reserve",
+          "width": 147,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--chat",
+          "width": 122,
+          "height": 55
+        },
+        {
+          "tag": "a",
+          "className": "mobile-bottom-btn mobile-bottom-btn--phone",
+          "width": 122,
+          "height": 55
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-mobile-scroll-arrow",
+          "width": 30,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "hero-fade hero-scroll-btn flex flex-col items-center gap-1 transition-opacity hover:opacity-70 focus-visible:outline-2 f",
+          "width": 21,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute left-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute right-3 top-[120px] z-10 w-9 h-9 rounded-full flex items-center justify-center dr-slider-arrow",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "absolute top-4 sm:top-6 right-4 sm:right-6 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ",
+          "width": 40,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn faq-tab-btn--active",
+          "width": 81,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 68,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 61,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 107,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 149,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 79,
+          "height": 40
+        },
+        {
+          "tag": "button",
+          "className": "faq-tab-btn ",
+          "width": 125,
+          "height": 40
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/equipment3",
+      "width": 390,
+      "label": "zh-tw/equipment3-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 677,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "h1",
+          "className": "sr-only",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-10 focus:rounded-md focus:bg-white focus:px-3 ",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/treatments/ulthera",
+      "width": 390,
+      "label": "zh-tw/treatments/ulthera-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1793,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/about",
+      "width": 390,
+      "label": "zh-tw/about-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 950,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/doctors",
+      "width": 390,
+      "label": "zh-tw/doctors-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 886,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        }
+      ],
+      "smallControls": [
+        {
+          "tag": "a",
+          "className": "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-[#2C2C2C] foc",
+          "width": 1,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "a",
+          "className": "transition-all hover:scale-110",
+          "width": 36,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        },
+        {
+          "tag": "button",
+          "className": "transition-colors hover:text-white",
+          "width": 39,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    },
+    {
+      "locale": "zh-tw",
+      "path": "/zh-tw/foreign-guide",
+      "width": 390,
+      "label": "zh-tw/foreign-guide-390",
+      "documentWidth": 390,
+      "viewportWidth": 390,
+      "rootTextLength": 1258,
+      "rootVisible": true,
+      "documentLanguage": "zh-Hant",
+      "inlineOverflow": [],
+      "clippedText": [],
+      "smallControls": [
+        {
+          "tag": "button",
+          "className": "flex items-center flex-shrink-0 group",
+          "width": 38,
+          "height": 44
+        }
+      ],
+      "noHorizontalOverflow": true
+    }
+  ]
+}

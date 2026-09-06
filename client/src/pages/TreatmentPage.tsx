@@ -184,7 +184,7 @@ const LABELS = {
     effects: "预期效果",
     video: "治疗视频",
     caution: "术前术后注意事项",
-    ctaKakao: "微信和误",
+    ctaKakao: "微信咨询",
     ctaCall: "+82-51-818-2300",
     ctaCallIntl: "+82-51-818-2300",
     ctaBook: "立即预约",
@@ -204,7 +204,7 @@ const LABELS = {
     effects: "預期效果",
     video: "療程影片",
     caution: "療程前後注意事項",
-    ctaKakao: "微信談詢",
+    ctaKakao: "微信諮詢",
     ctaCall: "+82-51-818-2300",
     ctaCallIntl: "+82-51-818-2300",
     ctaBook: "立即預約",
@@ -586,9 +586,9 @@ export default function TreatmentPage() {
         {/* CTA 버튼 */}
         <div className="flex flex-col sm:flex-row gap-4">
           <a
-            href={currentLang === "ja" ? "https://lin.ee/tyuRdUc" : currentLang === "zh" ? "#wechat" : "https://pf.kakao.com/_HNyGC"}
-            target={currentLang === "zh" ? undefined : "_blank"}
-            rel={currentLang === "zh" ? undefined : "noopener noreferrer"}
+            href={currentLang === "ja" ? "https://lin.ee/tyuRdUc" : currentLang === "zh" || currentLang === "zh-TW" ? "#wechat" : "https://pf.kakao.com/_HNyGC"}
+            target={currentLang === "zh" || currentLang === "zh-TW" ? undefined : "_blank"}
+            rel={currentLang === "zh" || currentLang === "zh-TW" ? undefined : "noopener noreferrer"}
             className="treatment-page__contact-action flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-base transition-all hover:opacity-90 shadow-md"
             style={{
               background: currentLang === "zh" ? "#07C160" : currentLang === "ja" ? "#06C755" : "#FEE500",

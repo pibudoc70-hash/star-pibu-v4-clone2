@@ -71,6 +71,7 @@
   --brand-bg: #FAF8F5;
   --brand-bg-alt: #F5F0EB;
   --brand-bg-warm: #EDE8E0;
+  --brand-bg-card: #FDFAF7;
   /* Brand Text */
   --brand-text: #2C2C2C;
   /* [P2-FINISH] 대비 소폭 강화: #666666 → #5a5a5a (WCAG AA 접근성 개선) */
@@ -155,6 +156,21 @@
   --sidebar-accent-foreground: oklch(0.2 0.015 240);
   --sidebar-border: oklch(0.91 0.008 220);
   --sidebar-ring: oklch(0.48 0.09 220);
+}
+
+/* 모바일 A안: 레이아웃은 그대로 두고 표면과 보조 텍스트 위계만 정돈한다. */
+@media (max-width: 767px) {
+  :root {
+    --brand-bg: #FAF8F5;
+    --brand-bg-alt: #F5F0EB;
+    --brand-bg-card: #FFFDF9;
+    --card: #FFFDF9;
+    --brand-text-mid: #4F4B47;
+    --brand-text-muted: #625B54;
+    --color-star-text-mid: #4F4B47;
+    --dr-text-mid: #4F4B47;
+    --muted-foreground: #625B54;
+  }
 }
 
 @layer base {
@@ -470,6 +486,14 @@
     transition: color 300ms ease;
   }
   .cat-tab-btn[data-active="true"] .cat-tab-icon { color: #ffffff; }
+
+  /* 모바일 A안: 웜 골드 활성 표면에서는 작은 흰색 글자 대신 네이비를 사용한다. */
+  @media (max-width: 767px) {
+    .cat-tab-btn[data-active="true"],
+    .cat-tab-btn[data-active="true"] .cat-tab-icon {
+      color: var(--color-star-text);
+    }
+  }
 
   /* ═══════════════════════════════════════════════
      SCROLL REVEAL ANIMATION SYSTEM

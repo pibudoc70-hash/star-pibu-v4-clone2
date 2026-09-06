@@ -309,7 +309,7 @@ export default function TreatmentsEquipmentSection() {
                 mobileCloseLabel={tr.collapseBtn}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
-                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-white" data-testid="treatment-mobile-category-detail">
+                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-[var(--card)]" data-testid="treatment-mobile-category-detail">
                     <div
                       id="treatments-mobile-grid"
                       aria-live="polite"

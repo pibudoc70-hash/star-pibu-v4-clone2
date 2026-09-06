@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-09-06T05:49:04.414Z",
+  "scope": "Public raw HTML only; no database reads or writes.",
+  "treatment": "ulthera",
+  "criteria": [
+    "one page-URL-matching MedicalProcedure",
+    "organization provider @id",
+    "absolute HTTPS image",
+    "locale URL",
+    "locale inLanguage",
+    "no status",
+    "nonempty followup",
+    "no Korean initial loading label outside ko"
+  ],
+  "rows": [
+    {
+      "locale": "ko",
+      "url": "https://star-pibu.com/treatments/ulthera",
+      "httpStatus": 200,
+      "pageMedicalProcedureCount": 1,
+      "clinicCatalogMedicalProcedureCount": 29,
+      "providerId": "https://star-pibu.com/#organization",
+      "imageIsAbsoluteHttps": true,
+      "urlMatchesLocale": true,
+      "inLanguageMatchesLocale": true,
+      "hasUnsupportedStatus": false,
+      "hasFollowup": true,
+      "hasKoreanInitialLoadingCopy": true,
+      "valid": true
+    },
+    {
+      "locale": "en",
+      "url": "https://star-pibu.com/en/treatments/ulthera",
+      "httpStatus": 200,
+      "pageMedicalProcedureCount": 1,
+      "clinicCatalogMedicalProcedureCount": 29,
+      "providerId": "https://star-pibu.com/#organization",
+      "imageIsAbsoluteHttps": true,
+      "urlMatchesLocale": true,
+      "inLanguageMatchesLocale": true,
+      "hasUnsupportedStatus": false,
+      "hasFollowup": true,
+      "hasKoreanInitialLoadingCopy": false,
+      "valid": true
+    },
+    {
+      "locale": "ja",
+      "url": "https://star-pibu.com/ja/treatments/ulthera",
+      "httpStatus": 200,
+      "pageMedicalProcedureCount": 1,
+      "clinicCatalogMedicalProcedureCount": 29,
+      "providerId": "https://star-pibu.com/#organization",
+      "imageIsAbsoluteHttps": true,
+      "urlMatchesLocale": true,
+      "inLanguageMatchesLocale": true,
+      "hasUnsupportedStatus": false,
+      "hasFollowup": true,
+      "hasKoreanInitialLoadingCopy": false,
+      "valid": true
+    },
+    {
+      "locale": "zh",
+      "url": "https://star-pibu.com/zh/treatments/ulthera",
+      "httpStatus": 200,
+      "pageMedicalProcedureCount": 1,
+      "clinicCatalogMedicalProcedureCount": 29,
+      "providerId": "https://star-pibu.com/#organization",
+      "imageIsAbsoluteHttps": true,
+      "urlMatchesLocale": true,
+      "inLanguageMatchesLocale": true,
+      "hasUnsupportedStatus": false,
+      "hasFollowup": true,
+      "hasKoreanInitialLoadingCopy": false,
+      "valid": true
+    },
+    {
+      "locale": "zh-TW",
+      "url": "https://star-pibu.com/zh-tw/treatments/ulthera",
+      "httpStatus": 200,
+      "pageMedicalProcedureCount": 1,
+      "clinicCatalogMedicalProcedureCount": 29,
+      "providerId": "https://star-pibu.com/#organization",
+      "imageIsAbsoluteHttps": true,
+      "urlMatchesLocale": true,
+      "inLanguageMatchesLocale": true,
+      "hasUnsupportedStatus": false,
+      "hasFollowup": true,
+      "hasKoreanInitialLoadingCopy": false,
+      "valid": true
+    }
+  ],
+  "passed": true
+}

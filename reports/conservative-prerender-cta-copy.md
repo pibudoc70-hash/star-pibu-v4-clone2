@@ -25,3 +25,9 @@
 중국어 경로에서는 **기존 `effect.zh` 값만** 사용하도록 제한했습니다. `effect.zh`가 비어 있으면 그 행은 빈 값으로 필터링되어 생략되며, 새 중국어 문구나 의료 수치·FAQ·영문 슬로건은 만들지 않습니다. 로컬 production raw 검증에서 해당 한국어 잔문은 0건이고 기존 zh 효과 값과 `crawler-content`는 각각 1건으로 유지됐습니다.
 
 focused tests 4개, TypeScript와 lint 신규 오류 0건을 확인했습니다. 헤드 주석·기관 주소 같은 동결 대상이나 다른 locale의 본문은 이번 규칙에서 변경하지 않았습니다.
+
+## 종합 검증 및 공개 전파 상태
+
+세 항목을 합친 최종 품질 게이트에서 Vitest **241 files / 2,034 tests**, TypeScript, production build와 build-time Brotli 생성이 통과했습니다. lint는 신규 오류 없이 기존 경고 106건만 보고했습니다.
+
+각 변경은 독립 체크포인트로 저장했습니다. 다만 마지막 공개 raw 확인 시점에는 `star-pibu.com`, `starpibu-qdq7tysk.manus.space`, `www.star-pibu.co.kr` 세 도메인이 모두 이전 홈 로딩 셸과 이전 중국어 잔문을 반환했습니다. 로컬 production raw에서는 두 변경이 확인됐지만, 공개 전파를 성공으로 주장하지 않습니다. 운영 배포 전파가 완료된 뒤에는 `/zh`의 `initial-loading` 0건과 `/zh/treatments/ulthera`의 대상 한국어 잔문 0건을 다시 확인해야 합니다.

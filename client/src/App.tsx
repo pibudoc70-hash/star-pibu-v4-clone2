@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider, useLang } from "./contexts/LangContext";
 import { Suspense, useEffect } from "react";
+import { trackGa4PageView } from "./lib/ga4";
 import Home from "./pages/Home";
 import MapErrorBoundary from "./components/MapErrorBoundary";
 import {
@@ -117,12 +118,24 @@ function HtmlLangUpdater() {
   return null;
 }
 
+/** SPA route changes are not full page loads, so emit one non-identifying page_view per route. */
+function Ga4PageViewTracker() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    trackGa4PageView(location, document.documentElement.lang || "ko");
+  }, [location]);
+
+  return null;
+}
+
 // ─── 라우터 ───────────────────────────────────────────────────────────────────
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <ScrollToTop />
       <HtmlLangUpdater />
+      <Ga4PageViewTracker />
       <Switch>
         {/* 공지사항 — MapErrorBoundary 밖에서 렌더링 (AlertDialog 훅 충돌 방지) */}
         <Route path="/notice/new"         component={() => <NoticeEdit id="new" />} />

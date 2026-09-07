@@ -44,6 +44,7 @@ function buildCSP(isDev: boolean): string {
     isDev ? unsafeEval : "",
     "https://forge.manus.ai",
     "https://manus-analytics.com",
+    "https://www.googletagmanager.com",
     // Maps Proxy가 로드한 SDK의 동적 Google Maps 모듈
     "https://maps.googleapis.com",
     "https://maps.gstatic.com",
@@ -91,6 +92,8 @@ function buildCSP(isDev: boolean): string {
     "https://api.manus.im",
     "https://manus.im",
     "https://manus-analytics.com",
+    "https://www.google-analytics.com",
+    "https://region1.google-analytics.com",
     // Manus 스토리지 CDN: SW fetch → /api/storage/ → 307 → CloudFront 리다이렉트 대상
     ...MANUS_CLOUDFRONT_SOURCES,
     // Manus CDN (콘솔 에러에서 발견)

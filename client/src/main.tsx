@@ -13,6 +13,7 @@ import "./index.css";
 // Core Web Vitals 모니터링
 import { initWebVitals } from './lib/webVitals';
 import { registerServiceWorker } from './lib/swRegister';
+import { initializeGa4 } from './lib/ga4';
 
 function InitialAppReadySignal() {
   useLayoutEffect(() => {
@@ -110,6 +111,9 @@ if (
 
 // Service Worker 등록 (프로덕션 환경에서만 활성화, 개발 환경 캐시 문제 방지)
 registerServiceWorker();
+
+// GA4는 기본 페이지뷰만 명시적으로 전송한다. 전환·광고 태그는 별도 승인/식별자 이후에 추가한다.
+initializeGa4();
 
 // OpenAI 픽셀 페이지 뷰 이벤트 추적
 if (typeof window !== 'undefined' && (window as any).oaiq) {

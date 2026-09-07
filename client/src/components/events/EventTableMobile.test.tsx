@@ -136,7 +136,7 @@ describe("EventTableMobile", () => {
     expect(source).toContain('className="min-w-0 flex-1"');
     expect(source).toContain('className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums"');
     expect(source).toContain("mobile-event-expand-indicator-${event.id}");
-    expect(source).toContain('isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.75rem] !py-3.5"');
+    expect(source).toContain('isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"');
     expect(source).not.toContain("function VatBadge");
   });
 });

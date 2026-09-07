@@ -9,7 +9,7 @@ const source = readFileSync(
 
 describe("EventTableMobile density contract", () => {
   it("keeps compact mobile event rows while preserving an accessible touch-target floor", () => {
-    expect(source).toContain('isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.75rem] !py-3.5"');
+    expect(source).toContain('isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"');
     expect(source).not.toContain('!min-h-[5.5rem] !py-5');
     expect(source).toContain("aria-expanded={isOpen}");
     expect(source).toContain("aria-controls={`mobile-event-detail-${event.id}`}");

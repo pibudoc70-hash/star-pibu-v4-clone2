@@ -16,6 +16,8 @@
 
 production-like Chromium 검증에서 태그 script 1회, GA4 config 1회, `page_view` 1회를 확인했습니다. 테스트 URL에는 query string과 hash가 있었으나 전송 `page_path`에는 포함되지 않았습니다. Google 태그 script가 `G-3CFK5RHK4T`로 요청되는 것도 확인했습니다.
 
+배포 전파 후 공개 `https://star-pibu.com/zh/treatments/ulthera?patient=hidden#faq`에서도 같은 결과를 재확인했습니다. 공개 bundle에 `G-3CFK5RHK4T`가 포함됐고, Chromium은 `gtag/js?id=G-3CFK5RHK4T` 1회·GA4 config 1회·`page_view` 1회를 기록했습니다. `https://star-pibu.co.kr/`은 Google tag script·config·page_view가 모두 0회여서 `.com` stream이 다른 도메인으로 전송되지 않았습니다.
+
 > 법률 자문이 아닙니다. GA4를 지속 운영하기 전에는 병원의 개인정보처리방침, 쿠키 고지 및 국외 이전·위탁 고지의 구체적 적합성을 개인정보 담당자 또는 법률 전문가와 검토해야 합니다.
 
 ## Google Ads 후속 입력값

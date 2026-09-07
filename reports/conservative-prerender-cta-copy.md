@@ -18,6 +18,10 @@
 
 홈 raw에는 기존 KakaoTalk URL이 이미 존재했으므로 전화 옆에 새 링크를 추가하지 않았습니다. focused home prerender/SEO tests 31개, TypeScript와 lint 신규 오류 0건을 확인했습니다.
 
-## 3. 중국어 시술 prerender 한국어 잔문 — 조사 예정
+## 3. 중국어 시술 prerender 한국어 잔문 — 최소 보정 적용
 
-2번 raw HTML 조사 결과를 바탕으로, 중국어 시술 본문에 실제 한국어 잔문이 남아 있을 경우에만 기존 zh 필드 사용 또는 생략 원칙을 적용합니다.
+공개 `/zh/treatments/ulthera` raw HTML의 crawler 본문에서 `适合人群` 행 뒤에 한국어 문장이 붙어 있는 것을 확인했습니다. 원인은 기존 zh 효과 필드를 가져온 뒤 모든 locale에 한국어 적합성 문장을 덧붙이던 prerender formatter였습니다.
+
+중국어 경로에서는 **기존 `effect.zh` 값만** 사용하도록 제한했습니다. `effect.zh`가 비어 있으면 그 행은 빈 값으로 필터링되어 생략되며, 새 중국어 문구나 의료 수치·FAQ·영문 슬로건은 만들지 않습니다. 로컬 production raw 검증에서 해당 한국어 잔문은 0건이고 기존 zh 효과 값과 `crawler-content`는 각각 1건으로 유지됐습니다.
+
+focused tests 4개, TypeScript와 lint 신규 오류 0건을 확인했습니다. 헤드 주석·기관 주소 같은 동결 대상이나 다른 locale의 본문은 이번 규칙에서 변경하지 않았습니다.

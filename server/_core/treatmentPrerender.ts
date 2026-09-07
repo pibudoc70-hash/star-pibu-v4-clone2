@@ -368,10 +368,12 @@ function findDuration(t: TreatmentSeoRecord, lang: Lang): string {
 
 function buildStructuredBody(t: TreatmentSeoRecord, lang: Lang): string {
   const labels = getTableLabels(lang);
-  const effect = pick(t.effect, lang);
-  const target = effect
-    ? `${effect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.`
-    : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.";
+  const effect = lang === "zh" ? t.effect?.zh?.trim() || "" : pick(t.effect, lang);
+  const target = lang === "zh"
+    ? effect
+    : effect
+      ? `${effect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.`
+      : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.";
   const rows = [
     [labels.description, pick(t.detail, lang) || pick(t.desc, lang)],
     [labels.target, target],

@@ -113,6 +113,13 @@ function loadIndexHtml(): string | null {
   return null;
 }
 
+function dropInitialLoadingShellWhenCrawlerContentExists(template: string): string {
+  return template.replace(
+    /\s*<div id="initial-loading"[^>]*>\s*<div class="initial-loading-content">[\s\S]*?<\/div>\s*<\/div>\s*(?=<div id="root">)/i,
+    "\n    ",
+  );
+}
+
 export function buildHomePrerenderedHtml(template: string, pathname: string): string | null {
   const locale = getLocale(pathname);
   if (!locale) return null;
@@ -165,7 +172,7 @@ export function buildHomePrerenderedHtml(template: string, pathname: string): st
     ...(verifiedVideoSchema ? [verifiedVideoSchema] : []),
   ]).replace(/</g, "\\u003c");
 
-  const rendered = template
+  const rendered = dropInitialLoadingShellWhenCrawlerContentExists(template)
     .replace(/<link\s+rel="canonical"[^>]*\/?>(\s*)/i, `<link data-rh="true" rel="canonical" href="${canonical}" />$1`)
     .replace("</head>", `    <script type="application/ld+json" data-prerender="home-schema">${jsonLd}</script>\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">\n    ${noscriptBody}\n  </div>`);

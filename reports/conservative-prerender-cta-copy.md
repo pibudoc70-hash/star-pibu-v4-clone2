@@ -10,9 +10,13 @@
 
 따라서 이 항목은 코드 변경 없이 중단했습니다. 기존 `TreatmentPage.wechatCta.test.ts`는 2개 테스트를 통과했고 TypeScript는 통과했으며 lint는 신규 오류 없이 기존 경고 106건만 보고했습니다.
 
-## 2. prerender 로딩 셸 — 조사 예정
+## 2. prerender 로딩 셸 — 최소 보정 적용
 
-다음 단계에서 `/`, `/en`, `/ja`, `/zh`, `/zh-tw`, `/zh/treatments/ulthera`의 공개 raw HTML을 읽기 전용으로 대조합니다.
+공개 raw HTML을 읽기 전용으로 대조했습니다. `/`, `/en`, `/ja`, `/zh`, `/zh-tw`에는 기존 locale별 초기 로딩 문구와 함께 동일 문서 내 crawler discovery 본문이 이미 주입되어 있었고, 각 홈 본문에는 locale별 `/equipment3` 링크, 전화 링크, 기존 KakaoTalk 링크가 있었습니다. 따라서 홈 raw에서는 초기 로딩 셸이 crawler 본문에 중복되는 상태였습니다.
+
+`homePrerender`에서 **crawler discovery 본문을 주입하는 홈 locale 경로에 한정**해 초기 로딩 셸을 제거했습니다. 클라이언트 템플릿·새 UI·새 API·새 카피·discovery 카드·CTA 디자인은 추가하지 않았습니다. `/zh/treatments/ulthera`에는 홈 discovery 본문이 없고 기존 locale 로딩 문구만 있으므로 이 규칙을 적용하지 않았습니다.
+
+홈 raw에는 기존 KakaoTalk URL이 이미 존재했으므로 전화 옆에 새 링크를 추가하지 않았습니다. focused home prerender/SEO tests 31개, TypeScript와 lint 신규 오류 0건을 확인했습니다.
 
 ## 3. 중국어 시술 prerender 한국어 잔문 — 조사 예정
 

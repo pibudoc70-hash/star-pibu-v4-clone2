@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildHomePrerenderedHtml, HOME_PRERENDER_CACHE_CONTROL } from "./homePrerender";
 
 const template = `<!doctype html><html lang="ko"><head><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="root"></div></body></html>`;
+const templateWithInitialLoadingShell = `<!doctype html><html lang="ko"><head><link rel="canonical" href="https://star-pibu.com" /></head><body><div id="initial-loading" role="status"><div class="initial-loading-content"><p class="initial-loading-label">콘텐츠를 불러오는 중입니다</p></div></div><div id="root"></div></body></html>`;
 
 describe("homePrerender", () => {
   it("한국어 홈 원본 HTML에 실제 FAQ와 진료 안내를 주입한다", () => {
@@ -19,6 +20,15 @@ describe("homePrerender", () => {
     expect(html).toContain('https://star-pibu.com/#website');
     expect(html).toContain('"@type":"VideoObject"');
     expect(html).toContain('"uploadDate":"2024-09-06"');
+  });
+
+  it("crawler discovery 본문이 주입되는 홈에서는 중복 초기 로딩 셸을 제외한다", () => {
+    const html = buildHomePrerenderedHtml(templateWithInitialLoadingShell, "/zh");
+
+    expect(html).not.toContain('id="initial-loading"');
+    expect(html).not.toContain("콘텐츠를 불러오는 중입니다");
+    expect(html).toContain('id="crawler-content"');
+    expect(html).toContain('href="https://star-pibu.com/zh/equipment3"');
   });
 
   it.each([

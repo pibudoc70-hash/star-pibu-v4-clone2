@@ -24,13 +24,11 @@ vi.mock("wouter", () => ({
 
 vi.mock("@/lib/trpc", () => ({
   trpc: {
-    youtube: {
-      getAll: {
-        useQuery: () => ({ data: videoData, refetch: vi.fn() }),
-      },
-    },
     admin: {
       youtube: {
+        getAll: {
+          useQuery: () => ({ data: videoData, refetch: vi.fn() }),
+        },
         create: { useMutation: () => mutationState },
         update: { useMutation: () => mutationState },
         delete: { useMutation: () => mutationState },

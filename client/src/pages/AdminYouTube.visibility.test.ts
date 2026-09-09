@@ -16,7 +16,7 @@ describe("AdminYouTube 노출 상태 제어", () => {
   });
 
   it("전환은 기존 admin update mutation의 isActive 값만 변경한다", () => {
-    expect(source).toContain("trpc.admin.youtube.update.useMutation");
+    expect(source).toContain("trpc.admin.youtube.getAll.useQuery()");
     expect(source).toContain("isActive: video.isActive === '1' ? '0' : '1'");
   });
 

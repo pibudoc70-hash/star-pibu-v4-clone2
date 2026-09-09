@@ -218,7 +218,7 @@ export default function AdminYouTube() {
     sortOrder: 0,
   });
 
-  const { data: videos = EMPTY_YOUTUBE_VIDEOS, refetch } = trpc.youtube.getAll.useQuery();
+  const { data: videos = EMPTY_YOUTUBE_VIDEOS, refetch } = trpc.admin.youtube.getAll.useQuery();
 
   // DB 데이터가 바뀌면 로컬 상태 동기화 (videos 변경 시 1회만 실행되는 정상 패턴)
   useEffect(() => {

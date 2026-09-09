@@ -15,7 +15,7 @@ describe("YouTubeSection focus token contract", () => {
 });
 
 type QueryState = {
-  data?: Array<{ id: number; title: string; videoId: string; type: "video" | "shorts" }>;
+  data?: Array<{ id: number; title: string; videoId: string; type: "video" | "shorts"; isActive?: "0" | "1" }>;
   isLoading: boolean;
   isError: boolean;
   isFetching: boolean;
@@ -174,6 +174,23 @@ describe("YouTubeSection viewport query states", () => {
     expect(screen.queryByRole("button", { name: "Unsafe video Play video" })).not.toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(document.querySelector('iframe[src*="evil.example"]')).toBeNull();
+  });
+
+  it("does not render an inactive record even if it reaches the public query payload", async () => {
+    queryState = state({
+      data: [
+        { id: 1, title: "Visible video", videoId: "dQw4w9WgXcQ", type: "video", isActive: "1" },
+        { id: 2, title: "Hidden video", videoId: "M7lc1UVf-VE", type: "video", isActive: "0" },
+      ],
+    });
+    render(<YouTubeSection />);
+
+    await act(async () => {
+      observerCallback?.([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver);
+    });
+
+    expect(await screen.findByRole("button", { name: "Visible video Play video" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Hidden video Play video" })).not.toBeInTheDocument();
   });
 
   it("disables retry and announces progress while a YouTube retry request is active", async () => {

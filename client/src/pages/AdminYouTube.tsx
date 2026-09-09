@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit2, Video, Zap, X, Play, ExternalLink, GripVertical, Save, RotateCcw } from 'lucide-react';
+import { Plus, Trash2, Edit2, Video, Zap, X, Play, ExternalLink, GripVertical, Save, RotateCcw, Eye, EyeOff } from 'lucide-react';
 import {
   DndContext,
   closestCenter,
@@ -106,12 +106,14 @@ function PreviewModal({ video, onClose }: { video: YouTubeVideo; onClose: () => 
 function SortableRow({
   video,
   onPreview,
+  onToggleVisibility,
   onEdit,
   onDelete,
   isDragging: _isDragging,
 }: {
   video: YouTubeVideo;
   onPreview: (v: YouTubeVideo) => void;
+  onToggleVisibility: (v: YouTubeVideo) => void;
   onEdit: (v: YouTubeVideo) => void;
   onDelete: (id: number) => void;
   isDragging?: boolean;
@@ -139,6 +141,21 @@ function SortableRow({
           title="드래그하여 순서 변경"
         >
           <GripVertical size={18} />
+        </button>
+      </td>
+      {/* 노출 상태: 썸네일 앞에서 즉시 전환 */}
+      <td className="px-1 py-3 w-20">
+        <button
+          type="button"
+          data-testid={`youtube-visibility-toggle-${video.id}`}
+          onClick={() => onToggleVisibility(video)}
+          aria-pressed={video.isActive === '1'}
+          aria-label={`${video.title} ${video.isActive === '1' ? '노출 숨기기' : '숨김 노출하기'}`}
+          title={video.isActive === '1' ? '노출 중 · 클릭하여 숨기기' : '숨김 · 클릭하여 노출하기'}
+          className={`inline-flex min-h-9 items-center gap-1 rounded-md px-2 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${video.isActive === '1' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+        >
+          {video.isActive === '1' ? <Eye size={15} aria-hidden="true" /> : <EyeOff size={15} aria-hidden="true" />}
+          <span>{video.isActive === '1' ? '노출' : '숨김'}</span>
         </button>
       </td>
       {/* 썸네일 + 제목 */}
@@ -233,6 +250,10 @@ export default function AdminYouTube() {
     onSuccess: () => refetch(),
   });
 
+  const visibilityMutation = trpc.admin.youtube.update.useMutation({
+    onSuccess: () => refetch(),
+  });
+
   const reorderMutation = trpc.admin.youtube.reorder.useMutation({
     onSuccess: () => {
       refetch();
@@ -267,6 +288,13 @@ export default function AdminYouTube() {
     setEditingId(video.id);
     setFormData({ title: video.title, videoId: video.videoId, type: video.type, sortOrder: video.sortOrder });
     setActiveTab(video.type);
+  };
+
+  const handleToggleVisibility = (video: YouTubeVideo) => {
+    visibilityMutation.mutate({
+      id: video.id,
+      isActive: video.isActive === '1' ? '0' : '1',
+    });
   };
 
   const handleCancel = () => {
@@ -430,6 +458,7 @@ export default function AdminYouTube() {
               <thead className="bg-gray-50 border-b">
                 <tr>
                   <th className="pl-4 pr-2 py-3 w-8" />
+                  <th className="px-1 py-3 text-left text-sm font-semibold text-gray-900 w-20">노출</th>
                   <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">제목 / 썸네일</th>
                   <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">영상 ID</th>
                   <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-24">타입</th>
@@ -440,7 +469,7 @@ export default function AdminYouTube() {
               <tbody>
                 {filteredVideos.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400 text-sm">
+                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400 text-sm">
                       {activeTab === 'all' ? '등록된 영상이 없습니다.' : activeTab === 'video' ? '등록된 일반 영상이 없습니다.' : '등록된 쇼츠가 없습니다.'}
                     </td>
                   </tr>
@@ -452,6 +481,7 @@ export default function AdminYouTube() {
                           key={video.id}
                           video={video}
                           onPreview={setPreviewVideo}
+                          onToggleVisibility={handleToggleVisibility}
                           onEdit={handleEdit}
                           onDelete={(id) => deleteMutation.mutate({ id })}
                         />

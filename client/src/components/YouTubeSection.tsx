@@ -36,6 +36,7 @@ interface YouTubeVideo {
   title: string;
   videoId: string;
   type: 'video' | 'shorts';
+  isActive?: '0' | '1';
 }
 
 // 모달 ID — 단일 aria-labelledby 참조 보장
@@ -56,7 +57,9 @@ export default function YouTubeSection() {
   );
   
   // 파생 상태 — useEffect + 중간 state 불필요
-  const safeVideos = (allVideos ?? []).filter((video) => YOUTUBE_VIDEO_ID_PATTERN.test(video.videoId));
+  const safeVideos = (allVideos ?? []).filter(
+    (video) => video.isActive !== '0' && YOUTUBE_VIDEO_ID_PATTERN.test(video.videoId)
+  );
   const videos = safeVideos.filter((v) => v.type === 'video') as YouTubeVideo[];
   const shorts = safeVideos.filter((v) => v.type === 'shorts') as YouTubeVideo[];
 

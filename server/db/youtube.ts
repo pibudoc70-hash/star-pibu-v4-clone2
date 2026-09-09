@@ -13,12 +13,34 @@ export async function getAllYouTubeVideos() {
   }
 }
 
+/** 관리자 목록은 숨김 영상도 유지해 다시 노출할 수 있어야 한다. */
+export async function getAllYouTubeVideosForAdmin() {
+  const db = await getDb();
+  try {
+    return db.select().from(youtubeVideos).orderBy(asc(youtubeVideos.sortOrder));
+  } catch (error) {
+    logger.error("Database", "Failed to get YouTube videos for admin", error);
+    return [];
+  }
+}
+
 export async function getYouTubeVideosByType(type: "video" | "shorts") {
   const db = await getDb();
   try {
     return db.select().from(youtubeVideos).where(and(eq(youtubeVideos.type, type), eq(youtubeVideos.isActive, "1"))).orderBy(asc(youtubeVideos.sortOrder));
   } catch (error) {
     logger.error("Database", "Failed to get YouTube videos by type", error);
+    return [];
+  }
+}
+
+/** 관리자 타입 탭은 공개 상태와 관계없이 해당 타입의 모든 영상을 반환한다. */
+export async function getYouTubeVideosByTypeForAdmin(type: "video" | "shorts") {
+  const db = await getDb();
+  try {
+    return db.select().from(youtubeVideos).where(eq(youtubeVideos.type, type)).orderBy(asc(youtubeVideos.sortOrder));
+  } catch (error) {
+    logger.error("Database", "Failed to get YouTube videos by type for admin", error);
     return [];
   }
 }

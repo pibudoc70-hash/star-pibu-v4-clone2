@@ -8,7 +8,7 @@ import { adminProcedure, router } from "../_core/trpc";
 import {
   getAllReservations, LastAdminRoleChangeError, SelfAdminRoleChangeError, UserRoleChangeNotFoundError,
   createUnavailableSlot, getUnavailableSlots, deleteUnavailableSlot, updateUnavailableSlot,
-  getAllYouTubeVideos, getYouTubeVideosByType, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
+  getAllYouTubeVideosForAdmin, getYouTubeVideosByTypeForAdmin, createYouTubeVideo, updateYouTubeVideo, deleteYouTubeVideo,
   listUsers as dbListUsers, updateUserRole as dbUpdateUserRole,
 } from "../db";
 import { updateAdminReservationStatus, normalizeYouTubeCreatePayload, getAdminStats } from "../services/admin.service";
@@ -121,11 +121,11 @@ export const adminRouter = router({
 
   // YouTube 영상 관리
   youtube: router({
-    getAll: adminProcedure.query(async () => getAllYouTubeVideos()),
+    getAll: adminProcedure.query(async () => getAllYouTubeVideosForAdmin()),
 
     getByType: adminProcedure
       .input(z.object({ type: z.enum(["video", "shorts"]) }))
-      .query(async ({ input }) => getYouTubeVideosByType(input.type)),
+      .query(async ({ input }) => getYouTubeVideosByTypeForAdmin(input.type)),
 
     create: adminProcedure
       .input(z.object({

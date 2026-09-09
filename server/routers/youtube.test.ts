@@ -6,7 +6,9 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("../db", () => ({
   getAllYouTubeVideos: vi.fn(),
+  getAllYouTubeVideosForAdmin: vi.fn(),
   getYouTubeVideosByType: vi.fn(),
+  getYouTubeVideosByTypeForAdmin: vi.fn(),
   createYouTubeVideo: vi.fn(),
   updateYouTubeVideo: vi.fn(),
   deleteYouTubeVideo: vi.fn(),
@@ -14,7 +16,9 @@ vi.mock("../db", () => ({
 
 import {
   getAllYouTubeVideos,
+  getAllYouTubeVideosForAdmin,
   getYouTubeVideosByType,
+  getYouTubeVideosByTypeForAdmin,
   createYouTubeVideo,
   updateYouTubeVideo,
   deleteYouTubeVideo,
@@ -96,6 +100,15 @@ describe("admin.youtube (관리자 CRUD)", () => {
       const result = await (updateYouTubeVideo as ReturnType<typeof vi.fn>)(1, { isActive: "0" });
       expect(result.isActive).toBe("0");
     });
+  });
+
+  it("관리자 조회는 숨김 영상을 포함해 다시 노출할 수 있다", async () => {
+    const hidden = { ...mockVideo, id: 2, isActive: "0" as const };
+    vi.mocked(getAllYouTubeVideosForAdmin).mockResolvedValue([mockVideo, hidden]);
+    vi.mocked(getYouTubeVideosByTypeForAdmin).mockResolvedValue([mockVideo, hidden]);
+
+    await expect((getAllYouTubeVideosForAdmin as ReturnType<typeof vi.fn>)()).resolves.toEqual([mockVideo, hidden]);
+    await expect((getYouTubeVideosByTypeForAdmin as ReturnType<typeof vi.fn>)("video")).resolves.toEqual([mockVideo, hidden]);
   });
 
   describe("delete", () => {

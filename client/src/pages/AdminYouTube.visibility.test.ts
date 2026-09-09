@@ -26,4 +26,13 @@ describe("AdminYouTube 노출 상태 제어", () => {
     expect(youtubeRepository).toContain("export async function getAllYouTubeVideosForAdmin()");
     expect(youtubeRepository).toContain('where(eq(youtubeVideos.isActive, "1"))');
   });
+
+  it("DnD accessibility markup을 tbody 밖에 두고 안정적인 빈 배열로 초기 렌더를 동기화한다", () => {
+    const tbody = source.slice(source.indexOf("<tbody>"), source.indexOf("</tbody>") + "</tbody>".length);
+    expect(tbody).not.toContain("<DndContext");
+    expect(source.indexOf("<DndContext")).toBeLessThan(source.indexOf("<table className=\"w-full\">"));
+    expect(source).toContain("const EMPTY_YOUTUBE_VIDEOS: YouTubeVideo[] = [];");
+    expect(source).toContain("data: videos = EMPTY_YOUTUBE_VIDEOS");
+    expect(source).toContain("previous === nextVideos ? previous : nextVideos");
+  });
 });

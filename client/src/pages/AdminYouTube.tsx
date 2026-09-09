@@ -32,6 +32,7 @@ interface YouTubeVideo {
 }
 
 type TabType = 'all' | 'video' | 'shorts';
+const EMPTY_YOUTUBE_VIDEOS: YouTubeVideo[] = [];
 
 function getThumbUrl(videoId: string) {
   // 프로덕션 환경에서 외부 YouTube 도메인 차단 방지를 위해 프록시 사용
@@ -217,13 +218,13 @@ export default function AdminYouTube() {
     sortOrder: 0,
   });
 
-  const { data: videos = [], refetch } = trpc.youtube.getAll.useQuery();
+  const { data: videos = EMPTY_YOUTUBE_VIDEOS, refetch } = trpc.youtube.getAll.useQuery();
 
   // DB 데이터가 바뀌면 로컬 상태 동기화 (videos 변경 시 1회만 실행되는 정상 패턴)
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLocalVideos(videos as YouTubeVideo[]);
-    setIsDirty(false);
+    const nextVideos = videos as YouTubeVideo[];
+    setLocalVideos((previous) => previous === nextVideos ? previous : nextVideos);
+    setIsDirty((previous) => previous ? false : previous);
   }, [videos]);
 
   const sensors = useSensors(
@@ -453,28 +454,29 @@ export default function AdminYouTube() {
               <span>썸네일 또는 제목을 클릭하면 영상을 미리볼 수 있습니다.</span>
             </div>
 
-            {/* 테이블 */}
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b">
-                <tr>
-                  <th className="pl-4 pr-2 py-3 w-8" />
-                  <th className="px-1 py-3 text-left text-sm font-semibold text-gray-900 w-20">노출</th>
-                  <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">제목 / 썸네일</th>
-                  <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">영상 ID</th>
-                  <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-24">타입</th>
-                  <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-16">순서</th>
-                  <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-36">작업</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredVideos.length === 0 ? (
+            {/* DndContext가 만드는 accessibility div가 tbody 자식이 되지 않도록 표 바깥에서 감싼다. */}
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              {/* 테이블 */}
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b">
                   <tr>
-                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400 text-sm">
-                      {activeTab === 'all' ? '등록된 영상이 없습니다.' : activeTab === 'video' ? '등록된 일반 영상이 없습니다.' : '등록된 쇼츠가 없습니다.'}
-                    </td>
+                    <th className="pl-4 pr-2 py-3 w-8" />
+                    <th className="px-1 py-3 text-left text-sm font-semibold text-gray-900 w-20">노출</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">제목 / 썸네일</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900">영상 ID</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-24">타입</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-16">순서</th>
+                    <th className="px-3 py-3 text-left text-sm font-semibold text-gray-900 w-36">작업</th>
                   </tr>
-                ) : (
-                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                </thead>
+                <tbody>
+                  {filteredVideos.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="px-6 py-12 text-center text-gray-400 text-sm">
+                        {activeTab === 'all' ? '등록된 영상이 없습니다.' : activeTab === 'video' ? '등록된 일반 영상이 없습니다.' : '등록된 쇼츠가 없습니다.'}
+                      </td>
+                    </tr>
+                  ) : (
                     <SortableContext items={filteredVideos.map((v) => v.id)} strategy={verticalListSortingStrategy}>
                       {filteredVideos.map((video) => (
                         <SortableRow
@@ -487,10 +489,10 @@ export default function AdminYouTube() {
                         />
                       ))}
                     </SortableContext>
-                  </DndContext>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </DndContext>
           </div>
         </div>
       </div>

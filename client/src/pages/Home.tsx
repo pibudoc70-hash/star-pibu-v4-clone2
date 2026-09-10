@@ -9,7 +9,7 @@
  *   → 초기 로드 시 폴드 아래 섹션의 JS 실행/API 호출 비용 제거
  *   → 스크롤 300px 전에 마운트 시작 → 사용자가 도달하기 전에 준비 완료
  */
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { useHomeInitialScrollRestore } from "@/hooks/useHomeInitialScrollRestore";
 import { useLang } from "@/contexts/LangContext";
 import { CLINIC_STATS } from "../lib/constants";
@@ -283,32 +283,8 @@ function SectionFallback({
   );
 }
 
-/** 초기 렌더 후 정확한 지연을 두고 팝업을 마운트해 첫 화면을 방해하지 않음 */
-function useDelayedMount(delayMs = 2000): boolean {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    let id: number | undefined;
-    const startDelay = () => {
-      id = window.setTimeout(() => setMounted(true), delayMs);
-    };
-
-    if (document.readyState === "complete") {
-      startDelay();
-    } else {
-      window.addEventListener("load", startDelay, { once: true });
-    }
-
-    return () => {
-      window.removeEventListener("load", startDelay);
-      if (id !== undefined) window.clearTimeout(id);
-    };
-  }, [delayMs]);
-  return mounted;
-}
-
 export default function Home() {
   const { lang } = useLang();
-  const popupReady = useDelayedMount(2000);
   const [, navigate] = useLocation();
 
   useHomeInitialScrollRestore();
@@ -636,14 +612,11 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Welcome Popup — lazy loaded + idle mount: 초기 번들/query 비용 제거
-            첫 렌더 후 정확히 2초 뒤 마운트하여 LCP/FID에 영향 없음 */}
-      {popupReady && (
-        <Suspense fallback={null}>
-          <UltheraThermagePromotionPopup />
-          <WelcomePopup />
-        </Suspense>
-      )}
+      {/* 팝업은 조건 충족 시 초기 화면과 함께 표시한다. 각 컴포넌트는 당일 숨김·활성 상태를 자체 확인한다. */}
+      <Suspense fallback={null}>
+        <UltheraThermagePromotionPopup />
+        <WelcomePopup />
+      </Suspense>
     </div>
   );
 }

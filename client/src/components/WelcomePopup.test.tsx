@@ -70,9 +70,6 @@ describe("WelcomePopup keyboard focus", () => {
 
   function renderVisiblePopup() {
     render(<WelcomePopup />);
-    act(() => {
-      vi.advanceTimersByTime(1200);
-    });
     return screen.getByRole("dialog", { name: "팝업 이벤트" });
   }
 
@@ -166,9 +163,6 @@ describe("WelcomePopup keyboard focus", () => {
   it("restores the original body overflow value when an open popup unmounts", () => {
     document.body.style.overflow = "scroll";
     const { unmount } = render(<WelcomePopup />);
-    act(() => {
-      vi.advanceTimersByTime(1200);
-    });
 
     expect(document.body.style.overflow).toBe("hidden");
     unmount();

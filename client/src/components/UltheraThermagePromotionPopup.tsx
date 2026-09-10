@@ -37,8 +37,8 @@ export default function UltheraThermagePromotionPopup() {
       // Storage may be unavailable in restrictive browser contexts; show the popup normally.
     }
 
-    const timer = window.setTimeout(() => setVisible(true), SHOW_DELAY_MS);
-    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- 당일 숨김이 아닌 초기 방문자에게 즉시 표시한다.
+    setVisible(true);
   }, []);
 
   useEffect(() => {

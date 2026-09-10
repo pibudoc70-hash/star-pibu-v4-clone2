@@ -68,14 +68,14 @@ export default function WelcomePopup() {
     if (!events || events.length === 0) return;
     const dismissed = localStorage.getItem("star-popup-v2-dismissed");
     if (!dismissed) {
-      const timer = setTimeout(() => setVisible(true), 1200);
-      return () => clearTimeout(timer);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- query 완료 직후 최초 노출 상태를 동기화한다.
+      setVisible(true);
     } else {
       const expiry = new Date(dismissed);
       if (new Date() > expiry) {
         localStorage.removeItem("star-popup-v2-dismissed");
-        const timer = setTimeout(() => setVisible(true), 1200);
-        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- 만료된 당일 숨김을 해제한 뒤 즉시 노출한다.
+        setVisible(true);
       }
     }
   }, [isLoading, error, events]);

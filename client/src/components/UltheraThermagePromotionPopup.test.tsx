@@ -5,7 +5,6 @@ import UltheraThermagePromotionPopup, {
   DISMISS_ANIMATION_MS,
   getLocalCalendarDateKey,
   PROMOTION_HIDE_UNTIL_DATE_KEY,
-  SHOW_DELAY_MS,
   ULTHERA_THERMAGE_PROMOTIONS,
 } from "./UltheraThermagePromotionPopup";
 
@@ -31,7 +30,6 @@ describe("UltheraThermagePromotionPopup", () => {
 
   function renderVisiblePopup() {
     render(<UltheraThermagePromotionPopup />);
-    act(() => vi.advanceTimersByTime(SHOW_DELAY_MS));
     return screen.getByRole("dialog", { name: "울쎄라피 프라임 및 써마지 FLX 이벤트" });
   }
 
@@ -97,12 +95,10 @@ describe("UltheraThermagePromotionPopup", () => {
     firstRender.parentElement?.parentElement?.remove();
 
     render(<UltheraThermagePromotionPopup />);
-    act(() => vi.advanceTimersByTime(700));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
     vi.setSystemTime(new Date("2026-09-05T10:00:00"));
     render(<UltheraThermagePromotionPopup />);
-    act(() => vi.advanceTimersByTime(700));
     expect(screen.getByRole("dialog", { name: "울쎄라피 프라임 및 써마지 FLX 이벤트" })).toBeInTheDocument();
   });
 
@@ -117,7 +113,7 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("starts hidden and transitions into the popup on its first rendered frame", () => {
+  it("mounts immediately and transitions into the popup on its first rendered frame", () => {
     const frames: FrameRequestCallback[] = [];
     window.requestAnimationFrame = vi.fn((callback: FrameRequestCallback) => {
       frames.push(callback);
@@ -125,7 +121,6 @@ describe("UltheraThermagePromotionPopup", () => {
     }) as typeof window.requestAnimationFrame;
 
     render(<UltheraThermagePromotionPopup />);
-    act(() => vi.advanceTimersByTime(700));
 
     const popup = screen.getByTestId("ulthera-thermage-promotion-popup");
     const overlay = screen.getByTestId("promotion-popup-overlay");

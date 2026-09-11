@@ -122,7 +122,7 @@ export default function UltheraThermagePromotionPopup() {
         className={`ulthera-thermage-promotion-dialog relative w-full max-w-[420px] overflow-visible rounded-[1.25rem] border border-[rgba(215,181,92,0.76)] bg-[var(--color-star-navy)] shadow-[0_22px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none md:max-w-[720px] lg:max-w-[960px] ${isClosing || !isEntering ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"}`}
         style={{ opacity: isClosing || !isEntering ? 0 : 1, scale: isClosing || !isEntering ? "0.985" : "1" }}
       >
-        <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2">
+        <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2 md:bottom-auto md:right-0 md:top-[calc(100%+0.75rem)]">
           <label
             data-testid="promotion-hide-today-control"
             className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] border border-[rgba(215,181,92,0.7)] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--color-gold-primary)] hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)]"

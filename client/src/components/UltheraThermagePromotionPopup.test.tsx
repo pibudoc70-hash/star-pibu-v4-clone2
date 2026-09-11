@@ -47,13 +47,20 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(document.querySelector(`source[srcset="${ULTHERA_THERMAGE_PROMOTIONS.desktopImage}"]`)).toHaveAttribute("media", "(min-width: 768px)");
   });
 
-  it("provides a cohesive today-hide control beside the accessible close control across breakpoints", () => {
+  it("keeps mobile controls on the creative while placing PC controls below the popup", () => {
     renderVisiblePopup();
 
     const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
     expect(checkbox).not.toBeChecked();
     expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "border-[rgba(215,181,92,0.7)]");
-    expect(screen.getByTestId("promotion-popup-controls")).toHaveClass("bottom-3", "right-3", "z-30");
+    expect(screen.getByTestId("promotion-popup-controls")).toHaveClass(
+      "bottom-3",
+      "right-3",
+      "z-30",
+      "md:bottom-auto",
+      "md:right-0",
+      "md:top-[calc(100%+0.75rem)]",
+    );
     expect(screen.getByTestId("promotion-popup-controls")).not.toHaveClass("md:-right-14", "md:top-0");
     expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");

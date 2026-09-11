@@ -14,6 +14,24 @@
 
 import type { Express } from "express";
 
+const PINPOINT_LEGACY_PATH = "/event/pinpoint.html";
+const PINPOINT_DESTINATION = new URL("https://star-pibu.co.kr/equipment3?tab=%EC%86%90%C2%B7%EB%B0%9C%ED%86%B1%EB%AC%B4%EC%A2%80");
+
+/**
+ * 기존 네이버 키워드 광고 URL의 식별 파라미터를 새 장비 탭으로 전달한다.
+ * 목적 탭은 고정하고, 구 URL에 있던 tab만 제외해 광고·UTM 파라미터를 보존한다.
+ */
+export function buildPinpointAdvertisingRedirect(originalUrl: string): string {
+  const legacyUrl = new URL(originalUrl, "https://legacy.star-pibu.co.kr");
+  const destination = new URL(PINPOINT_DESTINATION);
+
+  legacyUrl.searchParams.forEach((value, key) => {
+    if (key !== "tab") destination.searchParams.append(key, value);
+  });
+
+  return destination.toString();
+}
+
 /** 301 리다이렉트 맵: { [소스경로]: 대상URL } */
 const REDIRECT_MAP: Record<string, string> = {
   // ── 언어 ──────────────────────────────────────────────────────────────────
@@ -111,6 +129,13 @@ const REDIRECT_MAP: Record<string, string> = {
  * 반드시 다른 라우트보다 먼저 등록해야 한다.
  */
 export function registerRedirects(app: Express): void {
+  // ── 네이버 키워드 광고 legacy landing ──────────────────────────────────────
+  // 광고 등록 URL을 바꾸지 못한 기간에도 새 손·발톱무좀 탭으로 연결한다.
+  // 캠페인 링크는 향후 수정 가능해야 하므로 캐시되는 301 대신 302를 사용한다.
+  app.get(PINPOINT_LEGACY_PATH, (req, res) => {
+    res.redirect(302, buildPinpointAdvertisingRedirect(req.originalUrl));
+  });
+
   // ── www → apex 301 리다이렉트 ────────────────────────────────────────────
   // www.star-pibu.com/* → star-pibu.com/* (경로 보존)
   // Host 헤더는 Cloudflare/리버스 프록시를 통과하면 원본 호스트가 유지됨

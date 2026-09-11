@@ -14,6 +14,7 @@ import "./index.css";
 import { initWebVitals } from './lib/webVitals';
 import { registerServiceWorker } from './lib/swRegister';
 import { initializeGa4 } from './lib/ga4';
+import { initializeNaverWcs } from './lib/naverWcs';
 
 function InitialAppReadySignal() {
   useLayoutEffect(() => {
@@ -114,6 +115,9 @@ registerServiceWorker();
 
 // GA4는 기본 페이지뷰만 명시적으로 전송한다. 전환·광고 태그는 별도 승인/식별자 이후에 추가한다.
 initializeGa4();
+
+// 네이버 WCS 공통 태그는 .com 유입·광고 전환 귀속만 기록한다. 예약·상담·폼 값은 전달하지 않는다.
+initializeNaverWcs();
 
 // OpenAI 픽셀 페이지 뷰 이벤트 추적
 if (typeof window !== 'undefined' && (window as any).oaiq) {

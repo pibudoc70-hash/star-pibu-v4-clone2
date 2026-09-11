@@ -45,6 +45,7 @@ function buildCSP(isDev: boolean): string {
     "https://forge.manus.ai",
     "https://manus-analytics.com",
     "https://www.googletagmanager.com",
+    "https://wcs.naver.net",
     // Maps Proxy가 로드한 SDK의 동적 Google Maps 모듈
     "https://maps.googleapis.com",
     "https://maps.gstatic.com",
@@ -80,6 +81,8 @@ function buildCSP(isDev: boolean): string {
     "https://img.youtube.com",
     "https://i.ytimg.com",
     "https://lh3.googleusercontent.com",
+    // 네이버 WCS 공통 태그의 비식별 유입·광고 귀속 요청
+    "https://wcs.naver.net",
     // Google Maps JavaScript SDK 지도 타일·마커 리소스
     "https://maps.googleapis.com",
     "https://maps.gstatic.com",
@@ -94,6 +97,7 @@ function buildCSP(isDev: boolean): string {
     "https://manus-analytics.com",
     "https://www.google-analytics.com",
     "https://region1.google-analytics.com",
+    "https://wcs.naver.net",
     // Manus 스토리지 CDN: SW fetch → /api/storage/ → 307 → CloudFront 리다이렉트 대상
     ...MANUS_CLOUDFRONT_SOURCES,
     // Manus CDN (콘솔 에러에서 발견)

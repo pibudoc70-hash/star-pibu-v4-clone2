@@ -18,4 +18,6 @@ Content Security Policy에는 WCS 스크립트, 이미지형 수집, 연결 요�
 
 ## 검증
 
-WCS 계정 문맥으로 공식 스크립트 응답을 확인했으며, helper 단위 테스트에서 유효 계정 형식, `.com` 한정 초기화, 단일 script 삽입, script load 이후 inflow·공통 호출을 검증했다. CSP 및 개인정보 고지 회귀 테스트와 전체 품질 게이트도 실행했다. 자동 배포 뒤에는 `star-pibu.com`의 실제 WCS 요청을 추가 확인한다.
+WCS 계정 문맥으로 공식 스크립트 응답을 확인했으며, helper 단위 테스트에서 유효 계정 형식, `.com` 한정 초기화, 단일 script 삽입, script load 이후 inflow·공통 호출을 검증했다. CSP 및 개인정보 고지 회귀 테스트와 전체 품질 게이트도 실행했다.
+
+자동 배포 후 공개 `star-pibu.com` Chromium 세션에서 WCS script 1회 요청, script element 1개, 제공 계정 설정, `wcs.inflow` 및 `wcs_do` 함수 가용성을 확인했다. 동일한 공개 `.co.kr` 세션에서는 WCS script 요청·계정·함수가 모두 0건이었다. 브라우저에서 관찰된 별도 CSP 차단은 기존 OpenAI 및 광고 보조 모듈 요청으로, WCS URL은 차단되지 않았다.

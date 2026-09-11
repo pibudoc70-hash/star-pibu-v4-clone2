@@ -6,6 +6,7 @@ const debugPort = 9234;
 const requests = [];
 const consoleMessages = [];
 const failedRequests = [];
+const requestUrls = new Map();
 const hostResolverRules = process.env.NAVER_WCS_QA_HOST_RESOLVER_RULES;
 const disableHttpsUpgrades = process.env.NAVER_WCS_QA_DISABLE_HTTPS_UPGRADES === "true";
 const browser = spawn("/usr/bin/chromium", [
@@ -51,10 +52,15 @@ socket.addEventListener("message", event => {
   if (message.sessionId !== sessionId) return;
   if (message.method === "Network.requestWillBeSent") {
     const url = message.params.request.url;
+    requestUrls.set(message.params.requestId, url);
     if (url.includes("wcs.naver.net")) requests.push(url);
   }
   if (message.method === "Network.loadingFailed") {
-    failedRequests.push({ errorText: message.params.errorText, blockedReason: message.params.blockedReason ?? null });
+    failedRequests.push({
+      url: requestUrls.get(message.params.requestId) ?? null,
+      errorText: message.params.errorText,
+      blockedReason: message.params.blockedReason ?? null,
+    });
   }
   if (message.method === "Runtime.consoleAPICalled") {
     consoleMessages.push(message.params.args.map(arg => arg.value ?? arg.description ?? arg.type));

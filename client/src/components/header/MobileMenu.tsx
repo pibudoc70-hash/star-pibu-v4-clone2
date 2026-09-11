@@ -10,8 +10,7 @@
 import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical, CircleDollarSign } from "lucide-react";
 import type { RefObject } from "react";
 import { useEffect } from "react";
-import type { NavItem, LangOption } from "@/hooks/useHeaderState";
-import type { Lang } from "@/lib/i18n";
+import type { NavItem } from "@/hooks/useHeaderState";
 
 interface MobileMenuProps {
   mobileOpen: boolean;
@@ -19,12 +18,10 @@ interface MobileMenuProps {
   menuClosing: boolean;
   primaryNav: NavItem[];
   secondaryNav: NavItem[];
-  langOptions: LangOption[];
   lang: string;
   closeMobileMenu: (onAfterClose?: () => void) => void;
   handleNavClick: (href: string) => void;
   isActive: (href: string, sectionId: string | null) => boolean;
-  buildLocalizedPath: (lang: Lang) => string;
   chatUrl: string;
   reserveUrl: string;
   chatBg: string;
@@ -61,12 +58,10 @@ export default function MobileMenu({
   menuClosing,
   primaryNav,
   secondaryNav,
-  langOptions,
   lang,
   closeMobileMenu,
   handleNavClick,
   isActive,
-  buildLocalizedPath,
   chatUrl,
   reserveUrl,
   chatBg,
@@ -222,29 +217,6 @@ export default function MobileMenu({
             })}
           </div>
         )}
-
-        {/* ── 언어 선택 ── */}
-        <div className={`mobile-menu-lang-section ${menuVisible ? "visible" : ""}`}>
-          <p className="mobile-menu-section-label">LANGUAGE</p>
-          <div className="mobile-menu-lang-grid">
-            {langOptions.map((option) => (
-              <button
-                type="button"
-                key={option.lang}
-                onClick={() => {
-                  closeMobileMenu(() => {
-                    const hash = window.location.hash;
-                    window.location.replace(buildLocalizedPath(option.lang) + hash);
-                  });
-                }}
-                className={`mobile-menu-lang-btn ${option.lang === lang ? "active" : ""}`}
-              >
-                <span className="mobile-menu-lang-badge">{option.lang.toUpperCase()}</span>
-                <span>{option.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* ── 모바일 CTA ── */}
         <div className={`mobile-menu-cta-section ${menuVisible ? "visible" : ""}`}>

@@ -42,8 +42,12 @@ const mobileMenuSource = readFileSync(
   path.resolve(root, "client/src/components/header/MobileMenu.tsx"),
   "utf8",
 );
+const mobileLanguageSwitcherSource = readFileSync(
+  path.resolve(root, "client/src/components/header/MobileLanguageSwitcher.tsx"),
+  "utf8",
+);
 // 두 파일을 합쳐서 검사 (어느 파일에 있든 패턴이 존재하면 통과)
-const combinedSource = headerSource + "\n" + hookSource + "\n" + mobileMenuSource;
+const combinedSource = headerSource + "\n" + hookSource + "\n" + mobileMenuSource + "\n" + mobileLanguageSwitcherSource;
 
 const footerSource = readFileSync(
   path.resolve(root, "client/src/components/Footer.tsx"),
@@ -119,28 +123,19 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 3. 모바일 언어 버튼 — 동일한 setLang + replace 패턴
+// 3. 모바일 언어 버튼 — 중앙 handleLangChange 재사용
 // ─────────────────────────────────────────────────────────────────────────────
-describe("모바일 언어 버튼 — setLang + replace 패턴 일관성", () => {
-  it("모바일 언어 버튼에서도 window.location.replace를 사용해야 한다", () => {
-    // 모바일 언어 그리드 버튼 onClick 블록 확인
-    // MobileMenu.tsx로 분리됨 — mobileMenuSource에서 검사
-    const mobileBlock = mobileMenuSource.match(
-      /langOptions\.map\([\s\S]*?window\.location\.replace/,
-    )?.[0] ?? "";
-    expect(mobileBlock).toMatch(/window\.location\.replace/);
+describe("모바일 언어 버튼 — 중앙 언어 전환 계약 재사용", () => {
+  it("독립 모바일 언어 버튼이 handleLangChange를 사용해 setLang + replace 정책을 공유해야 한다", () => {
+    expect(mobileLanguageSwitcherSource).toMatch(/onClick=\{\(\) => handleLangChange\(option\)\}/);
+    const fnBlock = hookSource.match(/const handleLangChange[\s\S]*?\n {2}};/)?.[0] ?? "";
+    expect(fnBlock).toMatch(/setLang\(option\.lang, true\)/);
+    expect(fnBlock).toMatch(/window\.location\.replace/);
   });
 
-  it("모바일 언어 버튼에서도 setLang을 closeMobileMenu 이전에 호출해야 한다", () => {
-    // MobileMenu.tsx로 분리됨 — mobileMenuSource에서 검사
-    const mapStart = mobileMenuSource.indexOf("langOptions.map(");
-    const mapEnd = mobileMenuSource.indexOf("{/* 모바일 CTA", mapStart);
-    const mobileBlock = mapStart > -1 && mapEnd > -1
-      ? mobileMenuSource.slice(mapStart, mapEnd)
-      : mapStart > -1 ? mobileMenuSource.slice(mapStart) : "";
-    // closeMobileMenu 콜백 내부에 replace가 있어야 함
-    expect(mobileBlock).toMatch(/closeMobileMenu\(\(\)/);
-    expect(mobileBlock).toMatch(/window\.location\.replace/);
+  it("모바일 메뉴 내부에는 언어 그리드가 남아 있지 않아야 한다", () => {
+    expect(mobileMenuSource).not.toContain("mobile-menu-lang-section");
+    expect(mobileMenuSource).not.toContain("langOptions.map(");
   });
 });
 

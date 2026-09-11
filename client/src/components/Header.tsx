@@ -14,6 +14,7 @@
 import { Menu } from "lucide-react";
 import { useHeaderState } from "@/hooks/useHeaderState";
 import LanguageSwitcher from "./header/LanguageSwitcher";
+import MobileLanguageSwitcher from "./header/MobileLanguageSwitcher";
 import DesktopNav from "./header/DesktopNav";
 import MobileMenu from "./header/MobileMenu";
 
@@ -26,7 +27,7 @@ export default function Header() {
     t, lang, langOptions, currentLangOption,
     chatUrl, reserveUrl, chatBg, chatColor, WECHAT_ID,
     primaryNav, secondaryNav,
-    langDropRef, langTriggerRef, moreRef,
+    langDropRef, langTriggerRef, mobileLangDropRef, mobileLangTriggerRef, moreRef,
     mobileMenuRef, hamburgerRef,
     handleLangChange, handleWechatClick,
     openMobileMenu, closeMobileMenu, handleNavClick, isActive,
@@ -116,8 +117,21 @@ export default function Header() {
             handleLangChange={handleLangChange}
           />
 
+          {/* ── 모바일 독립 언어 선택 ── */}
+          <MobileLanguageSwitcher
+            lang={lang}
+            langOptions={langOptions}
+            currentLangOption={currentLangOption}
+            langDropOpen={langDropOpen}
+            setLangDropOpen={setLangDropOpen}
+            langDropRef={mobileLangDropRef}
+            langTriggerRef={mobileLangTriggerRef}
+            handleLangChange={handleLangChange}
+            scrolled={scrolled}
+          />
+
           {/* ── 모바일 햄버거 ── */}
-          <div className="md:hidden" style={{ marginLeft: "auto" }}>
+          <div className="md:hidden">
             <button
               type="button"
               ref={hamburgerRef}
@@ -149,12 +163,10 @@ export default function Header() {
         menuClosing={menuClosing}
         primaryNav={primaryNav}
         secondaryNav={secondaryNav}
-        langOptions={langOptions}
         lang={lang}
         closeMobileMenu={closeMobileMenu}
         handleNavClick={handleNavClick}
         isActive={isActive}
-        buildLocalizedPath={buildLocalizedPath}
         chatUrl={chatUrl}
         reserveUrl={reserveUrl}
         chatBg={chatBg}

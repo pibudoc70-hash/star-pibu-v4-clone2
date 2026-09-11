@@ -32,6 +32,8 @@ export function useHeaderState() {
 
   const langDropRef = useRef<HTMLDivElement>(null);
   const langTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileLangDropRef = useRef<HTMLDivElement>(null);
+  const mobileLangTriggerRef = useRef<HTMLButtonElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
   const { scrollToSelector, cancel: cancelAnchorScroll } = useAnchorScroll();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -203,7 +205,9 @@ export function useHeaderState() {
   // 드롭다운 외부 클릭 닫기
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (langDropRef.current && !langDropRef.current.contains(e.target as Node)) {
+      const clickedDesktopLanguage = langDropRef.current?.contains(e.target as Node);
+      const clickedMobileLanguage = mobileLangDropRef.current?.contains(e.target as Node);
+      if (!clickedDesktopLanguage && !clickedMobileLanguage) {
         setLangDropOpen(false);
       }
       if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
@@ -265,7 +269,10 @@ export function useHeaderState() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setLangDropOpen(false);
-        requestAnimationFrame(() => langTriggerRef.current?.focus());
+        requestAnimationFrame(() => {
+          const isMobile = window.matchMedia("(max-width: 767px)").matches;
+          (isMobile ? mobileLangTriggerRef : langTriggerRef).current?.focus();
+        });
       }
     };
     document.addEventListener("keydown", onKey);
@@ -317,7 +324,7 @@ export function useHeaderState() {
     primaryNav, secondaryNav,
     isHome,
     // Refs
-    langDropRef, langTriggerRef, moreRef,
+    langDropRef, langTriggerRef, mobileLangDropRef, mobileLangTriggerRef, moreRef,
     mobileMenuRef, hamburgerRef,
     // 핸들러
     handleLangChange, handleWechatClick,

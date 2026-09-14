@@ -125,7 +125,7 @@ export default function UltheraThermagePromotionPopup() {
         <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2 md:bottom-auto md:right-0 md:top-[calc(100%+0.75rem)]">
           <label
             data-testid="promotion-hide-today-control"
-            className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] border border-[rgba(215,181,92,0.7)] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--color-gold-primary)] hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)]"
+            className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,box-shadow,transform] duration-200 hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)]"
           >
             <input
               type="checkbox"
@@ -150,8 +150,8 @@ export default function UltheraThermagePromotionPopup() {
             aria-label="닫기"
             data-testid="promotion-popup-close"
             data-hovered={isCloseHovered ? "true" : "false"}
-            className="inline-flex size-[52px] items-center justify-center rounded-full border-2 border-[var(--color-gold-primary)] bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,border-color,color,transform,box-shadow] duration-200 md:hover:scale-105 md:hover:border-white md:hover:bg-[var(--color-gold-primary)] md:hover:text-[var(--color-star-navy)] md:hover:shadow-[0_12px_28px_rgba(0,0,0,0.6)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px]"
-            style={isCloseHovered ? { backgroundColor: "#C4A882", borderColor: "#FFFFFF", color: "#2C2C2C", scale: "1.05" } : undefined}
+            className="inline-flex size-[52px] items-center justify-center rounded-full bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-200 md:hover:scale-105 md:hover:bg-[var(--color-gold-primary)] md:hover:text-[var(--color-star-navy)] md:hover:shadow-[0_12px_28px_rgba(0,0,0,0.6)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px]"
+            style={isCloseHovered ? { backgroundColor: "#C4A882", color: "#2C2C2C", scale: "1.05" } : undefined}
           >
             <X size={22} strokeWidth={2.6} aria-hidden="true" />
             <span className="sr-only">닫기</span>

@@ -52,7 +52,8 @@ describe("UltheraThermagePromotionPopup", () => {
 
     const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
     expect(checkbox).not.toBeChecked();
-    expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "border-[rgba(215,181,92,0.7)]");
+    expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "shadow-[0_8px_20px_rgba(0,0,0,0.42)]");
+    expect(screen.getByTestId("promotion-hide-today-control")).not.toHaveClass("border", "border-[rgba(215,181,92,0.7)]", "hover:border-[var(--color-gold-primary)]");
     expect(screen.getByTestId("promotion-popup-controls")).toHaveClass(
       "bottom-3",
       "right-3",
@@ -64,7 +65,8 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(screen.getByTestId("promotion-popup-controls")).not.toHaveClass("md:-right-14", "md:top-0");
     expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");
-    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "border-[var(--color-gold-primary)]", "bg-[var(--color-star-navy)]", "text-white", "md:hover:bg-[var(--color-gold-primary)]", "md:hover:scale-105", "md:size-[52px]");
+    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "bg-[var(--color-star-navy)]", "text-white", "md:hover:bg-[var(--color-gold-primary)]", "md:hover:scale-105", "md:size-[52px]");
+    expect(screen.getByRole("button", { name: "닫기" })).not.toHaveClass("border-2", "border-[var(--color-gold-primary)]", "md:hover:border-white");
     expect(screen.getByText("닫기")).toHaveClass("sr-only");
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
 

@@ -31,6 +31,9 @@ describe("ManagementDeviceFaq", () => {
     expect(screen.getAllByText("기대 효과")).toHaveLength(MANAGEMENT_DEVICES.length);
     expect(screen.getAllByText("영양 성분 침투")).toHaveLength(2);
 
+    const cardGrid = screen.getByTestId("management-device-faq-grid");
+    expect(cardGrid).toHaveClass("grid-cols-1", "lg:grid-cols-2");
+
     const accordions = MANAGEMENT_DEVICES.map((device) => screen.getByTestId(`management-device-faq-${device.id}`));
     expect(accordions).toHaveLength(MANAGEMENT_DEVICES.length);
     expect(accordions.every((accordion) => !accordion.hasAttribute("open"))).toBe(true);

@@ -127,8 +127,8 @@ export default function ManagementDeviceFaq() {
       </section>
 
       <section className="bg-[#f7f5f0] px-4 py-12 md:py-20">
-        <div className="mx-auto max-w-3xl">
-          <div className="space-y-6 md:space-y-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8" data-testid="management-device-faq-grid">
             {MANAGEMENT_DEVICES.map((device) => {
               const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
               const description = getText(
@@ -142,7 +142,7 @@ export default function ManagementDeviceFaq() {
               const tags = DEVICE_TAGS[device.id][lang];
 
               return (
-                <article key={device.id} className="overflow-hidden rounded-2xl bg-white shadow-[0_12px_34px_rgba(39,30,20,0.10)]">
+                <article key={device.id} className="h-full overflow-hidden rounded-2xl bg-white shadow-[0_12px_34px_rgba(39,30,20,0.10)]">
                   <div className="flex flex-col gap-6 border-b border-black/5 p-6 sm:flex-row sm:items-center md:p-8">
                     <div className="size-24 shrink-0 overflow-hidden rounded-full bg-[#eee7dc] sm:size-28">
                       <OptimizedImage

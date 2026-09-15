@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { MANAGEMENT_DEVICES } from "@/lib/clinic-data";
 import ManagementDeviceFaq from "./ManagementDeviceFaq";
@@ -15,12 +15,12 @@ vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: "ko", t: { na
 vi.mock("@/hooks/useLocalizedText", () => ({ useLocalizedText: () => ({ getText: (ko: string) => ko }) }));
 
 describe("ManagementDeviceFaq", () => {
-  it("shows purpose/effect tags and one collapsed FAQ per management device", () => {
+  it("shows purpose/effect tags and each device description without FAQ accordions", () => {
     render(<ManagementDeviceFaq />);
 
     expect(screen.getByRole("heading", { level: 1, name: "관리장비 FAQ" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "소노필" })).toBeInTheDocument();
-    expect(screen.getByText("소노필 관리는 어떤 방식으로 진행되나요?")).toBeInTheDocument();
+    expect(screen.getByText("초음파 진동에너지와 이온의 전기적 특성을 이용하여 피부 각질을 제거하고 영양 성분을 깊이 침투시키는 복합 관리 장비입니다.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "포어덤" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "트랜스킨" })).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(MANAGEMENT_DEVICES.length);
@@ -34,14 +34,7 @@ describe("ManagementDeviceFaq", () => {
     const cardGrid = screen.getByTestId("management-device-faq-grid");
     expect(cardGrid).toHaveClass("grid-cols-1", "lg:grid-cols-2");
 
-    const accordions = MANAGEMENT_DEVICES.map((device) => screen.getByTestId(`management-device-faq-${device.id}`));
-    expect(accordions).toHaveLength(MANAGEMENT_DEVICES.length);
-    expect(accordions.every((accordion) => !accordion.hasAttribute("open"))).toBe(true);
-
-    const sonopeelAccordion = screen.getByTestId("management-device-faq-1");
-    fireEvent.click(screen.getByText("소노필 관리는 어떤 방식으로 진행되나요?"));
-    expect(sonopeelAccordion).toHaveAttribute("open");
-    fireEvent.click(screen.getByText("소노필 관리는 어떤 방식으로 진행되나요?"));
-    expect(sonopeelAccordion).not.toHaveAttribute("open");
+    expect(screen.queryByText("소노필 관리는 어떤 방식으로 진행되나요?")).not.toBeInTheDocument();
+    expect(screen.queryAllByRole("group")).toHaveLength(0);
   });
 });

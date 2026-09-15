@@ -5,7 +5,6 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { MANAGEMENT_DEVICES, MANAGEMENT_DEVICE_IMAGES } from "@/lib/clinic-data";
 import { getLocalizedUrl } from "@/lib/localizedPath";
-import { ChevronDown } from "lucide-react";
 
 const pageCopy = {
   ko: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
@@ -68,28 +67,6 @@ const DEVICE_TAGS: Record<string, Record<keyof typeof pageCopy, DeviceTag>> = {
   },
 };
 
-function getDeviceFaq(lang: keyof typeof pageCopy, deviceName: string, description: string) {
-  const copy = {
-    ko: {
-      method: `${deviceName} 관리는 어떤 방식으로 진행되나요?`,
-    },
-    en: {
-      method: `How is ${deviceName} care performed?`,
-    },
-    ja: {
-      method: `${deviceName}のケアはどのように行われますか？`,
-    },
-    zh: {
-      method: `${deviceName}护理如何进行？`,
-    },
-    "zh-TW": {
-      method: `${deviceName}護理如何進行？`,
-    },
-  }[lang];
-
-  return { question: copy.method, answer: description };
-}
-
 export default function ManagementDeviceFaq() {
   const { lang, t } = useLang();
   const { getText } = useLocalizedText();
@@ -138,7 +115,6 @@ export default function ManagementDeviceFaq() {
                 device.shortDescZh,
                 device.shortDescZhTw,
               );
-              const faq = getDeviceFaq(lang, displayName, description);
               const tags = DEVICE_TAGS[device.id][lang];
 
               return (
@@ -167,14 +143,8 @@ export default function ManagementDeviceFaq() {
                     </div>
                   </div>
 
-                  <div className="px-6 py-4 md:px-8">
-                    <details className="group rounded-xl border border-black/8 bg-[#fcfbf8]" data-testid={`management-device-faq-${device.id}`}>
-                      <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-base font-bold leading-relaxed text-[#2c1f0e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)] [&::-webkit-details-marker]:hidden">
-                        <span>{faq.question}</span>
-                        <ChevronDown aria-hidden="true" className="size-5 shrink-0 text-[var(--color-gold-primary)] transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
-                      </summary>
-                      <p className="border-t border-black/5 px-4 py-4 text-sm leading-7 text-[#62584e]">{faq.answer}</p>
-                    </details>
+                  <div className="px-6 py-5 md:px-8 md:py-6">
+                    <p className="text-sm leading-7 text-[#62584e]">{description}</p>
                   </div>
                 </article>
               );

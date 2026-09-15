@@ -5,48 +5,89 @@ import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { MANAGEMENT_DEVICES, MANAGEMENT_DEVICE_IMAGES } from "@/lib/clinic-data";
 import { getLocalizedUrl } from "@/lib/localizedPath";
+import { ChevronDown } from "lucide-react";
 
 const pageCopy = {
-  ko: { eyebrow: "MANAGEMENT DEVICE FAQ" },
-  en: { eyebrow: "MANAGEMENT DEVICE FAQ" },
-  ja: { eyebrow: "MANAGEMENT DEVICE FAQ" },
-  zh: { eyebrow: "MANAGEMENT DEVICE FAQ" },
-  "zh-TW": { eyebrow: "MANAGEMENT DEVICE FAQ" },
+  ko: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
+  en: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "Purpose", effect: "Expected effect", tagLabel: "Primary care purpose and expected effect" },
+  ja: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "ケア目的", effect: "期待できる効果", tagLabel: "主なケア目的と期待できる効果" },
+  zh: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "护理目的", effect: "预期效果", tagLabel: "主要护理目的和预期效果" },
+  "zh-TW": { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "護理目的", effect: "預期效果", tagLabel: "主要護理目的和預期效果" },
 } as const;
 
-function getDeviceFaqs(lang: keyof typeof pageCopy, deviceName: string, description: string) {
+type DeviceTag = { purpose: string; effect: string };
+
+const DEVICE_TAGS: Record<string, Record<keyof typeof pageCopy, DeviceTag>> = {
+  "1": {
+    ko: { purpose: "각질 케어", effect: "영양 성분 침투" }, en: { purpose: "Exfoliation", effect: "Active ingredient delivery" }, ja: { purpose: "角質ケア", effect: "美容成分の浸透" }, zh: { purpose: "去角质", effect: "营养成分渗透" }, "zh-TW": { purpose: "去角質", effect: "營養成分滲透" },
+  },
+  "2": {
+    ko: { purpose: "비타민 전달", effect: "무침 관리" }, en: { purpose: "Vitamin delivery", effect: "Needle-free care" }, ja: { purpose: "ビタミン導入", effect: "針なしケア" }, zh: { purpose: "维生素导入", effect: "无针护理" }, "zh-TW": { purpose: "維生素導入", effect: "無針護理" },
+  },
+  "3": {
+    ko: { purpose: "노폐물 케어", effect: "혈액순환 개선" }, en: { purpose: "Waste removal", effect: "Circulation support" }, ja: { purpose: "老廃物ケア", effect: "血行改善" }, zh: { purpose: "废物清洁", effect: "改善血液循环" }, "zh-TW": { purpose: "廢物清潔", effect: "改善血液循環" },
+  },
+  "4": {
+    ko: { purpose: "수분 케어", effect: "광채 개선" }, en: { purpose: "Moisture care", effect: "Radiance improvement" }, ja: { purpose: "保湿ケア", effect: "ツヤ改善" }, zh: { purpose: "保湿护理", effect: "改善光泽" }, "zh-TW": { purpose: "保濕護理", effect: "改善光澤" },
+  },
+  "5": {
+    ko: { purpose: "콜라겐 재생", effect: "탄력·리프팅" }, en: { purpose: "Collagen regeneration", effect: "Elasticity and lifting" }, ja: { purpose: "コラーゲン再生", effect: "弾力・リフティング" }, zh: { purpose: "促进胶原再生", effect: "弹力与提升" }, "zh-TW": { purpose: "促進膠原再生", effect: "彈力與提升" },
+  },
+  "6": {
+    ko: { purpose: "처짐 케어", effect: "주름 개선" }, en: { purpose: "Sagging care", effect: "Wrinkle improvement" }, ja: { purpose: "たるみケア", effect: "しわ改善" }, zh: { purpose: "改善松弛", effect: "改善皱纹" }, "zh-TW": { purpose: "改善鬆弛", effect: "改善皺紋" },
+  },
+  "7": {
+    ko: { purpose: "피부 재생", effect: "시술 후 회복" }, en: { purpose: "Skin regeneration", effect: "Post-treatment recovery" }, ja: { purpose: "肌再生", effect: "施術後の回復" }, zh: { purpose: "皮肤再生", effect: "术后恢复" }, "zh-TW": { purpose: "皮膚再生", effect: "術後恢復" },
+  },
+  "8": {
+    ko: { purpose: "3D 피부 분석", effect: "전후 데이터 확인" }, en: { purpose: "3D skin analysis", effect: "Before-and-after data" }, ja: { purpose: "3D肌分析", effect: "施術前後データ" }, zh: { purpose: "3D皮肤分析", effect: "前后数据确认" }, "zh-TW": { purpose: "3D皮膚分析", effect: "前後數據確認" },
+  },
+  "9": {
+    ko: { purpose: "비타민 침투", effect: "미백·항산화" }, en: { purpose: "Vitamin delivery", effect: "Whitening and antioxidant care" }, ja: { purpose: "ビタミン浸透", effect: "美白・抗酸化" }, zh: { purpose: "维生素渗透", effect: "美白与抗氧化" }, "zh-TW": { purpose: "維生素滲透", effect: "美白與抗氧化" },
+  },
+  "10": {
+    ko: { purpose: "진피 치유", effect: "시술 후 회복" }, en: { purpose: "Dermal healing", effect: "Post-treatment recovery" }, ja: { purpose: "真皮治癒", effect: "施術後の回復" }, zh: { purpose: "真皮愈合", effect: "术后恢复" }, "zh-TW": { purpose: "真皮癒合", effect: "術後恢復" },
+  },
+  "11": {
+    ko: { purpose: "영양 성분 침투", effect: "콜라겐 생성" }, en: { purpose: "Active ingredient delivery", effect: "Collagen production" }, ja: { purpose: "美容成分の浸透", effect: "コラーゲン生成" }, zh: { purpose: "营养成分渗透", effect: "促进胶原生成" }, "zh-TW": { purpose: "營養成分滲透", effect: "促進膠原生成" },
+  },
+  "12": {
+    ko: { purpose: "수분 개선", effect: "탄력 개선" }, en: { purpose: "Moisture improvement", effect: "Elasticity improvement" }, ja: { purpose: "水分改善", effect: "弾力改善" }, zh: { purpose: "改善水分", effect: "改善弹力" }, "zh-TW": { purpose: "改善水分", effect: "改善彈力" },
+  },
+  "13": {
+    ko: { purpose: "수분 집중 공급", effect: "콜라겐 형성 지원" }, en: { purpose: "Intensive moisture supply", effect: "Collagen formation support" }, ja: { purpose: "水分集中供給", effect: "コラーゲン形成支援" }, zh: { purpose: "集中补水", effect: "支持胶原形成" }, "zh-TW": { purpose: "集中補水", effect: "支持膠原形成" },
+  },
+  "14": {
+    ko: { purpose: "수분 보유력 강화", effect: "피부 톤 개선" }, en: { purpose: "Moisture retention", effect: "Skin-tone improvement" }, ja: { purpose: "水分保持力強化", effect: "肌トーン改善" }, zh: { purpose: "增强保湿力", effect: "改善肤色" }, "zh-TW": { purpose: "增強保濕力", effect: "改善膚色" },
+  },
+  "15": {
+    ko: { purpose: "색소 침착 예방", effect: "피부 안정화" }, en: { purpose: "Hyperpigmentation prevention", effect: "Skin stabilization" }, ja: { purpose: "色素沈着予防", effect: "肌の安定化" }, zh: { purpose: "预防色素沉着", effect: "稳定皮肤" }, "zh-TW": { purpose: "預防色素沉著", effect: "穩定皮膚" },
+  },
+  "16": {
+    ko: { purpose: "피부 손상 회복", effect: "탄력 강화" }, en: { purpose: "Skin-damage recovery", effect: "Elasticity support" }, ja: { purpose: "肌ダメージ回復", effect: "弾力強化" }, zh: { purpose: "修复皮肤损伤", effect: "强化弹力" }, "zh-TW": { purpose: "修復皮膚損傷", effect: "強化彈力" },
+  },
+};
+
+function getDeviceFaq(lang: keyof typeof pageCopy, deviceName: string, description: string) {
   const copy = {
     ko: {
       method: `${deviceName} 관리는 어떤 방식으로 진행되나요?`,
-      planning: "관리 전 무엇을 확인하나요?",
-      planningAnswer: "피부 상태와 관리 목표, 현재 시술 계획을 함께 확인한 뒤 의료진 상담을 통해 개별 안내를 드립니다.",
     },
     en: {
       method: `How is ${deviceName} care performed?`,
-      planning: "What is reviewed before care?",
-      planningAnswer: "Skin condition, care goals, and the current treatment plan are reviewed together before individualized guidance is provided through clinical consultation.",
     },
     ja: {
       method: `${deviceName}のケアはどのように行われますか？`,
-      planning: "ケア前に何を確認しますか？",
-      planningAnswer: "肌の状態、ケアの目的、現在の施術計画を確認し、医療スタッフとの相談を通じて個別にご案内します。",
     },
     zh: {
       method: `${deviceName}护理如何进行？`,
-      planning: "护理前会确认哪些内容？",
-      planningAnswer: "会结合皮肤状态、护理目标和当前治疗计划进行确认，并通过医疗人员咨询提供个别说明。",
     },
     "zh-TW": {
       method: `${deviceName}護理如何進行？`,
-      planning: "護理前會確認哪些內容？",
-      planningAnswer: "會結合皮膚狀態、護理目標和目前療程計畫進行確認，並透過醫療人員諮詢提供個別說明。",
     },
   }[lang];
 
-  return [
-    { question: copy.method, answer: description },
-    { question: copy.planning, answer: copy.planningAnswer },
-  ];
+  return { question: copy.method, answer: description };
 }
 
 export default function ManagementDeviceFaq() {
@@ -97,7 +138,8 @@ export default function ManagementDeviceFaq() {
                 device.shortDescZh,
                 device.shortDescZhTw,
               );
-              const faqs = getDeviceFaqs(lang, displayName, description);
+              const faq = getDeviceFaq(lang, displayName, description);
+              const tags = DEVICE_TAGS[device.id][lang];
 
               return (
                 <article key={device.id} className="overflow-hidden rounded-2xl bg-white shadow-[0_12px_34px_rgba(39,30,20,0.10)]">
@@ -114,17 +156,26 @@ export default function ManagementDeviceFaq() {
                     <div>
                       <p className="text-xs font-semibold tracking-[0.16em] text-[var(--color-gold-primary)]">{device.nameEn}</p>
                       <h2 className="mt-1 text-2xl font-bold text-[#2c1f0e]">{displayName}</h2>
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label={copy.tagLabel}>
+                        <li className="rounded-full bg-[#f3ece2] px-3 py-1.5 text-xs font-semibold text-[#6c4f26]">
+                          <span className="mr-1 text-[#9b7a43]">{copy.purpose}</span>{tags.purpose}
+                        </li>
+                        <li className="rounded-full bg-[#eef2ed] px-3 py-1.5 text-xs font-semibold text-[#48614d]">
+                          <span className="mr-1 text-[#6b8a70]">{copy.effect}</span>{tags.effect}
+                        </li>
+                      </ul>
                     </div>
                   </div>
 
-                  <dl className="divide-y divide-black/5 px-6 py-2 md:px-8">
-                    {faqs.map((faq) => (
-                      <div key={faq.question} className="py-6">
-                        <dt className="text-base font-bold leading-relaxed text-[#2c1f0e]">{faq.question}</dt>
-                        <dd className="mt-3 text-sm leading-7 text-[#62584e]">{faq.answer}</dd>
-                      </div>
-                    ))}
-                  </dl>
+                  <div className="px-6 py-4 md:px-8">
+                    <details className="group rounded-xl border border-black/8 bg-[#fcfbf8]" data-testid={`management-device-faq-${device.id}`}>
+                      <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-base font-bold leading-relaxed text-[#2c1f0e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-gold-primary)] [&::-webkit-details-marker]:hidden">
+                        <span>{faq.question}</span>
+                        <ChevronDown aria-hidden="true" className="size-5 shrink-0 text-[var(--color-gold-primary)] transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
+                      </summary>
+                      <p className="border-t border-black/5 px-4 py-4 text-sm leading-7 text-[#62584e]">{faq.answer}</p>
+                    </details>
+                  </div>
                 </article>
               );
             })}

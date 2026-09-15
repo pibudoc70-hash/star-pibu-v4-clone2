@@ -6,3 +6,7 @@
 - 각 장비는 기존의 두 FAQ 구조를 사용한다. 첫 번째 답변은 `MANAGEMENT_DEVICES`의 locale별 `shortDesc`이며, 두 번째 질문·답변은 기존 인라인 FAQ의 locale별 상담 안내 문구다.
 - 동적 DOM 수량 확인은 브라우저 하위 시스템의 crash-loop 제한으로 실행할 수 없었다. 이 수량은 `ManagementDeviceFaq.test.tsx`에서 16개의 `h2`와 16개의 공통 준비 안내 질문으로 검증한다.
 - 메인 장비 섹션의 FAQ 버튼과 인라인 영역 부재는 `ManagementDevicesSection.test.tsx` 및 `round5.regression.test.ts`에서 별도로 검증한다.
+
+## 태그 및 아코디언 개선
+
+로컬 미리보기 `/management-device-faq`의 텍스트 추출에서 소노필부터 트랜스킨까지 모든 장비에 `관리 목적`과 `기대 효과` 태그가 표시되는 것을 확인했다. 각 태그의 문구는 장비별 기존 `shortDesc`에 이미 있던 목적·효과 표현을 짧게 재사용한 것이다. 각 카드에는 해당 장비의 관리 방식 질문 하나만 남았고, 삭제 요청된 `관리 전 무엇을 확인하나요?` 문구는 추출 결과에 나타나지 않았다. 시각 스크린샷 캡처는 실패했으나, 아코디언의 기본 닫힘 상태와 클릭에 따른 열기·닫기는 `ManagementDeviceFaq.test.tsx`에서 검증한다.

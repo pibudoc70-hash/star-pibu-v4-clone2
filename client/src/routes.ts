@@ -38,6 +38,7 @@ export const pages = {
   ForeignGuide:       () => import("@/pages/ForeignGuide"),
   ForeignPriceList:   () => import("@/pages/ForeignPriceList"),
   Research:           () => import("@/pages/Research"),
+  ManagementDeviceFaq:() => import("@/pages/ManagementDeviceFaq"),
   Privacy:            () => import("@/pages/Privacy"),
   NonCoveredGuide:    () => import("@/pages/NonCoveredGuide"),
   MyReservations:     () => import("@/pages/MyReservations"),
@@ -85,6 +86,7 @@ export const LandingJA          = lazy(pages.LandingJA);
 export const LandingZH          = lazy(pages.LandingZH);
 export const LandingZHTW        = lazy(pages.LandingZHTW);
 export const Research           = lazy(pages.Research);
+export const ManagementDeviceFaq = lazy(pages.ManagementDeviceFaq);
 export const Doctors            = lazy(pages.Doctors);
 export const Directions         = lazy(pages.Directions);
 
@@ -115,6 +117,7 @@ export const LANG_ROUTES: LangRoute[] = [
   { path: "about",             component: About },
   { path: "foreign-guide",     component: ForeignGuide },
   { path: "research",          component: Research },
+  { path: "management-device-faq", component: ManagementDeviceFaq },
   { path: "privacy",           component: Privacy },
   { path: "non-covered",       component: NonCoveredGuide },
   { path: "doctors",           component: Doctors },

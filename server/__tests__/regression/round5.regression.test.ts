@@ -97,26 +97,13 @@ describe("B. DoctorsSection - useMemo + aria-label", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 // C. ManagementDevicesSection
 // ─────────────────────────────────────────────────────────────────────────────
-describe("C. ManagementDevicesSection - 스크롤 버튼 aria-label i18n", () => {
+describe("C. ManagementDevicesSection - 메인 FAQ 진입 제거", () => {
   const src = read("client/src/components/ManagementDevicesSection.tsx");
 
-  it("'Scroll left' 영어 하드코딩이 없어야 한다", () => {
-    expect(src).not.toContain('"Scroll left"');
-    expect(src).not.toContain("'Scroll left'");
-  });
-
-  it("'Scroll right' 영어 하드코딩이 없어야 한다", () => {
-    expect(src).not.toContain('"Scroll right"');
-    expect(src).not.toContain("'Scroll right'");
-  });
-
-  it("스크롤 버튼 aria-label에 i18n 키를 사용해야 한다", () => {
-    expect(src).toMatch(/aria-label=\{t\.managementDevices\.(scrollPrevLabel|scrollNextLabel)/);
-  });
-
-  it("스크롤 버튼 aria-label에 fallback 영어 하드코딩이 없어야 한다", () => {
-    expect(src).not.toContain('?? "Scroll left"');
-    expect(src).not.toContain('?? "Scroll right"');
+  it("기기 FAQ 버튼 및 인라인 FAQ 영역을 렌더하지 않아야 한다", () => {
+    expect(src).not.toContain("getDeviceFaqs");
+    expect(src).not.toContain("getDeviceFaqHeading");
+    expect(src).not.toContain("management-device-card-faq-");
   });
 });
 

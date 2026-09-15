@@ -49,6 +49,7 @@ export interface I18nContent {
     contact: string;
     foreignGuide: string;
     research: string;
+    managementDeviceFaq: string;
     notice: string;
   };
   hero: {

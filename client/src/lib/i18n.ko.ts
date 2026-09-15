@@ -17,6 +17,7 @@ export const ko: I18nContent = {
     contact: "오시는 길",
     foreignGuide: "외국어 안내",
     research: "연구 및 발표 활동",
+    managementDeviceFaq: "관리장비 FAQ",
     equipment3: "시술·장비 소개",
     equipment2: "주요 시술 및 장비",
     notice: "공지사항",

@@ -70,16 +70,10 @@ describe("ManagementDevicesSection dialog keyboard focus", () => {
     expect(within(dialog).queryByRole("button", { name: "기기 FAQ" })).not.toBeInTheDocument();
   });
 
-  it("expands device FAQ below the card photo without opening the photo-description dialog", () => {
+  it("does not render per-device FAQ controls on the main management-device section", () => {
     render(<ManagementDevicesSection />);
 
-    const faqButton = screen.getByRole("button", { name: "소노필 기기 FAQ" });
-    expect(faqButton).toHaveAttribute("aria-expanded", "false");
-
-    fireEvent.click(faqButton);
-
-    expect(faqButton).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("region", { name: "소노필 기기 FAQ" })).toBeInTheDocument();
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /기기 FAQ/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: /기기 FAQ/ })).not.toBeInTheDocument();
   });
 });

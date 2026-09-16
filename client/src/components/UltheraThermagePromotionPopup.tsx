@@ -143,7 +143,7 @@ export default function UltheraThermagePromotionPopup() {
             disabled={isClosing}
             aria-label="닫기"
             data-testid="promotion-popup-close"
-            className="inline-flex size-[52px] items-center justify-center rounded-full bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-200 active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px] md:rounded-none md:bg-transparent md:shadow-none md:hover:bg-transparent md:hover:text-[var(--color-gold-primary)] md:hover:shadow-none md:active:scale-100"
+            className="promotion-popup-close inline-flex size-[52px] items-center justify-center rounded-full bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-200 active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px] md:rounded-none md:bg-transparent md:shadow-none md:hover:bg-transparent md:hover:text-[var(--color-gold-primary)] md:hover:shadow-none md:active:scale-100"
           >
             <X size={22} strokeWidth={2.6} aria-hidden="true" />
             <span className="sr-only">닫기</span>

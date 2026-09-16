@@ -2703,6 +2703,19 @@
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* PC popup close icon must remain a bare X: global focus rules are intentionally neutralized only here. */
+@media (min-width: 768px) {
+  .promotion-popup-close,
+  .promotion-popup-close:hover,
+  .promotion-popup-close:focus,
+  .promotion-popup-close:focus-visible,
+  .promotion-popup-close:active {
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .event-card__media--hoverable:hover .event-card__media-image {
     transform: scale(1.04);

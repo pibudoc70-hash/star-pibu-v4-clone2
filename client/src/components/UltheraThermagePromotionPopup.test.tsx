@@ -1,5 +1,7 @@
 import "@testing-library/jest-dom";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import UltheraThermagePromotionPopup, {
   DISMISS_ANIMATION_MS,
@@ -7,6 +9,8 @@ import UltheraThermagePromotionPopup, {
   PROMOTION_HIDE_UNTIL_DATE_KEY,
   ULTHERA_THERMAGE_PROMOTIONS,
 } from "./UltheraThermagePromotionPopup";
+
+const globalStyles = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("UltheraThermagePromotionPopup", () => {
   const originalRequestAnimationFrame = window.requestAnimationFrame;
@@ -147,8 +151,13 @@ describe("UltheraThermagePromotionPopup", () => {
     renderVisiblePopup();
     const closeButton = screen.getByRole("button", { name: "닫기" });
 
-    expect(closeButton).toHaveClass("size-[52px]", "rounded-full", "bg-[var(--color-star-navy)]", "shadow-[0_8px_20px_rgba(0,0,0,0.5)]");
+    expect(closeButton).toHaveClass("promotion-popup-close", "size-[52px]", "rounded-full", "bg-[var(--color-star-navy)]", "shadow-[0_8px_20px_rgba(0,0,0,0.5)]");
     expect(closeButton).toHaveClass("md:rounded-none", "md:bg-transparent", "md:shadow-none", "md:hover:bg-transparent", "md:hover:shadow-none", "md:active:scale-100");
     expect(closeButton).not.toHaveAttribute("data-hovered");
+    expect(globalStyles).toContain("@media (min-width: 768px) {");
+    expect(globalStyles).toContain(".promotion-popup-close:focus-visible");
+    expect(globalStyles).toContain("border: 0 !important;");
+    expect(globalStyles).toContain("outline: 0 !important;");
+    expect(globalStyles).toContain("box-shadow: none !important;");
   });
 });

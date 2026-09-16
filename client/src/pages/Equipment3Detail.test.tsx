@@ -22,4 +22,8 @@ describe("Equipment3Detail error navigation", () => {
     render(<Equipment3Detail />);
     expect(screen.getByRole("link", { name: "목록으로 돌아가기" })).toHaveAttribute("href", "/equipment3?tab=skin");
   });
+
+  it("keeps an encoded Korean slug as the public detail-route input", () => {
+    expect(decodeURIComponent("%EC%9A%B8%EC%8D%A8%EB%9D%BC%ED%94%BC-%ED%94%84%EB%9D%BC%EC%9E%84")).toBe("울써라피-프라임");
+  });
 });

@@ -12,10 +12,33 @@ export async function getEquipment3All(): Promise<Equipment3Item[]> {
   return db.select().from(equipment3).orderBy(asc(equipment3.sortOrder));
 }
 
+/**
+ * 기존 광고·공유 URL에서 한글 장비명 사이의 공백, 하이픈, 밑줄이 포함된 경우에만
+ * 저장된 compact slug를 보완 조회한다. 정확한 slug는 항상 우선 조회해 충돌을 피한다.
+ */
+export function getEquipment3SlugFallback(slug: string): string | undefined {
+  const normalizedSlug = slug.normalize("NFC");
+  const legacyAlias: Record<string, string> = {
+    // 기존 공개 URL은 '울써라피' 표기를 사용하지만, 현재 저장 slug는 '울쎄라피'다.
+    "울써라피-프라임": "울쎄라피프라임",
+    "울써라피프라임": "울쎄라피프라임",
+  };
+  if (legacyAlias[normalizedSlug]) return legacyAlias[normalizedSlug];
+
+  const compactSlug = normalizedSlug.replace(/[\s_-]+/g, "");
+  return compactSlug && compactSlug !== slug ? compactSlug : undefined;
+}
+
 export async function getEquipment3BySlug(slug: string): Promise<Equipment3Item | undefined> {
   const db = await getDb();
-  const rows = await db.select().from(equipment3).where(eq(equipment3.slug, slug)).limit(1);
-  return rows[0];
+  const exactRows = await db.select().from(equipment3).where(eq(equipment3.slug, slug)).limit(1);
+  if (exactRows[0]) return exactRows[0];
+
+  const fallbackSlug = getEquipment3SlugFallback(slug);
+  if (!fallbackSlug) return undefined;
+
+  const fallbackRows = await db.select().from(equipment3).where(eq(equipment3.slug, fallbackSlug)).limit(1);
+  return fallbackRows[0];
 }
 
 export async function getEquipment3ById(id: number): Promise<Equipment3Item | undefined> {

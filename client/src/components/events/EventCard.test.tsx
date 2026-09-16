@@ -104,7 +104,7 @@ describe("EventCard design pilot", () => {
 
     const showcase = screen.getByTestId("event-card-showcase");
     expect(showcase).toHaveAttribute("data-event-id", "42");
-    expect(screen.getByRole("img", { name: "울쎄라피 프라임" })).toHaveClass("object-contain");
+    expect(screen.getByRole("img", { name: "울쎄라피 프라임" })).toHaveClass("block", "h-auto", "w-full");
     expect(screen.getByText("탄력 케어 이벤트")).toHaveClass("line-clamp-1");
     expect(screen.getAllByText("390,000원")[0]).toHaveClass("event-card__discount-price");
     expect(screen.getAllByText("500,000원")[0]).toHaveClass("event-card__normal-price", "line-through");

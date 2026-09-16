@@ -389,18 +389,18 @@ function ShowcaseEventCard({
 
   return (
     <article data-event-id={event.id} data-testid="event-card-showcase" className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="event-card__showcase-media flex items-center justify-center overflow-hidden border-b border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] bg-white p-0">
+      <div className="event-card__showcase-media overflow-hidden border-b border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] p-0">
         {event.imageUrl ? (
           <OptimizedImage
             src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
             alt={title}
-            className="h-full w-full object-contain"
+            className="block h-auto w-full"
             width={800}
             height={533}
             priority={false}
           />
         ) : (
-          <div className="h-full w-full bg-[var(--brand-bg-alt)]" aria-hidden="true" />
+          <div className="w-full bg-[var(--brand-bg-alt)] aspect-[3/2]" aria-hidden="true" />
         )}
       </div>
       <div className="event-card__showcase-content flex h-full min-h-0 flex-1 flex-col p-5">

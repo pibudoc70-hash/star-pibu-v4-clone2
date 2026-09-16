@@ -52,16 +52,16 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain("スターの特別価格で、ワンランク上のスキンケアを。");
   });
 
-  it("uses an edge-to-edge contained thumbnail and every existing option price for showcase cards", () => {
+  it("uses a native-ratio, edge-to-edge thumbnail and every existing option price for showcase cards", () => {
     expect(eventCardSource).toContain("event-card__showcase-media");
-    expect(eventCardSource).toContain('className="h-full w-full object-contain"');
-    expect(eventCardSource).toContain("bg-white p-0");
+    expect(eventCardSource).toContain('className="block h-auto w-full"');
+    expect(eventCardSource).not.toContain("object-contain");
+    expect(eventCardSource).not.toContain("bg-white p-0");
     expect(eventCardSource).toContain("event-card__discount-price");
     expect(eventCardSource).toContain("event-card__normal-price line-through");
     expect(eventCardSource).toContain("priceRows.map((row)");
     expect(eventCardSource).toContain("옵션별 가격");
     expect(eventCardSource).not.toContain("event-card__showcase-phone");
-    expect(styles).toContain(".event-card__showcase-media {");
-    expect(styles).toContain("aspect-ratio: 3 / 2;");
+    expect(styles).not.toContain(".event-card__showcase-media {");
   });
 });

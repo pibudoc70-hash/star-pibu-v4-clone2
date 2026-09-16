@@ -4,6 +4,8 @@ import { resolve } from "node:path";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "./equipmentInfographics";
 
 const detailPageSource = readFileSync(resolve(process.cwd(), "client/src/pages/Equipment3Detail.tsx"), "utf8");
+const ultherapySectionSource = readFileSync(resolve(process.cwd(), "client/src/components/UltherapyPrincipleSection.tsx"), "utf8");
+const ultherapyDataSource = readFileSync(resolve(process.cwd(), "shared/ultherapyPrinciple.ts"), "utf8");
 
 describe("equipment explanatory infographics", () => {
   it("maps the uploaded Korean explainer assets only to the two approved lifting devices", () => {
@@ -19,10 +21,15 @@ describe("equipment explanatory infographics", () => {
     });
   });
 
-  it("renders the explainer as a Korean-only detail section with accessible image context", () => {
-    expect(detailPageSource).toContain('lang === "ko" ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS');
+  it("keeps the approved image explainer for non-Ultherapy Korean devices and uses semantic HTML for Ultherapy Prime", () => {
+    expect(detailPageSource).toContain('lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS');
     expect(detailPageSource).toContain('aria-labelledby="equipment-infographic-heading"');
     expect(detailPageSource).toContain("시술 원리 인포그래픽");
     expect(detailPageSource).toContain("본 이미지는 시술 원리에 대한 이해를 돕기 위한 자료");
+    expect(detailPageSource).toContain("<UltherapyPrincipleSection />");
+    expect(ultherapySectionSource).toContain("ULTHERAPY_PRIME_PRINCIPLE");
+    expect(ultherapyDataSource).toContain("울쎄라, 피부 속에서 시작되는 탄력 리프팅");
+    expect(ultherapyDataSource).toContain("4단계 시술 원리");
+    expect(ultherapyDataSource).toContain("회복 과정 타임라인");
   });
 });

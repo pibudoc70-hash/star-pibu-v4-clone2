@@ -82,6 +82,20 @@ describe("equipmentPrerender", () => {
     expect(html).toContain("MedicalProcedure");
   });
 
+  it("울쎄라피 프라임 원본 HTML은 이미지 안 문구 대신 시맨틱 시술 원리·깊이·타임라인 텍스트를 제공한다", () => {
+    const html = buildEquipmentPrerenderedHtml(template, { ...item, slug: "울쎄라피프라임", name: "울쎄라피 프라임" }, "ko", "/equipment3/%EC%9A%B8%EC%8D%A8%EB%9D%BC%ED%94%BC%ED%94%84%EB%9D%BC%EC%9E%84");
+
+    expect(html).toContain("울쎄라, 피부 속에서 시작되는 탄력 리프팅");
+    expect(html).toContain("1.5mm · 표피");
+    expect(html).toContain("3.0mm · 진피");
+    expect(html).toContain("4.5mm · 피하지지층");
+    expect(html).toContain("피부층 확인");
+    expect(html).toContain("미세 열응고점 형성");
+    expect(html).toContain("시술 직후");
+    expect(html).toContain("수개월 후");
+    expect(html).toContain("시술 전 의료진 상담이 필요합니다.");
+  });
+
   it("저장 FAQ를 원본 HTML과 FAQPage JSON-LD에 함께 넣는다", () => {
     const html = buildEquipmentPrerenderedHtml(template, item, "ko", "/equipment3/rejuran");
     expect(html).toContain("저장 FAQ 질문");

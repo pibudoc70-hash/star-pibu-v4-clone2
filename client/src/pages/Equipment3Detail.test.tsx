@@ -1,9 +1,12 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import Equipment3Detail from "./Equipment3Detail";
 
 let queryResult = { data: undefined, isLoading: false, isError: true };
+const equipmentDetailSource = readFileSync(resolve(process.cwd(), "client/src/pages/Equipment3Detail.tsx"), "utf8");
 
 vi.mock("wouter", () => ({
   useParams: () => ({ slug: "missing-device" }),
@@ -39,5 +42,11 @@ describe("Equipment3Detail error navigation", () => {
     expect(hero).toHaveClass("md:pb-12");
     expect(hero).not.toHaveClass("md:py-12");
     queryResult = { data: undefined, isLoading: false, isError: true };
+  });
+
+  it("uses a dedicated semantic section for Korean Ultherapy Prime instead of its image-only infographic", () => {
+    expect(equipmentDetailSource).toContain("isUltherapyPrimeSlug(item.slug)");
+    expect(equipmentDetailSource).toContain("<UltherapyPrincipleSection />");
+    expect(equipmentDetailSource).toContain("!isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug");
   });
 });

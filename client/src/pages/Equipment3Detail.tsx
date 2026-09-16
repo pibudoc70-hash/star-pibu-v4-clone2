@@ -20,6 +20,8 @@ import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } 
 import { getLocalizedEquipmentFaqs } from "@shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
+import { isUltherapyPrimeSlug } from "@shared/ultherapyPrinciple";
+import UltherapyPrincipleSection from "@/components/UltherapyPrincipleSection";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
@@ -224,7 +226,8 @@ export default function Equipment3Detail() {
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
-  const explanatoryInfographic = lang === "ko" ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
+  const isUltherapyPrime = lang === "ko" && isUltherapyPrimeSlug(item.slug);
+  const explanatoryInfographic = lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -504,7 +507,9 @@ export default function Equipment3Detail() {
           </section>
         )}
 
-        {explanatoryInfographic && (
+        {isUltherapyPrime ? (
+          <UltherapyPrincipleSection />
+        ) : explanatoryInfographic && (
           <section className="mb-12" aria-labelledby="equipment-infographic-heading">
             <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
             <figure className="equipment-detail__infographic mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">

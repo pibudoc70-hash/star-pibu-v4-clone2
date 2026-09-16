@@ -99,15 +99,27 @@ describe("EventCard design pilot", () => {
     expect(screen.getByRole("link", { name: "카카오 상담" }).parentElement).toHaveClass("hidden", "md:flex");
   });
 
+  it("renders the desktop showcase with its complete thumbnail, price, Kakao, and phone information", () => {
+    render(<EventCard event={event} getLocalizedText={(item, field) => item[field]} variant="showcase" />);
+
+    expect(screen.getByTestId("event-card-showcase")).toHaveAttribute("data-event-id", "42");
+    expect(screen.getByRole("img", { name: "울쎄라피 프라임" })).toHaveClass("object-contain");
+    expect(screen.getByText("탄력 케어 이벤트")).toHaveClass("line-clamp-1");
+    expect(screen.getByText("390,000원")).toHaveClass("event-card__discount-price");
+    expect(screen.getByText("500,000원")).toHaveClass("event-card__normal-price", "line-through");
+    expect(screen.getByRole("link", { name: "카카오 상담" })).toHaveAttribute("href", "https://example.com/chat");
+    expect(screen.getByRole("link", { name: "051-818-2300" })).toHaveAttribute("href", "tel:051-818-2300");
+  });
+
   it("is isolated to the desktop event grid while the mobile event table remains the 390px surface", () => {
     const sectionSource = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../SpecialEventSection.tsx"), "utf8");
 
     expect(sectionSource).toContain('<div className="md:hidden">');
     expect(sectionSource).toContain("<EventTableMobile");
-    expect(sectionSource).toContain('<div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">');
-    expect(sectionSource).toContain('variant="lead"');
-    expect(sectionSource).toContain('variant="selector"');
-    expect(sectionSource).toContain("setSelectedEventId");
+    expect(sectionSource).toContain('data-testid="special-event-desktop-grid"');
+    expect(sectionSource).toContain("hidden md:grid md:auto-rows-fr md:grid-cols-3 md:gap-6");
+    expect(sectionSource).toContain('variant="showcase"');
+    expect(sectionSource).not.toContain("setSelectedEventId");
     expect(sectionSource).toContain("<EventCard");
   });
 });

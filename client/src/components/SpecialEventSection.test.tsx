@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SpecialEventSection from "./SpecialEventSection";
@@ -30,20 +30,12 @@ vi.mock("@/components/events/EventCard", () => ({
   default: ({
     event,
     variant,
-    isSelected,
-    onPreview,
   }: {
     event: { id: number; title: string };
     variant?: string;
-    isSelected?: boolean;
-    onPreview?: () => void;
   }) => {
-    if (variant !== "selector") return null;
-    return (
-      <button type="button" aria-pressed={isSelected} onClick={onPreview}>
-        {event.title}
-      </button>
-    );
+    if (variant !== "showcase") return null;
+    return <article data-testid="mock-event-showcase" data-event-id={event.id}>{event.title}</article>;
   },
 }));
 vi.mock("@/components/events/EventTableMobile", () => ({ default: () => null }));
@@ -148,7 +140,7 @@ describe("SpecialEventSection anchor target", () => {
     expect(screen.queryByRole("link", { name: "안전한 관리를 위한 안내" })).not.toBeInTheDocument();
   });
 
-  it("clears a removed selected event so the refreshed selector falls back to the first available event", async () => {
+  it("updates the desktop showcase card grid when the event list refreshes", async () => {
     class VisibleIntersectionObserverMock extends IntersectionObserverMock {
       observe() {
         this.callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
@@ -164,25 +156,25 @@ describe("SpecialEventSection anchor target", () => {
 
     const { rerender } = render(<SpecialEventSection />);
 
-    await waitFor(() => expect(screen.getByRole("button", { name: "이벤트 A" })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole("button", { name: "이벤트 A" }));
-    expect(screen.getByRole("button", { name: "이벤트 A" })).toHaveAttribute("aria-pressed", "true");
+    await waitFor(() => expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(2));
+    expect(screen.getByTestId("special-event-desktop-grid")).toHaveClass("md:grid-cols-3");
 
     specialQuery.mockReturnValue({ ...queryResult, data: [eventB] });
     rerender(<SpecialEventSection />);
 
     await waitFor(() => {
-      const refreshedRows = screen.getAllByRole("button");
-      expect(refreshedRows).toHaveLength(1);
-      expect(refreshedRows[0]).toHaveAttribute("aria-pressed", "true");
+      const refreshedCards = screen.getAllByTestId("mock-event-showcase");
+      expect(refreshedCards).toHaveLength(1);
+      expect(refreshedCards[0]).toHaveAttribute("data-event-id", "202");
     });
 
     specialQuery.mockReturnValue({ ...queryResult, data: [eventB, eventA] });
     rerender(<SpecialEventSection />);
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "이벤트 B" })).toHaveAttribute("aria-pressed", "true");
-      expect(screen.getByRole("button", { name: "이벤트 A" })).toHaveAttribute("aria-pressed", "false");
+      expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(2);
+      expect(screen.getByText("이벤트 B")).toBeInTheDocument();
+      expect(screen.getByText("이벤트 A")).toBeInTheDocument();
     });
   });
 });

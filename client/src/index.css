@@ -2703,6 +2703,15 @@
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Desktop-only SPECIAL EVENT showcase: this component is rendered only inside the md-up grid. */
+.event-card__showcase-media {
+  height: 12.5rem;
+}
+
+.event-card__showcase-phone {
+  color: var(--brand-text-mid, #666666);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .event-card__media--hoverable:hover .event-card__media-image {
     transform: scale(1.04);

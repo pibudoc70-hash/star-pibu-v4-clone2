@@ -9,11 +9,13 @@ const cardSource = readFileSync(
 const cssSource = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("EventCard desktop variants", () => {
-  it("adds explicit lead, compact, and legacy variants without changing the legacy default", () => {
-    expect(cardSource).toContain('EventCardVariant = "lead" | "compact" | "legacy"');
+  it("adds an explicit desktop showcase variant without changing the legacy default", () => {
+    expect(cardSource).toContain('EventCardVariant = "lead" | "compact" | "legacy" | "selector" | "showcase"');
     expect(cardSource).toContain('variant = "legacy"');
     expect(cardSource).toContain('variant === "lead"');
     expect(cardSource).toContain('variant === "compact"');
+    expect(cardSource).toContain('variant === "showcase"');
+    expect(cardSource).toContain("function ShowcaseEventCard");
   });
 
   it("keeps media only in the lead presentation and exposes an accessible compact disclosure", () => {

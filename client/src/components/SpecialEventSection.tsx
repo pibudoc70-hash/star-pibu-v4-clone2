@@ -3,7 +3,7 @@
  *
  * 리팩토링 내역:
  * - 모바일: EventTableMobile (하나의 카드에 모든 시술 목록 + 상세 모달)
- * - 데스크톱: 우측 이벤트 선택 목록 + 좌측 hover/focus 연동 상세 패널
+ * - 데스크톱: 동일 규격의 3열 이벤트 쇼케이스 카드
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Sparkles, RefreshCw } from "lucide-react";
@@ -79,10 +79,10 @@ function SectionHeader({ lang }: { lang: string }) {
     ),
   };
   return (
-    <div className="section-header-block !text-left">
+    <div className="section-header-block !text-left md:!mx-auto md:!max-w-[720px] md:!text-center">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
-      <p className="section-subtitle body-text !mx-0 mt-5 md:whitespace-nowrap">
+      <p className="section-subtitle body-text !mx-0 mt-5 md:!mx-auto md:whitespace-nowrap">
         {subtitleMap[lang] ?? subtitleMap.ko}
       </p>
     </div>
@@ -181,7 +181,6 @@ export default function SpecialEventSection() {
     { lang },
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
-  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const allEvents = specialEvents as SpecialEvent[];
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
   useEventSkeletonTiming(isInitialSkeletonVisible);
@@ -192,13 +191,6 @@ export default function SpecialEventSection() {
     toast.error(parseEventListError(error, lang), { duration: 5000 });
   }, [error, lang]);
 
-  useEffect(() => {
-    if (selectedEventId !== null && allEvents.find((event) => event.id === selectedEventId) === undefined) {
-      const resetSelection = window.setTimeout(() => setSelectedEventId(null), 0);
-      return () => window.clearTimeout(resetSelection);
-    }
-  }, [allEvents, selectedEventId]);
-
   if (isInitialSkeletonVisible) {
     return (
       <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셜 이벤트" aria-busy="true">
@@ -206,13 +198,10 @@ export default function SpecialEventSection() {
         <div className="container">
           <SectionHeader lang={lang} />
           <MobileEventListSkeleton />
-          <div className="hidden items-start gap-10 md:grid md:grid-cols-12 md:gap-8">
-            <div className="md:col-span-5"><EventCardSkeleton /></div>
-            <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white md:col-span-7">
-              <EventCardSkeleton compact />
-              <EventCardSkeleton compact />
-              <EventCardSkeleton compact />
-            </div>
+          <div className="hidden md:grid md:grid-cols-3 md:gap-6">
+            <EventCardSkeleton />
+            <EventCardSkeleton />
+            <EventCardSkeleton />
           </div>
         </div>
       </section>
@@ -249,9 +238,6 @@ export default function SpecialEventSection() {
     );
   }
 
-  const desktopEvents = allEvents;
-  const selectedEvent = allEvents.find((event) => event.id === selectedEventId) ?? allEvents[0];
-
   return (
     <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셜 이벤트">
       <span ref={fetchRef} aria-hidden="true" />
@@ -268,36 +254,16 @@ export default function SpecialEventSection() {
                 getLocalizedText={getLocalizedText}
               />
             </div>
-            {/* 데스크톱: 우측 목록의 hover/focus 선택 이벤트를 좌측 패널에 표시 */}
-            <div className="hidden md:grid md:grid-cols-12 md:items-start md:gap-8">
-              {selectedEvent && (
-                <div className="event-card__desktop-preview-frame md:col-span-5 md:sticky md:top-28 md:self-start">
-                  <div key={selectedEvent.id} className="event-card__preview">
-                    <EventCard
-                      event={selectedEvent}
-                      getLocalizedText={getLocalizedText}
-                      variant="lead"
-                      alwaysExpanded
-                      previewPanelId="special-event-desktop-preview"
-                    />
-                  </div>
-                </div>
-              )}
-              <div className="md:col-span-7">
-                <div className="overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-gold-primary)_20%,transparent)] bg-white">
-                  {desktopEvents.map((event) => (
-                    <EventCard
-                      key={event.id}
-                      event={event}
-                      getLocalizedText={getLocalizedText}
-                      variant="selector"
-                      isSelected={selectedEvent?.id === event.id}
-                      onPreview={() => setSelectedEventId(event.id)}
-                      previewPanelId="special-event-desktop-preview"
-                    />
-                  ))}
-                </div>
-              </div>
+            {/* 데스크톱: 모든 이벤트를 동일한 정보 밀도의 3열 카드로 표시 */}
+            <div data-testid="special-event-desktop-grid" className="hidden md:grid md:auto-rows-fr md:grid-cols-3 md:gap-6">
+              {allEvents.map((event) => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  getLocalizedText={getLocalizedText}
+                  variant="showcase"
+                />
+              ))}
             </div>
             <PainManagementGuide lang={lang} presentation="event-accordion" />
             <div className="mt-10 hidden md:block">

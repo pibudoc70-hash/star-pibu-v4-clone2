@@ -15,20 +15,18 @@ const eventCardSource = readFileSync(
   "utf8",
 );
 
-describe("SpecialEventSection conservative desktop layout", () => {
-  it("uses a hover and focus controlled desktop selection state for the left detail panel", () => {
-    expect(source).toContain("selectedEventId");
-    expect(source).toContain("setSelectedEventId");
-    expect(source).toContain("selectedEvent");
-    expect(source).toContain('variant="selector"');
-    expect(source).toContain('variant="lead"');
-    expect(source).toContain("onPreview={() => setSelectedEventId(event.id)}");
+describe("SpecialEventSection desktop showcase layout", () => {
+  it("uses a three-column grid of equal-density showcase cards only on desktop", () => {
+    expect(source).toContain('data-testid="special-event-desktop-grid"');
+    expect(source).toContain("hidden md:grid md:auto-rows-fr md:grid-cols-3 md:gap-6");
+    expect(source).toContain('variant="showcase"');
+    expect(source).not.toContain("selectedEventId");
+    expect(source).not.toContain('variant="selector"');
   });
 
-  it("preserves the frozen mobile surface and removes the equal desktop three-card grid", () => {
+  it("preserves the frozen mobile event surface", () => {
     expect(source).toContain('<div className="md:hidden">');
     expect(source).toContain("<EventTableMobile");
-    expect(source).not.toContain("grid-cols-3");
   });
 
   it("keeps lazy-fetch accessibility contracts without the removable desktop instruction copy", () => {
@@ -42,60 +40,25 @@ describe("SpecialEventSection conservative desktop layout", () => {
     expect(source).not.toContain("hover:scale-105");
   });
 
-  it("keys the selected preview so each desktop event change replays its fade transition", () => {
-    expect(source).toContain('className="event-card__preview"');
-    expect(source).toContain("key={selectedEvent.id}");
-  });
-
-  it("reserves one consistent desktop preview-media frame so event image changes do not move the next section", () => {
-    expect(source).toContain("event-card__desktop-preview-frame");
-    expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--lead.event-card__media--natural");
-    expect(styles).toContain("aspect-ratio: 3 / 2;");
-    expect(styles).toContain(".event-card__desktop-preview-frame .event-card__media--natural .event-card__media-image");
-  });
-
-  it("keeps the desktop preview crop focused on each event's subject rather than blindly cropping all images at one point", () => {
-    expect(eventCardSource).toContain("data-event-id={event.id}");
-    expect(styles).toContain('.event-card__desktop-preview-frame [data-event-id="10560001"] .event-card__media-image');
-    expect(styles).toContain("object-position: 62% center;");
-    expect(styles).toContain('.event-card__desktop-preview-frame [data-event-id="90001"] .event-card__media-image');
-    expect(styles).toContain("object-position: 42% center;");
-  });
-
-  it("uses an opacity-only desktop preview fade that can replay during rapid sequential selection", () => {
-    expect(styles).toContain(".event-card__preview {");
-    expect(styles).toContain("animation: eventPreviewFade 220ms");
-    expect(styles).toContain("will-change: opacity;");
-    expect(styles).not.toContain("@keyframes eventPreviewFade {\n  from { opacity: 0.12;");
-  });
-
-  it("gives keyboard focus on the desktop event selector a distinct high-visibility state", () => {
-    expect(styles).toContain(".event-card__selector-row:focus-visible {");
-    expect(styles).toContain("outline: 3px solid var(--color-gold-primary);");
-    expect(styles).toContain("outline-offset: -3px;");
-    expect(styles).toContain("background: color-mix(in srgb, var(--color-gold-primary) 16%, white);");
-  });
-
-  it("shows the full desktop event selector list by default and keeps the preview aligned while scanning", () => {
-    expect(source).toContain("const desktopEvents = allEvents;");
-    expect(source).toContain("md:sticky md:top-28 md:self-start");
-    expect(source).not.toContain("const [showMore");
-    expect(source).not.toContain("hasMoreDesktop");
-  });
-
-  it("keeps the preview and first selector on the same shared desktop grid top edge", () => {
-    expect(source).toContain('hidden md:grid md:grid-cols-12');
-    expect(source).not.toContain('data-testid="event-compact-context"');
-  });
-
-  it("keeps the Korean section subtitle on one desktop line while preserving mobile wrapping", () => {
+  it("centers only the desktop header while preserving mobile wrapping", () => {
+    expect(source).toContain("section-header-block !text-left md:!mx-auto md:!max-w-[720px] md:!text-center");
+    expect(source).toContain("section-subtitle body-text !mx-0 mt-5 md:!mx-auto md:whitespace-nowrap");
     expect(source).toContain("md:whitespace-nowrap");
     expect(source).toContain("md:hidden");
   });
 
-  it("keeps every locale subtitle on one desktop line and gives the event header more breathing room", () => {
-    expect(source).toContain("section-subtitle body-text !mx-0 mt-5 md:whitespace-nowrap");
+  it("keeps every locale subtitle on one desktop line", () => {
     expect(source).toContain("Experience premium skin care at Star's exclusive prices.");
     expect(source).toContain("スターの特別価格で、ワンランク上のスキンケアを。");
+  });
+
+  it("uses a contained thumbnail and existing consultation/price contracts for showcase cards", () => {
+    expect(eventCardSource).toContain("event-card__showcase-media");
+    expect(eventCardSource).toContain('className="h-full w-full object-contain"');
+    expect(eventCardSource).toContain("event-card__discount-price");
+    expect(eventCardSource).toContain("event-card__normal-price line-through");
+    expect(eventCardSource).toContain("event-card__consult-link");
+    expect(eventCardSource).toContain("event-card__showcase-phone");
+    expect(styles).toContain(".event-card__showcase-media {");
   });
 });

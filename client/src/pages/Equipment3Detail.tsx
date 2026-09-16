@@ -72,7 +72,7 @@ function EquipmentDetailLoading({ label, isDarkMode }: { label: string; isDarkMo
     <div className={`equipment-detail-page min-h-screen${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
       <Header />
       <main id="main-content" aria-busy="true" aria-label={label}>
-        <section className="equipment-detail__loading-hero bg-gradient-to-r from-slate-800 to-slate-900 pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
+        <section className="equipment-detail__loading-hero bg-gradient-to-r from-slate-800 to-slate-900 pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12">
           <div className="container mx-auto px-4 animate-pulse" aria-hidden="true">
             <div className="h-4 w-28 rounded bg-slate-600" />
             <div className="mt-4 h-10 max-w-md rounded bg-slate-600" />
@@ -330,7 +330,7 @@ export default function Equipment3Detail() {
       <Header />
 
       {/* 히어로 헤더 */}
-      <div className="equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12">
+      <div className="equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12">
         <div className="container mx-auto px-4">
           {localizedCategory && (
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">

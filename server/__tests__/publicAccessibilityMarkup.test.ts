@@ -38,10 +38,11 @@ describe("공개 화면 접근성 마크업 회귀 방지", () => {
     expect(source).not.toMatch(/<div className="relative" onClick=/);
   });
 
-  it("Equipment3 상세 히어로는 모바일 고정 헤더 아래에서 제목을 시작한다", () => {
+  it("Equipment3 상세 히어로는 모바일·데스크톱 고정 헤더 아래에서 제목을 시작한다", () => {
     const source = readClient("pages/Equipment3Detail.tsx");
 
-    expect(source).toContain("pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:py-12");
+    expect(source).toContain("pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12");
+    expect(source).not.toContain("md:py-12");
   });
 
   it("Equipment3 상세 로딩은 전체 화면 스피너 대신 구조를 유지하는 접근 가능한 스켈레톤을 제공한다", () => {

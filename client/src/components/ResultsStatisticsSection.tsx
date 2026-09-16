@@ -4,7 +4,7 @@ import { useLang } from '@/contexts/LangContext';
 import { DoctorCardSkeleton } from '@/components/SkeletonUI';
 import { useSectionReveal } from '@/hooks/useScrollReveal';
 
-export default function ResultsStatisticsSection() {
+export default function ResultsStatisticsSection({ showRegenerativeMedicineBanner = false }: { showRegenerativeMedicineBanner?: boolean }) {
   const sectionRef = useSectionReveal(60); // [Step64]
   const [isLoading, setIsLoading] = useState(false); // [P1-PERF] 가짜 800ms 로딩 제거: deferMount로 뷰포트 근처에서 마운트되므로 즉시 렌더
   const { t } = useLang();
@@ -42,7 +42,7 @@ export default function ResultsStatisticsSection() {
         </div>
 
         {/* 의료진 카드 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${showRegenerativeMedicineBanner ? "mb-6 md:mb-8" : "mb-16"}`}>
           {isLoading ? (
             <>
               <DoctorCardSkeleton />
@@ -77,6 +77,27 @@ export default function ResultsStatisticsSection() {
           ))
           )}
         </div>
+        {showRegenerativeMedicineBanner && (
+          <div data-testid="regenerative-medicine-banner" className="w-full">
+            <a
+              href="https://star-pibu.com/notice/90001"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full max-w-[92%] mx-auto rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.30)] md:max-w-none"
+              aria-label="보건복지부 지정 첨단재생의료 실시기관 공지 보기"
+            >
+              <img
+                src="/manus-storage/regen-medicine-banner-pc2_430fd36f_89f4a3e5.webp"
+                alt="보건복지부 지정 첨단재생의료 실시기관 — 스타피부과는 보건복지부로부터 첨단재생의료 실시기관에 지정됐습니다"
+                className="w-full h-auto block"
+                width={1470}
+                height={368}
+                loading="lazy"
+                fetchPriority="low"
+              />
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

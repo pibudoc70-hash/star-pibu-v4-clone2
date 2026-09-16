@@ -435,27 +435,6 @@ export default function Home() {
         <LiftingPositioningSummary />
         <MobileBottomCTA />
 
-        {/* 1-B. 첨단재생의료 실시기관 배너 — SPECIAL EVENT 위 */}
-        <div className="section-bg-cream py-6 md:py-8 flex justify-center px-4 md:px-0">
-          <a
-            href="https://star-pibu.com/notice/90001"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full max-w-[92%] md:w-[70%] md:max-w-none mx-auto rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,0,0,0.14)] transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.30)]"
-            aria-label="보건복지부 지정 첨단재생의료 실시기관 공지 보기"
-          >
-            <img
-              src="/manus-storage/regen-medicine-banner-pc2_430fd36f_89f4a3e5.webp"
-              alt="보건복지부 지정 첨단재생의료 실시기관 — 스타피부과는 보건복지부로부터 첨단재생의료 실시기관에 지정됐습니다"
-              className="w-full h-auto block"
-              width={1470}
-              height={368}
-              loading="lazy"
-              fetchPriority="low"
-            />
-          </a>
-        </div>
-
         {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
         <DeferredMount
           fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
@@ -543,7 +522,7 @@ export default function Home() {
           >
             <div className="section-bg-gold-soft">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
-                <ResultsStatisticsSection />
+                <ResultsStatisticsSection showRegenerativeMedicineBanner />
               </Suspense>
             </div>
           </DeferredMount>

@@ -208,7 +208,8 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("lg:p-10");
   });
 
-  it("constrains the outer desktop card instead of only its inner reading axis", () => {
-    expect(guideSource).toContain("lg:mx-auto lg:max-w-5xl");
+  it("uses the shared Special Event container width only on desktop", () => {
+    expect(guideSource).toContain("lg:w-full lg:max-w-none lg:p-10");
+    expect(guideSource).not.toContain("lg:max-w-5xl");
   });
 });

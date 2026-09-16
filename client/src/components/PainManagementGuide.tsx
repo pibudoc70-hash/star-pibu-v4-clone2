@@ -324,7 +324,7 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
   });
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:mx-auto lg:max-w-5xl lg:p-10" aria-labelledby={hideHeroTitle ? undefined : headingId} aria-label={hideHeroTitle ? copy.title : undefined}>
+    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:w-full lg:max-w-none lg:p-10" aria-labelledby={hideHeroTitle ? undefined : headingId} aria-label={hideHeroTitle ? copy.title : undefined}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(135deg,rgba(10,18,40,0.04),rgba(215,181,92,0.1),transparent)] md:h-40" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-6xl">
         <header data-testid="pain-management-header" className="mb-4 border-l-2 border-[var(--color-gold-primary)] pl-3 text-left md:mb-8 md:border-l-0 md:pl-0 md:text-center">

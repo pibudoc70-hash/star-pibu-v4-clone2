@@ -65,7 +65,7 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(screen.getByTestId("promotion-popup-controls")).not.toHaveClass("md:-right-14", "md:top-0");
     expect(checkbox).toHaveClass("peer", "sr-only");
     expect(screen.getByRole("button", { name: "닫기" })).toHaveAttribute("data-testid", "promotion-popup-close");
-    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "bg-[var(--color-star-navy)]", "text-white", "md:hover:bg-[var(--color-gold-primary)]", "md:hover:scale-105", "md:size-[52px]");
+    expect(screen.getByRole("button", { name: "닫기" })).toHaveClass("size-[52px]", "bg-[var(--color-star-navy)]", "text-white", "md:size-[52px]", "md:rounded-none", "md:bg-transparent", "md:shadow-none", "md:hover:bg-transparent", "md:hover:text-[var(--color-gold-primary)]");
     expect(screen.getByRole("button", { name: "닫기" })).not.toHaveClass("border-2", "border-[var(--color-gold-primary)]", "md:hover:border-white");
     expect(screen.getByText("닫기")).toHaveClass("sr-only");
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
@@ -143,16 +143,12 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(overlay).toHaveClass("opacity-100");
   });
 
-  it("uses a stronger desktop close-button hover state without applying it on mobile", () => {
-    window.matchMedia = vi.fn().mockImplementation((query: string) => ({ matches: query === "(min-width: 768px)" })) as typeof window.matchMedia;
+  it("removes only desktop circular close-button chrome while retaining the mobile control and shared hit area", () => {
     renderVisiblePopup();
     const closeButton = screen.getByRole("button", { name: "닫기" });
 
-    fireEvent.pointerEnter(closeButton);
-    expect(closeButton).toHaveAttribute("data-hovered", "true");
-    expect(closeButton).toHaveStyle({ color: "rgb(44, 44, 44)", scale: "1.05" });
-
-    fireEvent.pointerLeave(closeButton);
-    expect(closeButton).toHaveAttribute("data-hovered", "false");
+    expect(closeButton).toHaveClass("size-[52px]", "rounded-full", "bg-[var(--color-star-navy)]", "shadow-[0_8px_20px_rgba(0,0,0,0.5)]");
+    expect(closeButton).toHaveClass("md:rounded-none", "md:bg-transparent", "md:shadow-none", "md:hover:bg-transparent", "md:hover:shadow-none", "md:active:scale-100");
+    expect(closeButton).not.toHaveAttribute("data-hovered");
   });
 });

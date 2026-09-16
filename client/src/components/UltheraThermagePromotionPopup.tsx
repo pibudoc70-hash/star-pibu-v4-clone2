@@ -24,7 +24,6 @@ export default function UltheraThermagePromotionPopup() {
   const [hideForToday, setHideForToday] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isCloseHovered, setIsCloseHovered] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const dismissTimerRef = useRef<number | null>(null);
@@ -79,7 +78,6 @@ export default function UltheraThermagePromotionPopup() {
       setVisible(false);
       setIsEntering(false);
       setIsClosing(false);
-      setIsCloseHovered(false);
       dismissTimerRef.current = null;
       window.requestAnimationFrame(() => {
         lastFocusedRef.current?.focus();
@@ -142,16 +140,10 @@ export default function UltheraThermagePromotionPopup() {
             ref={closeButtonRef}
             type="button"
             onClick={dismiss}
-            onPointerEnter={() => {
-              if (window.matchMedia?.("(min-width: 768px)")?.matches) setIsCloseHovered(true);
-            }}
-            onPointerLeave={() => setIsCloseHovered(false)}
             disabled={isClosing}
             aria-label="닫기"
             data-testid="promotion-popup-close"
-            data-hovered={isCloseHovered ? "true" : "false"}
-            className="inline-flex size-[52px] items-center justify-center rounded-full bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-200 md:hover:scale-105 md:hover:bg-[var(--color-gold-primary)] md:hover:text-[var(--color-star-navy)] md:hover:shadow-[0_12px_28px_rgba(0,0,0,0.6)] active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px]"
-            style={isCloseHovered ? { backgroundColor: "#C4A882", color: "#2C2C2C", scale: "1.05" } : undefined}
+            className="inline-flex size-[52px] items-center justify-center rounded-full bg-[var(--color-star-navy)] text-white shadow-[0_8px_20px_rgba(0,0,0,0.5)] transition-[background-color,color,transform,box-shadow] duration-200 active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-star-navy)] md:size-[52px] md:rounded-none md:bg-transparent md:shadow-none md:hover:bg-transparent md:hover:text-[var(--color-gold-primary)] md:hover:shadow-none md:active:scale-100"
           >
             <X size={22} strokeWidth={2.6} aria-hidden="true" />
             <span className="sr-only">닫기</span>

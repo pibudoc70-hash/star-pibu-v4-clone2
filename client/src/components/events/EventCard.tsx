@@ -384,19 +384,12 @@ function ShowcaseEventCard({
   priceRows,
   displayPrice,
   title,
-  chatUrl,
-  chatBg,
-  chatColor,
-  chatLabel,
-  phoneHref,
-  phoneLabel,
 }: VariantCardProps) {
   const subtitle = getLocalizedText(event, "subtitle");
-  const firstPriceLabel = priceRows[0]?.label || getLocalizedText(event, "productName");
 
   return (
     <article data-event-id={event.id} data-testid="event-card-showcase" className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="event-card__showcase-media flex items-center justify-center overflow-hidden border-b border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] bg-white px-4 py-3">
+      <div className="event-card__showcase-media flex items-center justify-center overflow-hidden border-b border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] bg-white p-0">
         {event.imageUrl ? (
           <OptimizedImage
             src={withVersion(event.imageUrl, event.updatedAt instanceof Date ? event.updatedAt.getTime() : event.updatedAt)}
@@ -413,26 +406,24 @@ function ShowcaseEventCard({
       <div className="event-card__showcase-content flex h-full min-h-0 flex-1 flex-col p-5">
         <h3 className="event-card__title mb-2 font-semibold leading-tight">{title}</h3>
         {subtitle && <p className="event-card__subtitle mb-4 line-clamp-1">{subtitle}</p>}
-        {firstPriceLabel && <p className="event-card__product-label mb-1.5 truncate">{firstPriceLabel}</p>}
-        <div className="mb-5 flex min-h-7 items-baseline gap-2">
+        <div className="mb-3 flex min-h-7 items-baseline gap-2">
           <span className="event-card__discount-price font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
           {displayPrice.normalPrice > 0 && <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>}
           <span className="event-card__vat-badge inline-flex items-center rounded px-1.5 py-0.5 font-medium">VAT 포함</span>
         </div>
-        <div className="mt-auto flex items-center gap-3">
-          <a
-            href={chatUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="event-card__consult-link flex-1 rounded-xl px-4 py-2.5 text-center font-semibold transition-opacity duration-200 hover:opacity-85"
-            style={{ background: chatBg, color: chatColor }}
-          >
-            {chatLabel}
-          </a>
-          <a href={phoneHref} className="event-card__showcase-phone shrink-0 text-sm font-semibold underline-offset-4 hover:underline focus-visible:underline">
-            {phoneLabel}
-          </a>
-        </div>
+        {priceRows.length > 0 && (
+          <ul className="event-card__showcase-options space-y-1.5 border-t border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] pt-3 text-xs" aria-label={`${title} 옵션별 가격`}>
+            {priceRows.map((row) => (
+              <li key={`${row.label}-${row.discountPrice}`} className="flex items-baseline justify-between gap-3">
+                <span className="min-w-0 break-keep text-[var(--brand-text-mid)]">{row.label}</span>
+                <span className="flex shrink-0 items-baseline gap-1.5 whitespace-nowrap">
+                  <span className="font-semibold text-[var(--color-gold-deep)]">{row.discountPrice.toLocaleString()}원</span>
+                  {row.normalPrice > 0 && <span className="event-card__normal-price line-through">{row.normalPrice.toLocaleString()}원</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </article>
   );

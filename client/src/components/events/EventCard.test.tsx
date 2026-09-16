@@ -99,16 +99,20 @@ describe("EventCard design pilot", () => {
     expect(screen.getByRole("link", { name: "카카오 상담" }).parentElement).toHaveClass("hidden", "md:flex");
   });
 
-  it("renders the desktop showcase with its complete thumbnail, price, Kakao, and phone information", () => {
+  it("renders the desktop showcase with an edge-to-edge thumbnail and all registered price options", () => {
     render(<EventCard event={event} getLocalizedText={(item, field) => item[field]} variant="showcase" />);
 
-    expect(screen.getByTestId("event-card-showcase")).toHaveAttribute("data-event-id", "42");
+    const showcase = screen.getByTestId("event-card-showcase");
+    expect(showcase).toHaveAttribute("data-event-id", "42");
     expect(screen.getByRole("img", { name: "울쎄라피 프라임" })).toHaveClass("object-contain");
     expect(screen.getByText("탄력 케어 이벤트")).toHaveClass("line-clamp-1");
-    expect(screen.getByText("390,000원")).toHaveClass("event-card__discount-price");
-    expect(screen.getByText("500,000원")).toHaveClass("event-card__normal-price", "line-through");
-    expect(screen.getByRole("link", { name: "카카오 상담" })).toHaveAttribute("href", "https://example.com/chat");
-    expect(screen.getByRole("link", { name: "051-818-2300" })).toHaveAttribute("href", "tel:051-818-2300");
+    expect(screen.getAllByText("390,000원")[0]).toHaveClass("event-card__discount-price");
+    expect(screen.getAllByText("500,000원")[0]).toHaveClass("event-card__normal-price", "line-through");
+    expect(screen.getByRole("list", { name: "울쎄라피 프라임 옵션별 가격" })).toHaveTextContent("300샷");
+    expect(screen.getByRole("list", { name: "울쎄라피 프라임 옵션별 가격" })).toHaveTextContent("600샷");
+    expect(screen.getByText("720,000원")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "카카오 상담" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "051-818-2300" })).not.toBeInTheDocument();
   });
 
   it("is isolated to the desktop event grid while the mobile event table remains the 390px surface", () => {

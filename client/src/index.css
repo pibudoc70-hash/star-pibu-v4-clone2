@@ -2705,11 +2705,7 @@
 
 /* Desktop-only SPECIAL EVENT showcase: this component is rendered only inside the md-up grid. */
 .event-card__showcase-media {
-  height: 12.5rem;
-}
-
-.event-card__showcase-phone {
-  color: var(--brand-text-mid, #666666);
+  aspect-ratio: 3 / 2;
 }
 
 @media (hover: hover) and (pointer: fine) {

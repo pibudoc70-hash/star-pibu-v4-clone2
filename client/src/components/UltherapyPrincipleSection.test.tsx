@@ -20,5 +20,11 @@ describe("UltherapyPrincipleSection", () => {
     expect(screen.getByText("시술 직후")).toBeTruthy();
     expect(screen.getByText("수개월 후")).toBeTruthy();
     expect(screen.getByLabelText("시술 전 안내").textContent).toContain("시술 전 의료진 상담이 필요합니다.");
+
+    expect(screen.getByTestId("ultherapy-layer-illustration").getAttribute("aria-hidden")).toBe("true");
+    expect(screen.getByTestId("ultherapy-step-illustration-1").getAttribute("aria-hidden")).toBe("true");
+    expect(screen.getByTestId("ultherapy-step-illustration-4").getAttribute("aria-hidden")).toBe("true");
+    expect(screen.getByTestId("ultherapy-timeline-illustration-1").getAttribute("aria-hidden")).toBe("true");
+    expect(screen.getByTestId("ultherapy-timeline-illustration-3").getAttribute("aria-hidden")).toBe("true");
   });
 });

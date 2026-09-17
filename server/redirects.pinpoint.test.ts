@@ -130,12 +130,36 @@ describe("unmapped old-site path families", () => {
     });
   });
 
-  it.each(["/about", "/equipment3", "/en", "/en/treatments/ulthera", "/zh", "/zh-tw", "/zh-tw/equipment3"])(
+  it.each([
+    "/about",
+    "/equipment3",
+    "/en",
+    "/en/treatments/ulthera",
+    "/zh",
+    "/zh-tw",
+    "/zh-tw/equipment3",
+    "/notice",
+    "/notice/new",
+    "/notice/390001",
+    "/notice/390001/edit",
+    "/en/notice/390001",
+    "/zh/notice/390001",
+    "/zh-tw/notice/390001",
+  ])(
     "does not classify current live route %s as a legacy path",
     currentPath => {
       expect(isLegacyHomePath(currentPath)).toBe(false);
     },
   );
+
+  it("does not redirect an active numeric notice detail route to the homepage", async () => {
+    await withRedirectServer(async baseUrl => {
+      const response = await fetch(`${baseUrl}/notice/390001`, { redirect: "manual" });
+
+      expect(response.status).not.toBe(301);
+      expect(response.headers.get("location")).toBeNull();
+    });
+  });
 
   it.each(["/en/sub/old.html", "/zh/board/list.php", "/zh-tw/notice/view.html"])(
     "classifies only safely identifiable old structure %s",

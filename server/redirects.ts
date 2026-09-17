@@ -82,12 +82,16 @@ const CURRENT_LOCALE_LEGACY_SEGMENTS = new Set([
   "customer",
 ]);
 
+/** 실제 공지사항 목록·작성·숫자 ID 상세/수정 라우트는 legacy `/notice` fallback에서 제외한다. */
+const CURRENT_NOTICE_ROUTE_PATTERN = /^\/(?:(?:en|ja|zh|zh-tw)\/)?notice(?:\/(?:new|\d+(?:\/edit)?))?$/;
+
 function isPathAtOrBelow(pathname: string, prefix: string): boolean {
   return pathname === prefix || pathname.startsWith(`${prefix}/`);
 }
 
 /** 현재 locale 홈·정상 다국어 상세를 보호하고, 그 안의 명백한 구 사이트 하위 구조만 식별한다. */
 export function isLegacyHomePath(pathname: string): boolean {
+  if (CURRENT_NOTICE_ROUTE_PATTERN.test(pathname)) return false;
   if (LEGACY_HOME_PREFIXES.some(prefix => isPathAtOrBelow(pathname, prefix))) return true;
 
   const localeMatch = pathname.match(/^\/(en|zh|zh-tw)\/([^/]+)(?:\/|$)/);

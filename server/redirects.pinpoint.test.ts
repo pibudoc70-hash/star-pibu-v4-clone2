@@ -2,7 +2,7 @@ import express from "express";
 import { request } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterEach, describe, expect, it } from "vitest";
-import { buildAdvertisingRedirect, isLegacyHomePath, registerRedirects } from "./redirects";
+import { buildAdvertisingRedirect, isLegacyHomePath, isStaticAssetPath, registerRedirects } from "./redirects";
 
 const servers: Array<ReturnType<express.Express["listen"]>> = [];
 
@@ -150,6 +150,49 @@ describe("unmapped old-site path families", () => {
 
       expect(response.status).toBe(301);
       expect(response.location).toBe("https://star-pibu.com/");
+    });
+  });
+});
+
+describe("static asset protection before legacy redirects", () => {
+  it.each([
+    "/manus-storage/doctor.webp",
+    "/assets/site.css",
+    "/__static/assets/index.js",
+    "/sub/images/banner.png",
+    "/cha/media/hero.jpg",
+    "/board/attachment.pdf",
+    "/en/sub/fonts/clinic.woff2",
+    "/zh-tw/sub/video/intro.webm",
+  ])("classifies %s as a protected static asset path", staticPath => {
+    expect(isStaticAssetPath(staticPath)).toBe(true);
+  });
+
+  it.each(["/sub/sub_04_01.html", "/event/ulthera/index.html", "/equipment3", "/en/treatments/ulthera"])(
+    "does not misclassify HTML or live route %s as a static asset",
+    path => {
+      expect(isStaticAssetPath(path)).toBe(false);
+    },
+  );
+
+  it.each(["/sub/images/banner.webp", "/cha/media/hero.jpg", "/board/attachment.png", "/en/sub/old-script.js"])(
+    "does not redirect legacy static asset %s to the homepage",
+    async staticPath => {
+      await withRedirectServer(async baseUrl => {
+        const response = await fetch(`${baseUrl}${staticPath}`, { redirect: "manual" });
+
+        expect(response.status).not.toBe(301);
+        expect(response.headers.get("location")).toBeNull();
+      });
+    },
+  );
+
+  it("does not redirect an m.star-pibu.co.kr static asset", async () => {
+    await withRedirectServer(async baseUrl => {
+      const response = await requestWithHost(`${baseUrl}/sub/images/banner.webp`, "m.star-pibu.co.kr");
+
+      expect(response.status).not.toBe(301);
+      expect(response.location).toBeUndefined();
     });
   });
 });

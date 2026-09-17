@@ -39,6 +39,19 @@ const LEGACY_EVENT_301_DESTINATIONS: Record<string, string> = {
 
 const LEGACY_HOME_DESTINATION = "https://star-pibu.com/";
 
+const STATIC_PATH_PREFIXES = ["/manus-storage", "/assets", "/__static"] as const;
+const STATIC_FILE_EXTENSION_PATTERN = /\.(?:avif|bmp|css|eot|gif|ico|jpe?g|js|map|mjs|mp3|mp4|m4v|mov|ogg|ogv|otf|pdf|png|svg|ttf|wav|webm|webp|woff2?)$/i;
+
+/**
+ * 리다이렉트보다 정적 자산을 먼저 보호한다.
+ * 구 사이트의 `/sub/.../banner.webp`처럼 legacy 디렉터리 아래에 있더라도
+ * 실제 파일 요청은 홈페이지로 보내지 않고 정적 미들웨어(또는 404)에 맡긴다.
+ */
+export function isStaticAssetPath(pathname: string): boolean {
+  return STATIC_PATH_PREFIXES.some(prefix => isPathAtOrBelow(pathname, prefix))
+    || STATIC_FILE_EXTENSION_PATTERN.test(pathname);
+}
+
 /**
  * 현재 앱 라우트와 겹치지 않는 구 홈페이지 디렉터리 계열.
  * `/en`, `/zh`, `/zh-tw`은 현재 locale 홈이므로 아래의 명백한 legacy 하위 구조만 처리한다.
@@ -210,6 +223,10 @@ export function registerRedirects(app: Express): void {
   // ── 구 모바일 도메인 ───────────────────────────────────────────────────────
   // 모바일 구 사이트에는 현재 대응 경로가 없으므로, 어느 경로든 새 홈으로 정규화한다.
   app.use((req, res, next) => {
+    if (isStaticAssetPath(req.path)) {
+      next();
+      return;
+    }
     if (isLegacyMobileHost(req.headers.host)) {
       res.redirect(301, LEGACY_HOME_DESTINATION);
       return;
@@ -244,6 +261,10 @@ export function registerRedirects(app: Express): void {
   // ── 미매핑 구 사이트 디렉터리 계열 ────────────────────────────────────────
   // 명시 매핑이 없는 과거 경로는 홈으로 모아 404/401 대신 영구 정규화를 제공한다.
   app.use((req, res, next) => {
+    if (isStaticAssetPath(req.path)) {
+      next();
+      return;
+    }
     if (isLegacyHomePath(req.path)) {
       res.redirect(301, LEGACY_HOME_DESTINATION);
       return;

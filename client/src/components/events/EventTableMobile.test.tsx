@@ -96,7 +96,7 @@ describe("EventTableMobile", () => {
     expect(screen.getByTestId("mobile-event-detail-2")).toHaveClass("is-open");
   });
 
-  it("uses the row and circular indicator only for accordion control, with a safe new-tab link on the expanded image", () => {
+  it("uses the row and circular indicator only for accordion control, with a current-window link on the expanded image", () => {
     render(<EventTableMobile events={[{ ...event, imageUrl: "/event-thumbnail.jpg", linkUrl: "https://example.com/event" }, secondEvent]} getLocalizedText={getLocalizedText} />);
 
     const connectedEvent = screen.getByRole("button", { name: "테스트 이벤트 상세 보기" });
@@ -104,10 +104,10 @@ describe("EventTableMobile", () => {
     fireEvent.click(connectedEvent);
     expect(connectedEvent).toHaveAttribute("aria-expanded", "true");
 
-    const imageLink = within(screen.getByTestId("mobile-event-detail-1")).getByRole("link", { name: "테스트 이벤트 새 탭에서 열기" });
+    const imageLink = within(screen.getByTestId("mobile-event-detail-1")).getByRole("link", { name: "테스트 이벤트 현재 창에서 열기" });
     expect(imageLink).toHaveAttribute("href", "https://example.com/event");
-    expect(imageLink).toHaveAttribute("target", "_blank");
-    expect(imageLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(imageLink).not.toHaveAttribute("target");
+    expect(imageLink).not.toHaveAttribute("rel");
     fireEvent.click(imageLink);
     expect(connectedEvent).toHaveAttribute("aria-expanded", "true");
 

@@ -430,18 +430,16 @@ function ShowcaseEventCard({
     </>
   );
 
-  if (linkUrl) {
-    return (
-      <a
-        data-event-id={event.id}
-        data-testid="event-card-showcase"
-        href={linkUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${title} 새 탭에서 열기`}
-        className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden no-underline transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
-      >
-        {content}
+ if (linkUrl) {
+   return (
+     <a
+       data-event-id={event.id}
+       data-testid="event-card-showcase"
+       href={linkUrl}
+        aria-label={`${title} 현재 창에서 열기`}
+       className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden no-underline transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
+     >
+       {content}
       </a>
     );
   }

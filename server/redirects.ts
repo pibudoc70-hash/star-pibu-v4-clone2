@@ -214,9 +214,9 @@ const REDIRECT_MAP: Record<string, string> = {
   "/sub/sub_03_57.html": "https://star-pibu.com/",
 
   // ── 기존 게시판 계열 (sub_04) ────────────────────────────────────────────
-  "/sub/sub_04_01.html": "http://www.star-pibu.co.kr/zzboard",
-  "/sub/sub_04_02.html": "http://www.star-pibu.co.kr/zzboard",
-  "/sub/sub_04_03.html": "http://www.star-pibu.co.kr/zzboard",
+  "/sub/sub_04_01.html": "https://star-pibu.com/notice",
+  "/sub/sub_04_02.html": "https://star-pibu.com/notice",
+  "/sub/sub_04_03.html": "https://star-pibu.com/notice",
 };
 
 /**

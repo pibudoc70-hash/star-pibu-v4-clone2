@@ -122,17 +122,15 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
           </div>
 
           {event.imageUrl && (linkUrl ? (
-            <a
-              data-testid={`mobile-event-image-link-${event.id}`}
-              href={linkUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(clickEvent) => clickEvent.stopPropagation()}
-              className="mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
-              style={{ aspectRatio: "16/9" }}
-              aria-label={`${title} 새 탭에서 열기`}
-            >
-              <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
+           <a
+             data-testid={`mobile-event-image-link-${event.id}`}
+             href={linkUrl}
+             onClick={(clickEvent) => clickEvent.stopPropagation()}
+             className="mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+             style={{ aspectRatio: "16/9" }}
+              aria-label={`${title} 현재 창에서 열기`}
+           >
+             <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
             </a>
           ) : (
             <div className="mb-3 overflow-hidden rounded-xl bg-gray-100" style={{ aspectRatio: "16/9" }}>

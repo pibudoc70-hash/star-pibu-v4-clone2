@@ -50,9 +50,9 @@ const advertisingLandingCases = [
 const legacyPermanentRedirectCases = [
   ["/event/ulthera/index.html", "https://starpibuclinic.cafe24.com/event/ulthera/index.html"],
   ["/event/thermage/index.html", "https://starpibuclinic.cafe24.com/event/thermage/index.html"],
-  ["/sub/sub_04_01.html", "http://www.star-pibu.co.kr/zzboard"],
-  ["/sub/sub_04_02.html", "http://www.star-pibu.co.kr/zzboard"],
-  ["/sub/sub_04_03.html", "http://www.star-pibu.co.kr/zzboard"],
+  ["/sub/sub_04_01.html", "https://star-pibu.com/notice"],
+  ["/sub/sub_04_02.html", "https://star-pibu.com/notice"],
+  ["/sub/sub_04_03.html", "https://star-pibu.com/notice"],
 ] as const;
 
 const legacyHomeRedirectCases = [

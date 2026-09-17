@@ -16,6 +16,15 @@ import { optimizeImage } from "../_core/imageOptimizer";
 import { withCache, invalidateCache } from "../_core/cache";
 import type { InsertEvent } from "../../drizzle/schema";
 import { TRPCError } from "@trpc/server";
+import { isEventLinkUrl } from "../../shared/eventLinkUrl";
+
+const eventLinkUrlInput = z
+  .string()
+  .trim()
+  .max(2048)
+  .refine((value) => value === "" || isEventLinkUrl(value), {
+    message: "연결 URL은 http:// 또는 https://로 시작해야 합니다.",
+  });
 
 export const eventsRouter = router({
   // 공개: 모든 활성 이벤트 조회
@@ -101,6 +110,7 @@ export const eventsRouter = router({
       badgeColor: z.string().max(20).default("#4A6FA5"),
       date: z.string().min(1).max(50),
       imageUrl: z.string().optional(),
+      linkUrl: eventLinkUrlInput.default(""),
       sortOrder: z.number().default(0),
       isActive: z.enum(["0", "1"]).default("1"),
       category: z.enum(["신규시술", "이벤트", "공지사항", "기타"]).default("이벤트"),
@@ -153,6 +163,7 @@ export const eventsRouter = router({
       badgeColor: z.string().max(20).optional(),
       date: z.string().max(50).optional(),
       imageUrl: z.string().optional(),
+      linkUrl: eventLinkUrlInput.optional(),
       views: z.number().optional(),
       sortOrder: z.number().optional(),
       isActive: z.enum(["0", "1"]).optional(),

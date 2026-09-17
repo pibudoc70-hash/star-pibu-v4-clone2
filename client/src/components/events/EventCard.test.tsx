@@ -115,6 +115,15 @@ describe("EventCard design pilot", () => {
     expect(screen.queryByRole("link", { name: "051-818-2300" })).not.toBeInTheDocument();
   });
 
+  it("opens only a showcase card with a valid saved connection URL in a new tab", () => {
+    render(<EventCard event={{ ...event, linkUrl: "https://example.com/ultherapy" }} getLocalizedText={(item, field) => item[field]} variant="showcase" />);
+
+    const link = screen.getByRole("link", { name: "울쎄라피 프라임 새 탭에서 열기" });
+    expect(link).toHaveAttribute("href", "https://example.com/ultherapy");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("is isolated to the desktop event grid while the mobile event table remains the 390px surface", () => {
     const sectionSource = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../SpecialEventSection.tsx"), "utf8");
 

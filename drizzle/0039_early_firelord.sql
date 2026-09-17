@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `linkUrl` varchar(2048) DEFAULT '' NOT NULL;

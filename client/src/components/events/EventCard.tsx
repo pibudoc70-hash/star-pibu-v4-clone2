@@ -5,6 +5,7 @@ import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { isEventLinkUrl, normalizeEventLinkUrl } from "@shared/eventLinkUrl";
 
 export type EventCardVariant = "lead" | "compact" | "legacy" | "selector" | "showcase";
 
@@ -386,9 +387,10 @@ function ShowcaseEventCard({
   title,
 }: VariantCardProps) {
   const subtitle = getLocalizedText(event, "subtitle");
+  const linkUrl = isEventLinkUrl(event.linkUrl) ? normalizeEventLinkUrl(event.linkUrl) : "";
 
-  return (
-    <article data-event-id={event.id} data-testid="event-card-showcase" className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden">
+  const content = (
+    <>
       <div className="event-card__showcase-media overflow-hidden border-b border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] p-0">
         {event.imageUrl ? (
           <OptimizedImage
@@ -425,6 +427,28 @@ function ShowcaseEventCard({
           </ul>
         )}
       </div>
+    </>
+  );
+
+  if (linkUrl) {
+    return (
+      <a
+        data-event-id={event.id}
+        data-testid="event-card-showcase"
+        href={linkUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${title} 새 탭에서 열기`}
+        className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden no-underline transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <article data-event-id={event.id} data-testid="event-card-showcase" className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden">
+      {content}
     </article>
   );
 }

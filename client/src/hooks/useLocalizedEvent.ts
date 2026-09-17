@@ -16,6 +16,7 @@ export interface SpecialEvent {
   discountPrice: number;
   priceRows?: string; // JSON 문자열
   imageUrl?: string;
+  linkUrl?: string;
   cta: string;
   isActive: "0" | "1";
   isFeatured?: "0" | "1";

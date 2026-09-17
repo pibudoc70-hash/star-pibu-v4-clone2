@@ -9,6 +9,7 @@ import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useChatConfig } from "@/hooks/useChatConfig";
+import { isEventLinkUrl, normalizeEventLinkUrl } from "@shared/eventLinkUrl";
 
 const MOBILE_EVENT_COPY = {
   ko: {
@@ -187,7 +188,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
   const { lang } = useLang();
   const copy = MOBILE_EVENT_COPY[lang];
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
-  const eventRowRefs = useRef(new Map<number, HTMLButtonElement>());
+  const eventRowRefs = useRef(new Map<number, HTMLElement>());
   const orderedEvents = orderMobileSpecialEvents(events);
 
   const handleFooterClose = (eventId: number) => {
@@ -198,7 +199,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
     });
   };
 
-  const registerEventRow = (eventId: number) => (node: HTMLButtonElement | null) => {
+  const registerEventRow = (eventId: number) => (node: HTMLElement | null) => {
     if (node) {
       eventRowRefs.current.set(eventId, node);
     } else {
@@ -238,8 +239,30 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
           const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
           const title = getLocalizedText(event, "title");
           const isOpen = expandedEventId === event.id;
+          const linkUrl = isEventLinkUrl(event.linkUrl) ? normalizeEventLinkUrl(event.linkUrl) : "";
           const priorityIndex = MOBILE_PRIORITY_EVENT_IDS.findIndex((priorityId) => priorityId === event.id);
           const isPriority = priorityIndex !== -1;
+          const rowContent = (
+            <>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
+                </div>
+              </div>
+              <div data-testid={`mobile-event-price-${event.id}`} className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums">
+                <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
+                {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
+              </div>
+              <span
+                data-testid={`mobile-event-expand-indicator-${event.id}`}
+                data-expanded={isOpen}
+                aria-hidden="true"
+                className={`ml-2 inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-light)] text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}
+              >
+                <ChevronDown size={14} strokeWidth={2.25} />
+              </span>
+            </>
+          );
 
           return (
             <div
@@ -249,37 +272,37 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
               className={`event-mobile-entry overflow-hidden bg-white transition-colors ${index > 0 ? "border-t" : ""} ${isPriority ? "bg-[color-mix(in_srgb,var(--color-gold-primary)_3%,white)]" : ""}`}
               style={index > 0 ? { borderColor: "var(--color-gold-light)" } : undefined}
             >
-              <button
-                type="button"
-                ref={registerEventRow(event.id)}
-                data-testid={`mobile-event-row-${event.id}`}
-                data-event-row={event.id}
-                onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
-                aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
-                aria-expanded={isOpen}
-                aria-controls={`mobile-event-detail-${event.id}`}
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                  <p className={`min-w-0 font-semibold leading-5 text-gray-900 truncate ${isPriority ? "text-[15px]" : "text-sm"}`}>{title}</p>
-                  </div>
-                </div>
-                <div data-testid={`mobile-event-price-${event.id}`} className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums">
-                    <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
-                    {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
-                </div>
-                <span
-                  data-testid={`mobile-event-expand-indicator-${event.id}`}
-                  data-expanded={isOpen}
-                  aria-hidden="true"
-                  className={`ml-2 inline-flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-gold-light)] text-[var(--color-gold-deep)] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}
+              {linkUrl ? (
+                <a
+                  ref={registerEventRow(event.id)}
+                  data-testid={`mobile-event-row-${event.id}`}
+                  data-event-row={event.id}
+                  href={linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex w-full scroll-mt-16 items-center px-4 text-left no-underline transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
+                  aria-label={`${title} 새 탭에서 열기`}
                 >
-                  <ChevronDown size={14} strokeWidth={2.25} />
-                </span>
-              </button>
-
-              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
+                  {rowContent}
+                </a>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    ref={registerEventRow(event.id)}
+                    data-testid={`mobile-event-row-${event.id}`}
+                    data-event-row={event.id}
+                    onClick={() => setExpandedEventId(isOpen ? null : event.id)}
+                    className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
+                    aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`mobile-event-detail-${event.id}`}
+                  >
+                    {rowContent}
+                  </button>
+                  <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
+                </>
+              )}
             </div>
           );
         })}

@@ -141,6 +141,7 @@ export const events = mysqlTable("events", {
   iconType: varchar("iconType", { length: 20 }).notNull().default("tag"),
   badgeColor: varchar("badgeColor", { length: 20 }).notNull().default("#4A6FA5"),
   imageUrl: text("imageUrl"),
+  linkUrl: varchar("linkUrl", { length: 2048 }).notNull().default(""),
   date: varchar("date", { length: 50 }).notNull(),
   views: int("views").notNull().default(0),
   sortOrder: int("sortOrder").notNull().default(0),

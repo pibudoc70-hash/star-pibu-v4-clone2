@@ -24,6 +24,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import type { EventListItem, EventFormState, PriceRow } from "@/types/admin";
+import { isEventLinkUrl, normalizeEventLinkUrl } from "@shared/eventLinkUrl";
 
 interface CurrentUser {
   role: string;
@@ -67,6 +68,7 @@ const EMPTY_EVENT_FORM: EventFormState = {
   isActive: "1",
   category: "이벤트",
   imageUrl: "",
+  linkUrl: "",
   productName: "",
   normalPrice: 0,
   discountPrice: 0,
@@ -296,6 +298,11 @@ export default function AdminEventsTab({ currentUser }: Props) {
       toast.error("제목과 날짜를 입력해주세요.");
       return;
     }
+    const linkUrl = normalizeEventLinkUrl(eventForm.linkUrl);
+    if (linkUrl && !isEventLinkUrl(linkUrl)) {
+      toast.error("연결 URL은 http:// 또는 https://로 시작해야 합니다.");
+      return;
+    }
     if (editingEventId) {
       const { id: _id, type: _type, category: _cat, ...rest } = { id: editingEventId, ...eventForm };
       updateEventMutation.mutate({
@@ -303,6 +310,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
         type: _type as "이벤트" | "공지" | undefined,
         category: _cat as "신규시술" | "이벤트" | "공지사항" | "기타" | undefined,
         ...rest,
+        linkUrl,
         priceRows: Array.isArray(rest.priceRows) ? rest.priceRows : [],
       });
     } else {
@@ -325,6 +333,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
         iconType: eventForm.iconType ?? "tag",
         badgeColor: eventForm.badgeColor ?? "#4A6FA5",
         imageUrl: eventForm.imageUrl,
+        linkUrl,
         sortOrder: eventForm.sortOrder ?? 0,
         isActive: eventForm.isActive ?? "1",
         category: (eventForm.category as "신규시술" | "이벤트" | "공지사항" | "기타") ?? "이벤트",
@@ -427,6 +436,19 @@ export default function AdminEventsTab({ currentUser }: Props) {
                 className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                 rows={4}
               />
+              <div className="space-y-2">
+                <label htmlFor="event-link-url" className="text-sm font-semibold text-[#1F2937]">연결 URL</label>
+                <input
+                  id="event-link-url"
+                  type="url"
+                  inputMode="url"
+                  placeholder="https://example.com/page"
+                  value={eventForm.linkUrl || ""}
+                  onChange={(e) => setEventForm({ ...eventForm, linkUrl: e.target.value })}
+                  className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
+                />
+                <p className="text-xs text-[#6B7280]">http:// 또는 https:// 주소만 저장할 수 있으며, 저장된 이벤트 카드는 새 탭에서 열립니다.</p>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
@@ -729,6 +751,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
                           isActive: (event.isActive as "0" | "1") || "1",
                           category: event.category || "이벤트",
                           imageUrl: event.imageUrl || "",
+                          linkUrl: event.linkUrl || "",
                           productName: event.productName || "",
                           normalPrice: (event.normalPrice as number) || 0,
                           discountPrice: (event.discountPrice as number) || 0,

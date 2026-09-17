@@ -96,6 +96,16 @@ describe("EventTableMobile", () => {
     expect(screen.getByTestId("mobile-event-detail-2")).toHaveClass("is-open");
   });
 
+  it("uses a safe new-tab link only when an event has a valid saved connection URL", () => {
+    render(<EventTableMobile events={[{ ...event, linkUrl: "https://example.com/event" }, secondEvent]} getLocalizedText={getLocalizedText} />);
+
+    const connectedEvent = screen.getByRole("link", { name: "테스트 이벤트 새 탭에서 열기" });
+    expect(connectedEvent).toHaveAttribute("href", "https://example.com/event");
+    expect(connectedEvent).toHaveAttribute("target", "_blank");
+    expect(connectedEvent).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getByRole("button", { name: "두 번째 이벤트 상세 보기" })).toBeInTheDocument();
+  });
+
   it("keeps inline detail height and opacity motion scoped to the mobile list", () => {
     const styles = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 

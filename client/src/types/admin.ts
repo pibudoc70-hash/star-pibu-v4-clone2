@@ -105,6 +105,7 @@ export interface EventListItem extends Record<string, unknown> {
   desc?: string;
   note?: string;
   imageUrl?: string | null;
+  linkUrl?: string | null;
   accent?: string;
   accentLight?: string;
   sortOrder?: number;
@@ -163,6 +164,7 @@ export interface EventFormState {
   iconType?: string;
   badgeColor?: string;
   imageUrl?: string;
+  linkUrl?: string;
   date?: string;
   views?: number;
   sortOrder?: number;

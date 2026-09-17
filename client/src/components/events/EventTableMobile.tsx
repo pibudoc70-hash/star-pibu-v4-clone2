@@ -92,9 +92,10 @@ interface EventInlineDetailProps {
   isOpen: boolean;
   getLocalizedText: EventTableMobileProps["getLocalizedText"];
   onFooterClose: (eventId: number) => void;
+  linkUrl: string;
 }
 
-function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: EventInlineDetailProps) {
+function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, linkUrl }: EventInlineDetailProps) {
   const { lang } = useLang();
   const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const copy = MOBILE_EVENT_COPY[lang];
@@ -120,11 +121,24 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose }: E
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>
 
-          {event.imageUrl && (
-            <div className="mb-3 rounded-xl overflow-hidden bg-gray-100" style={{ aspectRatio: "16/9" }}>
-              <OptimizedImage src={event.imageUrl} alt={title} className="w-full h-full object-cover" width={600} height={400} priority={false} />
+          {event.imageUrl && (linkUrl ? (
+            <a
+              data-testid={`mobile-event-image-link-${event.id}`}
+              href={linkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(clickEvent) => clickEvent.stopPropagation()}
+              className="mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+              style={{ aspectRatio: "16/9" }}
+              aria-label={`${title} 새 탭에서 열기`}
+            >
+              <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
+            </a>
+          ) : (
+            <div className="mb-3 overflow-hidden rounded-xl bg-gray-100" style={{ aspectRatio: "16/9" }}>
+              <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
             </div>
-          )}
+          ))}
 
           {event.desc && <p className="mb-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.desc}</p>}
           {event.content && <p className="mb-4 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.content}</p>}
@@ -272,37 +286,20 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
               className={`event-mobile-entry overflow-hidden bg-white transition-colors ${index > 0 ? "border-t" : ""} ${isPriority ? "bg-[color-mix(in_srgb,var(--color-gold-primary)_3%,white)]" : ""}`}
               style={index > 0 ? { borderColor: "var(--color-gold-light)" } : undefined}
             >
-              {linkUrl ? (
-                <a
-                  ref={registerEventRow(event.id)}
-                  data-testid={`mobile-event-row-${event.id}`}
-                  data-event-row={event.id}
-                  href={linkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex w-full scroll-mt-16 items-center px-4 text-left no-underline transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
-                  aria-label={`${title} 새 탭에서 열기`}
-                >
-                  {rowContent}
-                </a>
-              ) : (
-                <>
-                  <button
-                    type="button"
-                    ref={registerEventRow(event.id)}
-                    data-testid={`mobile-event-row-${event.id}`}
-                    data-event-row={event.id}
-                    onClick={() => setExpandedEventId(isOpen ? null : event.id)}
-                    className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
-                    aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
-                    aria-expanded={isOpen}
-                    aria-controls={`mobile-event-detail-${event.id}`}
-                  >
-                    {rowContent}
-                  </button>
-                  <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} />
-                </>
-              )}
+              <button
+                type="button"
+                ref={registerEventRow(event.id)}
+                data-testid={`mobile-event-row-${event.id}`}
+                data-event-row={event.id}
+                onClick={() => setExpandedEventId(isOpen ? null : event.id)}
+                className={`flex w-full scroll-mt-16 items-center px-4 text-left transition-colors active:bg-[color-mix(in_srgb,var(--color-gold-primary)_7%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] ${isPriority ? "!h-auto !min-h-[5rem] !py-4" : "!h-auto !min-h-[4.5rem] !py-3"}`}
+                aria-label={`${title} ${isOpen ? copy.close : copy.open}`}
+                aria-expanded={isOpen}
+                aria-controls={`mobile-event-detail-${event.id}`}
+              >
+                {rowContent}
+              </button>
+              <EventInlineDetail event={event} isOpen={isOpen} getLocalizedText={getLocalizedText} onFooterClose={handleFooterClose} linkUrl={linkUrl} />
             </div>
           );
         })}

@@ -4763,6 +4763,62 @@ body.font-lang-zh .hero-stat-label {
   color: var(--equipment-detail-muted);
 }
 
+/* ── Equipment detail mobile density: shared detail template only ── */
+/* Desktop spacing is intentionally preserved; these overrides apply only below md. */
+@media (max-width: 767px) {
+  .equipment-detail__main {
+    padding-top: 2rem !important;
+    padding-bottom: 2.5rem !important;
+    overflow-x: clip;
+  }
+
+  .equipment-detail__primary {
+    gap: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .equipment-detail__main > section,
+  .equipment-detail__info-card {
+    margin-bottom: 2rem !important;
+  }
+
+  .equipment-detail__caution,
+  .equipment-detail__info-card,
+  .equipment-detail__positioning-faq {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 1.25rem !important;
+  }
+
+  .equipment-detail__faq-item {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 1rem !important;
+  }
+
+  .equipment-detail__section-heading {
+    margin-bottom: 1rem !important;
+  }
+
+  .equipment-detail__prose > * + * {
+    margin-top: 0.875rem !important;
+  }
+
+  .equipment-detail__ultherapy-principle > .space-y-12 {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .equipment-detail__ultherapy-principle .space-y-12 > * + * {
+    margin-top: 2rem !important;
+  }
+
+  .equipment-detail__video {
+    margin-bottom: 2.5rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+}
+
 .equipment-detail-page--dark header[role="banner"] {
   background: rgba(18, 26, 45, 0.97) !important;
   border-bottom: 1px solid rgba(215, 181, 109, 0.26) !important;

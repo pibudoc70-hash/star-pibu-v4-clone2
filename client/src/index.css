@@ -1654,6 +1654,33 @@
       padding-bottom: 5rem !important;  /* 80px */
     }
 
+    /* Equipment detail cards must size to their actual content. This sits in
+       the same layer as the global 80px rule so important declarations keep
+       the intended mobile cascade. */
+    #main-content.equipment-detail__main > section:not(#contact) {
+      min-height: 0 !important;
+      height: auto !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    #main-content .equipment-detail__caution,
+    #main-content .equipment-detail__info-card,
+    #main-content .equipment-detail__positioning-faq {
+      min-height: 0 !important;
+      height: auto !important;
+      padding: 1.25rem !important;
+    }
+
+    #main-content .equipment-detail__ultherapy-principle .space-y-12 > section {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    #main-content .equipment-detail__ultherapy-principle .space-y-12 > section[aria-labelledby="ultherapy-timeline-heading"] {
+      padding: 1.25rem !important;
+    }
+
     /* supplied mobile promotion is edge-to-edge inside its dialog; do not add generic section fill or gold line */
     .ulthera-thermage-promotion-dialog {
       padding-top: 0 !important;
@@ -4796,9 +4823,18 @@ body.font-lang-zh .hero-stat-label {
     margin-bottom: 2rem !important;
   }
 
-  .equipment-detail__caution,
-  .equipment-detail__info-card,
-  .equipment-detail__positioning-faq {
+  /* The legacy generic `section` mobile rule applies 80px vertical padding.
+     Detail sections already own their internal spacing, so neutralize it here. */
+  #main-content.equipment-detail__main > section:not(#contact) {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  #main-content .equipment-detail__caution,
+  #main-content .equipment-detail__info-card,
+  #main-content .equipment-detail__positioning-faq {
     min-height: 0 !important;
     height: auto !important;
     padding: 1.25rem !important;
@@ -4819,11 +4855,34 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .equipment-detail__ultherapy-principle > .space-y-12 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
     padding: 1.5rem 1rem !important;
   }
 
-  .equipment-detail__ultherapy-principle .space-y-12 > * + * {
-    margin-top: 2rem !important;
+  #main-content .equipment-detail__ultherapy-principle {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  #main-content .equipment-detail__ultherapy-principle .space-y-12 > * {
+    min-height: 0 !important;
+    height: auto !important;
+    flex: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #main-content .equipment-detail__ultherapy-principle .space-y-12 > section {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  #main-content .equipment-detail__ultherapy-principle .space-y-12 > section[aria-labelledby="ultherapy-timeline-heading"] {
+    padding: 1.25rem !important;
   }
 
   .equipment-detail__video {

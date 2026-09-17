@@ -436,19 +436,6 @@ export default function AdminEventsTab({ currentUser }: Props) {
                 className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
                 rows={4}
               />
-              <div className="space-y-2">
-                <label htmlFor="event-link-url" className="text-sm font-semibold text-[#1F2937]">연결 URL</label>
-                <input
-                  id="event-link-url"
-                  type="url"
-                  inputMode="url"
-                  placeholder="https://example.com/page"
-                  value={eventForm.linkUrl || ""}
-                  onChange={(e) => setEventForm({ ...eventForm, linkUrl: e.target.value })}
-                  className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg text-sm"
-                />
-                <p className="text-xs text-[#6B7280]">http:// 또는 https:// 주소만 저장할 수 있으며, 저장된 이벤트 카드는 새 탭에서 열립니다.</p>
-              </div>
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
@@ -630,6 +617,20 @@ export default function AdminEventsTab({ currentUser }: Props) {
                   <option value="featured">Featured 이벤트</option>
                   <option value="special">SPECIAL EVENT</option>
                 </select>
+              </div>
+
+              <div className="space-y-2 rounded-lg border border-[#D1D5DB] bg-[#F9FAFB] p-3">
+                <label htmlFor="event-link-url" className="text-sm font-semibold text-[#1F2937]">연결 URL</label>
+                <input
+                  id="event-link-url"
+                  type="url"
+                  inputMode="url"
+                  placeholder="https://example.com/page"
+                  value={eventForm.linkUrl || ""}
+                  onChange={(e) => setEventForm({ ...eventForm, linkUrl: e.target.value })}
+                  className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg bg-white text-sm"
+                />
+                <p className="text-xs text-[#6B7280]">http:// 또는 https:// 주소만 저장할 수 있으며, 저장된 이벤트 카드는 새 탭에서 열립니다.</p>
               </div>
 
               {/* 수면마취비 */}

@@ -17,4 +17,14 @@ describe("AdminEventsTab connection URL editor", () => {
     expect(source).toContain("linkUrl: event.linkUrl || \"\"");
     expect(source.match(/linkUrl,/g)?.length).toBeGreaterThanOrEqual(2);
   });
+
+  it("places the visible field between event type and anesthesia information", () => {
+    const linkUrlIndex = source.indexOf('id="event-link-url"');
+    const eventTypeIndex = source.indexOf('id="event-type-select"');
+    const anesthesiaIndex = source.indexOf('id="event-anesthesia-fee"');
+
+    expect(eventTypeIndex).toBeGreaterThan(-1);
+    expect(linkUrlIndex).toBeGreaterThan(eventTypeIndex);
+    expect(anesthesiaIndex).toBeGreaterThan(linkUrlIndex);
+  });
 });

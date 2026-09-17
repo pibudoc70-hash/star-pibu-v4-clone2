@@ -31,6 +31,60 @@ const ADVERTISING_LANDING_DESTINATIONS: Record<string, string> = {
   "/event/multi.html": "https://star-pibu.co.kr/equipment3?tab=%EC%83%89%EC%86%8C%C2%B7%EB%AC%B8%EC%8B%A0",
 };
 
+/** 네이버 광고 소재에 남아 있는 기존 이벤트 landing URL의 영구 목적지. */
+const LEGACY_EVENT_301_DESTINATIONS: Record<string, string> = {
+  "/event/ulthera/index.html": "https://starpibuclinic.cafe24.com/event/ulthera/index.html",
+  "/event/thermage/index.html": "https://starpibuclinic.cafe24.com/event/thermage/index.html",
+};
+
+const LEGACY_HOME_DESTINATION = "https://star-pibu.com/";
+
+/**
+ * 현재 앱 라우트와 겹치지 않는 구 홈페이지 디렉터리 계열.
+ * `/en`, `/zh`, `/zh-tw`은 현재 locale 홈이므로 아래의 명백한 legacy 하위 구조만 처리한다.
+ */
+const LEGACY_HOME_PREFIXES = [
+  "/cha",
+  "/sub",
+  "/jpn",
+  "/eng",
+  "/chn",
+  "/twn",
+  "/main",
+  "/board",
+  "/notice",
+  "/bbs",
+  "/community",
+  "/customer",
+] as const;
+
+const CURRENT_LOCALE_LEGACY_SEGMENTS = new Set([
+  "cha",
+  "sub",
+  "main",
+  "board",
+  "notice",
+  "bbs",
+  "community",
+  "customer",
+]);
+
+function isPathAtOrBelow(pathname: string, prefix: string): boolean {
+  return pathname === prefix || pathname.startsWith(`${prefix}/`);
+}
+
+/** 현재 locale 홈·정상 다국어 상세를 보호하고, 그 안의 명백한 구 사이트 하위 구조만 식별한다. */
+export function isLegacyHomePath(pathname: string): boolean {
+  if (LEGACY_HOME_PREFIXES.some(prefix => isPathAtOrBelow(pathname, prefix))) return true;
+
+  const localeMatch = pathname.match(/^\/(en|zh|zh-tw)\/([^/]+)(?:\/|$)/);
+  return localeMatch !== null && CURRENT_LOCALE_LEGACY_SEGMENTS.has(localeMatch[2]);
+}
+
+function isLegacyMobileHost(hostHeader: string | undefined): boolean {
+  return (hostHeader ?? "").split(":", 1)[0].toLowerCase() === "m.star-pibu.co.kr";
+}
+
 /**
  * 기존 네이버 키워드 광고 URL의 식별 파라미터를 새 장비 탭으로 전달한다.
  * 목적 탭은 고정하고, 구 URL에 있던 tab만 제외해 광고·UTM 파라미터를 보존한다.
@@ -141,6 +195,11 @@ const REDIRECT_MAP: Record<string, string> = {
   "/sub/sub_03_55.html": "https://star-pibu.com/equipment3/%EC%84%B8%EB%A5%B4%ED%94%84?tab=%EB%A6%AC%ED%94%84%ED%8C%85%C2%B7%ED%83%84%EB%A0%A5",
   "/sub/sub_03_56.html": "https://star-pibu.com/equipment3/%EB%9F%B0%EC%B9%98%ED%83%80%EC%9E%84-%EB%88%88%EB%B0%91%EB%A0%88%EC%9D%B4%EC%A0%80?tab=%EB%88%88%EB%B0%91%EC%A7%80%EB%B0%A9%EC%9E%AC%EB%B0%B0%EC%B9%98",
   "/sub/sub_03_57.html": "https://star-pibu.com/",
+
+  // ── 기존 게시판 계열 (sub_04) ────────────────────────────────────────────
+  "/sub/sub_04_01.html": "http://www.star-pibu.co.kr/zzboard",
+  "/sub/sub_04_02.html": "http://www.star-pibu.co.kr/zzboard",
+  "/sub/sub_04_03.html": "http://www.star-pibu.co.kr/zzboard",
 };
 
 /**
@@ -148,6 +207,16 @@ const REDIRECT_MAP: Record<string, string> = {
  * 반드시 다른 라우트보다 먼저 등록해야 한다.
  */
 export function registerRedirects(app: Express): void {
+  // ── 구 모바일 도메인 ───────────────────────────────────────────────────────
+  // 모바일 구 사이트에는 현재 대응 경로가 없으므로, 어느 경로든 새 홈으로 정규화한다.
+  app.use((req, res, next) => {
+    if (isLegacyMobileHost(req.headers.host)) {
+      res.redirect(301, LEGACY_HOME_DESTINATION);
+      return;
+    }
+    next();
+  });
+
   // ── 네이버 키워드 광고 legacy landing ──────────────────────────────────────
   // 광고 등록 URL을 바꾸지 못한 기간에도 지정한 새 장비 탭으로 연결한다.
   // 캠페인 링크는 향후 수정 가능해야 하므로 캐시되는 301 대신 302를 사용한다.
@@ -156,6 +225,31 @@ export function registerRedirects(app: Express): void {
       res.redirect(302, buildAdvertisingRedirect(req.originalUrl, destination));
     });
   }
+
+  // ── 기존 네이버 광고 event landing의 영구 목적지 ───────────────────────────
+  for (const [legacyPath, destination] of Object.entries(LEGACY_EVENT_301_DESTINATIONS)) {
+    app.get(legacyPath, (_req, res) => {
+      res.redirect(301, destination);
+    });
+  }
+
+  // ── 구 사이트 .htaccess 경로별 301 리다이렉트 ────────────────────────────
+  // 포괄적인 legacy fallback보다 먼저 등록해 기존의 정확한 장비·소개 목적지를 보존한다.
+  for (const [src, dst] of Object.entries(REDIRECT_MAP)) {
+    app.get(src, (_req, res) => {
+      res.redirect(301, dst);
+    });
+  }
+
+  // ── 미매핑 구 사이트 디렉터리 계열 ────────────────────────────────────────
+  // 명시 매핑이 없는 과거 경로는 홈으로 모아 404/401 대신 영구 정규화를 제공한다.
+  app.use((req, res, next) => {
+    if (isLegacyHomePath(req.path)) {
+      res.redirect(301, LEGACY_HOME_DESTINATION);
+      return;
+    }
+    next();
+  });
 
   // ── www → apex 301 리다이렉트 ────────────────────────────────────────────
   // www.star-pibu.com/* → star-pibu.com/* (경로 보존)
@@ -199,10 +293,4 @@ export function registerRedirects(app: Express): void {
     next();
   });
 
-  // ── 구 사이트 .htaccess 경로별 301 리다이렉트 ────────────────────────────
-  for (const [src, dst] of Object.entries(REDIRECT_MAP)) {
-    app.get(src, (_req, res) => {
-      res.redirect(301, dst);
-    });
-  }
 }

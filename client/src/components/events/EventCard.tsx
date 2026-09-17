@@ -5,7 +5,7 @@ import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
-import { isEventLinkUrl, normalizeEventLinkUrl } from "@shared/eventLinkUrl";
+import { getEventLinkHref } from "@shared/eventLinkUrl";
 
 export type EventCardVariant = "lead" | "compact" | "legacy" | "selector" | "showcase";
 
@@ -387,7 +387,7 @@ function ShowcaseEventCard({
   title,
 }: VariantCardProps) {
   const subtitle = getLocalizedText(event, "subtitle");
-  const linkUrl = isEventLinkUrl(event.linkUrl) ? normalizeEventLinkUrl(event.linkUrl) : "";
+  const linkUrl = getEventLinkHref(event.linkUrl);
 
   const content = (
     <>

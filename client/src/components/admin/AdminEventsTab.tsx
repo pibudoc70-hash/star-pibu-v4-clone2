@@ -630,7 +630,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
                   onChange={(e) => setEventForm({ ...eventForm, linkUrl: e.target.value })}
                   className="w-full px-3 py-2 border border-[#D1D5DB] rounded-lg bg-white text-sm"
                 />
-                <p className="text-xs text-[#6B7280]">http:// 또는 https:// 주소만 저장할 수 있으며, 저장된 이벤트 카드는 새 탭에서 열립니다.</p>
+                <p className="text-xs text-[#6B7280]">http:// 또는 https:// 주소만 저장할 수 있으며, 저장된 이벤트 카드는 현재 창에서 열립니다.</p>
               </div>
 
               {/* 수면마취비 */}

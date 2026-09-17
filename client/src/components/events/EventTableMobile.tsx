@@ -9,7 +9,7 @@ import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useChatConfig } from "@/hooks/useChatConfig";
-import { isEventLinkUrl, normalizeEventLinkUrl } from "@shared/eventLinkUrl";
+import { getEventLinkHref } from "@shared/eventLinkUrl";
 
 const MOBILE_EVENT_COPY = {
   ko: {
@@ -251,7 +251,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
           const normalPrice = priceRows.length > 0 ? priceRows[0].normalPrice : event.normalPrice;
           const title = getLocalizedText(event, "title");
           const isOpen = expandedEventId === event.id;
-          const linkUrl = isEventLinkUrl(event.linkUrl) ? normalizeEventLinkUrl(event.linkUrl) : "";
+          const linkUrl = getEventLinkHref(event.linkUrl);
           const priorityIndex = MOBILE_PRIORITY_EVENT_IDS.findIndex((priorityId) => priorityId === event.id);
           const isPriority = priorityIndex !== -1;
           const rowContent = (

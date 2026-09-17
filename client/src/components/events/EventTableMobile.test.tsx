@@ -114,6 +114,13 @@ describe("EventTableMobile", () => {
     expect(screen.getByRole("button", { name: "두 번째 이벤트 상세 보기" })).toBeInTheDocument();
   });
 
+  it("uses a same-origin path for a saved star-pibu notice URL", () => {
+    render(<EventTableMobile events={[{ ...event, imageUrl: "/event-thumbnail.jpg", linkUrl: "https://star-pibu.com/notice/390001" }]} getLocalizedText={getLocalizedText} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" }));
+    expect(within(screen.getByTestId("mobile-event-detail-1")).getByRole("link", { name: "테스트 이벤트 현재 창에서 열기" })).toHaveAttribute("href", "/notice/390001");
+  });
+
   it("keeps inline detail height and opacity motion scoped to the mobile list", () => {
     const styles = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 

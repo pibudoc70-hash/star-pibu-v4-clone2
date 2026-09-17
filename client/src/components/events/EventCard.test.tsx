@@ -124,6 +124,12 @@ describe("EventCard design pilot", () => {
     expect(link).not.toHaveAttribute("rel");
   });
 
+  it("keeps saved star-pibu notice links on the current site origin", () => {
+    render(<EventCard event={{ ...event, linkUrl: "https://star-pibu.com/notice/390001" }} getLocalizedText={(item, field) => item[field]} variant="showcase" />);
+
+    expect(screen.getByRole("link", { name: "울쎄라피 프라임 현재 창에서 열기" })).toHaveAttribute("href", "/notice/390001");
+  });
+
   it("is isolated to the desktop event grid while the mobile event table remains the 390px surface", () => {
     const sectionSource = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../SpecialEventSection.tsx"), "utf8");
 

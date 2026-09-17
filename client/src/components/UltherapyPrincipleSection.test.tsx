@@ -9,6 +9,7 @@ describe("UltherapyPrincipleSection", () => {
     expect(screen.getByRole("heading", { name: "울쎄라, 피부 속에서 시작되는 탄력 리프팅" })).toBeTruthy();
     expect(screen.getByText("미세집속 초음파 에너지를 필요한 깊이에 정밀하게 전달합니다.")).toBeTruthy();
     expect(screen.getByRole("heading", { name: "피부층과 목표 깊이" })).toBeTruthy();
+    expect(screen.getByRole("img", { name: "초음파 기기와 피부 단면의 세 깊이 타깃 도식" }).getAttribute("src")).toContain("ultherapy-skin-depth-illustration");
     expect(screen.getByText("1.5mm · 표피")).toBeTruthy();
     expect(screen.getByText("3.0mm · 진피")).toBeTruthy();
     expect(screen.getByText("4.5mm · 피하지지층")).toBeTruthy();
@@ -21,10 +22,5 @@ describe("UltherapyPrincipleSection", () => {
     expect(screen.getByText("수개월 후")).toBeTruthy();
     expect(screen.getByLabelText("시술 전 안내").textContent).toContain("시술 전 의료진 상담이 필요합니다.");
 
-    expect(screen.getByTestId("ultherapy-layer-illustration").getAttribute("aria-hidden")).toBe("true");
-    expect(screen.getByTestId("ultherapy-step-illustration-1").getAttribute("aria-hidden")).toBe("true");
-    expect(screen.getByTestId("ultherapy-step-illustration-4").getAttribute("aria-hidden")).toBe("true");
-    expect(screen.getByTestId("ultherapy-timeline-illustration-1").getAttribute("aria-hidden")).toBe("true");
-    expect(screen.getByTestId("ultherapy-timeline-illustration-3").getAttribute("aria-hidden")).toBe("true");
   });
 });

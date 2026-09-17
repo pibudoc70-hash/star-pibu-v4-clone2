@@ -101,7 +101,7 @@ export default function UltheraThermagePromotionPopup() {
     <div
       data-testid="ulthera-thermage-promotion-popup"
       data-state={isClosing ? "closing" : isEntering ? "open" : "opening"}
-      className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-6"
+      className="fixed inset-0 z-[120] flex items-start justify-center px-4 pb-6 pt-[max(3rem,env(safe-area-inset-top))] md:items-center md:py-6"
       role="presentation"
     >
       <button

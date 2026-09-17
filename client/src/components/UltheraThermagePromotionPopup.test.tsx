@@ -54,6 +54,12 @@ describe("UltheraThermagePromotionPopup", () => {
   it("keeps mobile controls on the creative while placing PC controls below the popup", () => {
     renderVisiblePopup();
 
+    expect(screen.getByTestId("ulthera-thermage-promotion-popup")).toHaveClass(
+      "items-start",
+      "pt-[max(3rem,env(safe-area-inset-top))]",
+      "md:items-center",
+      "md:py-6",
+    );
     const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
     expect(checkbox).not.toBeChecked();
     expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "shadow-[0_8px_20px_rgba(0,0,0,0.42)]");
@@ -147,7 +153,7 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(overlay).toHaveClass("opacity-100");
   });
 
-  it("removes only desktop circular close-button chrome while retaining the mobile control and shared hit area", () => {
+  it("keeps the shared hit area while removing close-button chrome in desktop and mobile-specific styles", () => {
     renderVisiblePopup();
     const closeButton = screen.getByRole("button", { name: "닫기" });
 
@@ -159,5 +165,7 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(globalStyles).toContain("border: 0 !important;");
     expect(globalStyles).toContain("outline: 0 !important;");
     expect(globalStyles).toContain("box-shadow: none !important;");
+    expect(globalStyles).toContain("@media (max-width: 767px) {");
+    expect(globalStyles).toContain("background: transparent !important;");
   });
 });

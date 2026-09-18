@@ -14,9 +14,8 @@
  * - skipWaiting + clients.claim 으로 배포 즉시 반영
  */
 
-// ⚠️ 배포 시 이 문자열을 바꾸면 기존 캐시 전체가 무효화된다.
-// 배포 파이프라인에서 자동으로 치환하도록 확장 가능.
-const CACHE_VERSION = "v2-2026-07-24";
+// 이벤트 내부 경로의 구 번들을 보유한 기존 방문자도 다음 등록 시 모든 캐시를 교체한다.
+const CACHE_VERSION = "v3-2026-09-18";
 
 const CACHE_NAMES = {
   static: `static-${CACHE_VERSION}`,   // JS/CSS/폰트

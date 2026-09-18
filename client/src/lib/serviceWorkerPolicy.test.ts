@@ -3,6 +3,7 @@ import { createContext, runInContext, Script } from "node:vm";
 import { describe, expect, it, vi } from "vitest";
 
 const workerSource = readFileSync("client/public/sw.js", "utf8");
+const registerSource = readFileSync("client/src/lib/swRegister.ts", "utf8");
 const APP_ORIGIN = "https://star-pibu.test";
 
 class MockResponse {
@@ -160,6 +161,12 @@ describe("service worker cache policy", () => {
     expect(workerSource).toContain("const MAX_IMAGE_CACHE_ENTRIES = 60");
     expect(workerSource).toContain("async function putSafely");
     expect(workerSource).toContain("async function trimImageCache");
+  });
+
+  it("replaces the stale cache generation and bypasses CDN HTTP cache on worker update", () => {
+    expect(workerSource).toContain('const CACHE_VERSION = "v3-2026-09-18"');
+    expect(registerSource).toContain('updateViaCache: "none"');
+    expect(registerSource).toContain('register("/sw.js?v=2026-09-18"');
   });
 
   it("compiles the complete Service Worker source without executing it", () => {

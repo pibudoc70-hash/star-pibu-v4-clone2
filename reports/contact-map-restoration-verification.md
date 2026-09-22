@@ -1,5 +1,9 @@
-# Shared contact map restoration verification
+# Shared contact surface verification
 
-The common `ContactSection` now renders `ClinicMapEmbed`, a responsive Google Maps iframe using the clinic coordinates `35.1572312,129.0581932`. The direct iframe endpoint `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s35.1572312,129.0581932!6i17` returned HTTP 200 with `text/html; charset=UTF-8`. The local application's CSP permits `https://www.google.com` and `https://maps.google.com` in `frame-src`.
+The common `ContactSection` renders a responsive Google Maps iframe centered on the clinic coordinates `35.1572312,129.0581932`. The iframe endpoint returned HTTP 200 with `text/html; charset=UTF-8`, and the application CSP authorizes `https://www.google.com` and `https://maps.google.com` in `frame-src`.
 
-The site screenshot tool failed for all seven representative routes because browser rendering slots were unavailable. A separate local Chromium capture also remained at the site loading shell and then stalled on external SSL handshakes, so it could not visually inspect the rendered map. Source-level and focused regressions verify that the shared global contact component uses `ClinicMapEmbed`, no longer contains the map-area Kakao handoff button, retains the existing Kakao directions and Naver map actions in `ContactInfoPanel`, and uses `#C4A882` as the section background.
+The contact section now uses the existing warm-beige brand token `--brand-bg-warm` (`#EDE8E0`) rather than the stronger gold accent. On desktop, the map and the ContactInfoPanel sit inside a single rounded outer surface. The information panel has no separated card backgrounds or shadows: address, phone, hours, and transit/parking are separated only by thin dividers. The map uses `lg:h-full` to fill the shared surface height defined by the information column. At smaller breakpoints, the map uses 360px and 440px heights before the integrated information panel stacks underneath.
+
+The map-area Kakao handoff remains removed. The existing Kakao directions and Naver Map buttons remain in the final action row. The shared component is rendered from Footer, so the update applies across public pages.
+
+Focused regression coverage passed for the shared map, global footer, map fallback, i18n, and layout contracts. Screenshot capture through the project tool failed in this environment; no screenshot-based visual claim is recorded.

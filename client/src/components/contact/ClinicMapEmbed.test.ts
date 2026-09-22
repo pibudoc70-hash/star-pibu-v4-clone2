@@ -17,9 +17,10 @@ describe("ClinicMapEmbed", () => {
     expect(source).toContain("loading=\"lazy\"");
   });
 
-  it("keeps a responsive map height for desktop and mobile contact layouts", () => {
-    expect(source).toContain("min-h-[360px]");
-    expect(source).toContain("sm:min-h-[440px]");
-    expect(source).toContain("lg:min-h-[560px]");
+  it("keeps a responsive map height while filling the desktop information panel", () => {
+    expect(source).toContain("h-[360px]");
+    expect(source).toContain("sm:h-[440px]");
+    expect(source).toContain("lg:h-full");
+    expect(source).toContain("lg:min-h-0");
   });
 });

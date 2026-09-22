@@ -1,6 +1,6 @@
 /**
  * ContactSection - 위치 및 연락처
- * 디자인: 공통 브랜드 배경, Google 지도 + 진료시간 + CTA
+ * 디자인: 웜 베이지 배경의 단일 지도·연락정보 카드 + CTA
  * i18n: useLang으로 한/중/일 전환
  * 모바일 최적화: 주소 복사 버튼, 레이아웃 개선
  */
@@ -55,7 +55,7 @@ export default function ContactSection() {
       ref={sectionRef}
       id="contact"
       className="pt-12 pb-16 sm:pt-16 sm:pb-24 scroll-mt-24 md:scroll-mt-28"
-      style={{ backgroundColor: "#C4A882" }}
+      style={{ backgroundColor: "var(--brand-bg-warm)" }}
       aria-label="오시는 방법 및 연락처"
     >
       <div className="container">
@@ -76,11 +76,12 @@ export default function ContactSection() {
           <div className="star-divider mx-auto" />
         </div>
 
-        <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-12">
-          <ClinicMapEmbed className="reveal-left lg:col-span-7" title={mapTitle} />
+        <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_12px_36px_rgba(57,39,20,0.14)] lg:grid-cols-12 lg:items-stretch">
+          <ClinicMapEmbed integrated className="reveal-left lg:col-span-7" title={mapTitle} />
 
           {/* Info Panel */}
           <ContactInfoPanel
+            integrated
             t={t}
             infoPanelRef={infoPanelRef}
             copied={copied}

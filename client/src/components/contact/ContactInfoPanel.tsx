@@ -2,11 +2,8 @@
  * ContactInfoPanel
  * ContactSection의 우측 정보 패널 (주소/전화/진료시간/교통/지도링크).
  *
- * [R15-P1-2] ContactSection에서 분리된 서브컴포넌트.
- *            인라인 hex 색상 → CSS 변수 토큰 치환.
- * [UI개선-2026-07-22] 텍스트 가독성 개선:
- *   - 보조 텍스트 color-star-text-mid(#666666) → color-star-text(#2C2C2C)로 변경
- *   - 밝은 배경(#FAF8F5)에서 WCAG AA 대비 기준 충족
+ * 공통 ContactSection에서는 한 개의 통합 정보 패널로 렌더링한다.
+ * 각 정보 블록은 독립 카드가 아닌 divider로만 분리된다.
  */
 import React from "react";
 import {
@@ -15,6 +12,7 @@ import {
 import type { I18nContent } from "@/lib/i18n.types";
 
 interface ContactInfoPanelProps {
+  integrated?: boolean;
   t: I18nContent;
   infoPanelRef: React.RefObject<HTMLDivElement | null>;
   copied: boolean;
@@ -28,6 +26,7 @@ interface ContactInfoPanelProps {
 }
 
 export default function ContactInfoPanel({
+  integrated = false,
   t,
   infoPanelRef,
   copied,
@@ -38,41 +37,48 @@ export default function ContactInfoPanel({
   phoneDisplay,
   onCopyAddress,
 }: ContactInfoPanelProps) {
-  const addressLabel   = t.access.addressLabel  ?? "";
-  const phoneLabel     = t.access.phoneLabel    ?? "";
-  const hoursLabel     = t.access.hoursLabel    ?? "";
-  const hoursNote      = t.access.hoursNote     ?? "";
-  const transitLabel   = t.access.transitLabel  ?? "";
-  const transitDesc    = t.access.transitDesc   ?? "";
-  const parkingLabel   = t.access.parkingLabel  ?? "";
-  const parkingDesc    = t.access.parkingDesc   ?? "";
-  const kakaoMapLabel  = t.access.kakaoMapLabel ?? "카카오맵";
-  const naverMapLabel  = t.access.naverMap      ?? "네이버지도";
+  const addressLabel = t.access.addressLabel ?? "";
+  const phoneLabel = t.access.phoneLabel ?? "";
+  const hoursLabel = t.access.hoursLabel ?? "";
+  const hoursNote = t.access.hoursNote ?? "";
+  const transitLabel = t.access.transitLabel ?? "";
+  const transitDesc = t.access.transitDesc ?? "";
+  const parkingLabel = t.access.parkingLabel ?? "";
+  const parkingDesc = t.access.parkingDesc ?? "";
+  const kakaoMapLabel = t.access.kakaoMapLabel ?? "카카오맵";
+  const naverMapLabel = t.access.naverMap ?? "네이버지도";
   const copyAddressLabel = t.access.copyAddress ?? "주소 복사";
-  const copiedLabel    = t.access.copiedLabel   ?? "복사됨";
+  const copiedLabel = t.access.copiedLabel ?? "복사됨";
+
+  const dividerColor = "1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent)";
+  const sectionStyle = integrated
+    ? { borderBottom: dividerColor }
+    : { background: "#FFFFFF", border: "1px solid var(--color-gold-pale)", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" };
+  const sectionClassName = integrated
+    ? "px-4 py-4 sm:px-5 sm:py-5"
+    : "p-3 sm:p-4 rounded-2xl";
+  const rootClassName = integrated
+    ? "reveal-right lg:col-span-5 flex h-full flex-col bg-[var(--brand-bg-card)]"
+    : "reveal-right lg:col-span-5 flex flex-col gap-2 sm:gap-3 lg:h-full";
 
   return (
     <div
       ref={infoPanelRef}
-      className="reveal-right lg:col-span-5 flex flex-col gap-2 sm:gap-3 lg:h-full"
+      className={rootClassName}
       style={{ transitionDelay: "0.15s" }}
+      data-testid="contact-info-panel"
     >
       {/* Address + 복사 버튼 */}
-      <div className="p-3 sm:p-4 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid var(--color-gold-pale)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+      <div className={sectionClassName} style={sectionStyle}>
         <div className="flex items-stretch gap-3">
-          <MapPin size={20} style={{ color: 'var(--color-gold-primary)' }} className="flex-shrink-0 mt-0.5" />
-          <div className="flex-1 min-w-0">
-            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
-              {addressLabel}
-            </p>
-            {/* [UI개선] color-star-text-mid → color-star-text (가독성 향상) */}
-            <p className="text-sm text-[var(--color-star-text)]">
-              {t.access.address}
-            </p>
+          <MapPin size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
+          <div className="min-w-0 flex-1">
+            <p className="mb-1 text-sm font-normal text-[var(--color-star-text)]">{addressLabel}</p>
+            <p className="text-sm text-[var(--color-star-text)]">{t.access.address}</p>
             <button
               type="button"
               onClick={onCopyAddress}
-              className="mt-2 flex items-center gap-1.5 text-xs font-normal px-3 py-1.5 rounded-full transition-all duration-200 active:scale-95"
+              className="mt-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-normal transition-all duration-200 active:scale-95"
               style={{
                 background: copied ? "#E8F9EF" : copyFailed ? "#FEF2F2" : "var(--color-gold-pale)",
                 color: copied ? "#03C75A" : copyFailed ? "#EF4444" : "var(--brand-text, #2C2C2C)",
@@ -80,23 +86,17 @@ export default function ContactInfoPanel({
               }}
             >
               {copied ? (
-                <>
-                  <Check size={12} />
-                  {copiedLabel}
-                </>
+                <><Check size={12} />{copiedLabel}</>
               ) : copyFailed ? (
                 <span>
                   {copyFailReason === 'unsupported'
-                    ? '직접 복사: ' + t.access.address
+                    ? `직접 복사: ${t.access.address}`
                     : copyFailReason === 'denied'
-                    ? '권한 거부됨 — 직접 복사: ' + t.access.address
-                    : '복사 실패 — 직접 복사: ' + t.access.address}
+                      ? `권한 거부됨 — 직접 복사: ${t.access.address}`
+                      : `복사 실패 — 직접 복사: ${t.access.address}`}
                 </span>
               ) : (
-                <>
-                  <Copy size={12} />
-                  {copyAddressLabel}
-                </>
+                <><Copy size={12} />{copyAddressLabel}</>
               )}
             </button>
           </div>
@@ -104,17 +104,12 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Phone */}
-      <div className="p-3 sm:p-4 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid var(--color-gold-pale)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+      <div className={sectionClassName} style={sectionStyle}>
         <div className="flex items-center gap-3">
-          <Phone size={20} style={{ color: 'var(--color-gold-primary)' }} className="flex-shrink-0" />
+          <Phone size={20} style={{ color: "var(--color-gold-primary)" }} className="shrink-0" />
           <div>
-            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
-              {phoneLabel}
-            </p>
-            <a
-              href={phoneHref}
-              className="font-montserrat font-normal text-lg transition-colors hover:opacity-70 text-[var(--color-star-navy)]"
-            >
+            <p className="mb-1 text-sm font-normal text-[var(--color-star-text)]">{phoneLabel}</p>
+            <a href={phoneHref} className="font-montserrat text-lg font-normal text-[var(--color-star-navy)] transition-colors hover:opacity-70">
               {phoneDisplay}
             </a>
           </div>
@@ -122,70 +117,55 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Hours */}
-      <div className="p-3 sm:p-4 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid var(--color-gold-pale)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+      <div className={sectionClassName} style={sectionStyle}>
         <div className="flex items-stretch gap-3">
-          <Clock size={20} style={{ color: 'var(--color-gold-primary)' }} className="flex-shrink-0 mt-0.5" />
+          <Clock size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
           <div className="flex-1">
-            <p className="font-normal text-sm mb-3 text-[var(--color-star-text)]">
-              {hoursLabel}
-            </p>
+            <p className="mb-3 text-sm font-normal text-[var(--color-star-text)]">{hoursLabel}</p>
             <div className="space-y-1.5">
               {t.hours.rows.map((h) => (
                 <div key={h.day} className="flex justify-between text-sm">
-                  {/* [UI개선] 요일 텍스트: color-star-text-mid → color-star-text */}
                   <span className="text-[var(--color-star-text)]">{h.day}</span>
-                  <span
-                    className="font-normal"
-                    style={{ color: h.time === closedLabel ? "#EF4444" : "var(--color-star-text)" }}
-                  >
+                  <span className="font-normal" style={{ color: h.time === closedLabel ? "#EF4444" : "var(--color-star-text)" }}>
                     {h.time}
                   </span>
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-3 p-2 rounded-lg" style={{ background: 'var(--color-gold-pale)', color: '#1a1a1a', fontWeight: 500 }}>
-              {hoursNote}
-            </p>
+            <p className="mt-3 rounded-lg bg-[var(--color-gold-pale)] p-2 text-xs font-medium text-[#1a1a1a]">{hoursNote}</p>
           </div>
         </div>
       </div>
 
       {/* Transit & Parking */}
-      <div className="p-3 sm:p-4 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid var(--color-gold-pale)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+      <div className={sectionClassName} style={integrated ? undefined : sectionStyle}>
         <div className="flex items-stretch gap-3">
-          <Train size={20} style={{ color: 'var(--color-gold-primary)' }} className="flex-shrink-0 mt-0.5" />
+          <Train size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
           <div>
-            <p className="font-normal text-sm mb-2 text-[var(--color-star-text)]">
-              {transitLabel}
-            </p>
-            {/* [UI개선] color-star-text-mid → color-star-text */}
-            <p className="text-sm text-[var(--color-star-text)]">
-              {transitDesc}
-            </p>
+            <p className="mb-2 text-sm font-normal text-[var(--color-star-text)]">{transitLabel}</p>
+            <p className="text-sm text-[var(--color-star-text)]">{transitDesc}</p>
           </div>
         </div>
-        <div className="flex items-stretch gap-3 mt-3">
-          <Car size={20} style={{ color: 'var(--color-gold-primary)' }} className="flex-shrink-0 mt-0.5" />
+        <div className="mt-3 flex items-stretch gap-3">
+          <Car size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
           <div>
-            <p className="font-normal text-sm mb-1 text-[var(--color-star-text)]">
-              {parkingLabel}
-            </p>
-            {/* [UI개선] color-star-text-mid → color-star-text */}
-            <p className="text-sm text-[var(--color-star-text)]">
-              {parkingDesc}
-            </p>
+            <p className="mb-1 text-sm font-normal text-[var(--color-star-text)]">{parkingLabel}</p>
+            <p className="text-sm text-[var(--color-star-text)]">{parkingDesc}</p>
           </div>
         </div>
       </div>
 
       {/* External Map Links */}
-      <div className="flex gap-2 flex-wrap">
+      <div
+        className={`mt-auto flex flex-wrap gap-2 ${integrated ? "border-t px-4 py-4 sm:px-5 sm:py-5" : ""}`}
+        style={integrated ? { borderColor: "color-mix(in srgb, var(--color-gold-primary) 22%, transparent)" } : undefined}
+      >
         <a
           href="https://map.kakao.com/link/map/스타피부과,35.1572312,129.0581932"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${kakaoMapLabel} (새 탭에서 열림)`}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-normal transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-kakao)] text-[#3C1E1E] min-w-[120px]"
+          className="flex min-w-[120px] flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--color-star-kakao)] px-3 py-2.5 text-sm font-normal text-[#3C1E1E] transition-all duration-200 hover:opacity-80 active:scale-95"
         >
           <MapPin size={14} />
           {kakaoMapLabel}
@@ -195,7 +175,7 @@ export default function ContactInfoPanel({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${naverMapLabel} (새 탭에서 열림)`}
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-sm font-normal transition-all duration-200 hover:opacity-80 active:scale-95 bg-[var(--color-star-naver)] text-white min-w-[120px]"
+          className="flex min-w-[120px] flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--color-star-naver)] px-3 py-2.5 text-sm font-normal text-white transition-all duration-200 hover:opacity-80 active:scale-95"
         >
           <MapPin size={14} />
           {naverMapLabel}

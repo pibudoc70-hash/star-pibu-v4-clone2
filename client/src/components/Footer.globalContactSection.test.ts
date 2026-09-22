@@ -42,8 +42,8 @@ describe("global footer contact section", () => {
     expect(footerSource).toMatch(/<>\s*<ContactSection\s*\/>\s*<footer/);
   });
 
-  it("uses the requested #C4A882 background for the common section", () => {
-    expect(contactSource).toContain('backgroundColor: "#C4A882"');
+  it("uses the established warm-beige background for the common section", () => {
+    expect(contactSource).toContain('backgroundColor: "var(--brand-bg-warm)"');
     expect(contactSource).not.toContain("faq-section-bg");
   });
 

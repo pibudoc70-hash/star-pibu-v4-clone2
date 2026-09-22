@@ -15,11 +15,17 @@ const landingSources = [
 ];
 
 describe("Contact section layout and notice visibility", () => {
-  it("reduces Contact's leading space and balances the desktop map and information panel", () => {
+  it("uses one responsive desktop surface for the map and information panel", () => {
     expect(contactSource).toContain("pt-12 pb-16 sm:pt-16 sm:pb-24");
     expect(contactSource).toContain("lg:grid-cols-12");
+    expect(contactSource).toContain("overflow-hidden rounded-2xl");
+    expect(contactSource).toContain('backgroundColor: "var(--brand-bg-warm)"');
     expect(contactSource).toContain("lg:col-span-7");
     expect(panelSource).toContain("lg:col-span-5");
+    expect(panelSource).toContain("integrated?: boolean");
+    expect(panelSource).toContain("borderBottom: dividerColor");
+    expect(panelSource).toContain("bg-[var(--brand-bg-card)]");
+    expect(contactSource).toContain("lg:items-stretch");
     expect(cssSource).toMatch(/#contact\s*\{\s*padding-top:\s*3rem\s*!important;/);
   });
 

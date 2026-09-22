@@ -1,6 +1,7 @@
 interface ClinicMapEmbedProps {
   title: string;
   className?: string;
+  integrated?: boolean;
 }
 
 export const STAR_CLINIC_LAT = 35.1572312;
@@ -13,16 +14,20 @@ export const STAR_CLINIC_LNG = 129.0581932;
 export const GOOGLE_CLINIC_MAP_EMBED_URL =
   `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${STAR_CLINIC_LAT},${STAR_CLINIC_LNG}!6i17`;
 
-export default function ClinicMapEmbed({ title, className = "" }: ClinicMapEmbedProps) {
+export default function ClinicMapEmbed({ title, className = "", integrated = false }: ClinicMapEmbedProps) {
+  const surfaceClassName = integrated
+    ? "h-full rounded-none border-0 bg-white shadow-none"
+    : "rounded-2xl border border-white/70 bg-white shadow-[0_10px_30px_rgba(57,39,20,0.16)]";
+
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_10px_30px_rgba(57,39,20,0.16)] ${className}`.trim()}
+      className={`overflow-hidden ${surfaceClassName} ${className}`.trim()}
       data-testid="clinic-map-embed"
     >
       <iframe
         src={GOOGLE_CLINIC_MAP_EMBED_URL}
         title={title}
-        className="block min-h-[360px] w-full border-0 sm:min-h-[440px] lg:h-full lg:min-h-[560px]"
+        className="block h-[360px] w-full border-0 sm:h-[440px] lg:h-full lg:min-h-0"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         allowFullScreen

@@ -27,6 +27,7 @@ export const pages = {
   LandingJA:          () => import("@/pages/LandingJA"),
   LandingZH:          () => import("@/pages/LandingZH"),
   LandingZHTW:        () => import("@/pages/LandingZHTW"),
+  Event:              () => import("@/pages/Event"),
   EventDetail:        () => import("@/pages/EventDetail"),
   TreatmentRedirect:  () => import("@/pages/TreatmentRedirect"),
   TreatmentPage:      () => import("@/pages/TreatmentPage"),
@@ -62,6 +63,7 @@ export const NotFound           = lazy(pages.NotFound);
 export const Notice             = lazy(pages.Notice);
 export const NoticeDetail       = lazy(pages.NoticeDetail);
 export const NoticeEdit         = lazy(pages.NoticeEdit);
+export const Event              = lazy(pages.Event);
 export const EventDetail        = lazy(pages.EventDetail);
 export const TreatmentRedirect  = lazy(pages.TreatmentRedirect);
 export const AdminDashboard     = lazy(pages.AdminDashboard);
@@ -114,6 +116,7 @@ export const LANG_ROUTES: LangRoute[] = [
   { path: "treatments/:slug",  component: TreatmentPage },
   { path: "equipment3/:slug",  component: Equipment3Detail },
   { path: "equipment3",        component: Equipment3 },
+  { path: "event",             component: Event },
   { path: "about",             component: About },
   { path: "foreign-guide",     component: ForeignGuide },
   { path: "research",          component: Research },

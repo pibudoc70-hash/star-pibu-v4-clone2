@@ -65,7 +65,7 @@ export function useHeaderState() {
     { label: t.nav.treatments, href: "/equipment3", sectionId: null },
     { label: t.nav.doctors,    href: "/doctors",    sectionId: null         },
     ...(priceListLabel[lang] ? [{ label: priceListLabel[lang], href: "/price-list", sectionId: null }] : []),
-    { label: "EVENT",          href: "#events",     sectionId: "events"     },
+    { label: "EVENT",          href: "/event",      sectionId: null         },
     { label: t.nav.about,      href: "/about",      sectionId: null         },
     { label: t.nav.contact,    href: "/directions", sectionId: null         },
   ];

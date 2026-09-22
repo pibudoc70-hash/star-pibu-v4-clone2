@@ -47,6 +47,14 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain("md:hidden");
   });
 
+  it("can omit only its introduction when a standalone page provides the title", () => {
+    expect(source).toContain("showHeader?: boolean");
+    expect(source).toContain("showHeader = true");
+    expect(source).toContain("{showHeader && <SectionHeader lang={lang} />}");
+    expect(source).toContain('const sectionSpacing = showHeader ? "py-20 md:py-28" : "pt-12 pb-20 md:pt-16 md:pb-28"');
+    expect(source).toContain('className={`${sectionSpacing} scroll-mt-24 md:scroll-mt-40`}');
+  });
+
   it("keeps every locale subtitle on one desktop line", () => {
     expect(source).toContain("Experience premium skin care at Star's exclusive prices.");
     expect(source).toContain("スターの特別価格で、ワンランク上のスキンケアを。");

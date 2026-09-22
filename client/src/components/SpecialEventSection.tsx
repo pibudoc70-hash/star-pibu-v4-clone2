@@ -173,7 +173,12 @@ function MobileEventListSkeleton() {
 }
 
 // ── 메인 컴포넌트 ─────────────────────────────────────────────────────────────
-export default function SpecialEventSection() {
+interface SpecialEventSectionProps {
+  /** Standalone EVENT page already supplies its own page title. */
+  showHeader?: boolean;
+}
+
+export default function SpecialEventSection({ showHeader = true }: SpecialEventSectionProps) {
   const { lang } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
   const [fetchRef, isFetchVisible] = useVisibleFetch();
@@ -183,6 +188,7 @@ export default function SpecialEventSection() {
   );
   const allEvents = specialEvents as SpecialEvent[];
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
+  const sectionSpacing = showHeader ? "py-20 md:py-28" : "pt-12 pb-20 md:pt-16 md:pb-28";
   useEventSkeletonTiming(isInitialSkeletonVisible);
 
   // 에러 발생 시 토스트 알림
@@ -193,10 +199,10 @@ export default function SpecialEventSection() {
 
   if (isInitialSkeletonVisible) {
     return (
-      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셜 이벤트" aria-busy="true">
+      <section id="events" className={`${sectionSpacing} scroll-mt-24 md:scroll-mt-40`} aria-label="스페셜 이벤트" aria-busy="true">
         <span ref={fetchRef} aria-hidden="true" />
         <div className="container">
-          <SectionHeader lang={lang} />
+          {showHeader && <SectionHeader lang={lang} />}
           <MobileEventListSkeleton />
           <div className="hidden md:grid md:grid-cols-3 md:gap-6">
             <EventCardSkeleton />
@@ -218,9 +224,9 @@ export default function SpecialEventSection() {
       "zh-TW": "重試",
     };
     return (
-      <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셜 이벤트">
+      <section id="events" className={`${sectionSpacing} scroll-mt-24 md:scroll-mt-40`} aria-label="스페셜 이벤트">
         <div className="container">
-          <SectionHeader lang={lang} />
+          {showHeader && <SectionHeader lang={lang} />}
           <div className="text-center py-16 flex flex-col items-center gap-4">
             <p className="text-base text-brand-mid">{parseEventListError(error, lang)}</p>
             <button
@@ -239,10 +245,14 @@ export default function SpecialEventSection() {
   }
 
   return (
-    <section id="events" className="py-20 md:py-28 scroll-mt-24 md:scroll-mt-40" aria-label="스페셜 이벤트">
+    <section
+      id="events"
+      className={`${sectionSpacing} scroll-mt-24 md:scroll-mt-40`}
+      aria-label="스페셜 이벤트"
+    >
       <span ref={fetchRef} aria-hidden="true" />
       <div className="container">
-        <SectionHeader lang={lang} />
+        {showHeader && <SectionHeader lang={lang} />}
         {allEvents.length === 0 ? (
           <EventEmptyState lang={lang} />
         ) : (

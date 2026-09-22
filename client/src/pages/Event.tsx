@@ -94,7 +94,7 @@ export default function Event() {
       </section>
 
       <div className="section-bg-cream">
-        <SpecialEventSection />
+        <SpecialEventSection showHeader={false} />
       </div>
       <ContactSection />
     </MainLayout>

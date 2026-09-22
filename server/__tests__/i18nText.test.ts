@@ -253,37 +253,32 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     }
   });
 
-  it("Directions는 공통 지도 SDK와 언어별 오류 대체 링크를 사용한다", () => {
+  it("Directions는 지도 임베드 없이 공통 카카오맵 링크 패널을 사용한다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    const mapSrc = readFileSync(nodePath.resolve(process.cwd(), "client/src/components/Map.tsx"), "utf8");
-    expect(src).toMatch(/import \{ MapView \} from '@\/components\/Map'/);
-    expect(src).toMatch(/<MapView/);
-    expect(src).toMatch(/initialCenter=\{\{ lat: 35\.1572312, lng: 129\.0581932 \}\}/);
-    expect(src).toMatch(/errorFallback=\{\(/);
-    expect(src).toMatch(/mapFallbackUrl/);
-    expect(src).toMatch(/mapFallbackLabel/);
-    expect(src).toMatch(/www\.google\.com\/maps\/embed\?pb=/);
-    expect(mapSrc).toMatch(/addListener\(map, 'tilesloaded'/);
-    expect(mapSrc).toMatch(/setMapError\(true\)/);
+    expect(src).toMatch(/import LocationLinkPanel from '@\/components\/contact\/LocationLinkPanel'/);
+    expect(src).toMatch(/<LocationLinkPanel/);
+    expect(src).toMatch(/href=\{HOSPITAL\.kakaoMapUrl\}/);
+    expect(src).not.toMatch(/<MapView/);
+    expect(src).not.toMatch(/<iframe/);
+    expect(src).not.toMatch(/googleMapsEmbedUrl/);
   });
 
   it("Directions의 길찾기 버튼은 링크와 버튼을 중첩하지 않는다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
     expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-yellow-400/);
     expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-green-600/);
-    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-\[#4285F4\]/);
+    expect(src).not.toMatch(/bg-\[#4285F4\]/);
     expect(src).not.toMatch(/<Button/);
     expect(src).not.toMatch(/<a[\s\S]{0,80}<button/);
   });
 
-  it("외국어 Directions는 언어별 Google Maps 길찾기를, 한국어는 카카오·네이버 지도를 유지한다", () => {
+  it("Directions는 모든 언어에서 공통 카카오맵 외부 링크를 제공하고 한국어 네이버 링크를 유지한다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/www\.google\.com\/maps\/dir/);
-    expect(src).toMatch(/hl=\$\{mapLanguage\[lang\]\}/);
-    expect(src).toMatch(/lang === 'ko'/);
-    expect(src).toMatch(/t\.directions\.googleMaps/);
+    expect(src).toMatch(/<LocationLinkPanel/);
+    expect(src).toMatch(/href=\{HOSPITAL\.kakaoMapUrl\}/);
     expect(src).toMatch(/HOSPITAL\.kakaoMapUrl/);
     expect(src).toMatch(/HOSPITAL\.naverMapUrl/);
+    expect(src).not.toMatch(/www\.google\.com\/maps\/dir/);
   });
 });
 
@@ -616,26 +611,28 @@ describe("Round-2 P1: HeroSection scrollLabel fallback 제거 검증", () => {
   });
 });
 
-describe("Round-2 P1: ContactSection mapAriaLabel/mapMarkerTitle fallback 제거 검증", () => {
+describe("Round-2 P1: ContactSection mapless location link 검증", () => {
   // readFileSync via top-level import (see below)
   // nodePath via top-level import (see below)
 
-  it("ContactSection.tsx에 mapAriaLabel 한국어 fallback이 없어야 한다", () => {
+  it("ContactSection.tsx가 공통 외부 지도 링크 패널을 사용하고 iframe을 렌더링하지 않는다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/ContactSection.tsx"),
       "utf8",
     );
-    expect(src).not.toMatch(/mapAriaLabel \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC704\uCE58 \uC9C0\uB3C4/);
-    expect(src).toMatch(/aria-label=\{mapTitle\}/);
-    expect(src).toMatch(/title=\{mapTitle\}/);
+    expect(src).toMatch(/import LocationLinkPanel/);
+    expect(src).toMatch(/<LocationLinkPanel/);
+    expect(src).not.toMatch(/<iframe/);
+    expect(src).not.toMatch(/GOOGLE_MAPS_EMBED_URL/);
   });
 
-  it("ContactSection.tsx에 mapMarkerTitle 한국어 fallback이 없어야 한다", () => {
+  it("ContactSection.tsx에 지도 오류 fallback 상태가 남아 있지 않아야 한다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/ContactSection.tsx"),
       "utf8",
     );
-    expect(src).not.toMatch(/mapMarkerTitle \?\? "\uC2A4\uD0C0\uD53C\uBD80\uACFC \uC11C\uBA74/);
+    expect(src).not.toMatch(/mapError/);
+    expect(src).not.toMatch(/setMapError/);
   });
 });
 describe("Round-2 P2: noindex 페이지 pageType=\"admin\" 명시 검증", () => {

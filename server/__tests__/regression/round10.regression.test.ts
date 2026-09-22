@@ -7,7 +7,7 @@
  *   A. ContactSection — navigator.clipboard 전용 사용 (document.execCommand 제거)
  *   B. ContactSection — non-null assertion(!) 제거 (optional chaining + nullish coalescing)
  *   C. ContactSection — copyFailed state 추가 (클립보드 실패 시 사용자 안내)
- *   D. ContactSection — mapError state 제거 (MapView 내부 자체 fallback UI 사용)
+ *   D. ContactSection — 지도 임베드 없이 공통 외부 지도 링크 사용
  *   E. TreatmentsEquipmentSection — hex 색상 직접 사용 없음 (CSS 변수 토큰 사용)
  *   F. TreatmentsEquipmentSection — CSS 변수 토큰 사용 확인
  */
@@ -106,25 +106,21 @@ describe("[C] ContactSection copyFailed state", () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// D. ContactSection — mapError state 제거 (MapView 내부 fallback 사용)
+// D. ContactSection — 지도 임베드 없이 공통 외부 지도 링크 사용
 // ─────────────────────────────────────────────────────────────────────────────
-describe("[D] ContactSection mapError state 제거", () => {
+describe("[D] ContactSection mapless location link", () => {
   const contactSrc = src("client/src/components/ContactSection.tsx");
 
-  it("ContactSection에 mapError state가 없어야 한다 (MapView 내부 처리)", () => {
-    // mapError state 선언이 없어야 함
-    expect(contactSrc).not.toMatch(/const\s*\[mapError,\s*setMapError\]/);
+  it("공통 외부 지도 링크 패널을 사용한다", () => {
+    expect(contactSrc).toMatch(/import LocationLinkPanel/);
+    expect(contactSrc).toMatch(/<LocationLinkPanel/);
+    expect(contactSrc).toMatch(/href=\{KAKAO_MAP_URL\}/);
   });
 
-  it("setMapError 호출이 없어야 한다", () => {
-    expect(contactSrc).not.toMatch(/setMapError/);
-  });
-
-  it("인터랙티브 지도 구현(MapView, tRPC 프록시 또는 Google Maps iframe)을 사용한다", () => {
-    const hasMapView = /<MapView/.test(contactSrc);
-    const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
-    expect(hasMapView || hasTrpcMap || hasEmbedMap).toBe(true);
+  it("iframe과 지도 오류 fallback UI를 렌더링하지 않는다", () => {
+    expect(contactSrc).not.toMatch(/<iframe/);
+    expect(contactSrc).not.toMatch(/GOOGLE_MAPS_EMBED_URL/);
+    expect(contactSrc).not.toMatch(/MapView/);
   });
 });
 

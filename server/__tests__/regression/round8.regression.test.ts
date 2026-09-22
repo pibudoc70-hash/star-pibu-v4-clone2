@@ -6,7 +6,7 @@
  *   C. MapErrorBoundary.tsx 신규 생성 — App.tsx에서 분리
  *   D. App.tsx — MapErrorBoundary 인라인 클래스 제거, import로 교체
  *   E. useMapHeight.ts 신규 생성 — ContactSection 지도 높이 계산 로직 분리
- *   F. ContactSection.tsx — useMapHeight 훅 사용, 팝업 토글 onToggle 콜백 추가
+ *   F. ContactSection.tsx — 지도 없는 공통 외부 링크 패널 사용
  */
 import { readFileSync } from "fs";
 import { resolve } from "path";
@@ -135,34 +135,23 @@ describe("[E] useMapHeight.ts 신규 생성", () => {
   });
 });
 
-// F. ContactSection.tsx — useMapHeight 훅 사용
-describe("[F] ContactSection.tsx useMapHeight 훅 사용", () => {
+// F. ContactSection.tsx — 지도 없는 공통 외부 링크 패널
+describe("[F] ContactSection.tsx mapless location link", () => {
   const contactSrc = src("client/src/components/ContactSection.tsx");
 
-  it("useMapHeight를 import해야 한다", () => {
-    expect(contactSrc).toMatch(/import.*useMapHeight.*from/);
+  it("공통 외부 지도 링크 패널을 import하고 렌더링해야 한다", () => {
+    expect(contactSrc).toMatch(/import LocationLinkPanel/);
+    expect(contactSrc).toMatch(/<LocationLinkPanel/);
   });
 
-  it("useMapHeight 훅을 호출해야 한다", () => {
-    expect(contactSrc).toMatch(/useMapHeight\(\)/);
-  });
-
-  it("ContactSection 내에서 setMapHeight를 직접 호출하지 않아야 한다", () => {
+  it("ContactSection 내에서 지도 높이를 직접 관리하지 않아야 한다", () => {
     expect(contactSrc).not.toMatch(/setMapHeight/);
+    expect(contactSrc).not.toMatch(/mapHeight/);
   });
 
-  it("마커 콜백, tRPC 지도 프록시 또는 인터랙티브 iframe 지도를 사용한다", () => {
-    const hasOnToggle = /onToggle/.test(contactSrc);
-    const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
-    expect(hasOnToggle || hasTrpcMap || hasEmbedMap).toBe(true);
-  });
-
-  it("팝업 상태, tRPC 지도 프록시 또는 인터랙티브 iframe 지도를 사용한다", () => {
-    const hasMarkerState = /markerPopupVisible|setMarkerPopupVisible/.test(contactSrc);
-    const hasTrpcMap = /trpc\.location\.getStaticMapUrl/.test(contactSrc);
-    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
-    expect(hasMarkerState || hasTrpcMap || hasEmbedMap).toBe(true);
+  it("iframe과 카카오 K fallback을 렌더링하지 않아야 한다", () => {
+    expect(contactSrc).not.toMatch(/<iframe/);
+    expect(contactSrc).not.toMatch(/>K<\/span>/);
   });
 });
 

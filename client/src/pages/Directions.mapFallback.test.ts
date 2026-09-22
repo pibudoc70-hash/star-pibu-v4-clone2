@@ -4,13 +4,13 @@ import { describe, expect, it } from "vitest";
 
 const source = readFileSync(resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
 
-describe("Directions map provider fallback", () => {
-  it("renders the official shared Google Maps embed when the Maps Proxy canvas is unavailable", () => {
-    expect(source).toContain('https://www.google.com/maps/embed?pb=');
-    expect(source).toContain('<iframe');
-    expect(source).toContain('title={t.directions.mapTitle}');
-    expect(source).toContain('referrerPolicy="strict-origin-when-cross-origin"');
-    expect(source).not.toContain('loading="lazy"');
-    expect(source).toMatch(/<iframe[\s\S]*?style=\{\{ height: '100%' \}\}/);
+describe("Directions mapless location link", () => {
+  it("uses the shared external Kakao map link instead of any embedded map fallback", () => {
+    expect(source).toContain("import LocationLinkPanel");
+    expect(source).toContain("<LocationLinkPanel");
+    expect(source).toContain("href={HOSPITAL.kakaoMapUrl}");
+    expect(source).not.toContain("<iframe");
+    expect(source).not.toContain("<MapView");
+    expect(source).not.toContain("googleMapsEmbedUrl");
   });
 });

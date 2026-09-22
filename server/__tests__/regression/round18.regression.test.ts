@@ -169,18 +169,15 @@ describe("F. useClinicMap: ContactSection onMapReady 콜백 캡슐화", () => {
     expect(clinicMapSrc).toMatch(/handleMapReady/);
   });
 
-  it("F-3: ContactSection이 useClinicMap, tRPC 지도 프록시 또는 인터랙티브 iframe을 사용한다", () => {
-    const hasUseClinicMap = contactSrc.includes("useClinicMap");
-    const hasTrpcMap = contactSrc.includes("trpc.location.getStaticMapUrl");
-    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
-    expect(hasUseClinicMap || hasTrpcMap || hasEmbedMap).toBe(true);
+  it("F-3: ContactSection이 공통 외부 지도 링크 패널을 사용한다", () => {
+    expect(contactSrc).toContain("LocationLinkPanel");
+    expect(contactSrc).toContain("<LocationLinkPanel");
   });
 
-  it("F-4: ContactSection이 useClinicMap 호출, tRPC 지도 프록시 또는 iframe 지도를 사용한다", () => {
-    const hasHandleMapReady = /const\s*\{[^}]*handleMapReady[^}]*\}\s*=\s*useClinicMap/.test(contactSrc);
-    const hasTrpcMap = contactSrc.includes("trpc.location.getStaticMapUrl");
-    const hasEmbedMap = /<iframe/.test(contactSrc) && /maps\.google\.com\/maps/.test(contactSrc);
-    expect(hasHandleMapReady || hasTrpcMap || hasEmbedMap).toBe(true);
+  it("F-4: ContactSection에 고정 높이 지도와 iframe이 남아 있지 않다", () => {
+    expect(contactSrc).not.toContain("useClinicMap");
+    expect(contactSrc).not.toContain("<iframe");
+    expect(contactSrc).not.toContain("mapHeight");
   });
 });
 

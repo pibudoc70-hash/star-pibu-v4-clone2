@@ -210,8 +210,10 @@ describe("E. ContactSection: 인라인 style 제거 + CSS 변수 토큰", () => 
     expect(contactSrc).toContain("text-[clamp(1.4rem,5vw,2.6rem)]");
   });
 
-  it("E-4: 지도 컨테이너에 flex flex-col 클래스가 사용되어야 한다", () => {
-    expect(contactSrc).toContain("flex flex-col");
+  it("E-4: 지도 임베드 대신 공통 외부 지도 링크 패널을 사용해야 한다", () => {
+    expect(contactSrc).toContain("LocationLinkPanel");
+    expect(contactSrc).toContain("<LocationLinkPanel");
+    expect(contactSrc).not.toContain("<iframe");
   });
 
   it("E-5: JSX 지도 컨테이너에 display: flex 인라인 style이 없어야 한다 (마커 HTML 문자열 제외)", () => {

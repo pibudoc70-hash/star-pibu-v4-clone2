@@ -64,6 +64,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LangContext";
+import LocationLinkPanel from "@/components/contact/LocationLinkPanel";
 
 declare global {
   interface Window {
@@ -306,25 +307,16 @@ export function MapView({
   if (mapError) {
     return (
       <div
-		key="map-error"
-        className={cn("w-full h-[500px] flex flex-col items-center justify-center bg-gray-100 rounded-2xl", className)}
+        key="map-error"
+        className={cn("w-full", className)}
         style={style}
       >
         {errorFallback ?? (
-          <a
+          <LocationLinkPanel
+            address={mapAddress}
+            buttonLabel={mapLabel}
             href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center gap-3 text-center px-6 py-8 rounded-xl hover:bg-gray-200 transition-colors"
-          >
-            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#FFCD00" }}>
-              <span className="text-2xl font-bold" style={{ color: "#3C1E1E" }}>K</span>
-            </div>
-            <div>
-              <p className="font-bold text-gray-800 text-lg">{mapLabel}</p>
-              <p className="text-gray-500 text-sm mt-1">{mapAddress}</p>
-            </div>
-          </a>
+          />
         )}
       </div>
     );

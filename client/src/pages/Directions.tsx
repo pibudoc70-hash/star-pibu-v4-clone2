@@ -5,19 +5,16 @@
  * directions routes. ContactSection is a separate home-page map surface, not a
  * replacement for this standalone access page.
  *
- * This page owns the active SeoHead canonical/hreflang output and the MapView →
- * embed fallback for its route. Keep route, locale, map fallback, and external
- * directions links in sync when making a separately approved access-page change.
+ * This page owns the active SeoHead canonical/hreflang output and external
+ * directions links for its route.
  */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { buildHreflangs } from '@/components/SeoHead';
 import { buttonVariants } from '@/components/ui/button';
 import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
-import { useCallback, useState } from 'react';
-import type { Lang } from '@/lib/i18n.types';
-import { MapView } from '@/components/Map';
-import { trackMapFallback } from '@/lib/mapFallbackAnalytics';
+import { useState } from 'react';
+import LocationLinkPanel from '@/components/contact/LocationLinkPanel';
 
 const HOSPITAL = {
   phone: '051-818-2300',
@@ -28,14 +25,6 @@ const HOSPITAL = {
 export default function Directions() {
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
-	const mapLanguage: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', zh: 'zh-CN', 'zh-TW': 'zh-TW' };
-	const googleMapsDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=35.1572312%2C129.0581932&travelmode=driving&hl=${mapLanguage[lang]}`;
-	const googleMapsEmbedUrl = `https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3261.9755226137463!2d129.0581932!3d35.157231200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDA5JzI2LjAiTiAxMjnCsDAzJzI5LjUiRQ!5e0!3m2!1suk!2sua!4v1786971719314!5m2!1suk!2sua&hl=${mapLanguage[lang]}`;
-	const mapFallbackUrl = lang === 'ko' ? HOSPITAL.kakaoMapUrl : googleMapsDirectionsUrl;
-  const mapFallbackLabel = lang === 'ko' ? t.directions.kakaoMap : t.directions.googleMaps;
-  const handleMapFallback = useCallback(() => {
-    trackMapFallback({ locale: lang, surface: 'directions' });
-  }, [lang]);
 
   const handleCopyAddress = () => {
     // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
@@ -70,29 +59,12 @@ export default function Directions() {
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* 지도 */}
-              <div className="md:col-span-2">
-                <div className="bg-gray-100 rounded-lg overflow-hidden" style={{ height: '400px', minHeight: '400px' }}>
-                  <MapView
-                    initialCenter={{ lat: 35.1572312, lng: 129.0581932 }}
-                    initialZoom={17}
-                    className="h-full w-full"
-                    style={{ height: '100%' }}
-	                    onFallback={handleMapFallback}
-	                    errorFallback={(
-	                      <div className="h-full w-full" style={{ height: '100%' }}>
-	                        <iframe
-	                          title={t.directions.mapTitle}
-	                          src={googleMapsEmbedUrl}
-	                          className="block h-full w-full border-0"
-	                          style={{ height: '100%' }}
-	                          referrerPolicy="strict-origin-when-cross-origin"
-	                        />
-	                      </div>
-	                    )}
-                  />
-                </div>
-              </div>
+              <LocationLinkPanel
+                className="md:col-span-2"
+                address={t.access.address}
+                buttonLabel={t.access.mapViewLabel ?? t.directions.kakaoMap}
+                href={HOSPITAL.kakaoMapUrl}
+              />
 
               {/* 정보 */}
               <div className="space-y-6">
@@ -172,16 +144,7 @@ export default function Directions() {
                         {t.directions.naverMap}
                       </a>
                     </>
-                  ) : (
-                    <a
-                      href={googleMapsDirectionsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={buttonVariants({ className: "w-full bg-[#4285F4] text-white hover:bg-[#3367D6]" })}
-                    >
-                      {t.directions.googleMaps}
-                    </a>
-                  )}
+                  ) : null}
                 </div>
               </div>
           </div>

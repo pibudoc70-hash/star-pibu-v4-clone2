@@ -6642,8 +6642,12 @@ body.font-lang-zh .hero-stat-label {
 .dr-page-header {
   background: linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%);
 }
+.dr-page-header--doctors {
+  background: linear-gradient(135deg, var(--brand-bg-card) 0%, var(--brand-bg-alt) 100%);
+}
 .dr-page-header-eyebrow { color: #b89a5a; }
 .dr-page-header-title { color: #1a1a1a; }
+.dr-page-header-subtitle { color: var(--color-gold-deep); }
 .dr-page-header-tagline { color: #6b5c3e; }
 
 /* 통증관리 native disclosure: React hook 없이 details content의 open/close를 부드럽게 전환한다. */

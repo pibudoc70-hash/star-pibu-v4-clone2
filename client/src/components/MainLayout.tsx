@@ -3,9 +3,10 @@ import Footer from './Footer';
 
 interface MainLayoutProps {
   children: React.ReactNode;
+  showContactSection?: boolean;
 }
 
-export default function MainLayout({ children }: MainLayoutProps) {
+export default function MainLayout({ children, showContactSection = true }: MainLayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 스킵 네비게이션 링크 - 키보드 사용자를 위한 WCAG 2.1 요건 */}
@@ -19,7 +20,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <main id="main-content" className="flex-grow star-page-enter" tabIndex={-1}>
         {children}
       </main>
-      <Footer />
+      <Footer showContactSection={showContactSection} />
     </div>
   );
 }

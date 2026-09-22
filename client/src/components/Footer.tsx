@@ -17,7 +17,11 @@ const sns = [
   { icon: Instagram, label: "Instagram", href: "https://instagram.com/starpibu", color: "#E1306C" },
 ];
 
-export default function Footer() {
+interface FooterProps {
+  showContactSection?: boolean;
+}
+
+export default function Footer({ showContactSection = true }: FooterProps) {
   const { t, lang } = useLang();
   const [, navigate] = useLocation();
 
@@ -91,7 +95,7 @@ export default function Footer() {
 
   return (
     <>
-      <ContactSection />
+      {showContactSection && <ContactSection />}
       <footer
         style={{ background: "#1A1410" }}
         className="footer-root"

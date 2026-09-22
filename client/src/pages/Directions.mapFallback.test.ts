@@ -5,14 +5,17 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
 const footerSource = readFileSync(resolve(process.cwd(), "client/src/components/Footer.tsx"), "utf8");
 
-describe("Directions dedicated transport content", () => {
-  it("keeps transport guidance while the global footer supplies the shared location section", () => {
+describe("Directions dedicated location and transport content", () => {
+  it("keeps the shared location panel in-page above transport guidance without a footer duplicate", () => {
     expect(source).toContain("transportationTitle");
     expect(source).toContain("carTitle");
     expect(source).toContain("transitTitle");
     expect(source).not.toContain("LocationLinkPanel");
     expect(source).not.toContain("map.kakao.com");
-    expect(footerSource).toContain("<ContactSection />");
+    expect(source).toContain("<MainLayout showContactSection={false}>");
+    expect(source).toContain('import ContactSection from \'@/components/ContactSection\'');
+    expect(source).toContain("<ContactSection />");
+    expect(footerSource).toContain("showContactSection && <ContactSection />");
     expect(source).not.toContain("<iframe");
     expect(source).not.toContain("<MapView");
     expect(source).not.toContain("googleMapsEmbedUrl");

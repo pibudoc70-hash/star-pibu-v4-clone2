@@ -14,7 +14,7 @@ import { getLocalizedUrl } from "@/lib/localizedPath";
 const EVENT_COPY = {
   ko: {
     eyebrow: "STAR DERMATOLOGY",
-    title: "EVENT",
+    title: "STAR EVENT",
     subtitle: "스타피부과의 특별한 혜택과 최신 이벤트를 확인해보세요.",
     seoTitle: "스페셜 이벤트 | 부산 서면 스타피부과",
     seoDescription: "부산 서면 스타피부과의 스페셜 이벤트를 확인하세요. 울쎄라피 프라임, 써마지 FLX 등 다양한 피부 관리 혜택을 안내합니다.",
@@ -22,7 +22,7 @@ const EVENT_COPY = {
   },
   en: {
     eyebrow: "STAR DERMATOLOGY",
-    title: "EVENT",
+    title: "STAR EVENT",
     subtitle: "Explore STAR Dermatology's latest special benefits and events.",
     seoTitle: "Special Events | STAR Dermatology Clinic Busan",
     seoDescription: "Explore the latest special events and benefits at STAR Dermatology Clinic in Seomyeon, Busan.",
@@ -30,7 +30,7 @@ const EVENT_COPY = {
   },
   ja: {
     eyebrow: "STAR DERMATOLOGY",
-    title: "EVENT",
+    title: "STAR EVENT",
     subtitle: "スター皮膚科の特別な特典と最新イベントをご確認ください。",
     seoTitle: "スペシャルイベント | 釜山西面スター皮膚科",
     seoDescription: "釜山西面スター皮膚科の最新スペシャルイベントと特典をご案内します。",
@@ -38,7 +38,7 @@ const EVENT_COPY = {
   },
   zh: {
     eyebrow: "STAR DERMATOLOGY",
-    title: "EVENT",
+    title: "STAR EVENT",
     subtitle: "查看STAR皮肤科的特别优惠和最新活动。",
     seoTitle: "特别活动 | 釜山西面STAR皮肤科",
     seoDescription: "查看釜山西面STAR皮肤科的最新特别活动与优惠。",
@@ -46,7 +46,7 @@ const EVENT_COPY = {
   },
   "zh-TW": {
     eyebrow: "STAR DERMATOLOGY",
-    title: "EVENT",
+    title: "STAR EVENT",
     subtitle: "查看STAR皮膚科的特別優惠與最新活動。",
     seoTitle: "特別活動｜釜山西面STAR皮膚科",
     seoDescription: "查看釜山西面STAR皮膚科的最新特別活動與優惠。",

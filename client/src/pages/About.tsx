@@ -128,7 +128,7 @@ export default function About() {
               {/* 의료진 소개 링크 */}
               <div className="mt-6">
                 <a
-                  href="/#doctors"
+                  href="/doctors"
                   className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
                   style={{ color: 'var(--color-gold-primary)' }}
                 >
@@ -156,30 +156,6 @@ export default function About() {
                 {sinceLabel}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 진료 시간 */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t.hours.title}</h2>
-            <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-              <table className="w-full">
-                <tbody>
-                  {t.hours.rows.map((row, idx) => (
-                    <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : ''} style={idx % 2 === 1 ? {backgroundColor: 'var(--color-gold-pale)'} : {}}>
-                      <td className="py-3 px-6 font-medium text-gray-700">{row.day}</td>
-                      <td className="py-3 px-6 text-gray-600 text-right">{row.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {t.hours.note && (
-              <p className="text-gray-500 text-sm mt-4 text-center">{t.hours.note}</p>
-            )}
           </div>
         </div>
       </section>

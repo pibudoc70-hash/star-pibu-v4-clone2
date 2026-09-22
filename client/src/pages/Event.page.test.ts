@@ -13,7 +13,7 @@ describe("standalone EVENT page", () => {
     expect(homeSource).toContain("<SpecialEventSection />");
     expect(eventPageSource).toContain("<SpecialEventSection showHeader={false} />");
     expect(eventPageSource).not.toContain("<ContactSection />");
-    expect(layoutSource).toContain("<Footer />");
+    expect(layoutSource).toContain("<Footer showContactSection={showContactSection} />");
     expect(eventPageSource).toContain('id="event-page-title"');
     expect(eventPageSource).toContain("dr-page-header");
   });

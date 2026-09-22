@@ -2,21 +2,22 @@
  * [LIVE ROUTED PAGE]
  *
  * STATUS: active. App.tsx registers `/directions` and the four locale-prefixed
- * directions routes. The shared location and contact section is supplied by the
- * common footer; this page retains its dedicated transport guidance above it.
+ * directions routes. This route places the shared location and contact section
+ * in its main content, then excludes the duplicate common-footer instance.
  *
  * This page owns the active SeoHead canonical/hreflang output and external
  * directions links for its route.
  */
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
+import ContactSection from '@/components/ContactSection';
 import SeoHead, { buildHreflangs } from '@/components/SeoHead';
 
 export default function Directions() {
   const { t, lang } = useLang();
 
   return (
-    <MainLayout>
+    <MainLayout showContactSection={false}>
       <SeoHead
         title={`${t.directions.title} | STAR DERMATOLOGY`}
         description={t.directions.subtitle}
@@ -24,13 +25,19 @@ export default function Directions() {
         hreflangs={buildHreflangs("/directions")}
         pageType="treatment"
       />
-      {/* 페이지 헤더 */}
-      <section className="bg-gradient-to-r from-amber-50 to-orange-50 py-12 md:pt-32 md:pb-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.directions.title}</h1>
-          <p className="text-gray-600 mt-4">{t.directions.subtitle}</p>
+      <section className="dr-page-header pt-28 pb-12 sm:pt-32 sm:pb-16 text-center" aria-labelledby="directions-page-title">
+        <div className="container">
+          <p className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3">
+            STAR DERMATOLOGY
+          </p>
+          <h1 id="directions-page-title" className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+            DIRECTIONS
+          </h1>
+          <p className="dr-page-header-tagline text-sm sm:text-base">{t.directions.subtitle}</p>
         </div>
       </section>
+
+      <ContactSection />
 
       {/* 주차 및 대중교통 */}
       <section className="py-16 md:py-24 bg-gray-50">

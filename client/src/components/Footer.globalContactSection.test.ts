@@ -37,9 +37,10 @@ const formerDuplicateSources = [
 ].map(read);
 
 describe("global footer contact section", () => {
-  it("renders the shared contact section immediately before the site footer", () => {
+  it("renders the shared contact section immediately before the site footer by default", () => {
     expect(footerSource).toContain('import ContactSection from "@/components/ContactSection"');
-    expect(footerSource).toMatch(/<>\s*<ContactSection\s*\/>\s*<footer/);
+    expect(footerSource).toContain("showContactSection?: boolean");
+    expect(footerSource).toContain("{showContactSection && <ContactSection />}");
   });
 
   it("uses the established warm-beige background for the common section", () => {
@@ -60,10 +61,13 @@ describe("global footer contact section", () => {
     });
   });
 
-  it("keeps only directions transport guidance in the dedicated directions body", () => {
+  it("keeps the location panel and transport guidance together in the dedicated directions body", () => {
     expect(directionsSource).toContain("transportationTitle");
     expect(directionsSource).toContain("carTitle");
     expect(directionsSource).toContain("transitTitle");
+    expect(directionsSource).toContain("<MainLayout showContactSection={false}>");
+    expect(directionsSource).toContain('import ContactSection from \'@/components/ContactSection\'');
+    expect(directionsSource).toContain("<ContactSection />");
     expect(directionsSource).not.toContain("LocationLinkPanel");
     expect(directionsSource).not.toContain("map.kakao.com");
   });

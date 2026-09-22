@@ -75,7 +75,7 @@ export default function Doctors() {
 
       {/* ── 페이지 헤더 ─────────────────────────────────────────────────────── */}
       <section
-        className="dr-page-header py-12 sm:py-16 text-center"
+        className="dr-page-header dr-page-header--doctors pt-28 pb-12 sm:pt-32 sm:pb-16 text-center"
       >
         <div className="container">
           <p

@@ -247,7 +247,7 @@ function Equipment3Card({
 
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Equipment3() {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const { getText } = useLocalizedText();
   const [colorScheme, setColorScheme] = useState<EquipmentListColorScheme>(getEquipmentListColorScheme);
 
@@ -460,22 +460,27 @@ export default function Equipment3() {
 
       <Header />
 
-      <main className="pt-20">
-        <h1 className="sr-only">{pageTitle}</h1>
+      <main>
+        <section className="dr-page-header pt-28 pb-12 sm:pt-32 sm:pb-16 text-center" aria-labelledby="equipment3-page-title">
+          <div className="container">
+            <p className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3">
+              STAR DERMATOLOGY
+            </p>
+            <h1 id="equipment3-page-title" className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3">
+              TREATMENTS &amp; EQUIPMENT
+            </h1>
+            <p className="dr-page-header-subtitle text-base sm:text-lg font-semibold mb-3">
+              {pageTitle}
+            </p>
+            <p className="dr-page-header-tagline text-sm sm:text-base">
+              {pageSubtitle}
+            </p>
+          </div>
+        </section>
 
         <section className="equipment-list__content-surface py-16 sm:py-24" aria-label={pageTitle}>
           <div className="container">
-            {/* 섹션 헤더 */}
-            <div className="text-center mb-8 sm:mb-12">
-              <p className="text-[12px] tracking-widest mb-3 font-montserrat text-[var(--color-gold-primary)] font-light">
-                {t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}
-              </p>
-              <h2 className="equipment-list__heading mb-4 font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]">
-                {pageTitle}
-              </h2>
-              <p className="equipment-list__subtitle text-base max-w-2xl mx-auto leading-snug sm:leading-normal pt-2">
-                <span className="text-lg">{pageSubtitle}</span>
-              </p>
+            <div className="mb-8 sm:mb-12">
               <div className="equipment-list__appearance-control">
                 <button
                   type="button"

@@ -10,19 +10,21 @@ const doctorsHeaderCss = globalCss.slice(
 );
 
 describe("Doctors direct-page header style contract", () => {
-  it("정적 header style을 page-scoped class로 위임한다", () => {
-    expect(doctorsPage).toContain('className="dr-page-header py-12 sm:py-16 text-center"');
+  it("정적 header style을 page-scoped class로 위임하고 상단 여백을 확보한다", () => {
+    expect(doctorsPage).toContain('className="dr-page-header dr-page-header--doctors pt-28 pb-12 sm:pt-32 sm:pb-16 text-center"');
     expect(doctorsPage).toContain('className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3"');
     expect(doctorsPage).toContain('className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4"');
     expect(doctorsPage).toContain('className="dr-page-header-tagline text-sm sm:text-base"');
     expect(doctorsPage).not.toContain('style={{ background: "linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%)" }}');
   });
 
-  it("기존 색상과 background를 !important 없이 동일한 CSS class로 보존한다", () => {
+  it("웜 뉴트럴 배경을 !important 없이 page-scoped class로 적용한다", () => {
     expect(globalCss).toContain('background: linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%);');
     expect(globalCss).toContain('color: #b89a5a;');
     expect(globalCss).toContain('color: #1a1a1a;');
     expect(globalCss).toContain('color: #6b5c3e;');
+    expect(globalCss).toContain('.dr-page-header--doctors');
+    expect(globalCss).toContain('background: linear-gradient(135deg, var(--brand-bg-card) 0%, var(--brand-bg-alt) 100%);');
     expect(doctorsHeaderCss).not.toContain("!important");
   });
 });

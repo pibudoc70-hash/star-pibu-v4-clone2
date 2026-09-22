@@ -170,12 +170,12 @@ describe("Step 2 i18n 일관성 — inline lang 삼항 제거 검증", () => {
     expect(src).toMatch(/getText\(item\.recovery, item\.recoveryEn/);
   });
 
-  it("Map.tsx에 mapLabel/mapAddress i18n 키를 사용해야 한다", () => {
+  it("Map.tsx에 map title fallback i18n 키를 사용해야 한다", () => {
     const src = readFileSync(
       nodePath.resolve(root, "client/src/components/Map.tsx"),
       "utf8",
     );
-    // t.access.mapViewLabel 키를 사용해야 함
+    // 지도 fallback title은 locale label·address fallback을 모두 사용해야 함
     expect(src).toMatch(/t\.access\.mapViewLabel/);
     expect(src).toMatch(/t\.access\.mapAddressShort/);
   });
@@ -610,19 +610,19 @@ describe("Round-2 P1: HeroSection scrollLabel fallback 제거 검증", () => {
   });
 });
 
-describe("Round-2 P1: ContactSection mapless location link 검증", () => {
+describe("Round-2 P1: ContactSection shared Google map 검증", () => {
   // readFileSync via top-level import (see below)
   // nodePath via top-level import (see below)
 
-  it("ContactSection.tsx가 공통 외부 지도 링크 패널을 사용하고 iframe을 렌더링하지 않는다", () => {
+  it("ContactSection.tsx가 공통 Google 지도 임베드를 사용한다", () => {
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/ContactSection.tsx"),
       "utf8",
     );
-    expect(src).toMatch(/import LocationLinkPanel/);
-    expect(src).toMatch(/<LocationLinkPanel/);
+    expect(src).toMatch(/import ClinicMapEmbed/);
+    expect(src).toMatch(/<ClinicMapEmbed/);
     expect(src).not.toMatch(/<iframe/);
-    expect(src).not.toMatch(/GOOGLE_MAPS_EMBED_URL/);
+    expect(src).not.toMatch(/LocationLinkPanel/);
   });
 
   it("ContactSection.tsx에 지도 오류 fallback 상태가 남아 있지 않아야 한다", () => {

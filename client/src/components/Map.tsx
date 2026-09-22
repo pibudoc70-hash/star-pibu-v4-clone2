@@ -64,7 +64,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/contexts/LangContext";
-import LocationLinkPanel from "@/components/contact/LocationLinkPanel";
+import ClinicMapEmbed from "@/components/contact/ClinicMapEmbed";
 
 declare global {
   interface Window {
@@ -301,8 +301,7 @@ export function MapView({
   }, []);
 
   const { t } = useLang();
-  const mapLabel = t.access.mapViewLabel;
-  const mapAddress = t.access.mapAddressShort;
+  const mapTitle = t.access.mapAriaLabel ?? t.access.mapViewLabel ?? t.access.mapAddressShort ?? "스타피부과 위치 지도";
 
   if (mapError) {
     return (
@@ -311,13 +310,7 @@ export function MapView({
         className={cn("w-full", className)}
         style={style}
       >
-        {errorFallback ?? (
-          <LocationLinkPanel
-            address={mapAddress}
-            buttonLabel={mapLabel}
-            href="https://map.kakao.com/link/search/부산광역시 부산진구 서면로 74 아이온시티빌딩"
-          />
-        )}
+        {errorFallback ?? <ClinicMapEmbed title={mapTitle} />}
       </div>
     );
   }

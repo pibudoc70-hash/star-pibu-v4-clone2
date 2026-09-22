@@ -210,9 +210,9 @@ describe("E. ContactSection: 인라인 style 제거 + CSS 변수 토큰", () => 
     expect(contactSrc).toContain("text-[clamp(1.4rem,5vw,2.6rem)]");
   });
 
-  it("E-4: 지도 임베드 대신 공통 외부 지도 링크 패널을 사용해야 한다", () => {
-    expect(contactSrc).toContain("LocationLinkPanel");
-    expect(contactSrc).toContain("<LocationLinkPanel");
+  it("E-4: 공통 Google 지도 임베드를 사용해야 한다", () => {
+    expect(contactSrc).toContain("ClinicMapEmbed");
+    expect(contactSrc).toContain("<ClinicMapEmbed");
     expect(contactSrc).not.toContain("<iframe");
   });
 

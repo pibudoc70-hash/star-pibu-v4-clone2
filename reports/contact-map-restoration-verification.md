@@ -1,0 +1,5 @@
+# Shared contact map restoration verification
+
+The common `ContactSection` now renders `ClinicMapEmbed`, a responsive Google Maps iframe using the clinic coordinates `35.1572312,129.0581932`. The direct iframe endpoint `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s35.1572312,129.0581932!6i17` returned HTTP 200 with `text/html; charset=UTF-8`. The local application's CSP permits `https://www.google.com` and `https://maps.google.com` in `frame-src`.
+
+The site screenshot tool failed for all seven representative routes because browser rendering slots were unavailable. A separate local Chromium capture also remained at the site loading shell and then stalled on external SSL handshakes, so it could not visually inspect the rendered map. Source-level and focused regressions verify that the shared global contact component uses `ClinicMapEmbed`, no longer contains the map-area Kakao handoff button, retains the existing Kakao directions and Naver map actions in `ContactInfoPanel`, and uses `#C4A882` as the section background.

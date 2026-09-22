@@ -7,7 +7,7 @@
  *   A. ContactSection — navigator.clipboard 전용 사용 (document.execCommand 제거)
  *   B. ContactSection — non-null assertion(!) 제거 (optional chaining + nullish coalescing)
  *   C. ContactSection — copyFailed state 추가 (클립보드 실패 시 사용자 안내)
- *   D. ContactSection — 지도 임베드 없이 공통 외부 지도 링크 사용
+ *   D. ContactSection — 공통 Google 지도 임베드 사용
  *   E. TreatmentsEquipmentSection — hex 색상 직접 사용 없음 (CSS 변수 토큰 사용)
  *   F. TreatmentsEquipmentSection — CSS 변수 토큰 사용 확인
  */
@@ -106,20 +106,20 @@ describe("[C] ContactSection copyFailed state", () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// D. ContactSection — 지도 임베드 없이 공통 외부 지도 링크 사용
+// D. ContactSection — 공통 Google 지도 임베드 사용
 // ─────────────────────────────────────────────────────────────────────────────
-describe("[D] ContactSection mapless location link", () => {
+describe("[D] ContactSection shared Google map", () => {
   const contactSrc = src("client/src/components/ContactSection.tsx");
 
-  it("공통 외부 지도 링크 패널을 사용한다", () => {
-    expect(contactSrc).toMatch(/import LocationLinkPanel/);
-    expect(contactSrc).toMatch(/<LocationLinkPanel/);
-    expect(contactSrc).toMatch(/href=\{KAKAO_MAP_URL\}/);
+  it("공통 Google 지도 임베드를 사용한다", () => {
+    expect(contactSrc).toMatch(/import ClinicMapEmbed/);
+    expect(contactSrc).toMatch(/<ClinicMapEmbed/);
+    expect(contactSrc).not.toMatch(/LocationLinkPanel/);
+    expect(contactSrc).not.toMatch(/KAKAO_MAP_URL/);
   });
 
-  it("iframe과 지도 오류 fallback UI를 렌더링하지 않는다", () => {
+  it("ContactSection은 지도 SDK와 별개인 embed 컴포넌트만 렌더링한다", () => {
     expect(contactSrc).not.toMatch(/<iframe/);
-    expect(contactSrc).not.toMatch(/GOOGLE_MAPS_EMBED_URL/);
     expect(contactSrc).not.toMatch(/MapView/);
   });
 });

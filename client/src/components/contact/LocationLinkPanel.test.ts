@@ -6,29 +6,31 @@ const contactSource = readFileSync(resolve(process.cwd(), "client/src/components
 const directionsSource = readFileSync(resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
 const mapSource = readFileSync(resolve(process.cwd(), "client/src/components/Map.tsx"), "utf8");
 const mapBoundarySource = readFileSync(resolve(process.cwd(), "client/src/components/MapErrorBoundary.tsx"), "utf8");
-const panelSource = readFileSync(resolve(process.cwd(), "client/src/components/contact/LocationLinkPanel.tsx"), "utf8");
+const mapEmbedSource = readFileSync(resolve(process.cwd(), "client/src/components/contact/ClinicMapEmbed.tsx"), "utf8");
 
 const KAKAO_FALLBACK_ICON = ["<span", ">K</span>"].join("");
 
-describe("map fallback removal", () => {
-  it("uses the shared address-and-link panel only through the global ContactSection", () => {
-    expect(contactSource).toContain('import LocationLinkPanel from "@/components/contact/LocationLinkPanel"');
-    expect(contactSource).toContain("<LocationLinkPanel");
-    expect(panelSource).toContain('target="_blank"');
-    expect(panelSource).toContain("href={href}");
-    expect(contactSource).toContain("map.kakao.com");
+describe("shared contact map restoration", () => {
+  it("uses the shared Google map embed in ContactSection instead of a Kakao handoff card", () => {
+    expect(contactSource).toContain('import ClinicMapEmbed from "@/components/contact/ClinicMapEmbed"');
+    expect(contactSource).toContain("<ClinicMapEmbed");
+    expect(contactSource).not.toContain("LocationLinkPanel");
+    expect(contactSource).not.toContain("카카오맵에서 보기");
+    expect(contactSource).not.toContain("map.kakao.com");
+    expect(mapEmbedSource).toContain("https://www.google.com/maps/embed?");
+    expect(mapEmbedSource).toContain("origin=mfe");
+    expect(mapEmbedSource).toContain("<iframe");
+    expect(mapEmbedSource).toContain("allowFullScreen");
     expect(directionsSource).not.toContain("LocationLinkPanel");
     expect(directionsSource).not.toContain("map.kakao.com");
   });
 
-  it("removes embedded maps and the yellow K fallback card from every former surface", () => {
-    for (const source of [contactSource, directionsSource]) {
-      expect(source).not.toContain("<iframe");
-      expect(source).not.toContain("<MapView");
-    }
+  it("keeps a map surface available when the Google SDK path fails", () => {
+    expect(contactSource).not.toContain("<MapView");
+    expect(directionsSource).not.toContain("<MapView");
     for (const source of [mapSource, mapBoundarySource]) {
       expect(source).not.toContain(KAKAO_FALLBACK_ICON);
-      expect(source).toContain("LocationLinkPanel");
+      expect(source).toContain("ClinicMapEmbed");
     }
   });
 });

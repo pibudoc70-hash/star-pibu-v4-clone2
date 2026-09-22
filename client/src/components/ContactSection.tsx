@@ -1,6 +1,6 @@
 /**
  * ContactSection - 위치 및 연락처
- * 디자인: 공통 라이트 배경, 외부 지도 링크 + 진료시간 + CTA
+ * 디자인: 공통 브랜드 배경, Google 지도 + 진료시간 + CTA
  * i18n: useLang으로 한/중/일 전환
  * 모바일 최적화: 주소 복사 버튼, 레이아웃 개선
  */
@@ -10,16 +10,9 @@ import { useSectionReveal } from "@/hooks/useScrollReveal";
 import { useLang } from "@/contexts/LangContext";
 import { useChatConfig } from "@/hooks/useChatConfig";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
-import LocationLinkPanel from "@/components/contact/LocationLinkPanel";
+import ClinicMapEmbed from "@/components/contact/ClinicMapEmbed";
 // 후행 호환성을 위해 re-export 유지
 export { buildMarkerPinElement } from "@/lib/mapHelpers";
-
-// 스타피부과 위치 (부산 서면)
-const STAR_LAT = 35.1572312;
-const STAR_LNG = 129.0581932;
-// 카카오맵 링크 (폴백 버튼용)
-// [Step59-A] 지도 검색용 문자열. NAP 표기(도로명)와 별개로 유지.
-const KAKAO_MAP_URL = `https://map.kakao.com/link/map/스타피부과,${STAR_LAT},${STAR_LNG}`;
 
 export default function ContactSection() {
   const sectionRef = useSectionReveal(80);
@@ -55,14 +48,14 @@ export default function ContactSection() {
   const sectionTitle = t.access.sectionTitle ?? t.access.title ?? '오시는 길';
   const locationInfo = t.access.locationInfo ?? 'Location';
   const closedLabel = t.hours.rows.at(-1)?.time ?? '휴진';
-  const mapLinkLabel = t.access.mapViewLabel ?? t.access.kakaoMapLabel ?? '카카오맵에서 보기';
+  const mapTitle = t.access.mapAriaLabel ?? '스타피부과 위치 지도';
 
   return (
     <section
       ref={sectionRef}
       id="contact"
       className="pt-12 pb-16 sm:pt-16 sm:pb-24 scroll-mt-24 md:scroll-mt-28"
-      style={{ backgroundColor: "#F9FAFB" }}
+      style={{ backgroundColor: "#C4A882" }}
       aria-label="오시는 방법 및 연락처"
     >
       <div className="container">
@@ -70,13 +63,13 @@ export default function ContactSection() {
         <div className="section-header-block">
           <span
             className="section-eyebrow"
-            style={{ color: 'var(--color-gold-primary)', fontWeight: 600 }}
+            style={{ color: '#4B351F', fontWeight: 700 }}
           >
             {locationInfo}
           </span>
           <h2
             className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]"
-            style={{ color: '#1A1A1A' }}
+            style={{ color: '#24180F' }}
           >
             {sectionTitle}
           </h2>
@@ -84,12 +77,7 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-12">
-          <LocationLinkPanel
-            className="lg:col-span-7"
-            address={t.access.address}
-            buttonLabel={mapLinkLabel}
-            href={KAKAO_MAP_URL}
-          />
+          <ClinicMapEmbed className="reveal-left lg:col-span-7" title={mapTitle} />
 
           {/* Info Panel */}
           <ContactInfoPanel

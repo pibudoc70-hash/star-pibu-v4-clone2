@@ -169,12 +169,12 @@ describe("F. useClinicMap: ContactSection onMapReady 콜백 캡슐화", () => {
     expect(clinicMapSrc).toMatch(/handleMapReady/);
   });
 
-  it("F-3: ContactSection이 공통 외부 지도 링크 패널을 사용한다", () => {
-    expect(contactSrc).toContain("LocationLinkPanel");
-    expect(contactSrc).toContain("<LocationLinkPanel");
+  it("F-3: ContactSection이 공통 Google 지도 임베드를 사용한다", () => {
+    expect(contactSrc).toContain("ClinicMapEmbed");
+    expect(contactSrc).toContain("<ClinicMapEmbed");
   });
 
-  it("F-4: ContactSection에 고정 높이 지도와 iframe이 남아 있지 않다", () => {
+  it("F-4: ContactSection에 구 Google SDK height 관리와 직접 iframe이 남아 있지 않다", () => {
     expect(contactSrc).not.toContain("useClinicMap");
     expect(contactSrc).not.toContain("<iframe");
     expect(contactSrc).not.toContain("mapHeight");

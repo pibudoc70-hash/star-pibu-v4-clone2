@@ -76,8 +76,9 @@ describe("[C] MapErrorBoundary.tsx 신규 생성", () => {
     expect(boundarySrc).toMatch(/componentDidCatch/);
   });
 
-  it("카카오맵 fallback UI가 포함되어야 한다", () => {
-    expect(boundarySrc).toMatch(/카카오맵에서 보기/);
+  it("Google 지도 fallback UI가 포함되어야 한다", () => {
+    expect(boundarySrc).toMatch(/ClinicMapEmbed/);
+    expect(boundarySrc).not.toMatch(/카카오맵에서 보기/);
   });
 
   it("default export가 있어야 한다", () => {
@@ -135,13 +136,13 @@ describe("[E] useMapHeight.ts 신규 생성", () => {
   });
 });
 
-// F. ContactSection.tsx — 지도 없는 공통 외부 링크 패널
-describe("[F] ContactSection.tsx mapless location link", () => {
+// F. ContactSection.tsx — 공통 Google 지도 임베드
+describe("[F] ContactSection.tsx shared Google map", () => {
   const contactSrc = src("client/src/components/ContactSection.tsx");
 
-  it("공통 외부 지도 링크 패널을 import하고 렌더링해야 한다", () => {
-    expect(contactSrc).toMatch(/import LocationLinkPanel/);
-    expect(contactSrc).toMatch(/<LocationLinkPanel/);
+  it("공통 Google 지도 임베드를 import하고 렌더링해야 한다", () => {
+    expect(contactSrc).toMatch(/import ClinicMapEmbed/);
+    expect(contactSrc).toMatch(/<ClinicMapEmbed/);
   });
 
   it("ContactSection 내에서 지도 높이를 직접 관리하지 않아야 한다", () => {
@@ -149,7 +150,7 @@ describe("[F] ContactSection.tsx mapless location link", () => {
     expect(contactSrc).not.toMatch(/mapHeight/);
   });
 
-  it("iframe과 카카오 K fallback을 렌더링하지 않아야 한다", () => {
+  it("카카오 K fallback이나 직접 iframe을 렌더링하지 않아야 한다", () => {
     expect(contactSrc).not.toMatch(/<iframe/);
     expect(contactSrc).not.toMatch(/>K<\/span>/);
   });

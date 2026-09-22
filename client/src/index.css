@@ -4804,6 +4804,17 @@ body.font-lang-zh .hero-stat-label {
   color: var(--equipment-detail-muted);
 }
 
+/* Desktop equipment list: retain individual tabs/cards while removing the two large enclosing panels. */
+@media (min-width: 768px) {
+  .equipment-list__tab-panel,
+  .equipment-list__card-panel,
+  .equipment-list__card-grid {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
 /* ── Equipment detail mobile density: shared detail template only ── */
 /* Desktop spacing is intentionally preserved; these overrides apply only below md. */
 @media (max-width: 767px) {

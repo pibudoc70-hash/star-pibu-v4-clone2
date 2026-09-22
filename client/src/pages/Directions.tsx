@@ -2,8 +2,8 @@
  * [LIVE ROUTED PAGE]
  *
  * STATUS: active. App.tsx registers `/directions` and the four locale-prefixed
- * directions routes. ContactSection is a separate home-page map surface, not a
- * replacement for this standalone access page.
+ * directions routes. The shared location and contact section is supplied by the
+ * common footer; this page retains its dedicated transport guidance above it.
  *
  * This page owns the active SeoHead canonical/hreflang output and external
  * directions links for its route.
@@ -11,32 +11,9 @@
 import { useLang } from '@/contexts/LangContext';
 import MainLayout from '@/components/MainLayout';
 import SeoHead, { buildHreflangs } from '@/components/SeoHead';
-import { buttonVariants } from '@/components/ui/button';
-import { MapPin, Phone, Clock, Copy, Check } from 'lucide-react';
-import { useState } from 'react';
-import LocationLinkPanel from '@/components/contact/LocationLinkPanel';
-
-const HOSPITAL = {
-  phone: '051-818-2300',
-  kakaoMapUrl: 'https://map.kakao.com/link/search/스타피부과',
-  naverMapUrl: 'https://map.naver.com/v5/search/스타피부과',
-};
 
 export default function Directions() {
   const { t, lang } = useLang();
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyAddress = () => {
-    // [P2] Promise await + .catch() 추가 — 복사 성공 후에만 setCopied(true) 호출
-    navigator.clipboard.writeText(t.access.address)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch(() => {
-        // 클립보드 접근 불가 시 조용히 무시
-      });
-  };
 
   return (
     <MainLayout>
@@ -52,102 +29,6 @@ export default function Directions() {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">{t.directions.title}</h1>
           <p className="text-gray-600 mt-4">{t.directions.subtitle}</p>
-        </div>
-      </section>
-
-      {/* 지도 및 정보 */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <LocationLinkPanel
-                className="md:col-span-2"
-                address={t.access.address}
-                buttonLabel={t.access.mapViewLabel ?? t.directions.kakaoMap}
-                href={HOSPITAL.kakaoMapUrl}
-              />
-
-              {/* 정보 */}
-              <div className="space-y-6">
-                {/* 주소 */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <div className="flex items-start gap-3 mb-3">
-                    <MapPin size={20} className="text-amber-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold text-gray-900">{t.directions.addressLabel}</h3>
-                      <p className="text-gray-600 text-sm mt-2">{t.access.address}</p>
-                    </div>
-                  </div>
-                  <button type="button"
-                    onClick={handleCopyAddress}
-                    className="text-amber-600 hover:text-amber-700 text-sm font-semibold flex items-center gap-1 mt-3"
-                  >
-                    {copied ? (
-                      <>
-                        <Check size={14} /> {t.directions.copiedAddress}
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={14} /> {t.directions.copyAddress}
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {/* 전화 */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <div className="flex items-start gap-3">
-                    <Phone size={20} className="text-amber-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold text-gray-900">{t.directions.phoneLabel}</h3>
-                      <a
-                        href={`tel:${HOSPITAL.phone}`}
-                        className="text-amber-600 hover:text-amber-700 font-semibold text-sm mt-2 block"
-                      >
-                        {HOSPITAL.phone}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 진료 시간 */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <div className="flex items-start gap-3">
-                    <Clock size={20} className="text-amber-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-bold text-gray-900">{t.directions.hoursLabel}</h3>
-                      {t.hours.rows.map((row, i) => (
-                        <p key={i} className="text-gray-600 text-sm mt-1">{row.day}: {row.time}</p>
-                      ))}
-                      <p className="text-red-500 text-xs mt-2">{t.hours.note}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 길찾기 버튼 */}
-                <div className="space-y-3">
-                  {lang === 'ko' ? (
-                    <>
-                      <a
-                        href={HOSPITAL.kakaoMapUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={buttonVariants({ className: "w-full bg-yellow-400 text-gray-900 hover:bg-yellow-300" })}
-                      >
-                        {t.directions.kakaoMap}
-                      </a>
-                      <a
-                        href={HOSPITAL.naverMapUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={buttonVariants({ className: "w-full bg-green-600 hover:bg-green-700 text-white mt-2" })}
-                      >
-                        {t.directions.naverMap}
-                      </a>
-                    </>
-                  ) : null}
-                </div>
-              </div>
-          </div>
         </div>
       </section>
 

@@ -1,6 +1,5 @@
 import MainLayout from "@/components/MainLayout";
 import SpecialEventSection from "@/components/SpecialEventSection";
-import ContactSection from "@/components/ContactSection";
 import SeoHead, {
   BASE_URL,
   buildBreadcrumbJsonLd,
@@ -96,7 +95,6 @@ export default function Event() {
       <div className="section-bg-cream">
         <SpecialEventSection showHeader={false} />
       </div>
-      <ContactSection />
     </MainLayout>
   );
 }

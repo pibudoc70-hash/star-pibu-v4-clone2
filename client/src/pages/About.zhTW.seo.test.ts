@@ -12,7 +12,8 @@ describe("About zh-TW page-local SEO copy", () => {
   });
 
   it("localizes the visible labels and Breadcrumb JSON-LD for the live zh-TW route", () => {
-    expect(source).toContain('lang === "zh-TW" ? { address: "地址", subway: "地鐵", bus: "公車", parking: "停車" }');
+    expect(source).not.toContain("accessLabels");
+    expect(source).not.toContain("t.access.address");
     expect(source).toContain('lang === "zh-TW" ? "診所介紹"');
     expect(source).toContain('lang === "zh-TW" ? "查看醫師團隊 →"');
     expect(source).toContain('lang === "zh-TW" ? "首頁"');

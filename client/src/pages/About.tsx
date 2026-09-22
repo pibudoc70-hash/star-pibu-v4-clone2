@@ -48,14 +48,6 @@ export default function About() {
     lang === "en" ? "Busan dermatology, STAR Dermatology Clinic, dermatologist Busan, Seomyeon skin clinic, about us" :
     "부산피부과, 피부과소개, 피부과전문의, 스타피부과, 서면피부과, 부산리프팅";
 
-  // access 섹션 레이블 (언어별 분기)
-  const accessLabels =
-    lang === "ja" ? { address: "住所", subway: "地下鉄", bus: "バス", parking: "駐車場" } :
-    lang === "zh" ? { address: "地址", subway: "地铁", bus: "公交", parking: "停车" } :
-    lang === "zh-TW" ? { address: "地址", subway: "地鐵", bus: "公車", parking: "停車" } :
-    lang === "en" ? { address: "Address", subway: "Subway", bus: "Bus", parking: "Parking" } :
-    { address: "주소", subway: "지하철", bus: "버스", parking: "주차" };
-
   // visible string i18n (PR-39: localized live 정책 UI 일관성)
   const aboutUsLabel =
     lang === "ja" ? "クリニック紹介" :
@@ -192,32 +184,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* 오시는 길 */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t.access.title}</h2>
-            <div className="space-y-4 rounded-xl p-6" style={{backgroundColor: 'var(--color-gold-pale)'}}>
-              <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.address}</span>
-                <span className="text-gray-700">{t.access.address}</span>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.subway}</span>
-                <span className="text-gray-700">{t.access.subway}</span>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.bus}</span>
-                <span className="text-gray-700">{t.access.bus}</span>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="font-bold w-16 flex-shrink-0" style={{color: 'var(--color-gold-primary)'}}>{accessLabels.parking}</span>
-                <span className="text-gray-700">{t.access.parking}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </MainLayout>
   );
 }

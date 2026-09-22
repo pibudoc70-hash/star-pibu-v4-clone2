@@ -38,7 +38,6 @@ const PhilosophySection = lazy(() => import("@/components/PhilosophySection"));
 const FacilitySection = lazy(() => import("@/components/FacilitySection"));
 const YouTubeSection = lazy(() => import("@/components/YouTubeSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
-const ContactSection = lazy(() => import("@/components/ContactSection"));
 import { ScrollAnimationWrapper } from "@/components/ScrollAnimationWrapper";
 import { useLocation } from "wouter";
 import { HOME_SECTION_FALLBACKS } from "@/lib/homeSectionFallbacks";
@@ -574,18 +573,6 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 10. Location & Contact — [Option B] 다크 딥→다크 브라운 */}
-        <ScrollAnimationWrapper
-          animationType="fade-in-slow"
-        >
-          <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
-            <div className="section-bg-dark-brown">
-              <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.contact} />}>
-                <ContactSection />
-              </Suspense>
-            </div>
-          </DeferredMount>
-        </ScrollAnimationWrapper>
       </main>
 
       {/* Footer */}

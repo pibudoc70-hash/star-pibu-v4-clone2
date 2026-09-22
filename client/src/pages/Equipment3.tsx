@@ -15,7 +15,6 @@ import { useLocalizedText } from "@/hooks/useLocalizedText";
 import SeoHead, { buildHreflangs, buildBreadcrumbJsonLd, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED, BASE_URL } from "@/components/SeoHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ContactSection from "@/components/ContactSection";
 import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
 import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X, Moon, Sun } from "lucide-react";
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
@@ -797,7 +796,6 @@ export default function Equipment3() {
           </div>
         </section>
 
-        <ContactSection />
       </main>
 
       <Footer />

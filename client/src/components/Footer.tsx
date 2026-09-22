@@ -8,6 +8,7 @@ import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 import { getLocaleBase } from "../../../shared/pathUtils";
 import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
+import ContactSection from "@/components/ContactSection";
 
 const sns = [
   { icon: MessageCircle, label: "KakaoTalk", href: "https://pf.kakao.com/_HNyGC", color: "#FEE500" },
@@ -89,10 +90,12 @@ export default function Footer() {
 
 
   return (
-    <footer
-      style={{ background: "#1A1410" }}
-      className="footer-root"
-    >
+    <>
+      <ContactSection />
+      <footer
+        style={{ background: "#1A1410" }}
+        className="footer-root"
+      >
 
       {/* ── Brand bar — 로고 + 슬로건 + SNS 아이콘 한 줄 정렬 ── */}
       <div
@@ -304,6 +307,7 @@ export default function Footer() {
           {t.footer.copyright}
         </p>
       </div>
-    </footer>
+      </footer>
+    </>
   );
 }

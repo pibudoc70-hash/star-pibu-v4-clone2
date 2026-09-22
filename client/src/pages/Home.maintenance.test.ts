@@ -24,13 +24,12 @@ describe("Home 유지보수성 경계", () => {
       "facility",
       "youtube",
       "faq",
-      "contact",
     ]) {
       expect(homeSource).toContain(`HOME_SECTION_FALLBACKS.${fallback}`);
     }
     expect(homeSource).toContain('fallback={<TreatmentsEquipmentSkeleton id="treatments" />}');
     expect(fallbackSource).toContain("specialEvent");
     expect(fallbackSource).toContain("managementDevices");
-    expect(fallbackSource).toContain("contact");
+    expect(fallbackSource).not.toContain("contact:");
   });
 });

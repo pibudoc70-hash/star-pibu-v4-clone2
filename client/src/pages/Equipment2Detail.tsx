@@ -19,6 +19,7 @@ import { lazy, Suspense, useEffect } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 import { getLocalizedUrl } from "@/lib/localizedPath";
+import Footer from "@/components/Footer";
 
 // Lazy load Streamdown to avoid bundling it in the initial page load
 const Streamdown = lazy(() => import("streamdown").then(m => ({ default: m.Streamdown })));
@@ -418,6 +419,7 @@ export default function Equipment2Detail() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

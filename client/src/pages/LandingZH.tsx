@@ -19,7 +19,6 @@ import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
 import FacilitySection from "@/components/FacilitySection";
 import YouTubeSection from "@/components/YouTubeSection";
 import FAQSection from "@/components/FAQSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 import MobileBottomCTA from "@/components/MobileBottomCTA";
@@ -153,10 +152,6 @@ export default function LandingZH() {
           <FAQSection />
         </div>
 
-
-        <div style={{ background: "#F5F1ED" }}>
-          <ContactSection />
-        </div>
       </main>
 
       <Footer />

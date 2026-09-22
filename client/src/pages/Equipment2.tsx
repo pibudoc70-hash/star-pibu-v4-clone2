@@ -17,7 +17,6 @@ import { useLang } from "@/contexts/LangContext";
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import Header from "@/components/Header";
 import TreatmentsEquipmentSection from "@/components/TreatmentsEquipmentSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 export default function Equipment2() {
@@ -79,9 +78,6 @@ export default function Equipment2() {
         </h1>
         {/* Treatments + Equipment Section 2 - DB 연동 (관리자 등록) */}
         <TreatmentsEquipmentSection />
-
-        {/* Location & Contact - 오시는 길 */}
-        <ContactSection />
       </main>
 
       {/* Footer */}

@@ -9,5 +9,4 @@ export const HOME_SECTION_FALLBACKS = {
   youtube: { minH: "min-h-[400px]", variant: "dark", bg: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" },
   faq: { minH: "min-h-[560px]", layout: "list", bg: "#ffffff" },
   notices: { minH: "min-h-[300px]", layout: "list", bg: "#FAF8F5" },
-  contact: { minH: "min-h-[560px]", variant: "dark", bg: "linear-gradient(180deg, #1A2744 0%, #0F1A30 100%)" },
 } as const;

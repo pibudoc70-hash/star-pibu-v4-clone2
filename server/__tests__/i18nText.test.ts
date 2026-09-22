@@ -253,32 +253,31 @@ describe("Directions 다국어·지도 회귀 방지", () => {
     }
   });
 
-  it("Directions는 지도 임베드 없이 공통 카카오맵 링크 패널을 사용한다", () => {
+  it("Directions는 지도 임베드와 중복 위치 패널 없이 교통안내 본문을 유지한다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/import LocationLinkPanel from '@\/components\/contact\/LocationLinkPanel'/);
-    expect(src).toMatch(/<LocationLinkPanel/);
-    expect(src).toMatch(/href=\{HOSPITAL\.kakaoMapUrl\}/);
+    expect(src).toMatch(/transportationTitle/);
+    expect(src).toMatch(/carTitle/);
+    expect(src).toMatch(/transitTitle/);
+    expect(src).not.toMatch(/LocationLinkPanel/);
+    expect(src).not.toMatch(/HOSPITAL\.kakaoMapUrl/);
     expect(src).not.toMatch(/<MapView/);
     expect(src).not.toMatch(/<iframe/);
     expect(src).not.toMatch(/googleMapsEmbedUrl/);
   });
 
-  it("Directions의 길찾기 버튼은 링크와 버튼을 중첩하지 않는다", () => {
+  it("Directions의 교통안내 본문에는 지도 CTA 중첩이 남아 있지 않다", () => {
     const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-yellow-400/);
-    expect(src).toMatch(/className=\{buttonVariants\(\{ className: "w-full bg-green-600/);
-    expect(src).not.toMatch(/bg-\[#4285F4\]/);
+    expect(src).not.toMatch(/buttonVariants/);
+    expect(src).not.toMatch(/map\.kakao\.com/);
+    expect(src).not.toMatch(/map\.naver\.com/);
     expect(src).not.toMatch(/<Button/);
     expect(src).not.toMatch(/<a[\s\S]{0,80}<button/);
   });
 
-  it("Directions는 모든 언어에서 공통 카카오맵 외부 링크를 제공하고 한국어 네이버 링크를 유지한다", () => {
-    const src = readFileSync(nodePath.resolve(process.cwd(), "client/src/pages/Directions.tsx"), "utf8");
-    expect(src).toMatch(/<LocationLinkPanel/);
-    expect(src).toMatch(/href=\{HOSPITAL\.kakaoMapUrl\}/);
-    expect(src).toMatch(/HOSPITAL\.kakaoMapUrl/);
-    expect(src).toMatch(/HOSPITAL\.naverMapUrl/);
-    expect(src).not.toMatch(/www\.google\.com\/maps\/dir/);
+  it("Footer가 모든 언어의 공통 위치 및 연락정보 섹션을 제공한다", () => {
+    const footer = readFileSync(nodePath.resolve(process.cwd(), "client/src/components/Footer.tsx"), "utf8");
+    expect(footer).toMatch(/import ContactSection/);
+    expect(footer).toMatch(/<ContactSection\s*\/>/);
   });
 });
 

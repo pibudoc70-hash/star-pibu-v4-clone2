@@ -31,8 +31,9 @@
  */
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { Phone, Clock, MapPin, ChevronRight, ArrowLeft, Globe, Plane, DollarSign, Headphones } from "lucide-react";
+import { Phone, Clock, ChevronRight, ArrowLeft, Globe, DollarSign, Headphones } from "lucide-react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import SeoHead, { BASE_URL, LANG_TO_OG_LOCALE, OG_IMAGE_LOCALIZED, SITE_NAME_LOCALIZED } from "@/components/SeoHead";
 import { useLang } from "@/contexts/LangContext";
 import { Lang, langCodes, langLabels, i18n } from "@/lib/i18n";
@@ -241,8 +242,8 @@ export default function ForeignGuide() {
           </div>
         </section>
 
-        {/* Hours & Access */}
-        <div className="grid md:grid-cols-2 gap-6">
+        {/* Hours */}
+        <div className="max-w-xl mx-auto">
           {/* Hours */}
           <section
             className="rounded-2xl p-6 border"
@@ -269,65 +270,7 @@ export default function ForeignGuide() {
               <p className="text-xs pt-1" style={{ color: "#9CA3AF" }}>{t.hours.note}</p>
             </div>
           </section>
-
-          {/* Access */}
-          <section
-            className="rounded-2xl p-6 border"
-            style={{ background: "white", borderColor: "#E5E7EB", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}
-          >
-            <div className="flex items-center gap-2 mb-5">
-              <MapPin size={18} style={{ color: colors.text }} />
-              <h2 className="text-base font-bold" style={{ color: "#1F2937" }}>
-                {t.access.title}
-              </h2>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#9CA3AF" }}>
-                  {activeLang === "ja" ? "住所" : activeLang === "zh" ? "地址" : "Address"}
-                </p>
-                <p className="text-sm" style={{ color: "#374151" }}>{t.access.address}</p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#9CA3AF" }}>
-                  {activeLang === "ja" ? "地下鉄" : activeLang === "zh" ? "地铁" : "Subway"}
-                </p>
-                <p className="text-sm" style={{ color: "#374151" }}>{t.access.subway}</p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#9CA3AF" }}>
-                  {activeLang === "ja" ? "駐車場" : activeLang === "zh" ? "停车场" : "Parking"}
-                </p>
-                <p className="text-sm" style={{ color: "#374151" }}>{t.access.parking}</p>
-              </div>
-            </div>
-          </section>
         </div>
-
-        {/* Transportation Section */}
-        <section
-          className="rounded-2xl p-6 border"
-          style={{ background: "white", borderColor: "#E5E7EB", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}
-        >
-          <div className="flex items-center gap-2 mb-5">
-            <Plane size={18} style={{ color: colors.text }} />
-            <h2 className="text-base font-bold" style={{ color: "#1F2937" }}>
-              {t.foreignGuide.transportation.title}
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {t.foreignGuide.transportation.methods.map((method, idx) => (
-              <div key={idx} className="p-4 rounded-lg" style={{ background: colors.accent }}>
-                <h3 className="font-semibold text-sm mb-1" style={{ color: colors.text }}>
-                  {method.name}
-                </h3>
-                <p className="text-xs leading-relaxed" style={{ color: "#374151" }}>
-                  {method.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* Currency & Payment Section */}
         <section
@@ -524,15 +467,7 @@ export default function ForeignGuide() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#E5E7EB", background: "white" }}>
-        <p className="text-xs" style={{ color: "#9CA3AF" }}>
-          {t.footer.address}
-        </p>
-        <p className="text-xs mt-1" style={{ color: "#9CA3AF" }}>
-          Tel. {t.footer.tel} · {t.footer.copyright}
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

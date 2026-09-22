@@ -1,6 +1,6 @@
 /**
  * ContactSection - 위치 및 연락처
- * 디자인: 베이지 배경, 외부 지도 링크 + 진료시간 + CTA
+ * 디자인: 공통 라이트 배경, 외부 지도 링크 + 진료시간 + CTA
  * i18n: useLang으로 한/중/일 전환
  * 모바일 최적화: 주소 복사 버튼, 레이아웃 개선
  */
@@ -58,7 +58,13 @@ export default function ContactSection() {
   const mapLinkLabel = t.access.mapViewLabel ?? t.access.kakaoMapLabel ?? '카카오맵에서 보기';
 
   return (
-    <section ref={sectionRef} id="contact" className="pt-12 pb-16 sm:pt-16 sm:pb-24 faq-section-bg scroll-mt-24 md:scroll-mt-28" aria-label="오시는 방법 및 연락처">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="pt-12 pb-16 sm:pt-16 sm:pb-24 scroll-mt-24 md:scroll-mt-28"
+      style={{ backgroundColor: "#F9FAFB" }}
+      aria-label="오시는 방법 및 연락처"
+    >
       <div className="container">
         {/* Section Header */}
         <div className="section-header-block">

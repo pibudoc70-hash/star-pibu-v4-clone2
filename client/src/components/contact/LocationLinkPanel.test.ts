@@ -11,15 +11,14 @@ const panelSource = readFileSync(resolve(process.cwd(), "client/src/components/c
 const KAKAO_FALLBACK_ICON = ["<span", ">K</span>"].join("");
 
 describe("map fallback removal", () => {
-  it("uses one shared address-and-link panel across ContactSection and Directions", () => {
+  it("uses the shared address-and-link panel only through the global ContactSection", () => {
     expect(contactSource).toContain('import LocationLinkPanel from "@/components/contact/LocationLinkPanel"');
     expect(contactSource).toContain("<LocationLinkPanel");
-    expect(directionsSource).toContain("import LocationLinkPanel from '@/components/contact/LocationLinkPanel'");
-    expect(directionsSource).toContain("<LocationLinkPanel");
     expect(panelSource).toContain('target="_blank"');
     expect(panelSource).toContain("href={href}");
     expect(contactSource).toContain("map.kakao.com");
-    expect(directionsSource).toContain("map.kakao.com");
+    expect(directionsSource).not.toContain("LocationLinkPanel");
+    expect(directionsSource).not.toContain("map.kakao.com");
   });
 
   it("removes embedded maps and the yellow K fallback card from every former surface", () => {

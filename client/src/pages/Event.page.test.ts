@@ -6,12 +6,14 @@ const eventPageSource = readFileSync(resolve(process.cwd(), "client/src/pages/Ev
 const routesSource = readFileSync(resolve(process.cwd(), "client/src/routes.ts"), "utf8");
 const headerSource = readFileSync(resolve(process.cwd(), "client/src/hooks/useHeaderState.ts"), "utf8");
 const homeSource = readFileSync(resolve(process.cwd(), "client/src/pages/Home.tsx"), "utf8");
+const layoutSource = readFileSync(resolve(process.cwd(), "client/src/components/MainLayout.tsx"), "utf8");
 
 describe("standalone EVENT page", () => {
   it("keeps the existing homepage event section while reusing its presentation on the dedicated page", () => {
     expect(homeSource).toContain("<SpecialEventSection />");
     expect(eventPageSource).toContain("<SpecialEventSection showHeader={false} />");
-    expect(eventPageSource).toContain("<ContactSection />");
+    expect(eventPageSource).not.toContain("<ContactSection />");
+    expect(layoutSource).toContain("<Footer />");
     expect(eventPageSource).toContain('id="event-page-title"');
     expect(eventPageSource).toContain("dr-page-header");
   });

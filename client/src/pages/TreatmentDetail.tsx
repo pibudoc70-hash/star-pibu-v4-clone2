@@ -40,6 +40,7 @@ import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import SeoHead, { buildHreflangs, LANG_TO_OG_LOCALE } from "@/components/SeoHead";
 import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
+import Footer from "@/components/Footer";
 
 // FAQ 아코디언 컴포넌트
 function FAQAccordion({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
@@ -611,6 +612,7 @@ export default function TreatmentDetail() {
           <FAQAccordion faqs={treatment.faqs || []} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

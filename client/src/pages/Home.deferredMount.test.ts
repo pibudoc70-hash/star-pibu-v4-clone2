@@ -27,7 +27,6 @@ describe("Home below-the-fold deferred mount contract", () => {
       "FacilitySection",
       "YouTubeSection",
       "FAQSection",
-      "ContactSection",
     ]) {
       expect(homeSource).toMatch(
         new RegExp(`<DeferredMount[\\s\\S]*?<${section}`),
@@ -35,14 +34,11 @@ describe("Home below-the-fold deferred mount contract", () => {
     }
   });
 
-  it("removes the hidden recent-notices home surface so FAQ flows directly into contact", () => {
+  it("removes the hidden recent-notices and page-level contact surfaces so the shared footer owns contact", () => {
     expect(homeSource).not.toContain("RecentNoticesSection");
     expect(homeSource).not.toContain("HOME_SECTION_FALLBACKS.notices");
-    expect(homeSource).toMatch(/<FAQSection[\s\S]*?<ContactSection/);
-  });
-
-  it("keeps the below-fold Google Maps iframe behind ContactSection's deferred mount", () => {
-    expect(homeSource).toMatch(/<DeferredMount[\s\S]*?<ContactSection/);
+    expect(homeSource).not.toContain("ContactSection");
+    expect(homeSource).not.toContain("HOME_SECTION_FALLBACKS.contact");
   });
 
   it("mounts eligible page-load popups with the initial home render instead of delaying them", () => {

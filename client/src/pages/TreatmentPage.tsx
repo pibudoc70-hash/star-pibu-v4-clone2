@@ -17,6 +17,7 @@ import { getTreatmentBySlug, getAllTreatments } from "@/data/treatments";
 import type { TreatmentI18n } from "@/data/treatments";
 import { EXTERNAL_BOOKING_URLS } from "@/lib/externalBooking";
 import { LIFTING_ANESTHESIA_PREPARATION, LIFTING_FAQS, isPainSensitiveLifting } from "@shared/liftingPositioning";
+import Footer from "@/components/Footer";
 
 // ── lang → URL prefix 매핑 ────────────────────────────────────────────────────
 const LANG_PREFIX: Record<SupportedLang, string> = {
@@ -630,6 +631,7 @@ export default function TreatmentPage() {
           <p className="mt-1">• 의료법 제56조(의료광고의 금지 등) 및 관련 규정을 준수합니다.</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

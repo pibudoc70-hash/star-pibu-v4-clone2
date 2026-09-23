@@ -339,7 +339,7 @@ export default function StemCellGuide() {
   return (
     <div className="space-y-10 mb-10">
       {/* ── 1. 줄기세포 치료란? ── */}
-      <section aria-labelledby="stemcell-what-is">
+      <section className="stemcell-guide__intro" aria-labelledby="stemcell-what-is">
         <div className="text-center mb-6">
           <p className="text-xs tracking-widest font-montserrat font-light mb-2" style={{ color: "var(--color-gold-primary)" }}>
             STEM CELL THERAPY
@@ -357,7 +357,7 @@ export default function StemCellGuide() {
             return (
               <div
                 key={i}
-                className="rounded-2xl p-5"
+                className="stemcell-guide__intro-card rounded-2xl p-5"
                 style={{ background: item.bg, border: `1.5px solid ${item.color}22` }}
               >
                 <div

@@ -44,7 +44,7 @@ describe("global footer contact section", () => {
   });
 
   it("uses the established warm-beige background for the common section", () => {
-    expect(contactSource).toContain('backgroundColor: "var(--brand-bg-warm)"');
+    expect(contactSource).toContain('backgroundColor: "var(--contact-section-bg, var(--brand-bg-warm))"');
     expect(contactSource).not.toContain("faq-section-bg");
   });
 
@@ -67,7 +67,7 @@ describe("global footer contact section", () => {
     expect(directionsSource).toContain("transitTitle");
     expect(directionsSource).toContain("<MainLayout showContactSection={false}>");
     expect(directionsSource).toContain('import ContactSection from \'@/components/ContactSection\'');
-    expect(directionsSource).toContain("<ContactSection showHeader={false} />");
+    expect(directionsSource).toContain('<ContactSection showHeader={false} desktopTone="doctors" />');
     expect(directionsSource).not.toContain("LocationLinkPanel");
     expect(directionsSource).not.toContain("map.kakao.com");
   });

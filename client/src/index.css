@@ -4813,6 +4813,11 @@ body.font-lang-zh .hero-stat-label {
     border-color: transparent !important;
     box-shadow: none !important;
   }
+
+  /* Keep the 3-column card grid on the same x-axis as the unchanged search shell. */
+  .equipment-list__card-grid {
+    padding-inline: 0;
+  }
 }
 
 /* `/doctors` direct-page header: static visual tokens stay out of JSX. */
@@ -4844,7 +4849,13 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .directions-transport-section {
-    background: #F5F0EB;
+    background: #FAF8F5;
+  }
+
+  /* Directions keeps the map and transport content in the Doctors reference tone. */
+  #contact.contact-section--doctors {
+    --contact-section-bg: #FAF8F5;
+    padding-bottom: 4rem;
   }
 
   .equipment-list-page {

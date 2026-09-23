@@ -34,8 +34,8 @@ describe("desktop-first public subpage tone unification", () => {
   it("keeps Equipment3 inside its existing page container while aligning the search shell", () => {
     expect(equipmentSource).toContain('className="equipment-list__search-shell mb-4"');
     expect(cssSource).toContain(".equipment-list__search-shell");
-    expect(cssSource).toContain("--equipment-list-page-bg: var(--brand-bg)");
-    expect(cssSource).toContain("--equipment-list-button: var(--color-gold-dark)");
+    expect(cssSource).toContain("--equipment-list-page-bg: #FAF8F5");
+    expect(cssSource).toContain("--equipment-list-button: #A8895E");
   });
 
   it("removes the direct-consultation callout while retaining the responsive Doctors layouts", () => {
@@ -51,7 +51,8 @@ describe("desktop-first public subpage tone unification", () => {
     expect(jaI18n).toContain('managementDeviceFaq: "管理機器紹介"');
     expect(zhI18n).toContain('managementDeviceFaq: "管理设备介绍"');
     expect(zhTwI18n).toContain('managementDeviceFaq: "管理設備介紹"');
-    expect(managementSource).toContain('eyebrow: "MANAGEMENT DEVICES"');
+    expect(managementSource).toContain('md:hidden">MANAGEMENT DEVICES</p>');
+    expect(managementSource).toContain('hidden font-montserrat text-xs tracking-[0.3em] uppercase md:block">STAR DERMATOLOGY</p>');
   });
 
   it("adds the desktop About title and editorial composition while retaining a mobile-only legacy layout", () => {

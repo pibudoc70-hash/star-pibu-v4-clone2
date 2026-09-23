@@ -397,7 +397,7 @@ export default function Equipment3() {
     "项目与设备介绍"
   );
   const pageSubtitle = getText(
-    "부산 서면 스타피부과의 다양한 시술과 장비를 소개합니다.",
+    "피부 고민에 맞춘 프리미엄 장비 시스템",
     "Explore our wide range of treatments and equipment at STAR Dermatology, Seomyeon, Busan.",
     "釜山西面スター皮膚科の施術・機器をご紹介します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。"

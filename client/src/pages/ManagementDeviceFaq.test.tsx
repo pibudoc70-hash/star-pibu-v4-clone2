@@ -19,6 +19,9 @@ describe("ManagementDeviceFaq", () => {
     render(<ManagementDeviceFaq />);
 
     expect(screen.getByRole("heading", { level: 1, name: "관리장비 소개" })).toBeInTheDocument();
+    expect(screen.getByText("MANAGEMENT DEVICES")).toHaveClass("md:hidden");
+    expect(screen.getByText("STAR DERMATOLOGY")).toHaveClass("md:block");
+    expect(screen.getByText("다양한 장비, 더 세밀한 맞춤 케어")).toHaveClass("md:block");
     expect(screen.getByRole("heading", { level: 2, name: "소노필" })).toBeInTheDocument();
     expect(screen.getByText("초음파 진동에너지와 이온의 전기적 특성을 이용하여 피부 각질을 제거하고 영양 성분을 깊이 침투시키는 복합 관리 장비입니다.")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "포어덤" })).toBeInTheDocument();

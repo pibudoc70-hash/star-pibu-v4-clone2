@@ -7,11 +7,11 @@ import { MANAGEMENT_DEVICES, MANAGEMENT_DEVICE_IMAGES } from "@/lib/clinic-data"
 import { getLocalizedUrl } from "@/lib/localizedPath";
 
 const pageCopy = {
-  ko: { eyebrow: "MANAGEMENT DEVICES", purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
-  en: { eyebrow: "MANAGEMENT DEVICES", purpose: "Purpose", effect: "Expected effect", tagLabel: "Primary care purpose and expected effect" },
-  ja: { eyebrow: "MANAGEMENT DEVICES", purpose: "ケア目的", effect: "期待できる効果", tagLabel: "主なケア目的と期待できる効果" },
-  zh: { eyebrow: "MANAGEMENT DEVICES", purpose: "护理目的", effect: "预期效果", tagLabel: "主要护理目的和预期效果" },
-  "zh-TW": { eyebrow: "MANAGEMENT DEVICES", purpose: "護理目的", effect: "預期效果", tagLabel: "主要護理目的和預期效果" },
+  ko: { purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
+  en: { purpose: "Purpose", effect: "Expected effect", tagLabel: "Primary care purpose and expected effect" },
+  ja: { purpose: "ケア目的", effect: "期待できる効果", tagLabel: "主なケア目的と期待できる効果" },
+  zh: { purpose: "护理目的", effect: "预期效果", tagLabel: "主要护理目的和预期效果" },
+  "zh-TW": { purpose: "護理目的", effect: "預期效果", tagLabel: "主要護理目的和預期效果" },
 } as const;
 
 type DeviceTag = { purpose: string; effect: string };
@@ -73,6 +73,13 @@ export default function ManagementDeviceFaq() {
 
   const copy = pageCopy[lang];
   const pageTitle = getText("관리장비 소개", "Management Devices", "管理機器のご案内", "管理设备介绍", "管理設備介紹");
+  const pageSubtitle = getText(
+    "다양한 장비, 더 세밀한 맞춤 케어",
+    "Diverse devices for more precise, personalized care",
+    "多彩な機器で、よりきめ細かなオーダーメイドケア",
+    "多样设备，带来更精细的定制护理",
+    "多樣設備，帶來更細緻的客製照護",
+  );
   const firstDescription = getText(
     MANAGEMENT_DEVICES[0].shortDesc,
     MANAGEMENT_DEVICES[0].shortDescEn,
@@ -100,8 +107,11 @@ export default function ManagementDeviceFaq() {
       />
 
       <section className="dr-page-header px-4 py-16 text-center md:py-24">
-        <p className="dr-page-header-eyebrow mb-3 text-sm font-semibold tracking-[0.2em]">{copy.eyebrow}</p>
+        {/* Mobile header remains unchanged; the peer-subpage eyebrow is desktop-only. */}
+        <p className="dr-page-header-eyebrow mb-3 text-sm font-semibold tracking-[0.2em] md:hidden">MANAGEMENT DEVICES</p>
+        <p className="dr-page-header-eyebrow mb-3 hidden font-montserrat text-xs tracking-[0.3em] uppercase md:block">STAR DERMATOLOGY</p>
         <h1 className="dr-page-header-title text-3xl font-bold md:text-5xl">{pageTitle}</h1>
+        <p className="dr-page-header-tagline mt-3 hidden text-base md:block">{pageSubtitle}</p>
       </section>
 
       <section className="bg-[var(--brand-bg)] px-4 py-12 md:py-20">

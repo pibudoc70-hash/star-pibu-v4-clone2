@@ -42,7 +42,7 @@ describe("requested public page structure refinements", () => {
 
   it("keeps Directions' location surface in-page and excludes only its footer duplicate", () => {
     expect(directionsSource).toContain("<MainLayout showContactSection={false}>");
-    expect(directionsSource).toContain("<ContactSection showHeader={false} />");
+    expect(directionsSource).toContain('<ContactSection showHeader={false} desktopTone="doctors" />');
     expect(directionsSource).toContain('id="directions-page-title"');
     expect(directionsSource).toContain("{t.directions.title}");
     expect(mainLayoutSource).toContain("showContactSection?: boolean");

@@ -37,10 +37,10 @@ export default function Directions() {
         </div>
       </section>
 
-      <ContactSection showHeader={false} />
+      <ContactSection showHeader={false} desktopTone="doctors" />
 
       {/* 주차 및 대중교통 */}
-      <section className="directions-transport-section py-16 md:py-24 bg-[var(--brand-bg-alt)]">
+      <section className="directions-transport-section py-16 md:py-16 bg-[var(--brand-bg-alt)]">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-[var(--brand-text)] mb-12 text-center">{t.directions.transportationTitle}</h2>
           

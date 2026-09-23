@@ -19,7 +19,7 @@ describe("Contact section layout and notice visibility", () => {
     expect(contactSource).toContain("pt-12 pb-16 sm:pt-16 sm:pb-24");
     expect(contactSource).toContain("lg:grid-cols-12");
     expect(contactSource).toContain("overflow-hidden rounded-2xl");
-    expect(contactSource).toContain('backgroundColor: "var(--brand-bg-warm)"');
+    expect(contactSource).toContain('backgroundColor: "var(--contact-section-bg, var(--brand-bg-warm))"');
     expect(contactSource).toContain("lg:col-span-7");
     expect(panelSource).toContain("lg:col-span-5");
     expect(panelSource).toContain("integrated?: boolean");
@@ -31,7 +31,8 @@ describe("Contact section layout and notice visibility", () => {
 
   it("can suppress only the reusable location heading for a dedicated location page", () => {
     expect(contactSource).toContain("showHeader?: boolean");
-    expect(contactSource).toContain("ContactSection({ showHeader = true }");
+    expect(contactSource).toContain('desktopTone?: "default" | "doctors"');
+    expect(contactSource).toContain('ContactSection({ showHeader = true, desktopTone = "default" }');
     expect(contactSource).toContain("{showHeader && (");
   });
 

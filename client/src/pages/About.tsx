@@ -75,6 +75,13 @@ export default function About() {
     lang === "en" ? "Meet Our Doctors →" :
     "의료진 소개 보기 →";
   const philosophyEyebrow = t.about.sectionLabels?.philosophy ?? "OUR PHILOSOPHY";
+  const desktopPageTitle = lang === "ko" ? "스타피부과 소개" : aboutUsLabel;
+  const desktopPageTagline = lang === "ko"
+    ? "보이는 아름다움 그 너머, 피부의 본질까지 생각합니다."
+    : t.about.title;
+  const desktopPhilosophyHeading = lang === "ko"
+    ? "스타피부과가 지키는 네 가지 약속"
+    : t.about.title;
 
   return (
     <MainLayout>
@@ -100,8 +107,8 @@ export default function About() {
         <section className="dr-page-header pt-32 pb-16 text-center" aria-labelledby="about-page-title">
           <div className="container">
             <p className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3">STAR DERMATOLOGY</p>
-            <h1 id="about-page-title" className="dr-page-header-title text-5xl font-extrabold mb-4">{aboutUsLabel}</h1>
-            <p className="dr-page-header-tagline text-base">{t.about.title}</p>
+            <h1 id="about-page-title" className="dr-page-header-title text-5xl font-extrabold mb-4">{desktopPageTitle}</h1>
+            <p className="dr-page-header-tagline text-base">{desktopPageTagline}</p>
           </div>
         </section>
 
@@ -109,6 +116,10 @@ export default function About() {
           <div className="container">
             <div className="grid grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)] items-center gap-14 lg:gap-20">
               <div>
+                <div className="mb-8 border-l-2 border-[color:var(--color-gold-primary)] pl-5">
+                  <p className="font-montserrat text-xs font-semibold tracking-[0.25em] text-[var(--color-gold-deep)]">{t.about.title}</p>
+                  <p className="mt-2 text-2xl font-extrabold tracking-tight text-[var(--brand-text)]">{t.about.philosophyTagline}</p>
+                </div>
                 <p className="max-w-2xl text-lg leading-9 text-[var(--brand-text-mid)]">{t.about.desc}</p>
                 <a
                   href="/doctors"
@@ -116,6 +127,18 @@ export default function About() {
                 >
                   {doctorLinkLabel}
                 </a>
+                <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-[color:var(--color-gold-light)] py-6">
+                  {t.about.stats.slice(0, 3).map((stat, idx) => {
+                    const Icon = [CalendarDays, HeartHandshake, Sparkles][idx];
+                    return (
+                      <div key={stat.label} className="px-5 text-center first:border-r first:border-[color:var(--color-gold-light)] last:border-l last:border-[color:var(--color-gold-light)]">
+                        <Icon size={20} aria-hidden="true" className="mx-auto text-[var(--color-gold-primary)]" />
+                        <p className="mt-3 text-2xl font-extrabold text-[var(--color-gold-dark)]">{stat.num}</p>
+                        <p className="mt-1 text-xs text-[var(--brand-text-mid)]">{stat.label}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <figure className="relative overflow-hidden rounded-[var(--card-radius)] shadow-[0_18px_42px_rgba(57,39,20,0.14)]">
@@ -134,38 +157,17 @@ export default function About() {
           </div>
         </section>
 
-        <section className="bg-[var(--brand-bg-alt)] py-20 lg:py-24">
-          <div className="container">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="font-montserrat text-xs font-semibold tracking-[0.25em] text-[var(--color-gold-deep)]">{sinceLabel}</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[var(--brand-text)]">{t.about.philosophyTagline}</h2>
-            </div>
-            <div className="mt-12 grid grid-cols-3 gap-5">
-              {t.about.stats.slice(0, 3).map((stat, idx) => {
-                const Icon = [CalendarDays, HeartHandshake, Sparkles][idx];
-                return (
-                  <div key={stat.label} className="rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] bg-[var(--brand-bg-card)] px-6 py-7 text-center shadow-[0_8px_22px_rgba(57,39,20,0.06)]">
-                    <Icon size={22} aria-hidden="true" className="mx-auto text-[var(--color-gold-primary)]" />
-                    <p className="mt-4 text-3xl font-extrabold text-[var(--color-gold-dark)]">{stat.num}</p>
-                    <p className="mt-2 text-sm text-[var(--brand-text-mid)]">{stat.label}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 lg:py-24">
+        <section className="pb-20 pt-8 lg:pb-24 lg:pt-12">
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-montserrat text-xs font-semibold tracking-[0.25em] text-[var(--color-gold-deep)]">{philosophyEyebrow}</p>
-              <h2 className="mt-3 text-3xl font-extrabold text-[var(--brand-text)]">{t.about.title}</h2>
+              <h2 className="mt-3 text-3xl font-extrabold text-[var(--brand-text)]">{desktopPhilosophyHeading}</h2>
             </div>
             <div className="mt-12 grid grid-cols-2 gap-5">
               {t.about.values.map((value, idx) => {
                 const Icon = VALUE_ICONS[idx] ?? ShieldCheck;
                 return (
-                  <article key={value.letter} className="rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] bg-[var(--brand-bg-card)] p-7 transition-shadow hover:shadow-[0_12px_28px_rgba(57,39,20,0.10)]">
+                  <article key={value.letter} className="border-t border-[color:var(--color-gold-light)] p-7">
                     <div className="flex items-start gap-4">
                       <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-gold-pale)] text-[var(--color-gold-dark)]"><Icon size={20} aria-hidden="true" /></span>
                       <div>

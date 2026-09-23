@@ -402,6 +402,24 @@ export default function Equipment3() {
     "釜山西面スター皮膚科の施術・機器をご紹介します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。"
   );
+
+  const renderActiveCategoryGuide = () => {
+    if (isSearching) return null;
+    if (activeId === "리프팅·탄력") return <LiftingGuide />;
+    if (activeId === "눈밑지방재배치") return <UnderEyeGuide />;
+    if (activeId === "여드름") return <AcneGuide />;
+    if (activeId === "흉터·모공") return <ScarGuide />;
+    if (activeId === "색소·문신") return <PigmentGuide />;
+    if (activeId === "볼륨·부스터") return <VolumeGuide />;
+    if (activeId === "보톡스·필러") return <BotoxGuide />;
+    if (activeId === "홍조·혈관") return <RosaceaGuide />;
+    if (activeId === "건선·아토피") return <PsoriasisGuide />;
+    if (activeId === "손·발톱무좀") return <NailFungusGuide />;
+    if (activeId === "액취증·다한증") return <HyperhidrosisGuide />;
+    if (activeId === "stem_cell" || activeId === "줄기세포 치료") return <StemCellGuide />;
+    return null;
+  };
+
   return (
     <div className="equipment-list-page min-h-screen">
       <SeoHead
@@ -567,99 +585,11 @@ export default function Equipment3() {
                   )}
                 </div>
 
-                {/* 리프팅·탄력 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "리프팅·탄력" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
+                {/* 모바일은 기존 카드 상단 안내 흐름을 유지합니다. */}
+                {renderActiveCategoryGuide() && (
+                  <div className="equipment-list__category-guide sm:hidden rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
                     <div className="px-5 pt-6 pb-2">
-                      <LiftingGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 눈밑지방재배치 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "눈밑지방재배치" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <UnderEyeGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 여드름 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "여드름" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <AcneGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 흉터·모공 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "흉터·모공" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <ScarGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 색소·문신 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "색소·문신" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <PigmentGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 볼륨·부스터 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "볼륨·부스터" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <VolumeGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 보톡스·필러 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "보톡스·필러" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <BotoxGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 홍조·혈관 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "홍조·혈관" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <RosaceaGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 건선·아토피 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "건선·아토피" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <PsoriasisGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 손·발톱무좀 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "손·발톱무좀" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <NailFungusGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 액취증·다한증 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && activeId === "액취증·다한증" && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <HyperhidrosisGuide />
-                    </div>
-                  </div>
-                )}
-                {/* 줄기세포 치료 탭 전용 안내 섹션 — 검색 중에는 숨김 */}
-                {!isSearching && (activeId === "stem_cell" || activeId === "줄기세포 치료") && (
-                  <div className="rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      <StemCellGuide />
+                      {renderActiveCategoryGuide()}
                     </div>
                   </div>
                 )}
@@ -742,6 +672,15 @@ export default function Equipment3() {
                           </button>
                         </div>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {/* 데스크톱은 장비 목록을 먼저 보여 준 뒤 카테고리 안내를 이어서 제공합니다. */}
+                {renderActiveCategoryGuide() && (
+                  <div className="equipment-list__category-guide hidden sm:block mb-8 animate-card-fade">
+                    <div className="px-5 pt-6 pb-2">
+                      {renderActiveCategoryGuide()}
                     </div>
                   </div>
                 )}

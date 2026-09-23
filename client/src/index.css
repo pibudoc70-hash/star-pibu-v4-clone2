@@ -4541,6 +4541,17 @@ body.font-lang-zh .hero-stat-label {
     background: #F3EEE7;
   }
 
+  /* The deferred children own their section background classes. Apply the
+     two approved colors to both wrapper and rendered section root so the
+     visible surface follows Home.tsx's exact A → B sequence. */
+  .home-surface-a > section {
+    background: #FAF8F5 !important;
+  }
+
+  .home-surface-b > section {
+    background: #F3EEE7 !important;
+  }
+
   .section-bg-warm {
     background: #FAF8F5;
   }

@@ -14,8 +14,8 @@
  * - skipWaiting + clients.claim 으로 배포 즉시 반영
  */
 
-// 이벤트 내부 경로의 구 번들을 보유한 기존 방문자도 다음 등록 시 모든 캐시를 교체한다.
-const CACHE_VERSION = "v5-2026-09-23-tone";
+// 이전 Home 청크와 현재 Footer 청크가 혼재하지 않도록 모든 기존 캐시를 교체한다.
+const CACHE_VERSION = "v6-2026-09-23-home-surface";
 
 const CACHE_NAMES = {
   static: `static-${CACHE_VERSION}`,   // JS/CSS/폰트

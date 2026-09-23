@@ -13,27 +13,33 @@ const youtubeSource = readFileSync(resolve(root, "client/src/components/YouTubeS
 const koSource = readFileSync(resolve(root, "client/src/lib/i18n.ko.ts"), "utf8");
 
 describe("homepage desktop palette and label refinement", () => {
-  it("keeps every deferred home surface in the warm palette system", () => {
-    for (const surface of [
-      "section-bg-cream",
-      "section-bg-warm",
-      "section-bg-cream-soft",
-      "section-bg-dark-brown",
-      "section-bg-gold-soft",
-      "section-bg-warm-alt",
-      "section-bg-dark-brown-mid",
-    ]) {
-      expect(homeSource).toContain(surface);
-    }
-
+  it("uses exactly the requested desktop A-B sequence on the visible section roots", () => {
     expect(cssSource).toContain("Homepage desktop surface harmony");
-    expect(cssSource).toContain("@media (min-width: 768px)");
     expect(cssSource).toContain(".home-surface-a {\n    background: #FAF8F5;");
     expect(cssSource).toContain(".home-surface-b {\n    background: #F3EEE7;");
-    expect(homeSource).toContain('className="home-surface-b section-bg-cream"');
-    expect(homeSource).toContain('className="home-surface-a section-bg-warm"');
-    expect(homeSource).toContain('className="home-surface-a section-bg-dark-brown"');
-    expect(homeSource).toContain('className="home-surface-b section-bg-warm-alt"');
+    expect(cssSource).toContain(".home-surface-a > section {\n    background: #FAF8F5 !important;");
+    expect(cssSource).toContain(".home-surface-b > section {\n    background: #F3EEE7 !important;");
+
+    const expectedOrder = [
+      ['SpecialEventSection', 'home-surface-a section-bg-cream'],
+      ['DoctorsSection', 'home-surface-b section-bg-warm'],
+      ['TreatmentsEquipmentSection', 'home-surface-a section-bg-cream-soft'],
+      ['ManagementDevicesSection', 'home-surface-b section-bg-dark-brown'],
+      ['PhilosophySection', 'home-surface-a section-bg-cream'],
+      ['ResultsStatisticsSection', 'home-surface-b section-bg-gold-soft'],
+      ['FacilitySection', 'home-surface-a section-bg-warm-alt'],
+      ['YouTubeSection', 'home-surface-b section-bg-dark-brown-mid'],
+      ['FAQSection', 'home-surface-a section-bg-cream'],
+    ] as const;
+
+    let previousIndex = -1;
+    for (const [component, surfaceClass] of expectedOrder) {
+      const surfaceIndex = homeSource.indexOf(surfaceClass, previousIndex + 1);
+      const componentIndex = homeSource.indexOf(`<${component}`, surfaceIndex);
+      expect(surfaceIndex).toBeGreaterThan(previousIndex);
+      expect(componentIndex).toBeGreaterThan(surfaceIndex);
+      previousIndex = componentIndex;
+    }
   });
 
   it("uses warm neutral desktop hero overlays without changing mobile overlay literals", () => {

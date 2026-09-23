@@ -164,9 +164,11 @@ describe("service worker cache policy", () => {
   });
 
   it("replaces the stale cache generation and bypasses CDN HTTP cache on worker update", () => {
-    expect(workerSource).toContain('const CACHE_VERSION = "v5-2026-09-23-tone"');
+    expect(workerSource).toContain('const CACHE_VERSION = "v6-2026-09-23-home-surface"');
     expect(registerSource).toContain('updateViaCache: "none"');
-    expect(registerSource).toContain('register("/sw.js?v=2026-09-23-tone"');
+    expect(registerSource).toContain('register("/sw.js?v=2026-09-23-home-surface"');
+    expect(workerSource).toContain("self.skipWaiting()");
+    expect(workerSource).toContain("await self.clients.claim()");
   });
 
   it("unregisters an old production worker before serving the development preview", () => {

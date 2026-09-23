@@ -440,7 +440,7 @@ export default function Home() {
           anchorSelectors={["#events", "#pain-management", "#facility"]}
           telemetrySurface="home_events"
         >
-          <div className="home-surface-b section-bg-cream">
+          <div className="home-surface-a section-bg-cream">
             <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
               <SpecialEventSection />
             </Suspense>
@@ -455,7 +455,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-a section-bg-warm">
+            <div className="home-surface-b section-bg-warm">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
                 <DoctorsSection />
               </Suspense>
@@ -471,7 +471,7 @@ export default function Home() {
             fallback={<TreatmentsEquipmentSkeleton id="treatments" />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-b section-bg-cream-soft">
+            <div className="home-surface-a section-bg-cream-soft">
               <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
                 <TreatmentsEquipmentSection />
               </Suspense>
@@ -487,7 +487,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}
             anchorSelectors={["#management-devices", "#facility"]}
           >
-            <div className="home-surface-a section-bg-dark-brown">
+            <div className="home-surface-b section-bg-dark-brown">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
                 <ManagementDevicesSection />
               </Suspense>
@@ -503,7 +503,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-b section-bg-cream">
+            <div className="home-surface-a section-bg-cream">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
                 <PhilosophySection />
               </Suspense>
@@ -519,7 +519,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}
             anchorSelectors={["#results-statistics", "#facility"]}
           >
-            <div className="home-surface-a section-bg-gold-soft">
+            <div className="home-surface-b section-bg-gold-soft">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
                 <ResultsStatisticsSection showRegenerativeMedicineBanner />
               </Suspense>
@@ -536,7 +536,7 @@ export default function Home() {
             anchorSelectors={["#facility"]}
             telemetrySurface="home_facility"
           >
-            <div className="home-surface-b section-bg-warm-alt">
+            <div className="home-surface-a section-bg-warm-alt">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
                 <FacilitySection />
               </Suspense>
@@ -549,7 +549,7 @@ export default function Home() {
           animationType="fade-in-slow"
         >
           <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
-            <div className="home-surface-a section-bg-dark-brown-mid">
+            <div className="home-surface-b section-bg-dark-brown-mid">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
                 <YouTubeSection />
               </Suspense>
@@ -565,7 +565,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}
             anchorSelectors={["#faq"]}
           >
-            <div className="home-surface-b section-bg-cream">
+            <div className="home-surface-a section-bg-cream">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
                 <FAQSection />
               </Suspense>

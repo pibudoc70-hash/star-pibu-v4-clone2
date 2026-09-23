@@ -70,7 +70,8 @@ export default function ContactSection({ showHeader = true, desktopTone = "defau
               className="section-eyebrow"
               style={{ color: '#4B351F', fontWeight: 700 }}
             >
-              {locationInfo}
+              <span className="hidden md:inline">STAR DERMATOLOGY</span>
+              <span className="md:hidden">{locationInfo}</span>
             </span>
             <h2
               className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]"

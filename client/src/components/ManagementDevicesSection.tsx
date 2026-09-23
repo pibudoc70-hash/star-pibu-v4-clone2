@@ -254,14 +254,14 @@ export default function ManagementDevicesSection() {
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle body-text text-[var(--color-gold-light)]">
+            <p className="section-subtitle body-text text-[var(--color-gold-light)] md:hidden">
               {md.sectionSubtitle}
             </p>
           </div>
 
           {/* 6열 그리드 — 다크 섹션 안에 밝은 크림 카드 영역으로 대비 극대화 */}
           <div
-            className="rounded-2xl px-4 py-6 sm:px-6 sm:py-8"
+            className="management-devices__grid-surface rounded-2xl px-4 py-6 sm:px-6 sm:py-8"
             style={{
               background: "linear-gradient(135deg, rgba(247,243,238,0.96) 0%, rgba(240,234,222,0.94) 100%)",
               border: "1px solid rgba(201,168,105,0.40)",

@@ -227,7 +227,7 @@ export default function YouTubeSection() {
               {yt.sectionTitle}
             </h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle body-text">
+            <p className="section-subtitle body-text md:hidden">
               {yt.sectionSubtitle}
             </p>
           </div>
@@ -272,7 +272,7 @@ export default function YouTubeSection() {
             {yt.sectionTitle}
           </h2>
           <div className="star-divider mx-auto" />
-          <p className="section-subtitle body-text">
+          <p className="section-subtitle body-text md:hidden">
             {yt.sectionSubtitle}
           </p>
         </div>
@@ -280,7 +280,7 @@ export default function YouTubeSection() {
         {/* 상단 영상 4개 */}
         {videos.length > 0 && (
           <div className="mb-16">
-            <h3 className="text-lg md:text-xl font-semibold mb-6 text-gray-900">{yt.latestVideos}</h3>
+            <h3 className="mb-6 text-lg font-semibold text-gray-900 md:hidden">{yt.latestVideos}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
                 <button
@@ -320,7 +320,7 @@ export default function YouTubeSection() {
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
           <div>
-            <h3 className="youtube-shorts-heading text-lg md:text-xl font-semibold mb-6" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
+            <h3 className="youtube-shorts-heading mb-6 text-lg font-semibold md:hidden" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
                 <button

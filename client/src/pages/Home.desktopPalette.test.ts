@@ -28,9 +28,12 @@ describe("homepage desktop palette and label refinement", () => {
 
     expect(cssSource).toContain("Homepage desktop surface harmony");
     expect(cssSource).toContain("@media (min-width: 768px)");
-    expect(cssSource).toContain(".section-bg-dark-brown {\n    background: #F2ECE4;");
-    expect(cssSource).toContain(".section-bg-dark-brown-mid {\n    background: #F5F0EA;");
-    expect(cssSource).toContain(".section-bg-gold-soft {\n    background: #F3EEE7;");
+    expect(cssSource).toContain(".home-surface-a {\n    background: #FAF8F5;");
+    expect(cssSource).toContain(".home-surface-b {\n    background: #F3EEE7;");
+    expect(homeSource).toContain('className="home-surface-b section-bg-cream"');
+    expect(homeSource).toContain('className="home-surface-a section-bg-warm"');
+    expect(homeSource).toContain('className="home-surface-a section-bg-dark-brown"');
+    expect(homeSource).toContain('className="home-surface-b section-bg-warm-alt"');
   });
 
   it("uses warm neutral desktop hero overlays without changing mobile overlay literals", () => {

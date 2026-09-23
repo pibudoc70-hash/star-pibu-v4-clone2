@@ -110,7 +110,7 @@ export default function UltheraThermagePromotionPopup() {
         data-testid="promotion-popup-overlay"
         onClick={dismiss}
         disabled={isClosing}
-        className={`absolute inset-0 bg-[rgba(5,12,28,0.72)] backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none ${isClosing ? "pointer-events-none opacity-0" : isEntering ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-[rgba(5,12,28,0.72)] backdrop-blur-[2px] transition-opacity duration-200 ease-out motion-reduce:transition-none md:bg-[rgba(28,22,17,0.74)] ${isClosing ? "pointer-events-none opacity-0" : isEntering ? "opacity-100" : "opacity-0"}`}
       />
       <section
         role="dialog"
@@ -123,7 +123,7 @@ export default function UltheraThermagePromotionPopup() {
         <div data-testid="promotion-popup-controls" className="absolute bottom-3 right-3 z-30 flex items-center gap-2 md:bottom-auto md:right-0 md:top-[calc(100%+0.75rem)]">
           <label
             data-testid="promotion-hide-today-control"
-            className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,box-shadow,transform] duration-200 hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)]"
+            className="group inline-flex min-h-[52px] min-w-[178px] cursor-pointer items-center gap-2.5 rounded-[0.9rem] bg-[rgba(5,12,28,0.92)] px-3.5 text-[12px] font-semibold tracking-[-0.01em] text-white shadow-[0_8px_20px_rgba(0,0,0,0.42)] transition-[background-color,box-shadow,transform] duration-200 hover:bg-[rgba(20,35,61,0.97)] hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)] active:scale-[0.98] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--color-gold-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-star-navy)] md:bg-transparent md:shadow-none md:hover:bg-transparent md:hover:shadow-none md:focus-within:ring-offset-transparent"
           >
             <input
               type="checkbox"

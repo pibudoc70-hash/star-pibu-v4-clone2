@@ -62,7 +62,7 @@ describe("UltheraThermagePromotionPopup", () => {
     );
     const checkbox = screen.getByRole("checkbox", { name: "오늘 하루 보지 않기" });
     expect(checkbox).not.toBeChecked();
-    expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "shadow-[0_8px_20px_rgba(0,0,0,0.42)]");
+    expect(screen.getByTestId("promotion-hide-today-control")).toHaveClass("min-h-[52px]", "min-w-[178px]", "shadow-[0_8px_20px_rgba(0,0,0,0.42)]", "md:bg-transparent", "md:shadow-none");
     expect(screen.getByTestId("promotion-hide-today-control")).not.toHaveClass("border", "border-[rgba(215,181,92,0.7)]", "hover:border-[var(--color-gold-primary)]");
     expect(screen.getByTestId("promotion-popup-controls")).toHaveClass(
       "bottom-3",
@@ -91,7 +91,7 @@ describe("UltheraThermagePromotionPopup", () => {
 
     const overlay = screen.getByTestId("promotion-popup-overlay");
     expect(overlay).toHaveAttribute("aria-label", "이벤트 팝업 닫기");
-    expect(overlay).toHaveClass("absolute", "inset-0", "bg-[rgba(5,12,28,0.72)]", "backdrop-blur-[2px]");
+    expect(overlay).toHaveClass("absolute", "inset-0", "bg-[rgba(5,12,28,0.72)]", "backdrop-blur-[2px]", "md:bg-[rgba(28,22,17,0.74)]");
 
     fireEvent.click(screen.getByTestId("promotion-hide-today-control"));
     expect(screen.getByRole("dialog")).toHaveAttribute("data-state", "open");

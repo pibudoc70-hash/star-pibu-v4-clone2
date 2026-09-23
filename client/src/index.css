@@ -4532,6 +4532,15 @@ body.font-lang-zh .hero-stat-label {
     background: var(--brand-bg, #FAF8F5);
   }
 
+  /* Home section sequence: A → B repeats above the shared contact/footer area. */
+  .home-surface-a {
+    background: #FAF8F5;
+  }
+
+  .home-surface-b {
+    background: #F3EEE7;
+  }
+
   .section-bg-warm {
     background: #FAF8F5;
   }
@@ -4558,6 +4567,13 @@ body.font-lang-zh .hero-stat-label {
 
   .section-bg-dark-brown-mid {
     background: #F5F0EA;
+  }
+
+  /* Keep the individual device icons while letting their desktop grid meet the page surface directly. */
+  .management-devices__grid-surface {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
   }
 
   .section-bg-dark-brown .section-eyebrow,
@@ -4875,6 +4891,13 @@ body.font-lang-zh .hero-stat-label {
   .equipment-list__tab-panel,
   .equipment-list__card-panel,
   .equipment-list__card-grid {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* The search and category controls remain interactive without a separate desktop panel surface. */
+  .equipment-list__search {
     background: transparent !important;
     border-color: transparent !important;
     box-shadow: none !important;

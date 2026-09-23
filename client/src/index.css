@@ -4919,6 +4919,28 @@ body.font-lang-zh .hero-stat-label {
   .equipment-list__card-grid {
     padding-inline: 0;
   }
+
+  /* Match the homepage treatment-card treatment: no hard outline, only a quiet surface shadow. */
+  .equipment-list-page .equipment-list__card {
+    border: none !important;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .equipment-list-page .equipment-list__card:hover {
+    border-color: transparent !important;
+    box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  /* Category controls retain their button shape but lose the heavy desktop outlines. */
+  .equipment-list-page .equipment-list__tab-panel .cat-tab-btn {
+    border-color: #E9E1D8;
+    box-shadow: 0 1px 3px rgba(47, 38, 27, 0.04);
+  }
+
+  .equipment-list-page .equipment-list__tab-panel .cat-tab-btn[data-active="true"] {
+    border-color: transparent;
+    box-shadow: none;
+  }
 }
 
 /* `/doctors` direct-page header: static visual tokens stay out of JSX. */

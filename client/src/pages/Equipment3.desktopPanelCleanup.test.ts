@@ -28,7 +28,8 @@ describe("Equipment3 desktop outer panel cleanup", () => {
     expect(desktopCleanup).toContain("background: transparent !important");
     expect(desktopCleanup).toContain("border-color: transparent !important");
     expect(desktopCleanup).toContain("box-shadow: none !important");
-    expect(desktopCleanup).not.toContain(".equipment-list__card {");
+    expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__card");
+    expect(desktopCleanup).toContain("border: none !important");
     expect(cssSource).toContain("@media (max-width: 639px)");
     expect(cssSource).toContain(".equipment-list__card-grid {\n    padding: 0.75rem;");
   });
@@ -48,5 +49,25 @@ describe("Equipment3 desktop outer panel cleanup", () => {
     expect(desktopCleanup).toContain("border-color: transparent !important");
     expect(desktopCleanup).toContain("box-shadow: none !important");
     expect(pageSource).toContain("className=\"flex-1 py-3.5 pr-4 bg-transparent");
+  });
+
+  it("uses borderless desktop equipment cards and softened category tab outlines", () => {
+    const cleanupStart = cssSource.indexOf("/* Desktop equipment list: retain individual tabs/cards");
+    const desktopCleanup = cssSource.slice(
+      cleanupStart,
+      cssSource.indexOf("/* ── Equipment detail mobile density", cleanupStart),
+    );
+
+    expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__card");
+    expect(desktopCleanup).toContain("border: none !important");
+    expect(desktopCleanup).toContain("0 2px 16px rgba(0, 0, 0, 0.05)");
+    expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__card:hover");
+    expect(desktopCleanup).toContain("border-color: transparent !important");
+    expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__tab-panel .cat-tab-btn");
+    expect(desktopCleanup).toContain("border-color: #E9E1D8");
+    expect(desktopCleanup).toContain("box-shadow: 0 1px 3px rgba(47, 38, 27, 0.04)");
+    expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__tab-panel .cat-tab-btn[data-active=\"true\"]");
+    expect(desktopCleanup).toContain("border-color: transparent;");
+    expect(desktopCleanup).toContain("box-shadow: none;");
   });
 });

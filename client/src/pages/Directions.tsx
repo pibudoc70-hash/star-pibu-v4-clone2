@@ -31,13 +31,13 @@ export default function Directions() {
             STAR DERMATOLOGY
           </p>
           <h1 id="directions-page-title" className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-            DIRECTIONS
+            {t.directions.title}
           </h1>
           <p className="dr-page-header-tagline text-sm sm:text-base">{t.directions.subtitle}</p>
         </div>
       </section>
 
-      <ContactSection />
+      <ContactSection showHeader={false} />
 
       {/* 주차 및 대중교통 */}
       <section className="py-16 md:py-24 bg-gray-50">

@@ -29,6 +29,12 @@ describe("Contact section layout and notice visibility", () => {
     expect(cssSource).toMatch(/#contact\s*\{\s*padding-top:\s*3rem\s*!important;/);
   });
 
+  it("can suppress only the reusable location heading for a dedicated location page", () => {
+    expect(contactSource).toContain("showHeader?: boolean");
+    expect(contactSource).toContain("ContactSection({ showHeader = true }");
+    expect(contactSource).toContain("{showHeader && (");
+  });
+
   it("keeps notices off every home landing while retaining dedicated notice routes", () => {
     expect(homeSource).not.toContain("RecentNoticesSection");
     expect(homeSource).not.toContain("useNewNoticeToast");

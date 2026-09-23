@@ -67,7 +67,7 @@ describe("global footer contact section", () => {
     expect(directionsSource).toContain("transitTitle");
     expect(directionsSource).toContain("<MainLayout showContactSection={false}>");
     expect(directionsSource).toContain('import ContactSection from \'@/components/ContactSection\'');
-    expect(directionsSource).toContain("<ContactSection />");
+    expect(directionsSource).toContain("<ContactSection showHeader={false} />");
     expect(directionsSource).not.toContain("LocationLinkPanel");
     expect(directionsSource).not.toContain("map.kakao.com");
   });

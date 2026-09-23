@@ -68,10 +68,11 @@ const DEVICE_TAGS: Record<string, Record<keyof typeof pageCopy, DeviceTag>> = {
 };
 
 export default function ManagementDeviceFaq() {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const { getText } = useLocalizedText();
 
   const copy = pageCopy[lang];
+  const pageTitle = getText("관리장비 소개", "Management Devices", "管理機器のご案内", "管理设备介绍", "管理設備介紹");
   const firstDescription = getText(
     MANAGEMENT_DEVICES[0].shortDesc,
     MANAGEMENT_DEVICES[0].shortDescEn,
@@ -90,7 +91,7 @@ export default function ManagementDeviceFaq() {
   return (
     <MainLayout>
       <SeoHead
-        title={`${t.nav.managementDeviceFaq} | 스타피부과`}
+        title={`${pageTitle} | 스타피부과`}
         description={firstDescription}
         canonical={canonicalPath}
         ogUrl={canonicalPath}
@@ -100,7 +101,7 @@ export default function ManagementDeviceFaq() {
 
       <section className="bg-[var(--color-star-navy)] px-4 py-16 text-center md:py-24">
         <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[var(--color-gold-primary)]">{copy.eyebrow}</p>
-        <h1 className="text-3xl font-bold text-white md:text-5xl">{t.nav.managementDeviceFaq}</h1>
+        <h1 className="text-3xl font-bold text-white md:text-5xl">{pageTitle}</h1>
       </section>
 
       <section className="bg-[#f7f5f0] px-4 py-12 md:py-20">

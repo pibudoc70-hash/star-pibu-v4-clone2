@@ -14,7 +14,11 @@ import ClinicMapEmbed from "@/components/contact/ClinicMapEmbed";
 // 후행 호환성을 위해 re-export 유지
 export { buildMarkerPinElement } from "@/lib/mapHelpers";
 
-export default function ContactSection() {
+interface ContactSectionProps {
+  showHeader?: boolean;
+}
+
+export default function ContactSection({ showHeader = true }: ContactSectionProps) {
   const sectionRef = useSectionReveal(80);
   const { t } = useLang();
   const { phoneHref, phoneDisplay } = useChatConfig();
@@ -59,22 +63,23 @@ export default function ContactSection() {
       aria-label="오시는 방법 및 연락처"
     >
       <div className="container">
-        {/* Section Header */}
-        <div className="section-header-block">
-          <span
-            className="section-eyebrow"
-            style={{ color: '#4B351F', fontWeight: 700 }}
-          >
-            {locationInfo}
-          </span>
-          <h2
-            className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]"
-            style={{ color: '#24180F' }}
-          >
-            {sectionTitle}
-          </h2>
-          <div className="star-divider mx-auto" />
-        </div>
+        {showHeader && (
+          <div className="section-header-block">
+            <span
+              className="section-eyebrow"
+              style={{ color: '#4B351F', fontWeight: 700 }}
+            >
+              {locationInfo}
+            </span>
+            <h2
+              className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]"
+              style={{ color: '#24180F' }}
+            >
+              {sectionTitle}
+            </h2>
+            <div className="star-divider mx-auto" />
+          </div>
+        )}
 
         <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_12px_36px_rgba(57,39,20,0.14)] lg:grid-cols-12 lg:items-stretch">
           <ClinicMapEmbed integrated className="reveal-left lg:col-span-7" title={mapTitle} />

@@ -16,7 +16,7 @@ import SeoHead, { buildHreflangs, buildBreadcrumbJsonLd, LANG_TO_OG_LOCALE, OG_I
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getLocalizedUrl, getLangPrefix } from "@/lib/localizedPath";
-import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X, Moon, Sun } from "lucide-react";
+import { Loader, ChevronDown, ChevronUp, Clock, RefreshCw, Search, X } from "lucide-react";
 import { CATEGORY_ICON_MAP, CAT_IMG_BG } from "@/data/treatments/categories";
 import CategoryTabButton from "@/components/treatments/CategoryTabButton";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -37,18 +37,6 @@ import HyperhidrosisGuide from "@/components/treatments/HyperhidrosisGuide";
 
 // ── 더보기 표시 개수 ──────────────────────────────────────────────────────────
 const INITIAL_SHOW = 9;
-const EQUIPMENT_LIST_COLOR_SCHEME_KEY = "equipment3_color_scheme";
-type EquipmentListColorScheme = "light" | "dark";
-
-function getEquipmentListColorScheme(): EquipmentListColorScheme {
-  if (typeof window === "undefined") return "light";
-  try {
-    return window.localStorage.getItem(EQUIPMENT_LIST_COLOR_SCHEME_KEY) === "dark" ? "dark" : "light";
-  } catch {
-    return "light";
-  }
-}
-
 // ── 카테고리 번역 폴백 맵 (DB에 번역이 없을 때 사용) ─────────────────────────
 const CATEGORY_TRANS: Record<string, { en: string; ja: string; zh: string }> = {
   "Best 시술":     { en: "Best Treatments",           ja: "ベスト施術",         zh: "最佳项目" },
@@ -249,22 +237,8 @@ function Equipment3Card({
 export default function Equipment3() {
   const { lang } = useLang();
   const { getText } = useLocalizedText();
-  const [colorScheme, setColorScheme] = useState<EquipmentListColorScheme>(getEquipmentListColorScheme);
 
   const { data: rawItems = [], isLoading } = trpc.equipment3.list.useQuery();
-
-  const isDarkMode = colorScheme === "dark";
-  const toggleColorScheme = useCallback(() => {
-    setColorScheme((current) => {
-      const next: EquipmentListColorScheme = current === "light" ? "dark" : "light";
-      try {
-        window.localStorage.setItem(EQUIPMENT_LIST_COLOR_SCHEME_KEY, next);
-      } catch {
-        // 저장소를 사용할 수 없으면 현재 방문 중인 화면에서만 모드를 전환한다.
-      }
-      return next;
-    });
-  }, []);
 
   // ── 탭: category 필드 기반 동적 생성 + Best 시술 탭 ─────────────────────────
   const tabs = useMemo(() => {
@@ -428,15 +402,8 @@ export default function Equipment3() {
     "釜山西面スター皮膚科の施術・機器をご紹介します。",
     "介绍釜山西面STAR皮肤科的各种项目与设备。"
   );
-  const colorSchemeLabel = isDarkMode
-    ? getText("라이트 모드", "Light mode", "ライトモード", "浅色模式", "淺色模式")
-    : getText("다크 모드", "Dark mode", "ダークモード", "深色模式", "深色模式");
-  const colorSchemeAction = isDarkMode
-    ? getText("라이트 모드로 전환", "Switch to light mode", "ライトモードに切り替え", "切换到浅色模式", "切換至淺色模式")
-    : getText("다크 모드로 전환", "Switch to dark mode", "ダークモードに切り替え", "切换到深色模式", "切換至深色模式");
-
   return (
-    <div className={`equipment-list-page min-h-screen${isDarkMode ? " equipment-list-page--dark" : ""}`}>
+    <div className="equipment-list-page min-h-screen">
       <SeoHead
         title={seoTitle}
         description={seoDesc}
@@ -467,11 +434,8 @@ export default function Equipment3() {
               STAR DERMATOLOGY
             </p>
             <h1 id="equipment3-page-title" className="dr-page-header-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3">
-              TREATMENTS &amp; EQUIPMENT
-            </h1>
-            <p className="dr-page-header-subtitle text-base sm:text-lg font-semibold mb-3">
               {pageTitle}
-            </p>
+            </h1>
             <p className="dr-page-header-tagline text-sm sm:text-base">
               {pageSubtitle}
             </p>
@@ -480,21 +444,6 @@ export default function Equipment3() {
 
         <section className="equipment-list__content-surface py-16 sm:py-24" aria-label={pageTitle}>
           <div className="container">
-            <div className="mb-8 sm:mb-12">
-              <div className="equipment-list__appearance-control">
-                <button
-                  type="button"
-                  className="equipment-list__appearance-toggle"
-                  onClick={toggleColorScheme}
-                  aria-pressed={isDarkMode}
-                  aria-label={colorSchemeAction}
-                >
-                  {isDarkMode ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
-                  <span>{colorSchemeLabel}</span>
-                </button>
-              </div>
-            </div>
-
             {/* 로딩 */}
             {isLoading && (
               <div

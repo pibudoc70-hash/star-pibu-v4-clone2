@@ -15,7 +15,7 @@
  */
 
 // 이벤트 내부 경로의 구 번들을 보유한 기존 방문자도 다음 등록 시 모든 캐시를 교체한다.
-const CACHE_VERSION = "v3-2026-09-18";
+const CACHE_VERSION = "v4-2026-09-23";
 
 const CACHE_NAMES = {
   static: `static-${CACHE_VERSION}`,   // JS/CSS/폰트

@@ -315,13 +315,13 @@ export default function Doctors() {
       {/* ── 하단 CTA ────────────────────────────────────────────────────────── */}
       <section
         className="py-14 sm:py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%)" }}
+        style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
       >
         <div className="container">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
             {lang === "en" ? "Consult with Our Specialists" : lang === "ja" ? "専門医に相談する" : lang === "zh" ? "咨询专科医生" : "전문의 직접 상담"}
           </h2>
-          <p className="text-sm text-gray-300 mb-8 max-w-xl mx-auto">
+          <p className="text-sm text-white/80 mb-8 max-w-xl mx-auto">
             {lang === "en"
               ? "Our board-certified dermatologists will recommend the most suitable treatment for you."
               : lang === "ja"
@@ -342,7 +342,7 @@ export default function Doctors() {
             </a>
             <a
               href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-bold text-sm border-2 border-white text-white transition-all hover:bg-white hover:text-gray-900 active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-bold text-sm border border-white/80 text-white transition-all hover:bg-white/10 hover:border-[#F6E4B0] hover:text-[#F6E4B0] active:scale-95"
             >
               {lang === "en" ? "Call Us" : lang === "ja" ? "お電話" : lang === "zh" ? "电话咨询" : "전화 상담"} 051-818-2300
             </a>

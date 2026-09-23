@@ -13,11 +13,12 @@ const footerSource = read("client/src/components/Footer.tsx");
 const cssSource = read("client/src/index.css");
 
 describe("requested public page structure refinements", () => {
-  it("adds the established title-band hierarchy above Equipment3 content", () => {
+  it("uses a single Korean title in the Equipment3 title band", () => {
     expect(equipmentSource).toContain('aria-labelledby="equipment3-page-title"');
     expect(equipmentSource).toContain("STAR DERMATOLOGY");
-    expect(equipmentSource).toContain("TREATMENTS &amp; EQUIPMENT");
-    expect(equipmentSource).toContain("dr-page-header-subtitle");
+    expect(equipmentSource).toContain("{pageTitle}");
+    expect(equipmentSource).not.toContain("TREATMENTS &amp; EQUIPMENT");
+    expect(equipmentSource).not.toContain("dr-page-header-subtitle");
     expect(equipmentSource).toContain('id="equipment3-page-title"');
     expect(equipmentSource).not.toContain('<h1 className="sr-only">{pageTitle}</h1>');
   });
@@ -41,9 +42,9 @@ describe("requested public page structure refinements", () => {
 
   it("keeps Directions' location surface in-page and excludes only its footer duplicate", () => {
     expect(directionsSource).toContain("<MainLayout showContactSection={false}>");
-    expect(directionsSource).toContain("<ContactSection />");
+    expect(directionsSource).toContain("<ContactSection showHeader={false} />");
     expect(directionsSource).toContain('id="directions-page-title"');
-    expect(directionsSource).toContain("DIRECTIONS");
+    expect(directionsSource).toContain("{t.directions.title}");
     expect(mainLayoutSource).toContain("showContactSection?: boolean");
     expect(footerSource).toContain("showContactSection && <ContactSection />");
   });

@@ -93,7 +93,6 @@ export default function Notice() {
             </span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{pageTitle}</h1>
-          <p className="text-white/60 text-sm">{pageSubtitle}</p>
         </div>
 
         {/* 목록 컨테이너 */}

@@ -169,6 +169,11 @@ describe("service worker cache policy", () => {
     expect(registerSource).toContain('register("/sw.js?v=2026-09-23-tone"');
   });
 
+  it("unregisters an old production worker before serving the development preview", () => {
+    expect(registerSource).toContain("navigator.serviceWorker.getRegistrations()");
+    expect(registerSource).toContain("registration.unregister()");
+  });
+
   it("compiles the complete Service Worker source without executing it", () => {
     expect(() => new Script(workerSource, { filename: "client/public/sw.js" })).not.toThrow();
   });

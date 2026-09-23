@@ -38,9 +38,10 @@ describe("desktop-first public subpage tone unification", () => {
     expect(cssSource).toContain("--equipment-list-button: var(--color-gold-dark)");
   });
 
-  it("removes the direct-consultation callout without changing the Doctors panel", () => {
+  it("removes the direct-consultation callout while retaining the responsive Doctors layouts", () => {
     expect(doctorsSource).not.toContain("전문의 직접 상담");
-    expect(doctorsSource).toContain("dr-desktop-panel");
+    expect(doctorsSource).toContain('className="hidden lg:block space-y-10"');
+    expect(doctorsSource).toContain('className="grid grid-cols-[420px_minmax(0,1fr)]');
     expect(doctorsSource).toContain("dr-mobile-tabbar");
   });
 

@@ -7,10 +7,12 @@ const mobileLayout = readFileSync(
   resolve(process.cwd(), "client/src/components/doctors/DoctorMobileLayout.tsx"),
   "utf8"
 );
+const doctorsPage = readFileSync(resolve(process.cwd(), "client/src/pages/Doctors.tsx"), "utf8");
 
-describe("Doctor desktop panel height", () => {
-  it("keeps the detail card at least as tall as the longest doctor profile", () => {
-    expect(styles).toMatch(/\.dr-desktop-panel\s*\{\s*min-height:\s*741px;\s*\}/);
+describe("Doctor profile layout", () => {
+  it("uses content-driven full profiles instead of a fixed-height desktop tab panel", () => {
+    expect(doctorsPage).toContain('className="grid grid-cols-[420px_minmax(0,1fr)]');
+    expect(doctorsPage).not.toContain("dr-desktop-panel");
   });
 
   it("keeps the mobile photo fade compact so white coats do not look like blank space", () => {

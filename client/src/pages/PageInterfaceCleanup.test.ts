@@ -11,10 +11,11 @@ const managementSource = read("client/src/pages/ManagementDeviceFaq.tsx");
 const noticeSource = read("client/src/pages/Notice.tsx");
 
 describe("requested page interface cleanup", () => {
-  it("removes the Doctors direct-consultation CTA without changing its medical-team panel", () => {
+  it("removes the Doctors direct-consultation CTA while keeping the responsive medical-team layouts", () => {
     expect(doctorsSource).not.toContain("전문의 직접 상담");
     expect(doctorsSource).not.toContain("KakaoTalk Consultation");
-    expect(doctorsSource).toContain("dr-desktop-panel");
+    expect(doctorsSource).toContain('className="hidden lg:block space-y-10"');
+    expect(doctorsSource).toContain("dr-mobile-tabbar");
   });
 
   it("uses the Korean Directions title and intro while hiding only the repeated contact header", () => {

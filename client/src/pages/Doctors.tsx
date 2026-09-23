@@ -5,7 +5,8 @@
  * - route: /doctors, /en/doctors, /ja/doctors, /zh/doctors (App.tsx live)
  * - canonical: lang 기반 동적 계산
  * - 목적: SEO — "부산 피부과전문의", "스타피부과 의료진" 키워드 노출
- * - 레이아웃: 좌측 세로 탭 사이드바 + 우측 상세 패널 (DoctorsSection 동일 패턴)
+ * - 데스크톱: 3인의 전체 프로필을 순서대로 보여주는 세로형 상세 레이아웃
+ * - 모바일: 기존 탭 선택형 레이아웃 유지
  */
 import { useLang } from "@/contexts/LangContext";
 import MainLayout from "@/components/MainLayout";
@@ -94,131 +95,92 @@ export default function Doctors() {
         </div>
       </section>
 
-      {/* ── 메인 패널 (DoctorsSection 동일 레이아웃) ──────────────────────── */}
+      {/* ── 의료진 프로필 ─────────────────────────────────────────────────── */}
       <section className="py-10 sm:py-16 dr-section-bg">
         <div className="container">
           <div
-            className="rounded-3xl overflow-hidden dr-panel-card card card--doctor dr-panel-border"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {/* ── 데스크톱 레이아웃 ─────────────────────────────────────── */}
-            <div className="hidden lg:flex dr-desktop-panel">
-              {/* 좌측 탭 사이드바 */}
-              <div className="flex flex-col dr-tab-sidebar dr-tab-sidebar-border">
-                <div className="px-5 py-7 border-b text-center dr-brand-border">
-                  <p className="font-montserrat text-[0.6rem] tracking-[0.25em] uppercase dr-brand-label">
-                    STAR DERMATOLOGY
-                  </p>
-                  <p className="text-[0.6rem] mt-0.5 dr-brand-sub">{t.doctors.label}</p>
-                </div>
-                <div
-                  role="tablist"
-                  aria-orientation="vertical"
-                  aria-label={t.doctors.label}
-                  className="flex flex-col flex-1 justify-center"
+            {/* ── 데스크톱: 탭 없이 세 원장 프로필을 모두 표시 ─────────── */}
+            <div className="hidden lg:block space-y-10">
+              {mergedDoctors.map((d, index) => (
+                <article
+                  key={d.id}
+                  id={`dr-${d.slug}`}
+                  aria-labelledby={`doctor-profile-${d.slug}`}
+                  className="grid grid-cols-[420px_minmax(0,1fr)] overflow-hidden rounded-3xl dr-panel-card card card--doctor dr-panel-border scroll-mt-24 md:scroll-mt-28"
                 >
-                  {mergedDoctors.map((d) => (
-                    <DoctorTabButton
-                      key={d.id}
-                      doctor={d}
-                      isActive={activeDoctor === d.id}
-                      variant="desktop"
-                      badgeLabel={badgeLabel}
-                      onSelect={handleDoctorSelect}
-                      onKeyDown={(e) => handleTabKeyDown(e, "vertical")}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* 우측 상세 패널 */}
-              <div
-                role="tabpanel"
-                id={`doctor-panel-${activeDoctor}`}
-                aria-labelledby={`doctor-tab-${activeDoctor}`}
-                className="flex flex-1"
-              >
-                {mergedDoctors.map((d) => (
-                  <div
-                    key={d.id}
-                    id={`dr-${d.slug}`}
-                    className="absolute top-0 left-0 w-0 h-0 overflow-hidden scroll-mt-24 md:scroll-mt-28"
-                    aria-hidden="true"
-                  />
-                ))}
-                {/* 사진 영역 */}
-                <div className="relative flex-shrink-0 dr-photo-panel">
-                  {mergedDoctors.map((d) => (
+                  {/* 사진 영역 */}
+                  <div className="relative dr-photo-panel">
                     <OptimizedImage
-                      key={d.id}
                       src={d.image}
                       alt={d.name}
-                      priority={activeDoctor === d.id}
+                      priority={index === 0}
                       usePicture={false}
                       onLoad={() => handleImageLoad(d.id)}
-                      className={`dr-photo-img ${activeDoctor === d.id ? "opacity-100 z-[1]" : "opacity-0 z-0"}`}
+                      className="dr-photo-img opacity-100"
                       style={{ objectPosition: "top 0%" }}
                     />
-                  ))}
-                  <div className="dr-photo-fade-right" />
-                  <div className="dr-photo-fade-bottom" />
-                </div>
+                    <div className="dr-photo-fade-right" />
+                    <div className="dr-photo-fade-bottom" />
+                  </div>
 
-                {/* 텍스트 상세 */}
-                <div className="flex-1 p-12 flex flex-col gap-5 overflow-y-auto">
-                  <div className="flex items-start justify-between">
+                  {/* 텍스트 상세 */}
+                  <div className="min-w-0 p-12 flex flex-col gap-5">
+                    <div className="flex items-start justify-between gap-6">
+                      <div>
+                        <div className="flex items-baseline gap-3 flex-wrap dr-name-header">
+                          <h2 id={`doctor-profile-${d.slug}`} className="dr-name-h3-desktop">{d.name}</h2>
+                          <span className="font-montserrat dr-name-en">{d.nameEn}</span>
+                        </div>
+                      </div>
+                      <img
+                        src={DERM_SPECIALIST_BADGE}
+                        alt={t.doctors.dermBadge?.replace("\n", " ") ?? "피부과 전문의"}
+                        className="dr-derm-badge-img dr-derm-badge-img-desktop"
+                        draggable={false}
+                      />
+                    </div>
+
+                    <div className="text-sm leading-relaxed dr-intro-desktop">
+                      {Array.isArray(d.intro)
+                        ? d.intro.map((para, idx) => (
+                            <p key={idx} className="dr-intro-para">{para}</p>
+                          ))
+                        : <p>{d.intro as string}</p>}
+                    </div>
+
                     <div>
-                      <div className="flex items-baseline gap-3 flex-wrap dr-name-header">
-                        <h2 className="dr-name-h3-desktop">{doctor.name}</h2>
-                        <span className="font-montserrat dr-name-en">{doctor.nameEn}</span>
+                      <div className="flex items-center gap-2 mb-3 dr-sub-header-wrap">
+                        <Zap size={16} className="dr-sub-header-icon" />
+                        <p className="text-xs tracking-widest uppercase dr-sub-header-text">
+                          {t.doctors.specialtyTitle}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 dr-specialty-wrap">
+                        {d.specialties.map((s) => (
+                          <span key={s} className="px-3 py-1.5 text-xs dr-specialty-chip-desktop">
+                            {s}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <img
-                      src={DERM_SPECIALIST_BADGE}
-                      alt={t.doctors.dermBadge?.replace("\n", " ") ?? "피부과 전문의"}
-                      className="dr-derm-badge-img dr-derm-badge-img-desktop"
-                      draggable={false}
+
+                    <div className="dr-gold-divider dr-gold-divider-light" />
+
+                    <DoctorCredentials
+                      doctor={d}
+                      variant="desktop"
+                      credentialsTitle={t.doctors.credentialsTitle}
                     />
                   </div>
-
-                  <div className="text-sm leading-relaxed dr-intro-desktop">
-                    {Array.isArray(doctor.intro)
-                      ? doctor.intro.map((para, idx) => (
-                          <p key={idx} className="dr-intro-para">{para}</p>
-                        ))
-                      : <p>{doctor.intro as string}</p>}
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-3 dr-sub-header-wrap">
-                      <Zap size={16} className="dr-sub-header-icon" />
-                      <p className="text-xs tracking-widest uppercase dr-sub-header-text">
-                        {t.doctors.specialtyTitle}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 dr-specialty-wrap">
-                      {doctor.specialties.map((s) => (
-                        <span key={s} className="px-3 py-1.5 text-xs dr-specialty-chip-desktop">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="dr-gold-divider dr-gold-divider-light" />
-
-                  <DoctorCredentials
-                    doctor={doctor}
-                    variant="desktop"
-                    credentialsTitle={t.doctors.credentialsTitle}
-                  />
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
 
             {/* ── 모바일 레이아웃 ───────────────────────────────────────── */}
-            <div className="lg:hidden">
+            <div className="lg:hidden rounded-3xl overflow-hidden dr-panel-card card card--doctor dr-panel-border">
               {/* 상단 탭 */}
               <div
                 role="tablist"

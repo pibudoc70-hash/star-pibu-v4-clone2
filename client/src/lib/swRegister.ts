@@ -8,7 +8,14 @@
 export function registerServiceWorker(): void {
   if (typeof window === "undefined") return;
   if (!("serviceWorker" in navigator)) return;
-  if (!import.meta.env.PROD) return;
+  if (!import.meta.env.PROD) {
+    // 이전 production preview가 남긴 worker가 Vite 개발 번들을 가로채지 않도록
+    // dev에서는 등록하지 않을 뿐 아니라, 존재하는 동일 origin worker도 해제한다.
+    navigator.serviceWorker.getRegistrations()
+      .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+      .catch(() => undefined);
+    return;
+  }
 
   window.addEventListener("load", () => {
     navigator.serviceWorker

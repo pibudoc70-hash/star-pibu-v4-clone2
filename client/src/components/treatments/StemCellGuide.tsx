@@ -337,7 +337,7 @@ export default function StemCellGuide() {
   };
 
   return (
-    <div className="space-y-10 mb-10">
+    <div className="stemcell-guide space-y-10 mb-10">
       {/* ── 1. 줄기세포 치료란? ── */}
       <section className="stemcell-guide__intro" aria-labelledby="stemcell-what-is">
         <div className="text-center mb-6">

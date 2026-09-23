@@ -48,8 +48,13 @@ describe("Equipment3 category guide placement", () => {
     expect(desktopCleanup).toContain("border: none !important");
     expect(desktopCleanup).toContain("0 2px 16px rgba(0, 0, 0, 0.05)");
     expect(liftingGuideSource).toContain('style={{ background: f.bg, border: `1.5px solid ${f.color}22` }}');
+    expect(stemCellGuideSource).toContain('className="stemcell-guide space-y-10 mb-10"');
     expect(stemCellGuideSource).toContain('className="stemcell-guide__intro"');
     expect(stemCellGuideSource).toContain('className="stemcell-guide__intro-card rounded-2xl p-5"');
+    expect(desktopCleanup).toContain(".equipment-list__category-guide > div,");
+    expect(desktopCleanup).toContain(".equipment-list__category-guide .stemcell-guide,");
     expect(desktopCleanup).toContain(".equipment-list__category-guide .stemcell-guide__intro-card {");
+    expect(desktopCleanup).toContain("outline: none !important;");
+    expect(desktopCleanup).toContain("box-shadow: none !important;");
   });
 });

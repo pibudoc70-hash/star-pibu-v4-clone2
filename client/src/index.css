@@ -4962,10 +4962,16 @@ body.font-lang-zh .hero-stat-label {
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
   }
   /* StemCellGuide has an editorial first section rather than the shared guide hero.
-     Its section and three intro cards meet the page directly on desktop. */
+     Remove every enclosing desktop surface edge around its introduction, including
+     the Equipment3 guide wrapper visible above the STEM CELL THERAPY heading. */
+  .equipment-list__category-guide,
+  .equipment-list__category-guide > div,
+  .equipment-list__category-guide .stemcell-guide,
   .equipment-list__category-guide .stemcell-guide__intro,
   .equipment-list__category-guide .stemcell-guide__intro-card {
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 

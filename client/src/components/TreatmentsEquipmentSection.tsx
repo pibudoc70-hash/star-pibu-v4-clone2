@@ -357,7 +357,7 @@ export default function TreatmentsEquipmentSection() {
             {activeId && (
               <div
                 key={`content-${activeId}`}
-                className={`rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade ${searchQuery ? "" : "hidden sm:block"}`}
+                className={`treatments-equipment__card-surface rounded-2xl mb-8 overflow-hidden bg-[var(--color-gold-pale)] animate-card-fade ${searchQuery ? "" : "hidden sm:block"}`}
               >
                 <div className="px-5 pt-5 pb-5 rounded-b-2xl" style={{ background: "#F3EEE8" }}>
                   <div

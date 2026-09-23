@@ -81,4 +81,17 @@ describe("homepage desktop palette and label refinement", () => {
     expect(desktopPalette).toContain(".treatments-equipment__controls-surface {");
     expect(desktopPalette).toContain("background: transparent !important;");
   });
+
+  it("removes only the desktop treatment-card and more-button wrapper surfaces", () => {
+    expect(treatmentsSource).toContain("treatments-equipment__card-surface");
+    expect(treatmentsSource).toContain('className="px-5 pt-5 pb-5 rounded-b-2xl" style={{ background: "#F3EEE8" }}');
+
+    const desktopPalette = cssSource.slice(
+      cssSource.indexOf("/* ── Homepage desktop surface harmony"),
+      cssSource.indexOf(".section-bg-warm", cssSource.indexOf("/* ── Homepage desktop surface harmony")),
+    );
+    expect(desktopPalette).toContain(".treatments-equipment__card-surface,");
+    expect(desktopPalette).toContain(".treatments-equipment__card-surface > div {");
+    expect(desktopPalette).toContain("background: transparent !important;");
+  });
 });

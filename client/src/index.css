@@ -4558,6 +4558,13 @@ body.font-lang-zh .hero-stat-label {
     background: transparent !important;
   }
 
+  /* The card grid and more-button wrapper continue directly from the section canvas.
+     Individual treatment cards and the button keep their existing surfaces. */
+  .treatments-equipment__card-surface,
+  .treatments-equipment__card-surface > div {
+    background: transparent !important;
+  }
+
   .section-bg-warm {
     background: #FAF8F5;
   }

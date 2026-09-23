@@ -4552,6 +4552,12 @@ body.font-lang-zh .hero-stat-label {
     background: #F3EEE7 !important;
   }
 
+  /* The homepage treatment controls sit directly on their section canvas.
+     The input and individual category buttons retain their own surfaces. */
+  .treatments-equipment__controls-surface {
+    background: transparent !important;
+  }
+
   .section-bg-warm {
     background: #FAF8F5;
   }

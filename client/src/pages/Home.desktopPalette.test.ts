@@ -10,6 +10,7 @@ const doctorsSource = readFileSync(resolve(root, "client/src/components/DoctorsS
 const facilitySource = readFileSync(resolve(root, "client/src/components/FacilitySection.tsx"), "utf8");
 const managementSource = readFileSync(resolve(root, "client/src/components/ManagementDevicesSection.tsx"), "utf8");
 const youtubeSource = readFileSync(resolve(root, "client/src/components/YouTubeSection.tsx"), "utf8");
+const treatmentsSource = readFileSync(resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"), "utf8");
 const koSource = readFileSync(resolve(root, "client/src/lib/i18n.ko.ts"), "utf8");
 
 describe("homepage desktop palette and label refinement", () => {
@@ -67,5 +68,17 @@ describe("homepage desktop palette and label refinement", () => {
   it("uses the requested Korean Directions subtitle", () => {
     expect(koSource).toContain('subtitle: "스타피부과 쉽게 찾아오세요."');
     expect(koSource).not.toContain('subtitle: "스타피부과 쉽게 찾아보세요."');
+  });
+
+  it("removes only the desktop treatment controls container surface", () => {
+    expect(treatmentsSource).toContain("treatments-equipment__controls-surface");
+    expect(treatmentsSource).toContain('style={{ background: "#F3EEE8" }}');
+
+    const desktopPalette = cssSource.slice(
+      cssSource.indexOf("/* ── Homepage desktop surface harmony"),
+      cssSource.indexOf(".section-bg-warm", cssSource.indexOf("/* ── Homepage desktop surface harmony")),
+    );
+    expect(desktopPalette).toContain(".treatments-equipment__controls-surface {");
+    expect(desktopPalette).toContain("background: transparent !important;");
   });
 });

@@ -256,7 +256,7 @@ export default function TreatmentsEquipmentSection() {
         {/* 카테고리 탭 + 검색 */}
         {!isLoading && !isError && tabs.length > 0 && (
           <>
-              <div className="rounded-2xl px-3 py-3 mb-3 sm:px-4 sm:py-4 sm:mb-4" style={{ background: "#F3EEE8" }}>
+              <div className="treatments-equipment__controls-surface rounded-2xl px-3 py-3 mb-3 sm:px-4 sm:py-4 sm:mb-4" style={{ background: "#F3EEE8" }}>
               {/* 검색 입력 */}
               <div
                 className="flex items-center gap-2 mb-2 px-3 py-2.5 rounded-xl transition-all duration-200 sm:mb-4"

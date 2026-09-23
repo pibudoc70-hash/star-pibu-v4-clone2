@@ -4908,6 +4908,7 @@ body.font-lang-zh .hero-stat-label {
   }
 
   /* The search and category controls remain interactive without a separate desktop panel surface. */
+  .equipment-list__search-shell,
   .equipment-list__search {
     background: transparent !important;
     border-color: transparent !important;

@@ -174,7 +174,10 @@ export default function FacilitySection() {
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 reveal-heading">
-          <span className="section-eyebrow">{fc.sectionTitle}</span>
+          <span className="section-eyebrow">
+            <span className="hidden md:inline">CLINIC FACILITIES</span>
+            <span className="md:hidden">{fc.sectionTitle}</span>
+          </span>
           <h2 className="section-title mb-4">{fc.sectionSubtitle}</h2>
           <div className="star-divider mx-auto mb-6" />
           {fc.highlights[0] && (

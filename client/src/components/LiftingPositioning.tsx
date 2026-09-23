@@ -10,7 +10,7 @@ export function LiftingPositioningSummary() {
   const localizedLang = toPositioningLang(lang);
   const title = LIFTING_POSITIONING_TITLES[localizedLang].summary;
   return (
-    <section className="bg-[#fbf8f2] border-y border-[#eadfcd] py-6 md:py-8" aria-labelledby="lifting-positioning-title">
+    <section className="bg-[#fbf8f2] md:bg-[#FAF8F5] border-y border-[#eadfcd] py-6 md:py-8" aria-labelledby="lifting-positioning-title">
       {/* Desktop aligns with the immediately following SPECIAL EVENT `.container`; mobile's 20px inset stays unchanged. */}
       <div className="container px-5 md:px-6 lg:px-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-[#9c762f] uppercase">Lifting Care</p>

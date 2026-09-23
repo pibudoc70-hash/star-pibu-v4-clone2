@@ -249,7 +249,8 @@ export default function ManagementDevicesSection() {
           {/* 섹션 헤더 */}
           <div className="section-header-block reveal-heading">
             <span className="section-eyebrow management-devices-eyebrow">
-              {md.eyebrow ?? "MANAGEMENT DEVICES"}
+              <span className="hidden md:inline">CARE DEVICES</span>
+              <span className="md:hidden">{md.eyebrow ?? "MANAGEMENT DEVICES"}</span>
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />

@@ -20,7 +20,7 @@ export function HeroDarkOverlay() {
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(8,14,32,0.78) 0%, rgba(8,14,32,0.32) 38%, rgba(8,14,32,0.40) 62%, rgba(8,14,32,0.85) 100%)",
+            "linear-gradient(to bottom, rgba(58,45,33,0.76) 0%, rgba(58,45,33,0.28) 38%, rgba(58,45,33,0.36) 62%, rgba(58,45,33,0.80) 100%)",
         }}
       />
       {/* 모바일 오버레이 — 텍스트 가독성을 위해 전체 어둥게 강화 */}
@@ -44,7 +44,7 @@ export function HeroTextContrastOverlay() {
       className="absolute inset-0 pointer-events-none"
       style={{
         background:
-          "radial-gradient(ellipse 58% 42% at 50% 47%, rgba(3,8,20,0.34) 0%, rgba(3,8,20,0.16) 48%, transparent 78%)",
+          "radial-gradient(ellipse 58% 42% at 50% 47%, rgba(49,38,28,0.30) 0%, rgba(49,38,28,0.14) 48%, transparent 78%)",
       }}
     />
   );
@@ -62,7 +62,7 @@ export function HeroVignette() {
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 35%, rgba(4,8,22,0.55) 100%)",
+            "radial-gradient(ellipse at center, transparent 35%, rgba(49,38,28,0.48) 100%)",
         }}
       />
       {/* 모바일 비네팅 — 좌우 강화, 중앙 투명 */}

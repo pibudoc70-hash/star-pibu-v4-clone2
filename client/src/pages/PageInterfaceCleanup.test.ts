@@ -21,7 +21,7 @@ describe("requested page interface cleanup", () => {
   it("uses the Korean Directions title and intro while hiding only the repeated contact header", () => {
     expect(directionsSource).toContain("{t.directions.title}");
     expect(directionsSource).toContain('<ContactSection showHeader={false} desktopTone="doctors" />');
-    expect(koI18nSource).toContain('subtitle: "스타피부과 쉽게 찾아보세요."');
+    expect(koI18nSource).toContain('subtitle: "스타피부과 쉽게 찾아오세요."');
   });
 
   it("removes Facilities from More while retaining the management-device route", () => {

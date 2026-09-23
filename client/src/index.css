@@ -4524,6 +4524,72 @@ body.font-lang-zh .hero-stat-label {
     linear-gradient(180deg, #221508 0%, #1a1006 50%, #120c04 100%);
 }
 
+/* ── Homepage desktop surface harmony ────────────────────────────────────
+   The public home page uses only closely related cream / beige steps on
+   desktop. Mobile retains its existing contrast treatments and layout. */
+@media (min-width: 768px) {
+  .hero-section-root {
+    background: var(--brand-bg, #FAF8F5);
+  }
+
+  .section-bg-warm {
+    background: #FAF8F5;
+  }
+
+  .section-bg-cream {
+    background: #F8F5F1;
+  }
+
+  .section-bg-cream-soft {
+    background: #F6F1EB;
+  }
+
+  .section-bg-gold-soft {
+    background: #F3EEE7;
+  }
+
+  .section-bg-warm-alt {
+    background: #F5F0EA;
+  }
+
+  .section-bg-dark-brown {
+    background: #F2ECE4;
+  }
+
+  .section-bg-dark-brown-mid {
+    background: #F5F0EA;
+  }
+
+  .section-bg-dark-brown .section-eyebrow,
+  .section-bg-dark-brown-mid .section-eyebrow {
+    color: var(--color-gold-dark, #7A5C35);
+  }
+
+  .section-bg-dark-brown .section-title,
+  .section-bg-dark-brown-mid .section-title {
+    color: var(--brand-text, #2C2C2C);
+  }
+
+  .section-bg-dark-brown .section-subtitle,
+  .section-bg-dark-brown-mid .section-subtitle {
+    color: var(--brand-text-mid, #5A5A5A);
+  }
+
+  .section-bg-dark-brown .star-divider,
+  .section-bg-dark-brown-mid .star-divider {
+    background: linear-gradient(90deg, transparent, rgba(168, 137, 94, 0.52), transparent);
+  }
+
+  .youtube-video-title {
+    background: var(--brand-bg-warm, #EDE8E0) !important;
+  }
+
+  .youtube-video-title-text,
+  .youtube-shorts-heading {
+    color: var(--brand-text, #2C2C2C) !important;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────────
    FAQ 섹션 CSS 클래스 (인라인 스타일 제거 후 대체)
    ───────────────────────────────────────────────────────────────────── */

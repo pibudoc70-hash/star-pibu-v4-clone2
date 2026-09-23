@@ -306,8 +306,8 @@ export default function YouTubeSection() {
                   </div>
 
                   {/* 제목 */}
-                  <div className="p-3" style={{ background: "rgba(30,18,8,0.85)" }}>
-                    <p className="text-xs md:text-sm font-medium line-clamp-2 text-left" style={{ color: "rgba(236,229,211,0.88)" }}>
+                  <div className="youtube-video-title p-3" style={{ background: "rgba(30,18,8,0.85)" }}>
+                    <p className="youtube-video-title-text text-xs md:text-sm font-medium line-clamp-2 text-left" style={{ color: "rgba(236,229,211,0.88)" }}>
                       {video.title}
                     </p>
                   </div>
@@ -320,7 +320,7 @@ export default function YouTubeSection() {
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
           <div>
-            <h3 className="text-lg md:text-xl font-semibold mb-6" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
+            <h3 className="youtube-shorts-heading text-lg md:text-xl font-semibold mb-6" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
                 <button

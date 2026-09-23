@@ -20,6 +20,10 @@ const enI18n = read("client/src/lib/i18n.en.ts");
 const jaI18n = read("client/src/lib/i18n.ja.ts");
 const zhI18n = read("client/src/lib/i18n.zh.ts");
 const zhTwI18n = read("client/src/lib/i18n.zh-TW.ts");
+const doctorsDesktopMarkup = doctorsSource.slice(
+  doctorsSource.indexOf("{/* ── 데스크톱: 탭 없이 세 원장 프로필을 모두 표시"),
+  doctorsSource.indexOf("{/* ── 모바일 레이아웃")
+);
 
 describe("desktop-first public subpage tone unification", () => {
   it("uses the shared warm title band for each top-navigation subpage", () => {
@@ -40,8 +44,9 @@ describe("desktop-first public subpage tone unification", () => {
 
   it("removes the direct-consultation callout while retaining the responsive Doctors layouts", () => {
     expect(doctorsSource).not.toContain("전문의 직접 상담");
-    expect(doctorsSource).toContain('className="hidden lg:block space-y-10"');
-    expect(doctorsSource).toContain('className="grid grid-cols-[420px_minmax(0,1fr)]');
+    expect(doctorsDesktopMarkup).toContain('className="hidden lg:block"');
+    expect(doctorsDesktopMarkup).toContain('grid-cols-[minmax(320px,.7fr)_minmax(0,1fr)]');
+    expect(doctorsDesktopMarkup).not.toContain("dr-panel-card card card--doctor");
     expect(doctorsSource).toContain("dr-mobile-tabbar");
   });
 

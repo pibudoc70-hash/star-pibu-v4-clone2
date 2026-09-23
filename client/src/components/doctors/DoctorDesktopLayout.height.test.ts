@@ -8,11 +8,17 @@ const mobileLayout = readFileSync(
   "utf8"
 );
 const doctorsPage = readFileSync(resolve(process.cwd(), "client/src/pages/Doctors.tsx"), "utf8");
+const desktopMarkup = doctorsPage.slice(
+  doctorsPage.indexOf("{/* ── 데스크톱: 탭 없이 세 원장 프로필을 모두 표시"),
+  doctorsPage.indexOf("{/* ── 모바일 레이아웃")
+);
 
 describe("Doctor profile layout", () => {
   it("uses content-driven full profiles instead of a fixed-height desktop tab panel", () => {
-    expect(doctorsPage).toContain('className="grid grid-cols-[420px_minmax(0,1fr)]');
-    expect(doctorsPage).not.toContain("dr-desktop-panel");
+    expect(desktopMarkup).toContain('grid-cols-[minmax(320px,.7fr)_minmax(0,1fr)]');
+    expect(desktopMarkup).toContain('py-16 first:pt-0 last:pb-0');
+    expect(desktopMarkup).not.toContain("dr-panel-card card card--doctor");
+    expect(desktopMarkup).not.toContain("dr-desktop-panel");
   });
 
   it("keeps the mobile photo fade compact so white coats do not look like blank space", () => {

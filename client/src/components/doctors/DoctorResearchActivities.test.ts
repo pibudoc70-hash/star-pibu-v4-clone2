@@ -21,6 +21,7 @@ describe("Doctor research activities disclosure contract", () => {
     expect(credentials).toContain("doctor.researchActivities");
     expect(credentials).toContain("<details");
     expect(credentials).toContain("<summary");
+    expect(credentials).toContain("onClick={(event) => event.stopPropagation()}");
     expect(credentials).toContain("target=\"_blank\"");
     expect(credentials).toContain('rel="noreferrer"');
     expect(credentials).not.toContain("@/components/ui/accordion");

@@ -103,34 +103,32 @@ export default function Doctors() {
             onTouchEnd={handleTouchEnd}
           >
             {/* ── 데스크톱: 탭 없이 세 원장 프로필을 모두 표시 ─────────── */}
-            <div className="hidden lg:block space-y-10">
+            <div className="hidden lg:block">
               {mergedDoctors.map((d, index) => (
                 <article
                   key={d.id}
                   id={`dr-${d.slug}`}
                   aria-labelledby={`doctor-profile-${d.slug}`}
-                  className="grid grid-cols-[420px_minmax(0,1fr)] overflow-hidden rounded-3xl dr-panel-card card card--doctor dr-panel-border scroll-mt-24 md:scroll-mt-28"
+                  className={`grid grid-cols-[minmax(320px,.7fr)_minmax(0,1fr)] gap-x-16 xl:gap-x-24 py-16 first:pt-0 last:pb-0 scroll-mt-24 md:scroll-mt-28 ${index < mergedDoctors.length - 1 ? "border-b border-[color:var(--color-gold-light)]" : ""}`}
                 >
-                  {/* 사진 영역 */}
-                  <div className="relative dr-photo-panel">
+                  {/* 사진은 카드와 분리한 독립적인 세로 영역으로 둡니다. */}
+                  <figure className="self-start">
                     <OptimizedImage
                       src={d.image}
                       alt={d.name}
                       priority={index === 0}
                       usePicture={false}
                       onLoad={() => handleImageLoad(d.id)}
-                      className="dr-photo-img opacity-100"
+                      className="block aspect-[4/5] w-full object-cover"
                       style={{ objectPosition: "top 0%" }}
                     />
-                    <div className="dr-photo-fade-right" />
-                    <div className="dr-photo-fade-bottom" />
-                  </div>
+                  </figure>
 
                   {/* 텍스트 상세 */}
-                  <div className="min-w-0 p-12 flex flex-col gap-5">
+                  <div className="min-w-0 self-center py-4 xl:py-8 flex flex-col gap-5">
                     <div className="flex items-start justify-between gap-6">
                       <div>
-                        <div className="flex items-baseline gap-3 flex-wrap dr-name-header">
+                        <div className="flex items-baseline gap-3 flex-wrap">
                           <h2 id={`doctor-profile-${d.slug}`} className="dr-name-h3-desktop">{d.name}</h2>
                           <span className="font-montserrat dr-name-en">{d.nameEn}</span>
                         </div>

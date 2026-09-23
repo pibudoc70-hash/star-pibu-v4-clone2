@@ -14,7 +14,8 @@ describe("requested page interface cleanup", () => {
   it("removes the Doctors direct-consultation CTA while keeping the responsive medical-team layouts", () => {
     expect(doctorsSource).not.toContain("전문의 직접 상담");
     expect(doctorsSource).not.toContain("KakaoTalk Consultation");
-    expect(doctorsSource).toContain('className="hidden lg:block space-y-10"');
+    expect(doctorsSource).toContain('className="hidden lg:block"');
+    expect(doctorsSource).toContain('grid-cols-[minmax(320px,.7fr)_minmax(0,1fr)]');
     expect(doctorsSource).toContain("dr-mobile-tabbar");
   });
 

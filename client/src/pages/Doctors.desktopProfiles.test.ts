@@ -11,9 +11,10 @@ const mobileMarkup = doctorsPage.slice(doctorsPage.indexOf("{/* ── 모바일
 
 describe("Doctors desktop full-profile layout", () => {
   it("renders all doctors as ordered desktop profile sections without a vertical tablist", () => {
-    expect(desktopMarkup).toContain('className="hidden lg:block space-y-10"');
+    expect(desktopMarkup).toContain('className="hidden lg:block"');
     expect(desktopMarkup).toContain("mergedDoctors.map((d, index) => (");
-    expect(desktopMarkup).toContain('className="grid grid-cols-[420px_minmax(0,1fr)]');
+    expect(desktopMarkup).toContain('grid-cols-[minmax(320px,.7fr)_minmax(0,1fr)]');
+    expect(desktopMarkup).toContain('border-b border-[color:var(--color-gold-light)]');
     expect(desktopMarkup).toContain('id={`dr-${d.slug}`}');
     expect(desktopMarkup).not.toContain('aria-orientation="vertical"');
     expect(desktopMarkup).not.toContain("DoctorTabButton");
@@ -21,6 +22,10 @@ describe("Doctors desktop full-profile layout", () => {
 
   it("keeps the complete profile content and a separate native research disclosure for every doctor", () => {
     expect(desktopMarkup).toContain("src={d.image}");
+    expect(desktopMarkup).toContain('className="block aspect-[4/5] w-full object-cover"');
+    expect(desktopMarkup).not.toContain("dr-panel-card card card--doctor");
+    expect(desktopMarkup).not.toContain("dr-photo-fade-right");
+    expect(desktopMarkup).not.toContain("dr-photo-fade-bottom");
     expect(desktopMarkup).toContain("{d.name}");
     expect(desktopMarkup).toContain("{d.nameEn}");
     expect(desktopMarkup).toContain("d.specialties.map");

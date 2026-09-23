@@ -24,7 +24,10 @@ function DoctorResearchActivities({ doctor }: Pick<DoctorCredentialsProps, "doct
   if (!doctor.researchActivities || doctor.researchActivities.length === 0) return null;
 
   return (
-    <details className="group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white">
+    <details
+      className="group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white"
+      onClick={(event) => event.stopPropagation()}
+    >
       <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-semibold text-stone-800 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67] focus-visible:ring-inset">
         <BookOpen size={16} aria-hidden="true" className="text-[#b8924c]" />
         <span>{doctor.researchActivitiesTitle ?? "연구·발표 및 연수 활동"}</span>

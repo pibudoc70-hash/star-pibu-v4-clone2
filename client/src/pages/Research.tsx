@@ -424,7 +424,7 @@ export default function Research() {
       </section>
 
       {/* 국내 학술지 논문 섹션 */}
-      <section className="py-16" style={{ backgroundColor: "#f8f6f2" }}>
+      <section className="research-domestic-section py-16" style={{ backgroundColor: "var(--research-domestic-bg, #f8f6f2)" }}>
         <div className="container mx-auto px-4 max-w-4xl">
           <SectionHeader
             icon="📄"

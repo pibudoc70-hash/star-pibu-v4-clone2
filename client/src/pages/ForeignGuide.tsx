@@ -44,10 +44,10 @@ type ForeignLang = "en" | "ja" | "zh" | "zh-TW";
 const FOREIGN_LANGS: ForeignLang[] = ["en", "ja", "zh", "zh-TW"];
 
 const LANG_COLORS: Record<ForeignLang, { bg: string; text: string; accent: string }> = {
-  en: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
-  ja: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
-  zh: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
-  "zh-TW": { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
+  en: { bg: "var(--foreign-guide-header-bg, linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%))", text: "var(--foreign-guide-text, #7A5C35)", accent: "var(--foreign-guide-accent, #F0EAE0)" },
+  ja: { bg: "var(--foreign-guide-header-bg, linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%))", text: "var(--foreign-guide-text, #7A5C35)", accent: "var(--foreign-guide-accent, #F0EAE0)" },
+  zh: { bg: "var(--foreign-guide-header-bg, linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%))", text: "var(--foreign-guide-text, #7A5C35)", accent: "var(--foreign-guide-accent, #F0EAE0)" },
+  "zh-TW": { bg: "var(--foreign-guide-header-bg, linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%))", text: "var(--foreign-guide-text, #7A5C35)", accent: "var(--foreign-guide-accent, #F0EAE0)" },
 };
 
 export function getForeignGuideLanguage(location: string): ForeignLang {
@@ -125,7 +125,7 @@ export default function ForeignGuide() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--brand-bg)" }}>
+    <div className="foreign-guide-page min-h-screen" style={{ background: "var(--brand-bg)" }}>
       <SeoHead
         title={seo.title}
         description={seo.description}
@@ -149,7 +149,7 @@ export default function ForeignGuide() {
 
       {/* Hero Banner */}
       <section
-        className="relative flex items-center justify-center"
+        className="foreign-guide-header relative flex items-center justify-center"
         style={{
           paddingTop: "72px",
           minHeight: "280px",

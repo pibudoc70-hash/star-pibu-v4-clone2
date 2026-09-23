@@ -4815,6 +4815,95 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
+/* `/doctors` direct-page header: static visual tokens stay out of JSX. */
+.dr-page-header {
+  background: linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%);
+}
+.dr-page-header--doctors {
+  background: linear-gradient(135deg, var(--brand-bg-card) 0%, var(--brand-bg-alt) 100%);
+}
+.dr-page-header-eyebrow { color: #b89a5a; }
+.dr-page-header-title { color: #1a1a1a; }
+.dr-page-header-subtitle { color: var(--color-gold-deep); }
+.dr-page-header-tagline { color: #6b5c3e; }
+
+/* Desktop public-subpage palette — `/doctors` is the visual source of truth.
+   Mobile retains its established color rules below 768px. */
+@media (min-width: 768px) {
+  .dr-page-header {
+    background: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%);
+  }
+
+  .dr-page-header-eyebrow { color: #B89A5A; }
+  .dr-page-header-title { color: #1A1A1A; }
+  .dr-page-header-subtitle { color: #A8895E; }
+  .dr-page-header-tagline { color: #6B5C3E; }
+
+  .section-bg-cream {
+    background: #FAF8F5;
+  }
+
+  .directions-transport-section {
+    background: #F5F0EB;
+  }
+
+  .equipment-list-page {
+    --equipment-list-page-bg: #FAF8F5;
+    --equipment-list-surface: #FFFFFF;
+    --equipment-list-panel: #F5F0EB;
+    --equipment-list-border: #D9C4A8;
+    --equipment-list-text: #2C2C2C;
+    --equipment-list-muted: #5A5A5A;
+    --equipment-list-meta: #666666;
+    --equipment-list-accent: #C4A882;
+    --equipment-list-link-hover: #A8895E;
+    --equipment-list-button: #A8895E;
+    --equipment-list-button-text: #FFFFFF;
+    --equipment-list-button-hover-text: #2C2C2C;
+    --equipment-list-expanded-text: #A8895E;
+    --equipment-list-focus: #C4A882;
+  }
+
+  .equipment-list-page .cat-tab-btn {
+    background-color: #FFFFFF;
+    border-color: #D9C4A8;
+    color: #5A5A5A;
+  }
+
+  .equipment-list-page .cat-tab-btn[data-active="true"] {
+    background-color: #C4A882;
+    border-color: #C4A882;
+    color: #2C2C2C;
+    box-shadow: 0 4px 14px rgba(196, 168, 130, 0.34);
+  }
+
+  .equipment-list-page .cat-tab-icon { color: #6B5C3E; }
+  .equipment-list-page .cat-tab-btn[data-active="true"] .cat-tab-icon { color: #2C2C2C; }
+
+  .foreign-guide-page {
+    --foreign-guide-header-bg: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%);
+    --foreign-guide-text: #2C2C2C;
+    --foreign-guide-accent: #F0EAE0;
+  }
+
+  .research-domestic-section {
+    --research-domestic-bg: #F5F0EB;
+  }
+
+  .foreign-price-list-page .bg-\[\#EEF4FB\] {
+    background-color: #F0EAE0;
+  }
+
+  .foreign-price-list-page .text-slate-600,
+  .foreign-price-list-page .text-slate-500 {
+    color: #5A5A5A;
+  }
+
+  .foreign-price-list-page .text-\[\#172033\] {
+    color: #2C2C2C;
+  }
+}
+
 /* ── Equipment detail mobile density: shared detail template only ── */
 /* Desktop spacing is intentionally preserved; these overrides apply only below md. */
 @media (max-width: 767px) {
@@ -6643,18 +6732,6 @@ body.font-lang-zh .hero-stat-label {
   pointer-events: none;
   background: linear-gradient(to bottom, transparent, #fff);
 }
-
-/* `/doctors` direct-page header: static visual tokens stay out of JSX. */
-.dr-page-header {
-  background: linear-gradient(135deg, #faf8f3 0%, #f5efe0 100%);
-}
-.dr-page-header--doctors {
-  background: linear-gradient(135deg, var(--brand-bg-card) 0%, var(--brand-bg-alt) 100%);
-}
-.dr-page-header-eyebrow { color: #b89a5a; }
-.dr-page-header-title { color: #1a1a1a; }
-.dr-page-header-subtitle { color: var(--color-gold-deep); }
-.dr-page-header-tagline { color: #6b5c3e; }
 
 /* 통증관리 native disclosure: React hook 없이 details content의 open/close를 부드럽게 전환한다. */
 :root { interpolate-size: allow-keywords; }

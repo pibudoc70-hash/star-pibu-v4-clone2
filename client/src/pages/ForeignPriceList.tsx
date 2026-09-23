@@ -74,7 +74,7 @@ export default function ForeignPriceList() {
   }, [locale, setLang]);
 
   return (
-    <div className="min-h-screen bg-[var(--brand-bg)] text-[var(--brand-text)]">
+    <div className="foreign-price-list-page min-h-screen bg-[var(--brand-bg)] text-[var(--brand-text)]">
       <SeoHead
         title={copy.seoTitle}
         description={copy.seoDescription}

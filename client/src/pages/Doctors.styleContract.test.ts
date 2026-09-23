@@ -6,7 +6,7 @@ const doctorsPage = readFileSync(resolve(process.cwd(), "client/src/pages/Doctor
 const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 const doctorsHeaderCss = globalCss.slice(
   globalCss.indexOf("/* `/doctors` direct-page header"),
-  globalCss.indexOf("/* 통증관리 native disclosure"),
+  globalCss.indexOf("/* ── Equipment detail mobile density: shared detail template only ── */"),
 );
 
 describe("Doctors direct-page header style contract", () => {

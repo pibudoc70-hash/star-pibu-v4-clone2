@@ -17,7 +17,7 @@ export const ja: I18nContent = {
     contact: "アクセス",
     foreignGuide: "外国語案内",
     research: "研究・発表活動",
-    managementDeviceFaq: "管理機器FAQ",
+    managementDeviceFaq: "管理機器紹介",
     equipment3: "施術・機器のご案内",
     equipment2: "主要施術・機器",
     notice: "お知らせ",

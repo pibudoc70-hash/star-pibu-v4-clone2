@@ -164,9 +164,9 @@ describe("service worker cache policy", () => {
   });
 
   it("replaces the stale cache generation and bypasses CDN HTTP cache on worker update", () => {
-    expect(workerSource).toContain('const CACHE_VERSION = "v4-2026-09-23"');
+    expect(workerSource).toContain('const CACHE_VERSION = "v5-2026-09-23-tone"');
     expect(registerSource).toContain('updateViaCache: "none"');
-    expect(registerSource).toContain('register("/sw.js?v=2026-09-23"');
+    expect(registerSource).toContain('register("/sw.js?v=2026-09-23-tone"');
   });
 
   it("compiles the complete Service Worker source without executing it", () => {

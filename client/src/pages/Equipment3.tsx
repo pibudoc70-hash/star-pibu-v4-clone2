@@ -515,7 +515,7 @@ export default function Equipment3() {
                 </div>
 
                 {/* 검색창 */}
-                <div className="mb-4">
+                <div className="equipment-list__search-shell mb-4">
                   <div
                     className="equipment-list__search relative flex items-center rounded-2xl shadow-sm overflow-hidden"
                     style={{ transition: "box-shadow 0.2s" }}

@@ -44,10 +44,10 @@ type ForeignLang = "en" | "ja" | "zh" | "zh-TW";
 const FOREIGN_LANGS: ForeignLang[] = ["en", "ja", "zh", "zh-TW"];
 
 const LANG_COLORS: Record<ForeignLang, { bg: string; text: string; accent: string }> = {
-  en: { bg: "linear-gradient(135deg, #1a3a5c 0%, #2563EB 60%, #60A5FA 100%)", text: "#2563EB", accent: "#DBEAFE" },
-  ja: { bg: "linear-gradient(135deg, #1F2937 0%, #4A6FA5 60%, #81C7C9 100%)", text: "#4A6FA5", accent: "#EEF7F7" },
-  zh: { bg: "linear-gradient(135deg, #7f1d1d 0%, #DC2626 60%, #F87171 100%)", text: "#DC2626", accent: "#FEE2E2" },
-  "zh-TW": { bg: "linear-gradient(135deg, #7f1d1d 0%, #B91C1C 60%, #FCA5A5 100%)", text: "#B91C1C", accent: "#FEE2E2" },
+  en: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
+  ja: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
+  zh: { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
+  "zh-TW": { bg: "linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 100%)", text: "#7A5C35", accent: "#F0EAE0" },
 };
 
 export function getForeignGuideLanguage(location: string): ForeignLang {
@@ -125,7 +125,7 @@ export default function ForeignGuide() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
+    <div className="min-h-screen" style={{ background: "var(--brand-bg)" }}>
       <SeoHead
         title={seo.title}
         description={seo.description}
@@ -157,17 +157,17 @@ export default function ForeignGuide() {
           transition: "background 0.4s ease",
         }}
       >
-        <div className="text-center text-white px-6 py-12">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Globe size={20} className="opacity-70" />
-            <span className="text-sm font-medium opacity-70 tracking-widest uppercase">
-              Foreign Patient Guide
-            </span>
-          </div>
+          <div className="text-center text-[var(--brand-text)] px-6 py-12">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Globe size={20} className="text-[var(--color-gold-deep)]" />
+              <span className="text-sm font-medium text-[var(--color-gold-deep)] tracking-widest uppercase">
+                Foreign Patient Guide
+              </span>
+            </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             {t.foreignGuide.title}
           </h1>
-          <p className="text-base opacity-80 max-w-xl mx-auto">
+          <p className="text-base text-[var(--brand-text-mid)] max-w-xl mx-auto">
             {t.foreignGuide.subtitle}
           </p>
 
@@ -179,10 +179,10 @@ export default function ForeignGuide() {
                 onClick={() => handleLangSwitch(l)}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm transition-all duration-200"
                 style={{
-                  background: l === activeLang ? "white" : "rgba(255,255,255,0.15)",
-                  color: l === activeLang ? colors.text : "white",
+                  background: l === activeLang ? "var(--brand-bg-card)" : "rgba(255,255,255,0.42)",
+                  color: l === activeLang ? colors.text : "var(--brand-text)",
                   border: "2px solid",
-                  borderColor: l === activeLang ? "white" : "rgba(255,255,255,0.3)",
+                  borderColor: l === activeLang ? "var(--color-gold-primary)" : "rgba(122,92,53,0.22)",
                   transform: l === activeLang ? "scale(1.05)" : "scale(1)",
                 }}
               >
@@ -376,8 +376,8 @@ export default function ForeignGuide() {
         <section
           className="rounded-2xl p-6 border"
           style={{
-            background: `linear-gradient(135deg, ${colors.accent}, #F0F7FF)`,
-            borderColor: "#D1E8E8",
+            background: `linear-gradient(135deg, ${colors.accent}, var(--brand-bg-card))`,
+            borderColor: "var(--color-gold-light)",
           }}
         >
           <h2 className="text-base font-bold mb-4" style={{ color: "#1F2937" }}>
@@ -411,7 +411,7 @@ export default function ForeignGuide() {
                   href="https://otomo-busan.com/star"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "#4A6FA5", textDecoration: "underline", fontWeight: "600" }}
+                  style={{ color: "var(--color-gold-dark)", textDecoration: "underline", fontWeight: "600" }}
                 >
                   OTOMO
                 </a>
@@ -438,7 +438,7 @@ export default function ForeignGuide() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5"
-                style={{ background: "#4A6FA5", color: "white" }}
+                style={{ background: "var(--color-gold-dark)", color: "white" }}
               >
                 🇯🇵 OTOMO 相談
               </a>

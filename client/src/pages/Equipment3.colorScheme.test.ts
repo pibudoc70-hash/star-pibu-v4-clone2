@@ -21,10 +21,11 @@ describe("Equipment3 visual control cleanup", () => {
     expect(pageSource).not.toContain("equipment-list__appearance-toggle");
   });
 
-  it("retains the existing light palette and card interaction rules", () => {
-    expect(cssSource).toContain("--equipment-list-page-bg: #F4F1EA");
-    expect(cssSource).toContain("--equipment-list-surface: #EEEBE4");
-    expect(cssSource).toContain("--equipment-list-text: #202938");
+  it("uses the shared warm palette and retains card interaction rules", () => {
+    expect(cssSource).toContain("--equipment-list-page-bg: var(--brand-bg)");
+    expect(cssSource).toContain("--equipment-list-surface: var(--brand-bg-card)");
+    expect(cssSource).toContain("--equipment-list-text: var(--brand-text)");
+    expect(cssSource).toContain("--equipment-list-button: var(--color-gold-dark)");
     expect(cssSource).toContain(".equipment-list__card:focus-visible");
     expect(cssSource).toContain("@media (prefers-reduced-motion: reduce)");
   });

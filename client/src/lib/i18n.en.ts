@@ -17,7 +17,7 @@ export const en: I18nContent = {
     contact: "Directions",
     foreignGuide: "Foreign Patient Guide",
     research: "Research & Presentations",
-    managementDeviceFaq: "Management Device FAQ",
+    managementDeviceFaq: "Management Devices",
     equipment3: "Treatments & Equipment",
     equipment2: "Main Treatments & Equipment",
     notice: "Notice",

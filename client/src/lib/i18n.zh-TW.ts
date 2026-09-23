@@ -21,7 +21,7 @@ export const zhTW: I18nContent = {
     contact: "交通資訊",
     foreignGuide: "外語服務",
     research: "研究與學術活動",
-    managementDeviceFaq: "管理設備常見問題",
+    managementDeviceFaq: "管理設備介紹",
     equipment3: "療程與設備介紹",
     equipment2: "主要療程與設備",
     notice: "公告",

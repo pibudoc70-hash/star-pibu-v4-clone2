@@ -40,29 +40,29 @@ export default function Directions() {
       <ContactSection showHeader={false} />
 
       {/* 주차 및 대중교통 */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-[var(--brand-bg-alt)]">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">{t.directions.transportationTitle}</h2>
+          <h2 className="text-3xl font-bold text-[var(--brand-text)] mb-12 text-center">{t.directions.transportationTitle}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">🚗 {t.directions.carTitle}</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="bg-[var(--brand-bg-card)] rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] p-6 shadow-[0_8px_20px_rgba(57,39,20,0.06)]">
+              <h3 className="text-xl font-bold text-[var(--brand-text)] mb-4">🚗 {t.directions.carTitle}</h3>
+              <p className="text-[var(--brand-text-mid)] mb-4">
                 {t.directions.carDescription}
               </p>
-              <ul className="text-gray-600 text-sm space-y-2">
+              <ul className="text-[var(--brand-text-mid)] text-sm space-y-2">
                 <li>• {t.directions.parkingFee}</li>
                 <li>• {t.directions.parkingLocation}</li>
                 <li>• {t.directions.accessibleParking}</li>
               </ul>
             </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">🚌 {t.directions.transitTitle}</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="bg-[var(--brand-bg-card)] rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] p-6 shadow-[0_8px_20px_rgba(57,39,20,0.06)]">
+              <h3 className="text-xl font-bold text-[var(--brand-text)] mb-4">🚌 {t.directions.transitTitle}</h3>
+              <p className="text-[var(--brand-text-mid)] mb-4">
                 {t.directions.transitDescription}
               </p>
-              <ul className="text-gray-600 text-sm space-y-2">
+              <ul className="text-[var(--brand-text-mid)] text-sm space-y-2">
                 <li>• {t.directions.subwayInfo}</li>
                 <li>• {t.directions.busInfo}</li>
                 <li>• {t.directions.taxiInfo}</li>

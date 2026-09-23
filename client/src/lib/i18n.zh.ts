@@ -17,7 +17,7 @@ export const zh: I18nContent = {
     directions: "交通指南",
     foreignGuide: "外语服务",
     research: "研究及学术活动",
-    managementDeviceFaq: "管理设备常见问题",
+    managementDeviceFaq: "管理设备介绍",
     equipment3: "项目与设备介绍",
     equipment2: "主要项目与设备",
     notice: "公告",

@@ -7,11 +7,11 @@ import { MANAGEMENT_DEVICES, MANAGEMENT_DEVICE_IMAGES } from "@/lib/clinic-data"
 import { getLocalizedUrl } from "@/lib/localizedPath";
 
 const pageCopy = {
-  ko: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
-  en: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "Purpose", effect: "Expected effect", tagLabel: "Primary care purpose and expected effect" },
-  ja: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "ケア目的", effect: "期待できる効果", tagLabel: "主なケア目的と期待できる効果" },
-  zh: { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "护理目的", effect: "预期效果", tagLabel: "主要护理目的和预期效果" },
-  "zh-TW": { eyebrow: "MANAGEMENT DEVICE FAQ", purpose: "護理目的", effect: "預期效果", tagLabel: "主要護理目的和預期效果" },
+  ko: { eyebrow: "MANAGEMENT DEVICES", purpose: "관리 목적", effect: "기대 효과", tagLabel: "주요 관리 목적과 기대 효과" },
+  en: { eyebrow: "MANAGEMENT DEVICES", purpose: "Purpose", effect: "Expected effect", tagLabel: "Primary care purpose and expected effect" },
+  ja: { eyebrow: "MANAGEMENT DEVICES", purpose: "ケア目的", effect: "期待できる効果", tagLabel: "主なケア目的と期待できる効果" },
+  zh: { eyebrow: "MANAGEMENT DEVICES", purpose: "护理目的", effect: "预期效果", tagLabel: "主要护理目的和预期效果" },
+  "zh-TW": { eyebrow: "MANAGEMENT DEVICES", purpose: "護理目的", effect: "預期效果", tagLabel: "主要護理目的和預期效果" },
 } as const;
 
 type DeviceTag = { purpose: string; effect: string };
@@ -99,12 +99,12 @@ export default function ManagementDeviceFaq() {
         hreflangs={hreflangs}
       />
 
-      <section className="bg-[var(--color-star-navy)] px-4 py-16 text-center md:py-24">
-        <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[var(--color-gold-primary)]">{copy.eyebrow}</p>
-        <h1 className="text-3xl font-bold text-white md:text-5xl">{pageTitle}</h1>
+      <section className="dr-page-header px-4 py-16 text-center md:py-24">
+        <p className="dr-page-header-eyebrow mb-3 text-sm font-semibold tracking-[0.2em]">{copy.eyebrow}</p>
+        <h1 className="dr-page-header-title text-3xl font-bold md:text-5xl">{pageTitle}</h1>
       </section>
 
-      <section className="bg-[#f7f5f0] px-4 py-12 md:py-20">
+      <section className="bg-[var(--brand-bg)] px-4 py-12 md:py-20">
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8" data-testid="management-device-faq-grid">
             {MANAGEMENT_DEVICES.map((device) => {

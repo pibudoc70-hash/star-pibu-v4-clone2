@@ -5018,20 +5018,20 @@ body.font-lang-zh .hero-stat-label {
 
 /* ── Equipment listing warm-greige palette: all values are scoped to this page. ── */
 .equipment-list-page {
-  --equipment-list-page-bg: #F4F1EA;
-  --equipment-list-surface: #EEEBE4;
-  --equipment-list-panel: #E6E1D8;
-  --equipment-list-border: #D8D0C2;
-  --equipment-list-text: #202938;
-  --equipment-list-muted: #5A5A5A;
-  --equipment-list-meta: #5A5A5A;
-  --equipment-list-accent: #7A5C35;
-  --equipment-list-link-hover: #1A2744;
-  --equipment-list-button: #1A2744;
-  --equipment-list-button-text: #FCFBF8;
-  --equipment-list-button-hover-text: #FCFBF8;
-  --equipment-list-expanded-text: #1A2744;
-  --equipment-list-focus: #7A5C35;
+  --equipment-list-page-bg: var(--brand-bg);
+  --equipment-list-surface: var(--brand-bg-card);
+  --equipment-list-panel: var(--brand-bg-alt);
+  --equipment-list-border: var(--color-gold-light);
+  --equipment-list-text: var(--brand-text);
+  --equipment-list-muted: var(--brand-text-mid);
+  --equipment-list-meta: var(--brand-text-muted);
+  --equipment-list-accent: var(--color-gold-dark);
+  --equipment-list-link-hover: var(--color-gold-dark);
+  --equipment-list-button: var(--color-gold-dark);
+  --equipment-list-button-text: #FFFDF9;
+  --equipment-list-button-hover-text: #FFFDF9;
+  --equipment-list-expanded-text: var(--color-gold-dark);
+  --equipment-list-focus: var(--color-gold-dark);
   background: var(--equipment-list-page-bg);
   color: var(--equipment-list-text);
   transition: background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -5101,6 +5101,12 @@ body.font-lang-zh .hero-stat-label {
 
 .equipment-list__content-surface {
   background: var(--equipment-list-page-bg);
+}
+
+/* Keeps the search field on the same desktop container grid as tabs and cards. */
+.equipment-list__search-shell {
+  width: 100%;
+  margin-inline: auto;
 }
 
 .equipment-list__heading {

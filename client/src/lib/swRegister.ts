@@ -13,7 +13,7 @@ export function registerServiceWorker(): void {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       // 고정 `/sw.js`가 CDN에서 장기 캐시되더라도 새 배포의 워커를 별도 캐시 키로 받는다.
-      .register("/sw.js?v=2026-09-23", { scope: "/", updateViaCache: "none" })
+      .register("/sw.js?v=2026-09-23-tone", { scope: "/", updateViaCache: "none" })
       .then((registration) => {
         // 새 SW 발견 시 즉시 활성화 유도
         registration.addEventListener("updatefound", () => {

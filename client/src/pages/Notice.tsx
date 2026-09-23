@@ -79,10 +79,7 @@ export default function Notice() {
 
       <main className="flex-1 pt-24 pb-20">
         {/* 페이지 헤더 */}
-        <div
-          className="py-12 md:py-16 text-center"
-          style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
-        >
+        <div className="dr-page-header py-12 md:py-16 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Bell size={20} style={{ color: "var(--color-gold-primary)" }} />
             <span
@@ -92,7 +89,7 @@ export default function Notice() {
               NOTICE
             </span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{pageTitle}</h1>
+          <h1 className="dr-page-header-title text-3xl md:text-4xl font-bold mb-2">{pageTitle}</h1>
         </div>
 
         {/* 목록 컨테이너 */}
@@ -149,7 +146,7 @@ export default function Notice() {
                                 {lang === "ja" ? "固定" : lang === "zh" ? "置顶" : lang === "en" ? "Pinned" : "고정"}
                               </Badge>
                             )}
-                            <span className="font-medium text-gray-800 group-hover:text-[#2D4A7B] transition-colors line-clamp-1">
+                            <span className="font-medium text-gray-800 group-hover:text-[var(--color-gold-dark)] transition-colors line-clamp-1">
                               {notice.title}
                             </span>
                           </div>

@@ -74,7 +74,7 @@ export default function ForeignPriceList() {
   }, [locale, setLang]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#172033]">
+    <div className="min-h-screen bg-[var(--brand-bg)] text-[var(--brand-text)]">
       <SeoHead
         title={copy.seoTitle}
         description={copy.seoDescription}
@@ -96,8 +96,8 @@ export default function ForeignPriceList() {
       <Header />
 
       <main>
-        <section className="relative overflow-hidden bg-[#101C38] px-5 pb-14 pt-32 text-white md:px-8 md:pb-20 md:pt-36">
-          <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" style={{ background: "radial-gradient(circle at 84% 12%, rgba(201,169,98,.34), transparent 32%), radial-gradient(circle at 5% 100%, rgba(59,130,246,.26), transparent 42%)" }} />
+        <section className="dr-page-header relative overflow-hidden px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-36">
+          <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" style={{ background: "radial-gradient(circle at 84% 12%, rgba(196,168,130,.24), transparent 32%), radial-gradient(circle at 5% 100%, rgba(240,234,224,.72), transparent 42%)" }} />
           <div className="relative mx-auto max-w-6xl">
             {showHeroContext && (
               <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#E6D4A1]">
@@ -107,17 +107,17 @@ export default function ForeignPriceList() {
             )}
             <div className="grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-end">
               <div>
-                <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.035em] md:text-6xl">{copy.title}</h1>
+                <h1 className="dr-page-header-title max-w-3xl text-4xl font-bold tracking-[-0.035em] md:text-6xl">{copy.title}</h1>
                 {showHeroContext && (
-                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-200 md:text-lg">
+                  <p className="dr-page-header-tagline mt-5 max-w-2xl text-base leading-7 md:text-lg">
                     {copy.description}
                   </p>
                 )}
               </div>
-              <div className="rounded-2xl border border-white/15 bg-white/8 p-5 backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#F0DFAF]"><CalendarDays size={17} aria-hidden="true" /> {copy.updated}</div>
-                <p className="mt-1 text-xl font-bold">{FOREIGN_PRICE_LIST_UPDATED}</p>
-                <p className="mt-2 text-sm leading-5 text-slate-300">{copy.vat}</p>
+              <div className="rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] bg-[rgba(255,253,249,.76)] p-5 backdrop-blur-sm">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-gold-dark)]"><CalendarDays size={17} aria-hidden="true" /> {copy.updated}</div>
+                <p className="mt-1 text-xl font-bold text-[var(--brand-text)]">{FOREIGN_PRICE_LIST_UPDATED}</p>
+                <p className="mt-2 text-sm leading-5 text-[var(--brand-text-mid)]">{copy.vat}</p>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function ForeignPriceList() {
             <ArrowLeft size={16} aria-hidden="true" /> {copy.back}
           </button>
 
-          <div className="mb-8 grid gap-4 rounded-2xl border border-[#DCE3EC] bg-white p-5 shadow-[0_10px_30px_rgba(23,32,51,.05)] md:grid-cols-2">
+          <div className="mb-8 grid gap-4 rounded-[var(--card-radius)] border border-[color:var(--color-gold-light)] bg-[var(--brand-bg-card)] p-5 shadow-[0_10px_30px_rgba(57,39,20,.05)] md:grid-cols-2">
             <div className="flex gap-3">
               <ShieldCheck className="mt-0.5 shrink-0 text-[#A57F2D]" size={22} aria-hidden="true" />
               <p className="text-sm leading-6 text-slate-600"><strong className="text-slate-800">{copy.noteTitle}</strong> {copy.noteText}</p>
@@ -157,7 +157,7 @@ export default function ForeignPriceList() {
               role="tab"
               aria-selected={activeFilter === "all"}
               onClick={() => setActiveFilter("all")}
-              className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === "all" ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
+              className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === "all" ? "bg-[var(--color-gold-dark)] text-white" : "border border-[color:var(--color-gold-light)] bg-[var(--brand-bg-card)] text-[var(--brand-text-mid)] hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
             >
               <ListFilter className="mr-1.5 inline" size={15} aria-hidden="true" /> {copy.all}
             </button>
@@ -168,7 +168,7 @@ export default function ForeignPriceList() {
                 key={category.id}
                 aria-selected={activeFilter === category.id}
                 onClick={() => setActiveFilter(category.id)}
-                className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === category.id ? "bg-[#172033] text-white" : "border border-slate-300 bg-white text-slate-600 hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
+                  className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A57F2D] ${activeFilter === category.id ? "bg-[var(--color-gold-dark)] text-white" : "border border-[color:var(--color-gold-light)] bg-[var(--brand-bg-card)] text-[var(--brand-text-mid)] hover:border-[#A57F2D] hover:text-[#A57F2D]"}`}
               >
                 {category.label}
               </button>

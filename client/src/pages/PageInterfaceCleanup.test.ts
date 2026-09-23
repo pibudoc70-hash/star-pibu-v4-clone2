@@ -11,11 +11,10 @@ const managementSource = read("client/src/pages/ManagementDeviceFaq.tsx");
 const noticeSource = read("client/src/pages/Notice.tsx");
 
 describe("requested page interface cleanup", () => {
-  it("uses the established navy palette for the Doctors direct-consultation CTA", () => {
-    expect(doctorsSource).toContain('background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)"');
-    expect(doctorsSource).toContain("text-white/80");
-    expect(doctorsSource).toContain("border-white/80");
-    expect(doctorsSource).toContain("hover:border-[#F6E4B0]");
+  it("removes the Doctors direct-consultation CTA without changing its medical-team panel", () => {
+    expect(doctorsSource).not.toContain("전문의 직접 상담");
+    expect(doctorsSource).not.toContain("KakaoTalk Consultation");
+    expect(doctorsSource).toContain("dr-desktop-panel");
   });
 
   it("uses the Korean Directions title and intro while hiding only the repeated contact header", () => {
@@ -24,7 +23,7 @@ describe("requested page interface cleanup", () => {
     expect(koI18nSource).toContain('subtitle: "스타피부과 쉽게 찾아보세요."');
   });
 
-  it("removes Facilities from More while retaining the management-device FAQ menu item", () => {
+  it("removes Facilities from More while retaining the management-device route", () => {
     expect(headerStateSource).not.toContain('label: t.nav.facility');
     expect(headerStateSource).toContain('label: t.nav.managementDeviceFaq');
     expect(headerStateSource).toContain('href: "/management-device-faq"');

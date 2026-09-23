@@ -311,44 +311,6 @@ export default function Doctors() {
           </div>
         </div>
       </section>
-
-      {/* ── 하단 CTA ────────────────────────────────────────────────────────── */}
-      <section
-        className="py-14 sm:py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #1A2744 0%, #2D4A7B 100%)" }}
-      >
-        <div className="container">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-            {lang === "en" ? "Consult with Our Specialists" : lang === "ja" ? "専門医に相談する" : lang === "zh" ? "咨询专科医生" : "전문의 직접 상담"}
-          </h2>
-          <p className="text-sm text-white/80 mb-8 max-w-xl mx-auto">
-            {lang === "en"
-              ? "Our board-certified dermatologists will recommend the most suitable treatment for you."
-              : lang === "ja"
-              ? "皮膚科専門医が直接診断し、最適な治療をご提案します。"
-              : lang === "zh"
-              ? "皮肤科专科医生将为您直接诊断并推荐最适合的治疗方案。"
-              : "피부과 전문의가 직접 진단하고 최적의 시술을 추천해 드립니다."}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://pf.kakao.com/_HNyGC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-              style={{ background: "#FEE500", color: "#1a1a1a" }}
-            >
-              {lang === "en" ? "KakaoTalk Consultation" : lang === "ja" ? "カカオトーク相談" : lang === "zh" ? "KakaoTalk咨询" : "카카오톡 상담"}
-            </a>
-            <a
-              href={lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300"}
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-bold text-sm border border-white/80 text-white transition-all hover:bg-white/10 hover:border-[#F6E4B0] hover:text-[#F6E4B0] active:scale-95"
-            >
-              {lang === "en" ? "Call Us" : lang === "ja" ? "お電話" : lang === "zh" ? "电话咨询" : "전화 상담"} 051-818-2300
-            </a>
-          </div>
-        </div>
-      </section>
     </MainLayout>
   );
 }

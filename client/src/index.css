@@ -4949,6 +4949,7 @@ body.font-lang-zh .hero-stat-label {
   }
 
   /* Category guides follow the card grid without a heavy enclosing outline. Individual feature cards retain their own styling. */
+  .equipment-list__category-guide section:first-child > .rounded-2xl,
   .equipment-list__category-guide > div > section:first-child > .rounded-2xl {
     border: none !important;
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.04) !important;

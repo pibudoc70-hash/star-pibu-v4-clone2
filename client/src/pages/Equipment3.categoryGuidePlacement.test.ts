@@ -43,7 +43,7 @@ describe("Equipment3 category guide placement", () => {
       cssSource.indexOf("/* `/doctors` direct-page header", desktopCleanupStart),
     );
 
-    expect(desktopCleanup).toContain(".equipment-list__category-guide > div > section:first-child > .rounded-2xl");
+    expect(desktopCleanup).toContain(".equipment-list__category-guide section:first-child > .rounded-2xl");
     expect(desktopCleanup).toContain("border: none !important");
     expect(desktopCleanup).toContain("0 2px 16px rgba(0, 0, 0, 0.05)");
     expect(liftingGuideSource).toContain('style={{ background: f.bg, border: `1.5px solid ${f.color}22` }}');

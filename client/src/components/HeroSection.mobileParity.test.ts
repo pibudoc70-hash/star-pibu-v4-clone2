@@ -56,12 +56,18 @@ describe("homepage mobile hero and promotion parity", () => {
     expect(mobileBreathingRoomBlock).toContain("margin-bottom: clamp(1.25rem, 2.8svh, 1.5rem) !important;");
     expect(mobileBreathingRoomBlock).toContain("gap: clamp(4.5rem, 8svh, 5.5rem) !important;");
     expect(mobileBreathingRoomBlock).toContain("line-height: 1.75 !important;");
+    expect(mobileBreathingRoomBlock).toContain("hero-mobile-slogan-wrap");
+    expect(mobileBreathingRoomBlock).toContain("translateY(clamp(1.75rem, 4.5svh, 2.75rem)) !important;");
+    expect(mobileBreathingRoomBlock).toContain("hero-mobile-bottom-group");
+    expect(mobileBreathingRoomBlock).toContain("translateY(clamp(1.25rem, 3.2svh, 2rem)) !important;");
+    expect(mobileBreathingRoomBlock).toContain("object-position: 66% 48% !important;");
     expect(mobileBreathingRoomBlock).toContain("margin-top: clamp(0.5rem, 1.3svh, 0.75rem) !important;");
     expect(mobileBreathingRoomBlock).toContain("background: transparent !important;");
     expect(mobileBreathingRoomBlock).toContain("backdrop-filter: none !important;");
     expect(mobileBreathingRoomBlock).toContain("hero-stats-wrap");
     expect(mobileBreathingRoomBlock).toContain("hero-mobile-scroll-arrow");
     expect(mobileBreathingRoomBlock).toContain("margin-top: 0 !important;");
+    expect(mobileBreathingRoomBlock).toContain("translateY(0.75rem) !important;");
     expect(css).toContain("rgba(58,45,33,0.42)");
     expect(css).toContain("rgba(58,45,33,0.50)");
   });

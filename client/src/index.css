@@ -7749,3 +7749,88 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 }
+
+
+/* ── Homepage mobile section rhythm ───────────────────────────────────────
+   Medical Team is the reference: 40px top, 80px bottom, a 10px eyebrow-to-
+   title rhythm, and 16px from the shared title block to its first content.
+   Scope every token to the homepage so subpages and desktop remain untouched. */
+@layer components {
+  @media (max-width: 767px) {
+    .home-page {
+      --home-mobile-section-padding-top: 2.5rem;
+      --home-mobile-section-padding-bottom: 5rem;
+      --home-mobile-eyebrow-to-title-gap: 0.625rem;
+      --home-mobile-title-block-to-content-gap: 1rem;
+    }
+
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq,
+      #contact
+    ) {
+      padding-top: var(--home-mobile-section-padding-top) !important;
+      padding-bottom: var(--home-mobile-section-padding-bottom) !important;
+    }
+
+    /* The contact section needs exactly the shared base rhythm plus its
+       existing safe-area reserve for the fixed mobile consultation bar. */
+    .home-page #contact {
+      padding-top: var(--home-mobile-section-padding-top) !important;
+      padding-bottom: calc(var(--home-mobile-section-padding-bottom) + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header {
+      margin-bottom: var(--home-mobile-title-block-to-content-gap) !important;
+    }
+
+    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-eyebrow, .dr-section-eyebrow) {
+      margin: 0 0 var(--home-mobile-eyebrow-to-title-gap) !important;
+    }
+
+    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-title, .dr-section-title) {
+      margin: 0 !important;
+    }
+
+    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-subtitle, .dr-section-tagline) {
+      margin: 0 auto !important;
+    }
+
+    /* Lifting Care used standalone markup; it now joins the same title rhythm
+       without changing its desktop composition or copy. */
+    #main-content.home-main .mobile-home-section-header--lifting {
+      width: 100% !important;
+      max-width: calc(100vw - 2rem) !important;
+      margin-inline: auto !important;
+      text-align: center !important;
+    }
+
+    #main-content.home-main .mobile-home-section-header--lifting .lifting-positioning-title {
+      margin: 0 !important;
+    }
+
+    #main-content.home-main .mobile-home-section-header--lifting .lifting-positioning-summary-text {
+      margin: 0 !important;
+      max-width: 100% !important;
+      line-height: 1.75 !important;
+      text-align: center !important;
+      word-break: keep-all !important;
+      overflow-wrap: normal !important;
+    }
+
+    /* The pain-management accordion is part of the event section. Match only
+       its outer handoff to the shared 16px title/content rhythm; its contents
+       and disclosure design stay unchanged. */
+    #main-content.home-main section#pain-management[data-testid="pain-management-event-accordion"] {
+      margin-top: var(--home-mobile-title-block-to-content-gap) !important;
+    }
+  }
+}

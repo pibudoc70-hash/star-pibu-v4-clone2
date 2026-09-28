@@ -19,7 +19,7 @@ const desktopSurfaceRules = cssSource.slice(
 
 describe("desktop surface cleanup", () => {
   it("uses the prescribed two-tone sequence from the opening lifting summary through homepage sections", () => {
-    expect(liftingSource).toContain('className="home-surface-a bg-[#fbf8f2]');
+    expect(liftingSource).toContain('className="lifting-positioning-summary home-surface-a bg-[#fbf8f2]');
     expect(cssSource).toContain(".home-surface-a {\n    background: #FAF8F5;");
     expect(cssSource).toContain(".home-surface-b {\n    background: #F3EEE7;");
   });

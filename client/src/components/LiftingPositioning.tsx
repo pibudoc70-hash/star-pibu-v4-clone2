@@ -10,12 +10,14 @@ export function LiftingPositioningSummary() {
   const localizedLang = toPositioningLang(lang);
   const title = LIFTING_POSITIONING_TITLES[localizedLang].summary;
   return (
-    <section className="home-surface-a bg-[#fbf8f2] md:bg-[#FAF8F5] border-y border-[#eadfcd] py-6 md:py-8" aria-labelledby="lifting-positioning-title">
-      {/* Desktop aligns with the immediately following SPECIAL EVENT `.container`; mobile's 20px inset stays unchanged. */}
+    <section className="lifting-positioning-summary home-surface-a bg-[#fbf8f2] md:bg-[#FAF8F5] border-y border-[#eadfcd] py-6 md:py-8" aria-labelledby="lifting-positioning-title">
+      {/* Desktop aligns with the immediately following SPECIAL EVENT `.container`; mobile uses the shared homepage title rhythm. */}
       <div className="container px-5 md:px-6 lg:px-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-[#9c762f] uppercase">Lifting Care</p>
-        <h2 id="lifting-positioning-title" className="mt-2 text-xl md:text-2xl font-semibold text-[#2d241c]">{title}</h2>
-        <p className="mt-3 text-sm md:text-base leading-7 text-[#51463a]">{LIFTING_HOME_SUMMARY[localizedLang]}</p>
+        <div className="mobile-home-section-header mobile-home-section-header--lifting">
+          <p className="section-eyebrow text-xs font-semibold tracking-[0.16em] text-[#9c762f] uppercase">Lifting Care</p>
+          <h2 id="lifting-positioning-title" className="lifting-positioning-title mt-2 text-xl md:text-2xl font-semibold text-[#2d241c]">{title}</h2>
+          <p className="lifting-positioning-summary-text mt-3 text-sm md:text-base leading-7 text-[#51463a]">{LIFTING_HOME_SUMMARY[localizedLang]}</p>
+        </div>
       </div>
     </section>
   );

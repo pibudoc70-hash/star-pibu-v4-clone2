@@ -15,6 +15,8 @@ const treatments = read("client/src/components/TreatmentsEquipmentSection.tsx");
 const contact = read("client/src/components/ContactSection.tsx");
 const commaBreak = read("client/src/components/MobileCommaBreak.tsx");
 const philosophy = read("client/src/components/PhilosophySection.tsx");
+const home = read("client/src/pages/Home.tsx");
+const lifting = read("client/src/components/LiftingPositioning.tsx");
 
 const mobileHomeBlock = css.split("Homepage mobile-only content-density pass")[1]?.split("\n}")[0] ?? "";
 const mobileTitleBlock = css.split("Homepage mobile title unification")[1] ?? "";
@@ -78,5 +80,25 @@ describe("homepage mobile-only optimization", () => {
     expect(specialEvents).toContain("<MobileCommaBreak text={subtitleMap[lang] ?? subtitleMap.ko} />");
     expect(doctors).toContain("<MobileCommaBreak text={t.doctors.tagline} />");
     expect(treatments).toContain("<MobileCommaBreak text={tr.subtitle} />");
+  });
+
+  it("uses the medical-team rhythm tokens across every homepage section only below md", () => {
+    expect(home).toContain('<div className="home-page min-h-screen">');
+    expect(home).toContain('<main id="main-content" className="home-main"');
+    expect(lifting).toContain("lifting-positioning-summary");
+    expect(lifting).toContain("mobile-home-section-header--lifting");
+    expect(css).toContain("Homepage mobile section rhythm");
+    expect(css).toContain("@media (max-width: 767px)");
+    expect(css).toContain("--home-mobile-section-padding-top: 2.5rem;");
+    expect(css).toContain("--home-mobile-section-padding-bottom: 5rem;");
+    expect(css).toContain("--home-mobile-eyebrow-to-title-gap: 0.625rem;");
+    expect(css).toContain("--home-mobile-title-block-to-content-gap: 1rem;");
+    expect(css).toContain("#main-content.home-main :is(");
+    expect(css).toContain(".home-page #contact");
+    for (const selector of [".lifting-positioning-summary", "#events", "#doctors", "#treatments", "#management-devices", "#about", "#results-statistics", "#facility", ".youtube-section-root", "#faq", "#contact"]) {
+      expect(css).toContain(selector);
+    }
+    expect(css).toContain("mobile-home-section-header--lifting");
+    expect(css).toContain("word-break: keep-all !important;");
   });
 });

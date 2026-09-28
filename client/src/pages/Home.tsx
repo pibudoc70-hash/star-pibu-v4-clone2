@@ -289,7 +289,7 @@ export default function Home() {
   useHomeInitialScrollRestore();
 
   return (
-    <div className="min-h-screen">
+    <div className="home-page min-h-screen">
       {/*
        * [PROD-P2-2] 홈페이지에만 pageType="home" 설정 (WebSite + MedicalBusiness 스키마 모두 포함)
        * 이유: WebSite 스키마(SearchAction)는 사이트 전체를 대표하는 루트 URL에만
@@ -428,7 +428,7 @@ export default function Home() {
       </a>
 
       {/* Main Content */}
-      <main id="main-content" tabIndex={-1}>
+      <main id="main-content" className="home-main" tabIndex={-1}>
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
         <LiftingPositioningSummary />

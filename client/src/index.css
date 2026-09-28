@@ -7867,3 +7867,37 @@ body.font-lang-zh .hero-stat-label {
     }
   }
 }
+
+
+/* ── Mobile special-event detail simplification ──────────────────────────
+   Preserve detail data for desktop cards, while keeping the mobile disclosure
+   image-led: image → price rows → any supplemental copy → collapse control. */
+@layer components {
+  @media (max-width: 767px) {
+    #main-content.home-main .event-mobile-detail__intro,
+    #main-content.home-main .event-mobile-detail__pricing-heading {
+      display: none !important;
+    }
+
+    #main-content.home-main .event-mobile-detail__body {
+      padding-top: 1rem !important;
+    }
+
+    #main-content.home-main .event-mobile-detail__image {
+      margin-inline: -0.25rem !important;
+      margin-bottom: 0.875rem !important;
+    }
+
+    #main-content.home-main .event-mobile-detail__pricing {
+      margin-top: 0 !important;
+    }
+
+    #main-content.home-main .event-mobile-detail__price-rows > :first-child {
+      padding-top: 0.875rem !important;
+    }
+
+    #main-content.home-main .event-mobile-detail__price-rows > :last-child {
+      padding-bottom: 0.875rem !important;
+    }
+  }
+}

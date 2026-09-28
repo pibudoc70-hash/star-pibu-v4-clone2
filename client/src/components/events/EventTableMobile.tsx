@@ -111,7 +111,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
     >
       <div className="event-mobile-detail__content">
         <div className="event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4">
-          <div className="mb-1.5">
+          <div className="event-mobile-detail__intro mb-1.5">
             <p className="text-base font-bold text-gray-900 leading-tight">{title}</p>
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{getLocalizedText(event, "subtitle")}</p>
           </div>
@@ -121,26 +121,23 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
              data-testid={`mobile-event-image-link-${event.id}`}
              href={linkUrl}
              onClick={(clickEvent) => clickEvent.stopPropagation()}
-             className="mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
+             className="event-mobile-detail__image mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
              style={{ aspectRatio: "16/9" }}
               aria-label={`${title} 현재 창에서 열기`}
            >
              <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
             </a>
           ) : (
-            <div className="mb-3 overflow-hidden rounded-xl bg-gray-100" style={{ aspectRatio: "16/9" }}>
+            <div className="event-mobile-detail__image mb-3 overflow-hidden rounded-xl bg-gray-100" style={{ aspectRatio: "16/9" }}>
               <OptimizedImage src={event.imageUrl} alt={title} className="h-full w-full object-cover" width={600} height={400} priority={false} />
             </div>
           ))}
 
-          {event.desc && <p className="mb-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.desc}</p>}
-          {event.content && <p className="mb-4 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.content}</p>}
-
-          <div className="rounded-xl overflow-hidden border border-gray-100">
-            <div className="px-3.5 py-2 bg-gray-50 border-b border-gray-100">
+          <div className="event-mobile-detail__pricing rounded-xl overflow-hidden border border-gray-100">
+            <div className="event-mobile-detail__pricing-heading px-3.5 py-2 bg-gray-50 border-b border-gray-100">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{copy.pricing}</span>
             </div>
-            <div className="divide-y divide-gray-100">
+            <div className="event-mobile-detail__price-rows divide-y divide-gray-100">
               {priceRows.length > 0 ? (
                 priceRows.map((row, index) => (
                   <div key={index} className="flex items-center justify-between gap-3 px-3.5 py-2.5">
@@ -166,6 +163,9 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
               )}
             </div>
           </div>
+
+          {event.desc && <p className="event-mobile-detail__supplemental mb-3 mt-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.desc}</p>}
+          {event.content && <p className="event-mobile-detail__supplemental mb-4 mt-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.content}</p>}
 
           <div data-testid="mobile-event-detail-footer" className="mt-4 flex justify-center border-t border-gray-100 pt-3">
             <button

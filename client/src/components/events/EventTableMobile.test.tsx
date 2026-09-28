@@ -157,8 +157,10 @@ describe("EventTableMobile", () => {
     const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
 
     expect(source).toContain("event-mobile-detail__body border-t border-gray-100 bg-white px-4 pt-1.5 pb-4");
-    expect(source).toContain('<div className="mb-1.5">');
+    expect(source).toContain('className="event-mobile-detail__intro mb-1.5"');
     expect(source).toContain('style={{ aspectRatio: "16/9" }}');
+    expect(source).toContain("event-mobile-detail__pricing");
+    expect(source.indexOf("event-mobile-detail__image")).toBeLessThan(source.indexOf("event-mobile-detail__pricing"));
     expect(source).toContain('className="min-w-0 flex-1"');
     expect(source).toContain('className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums"');
     expect(source).toContain("mobile-event-expand-indicator-${event.id}");

@@ -8100,6 +8100,63 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
+/* ── Homepage mobile FAQ cleanup ─────────────────────────────────────────
+   Show every treatment tab in the shared content width and use dividers—not
+   nested cards—to separate the visible question list. */
+@media (max-width: 767px) {
+  #main-content.home-main #faq .faq-tabs-scroll {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    column-gap: 0.5rem !important;
+    row-gap: 0.5625rem !important;
+    margin: 0 0 1.5rem !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    overscroll-behavior-x: auto !important;
+    scroll-snap-type: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #main-content.home-main #faq .faq-tabs-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  #main-content.home-main #faq .faq-tab-btn {
+    flex: 0 0 auto !important;
+    max-width: 100%;
+    white-space: normal !important;
+    scroll-snap-align: none !important;
+  }
+
+  #main-content.home-main #faq .faq-accordion-wrap {
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #main-content.home-main #faq .faq-accordion-item {
+    border: 0 !important;
+  }
+
+  #main-content.home-main #faq .faq-accordion-item + .faq-accordion-item {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+  }
+
+  #main-content.home-main #faq .faq-question-btn,
+  #main-content.home-main #faq .faq-question-btn--open {
+    background: transparent !important;
+  }
+
+  #main-content.home-main #faq .faq-answer-panel {
+    border: 0 !important;
+    background: transparent !important;
+  }
+}
+
 /* ── Homepage mobile doctor-card density ──────────────────────────────────
    Keep profile data intact while presenting specialties and credentials as a
    single, border-free editorial list on phone widths only. */

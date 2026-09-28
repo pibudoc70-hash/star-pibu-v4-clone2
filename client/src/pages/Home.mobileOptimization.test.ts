@@ -26,7 +26,7 @@ describe("homepage mobile-only optimization", () => {
     const targetSelector = "html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq)";
     expect(css).toContain(`@media (max-width: 767px) {\n  ${targetSelector}`);
     expect(mobileHomeBlock).toContain(targetSelector);
-    expect(css).toContain(`@layer components {\n  @media (max-width: 767px) {\n    ${targetSelector}`);
+    expect(css).toContain(`@layer components {\n  @media (max-width: 767px) {`);
     expect(mobileHomeBlock).not.toContain(":is(#events");
     expect(mobileHomeBlock).not.toContain(":is(#pain-management");
     expect(mobileHomeBlock).not.toContain(":is(#doctors");
@@ -86,17 +86,18 @@ describe("homepage mobile-only optimization", () => {
     expect(treatments).toContain("<MobileCommaBreak text={tr.subtitle} />");
   });
 
-  it("uses the medical-team rhythm tokens across every homepage section only below md", () => {
+  it("uses one 48-pixel mobile rhythm across every homepage section only below md", () => {
     expect(home).toContain('<div className="home-page min-h-screen">');
     expect(home).toContain('<main id="main-content" className="home-main"');
     expect(lifting).toContain("lifting-positioning-summary");
     expect(lifting).toContain("mobile-home-section-header--lifting");
     expect(css).toContain("Homepage mobile section rhythm");
     expect(css).toContain("@media (max-width: 767px)");
-    expect(css).toContain("--home-mobile-section-padding-top: 2.5rem;");
-    expect(css).toContain("--home-mobile-section-padding-bottom: 5rem;");
+    expect(css).toContain("--home-mobile-section-padding-top: 3rem;");
+    expect(css).toContain("--home-mobile-section-padding-bottom: 3rem;");
     expect(css).toContain("--home-mobile-eyebrow-to-title-gap: 0.625rem;");
-    expect(css).toContain("--home-mobile-title-block-to-content-gap: 1rem;");
+    expect(css).toContain("--home-mobile-title-to-subtitle-gap: 0.9375rem;");
+    expect(css).toContain("--home-mobile-title-block-to-content-gap: 1.875rem;");
     expect(css).toContain("#main-content.home-main :is(");
     expect(css).toContain(".home-page #contact");
     for (const selector of [".lifting-positioning-summary", "#events", "#doctors", "#treatments", "#management-devices", "#about", "#results-statistics", "#facility", ".youtube-section-root", "#faq", "#contact"]) {
@@ -104,5 +105,14 @@ describe("homepage mobile-only optimization", () => {
     }
     expect(css).toContain("mobile-home-section-header--lifting");
     expect(css).toContain("word-break: keep-all !important;");
+    expect(css).toContain("min-height: 0 !important;");
+    expect(css).toContain("margin: var(--home-mobile-title-to-subtitle-gap) auto 0 !important;");
+    expect(css).toContain(".mobile-home-section-header--lifting {");
+    expect(css).toContain("margin-bottom: 0 !important;");
+    expect(css).toContain(".philosophy-mobile-header > .section-eyebrow:last-child {");
+    expect(css).toContain("margin: var(--home-mobile-title-to-subtitle-gap) 0 0 !important;");
+    expect(css).not.toContain("section#events {\n      padding-bottom: 3rem !important;");
+    expect(css).not.toContain("section#doctors {\n      padding-top: 2.5rem !important;");
+    expect(css).not.toContain("section#treatments {\n      padding-top: 2.5rem !important;");
   });
 });

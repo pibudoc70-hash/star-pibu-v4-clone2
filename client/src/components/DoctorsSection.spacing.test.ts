@@ -6,10 +6,13 @@ const doctorsSource = readFileSync(resolve(process.cwd(), "client/src/components
 const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("DoctorsSection upper spacing", () => {
-  it("limits only the medical team section's top padding to half of its former responsive values", () => {
+  it("uses the shared mobile 48-pixel rhythm while preserving desktop spacing", () => {
     expect(doctorsSource).toContain('id="doctors"');
     expect(doctorsSource).toContain('className="py-16 sm:py-24 dr-section-bg scroll-mt-24 md:scroll-mt-28"');
-    expect(globalCss).toContain("section#doctors {\n      padding-top: 2.5rem !important;");
+    expect(globalCss).toContain("--home-mobile-section-padding-top: 3rem;");
+    expect(globalCss).toContain("--home-mobile-section-padding-bottom: 3rem;");
+    expect(globalCss).toContain("#doctors,");
+    expect(globalCss).toContain("padding-top: var(--home-mobile-section-padding-top) !important;");
     expect(globalCss).toContain("@media (min-width: 768px) {\n  #doctors {\n    padding-top: 3rem !important;");
     expect(globalCss).not.toContain("#doctors {\n  padding-bottom:");
   });

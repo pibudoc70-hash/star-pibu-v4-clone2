@@ -6,12 +6,15 @@ const treatmentsSource = readFileSync(resolve(process.cwd(), "client/src/compone
 const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("TreatmentsEquipmentSection spacing", () => {
-  it("halves only the surrounding section padding without changing treatment cards or category interactions", () => {
+  it("uses the shared mobile section rhythm without changing treatment cards or category interactions", () => {
     expect(treatmentsSource).toContain('id="treatments"');
     expect(treatmentsSource).toContain("<CategoryTabList");
     expect(treatmentsSource).toContain("<EquipmentTreatmentCard");
     expect(treatmentsSource).not.toContain("PainManagementGuide");
-    expect(globalCss).toContain("section#treatments {\n      padding-top: 2.5rem !important;\n      padding-bottom: 2.5rem !important;");
-    expect(globalCss).toContain("#treatments {\n    padding-top: 3rem !important;\n    padding-bottom: 3rem !important;");
+    expect(globalCss).toContain("--home-mobile-section-padding-top: 3rem;");
+    expect(globalCss).toContain("--home-mobile-section-padding-bottom: 3rem;");
+    expect(globalCss).toContain("#treatments,");
+    expect(globalCss).toContain("padding-top: var(--home-mobile-section-padding-top) !important;");
+    expect(globalCss).toContain("padding-bottom: var(--home-mobile-section-padding-bottom) !important;");
   });
 });

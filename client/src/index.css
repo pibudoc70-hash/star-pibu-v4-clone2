@@ -1708,10 +1708,6 @@
       padding-top: 0 !important;
       padding-bottom: 0 !important;
     }
-    /* 이벤트 끝의 통증관리 안내는 목록과 다음 섹션 사이의 중간 지점에 배치한다. */
-    section#events {
-      padding-bottom: 3rem !important;
-    }
     /* 이벤트 안에서 열리는 통증관리의 하위 section도 generic 80px 여백을 상속하지 않는다. */
     section#pain-management[data-testid="pain-management-event-accordion"] [data-testid="pain-management-summary"],
     section#pain-management[data-testid="pain-management-event-accordion"] [data-testid="pain-trust-strip"],
@@ -1723,17 +1719,6 @@
     #home {
       padding-top: 0 !important;
       padding-bottom: 0 !important;
-    }
-
-    /* 의료팀은 콘텐츠 시작점을 앞당겨 mobile 기본 section 상단 80px의 절반만 사용한다. */
-    section#doctors {
-      padding-top: 2.5rem !important;
-    }
-
-    /* 시술·장비 카드 영역은 내용 높이는 보존하고, mobile 기본 80px 상하 section 여백만 절반으로 조정한다. */
-    section#treatments {
-      padding-top: 2.5rem !important;
-      padding-bottom: 2.5rem !important;
     }
 
     /* 컨테이너 좌우 패딩 */
@@ -6998,11 +6983,6 @@ body.font-lang-zh .hero-stat-label {
    are deliberately excluded. Desktop rules remain unchanged.
    ───────────────────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
-  html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) {
-    padding-top: 3rem !important;
-    padding-bottom: 3.25rem !important;
-  }
-
   html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) > .container {
     padding-inline: 0.875rem !important;
     min-width: 0;
@@ -7220,10 +7200,6 @@ body.font-lang-zh .hero-stat-label {
   }
 
   /* FAQ: 탭은 가로 스와이프로, 질문·답변은 테두리와 여백만으로 분리한다. */
-  #faq {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
   #faq .faq-tabs-scroll {
     flex-wrap: nowrap !important;
     justify-content: flex-start !important;
@@ -7318,14 +7294,6 @@ body.font-lang-zh .hero-stat-label {
    reverse layer priority, so this scoped override must live in that same layer. */
 @layer components {
   @media (max-width: 767px) {
-    html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) {
-      padding-top: 3rem !important;
-      padding-bottom: 3.25rem !important;
-    }
-
-    html body #main-content section#faq {
-      padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
-    }
   }
 }
 
@@ -7339,12 +7307,6 @@ body.font-lang-zh .hero-stat-label {
     margin: 0 auto 2rem !important;
     padding: 0 !important;
     text-align: center !important;
-  }
-
-  #main-content :is(#events, #doctors, #treatments) {
-    padding-top: 4rem !important;
-    border-inline-start: 0 !important;
-    box-shadow: none !important;
   }
 
   #main-content .mobile-home-section-header :is(.section-eyebrow, .dr-section-eyebrow) {
@@ -7402,12 +7364,19 @@ body.font-lang-zh .hero-stat-label {
    title remains first, followed by the consultation visual, narrative, then
    a single-column STAR promise list for an easier reading rhythm. */
 @media (max-width: 767px) {
-  #main-content #about .philosophy-mobile-header {
-    margin-bottom: 1.5rem !important;
-  }
-
-  #main-content #about .philosophy-mobile-header > .section-eyebrow:last-child {
-    margin: 0.75rem 0 0 !important;
+  #main-content.home-main :is(
+    .lifting-positioning-summary,
+    #events,
+    #doctors,
+    #treatments,
+    #management-devices,
+    #about,
+    #results-statistics,
+    #facility,
+    .youtube-section-root,
+    #faq
+  ) #about .philosophy-mobile-header > .section-eyebrow:last-child {
+    margin: var(--home-mobile-title-to-subtitle-gap) 0 0 !important;
     color: var(--color-gold-dark, #7A5C35) !important;
     font-size: 0.6rem !important;
     font-weight: 500 !important;
@@ -7747,10 +7716,11 @@ body.font-lang-zh .hero-stat-label {
 @layer components {
   @media (max-width: 767px) {
     .home-page {
-      --home-mobile-section-padding-top: 2.5rem;
-      --home-mobile-section-padding-bottom: 5rem;
+      --home-mobile-section-padding-top: 3rem;
+      --home-mobile-section-padding-bottom: 3rem;
       --home-mobile-eyebrow-to-title-gap: 0.625rem;
-      --home-mobile-title-block-to-content-gap: 1rem;
+      --home-mobile-title-to-subtitle-gap: 0.9375rem;
+      --home-mobile-title-block-to-content-gap: 1.875rem;
     }
 
     #main-content.home-main :is(
@@ -7768,6 +7738,7 @@ body.font-lang-zh .hero-stat-label {
     ) {
       padding-top: var(--home-mobile-section-padding-top) !important;
       padding-bottom: var(--home-mobile-section-padding-bottom) !important;
+      min-height: 0 !important;
     }
 
     /* The contact section needs exactly the shared base rhythm plus its
@@ -7777,28 +7748,88 @@ body.font-lang-zh .hero-stat-label {
       padding-bottom: calc(var(--home-mobile-section-padding-bottom) + env(safe-area-inset-bottom, 0px)) !important;
     }
 
-    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header {
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq
+    ) .mobile-home-section-header,
+    .home-page #contact .mobile-home-section-header {
       margin-bottom: var(--home-mobile-title-block-to-content-gap) !important;
     }
 
-    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-eyebrow, .dr-section-eyebrow) {
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq
+    ) .mobile-home-section-header :is(.section-eyebrow, .dr-section-eyebrow),
+    .home-page #contact .mobile-home-section-header :is(.section-eyebrow, .dr-section-eyebrow) {
       margin: 0 0 var(--home-mobile-eyebrow-to-title-gap) !important;
     }
 
-    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-title, .dr-section-title) {
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq
+    ) .mobile-home-section-header :is(.section-title, .dr-section-title),
+    .home-page #contact .mobile-home-section-header :is(.section-title, .dr-section-title) {
       margin: 0 !important;
     }
 
-    :is(#main-content.home-main, .home-page #contact) .mobile-home-section-header :is(.section-subtitle, .dr-section-tagline) {
-      margin: 0 auto !important;
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq
+    ) .mobile-home-section-header :is(.section-subtitle, .dr-section-tagline),
+    .home-page #contact .mobile-home-section-header :is(.section-subtitle, .dr-section-tagline) {
+      margin: var(--home-mobile-title-to-subtitle-gap) auto 0 !important;
     }
 
     /* Lifting Care used standalone markup; it now joins the same title rhythm
        without changing its desktop composition or copy. */
-    #main-content.home-main .mobile-home-section-header--lifting {
+    #main-content.home-main :is(
+      .lifting-positioning-summary,
+      #events,
+      #doctors,
+      #treatments,
+      #management-devices,
+      #about,
+      #results-statistics,
+      #facility,
+      .youtube-section-root,
+      #faq
+    ) .mobile-home-section-header--lifting {
       width: 100% !important;
       max-width: calc(100vw - 2rem) !important;
       margin-inline: auto !important;
+      margin-bottom: 0 !important;
       text-align: center !important;
     }
 
@@ -7807,7 +7838,7 @@ body.font-lang-zh .hero-stat-label {
     }
 
     #main-content.home-main .mobile-home-section-header--lifting .lifting-positioning-summary-text {
-      margin: 0 !important;
+      margin: var(--home-mobile-title-to-subtitle-gap) auto 0 !important;
       max-width: 100% !important;
       line-height: 1.75 !important;
       text-align: center !important;

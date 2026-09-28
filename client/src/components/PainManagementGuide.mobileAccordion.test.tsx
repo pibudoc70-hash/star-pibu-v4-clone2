@@ -104,11 +104,11 @@ describe("PainManagementGuide mobile disclosure", () => {
     expect(accordion.querySelector('section[aria-label="개인별 통증관리 3단계"]')).toBeInTheDocument();
   });
 
-  it("prevents global mobile section padding from increasing the closed Special Event accordion", () => {
+  it("keeps the closed Special Event accordion free of nested mobile section padding", () => {
     const styles = readFileSync("client/src/index.css", "utf8");
 
     expect(styles).toContain('section#pain-management[data-testid="pain-management-event-accordion"]');
-    expect(styles).toContain("section#events {\n      padding-bottom: 3rem !important;");
+    expect(styles).toContain("--home-mobile-section-padding-bottom: 3rem;");
     expect(styles).toContain('[data-testid="pain-management-summary"]');
     expect(styles).toContain('[data-testid="pain-trust-strip"]');
     expect(styles).toContain('[data-testid="pain-faq"]');

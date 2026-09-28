@@ -6,8 +6,12 @@ const read = (path: string) => readFileSync(resolve(process.cwd(), path), "utf8"
 const css = read("client/src/index.css");
 const hero = read("client/src/components/HeroSection.tsx");
 const popup = read("client/src/components/UltheraThermagePromotionPopup.tsx");
-const mobileParityBlock = css.split("Homepage mobile hero and promotion parity")[1] ?? "";
-const mobilePlacementBlock = css.split("Homepage mobile hero cluster placement")[1] ?? "";
+const extractBlock = (startMarker: string, endMarker: string) => {
+  const start = css.indexOf(startMarker);
+  return start === -1 ? "" : css.slice(start, css.indexOf(endMarker, start));
+};
+const mobileParityBlock = extractBlock("Homepage mobile hero and promotion parity", "Homepage mobile hero cluster placement");
+const mobilePlacementBlock = extractBlock("Homepage mobile hero cluster placement", "Homepage mobile hero breathing room");
 const mobileBreathingRoomBlock = css.split("Homepage mobile hero breathing room")[1] ?? "";
 
 describe("homepage mobile hero and promotion parity", () => {

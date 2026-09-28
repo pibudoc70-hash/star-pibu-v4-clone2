@@ -7834,3 +7834,36 @@ body.font-lang-zh .hero-stat-label {
     }
   }
 }
+
+
+/* ── Homepage management-device surface separation ───────────────────────
+   The treatment canvas remains untouched. Give CARE DEVICES its own bright
+   off-white surface and one quiet gold handoff line at every viewport. */
+:root {
+  --home-management-section-bg: #FBF9F5;
+  --home-management-section-divider: rgba(168, 137, 94, 0.26);
+}
+
+@layer components {
+  @media (min-width: 768px) {
+    .home-page .home-surface-b.section-bg-dark-brown,
+    .home-page .home-surface-b.section-bg-dark-brown > #management-devices {
+      background: var(--home-management-section-bg) !important;
+    }
+
+    .home-page .home-surface-b.section-bg-dark-brown > #management-devices {
+      border-top: 1px solid var(--home-management-section-divider) !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #main-content.home-main .home-surface-b.section-bg-dark-brown,
+    #main-content.home-main #management-devices {
+      background: var(--home-management-section-bg) !important;
+    }
+
+    #main-content.home-main #management-devices {
+      border-top: 1px solid var(--home-management-section-divider) !important;
+    }
+  }
+}

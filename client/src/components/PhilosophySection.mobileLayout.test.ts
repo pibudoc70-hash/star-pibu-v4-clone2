@@ -5,7 +5,9 @@ import { describe, expect, it } from "vitest";
 const read = (path: string) => readFileSync(resolve(process.cwd(), path), "utf8");
 const source = read("client/src/components/PhilosophySection.tsx");
 const css = read("client/src/index.css");
-const mobileBlock = css.split("Homepage mobile philosophy layout")[1] ?? "";
+const mobileStart = css.indexOf("Homepage mobile philosophy layout");
+const mobileEnd = css.indexOf("Homepage mobile hero and promotion parity", mobileStart);
+const mobileBlock = mobileStart === -1 ? "" : css.slice(mobileStart, mobileEnd);
 
 describe("PhilosophySection mobile layout", () => {
   it("places a mobile-only consultation image between the shared title and narrative", () => {

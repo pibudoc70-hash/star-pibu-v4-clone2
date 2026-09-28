@@ -7620,3 +7620,42 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 }
+
+
+/* ── Homepage mobile hero cluster placement ─────────────────────────────
+   Keep the title cluster and statistics visually together while reserving
+   clear space for the fixed mobile consultation bar. */
+@layer components {
+@media (max-width: 767px) {
+  #home {
+    min-height: 100svh !important;
+    height: 100svh !important;
+  }
+
+  #home .hero-mobile-layout {
+    justify-content: center !important;
+    gap: clamp(1.25rem, 3.5svh, 2rem) !important;
+    padding-top: clamp(5rem, 14svh, 7rem) !important;
+    padding-bottom: clamp(5.5rem, 11svh, 6.5rem) !important;
+  }
+
+  #home .hero-mobile-bottom-group {
+    padding-bottom: 0 !important;
+  }
+
+  /* Reveal a little more of the right-side clinic sign without moving copy. */
+  #home .hero-bg-img {
+    object-position: 62% center !important;
+  }
+}
+
+/* Short phone heights retain the same group order without clipping the arrow
+   into the fixed consultation bar. No content size, color, or copy changes. */
+@media (max-width: 767px) and (max-height: 650px) {
+  #home .hero-mobile-layout {
+    gap: 0.75rem !important;
+    padding-top: max(4.25rem, env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: max(4.5rem, calc(54px + env(safe-area-inset-bottom, 0px))) !important;
+  }
+}
+}

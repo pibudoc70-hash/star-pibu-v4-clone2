@@ -7,6 +7,7 @@ const css = read("client/src/index.css");
 const hero = read("client/src/components/HeroSection.tsx");
 const popup = read("client/src/components/UltheraThermagePromotionPopup.tsx");
 const mobileParityBlock = css.split("Homepage mobile hero and promotion parity")[1] ?? "";
+const mobilePlacementBlock = css.split("Homepage mobile hero cluster placement")[1] ?? "";
 
 describe("homepage mobile hero and promotion parity", () => {
   it("limits parity changes to a mobile media query while keeping shared hero data intact", () => {
@@ -32,5 +33,16 @@ describe("homepage mobile hero and promotion parity", () => {
     expect(mobileParityBlock).toContain("Keep 52px touch targets");
     expect(popup).toContain("min-h-[52px]");
     expect(popup).toContain("size-[52px]");
+  });
+
+  it("centers only the mobile hero content cluster and reserves room below its scroll control", () => {
+    expect(mobilePlacementBlock).toContain("@media (max-width: 767px)");
+    expect(mobilePlacementBlock).not.toContain("@media (min-width");
+    expect(mobilePlacementBlock).toContain("height: 100svh !important;");
+    expect(mobilePlacementBlock).toContain("justify-content: center !important;");
+    expect(mobilePlacementBlock).toContain("gap: clamp(1.25rem, 3.5svh, 2rem) !important;");
+    expect(mobilePlacementBlock).toContain("padding-bottom: 0 !important;");
+    expect(mobilePlacementBlock).toContain("object-position: 62% center !important;");
+    expect(mobilePlacementBlock).toContain("max-height: 650px");
   });
 });

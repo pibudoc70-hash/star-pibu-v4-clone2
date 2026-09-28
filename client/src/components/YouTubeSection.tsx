@@ -12,6 +12,7 @@ import { X, AlertCircle, RefreshCw } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
+import MobileCardSlider from '@/components/MobileCardSlider';
 
 /** viewport 진입 시점에 합성 후 enabled=true 리턴 — 마운트 즉시 API 호출 방지 */
 function useVisibleFetch(rootMargin = '200px 0px'): [React.RefObject<HTMLElement>, boolean] {
@@ -281,7 +282,11 @@ export default function YouTubeSection() {
         {videos.length > 0 && (
           <div className="youtube-videos-block mb-16">
             <h3 className="mb-6 text-lg font-semibold text-gray-900 md:hidden">{yt.latestVideos}</h3>
-            <div className="youtube-videos-row grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <MobileCardSlider
+              itemCount={videos.length}
+              label={yt.latestVideos}
+              className="youtube-videos-row grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"
+            >
               {videos.map((video) => (
                 <button
                   type="button"
@@ -313,7 +318,7 @@ export default function YouTubeSection() {
                   </div>
                 </button>
               ))}
-            </div>
+            </MobileCardSlider>
           </div>
         )}
 
@@ -321,7 +326,12 @@ export default function YouTubeSection() {
         {shorts.length > 0 && (
           <div className="youtube-shorts-block">
             <h3 className="youtube-shorts-heading mb-6 text-lg font-semibold md:hidden" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
-            <div className="youtube-shorts-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
+            <MobileCardSlider
+              itemCount={shorts.length}
+              label={yt.shorts}
+              variant="shorts"
+              className="youtube-shorts-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4"
+            >
               {shorts.map((short) => (
                 <button
                   type="button"
@@ -353,7 +363,7 @@ export default function YouTubeSection() {
                   </div>
                 </button>
               ))}
-            </div>
+            </MobileCardSlider>
           </div>
         )}
 

@@ -3,6 +3,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { useLang } from '@/contexts/LangContext';
 import { DoctorCardSkeleton } from '@/components/SkeletonUI';
 import { useSectionReveal } from '@/hooks/useScrollReveal';
+import MobileCardSlider from '@/components/MobileCardSlider';
 
 export default function ResultsStatisticsSection({ showRegenerativeMedicineBanner = false }: { showRegenerativeMedicineBanner?: boolean }) {
   const sectionRef = useSectionReveal(60); // [Step64]
@@ -42,13 +43,18 @@ export default function ResultsStatisticsSection({ showRegenerativeMedicineBanne
         </div>
 
         {/* 의료진 카드 */}
-        <div className={`results-statistics__cards grid grid-cols-1 md:grid-cols-3 gap-6 ${showRegenerativeMedicineBanner ? "mb-6 md:mb-8" : "mb-16"}`}>
+        <MobileCardSlider
+          itemCount={isLoading ? 3 : doctors.length}
+          label={r.sectionTitle}
+          wrapperClassName={showRegenerativeMedicineBanner ? "mb-6 md:mb-8" : "mb-16"}
+          className="results-statistics__cards grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {isLoading ? (
-            <>
-              <DoctorCardSkeleton />
-              <DoctorCardSkeleton />
-              <DoctorCardSkeleton />
-            </>
+            [
+              <DoctorCardSkeleton key="result-skeleton-1" />,
+              <DoctorCardSkeleton key="result-skeleton-2" />,
+              <DoctorCardSkeleton key="result-skeleton-3" />,
+            ]
           ) : (
             doctors.map((doctor) => (
             <div
@@ -76,7 +82,7 @@ export default function ResultsStatisticsSection({ showRegenerativeMedicineBanne
             </div>
           ))
           )}
-        </div>
+        </MobileCardSlider>
         {showRegenerativeMedicineBanner && (
           <div data-testid="regenerative-medicine-banner" className="w-full">
             <a

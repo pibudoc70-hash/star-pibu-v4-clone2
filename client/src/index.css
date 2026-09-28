@@ -4637,6 +4637,17 @@ body.font-lang-zh .hero-stat-label {
   background: var(--brand-bg-alt, #F5F0EB);
 }
 
+/* FAQ no longer has a subtitle, so keep the title/divider-to-tabs handoff compact. */
+.faq-section__header {
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 767px) {
+  .faq-section__header {
+    margin-bottom: 1.75rem;
+  }
+}
+
 /* 탭 버튼 */
 .faq-tab-btn {
   border-radius: 9999px;

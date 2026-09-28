@@ -75,13 +75,12 @@ export default function FAQSection() {
 
       {/* [PROD-P4-1] py-20 md:py-28 → py-16 md:py-24: 사이트 표준 셉션 간격(py-16/py-24)으로 통일 */}
       <section ref={sectionRef} id="faq" className="py-16 md:py-24 faq-section-bg" aria-label="자주 묻는 질문">
-        <div className="container max-w-4xl">
+        <div className="container">
           {/* 섹션 헤더 */}
-          <div className="section-header-block reveal-heading">
+          <div className="section-header-block faq-section__header reveal-heading">
             <span className="section-eyebrow">FAQ</span>
             <h2 className="section-title">{faq.sectionTitle}</h2>
             <div className="star-divider mx-auto" />
-            <p className="section-subtitle body-text">{faq.sectionSubtitle}</p>
           </div>
 
           {/* 장비 탭 */}

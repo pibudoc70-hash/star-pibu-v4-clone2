@@ -127,10 +127,11 @@
   --hero-background-blur: 3.5px;
   --hero-background-brightness: 0.66;
   --hero-background-saturation: 0.85;
+  --hero-background-sepia: 0.24;
   --hero-background-scale: 1.05;
-  --hero-overlay-gradient: linear-gradient(to bottom, rgba(16, 22, 35, 0.36) 0%, rgba(15, 20, 33, 0.56) 44%, rgba(10, 14, 27, 0.74) 72%, rgba(5, 8, 18, 0.84) 100%);
-  --hero-vignette-gradient: radial-gradient(ellipse at center, transparent 24%, rgba(8, 12, 24, 0.32) 100%);
-  --hero-text-contrast-gradient: radial-gradient(ellipse 58% 42% at 50% 47%, rgba(25, 31, 44, 0.20) 0%, rgba(18, 23, 36, 0.10) 48%, transparent 78%);
+  --hero-overlay-gradient: radial-gradient(ellipse 68% 48% at 50% 34%, rgba(201, 169, 110, 0.09) 0%, rgba(201, 169, 110, 0.04) 44%, transparent 76%), linear-gradient(to bottom, rgba(28, 20, 14, 0.46) 0%, rgba(24, 17, 12, 0.60) 44%, rgba(21, 14, 10, 0.72) 72%, rgba(18, 12, 8, 0.82) 100%);
+  --hero-vignette-gradient: radial-gradient(ellipse at center, transparent 24%, rgba(20, 13, 9, 0.38) 100%);
+  --hero-text-contrast-gradient: radial-gradient(ellipse 58% 42% at 50% 47%, rgba(35, 24, 16, 0.22) 0%, rgba(29, 19, 13, 0.11) 48%, transparent 78%);
   /* 브랜드 웜 뉴트럴 팔레트 */
   --background: oklch(0.985 0.006 75);    /* #FAF8F5 웸 화이트 */
   --foreground: oklch(0.22 0.008 40);     /* #2C2C2C 진한 차콜 */
@@ -940,7 +941,7 @@
   /* [R16-P0-1] Hero layout utility classes — replaces inline style magic numbers */
   /* 모바일에서 body 배경(크림색)이 Hero 위에 비치지 않도록 Hero 섹션 자체에 다크 배경 지정 */
   #home {
-    background: #040816;
+    background: #120C08;
   }
   /* sonner 알림 컨테이너 section 태그가 레이아웃 플로우에서 128px 공간을 차지하는 문제 수정 */
   section[aria-live="polite"][aria-label*="Notifications"] {
@@ -959,7 +960,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
-    filter: blur(var(--hero-background-blur)) brightness(var(--hero-background-brightness)) saturate(var(--hero-background-saturation));
+    filter: blur(var(--hero-background-blur)) brightness(var(--hero-background-brightness)) saturate(var(--hero-background-saturation)) sepia(var(--hero-background-sepia));
     transform: scale(var(--hero-background-scale));
     transform-origin: center;
     will-change: filter, transform;
@@ -1999,7 +2000,7 @@
       line-height: 1.05 !important;
       text-align: center !important;
       margin: 0 0 clamp(6px, 1.2vh, 10px) 0 !important;
-      text-shadow: 0 2px 16px rgba(4,8,22,0.85), 0 1px 4px rgba(4,8,22,0.95) !important;
+      text-shadow: 0 2px 16px rgba(18,12,8,0.85), 0 1px 4px rgba(18,12,8,0.95) !important;
       word-break: keep-all !important;
       width: auto !important;
     }
@@ -2061,7 +2062,7 @@
       line-height: 1.58 !important;
       margin: 0 !important;
       opacity: 0.92 !important;
-      text-shadow: 0 1px 12px rgba(4,8,22,0.90), 0 1px 3px rgba(4,8,22,0.95) !important;
+      text-shadow: 0 1px 12px rgba(18,12,8,0.90), 0 1px 3px rgba(18,12,8,0.95) !important;
     }
 
     /* ▶ 1j. 모바일 스크롤 유도 화살표 */

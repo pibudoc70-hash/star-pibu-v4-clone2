@@ -15,7 +15,7 @@ describe("Directions dedicated location and transport content", () => {
     expect(source).toContain("<MainLayout showContactSection={false}>");
     expect(source).toContain('import ContactSection from \'@/components/ContactSection\'');
     expect(source).toContain('<ContactSection showHeader={false} desktopTone="doctors" />');
-    expect(footerSource).toContain("showContactSection && <ContactSection />");
+    expect(footerSource).toContain("showContactSection && <ContactSection surfaceClassName=");
     expect(source).not.toContain("<iframe");
     expect(source).not.toContain("<MapView");
     expect(source).not.toContain("googleMapsEmbedUrl");

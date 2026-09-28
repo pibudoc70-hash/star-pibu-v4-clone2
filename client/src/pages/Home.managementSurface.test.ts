@@ -6,20 +6,21 @@ const css = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8")
 const home = readFileSync(resolve(process.cwd(), "client/src/pages/Home.tsx"), "utf8");
 
 describe("homepage management-device surface separation", () => {
-  it("uses one variable-driven off-white surface and quiet gold divider at every viewport", () => {
-    expect(home).toContain("home-surface-b section-bg-dark-brown");
-    expect(css).toContain("--home-management-section-bg: #FBF9F5;");
-    expect(css).toContain("--home-management-section-divider: rgba(168, 137, 94, 0.26);");
-    expect(css).toContain("@media (min-width: 768px)");
-    expect(css).toContain("@media (max-width: 767px)");
-    expect(css).toContain(".home-page .home-surface-b.section-bg-dark-brown");
-    expect(css).toContain("#main-content.home-main .home-surface-b.section-bg-dark-brown");
-    expect(css).toContain("background: var(--home-management-section-bg) !important;");
-    expect(css).toContain("border-top: 1px solid var(--home-management-section-divider) !important;");
+  it("places Management Devices on shared surface A between treatment and philosophy surface B", () => {
+    const treatmentIndex = home.indexOf('home-section-surface home-section-surface--b', home.indexOf('/* 4. Treatments + Equipment'));
+    const managementIndex = home.indexOf('home-section-surface home-section-surface--a', home.indexOf('/* 5. Management Devices'));
+    const philosophyIndex = home.indexOf('home-section-surface home-section-surface--b', home.indexOf('/* 6. Philosophy'));
+
+    expect(treatmentIndex).toBeGreaterThan(-1);
+    expect(managementIndex).toBeGreaterThan(treatmentIndex);
+    expect(philosophyIndex).toBeGreaterThan(managementIndex);
+    expect(css).toContain("--home-section-bg-a: #FAF8F5;");
+    expect(css).toContain("--home-section-bg-b: #F3EEE7;");
   });
 
-  it("does not change the Treatments & Equipment surface token", () => {
-    expect(css).toContain(".home-surface-a > section {\n    background: #FAF8F5 !important;");
-    expect(css).not.toContain("#treatments {\n      background: var(--home-management-section-bg)");
+  it("uses one quiet divider for shared homepage surface handoffs", () => {
+    expect(css).toContain("--home-section-divider:");
+    expect(css).toContain(".home-page .home-section-surface:not(.lifting-positioning-summary),");
+    expect(css).toContain("border-top: 1px solid var(--home-section-divider);");
   });
 });

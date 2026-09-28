@@ -40,7 +40,8 @@ describe("global footer contact section", () => {
   it("renders the shared contact section immediately before the site footer by default", () => {
     expect(footerSource).toContain('import ContactSection from "@/components/ContactSection"');
     expect(footerSource).toContain("showContactSection?: boolean");
-    expect(footerSource).toContain("{showContactSection && <ContactSection />}");
+    expect(footerSource).toContain('homeSectionSurface?: "a" | "b";');
+    expect(footerSource).toContain("{showContactSection && <ContactSection surfaceClassName=");
   });
 
   it("uses the established warm-beige background for the common section", () => {

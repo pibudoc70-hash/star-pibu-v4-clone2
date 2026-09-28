@@ -18,9 +18,10 @@ const sns = [
 
 interface FooterProps {
   showContactSection?: boolean;
+  homeSectionSurface?: "a" | "b";
 }
 
-export default function Footer({ showContactSection = true }: FooterProps) {
+export default function Footer({ showContactSection = true, homeSectionSurface }: FooterProps) {
   const { t } = useLang();
   const [, navigate] = useLocation();
 
@@ -76,7 +77,7 @@ export default function Footer({ showContactSection = true }: FooterProps) {
 
   return (
     <>
-      {showContactSection && <ContactSection />}
+      {showContactSection && <ContactSection surfaceClassName={homeSectionSurface ? `home-section-surface home-section-surface--${homeSectionSurface}` : undefined} />}
       <footer
         style={{ background: "#1A1410" }}
         className="footer-root"

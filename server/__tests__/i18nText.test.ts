@@ -277,7 +277,7 @@ describe("Directions 다국어·지도 회귀 방지", () => {
   it("Footer가 모든 언어의 공통 위치 및 연락정보 섹션을 제공한다", () => {
     const footer = readFileSync(nodePath.resolve(process.cwd(), "client/src/components/Footer.tsx"), "utf8");
     expect(footer).toMatch(/import ContactSection/);
-    expect(footer).toMatch(/<ContactSection\s*\/>/);
+    expect(footer).toMatch(/<ContactSection\s+surfaceClassName=/);
   });
 });
 

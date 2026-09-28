@@ -46,6 +46,6 @@ describe("requested public page structure refinements", () => {
     expect(directionsSource).toContain('id="directions-page-title"');
     expect(directionsSource).toContain("{t.directions.title}");
     expect(mainLayoutSource).toContain("showContactSection?: boolean");
-    expect(footerSource).toContain("showContactSection && <ContactSection />");
+    expect(footerSource).toContain("showContactSection && <ContactSection surfaceClassName=");
   });
 });

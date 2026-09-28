@@ -12,25 +12,28 @@ const managementSource = readFileSync(resolve(root, "client/src/components/Manag
 const youtubeSource = readFileSync(resolve(root, "client/src/components/YouTubeSection.tsx"), "utf8");
 const treatmentsSource = readFileSync(resolve(root, "client/src/components/TreatmentsEquipmentSection.tsx"), "utf8");
 const koSource = readFileSync(resolve(root, "client/src/lib/i18n.ko.ts"), "utf8");
+const liftingSource = readFileSync(resolve(root, "client/src/components/LiftingPositioning.tsx"), "utf8");
 
 describe("homepage desktop palette and label refinement", () => {
-  it("uses exactly the requested desktop A-B sequence on the visible section roots", () => {
-    expect(cssSource).toContain("Homepage desktop surface harmony");
-    expect(cssSource).toContain(".home-surface-a {\n    background: #FAF8F5;");
-    expect(cssSource).toContain(".home-surface-b {\n    background: #F3EEE7;");
-    expect(cssSource).toContain(".home-surface-a > section {\n    background: #FAF8F5 !important;");
-    expect(cssSource).toContain(".home-surface-b > section {\n    background: #F3EEE7 !important;");
+  it("uses one A-B palette and an alternating section sequence across desktop and mobile", () => {
+    expect(cssSource).toContain("Homepage alternating section surfaces");
+    expect(cssSource).toContain("--home-section-bg-a: #FAF8F5;");
+    expect(cssSource).toContain("--home-section-bg-b: #F3EEE7;");
+    expect(cssSource).toContain(".home-page .home-section-surface--a {");
+    expect(cssSource).toContain(".home-page .home-section-surface--b {");
+    expect(cssSource).toContain(".home-page .home-section-surface--a > section,");
+    expect(cssSource).toContain(".home-page .home-section-surface--b > section,");
 
     const expectedOrder = [
-      ['SpecialEventSection', 'home-surface-a section-bg-cream'],
-      ['DoctorsSection', 'home-surface-b section-bg-warm'],
-      ['TreatmentsEquipmentSection', 'home-surface-a section-bg-cream-soft'],
-      ['ManagementDevicesSection', 'home-surface-b section-bg-dark-brown'],
-      ['PhilosophySection', 'home-surface-a section-bg-cream'],
-      ['ResultsStatisticsSection', 'home-surface-b section-bg-gold-soft'],
-      ['FacilitySection', 'home-surface-a section-bg-warm-alt'],
-      ['YouTubeSection', 'home-surface-b section-bg-dark-brown-mid'],
-      ['FAQSection', 'home-surface-a section-bg-cream'],
+      ['SpecialEventSection', 'home-section-surface home-section-surface--b'],
+      ['DoctorsSection', 'home-section-surface home-section-surface--a'],
+      ['TreatmentsEquipmentSection', 'home-section-surface home-section-surface--b'],
+      ['ManagementDevicesSection', 'home-section-surface home-section-surface--a'],
+      ['PhilosophySection', 'home-section-surface home-section-surface--b'],
+      ['ResultsStatisticsSection', 'home-section-surface home-section-surface--a'],
+      ['FacilitySection', 'home-section-surface home-section-surface--b'],
+      ['YouTubeSection', 'home-section-surface home-section-surface--a'],
+      ['FAQSection', 'home-section-surface home-section-surface--b'],
     ] as const;
 
     let previousIndex = -1;
@@ -41,6 +44,9 @@ describe("homepage desktop palette and label refinement", () => {
       expect(componentIndex).toBeGreaterThan(surfaceIndex);
       previousIndex = componentIndex;
     }
+
+    expect(liftingSource).toContain('className="lifting-positioning-summary home-section-surface home-section-surface--a');
+    expect(homeSource).toContain('<Footer homeSectionSurface="a" />');
   });
 
   it("uses one shared dark-brown and gold hero overlay token across desktop and mobile", () => {

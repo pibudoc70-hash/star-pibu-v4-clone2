@@ -32,7 +32,8 @@ describe("Contact section layout and notice visibility", () => {
   it("can suppress only the reusable location heading for a dedicated location page", () => {
     expect(contactSource).toContain("showHeader?: boolean");
     expect(contactSource).toContain('desktopTone?: "default" | "doctors"');
-    expect(contactSource).toContain('ContactSection({ showHeader = true, desktopTone = "default" }');
+    expect(contactSource).toContain("surfaceClassName?: string");
+    expect(contactSource).toContain('ContactSection({ showHeader = true, desktopTone = "default", surfaceClassName }');
     expect(contactSource).toContain("{showHeader && (");
   });
 

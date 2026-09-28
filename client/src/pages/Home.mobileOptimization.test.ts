@@ -52,9 +52,13 @@ describe("homepage mobile-only optimization", () => {
     expect(mobileHomeBlock).toContain("scroll-snap-type: x mandatory");
   });
 
-  it("keeps final desktop copy and approved surfaces authoritative on mobile", () => {
-    expect(mobileHomeBlock).toContain("background: #F3EEE7 !important;");
-    expect(mobileHomeBlock).toContain("background: #FAF8F5 !important;");
+  it("keeps final desktop copy and one approved surface system authoritative on mobile", () => {
+    expect(css).toContain("Homepage alternating section surfaces");
+    expect(css).toContain("--home-section-bg-a: #FAF8F5;");
+    expect(css).toContain("--home-section-bg-b: #F3EEE7;");
+    expect(css).toContain(".home-page .home-section-surface--a {");
+    expect(css).toContain(".home-page .home-section-surface--b {");
+    expect(mobileHomeBlock).not.toContain("#main-content #management-devices,\n  #main-content #results-statistics");
     expect(mobileHomeBlock).toContain("color: var(--brand-text, #2C2C2C) !important;");
     expect(mobileHomeBlock).toContain("#management-devices .section-subtitle,");
     expect(mobileHomeBlock).toContain(".youtube-section-root .section-subtitle,");

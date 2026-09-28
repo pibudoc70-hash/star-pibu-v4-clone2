@@ -434,20 +434,20 @@ export default function Home() {
         <LiftingPositioningSummary />
         <MobileBottomCTA />
 
-        {/* 2. SPECIAL EVENT — [Option A] 순백→크림 오프화이트 */}
+        {/* 2. SPECIAL EVENT — shared home surface B */}
         <DeferredMount
           fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}
           anchorSelectors={["#events", "#pain-management", "#facility"]}
           telemetrySurface="home_events"
         >
-          <div className="home-surface-a section-bg-cream">
+          <div className="home-section-surface home-section-surface--b">
             <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.specialEvent} />}>
               <SpecialEventSection />
             </Suspense>
           </div>
         </DeferredMount>
 
-        {/* 3. Doctors */}
+        {/* 3. Doctors — shared home surface A; follows the event surface */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -455,7 +455,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-b section-bg-warm">
+            <div className="home-section-surface home-section-surface--a">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.doctors} />}>
                 <DoctorsSection />
               </Suspense>
@@ -463,7 +463,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 4. Treatments + Equipment — [Option A] 순백→크림 소프트 */}
+        {/* 4. Treatments + Equipment — shared home surface B */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -471,7 +471,7 @@ export default function Home() {
             fallback={<TreatmentsEquipmentSkeleton id="treatments" />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-a section-bg-cream-soft">
+            <div className="home-section-surface home-section-surface--b">
               <Suspense fallback={<TreatmentsEquipmentSkeleton id="treatments" />}>
                 <TreatmentsEquipmentSection />
               </Suspense>
@@ -479,7 +479,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 5. Management Devices — [Option B] 다크 네이비→다크 브라운 */}
+        {/* 5. Management Devices — shared home surface A */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
@@ -487,7 +487,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}
             anchorSelectors={["#management-devices", "#facility"]}
           >
-            <div className="home-surface-b section-bg-dark-brown">
+            <div className="home-section-surface home-section-surface--a">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.managementDevices} />}>
                 <ManagementDevicesSection />
               </Suspense>
@@ -495,7 +495,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 6. Philosophy — [Option A] offwhite→크림 */}
+        {/* 6. Philosophy — shared home surface B */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -503,7 +503,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}
             anchorSelectors={["#facility"]}
           >
-            <div className="home-surface-a section-bg-cream">
+            <div className="home-section-surface home-section-surface--b">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.philosophy} />}>
                 <PhilosophySection />
               </Suspense>
@@ -511,7 +511,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 6-2. Results & Statistics */}
+        {/* 6-2. Results & Statistics — shared home surface A */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -519,7 +519,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}
             anchorSelectors={["#results-statistics", "#facility"]}
           >
-            <div className="home-surface-b section-bg-gold-soft">
+            <div className="home-section-surface home-section-surface--a">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.results} />}>
                 <ResultsStatisticsSection showRegenerativeMedicineBanner />
               </Suspense>
@@ -527,7 +527,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 7. Facility Gallery — [Option A] 순백→웜 알트 */}
+        {/* 7. Facility Gallery — shared home surface B */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -536,7 +536,7 @@ export default function Home() {
             anchorSelectors={["#facility"]}
             telemetrySurface="home_facility"
           >
-            <div className="home-surface-a section-bg-warm-alt">
+            <div className="home-section-surface home-section-surface--b">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.facility} />}>
                 <FacilitySection />
               </Suspense>
@@ -544,12 +544,12 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 8-2. YouTube Channel — [Option B] 다크 딥→다크 브라운 미드 */}
+        {/* 8-2. YouTube Channel — shared home surface A */}
         <ScrollAnimationWrapper
           animationType="fade-in-slow"
         >
           <DeferredMount fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
-            <div className="home-surface-b section-bg-dark-brown-mid">
+            <div className="home-section-surface home-section-surface--a">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.youtube} />}>
                 <YouTubeSection />
               </Suspense>
@@ -557,7 +557,7 @@ export default function Home() {
           </DeferredMount>
         </ScrollAnimationWrapper>
 
-        {/* 9. FAQ — [Option A] 순백→크림 */}
+        {/* 9. FAQ — shared home surface B */}
         <ScrollAnimationWrapper
           animationType="fade-in"
         >
@@ -565,7 +565,7 @@ export default function Home() {
             fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}
             anchorSelectors={["#faq"]}
           >
-            <div className="home-surface-a section-bg-cream">
+            <div className="home-section-surface home-section-surface--b">
               <Suspense fallback={<SectionFallback {...HOME_SECTION_FALLBACKS.faq} />}>
                 <FAQSection />
               </Suspense>
@@ -576,7 +576,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer homeSectionSurface="a" />
 
       {/* 팝업은 조건 충족 시 초기 화면과 함께 표시한다. 각 컴포넌트는 당일 숨김·활성 상태를 자체 확인한다. */}
       <Suspense fallback={null}>

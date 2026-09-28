@@ -7268,19 +7268,8 @@ body.font-lang-zh .hero-stat-label {
     padding: 0.25rem 0.25rem 1.25rem !important;
   }
 
-  /* PC parity: only reflow the shared homepage content on mobile. The visible
-     copy, two-surface palette, and text colors match the final desktop page. */
-  #main-content #management-devices,
-  #main-content #results-statistics,
-  #main-content .youtube-section-root {
-    background: #F3EEE7 !important;
-  }
-
-  #main-content #about,
-  #main-content #facility,
-  #main-content #faq {
-    background: #FAF8F5 !important;
-  }
+  /* Background tokens are set once by the shared home-surface classes below.
+     Keep mobile-only content reflow independent from the section palette. */
 
   #main-content #management-devices .section-eyebrow,
   #main-content .youtube-section-root .section-eyebrow {
@@ -7836,39 +7825,6 @@ body.font-lang-zh .hero-stat-label {
 }
 
 
-/* ── Homepage management-device surface separation ───────────────────────
-   The treatment canvas remains untouched. Give CARE DEVICES its own bright
-   off-white surface and one quiet gold handoff line at every viewport. */
-:root {
-  --home-management-section-bg: #FBF9F5;
-  --home-management-section-divider: rgba(168, 137, 94, 0.26);
-}
-
-@layer components {
-  @media (min-width: 768px) {
-    .home-page .home-surface-b.section-bg-dark-brown,
-    .home-page .home-surface-b.section-bg-dark-brown > #management-devices {
-      background: var(--home-management-section-bg) !important;
-    }
-
-    .home-page .home-surface-b.section-bg-dark-brown > #management-devices {
-      border-top: 1px solid var(--home-management-section-divider) !important;
-    }
-  }
-
-  @media (max-width: 767px) {
-    #main-content.home-main .home-surface-b.section-bg-dark-brown,
-    #main-content.home-main #management-devices {
-      background: var(--home-management-section-bg) !important;
-    }
-
-    #main-content.home-main #management-devices {
-      border-top: 1px solid var(--home-management-section-divider) !important;
-    }
-  }
-}
-
-
 /* ── Mobile special-event detail simplification ──────────────────────────
    Preserve detail data for desktop cards, while keeping the mobile disclosure
    image-led: image → price rows → any supplemental copy → collapse control. */
@@ -7900,4 +7856,43 @@ body.font-lang-zh .hero-stat-label {
       padding-bottom: 0.875rem !important;
     }
   }
+}
+
+
+/* ── Homepage alternating section surfaces ───────────────────────────────
+   One palette, one class pair, every viewport. Home.tsx owns the sequence;
+   inner cards, imagery, type, and responsive reflow retain their own styles. */
+:root {
+  --home-section-bg-a: #FAF8F5;
+  --home-section-bg-b: #F3EEE7;
+  --home-section-divider: color-mix(in srgb, var(--color-gold-primary) 24%, transparent);
+}
+
+.home-page .home-section-surface--a {
+  --contact-section-bg: var(--home-section-bg-a);
+  background: var(--home-section-bg-a) !important;
+}
+
+.home-page .home-section-surface--b {
+  --contact-section-bg: var(--home-section-bg-b);
+  background: var(--home-section-bg-b) !important;
+}
+
+/* Apply the wrapper surface to each rendered root as well. This neutralizes
+   legacy section utilities and keeps deferred and mounted content identical. */
+.home-page .home-section-surface--a > section,
+.home-page section.home-section-surface--a {
+  background: var(--home-section-bg-a) !important;
+}
+
+.home-page .home-section-surface--b > section,
+.home-page section.home-section-surface--b {
+  background: var(--home-section-bg-b) !important;
+}
+
+/* The light surfaces are deliberately close; a quiet gold handoff guarantees
+   that consecutive sections remain legible without changing card treatments. */
+.home-page .home-section-surface:not(.lifting-positioning-summary),
+.home-page #contact.home-section-surface {
+  border-top: 1px solid var(--home-section-divider);
 }

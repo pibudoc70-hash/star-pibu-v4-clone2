@@ -17,9 +17,10 @@ export { buildMarkerPinElement } from "@/lib/mapHelpers";
 interface ContactSectionProps {
   showHeader?: boolean;
   desktopTone?: "default" | "doctors";
+  surfaceClassName?: string;
 }
 
-export default function ContactSection({ showHeader = true, desktopTone = "default" }: ContactSectionProps) {
+export default function ContactSection({ showHeader = true, desktopTone = "default", surfaceClassName }: ContactSectionProps) {
   const sectionRef = useSectionReveal(80);
   const { t } = useLang();
   const { phoneHref, phoneDisplay } = useChatConfig();
@@ -58,7 +59,7 @@ export default function ContactSection({ showHeader = true, desktopTone = "defau
     <section
       ref={sectionRef}
       id="contact"
-      className={`pt-12 pb-16 sm:pt-16 sm:pb-24 scroll-mt-24 md:scroll-mt-28${desktopTone === "doctors" ? " contact-section--doctors" : ""}`}
+      className={`pt-12 pb-16 sm:pt-16 sm:pb-24 scroll-mt-24 md:scroll-mt-28${desktopTone === "doctors" ? " contact-section--doctors" : ""}${surfaceClassName ? ` ${surfaceClassName}` : ""}`}
       style={{ backgroundColor: "var(--contact-section-bg, var(--brand-bg-warm))" }}
       aria-label="오시는 방법 및 연락처"
     >

@@ -10,13 +10,15 @@ const layers = readFileSync(
   resolve(process.cwd(), "client/src/components/hero/HeroBackgroundLayers.tsx"),
   "utf8",
 );
+const css = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("Hero text contrast overlay", () => {
-  it("adds a non-interactive low-opacity gradient behind the central text area", () => {
+  it("adds a non-interactive shared low-opacity gradient behind the central text area", () => {
     expect(overlays).toContain("export function HeroTextContrastOverlay()");
     expect(overlays).toContain('className="absolute inset-0 pointer-events-none"');
-    expect(overlays).toContain("radial-gradient(ellipse 58% 42% at 50% 47%");
-    expect(overlays).toContain("rgba(49,38,28,0.30)");
+    expect(overlays).toContain('"var(--hero-text-contrast-gradient)"');
+    expect(css).toContain("--hero-text-contrast-gradient:");
+    expect(css).toContain("radial-gradient(ellipse 58% 42% at 50% 47%");
   });
 
   it("places the overlay in the background layer stack before Hero content", () => {

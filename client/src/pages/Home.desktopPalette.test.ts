@@ -43,10 +43,11 @@ describe("homepage desktop palette and label refinement", () => {
     }
   });
 
-  it("uses warm neutral desktop hero overlays without changing mobile overlay literals", () => {
-    expect(overlaysSource).toContain("rgba(58,45,33,0.76)");
-    expect(overlaysSource).toContain("rgba(49,38,28,0.48)");
-    expect(overlaysSource).toContain("rgba(4,8,22,0.72)");
+  it("uses one shared dark-navy hero overlay token across desktop and mobile", () => {
+    expect(overlaysSource).toContain('"var(--hero-overlay-gradient)"');
+    expect(overlaysSource).toContain('"var(--hero-vignette-gradient)"');
+    expect(cssSource).toContain("--hero-overlay-gradient:");
+    expect(cssSource).toContain("rgba(16, 22, 35, 0.36)");
   });
 
   it("uses English eyebrows for the homepage sections standardized across breakpoints", () => {

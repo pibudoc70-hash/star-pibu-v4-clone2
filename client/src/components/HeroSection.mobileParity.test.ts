@@ -19,10 +19,10 @@ describe("homepage mobile hero and promotion parity", () => {
     expect(hero).toContain("Trust, and Science Meet");
   });
 
-  it("uses the approved desktop overlay, centered image focal point, and transparent editorial stats", () => {
+  it("uses the shared dark-navy overlay, centered image focal point, and transparent editorial stats", () => {
     expect(mobileParityBlock).toContain("object-position: center center !important;");
-    expect(mobileParityBlock).toContain("rgba(58,45,33,0.76)");
-    expect(mobileParityBlock).toContain("rgba(49,38,28,0.48)");
+    expect(css).toContain("--hero-overlay-gradient:");
+    expect(css).toContain("--hero-vignette-gradient:");
     expect(mobileParityBlock).toContain("background: transparent !important;");
     expect(mobileParityBlock).toContain("color: rgba(255,255,255,0.97) !important;");
   });
@@ -68,7 +68,7 @@ describe("homepage mobile hero and promotion parity", () => {
     expect(mobileBreathingRoomBlock).toContain("hero-mobile-scroll-arrow");
     expect(mobileBreathingRoomBlock).toContain("margin-top: 0 !important;");
     expect(mobileBreathingRoomBlock).toContain("translateY(0.75rem) !important;");
-    expect(css).toContain("rgba(58,45,33,0.42)");
-    expect(css).toContain("rgba(58,45,33,0.50)");
+    expect(css).toContain("--hero-background-blur: 3.5px;");
+    expect(css).toContain("--hero-background-brightness: 0.66;");
   });
 });

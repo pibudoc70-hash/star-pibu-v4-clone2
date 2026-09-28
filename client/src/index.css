@@ -123,6 +123,14 @@
 
 :root {
   --radius: 0.5rem;
+  /* Hero background treatment — shared by desktop and mobile image layers. */
+  --hero-background-blur: 3.5px;
+  --hero-background-brightness: 0.66;
+  --hero-background-saturation: 0.85;
+  --hero-background-scale: 1.05;
+  --hero-overlay-gradient: linear-gradient(to bottom, rgba(16, 22, 35, 0.36) 0%, rgba(15, 20, 33, 0.56) 44%, rgba(10, 14, 27, 0.74) 72%, rgba(5, 8, 18, 0.84) 100%);
+  --hero-vignette-gradient: radial-gradient(ellipse at center, transparent 24%, rgba(8, 12, 24, 0.32) 100%);
+  --hero-text-contrast-gradient: radial-gradient(ellipse 58% 42% at 50% 47%, rgba(25, 31, 44, 0.20) 0%, rgba(18, 23, 36, 0.10) 48%, transparent 78%);
   /* 브랜드 웜 뉴트럴 팔레트 */
   --background: oklch(0.985 0.006 75);    /* #FAF8F5 웸 화이트 */
   --foreground: oklch(0.22 0.008 40);     /* #2C2C2C 진한 차콜 */
@@ -951,6 +959,10 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
+    filter: blur(var(--hero-background-blur)) brightness(var(--hero-background-brightness)) saturate(var(--hero-background-saturation));
+    transform: scale(var(--hero-background-scale));
+    transform-origin: center;
+    will-change: filter, transform;
   }
   /* 모바일 hero 이미지 — 고정 (슬라이드 없음) */
   @media (max-width: 767px) {
@@ -7542,15 +7554,6 @@ body.font-lang-zh .hero-stat-label {
   #home .hero-mobile-layout {
     overflow-x: clip !important;
     text-align: center !important;
-  }
-
-  /* Full-bleed vertical overlay keeps mobile copy readable without a local box. */
-  #home > div[aria-hidden="true"][style*="linear-gradient"] {
-    background: linear-gradient(to bottom, rgba(58,45,33,0.76) 0%, rgba(58,45,33,0.42) 38%, rgba(58,45,33,0.50) 62%, rgba(58,45,33,0.80) 100%) !important;
-  }
-
-  #home > div[aria-hidden="true"][style*="ellipse 70% 55%"] {
-    background: radial-gradient(ellipse at center, transparent 35%, rgba(49,38,28,0.48) 100%) !important;
   }
 
   #home .hero-mobile-title {

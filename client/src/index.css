@@ -7505,3 +7505,118 @@ body.font-lang-zh .hero-stat-label {
     overflow-wrap: normal !important;
   }
 }
+
+
+/* ── Homepage mobile hero and promotion parity ───────────────────────────
+   Phone-only visual normalization: reuse the approved desktop brown overlay,
+   typography colors, transparent editorial stats, and promotion dim treatment.
+   Markup, popup creative, controls' hit targets, and desktop rules remain intact. */
+/* The legacy mobile Hero rules live in @layer components. Keep this override
+   in that same layer so their !important declarations do not outrank it. */
+@layer components {
+@media (max-width: 767px) {
+  #home {
+    background: var(--brand-bg, #FAF8F5) !important;
+    overflow-x: clip !important;
+  }
+
+  /* The supplied hero image is shared with desktop; keep its focal point centered. */
+  #home .hero-bg-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  #home .hero-mobile-layout,
+  #home .hero-mobile-top-group,
+  #home .hero-mobile-bottom-group,
+  #home .hero-mobile-slogan-wrap,
+  #home .hero-stats-wrap {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  #home .hero-mobile-layout {
+    overflow-x: clip !important;
+    text-align: center !important;
+  }
+
+  /* HeroDarkOverlay and HeroVignette keep PC's warm brown values on phones. */
+  #home > div[aria-hidden="true"][style*="linear-gradient"] {
+    background: linear-gradient(to bottom, rgba(58,45,33,0.76) 0%, rgba(58,45,33,0.28) 38%, rgba(58,45,33,0.36) 62%, rgba(58,45,33,0.80) 100%) !important;
+  }
+
+  #home > div[aria-hidden="true"][style*="ellipse 70% 55%"] {
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(49,38,28,0.48) 100%) !important;
+  }
+
+  #home .hero-mobile-title {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+  }
+
+  #home .hero-mobile-slogan {
+    color: rgba(255,255,255,0.78) !important;
+    opacity: 1 !important;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.45) !important;
+  }
+
+  /* Desktop's stat strip is an editorial divider, not a blue glass panel. */
+  #home .hero-mobile-layout .hero-stats-row {
+    background: transparent !important;
+    border-top: 1px solid rgba(201,168,76,0.42) !important;
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #home .hero-mobile-layout .hero-stat-value {
+    color: rgba(255,255,255,0.97) !important;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.50), 0 0 20px rgba(0,0,0,0.20) !important;
+  }
+
+  #home .hero-mobile-layout .hero-stat-value[data-done="true"] {
+    color: #F0DE96 !important;
+    text-shadow: 0 0 28px rgba(237,217,138,0.70), 0 2px 12px rgba(0,0,0,0.50) !important;
+  }
+
+  #home .hero-mobile-layout .hero-stat-label {
+    color: rgba(255,255,255,0.92) !important;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.60), 0 0 14px rgba(0,0,0,0.30) !important;
+  }
+
+  /* The mobile dim uses the same warm brown opacity as the desktop popup. */
+  [data-testid="promotion-popup-overlay"] {
+    background: rgba(28,22,17,0.74) !important;
+  }
+
+  /* Keep 52px touch targets while removing only the dark control-bar chrome. */
+  [data-testid="promotion-popup-controls"],
+  [data-testid="promotion-hide-today-control"],
+  [data-testid="promotion-hide-today-control"]:hover,
+  [data-testid="promotion-hide-today-control"]:active {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  [data-testid="promotion-hide-today-control"] {
+    border-radius: 0 !important;
+    color: #FFFFFF !important;
+  }
+
+  [data-testid="promotion-hide-today-control"]:focus-within {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  [data-testid="promotion-popup-close"] {
+    color: #FFFFFF !important;
+  }
+}
+}

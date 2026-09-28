@@ -1,13 +1,12 @@
 /**
  * Footer - STAR 피부과
- * 디자인: 다크 네이비 배경, 빠른 링크 + SNS + 법적 정보
+ * 디자인: 컴팩트 다크 배경, 브랜드 + SNS + 법적 정보
  * i18n: useLang으로 한/중/일 전환
  */
-import { MessageCircle, Youtube, BookOpen, Instagram, Phone, MapPin, Mail, Printer } from "lucide-react";
+import { MessageCircle, Youtube, BookOpen, Instagram } from "lucide-react";
 import { useLocation } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 import { getLocaleBase } from "../../../shared/pathUtils";
-import { CLINIC_TEL, CLINIC_TEL_INTL } from "@/lib/constants";
 import ContactSection from "@/components/ContactSection";
 
 const sns = [
@@ -22,7 +21,7 @@ interface FooterProps {
 }
 
 export default function Footer({ showContactSection = true }: FooterProps) {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const [, navigate] = useLocation();
 
   const handleNavClick = (href: string) => {
@@ -75,24 +74,6 @@ export default function Footer({ showContactSection = true }: FooterProps) {
     }
   };
 
-  // Header primaryNav + secondaryNav 순서와 일치 (일관성 유지)
-  const quickLinks = [
-    // 1차 메뉴
-    { label: t.nav.treatments, href: "#treatments" },
-    { label: t.nav.doctors,    href: "/doctors"    },
-    { label: "EVENT",          href: "#events"     },
-    { label: t.nav.about,      href: "/about"      },
-    // 2차 메뉴 (More 패널과 동일)
-    { label: t.nav.facility,   href: "#facility"   },
-    { label: t.nav.contact,    href: "#contact"    },
-    { label: t.nav.foreignGuide, href: "/foreign-guide" },
-  ];
-
-  // 주요 시술 목록 (언어별)
-  const treatmentItems = t.treatments.categories.flatMap((c) => c.items.slice(0, 2)).slice(0, 10);
-
-
-
   return (
     <>
       {showContactSection && <ContactSection />}
@@ -105,10 +86,10 @@ export default function Footer({ showContactSection = true }: FooterProps) {
       <div
         className="container"
         style={{
-          padding: "40px 1.25rem 32px",
+          padding: "32px 1.25rem 24px",
           display: "flex",
           flexDirection: "column",
-          gap: "16px",
+          gap: "12px",
           borderBottom: "1px solid rgba(255,255,255,0.07)",
         }}
       >
@@ -159,117 +140,6 @@ export default function Footer({ showContactSection = true }: FooterProps) {
                 </a>
               );
             })}
-          </div>
-        </div>
-      </div>
-
-      {/* ── 3열 정보 영역 ── */}
-      <div
-        className="container"
-        style={{
-          padding: "32px 1.25rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: "32px",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
-        }}
-      >
-        {/* Quick Links */}
-        <div>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "400",
-              letterSpacing: "0.12em",
-              color: "rgba(255,255,255,0.35)",
-              marginBottom: "14px",
-              textTransform: "uppercase",
-            }}
-          >
-            {t.footer.quickMenu}
-          </p>
-          <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            {quickLinks.map((l) => (
-              <li key={l.label}>
-                <button
-                  type="button"
-                  onClick={() => handleNavClick(l.href)}
-                  className="transition-colors hover:text-white"
-                  style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", letterSpacing: "-0.01em" }}
-                >
-                  {l.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Key Treatments */}
-        <div>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "400",
-              letterSpacing: "0.12em",
-              color: "rgba(255,255,255,0.35)",
-              marginBottom: "14px",
-              textTransform: "uppercase",
-            }}
-          >
-            {t.footer.mainTreatments}
-          </p>
-          <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            {treatmentItems.slice(0, 6).map((item) => (
-              <li key={item}>
-                <button
-                  type="button"
-                  onClick={() => handleNavClick("#treatments")}
-                  className="transition-colors hover:text-white"
-                  style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", letterSpacing: "-0.01em" }}
-                >
-                  {item}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: "400",
-              letterSpacing: "0.12em",
-              color: "rgba(255,255,255,0.35)",
-              marginBottom: "14px",
-              textTransform: "uppercase",
-            }}
-          >
-            {t.footer.contactInfo}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <a
-              href={lang === "ko" ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`}
-              className="transition-colors hover:text-white"
-              style={{ fontSize: "15px", fontWeight: "400", color: "rgba(255,255,255,0.8)", letterSpacing: "0.02em" }}
-            >
-              {t.footer.tel}
-            </a>
-            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: "1.6" }}>
-              {t.footer.address}
-            </p>
-            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}>
-              {t.footer.subwayInfo}
-            </p>
-            {/* 영업시간 요약 */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "3px", paddingTop: "4px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-              {t.hours.rows.slice(0, 3).map((row) => (
-                <p key={row.day} style={{ fontSize: "11px", color: "rgba(255,255,255,0.62)" }}>
-                  {row.day} {row.time}
-                </p>
-              ))}
-            </div>
           </div>
         </div>
       </div>

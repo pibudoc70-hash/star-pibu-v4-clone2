@@ -47,16 +47,22 @@ describe("homepage mobile hero and promotion parity", () => {
     expect(mobilePlacementBlock).toContain("max-height: 650px");
   });
 
-  it("keeps mobile copy unchanged while giving the title cluster and statistic labels more breathing room", () => {
+  it("keeps mobile copy unchanged while separating statistics and removing the local text box", () => {
     expect(mobileBreathingRoomBlock).toContain("@media (max-width: 767px)");
     expect(mobileBreathingRoomBlock).not.toContain("font-size:");
+    expect(mobileBreathingRoomBlock).not.toContain("hero-mobile-top-group::before");
+    expect(mobileBreathingRoomBlock).not.toContain("radial-gradient");
     expect(mobileBreathingRoomBlock).toContain("margin-bottom: clamp(1.75rem, 4svh, 2.25rem) !important;");
     expect(mobileBreathingRoomBlock).toContain("margin-bottom: clamp(1.25rem, 2.8svh, 1.5rem) !important;");
-    expect(mobileBreathingRoomBlock).toContain("gap: clamp(2.5rem, 5.5svh, 3.5rem) !important;");
+    expect(mobileBreathingRoomBlock).toContain("gap: clamp(4.5rem, 8svh, 5.5rem) !important;");
     expect(mobileBreathingRoomBlock).toContain("line-height: 1.75 !important;");
     expect(mobileBreathingRoomBlock).toContain("margin-top: clamp(0.5rem, 1.3svh, 0.75rem) !important;");
-    expect(mobileBreathingRoomBlock).toContain("hero-mobile-top-group::before");
-    expect(mobileBreathingRoomBlock).toContain("rgba(25, 19, 14, 0.62)");
-    expect(mobileBreathingRoomBlock).toContain("backdrop-filter: blur(1.75px);");
+    expect(mobileBreathingRoomBlock).toContain("background: transparent !important;");
+    expect(mobileBreathingRoomBlock).toContain("backdrop-filter: none !important;");
+    expect(mobileBreathingRoomBlock).toContain("hero-stats-wrap");
+    expect(mobileBreathingRoomBlock).toContain("hero-mobile-scroll-arrow");
+    expect(mobileBreathingRoomBlock).toContain("margin-top: 0 !important;");
+    expect(css).toContain("rgba(58,45,33,0.42)");
+    expect(css).toContain("rgba(58,45,33,0.50)");
   });
 });

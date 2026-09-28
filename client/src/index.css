@@ -7544,9 +7544,9 @@ body.font-lang-zh .hero-stat-label {
     text-align: center !important;
   }
 
-  /* HeroDarkOverlay and HeroVignette keep PC's warm brown values on phones. */
+  /* Full-bleed vertical overlay keeps mobile copy readable without a local box. */
   #home > div[aria-hidden="true"][style*="linear-gradient"] {
-    background: linear-gradient(to bottom, rgba(58,45,33,0.76) 0%, rgba(58,45,33,0.28) 38%, rgba(58,45,33,0.36) 62%, rgba(58,45,33,0.80) 100%) !important;
+    background: linear-gradient(to bottom, rgba(58,45,33,0.76) 0%, rgba(58,45,33,0.42) 38%, rgba(58,45,33,0.50) 62%, rgba(58,45,33,0.80) 100%) !important;
   }
 
   #home > div[aria-hidden="true"][style*="ellipse 70% 55%"] {
@@ -7681,25 +7681,19 @@ body.font-lang-zh .hero-stat-label {
     line-height: 1.75 !important;
   }
 
-  /* Slogan → stats: 40–56px, keeping the hero's flex-centered balance. */
+  /* Slogan → stats: increase the separation while retaining flex balance. */
   #home .hero-mobile-layout {
-    gap: clamp(2.5rem, 5.5svh, 3.5rem) !important;
+    gap: clamp(4.5rem, 8svh, 5.5rem) !important;
   }
 
-  /* Preserve the sign focal point while softening it only behind the copy. */
+  /* Explicitly keep the copy wrapper surface-free: no floating rectangle. */
   #home .hero-mobile-top-group {
-    isolation: isolate;
     position: relative;
-  }
-
-  #home .hero-mobile-top-group::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    inset: -1.25rem -1.75rem;
-    background: radial-gradient(ellipse at center, rgba(25, 19, 14, 0.62) 0%, rgba(25, 19, 14, 0.44) 52%, rgba(25, 19, 14, 0.12) 74%, transparent 88%);
-    backdrop-filter: blur(1.75px);
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   /* Give the editorial statistic divider, values, and captions clearer air. */
@@ -7715,7 +7709,16 @@ body.font-lang-zh .hero-stat-label {
 
 @media (max-width: 767px) and (max-height: 650px) {
   #home .hero-mobile-layout {
-    gap: 2.5rem !important;
+    gap: 2.875rem !important;
+  }
+
+  /* Keep the down-arrow clear of the fixed consultation bar on short phones. */
+  #home .hero-mobile-bottom-group .hero-stats-wrap {
+    margin-bottom: 0 !important;
+  }
+
+  #home .hero-mobile-scroll-arrow {
+    margin-top: 0 !important;
   }
 }
 }

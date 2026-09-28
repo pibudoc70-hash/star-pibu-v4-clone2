@@ -42,4 +42,15 @@ describe("homepage mobile-only optimization", () => {
     expect(mobileHomeBlock).toContain("#faq .faq-tabs-scroll");
     expect(mobileHomeBlock).toContain("scroll-snap-type: x mandatory");
   });
+
+  it("keeps final desktop copy and approved surfaces authoritative on mobile", () => {
+    expect(mobileHomeBlock).toContain("background: #F3EEE7 !important;");
+    expect(mobileHomeBlock).toContain("background: #FAF8F5 !important;");
+    expect(mobileHomeBlock).toContain("color: var(--brand-text, #2C2C2C) !important;");
+    expect(mobileHomeBlock).toContain("#management-devices .section-subtitle,");
+    expect(mobileHomeBlock).toContain(".youtube-section-root .section-subtitle,");
+    expect(mobileHomeBlock).toContain("#management-devices .management-device-card > div > span.hidden");
+    expect(mobileHomeBlock).toContain('#faq div.hidden[class~="md:block"]');
+    expect(mobileHomeBlock).toContain("#about .reveal-right.hidden.lg\\:block");
+  });
 });

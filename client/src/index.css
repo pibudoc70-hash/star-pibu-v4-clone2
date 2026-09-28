@@ -7254,6 +7254,73 @@ body.font-lang-zh .hero-stat-label {
   #faq .faq-answer-panel {
     padding: 0.25rem 0.25rem 1.25rem !important;
   }
+
+  /* PC parity: only reflow the shared homepage content on mobile. The visible
+     copy, two-surface palette, and text colors match the final desktop page. */
+  #main-content #management-devices,
+  #main-content #results-statistics,
+  #main-content .youtube-section-root {
+    background: #F3EEE7 !important;
+  }
+
+  #main-content #about,
+  #main-content #facility,
+  #main-content #faq {
+    background: #FAF8F5 !important;
+  }
+
+  #main-content #management-devices .section-eyebrow,
+  #main-content .youtube-section-root .section-eyebrow {
+    color: var(--color-gold-dark, #7A5C35) !important;
+  }
+
+  #main-content #management-devices .section-title,
+  #main-content .youtube-section-root .section-title {
+    color: var(--brand-text, #2C2C2C) !important;
+  }
+
+  #main-content #about .section-subtitle {
+    color: var(--brand-text-mid, #5A5A5A) !important;
+  }
+
+  #about .reveal-right.hidden.lg\:block {
+    display: block !important;
+    margin-top: 1.5rem;
+  }
+
+  #about .reveal-right.hidden.lg\:block img {
+    height: min(18rem, 72vw) !important;
+    margin-top: 0 !important;
+    border-radius: 1rem !important;
+  }
+
+  #main-content .youtube-video-title {
+    background: var(--brand-bg-warm, #EDE8E0) !important;
+  }
+
+  #main-content .youtube-video-title-text,
+  #main-content .youtube-shorts-heading {
+    color: var(--brand-text, #2C2C2C) !important;
+  }
+
+  /* Desktop hides these auxiliary mobile-only labels. Keep the shared PC
+     copy authoritative at every width, while retaining the mobile reflow. */
+  #management-devices .section-subtitle,
+  #facility .section-subtitle,
+  .youtube-section-root .section-subtitle,
+  .youtube-videos-block > h3,
+  .youtube-shorts-block > h3 {
+    display: none !important;
+  }
+
+  #management-devices .management-device-card > div > span.hidden {
+    display: block !important;
+  }
+
+  #faq div.hidden[class~="md:block"] {
+    display: block !important;
+    margin-top: 2rem;
+  }
 }
 
 /* The legacy 80px rule lives in @layer components. Important declarations

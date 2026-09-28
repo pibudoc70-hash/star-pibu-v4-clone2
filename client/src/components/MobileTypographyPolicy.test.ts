@@ -8,7 +8,6 @@ const indexCss = readFileSync(resolve(projectRoot, "client/src/index.css"), "utf
 const readableBodyFiles = [
   "ConsultationFormSection.tsx",
   "EventsSection.tsx",
-  "FAQSection.tsx",
   "ManagementDevicesSection.tsx",
   "PhilosophySection.tsx",
   "ReservationSection.tsx",

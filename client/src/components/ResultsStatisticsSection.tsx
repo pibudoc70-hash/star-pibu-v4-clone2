@@ -42,7 +42,7 @@ export default function ResultsStatisticsSection({ showRegenerativeMedicineBanne
         </div>
 
         {/* 의료진 카드 */}
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${showRegenerativeMedicineBanner ? "mb-6 md:mb-8" : "mb-16"}`}>
+        <div className={`results-statistics__cards grid grid-cols-1 md:grid-cols-3 gap-6 ${showRegenerativeMedicineBanner ? "mb-6 md:mb-8" : "mb-16"}`}>
           {isLoading ? (
             <>
               <DoctorCardSkeleton />
@@ -53,7 +53,7 @@ export default function ResultsStatisticsSection({ showRegenerativeMedicineBanne
             doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 card"
+              className="results-statistics__card rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 card"
             >
               {/* 의료진 사진 */}
               <div className="relative h-64 md:h-72 overflow-hidden" style={{ background: 'var(--brand-bg-warm, #EDE8E0)' }}>

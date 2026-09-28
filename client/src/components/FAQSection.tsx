@@ -84,7 +84,7 @@ export default function FAQSection() {
           </div>
 
           {/* 장비 탭 */}
-          <div className="flex flex-wrap gap-2.5 justify-center mb-10">
+          <div className="faq-tabs-scroll flex flex-wrap gap-2.5 justify-center mb-10">
             {(faq.items as FAQItem[]).map((item: FAQItem, idx: number) => (
               <button type="button"
                 key={idx}

@@ -177,17 +177,17 @@ function DeviceCard({
   const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
 
   return (
-    <div className="flex w-full flex-col items-center gap-2 rounded-xl p-2 sm:p-3">
+    <div className="management-device-card flex w-full flex-col items-center gap-2 rounded-xl p-2 sm:p-3">
       <button
         type="button"
         onClick={(event) => onClick(event.currentTarget)}
-        className="group flex flex-col items-center"
+        className="management-device-card__button group flex flex-col items-center"
         style={{ background: "transparent", border: "none", cursor: "pointer" }}
         aria-label={displayName}
       >
         {/* 원형 이미지 */}
         <div
-          className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
+          className="management-device-card__image w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg"
           style={{
             background: "rgba(201, 168, 105, 0.15)",
             border: "2px solid rgba(160, 120, 55, 0.65)",
@@ -207,7 +207,7 @@ function DeviceCard({
       {/* 이름 */}
       <div className="text-center">
         <p
-          className="text-[11px] sm:text-xs lg:text-sm font-bold leading-tight transition-colors duration-200 group-hover:text-[#7a5520] break-keep"
+          className="management-device-card__name text-[11px] sm:text-xs lg:text-sm font-bold leading-tight transition-colors duration-200 group-hover:text-[#7a5520] break-keep"
           style={{ color: "#2c1f0e", textShadow: "none" }}
         >
           {displayName}
@@ -250,7 +250,7 @@ export default function ManagementDevicesSection() {
           <div className="section-header-block reveal-heading">
             <span className="section-eyebrow management-devices-eyebrow">
               <span className="hidden md:inline">CARE DEVICES</span>
-              <span className="md:hidden">{md.eyebrow ?? "MANAGEMENT DEVICES"}</span>
+              <span className="md:hidden">CARE DEVICES</span>
             </span>
             <h2 className="section-title management-devices-title">{md.sectionTitle}</h2>
             <div className="star-divider mx-auto" />

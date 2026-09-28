@@ -140,25 +140,13 @@ describe("모바일 언어 버튼 — 중앙 언어 전환 계약 재사용", ()
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 4. Footer quickLinks — Header primaryNav 순서와 일치
+// 4. Footer simplified structure — middle quick-link columns removed
 // ─────────────────────────────────────────────────────────────────────────────
-describe("Footer quickLinks — Header primaryNav 순서 일관성", () => {
-  it("Footer quickLinks의 첫 번째 항목이 treatments(시술·장비)여야 한다", () => {
-    // quickLinks 배열 블록 추출
-    const quickLinksBlock = footerSource.match(
-      /const quickLinks\s*=\s*\[[\s\S]*?\];/,
-    )?.[0] ?? "";
-    // 첫 번째 href가 #treatments여야 함
-    const firstHref = quickLinksBlock.match(/href:\s*["']([^"']+)["']/)?.[1];
-    expect(firstHref).toBe("#treatments");
-  });
-
-  it("Footer quickLinks에 /foreign-guide 항목이 포함되어야 한다", () => {
-    expect(footerSource).toMatch(/href:\s*["']\/foreign-guide["']/);
-  });
-
-  it("Footer quickLinks에 /about 항목이 포함되어야 한다", () => {
-    expect(footerSource).toMatch(/href:\s*["']\/about["']/);
+describe("Footer simplified structure", () => {
+  it("removes the obsolete quick-link collection while retaining legal destinations", () => {
+    expect(footerSource).not.toContain("const quickLinks");
+    expect(footerSource).toContain('handleNavClick("/non-covered")');
+    expect(footerSource).toContain('handleNavClick("/privacy")');
   });
 });
 

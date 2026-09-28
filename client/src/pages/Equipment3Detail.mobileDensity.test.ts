@@ -42,8 +42,10 @@ describe("Equipment3Detail mobile density contract", () => {
 
   it("does not modify desktop breakpoint rules in the mobile density block", () => {
     const start = css.indexOf("/* ── Equipment detail mobile density: shared detail template only ── */");
-    const block = css.slice(start);
+    const end = css.indexOf(".equipment-detail-page--dark header[role=\"banner\"]", start);
+    const block = css.slice(start, end);
 
+    expect(end).toBeGreaterThan(start);
     expect(block).not.toContain("min-width:");
     expect(block).not.toContain("@media (min-width");
   });

@@ -49,13 +49,13 @@ describe("homepage desktop palette and label refinement", () => {
     expect(overlaysSource).toContain("rgba(4,8,22,0.72)");
   });
 
-  it("uses English desktop eyebrow labels while retaining localized mobile labels", () => {
+  it("uses English eyebrows for the homepage sections standardized across breakpoints", () => {
     expect(doctorsSource).toContain('<span className="hidden md:inline">MEDICAL TEAM</span>');
     expect(facilitySource).toContain('<span className="hidden md:inline">CLINIC FACILITIES</span>');
     expect(managementSource).toContain('<span className="hidden md:inline">CARE DEVICES</span>');
     expect(doctorsSource).toContain('<span className="md:hidden">{t.doctors.teamLabel ?? t.doctors.label}</span>');
-    expect(facilitySource).toContain('<span className="md:hidden">{fc.sectionTitle}</span>');
-    expect(managementSource).toContain('<span className="md:hidden">{md.eyebrow ?? "MANAGEMENT DEVICES"}</span>');
+    expect(facilitySource).toContain('<span className="md:hidden">CLINIC FACILITIES</span>');
+    expect(managementSource).toContain('<span className="md:hidden">CARE DEVICES</span>');
   });
 
   it("keeps desktop YouTube card copy readable on the shared warm surface", () => {

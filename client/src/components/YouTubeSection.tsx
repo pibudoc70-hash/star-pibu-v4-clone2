@@ -135,7 +135,7 @@ export default function YouTubeSection() {
     return (
       <section
         ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
-        className="py-16 md:py-24 bg-white"
+        className="youtube-section-root py-16 md:py-24 bg-white"
         aria-label={yt.loadingLabel}
         aria-busy="true"
       >
@@ -181,7 +181,7 @@ export default function YouTubeSection() {
     return (
       <section
         ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>}
-        className="py-16 md:py-24 bg-white"
+        className="youtube-section-root py-16 md:py-24 bg-white"
         aria-label={yt.errorLabel}
       >
         <div className="container mx-auto px-4 text-center">
@@ -217,7 +217,7 @@ export default function YouTubeSection() {
   if (!videos.length && !shorts.length) {
     // 섹션 제목만 표시하고 영상 그리드는 숨김
     return (
-      <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24">
+      <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="youtube-section-root py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="section-header-block">
             <span className="section-eyebrow youtube-section-eyebrow">
@@ -261,7 +261,7 @@ export default function YouTubeSection() {
   }
 
   return (
-    <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="py-16 md:py-24">
+    <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="youtube-section-root py-16 md:py-24">
       <div className="container mx-auto px-4">
         {/* 섹션 제목 */}
         <div className="section-header-block">
@@ -279,9 +279,9 @@ export default function YouTubeSection() {
 
         {/* 상단 영상 4개 */}
         {videos.length > 0 && (
-          <div className="mb-16">
+          <div className="youtube-videos-block mb-16">
             <h3 className="mb-6 text-lg font-semibold text-gray-900 md:hidden">{yt.latestVideos}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="youtube-videos-row grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {videos.map((video) => (
                 <button
                   type="button"
@@ -319,9 +319,9 @@ export default function YouTubeSection() {
 
         {/* 하단 쇼츠 6개 (2줄) */}
         {shorts.length > 0 && (
-          <div>
+          <div className="youtube-shorts-block">
             <h3 className="youtube-shorts-heading mb-6 text-lg font-semibold md:hidden" style={{ color: "rgba(236,229,211,0.92)" }}>{yt.shorts}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
+            <div className="youtube-shorts-row grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
               {shorts.map((short) => (
                 <button
                   type="button"
@@ -358,7 +358,7 @@ export default function YouTubeSection() {
         )}
 
         {/* 채널 링크 */}
-        <div className="text-center mt-12">
+        <div className="youtube-channel-cta text-center mt-12">
           <a
             href="https://www.youtube.com/@starpibu"
             target="_blank"

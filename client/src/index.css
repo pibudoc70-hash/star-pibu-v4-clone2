@@ -6978,3 +6978,295 @@ body.font-lang-zh .hero-stat-label {
 @media (prefers-reduced-motion: reduce) {
   .pain-management-disclosure::details-content { transition: none; transform: none; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   Homepage mobile-only content-density pass
+   Protected sections (#events, #pain-management, #doctors, #treatments)
+   are deliberately excluded. Desktop rules remain unchanged.
+   ───────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) {
+    padding-top: 3rem !important;
+    padding-bottom: 3.25rem !important;
+  }
+
+  html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) > .container {
+    padding-inline: 0.875rem !important;
+    min-width: 0;
+  }
+
+  :is(#management-devices, #results-statistics, .youtube-section-root, #faq) .section-header-block {
+    margin-bottom: 1.5rem !important;
+  }
+
+  #facility .reveal-heading {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* 관리 장비: 외곽 카드 표면은 제거하고, 터치 가능한 원형 장비 아이콘만 남긴다. */
+  #management-devices .management-devices__grid-surface {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #management-devices .management-devices__grid-surface > .grid {
+    gap: 0.5rem !important;
+  }
+
+  #management-devices .management-device-card {
+    min-width: 0;
+    gap: 0.375rem !important;
+    padding: 0.25rem 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #management-devices .management-device-card__button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  #management-devices .management-device-card__image {
+    width: clamp(3.1rem, 14vw, 3.5rem) !important;
+    height: clamp(3.1rem, 14vw, 3.5rem) !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  #management-devices .management-device-card__name {
+    min-width: 0;
+    font-size: 0.7rem !important;
+    line-height: 1.35 !important;
+    overflow-wrap: anywhere;
+  }
+
+  #management-devices [role="dialog"] {
+    max-height: calc(100svh - 2rem);
+    overflow-y: auto;
+  }
+
+  /* 철학: 모바일에서도 헤더 문법을 중앙 정렬하고, 가치 카드는 표면 없이 구분한다. */
+  #about .reveal-left {
+    text-align: center;
+  }
+
+  #about .section-title {
+    margin-bottom: 0.5rem !important;
+  }
+
+  #about .section-subtitle {
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+    font-size: 0.9rem !important;
+    line-height: 1.75 !important;
+  }
+
+  #about [aria-labelledby="star-values-heading"] {
+    margin-top: 1.5rem !important;
+    text-align: left;
+  }
+
+  #about [aria-labelledby="star-values-heading"] > div:first-child {
+    margin-bottom: 0.75rem !important;
+    flex-wrap: wrap;
+    gap: 0.375rem 0.625rem !important;
+  }
+
+  #about .grid.grid-cols-2 {
+    gap: 0.625rem !important;
+  }
+
+  #about .philosophy-value-card {
+    min-width: 0;
+    gap: 0.5rem !important;
+    padding: 0.5rem 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #about .philosophy-value-card .text-xs {
+    font-size: 0.74rem !important;
+    line-height: 1.55 !important;
+    overflow-wrap: anywhere;
+  }
+
+  /* 결과: 모든 카드를 유지한 채 한 장씩 넘길 수 있는 가로 스와이프 열로 전환한다. */
+  #results-statistics .results-statistics__cards {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(78%, 20rem);
+    grid-template-columns: none !important;
+    gap: 0.875rem !important;
+    margin-inline: -0.875rem;
+    padding: 0 0.875rem 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  #results-statistics .results-statistics__card {
+    min-width: 0;
+    scroll-snap-align: start;
+    box-shadow: none !important;
+  }
+
+  #results-statistics .results-statistics__card .h-64 {
+    height: 12.5rem !important;
+  }
+
+  #results-statistics .results-statistics__card .p-4 {
+    padding: 0.875rem !important;
+  }
+
+  #results-statistics [data-testid="regenerative-medicine-banner"] a {
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  /* 시설: 기존 스와이프 기능은 유지하고, 과도한 고정 높이와 썸네일 밀도만 낮춘다. */
+  #facility .facility-carousel-wrap {
+    min-height: 0 !important;
+    border-radius: 1rem !important;
+    box-shadow: none !important;
+  }
+
+  #facility .facility-nav-btn {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+  }
+
+  #facility .facility-carousel-wrap > .flex {
+    gap: 0.25rem !important;
+  }
+
+  #facility .facility-carousel-wrap + .flex {
+    gap: 0.375rem !important;
+    margin-top: 0.75rem !important;
+    padding-inline: 0 !important;
+  }
+
+  #facility .facility-carousel-wrap + .flex > button {
+    width: 4rem !important;
+    height: 3rem !important;
+  }
+
+  /* 유튜브: 일반 영상과 쇼츠를 모두 유지하되 가로 스와이프로 세로 반복을 줄인다. */
+  .youtube-section-root .section-header-block {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .youtube-videos-block {
+    margin-bottom: 2rem !important;
+  }
+
+  .youtube-videos-row,
+  .youtube-shorts-row {
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-template-columns: none !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .youtube-videos-row {
+    grid-auto-columns: minmax(78%, 20rem);
+    gap: 0.75rem !important;
+    margin-inline: -0.875rem;
+    padding: 0 0.875rem 0.5rem;
+  }
+
+  .youtube-shorts-row {
+    grid-auto-columns: minmax(42%, 10rem);
+    gap: 0.5rem !important;
+    margin-inline: -0.875rem;
+    padding: 0 0.875rem 0.5rem;
+  }
+
+  .youtube-videos-row > button,
+  .youtube-shorts-row > button {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .youtube-videos-row .youtube-video-title {
+    padding: 0.75rem !important;
+  }
+
+  .youtube-shorts-heading {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .youtube-channel-cta {
+    margin-top: 2rem !important;
+  }
+
+  /* FAQ: 탭은 가로 스와이프로, 질문·답변은 테두리와 여백만으로 분리한다. */
+  #faq {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  #faq .faq-tabs-scroll {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+    margin: 0 -0.875rem 1.5rem !important;
+    padding: 0 0.875rem 0.5rem !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+
+  #faq .faq-tab-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  #faq .faq-accordion-wrap {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 24%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 24%, transparent);
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #faq .faq-question-btn {
+    gap: 0.75rem !important;
+    padding: 0.875rem 0.25rem !important;
+  }
+
+  #faq .faq-question-btn > div,
+  #faq .faq-question-text {
+    min-width: 0;
+  }
+
+  #faq .faq-question-text {
+    overflow-wrap: anywhere;
+  }
+
+  #faq .faq-answer-panel {
+    padding: 0.25rem 0.25rem 1.25rem !important;
+  }
+}
+
+/* The legacy 80px rule lives in @layer components. Important declarations
+   reverse layer priority, so this scoped override must live in that same layer. */
+@layer components {
+  @media (max-width: 767px) {
+    html body #main-content section:is(#management-devices, #about, #results-statistics, #facility, .youtube-section-root, #faq) {
+      padding-top: 3rem !important;
+      padding-bottom: 3.25rem !important;
+    }
+
+    html body #main-content section#faq {
+      padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    }
+  }
+}

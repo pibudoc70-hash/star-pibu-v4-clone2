@@ -49,7 +49,7 @@ describe("FacilitySection", () => {
 
   it("renders the facility section with correct heading", () => {
     renderWithLang(<FacilitySection />);
-    expect(screen.getByText("시설 안내")).toBeInTheDocument();
+    expect(screen.getAllByText("CLINIC FACILITIES")).not.toHaveLength(0);
     expect(screen.getByText("최신 의료 장비와 쾌적한 환경")).toBeInTheDocument();
   });
 

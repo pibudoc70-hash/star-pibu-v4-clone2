@@ -8,7 +8,6 @@ import { ChevronDown, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
-import { useChatConfig } from "@/hooks/useChatConfig";
 import { getEventLinkHref } from "@shared/eventLinkUrl";
 
 const MOBILE_EVENT_COPY = {
@@ -97,13 +96,9 @@ interface EventInlineDetailProps {
 
 function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, linkUrl }: EventInlineDetailProps) {
   const { lang } = useLang();
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const copy = MOBILE_EVENT_COPY[lang];
   const priceRows = parsePriceRows(event);
   const title = getLocalizedText(event, "title");
-  const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
-  const phoneHref = lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300";
-  const phoneLabel = lang === "ko" ? "051-818-2300" : "+82-51-818-2300";
 
   return (
     <div
@@ -172,15 +167,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5 pt-3">
-            <a href={chatUrl} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-2.5 font-semibold rounded-xl text-center text-sm" style={{ background: chatBg, color: chatColor }}>
-              {chatLabel}
-            </a>
-            <a href={phoneHref} className="flex-1 px-4 py-2.5 font-medium rounded-xl text-center text-sm border border-gray-200" style={{ color: "var(--brand-text-mid, #666666)" }}>
-              {phoneLabel}
-            </a>
-          </div>
-          <div data-testid="mobile-event-detail-footer" className="mt-2.5 flex justify-center border-t border-gray-100 pt-2.5">
+          <div data-testid="mobile-event-detail-footer" className="mt-4 flex justify-center border-t border-gray-100 pt-3">
             <button
               type="button"
               onClick={() => onFooterClose(event.id)}

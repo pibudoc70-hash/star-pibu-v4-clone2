@@ -10,16 +10,6 @@ vi.mock("@/contexts/LangContext", () => ({
   useLang: () => ({ lang: "ko" }),
 }));
 
-vi.mock("@/hooks/useChatConfig", () => ({
-  useChatConfig: () => ({
-    chatUrl: "https://pf.kakao.com/_HNyGC",
-    chatBg: "#FEE500",
-    chatColor: "#111111",
-    isZH: false,
-    isJA: false,
-  }),
-}));
-
 vi.mock("@/components/OptimizedImage", () => ({
   default: () => <div data-testid="optimized-image" />,
 }));
@@ -71,6 +61,8 @@ describe("EventTableMobile", () => {
     const detailClose = within(detail).getByRole("button", { name: "테스트 이벤트 상세 접기" });
     expect(within(detail).getByTestId("mobile-event-detail-footer")).toContainElement(detailClose);
     expect(within(detail).getAllByRole("button", { name: "테스트 이벤트 상세 접기" })).toHaveLength(1);
+    expect(within(detail).queryByRole("link", { name: "카카오 상담" })).not.toBeInTheDocument();
+    expect(within(detail).queryByRole("link", { name: "051-818-2300" })).not.toBeInTheDocument();
 
     fireEvent.click(detailClose);
 
@@ -132,6 +124,15 @@ describe("EventTableMobile", () => {
     expect(styles).toContain("opacity: 0");
     expect(styles).toContain("translateY(8px)");
     expect(styles).toContain(".event-mobile-detail.is-open .event-mobile-detail__body");
+  });
+
+  it("uses one mobile detail renderer without consultation or phone actions", () => {
+    const source = readFileSync(resolve(process.cwd(), "client/src/components/events/EventTableMobile.tsx"), "utf8");
+
+    expect(source).not.toContain("useChatConfig");
+    expect(source).not.toContain("카카오 상담");
+    expect(source).not.toContain("tel:051-818-2300");
+    expect(source).toContain('data-testid="mobile-event-detail-footer"');
   });
 
   it("returns footer close to the expanded event row start with smooth scrolling", () => {

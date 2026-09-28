@@ -65,17 +65,18 @@ describe("EventCard design pilot", () => {
     expect(screen.getByRole("button", { name: "울쎄라피 프라임 접기" })).toHaveClass("event-card__collapse");
     expect(screen.getByText("600샷")).toHaveClass("event-card__extra-label");
     expect(screen.getByText("720,000원")).toHaveClass("event-card__discount-price--row");
-    expect(screen.getByRole("link", { name: "카카오 상담" })).toHaveAttribute("href", "https://example.com/chat");
-    expect(screen.getByRole("link", { name: "051-818-2300" })).toHaveAttribute("href", "tel:051-818-2300");
+    expect(screen.queryByRole("link", { name: "카카오 상담" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "051-818-2300" })).not.toBeInTheDocument();
   });
 
-  it("moves static presentation rules to scoped classes while retaining only dynamic chat colors inline", () => {
+  it("keeps static presentation rules scoped while omitting shared consultation actions", () => {
     const source = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "EventCard.tsx"), "utf8");
     const styles = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../../index.css"), "utf8");
 
     expect(source).toContain("event-card__toggle");
     expect(source).toContain("event-card__media");
-    expect(source).toContain("style={{ background: chatBg, color: chatColor }}");
+    expect(source).not.toContain("useChatConfig");
+    expect(source).not.toContain("event-card__consult-link");
     expect(source).not.toContain('fontSize: "0.82rem"');
     expect(source).not.toContain('aspectRatio: "10/6"');
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
@@ -96,7 +97,8 @@ describe("EventCard design pilot", () => {
     await user.keyboard("{Enter}");
 
     expect(screen.getByRole("button", { name: "울쎄라피 프라임 접기" })).toHaveClass("event-card__collapse");
-    expect(screen.getByRole("link", { name: "카카오 상담" }).parentElement).toHaveClass("hidden", "md:flex");
+    expect(screen.queryByRole("link", { name: "카카오 상담" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "051-818-2300" })).not.toBeInTheDocument();
   });
 
   it("renders the desktop showcase with an edge-to-edge thumbnail and all registered price options", () => {

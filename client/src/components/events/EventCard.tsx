@@ -3,8 +3,6 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
-import { useLang } from "@/contexts/LangContext";
-import { useChatConfig } from "@/hooks/useChatConfig";
 import { getEventLinkHref } from "@shared/eventLinkUrl";
 
 export type EventCardVariant = "lead" | "compact" | "legacy" | "selector" | "showcase";
@@ -100,16 +98,9 @@ interface EventDetailProps {
   event: SpecialEvent;
   title: string;
   priceRows: PriceRow[];
-  chatUrl: string;
-  chatBg: string;
-  chatColor: string;
-  chatLabel: string;
-  phoneHref: string;
-  phoneLabel: string;
   detailId: string;
   onCollapse: () => void;
   compact?: boolean;
-  hideLinksOnMobile?: boolean;
   showCollapse?: boolean;
 }
 
@@ -117,16 +108,9 @@ function EventDetail({
   event,
   title,
   priceRows,
-  chatUrl,
-  chatBg,
-  chatColor,
-  chatLabel,
-  phoneHref,
-  phoneLabel,
   detailId,
   onCollapse,
   compact = false,
-  hideLinksOnMobile = false,
   showCollapse = true,
 }: EventDetailProps) {
   return (
@@ -161,23 +145,6 @@ function EventDetail({
       )}
       {event.desc && <p className="event-card__details mb-3 text-xs whitespace-pre-wrap leading-relaxed">{event.desc}</p>}
       {event.content && <p className="event-card__details mb-4 text-xs whitespace-pre-wrap leading-relaxed">{event.content}</p>}
-      <div className={`gap-2.5 mb-3 ${hideLinksOnMobile ? "hidden md:flex" : "flex"}`}>
-        <a
-          href={chatUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="event-card__consult-link flex-1 px-4 py-2.5 font-semibold rounded-xl transition-opacity duration-200 text-center hover:opacity-85"
-          style={{ background: chatBg, color: chatColor }}
-        >
-          {chatLabel}
-        </a>
-        <a
-          href={phoneHref}
-          className="event-card__consult-link event-card__consult-link--phone flex-1 px-4 py-2.5 font-medium rounded-xl transition-opacity duration-200 text-center hover:opacity-85"
-        >
-          {phoneLabel}
-        </a>
-      </div>
       {showCollapse && (
         <button
           type="button"
@@ -185,7 +152,7 @@ function EventDetail({
           aria-expanded="true"
           aria-controls={detailId}
           aria-label={`${title} 접기`}
-          className="event-card__collapse w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
+          className="event-card__collapse mt-1 w-full py-2.5 font-medium rounded-xl transition-colors text-sm"
         >
           접기
         </button>
@@ -200,12 +167,6 @@ interface VariantCardProps extends Omit<EventCardProps, "variant"> {
   isExpanded: boolean;
   onToggle: () => void;
   title: string;
-  chatUrl: string;
-  chatBg: string;
-  chatColor: string;
-  chatLabel: string;
-  phoneHref: string;
-  phoneLabel: string;
   showCollapse?: boolean;
 }
 
@@ -217,12 +178,6 @@ function LeadEventCard({
   isExpanded,
   onToggle,
   title,
-  chatUrl,
-  chatBg,
-  chatColor,
-  chatLabel,
-  phoneHref,
-  phoneLabel,
   showCollapse,
   previewPanelId,
 }: VariantCardProps) {
@@ -270,12 +225,6 @@ function LeadEventCard({
           event={event}
           title={title}
           priceRows={priceRows}
-          chatUrl={chatUrl}
-          chatBg={chatBg}
-          chatColor={chatColor}
-          chatLabel={chatLabel}
-          phoneHref={phoneHref}
-          phoneLabel={phoneLabel}
           detailId={detailId}
           onCollapse={onToggle}
           showCollapse={showCollapse}
@@ -292,12 +241,6 @@ function CompactEventRow({
   isExpanded,
   onToggle,
   title,
-  chatUrl,
-  chatBg,
-  chatColor,
-  chatLabel,
-  phoneHref,
-  phoneLabel,
 }: VariantCardProps) {
   const detailId = `special-event-compact-detail-${event.id}`;
 
@@ -329,12 +272,6 @@ function CompactEventRow({
           event={event}
           title={title}
           priceRows={priceRows}
-          chatUrl={chatUrl}
-          chatBg={chatBg}
-          chatColor={chatColor}
-          chatLabel={chatLabel}
-          phoneHref={phoneHref}
-          phoneLabel={phoneLabel}
           detailId={detailId}
           onCollapse={onToggle}
           compact
@@ -459,12 +396,6 @@ function LegacyEventCard({
   isExpanded,
   onToggle,
   title,
-  chatUrl,
-  chatBg,
-  chatColor,
-  chatLabel,
-  phoneHref,
-  phoneLabel,
 }: VariantCardProps) {
   const detailId = `special-event-detail-${event.id}`;
 
@@ -507,15 +438,8 @@ function LegacyEventCard({
             event={event}
             title={title}
             priceRows={priceRows}
-            chatUrl={chatUrl}
-            chatBg={chatBg}
-            chatColor={chatColor}
-            chatLabel={chatLabel}
-            phoneHref={phoneHref}
-            phoneLabel={phoneLabel}
             detailId={detailId}
             onCollapse={onToggle}
-            hideLinksOnMobile
           />
         </>
       )}
@@ -533,14 +457,9 @@ export default function EventCard({
   previewPanelId,
 }: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { lang } = useLang();
-  const { chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const priceRows = parsePriceRows(event);
   const displayPrice = getDisplayPrice(event, priceRows);
   const title = getLocalizedText(event, "title");
-  const chatLabel = isZH ? "微信和我联系" : isJA ? "LINEで相談" : lang === "en" ? "Chat Consultation" : "카카오 상담";
-  const phoneHref = lang === "ko" ? "tel:051-818-2300" : "tel:+82-51-818-2300";
-  const phoneLabel = lang === "ko" ? "051-818-2300" : "+82-51-818-2300";
   const effectiveExpanded = alwaysExpanded || isExpanded;
   const sharedProps: VariantCardProps = {
     event,
@@ -550,12 +469,6 @@ export default function EventCard({
     isExpanded: effectiveExpanded,
     onToggle: alwaysExpanded ? () => undefined : () => setIsExpanded((previous) => !previous),
     title,
-    chatUrl,
-    chatBg,
-    chatColor,
-    chatLabel,
-    phoneHref,
-    phoneLabel,
     showCollapse: !alwaysExpanded,
     previewPanelId,
   };

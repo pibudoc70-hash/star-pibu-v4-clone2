@@ -74,4 +74,18 @@ describe("MobileCardSlider", () => {
     expect(styles).toContain("-ms-overflow-style: none;");
     expect(styles).toContain("#faq .faq-tabs-scroll::-webkit-scrollbar");
   });
+
+  it("keeps compact visible controls with expanded mobile touch targets", () => {
+    expect(styles).toContain("width: 1.75rem;");
+    expect(styles).toContain("height: 1.75rem;");
+    expect(styles).toContain("min-height: 1.75rem !important;");
+    expect(styles).toContain(".mobile-card-slider__arrow::after");
+    expect(styles).toContain("inset: -0.5rem;");
+    expect(styles).toContain("width: 0.375rem;");
+    expect(styles).toContain("height: 0.375rem;");
+    expect(styles).toContain("height: 1.75rem;");
+    expect(styles).toContain("transition: width 0.25s ease;");
+    expect(styles).toContain("width: 1.125rem;");
+    expect(styles).toContain("background: #C9A96E;");
+  });
 });

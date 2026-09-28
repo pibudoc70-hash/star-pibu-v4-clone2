@@ -7283,17 +7283,6 @@ body.font-lang-zh .hero-stat-label {
     color: var(--brand-text-mid, #5A5A5A) !important;
   }
 
-  #about .reveal-right.hidden.lg\:block {
-    display: block !important;
-    margin-top: 1.5rem;
-  }
-
-  #about .reveal-right.hidden.lg\:block img {
-    height: min(18rem, 72vw) !important;
-    margin-top: 0 !important;
-    border-radius: 1rem !important;
-  }
-
   #main-content .youtube-video-title {
     background: var(--brand-bg-warm, #EDE8E0) !important;
   }
@@ -7402,5 +7391,117 @@ body.font-lang-zh .hero-stat-label {
 
   #main-content .mobile-comma-break {
     display: block !important;
+  }
+}
+
+
+/* ── Homepage mobile philosophy layout ────────────────────────────────────
+   Desktop keeps its editorial two-column composition. On phones the shared
+   title remains first, followed by the consultation visual, narrative, then
+   a single-column STAR promise list for an easier reading rhythm. */
+@media (max-width: 767px) {
+  #main-content #about .philosophy-mobile-header {
+    margin-bottom: 1.5rem !important;
+  }
+
+  #main-content #about .philosophy-mobile-header > .section-eyebrow:last-child {
+    margin: 0.75rem 0 0 !important;
+    color: var(--color-gold-dark, #7A5C35) !important;
+    font-size: 0.6rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.18em !important;
+    line-height: 1.5 !important;
+  }
+
+  #main-content #about .philosophy-mobile-image {
+    display: block !important;
+    width: calc(100% + 0.75rem) !important;
+    margin: 0 -0.375rem 1.75rem !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #main-content #about .philosophy-mobile-image img {
+    display: block;
+    width: 100%;
+    min-height: 0;
+  }
+
+  #main-content #about .philosophy-body {
+    margin: 0 0 1.75rem !important;
+    padding: 0 0.125rem !important;
+    color: var(--brand-text-mid, #5A5A5A) !important;
+    font-size: 0.84rem !important;
+    line-height: 1.78 !important;
+    text-align: left !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+
+  #main-content #about .philosophy-values {
+    margin-top: 0 !important;
+    text-align: center !important;
+  }
+
+  #main-content #about .philosophy-values-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.375rem !important;
+    margin: 0 0 0.875rem !important;
+  }
+
+  #main-content #about .philosophy-values-header > span:first-child {
+    color: var(--color-gold-dark, #7A5C35) !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  #main-content #about .philosophy-values-header > span:last-child {
+    color: var(--brand-text-mid, #5A5A5A) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  #main-content #about .philosophy-values-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  #main-content #about .philosophy-value-card {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+    min-width: 0;
+    padding: 0.875rem 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: left !important;
+  }
+
+  #main-content #about .philosophy-value-card:first-child {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent) !important;
+  }
+
+  #main-content #about .philosophy-value-card > div {
+    min-width: 0;
+    flex: 1;
+  }
+
+  #main-content #about .philosophy-value-card p {
+    margin: 0 0 0.2rem !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+  }
+
+  #main-content #about .philosophy-value-card .text-xs {
+    font-size: 0.78rem !important;
+    line-height: 1.7 !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
   }
 }

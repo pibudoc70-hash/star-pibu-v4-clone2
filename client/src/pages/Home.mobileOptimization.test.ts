@@ -14,6 +14,7 @@ const doctors = read("client/src/components/DoctorsSection.tsx");
 const treatments = read("client/src/components/TreatmentsEquipmentSection.tsx");
 const contact = read("client/src/components/ContactSection.tsx");
 const commaBreak = read("client/src/components/MobileCommaBreak.tsx");
+const philosophy = read("client/src/components/PhilosophySection.tsx");
 
 const mobileHomeBlock = css.split("Homepage mobile-only content-density pass")[1]?.split("\n}")[0] ?? "";
 const mobileTitleBlock = css.split("Homepage mobile title unification")[1] ?? "";
@@ -57,7 +58,7 @@ describe("homepage mobile-only optimization", () => {
     expect(mobileHomeBlock).toContain(".youtube-section-root .section-subtitle,");
     expect(mobileHomeBlock).toContain("#management-devices .management-device-card > div > span.hidden");
     expect(mobileHomeBlock).toContain('#faq div.hidden[class~="md:block"]');
-    expect(mobileHomeBlock).toContain("#about .reveal-right.hidden.lg\\:block");
+    expect(philosophy).toContain("philosophy-mobile-image");
   });
 
   it("uses one mobile-only title system for every homepage title wrapper", () => {

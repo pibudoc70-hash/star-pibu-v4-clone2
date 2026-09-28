@@ -36,20 +36,81 @@ export default function PhilosophySection() {
 
             {/* Left: Text */}
             <div ref={leftRef} className="reveal-left">
-              <span className="section-eyebrow">{t.about.sectionLabels?.philosophy ?? "OUR PHILOSOPHY"}</span>
-              <h2 className="section-title mb-4">
-                {t.about.title}
-              </h2>
-              <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>
-                {t.about.philosophyTagline ?? "20년의 안목, 한결같은 신뢰"}
-              </p>
-              <p className="section-subtitle body-text leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
+              <div className="mobile-home-section-header philosophy-mobile-header">
+                <span className="section-eyebrow">{t.about.sectionLabels?.philosophy ?? "OUR PHILOSOPHY"}</span>
+                <h2 className="section-title mb-4">
+                  {t.about.title}
+                </h2>
+                <p className="section-eyebrow mb-3" style={{ letterSpacing: "0.18em" }}>
+                  {t.about.philosophyTagline ?? "20년의 안목, 한결같은 신뢰"}
+                </p>
+              </div>
+
+              {/* Mobile-only placement: title → image → narrative → values. */}
+              <div className="philosophy-mobile-image relative overflow-hidden lg:hidden">
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "18px",
+                    left: "18px",
+                    zIndex: 20,
+                    background: "rgba(26,20,16,0.75)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid color-mix(in srgb, var(--color-gold-primary) 30%, transparent)",
+                    borderRadius: "8px",
+                    padding: "9px 14px",
+                  }}
+                >
+                  <p
+                    style={{
+                      color: "color-mix(in srgb, var(--color-gold-primary) 90%, transparent)",
+                      fontSize: "0.6rem",
+                      letterSpacing: "0.25em",
+                      textTransform: "uppercase",
+                      fontFamily: "Montserrat, sans-serif",
+                      marginBottom: "2px",
+                    }}
+                  >
+                    ESTABLISHED
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "'Montserrat', 'Noto Sans KR', sans-serif",
+                      fontSize: "1.45rem",
+                      fontWeight: 400,
+                      color: "#EDD98A",
+                      lineHeight: 1,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    2006
+                  </p>
+                </div>
+                <picture>
+                  <source srcSet={PATIENT_IMAGE_MOBILE_WEBP} type="image/webp" />
+                  <img
+                    src={PATIENT_IMAGE_MOBILE_JPG}
+                    alt={t.about.consultationAlt}
+                    className="relative z-10 w-full object-cover"
+                    style={{
+                      height: "min(18rem, 72vw)",
+                      objectPosition: "center top",
+                      borderRadius: "16px",
+                      boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
+                    }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+
+              <p className="philosophy-body section-subtitle body-text leading-relaxed mb-10" style={{ maxWidth: "none", textAlign: "left", fontSize: "0.95rem", lineHeight: 1.85 }}>
                 {t.about.desc}
               </p>
 
               {/* S.T.A.R. Values — 브랜드 이니셜을 병원의 네 가지 약속으로 연결 */}
-              <div className="mt-8" aria-labelledby="star-values-heading">
-                <div className="mb-4 flex items-baseline gap-3">
+              <div className="philosophy-values mt-8" aria-labelledby="star-values-heading">
+                <div className="philosophy-values-header mb-4 flex items-baseline gap-3">
                   <span
                     id="star-values-heading"
                     className="font-montserrat text-[10px] font-medium tracking-[0.25em]"
@@ -61,7 +122,7 @@ export default function PhilosophySection() {
                     {starValuesCopy.summary}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="philosophy-values-grid grid grid-cols-2 gap-3 sm:gap-4">
                 {t.about.values.map((v) => (
                   <article
                     key={v.letter}

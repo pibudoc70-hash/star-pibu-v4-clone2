@@ -35,7 +35,7 @@ export default function ResultsStatisticsSection({ showRegenerativeMedicineBanne
     <section ref={sectionRef} id="results-statistics" className="py-16 md:py-24" aria-label="시술 결과 실적">
       <div className="container">
         {/* 제목 */}
-        <div className="section-header-block reveal-heading">
+        <div className="section-header-block mobile-home-section-header reveal-heading">
           <span className="section-eyebrow">RESULTS & STATISTICS</span>
           <h2 className="section-title">{r.sectionTitle}</h2>
           <div className="star-divider mx-auto" />

@@ -24,6 +24,7 @@ import CategoryTabList from "@/components/treatments/CategoryTabList";
 import TreatmentsEquipmentSkeleton from "@/components/treatments/TreatmentsEquipmentSkeleton";
 import { useViewportTier } from "@/hooks/useViewportTier";
 import EmptyResultView from "@/components/treatments/EmptyResultView";
+import { MobileCommaBreak } from "@/components/MobileCommaBreak";
 import { sortTreatments } from "@/lib/treatmentSortUtils";
 import type { SortBy } from "@/lib/treatmentSortUtils";
 import type { Treatment } from "@/types/treatment";
@@ -225,10 +226,10 @@ export default function TreatmentsEquipmentSection() {
       <div className="container">
         <div ref={sectionTopRef} />
         {/* 섹션 헤더 */}
-        <div className="text-center mb-8 sm:mb-12 reveal-heading">
+        <div className="mobile-home-section-header text-center mb-8 sm:mb-12 reveal-heading">
           <span className="section-eyebrow text-[12px]">{t.about.sectionLabels?.treatmentsEquipment ?? "TREATMENTS & EQUIPMENT"}</span>
           <h2 className="section-title mb-4">{tr.title}</h2>
-          <p className="section-subtitle body-text">{tr.subtitle}</p>
+          <p className="section-subtitle body-text"><MobileCommaBreak text={tr.subtitle} /></p>
         </div>
 
         {/* 실제 tab·search·card 구조를 반영한 로딩 스켈레톤 */}

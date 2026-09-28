@@ -247,7 +247,7 @@ export default function ManagementDevicesSection() {
       >
         <div className="container">
           {/* 섹션 헤더 */}
-          <div className="section-header-block reveal-heading">
+          <div className="section-header-block mobile-home-section-header reveal-heading">
             <span className="section-eyebrow management-devices-eyebrow">
               <span className="hidden md:inline">CARE DEVICES</span>
               <span className="md:hidden">CARE DEVICES</span>

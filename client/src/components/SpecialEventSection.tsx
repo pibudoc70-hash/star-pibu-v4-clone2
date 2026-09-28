@@ -15,6 +15,7 @@ import { i18n } from "@/lib/i18n";
 import EventCard from "@/components/events/EventCard";
 import EventTableMobile from "@/components/events/EventTableMobile";
 import PainManagementGuide from "@/components/PainManagementGuide";
+import { MobileCommaBreak } from "@/components/MobileCommaBreak";
 import { parseEventListError } from "@/lib/errorMessages";
 import { useEventSkeletonTiming } from "@/hooks/useEventSkeletonTiming";
 
@@ -66,24 +67,19 @@ function EventEmptyState({ lang }: { lang: string }) {
 
 // ── 섹션 헤더 ─────────────────────────────────────────────────────────────────
 function SectionHeader({ lang }: { lang: string }) {
-  const subtitleMap: Record<string, React.ReactNode> = {
+  const subtitleMap: Record<string, string> = {
     en: "Experience premium skin care at Star's exclusive prices.",
     ja: "スターの特別価格で、ワンランク上のスキンケアを。",
     zh: "以STAR独家优惠价，享受顶级皮肤护理。",
     "zh-TW": "以STAR獨家優惠價，享受頂級皮膚護理。",
-    ko: (
-      <>
-        <span className="hidden md:inline md:whitespace-nowrap">스타만의 특별한 가격으로 한 단계 높은 피부 관리를 시작해보세요.</span>
-        <span className="md:hidden">스타만의 특별한 가격으로,<br />한 단계 높은 피부 관리를 시작해보세요.</span>
-      </>
-    ),
+    ko: "스타만의 특별한 가격으로, 한 단계 높은 피부 관리를 시작해보세요.",
   };
   return (
-    <div className="section-header-block !text-left md:!mx-auto md:!max-w-[720px] md:!text-center">
+    <div className="section-header-block mobile-home-section-header text-center md:!mx-auto md:!max-w-[720px] md:!text-center">
       <span className="section-eyebrow font-montserrat">FOR YOU</span>
       <h2 className="section-title">SPECIAL EVENT</h2>
       <p className="section-subtitle body-text !mx-0 mt-5 md:!mx-auto md:whitespace-nowrap">
-        {subtitleMap[lang] ?? subtitleMap.ko}
+        <MobileCommaBreak text={subtitleMap[lang] ?? subtitleMap.ko} />
       </p>
     </div>
   );

@@ -50,10 +50,10 @@ describe("homepage desktop palette and label refinement", () => {
   });
 
   it("uses English eyebrows for the homepage sections standardized across breakpoints", () => {
-    expect(doctorsSource).toContain('<span className="hidden md:inline">MEDICAL TEAM</span>');
+    expect(doctorsSource).toContain("MEDICAL TEAM");
     expect(facilitySource).toContain('<span className="hidden md:inline">CLINIC FACILITIES</span>');
     expect(managementSource).toContain('<span className="hidden md:inline">CARE DEVICES</span>');
-    expect(doctorsSource).toContain('<span className="md:hidden">{t.doctors.teamLabel ?? t.doctors.label}</span>');
+    expect(doctorsSource).not.toContain("t.doctors.teamLabel");
     expect(facilitySource).toContain('<span className="md:hidden">CLINIC FACILITIES</span>');
     expect(managementSource).toContain('<span className="md:hidden">CARE DEVICES</span>');
   });

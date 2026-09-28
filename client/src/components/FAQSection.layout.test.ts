@@ -16,7 +16,7 @@ describe("homepage FAQ layout", () => {
 
   it("removes the FAQ subtitle and keeps a scoped title-to-tabs spacing rule", () => {
     expect(faqSource).not.toContain("{faq.sectionSubtitle}");
-    expect(faqSource).toContain("section-header-block faq-section__header reveal-heading");
+    expect(faqSource).toContain("section-header-block mobile-home-section-header faq-section__header reveal-heading");
     expect(cssSource).toContain(".faq-section__header {");
     expect(cssSource).toContain("margin-bottom: 2.5rem;");
     expect(cssSource).toContain("margin-bottom: 1.75rem;");

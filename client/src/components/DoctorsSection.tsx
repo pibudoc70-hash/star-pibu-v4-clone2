@@ -7,6 +7,7 @@ import { useLang } from "@/contexts/LangContext";
 import { useDoctorViewModel } from "@/hooks/useDoctorViewModel";
 import { DoctorDesktopLayout } from "./doctors/DoctorDesktopLayout";
 import { DoctorMobileLayout } from "./doctors/DoctorMobileLayout";
+import { MobileCommaBreak } from "@/components/MobileCommaBreak";
 
 function DoctorsSection() {
   const { t, lang } = useLang();
@@ -38,14 +39,13 @@ function DoctorsSection() {
       {/* 앵커 div는 DoctorDesktopLayout / DoctorMobileLayout 내부에 id=dr-{slug}로 이미 존재 */}
       <div className="container">
         {/* ── Section Header ── */}
-        <div className="text-center mb-10 sm:mb-16 reveal-heading">
+        <div className="mobile-home-section-header text-center mb-10 sm:mb-16 reveal-heading">
           <p className="font-montserrat text-xs tracking-[0.3em] mb-3 uppercase dr-section-eyebrow">
-            <span className="hidden md:inline">MEDICAL TEAM</span>
-            <span className="md:hidden">{t.doctors.teamLabel ?? t.doctors.label}</span>
+            MEDICAL TEAM
           </p>
           <h2 className="mb-3 dr-section-title">{t.doctors.title}</h2>
           <p className="text-sm leading-snug sm:leading-normal dr-section-tagline">
-            {t.doctors.tagline}
+            <MobileCommaBreak text={t.doctors.tagline} />
           </p>
         </div>
 

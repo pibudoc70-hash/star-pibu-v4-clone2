@@ -464,15 +464,15 @@ describe("PR-QA-P1: DoctorsSection aria-label/eyebrow 하드코딩 제거 검증
     expect(src).toMatch(/aria-label=\{t\.doctors\.label\}/);
   });
 
-  it("DoctorsSection.tsx에 'Medical Team' 하드코딩 문자열이 없어야 한다", () => {
+  it("DoctorsSection.tsx가 PC와 모바일에 동일한 영문 라벨을 사용해야 한다", () => {
     // readFileSync via top-level import (see below)
     // nodePath via top-level import (see below)
     const src = readFileSync(
       nodePath.resolve(process.cwd(), "client/src/components/DoctorsSection.tsx"),
       "utf8",
     );
-    expect(src).not.toMatch(/>Medical Team</);
-    expect(src).toMatch(/t\.doctors\.teamLabel/);
+    expect(src).toMatch(/MEDICAL TEAM/);
+    expect(src).not.toMatch(/t\.doctors\.teamLabel/);
   });
 });
 

@@ -173,7 +173,7 @@ export default function FacilitySection() {
     <section ref={sectionRef} id="facility" className="py-16 sm:py-24 scroll-mt-24 md:scroll-mt-28" aria-label="클리닉 시설 갤러리">
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 reveal-heading">
+        <div className="mobile-home-section-header text-center mb-12 sm:mb-16 reveal-heading">
           <span className="section-eyebrow">
             <span className="hidden md:inline">CLINIC FACILITIES</span>
             <span className="md:hidden">CLINIC FACILITIES</span>

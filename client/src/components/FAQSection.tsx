@@ -77,7 +77,7 @@ export default function FAQSection() {
       <section ref={sectionRef} id="faq" className="py-16 md:py-24 faq-section-bg" aria-label="자주 묻는 질문">
         <div className="container">
           {/* 섹션 헤더 */}
-          <div className="section-header-block faq-section__header reveal-heading">
+          <div className="section-header-block mobile-home-section-header faq-section__header reveal-heading">
             <span className="section-eyebrow">FAQ</span>
             <h2 className="section-title">{faq.sectionTitle}</h2>
             <div className="star-divider mx-auto" />

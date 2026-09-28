@@ -75,9 +75,9 @@ describe("[B] ContactSection non-null assertion 제거", () => {
     expect(contactSrc).toMatch(/\?\?/);
   });
 
-  it("locationInfo는 optional chaining 또는 nullish coalescing으로 안전하게 접근해야 한다", () => {
-    // t.access.locationInfo ?? "" 또는 t.access?.locationInfo 패턴
-    expect(contactSrc).toMatch(/locationInfo\s*\?\?|locationInfo\?/);
+  it("모든 뷰포트에서 동일한 STAR DERMATOLOGY 라벨을 사용해야 한다", () => {
+    expect(contactSrc).toContain("STAR DERMATOLOGY");
+    expect(contactSrc).not.toMatch(/locationInfo/);
   });
 });
 

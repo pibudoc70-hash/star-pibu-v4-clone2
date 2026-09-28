@@ -27,8 +27,9 @@ describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", 
 
   // [R13] i18n.types.ts에서 optional 필드는 non-null assertion(!) 대신
   // nullish coalescing(?? "") 방식이 더 안전함 → Round-13에서 재개선
-  it("locationInfo가 안전하게 접근되어야 한다 (non-null assertion 또는 nullish coalescing)", () => {
-    expect(contactSrc).toMatch(/locationInfo/);
+  it("locationInfo 대신 모든 뷰포트에서 동일한 고정 라벨을 사용해야 한다", () => {
+    expect(contactSrc).toContain("STAR DERMATOLOGY");
+    expect(contactSrc).not.toMatch(/locationInfo/);
   });
 
   it("sectionTitle이 안전하게 접근되어야 한다", () => {
@@ -50,8 +51,8 @@ describe("[A] ContactSection optional 필드 안전 접근 [R13 업데이트]", 
     expect(combinedSrc).toMatch(/parkingDesc/);
   });
 
-  it("[R13] locationInfo에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {
-    expect(contactSrc).toMatch(/locationInfo\s*\?\?\s*["']/);
+  it("[R13] 공유 라벨이므로 locationInfo fallback 렌더링이 없어야 한다", () => {
+    expect(contactSrc).not.toMatch(/locationInfo\s*\?\?\s*["']/);
   });
 
   it("[R13] hoursNote에 nullish coalescing(?? \"\") fallback이 있어야 한다", () => {

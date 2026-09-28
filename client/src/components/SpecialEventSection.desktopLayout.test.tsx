@@ -40,11 +40,11 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).not.toContain("hover:scale-105");
   });
 
-  it("centers only the desktop header while preserving mobile wrapping", () => {
-    expect(source).toContain("section-header-block !text-left md:!mx-auto md:!max-w-[720px] md:!text-center");
+  it("uses the shared mobile title wrapper while preserving desktop centering", () => {
+    expect(source).toContain("section-header-block mobile-home-section-header text-center md:!mx-auto md:!max-w-[720px] md:!text-center");
     expect(source).toContain("section-subtitle body-text !mx-0 mt-5 md:!mx-auto md:whitespace-nowrap");
     expect(source).toContain("md:whitespace-nowrap");
-    expect(source).toContain("md:hidden");
+    expect(source).toContain("MobileCommaBreak");
   });
 
   it("can omit only its introduction when a standalone page provides the title", () => {

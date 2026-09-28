@@ -219,7 +219,7 @@ export default function YouTubeSection() {
     return (
       <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="youtube-section-root py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="section-header-block">
+          <div className="section-header-block mobile-home-section-header">
             <span className="section-eyebrow youtube-section-eyebrow">
               YOUTUBE CHANNEL
             </span>
@@ -264,7 +264,7 @@ export default function YouTubeSection() {
     <section ref={sectionRef as React.RefObject<HTMLElement & HTMLDivElement>} className="youtube-section-root py-16 md:py-24">
       <div className="container mx-auto px-4">
         {/* 섹션 제목 */}
-        <div className="section-header-block">
+        <div className="section-header-block mobile-home-section-header">
           <span className="section-eyebrow youtube-section-eyebrow">
             YOUTUBE CHANNEL
           </span>

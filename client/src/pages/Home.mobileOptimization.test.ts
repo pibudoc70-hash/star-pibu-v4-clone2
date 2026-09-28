@@ -9,8 +9,14 @@ const results = read("client/src/components/ResultsStatisticsSection.tsx");
 const facility = read("client/src/components/FacilitySection.tsx");
 const youtube = read("client/src/components/YouTubeSection.tsx");
 const faq = read("client/src/components/FAQSection.tsx");
+const specialEvents = read("client/src/components/SpecialEventSection.tsx");
+const doctors = read("client/src/components/DoctorsSection.tsx");
+const treatments = read("client/src/components/TreatmentsEquipmentSection.tsx");
+const contact = read("client/src/components/ContactSection.tsx");
+const commaBreak = read("client/src/components/MobileCommaBreak.tsx");
 
 const mobileHomeBlock = css.split("Homepage mobile-only content-density pass")[1]?.split("\n}")[0] ?? "";
+const mobileTitleBlock = css.split("Homepage mobile title unification")[1] ?? "";
 
 describe("homepage mobile-only optimization", () => {
   it("scopes the density pass to the mobile media query and excludes protected sections", () => {
@@ -52,5 +58,24 @@ describe("homepage mobile-only optimization", () => {
     expect(mobileHomeBlock).toContain("#management-devices .management-device-card > div > span.hidden");
     expect(mobileHomeBlock).toContain('#faq div.hidden[class~="md:block"]');
     expect(mobileHomeBlock).toContain("#about .reveal-right.hidden.lg\\:block");
+  });
+
+  it("uses one mobile-only title system for every homepage title wrapper", () => {
+    for (const source of [specialEvents, doctors, treatments, management, results, facility, youtube, faq, contact]) {
+      expect(source).toContain("mobile-home-section-header");
+    }
+    expect(mobileTitleBlock).toContain("@media (max-width: 767px)");
+    expect(mobileTitleBlock).toContain(".mobile-home-section-header");
+    expect(mobileTitleBlock).toContain("text-align: center !important;");
+    expect(mobileTitleBlock).toContain("word-break: keep-all !important;");
+    expect(mobileTitleBlock).toContain(".mobile-comma-break");
+  });
+
+  it("reuses one locale string and exposes comma breaks only through mobile CSS", () => {
+    expect(commaBreak).toContain('text.split(",")');
+    expect(commaBreak).toContain('className="mobile-comma-break hidden"');
+    expect(specialEvents).toContain("<MobileCommaBreak text={subtitleMap[lang] ?? subtitleMap.ko} />");
+    expect(doctors).toContain("<MobileCommaBreak text={t.doctors.tagline} />");
+    expect(treatments).toContain("<MobileCommaBreak text={tr.subtitle} />");
   });
 });

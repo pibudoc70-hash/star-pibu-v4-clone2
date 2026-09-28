@@ -51,7 +51,6 @@ export default function ContactSection({ showHeader = true, desktopTone = "defau
 
   // 섹션 제목 및 부제목
   const sectionTitle = t.access.sectionTitle ?? t.access.title ?? '오시는 길';
-  const locationInfo = t.access.locationInfo ?? 'Location';
   const closedLabel = t.hours.rows.at(-1)?.time ?? '휴진';
   const mapTitle = t.access.mapAriaLabel ?? '스타피부과 위치 지도';
 
@@ -65,13 +64,12 @@ export default function ContactSection({ showHeader = true, desktopTone = "defau
     >
       <div className="container">
         {showHeader && (
-          <div className="section-header-block">
+          <div className="section-header-block mobile-home-section-header">
             <span
               className="section-eyebrow"
               style={{ color: '#4B351F', fontWeight: 700 }}
             >
-              <span className="hidden md:inline">STAR DERMATOLOGY</span>
-              <span className="md:hidden">{locationInfo}</span>
+              STAR DERMATOLOGY
             </span>
             <h2
               className="section-title font-extrabold text-[clamp(1.4rem,5vw,2.6rem)]"

@@ -40,8 +40,8 @@ describe("desktop surface cleanup", () => {
     expect(youtubeSource).toContain('className="youtube-shorts-heading mb-6 text-lg font-semibold md:hidden"');
   });
 
-  it("uses STAR DERMATOLOGY as the desktop contact eyebrow while retaining localized mobile copy", () => {
-    expect(contactSource).toContain('<span className="hidden md:inline">STAR DERMATOLOGY</span>');
-    expect(contactSource).toContain('<span className="md:hidden">{locationInfo}</span>');
+  it("uses one STAR DERMATOLOGY contact eyebrow across breakpoints", () => {
+    expect(contactSource).toContain("STAR DERMATOLOGY");
+    expect(contactSource).not.toContain("locationInfo");
   });
 });

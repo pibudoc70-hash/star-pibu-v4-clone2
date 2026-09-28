@@ -12,7 +12,7 @@ const extractBlock = (startMarker: string, endMarker: string) => {
 };
 const mobileParityBlock = extractBlock("Homepage mobile hero and promotion parity", "Homepage mobile hero cluster placement");
 const mobilePlacementBlock = extractBlock("Homepage mobile hero cluster placement", "Homepage mobile hero breathing room");
-const mobileBreathingRoomBlock = css.split("Homepage mobile hero breathing room")[1] ?? "";
+const mobileBreathingRoomBlock = extractBlock("Homepage mobile hero breathing room", "Homepage mobile section rhythm");
 
 describe("homepage mobile hero and promotion parity", () => {
   it("limits parity changes to a mobile media query while keeping shared hero data intact", () => {

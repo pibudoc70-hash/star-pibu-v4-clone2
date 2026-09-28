@@ -174,7 +174,7 @@ export function DoctorMobileLayout({
                   <p className="text-xs tracking-widest uppercase mb-2 dr-mob-specialty-title">
                     {t.doctors.specialtyTitle}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 dr-mob-specialty-list">
                     {d.specialties.map((s) => (
                       <span key={s} className="px-3 py-1.5 text-xs font-semibold dr-specialty-chip-mobile">
                         {s}

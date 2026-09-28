@@ -8099,3 +8099,100 @@ body.font-lang-zh .hero-stat-label {
     transition: none;
   }
 }
+
+/* ── Homepage mobile doctor-card density ──────────────────────────────────
+   Keep profile data intact while presenting specialties and credentials as a
+   single, border-free editorial list on phone widths only. */
+@media (max-width: 767px) {
+  #main-content.home-main #doctors .dr-mob-slide-panel > .p-5 {
+    padding: 1rem !important;
+    gap: 1.125rem !important;
+  }
+
+  #main-content.home-main #doctors .dr-mob-specialty-title {
+    margin-bottom: 0.375rem !important;
+  }
+
+  #main-content.home-main #doctors .dr-mob-specialty-list {
+    column-gap: 0.5rem !important;
+    row-gap: 0.1875rem !important;
+  }
+
+  #main-content.home-main #doctors .dr-specialty-chip-mobile {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--dr-text-specialty) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+  }
+
+  #main-content.home-main #doctors .dr-specialty-chip-mobile:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.5rem;
+    color: color-mix(in srgb, var(--color-gold-primary) 62%, transparent);
+    font-weight: 400;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-accordion {
+    overflow: visible !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-header-mobile {
+    min-height: 0 !important;
+    padding: 0 0 0.75rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-list-mobile {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-item-mobile {
+    min-height: 0 !important;
+    align-items: center !important;
+    gap: 0.625rem !important;
+    margin: 0 !important;
+    padding: 0.6875rem 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-item-mobile + .dr-credentials-item-mobile {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-icon-mobile {
+    width: 1.0625rem !important;
+    height: 1.0625rem !important;
+    margin: 0 !important;
+  }
+
+  #main-content.home-main #doctors .dr-credentials-text-mobile {
+    min-width: 0;
+    font-size: 0.84375rem !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+    word-break: keep-all !important;
+  }
+}

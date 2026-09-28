@@ -83,13 +83,13 @@ export function DoctorCredentials({
   // mobile: credentials stay visible; research remains the only disclosure.
   return (
     <div className="dr-credentials-accordion dr-accordion-border">
-      <div className="flex items-center justify-between px-4 py-3 dr-accordion-btn">
+      <div className="flex items-center justify-between px-4 py-3 dr-accordion-btn dr-credentials-header-mobile">
         <span className="text-xs font-bold tracking-wider dr-accordion-label">
           {credentialsTitle}
         </span>
         <span className="text-xs text-stone-500">{doctor.credentials.length}</span>
       </div>
-      <div className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2">
+      <div className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2 dr-credentials-list-mobile">
         {doctor.credentials.map((c) => {
           const Icon = c.icon;
           return (

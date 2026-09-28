@@ -7120,7 +7120,7 @@ body.font-lang-zh .hero-stat-label {
     box-shadow: none !important;
   }
 
-  /* 시설: 기존 스와이프 기능은 유지하고, 과도한 고정 높이와 썸네일 밀도만 낮춘다. */
+  /* 시설: 큰 이미지의 스와이프·화살표·자동재생·점 조작은 유지한다. */
   #facility .facility-carousel-wrap {
     min-height: 0 !important;
     border-radius: 1rem !important;
@@ -7136,15 +7136,10 @@ body.font-lang-zh .hero-stat-label {
     gap: 0.25rem !important;
   }
 
+  /* Keep thumbnail data and desktop navigation intact, but remove the entire
+     mobile-only thumbnail strip (including its horizontal scrollbar). */
   #facility .facility-carousel-wrap + .flex {
-    gap: 0.375rem !important;
-    margin-top: 0.75rem !important;
-    padding-inline: 0 !important;
-  }
-
-  #facility .facility-carousel-wrap + .flex > button {
-    width: 4rem !important;
-    height: 3rem !important;
+    display: none !important;
   }
 
   /* 유튜브: 일반 영상과 쇼츠를 모두 유지하되 가로 스와이프로 세로 반복을 줄인다. */

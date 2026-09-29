@@ -22,20 +22,20 @@ describe("Doctor research activities disclosure contract", () => {
     expect(credentials).toContain("<details");
     expect(credentials).toContain("<summary");
     expect(credentials).toContain("onClick={(event) => event.stopPropagation()}");
-    expect(credentials).toContain("target=\"_blank\"");
+    expect(credentials).toContain('target="_blank"');
     expect(credentials).toContain('rel="noreferrer"');
     expect(credentials).not.toContain("@/components/ui/accordion");
   });
 
-  it("derives each activity key from both the source URL and its distinct title", () => {
-    expect(credentials).toContain('key={`${activity.sourceUrl}-${activity.title}`}');
-    expect(credentials).not.toContain('key={activity.sourceUrl}');
+  it("derives each activity key from the verified source URL and stable activity identifier", () => {
+    expect(credentials).toContain("key={`${activity.sourceUrl}-${activity.id}`}");
+    expect(credentials).not.toContain("key={activity.sourceUrl}");
   });
 
   it("keeps credentials visible on mobile while reserving disclosure behavior for research activities", () => {
     expect(credentials).not.toContain("aria-expanded={expanded}");
     expect(credentials).not.toContain("onClick={onToggle}");
-    expect(credentials).toContain('className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2 dr-credentials-list-mobile"');
+    expect(credentials).toContain('className="px-4 py-4 flex flex-col dr-credentials-list-mobile"');
     expect(credentials).toContain("<DoctorResearchActivities doctor={doctor} />");
   });
 

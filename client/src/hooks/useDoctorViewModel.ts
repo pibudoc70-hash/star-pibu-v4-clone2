@@ -20,6 +20,8 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import React from "react";
 import { doctors, type Doctor } from "@/lib/doctors-data";
 import type { I18nContent } from "@/lib/i18n.types";
+import type { Lang } from "@/lib/i18n.types";
+import { DOCTOR_RESEARCH_I18N } from "@/lib/doctorResearchI18n";
 import { useDoctorSwipe } from "@/hooks/useDoctorSwipe";
 
 // ── 타입 ─────────────────────────────────────────────────────────────────────
@@ -29,7 +31,7 @@ export interface DoctorViewModel extends Doctor {
   /** i18n에서 병합된 badge 텍스트 */
   badge: string;
   /** locale에서 병합된 연구·발표·연수 활동 제목 */
-  researchActivitiesTitle?: string;
+  researchActivitiesTitle: string;
 }
 
 export interface UseDoctorViewModelReturn {
@@ -91,7 +93,7 @@ function preloadDoctorImages() {
 /**
  * @param t - useLang()에서 받은 번역 객체
  */
-export function useDoctorViewModel(t: I18nContent, lang = "ko"): UseDoctorViewModelReturn {
+export function useDoctorViewModel(t: I18nContent, lang: Lang = "ko"): UseDoctorViewModelReturn {
   // 마운트 시 sessionStorage에서 의사 탭 인덱스 읽기 (#dr-{slug} 직접 접근 지원)
   const [activeDoctor, setActiveDoctor] = useState(() => {
     const stored = sessionStorage.getItem("__star_doctor_tab");
@@ -372,8 +374,11 @@ export function useDoctorViewModel(t: I18nContent, lang = "ko"): UseDoctorViewMo
   // [D항목] index 기반 merge → id 기반 find로 전환 (의사 순서 변경 시 불일치 방지)
   // [R11-A] locale.careers 텍스트만 교체, icon/label은 원본 credentials에서 유지
   const mergedDoctors = useMemo<DoctorViewModel[]>(() => {
+    const localizedResearch = DOCTOR_RESEARCH_I18N[lang];
+
     return doctors.map((d) => {
       const locale = t.doctors.list.find((item: { id: number }) => item.id === d.id);
+      const localizedItems = localizedResearch.activities.find((activity) => activity.id === d.id)?.items;
       return {
         ...d,
         name: locale?.name ?? d.name,
@@ -390,12 +395,11 @@ export function useDoctorViewModel(t: I18nContent, lang = "ko"): UseDoctorViewMo
             }))
           : d.credentials,
         specialties: locale?.specialties ?? d.specialties,
-        researchActivities: lang === "zh-TW" && d.researchActivitiesZhTw
-          ? d.researchActivitiesZhTw
-          : d.researchActivities,
-        researchActivitiesTitle: lang === "zh-TW" && d.researchActivitiesZhTw
-          ? "研究・發表與進修活動"
-          : undefined,
+        researchActivities: d.researchActivities?.map((activity) => {
+          const localizedActivity = localizedItems?.find((item) => item.id === activity.id);
+          return localizedActivity ? { ...activity, ...localizedActivity } : activity;
+        }),
+        researchActivitiesTitle: localizedResearch.title,
         badge: badgeLabel,
       };
     });

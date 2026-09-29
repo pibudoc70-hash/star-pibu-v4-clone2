@@ -60,7 +60,8 @@ export default function Doctors() {
 
   return (
     <MainLayout>
-      <SeoHead
+      <div className="doctors-page">
+        <SeoHead
         title={seo.title}
         description={seo.description}
         keywords={seo.keywords}
@@ -74,10 +75,10 @@ export default function Doctors() {
         pageType="treatment"
       />
 
-      {/* ── 페이지 헤더 ─────────────────────────────────────────────────────── */}
-      <section
+        {/* ── 페이지 헤더 ─────────────────────────────────────────────────────── */}
+        <section
         className="dr-page-header dr-page-header--doctors pt-28 pb-12 sm:pt-32 sm:pb-16 text-center"
-      >
+        >
         <div className="container">
           <p
             className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3"
@@ -93,10 +94,10 @@ export default function Doctors() {
             {seo.pageTagline}
           </p>
         </div>
-      </section>
+        </section>
 
-      {/* ── 의료진 프로필 ─────────────────────────────────────────────────── */}
-      <section className="py-10 sm:py-16 dr-section-bg">
+        {/* ── 의료진 프로필 ─────────────────────────────────────────────────── */}
+        <section className="dr-doctors-content py-10 sm:py-16 dr-section-bg">
         <div className="container">
           <div
             onTouchStart={handleTouchStart}
@@ -270,7 +271,8 @@ export default function Doctors() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
+      </div>
     </MainLayout>
   );
 }

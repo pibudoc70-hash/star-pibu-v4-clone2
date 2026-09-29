@@ -25,17 +25,17 @@ function DoctorResearchActivities({ doctor }: Pick<DoctorCredentialsProps, "doct
 
   return (
     <details
-      className="group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white"
+      className="dr-research-activities group mt-5 rounded-xl border border-stone-200 bg-stone-50/70 open:bg-white"
       onClick={(event) => event.stopPropagation()}
     >
       <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-semibold text-stone-800 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67] focus-visible:ring-inset">
         <BookOpen size={16} aria-hidden="true" className="text-[#b8924c]" />
-        <span>{doctor.researchActivitiesTitle ?? "연구·발표 및 연수 활동"}</span>
+        <span>{doctor.researchActivitiesTitle}</span>
         <ChevronDown size={16} aria-hidden="true" className="ml-auto transition-transform duration-200 group-open:rotate-180" />
       </summary>
       <div className="space-y-3 border-t border-stone-200 px-4 py-4">
         {doctor.researchActivities.map((activity) => (
-          <article key={`${activity.sourceUrl}-${activity.title}`} className="border-l-2 border-[#d2ac67]/70 pl-3">
+          <article key={`${activity.sourceUrl}-${activity.id}`} className="dr-research-activity border-l-2 border-[#d2ac67]/70 pl-3">
             <h4 className="text-sm font-semibold text-stone-800">{activity.title}</h4>
             <p className="mt-1 text-xs leading-relaxed text-stone-600">{activity.detail}</p>
             <a href={activity.sourceUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#8f6b31] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2ac67]">
@@ -89,13 +89,13 @@ export function DoctorCredentials({
         </span>
         <span className="text-xs text-stone-500">{doctor.credentials.length}</span>
       </div>
-      <div className="px-4 py-4 grid grid-cols-1 min-[420px]:grid-cols-2 gap-2 dr-credentials-list-mobile">
+      <div className="px-4 py-4 flex flex-col dr-credentials-list-mobile">
         {doctor.credentials.map((c) => {
           const Icon = c.icon;
           return (
             <div
               key={c.text}
-              className="flex items-start gap-2.5 py-3 px-3 rounded-lg dr-credentials-item-mobile"
+              className="flex items-center gap-2.5 py-3 dr-credentials-item-mobile"
             >
               <Icon size={15} className="dr-credentials-icon-mobile" />
               <span className="dr-credentials-text-mobile">

@@ -7131,6 +7131,147 @@ body.font-lang-zh .hero-stat-label {
   transform: translateY(0);
 }
 @media (max-width: 767px) {
+  /* Standalone Doctors: retain the existing selector/photo controls, but let
+     the profile details read as one wide editorial list instead of card-in-card surfaces. */
+  #main-content .doctors-page > section.dr-doctors-content {
+    padding-top: var(--subpage-mobile-content-gap) !important;
+    padding-bottom: var(--subpage-mobile-content-gap) !important;
+  }
+
+  .doctors-page .dr-panel-card.card--doctor {
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .doctors-page .dr-mobile-tabbar {
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 16%, transparent);
+    border-radius: 1rem 1rem 0 0;
+    background: var(--color-white, #fff);
+  }
+
+  .doctors-page .dr-mobile-photo-wrap {
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .doctors-page .dr-mobile-photo-wrap + .p-5 {
+    padding: 1rem 0 0 !important;
+    gap: 1.125rem !important;
+  }
+
+  .doctors-page .dr-specialty-wrap {
+    column-gap: 0.5rem !important;
+    row-gap: 0.1875rem !important;
+  }
+
+  .doctors-page .dr-specialty-chip-mobile {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--dr-text-specialty) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+  }
+
+  .doctors-page .dr-specialty-chip-mobile:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.5rem;
+    color: color-mix(in srgb, var(--color-gold-primary) 62%, transparent);
+    font-weight: 400;
+  }
+
+  .doctors-page .dr-credentials-accordion {
+    overflow: visible !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .doctors-page .dr-credentials-header-mobile {
+    min-height: 0 !important;
+    padding: 0 0 0.75rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .doctors-page .dr-credentials-list-mobile {
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .doctors-page .dr-credentials-item-mobile {
+    min-height: 0 !important;
+    gap: 0.625rem !important;
+    margin: 0 !important;
+    padding: 0.6875rem 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .doctors-page .dr-credentials-item-mobile + .dr-credentials-item-mobile {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+  }
+
+  .doctors-page .dr-credentials-icon-mobile {
+    width: 1.0625rem !important;
+    height: 1.0625rem !important;
+    margin: 0 !important;
+  }
+
+  .doctors-page .dr-credentials-text-mobile {
+    min-width: 0;
+    font-size: 0.84375rem !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+    word-break: keep-all !important;
+  }
+
+  .doctors-page .dr-research-activities {
+    overflow: visible !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .doctors-page .dr-research-activities > summary {
+    min-height: 0 !important;
+    padding: 0.75rem 0 !important;
+    background: transparent !important;
+  }
+
+  .doctors-page .dr-research-activities > div {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+    padding: 0.75rem 0 0 !important;
+  }
+
+  .doctors-page .dr-research-activity {
+    border-left: 0 !important;
+    padding: 0.75rem 0 !important;
+  }
+
+  .doctors-page .dr-research-activity + .dr-research-activity {
+    border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
+  }
+
   /* 통증관리 단계: 모든 아이콘 채움과 긴 한글 제목의 안전한 줄바꿈을 유지한다. */
   .pain-management-stage-icon {
     background-color: var(--color-gold-primary) !important;

@@ -48,8 +48,6 @@ export interface Doctor {
   specialties: string[];
   /** 공식 학술 DB 또는 병원 연구 페이지로 교차 확인된 연구·발표·연수 활동 */
   researchActivities?: DoctorResearchActivity[];
-  /** 대만 번체 전용 연구·발표·연수 활동 번역 */
-  researchActivitiesZhTw?: DoctorResearchActivity[];
 
   // ── JSON-LD 스키마 전용 필드 (신규) ──
   /** schema.org Person.jobTitle (영문) */
@@ -69,6 +67,7 @@ export interface Doctor {
 }
 
 export interface DoctorResearchActivity {
+    id: string;
     title: string;
     detail: string;
     sourceLabel: string;
@@ -110,65 +109,62 @@ export const doctors: Doctor[] = [
     ],
     researchActivities: [
       {
+        id: "cho-bromhidrosis",
         title: "액취증·다한증 치료 연구",
         detail: "액취증·다한증 치료 관련 공동연구로, PubMed에서 저자 Si-Hyung Cho와 논문 서지를 확인할 수 있습니다.",
         sourceLabel: "PubMed",
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16681657/",
       },
       {
+        id: "cho-papillomatosis",
         title: "융합성 망상 유두종증 항생제 치료 증례",
         detail: "JAAD에 게재된 융합성 망상 유두종증의 항생제 치료 증례 연구입니다.",
         sourceLabel: "PubMed",
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11260541/",
       },
       {
+        id: "cho-syringoma",
         title: "한관종 절연침 치료 연구",
         detail: "표피 손상을 줄이는 절연침을 이용한 한관종 치료 관련 국제 학술지 연구입니다.",
         sourceLabel: "PubMed",
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/20711282/",
       },
       {
+        id: "cho-alopecia",
         title: "남성형 탈모 임상 연구",
         detail: "대한피부과학회지에 수록된 남성형 탈모 임상 양상 연구입니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
       {
+        id: "cho-radiofrequency",
         title: "고주파 주사요법 라이브 시연",
         detail: "대경피부미용치료 심포지엄에서 이마·미간·하안검 주름 치료 관련 라이브 시연과 발표를 진행했습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
       {
+        id: "cho-asian-academy",
         title: "아시아 미용피부외과 학술대회 초청 발표",
         detail: "Asian Academy of Cosmetic & Dermatologic Surgery에서 미용피부과·피부외과 주제로 초청 발표했습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
       {
+        id: "cho-domestic-conference",
         title: "국내 피부과 학회 임상 발표",
         detail: "대한피부과학회 학술대회에서 희귀 증례와 흉터 레이저박피·프락셀 병합치료 관련 공동 발표를 확인할 수 있습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
       {
+        id: "cho-overseas-training",
         title: "해외 전문가 과정 및 연수",
         detail: "미국·브라질·독일·싱가포르에서 국소마취 지방흡입, 지방이식, 화학박피, 실리프팅 관련 전문가 과정을 이수했습니다.",
         sourceLabel: "스타피부과 연구·발표",
         sourceUrl: "/research",
       },
     ],
-    researchActivitiesZhTw: [
-      { title: "腋臭與多汗症治療研究", detail: "這項腋臭與多汗症治療的共同研究，可於 PubMed 以作者 Si-Hyung Cho 查閱論文書目。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16681657/" },
-      { title: "融合性網狀乳頭瘤症的抗生素治療病例", detail: "這是刊登於 JAAD、探討融合性網狀乳頭瘤症抗生素治療病例的研究。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11260541/" },
-      { title: "以絕緣針治療汗管瘤的研究", detail: "這是關於使用絕緣針治療汗管瘤、以減少表皮損傷的國際期刊研究。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/20711282/" },
-      { title: "男性型落髮臨床研究", detail: "這是收錄於《大韓皮膚科學會誌》的男性型落髮臨床表現研究。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
-      { title: "高頻注射療法現場示範", detail: "於大慶皮膚美容治療研討會，進行額頭、眉間與下眼瞼皺紋治療的現場示範與發表。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
-      { title: "亞洲美容皮膚外科學術大會受邀發表", detail: "於 Asian Academy of Cosmetic & Dermatologic Surgery 以美容皮膚科與皮膚外科為主題受邀發表。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
-      { title: "國內皮膚科學會臨床發表", detail: "可確認於大韓皮膚科學會學術大會共同發表罕見病例及疤痕雷射磨皮與飛梭雷射合併治療。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
-      { title: "海外專家課程與研修", detail: "於美國、巴西、德國及新加坡完成局部麻醉抽脂、脂肪移植、化學換膚與埋線拉提相關專家課程。", sourceLabel: "STAR皮膚科研究與發表", sourceUrl: "/research" },
-    ],
-
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD, PhD",
     schemaDescription:
@@ -227,23 +223,20 @@ export const doctors: Doctor[] = [
     ],
     researchActivities: [
       {
+        id: "woo-neurofibromatosis",
         title: "두피 분절상 신경섬유종증 증례 보고",
         detail: "가톨릭대학교 소속 저자로 확인되는 피부과 증례 보고이며, KCI에서 논문 서지를 확인할 수 있습니다.",
         sourceLabel: "KCI",
         sourceUrl: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000885244",
       },
       {
+        id: "woo-elastosis",
         title: "선형 국소 탄력섬유증 증례 보고",
         detail: "가톨릭대학교 의과대학 피부과 소속 Hye Jin Woo 저자로 확인되는 피부과 증례 논문입니다.",
         sourceLabel: "PubMed",
         sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10759963/",
       },
     ],
-    researchActivitiesZhTw: [
-      { title: "頭皮節段型神經纖維瘤症病例報告", detail: "這是可確認作者所屬為天主教大學的皮膚科病例報告，論文書目可於 KCI 查閱。", sourceLabel: "KCI", sourceUrl: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000885244" },
-      { title: "線狀局限性彈力纖維症病例報告", detail: "這是作者所屬為天主教大學醫學院皮膚科的 Hye Jin Woo 皮膚科病例論文。", sourceLabel: "PubMed", sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10759963/" },
-    ],
-
     // ── JSON-LD 스키마 전용 필드 ──
     jobTitleEn: "Dermatologist, MD",
     schemaDescription:

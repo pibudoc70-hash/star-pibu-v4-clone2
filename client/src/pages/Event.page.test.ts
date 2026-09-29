@@ -39,11 +39,11 @@ describe("standalone EVENT page", () => {
   it("scopes the mobile title and event-list rhythm to the standalone page", () => {
     expect(eventPageSource).toContain("event-page-header");
     expect(eventPageSource).toContain("event-page-events-surface");
-    expect(globalCss).toContain("@layer components {\n  @media (max-width: 767px) {\n    section.event-page-header:not(#contact)");
     expect(globalCss).toContain("#root .event-page-events-surface > section.event-page-mobile-cards-section");
     expect(globalCss).toContain("padding-top: var(--subpage-mobile-header-top) !important;");
     expect(globalCss).toContain("padding-top: var(--subpage-mobile-content-gap) !important;");
-    expect(globalCss).toContain("background: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%);");
+    expect(globalCss).toContain(".dr-page-header:not(#contact)");
+    expect(globalCss).not.toContain("section.event-page-header:not(#contact)");
   });
 
   it("registers localized event routes and points the EVENT navigation item at them", () => {

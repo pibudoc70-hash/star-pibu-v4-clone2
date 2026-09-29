@@ -1667,6 +1667,13 @@
       padding-bottom: 5rem !important;  /* 80px */
     }
 
+    /* Public Doctors starts directly after its shared title area, so it uses
+       the common 48px subpage handoff rather than this legacy 80px default. */
+    .doctors-page > section.dr-doctors-content:not(#contact) {
+      padding-top: var(--subpage-mobile-content-gap) !important;
+      padding-bottom: var(--subpage-mobile-content-gap) !important;
+    }
+
     /* Equipment detail cards must size to their actual content. This sits in
        the same layer as the global 80px rule so important declarations keep
        the intended mobile cascade. */
@@ -5241,30 +5248,10 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
-/* Standalone EVENT keeps the desktop page-header palette and the shared
-   48px section rhythm on phones. The extra top clearance keeps its eyebrow
-   below the fixed mobile header. Keep this in the components layer so it
-   can narrowly supersede the legacy global mobile section-padding rule. */
+/* Standalone EVENT only owns its event-list surface. Its title uses the shared
+   public-subpage header rhythm declared immediately below. */
 @layer components {
   @media (max-width: 767px) {
-    section.event-page-header:not(#contact) {
-      background: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%) !important;
-      padding-top: var(--subpage-mobile-header-top) !important;
-      padding-bottom: var(--subpage-mobile-header-bottom) !important;
-    }
-
-    .event-page-header .dr-page-header-eyebrow {
-      color: #B89A5A;
-    }
-
-    .event-page-header .dr-page-header-title {
-      color: #1A1A1A;
-    }
-
-    .event-page-header .dr-page-header-tagline {
-      color: #6B5C3E;
-    }
-
     .event-page-events-surface {
       background: #FAF8F5 !important;
     }
@@ -7133,11 +7120,6 @@ body.font-lang-zh .hero-stat-label {
 @media (max-width: 767px) {
   /* Standalone Doctors: retain the existing selector/photo controls, but let
      the profile details read as one wide editorial list instead of card-in-card surfaces. */
-  #main-content .doctors-page > section.dr-doctors-content {
-    padding-top: var(--subpage-mobile-content-gap) !important;
-    padding-bottom: var(--subpage-mobile-content-gap) !important;
-  }
-
   .doctors-page .dr-panel-card.card--doctor {
     overflow: visible !important;
     border: 0 !important;
@@ -7147,14 +7129,28 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .doctors-page .dr-mobile-tabbar {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.25rem;
     overflow: hidden;
+    padding: 0.25rem;
     border: 1px solid color-mix(in srgb, var(--color-gold-primary) 16%, transparent);
-    border-radius: 1rem 1rem 0 0;
+    border-radius: 1rem;
     background: var(--color-white, #fff);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--color-gold-primary) 11%, transparent);
+  }
+
+  .doctors-page .dr-mobile-tabbar .dr-mob-tab-btn {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    padding: 0.75rem 0.25rem !important;
+    border-radius: 0.75rem;
   }
 
   .doctors-page .dr-mobile-photo-wrap {
-    border-radius: 0 0 1rem 1rem;
+    margin-top: 0.75rem;
+    border-radius: 1rem;
   }
 
   .doctors-page .dr-mobile-photo-wrap + .p-5 {

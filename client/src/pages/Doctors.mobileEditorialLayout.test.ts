@@ -20,11 +20,21 @@ describe("Doctors direct-page mobile editorial layout", () => {
 
   it("limits panel and nested-card removal to the phone-only Doctors scope", () => {
     expect(mobileScope).toContain("@media (max-width: 767px)");
+    expect(styles).toContain(".doctors-page > section.dr-doctors-content:not(#contact)");
+    expect(styles).toContain("/* Public Doctors starts directly after its shared title area");
     expect(mobileScope).toContain(".doctors-page .dr-panel-card.card--doctor");
     expect(mobileScope).toContain("box-shadow: none !important;");
     expect(mobileScope).toContain(".doctors-page .dr-credentials-accordion");
     expect(mobileScope).toContain(".doctors-page .dr-credentials-item-mobile + .dr-credentials-item-mobile");
     expect(mobileScope).toContain(".doctors-page .dr-research-activities");
+  });
+
+  it("centers all three doctor selector profiles in an equal mobile grid", () => {
+    expect(mobileScope).toContain(".doctors-page .dr-mobile-tabbar");
+    expect(mobileScope).toContain("grid-template-columns: repeat(3, minmax(0, 1fr));");
+    expect(mobileScope).toContain(".doctors-page .dr-mobile-tabbar .dr-mob-tab-btn");
+    expect(mobileScope).toContain("width: 100%;");
+    expect(mobileScope).toContain("justify-content: center;");
   });
 
   it("keeps credentials and research as icon-and-text rows with divider-only separation", () => {

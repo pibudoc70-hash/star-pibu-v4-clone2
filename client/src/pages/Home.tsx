@@ -20,7 +20,6 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import { LiftingPositioningSummary } from "@/components/LiftingPositioning";
 import ResultsStatisticsSection from "@/components/ResultsStatisticsSection";
-import MobileBottomCTA from "@/components/MobileBottomCTA";
 // [P1-OPT] SpecialEventSection, DoctorsSection을 lazy import로 전환
 // 폴드 아래 섹션이므로 초기 로딩 시 필요 없음
 const SpecialEventSection = lazy(() => import("@/components/SpecialEventSection"));
@@ -432,7 +431,6 @@ export default function Home() {
         {/* 1. Hero - Full Screen (eager) */}
         <HeroSection />
         <LiftingPositioningSummary />
-        <MobileBottomCTA />
 
         {/* 2. SPECIAL EVENT — shared home surface B */}
         <DeferredMount

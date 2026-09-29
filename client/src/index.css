@@ -3661,7 +3661,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9000;
+  /* Keep dialogs, promotion overlays, and the mobile drawer above the CTA. */
+  z-index: 40;
   height: calc(54px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   background: #1A1A1C;
@@ -3804,8 +3805,12 @@
 
 /* 모바일에서 하단 고정 바 높이만큼 body 하단 패딩 추가 (콘텐츠 가림 방지) */
 @media (max-width: 767px) {
+  :root {
+    --mobile-bottom-cta-height: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+
   body {
-    padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--mobile-bottom-cta-height);
   }
 
   /* Hero 섹션 모바일 CTA 버튼 그룹 숨김 */
@@ -6289,7 +6294,7 @@ body.font-lang-zh .hero-stat-label {
 /* MobileBottomCTA 개선 — 상단 radius 대응 및 높이 조정 */
 @media (max-width: 767px) {
   .mobile-bottom-cta {
-    height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+    height: var(--mobile-bottom-cta-height) !important;
   }
   /* Primary — 네이버 예약 강조 */
   .mobile-bottom-btn--reserve {

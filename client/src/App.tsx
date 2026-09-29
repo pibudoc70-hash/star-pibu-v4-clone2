@@ -4,6 +4,7 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LangProvider, useLang } from "./contexts/LangContext";
+import MobileBottomCTA from "./components/MobileBottomCTA";
 import { Suspense, useEffect } from "react";
 import { trackGa4PageView } from "./lib/ga4";
 import Home from "./pages/Home";
@@ -129,6 +130,16 @@ function Ga4PageViewTracker() {
   return null;
 }
 
+/** Public-site mobile CTA is rendered once outside individual page layouts. */
+function PublicMobileBottomCTA() {
+  const [location] = useLocation();
+
+  // 운영용 관리자 화면에는 환자용 고정 CTA를 표시하지 않는다.
+  if (location.startsWith("/admin")) return null;
+
+  return <MobileBottomCTA />;
+}
+
 // ─── 라우터 ───────────────────────────────────────────────────────────────────
 function Router() {
   return (
@@ -206,6 +217,7 @@ function Router() {
           </MapErrorBoundary>
         </Route>
       </Switch>
+      <PublicMobileBottomCTA />
     </Suspense>
   );
 }

@@ -3832,15 +3832,57 @@
 
   .event-page-mobile-card .event-card__showcase {
     background: var(--color-white, #fff);
+    display: flex !important;
+    align-items: stretch !important;
+    text-align: left !important;
   }
 
   .event-page-mobile-card .event-card__showcase > :is(.event-card__showcase-media) {
-    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: auto;
+    background: var(--color-white, #fff);
   }
 
   .event-page-mobile-card .event-card__showcase > :is(.event-card__showcase-media) img {
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  .event-page-mobile-card .event-card__showcase-content {
+    align-self: stretch !important;
+    width: 100% !important;
+    margin-inline: 0 !important;
+    padding: 1.25rem !important;
+    text-align: left !important;
+  }
+
+  .event-page-mobile-card :is(
+    .event-card__title,
+    .event-card__subtitle,
+    .event-card__showcase-price-row,
+    .event-card__showcase-options,
+    .event-card__showcase-option-row
+  ) {
+    text-align: left !important;
+  }
+
+  .event-page-mobile-card .event-card__showcase-price-row {
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .event-page-mobile-card .event-card__showcase-price-row .event-card__vat-badge {
+    margin-left: 0;
+    flex: 0 0 auto;
+  }
+
+  .event-page-mobile-card .event-card__showcase-option-row {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .event-page-mobile-card-skeleton {
@@ -5207,8 +5249,8 @@ body.font-lang-zh .hero-stat-label {
   @media (max-width: 767px) {
     section.event-page-header:not(#contact) {
       background: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%) !important;
-      padding-top: calc(3rem + 1.5rem) !important;
-      padding-bottom: 3rem !important;
+      padding-top: var(--subpage-mobile-header-top) !important;
+      padding-bottom: var(--subpage-mobile-header-bottom) !important;
     }
 
     .event-page-header .dr-page-header-eyebrow {
@@ -5227,9 +5269,9 @@ body.font-lang-zh .hero-stat-label {
       background: #FAF8F5 !important;
     }
 
-    .event-page-events-surface section#events {
-      padding-top: 3rem !important;
-      padding-bottom: 3rem !important;
+    #root .event-page-events-surface > section.event-page-mobile-cards-section {
+      padding-top: var(--subpage-mobile-content-gap) !important;
+      padding-bottom: var(--subpage-mobile-content-gap) !important;
     }
   }
 }

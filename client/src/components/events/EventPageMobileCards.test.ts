@@ -22,5 +22,7 @@ describe("EventPageMobileCards", () => {
     expect(cardSource).toContain("event-card__showcase-media");
     expect(cardSource).toContain("event-card__vat-badge");
     expect(cardSource).toContain("event-card__showcase-options");
+    expect(cardSource).toContain("event-card__showcase-price-row");
+    expect(cardSource).toContain("event-card__showcase-option-row");
   });
 });

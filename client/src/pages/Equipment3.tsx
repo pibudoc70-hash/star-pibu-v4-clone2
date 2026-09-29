@@ -297,11 +297,13 @@ export default function Equipment3() {
   // ── 검색 상태 ────────────────────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [mobileGuideExpanded, setMobileGuideExpanded] = useState(false);
 
   // 탭 전환 시 검색어 초기화
   const handleTabChange = useCallback((id: string) => {
     setActiveId(id);
     setSearchQuery("");
+    setMobileGuideExpanded(false);
     const newSearch = id ? `?tab=${encodeURIComponent(id)}` : "";
     window.history.replaceState(null, "", window.location.pathname + newSearch);
   }, []);
@@ -585,15 +587,6 @@ export default function Equipment3() {
                   )}
                 </div>
 
-                {/* 모바일은 기존 카드 상단 안내 흐름을 유지합니다. */}
-                {renderActiveCategoryGuide() && (
-                  <div className="equipment-list__category-guide sm:hidden rounded-2xl mb-4 overflow-hidden bg-white animate-card-fade">
-                    <div className="px-5 pt-6 pb-2">
-                      {renderActiveCategoryGuide()}
-                    </div>
-                  </div>
-                )}
-
                 {/* 카드 그리드 — 검색 중에는 탭에 관계없이 표시 */}
                 {(activeId || isSearching) && (
                   <div className="equipment-list__card-panel rounded-2xl mb-8 overflow-hidden animate-card-fade">
@@ -673,6 +666,27 @@ export default function Equipment3() {
                         </div>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* 모바일에서는 시술 카드를 먼저 보여주고, 카테고리 안내를 뒤에 이어서 제공합니다. */}
+                {renderActiveCategoryGuide() && (
+                  <div
+                    className="equipment-list__category-guide equipment-list__category-guide--mobile sm:hidden rounded-2xl mb-8 overflow-hidden bg-white animate-card-fade"
+                    data-expanded={mobileGuideExpanded}
+                  >
+                    <div className="equipment-list__category-guide-content px-5 pt-6 pb-2">
+                      {renderActiveCategoryGuide()}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setMobileGuideExpanded((expanded) => !expanded)}
+                      className="equipment-list__category-guide-toggle inline-flex min-h-11 items-center gap-1.5 px-5 py-2 text-sm font-semibold"
+                      aria-expanded={mobileGuideExpanded}
+                    >
+                      <span>{mobileGuideExpanded ? getText("접기", "Show less", "閉じる", "收起") : getText("더보기", "Show more", "もっと見る", "查看更多")}</span>
+                      {mobileGuideExpanded ? <ChevronUp size={15} aria-hidden="true" /> : <ChevronDown size={15} aria-hidden="true" />}
+                    </button>
                   </div>
                 )}
 

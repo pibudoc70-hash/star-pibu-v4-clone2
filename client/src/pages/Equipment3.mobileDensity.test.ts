@@ -26,10 +26,11 @@ describe("Equipment3 mobile card density", () => {
     expect(cardSource).toContain('<a\n      href={detailPath}');
   });
 
-  it("uses a 639px mobile scope to reduce unused card height while keeping readable type", () => {
-    expect(cssSource).toContain("@media (max-width: 639px)");
+  it("uses one phone scope with a horizontal media ratio and readable card type", () => {
+    expect(cssSource).toContain("@media (max-width: 767px)");
     expect(cssSource).toContain(".equipment-list__card-media");
-    expect(cssSource).toContain("height: 11.5rem !important");
+    expect(cssSource).toContain("aspect-ratio: 1.93 / 1;");
+    expect(cssSource).toContain("object-position: center center;");
     expect(cssSource).toContain("min-height: 0 !important");
     expect(cssSource).toContain("font-size: 0.8125rem");
     expect(cssSource).toContain("line-height: 1.55");

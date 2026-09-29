@@ -27,14 +27,25 @@ describe("Equipment3 category guide placement", () => {
     ].forEach((condition) => expect(pageSource).toContain(condition));
   });
 
-  it("keeps the existing mobile guide-before-cards flow and renders desktop guides after the card panel", () => {
-    const mobileGuideIndex = pageSource.indexOf('className="equipment-list__category-guide sm:hidden');
+  it("renders the shared mobile guide after cards and keeps the desktop guide after the card panel", () => {
+    const mobileGuideIndex = pageSource.indexOf('className="equipment-list__category-guide equipment-list__category-guide--mobile sm:hidden');
     const cardPanelIndex = pageSource.indexOf('className="equipment-list__card-panel');
     const desktopGuideIndex = pageSource.indexOf('className="equipment-list__category-guide hidden sm:block');
 
     expect(mobileGuideIndex).toBeGreaterThan(-1);
-    expect(cardPanelIndex).toBeGreaterThan(mobileGuideIndex);
+    expect(mobileGuideIndex).toBeGreaterThan(cardPanelIndex);
     expect(desktopGuideIndex).toBeGreaterThan(cardPanelIndex);
+  });
+
+  it("keeps every mobile guide preview source intact behind one accessible text toggle", () => {
+    expect(pageSource).toContain('const [mobileGuideExpanded, setMobileGuideExpanded] = useState(false);');
+    expect(pageSource).toContain('setMobileGuideExpanded(false);');
+    expect(pageSource).toContain('className="equipment-list__category-guide-toggle');
+    expect(pageSource).toContain('aria-expanded={mobileGuideExpanded}');
+    expect(cssSource).toContain('.equipment-list__category-guide--mobile:not([data-expanded="true"])');
+    expect(cssSource).toContain('-webkit-line-clamp: 3;');
+    expect(cssSource).toContain('#root .equipment-list-page .equipment-list__category-guide--mobile');
+    expect(cssSource).toContain('padding-block: 0 !important;');
   });
 
   it("removes only desktop guide hero outlines and retains feature-card styling", () => {

@@ -13,7 +13,7 @@ describe("Equipment3 desktop outer panel cleanup", () => {
     expect(pageSource).toContain("equipment-list__card treatment-card");
   });
 
-  it("removes only the desktop wrapper treatments and preserves mobile panel styling", () => {
+  it("keeps desktop wrapper cleanup and removes redundant mobile outer chrome", () => {
     const cleanupStart = cssSource.indexOf("/* Desktop equipment list: retain individual tabs/cards");
     const desktopCleanup = cssSource.slice(
       cleanupStart,
@@ -30,8 +30,10 @@ describe("Equipment3 desktop outer panel cleanup", () => {
     expect(desktopCleanup).toContain("box-shadow: none !important");
     expect(desktopCleanup).toContain(".equipment-list-page .equipment-list__card");
     expect(desktopCleanup).toContain("border: none !important");
-    expect(cssSource).toContain("@media (max-width: 639px)");
-    expect(cssSource).toContain(".equipment-list__card-grid {\n    padding: 0.75rem;");
+    expect(cssSource).toContain("@media (max-width: 767px)");
+    expect(cssSource).toContain(".equipment-list-page .equipment-list__card-panel,");
+    expect(cssSource).toContain(".equipment-list-page .equipment-list__card-grid {");
+    expect(cssSource).toContain("padding: 0 !important;");
   });
 
   it("keeps the transparent desktop search and filter override inside the desktop-only cleanup boundary", () => {

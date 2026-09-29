@@ -25,7 +25,7 @@ describe("2026-09-23 desktop page refinements", () => {
     expect(mobileBranch).toContain('<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{t.about.title}</h1>');
   });
 
-  it("keeps Equipment3 search width while aligning only the desktop card grid", () => {
+  it("keeps Equipment3 search width while aligning the desktop grid and removing mobile outer chrome", () => {
     expect(equipmentSource).toContain("피부 고민에 맞춘 프리미엄 장비 시스템");
     expect(equipmentSource).toContain('className="equipment-list__search-shell mb-4"');
     expect(equipmentSource).toContain('className="equipment-list__card-grid px-5 pt-5 pb-5 rounded-b-2xl"');
@@ -33,7 +33,7 @@ describe("2026-09-23 desktop page refinements", () => {
     const desktopBlock = cssSource.slice(cssSource.indexOf("@media (min-width: 768px)"), cssSource.indexOf("/* `/doctors` direct-page header"));
     expect(desktopBlock).toContain(".equipment-list__card-grid {");
     expect(desktopBlock).toContain("padding-inline: 0;");
-    expect(cssSource).toContain(".equipment-list__card-grid {\n    padding: 0.75rem;");
+    expect(cssSource).toContain(".equipment-list-page .equipment-list__card-grid {\n    padding: 0 !important;");
   });
 
   it("uses the peer subpage label and subtitle only on the management desktop header", () => {

@@ -19,6 +19,7 @@ const koreanI18nSource = readFileSync(
   resolve(process.cwd(), "client/src/lib/i18n.ko.ts"),
   "utf8",
 );
+const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("EquipmentTreatmentModal Equipment3 detail links", () => {
   it("maps Ultherapy Prime to the user-confirmed Equipment3 detail URL", () => {
@@ -29,16 +30,16 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
     expect(cardSource).toContain("detailUrl={item.detailUrl}");
   });
 
-  it("renders a high-contrast detail button directly after media and navigates with progress feedback", () => {
+  it("renders the FAQ-active gold detail button directly after media and navigates with progress feedback", () => {
     expect(modalSource).toContain("detailUrl: string | undefined");
-    expect(modalSource).toContain("accentColor: string");
+    expect(modalSource).not.toContain("accentColor");
     expect(modalSource).toContain("const [isNavigating, setIsNavigating] = useState(false);");
     expect(modalSource).toContain("setLocation(detailUrl)");
     expect(modalSource).toContain("disabled={isNavigating}");
     expect(modalSource).toContain("aria-busy={isNavigating}");
-    expect(modalSource).toContain("style={{ backgroundColor: accentColor }}");
+    expect(modalSource).toContain('className="treatment-modal-detail-link-button"');
     expect(modalSource).toContain("{isNavigating ? (");
-    expect(cardSource).toContain("accentColor={catTextColor}");
+    expect(cardSource).not.toContain("accentColor={catTextColor}");
     expect(koreanI18nSource).toContain('modalDetailBtn: "자세히 보기"');
     expect(modalSource.indexOf("{/* 상세 페이지 이동 버튼 */}")).toBeGreaterThan(
       modalSource.indexOf("{/* 모달 이미지 (유튜브 embed 불가능하거나 없을 때) */}"),
@@ -47,5 +48,15 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
       modalSource.indexOf("{/* 상세 설명 */}"),
     );
     expect(modalSource).toContain("{detailUrl && (");
+    expect(globalCss).toContain(".treatment-modal-detail-link-button {");
+    expect(globalCss).toContain("background: var(--color-gold-primary);");
+    expect(globalCss).toContain("border-radius: 9999px;");
+    expect(globalCss).toContain("color: #fff;");
+  });
+
+  it("keeps the standard header text flush left without its square thumbnail", () => {
+    expect(modalSource).not.toContain("src={item.image}");
+    expect(modalSource).not.toContain("w-20 h-20");
+    expect(modalSource).toContain("/* 한국어 또는 bgImageUrl 없음: 제목 + 시간/회복 */");
   });
 });

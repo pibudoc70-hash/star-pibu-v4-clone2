@@ -34,7 +34,6 @@ interface EquipmentTreatmentModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   detailUrl: string | undefined;
-  accentColor: string;
 }
 
 export function EquipmentTreatmentModal({
@@ -42,7 +41,6 @@ export function EquipmentTreatmentModal({
   open,
   onOpenChange,
   detailUrl,
-  accentColor,
 }: EquipmentTreatmentModalProps) {
   const { t, lang } = useLang();
   const tr = t.treatments;
@@ -50,7 +48,7 @@ export function EquipmentTreatmentModal({
   const [, setLocation] = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);
 
-  // 언어별 헤더 이미지: ko는 imageUrl 썬네일, 비ko는 bgImageUrl 풀배경
+  // 비한국어 + bgImageUrl은 풀배경 헤더, 그 외는 텍스트 메타 헤더를 사용한다.
   const isNonKo = lang !== "ko";
   const showBgOverlay = isNonKo && !!item.bgImageUrl;
 
@@ -62,7 +60,7 @@ export function EquipmentTreatmentModal({
           {tr.modalDetailBtn}
         </DialogTitle>
         <div className="space-y-4">
-          {/* 헤더: 언어별 이미지 + 이름 + 시간/회복 */}
+          {/* 헤더: 비한국어 풀배경 또는 이름 + 시간/회복 */}
           {showBgOverlay ? (
             /* 비한국어: bgImageUrl 풀배경 + 텍스트 오버레이 */
             <div className="relative rounded-xl overflow-hidden" style={{ height: "160px" }}>
@@ -98,31 +96,22 @@ export function EquipmentTreatmentModal({
               </div>
             </div>
           ) : (
-            /* 한국어 또는 bgImageUrl 없음: 기존 썬네일 + 텍스트 */
-            <div className="flex items-start gap-4">
-              <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
-                <OptimizedImage
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-slate-800">
-                  {getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)}
-                </h3>
-                <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                  <span className="flex items-center gap-1">
-                    <Clock size={12} />
-                    {tr.modalTime}:{" "}
-                    {getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw)}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <RefreshCw size={12} />
-                    {tr.modalRecovery}:{" "}
-                    {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw)}
-                  </span>
-                </div>
+            /* 한국어 또는 bgImageUrl 없음: 제목 + 시간/회복 */
+            <div>
+              <h3 className="text-lg font-bold text-slate-800">
+                {getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)}
+              </h3>
+              <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                <span className="flex items-center gap-1">
+                  <Clock size={12} />
+                  {tr.modalTime}:{" "}
+                  {getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw)}
+                </span>
+                <span className="flex items-center gap-1">
+                  <RefreshCw size={12} />
+                  {tr.modalRecovery}:{" "}
+                  {getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw)}
+                </span>
               </div>
             </div>
           )}
@@ -167,8 +156,7 @@ export function EquipmentTreatmentModal({
               disabled={isNavigating}
               aria-busy={isNavigating}
               aria-label={isNavigating ? tr.modalDetailLoading : tr.modalDetailBtn}
-              className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-black/10 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-[transform,filter,box-shadow] duration-200 hover:brightness-110 hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)] focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-95"
-              style={{ backgroundColor: accentColor }}
+              className="treatment-modal-detail-link-button"
             >
               {isNavigating ? (
                 <>

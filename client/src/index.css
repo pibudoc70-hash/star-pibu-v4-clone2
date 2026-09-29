@@ -4603,6 +4603,42 @@ body.font-lang-zh .hero-stat-label {
   box-shadow: 0 0 0 2px var(--focus-ring), 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
 }
 
+/* Treatment detail CTA follows the selected FAQ tab's gold pill system. */
+.treatment-modal-detail-link-button {
+  display: inline-flex;
+  min-height: 44px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 10px 22px;
+  border: 1.5px solid transparent;
+  border-radius: 9999px;
+  background: var(--color-gold-primary);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.25;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.treatment-modal-detail-link-button:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
+  transform: translateY(-1px);
+}
+.treatment-modal-detail-link-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.treatment-modal-detail-link-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--focus-ring), 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+}
+.treatment-modal-detail-link-button:disabled {
+  cursor: wait;
+  opacity: 0.95;
+}
+
 /* Mobile contact hierarchy: retain desktop icons, but let labels lead each row on phones. */
 @media (max-width: 767px) {
   #contact [data-testid="contact-info-panel"] .contact-info-item__icon {

@@ -5157,6 +5157,41 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
+/* Standalone EVENT keeps the desktop page-header palette and the shared
+   48px section rhythm on phones. The extra top clearance keeps its eyebrow
+   below the fixed mobile header. Keep this in the components layer so it
+   can narrowly supersede the legacy global mobile section-padding rule. */
+@layer components {
+  @media (max-width: 767px) {
+    section.event-page-header:not(#contact) {
+      background: linear-gradient(135deg, #FDFAF7 0%, #F5F0EB 100%) !important;
+      padding-top: calc(3rem + 1.5rem) !important;
+      padding-bottom: 3rem !important;
+    }
+
+    .event-page-header .dr-page-header-eyebrow {
+      color: #B89A5A;
+    }
+
+    .event-page-header .dr-page-header-title {
+      color: #1A1A1A;
+    }
+
+    .event-page-header .dr-page-header-tagline {
+      color: #6B5C3E;
+    }
+
+    .event-page-events-surface {
+      background: #FAF8F5 !important;
+    }
+
+    .event-page-events-surface section#events {
+      padding-top: 3rem !important;
+      padding-bottom: 3rem !important;
+    }
+  }
+}
+
 .equipment-detail-page--dark header[role="banner"] {
   background: rgba(18, 26, 45, 0.97) !important;
   border-bottom: 1px solid rgba(215, 181, 109, 0.26) !important;

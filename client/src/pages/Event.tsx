@@ -78,7 +78,7 @@ export default function Event() {
         ])]}
       />
 
-      <section className="dr-page-header pt-28 pb-12 sm:pt-32 sm:pb-16 text-center" aria-labelledby="event-page-title">
+      <section className="dr-page-header event-page-header pt-28 pb-12 sm:pt-32 sm:pb-16 text-center" aria-labelledby="event-page-title">
         <div className="container">
           <p className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3">
             {copy.eyebrow}
@@ -92,7 +92,7 @@ export default function Event() {
         </div>
       </section>
 
-      <div className="section-bg-cream">
+      <div className="section-bg-cream event-page-events-surface">
         <SpecialEventSection showHeader={false} />
       </div>
     </MainLayout>

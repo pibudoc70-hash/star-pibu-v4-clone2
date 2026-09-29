@@ -5279,6 +5279,32 @@ body.font-lang-zh .hero-stat-label {
       padding-bottom: var(--subpage-mobile-header-bottom) !important;
     }
 
+    /* Standalone management devices retain their card surfaces, but every
+       mapped card shares one centered mobile composition below 768px. */
+    .management-device-faq-grid .management-device-faq-card__content {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .management-device-faq-grid .management-device-faq-card__image {
+      margin-inline: auto;
+    }
+
+    .management-device-faq-grid .management-device-faq-card__copy,
+    .management-device-faq-grid .management-device-faq-card__description {
+      width: 100%;
+      text-align: center;
+    }
+
+    .management-device-faq-grid .management-device-faq-card__tags {
+      justify-content: center;
+    }
+
+    .management-device-faq-grid .management-device-faq-card__tags > li {
+      text-align: start;
+    }
+
     /* Shared, border-led mobile editorial list. Public subpages can reuse this
        instead of stacking nested cards on narrow screens. */
     .subpage-mobile-editorial-list {

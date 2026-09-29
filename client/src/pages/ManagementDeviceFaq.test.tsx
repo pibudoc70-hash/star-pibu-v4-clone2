@@ -35,7 +35,15 @@ describe("ManagementDeviceFaq", () => {
     expect(screen.getAllByText("영양 성분 침투")).toHaveLength(2);
 
     const cardGrid = screen.getByTestId("management-device-faq-grid");
-    expect(cardGrid).toHaveClass("grid-cols-1", "lg:grid-cols-2");
+    expect(cardGrid).toHaveClass("management-device-faq-grid", "grid-cols-1", "lg:grid-cols-2");
+
+    const firstCard = cardGrid.querySelector("article");
+    expect(firstCard).toHaveClass("management-device-faq-card");
+    expect(firstCard?.querySelector(".management-device-faq-card__content")).toBeInTheDocument();
+    expect(firstCard?.querySelector(".management-device-faq-card__image")).toBeInTheDocument();
+    expect(firstCard?.querySelector(".management-device-faq-card__copy")).toBeInTheDocument();
+    expect(firstCard?.querySelector(".management-device-faq-card__tags")).toBeInTheDocument();
+    expect(firstCard?.querySelector(".management-device-faq-card__description")).toBeInTheDocument();
 
     expect(screen.queryByText("소노필 관리는 어떤 방식으로 진행되나요?")).not.toBeInTheDocument();
     expect(screen.queryAllByRole("group")).toHaveLength(0);

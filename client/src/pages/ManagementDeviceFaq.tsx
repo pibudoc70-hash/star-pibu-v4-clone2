@@ -116,7 +116,7 @@ export default function ManagementDeviceFaq() {
 
       <section className="bg-[var(--brand-bg)] px-4 py-12 md:py-20">
         <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8" data-testid="management-device-faq-grid">
+          <div className="management-device-faq-grid grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8" data-testid="management-device-faq-grid">
             {MANAGEMENT_DEVICES.map((device) => {
               const displayName = getText(device.name, device.nameEn, device.nameJa, device.nameZh, device.nameZhTw);
               const description = getText(
@@ -129,9 +129,9 @@ export default function ManagementDeviceFaq() {
               const tags = DEVICE_TAGS[device.id][lang];
 
               return (
-                <article key={device.id} className="h-full overflow-hidden rounded-2xl bg-white shadow-[0_12px_34px_rgba(39,30,20,0.10)]">
-                  <div className="flex flex-col gap-6 border-b border-black/5 p-6 sm:flex-row sm:items-center md:p-8">
-                    <div className="size-24 shrink-0 overflow-hidden rounded-full bg-[#eee7dc] sm:size-28">
+                <article key={device.id} className="management-device-faq-card h-full overflow-hidden rounded-2xl bg-white shadow-[0_12px_34px_rgba(39,30,20,0.10)]">
+                  <div className="management-device-faq-card__content flex flex-col gap-6 border-b border-black/5 p-6 sm:flex-row sm:items-center md:p-8">
+                    <div className="management-device-faq-card__image size-24 shrink-0 overflow-hidden rounded-full bg-[#eee7dc] sm:size-28">
                       <OptimizedImage
                         src={MANAGEMENT_DEVICE_IMAGES[device.imgId]}
                         alt={displayName}
@@ -140,10 +140,10 @@ export default function ManagementDeviceFaq() {
                         height={112}
                       />
                     </div>
-                    <div>
+                    <div className="management-device-faq-card__copy">
                       <p className="text-xs font-semibold tracking-[0.16em] text-[var(--color-gold-primary)]">{device.nameEn}</p>
                       <h2 className="mt-1 text-2xl font-bold text-[#2c1f0e]">{displayName}</h2>
-                      <ul className="mt-3 flex flex-wrap gap-2" aria-label={copy.tagLabel}>
+                      <ul className="management-device-faq-card__tags mt-3 flex flex-wrap gap-2" aria-label={copy.tagLabel}>
                         <li className="rounded-full bg-[#f3ece2] px-3 py-1.5 text-xs font-semibold text-[#6c4f26]">
                           <span className="mr-1 text-[#9b7a43]">{copy.purpose}</span>{tags.purpose}
                         </li>
@@ -154,7 +154,7 @@ export default function ManagementDeviceFaq() {
                     </div>
                   </div>
 
-                  <div className="px-6 py-5 md:px-8 md:py-6">
+                  <div className="management-device-faq-card__description px-6 py-5 md:px-8 md:py-6">
                     <p className="text-sm leading-7 text-[#62584e]">{description}</p>
                   </div>
                 </article>

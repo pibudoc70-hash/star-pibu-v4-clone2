@@ -60,8 +60,9 @@ describe("Doctors desktop palette rebaseline", () => {
     expect(research).toContain("research-domestic-section");
   });
 
-  it("preserves the existing mobile branches while moving no page structure", () => {
-    expect(about).toContain('className="md:hidden py-16 md:py-24 bg-white"');
+  it("preserves the public mobile branches while allowing About's scoped editorial layout", () => {
+    expect(about).toContain('className="about-mobile-page md:hidden bg-white text-[var(--brand-text)]"');
+    expect(about).toContain('className="dr-page-header about-mobile-header text-center"');
     expect(directions).toContain("directions-transport-section");
     expect(doctors).toContain("dr-mobile-tabbar");
   });

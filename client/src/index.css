@@ -5279,6 +5279,113 @@ body.font-lang-zh .hero-stat-label {
       padding-bottom: var(--subpage-mobile-header-bottom) !important;
     }
 
+    /* Shared, border-led mobile editorial list. Public subpages can reuse this
+       instead of stacking nested cards on narrow screens. */
+    .subpage-mobile-editorial-list {
+      border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent);
+    }
+
+    .subpage-mobile-editorial-row {
+      display: flex;
+      gap: 0.75rem;
+      padding-block: 1rem;
+      text-align: left;
+    }
+
+    .subpage-mobile-editorial-row + .subpage-mobile-editorial-row {
+      border-top: 1px solid color-mix(in srgb, var(--color-gold-primary) 16%, transparent);
+    }
+
+    .subpage-mobile-editorial-row__icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--color-gold-pale);
+      color: var(--color-gold-dark);
+    }
+
+    .subpage-mobile-editorial-row__content {
+      min-width: 0;
+    }
+
+    .subpage-mobile-editorial-row__content h2 {
+      color: var(--brand-text);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .subpage-mobile-editorial-row__content h2 span {
+      margin-right: 0.125rem;
+      color: var(--color-gold-deep);
+    }
+
+    .subpage-mobile-editorial-row__content p {
+      margin-top: 0.25rem;
+      color: var(--brand-text-mid);
+      font-size: 0.875rem;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .about-mobile-content {
+      padding-top: 1.5rem;
+      padding-bottom: var(--subpage-mobile-content-gap);
+    }
+
+    .about-mobile-image {
+      aspect-ratio: 4 / 3;
+      box-shadow: 0 12px 28px color-mix(in srgb, var(--color-gold-deep) 12%, transparent);
+    }
+
+    .about-mobile-body p {
+      color: var(--brand-text-mid);
+      font-size: 1rem;
+      line-height: 1.75;
+      text-align: left;
+      word-break: keep-all;
+    }
+
+    .about-mobile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-block: 1px solid color-mix(in srgb, var(--color-gold-primary) 22%, transparent);
+    }
+
+    .about-mobile-stat {
+      min-width: 0;
+      padding: 0.875rem 0.375rem;
+      text-align: center;
+    }
+
+    .about-mobile-stat + .about-mobile-stat {
+      border-left: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
+    }
+
+    .about-mobile-stat dt {
+      color: var(--color-gold-deep);
+      font-size: clamp(1.25rem, 6vw, 1.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      word-break: keep-all;
+    }
+
+    .about-mobile-stat dd {
+      margin-top: 0.375rem;
+      color: var(--brand-text-mid);
+      font-size: 0.75rem;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .about-mobile-doctor-link a {
+      color: var(--color-gold-deep);
+    }
+
     /* This shares the header's 48px handoff and intentionally lives in the
        legacy component layer, where its important declarations can supersede
        the site's generic mobile `section` padding contract. */

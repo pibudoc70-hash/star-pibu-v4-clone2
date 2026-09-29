@@ -42,7 +42,7 @@ describe("Equipment3Detail mobile density contract", () => {
 
   it("does not modify desktop breakpoint rules in the mobile density block", () => {
     const start = css.indexOf("/* ── Equipment detail mobile density: shared detail template only ── */");
-    const end = css.indexOf(".equipment-detail-page--dark header[role=\"banner\"]", start);
+    const end = css.indexOf("/* Standalone EVENT only owns its event-list surface.", start);
     const block = css.slice(start, end);
 
     expect(end).toBeGreaterThan(start);

@@ -60,11 +60,12 @@ describe("desktop-first public subpage tone unification", () => {
     expect(managementSource).toContain('hidden font-montserrat text-xs tracking-[0.3em] uppercase md:block">STAR DERMATOLOGY</p>');
   });
 
-  it("adds the desktop About title and editorial composition while retaining a mobile-only legacy layout", () => {
+  it("adds the desktop About title and a shared-header mobile editorial layout", () => {
     expect(aboutSource).toContain('className="hidden md:block bg-[var(--brand-bg)] text-[var(--brand-text)]"');
     expect(aboutSource).toContain('id="about-page-title"');
     expect(aboutSource).toContain("const VALUE_ICONS = [HeartHandshake, Sparkles, ShieldCheck, CalendarDays]");
     expect(aboutSource).toContain('href="/doctors"');
-    expect(aboutSource).toContain('className="md:hidden py-16 md:py-24 bg-white"');
+    expect(aboutSource).toContain('className="about-mobile-page md:hidden bg-white text-[var(--brand-text)]"');
+    expect(aboutSource).toContain('className="subpage-mobile-editorial-list about-mobile-values mt-8"');
   });
 });

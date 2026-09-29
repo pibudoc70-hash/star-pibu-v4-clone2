@@ -12,8 +12,8 @@ const contactSource = read("client/src/components/ContactSection.tsx");
 const cssSource = read("client/src/index.css");
 
 describe("2026-09-23 desktop page refinements", () => {
-  it("keeps About mobile markup intact while using one desktop composition", () => {
-    const mobileBranch = aboutSource.slice(aboutSource.indexOf("{/* Mobile is intentionally retained unchanged. */}"));
+  it("keeps About's desktop composition isolated from its mobile editorial branch", () => {
+    const mobileBranch = aboutSource.slice(aboutSource.indexOf("{/* Mobile: mirrors the shared public-subpage title rhythm"));
 
     expect(aboutSource).toContain('lang === "ko" ? "스타피부과 소개"');
     expect(aboutSource).toContain("보이는 아름다움 그 너머, 피부의 본질까지 생각합니다.");
@@ -21,8 +21,9 @@ describe("2026-09-23 desktop page refinements", () => {
     expect(aboutSource).toContain("t.about.philosophyTagline}</p>");
     expect(aboutSource).toContain("스타피부과가 지키는 네 가지 약속");
     expect(aboutSource).not.toContain('className="bg-[var(--brand-bg-alt)] py-20 lg:py-24"');
-    expect(aboutSource).toContain('className="md:hidden py-16 md:py-24 bg-white"');
-    expect(mobileBranch).toContain('<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{t.about.title}</h1>');
+    expect(aboutSource).toContain('className="about-mobile-page md:hidden bg-white text-[var(--brand-text)]"');
+    expect(mobileBranch).toContain('className="dr-page-header about-mobile-header text-center"');
+    expect(mobileBranch).toContain('id="about-page-mobile-title"');
   });
 
   it("keeps Equipment3 search width while aligning the desktop grid and removing mobile outer chrome", () => {

@@ -183,44 +183,67 @@ export default function About() {
         </section>
       </div>
 
-      {/* Mobile is intentionally retained unchanged. */}
-      <section className="md:hidden py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="font-semibold text-sm uppercase tracking-wider mb-4" style={{ color: 'var(--color-gold-primary)' }}>{aboutUsLabel}</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{t.about.title}</h1>
-              <p className="text-2xl font-bold mb-6" style={{ color: 'var(--color-gold-primary)' }}>STAR DERMATOLOGY</p>
-              <p className="text-gray-600 mb-8 leading-relaxed text-base">{t.about.desc}</p>
-              <div className="grid grid-cols-3 gap-4 mb-8">
-                {t.about.stats.slice(0, 3).map((stat, idx) => (
-                  <div key={idx} className="rounded-lg p-6 text-center" style={{ backgroundColor: 'var(--color-gold-pale)' }}>
-                    <div className="text-3xl font-bold mb-2" style={{ color: 'var(--color-gold-primary)' }}>{stat.num}</div>
-                    <div className="text-gray-600 text-sm">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="space-y-4">
-                {t.about.values.map((value, idx) => (
-                  <div key={idx} className="border-l-4 pl-4" style={{ borderColor: 'var(--color-gold-primary)' }}>
-                    <h3 className="font-bold text-gray-900 mb-1"><span style={{ color: 'var(--color-gold-primary)' }}>{value.letter}</span>{value.title.slice(1)}</h3>
-                    <p className="text-gray-600 text-sm">{value.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6">
-                <a href="/doctors" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline" style={{ color: 'var(--color-gold-primary)' }}>{doctorLinkLabel}</a>
-              </div>
+      {/* Mobile: mirrors the shared public-subpage title rhythm, then keeps the
+          consultation image ahead of the editorial copy for a natural reading order. */}
+      <div className="about-mobile-page md:hidden bg-white text-[var(--brand-text)]">
+        <section className="dr-page-header about-mobile-header text-center" aria-labelledby="about-page-mobile-title">
+          <div className="container">
+            <p className="dr-page-header-eyebrow font-montserrat text-xs tracking-[0.3em] uppercase mb-3">STAR DERMATOLOGY</p>
+            <h1 id="about-page-mobile-title" className="dr-page-header-title text-3xl sm:text-4xl font-extrabold mb-4">{t.about.title}</h1>
+            <p className="dr-page-header-tagline text-sm sm:text-base">{t.about.philosophyTagline}</p>
+          </div>
+        </section>
+
+        <div className="about-mobile-content">
+          <div className="container">
+            <figure className="about-mobile-image relative overflow-hidden rounded-[var(--card-radius)]">
+              <OptimizedImage
+                id="about-section-image"
+                src="/api/storage/patient-consultation-mobile_e2474e05_fb420943_2114c946.webp"
+                alt={medicalTeamAlt}
+                priority
+                className="w-full h-full object-cover"
+                height={384}
+              />
+              <figcaption className="absolute bottom-4 left-4 rounded-full bg-[rgba(44,44,44,0.78)] px-3 py-1.5 text-xs font-semibold text-white">
+                {sinceLabel}
+              </figcaption>
+            </figure>
+
+            <div className="about-mobile-body mt-7">
+              <p>{t.about.desc}</p>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg h-96 flex items-center justify-center overflow-hidden">
-                <OptimizedImage id="about-section-image" src="/manus-storage/patient-consultation-mobile_e2474e05_fb420943_2114c946.webp" alt={medicalTeamAlt} className="w-full h-full object-cover" height={384} />
-              </div>
-              <div className="absolute bottom-6 left-6 bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm font-semibold">{sinceLabel}</div>
+
+            <dl className="about-mobile-stats mt-8">
+              {t.about.stats.slice(0, 3).map((stat) => (
+                <div key={stat.label} className="about-mobile-stat">
+                  <dt>{stat.num}</dt>
+                  <dd>{stat.label}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="subpage-mobile-editorial-list about-mobile-values mt-8">
+              {t.about.values.map((value, idx) => {
+                const Icon = VALUE_ICONS[idx] ?? ShieldCheck;
+                return (
+                  <article key={value.letter} className="subpage-mobile-editorial-row about-mobile-value">
+                    <span className="subpage-mobile-editorial-row__icon" aria-hidden="true"><Icon size={18} /></span>
+                    <div className="subpage-mobile-editorial-row__content">
+                      <h2><span>{value.letter}</span>{value.title.slice(1)}</h2>
+                      <p>{value.desc}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="about-mobile-doctor-link mt-7">
+              <a href="/doctors" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline">{doctorLinkLabel}</a>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </MainLayout>
   );
 }

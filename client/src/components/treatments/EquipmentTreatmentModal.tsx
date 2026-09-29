@@ -51,6 +51,10 @@ export function EquipmentTreatmentModal({
   // 비한국어 + bgImageUrl은 풀배경 헤더, 그 외는 텍스트 메타 헤더를 사용한다.
   const isNonKo = lang !== "ko";
   const showBgOverlay = isNonKo && !!item.bgImageUrl;
+  const embeddedVideoUrl = toEmbedUrl(item.youtubeUrl);
+  // 영상이 없을 때는 카드에 실제로 표시된 썸네일을 우선 사용한다.
+  // 기존 modalImage는 썸네일 자체가 없는 레거시 데이터의 보조값으로만 유지한다.
+  const fallbackMediaImage = item.image || item.modalImage;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -117,10 +121,10 @@ export function EquipmentTreatmentModal({
           )}
 
           {/* 유튜브 임베드 */}
-          {toEmbedUrl(item.youtubeUrl) && (
+          {embeddedVideoUrl && (
             <div className="rounded-xl overflow-hidden aspect-video">
               <iframe
-                src={toEmbedUrl(item.youtubeUrl)!}
+                src={embeddedVideoUrl}
                 title={item.name}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -130,13 +134,13 @@ export function EquipmentTreatmentModal({
             </div>
           )}
 
-          {/* 모달 이미지 (유튜브 embed 불가능하거나 없을 때) */}
-          {!toEmbedUrl(item.youtubeUrl) && item.modalImage && (
-            <div className="rounded-xl overflow-hidden">
+          {/* 영상이 없을 때: 카드 썸네일, 없으면 기존 모달 이미지를 표시 */}
+          {!embeddedVideoUrl && fallbackMediaImage && (
+            <div className="rounded-xl overflow-hidden aspect-video bg-[#f6efe0]">
               <OptimizedImage
-                src={item.modalImage}
+                src={fallbackMediaImage}
                 alt={`${getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw)} ${tr.modalDetailBtn}`}
-                className="w-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
           )}

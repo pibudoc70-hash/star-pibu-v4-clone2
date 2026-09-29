@@ -59,4 +59,16 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
     expect(modalSource).not.toContain("w-20 h-20");
     expect(modalSource).toContain("/* 한국어 또는 bgImageUrl 없음: 제목 + 시간/회복 */");
   });
+
+  it("uses the card thumbnail as the shared video-less media fallback", () => {
+    expect(modalSource).toContain("const embeddedVideoUrl = toEmbedUrl(item.youtubeUrl);");
+    expect(modalSource).toContain("const fallbackMediaImage = item.image || item.modalImage;");
+    expect(modalSource).toContain("!embeddedVideoUrl && fallbackMediaImage");
+    expect(modalSource).toContain("src={fallbackMediaImage}");
+    expect(modalSource).toContain("rounded-xl overflow-hidden aspect-video");
+    expect(modalSource).toContain("w-full h-full object-cover");
+    expect(modalSource.indexOf("{/* 상세 페이지 이동 버튼 */}")).toBeGreaterThan(
+      modalSource.indexOf("{/* 영상이 없을 때: 카드 썸네일, 없으면 기존 모달 이미지를 표시 */}"),
+    );
+  });
 });

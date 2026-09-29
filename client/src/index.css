@@ -5337,6 +5337,24 @@ body.font-lang-zh .hero-stat-label {
       padding-bottom: var(--subpage-mobile-content-gap);
     }
 
+    /* Shared mobile statistic baseline contract: used by the About strip and
+       the homepage Hero so a number and its unit never split across lines. */
+    .stat-inline-value,
+    #home .hero-mobile-layout .hero-stat-value {
+      display: inline-flex !important;
+      align-items: baseline !important;
+      justify-content: center;
+      white-space: nowrap !important;
+    }
+
+    .stat-inline-value__unit,
+    #home .hero-mobile-layout .hero-stat-unit {
+      display: inline-block;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      vertical-align: baseline;
+    }
+
     .about-mobile-image {
       aspect-ratio: 4 / 3;
       box-shadow: 0 12px 28px color-mix(in srgb, var(--color-gold-deep) 12%, transparent);
@@ -5357,7 +5375,10 @@ body.font-lang-zh .hero-stat-label {
     }
 
     .about-mobile-stat {
+      display: flex;
       min-width: 0;
+      flex-direction: column;
+      align-items: center;
       padding: 0.875rem 0.375rem;
       text-align: center;
     }
@@ -5366,12 +5387,22 @@ body.font-lang-zh .hero-stat-label {
       border-left: 1px solid color-mix(in srgb, var(--color-gold-primary) 18%, transparent);
     }
 
-    .about-mobile-stat dt {
+    .about-mobile-stat__value {
       color: var(--color-gold-deep);
+      line-height: 1.2;
+    }
+
+    .about-mobile-stat__number {
       font-size: clamp(1.25rem, 6vw, 1.75rem);
       font-weight: 800;
-      line-height: 1.2;
-      word-break: keep-all;
+      letter-spacing: -0.02em;
+    }
+
+    .about-mobile-stat__unit {
+      margin-left: 0.08em;
+      font-size: clamp(0.75rem, 3.5vw, 0.95rem);
+      font-weight: 400;
+      letter-spacing: 0;
     }
 
     .about-mobile-stat dd {

@@ -22,6 +22,11 @@ import { CalendarDays, HeartHandshake, ShieldCheck, Sparkles } from 'lucide-reac
 
 const VALUE_ICONS = [HeartHandshake, Sparkles, ShieldCheck, CalendarDays] as const;
 
+function splitStatisticValue(value: string) {
+  const match = value.match(/^([\d,.]+)(.*)$/);
+  return match ? { number: match[1], unit: match[2] } : { number: value, unit: "" };
+}
+
 export default function About() {
   const { t, lang } = useLang();
   const pageUrl = getLocalizedUrl(lang, "/about");
@@ -215,12 +220,18 @@ export default function About() {
             </div>
 
             <dl className="about-mobile-stats mt-8">
-              {t.about.stats.slice(0, 3).map((stat) => (
-                <div key={stat.label} className="about-mobile-stat">
-                  <dt>{stat.num}</dt>
-                  <dd>{stat.label}</dd>
-                </div>
-              ))}
+              {t.about.stats.slice(0, 3).map((stat) => {
+                const { number, unit } = splitStatisticValue(stat.num);
+                return (
+                  <div key={stat.label} className="about-mobile-stat">
+                    <dt className="about-mobile-stat__value stat-inline-value">
+                      <span className="about-mobile-stat__number">{number}</span>
+                      {unit && <span className="about-mobile-stat__unit stat-inline-value__unit">{unit}</span>}
+                    </dt>
+                    <dd>{stat.label}</dd>
+                  </div>
+                );
+              })}
             </dl>
 
             <div className="subpage-mobile-editorial-list about-mobile-values mt-8">

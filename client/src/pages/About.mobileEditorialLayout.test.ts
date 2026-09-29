@@ -34,4 +34,18 @@ describe("About mobile editorial layout", () => {
     expect(mobileCss).toContain("word-break: keep-all;");
     expect(mobileCss).toContain("line-height: 1.75;");
   });
+
+  it("keeps each mobile statistic number and unit as one baseline-aligned value", () => {
+    expect(mobileBranch).toContain("splitStatisticValue(stat.num)");
+    expect(mobileBranch).toContain('className="about-mobile-stat__value stat-inline-value"');
+    expect(mobileBranch).toContain('className="about-mobile-stat__number"');
+    expect(mobileBranch).toContain('className="about-mobile-stat__unit stat-inline-value__unit"');
+    expect(mobileCss).toContain(".stat-inline-value,");
+    expect(mobileCss).toContain("align-items: baseline !important;");
+    expect(mobileCss).toContain("white-space: nowrap !important;");
+    expect(mobileCss).toContain("#home .hero-mobile-layout .hero-stat-value");
+    expect(mobileCss).toContain("#home .hero-mobile-layout .hero-stat-unit");
+    expect(mobileCss).toContain(".about-mobile-stat__unit {");
+    expect(mobileCss).toContain("font-weight: 400;");
+  });
 });

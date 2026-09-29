@@ -25,4 +25,13 @@ describe("FacilitySection mobile thumbnail cleanup", () => {
     expect(component).toContain("setIsAutoPlay(!isAutoPlay)");
     expect(component).toContain("aria-current={i === currentIndex ? \"true\" : undefined}");
   });
+
+  it("passes vertical mobile gestures to page scroll and keeps horizontal facility swipes", () => {
+    expect(component).toContain('window.matchMedia("(max-width: 767px)").matches');
+    expect(component).toContain("touchStart.current = { x: e.clientX, y: e.clientY }");
+    expect(component).toContain("Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40");
+    expect(styles).toContain("Mobile carousel vertical-scroll handoff");
+    expect(styles).toContain("#facility .facility-carousel-wrap,");
+    expect(styles).toContain("touch-action: pan-y;");
+  });
 });

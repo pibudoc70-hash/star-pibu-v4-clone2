@@ -5,6 +5,7 @@ import {
   type KeyboardEvent,
   type ReactElement,
   type ReactNode,
+  type TouchEvent,
   useCallback,
   useEffect,
   useRef,
@@ -22,6 +23,13 @@ type MobileCardSliderProps = {
   variant?: "standard" | "shorts";
 };
 
+type TouchGesture = {
+  startX: number;
+  startY: number;
+  startScrollLeft: number;
+  axis: "pending" | "horizontal" | "vertical";
+};
+
 /**
  * Shared, native-scroll mobile carousel. The existing desktop grid remains the
  * viewport, while mobile-only CSS turns it into a centered snap row.
@@ -36,6 +44,7 @@ export default function MobileCardSlider({
 }: MobileCardSliderProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const scrollFrameRef = useRef<number | null>(null);
+  const touchGestureRef = useRef<TouchGesture | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const safeCount = Math.max(0, itemCount);
 
@@ -114,6 +123,53 @@ export default function MobileCardSlider({
     }
   };
 
+  const isMobileTouchViewport = () => (
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  );
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    const touch = event.touches[0];
+    if (!viewport || !touch || !isMobileTouchViewport()) {
+      touchGestureRef.current = null;
+      return;
+    }
+
+    touchGestureRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startScrollLeft: viewport.scrollLeft,
+      axis: "pending",
+    };
+  };
+
+  const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    const gesture = touchGestureRef.current;
+    const touch = event.touches[0];
+    if (!viewport || !gesture || !touch || !isMobileTouchViewport()) return;
+
+    const deltaX = touch.clientX - gesture.startX;
+    const deltaY = touch.clientY - gesture.startY;
+
+    if (gesture.axis === "pending") {
+      // Leave taps and tiny pointer noise alone until the gesture has a direction.
+      if (Math.abs(deltaX) + Math.abs(deltaY) < 8) return;
+      gesture.axis = Math.abs(deltaX) > Math.abs(deltaY) ? "horizontal" : "vertical";
+    }
+
+    // Vertical movement always belongs to the page; never cancel its native scroll.
+    if (gesture.axis === "vertical") return;
+
+    // Horizontal movement keeps the existing native card-scroll behavior.
+    if (event.cancelable) event.preventDefault();
+    viewport.scrollLeft = gesture.startScrollLeft - deltaX;
+  };
+
+  const clearTouchGesture = () => {
+    touchGestureRef.current = null;
+  };
+
   const sliderItems = Children.toArray(children).map((child, index) => {
     if (!isValidElement(child)) return child;
     return cloneElement(child as ReactElement<Record<string, unknown>>, {
@@ -132,6 +188,10 @@ export default function MobileCardSlider({
         className={cn("mobile-card-slider__viewport", `mobile-card-slider__viewport--${variant}`, className)}
         onScroll={handleScroll}
         onKeyDown={handleKeyDown}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={clearTouchGesture}
+        onTouchCancel={clearTouchGesture}
         tabIndex={0}
       >
         {sliderItems}

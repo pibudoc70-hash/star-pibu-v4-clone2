@@ -35,7 +35,7 @@ export default function FacilitySection() {
   const [isHovering, setIsHovering] = useState(false);
   const [canAutoPlay, setCanAutoPlay] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const touchStartX = useRef<number | null>(null);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
   const galleryImages = galleryImageSrcs.map((src, i) => ({
@@ -100,23 +100,32 @@ export default function FacilitySection() {
     if (e.pointerType === "mouse") setIsHovering(false);
   };
 
+  const isMobileTouch = (pointerType: string) => (
+    pointerType === "touch" &&
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches
+  );
+
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "touch") return;
-    touchStartX.current = e.clientX;
+    if (!isMobileTouch(e.pointerType)) return;
+    touchStart.current = { x: e.clientX, y: e.clientY };
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "touch" || touchStartX.current === null) return;
-    const dx = e.clientX - touchStartX.current;
-    if (Math.abs(dx) > 40) {
+    const start = touchStart.current;
+    if (!isMobileTouch(e.pointerType) || start === null) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    // Horizontal navigation must never win over a predominantly vertical page scroll.
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
       if (dx > 0) goPrev();
       else goNext();
     }
-    touchStartX.current = null;
+    touchStart.current = null;
   };
 
   const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === "touch") touchStartX.current = null;
+    if (isMobileTouch(e.pointerType)) touchStart.current = null;
   };
 
   const triggerBtnRef = useRef<HTMLButtonElement | null>(null);

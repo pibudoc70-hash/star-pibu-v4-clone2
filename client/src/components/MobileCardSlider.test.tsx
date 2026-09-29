@@ -7,6 +7,7 @@ import MobileCardSlider from "./MobileCardSlider";
 
 const scrollTo = vi.fn();
 const styles = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
+const sliderSource = readFileSync(resolve(process.cwd(), "client/src/components/MobileCardSlider.tsx"), "utf8");
 
 describe("MobileCardSlider", () => {
   beforeEach(() => {
@@ -73,6 +74,18 @@ describe("MobileCardSlider", () => {
     expect(styles).toContain("scrollbar-width: none;");
     expect(styles).toContain("-ms-overflow-style: none;");
     expect(styles).toContain("#faq .faq-tabs-scroll::-webkit-scrollbar");
+  });
+
+  it("lets vertical mobile touches scroll the page while retaining horizontal card drags", () => {
+    expect(styles).toContain("overflow-y: visible;");
+    expect(styles).toContain("overscroll-behavior-y: auto;");
+    expect(styles).toContain("touch-action: pan-y;");
+    expect(sliderSource).toContain("const handleTouchStart");
+    expect(sliderSource).toContain("const handleTouchMove");
+    expect(sliderSource).toContain('Math.abs(deltaX) > Math.abs(deltaY) ? "horizontal" : "vertical"');
+    expect(sliderSource).toContain('if (gesture.axis === "vertical") return;');
+    expect(sliderSource).toContain("if (event.cancelable) event.preventDefault();");
+    expect(sliderSource).toContain("onTouchMove={handleTouchMove}");
   });
 
   it("keeps compact visible controls with expanded mobile touch targets", () => {

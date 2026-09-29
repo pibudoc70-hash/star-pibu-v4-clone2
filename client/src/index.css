@@ -7946,14 +7946,16 @@ body.font-lang-zh .hero-stat-label {
     margin-inline: calc(50% - 50vw);
     padding: 0 var(--mobile-slider-side-space) !important;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
     overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--mobile-slider-side-space);
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: pan-x;
+    /* The page owns vertical panning; the component only handles horizontal drags. */
+    touch-action: pan-y;
   }
 
   .mobile-card-slider__viewport::-webkit-scrollbar,
@@ -7965,6 +7967,7 @@ body.font-lang-zh .hero-stat-label {
     min-width: 0;
     scroll-snap-align: center;
     scroll-snap-stop: always;
+    touch-action: pan-y;
   }
 
   .mobile-card-slider__viewport--shorts {
@@ -8154,6 +8157,16 @@ body.font-lang-zh .hero-stat-label {
   #main-content.home-main #faq .faq-answer-panel {
     border: 0 !important;
     background: transparent !important;
+  }
+}
+
+/* ── Mobile carousel vertical-scroll handoff ──────────────────────────────
+   Image sliders retain horizontal navigation while the document owns vertical
+   panning, including the self-managed facilities carousel. */
+@media (max-width: 767px) {
+  #facility .facility-carousel-wrap,
+  #facility .facility-carousel-wrap > div {
+    touch-action: pan-y;
   }
 }
 

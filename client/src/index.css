@@ -4572,6 +4572,44 @@ body.font-lang-zh .hero-stat-label {
   background: var(--brand-bg-alt, #F5F0EB);
 }
 
+/* YouTube channel CTA follows the FAQ selected-tab token and finish. */
+.youtube-channel-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 26px;
+  border: 1.5px solid transparent;
+  border-radius: 9999px;
+  background: var(--color-gold-primary);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.youtube-channel-cta-button:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-gold-primary) 38%, transparent);
+  transform: translateY(-2px);
+}
+.youtube-channel-cta-button:active {
+  transform: translateY(0);
+}
+.youtube-channel-cta-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--focus-ring), 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
+}
+
+@media (max-width: 767px) {
+  .youtube-channel-cta-button {
+    font-size: 0.8rem;
+    padding: 7px 18px;
+  }
+}
+
 /* 아코디언 래퍼 */
 .faq-accordion-wrap {
   border: 1.5px solid color-mix(in srgb, var(--color-gold-primary) 20%, transparent);

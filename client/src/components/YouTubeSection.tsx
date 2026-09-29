@@ -373,8 +373,7 @@ export default function YouTubeSection() {
             href="https://www.youtube.com/@starpibu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 py-3 rounded-full font-semibold transition-all hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
-            style={{ background: 'var(--color-gold-primary)', color: 'var(--color-gold-dark, #7A5C35)' }}
+            className="youtube-channel-cta-button"
           >
             {yt.visitChannel}
           </a>

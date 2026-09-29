@@ -69,11 +69,11 @@ export default function ContactInfoPanel({
       data-testid="contact-info-panel"
     >
       {/* Address + 복사 버튼 */}
-      <div className={sectionClassName} style={sectionStyle}>
-        <div className="flex items-stretch gap-3">
-          <MapPin size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
+      <div className={`${sectionClassName} contact-info-item`} style={sectionStyle}>
+        <div className="contact-info-item__content-row flex items-stretch gap-3">
+          <MapPin size={20} style={{ color: "var(--color-gold-primary)" }} className="contact-info-item__icon mt-0.5 shrink-0" />
           <div className="min-w-0 flex-1">
-            <p className="mb-1 text-sm font-normal text-[var(--color-star-text)]">{addressLabel}</p>
+            <p className="contact-info-item__label mb-1 text-sm font-normal text-[var(--color-star-text)]">{addressLabel}</p>
             <p className="text-sm text-[var(--color-star-text)]">{t.access.address}</p>
             <button
               type="button"
@@ -104,11 +104,11 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Phone */}
-      <div className={sectionClassName} style={sectionStyle}>
-        <div className="flex items-center gap-3">
-          <Phone size={20} style={{ color: "var(--color-gold-primary)" }} className="shrink-0" />
+      <div className={`${sectionClassName} contact-info-item`} style={sectionStyle}>
+        <div className="contact-info-item__content-row flex items-center gap-3">
+          <Phone size={20} style={{ color: "var(--color-gold-primary)" }} className="contact-info-item__icon shrink-0" />
           <div>
-            <p className="mb-1 text-sm font-normal text-[var(--color-star-text)]">{phoneLabel}</p>
+            <p className="contact-info-item__label mb-1 text-sm font-normal text-[var(--color-star-text)]">{phoneLabel}</p>
             <a href={phoneHref} className="font-montserrat text-lg font-normal text-[var(--color-star-navy)] transition-colors hover:opacity-70">
               {phoneDisplay}
             </a>
@@ -117,11 +117,11 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Hours */}
-      <div className={sectionClassName} style={sectionStyle}>
-        <div className="flex items-stretch gap-3">
-          <Clock size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
+      <div className={`${sectionClassName} contact-info-item`} style={sectionStyle}>
+        <div className="contact-info-item__content-row flex items-stretch gap-3">
+          <Clock size={20} style={{ color: "var(--color-gold-primary)" }} className="contact-info-item__icon mt-0.5 shrink-0" />
           <div className="flex-1">
-            <p className="mb-3 text-sm font-normal text-[var(--color-star-text)]">{hoursLabel}</p>
+            <p className="contact-info-item__label mb-3 text-sm font-normal text-[var(--color-star-text)]">{hoursLabel}</p>
             <div className="space-y-1.5">
               {t.hours.rows.map((h) => (
                 <div key={h.day} className="flex justify-between text-sm">
@@ -138,11 +138,11 @@ export default function ContactInfoPanel({
       </div>
 
       {/* Transit & Parking */}
-      <div className={sectionClassName} style={integrated ? undefined : sectionStyle}>
-        <div className="flex items-stretch gap-3">
-          <Train size={20} style={{ color: "var(--color-gold-primary)" }} className="mt-0.5 shrink-0" />
+      <div className={`${sectionClassName} contact-info-item`} style={integrated ? undefined : sectionStyle}>
+        <div className="contact-info-item__content-row flex items-stretch gap-3">
+          <Train size={20} style={{ color: "var(--color-gold-primary)" }} className="contact-info-item__icon mt-0.5 shrink-0" />
           <div>
-            <p className="mb-2 text-sm font-normal text-[var(--color-star-text)]">{transitLabel}</p>
+            <p className="contact-info-item__label mb-2 text-sm font-normal text-[var(--color-star-text)]">{transitLabel}</p>
             <p className="text-sm text-[var(--color-star-text)]">{transitDesc}</p>
           </div>
         </div>

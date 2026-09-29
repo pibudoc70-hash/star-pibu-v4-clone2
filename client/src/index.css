@@ -4603,6 +4603,23 @@ body.font-lang-zh .hero-stat-label {
   box-shadow: 0 0 0 2px var(--focus-ring), 0 4px 14px color-mix(in srgb, var(--color-gold-primary) 30%, transparent);
 }
 
+/* Mobile contact hierarchy: retain desktop icons, but let labels lead each row on phones. */
+@media (max-width: 767px) {
+  #contact [data-testid="contact-info-panel"] .contact-info-item__icon {
+    display: none;
+  }
+  #contact [data-testid="contact-info-panel"] .contact-info-item__content-row {
+    gap: 0;
+  }
+  #contact [data-testid="contact-info-panel"] .contact-info-item__label {
+    margin-bottom: 7px !important;
+    color: var(--color-star-text);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+}
+
 @media (max-width: 767px) {
   .youtube-channel-cta-button {
     font-size: 0.8rem;

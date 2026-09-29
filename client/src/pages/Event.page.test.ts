@@ -12,6 +12,8 @@ const globalCss = readFileSync(resolve(process.cwd(), "client/src/index.css"), "
 describe("standalone EVENT page", () => {
   it("keeps the existing homepage event section while reusing its presentation on the dedicated page", () => {
     expect(homeSource).toContain("<SpecialEventSection />");
+    expect(eventPageSource).toContain("<EventPageMobileCards />");
+    expect(eventPageSource).toContain('<div className="hidden md:block">');
     expect(eventPageSource).toContain("<SpecialEventSection showHeader={false} />");
     expect(eventPageSource).not.toContain("<ContactSection />");
     expect(layoutSource).toContain("<Footer showContactSection={showContactSection} />");
@@ -23,6 +25,15 @@ describe("standalone EVENT page", () => {
     expect(eventPageSource).not.toContain("FOR YOU");
     expect(eventPageSource).not.toContain("스타만의 특별한 가격으로 한 단계 높은 피부 관리를 시작해보세요.");
     expect(eventPageSource).toContain("<SpecialEventSection showHeader={false} />");
+  });
+
+  it("uses an EVENT-only mobile showcase card list instead of the homepage accordion", () => {
+    expect(eventPageSource).toContain('event-page-mobile-cards-section md:hidden');
+    expect(eventPageSource).toContain("EventPageMobileCards");
+    expect(eventPageSource).not.toContain("EventTableMobile");
+    expect(homeSource).toContain("<SpecialEventSection />");
+    expect(globalCss).toContain(".event-page-mobile-cards-section");
+    expect(globalCss).toContain(".event-page-mobile-card .event-card__showcase > :is(.event-card__showcase-media)");
   });
 
   it("scopes the mobile title and event-list rhythm to the standalone page", () => {

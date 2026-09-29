@@ -1,5 +1,6 @@
 import MainLayout from "@/components/MainLayout";
 import SpecialEventSection from "@/components/SpecialEventSection";
+import EventPageMobileCards from "@/components/events/EventPageMobileCards";
 import SeoHead, {
   BASE_URL,
   buildBreadcrumbJsonLd,
@@ -93,7 +94,16 @@ export default function Event() {
       </section>
 
       <div className="section-bg-cream event-page-events-surface">
-        <SpecialEventSection showHeader={false} />
+        {/* /event keeps every mobile event visible in the same showcase card form as desktop.
+            The homepage continues to own its separate compact mobile accordion. */}
+        <section className="event-page-mobile-cards-section md:hidden" aria-label="스페셜 이벤트">
+          <div className="container">
+            <EventPageMobileCards />
+          </div>
+        </section>
+        <div className="hidden md:block">
+          <SpecialEventSection showHeader={false} />
+        </div>
       </div>
     </MainLayout>
   );

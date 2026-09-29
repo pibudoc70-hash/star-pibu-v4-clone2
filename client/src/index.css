@@ -3813,6 +3813,43 @@
     padding-bottom: var(--mobile-bottom-cta-height);
   }
 
+  /* Standalone /event only: retain the desktop showcase card information density
+     on phones without changing the homepage Special Event accordion. */
+  .event-page-mobile-cards-section {
+    padding: 3rem 0;
+  }
+
+  .event-page-mobile-card-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .event-page-mobile-card,
+  .event-page-mobile-card .event-card__showcase {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .event-page-mobile-card .event-card__showcase {
+    background: var(--color-white, #fff);
+  }
+
+  .event-page-mobile-card .event-card__showcase > :is(.event-card__showcase-media) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .event-page-mobile-card .event-card__showcase > :is(.event-card__showcase-media) img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .event-page-mobile-card-skeleton {
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-gold-primary) 15%, transparent);
+    border-radius: calc(var(--card-radius, 1rem) + 0.25rem);
+    background: var(--color-white, #fff);
+  }
+
   /* Hero 섹션 모바일 CTA 버튼 그룹 숨김 */
   .hero-cta-group {
     display: none !important;

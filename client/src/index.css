@@ -3998,6 +3998,12 @@ body.font-lang-zh .hero-stat-label {
     align-items: center;
     gap: 8px;
   }
+
+  /* Keep label strings in markup for localization, while removing their
+     visual labels and decorative dot from the mobile drawer. */
+  .mobile-menu-panel .mobile-menu-section-label {
+    display: none;
+  }
   .mobile-menu-section-label::before {
     content: '';
     display: inline-block;
@@ -4122,6 +4128,15 @@ body.font-lang-zh .hero-stat-label {
       rgba(201, 168, 105, 0.08) 90%,
       transparent 100%
     );
+  }
+
+  /* Continue directly from directions to the secondary entries without a
+     visual category break or residual vertical gap. */
+  .mobile-menu-panel .mobile-menu-divider {
+    display: none;
+  }
+  .mobile-menu-secondary-section {
+    padding-top: 0;
   }
 
   /* 언어 선택 섹션 — 다크 프리미엄 테마 */

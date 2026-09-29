@@ -7,7 +7,7 @@
  * - Focus trap 구현 (Tab 키 제어)
  * - ESC 키 닫기 구현
  */
-import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical, CircleDollarSign } from "lucide-react";
+import { X, ChevronRight, Stethoscope, Users, Calendar, Building2, MapPin, Globe2, BookOpen, FlaskConical, CircleDollarSign, Gift, Sparkles, Megaphone } from "lucide-react";
 import type { RefObject } from "react";
 import { useEffect } from "react";
 import type { NavItem } from "@/hooks/useHeaderState";
@@ -42,14 +42,18 @@ const NAV_ICONS: Record<string, React.ElementType> = {
   "#treatments": Stethoscope,
   "/doctors":    Users,
   "#events":     Calendar,
+  "/event":      Gift,
   "/about":      Building2,
   "#contact":    MapPin,
+  "/directions": MapPin,
   "#facility":   Building2,
   "/foreign-guide": Globe2,
   "/price-list": CircleDollarSign,
   "/research":   BookOpen,
   "/equipment3": FlaskConical,
   "/equipment2": FlaskConical,
+  "/management-device-faq": Sparkles,
+  "/notice": Megaphone,
 };
 
 export default function MobileMenu({
@@ -170,7 +174,7 @@ export default function MobileMenu({
 
           {primaryNav.map((item, idx) => {
             const active = isActive(item.href, item.sectionId ?? null);
-            const Icon = NAV_ICONS[item.href];
+            const Icon = NAV_ICONS[item.href] ?? Sparkles;
             return (
               <button
                 type="button"
@@ -178,11 +182,9 @@ export default function MobileMenu({
                 onClick={() => handleNavClick(item.href)}
                 className={`mobile-menu-item mobile-menu-item-delay-${idx} ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
               >
-                {Icon && (
-                  <span className="mobile-menu-icon">
-                    <Icon size={15} />
-                  </span>
-                )}
+                <span className="mobile-menu-icon">
+                  <Icon size={15} />
+                </span>
                 <span className="flex-1 min-w-0">{item.label}</span>
                 <ChevronRight size={14} className="shrink-0" />
               </button>
@@ -197,7 +199,7 @@ export default function MobileMenu({
             <p className="mobile-menu-section-label">MORE</p>
             {secondaryNav.map((item, idx) => {
               const active = isActive(item.href, item.sectionId ?? null);
-              const Icon = NAV_ICONS[item.href];
+              const Icon = NAV_ICONS[item.href] ?? Sparkles;
               return (
                 <button
                   type="button"
@@ -205,11 +207,9 @@ export default function MobileMenu({
                   onClick={() => handleNavClick(item.href)}
                   className={`mobile-menu-item mobile-menu-item-secondary mobile-menu-item-delay-secondary-${idx} ${active ? "active" : ""} ${menuVisible ? "visible" : ""}`}
                 >
-                  {Icon && (
-                    <span className="mobile-menu-icon mobile-menu-icon-secondary">
-                      <Icon size={13} />
-                    </span>
-                  )}
+                  <span className="mobile-menu-icon">
+                    <Icon size={15} />
+                  </span>
                   <span className="flex-1 min-w-0">{item.label}</span>
                   <ChevronRight size={13} className="shrink-0" />
                 </button>

@@ -13,7 +13,6 @@ const publicBookingCtaFiles = [
 ];
 const sharedReserveUrlConsumers = [
   "components/header/DesktopNav.tsx",
-  "components/header/MobileMenu.tsx",
 ];
 
 describe("public external booking CTA policy", () => {
@@ -25,7 +24,7 @@ describe("public external booking CTA policy", () => {
     }
   });
 
-  it("keeps desktop and mobile header booking buttons on the shared external URL with safe new-tab attributes", () => {
+  it("keeps the desktop header booking button on the shared external URL with safe new-tab attributes", () => {
     for (const relativePath of sharedReserveUrlConsumers) {
       const source = readFileSync(join(clientRoot, relativePath), "utf8");
       expect(source).toContain("href={reserveUrl}");

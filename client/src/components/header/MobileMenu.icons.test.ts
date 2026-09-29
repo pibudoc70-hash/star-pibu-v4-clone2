@@ -24,4 +24,10 @@ describe("MobileMenu icon mapping", () => {
     expect(mobileMenu).not.toContain("mobile-menu-icon-secondary");
     expect((mobileMenu.match(/className=\"mobile-menu-icon\"/g) ?? []).length).toBe(2);
   });
+
+  it("ends the mobile drawer after navigation items without embedded consultation CTAs", () => {
+    expect(mobileMenu).not.toContain("mobile-menu-cta-section");
+    expect(mobileMenu).not.toContain("mobile-menu-cta-primary");
+    expect(mobileMenu).not.toContain("mobile-menu-cta-secondary");
+  });
 });

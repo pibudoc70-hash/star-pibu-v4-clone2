@@ -18,22 +18,9 @@ interface MobileMenuProps {
   menuClosing: boolean;
   primaryNav: NavItem[];
   secondaryNav: NavItem[];
-  lang: string;
   closeMobileMenu: (onAfterClose?: () => void) => void;
   handleNavClick: (href: string) => void;
   isActive: (href: string, sectionId: string | null) => boolean;
-  chatUrl: string;
-  reserveUrl: string;
-  chatBg: string;
-  chatColor: string;
-  wechatCopied: boolean;
-  handleWechatClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-  WECHAT_ID: string;
-  t: {
-    hero: { cta_kakao: string; cta_reserve: string };
-    access: { copiedLabel: string };
-    nav?: Record<string, string>;
-  };
   mobileMenuRef: RefObject<HTMLDivElement | null>;
 }
 
@@ -62,18 +49,9 @@ export default function MobileMenu({
   menuClosing,
   primaryNav,
   secondaryNav,
-  lang,
   closeMobileMenu,
   handleNavClick,
   isActive,
-  chatUrl,
-  reserveUrl,
-  chatBg,
-  chatColor,
-  wechatCopied,
-  handleWechatClick,
-  WECHAT_ID,
-  t,
   mobileMenuRef,
 }: MobileMenuProps) {
   // Scroll lock 및 Focus trap 관리
@@ -217,40 +195,6 @@ export default function MobileMenu({
             })}
           </div>
         )}
-
-        {/* ── 모바일 CTA ── */}
-        <div className={`mobile-menu-cta-section ${menuVisible ? "visible" : ""}`}>
-          <div className="relative">
-            <a
-              href={chatUrl}
-              target={lang === "zh" ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              onClick={handleWechatClick}
-              className="mobile-menu-cta-primary"
-              style={{
-                background: chatBg,
-                color: chatColor,
-              }}
-              data-chat-bg={chatBg}
-              data-chat-color={chatColor}
-            >
-              {t.hero.cta_kakao}
-            </a>
-            {wechatCopied && lang === "zh" && (
-              <div className="mobile-menu-wechat-toast">
-                {t.access.copiedLabel}: <span className="font-bold">{WECHAT_ID}</span>
-              </div>
-            )}
-          </div>
-          <a
-            href={reserveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mobile-menu-cta-secondary"
-          >
-            {t.hero.cta_reserve}
-          </a>
-        </div>
       </div>
     </>
   );

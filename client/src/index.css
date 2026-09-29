@@ -4109,6 +4109,7 @@ body.font-lang-zh .hero-stat-label {
   .mobile-menu-secondary-section {
     opacity: 0;
     transition: opacity 0.3s ease 300ms;
+    padding-bottom: max(32px, env(safe-area-inset-bottom, 32px));
   }
   .mobile-menu-secondary-section.visible {
     opacity: 1;
@@ -4223,123 +4224,6 @@ body.font-lang-zh .hero-stat-label {
   .mobile-menu-lang-btn.active .mobile-menu-lang-badge {
     background: rgba(201, 168, 105, 0.18);
     color: #c9a869;
-  }
-
-  /* 모바일 CTA 섹션 — 다크 프리미엄 테마 */
-  .mobile-menu-cta-section {
-    padding: 16px 24px max(32px, env(safe-area-inset-bottom, 32px));
-    /* 골드 그라디언트 구분선 */
-    border-top: none;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-shrink: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease 460ms;
-    /* 미묘한 상단 글로우 */
-    background: linear-gradient(180deg, rgba(201, 168, 105, 0.04) 0%, transparent 30%);
-  }
-  .mobile-menu-cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 24px;
-    right: 24px;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(201, 168, 105, 0.10) 10%,
-      rgba(201, 168, 105, 0.38) 35%,
-      rgba(201, 168, 105, 0.48) 50%,
-      rgba(201, 168, 105, 0.38) 65%,
-      rgba(201, 168, 105, 0.10) 90%,
-      transparent 100%
-    );
-  }
-  .mobile-menu-cta-section.visible {
-    opacity: 1;
-  }
-
-  /* CTA 버튼 — Primary (상담/카카오) */
-  .mobile-menu-cta-primary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 14px;
-    border-radius: 14px;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    min-height: 50px;
-    /* 버튼 하단 미묘한 그림자 */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
-  }
-  .mobile-menu-cta-primary:hover {
-    opacity: 0.92;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.30), 0 2px 6px rgba(0, 0, 0, 0.18);
-  }
-  .mobile-menu-cta-primary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
-  }
-  .mobile-menu-cta-primary:focus-visible {
-    outline: 2px solid var(--color-gold-primary);
-    outline-offset: 2px;
-  }
-
-  /* CTA 버튼 — Secondary (네이버 예약) */
-  .mobile-menu-cta-secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 14px;
-    border-radius: 14px;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    /* 네이버 그린 — 브랜드 일관성 */
-    background-color: #03C75A;
-    color: #ffffff;
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 16px rgba(3, 199, 90, 0.28), 0 1px 3px rgba(0, 0, 0, 0.12);
-    min-height: 50px;
-  }
-  .mobile-menu-cta-secondary:hover {
-    background-color: #02a84c;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(3, 199, 90, 0.38), 0 2px 6px rgba(0, 0, 0, 0.15);
-  }
-  .mobile-menu-cta-secondary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(3, 199, 90, 0.22);
-  }
-  .mobile-menu-cta-secondary:focus-visible {
-    outline: 2px solid #03C75A;
-    outline-offset: 2px;
-  }
-
-  /* WeChat 복사 토스트 */
-  .mobile-menu-wechat-toast {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    font-size: 12px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 50;
-    top: -40px;
-    left: 0;
   }
 
 /* ═══════════════════════════════════════════════════════════════════════════

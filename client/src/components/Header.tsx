@@ -163,18 +163,9 @@ export default function Header() {
         menuClosing={menuClosing}
         primaryNav={primaryNav}
         secondaryNav={secondaryNav}
-        lang={lang}
         closeMobileMenu={closeMobileMenu}
         handleNavClick={handleNavClick}
         isActive={isActive}
-        chatUrl={chatUrl}
-        reserveUrl={reserveUrl}
-        chatBg={chatBg}
-        chatColor={chatColor}
-        wechatCopied={wechatCopied}
-        handleWechatClick={handleWechatClick}
-        WECHAT_ID={WECHAT_ID}
-        t={t}
         mobileMenuRef={mobileMenuRef}
       />
 

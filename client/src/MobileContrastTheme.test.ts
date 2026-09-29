@@ -22,7 +22,8 @@ describe("mobile contrast theme", () => {
     expect(css).toContain("color: var(--color-star-text);");
   });
 
-  it("uses the mobile-aware card surface for expanded category details", () => {
-    expect(treatmentsSection).toContain("treatment-mobile-category-detail overflow-hidden rounded-xl bg-[var(--card)]");
+  it("leaves expanded category details on the mobile section canvas", () => {
+    expect(treatmentsSection).toContain('className="treatment-mobile-category-detail"');
+    expect(treatmentsSection).not.toContain("treatment-mobile-category-detail overflow-hidden rounded-xl bg-[var(--card)]");
   });
 });

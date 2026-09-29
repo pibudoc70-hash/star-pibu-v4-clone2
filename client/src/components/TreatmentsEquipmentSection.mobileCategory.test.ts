@@ -26,7 +26,7 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
   it("keeps mobile category content inline with a row-local expand and close contract", () => {
     expect(sectionSource).toContain("mobileExpandedId");
     expect(sectionSource).toContain("onMobileTabToggle");
-    expect(sectionSource).toContain("handleMobileCategoryClose");
+    expect(sectionSource).not.toContain("handleMobileCategoryClose");
     expect(sectionSource).toContain("treatment-mobile-category-detail");
   });
 
@@ -36,48 +36,34 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabListSource).toContain("col-span-2");
   });
 
-  it("returns the mobile viewport to the precisely centered category list after close", () => {
-    expect(sectionSource).toContain("window.visualViewport?.height");
-    expect(sectionSource).toContain("window.scrollTo");
-    expect(sectionSource).toContain('behavior: "smooth"');
+  it("uses the selected category button as the only mobile close control", () => {
+    expect(sectionSource).not.toContain("handleMobileCategoryClose");
+    expect(sectionSource).not.toContain("mobileClosingId");
+    expect(tabListSource).not.toContain("onMobileDetailClose");
+    expect(tabListSource).toContain("onClick={onMobileTabToggle ?? onTabChange}");
     expect(tabListSource).toContain('id="treatment-mobile-category-list"');
   });
 
-  it("offers one top close below the selected category row and one footer close after category content", () => {
-    expect(tabListSource).toContain("onMobileTabToggle");
-    expect(tabListSource).toContain("onMobileDetailClose");
-    expect(tabListSource).toContain("mobile-category-detail-close-top");
-    expect(sectionSource).toContain("mobile-category-detail-close-footer");
-    expect(sectionSource).toContain("onMobileDetailClose={handleMobileCategoryClose}");
-  });
-
-  it("shows all mobile category items at once while retaining the footer close control", () => {
+  it("shows all mobile category items without duplicate close controls", () => {
     expect(sectionSource).toContain("filteredTreatments.map((item, i) => (");
     expect(sectionSource).not.toContain('aria-controls="treatments-mobile-grid"');
-    expect(sectionSource).toContain("mobile-category-detail-close-footer");
+    expect(sectionSource).not.toContain("mobile-category-detail-close-footer");
+    expect(tabListSource).not.toContain("mobile-category-detail-close-top");
   });
 
-  it("uses the existing localized collapse label for both mobile close controls", () => {
-    expect(tabListSource).toContain("mobileCloseLabel");
-    expect(tabListSource).toContain("{mobileCloseLabel}");
-    expect(sectionSource).toContain("mobileCloseLabel={tr.collapseBtn}");
-  });
-
-  it("keeps detail mounted through an accessible fade-out lifecycle before returning to the grid", () => {
-    expect(sectionSource).toContain("mobileClosingId");
+  it("keeps the inline detail in the shared animated shell", () => {
     expect(tabListSource).toContain("mobile-category-detail-shell");
-    expect(tabListSource).toContain('data-state={isClosing ? "closing" : "open"}');
+    expect(tabListSource).toContain('data-state="open"');
     expect(stylesSource).toContain(".mobile-category-detail-shell");
-    expect(stylesSource).toContain(".mobile-category-detail-shell[data-state=\"closing\"]");
     expect(stylesSource).toContain("prefers-reduced-motion: reduce");
   });
 
   it("keeps the mobile category controls compact without shrinking interactive targets", () => {
     expect(sectionSource).toContain('rounded-2xl px-3 py-3 mb-3 sm:px-4 sm:py-4 sm:mb-4');
     expect(sectionSource).toContain('gap-2 mb-2 px-3 py-2.5 rounded-xl transition-all duration-200 sm:mb-4');
-    expect(sectionSource).toContain('grid gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-4');
+    expect(sectionSource).toContain('grid gap-3 py-3');
     expect(tabListSource).toContain('grid grid-cols-2 gap-x-2 gap-y-1.5 sm:hidden');
-    expect(tabListSource).toContain('min-h-11');
+    expect(tabButtonSource).toContain('aria-expanded={isSm ? isActive : undefined}');
   });
 
   it("shows each mobile category as an expandable control with a stateful chevron", () => {
@@ -86,6 +72,14 @@ describe("TreatmentsEquipmentSection mobile category detail", () => {
     expect(tabButtonSource).toContain('aria-controls={isSm && isActive ? `mobile-category-detail-${id}` : undefined}');
     expect(tabButtonSource).toContain('isActive ? <ChevronUp size={15} /> : <ChevronDown size={15} />');
     expect(tabButtonSource).toContain('aria-hidden="true"');
+  });
+
+  it("removes only the mobile detail shell chrome and category icons", () => {
+    expect(stylesSource).toContain("Homepage mobile treatment category detail cleanup");
+    expect(stylesSource).toContain(".treatment-mobile-category-detail");
+    expect(stylesSource).toContain("background: transparent !important");
+    expect(stylesSource).toContain(".cat-tab-btn-sm .cat-tab-icon");
+    expect(stylesSource).toContain("display: none");
   });
 
   it("does not retain a pain-management category, hash handler, or inline guide in Treatments & Equipment", () => {

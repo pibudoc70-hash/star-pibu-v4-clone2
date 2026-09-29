@@ -7307,6 +7307,39 @@ body.font-lang-zh .hero-stat-label {
   }
 }
 
+/* ── Homepage mobile treatment category detail cleanup ────────────────────
+   The category button is the sole open/close control. Detail cards sit on
+   the section canvas rather than inside a second card surface. */
+@media (max-width: 767px) {
+  #main-content #treatments .mobile-category-detail-shell {
+    margin-inline: -0.75rem;
+    overflow: visible;
+    padding-bottom: 0.75rem;
+  }
+
+  #main-content #treatments .treatment-mobile-category-detail {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #main-content #treatments #treatments-mobile-grid {
+    padding-inline: 0 !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  #main-content #treatments .cat-tab-btn-sm {
+    justify-content: center;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  #main-content #treatments .cat-tab-btn-sm .cat-tab-icon {
+    display: none;
+  }
+}
+
 
 /* ── Homepage mobile philosophy layout ────────────────────────────────────
    Desktop keeps its editorial two-column composition. On phones the shared

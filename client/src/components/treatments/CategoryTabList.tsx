@@ -8,7 +8,7 @@
  * - native button의 Tab/Shift+Tab 및 Space/Enter 동작을 그대로 보존한다.
  */
 import { Fragment, type ReactNode } from "react";
-import { ChevronUp, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import type { Category } from "@/types/treatment";
 import CategoryTabButton from "./CategoryTabButton";
 import { CATEGORY_ICON_MAP, getCatLabel } from "@/data/treatments/categories";
@@ -23,13 +23,7 @@ interface CategoryTabListProps {
   onTabChange: (id: TreatmentTabId) => void;
   /** 모바일에서만 선택한 카테고리의 inline detail을 연다. null이면 모두 닫힌 상태다. */
   mobileActiveId?: TreatmentTabId | null;
-  /** 닫힘 fade-out이 끝날 때까지 detail을 유지할 category id. */
-  mobileClosingId?: TreatmentTabId | null;
   onMobileTabToggle?: (id: TreatmentTabId) => void;
-  /** 모바일 inline detail의 접기 동작. 제공되면 카테고리 grid 복귀를 담당한다. */
-  onMobileDetailClose?: () => void;
-  /** 상단 close control의 현재 언어 label. */
-  mobileCloseLabel?: string;
   renderMobileDetail?: (id: TreatmentTabId) => ReactNode;
   mobileContainerRef?: React.RefObject<HTMLDivElement | null>;
   containerRef?: React.RefObject<HTMLDivElement | null>;
@@ -43,10 +37,7 @@ export default function CategoryTabList({
   lang,
   onTabChange,
   mobileActiveId = activeId,
-  mobileClosingId = null,
   onMobileTabToggle,
-  onMobileDetailClose,
-  mobileCloseLabel = "접기",
   renderMobileDetail,
   mobileContainerRef,
   containerRef,
@@ -68,8 +59,7 @@ export default function CategoryTabList({
   const renderMobileTabs = () =>
     categories.map((cat) => {
       const isMobileActive = mobileActiveId === cat.id;
-      const isClosing = mobileClosingId === cat.id;
-      const shouldRenderMobileDetail = (isMobileActive || isClosing) && renderMobileDetail;
+      const shouldRenderMobileDetail = isMobileActive && renderMobileDetail;
 
       return (
         <Fragment key={cat.id}>
@@ -77,29 +67,15 @@ export default function CategoryTabList({
                 id={cat.id}
                 label={getCatLabel(cat, lang)}
             isActive={isMobileActive}
-            onClick={isMobileActive ? () => onMobileDetailClose?.() : onMobileTabToggle ?? onTabChange}
+            onClick={onMobileTabToggle ?? onTabChange}
             icon={CATEGORY_ICON_MAP[cat.id] ?? Star}
             size="sm"
           />
           {shouldRenderMobileDetail ? (
             <div
               className="col-span-2 mobile-category-detail-shell"
-              data-state={isClosing ? "closing" : "open"}
-              aria-hidden={isClosing || undefined}
+              data-state="open"
             >
-              {isMobileActive && (
-                <div className="flex justify-center pt-1">
-                <button
-                  type="button"
-                  onClick={onMobileDetailClose ?? (() => onMobileTabToggle?.(cat.id))}
-                  data-testid="mobile-category-detail-close-top"
-                  className="flex min-h-11 items-center gap-1 rounded-xl border border-[var(--color-gold-light)] bg-white px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
-                >
-                  <ChevronUp size={14} aria-hidden="true" />
-                  {mobileCloseLabel}
-                </button>
-              </div>
-              )}
               <div data-testid={`mobile-category-detail-${cat.id}`}>
                 {renderMobileDetail(cat.id)}
               </div>

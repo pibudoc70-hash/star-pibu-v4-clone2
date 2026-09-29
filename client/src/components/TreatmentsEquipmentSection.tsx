@@ -40,7 +40,6 @@ const TABLET_SHOW  = 4;
 const DESKTOP_SHOW = 6;
 
 const SCROLL_COMPLETE_FALLBACK_MS = 500;
-const MOBILE_CATEGORY_CLOSE_MOTION_MS = 220;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 메인 컴포넌트
@@ -52,7 +51,6 @@ export default function TreatmentsEquipmentSection() {
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
-  const [mobileClosingId, setMobileClosingId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortBy>("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,35 +114,8 @@ export default function TreatmentsEquipmentSection() {
   const handleMobileTabToggle = useCallback((id: string) => {
     setActiveId(id);
     setShowAll(false);
-    setMobileClosingId(null);
     setMobileExpandedId((current) => (current === id ? null : id));
   }, []);
-
-  const handleMobileCategoryClose = useCallback(() => {
-    if (!mobileExpandedId || mobileClosingId) return;
-    setMobileExpandedId(null);
-    setShowAll(false);
-    setMobileClosingId(mobileExpandedId);
-  }, [mobileClosingId, mobileExpandedId]);
-
-  useEffect(() => {
-    if (!mobileClosingId) return;
-
-    const closeTimer = window.setTimeout(() => {
-      setMobileClosingId(null);
-      window.requestAnimationFrame(() => {
-        const categoryList = mobileCategoryListRef.current;
-        if (!categoryList) return;
-
-        const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
-        const targetTop = window.scrollY + categoryList.getBoundingClientRect().top
-          - Math.max(0, (viewportHeight - categoryList.offsetHeight) / 2);
-        window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-      });
-    }, MOBILE_CATEGORY_CLOSE_MOTION_MS);
-
-    return () => window.clearTimeout(closeTimer);
-  }, [mobileClosingId]);
 
   // 검색어 변경 시 더보기 초기화
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -304,18 +275,15 @@ export default function TreatmentsEquipmentSection() {
                 lang={lang}
                 onTabChange={handleTabChange}
                 mobileActiveId={mobileExpandedId}
-                mobileClosingId={mobileClosingId}
                 onMobileTabToggle={handleMobileTabToggle}
-                onMobileDetailClose={handleMobileCategoryClose}
-                mobileCloseLabel={tr.collapseBtn}
                 mobileContainerRef={mobileCategoryListRef}
                 renderMobileDetail={() => (
-                  <div className="treatment-mobile-category-detail overflow-hidden rounded-xl bg-[var(--card)]" data-testid="treatment-mobile-category-detail">
+                  <div className="treatment-mobile-category-detail" data-testid="treatment-mobile-category-detail">
                     <div
                       id="treatments-mobile-grid"
                       aria-live="polite"
                       aria-label="선택한 카테고리 시술 목록"
-                      className="grid gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-4"
+                      className="grid gap-3 py-3"
                     >
                       {filteredTreatments.length === 0 ? (
                         <EmptyResultView message={tr.noResults} hint={tr.noResultsHint} />
@@ -330,16 +298,6 @@ export default function TreatmentsEquipmentSection() {
                           />
                         ))
                       )}
-                    </div>
-                    <div className="flex items-center justify-center gap-3 border-t border-[var(--color-gold-light)] px-3 py-2.5 sm:px-4 sm:py-3">
-                      <button
-                        type="button"
-                        onClick={handleMobileCategoryClose}
-                        data-testid="mobile-category-detail-close-footer"
-                        className="min-h-11 rounded-xl border border-[var(--color-gold-light)] bg-white px-3 py-2 text-xs font-semibold text-[var(--color-star-text-mid)] transition-colors hover:bg-[var(--color-gold-pale)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
-                      >
-                        {tr.collapseBtn}
-                      </button>
                     </div>
                   </div>
                 )}

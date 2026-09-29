@@ -61,7 +61,7 @@ export default function CategoryTabButton({
       </span>
       <span>{label}</span>
       {isSm && (
-        <span className="ml-auto flex shrink-0 opacity-75 transition-transform duration-200" aria-hidden="true">
+        <span className="flex shrink-0 opacity-75 transition-transform duration-200" aria-hidden="true">
           {isActive ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
         </span>
       )}

@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 
 const ASSET = {
-  logo: "/api/storage/ultherapy-prime-logo_62aa176b.png",
   device: "/api/storage/ultherapy-prime-device_374d4239.png",
   fda: "/api/storage/ultherapy-prime-fda_34036496.png",
   authenticity: "/api/storage/ultherapy-prime-authenticity_060bcbbe.png",
@@ -144,7 +143,10 @@ export function UltherapyPrimeDesktopHero() {
     <section className="ultherapy-prime-desktop ultherapy-prime-desktop__hero" aria-labelledby="ultherapy-prime-title">
       <div className="ultherapy-prime-desktop__hero-inner">
         <div className="ultherapy-prime-desktop__hero-copy">
-          <img className="ultherapy-prime-desktop__logo" src={ASSET.logo} alt="Ultherapy Prime" />
+          <div className="ultherapy-prime-desktop__wordmark" aria-label="Ultherapy Prime">
+            <span>Ultherapy<sup>®</sup></span>
+            <em>PRIME</em>
+          </div>
           <p className="ultherapy-prime-desktop__eyebrow">PREMIUM ULTRASOUND LIFTING</p>
           <h1 id="ultherapy-prime-title">한 번의 시술로 최대 1년,<br />안전하고 확실하게 끌어올리는 리프팅</h1>
           <p className="ultherapy-prime-desktop__hero-description">부산 서면 스타피부과에서, 정품 울쎄라피 프라임을 정확하게 경험하세요</p>
@@ -178,7 +180,7 @@ export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: Ul
       <section className="ultherapy-prime-desktop__summary" aria-labelledby="ultherapy-summary-heading">
         <SectionHeading eyebrow="AT A GLANCE" title="한눈에 보는 울쎄라피 프라임" />
         <dl className="ultherapy-prime-desktop__summary-grid">
-          <div><dt>시술 설명</dt><dd>{summary.overview}</dd></div>
+          <div className="ultherapy-prime-desktop__summary-overview"><dt>시술 설명</dt><dd>{summary.overview}</dd></div>
           <div><dt>적합한 대상</dt><dd>{summary.target}</dd></div>
           <div><dt>효과 지속 기간</dt><dd>{summary.duration}</dd></div>
           <div><dt>시술 소요 시간</dt><dd>{summary.time}</dd></div>

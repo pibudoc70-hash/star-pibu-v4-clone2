@@ -29,7 +29,6 @@ describe("Ultherapy Prime desktop authored content", () => {
 
   it("uses each requested supplied-media group in the authored desktop structure", () => {
     [
-      'ultherapy-prime-logo_62aa176b.png',
       'ultherapy-prime-device_374d4239.png',
       'ultherapy-prime-authenticity_060bcbbe.png',
       'ultherapy-prime-transducer-photo_69ea0165.webp',
@@ -52,6 +51,12 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('당신의 소중한 젊음, 스타피부과가 돌려드립니다');
   });
 
+  it("uses a text wordmark and balances the summary's long overview before its six facts", () => {
+    expect(content).toContain('ultherapy-prime-desktop__wordmark');
+    expect(content).toContain('Ultherapy<sup>®</sup>');
+    expect(content).toContain('ultherapy-prime-desktop__summary-overview');
+  });
+
   it("keeps authored layout rules desktop-scoped and leaves the generic mobile rules intact", () => {
     const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
     const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
@@ -63,5 +68,16 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('.equipment-detail__hero--ultherapy-mobile');
     expect(desktopRules).toContain('.ultherapy-prime-desktop-mobile-only');
     expect(desktopRules).not.toContain('@media (max-width: 767px)');
+  });
+
+  it("keeps the authored desktop surfaces within the warm brand palette", () => {
+    const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
+    const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
+    const desktopRules = css.slice(desktopStart, desktopEnd);
+
+    expect(desktopRules).toContain('linear-gradient(118deg, #FBF8F2');
+    expect(desktopRules).toContain('--ultherapy-deep: #3B2B21');
+    expect(desktopRules).not.toContain('#111C2E');
+    expect(desktopRules).not.toContain('#162033');
   });
 });

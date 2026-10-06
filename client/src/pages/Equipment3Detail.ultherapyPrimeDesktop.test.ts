@@ -182,4 +182,17 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('grid-template-columns: minmax(460px, 0.96fr) minmax(0, 1.04fr);');
     expect(desktopRules).toContain('border-radius: 0;');
   });
+
+  it("keeps the expanded hero-to-badge handoff and subtle gold waves PC-only", () => {
+    const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
+    const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
+    const desktopRules = css.slice(desktopStart, desktopEnd);
+
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__hero::before');
+    expect(desktopRules).toContain('repeating-radial-gradient');
+    expect(desktopRules).toContain('color-mix(in srgb, var(--ultherapy-gold) 9%, transparent)');
+    expect(desktopRules).toContain('mask-image: radial-gradient');
+    expect(desktopRules).toContain('min-height: 678px;');
+    expect(desktopRules).toContain('margin-top: 3.75rem;');
+  });
 });

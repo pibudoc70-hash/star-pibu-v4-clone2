@@ -5564,6 +5564,52 @@ body.font-lang-zh .hero-stat-label {
     margin-top: 0;
   }
 
+  /* Keep the hero's existing bottom handoff intact while creating a 60px
+     breathing space above the trust markers. The decorative wave system is
+     scoped to this authored page and lives behind its readable content. */
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero {
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 86% 20%, color-mix(in srgb, var(--ultherapy-gold) 10%, transparent) 0, transparent 52%),
+      var(--home-section-bg-a);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero::before {
+    position: absolute;
+    z-index: 0;
+    top: -22rem;
+    right: -18rem;
+    width: 50rem;
+    height: 50rem;
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+    background: repeating-radial-gradient(
+      circle at center,
+      transparent 0,
+      transparent calc(4rem - 1px),
+      color-mix(in srgb, var(--ultherapy-gold) 9%, transparent) 4rem,
+      transparent calc(4rem + 1px),
+      transparent 8rem
+    );
+    mask-image: radial-gradient(circle at center, #000 0 34%, transparent 74%);
+    opacity: 0.78;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero::after {
+    z-index: 0;
+    background: none;
+    opacity: 1;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero-inner {
+    min-height: 678px;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__trust-badges {
+    margin-top: 3.75rem;
+  }
+
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero-visual::before {
     inset: 50% auto auto 50%;
     width: min(37vw, 510px);

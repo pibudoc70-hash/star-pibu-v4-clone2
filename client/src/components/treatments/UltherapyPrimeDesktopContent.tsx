@@ -13,6 +13,7 @@ import { ULTHERAPY_PRIME_COPY } from "./ultherapyPrimeContent";
 
 const ASSET = {
   device: "/api/storage/ultherapy-prime-device_374d4239.png",
+  mobileControlUnit: "/api/storage/ultherapy-prime-mobile-control-unit_bc826791.png",
   fda: "/api/storage/ultherapy-prime-fda_34036496.png",
   authenticity: "/api/storage/ultherapy-prime-authenticity_060bcbbe.png",
   specialist: "/api/storage/ultherapy-prime-specialist_15575405.png",
@@ -31,8 +32,9 @@ const ASSET = {
   processTreat: "/api/storage/ultherapy-prime-process-step-3_6fc8187f.webp",
   qa: "/api/storage/ultherapy-prime-qa-thumbnail_5bd4e1e1.webp",
   thermage: "/api/storage/ultherapy-prime-thermage_75ab3431.png",
-  oligiox: "/api/storage/ultherapy-prime-oligiox_6c01bdc5.webp",
+  xerf: "/api/storage/ultherapy-prime-xerf-body-arm-l45_12cffff1.webp",
   onda: "/api/storage/ultherapy-prime-onda_954449ad.png",
+  vro: "/api/storage/ultherapy-prime-v-ro_37ba6e49.png",
   lumenis: "/api/storage/ultherapy-prime-lumenis-one_ccd3f96b.png",
   rejuran: "/api/storage/ultherapy-prime-rejuran_9f2cbadd.png",
   skinBotox: "/api/storage/ultherapy-prime-skin-botox_70192da7.png",
@@ -60,8 +62,8 @@ const PROCESS_MEDIA = [
 
 const COMBINATION_MEDIA = [
   { image: ASSET.thermage },
-  { image: ASSET.oligiox },
-  { image: ASSET.onda },
+  { image: ASSET.xerf },
+  { image: ASSET.onda, secondaryImage: ASSET.vro },
   { image: ASSET.lumenis, secondaryImage: ASSET.rejuran },
   { image: ASSET.skinBotox },
 ] as const;
@@ -150,6 +152,18 @@ function KoreanLineBreakTitle({ lang, text, firstLine }: { lang: Lang; text: str
   return <><span className="ultherapy-prime-desktop__title-line">{firstLine}</span><br /><span className="ultherapy-prime-desktop__title-line">{rest}</span></>;
 }
 
+function KoreanMobileLineBreak({ lang, text, firstLine }: { lang: Lang; text: string; firstLine: string }) {
+  if (lang !== "ko") return <>{text}</>;
+  const rest = text.replace(`${firstLine} `, "");
+  return <><span>{firstLine}</span>{" "}<br className="ultherapy-prime-desktop__mobile-break" /><span>{rest}</span></>;
+}
+
+function KoreanMobileOnlyLineBreak({ lang, text, firstLine }: { lang: Lang; text: string; firstLine: string }) {
+  if (lang !== "ko") return <>{text}</>;
+  const rest = text.startsWith(firstLine) ? text.slice(firstLine.length).trimStart() : text;
+  return <><span>{firstLine}</span>{" "}<br className="ultherapy-prime-desktop__mobile-korean-break" /><span>{rest}</span></>;
+}
+
 export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "lang">) {
   const copy = ULTHERAPY_PRIME_COPY[lang];
 
@@ -162,8 +176,8 @@ export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "l
             <em>PRIME</em>
           </div>
           <p className="ultherapy-prime-desktop__eyebrow">PREMIUM ULTRASOUND LIFTING</p>
-          <h1 id="ultherapy-prime-title">{copy.heroTitle}</h1>
-          <p className="ultherapy-prime-desktop__hero-description">{copy.heroDescription}</p>
+          <h1 id="ultherapy-prime-title"><KoreanLineBreakTitle lang={lang} text={copy.heroTitle} firstLine="한 번의 시술로 최대 1년," /></h1>
+          <p className="ultherapy-prime-desktop__hero-description"><KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," /></p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label={copy.trustTitles.join(", ")}>
             {TRUST_BADGES.map((badge, index) => (
               <li key={badge.key} className={badge.key === "authentic" ? "ultherapy-prime-desktop__trust-badge--authentic" : undefined}>
@@ -176,6 +190,7 @@ export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "l
         </div>
         <div className="ultherapy-prime-desktop__hero-visual" aria-label="Ultherapy Prime">
           <img className="ultherapy-prime-desktop__hero-device" src={ASSET.device} alt="Ultherapy Prime" />
+          <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt="울쎄라피 프라임 컨트롤 유닛" />
         </div>
       </div>
     </section>
@@ -196,6 +211,9 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
             <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<KoreanLineBreakTitle lang={lang} text={copy.whatTitle} firstLine="울쎄라피 프라임은" />} />
             <p>{copy.whatParagraphs[0]}</p>
             <p>{copy.whatParagraphs[1]}</p>
+            <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">
+              <img src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" />
+            </figure>
             <div className="ultherapy-prime-desktop__principle-depth-copy">
               <h3>{copy.depthTitle}</h3>
               <p>{copy.depthText}</p>
@@ -221,7 +239,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
           </figure>
           <figure className="ultherapy-prime-desktop__authentic-depth">
             <img src={ASSET.depthReference} alt={copy.depthTitle} loading="lazy" />
-            <figcaption>{copy.authCaption}</figcaption>
+            <figcaption><KoreanMobileLineBreak lang={lang} text={copy.authCaption} firstLine="정품 팁에서 초음파 에너지를 사용해" /></figcaption>
           </figure>
         </div>
       </section>
@@ -286,7 +304,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       </section>
 
       <section className="ultherapy-prime-desktop__combination" aria-labelledby="ultherapy-combination-heading">
-        <SectionHeading eyebrow="BETTER TOGETHER" title={copy.combinationTitle} />
+        <SectionHeading eyebrow="BETTER TOGETHER" title={<KoreanMobileOnlyLineBreak lang={lang} text={copy.combinationTitle} firstLine="울쎄라피 프라임과" />} />
         <div className="ultherapy-prime-desktop__combination-grid">
           {copy.combinationTitles.map((title, index) => {
             const media = COMBINATION_MEDIA[index];
@@ -297,7 +315,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
                   {"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}
                 </div>
                 {copy.combinationBadges[index] && <span className="ultherapy-prime-desktop__combination-badge">{copy.combinationBadges[index]}</span>}
-                <h3>{title}</h3>
+                <h3>{lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={title} firstLine="울쎄라피 프라임" /> : title.split("\n").map((line, lineIndex) => <span key={`${title}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</h3>
                 <p>{copy.combinationDescriptions[index]}</p>
               </article>
             );
@@ -324,7 +342,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
         <div className="ultherapy-prime-desktop__strength-grid">
           {copy.strengths.map((text, index) => {
             const Icon = STRENGTH_ICONS[index];
-            return <div key={text}><Icon aria-hidden="true" /><p>{text}</p></div>;
+            return <div key={text}><Icon aria-hidden="true" /><p>{text.split("\n").map((line, lineIndex) => <span key={`${text}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</p></div>;
           })}
         </div>
         <div className="ultherapy-prime-desktop__star-certification" aria-label={copy.certificationTitle}>

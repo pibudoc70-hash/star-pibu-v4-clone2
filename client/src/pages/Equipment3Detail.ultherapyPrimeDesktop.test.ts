@@ -33,7 +33,7 @@ describe("Ultherapy Prime localized authored content", () => {
     ["ko:", "en:", "ja:", "zh:", '"zh-TW":'].forEach((locale) => expect(copy).toContain(locale));
     [
       "What is Ultherapy Prime?",
-      "Ultherapy Primeとはどのような施術ですか？",
+      "Ultherapy Primeとは\\nどのような施術ですか？",
       "Ultherapy Prime 是什么治疗？",
       "Ultherapy Prime 是什麼療程？",
       "Discover Ultherapy Prime Through Video",
@@ -64,11 +64,17 @@ describe("Ultherapy Prime localized authored content", () => {
       'copy.certificationText',
     ].forEach((fragment) => expect(content).toContain(fragment));
     expect(content).toContain('data-lang={lang}');
+    expect(content).toContain('text.split("\\n").map');
+    expect(content).toContain('function KoreanMobileLineBreak');
+    expect(content).toContain('function KoreanMobileOnlyLineBreak');
+    expect(copy).toContain('"대한민국 의사의\\n단 2% 피부과전문의"');
+    expect(copy).toContain('"대학병원 교수출신,\\n20년 이상의 시술 경험"');
   });
 
   it("keeps all requested supplied media and semantic sections", () => {
     [
       'ultherapy-prime-device_374d4239.png',
+      'ultherapy-prime-mobile-control-unit_bc826791.png',
       'ultherapy-prime-authenticity_060bcbbe.png',
       'ultherapy-prime-specialist_15575405.png',
       'ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp',
@@ -78,6 +84,8 @@ describe("Ultherapy Prime localized authored content", () => {
       'ultherapy-prime-collagen-stage-1_14727d05.webp',
       'ultherapy-prime-process-step-1_68a4c1b5.webp',
       'ultherapy-prime-qa-thumbnail_5bd4e1e1.webp',
+      'ultherapy-prime-xerf-body-arm-l45_12cffff1.webp',
+      'ultherapy-prime-v-ro_37ba6e49.png',
       'ultherapy-prime-treatment-areas_ea4ea3ca.png',
     ].forEach((asset) => expect(content).toContain(asset));
     [
@@ -90,6 +98,23 @@ describe("Ultherapy Prime localized authored content", () => {
       'ultherapy-prime-desktop__recommend',
       'ultherapy-prime-desktop__star',
     ].forEach((section) => expect(content).toContain(section));
+    expect(content).not.toContain('ultherapy-prime-oligiox_6c01bdc5.webp');
+    expect(content).toContain('{ image: ASSET.onda, secondaryImage: ASSET.vro }');
+  });
+
+  it("uses localized XERF titles and descriptions in the second combination card", () => {
+    [
+      '+ 세르프',
+      '+ XERF',
+      "피부 속 콜라겐 재생을 돕고",
+      "support collagen renewal",
+      "コラーゲン再生を促し",
+      "促进胶原蛋白再生",
+      "促進膠原蛋白再生",
+    ].forEach((fragment) => expect(copy).toContain(fragment));
+    expect(content).toContain('title.split("\\n").map');
+    expect(copy).not.toContain('Oligio X');
+    expect(copy).not.toContain('올리지오X');
   });
 
   it("keeps four click-to-load Shorts while localizing their accessible controls", () => {
@@ -121,6 +146,46 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(authoredRules).toContain('@media (min-width: 1024px)');
     expect(authoredRules).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(authoredRules).toContain('aspect-ratio: 9 / 16;');
+  });
+
+  it("keeps Korean phone visuals aligned with the current PC image selection", () => {
+    const authoredStart = css.indexOf('/* ── Ultherapy Prime authored landing content');
+    const authoredEnd = css.indexOf('/* Desktop equipment list:', authoredStart);
+    const authoredRules = css.slice(authoredStart, authoredEnd);
+
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero .ultherapy-prime-desktop__eyebrow { display: none; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero h1 { font-size: clamp(0.96rem, 4.5vw, 1.08rem);');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-description { font-size: clamp(1.08rem, 5.05vw, 1.28rem);');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-description .ultherapy-prime-desktop__title-line { white-space: nowrap; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-copy { display: contents; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__wordmark { align-self: center; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-description { text-align: center; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-visual { order: 2; min-height: 205px; margin-top: 0.25rem; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__trust-badges { order: 3; margin-top: 0.35rem; padding-bottom: 0.7rem; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-device { height: min(250px, 64vw); }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-mobile-control-unit { display: block; width: min(100%, 295px);');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__hero-visual { min-height: 0; margin-top: 1.4rem; padding: 0.7rem 0 1.05rem; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__heading { text-align: center; }');
+    expect(content).toContain('ultherapy-prime-desktop__principle-diagram--mobile-inline');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-grid > .ultherapy-prime-desktop__principle-diagram { display: none; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram--mobile-inline { display: flex !important; justify-content: center; margin: 1.1rem 0 0.6rem; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic-emphasis { color: var(--ultherapy-ink); font-weight: 700; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__authentic-depth .ultherapy-prime-desktop__mobile-break { display: initial; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__mobile-korean-break { display: initial; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__combination-grid article { grid-template-columns: 124px minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr;');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__combination-image img { flex: 1 1 0; width: auto; min-width: 0; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__pain-shorts h3 { text-align: center; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__combination-grid article:nth-child(4) h3 { font-size: 0.84rem; letter-spacing: -0.035em; }');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li { align-items: center; justify-content: center; gap: 0.3rem; font-size: clamp(0.64rem, 3.35vw, 0.78rem);');
+    expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li svg { width: 0.72rem; height: 0.72rem; margin-top: 0; }');
+    expect(authoredRules).toContain('body.font-lang-ko .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {\n    display: flex;\n    flex-direction: column;\n    gap: 2rem;');
+    expect(css).toContain('body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {\n      padding: 2rem 0 0 !important;\n    }');
+    expect(css).toContain('body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {\n      padding: 0 !important;\n    }');
+    expect(authoredRules).toContain('body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {\n    padding-top: 0;\n  }');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--tablet { display: none; }');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--pc { display: block; }');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic-equipment--pc-hidden,');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__auth-seal { display: none; }');
   });
 
   it("keeps the warm brand palette and accessibility-safe focus treatment", () => {

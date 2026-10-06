@@ -21,8 +21,7 @@ import { getLocalizedEquipmentFaqs } from "@shared/equipmentFaq";
 import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 import { isUltherapyPrimeSlug } from "@shared/ultherapyPrinciple";
-import UltherapyPrincipleSection from "@/components/UltherapyPrincipleSection";
-import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero, UltherapyPrimeProcessSeoFallback } from "@/components/treatments/UltherapyPrimeDesktopContent";
+import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero } from "@/components/treatments/UltherapyPrimeDesktopContent";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
@@ -227,7 +226,7 @@ export default function Equipment3Detail() {
   const positioningFaqs = hasLiftingPainCare && managedFaqs.length === 0 ? LIFTING_FAQS[lang] : [];
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
-  const isUltherapyPrime = lang === "ko" && isUltherapyPrimeSlug(item.slug);
+  const isUltherapyPrime = isUltherapyPrimeSlug(item.slug);
   const explanatoryInfographic = lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
 
   const images = safeParseJson<string[]>(item.images, []);
@@ -333,7 +332,7 @@ export default function Equipment3Detail() {
 
       <Header />
 
-      {isUltherapyPrime && <UltherapyPrimeDesktopHero />}
+      {isUltherapyPrime && <UltherapyPrimeDesktopHero lang={lang} />}
 
       {/* 히어로 헤더 */}
       <div className={`equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12${isUltherapyPrime ? " equipment-detail__hero--ultherapy-mobile" : ""}`}>
@@ -362,11 +361,10 @@ export default function Equipment3Detail() {
         </div>
       </div>
 
-      {isUltherapyPrime && <UltherapyPrimeDesktopContent youtubeUrl={item.youtubeUrl} />}
+      {isUltherapyPrime && <UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />}
 
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
-        {isUltherapyPrime && <UltherapyPrimeProcessSeoFallback />}
         <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>
@@ -513,9 +511,7 @@ export default function Equipment3Detail() {
           </section>
         )}
 
-        {isUltherapyPrime ? (
-          <div className="ultherapy-prime-desktop-mobile-only"><UltherapyPrincipleSection /></div>
-        ) : explanatoryInfographic && (
+        {explanatoryInfographic && (
           <section className="mb-12" aria-labelledby="equipment-infographic-heading">
             <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
             <figure className="equipment-detail__infographic mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">

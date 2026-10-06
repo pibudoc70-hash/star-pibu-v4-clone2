@@ -44,9 +44,11 @@ describe("Equipment3Detail error navigation", () => {
     queryResult = { data: undefined, isLoading: false, isError: true };
   });
 
-  it("uses a dedicated semantic section for Korean Ultherapy Prime instead of its image-only infographic", () => {
+  it("uses localized authored content for Ultherapy Prime instead of the generic detail fallback", () => {
     expect(equipmentDetailSource).toContain("isUltherapyPrimeSlug(item.slug)");
-    expect(equipmentDetailSource).toContain("<UltherapyPrincipleSection />");
+    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopHero lang={lang} />");
+    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />");
+    expect(equipmentDetailSource).not.toContain("lang === \"ko\" && isUltherapyPrimeSlug");
     expect(equipmentDetailSource).toContain("!isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug");
   });
 });

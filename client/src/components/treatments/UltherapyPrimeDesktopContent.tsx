@@ -17,6 +17,7 @@ const ASSET = {
   handpiece: "/api/storage/ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp",
   depthReference: "/api/storage/1_530b8674.png",
   depths: "/api/storage/ultherapy-prime-depths_5f0a9424.png",
+  procedureDepths: "/api/storage/ultherapy-prime-procedure-depths-3_16754c9f.png",
   collagenOne: "/api/storage/ultherapy-prime-collagen-stage-1_14727d05.webp",
   collagenTwo: "/api/storage/ultherapy-prime-collagen-stage-2_f334472d.webp",
   collagenThree: "/api/storage/ultherapy-prime-collagen-stage-3_9b65a9cd.webp",
@@ -38,9 +39,9 @@ type UltherapyPrimeDesktopContentProps = {
 };
 
 const TRUST_BADGES = [
-  { title: "정품 인증 병원", subtitle: "정품 울쎄라피 사용", image: ASSET.authenticity, alt: "울쎄라피 프라임 정품 병원 인증" },
-  { title: "FDA 승인", subtitle: "특허받은 단독기술", image: ASSET.fda, alt: "FDA Cleared" },
-  { title: "피부과전문의 시술", subtitle: "믿고 안전하게!", image: ASSET.specialist, alt: "피부과전문의" },
+  { key: "authentic", title: "정품 인증 병원", subtitle: "정품 울쎄라피 사용", image: ASSET.authenticity, alt: "울쎄라피 프라임 정품 병원 인증" },
+  { key: "fda", title: "FDA 승인", subtitle: "특허받은 단독기술", image: ASSET.fda, alt: "FDA Cleared" },
+  { key: "specialist", title: "피부과전문의 시술", subtitle: "믿고 안전하게!", image: ASSET.specialist, alt: "피부과전문의" },
 ] as const;
 
 const COLLAGEN_STAGES = [
@@ -136,7 +137,7 @@ export function UltherapyPrimeDesktopHero() {
           <p className="ultherapy-prime-desktop__hero-description">부산 서면 스타피부과에서,<br />정품 울쎄라피 프라임을 경험하세요</p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label="울쎄라피 프라임 신뢰 기준">
             {TRUST_BADGES.map((badge) => (
-              <li key={badge.title}>
+              <li key={badge.key} className={badge.key === "authentic" ? "ultherapy-prime-desktop__trust-badge--authentic" : undefined}>
                 <span className="ultherapy-prime-desktop__trust-icon"><img src={badge.image} alt={badge.alt} /></span>
                 <strong>{badge.title}</strong>
                 <span>{badge.subtitle}</span>
@@ -170,7 +171,8 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
             </div>
           </div>
           <figure className="ultherapy-prime-desktop__principle-diagram">
-            <img src={ASSET.depths} alt="시술 적용 깊이 1.5mm, 3.0mm, 4.5mm와 피부층별 라벨이 표시된 울쎄라피 프라임 깊이 다이어그램" loading="lazy" />
+            <img className="ultherapy-prime-desktop__principle-diagram--tablet" src={ASSET.depths} alt="시술 적용 깊이 1.5mm, 3.0mm, 4.5mm와 피부층별 라벨이 표시된 울쎄라피 프라임 깊이 다이어그램" loading="lazy" />
+            <img className="ultherapy-prime-desktop__principle-diagram--pc" src={ASSET.procedureDepths} alt="시술 적용 깊이 1.5mm, 3.0mm, 4.5mm와 피부층별 라벨이 표시된 울쎄라피 프라임 깊이 단면도" loading="lazy" />
           </figure>
         </div>
       </section>

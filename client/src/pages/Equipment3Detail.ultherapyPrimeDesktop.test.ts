@@ -35,6 +35,7 @@ describe("Ultherapy Prime desktop authored content", () => {
       'ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp',
       '1_530b8674.png',
       'ultherapy-prime-depths_5f0a9424.png',
+      'ultherapy-prime-procedure-depths-3_16754c9f.png',
       'ultherapy-prime-collagen-stage-1_14727d05.webp',
       'ultherapy-prime-see_c3d3df83.webp',
       'ultherapy-prime-qa-thumbnail_5bd4e1e1.webp',
@@ -73,6 +74,9 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('title={<>당신의 소중한 젊음,<br />스타피부과가 돌려드립니다</>}');
     expect(content).toContain('대한민국 의사의<br />단 2% 피부과전문의');
     expect(content).toContain('대학병원 교수출신 의료진,<br />20년 이상의 수많은 시술 경험');
+    expect(content).toContain('ultherapy-prime-desktop__trust-badge--authentic');
+    expect(content).toContain('ultherapy-prime-desktop__principle-diagram--tablet');
+    expect(content).toContain('ultherapy-prime-desktop__principle-diagram--pc');
     expect(content).not.toContain('ultherapy-prime-desktop__hero-certificates');
     expect(content).not.toContain('ultherapy-prime-desktop__summary');
     expect(content).not.toContain('ultherapy-prime-deepsee-monitor_4757defd.png');
@@ -121,5 +125,21 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('background: transparent;');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__star-certification { width: 100%;');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__collagen-grid li { text-align: center;');
+  });
+
+  it("keeps the requested visual corrections in a PC-only 1024px override", () => {
+    const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
+    const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
+    const desktopRules = css.slice(desktopStart, desktopEnd);
+
+    expect(page).toContain('equipment-detail__faq-shell');
+    expect(page).toContain('equipment-detail__faq-inner');
+    expect(desktopRules).toContain('@media (min-width: 1024px)');
+    expect(desktopRules).toContain('transform: translate(-50%, -50%);');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__trust-badge--authentic');
+    expect(desktopRules).toContain('align-items: center;');
+    expect(desktopRules).toContain('white-space: nowrap;');
+    expect(desktopRules).toContain('.equipment-detail__faq-shell');
+    expect(desktopRules).toContain('box-shadow: 0 0 0 100vmax var(--home-section-bg-b);');
   });
 });

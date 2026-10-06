@@ -5012,6 +5012,12 @@ body.font-lang-zh .hero-stat-label {
   display: block;
 }
 
+/* The requested procedure-depth artwork is deliberately reserved for PC.
+   The existing tablet presentation retains its original diagram. */
+.ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--pc {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .ultherapy-prime-desktop {
     display: block;
@@ -5526,6 +5532,79 @@ body.font-lang-zh .hero-stat-label {
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main > .equipment-detail__info-card,
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main > section:not(.ultherapy-prime-desktop-mobile-only) {
     margin-bottom: 4rem;
+  }
+}
+
+/* PC-only polish for the authored Ultherapy Prime detail route. Tablet and
+   mobile retain the existing 768px presentation without these overrides. */
+@media (min-width: 1024px) {
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__hero-visual::before {
+    inset: 50% auto auto 50%;
+    width: min(37vw, 510px);
+    transform: translate(-50%, -50%);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__trust-badges {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 420px);
+    max-width: none;
+    gap: 1.5rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__trust-badge--authentic {
+    display: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__principle-grid {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__principle-diagram {
+    align-self: center;
+    align-items: center;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__principle-diagram--tablet {
+    display: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--pc {
+    display: block;
+    width: min(100%, 460px);
+    max-height: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__section-closing {
+    width: 100%;
+    max-width: none;
+    margin-top: 2.25rem;
+    color: var(--ultherapy-muted);
+    font-size: clamp(0.86rem, 1.05vw, 1rem);
+    line-height: 1.85;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure {
+    min-height: 476px;
+    justify-content: flex-start;
+    padding: 1.25rem 2rem 2.25rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure figcaption {
+    margin-top: 1.75rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-shell {
+    padding-block: 4.5rem;
+    background: var(--home-section-bg-b);
+    box-shadow: 0 0 0 100vmax var(--home-section-bg-b);
+    clip-path: inset(0 -100vmax);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-inner {
+    width: 100%;
   }
 }
 

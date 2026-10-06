@@ -557,17 +557,19 @@ export default function Equipment3Detail() {
         )}
 
         {managedFaqs.length > 0 && (
-          <section className="mb-12" aria-labelledby="equipment-faq-heading">
-            <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
-            <div className="space-y-3">
-              {managedFaqs.map(({ question, answer }, index) => (
-                <details key={`${question}-${index}`} className="equipment-detail__faq-item group rounded-xl border px-5 py-4">
-                  <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-800">
-                    <span className="mr-2 text-blue-600" aria-hidden="true">Q.</span>{question}
-                  </summary>
-                  <p className="mt-4 whitespace-pre-line leading-relaxed text-slate-700"><span className="mr-2 font-semibold text-blue-600" aria-hidden="true">A.</span>{answer}</p>
-                </details>
-              ))}
+          <section className="equipment-detail__faq-shell mb-12" aria-labelledby="equipment-faq-heading">
+            <div className="equipment-detail__faq-inner">
+              <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
+              <div className="space-y-3">
+                {managedFaqs.map(({ question, answer }, index) => (
+                  <details key={`${question}-${index}`} className="equipment-detail__faq-item group rounded-xl border px-5 py-4">
+                    <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-800">
+                      <span className="mr-2 text-blue-600" aria-hidden="true">Q.</span>{question}
+                    </summary>
+                    <p className="mt-4 whitespace-pre-line leading-relaxed text-slate-700"><span className="mr-2 font-semibold text-blue-600" aria-hidden="true">A.</span>{answer}</p>
+                  </details>
+                ))}
+              </div>
             </div>
           </section>
         )}

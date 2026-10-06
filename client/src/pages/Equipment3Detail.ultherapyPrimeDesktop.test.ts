@@ -36,7 +36,7 @@ describe("Ultherapy Prime desktop authored content", () => {
       'ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp',
       '1_530b8674.png',
       'ultherapy-prime-depths_5f0a9424.png',
-      'ultherapy-prime-procedure-depths-3_16754c9f.png',
+      'ultherapy-prime-procedure-depths-2026-10-06_eaa6eeae.png',
       'ultherapy-prime-collagen-stage-1_14727d05.webp',
       'ultherapy-prime-see_c3d3df83.webp',
       'ultherapy-prime-qa-thumbnail_5bd4e1e1.webp',

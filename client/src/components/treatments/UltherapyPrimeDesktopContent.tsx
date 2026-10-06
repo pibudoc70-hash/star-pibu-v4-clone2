@@ -17,7 +17,7 @@ const ASSET = {
   handpiece: "/api/storage/ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp",
   depthReference: "/api/storage/1_530b8674.png",
   depths: "/api/storage/ultherapy-prime-depths_5f0a9424.png",
-  procedureDepths: "/api/storage/ultherapy-prime-procedure-depths-3_16754c9f.png",
+  procedureDepths: "/api/storage/ultherapy-prime-procedure-depths-2026-10-06_eaa6eeae.png",
   collagenOne: "/api/storage/ultherapy-prime-collagen-stage-1_14727d05.webp",
   collagenTwo: "/api/storage/ultherapy-prime-collagen-stage-2_f334472d.webp",
   collagenThree: "/api/storage/ultherapy-prime-collagen-stage-3_9b65a9cd.webp",

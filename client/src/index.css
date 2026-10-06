@@ -5636,32 +5636,64 @@ body.font-lang-zh .hero-stat-label {
     margin-top: 1.75rem;
   }
 
-  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-shell {
-    padding-block: 4.5rem;
-    background: var(--home-section-bg-b);
-    box-shadow: 0 0 0 100vmax var(--home-section-bg-b);
+  /* FAQ → clinic information → return is one uninterrupted page-ivory
+     surface.  Only the interactive FAQ and information blocks carry a card
+     surface, so no full-width beige bands or stepped container backgrounds
+     appear before the shared footer/contact area. */
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    background: var(--equipment-detail-page-bg);
+    box-shadow: 0 0 0 100vmax var(--equipment-detail-page-bg);
     clip-path: inset(0 -100vmax);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-shell,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__info-shell,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__back-surface {
+    width: 100%;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-shell {
+    padding: 5rem 0 2rem;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__faq-inner {
     width: 100%;
+    margin: 0;
+    background: transparent;
   }
 
-  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main > .equipment-detail__faq-shell,
-  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main > .equipment-detail__info-shell {
-    margin-bottom: 0;
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__positioning-faq {
+    width: 100%;
+    margin: 0;
+    padding: 2rem 2.25rem;
+    border-color: var(--equipment-detail-border);
+    background: var(--equipment-detail-surface);
+    box-shadow: 0 2px 8px rgba(26, 39, 68, 0.04);
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__info-shell {
-    padding-block: 4.5rem;
-    background: var(--home-section-bg-a);
-    box-shadow: 0 0 0 100vmax var(--home-section-bg-a);
-    clip-path: inset(0 -100vmax);
+    padding: 5rem 0;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__info-shell > .equipment-detail__info-card {
     width: 100%;
     margin: 0;
+    padding: 2rem 2.25rem;
+    background: var(--equipment-detail-surface);
+    border-color: var(--equipment-detail-border);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__back-surface {
+    display: flex;
+    align-items: flex-start;
+    padding: 5rem 0;
   }
 }
 

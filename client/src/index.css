@@ -5018,6 +5018,12 @@ body.font-lang-zh .hero-stat-label {
   display: none;
 }
 
+/* Added only for the authored PC process section; tablet and phone content
+   retain their prior composition. */
+.ultherapy-prime-desktop__process-note {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .ultherapy-prime-desktop {
     display: block;
@@ -5613,6 +5619,93 @@ body.font-lang-zh .hero-stat-label {
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-depth img {
     width: min(100%, 340px);
+  }
+
+  /* Keep the authored authenticity copy and its diagram as two calm, centered
+     columns on PC. The base tablet treatment intentionally remains unchanged. */
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic {
+    grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+    align-items: center;
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__split-copy {
+    width: 100%;
+    max-width: 510px;
+    justify-self: end;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__heading {
+    max-width: 510px;
+    margin-bottom: 1rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__auth-title-brand,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-title-line {
+    white-space: nowrap;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__split-copy > p {
+    max-width: 510px;
+    word-break: keep-all;
+    text-wrap: pretty;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__auth-seal {
+    margin-top: 2rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-media {
+    display: flex;
+    width: 100%;
+    max-width: 470px;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-depth {
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-depth img {
+    width: min(100%, 340px);
+    flex: 0 0 auto;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-depth figcaption {
+    max-width: 340px;
+    margin-inline: auto;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__process-note {
+    display: block;
+    max-width: 860px;
+    margin: 1.75rem auto 0;
+    color: var(--ultherapy-muted);
+    font-size: clamp(0.94rem, 1.05vw, 1rem);
+    line-height: 1.7;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain {
+    grid-template-columns: minmax(460px, 0.96fr) minmax(0, 1.04fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-copy .ultherapy-prime-desktop__heading {
+    max-width: 540px;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-copy .ultherapy-prime-desktop__heading h2 {
+    font-size: clamp(2rem, 2.6vw, 2.7rem);
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__section-closing {

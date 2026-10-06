@@ -44,10 +44,11 @@ describe("Ultherapy Prime desktop authored content", () => {
 
     expect(content).toContain('부산 서면 스타피부과에서,<br />정품 울쎄라피 프라임을 경험하세요');
     expect(content).not.toContain('한눈에 보는 울쎄라피 프라임');
-    expect(content).toContain('왜 꼭 ‘정품 울쎄라피 프라임’이어야 할까요?');
+    expect(content).toContain('왜 꼭 ‘정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span>’이어야 할까요?');
     expect(content).toContain('콜라겐이 재생되는 과정');
     expect(content).toContain('3단계 시술 프로세스');
-    expect(content).toContain('울쎄라피 프라임,<br />통증 때문에 고민이라면?');
+    expect(content).toContain('같은 시술이라도 피부 상태에 따라 달라야 하기에, 피부 깊이와 상태를 확인해 개인별 맞춤 시술을 진행합니다.');
+    expect(content).toContain('통증 때문에 고민이라면?</span>');
     expect(content).toContain('울쎄라피 프라임과 함께하면 좋은 시술');
     expect(content).toContain('울쎄라피 프라임,<br />이런 분께 추천합니다');
     expect(content).toContain('당신의 소중한 젊음,<br />스타피부과가 돌려드립니다');
@@ -68,8 +69,10 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('마취크림');
     expect(content).toContain('국소마취주사');
     expect(content).toContain('수면마취');
+    expect(content).toContain('ultherapy-prime-desktop__process-note');
+    expect(content).toContain('ultherapy-prime-desktop__pain-title-line');
+    expect(content).toContain('ultherapy-prime-desktop__auth-title-brand');
     expect(content).toContain('ultherapy-prime-desktop__star-certification');
-    expect(content).toContain('title={<>울쎄라피 프라임,<br />통증 때문에 고민이라면?</>}');
     expect(content).toContain('title={<>울쎄라피 프라임,<br />이런 분께 추천합니다</>}');
     expect(content).toContain('title={<>당신의 소중한 젊음,<br />스타피부과가 돌려드립니다</>}');
     expect(content).toContain('대한민국 의사의<br />단 2% 피부과전문의');
@@ -98,6 +101,7 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopStart).toBeGreaterThan(-1);
     expect(desktopRules).toContain('@media (min-width: 768px)');
     expect(desktopRules).toContain('.ultherapy-prime-desktop {\n    display: block;');
+    expect(css).toContain('.ultherapy-prime-desktop__process-note {\n  display: none;');
     expect(desktopRules).toContain('.equipment-detail__hero--ultherapy-mobile');
     expect(desktopRules).toContain('.ultherapy-prime-desktop-mobile-only');
     expect(desktopRules).not.toContain('@media (max-width: 767px)');
@@ -167,5 +171,10 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('width: 100vw;');
     expect(desktopRules).toContain('padding: 4rem max(1.5rem, calc((100vw - 1120px) / 2 + 1rem));');
     expect(desktopRules).toContain('padding: 2.5rem 0 0;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__process-note');
+    expect(desktopRules).toContain('line-height: 1.7;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__pain-title-line');
+    expect(desktopRules).toContain('grid-template-columns: minmax(460px, 0.96fr) minmax(0, 1.04fr);');
+    expect(desktopRules).toContain('border-radius: 0;');
   });
 });

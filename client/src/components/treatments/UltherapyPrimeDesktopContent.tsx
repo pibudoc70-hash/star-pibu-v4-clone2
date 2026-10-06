@@ -184,7 +184,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
 
       <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
         <div className="ultherapy-prime-desktop__split-copy">
-          <SectionHeading eyebrow="AUTHENTICITY FIRST" title="왜 꼭 ‘정품 울쎄라피 프라임’이어야 할까요?" />
+          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<>왜 꼭 ‘정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span>’이어야 할까요?</>} />
           <p>초음파 리프팅 시술의 효과를 제대로 경험하기 위해서는 꼭 정품 울쎄라피 프라임으로 시술받아야 합니다. 정품 팁이 아닌 경우 피부층에 적정 에너지가 전달되지 않거나 피부와 밀착이 잘 되지 않아 리프팅 효과 저하는 물론 화상의 위험이 있을 수 있습니다.</p>
           <p>정품 팁은 60~70℃의 열을 정밀하게 전달하도록 설계된 특허받은 단독 기술입니다.</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>정품 인증 병원</span></div>
@@ -219,11 +219,12 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
         <div className="ultherapy-prime-desktop__process-grid">
           {PROCESS_STEPS.map((step) => <img key={step.image} src={step.image} alt={step.alt} loading="lazy" />)}
         </div>
+        <p className="ultherapy-prime-desktop__process-note">같은 시술이라도 피부 상태에 따라 달라야 하기에, 피부 깊이와 상태를 확인해 개인별 맞춤 시술을 진행합니다.</p>
       </section>
 
       <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-copy">
-          <SectionHeading eyebrow="COMFORT CARE" title={<>울쎄라피 프라임,<br />통증 때문에 고민이라면?</>} />
+          <SectionHeading eyebrow="COMFORT CARE" title={<><span className="ultherapy-prime-desktop__pain-title-line">울쎄라피 프라임,</span><br /><span className="ultherapy-prime-desktop__pain-title-line">통증 때문에 고민이라면?</span></>} />
           <ul className="ultherapy-prime-desktop__pain-options" aria-label="스타피부과 통증 케어 옵션">
             <li>마취크림</li>
             <li>국소마취주사</li>

@@ -9,9 +9,10 @@ const css = read("client/src/index.css");
 
 describe("Ultherapy Prime desktop authored content", () => {
   it("mounts the replacement only for Korean Ultherapy Prime while retaining the mobile template", () => {
-    expect(page).toContain('import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero }');
+    expect(page).toContain('import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero, UltherapyPrimeProcessSeoFallback }');
     expect(page).toContain('{isUltherapyPrime && <UltherapyPrimeDesktopHero />}');
     expect(page).toContain('{isUltherapyPrime && <UltherapyPrimeDesktopContent youtubeUrl={item.youtubeUrl} />}');
+    expect(page).toContain('{isUltherapyPrime && <UltherapyPrimeProcessSeoFallback />}');
     expect(page).toContain('equipment-detail__hero--ultherapy-mobile');
     expect(page).toContain('ultherapy-prime-desktop-mobile-only');
     expect(page).toContain('<div className="ultherapy-prime-desktop-mobile-only"><UltherapyPrincipleSection /></div>');
@@ -40,6 +41,9 @@ describe("Ultherapy Prime desktop authored content", () => {
       'ultherapy-prime-see_c3d3df83.webp',
       'ultherapy-prime-qa-thumbnail_5bd4e1e1.webp',
       'ultherapy-prime-treatment-areas_ea4ea3ca.png',
+      'ultherapy-prime-process-step-1_68a4c1b5.webp',
+      'ultherapy-prime-process-step-2_e11de918.webp',
+      'ultherapy-prime-process-step-3_6fc8187f.webp',
     ].forEach((asset) => expect(content).toContain(asset));
 
     expect(content).toContain('부산 서면 스타피부과에서,<br />정품 울쎄라피 프라임을 경험하세요');
@@ -51,6 +55,12 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('콜라겐이 재생되는 과정');
     expect(content).toContain('3단계 시술 프로세스');
     expect(content).toContain('같은 시술이라도 피부 상태에 따라 달라야 하기에, 피부 깊이와 상태를 확인해 개인별 맞춤 시술을 진행합니다.');
+    expect(content).toContain('ultherapy-prime-desktop__process-grid--composite');
+    expect(content).toContain('ultherapy-prime-desktop__process-grid--pc');
+    expect(content).toContain('ultherapy-prime-desktop__process-seo-fallback');
+    expect(content).toContain('STEP. 01');
+    expect(content).toContain('피부 속 조직층을<br />실시간으로<br />정확히 확인<sup>41, 42</sup>');
+    expect(content).toContain('alt="" aria-hidden="true" loading="lazy"');
     expect(content).toContain('통증 때문에 고민이라면?</span>');
     expect(content).toContain('울쎄라피 프라임과 함께하면 좋은 시술');
     expect(content).toContain('울쎄라피 프라임,<br />이런 분께 추천합니다');
@@ -176,6 +186,12 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('padding: 2.5rem 0 0;');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__process-note');
     expect(desktopRules).toContain('line-height: 1.7;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__process-grid--pc');
+    expect(desktopRules).toContain('clip: rect(0 0 0 0);');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__process-grid--composite {\n    display: none;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__process-card {');
+    expect(desktopRules).toContain('grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);');
+    expect(desktopRules).toContain('aspect-ratio: 1024 / 578;');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__pain-title-line');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__auth-heading--pc');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__recommend');

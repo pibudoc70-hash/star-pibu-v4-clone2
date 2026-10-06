@@ -22,7 +22,7 @@ import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 import { isUltherapyPrimeSlug } from "@shared/ultherapyPrinciple";
 import UltherapyPrincipleSection from "@/components/UltherapyPrincipleSection";
-import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero } from "@/components/treatments/UltherapyPrimeDesktopContent";
+import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero, UltherapyPrimeProcessSeoFallback } from "@/components/treatments/UltherapyPrimeDesktopContent";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
@@ -366,6 +366,7 @@ export default function Equipment3Detail() {
 
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
+        {isUltherapyPrime && <UltherapyPrimeProcessSeoFallback />}
         <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>

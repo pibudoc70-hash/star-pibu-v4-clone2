@@ -24,6 +24,9 @@ const ASSET = {
   see: "/api/storage/ultherapy-prime-see_c3d3df83.webp",
   plan: "/api/storage/ultherapy-prime-plan_b5a31bbc.webp",
   treat: "/api/storage/ultherapy-prime-treat_c4a67ca4.webp",
+  processSee: "/api/storage/ultherapy-prime-process-step-1_68a4c1b5.webp",
+  processPlan: "/api/storage/ultherapy-prime-process-step-2_e11de918.webp",
+  processTreat: "/api/storage/ultherapy-prime-process-step-3_6fc8187f.webp",
   qa: "/api/storage/ultherapy-prime-qa-thumbnail_5bd4e1e1.webp",
   thermage: "/api/storage/ultherapy-prime-thermage_75ab3431.png",
   oligiox: "/api/storage/ultherapy-prime-oligiox_6c01bdc5.webp",
@@ -50,11 +53,39 @@ const COLLAGEN_STAGES = [
   { image: ASSET.collagenThree, label: "촉진된 콜라겐으로 팽팽한 피부" },
 ] as const;
 
-const PROCESS_STEPS = [
-  { image: ASSET.see, alt: "SEE 피부 속 조직층을 실시간으로 정확히 확인" },
-  { image: ASSET.plan, alt: "PLAN 개개인의 피부 상태에 따른 맞춤 시술 계획 수립" },
-  { image: ASSET.treat, alt: "TREAT 섬세하고 정확하게 시술" },
-] as const;
+const PROCESS_STEPS: ReadonlyArray<{
+  compositeImage: string;
+  image: string;
+  imageAlt: string;
+  step: string;
+  title: ReactNode;
+  description: ReactNode;
+}> = [
+  {
+    compositeImage: ASSET.see,
+    image: ASSET.processSee,
+    imageAlt: "울쎄라피 프라임 트랜스듀서와 초음파 영상으로 확인하는 1.5mm·3.0mm·4.5mm 피부 조직층",
+    step: "STEP. 01",
+    title: <><strong>S</strong>EE</>,
+    description: <>피부 속 조직층을<br />실시간으로<br />정확히 확인<sup>41, 42</sup></>,
+  },
+  {
+    compositeImage: ASSET.plan,
+    image: ASSET.processPlan,
+    imageAlt: "얼굴에 리프팅 라인을 표시한 개인별 맞춤 시술 계획 이미지",
+    step: "STEP. 02",
+    title: <><strong>P</strong>LAN</>,
+    description: <>개개인의 피부<br />상태에 따라<br />맞춤 시술 계획 수립</>,
+  },
+  {
+    compositeImage: ASSET.treat,
+    image: ASSET.processTreat,
+    imageAlt: "울쎄라피 프라임 팁과 피부 단면에서 열 응고점이 형성되는 시술 이미지",
+    step: "STEP. 03",
+    title: <><strong>T</strong>REAT</>,
+    description: <>섬세하고<br />정확하게 시술</>,
+  },
+];
 
 const COMBINATIONS = [
   {
@@ -153,6 +184,25 @@ export function UltherapyPrimeDesktopHero() {
   );
 }
 
+/**
+ * The authored PC cards live inside the desktop landing shell. This parallel,
+ * visually-clipped semantic list keeps the same process copy available to
+ * mobile-first crawlers without changing the established phone presentation.
+ */
+export function UltherapyPrimeProcessSeoFallback() {
+  return (
+    <ol className="ultherapy-prime-desktop__process-seo-fallback" aria-label="울쎄라피 프라임 3단계 시술 프로세스">
+      {PROCESS_STEPS.map((step) => (
+        <li key={step.step}>
+          <span>{step.step}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPrimeDesktopContentProps) {
   const embedUrl = imageEmbedUrl(youtubeUrl);
   const fallbackVideoUrl = youtubeUrl || "https://www.youtube.com/@starpibu";
@@ -221,9 +271,21 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
 
       <section className="ultherapy-prime-desktop__process" aria-labelledby="ultherapy-process-heading">
         <SectionHeading eyebrow="SEE · PLAN · TREAT" title="3단계 시술 프로세스" />
-        <div className="ultherapy-prime-desktop__process-grid">
-          {PROCESS_STEPS.map((step) => <img key={step.image} src={step.image} alt={step.alt} loading="lazy" />)}
+        <div className="ultherapy-prime-desktop__process-grid ultherapy-prime-desktop__process-grid--composite">
+          {PROCESS_STEPS.map((step) => <img key={step.compositeImage} src={step.compositeImage} alt="" aria-hidden="true" loading="lazy" />)}
         </div>
+        <ol className="ultherapy-prime-desktop__process-grid ultherapy-prime-desktop__process-grid--pc" aria-label="울쎄라피 프라임 3단계 시술 프로세스">
+          {PROCESS_STEPS.map((step) => (
+            <li className="ultherapy-prime-desktop__process-card" key={step.step}>
+              <div className="ultherapy-prime-desktop__process-card-copy">
+                <span>{step.step}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+              <img src={step.image} alt={step.imageAlt} width={508} height={578} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ol>
         <p className="ultherapy-prime-desktop__process-note">같은 시술이라도 피부 상태에 따라 달라야 하기에, 피부 깊이와 상태를 확인해 개인별 맞춤 시술을 진행합니다.</p>
       </section>
 

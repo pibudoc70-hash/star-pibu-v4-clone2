@@ -341,26 +341,32 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
       </section>
 
       <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
-        <div className="ultherapy-prime-desktop__pain-copy">
-          <SectionHeading eyebrow="COMFORT CARE" title={<><span className="ultherapy-prime-desktop__pain-title-line">울쎄라피 프라임,</span><br /><span className="ultherapy-prime-desktop__pain-title-line">통증 때문에 고민이라면?</span></>} />
-          <ul className="ultherapy-prime-desktop__pain-options" aria-label="스타피부과 통증 케어 옵션">
-            <li>마취크림</li>
-            <li>국소마취주사</li>
-            <li>수면마취</li>
-          </ul>
-          <p>스타피부과는 통증케어 시스템(마취크림, 국소마취주사)을 통해 통증을 줄이고, 보다 통증에 민감하신 경우 선택적인 수면마취 시스템까지 제공하고 있어 높은 효율의 편안한 시술이 가능합니다.</p>
-          <p>특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.</p>
-          <UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} />
+        <div className="ultherapy-prime-desktop__pain-main">
+          <div className="ultherapy-prime-desktop__pain-copy">
+            <SectionHeading eyebrow="COMFORT CARE" title={<><span className="ultherapy-prime-desktop__pain-title-line">울쎄라피 프라임,</span><br /><span className="ultherapy-prime-desktop__pain-title-line">통증 때문에 고민이라면?</span></>} />
+            <ul className="ultherapy-prime-desktop__pain-options" aria-label="스타피부과 통증 케어 옵션">
+              <li>마취크림</li>
+              <li>국소마취주사</li>
+              <li>수면마취</li>
+            </ul>
+            <p>스타피부과는 통증케어 시스템(마취크림, 국소마취주사)을 통해 통증을 줄이고, 보다 통증에 민감하신 경우 선택적인 수면마취 시스템까지 제공하고 있어 높은 효율의 편안한 시술이 가능합니다.</p>
+            <p>특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.</p>
+          </div>
+          <div className="ultherapy-prime-desktop__video-shell">
+            {embedUrl ? (
+              <iframe src={embedUrl} title="피부과전문의가 알려주는 울쎄라피 프라임 Q&A" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+            ) : (
+              <a href={fallbackVideoUrl} target="_blank" rel="noopener noreferrer" className="ultherapy-prime-desktop__video-fallback">
+                <img src={ASSET.qa} alt="피부과전문의가 알려주는 울쎄라피 프라임 Q&A" loading="lazy" />
+                <span><Play fill="currentColor" aria-hidden="true" /> YouTube에서 영상 보기 <ExternalLink aria-hidden="true" /></span>
+              </a>
+            )}
+          </div>
         </div>
-        <div className="ultherapy-prime-desktop__video-shell">
-          {embedUrl ? (
-            <iframe src={embedUrl} title="피부과전문의가 알려주는 울쎄라피 프라임 Q&A" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-          ) : (
-            <a href={fallbackVideoUrl} target="_blank" rel="noopener noreferrer" className="ultherapy-prime-desktop__video-fallback">
-              <img src={ASSET.qa} alt="피부과전문의가 알려주는 울쎄라피 프라임 Q&A" loading="lazy" />
-              <span><Play fill="currentColor" aria-hidden="true" /> YouTube에서 영상 보기 <ExternalLink aria-hidden="true" /></span>
-            </a>
-          )}
+        <div className="ultherapy-prime-desktop__pain-shorts">
+          <div className="ultherapy-prime-desktop__pain-shorts-divider" aria-hidden="true" />
+          <h3>울쎄라피 프라임 영상으로 만나보세요</h3>
+          <UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} />
         </div>
       </section>
 

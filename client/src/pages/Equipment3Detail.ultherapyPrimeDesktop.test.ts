@@ -106,14 +106,17 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(authenticity).toBeGreaterThan(treatmentPrinciple);
   });
 
-  it("adds four click-to-load Shorts below the final COMFORT CARE paragraph without replacing the existing video", () => {
+  it("moves four click-to-load Shorts below the COMFORT CARE two-column area without replacing the existing video", () => {
     const finalPainParagraph = content.indexOf('특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.');
     const shortsMount = content.lastIndexOf('<UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} />');
+    const shortsFeature = content.indexOf('ultherapy-prime-desktop__pain-shorts');
     const existingVideo = content.indexOf('ultherapy-prime-desktop__video-shell');
 
     expect(finalPainParagraph).toBeGreaterThan(-1);
-    expect(shortsMount).toBeGreaterThan(finalPainParagraph);
-    expect(existingVideo).toBeGreaterThan(shortsMount);
+    expect(existingVideo).toBeGreaterThan(finalPainParagraph);
+    expect(shortsFeature).toBeGreaterThan(existingVideo);
+    expect(shortsMount).toBeGreaterThan(shortsFeature);
+    expect(content).toContain('울쎄라피 프라임 영상으로 만나보세요');
     expect(content).toContain('const [activeShortId, setActiveShortId] = useState<string | null>(null);');
     expect(content).toContain('aria-label="울쎄라피 관련 숏폼 영상"');
     expect(content).toContain('aria-label={`영상 재생: ${short.title}`}');

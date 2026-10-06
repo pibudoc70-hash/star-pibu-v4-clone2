@@ -5030,6 +5030,10 @@ body.font-lang-zh .hero-stat-label {
   display: none;
 }
 
+.ultherapy-prime-desktop__pain-shorts {
+  display: none;
+}
+
 /* Mobile-first crawlers retain the authored process copy without changing the
    existing phone layout. Its visual PC counterpart is enabled below 1024px. */
 .ultherapy-prime-desktop__process-grid--pc,
@@ -5485,6 +5489,8 @@ body.font-lang-zh .hero-stat-label {
     background: var(--home-section-bg-b);
   }
 
+  .ultherapy-prime-desktop__pain-main { display: contents; }
+
   .ultherapy-prime-desktop__pain-options {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5903,7 +5909,13 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain {
+    display: block;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-main {
+    display: grid;
     grid-template-columns: minmax(460px, 0.96fr) minmax(0, 1.04fr);
+    align-items: center;
     gap: clamp(2rem, 4vw, 4rem);
   }
 
@@ -5915,11 +5927,36 @@ body.font-lang-zh .hero-stat-label {
     font-size: clamp(2rem, 2.6vw, 2.7rem);
   }
 
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-shorts {
+    display: block;
+    width: 100%;
+    margin-top: 4rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-shorts-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--ultherapy-line);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-shorts h3 {
+    margin: 2rem 0 0;
+    color: var(--ultherapy-ink);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__shorts {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
     width: 100%;
+    margin-top: 2rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-shorts .ultherapy-prime-desktop__shorts {
+    gap: 1.25rem;
     margin-top: 2rem;
   }
 

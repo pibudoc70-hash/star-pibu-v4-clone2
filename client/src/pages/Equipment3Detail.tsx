@@ -22,6 +22,7 @@ import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 import { isUltherapyPrimeSlug } from "@shared/ultherapyPrinciple";
 import UltherapyPrincipleSection from "@/components/UltherapyPrincipleSection";
+import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero } from "@/components/treatments/UltherapyPrimeDesktopContent";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
@@ -228,6 +229,17 @@ export default function Equipment3Detail() {
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
   const isUltherapyPrime = lang === "ko" && isUltherapyPrimeSlug(item.slug);
   const explanatoryInfographic = lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
+  const ultherapySummary = isUltherapyPrime ? {
+    overview: localizedDetail || localizedDesc,
+    target: localizedEffect
+      ? `${localizedEffect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.`
+      : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.",
+    duration: localizedSessions || "개인 피부 상태와 시술 범위에 따라 의료진 상담 후 안내합니다.",
+    time: localizedTime,
+    recovery: localizedRecovery,
+    caution: localizedCaution,
+    sessions: localizedSessions,
+  } : null;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -332,8 +344,10 @@ export default function Equipment3Detail() {
 
       <Header />
 
+      {isUltherapyPrime && <UltherapyPrimeDesktopHero />}
+
       {/* 히어로 헤더 */}
-      <div className="equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12">
+      <div className={`equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12${isUltherapyPrime ? " equipment-detail__hero--ultherapy-mobile" : ""}`}>
         <div className="container mx-auto px-4">
           {localizedCategory && (
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">
@@ -359,9 +373,11 @@ export default function Equipment3Detail() {
         </div>
       </div>
 
+      {ultherapySummary && <UltherapyPrimeDesktopContent summary={ultherapySummary} youtubeUrl={item.youtubeUrl} />}
+
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
-        <div className="equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
+        <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>
             {lang !== "ko" && item.bgImageUrl ? (
@@ -497,7 +513,7 @@ export default function Equipment3Detail() {
 
         {/* 상세 설명 */}
         {localizedDetail && (
-          <section className="mb-12">
+          <section className={`mb-12${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -508,7 +524,7 @@ export default function Equipment3Detail() {
         )}
 
         {isUltherapyPrime ? (
-          <UltherapyPrincipleSection />
+          <div className="ultherapy-prime-desktop-mobile-only"><UltherapyPrincipleSection /></div>
         ) : explanatoryInfographic && (
           <section className="mb-12" aria-labelledby="equipment-infographic-heading">
             <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
@@ -529,7 +545,7 @@ export default function Equipment3Detail() {
 
         {/* 기대 효과 */}
         {localizedEffect && (
-          <section className="mb-12">
+          <section className={`mb-12${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -541,7 +557,7 @@ export default function Equipment3Detail() {
 
         {/* 주의사항 */}
         {localizedCaution && (
-          <section className="equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+          <section className={`equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__caution-heading text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
             <div className="equipment-detail__caution-copy prose max-w-none text-amber-900">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -598,7 +614,7 @@ export default function Equipment3Detail() {
         )}
 
         {/* YouTube 가이드 영상 */}
-        {item.youtubeUrl && (() => {
+        {item.youtubeUrl && !isUltherapyPrime && (() => {
           const sourceUrl = item.youtubeUrl ?? "";
           const videoId = sourceUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
           const getEmbedUrl = () => videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : sourceUrl;

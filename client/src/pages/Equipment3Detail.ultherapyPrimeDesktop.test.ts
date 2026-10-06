@@ -160,10 +160,12 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('margin-bottom: 1.5rem;');
     expect(desktopRules).toContain('.ultherapy-prime-desktop__authentic-equipment--pc-hidden');
     expect(desktopRules).toContain('.equipment-detail__info-shell');
-    expect(desktopRules).toContain('padding: 5rem 0;');
+    expect(desktopRules).toContain('padding: 3rem 0 0;');
     expect(desktopRules).toContain('.equipment-detail__positioning-faq');
     expect(page).toContain('equipment-detail__back-surface mt-8');
     expect(desktopRules).toContain('.equipment-detail__lower-surface');
-    expect(desktopRules).toContain('box-shadow: 0 0 0 100vmax var(--equipment-detail-page-bg);');
+    expect(desktopRules).toContain('width: 100vw;');
+    expect(desktopRules).toContain('padding: 4rem max(1.5rem, calc((100vw - 1120px) / 2 + 1rem));');
+    expect(desktopRules).toContain('padding: 2.5rem 0 0;');
   });
 });

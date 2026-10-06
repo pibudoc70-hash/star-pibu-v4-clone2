@@ -160,9 +160,14 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
   return (
     <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content">
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
-        <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<>울쎄라피 프라임은<br />어떤 시술인가요?</>} />
+        <div className="ultherapy-prime-desktop__what-heading--tablet">
+          <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<>울쎄라피 프라임은<br />어떤 시술인가요?</>} />
+        </div>
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">
+            <div className="ultherapy-prime-desktop__what-heading--pc">
+              <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<>울쎄라피 프라임은<br />어떤 시술인가요?</>} />
+            </div>
             <p>울쎄라피 프라임은 피부 표면의 손상 없이 피부 속 조직에 고강도 초음파 에너지를 전달하여 피부 속 콜라겐을 변성·수축시키고, 새로운 콜라겐을 생성시키는 리프팅 시술입니다.</p>
             <p>고강도 집속 초음파 에너지를 콜라겐 재생에 최적인 온도(60~70℃)로 피부 속에 조사하여, 피부 속 약 1mm 이하의 열 응고점(TCP)을 생성합니다.</p>
             <div className="ultherapy-prime-desktop__principle-depth-copy">
@@ -183,10 +188,10 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
           <p>초음파 리프팅 시술의 효과를 제대로 경험하기 위해서는 꼭 정품 울쎄라피 프라임으로 시술받아야 합니다. 정품 팁이 아닌 경우 피부층에 적정 에너지가 전달되지 않거나 피부와 밀착이 잘 되지 않아 리프팅 효과 저하는 물론 화상의 위험이 있을 수 있습니다.</p>
           <p>정품 팁은 60~70℃의 열을 정밀하게 전달하도록 설계된 특허받은 단독 기술입니다.</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>정품 인증 병원</span></div>
-        </div>
-        <div className="ultherapy-prime-desktop__authentic-media">
-          <figure className="ultherapy-prime-desktop__authentic-equipment">
-            <img src={ASSET.handpiece} alt="울쎄라피 프라임 DeepSEE 핸드피스" loading="lazy" />
+          </div>
+          <div className="ultherapy-prime-desktop__authentic-media">
+            <figure className="ultherapy-prime-desktop__authentic-equipment ultherapy-prime-desktop__authentic-equipment--pc-hidden">
+              <img src={ASSET.handpiece} alt="울쎄라피 프라임 DeepSEE 핸드피스" loading="lazy" />
           </figure>
           <figure className="ultherapy-prime-desktop__authentic-depth">
             <img src={ASSET.depthReference} alt="1.0mm, 1.5mm, 3.0mm, 4.5mm 깊이와 DS 4-4.5 핸드피스가 표시된 피부 단면 다이어그램" loading="lazy" />

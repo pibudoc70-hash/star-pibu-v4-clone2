@@ -576,15 +576,17 @@ export default function Equipment3Detail() {
 
         {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} />}
 
-        <aside className="equipment-detail__info-card mb-12 rounded-2xl border p-6" aria-labelledby="equipment-detail-quote-heading">
-          <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
-          <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
-            <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.hoursLabel}</dt><dd>{detailQuote.hours}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.providerLabel}</dt><dd>{detailQuote.provider}</dd></div>
-            <div><dt className="font-semibold text-slate-900">{detailQuote.painManagementLabel}</dt><dd>{detailQuote.painManagement}</dd></div>
-          </dl>
-        </aside>
+        <section className="equipment-detail__info-shell mb-12" aria-labelledby="equipment-detail-quote-heading">
+          <aside className="equipment-detail__info-card mb-12 rounded-2xl border p-6">
+            <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
+            <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
+              <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
+              <div><dt className="font-semibold text-slate-900">{detailQuote.hoursLabel}</dt><dd>{detailQuote.hours}</dd></div>
+              <div><dt className="font-semibold text-slate-900">{detailQuote.providerLabel}</dt><dd>{detailQuote.provider}</dd></div>
+              <div><dt className="font-semibold text-slate-900">{detailQuote.painManagementLabel}</dt><dd>{detailQuote.painManagement}</dd></div>
+            </dl>
+          </aside>
+        </section>
 
         {/* 추가 이미지 갤러리 */}
         {images.length > 0 && (

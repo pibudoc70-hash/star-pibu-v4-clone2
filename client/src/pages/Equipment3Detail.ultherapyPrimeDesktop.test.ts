@@ -20,7 +20,7 @@ describe("Ultherapy Prime desktop authored content", () => {
   it("keeps FAQ and clinic-information rendering after the replacement content", () => {
     const desktopInsert = page.indexOf('<UltherapyPrimeDesktopContent');
     const faq = page.indexOf('{managedFaqs.length > 0 && (');
-    const quote = page.indexOf('<aside className="equipment-detail__info-card');
+    const quote = page.indexOf('<section className="equipment-detail__info-shell');
 
     expect(desktopInsert).toBeGreaterThan(-1);
     expect(faq).toBeGreaterThan(desktopInsert);
@@ -77,6 +77,9 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('ultherapy-prime-desktop__trust-badge--authentic');
     expect(content).toContain('ultherapy-prime-desktop__principle-diagram--tablet');
     expect(content).toContain('ultherapy-prime-desktop__principle-diagram--pc');
+    expect(content).toContain('ultherapy-prime-desktop__what-heading--tablet');
+    expect(content).toContain('ultherapy-prime-desktop__what-heading--pc');
+    expect(content).toContain('ultherapy-prime-desktop__authentic-equipment--pc-hidden');
     expect(content).not.toContain('ultherapy-prime-desktop__hero-certificates');
     expect(content).not.toContain('ultherapy-prime-desktop__summary');
     expect(content).not.toContain('ultherapy-prime-deepsee-monitor_4757defd.png');
@@ -134,12 +137,27 @@ describe("Ultherapy Prime desktop authored content", () => {
 
     expect(page).toContain('equipment-detail__faq-shell');
     expect(page).toContain('equipment-detail__faq-inner');
+    expect(page).toContain('equipment-detail__info-shell');
     expect(desktopRules).toContain('@media (min-width: 1024px)');
     expect(desktopRules).toContain('transform: translate(-50%, -50%);');
-    expect(desktopRules).toContain('.ultherapy-prime-desktop__trust-badge--authentic');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__trust-badges');
     expect(desktopRules).toContain('align-items: center;');
     expect(desktopRules).toContain('white-space: nowrap;');
     expect(desktopRules).toContain('.equipment-detail__faq-shell');
     expect(desktopRules).toContain('box-shadow: 0 0 0 100vmax var(--home-section-bg-b);');
+  });
+
+  it("restores the three trust badges and keeps follow-up surfaces PC-only", () => {
+    const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
+    const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
+    const desktopRules = css.slice(desktopStart, desktopEnd);
+
+    expect(desktopRules).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(desktopRules).not.toContain('.ultherapy-prime-desktop__trust-badge--authentic {\n    display: none;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__what-heading--pc');
+    expect(desktopRules).toContain('margin-bottom: 1.5rem;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__authentic-equipment--pc-hidden');
+    expect(desktopRules).toContain('.equipment-detail__info-shell');
+    expect(desktopRules).toContain('box-shadow: 0 0 0 100vmax var(--home-section-bg-a);');
   });
 });

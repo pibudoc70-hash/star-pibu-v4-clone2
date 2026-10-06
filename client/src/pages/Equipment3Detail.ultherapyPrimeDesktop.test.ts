@@ -32,7 +32,7 @@ describe("Ultherapy Prime desktop authored content", () => {
       'ultherapy-prime-device_374d4239.png',
       'ultherapy-prime-authenticity_060bcbbe.png',
       'ultherapy-prime-specialist_15575405.png',
-      'ultherapy-prime-transducer-photo_69ea0165.webp',
+      'ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp',
       '1_530b8674.png',
       'ultherapy-prime-depths_5f0a9424.png',
       'ultherapy-prime-collagen-stage-1_14727d05.webp',
@@ -46,10 +46,10 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('왜 꼭 ‘정품 울쎄라피 프라임’이어야 할까요?');
     expect(content).toContain('콜라겐이 재생되는 과정');
     expect(content).toContain('3단계 시술 프로세스');
-    expect(content).toContain('울쎄라피 프라임, 통증 때문에 고민이라면?');
+    expect(content).toContain('울쎄라피 프라임,<br />통증 때문에 고민이라면?');
     expect(content).toContain('울쎄라피 프라임과 함께하면 좋은 시술');
-    expect(content).toContain('울쎄라피 프라임, 이런 분께 추천합니다');
-    expect(content).toContain('당신의 소중한 젊음, 스타피부과가 돌려드립니다');
+    expect(content).toContain('울쎄라피 프라임,<br />이런 분께 추천합니다');
+    expect(content).toContain('당신의 소중한 젊음,<br />스타피부과가 돌려드립니다');
   });
 
   it("uses the requested PC-only hierarchy, media pairings, and compact certification bar", () => {
@@ -59,6 +59,8 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('울쎄라피 프라임은 서로 다른 종류의 트랜스듀서로 피부층별 깊이');
     expect(content).toContain('ultherapy-prime-desktop__authentic-equipment');
     expect(content).toContain('ultherapy-prime-desktop__authentic-depth');
+    expect(content).toContain('ASSET.handpiece');
+    expect(content).not.toContain('ASSET.transducerPhoto');
     expect(content).toContain('내 피부 속의 노화된 콜라겐은 점차적으로 재생되고, 건강한 콜라겐이 더 생겨나면서');
     expect(content).not.toContain('재생되고,<br />건강한 콜라겐');
     expect(content).toContain('ultherapy-prime-desktop__pain-options');
@@ -66,6 +68,9 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('국소마취주사');
     expect(content).toContain('수면마취');
     expect(content).toContain('ultherapy-prime-desktop__star-certification');
+    expect(content).toContain('title={<>울쎄라피 프라임,<br />통증 때문에 고민이라면?</>}');
+    expect(content).toContain('title={<>울쎄라피 프라임,<br />이런 분께 추천합니다</>}');
+    expect(content).toContain('title={<>당신의 소중한 젊음,<br />스타피부과가 돌려드립니다</>}');
     expect(content).toContain('대한민국 의사의<br />단 2% 피부과전문의');
     expect(content).toContain('대학병원 교수출신 의료진,<br />20년 이상의 수많은 시술 경험');
     expect(content).not.toContain('ultherapy-prime-desktop__hero-certificates');
@@ -96,10 +101,25 @@ describe("Ultherapy Prime desktop authored content", () => {
     const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
     const desktopRules = css.slice(desktopStart, desktopEnd);
 
-    expect(desktopRules).toContain('linear-gradient(118deg, #FBF8F2');
+    expect(desktopRules).toContain('var(--home-section-bg-a)');
     expect(desktopRules).toContain('--ultherapy-deep: #3B2B21');
-    expect(desktopRules).toContain('padding-inline: 1.75rem');
+    expect(desktopRules).toContain('padding-inline: 1.5rem');
     expect(desktopRules).not.toContain('#111C2E');
     expect(desktopRules).not.toContain('#162033');
+  });
+
+  it("uses the established section alternation and desktop-only alignment refinements", () => {
+    const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
+    const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
+    const desktopRules = css.slice(desktopStart, desktopEnd);
+
+    expect(desktopRules).toContain('var(--home-section-bg-a)');
+    expect(desktopRules).toContain('var(--home-section-bg-b)');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__principle-grid');
+    expect(desktopRules).toContain('align-items: start;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__principle-diagram');
+    expect(desktopRules).toContain('background: transparent;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__star-certification { width: 100%;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__collagen-grid li { text-align: center;');
   });
 });

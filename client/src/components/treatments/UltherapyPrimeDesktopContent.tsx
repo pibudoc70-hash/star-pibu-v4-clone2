@@ -14,8 +14,7 @@ const ASSET = {
   fda: "/api/storage/ultherapy-prime-fda_34036496.png",
   authenticity: "/api/storage/ultherapy-prime-authenticity_060bcbbe.png",
   specialist: "/api/storage/ultherapy-prime-specialist_15575405.png",
-  transducerPhoto: "/api/storage/ultherapy-prime-transducer-photo_69ea0165.webp",
-  transducer: "/api/storage/ultherapy-prime-transducer_957d9c92.png",
+  handpiece: "/api/storage/ultherapy-prime-handpiece-dsc-605_dd7aa28b.webp",
   depthReference: "/api/storage/1_530b8674.png",
   depths: "/api/storage/ultherapy-prime-depths_5f0a9424.png",
   collagenOne: "/api/storage/ultherapy-prime-collagen-stage-1_14727d05.webp",
@@ -185,8 +184,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
         </div>
         <div className="ultherapy-prime-desktop__authentic-media">
           <figure className="ultherapy-prime-desktop__authentic-equipment">
-            <img src={ASSET.transducerPhoto} alt="울쎄라피 프라임 DeepSEE 핸드피스" loading="lazy" />
-            <img src={ASSET.transducer} alt="울쎄라피 프라임 정품 4.5mm 트랜스듀서 팁" loading="lazy" />
+            <img src={ASSET.handpiece} alt="울쎄라피 프라임 DeepSEE 핸드피스" loading="lazy" />
           </figure>
           <figure className="ultherapy-prime-desktop__authentic-depth">
             <img src={ASSET.depthReference} alt="1.0mm, 1.5mm, 3.0mm, 4.5mm 깊이와 DS 4-4.5 핸드피스가 표시된 피부 단면 다이어그램" loading="lazy" />
@@ -218,7 +216,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
 
       <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-copy">
-          <SectionHeading eyebrow="COMFORT CARE" title="울쎄라피 프라임, 통증 때문에 고민이라면?" />
+          <SectionHeading eyebrow="COMFORT CARE" title={<>울쎄라피 프라임,<br />통증 때문에 고민이라면?</>} />
           <ul className="ultherapy-prime-desktop__pain-options" aria-label="스타피부과 통증 케어 옵션">
             <li>마취크림</li>
             <li>국소마취주사</li>
@@ -258,7 +256,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
 
       <section className="ultherapy-prime-desktop__recommend" aria-labelledby="ultherapy-recommend-heading">
         <div className="ultherapy-prime-desktop__recommend-copy">
-          <SectionHeading eyebrow="RECOMMENDED FOR" title="울쎄라피 프라임, 이런 분께 추천합니다" />
+          <SectionHeading eyebrow="RECOMMENDED FOR" title={<>울쎄라피 프라임,<br />이런 분께 추천합니다</>} />
           <ul>
             {RECOMMENDATIONS.map((recommendation) => <li key={recommendation}><Check aria-hidden="true" />{recommendation}</li>)}
           </ul>
@@ -270,7 +268,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
       </section>
 
       <section className="ultherapy-prime-desktop__star" aria-labelledby="ultherapy-star-heading">
-        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title="당신의 소중한 젊음, 스타피부과가 돌려드립니다" />
+        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title={<>당신의 소중한 젊음,<br />스타피부과가 돌려드립니다</>} />
         <p className="ultherapy-prime-desktop__star-intro">스타피부과는 개인별 피부 타입과 얼굴형에 맞춰 시술 층의 깊이, 샷수, 부위 등 한 샷 한 샷 신중하게 시술하여 가장 아름다운 얼굴선을 이끌어 냅니다.</p>
         <div className="ultherapy-prime-desktop__strength-grid">
           {STAR_STRENGTHS.map(({ key, icon: Icon, text }) => <div key={key}><Icon aria-hidden="true" /><p>{text}</p></div>)}

@@ -184,7 +184,12 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
 
       <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
         <div className="ultherapy-prime-desktop__split-copy">
-          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<>왜 꼭 ‘정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span>’이어야 할까요?</>} />
+          <div className="ultherapy-prime-desktop__auth-heading--tablet">
+            <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<>왜 꼭 ‘정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span>’이어야 할까요?</>} />
+          </div>
+          <div className="ultherapy-prime-desktop__auth-heading--pc">
+            <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<><span className="ultherapy-prime-desktop__auth-title-line">정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span></span><br /><span className="ultherapy-prime-desktop__auth-title-line">중요한 이유</span></>} />
+          </div>
           <p>초음파 리프팅 시술의 효과를 제대로 경험하기 위해서는 꼭 정품 울쎄라피 프라임으로 시술받아야 합니다. 정품 팁이 아닌 경우 피부층에 적정 에너지가 전달되지 않거나 피부와 밀착이 잘 되지 않아 리프팅 효과 저하는 물론 화상의 위험이 있을 수 있습니다.</p>
           <p>정품 팁은 60~70℃의 열을 정밀하게 전달하도록 설계된 특허받은 단독 기술입니다.</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>정품 인증 병원</span></div>

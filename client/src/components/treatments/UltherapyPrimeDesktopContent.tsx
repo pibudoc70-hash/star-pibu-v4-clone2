@@ -89,34 +89,34 @@ const PROCESS_STEPS: ReadonlyArray<{
 
 const COMBINATIONS = [
   {
-    title: "울쎄라피 + 써마지 FLX",
+    title: <>울쎄라피 프라임<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span> + 써마지 FLX</>,
     badge: "BEST",
     image: ASSET.thermage,
     alt: "써마지 FLX 장비",
-    description: "초음파로 피부 속 콜라겐을, 고주파로 피부 겉 탄력섬유를 동시에 재생시키는 최고의 리프팅 레이저 조합",
+    description: <>초음파로 피부 속 콜라겐을,<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span>고주파로 피부 겉 탄력섬유를<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span>동시에 재생시키는 최고의<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span>리프팅 레이저 조합</>,
   },
   {
-    title: "울쎄라피 + 올리지오X",
+    title: <>울쎄라피 프라임<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span> + 올리지오X</>,
     badge: "인기",
     image: ASSET.oligiox,
     alt: "올리지오X 장비",
     description: "고주파 써마지 비용이 부담스럽다면 가성비 좋은 올리지오X로 울써마지 효과 그대로, 피부 탄력과 윤곽을 동시에 UP",
   },
   {
-    title: "울쎄라피 + 온다 + 브이로",
+    title: <>울쎄라피 프라임<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span> + 온다 + 브이로</>,
     image: ASSET.onda,
     alt: "온다 장비",
     description: "초음파, 고주파, 마이크로웨이브파의 시너지를 담은 이중턱·심부볼·볼처짐에 탁월한 복합 리프팅",
   },
   {
-    title: "울쎄라피 + 루메니스원 + 리쥬란",
+    title: <>울쎄라피 프라임<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span> + 루메니스원 + 리쥬란</>,
     image: ASSET.lumenis,
     secondaryImage: ASSET.rejuran,
     alt: "루메니스원과 리쥬란",
     description: "초음파 콜라겐 재생으로 피부 속 탄력을 올려주고 피부톤 개선과 물광 효과를 한 번에 느낄 수 있는 꿀조합",
   },
   {
-    title: "울쎄라피 + 스킨보톡스",
+    title: <>울쎄라피 프라임<span className="ultherapy-prime-desktop__combination-desktop-break"><br /></span> + 스킨보톡스</>,
     image: ASSET.skinBotox,
     alt: "스킨보톡스 시술 이미지",
     description: "피부 속 탄력과 진피층의 미세근섬유 주름을 동시에 개선하고 피부 광택까지",
@@ -291,8 +291,8 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
           <div className="ultherapy-prime-desktop__auth-heading--pc">
             <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<><span className="ultherapy-prime-desktop__auth-title-line">정품 <span className="ultherapy-prime-desktop__auth-title-brand">울쎄라피&nbsp;프라임</span></span><br /><span className="ultherapy-prime-desktop__auth-title-line">중요한 이유</span></>} />
           </div>
-          <p>초음파 리프팅 시술의 효과를 제대로 경험하기 위해서는 꼭 정품 울쎄라피 프라임으로 시술받아야 합니다. 정품 팁이 아닌 경우 피부층에 적정 에너지가 전달되지 않거나 피부와 밀착이 잘 되지 않아 리프팅 효과 저하는 물론 화상의 위험이 있을 수 있습니다.</p>
-          <p>정품 팁은 60~70℃의 열을 정밀하게 전달하도록 설계된 특허받은 단독 기술입니다.</p>
+          <p>초음파 리프팅 시술의 효과를 제대로 경험하기 위해서는<span className="ultherapy-prime-desktop__authentic-desktop-break"><br /></span>꼭 정품 울쎄라피 프라임으로 시술받아야 합니다. 정품 팁이 아닌 경우 피부층에 적정 에너지가 전달되지 않거나 피부와 밀착이 잘 되지 않아 리프팅 효과 저하는 물론 화상의 위험이 있을 수 있습니다.</p>
+          <p className="ultherapy-prime-desktop__authentic-emphasis">정품 팁은 60~70℃의 열을 정밀하게 전달하도록 설계된 특허받은 단독 기술입니다.</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>정품 인증 병원</span></div>
           </div>
           <div className="ultherapy-prime-desktop__authentic-media">
@@ -374,7 +374,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
         <SectionHeading eyebrow="BETTER TOGETHER" title="울쎄라피 프라임과 함께하면 좋은 시술" />
         <div className="ultherapy-prime-desktop__combination-grid">
           {COMBINATIONS.map((combination) => (
-            <article key={combination.title}>
+            <article key={combination.alt}>
               <div className="ultherapy-prime-desktop__combination-image">
                 <img src={combination.image} alt={combination.alt} loading="lazy" />
                 {"secondaryImage" in combination && combination.secondaryImage && <img src={combination.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}

@@ -5034,6 +5034,14 @@ body.font-lang-zh .hero-stat-label {
   display: none;
 }
 
+.ultherapy-prime-desktop__authentic-desktop-break {
+  display: none;
+}
+
+.ultherapy-prime-desktop__combination-desktop-break {
+  display: none;
+}
+
 /* Mobile-first crawlers retain the authored process copy without changing the
    existing phone layout. Its visual PC counterpart is enabled below 1024px. */
 .ultherapy-prime-desktop__process-grid--pc,
@@ -5656,6 +5664,10 @@ body.font-lang-zh .hero-stat-label {
     flex: 0 0 8.4rem;
   }
 
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__content > section {
+    padding-block: 4.5rem;
+  }
+
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__what-heading--tablet {
     display: none;
   }
@@ -5666,6 +5678,10 @@ body.font-lang-zh .hero-stat-label {
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__what-heading--pc .ultherapy-prime-desktop__heading {
     margin-bottom: 1.5rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__what {
+    padding-block: 4.5rem;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__principle-grid {
@@ -5750,9 +5766,23 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__split-copy > p {
-    max-width: 560px;
+    width: 100%;
+    max-width: 34rem;
     word-break: keep-all;
     text-wrap: pretty;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__authentic-emphasis {
+    color: var(--ultherapy-ink);
+    font-weight: 700;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-desktop-break {
+    display: inline;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-desktop-break {
+    display: inline;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__auth-seal {
@@ -5764,11 +5794,15 @@ body.font-lang-zh .hero-stat-label {
     width: 100%;
     max-width: 470px;
     align-items: center;
-    justify-content: center;
-    justify-self: start;
+    justify-content: flex-end;
+    justify-self: end;
+    box-sizing: border-box;
+    padding-right: 2.375rem;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__authentic-depth {
+    width: 340px;
+    flex: 0 0 340px;
     min-height: 0;
     padding: 0;
     overflow: visible;
@@ -5818,6 +5852,27 @@ body.font-lang-zh .hero-stat-label {
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__process-seo-fallback {
     display: none;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-grid article {
+    padding-inline: 1rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-grid h3,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-grid p {
+    text-align: center;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-grid h3 {
+    text-wrap: balance;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__combination-grid p {
+    text-wrap: pretty;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__strength-grid > div {
+    justify-content: center;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__process-card {
@@ -5891,7 +5946,7 @@ body.font-lang-zh .hero-stat-label {
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__recommend {
     grid-template-columns: minmax(0, 1fr) minmax(350px, 0.78fr);
     gap: clamp(2rem, 4vw, 3.5rem);
-    padding: 3.75rem max(1.5rem, calc((100vw - 1040px) / 2));
+    padding: 3rem max(1.5rem, calc((100vw - 1040px) / 2));
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure {
@@ -5942,7 +5997,7 @@ body.font-lang-zh .hero-stat-label {
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-shorts h3 {
     margin: 2rem 0 0;
     color: var(--ultherapy-ink);
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
     line-height: 1.5;
   }
@@ -6028,9 +6083,13 @@ body.font-lang-zh .hero-stat-label {
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure {
-    min-height: 476px;
+    min-height: 400px;
     justify-content: flex-start;
-    padding: 1.25rem 2rem 2.25rem;
+    padding: 0.75rem 2rem 1.5rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure img {
+    width: min(380px, 100%);
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__areas-figure figcaption {

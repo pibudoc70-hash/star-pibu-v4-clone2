@@ -5134,7 +5134,7 @@ body.font-lang-zh .hero-stat-label {
     margin: 1rem 0 0;
     color: var(--ultherapy-deep);
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(2.05rem, 3.2vw, 3.35rem);
+    font-size: clamp(1.8rem, 2.75vw, 2.95rem);
     font-weight: 600;
     letter-spacing: -0.05em;
     line-height: 1.35;
@@ -5219,26 +5219,6 @@ body.font-lang-zh .hero-stat-label {
     filter: drop-shadow(0 28px 24px rgba(73, 53, 34, 0.24));
   }
 
-  .ultherapy-prime-desktop__hero-certificates {
-    position: absolute;
-    z-index: 2;
-    top: 1.35rem;
-    left: 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .ultherapy-prime-desktop__hero-certificates img {
-    display: block;
-    width: auto;
-    height: 72px;
-    object-fit: contain;
-  }
-
-  .ultherapy-prime-desktop__hero-certificates img:first-child { max-width: 72px; }
-  .ultherapy-prime-desktop__hero-certificates img:last-child { max-width: 118px; }
-
   .ultherapy-prime-desktop__content {
     overflow: hidden;
     width: 100%;
@@ -5315,18 +5295,14 @@ body.font-lang-zh .hero-stat-label {
 
   .ultherapy-prime-desktop__auth-seal svg { width: 1.2rem; height: 1.2rem; }
 
-  .ultherapy-prime-desktop__image-pair {
+  .ultherapy-prime-desktop__authentic-media {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
     gap: 1.2rem;
   }
 
-  .ultherapy-prime-desktop__image-pair figure {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 335px;
+  .ultherapy-prime-desktop__authentic-media figure {
     margin: 0;
     overflow: hidden;
     border: 1px solid var(--ultherapy-line);
@@ -5334,11 +5310,54 @@ body.font-lang-zh .hero-stat-label {
     background: #F7F6F3;
   }
 
-  .ultherapy-prime-desktop__image-pair img {
+  .ultherapy-prime-desktop__authentic-equipment {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) 118px;
+    min-height: 375px;
+    padding: 1rem;
+    gap: 0.4rem;
+  }
+
+  .ultherapy-prime-desktop__authentic-equipment img:first-child {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ultherapy-prime-desktop__authentic-equipment img:last-child {
+    display: block;
+    width: min(82%, 240px);
+    height: 118px;
+    margin-inline: auto;
     object-fit: contain;
     mix-blend-mode: multiply;
+  }
+
+  .ultherapy-prime-desktop__authentic-depth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 375px;
+    padding: 1rem 1rem 0.9rem;
+  }
+
+  .ultherapy-prime-desktop__authentic-depth img {
+    display: block;
+    width: min(100%, 280px);
+    flex: 1 1 auto;
+    min-height: 0;
+    object-fit: contain;
+  }
+
+  .ultherapy-prime-desktop__authentic-depth figcaption {
+    margin-top: 0.6rem;
+    color: var(--ultherapy-muted);
+    font-size: 0.74rem;
+    line-height: 1.5;
+    text-align: center;
+    word-break: keep-all;
   }
 
   .ultherapy-prime-desktop__what {
@@ -5357,51 +5376,43 @@ body.font-lang-zh .hero-stat-label {
     gap: 1.1rem;
   }
 
-  .ultherapy-prime-desktop__tcp-figure {
+  .ultherapy-prime-desktop__principle-depth-copy {
+    margin-top: 1.1rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--ultherapy-line);
+  }
+
+  .ultherapy-prime-desktop__principle-depth-copy h3 {
+    margin: 0;
+    color: var(--ultherapy-deep);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  .ultherapy-prime-desktop__principle-depth-copy p {
+    margin-top: 0.75rem !important;
+  }
+
+  .ultherapy-prime-desktop__principle-diagram {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 455px;
+    min-height: 515px;
     margin: 0;
-    padding: 1.5rem 1.5rem 1.25rem;
+    padding: 1.25rem;
     border-radius: 1.35rem;
-    background: linear-gradient(145deg, #EFE7D8, #FDFBF6);
-  }
-
-  .ultherapy-prime-desktop__tcp-figure img {
-    width: min(355px, 76%);
-    max-height: 400px;
-    object-fit: contain;
-    filter: drop-shadow(0 20px 24px rgba(102, 72, 32, 0.14));
-  }
-
-  .ultherapy-prime-desktop__tcp-figure figcaption {
-    max-width: 320px;
-    margin-top: 1rem;
-    color: var(--ultherapy-muted);
-    font-size: 0.8rem;
-    line-height: 1.55;
-    text-align: center;
-    word-break: keep-all;
-  }
-
-  .ultherapy-prime-desktop__depth-panel {
-    display: grid;
-    grid-template-columns: minmax(0, 0.75fr) minmax(310px, 0.9fr);
-    align-items: center;
-    gap: clamp(2rem, 6vw, 6rem);
-    margin-top: 3.75rem;
-    padding: clamp(2rem, 4vw, 3.5rem);
-    border-radius: 1.45rem;
     background: var(--ultherapy-deep);
-    color: #FFFDF9;
   }
 
-  .ultherapy-prime-desktop__depth-panel svg { color: #E7C06A; }
-  .ultherapy-prime-desktop__depth-panel h3 { margin: 1rem 0 0; font-family: 'Noto Serif KR', serif; font-size: 1.65rem; font-weight: 600; }
-  .ultherapy-prime-desktop__depth-panel p { margin: 1rem 0 0; color: rgba(255,255,255,0.75); font-size: 0.98rem; line-height: 1.8; word-break: keep-all; }
-  .ultherapy-prime-desktop__depth-panel img { display: block; width: min(100%, 430px); max-height: 430px; margin-inline: auto; object-fit: contain; }
+  .ultherapy-prime-desktop__principle-diagram img {
+    display: block;
+    width: min(100%, 410px);
+    max-height: 470px;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.18));
+  }
 
   .ultherapy-prime-desktop__collagen { background: var(--ultherapy-paper); }
 
@@ -5496,15 +5507,16 @@ body.font-lang-zh .hero-stat-label {
   .ultherapy-prime-desktop__areas-figure img { display: block; width: min(440px, 76%); max-height: 390px; object-fit: contain; filter: drop-shadow(0 18px 18px rgba(82, 50, 18, 0.16)); }
   .ultherapy-prime-desktop__areas-figure figcaption { margin-top: 0.2rem; color: #8F6C32; font-size: 0.88rem; font-weight: 700; }
 
-  .ultherapy-prime-desktop__star { background: #E9E0D4; color: var(--ultherapy-ink); }
+  .ultherapy-prime-desktop__star { background: #E9E0D4; color: var(--ultherapy-ink); text-align: center; }
+  .ultherapy-prime-desktop__star .ultherapy-prime-desktop__heading { margin-inline: auto; text-align: center; }
   .ultherapy-prime-desktop__star .ultherapy-prime-desktop__heading > p { color: var(--ultherapy-gold); }
   .ultherapy-prime-desktop__star .ultherapy-prime-desktop__heading h2 { color: var(--ultherapy-deep); }
-  .ultherapy-prime-desktop__star-intro { max-width: 775px; margin: -1.45rem 0 2.5rem; color: var(--ultherapy-muted); font-size: 1rem; line-height: 1.85; word-break: keep-all; }
+  .ultherapy-prime-desktop__star-intro { max-width: none; margin: -1.45rem auto 2.5rem; color: var(--ultherapy-muted); font-size: clamp(0.72rem, 1vw, 1rem); line-height: 1.85; text-align: center; white-space: nowrap; word-break: keep-all; }
   .ultherapy-prime-desktop__strength-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; border: 1px solid rgba(120, 89, 54, 0.16); border-radius: 1rem; overflow: hidden; background: rgba(120, 89, 54, 0.16); }
-  .ultherapy-prime-desktop__strength-grid > div { min-height: 162px; padding: 1.5rem; background: rgba(255, 253, 249, 0.78); }
+  .ultherapy-prime-desktop__strength-grid > div { display: flex; flex-direction: column; align-items: center; min-height: 162px; padding: 1.5rem; background: rgba(255, 253, 249, 0.78); }
   .ultherapy-prime-desktop__strength-grid svg { width: 1.5rem; height: 1.5rem; color: var(--ultherapy-gold); }
-  .ultherapy-prime-desktop__strength-grid p { margin: 1rem 0 0; color: var(--ultherapy-ink); font-size: 0.91rem; font-weight: 600; line-height: 1.65; word-break: keep-all; }
-  .ultherapy-prime-desktop__star-certification { display: grid; grid-template-columns: 132px minmax(0, 1fr); align-items: center; gap: 1.5rem; width: min(900px, 100%); margin: 2.75rem auto 0; padding: 1rem 1.35rem; border: 1px solid rgba(120, 89, 54, 0.2); border-radius: 1rem; background: rgba(255, 253, 249, 0.68); }
+  .ultherapy-prime-desktop__strength-grid p { margin: 1rem 0 0; color: var(--ultherapy-ink); font-size: 0.91rem; font-weight: 600; line-height: 1.65; text-align: center; word-break: keep-all; }
+  .ultherapy-prime-desktop__star-certification { display: grid; grid-template-columns: 132px minmax(0, 1fr); align-items: center; gap: 1.5rem; width: min(900px, 100%); margin: 2.75rem auto 0; padding-block: 1rem; padding-inline: 1.75rem; border: 1px solid rgba(120, 89, 54, 0.2); border-radius: 1rem; background: rgba(255, 253, 249, 0.68); }
   .ultherapy-prime-desktop__star-certification > img { display: block; width: 132px; max-height: 112px; object-fit: contain; }
   .ultherapy-prime-desktop__star-certification p { margin: 0; color: var(--ultherapy-muted); font-size: 0.93rem; line-height: 1.78; word-break: keep-all; }
   .ultherapy-prime-desktop__star-certification strong { color: var(--ultherapy-deep); font-size: 1rem; font-weight: 700; }

@@ -34,13 +34,14 @@ describe("Ultherapy Prime desktop authored content", () => {
       'ultherapy-prime-specialist_15575405.png',
       'ultherapy-prime-transducer-photo_69ea0165.webp',
       '1_530b8674.png',
+      'ultherapy-prime-depths_5f0a9424.png',
       'ultherapy-prime-collagen-stage-1_14727d05.webp',
       'ultherapy-prime-see_c3d3df83.webp',
       'ultherapy-prime-qa-thumbnail_5bd4e1e1.webp',
       'ultherapy-prime-treatment-areas_ea4ea3ca.png',
     ].forEach((asset) => expect(content).toContain(asset));
 
-    expect(content).toContain('한 번의 시술로 최대 1년,');
+    expect(content).toContain('부산 서면 스타피부과에서,<br />정품 울쎄라피 프라임을 경험하세요');
     expect(content).not.toContain('한눈에 보는 울쎄라피 프라임');
     expect(content).toContain('왜 꼭 ‘정품 울쎄라피 프라임’이어야 할까요?');
     expect(content).toContain('콜라겐이 재생되는 과정');
@@ -51,16 +52,23 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(content).toContain('당신의 소중한 젊음, 스타피부과가 돌려드립니다');
   });
 
-  it("uses the requested PC-only hierarchy, fixed line breaks, and compact certification bar", () => {
+  it("uses the requested PC-only hierarchy, media pairings, and compact certification bar", () => {
     expect(content).toContain('ultherapy-prime-desktop__wordmark');
     expect(content).toContain('Ultherapy<sup>®</sup>');
     expect(content).toContain('울쎄라피 프라임은<br />어떤 시술인가요?');
-    expect(content).toContain('재생되고,<br />건강한 콜라겐');
+    expect(content).toContain('울쎄라피 프라임은 서로 다른 종류의 트랜스듀서로 피부층별 깊이');
+    expect(content).toContain('ultherapy-prime-desktop__authentic-equipment');
+    expect(content).toContain('ultherapy-prime-desktop__authentic-depth');
+    expect(content).toContain('내 피부 속의 노화된 콜라겐은 점차적으로 재생되고, 건강한 콜라겐이 더 생겨나면서');
+    expect(content).not.toContain('재생되고,<br />건강한 콜라겐');
     expect(content).toContain('ultherapy-prime-desktop__pain-options');
     expect(content).toContain('마취크림');
     expect(content).toContain('국소마취주사');
     expect(content).toContain('수면마취');
     expect(content).toContain('ultherapy-prime-desktop__star-certification');
+    expect(content).toContain('대한민국 의사의<br />단 2% 피부과전문의');
+    expect(content).toContain('대학병원 교수출신 의료진,<br />20년 이상의 수많은 시술 경험');
+    expect(content).not.toContain('ultherapy-prime-desktop__hero-certificates');
     expect(content).not.toContain('ultherapy-prime-desktop__summary');
     expect(content).not.toContain('ultherapy-prime-deepsee-monitor_4757defd.png');
 
@@ -90,6 +98,7 @@ describe("Ultherapy Prime desktop authored content", () => {
 
     expect(desktopRules).toContain('linear-gradient(118deg, #FBF8F2');
     expect(desktopRules).toContain('--ultherapy-deep: #3B2B21');
+    expect(desktopRules).toContain('padding-inline: 1.75rem');
     expect(desktopRules).not.toContain('#111C2E');
     expect(desktopRules).not.toContain('#162033');
   });

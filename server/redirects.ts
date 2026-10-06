@@ -35,6 +35,7 @@ const ADVERTISING_LANDING_DESTINATIONS: Record<string, string> = {
 const LEGACY_EVENT_301_DESTINATIONS: Record<string, string> = {
   "/event/ulthera/index.html": "https://starpibuclinic.cafe24.com/event/ulthera/index.html",
   "/event/thermage/index.html": "https://starpibuclinic.cafe24.com/event/thermage/index.html",
+  "/event/lifting.html": "https://star-pibu.com/equipment3/%EC%9A%B8%EC%8E%84%EB%9D%BC%ED%94%BC%ED%94%84%EB%9D%BC%EC%9E%84?tab=%EB%A6%AC%ED%94%84%ED%8C%85%C2%B7%ED%83%84%EB%A0%A5",
 };
 
 const LEGACY_HOME_DESTINATION = "https://star-pibu.com/";

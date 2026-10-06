@@ -106,6 +106,32 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(authenticity).toBeGreaterThan(treatmentPrinciple);
   });
 
+  it("adds four click-to-load Shorts below the final COMFORT CARE paragraph without replacing the existing video", () => {
+    const finalPainParagraph = content.indexOf('특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.');
+    const shortsMount = content.lastIndexOf('<UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} />');
+    const existingVideo = content.indexOf('ultherapy-prime-desktop__video-shell');
+
+    expect(finalPainParagraph).toBeGreaterThan(-1);
+    expect(shortsMount).toBeGreaterThan(finalPainParagraph);
+    expect(existingVideo).toBeGreaterThan(shortsMount);
+    expect(content).toContain('const [activeShortId, setActiveShortId] = useState<string | null>(null);');
+    expect(content).toContain('aria-label="울쎄라피 관련 숏폼 영상"');
+    expect(content).toContain('aria-label={`영상 재생: ${short.title}`}');
+    expect(content).toContain('allow="autoplay; encrypted-media; picture-in-picture"');
+    expect(content).toContain('allowFullScreen');
+    expect(content).toContain('loading="lazy"');
+    expect(content).toContain('https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1');
+    expect(content).toContain('image.onerror = null;');
+    expect(content).toContain('shortThumbnailUrl(short.id, "hqdefault")');
+
+    [
+      "uOaql94ArBQ",
+      "SCYXRjhB9rU",
+      "ZBeG2Ntn-kg",
+      "I4oaLkc9eos",
+    ].forEach((videoId) => expect(content).toContain(videoId));
+  });
+
   it("keeps authored layout rules desktop-scoped and leaves the generic mobile rules intact", () => {
     const desktopStart = css.indexOf('/* ── Ultherapy Prime authored desktop landing content');
     const desktopEnd = css.indexOf('/* Desktop equipment list:', desktopStart);
@@ -164,6 +190,11 @@ describe("Ultherapy Prime desktop authored content", () => {
     expect(desktopRules).toContain('.equipment-detail__faq-shell');
     expect(desktopRules).toContain('equipment-detail__back-surface');
     expect(desktopRules).toContain('background: transparent;');
+    expect(css).toContain('.ultherapy-prime-desktop__shorts {\n  display: none;');
+    expect(desktopRules).toContain('.ultherapy-prime-desktop__shorts');
+    expect(desktopRules).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(desktopRules).toContain('aspect-ratio: 9 / 16;');
+    expect(desktopRules).toContain('margin-top: 2rem;');
   });
 
   it("restores the three trust badges and keeps follow-up surfaces PC-only", () => {

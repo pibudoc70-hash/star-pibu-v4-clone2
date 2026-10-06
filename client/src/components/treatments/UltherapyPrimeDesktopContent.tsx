@@ -7,7 +7,7 @@ import {
   Stethoscope,
   Target,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 const ASSET = {
   device: "/api/storage/ultherapy-prime-device_374d4239.png",
@@ -131,6 +131,13 @@ const RECOMMENDATIONS = [
   "회복시간이 따로 필요 없는 리프팅을 원하시는 분",
 ] as const;
 
+const ULTHERAPY_SHORTS = [
+  { id: "uOaql94ArBQ", title: "울쎄라 리프팅 어떤 원리일까? #부산피부과 #부산울쎄라 #부산울쎄라피 #부산울쎄라피프라임" },
+  { id: "SCYXRjhB9rU", title: "울쎄라, 써마지 함께하면 리프팅 효과 좋은가요? #부산울쎄라 #부산써마지 #부산울써마지 #부산피부과 #부산피부과전문의" },
+  { id: "ZBeG2Ntn-kg", title: "울쎄라 통증 때문에 샷 수 줄여야되나요? #부산울쎄라 #부산리프팅 #울쎄라600샷 #피부과전문의" },
+  { id: "I4oaLkc9eos", title: "울쎄라 300샷 vs 600샷, 도대체 몇 샷을 해야 할까요? #부산울쎄라 #부산피부과 #피부과전문의" },
+] as const;
+
 const STAR_STRENGTHS = [
   { key: "dermatologist", icon: BadgeCheck, text: <>대한민국 의사의<br />단 2% 피부과전문의</> },
   { key: "experience", icon: Stethoscope, text: <>대학병원 교수출신 의료진,<br />20년 이상의 수많은 시술 경험</> },
@@ -152,6 +159,49 @@ function imageEmbedUrl(sourceUrl: string | null | undefined): string | null {
   if (!sourceUrl) return null;
   const videoId = sourceUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
   return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : null;
+}
+
+function shortThumbnailUrl(videoId: string, resolution: "maxresdefault" | "hqdefault" = "maxresdefault") {
+  return `https://i.ytimg.com/vi/${videoId}/${resolution}.jpg`;
+}
+
+function shortEmbedUrl(videoId: string) {
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`;
+}
+
+function UltherapyPrimeShorts({ activeShortId, onSelect }: { activeShortId: string | null; onSelect: (videoId: string) => void }) {
+  return (
+    <div className="ultherapy-prime-desktop__shorts" role="group" aria-label="울쎄라피 관련 숏폼 영상">
+      {ULTHERAPY_SHORTS.map((short) => (
+        <div className="ultherapy-prime-desktop__short" key={short.id}>
+          {activeShortId === short.id ? (
+            <iframe
+              src={shortEmbedUrl(short.id)}
+              title={short.title}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+            />
+          ) : (
+            <button type="button" aria-label={`영상 재생: ${short.title}`} onClick={() => onSelect(short.id)}>
+              <img
+                src={shortThumbnailUrl(short.id)}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                onError={(event) => {
+                  const image = event.currentTarget;
+                  image.onerror = null;
+                  image.src = shortThumbnailUrl(short.id, "hqdefault");
+                }}
+              />
+              <span className="ultherapy-prime-desktop__short-play"><Play fill="currentColor" aria-hidden="true" /></span>
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function UltherapyPrimeDesktopHero() {
@@ -206,6 +256,7 @@ export function UltherapyPrimeProcessSeoFallback() {
 export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPrimeDesktopContentProps) {
   const embedUrl = imageEmbedUrl(youtubeUrl);
   const fallbackVideoUrl = youtubeUrl || "https://www.youtube.com/@starpibu";
+  const [activeShortId, setActiveShortId] = useState<string | null>(null);
 
   return (
     <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content">
@@ -299,6 +350,7 @@ export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPr
           </ul>
           <p>스타피부과는 통증케어 시스템(마취크림, 국소마취주사)을 통해 통증을 줄이고, 보다 통증에 민감하신 경우 선택적인 수면마취 시스템까지 제공하고 있어 높은 효율의 편안한 시술이 가능합니다.</p>
           <p>특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.</p>
+          <UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} />
         </div>
         <div className="ultherapy-prime-desktop__video-shell">
           {embedUrl ? (

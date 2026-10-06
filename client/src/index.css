@@ -5024,6 +5024,12 @@ body.font-lang-zh .hero-stat-label {
   display: none;
 }
 
+/* The Short-form media is intentionally desktop-only; the established tablet
+   and phone presentation must not gain a new visual block. */
+.ultherapy-prime-desktop__shorts {
+  display: none;
+}
+
 /* Mobile-first crawlers retain the authored process copy without changing the
    existing phone layout. Its visual PC counterpart is enabled below 1024px. */
 .ultherapy-prime-desktop__process-grid--pc,
@@ -5907,6 +5913,70 @@ body.font-lang-zh .hero-stat-label {
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__pain-copy .ultherapy-prime-desktop__heading h2 {
     font-size: clamp(2rem, 2.6vw, 2.7rem);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__shorts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: var(--ultherapy-deep);
+    box-shadow: 0 14px 28px rgba(75, 53, 35, 0.14);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short button,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short iframe,
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short button {
+    position: relative;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 253, 249, 0.78);
+    color: var(--ultherapy-deep);
+    box-shadow: 0 4px 12px rgba(59, 43, 33, 0.18);
+    transform: translate(-50%, -50%);
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short-play svg {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.1rem;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__short button:focus-visible {
+    outline: 3px solid var(--ultherapy-gold);
+    outline-offset: -3px;
   }
 
   .equipment-detail-page:has(.ultherapy-prime-desktop) .ultherapy-prime-desktop__section-closing {

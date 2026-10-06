@@ -1,24 +1,24 @@
 import {
   BadgeCheck,
   Check,
-  CircleCheckBig,
   Crown,
   ExternalLink,
   Play,
   ScanLine,
-  ShieldCheck,
-  Sparkles,
   Stethoscope,
   Target,
 } from "lucide-react";
+import type { ReactNode } from "react";
 
 const ASSET = {
   device: "/api/storage/ultherapy-prime-device_374d4239.png",
   fda: "/api/storage/ultherapy-prime-fda_34036496.png",
   authenticity: "/api/storage/ultherapy-prime-authenticity_060bcbbe.png",
+  specialist: "/api/storage/ultherapy-prime-specialist_15575405.png",
   transducerPhoto: "/api/storage/ultherapy-prime-transducer-photo_69ea0165.webp",
   transducer: "/api/storage/ultherapy-prime-transducer_957d9c92.png",
   tcp: "/api/storage/ultherapy-prime-tcp_83004e22.png",
+  depthReference: "/api/storage/1_530b8674.png",
   depths: "/api/storage/ultherapy-prime-depths_5f0a9424.png",
   collagenOne: "/api/storage/ultherapy-prime-collagen-stage-1_14727d05.webp",
   collagenTwo: "/api/storage/ultherapy-prime-collagen-stage-2_f334472d.webp",
@@ -34,29 +34,16 @@ const ASSET = {
   rejuran: "/api/storage/ultherapy-prime-rejuran_9f2cbadd.png",
   skinBotox: "/api/storage/ultherapy-prime-skin-botox_70192da7.png",
   areas: "/api/storage/ultherapy-prime-treatment-areas_ea4ea3ca.png",
-  monitor: "/api/storage/ultherapy-prime-deepsee-monitor_4757defd.png",
 } as const;
 
-type Summary = {
-  overview: string;
-  target: string;
-  duration: string;
-  time: string;
-  recovery: string;
-  caution: string;
-  sessions: string;
-};
-
 type UltherapyPrimeDesktopContentProps = {
-  summary: Summary;
   youtubeUrl?: string | null;
 };
 
 const TRUST_BADGES = [
-  "정품 인증 병원",
-  "FDA 승인",
-  "피부과전문의 시술",
-  "정품 울쎄라 사용",
+  { title: "정품 인증 병원", subtitle: "정품 울쎄라피 사용", image: ASSET.authenticity, alt: "울쎄라피 프라임 정품 병원 인증" },
+  { title: "FDA 승인", subtitle: "특허받은 단독기술", image: ASSET.fda, alt: "FDA Cleared" },
+  { title: "피부과전문의 시술", subtitle: "믿고 안전하게!", image: ASSET.specialist, alt: "피부과전문의" },
 ] as const;
 
 const COLLAGEN_STAGES = [
@@ -122,7 +109,7 @@ const STAR_STRENGTHS = [
   { icon: Crown, text: "울쎄라피 프라임 외 프리미엄 리프팅 장비 다수 보유" },
 ] as const;
 
-function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {
+function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: ReactNode; description?: string }) {
   return (
     <div className="ultherapy-prime-desktop__heading">
       <p>{eyebrow}</p>
@@ -151,43 +138,53 @@ export function UltherapyPrimeDesktopHero() {
           <h1 id="ultherapy-prime-title">한 번의 시술로 최대 1년,<br />안전하고 확실하게 끌어올리는 리프팅</h1>
           <p className="ultherapy-prime-desktop__hero-description">부산 서면 스타피부과에서, 정품 울쎄라피 프라임을 정확하게 경험하세요</p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label="울쎄라피 프라임 신뢰 기준">
-            {TRUST_BADGES.map((badge, index) => (
-              <li key={badge}>
-                {index === 0 ? <BadgeCheck aria-hidden="true" /> : index === 1 ? <ShieldCheck aria-hidden="true" /> : <CircleCheckBig aria-hidden="true" />}
-                <span>{badge}</span>
+            {TRUST_BADGES.map((badge) => (
+              <li key={badge.title}>
+                <span className="ultherapy-prime-desktop__trust-icon"><img src={badge.image} alt={badge.alt} /></span>
+                <strong>{badge.title}</strong>
+                <span>{badge.subtitle}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className="ultherapy-prime-desktop__hero-visual" aria-label="울쎄라피 프라임 장비와 정품 인증">
-          <img className="ultherapy-prime-desktop__hero-device" src={ASSET.device} alt="울쎄라피 프라임 장비" />
           <div className="ultherapy-prime-desktop__hero-certificates">
             <img src={ASSET.fda} alt="FDA Cleared" />
             <img src={ASSET.authenticity} alt="울쎄라피 프라임 정품 병원 인증" />
           </div>
+          <img className="ultherapy-prime-desktop__hero-device" src={ASSET.device} alt="울쎄라피 프라임 장비" />
         </div>
       </div>
     </section>
   );
 }
 
-export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: UltherapyPrimeDesktopContentProps) {
+export default function UltherapyPrimeDesktopContent({ youtubeUrl }: UltherapyPrimeDesktopContentProps) {
   const embedUrl = imageEmbedUrl(youtubeUrl);
   const fallbackVideoUrl = youtubeUrl || "https://www.youtube.com/@starpibu";
 
   return (
     <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content">
-      <section className="ultherapy-prime-desktop__summary" aria-labelledby="ultherapy-summary-heading">
-        <SectionHeading eyebrow="AT A GLANCE" title="한눈에 보는 울쎄라피 프라임" />
-        <dl className="ultherapy-prime-desktop__summary-grid">
-          <div className="ultherapy-prime-desktop__summary-overview"><dt>시술 설명</dt><dd>{summary.overview}</dd></div>
-          <div><dt>적합한 대상</dt><dd>{summary.target}</dd></div>
-          <div><dt>효과 지속 기간</dt><dd>{summary.duration}</dd></div>
-          <div><dt>시술 소요 시간</dt><dd>{summary.time}</dd></div>
-          <div><dt>회복 기간</dt><dd>{summary.recovery}</dd></div>
-          <div><dt>부작용·주의사항</dt><dd>{summary.caution}</dd></div>
-          <div><dt>권장 횟수·간격</dt><dd>{summary.sessions}</dd></div>
-        </dl>
+      <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
+        <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<>울쎄라피 프라임은<br />어떤 시술인가요?</>} />
+        <div className="ultherapy-prime-desktop__principle-grid">
+          <div className="ultherapy-prime-desktop__principle-copy">
+            <p>울쎄라피 프라임은 피부 표면의 손상 없이 피부 속 조직에 고강도 초음파 에너지를 전달하여 피부 속 콜라겐을 변성·수축시키고, 새로운 콜라겐을 생성시키는 리프팅 시술입니다.</p>
+            <p>고강도 집속 초음파 에너지를 콜라겐 재생에 최적인 온도(60~70℃)로 피부 속에 조사하여, 피부 속 약 1mm 이하의 열 응고점(TCP)을 생성합니다.</p>
+          </div>
+          <figure className="ultherapy-prime-desktop__tcp-figure">
+            <img src={ASSET.depthReference} alt="1.0mm부터 4.5mm 피부층에 초음파 에너지를 전달하는 DS 4-4.5 핸드피스" loading="lazy" />
+            <figcaption>정품 팁에서 초음파 에너지를 사용해 60~70℃의 열을 정밀하게 전달</figcaption>
+          </figure>
+        </div>
+        <div className="ultherapy-prime-desktop__depth-panel">
+          <div>
+            <ScanLine aria-hidden="true" />
+            <h3>피부층별 깊이를 정밀하게</h3>
+            <p>울쎄라피 프라임은 서로 다른 종류의 트랜스듀서로 피부층별 깊이(1.5mm·3.0mm·4.5mm)에 초음파 에너지를 균일하게 전달합니다.</p>
+          </div>
+          <img src={ASSET.depths} alt="표피, 진피, 지방, 근막, 근육 층별 울쎄라피 프라임 깊이 다이어그램" loading="lazy" />
+        </div>
       </section>
 
       <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
@@ -203,25 +200,6 @@ export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: Ul
         </div>
       </section>
 
-      <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
-        <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title="울쎄라피 프라임은 어떤 시술인가요?" />
-        <div className="ultherapy-prime-desktop__principle-grid">
-          <div className="ultherapy-prime-desktop__principle-copy">
-            <p>울쎄라피 프라임은 피부 표면의 손상 없이 피부 속 조직에 고강도 초음파 에너지를 전달하여 피부 속 콜라겐을 변성·수축시키고, 새로운 콜라겐을 생성시키는 리프팅 시술입니다.</p>
-            <p>고강도 집속 초음파 에너지를 콜라겐 재생에 최적인 온도(60~70℃)로 피부 속에 조사하여, 피부 속 약 1mm 이하의 열 응고점(TCP)을 생성합니다.</p>
-          </div>
-          <figure className="ultherapy-prime-desktop__tcp-figure"><img src={ASSET.tcp} alt="피부 단면 속 울쎄라피 열 응고점 생성 원리" loading="lazy" /></figure>
-        </div>
-        <div className="ultherapy-prime-desktop__depth-panel">
-          <div>
-            <ScanLine aria-hidden="true" />
-            <h3>피부층별 깊이를 정밀하게</h3>
-            <p>울쎄라피 프라임은 서로 다른 종류의 트랜스듀서로 피부층별 깊이(1.5mm·3.0mm·4.5mm)에 초음파 에너지를 균일하게 전달합니다.</p>
-          </div>
-          <img src={ASSET.depths} alt="표피, 진피, 지방, 근막, 근육 층별 울쎄라피 프라임 깊이 다이어그램" loading="lazy" />
-        </div>
-      </section>
-
       <section className="ultherapy-prime-desktop__collagen" aria-labelledby="ultherapy-collagen-heading">
         <SectionHeading eyebrow="COLLAGEN REMODELING" title="콜라겐이 재생되는 과정" />
         <ol className="ultherapy-prime-desktop__collagen-grid">
@@ -233,7 +211,7 @@ export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: Ul
             </li>
           ))}
         </ol>
-        <p className="ultherapy-prime-desktop__section-closing">내 피부 속의 노화된 콜라겐은 점차적으로 재생되고, 건강한 콜라겐이 더 생겨나면서 리프팅 효과가 지속되고 유지될 수 있습니다.</p>
+        <p className="ultherapy-prime-desktop__section-closing">내 피부 속의 노화된 콜라겐은 점차적으로 재생되고,<br />건강한 콜라겐이 더 생겨나면서 리프팅 효과가 지속되고 유지될 수 있습니다.</p>
       </section>
 
       <section className="ultherapy-prime-desktop__process" aria-labelledby="ultherapy-process-heading">
@@ -246,6 +224,11 @@ export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: Ul
       <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-copy">
           <SectionHeading eyebrow="COMFORT CARE" title="울쎄라피 프라임, 통증 때문에 고민이라면?" />
+          <ul className="ultherapy-prime-desktop__pain-options" aria-label="스타피부과 통증 케어 옵션">
+            <li>마취크림</li>
+            <li>국소마취주사</li>
+            <li>수면마취</li>
+          </ul>
           <p>스타피부과는 통증케어 시스템(마취크림, 국소마취주사)을 통해 통증을 줄이고, 보다 통증에 민감하신 경우 선택적인 수면마취 시스템까지 제공하고 있어 높은 효율의 편안한 시술이 가능합니다.</p>
           <p>특히 수면마취는 시술 통증을 줄이고, 환자의 긴장감과 불안함을 해소하여 편안한 상태에서 시술받을 수 있다는 장점이 있습니다.</p>
         </div>
@@ -297,14 +280,9 @@ export default function UltherapyPrimeDesktopContent({ summary, youtubeUrl }: Ul
         <div className="ultherapy-prime-desktop__strength-grid">
           {STAR_STRENGTHS.map(({ icon: Icon, text }) => <div key={text}><Icon aria-hidden="true" /><p>{text}</p></div>)}
         </div>
-        <div className="ultherapy-prime-desktop__star-certification">
-          <div>
-            <Sparkles aria-hidden="true" />
-            <h3>울쎄라피 프라임 정품 인증 병원</h3>
-            <p>스타피부과는 멀츠 본사에서 인증한 울쎄라피 프라임 공식 정품 인증 병원으로, 최신 소프트웨어인 Amplify II로 업그레이드된 정품 장비와 정품 팁을 사용하고 있습니다.</p>
-          </div>
-          <img src={ASSET.monitor} alt="울쎄라피 프라임 DeepSEE 실시간 초음파 영상 모니터링 화면" loading="lazy" />
+        <div className="ultherapy-prime-desktop__star-certification" aria-label="울쎄라피 프라임 정품 인증 병원 안내">
           <img src={ASSET.authenticity} alt="울쎄라피 프라임 정품 병원 인증" loading="lazy" />
+          <p><strong>울쎄라피 프라임 정품 인증 병원</strong> — 스타피부과는 멀츠 본사에서 인증한 울쎄라피 프라임 공식 정품 인증 병원으로, 최신 소프트웨어인 Amplify II로 업그레이드된 정품 장비와 정품 팁을 사용하고 있습니다.</p>
         </div>
       </section>
     </div>

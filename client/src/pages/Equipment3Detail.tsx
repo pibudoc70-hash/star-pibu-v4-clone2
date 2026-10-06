@@ -229,17 +229,6 @@ export default function Equipment3Detail() {
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
   const isUltherapyPrime = lang === "ko" && isUltherapyPrimeSlug(item.slug);
   const explanatoryInfographic = lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
-  const ultherapySummary = isUltherapyPrime ? {
-    overview: localizedDetail || localizedDesc,
-    target: localizedEffect
-      ? `${localizedEffect} 개선을 원하는 분은 의료진 상담을 통해 적합성을 확인할 수 있습니다.`
-      : "개인 피부 상태와 고민에 따라 의료진 상담을 통해 적합성을 확인할 수 있습니다.",
-    duration: localizedSessions || "개인 피부 상태와 시술 범위에 따라 의료진 상담 후 안내합니다.",
-    time: localizedTime,
-    recovery: localizedRecovery,
-    caution: localizedCaution,
-    sessions: localizedSessions,
-  } : null;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -373,7 +362,7 @@ export default function Equipment3Detail() {
         </div>
       </div>
 
-      {ultherapySummary && <UltherapyPrimeDesktopContent summary={ultherapySummary} youtubeUrl={item.youtubeUrl} />}
+      {isUltherapyPrime && <UltherapyPrimeDesktopContent youtubeUrl={item.youtubeUrl} />}
 
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">

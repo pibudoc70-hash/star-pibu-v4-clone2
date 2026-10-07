@@ -591,7 +591,7 @@ export default function Equipment3Detail() {
           </section>
 
         {/* 추가 이미지 갤러리 */}
-        {images.length > 0 && (
+        {images.length > 0 && !(isThermageFlx && lang === "ko") && (
           <section className="mb-12">
             <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.gallery}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

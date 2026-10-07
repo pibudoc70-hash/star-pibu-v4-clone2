@@ -7,6 +7,7 @@ const page = read("client/src/pages/Equipment3Detail.tsx");
 const content = read("client/src/components/treatments/UltherapyPrimeDesktopContent.tsx");
 const copy = read("client/src/components/treatments/ultherapyPrimeContent.ts");
 const css = read("client/src/index.css");
+const liftingPositioning = read("client/src/components/LiftingPositioning.tsx");
 
 describe("Ultherapy Prime localized authored content", () => {
   it("mounts the authored experience for the Ultherapy Prime slug in every language", () => {
@@ -22,7 +23,7 @@ describe("Ultherapy Prime localized authored content", () => {
   it("keeps FAQ and clinic-information rendering after the authored content", () => {
     const authoredInsert = page.indexOf('<UltherapyPrimeDesktopContent');
     const faq = page.indexOf('{managedFaqs.length > 0 && (');
-    const quote = page.indexOf('<section className="equipment-detail__info-shell');
+    const quote = page.indexOf('equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
 
     expect(authoredInsert).toBeGreaterThan(-1);
     expect(faq).toBeGreaterThan(authoredInsert);
@@ -186,6 +187,51 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--pc { display: block; }');
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic-equipment--pc-hidden,');
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__auth-seal { display: none; }');
+  });
+
+  it("keeps foreign-language phones on the same approved image sequence as Korean", () => {
+    const authoredStart = css.indexOf('/* ── Ultherapy Prime authored landing content');
+    const authoredEnd = css.indexOf('/* Desktop equipment list:', authoredStart);
+    const authoredRules = css.slice(authoredStart, authoredEnd);
+
+    expect(content).toContain('alt={copy.mobileControlUnitAlt}');
+    [
+      'mobileControlUnitAlt: "Ultherapy Prime control unit"',
+      'mobileControlUnitAlt: "Ultherapy Prime コントロールユニット"',
+      'mobileControlUnitAlt: "Ultherapy Prime 控制主机"',
+      'mobileControlUnitAlt: "Ultherapy Prime 控制主機"',
+    ].forEach((translation) => expect(copy).toContain(translation));
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-mobile-control-unit { display: block; width: min(100%, 295px);');
+    expect(content).toContain('function ForeignMobileHeadingLineBreak');
+    expect(content).toContain('type ForeignMobileHeading = "what" | "auth" | "pain" | "combination" | "recommend";');
+    expect(content).toContain('className="ultherapy-prime-desktop__foreign-mobile-break"');
+    expect(content).toContain('className="ultherapy-prime-desktop__foreign-mobile-heading-desktop"');
+    expect(content).toContain('className="ultherapy-prime-desktop__foreign-mobile-heading-mobile"');
+    expect(content).toContain('auth: "正規品のUltherapy Primeが重要"');
+    expect(content).toContain('combination: "适合与 Ultherapy Prime"');
+    expect(content).toContain('recommend: "Ultherapy Prime"');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__foreign-mobile-break {\n  display: none;\n}');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__foreign-mobile-heading-mobile {\n  display: none;\n}');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-break,\n  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-break,\n  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-break { display: initial; }');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop,\n  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop,\n  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop { display: none; }');
+    expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile,\n  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile,\n  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile { display: inline; }');
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-diagram--mobile-inline { display: flex !important; justify-content: center; margin: 1.1rem 0 0.6rem; }');
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic-equipment--pc-hidden,');
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic-media { grid-template-columns: minmax(0, 1fr); }');
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-image { grid-column: 1; grid-row: 1 / -1; gap: 0.2rem; min-height: 0; padding: 0.25rem; overflow: hidden; }');
+    expect(authoredRules).toContain('body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-image img { flex: 1 1 0; width: auto; min-width: 0; }');
+    expect(authoredRules).toContain('.equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {\n    display: flex;\n    flex-direction: column;\n    gap: 2rem;');
+    expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {\n    padding: 2rem 0 0 !important;');
+    expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {\n    padding: 0 !important;');
+    expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__positioning-faq,');
+    expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {\n    padding-top: 0 !important;');
+    expect(page).toContain('equipment-detail__faq-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
+    expect(page).toContain('<LiftingFaqSection lang={lang} compact={isUltherapyPrime} />');
+    expect(page).toContain('equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
+    expect(page).toContain('equipment-detail__back-surface ${isUltherapyPrime ? "mt-0" : "mt-8"}');
+    expect(liftingPositioning).toContain('compact = false');
+    expect(liftingPositioning).toContain('equipment-detail__positioning-faq ${compact ? "mb-0" : "mb-12"}');
+    expect(authoredRules).toContain('@media (max-width: 767px)');
   });
 
   it("keeps the warm brand palette and accessibility-safe focus treatment", () => {

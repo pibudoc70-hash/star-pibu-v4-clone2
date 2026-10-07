@@ -3,6 +3,7 @@ import type { Lang } from "@/lib/i18n";
 export type UltherapyPrimeCopy = {
   trustTitles: readonly [string, string, string];
   trustSubtitles: readonly [string, string, string];
+  mobileControlUnitAlt: string;
   heroTitle: string;
   heroDescription: string;
   whatTitle: string;
@@ -44,6 +45,7 @@ export const ULTHERAPY_PRIME_COPY: Record<Lang, UltherapyPrimeCopy> = {
   ko: {
     trustTitles: ["정품 인증 병원", "FDA 승인", "피부과전문의 시술"],
     trustSubtitles: ["정품 울쎄라피 사용", "특허받은 단독기술", "믿고 안전하게!"],
+    mobileControlUnitAlt: "울쎄라피 프라임 컨트롤 유닛",
     heroTitle: "한 번의 시술로 최대 1년, 안전하고 확실하게 끌어올리는 리프팅",
     heroDescription: "부산 서면 스타피부과에서, 정품 울쎄라피 프라임을 경험하세요",
     whatTitle: "울쎄라피 프라임은 어떤 시술인가요?",
@@ -98,6 +100,7 @@ export const ULTHERAPY_PRIME_COPY: Record<Lang, UltherapyPrimeCopy> = {
   en: {
     trustTitles: ["Authentic Product-Certified Clinic", "FDA-Cleared", "Treatment by a Board-Certified Dermatologist"],
     trustSubtitles: ["Use of authentic Ultherapy Prime equipment", "Patented proprietary technology", "With confidence and safety!"],
+    mobileControlUnitAlt: "Ultherapy Prime control unit",
     heroTitle: "Safe, reliable lifting that can last up to one year with a single treatment",
     heroDescription: "Experience authentic Ultherapy Prime at Star Dermatology in Seomyeon, Busan.",
     whatTitle: "What is Ultherapy Prime?",
@@ -152,6 +155,7 @@ export const ULTHERAPY_PRIME_COPY: Record<Lang, UltherapyPrimeCopy> = {
   ja: {
     trustTitles: ["正規品認証クリニック", "FDA承認", "皮膚科専門医による施術"],
     trustSubtitles: ["正規品のUltherapy Primeを使用", "特許取得の独自技術", "安心・安全に配慮"],
+    mobileControlUnitAlt: "Ultherapy Prime コントロールユニット",
     heroTitle: "1回の施術で最大1年。安全性に配慮し、しっかりと引き上げるリフティング",
     heroDescription: "釜山・西面のスター皮膚科で、正規品のUltherapy Primeをご体験ください",
     whatTitle: "Ultherapy Primeとは\nどのような施術ですか？",
@@ -206,6 +210,7 @@ export const ULTHERAPY_PRIME_COPY: Record<Lang, UltherapyPrimeCopy> = {
   zh: {
     trustTitles: ["正品认证医院", "FDA获批", "由皮肤科专科医师操作"],
     trustSubtitles: ["使用正品 Ultherapy Prime", "获得专利的专有技术", "安心、规范地治疗！"],
+    mobileControlUnitAlt: "Ultherapy Prime 控制主机",
     heroTitle: "一次治疗，提升效果最长可维持1年，安心且可靠的紧致提升",
     heroDescription: "在釜山西面 Star皮肤科，体验正品 Ultherapy Prime",
     whatTitle: "Ultherapy Prime 是什么治疗？",
@@ -260,6 +265,7 @@ export const ULTHERAPY_PRIME_COPY: Record<Lang, UltherapyPrimeCopy> = {
   "zh-TW": {
     trustTitles: ["原廠正貨認證診所", "FDA 核准", "皮膚科專科醫師施作"],
     trustSubtitles: ["使用原廠 Ultherapy Prime", "專利獨家技術", "安心、安全！"],
+    mobileControlUnitAlt: "Ultherapy Prime 控制主機",
     heroTitle: "單次療程，效果最長可維持約 1 年的安全拉提",
     heroDescription: "在釜山西面 Star皮膚科，體驗原廠 Ultherapy Prime",
     whatTitle: "Ultherapy Prime 是什麼療程？",

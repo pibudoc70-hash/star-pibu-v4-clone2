@@ -23,12 +23,12 @@ export function LiftingPositioningSummary() {
   );
 }
 
-export function LiftingFaqSection({ lang }: { lang?: string }) {
+export function LiftingFaqSection({ lang, compact = false }: { lang?: string; compact?: boolean }) {
   const context = useLang();
   const localizedLang = toPositioningLang(lang ?? context.lang);
   const title = LIFTING_POSITIONING_TITLES[localizedLang].faq;
   return (
-    <section className="equipment-detail__positioning-faq mb-12 rounded-2xl border border-[#e8dcc8] bg-[#fffcf7] p-6 md:p-8" aria-labelledby="lifting-faq-title">
+    <section className={`equipment-detail__positioning-faq ${compact ? "mb-0" : "mb-12"} rounded-2xl border border-[#e8dcc8] bg-[#fffcf7] p-6 md:p-8`} aria-labelledby="lifting-faq-title">
       <h2 id="lifting-faq-title" className="text-xl font-bold text-[#3a2d1e] mb-5">{title}</h2>
       <dl className="space-y-5">
         {LIFTING_FAQS[localizedLang].map((item) => (

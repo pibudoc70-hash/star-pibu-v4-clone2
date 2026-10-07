@@ -5080,6 +5080,14 @@ body.font-lang-zh .hero-stat-label {
   display: none;
 }
 
+.ultherapy-prime-desktop__foreign-mobile-break {
+  display: none;
+}
+
+.ultherapy-prime-desktop__foreign-mobile-heading-mobile {
+  display: none;
+}
+
 /* Mobile-first crawlers retain the authored process copy without changing the
    existing phone layout. Its visual PC counterpart is enabled below 1024px. */
 .ultherapy-prime-desktop__process-grid--pc,
@@ -5162,6 +5170,47 @@ body.font-lang-zh .hero-stat-label {
   body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li { align-items: center; justify-content: center; gap: 0.3rem; font-size: clamp(0.64rem, 3.35vw, 0.78rem); line-height: 1.4; letter-spacing: -0.045em; text-align: center; white-space: nowrap; }
   body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li svg { width: 0.72rem; height: 0.72rem; margin-top: 0; }
   body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__pain-shorts h3 { text-align: center; }
+
+  /* Foreign-language phones use the same approved image sequence as Korean:
+     control unit → trust badges, the supplied procedure-depth diagram, then
+     the single authenticity-depth visual. Translation length remains fluid. */
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero .ultherapy-prime-desktop__eyebrow { display: none; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-inner { display: flex; flex-direction: column; padding-top: calc(3.8rem + env(safe-area-inset-top)); }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-copy { display: contents; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__wordmark,
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero h1,
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-description { order: 1; text-align: center; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__wordmark { align-self: center; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero h1 { font-size: clamp(0.96rem, 4.5vw, 1.08rem); line-height: 1.55; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-description { max-width: 23rem; margin-inline: auto; font-size: clamp(1.08rem, 5vw, 1.28rem); line-height: 1.35; overflow-wrap: anywhere; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-visual { order: 2; min-height: 0; margin-top: 1.4rem; padding: 0.7rem 0 1.05rem; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-visual::before { display: none; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-device { display: none; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__hero-mobile-control-unit { display: block; width: min(100%, 295px); height: auto; object-fit: contain; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__trust-badges { order: 3; margin-top: 0.35rem; padding-bottom: 0.7rem; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__heading { text-align: center; }
+  .ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-break,
+  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-break,
+  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-break { display: initial; }
+  .ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop,
+  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop,
+  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-heading-desktop { display: none; }
+  .ultherapy-prime-desktop__content[data-lang="ja"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile,
+  .ultherapy-prime-desktop__content[data-lang="zh"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile,
+  .ultherapy-prime-desktop__content[data-lang="zh-TW"] .ultherapy-prime-desktop__foreign-mobile-heading-mobile { display: inline; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-grid > .ultherapy-prime-desktop__principle-diagram { display: none; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-diagram--mobile-inline { display: flex !important; justify-content: center; margin: 1.1rem 0 0.6rem; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-diagram--mobile-inline img { display: block; width: min(100%, 335px); height: auto; object-fit: contain; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic-equipment--pc-hidden,
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic .ultherapy-prime-desktop__auth-seal { display: none; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic-media { grid-template-columns: minmax(0, 1fr); }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__authentic-emphasis { color: var(--ultherapy-ink); font-weight: 700; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid article { grid-template-columns: 124px minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr; column-gap: 0.85rem; min-height: 154px; padding: 0.75rem; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-image { grid-column: 1; grid-row: 1 / -1; gap: 0.2rem; min-height: 0; padding: 0.25rem; overflow: hidden; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-image img { flex: 1 1 0; width: auto; min-width: 0; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-image img + img { width: auto; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid h3 { grid-column: 2; grid-row: 2; min-width: 0; }
+  body:is(.font-lang-en, .font-lang-ja, .font-lang-zh) .ultherapy-prime-desktop__content:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid p { grid-column: 2; grid-row: 3; min-width: 0; margin: 0.5rem 0 0; }
   .ultherapy-prime-desktop__hero-visual { position: relative; display: flex; min-height: 250px; align-items: flex-end; justify-content: center; }
   .ultherapy-prime-desktop__hero-visual::before { position: absolute; width: min(78vw, 315px); aspect-ratio: 1; border: 1px solid rgba(233, 198, 107, 0.32); border-radius: 50%; content: ""; box-shadow: 0 0 0 16px rgba(255, 255, 255, 0.03), 0 0 56px rgba(232, 193, 93, 0.14); }
   .ultherapy-prime-desktop__hero-device { position: relative; z-index: 1; display: block; width: auto; height: min(290px, 72vw); object-fit: contain; filter: drop-shadow(0 18px 18px rgba(73, 53, 34, 0.22)); }
@@ -6548,6 +6597,39 @@ body.font-lang-zh .hero-stat-label {
 
   body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
     padding-top: 0;
+  }
+
+  /* All authored Ultherapy phone pages share the approved compact
+     FAQ → clinic → return rhythm without relying on the body language class. */
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main {
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {
+    padding: 2rem 0 0 !important;
+  }
+
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {
+    padding: 0 !important;
+  }
+
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell,
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__positioning-faq,
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell,
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface,
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell > .equipment-detail__info-card {
+    margin: 0 !important;
+  }
+
+  #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    padding-top: 0 !important;
   }
 }
 

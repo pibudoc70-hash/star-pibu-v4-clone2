@@ -164,6 +164,40 @@ function KoreanMobileOnlyLineBreak({ lang, text, firstLine }: { lang: Lang; text
   return <><span>{firstLine}</span>{" "}<br className="ultherapy-prime-desktop__mobile-korean-break" /><span>{rest}</span></>;
 }
 
+type ForeignMobileHeading = "what" | "auth" | "pain" | "combination" | "recommend";
+
+const FOREIGN_MOBILE_HEADING_FIRST_LINES: Partial<Record<Lang, Record<ForeignMobileHeading, string>>> = {
+  ja: {
+    what: "Ultherapy Primeとは",
+    auth: "正規品のUltherapy Primeが重要",
+    pain: "Ultherapy Primeの痛みが気に",
+    combination: "Ultherapy Primeと組み合わせた",
+    recommend: "Ultherapy Primeはこのような方",
+  },
+  zh: {
+    what: "Ultherapy Prime",
+    auth: "为何正品 Ultherapy Prime",
+    pain: "担心 Ultherapy Prime",
+    combination: "适合与 Ultherapy Prime",
+    recommend: "Ultherapy Prime",
+  },
+  "zh-TW": {
+    what: "Ultherapy Prime",
+    auth: "為何原廠 Ultherapy Prime",
+    pain: "擔心 Ultherapy Prime 的",
+    combination: "適合搭配 Ultherapy Prime 的",
+    recommend: "Ultherapy Prime",
+  },
+};
+
+function ForeignMobileHeadingLineBreak({ lang, text, heading }: { lang: Lang; text: string; heading: ForeignMobileHeading }) {
+  const firstLine = FOREIGN_MOBILE_HEADING_FIRST_LINES[lang]?.[heading];
+  const normalizedText = text.replace(/\n/g, "");
+  if (!firstLine || !normalizedText.startsWith(firstLine)) return <>{text}</>;
+  const rest = normalizedText.slice(firstLine.length).trimStart();
+  return <><span className="ultherapy-prime-desktop__foreign-mobile-heading-desktop">{text}</span><span className="ultherapy-prime-desktop__foreign-mobile-heading-mobile"><span>{firstLine}</span><br className="ultherapy-prime-desktop__foreign-mobile-break" /><span>{rest}</span></span></>;
+}
+
 export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "lang">) {
   const copy = ULTHERAPY_PRIME_COPY[lang];
 
@@ -190,7 +224,7 @@ export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "l
         </div>
         <div className="ultherapy-prime-desktop__hero-visual" aria-label="Ultherapy Prime">
           <img className="ultherapy-prime-desktop__hero-device" src={ASSET.device} alt="Ultherapy Prime" />
-          <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt="울쎄라피 프라임 컨트롤 유닛" />
+          <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt={copy.mobileControlUnitAlt} />
         </div>
       </div>
     </section>
@@ -208,7 +242,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">
-            <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={<KoreanLineBreakTitle lang={lang} text={copy.whatTitle} firstLine="울쎄라피 프라임은" />} />
+            <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.whatTitle} firstLine="울쎄라피 프라임은" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.whatTitle} heading="what" />} />
             <p>{copy.whatParagraphs[0]}</p>
             <p>{copy.whatParagraphs[1]}</p>
             <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">
@@ -228,7 +262,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
 
       <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
         <div className="ultherapy-prime-desktop__split-copy">
-          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<KoreanLineBreakTitle lang={lang} text={copy.authTitle} firstLine="정품 울쎄라피 프라임" />} />
+          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.authTitle} firstLine="정품 울쎄라피 프라임" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.authTitle} heading="auth" />} />
           <p>{copy.authParagraphs[0]}</p>
           <p className="ultherapy-prime-desktop__authentic-emphasis">{copy.authParagraphs[1]}</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>{copy.certificationTitle}</span></div>
@@ -278,7 +312,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-main">
           <div className="ultherapy-prime-desktop__pain-copy">
-            <SectionHeading eyebrow="COMFORT CARE" title={<KoreanLineBreakTitle lang={lang} text={copy.painTitle} firstLine="울쎄라피 프라임," />} />
+            <SectionHeading eyebrow="COMFORT CARE" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.painTitle} firstLine="울쎄라피 프라임," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.painTitle} heading="pain" />} />
             <ul className="ultherapy-prime-desktop__pain-options" aria-label={copy.painTitle}>
               {copy.painOptions.map((option) => <li key={option}>{option}</li>)}
             </ul>
@@ -304,7 +338,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       </section>
 
       <section className="ultherapy-prime-desktop__combination" aria-labelledby="ultherapy-combination-heading">
-        <SectionHeading eyebrow="BETTER TOGETHER" title={<KoreanMobileOnlyLineBreak lang={lang} text={copy.combinationTitle} firstLine="울쎄라피 프라임과" />} />
+        <SectionHeading eyebrow="BETTER TOGETHER" title={lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={copy.combinationTitle} firstLine="울쎄라피 프라임과" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.combinationTitle} heading="combination" />} />
         <div className="ultherapy-prime-desktop__combination-grid">
           {copy.combinationTitles.map((title, index) => {
             const media = COMBINATION_MEDIA[index];
@@ -325,7 +359,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
 
       <section className="ultherapy-prime-desktop__recommend" aria-labelledby="ultherapy-recommend-heading">
         <div className="ultherapy-prime-desktop__recommend-copy">
-          <SectionHeading eyebrow="RECOMMENDED FOR" title={<KoreanLineBreakTitle lang={lang} text={copy.recommendTitle} firstLine="울쎄라피 프라임," />} />
+          <SectionHeading eyebrow="RECOMMENDED FOR" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.recommendTitle} firstLine="울쎄라피 프라임," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.recommendTitle} heading="recommend" />} />
           <ul>
             {copy.recommendations.map((recommendation) => <li key={recommendation}><Check aria-hidden="true" />{recommendation}</li>)}
           </ul>

@@ -555,7 +555,7 @@ export default function Equipment3Detail() {
 
         <div className="equipment-detail__lower-surface">
           {managedFaqs.length > 0 && (
-            <section className="equipment-detail__faq-shell mb-12" aria-labelledby="equipment-faq-heading">
+            <section className={`equipment-detail__faq-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-faq-heading">
               <div className="equipment-detail__faq-inner">
                 <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
                 <div className="space-y-3">
@@ -572,10 +572,10 @@ export default function Equipment3Detail() {
             </section>
           )}
 
-          {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} />}
+          {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} compact={isUltherapyPrime} />}
 
-          <section className="equipment-detail__info-shell mb-12" aria-labelledby="equipment-detail-quote-heading">
-            <aside className="equipment-detail__info-card mb-12 rounded-2xl border p-6">
+          <section className={`equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-detail-quote-heading">
+            <aside className={`equipment-detail__info-card ${isUltherapyPrime ? "mb-0" : "mb-12"} rounded-2xl border p-6`}>
               <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
               <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
                 <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
@@ -642,7 +642,7 @@ export default function Equipment3Detail() {
         })()}
 
           {/* 목록으로 돌아가기 */}
-          <div className="equipment-detail__back-surface mt-8">
+          <div className={`equipment-detail__back-surface ${isUltherapyPrime ? "mt-0" : "mt-8"}`}>
             <button
               type="button"
               onClick={() => setLocation(getBackPath(item.category))}

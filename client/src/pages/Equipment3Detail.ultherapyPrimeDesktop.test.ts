@@ -75,7 +75,7 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(copy).toContain('"대학병원 교수출신,\\n20년 이상의 시술 경험"');
   });
 
-  it("uses the shared authored template for Thermage FLX without rendering video content", () => {
+  it("uses the shared authored template for Thermage FLX with Korean desktop video content only", () => {
     const thermageCopy = read("client/src/components/treatments/thermageFlxContent.ts");
     expect(thermageCopy).toContain('export const THERMAGE_FLX_COPY');
     expect(thermageCopy).toContain('export const THERMAGE_FLX_INFO_ROWS');
@@ -84,8 +84,12 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(content).toContain('THERMAGE_COMBINATION_MEDIA');
     expect(content).toContain('THERMAGE_PROCESS_MEDIA');
     expect(content).toContain('isThermage ? null : imageEmbedUrl(youtubeUrl)');
-    expect(content).toContain('{!isThermage && <div className="ultherapy-prime-desktop__video-shell">');
-    expect(content).toContain('{!isThermage && <div className="ultherapy-prime-desktop__pain-shorts">');
+    expect(content).toContain('const showThermageKoreanVideo = isThermage && lang === "ko";');
+    expect(content).toContain('https://www.youtube.com/embed/aAk9py_Hfww?start=3&rel=0');
+    expect(content).toContain('const THERMAGE_SHORTS = [');
+    ["dCmbvAcYVB8", "4JuXH9cvpIk", "l_rl1VB2vaQ", "8kLAcP5C9O0"].forEach((videoId) => expect(content).toContain(videoId));
+    expect(content).toContain('ultherapy-prime-desktop__thermage-korean-video-shell');
+    expect(css).toContain('.ultherapy-prime-desktop__thermage-korean-video-shell {\n  display: none;');
     expect(content).toContain('thermage-flx-total-tip_a73293b6.webp');
     expect(content).toContain('thermage-flx-certificate_de288662.webp');
   });

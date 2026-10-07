@@ -13,9 +13,11 @@ describe("Ultherapy Prime localized authored content", () => {
   it("mounts the authored experience for the Ultherapy Prime slug in every language", () => {
     expect(page).toContain('import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero }');
     expect(page).toContain('const isUltherapyPrime = isUltherapyPrimeSlug(item.slug);');
+    expect(page).toContain('const isThermageFlx = item.slug === "써마지FLX";');
+    expect(page).toContain('const isAuthoredLiftingDetail = isUltherapyPrime || isThermageFlx;');
     expect(page).not.toContain('const isUltherapyPrime = lang === "ko"');
-    expect(page).toContain('{isUltherapyPrime && <UltherapyPrimeDesktopHero lang={lang} />}');
-    expect(page).toContain('{isUltherapyPrime && <UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />}');
+    expect(page).toContain('{isAuthoredLiftingDetail && <UltherapyPrimeDesktopHero lang={lang} treatment={isThermageFlx ? "thermage" : "ultherapy"} />}');
+    expect(page).toContain('{isAuthoredLiftingDetail && <UltherapyPrimeDesktopContent lang={lang} youtubeUrl={isThermageFlx ? null : item.youtubeUrl} treatment={isThermageFlx ? "thermage" : "ultherapy"} />}');
     expect(page).not.toContain('UltherapyPrimeProcessSeoFallback');
     expect(page).not.toContain('<UltherapyPrincipleSection />');
   });
@@ -23,7 +25,7 @@ describe("Ultherapy Prime localized authored content", () => {
   it("keeps FAQ and clinic-information rendering after the authored content", () => {
     const authoredInsert = page.indexOf('<UltherapyPrimeDesktopContent');
     const faq = page.indexOf('{managedFaqs.length > 0 && (');
-    const quote = page.indexOf('equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
+    const quote = page.indexOf('equipment-detail__info-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}');
 
     expect(authoredInsert).toBeGreaterThan(-1);
     expect(faq).toBeGreaterThan(authoredInsert);
@@ -50,7 +52,8 @@ describe("Ultherapy Prime localized authored content", () => {
   });
 
   it("renders every authored section from the selected locale data instead of hard-coding Korean text", () => {
-    expect(content).toContain('const copy = ULTHERAPY_PRIME_COPY[lang];');
+    expect(content).toContain('const thermageCopy = isThermage ? THERMAGE_FLX_COPY[lang] : null;');
+    expect(content).toContain('const copy = thermageCopy ?? ULTHERAPY_PRIME_COPY[lang];');
     [
       'copy.heroTitle',
       'copy.whatParagraphs[0]',
@@ -70,6 +73,21 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(content).toContain('function KoreanMobileOnlyLineBreak');
     expect(copy).toContain('"대한민국 의사의\\n단 2% 피부과전문의"');
     expect(copy).toContain('"대학병원 교수출신,\\n20년 이상의 시술 경험"');
+  });
+
+  it("uses the shared authored template for Thermage FLX without rendering video content", () => {
+    const thermageCopy = read("client/src/components/treatments/thermageFlxContent.ts");
+    expect(thermageCopy).toContain('export const THERMAGE_FLX_COPY');
+    expect(thermageCopy).toContain('export const THERMAGE_FLX_INFO_ROWS');
+    expect(thermageCopy).toContain('export const THERMAGE_FLX_SEO');
+    expect(content).toContain('data-treatment={treatment}');
+    expect(content).toContain('THERMAGE_COMBINATION_MEDIA');
+    expect(content).toContain('THERMAGE_PROCESS_MEDIA');
+    expect(content).toContain('isThermage ? null : imageEmbedUrl(youtubeUrl)');
+    expect(content).toContain('{!isThermage && <div className="ultherapy-prime-desktop__video-shell">');
+    expect(content).toContain('{!isThermage && <div className="ultherapy-prime-desktop__pain-shorts">');
+    expect(content).toContain('thermage-flx-total-tip_a73293b6.webp');
+    expect(content).toContain('thermage-flx-certificate_de288662.webp');
   });
 
   it("keeps all requested supplied media and semantic sections", () => {
@@ -229,10 +247,10 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {\n    padding: 0 !important;');
     expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__positioning-faq,');
     expect(authoredRules).toContain('#main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {\n    padding-top: 0 !important;');
-    expect(page).toContain('equipment-detail__faq-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
-    expect(page).toContain('<LiftingFaqSection lang={lang} compact={isUltherapyPrime} />');
-    expect(page).toContain('equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}');
-    expect(page).toContain('equipment-detail__back-surface ${isUltherapyPrime ? "mt-0" : "mt-8"}');
+    expect(page).toContain('equipment-detail__faq-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}');
+    expect(page).toContain('<LiftingFaqSection lang={lang} compact={isAuthoredLiftingDetail} />');
+    expect(page).toContain('equipment-detail__info-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}');
+    expect(page).toContain('equipment-detail__back-surface ${isAuthoredLiftingDetail ? "mt-0" : "mt-8"}');
     expect(liftingPositioning).toContain('compact = false');
     expect(liftingPositioning).toContain('equipment-detail__positioning-faq ${compact ? "mb-0" : "mb-12"}');
     expect(authoredRules).toContain('@media (max-width: 767px)');

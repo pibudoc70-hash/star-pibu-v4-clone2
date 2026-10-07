@@ -10,6 +10,7 @@ import {
 import { useState, type ReactNode } from "react";
 import type { Lang } from "@/lib/i18n";
 import { ULTHERAPY_PRIME_COPY } from "./ultherapyPrimeContent";
+import { THERMAGE_FLX_COPY, THERMAGE_FLX_INFO_ROWS } from "./thermageFlxContent";
 
 const ASSET = {
   device: "/api/storage/ultherapy-prime-device_374d4239.png",
@@ -44,12 +45,35 @@ const ASSET = {
 type UltherapyPrimeProps = {
   lang: Lang;
   youtubeUrl?: string | null;
+  treatment?: "ultherapy" | "thermage";
 };
+
+const THERMAGE_ASSET = {
+  device: "/api/storage/thermage-flx-device_c5ab9400.webp",
+  principle: "/api/storage/thermage-flx-treatment_f0e99de0.webp",
+  closeup: "/api/storage/thermage-flx-closeup_645a65ea.webp",
+  handpiece: "/api/storage/thermage-flx-handpiece_f5856bce.webp",
+  totalTip: "/api/storage/thermage-flx-total-tip_a73293b6.webp",
+  eyeTip: "/api/storage/thermage-flx-eye-tip_7de0d6c4.webp",
+  authenticTip: "/api/storage/thermage-flx-authentic-tip_8fc1f4da.webp",
+  certificate: "/api/storage/thermage-flx-certificate_de288662.webp",
+  director: "/api/storage/thermage-flx-director_b8f4f84c.webp",
+  areas: "/api/storage/thermage-flx-treatment-areas_6e0ffa61.webp",
+  shurink: "/api/storage/thermage-flx-shurink_12c239a0.webp",
+  onda: "/api/storage/thermage-flx-onda_52330caa.webp",
+  vro: "/api/storage/thermage-flx-vro_096cef05.webp",
+} as const;
 
 const TRUST_BADGES = [
   { key: "authentic", image: ASSET.authenticity },
   { key: "fda", image: ASSET.fda },
   { key: "specialist", image: ASSET.specialist },
+] as const;
+
+const THERMAGE_TRUST_BADGES = [
+  { key: "authentic", Icon: BadgeCheck },
+  { key: "fda", Icon: Target },
+  { key: "specialist", Icon: Stethoscope },
 ] as const;
 
 const COLLAGEN_IMAGES = [ASSET.collagenOne, ASSET.collagenTwo, ASSET.collagenThree] as const;
@@ -66,6 +90,20 @@ const COMBINATION_MEDIA = [
   { image: ASSET.onda, secondaryImage: ASSET.vro },
   { image: ASSET.lumenis, secondaryImage: ASSET.rejuran },
   { image: ASSET.skinBotox },
+] as const;
+
+const THERMAGE_COMBINATION_MEDIA = [
+  { image: THERMAGE_ASSET.device, secondaryImage: ASSET.device },
+  { image: THERMAGE_ASSET.shurink },
+  { image: THERMAGE_ASSET.onda, secondaryImage: THERMAGE_ASSET.vro },
+  { image: ASSET.lumenis, secondaryImage: ASSET.rejuran },
+  { image: ASSET.skinBotox },
+] as const;
+
+const THERMAGE_PROCESS_MEDIA = [
+  { image: THERMAGE_ASSET.closeup, step: "FEATURE 01", title: "FASTER" },
+  { image: THERMAGE_ASSET.handpiece, step: "FEATURE 02", title: "ALGORITHM" },
+  { image: THERMAGE_ASSET.principle, step: "FEATURE 03", title: "EXPERIENCE" },
 ] as const;
 
 const ULTHERAPY_SHORTS = [
@@ -201,22 +239,43 @@ function ForeignMobileHeadingLineBreak({ lang, text, heading }: { lang: Lang; te
   return <><span className="ultherapy-prime-desktop__foreign-mobile-heading-desktop">{text}</span><span className="ultherapy-prime-desktop__foreign-mobile-heading-mobile"><span>{firstLine}</span><br className="ultherapy-prime-desktop__foreign-mobile-break" /><span>{rest}</span></span></>;
 }
 
-export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "lang">) {
-  const copy = ULTHERAPY_PRIME_COPY[lang];
+function AuthoredTreatmentTitle({
+  treatment,
+  lang,
+  text,
+  koreanFirstLine,
+  foreignHeading,
+}: {
+  treatment: "ultherapy" | "thermage";
+  lang: Lang;
+  text: string;
+  koreanFirstLine?: string;
+  foreignHeading?: ForeignMobileHeading;
+}) {
+  if (treatment === "thermage") return <>{text}</>;
+  if (lang === "ko" && koreanFirstLine) return <KoreanLineBreakTitle lang={lang} text={text} firstLine={koreanFirstLine} />;
+  return foreignHeading ? <ForeignMobileHeadingLineBreak lang={lang} text={text} heading={foreignHeading} /> : <>{text}</>;
+}
+
+export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pick<UltherapyPrimeProps, "lang" | "treatment">) {
+  const isThermage = treatment === "thermage";
+  const copy = isThermage ? THERMAGE_FLX_COPY[lang] : ULTHERAPY_PRIME_COPY[lang];
 
   return (
-    <section className="ultherapy-prime-desktop ultherapy-prime-desktop__hero" aria-labelledby="ultherapy-prime-title">
+    <section className="ultherapy-prime-desktop ultherapy-prime-desktop__hero" data-treatment={treatment} aria-labelledby="ultherapy-prime-title">
       <div className="ultherapy-prime-desktop__hero-inner">
         <div className="ultherapy-prime-desktop__hero-copy">
-          <div className="ultherapy-prime-desktop__wordmark" aria-label="Ultherapy Prime">
-            <span>Ultherapy<sup>®</sup></span>
-            <em>PRIME</em>
+          <div className="ultherapy-prime-desktop__wordmark" aria-label={isThermage ? "Thermage FLX" : "Ultherapy Prime"}>
+            {isThermage ? <><span>Thermage<sup>®</sup></span><em>FLX</em></> : <><span>Ultherapy<sup>®</sup></span><em>PRIME</em></>}
           </div>
-          <p className="ultherapy-prime-desktop__eyebrow">PREMIUM ULTRASOUND LIFTING</p>
-          <h1 id="ultherapy-prime-title"><KoreanLineBreakTitle lang={lang} text={copy.heroTitle} firstLine="한 번의 시술로 최대 1년," /></h1>
-          <p className="ultherapy-prime-desktop__hero-description"><KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," /></p>
+          <p className="ultherapy-prime-desktop__eyebrow">{isThermage ? "PREMIUM RADIOFREQUENCY CARE" : "PREMIUM ULTRASOUND LIFTING"}</p>
+          <h1 id="ultherapy-prime-title">{isThermage ? copy.heroTitle : <KoreanLineBreakTitle lang={lang} text={copy.heroTitle} firstLine="한 번의 시술로 최대 1년," />}</h1>
+          <p className="ultherapy-prime-desktop__hero-description">{isThermage ? copy.heroDescription : <KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," />}</p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label={copy.trustTitles.join(", ")}>
-            {TRUST_BADGES.map((badge, index) => (
+            {isThermage ? THERMAGE_TRUST_BADGES.map((badge, index) => {
+              const Icon = badge.Icon;
+              return <li key={badge.key}><span className="ultherapy-prime-desktop__trust-icon ultherapy-prime-desktop__trust-icon--symbol"><Icon aria-hidden="true" /></span><strong>{copy.trustTitles[index]}</strong><span>{copy.trustSubtitles[index]}</span></li>;
+            }) : TRUST_BADGES.map((badge, index) => (
               <li key={badge.key} className={badge.key === "authentic" ? "ultherapy-prime-desktop__trust-badge--authentic" : undefined}>
                 <span className="ultherapy-prime-desktop__trust-icon"><img src={badge.image} alt="" /></span>
                 <strong>{copy.trustTitles[index]}</strong>
@@ -225,68 +284,70 @@ export function UltherapyPrimeDesktopHero({ lang }: Pick<UltherapyPrimeProps, "l
             ))}
           </ul>
         </div>
-        <div className="ultherapy-prime-desktop__hero-visual" aria-label="Ultherapy Prime">
-          <img className="ultherapy-prime-desktop__hero-device" src={ASSET.device} alt="Ultherapy Prime" />
-          <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt={copy.mobileControlUnitAlt} />
+        <div className="ultherapy-prime-desktop__hero-visual" aria-label={isThermage ? "Thermage FLX" : "Ultherapy Prime"}>
+          <img className="ultherapy-prime-desktop__hero-device" src={isThermage ? THERMAGE_ASSET.device : ASSET.device} alt={isThermage ? "Thermage FLX radiofrequency skin-firmness device" : "Ultherapy Prime"} />
+          {!isThermage && <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt={copy.mobileControlUnitAlt} />}
         </div>
       </div>
     </section>
   );
 }
 
-export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: UltherapyPrimeProps) {
-  const copy = ULTHERAPY_PRIME_COPY[lang];
-  const embedUrl = imageEmbedUrl(youtubeUrl);
+export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatment = "ultherapy" }: UltherapyPrimeProps) {
+  const isThermage = treatment === "thermage";
+  const thermageCopy = isThermage ? THERMAGE_FLX_COPY[lang] : null;
+  const copy = thermageCopy ?? ULTHERAPY_PRIME_COPY[lang];
+  const embedUrl = isThermage ? null : imageEmbedUrl(youtubeUrl);
   const fallbackVideoUrl = youtubeUrl || "https://www.youtube.com/@starpibu";
+  const treatmentInfoRows = isThermage ? THERMAGE_FLX_INFO_ROWS[lang] : [];
+  const combinationMedia = isThermage ? THERMAGE_COMBINATION_MEDIA : COMBINATION_MEDIA;
   const [activeShortId, setActiveShortId] = useState<string | null>(null);
 
   return (
-    <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content" data-lang={lang}>
+    <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content" data-lang={lang} data-treatment={treatment}>
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">
-            <SectionHeading eyebrow="HOW ULTHERAPY WORKS" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.whatTitle} firstLine="울쎄라피 프라임은" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.whatTitle} heading="what" />} />
+            <SectionHeading eyebrow={isThermage ? "HOW THERMAGE FLX WORKS" : "HOW ULTHERAPY WORKS"} title={<AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.whatTitle} koreanFirstLine="울쎄라피 프라임은" foreignHeading="what" />} />
             <p>{copy.whatParagraphs[0]}</p>
             <p>{copy.whatParagraphs[1]}</p>
-            <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">
+            {!isThermage && <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">
               <img src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" />
-            </figure>
+            </figure>}
             <div className="ultherapy-prime-desktop__principle-depth-copy">
               <h3>{copy.depthTitle}</h3>
               <p>{copy.depthText}</p>
             </div>
           </div>
           <figure className="ultherapy-prime-desktop__principle-diagram">
-            <img className="ultherapy-prime-desktop__principle-diagram--tablet" src={ASSET.depths} alt={copy.depthTitle} loading="lazy" />
-            <img className="ultherapy-prime-desktop__principle-diagram--pc" src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" />
+            {isThermage ? <img className="ultherapy-prime-desktop__thermage-principle-image" src={THERMAGE_ASSET.principle} alt="Thermage FLX radiofrequency treatment" loading="lazy" /> : <><img className="ultherapy-prime-desktop__principle-diagram--tablet" src={ASSET.depths} alt={copy.depthTitle} loading="lazy" /><img className="ultherapy-prime-desktop__principle-diagram--pc" src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" /></>}
           </figure>
         </div>
       </section>
 
-      <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
+      {isThermage && <section className="ultherapy-prime-desktop__treatment-info" aria-label="Thermage FLX treatment information">
+        <dl>{treatmentInfoRows.map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}</dl>
+      </section>}
+
+      {!isThermage && <section className="ultherapy-prime-desktop__split-section ultherapy-prime-desktop__authentic" aria-labelledby="ultherapy-authentic-heading">
         <div className="ultherapy-prime-desktop__split-copy">
-          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.authTitle} firstLine="정품 울쎄라피 프라임" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.authTitle} heading="auth" />} />
+          <SectionHeading eyebrow="AUTHENTICITY FIRST" title={<AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.authTitle} koreanFirstLine="정품 울쎄라피 프라임" foreignHeading="auth" />} />
           <p>{copy.authParagraphs[0]}</p>
           <p className="ultherapy-prime-desktop__authentic-emphasis">{copy.authParagraphs[1]}</p>
           <div className="ultherapy-prime-desktop__auth-seal"><BadgeCheck aria-hidden="true" /><span>{copy.certificationTitle}</span></div>
         </div>
         <div className="ultherapy-prime-desktop__authentic-media">
-          <figure className="ultherapy-prime-desktop__authentic-equipment ultherapy-prime-desktop__authentic-equipment--pc-hidden">
-            <img src={ASSET.handpiece} alt="Ultherapy Prime DeepSEE handpiece" loading="lazy" />
-          </figure>
-          <figure className="ultherapy-prime-desktop__authentic-depth">
-            <img src={ASSET.depthReference} alt={copy.depthTitle} loading="lazy" />
-            <figcaption><KoreanMobileLineBreak lang={lang} text={copy.authCaption} firstLine="정품 팁에서 초음파 에너지를 사용해" /></figcaption>
-          </figure>
+          <figure className="ultherapy-prime-desktop__authentic-equipment ultherapy-prime-desktop__authentic-equipment--pc-hidden"><img src={ASSET.handpiece} alt="Ultherapy Prime DeepSEE handpiece" loading="lazy" /></figure>
+          <figure className="ultherapy-prime-desktop__authentic-depth"><img src={ASSET.depthReference} alt={copy.depthTitle} loading="lazy" /><figcaption><KoreanMobileLineBreak lang={lang} text={copy.authCaption} firstLine="정품 팁에서 초음파 에너지를 사용해" /></figcaption></figure>
         </div>
-      </section>
+      </section>}
 
       <section className="ultherapy-prime-desktop__collagen" aria-labelledby="ultherapy-collagen-heading">
         <SectionHeading eyebrow="COLLAGEN REMODELING" title={copy.collagenTitle} />
         <ol className="ultherapy-prime-desktop__collagen-grid">
           {copy.collagenStages.map((label, index) => (
             <li key={label}>
-              <figure><img src={COLLAGEN_IMAGES[index]} alt={label} loading="lazy" /></figure>
+              <figure><img src={isThermage ? [THERMAGE_ASSET.closeup, THERMAGE_ASSET.handpiece, THERMAGE_ASSET.principle][index] : COLLAGEN_IMAGES[index]} alt={label} loading="lazy" /></figure>
               <span>STEP {index + 1}</span>
               <h3>{label}</h3>
             </li>
@@ -296,33 +357,31 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       </section>
 
       <section className="ultherapy-prime-desktop__process" aria-labelledby="ultherapy-process-heading">
-        <SectionHeading eyebrow="SEE · PLAN · TREAT" title={copy.processTitle} />
+        <SectionHeading eyebrow={isThermage ? "THERMAGE FLX FEATURES" : "SEE · PLAN · TREAT"} title={copy.processTitle} />
         <ol className="ultherapy-prime-desktop__process-grid ultherapy-prime-desktop__process-grid--pc" aria-label={copy.processTitle}>
-          {PROCESS_MEDIA.map((step, index) => (
-            <li className="ultherapy-prime-desktop__process-card" key={step.step}>
-              <div className="ultherapy-prime-desktop__process-card-copy">
-                <span>{step.step}</span>
-                <h3>{step.title}</h3>
-                <p>{copy.processDescriptions[index]}{index === 0 && <sup>41, 42</sup>}</p>
-              </div>
-              <img src={step.image} alt={copy.processDescriptions[index]} width={508} height={578} loading="lazy" decoding="async" />
-            </li>
-          ))}
+          {isThermage ? THERMAGE_PROCESS_MEDIA.map((step, index) => <li className="ultherapy-prime-desktop__process-card" key={step.step}><div className="ultherapy-prime-desktop__process-card-copy"><span>{step.step}</span><h3>{step.title}</h3><p>{copy.processDescriptions[index]}</p></div><img src={step.image} alt={copy.processDescriptions[index]} width={508} height={578} loading="lazy" decoding="async" /></li>) : PROCESS_MEDIA.map((step, index) => <li className="ultherapy-prime-desktop__process-card" key={step.step}><div className="ultherapy-prime-desktop__process-card-copy"><span>{step.step}</span><h3>{step.title}</h3><p>{copy.processDescriptions[index]}{index === 0 && <sup>41, 42</sup>}</p></div><img src={step.image} alt={copy.processDescriptions[index]} width={508} height={578} loading="lazy" decoding="async" /></li>)}
         </ol>
         <p className="ultherapy-prime-desktop__process-note">{copy.processNote}</p>
       </section>
 
-      <section className="ultherapy-prime-desktop__pain" aria-labelledby="ultherapy-pain-heading">
+      {thermageCopy && <section className="ultherapy-prime-desktop__tips" aria-labelledby="thermage-tip-heading">
+        <SectionHeading eyebrow="THERMAGE FLX TIPS" title={thermageCopy.tipTitle} />
+        <div className="ultherapy-prime-desktop__tip-grid">
+          {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{tip.description}</p></div></article>)}
+        </div>
+      </section>}
+
+      <section className={`ultherapy-prime-desktop__pain${isThermage ? " ultherapy-prime-desktop__pain--no-media" : ""}`} aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-main">
           <div className="ultherapy-prime-desktop__pain-copy">
-            <SectionHeading eyebrow="COMFORT CARE" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.painTitle} firstLine="울쎄라피 프라임," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.painTitle} heading="pain" />} />
+            <SectionHeading eyebrow="COMFORT CARE" title={<AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.painTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="pain" />} />
             <ul className="ultherapy-prime-desktop__pain-options" aria-label={copy.painTitle}>
               {copy.painOptions.map((option) => <li key={option}>{option}</li>)}
             </ul>
             <p>{copy.painParagraphs[0]}</p>
             <p>{copy.painParagraphs[1]}</p>
           </div>
-          <div className="ultherapy-prime-desktop__video-shell">
+          {!isThermage && <div className="ultherapy-prime-desktop__video-shell">
             {embedUrl ? (
               <iframe src={embedUrl} title={copy.qaTitle} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
             ) : (
@@ -331,20 +390,20 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
                 <span><Play fill="currentColor" aria-hidden="true" /> {copy.watchYoutubeLabel} <ExternalLink aria-hidden="true" /></span>
               </a>
             )}
-          </div>
+          </div>}
         </div>
-        <div className="ultherapy-prime-desktop__pain-shorts">
+        {!isThermage && <div className="ultherapy-prime-desktop__pain-shorts">
           <div className="ultherapy-prime-desktop__pain-shorts-divider" aria-hidden="true" />
           <h3>{copy.shortsTitle}</h3>
           <UltherapyPrimeShorts activeShortId={activeShortId} onSelect={setActiveShortId} shortsAriaLabel={copy.shortsAriaLabel} playVideoLabel={copy.playVideoLabel} />
-        </div>
+        </div>}
       </section>
 
       <section className="ultherapy-prime-desktop__combination" aria-labelledby="ultherapy-combination-heading">
-        <SectionHeading eyebrow="BETTER TOGETHER" title={lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={copy.combinationTitle} firstLine="울쎄라피 프라임과" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.combinationTitle} heading="combination" />} />
+        <SectionHeading eyebrow="BETTER TOGETHER" title={isThermage ? copy.combinationTitle : (lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={copy.combinationTitle} firstLine="울쎄라피 프라임과" /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.combinationTitle} heading="combination" />)} />
         <div className="ultherapy-prime-desktop__combination-grid">
           {copy.combinationTitles.map((title, index) => {
-            const media = COMBINATION_MEDIA[index];
+            const media = combinationMedia[index];
             return (
               <article key={title}>
                 <div className="ultherapy-prime-desktop__combination-image">
@@ -352,7 +411,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
                   {"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}
                 </div>
                 {copy.combinationBadges[index] && <span className="ultherapy-prime-desktop__combination-badge">{copy.combinationBadges[index]}</span>}
-                <h3>{lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={title} firstLine="울쎄라피 프라임" /> : title.split("\n").map((line, lineIndex) => <span key={`${title}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</h3>
+                <h3>{!isThermage && lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={title} firstLine="울쎄라피 프라임" /> : title.split("\n").map((line, lineIndex) => <span key={`${title}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</h3>
                 <p>{copy.combinationDescriptions[index]}</p>
               </article>
             );
@@ -362,20 +421,21 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
 
       <section className="ultherapy-prime-desktop__recommend" aria-labelledby="ultherapy-recommend-heading">
         <div className="ultherapy-prime-desktop__recommend-copy">
-          <SectionHeading eyebrow="RECOMMENDED FOR" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.recommendTitle} firstLine="울쎄라피 프라임," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.recommendTitle} heading="recommend" />} />
+          <SectionHeading eyebrow="RECOMMENDED FOR" title={<AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.recommendTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="recommend" />} />
           <ul>
             {copy.recommendations.map((recommendation) => <li key={recommendation}><Check aria-hidden="true" />{recommendation}</li>)}
           </ul>
         </div>
         <figure className="ultherapy-prime-desktop__areas-figure">
-          <img src={ASSET.areas} alt={copy.areasCaption} loading="lazy" />
+          <img src={isThermage ? THERMAGE_ASSET.areas : ASSET.areas} alt={copy.areasCaption} loading="lazy" />
           <figcaption>{copy.areasCaption}</figcaption>
         </figure>
       </section>
 
       <section className="ultherapy-prime-desktop__star" aria-labelledby="ultherapy-star-heading">
-        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.starTitle} firstLine="당신의 소중한 젊음," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.starTitle} heading="star" />} />
+        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title={<AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.starTitle} koreanFirstLine="당신의 소중한 젊음," foreignHeading="star" />} />
         <p className="ultherapy-prime-desktop__star-intro">{copy.starIntro}</p>
+        {thermageCopy && <figure className="ultherapy-prime-desktop__thermage-director"><img src={THERMAGE_ASSET.director} alt={thermageCopy.directorCaption} loading="lazy" /><figcaption>{thermageCopy.directorCaption}</figcaption></figure>}
         <div className="ultherapy-prime-desktop__strength-grid">
           {copy.strengths.map((text, index) => {
             const Icon = STRENGTH_ICONS[index];
@@ -383,7 +443,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
           })}
         </div>
         <div className="ultherapy-prime-desktop__star-certification" aria-label={copy.certificationTitle}>
-          <img src={ASSET.authenticity} alt="" loading="lazy" />
+          <img src={isThermage ? THERMAGE_ASSET.certificate : ASSET.authenticity} alt="" loading="lazy" />
           <p><strong>{copy.certificationTitle}</strong> — {copy.certificationText}</p>
         </div>
       </section>

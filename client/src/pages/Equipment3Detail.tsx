@@ -22,6 +22,7 @@ import { EQUIPMENT_DETAIL_QUOTES } from "@shared/equipmentDetailQuote";
 import { EQUIPMENT_EXPLANATORY_INFOGRAPHICS } from "@/lib/equipmentInfographics";
 import { isUltherapyPrimeSlug } from "@shared/ultherapyPrinciple";
 import UltherapyPrimeDesktopContent, { UltherapyPrimeDesktopHero } from "@/components/treatments/UltherapyPrimeDesktopContent";
+import { THERMAGE_FLX_SEO } from "@/components/treatments/thermageFlxContent";
 
 import { getLocalizedUrl } from "@/lib/localizedPath";
 import { buildBreadcrumbJsonLd, buildFAQPageJsonLd, withSchemaLanguage } from "@/lib/seoHelpers";
@@ -227,7 +228,9 @@ export default function Equipment3Detail() {
   const allFaqs = [...managedFaqs, ...positioningFaqs];
   const detailQuote = EQUIPMENT_DETAIL_QUOTES[lang];
   const isUltherapyPrime = isUltherapyPrimeSlug(item.slug);
-  const explanatoryInfographic = lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
+  const isThermageFlx = item.slug === "써마지FLX";
+  const isAuthoredLiftingDetail = isUltherapyPrime || isThermageFlx;
+  const explanatoryInfographic = lang === "ko" && !isAuthoredLiftingDetail ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -241,7 +244,8 @@ export default function Equipment3Detail() {
     : allFaqs;
 
   // DB에 저장된 SEO 필드를 우선 사용, 없으면 자동 생성
-  const seoTitle = normalizeEnglishBrand(item.seoTitle?.trim() || (() => {
+  const authoredThermageSeo = isThermageFlx ? THERMAGE_FLX_SEO[lang] : null;
+  const seoTitle = authoredThermageSeo?.title || normalizeEnglishBrand(item.seoTitle?.trim() || (() => {
     switch (lang) {
       case "en": return `${localizedName} | STAR Dermatology, Seomyeon, Busan`;
       case "ja": return `${localizedName} | 釜山西面 スター皮膚科`;
@@ -250,7 +254,7 @@ export default function Equipment3Detail() {
     }
   })());
 
-  const seoDesc = normalizeEnglishBrand(item.seoDescription?.trim() || (() => {
+  const seoDesc = authoredThermageSeo?.description || normalizeEnglishBrand(item.seoDescription?.trim() || (() => {
     const d = localizedDesc || "";
     switch (lang) {
       case "en": return `STAR Dermatology Clinic in Seomyeon, Busan offers ${localizedName}. ${d} Performed by board-certified dermatologist.`;
@@ -332,10 +336,10 @@ export default function Equipment3Detail() {
 
       <Header />
 
-      {isUltherapyPrime && <UltherapyPrimeDesktopHero lang={lang} />}
+      {isAuthoredLiftingDetail && <UltherapyPrimeDesktopHero lang={lang} treatment={isThermageFlx ? "thermage" : "ultherapy"} />}
 
       {/* 히어로 헤더 */}
-      <div className={`equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12${isUltherapyPrime ? " equipment-detail__hero--ultherapy-mobile" : ""}`}>
+      <div className={`equipment-detail__hero bg-gradient-to-r from-slate-800 to-slate-900 text-white pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pt-[calc(8rem+env(safe-area-inset-top))] md:pb-12${isAuthoredLiftingDetail ? " equipment-detail__hero--ultherapy-mobile" : ""}`}>
         <div className="container mx-auto px-4">
           {localizedCategory && (
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">
@@ -361,11 +365,11 @@ export default function Equipment3Detail() {
         </div>
       </div>
 
-      {isUltherapyPrime && <UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />}
+      {isAuthoredLiftingDetail && <UltherapyPrimeDesktopContent lang={lang} youtubeUrl={isThermageFlx ? null : item.youtubeUrl} treatment={isThermageFlx ? "thermage" : "ultherapy"} />}
 
       {/* 메인 콘텐츠 */}
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
-        <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+        <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
           <div>
             {lang !== "ko" && item.bgImageUrl ? (
@@ -501,7 +505,7 @@ export default function Equipment3Detail() {
 
         {/* 상세 설명 */}
         {localizedDetail && (
-          <section className={`mb-12${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+          <section className={`mb-12${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -531,7 +535,7 @@ export default function Equipment3Detail() {
 
         {/* 기대 효과 */}
         {localizedEffect && (
-          <section className={`mb-12${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+          <section className={`mb-12${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -543,7 +547,7 @@ export default function Equipment3Detail() {
 
         {/* 주의사항 */}
         {localizedCaution && (
-          <section className={`equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6${isUltherapyPrime ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+          <section className={`equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__caution-heading text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
             <div className="equipment-detail__caution-copy prose max-w-none text-amber-900">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -555,7 +559,7 @@ export default function Equipment3Detail() {
 
         <div className="equipment-detail__lower-surface">
           {managedFaqs.length > 0 && (
-            <section className={`equipment-detail__faq-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-faq-heading">
+            <section className={`equipment-detail__faq-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-faq-heading">
               <div className="equipment-detail__faq-inner">
                 <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
                 <div className="space-y-3">
@@ -572,10 +576,10 @@ export default function Equipment3Detail() {
             </section>
           )}
 
-          {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} compact={isUltherapyPrime} />}
+          {positioningFaqs.length > 0 && <LiftingFaqSection lang={lang} compact={isAuthoredLiftingDetail} />}
 
-          <section className={`equipment-detail__info-shell ${isUltherapyPrime ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-detail-quote-heading">
-            <aside className={`equipment-detail__info-card ${isUltherapyPrime ? "mb-0" : "mb-12"} rounded-2xl border p-6`}>
+          <section className={`equipment-detail__info-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-detail-quote-heading">
+            <aside className={`equipment-detail__info-card ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"} rounded-2xl border p-6`}>
               <h2 id="equipment-detail-quote-heading" className="text-xl font-bold text-slate-900 mb-4">{detailQuote.heading}</h2>
               <dl className="grid gap-4 text-sm leading-relaxed text-slate-700">
                 <div><dt className="font-semibold text-slate-900">{detailQuote.locationLabel}</dt><dd>{detailQuote.location}</dd></div>
@@ -605,7 +609,7 @@ export default function Equipment3Detail() {
         )}
 
         {/* YouTube 가이드 영상 */}
-        {item.youtubeUrl && !isUltherapyPrime && (() => {
+        {item.youtubeUrl && !isAuthoredLiftingDetail && (() => {
           const sourceUrl = item.youtubeUrl ?? "";
           const videoId = sourceUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
           const getEmbedUrl = () => videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : sourceUrl;
@@ -642,7 +646,7 @@ export default function Equipment3Detail() {
         })()}
 
           {/* 목록으로 돌아가기 */}
-          <div className={`equipment-detail__back-surface ${isUltherapyPrime ? "mt-0" : "mt-8"}`}>
+          <div className={`equipment-detail__back-surface ${isAuthoredLiftingDetail ? "mt-0" : "mt-8"}`}>
             <button
               type="button"
               onClick={() => setLocation(getBackPath(item.category))}

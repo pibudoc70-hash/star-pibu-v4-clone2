@@ -44,11 +44,12 @@ describe("Equipment3Detail error navigation", () => {
     queryResult = { data: undefined, isLoading: false, isError: true };
   });
 
-  it("uses localized authored content for Ultherapy Prime instead of the generic detail fallback", () => {
+  it("uses localized authored content for Ultherapy Prime and Thermage FLX instead of the generic detail fallback", () => {
     expect(equipmentDetailSource).toContain("isUltherapyPrimeSlug(item.slug)");
-    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopHero lang={lang} />");
-    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />");
+    expect(equipmentDetailSource).toContain('const isThermageFlx = item.slug === "써마지FLX";');
+    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopHero lang={lang} treatment={isThermageFlx ? \"thermage\" : \"ultherapy\"} />");
+    expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={isThermageFlx ? null : item.youtubeUrl} treatment={isThermageFlx ? \"thermage\" : \"ultherapy\"} />");
     expect(equipmentDetailSource).not.toContain("lang === \"ko\" && isUltherapyPrimeSlug");
-    expect(equipmentDetailSource).toContain("!isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug");
+    expect(equipmentDetailSource).toContain("!isAuthoredLiftingDetail ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug");
   });
 });

@@ -5333,6 +5333,32 @@ body.font-lang-zh .hero-stat-label {
   .ultherapy-prime-desktop__star-certification strong { color: var(--ultherapy-deep); font-size: 0.83rem; font-weight: 700; }
   .ultherapy-prime-desktop[data-lang="en"] .ultherapy-prime-desktop__heading h2,
   .ultherapy-prime-desktop[data-lang="en"] .ultherapy-prime-desktop__hero-description { font-family: var(--font-montserrat, Montserrat, sans-serif); letter-spacing: -0.04em; }
+
+  /* Thermage FLX uses the same authored sequence without Ultherapy-specific
+     mobile imagery or video. Its device stays visible in every locale. */
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-device { display: block !important; height: min(270px, 68vw); }
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-visual { min-height: 0; margin-top: 1.15rem; padding: 0.4rem 0 1.05rem; }
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-visual::before { display: block; width: min(63vw, 245px); opacity: 0.58; }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__principle-grid > .ultherapy-prime-desktop__principle-diagram { display: flex !important; }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-principle-image { width: min(100%, 360px); border-radius: 1rem; object-fit: cover; box-shadow: 0 14px 28px rgba(75, 53, 35, 0.12); }
+  .ultherapy-prime-desktop__treatment-info { background: var(--home-section-bg-a); }
+  .ultherapy-prime-desktop__treatment-info dl { display: grid; gap: 0; margin: 0; border: 1px solid var(--ultherapy-line); border-radius: 1rem; overflow: hidden; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__treatment-info dl > div { display: grid; grid-template-columns: minmax(6.8rem, 0.68fr) minmax(0, 1.32fr); gap: 0.75rem; padding: 0.88rem 0.95rem; border-top: 1px solid var(--ultherapy-line); }
+  .ultherapy-prime-desktop__treatment-info dl > div:first-child { border-top: 0; }
+  .ultherapy-prime-desktop__treatment-info dt { color: var(--ultherapy-deep); font-size: 0.77rem; font-weight: 700; line-height: 1.55; }
+  .ultherapy-prime-desktop__treatment-info dd { margin: 0; color: var(--ultherapy-muted); font-size: 0.77rem; line-height: 1.62; overflow-wrap: anywhere; }
+  .ultherapy-prime-desktop__tips { background: var(--home-section-bg-b); }
+  .ultherapy-prime-desktop__tip-grid { display: grid; gap: 0.9rem; }
+  .ultherapy-prime-desktop__tip-grid article { display: grid; grid-template-columns: 7rem minmax(0, 1fr); align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--ultherapy-line); border-radius: 1rem; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__tip-grid figure { display: grid; height: 6rem; margin: 0; place-items: center; border-radius: 0.7rem; background: #F6F5F1; }
+  .ultherapy-prime-desktop__tip-grid img { display: block; max-width: 84%; max-height: 84%; object-fit: contain; }
+  .ultherapy-prime-desktop__tip-grid span { color: var(--ultherapy-gold); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; }
+  .ultherapy-prime-desktop__tip-grid h3 { margin: 0.28rem 0 0; color: var(--ultherapy-ink); font-size: 1rem; font-weight: 700; line-height: 1.45; }
+  .ultherapy-prime-desktop__tip-grid p { margin: 0.35rem 0 0; color: var(--ultherapy-muted); font-size: 0.77rem; line-height: 1.58; }
+  .ultherapy-prime-desktop__pain--no-media .ultherapy-prime-desktop__pain-main { gap: 0; }
+  .ultherapy-prime-desktop__thermage-director { display: grid; grid-template-columns: 6.8rem minmax(0, 1fr); align-items: end; gap: 1rem; max-width: 31rem; margin: 0 0 1.5rem; padding: 0.85rem; border: 1px solid var(--ultherapy-line); border-radius: 1rem; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__thermage-director img { display: block; width: 100%; max-height: 10rem; object-fit: contain; object-position: bottom; }
+  .ultherapy-prime-desktop__thermage-director figcaption { padding-bottom: 0.55rem; color: var(--ultherapy-deep); font-size: 0.82rem; font-weight: 700; line-height: 1.55; }
 }
 
 @media (min-width: 768px) {
@@ -6613,6 +6639,42 @@ body.font-lang-zh .hero-stat-label {
   #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
     padding-top: 0 !important;
   }
+}
+
+/* Thermage FLX reuses the authored lifting template while only introducing
+   device-specific presentation for its information table, tips, and no-video
+   comfort-care configuration. */
+@media (min-width: 768px) {
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-device { width: min(100%, 410px); height: auto; }
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-visual::before { width: min(36vw, 465px); }
+  .ultherapy-prime-desktop__trust-icon--symbol svg { width: 2.1rem; height: 2.1rem; color: var(--ultherapy-gold); }
+  .ultherapy-prime-desktop__treatment-info { background: var(--home-section-bg-a); }
+  .ultherapy-prime-desktop__treatment-info dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; overflow: hidden; border: 1px solid var(--ultherapy-line); border-radius: 1rem; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__treatment-info dl > div { display: grid; grid-template-columns: 8.6rem minmax(0, 1fr); gap: 1.1rem; min-height: 5.6rem; padding: 1.25rem 1.4rem; border-top: 1px solid var(--ultherapy-line); }
+  .ultherapy-prime-desktop__treatment-info dl > div:nth-child(2) { border-top: 0; border-left: 1px solid var(--ultherapy-line); }
+  .ultherapy-prime-desktop__treatment-info dl > div:nth-child(even) { border-left: 1px solid var(--ultherapy-line); }
+  .ultherapy-prime-desktop__treatment-info dt { color: var(--ultherapy-deep); font-size: 0.87rem; font-weight: 700; line-height: 1.65; }
+  .ultherapy-prime-desktop__treatment-info dd { margin: 0; color: var(--ultherapy-muted); font-size: 0.87rem; line-height: 1.7; word-break: keep-all; }
+  .ultherapy-prime-desktop__tip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  .ultherapy-prime-desktop__tip-grid article { display: grid; grid-template-columns: 9rem minmax(0, 1fr); align-items: center; gap: 1.35rem; min-height: 12rem; padding: 1.35rem; border: 1px solid var(--ultherapy-line); border-radius: 1.1rem; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__tip-grid figure { display: grid; height: 9rem; margin: 0; place-items: center; border-radius: 0.85rem; background: #F6F5F1; }
+  .ultherapy-prime-desktop__tip-grid img { display: block; max-width: 84%; max-height: 84%; object-fit: contain; }
+  .ultherapy-prime-desktop__tip-grid span { color: var(--ultherapy-gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; }
+  .ultherapy-prime-desktop__tip-grid h3 { margin: 0.35rem 0 0; color: var(--ultherapy-ink); font-size: 1.12rem; font-weight: 700; line-height: 1.4; }
+  .ultherapy-prime-desktop__tip-grid p { margin: 0.5rem 0 0; color: var(--ultherapy-muted); font-size: 0.87rem; line-height: 1.7; word-break: keep-all; }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-principle-image { width: min(100%, 500px); border-radius: 1.1rem; object-fit: cover; box-shadow: 0 14px 28px rgba(75, 53, 35, 0.12); }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__pain--no-media .ultherapy-prime-desktop__pain-main { grid-template-columns: minmax(0, 760px); justify-content: center; }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__pain-copy { width: 100%; }
+  .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__star-intro { max-width: 54rem; white-space: normal; }
+  .ultherapy-prime-desktop__thermage-director { display: grid; grid-template-columns: 10rem minmax(0, 1fr); align-items: end; gap: 1.4rem; width: min(100%, 37rem); margin: 0 0 2.25rem; padding: 1rem 1.2rem; border: 1px solid var(--ultherapy-line); border-radius: 1rem; background: var(--ultherapy-paper); }
+  .ultherapy-prime-desktop__thermage-director img { display: block; width: 100%; max-height: 15rem; object-fit: contain; object-position: bottom; }
+  .ultherapy-prime-desktop__thermage-director figcaption { padding-bottom: 1.25rem; color: var(--ultherapy-deep); font-size: 0.94rem; font-weight: 700; line-height: 1.65; }
+}
+
+@media (min-width: 1024px) {
+  .equipment-detail-page:has(.ultherapy-prime-desktop[data-treatment="thermage"]) .ultherapy-prime-desktop__content > section { padding-block: 4.5rem; }
+  .equipment-detail-page:has(.ultherapy-prime-desktop[data-treatment="thermage"]) .ultherapy-prime-desktop__treatment-info dl > div:nth-child(-n + 2) { border-top: 0; }
+  .equipment-detail-page:has(.ultherapy-prime-desktop[data-treatment="thermage"]) .ultherapy-prime-desktop__combination .ultherapy-prime-desktop__heading h2 { max-width: 48rem; font-size: clamp(2rem, 2.6vw, 2.7rem); white-space: normal; }
 }
 
 /* Desktop equipment list: retain individual tabs/cards while removing the two large enclosing panels. */

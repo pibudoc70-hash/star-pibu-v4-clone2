@@ -20,12 +20,12 @@ describe("equipment explanatory infographics", () => {
     });
   });
 
-  it("keeps the approved image explainer for non-Ultherapy Korean devices and uses localized semantic HTML for Ultherapy Prime", () => {
-    expect(detailPageSource).toContain('lang === "ko" && !isUltherapyPrime ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS');
+  it("keeps the approved image explainer for non-authored Korean devices and uses localized semantic HTML for authored lifting details", () => {
+    expect(detailPageSource).toContain('lang === "ko" && !isAuthoredLiftingDetail ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS');
     expect(detailPageSource).toContain('aria-labelledby="equipment-infographic-heading"');
     expect(detailPageSource).toContain("시술 원리 인포그래픽");
     expect(detailPageSource).toContain("본 이미지는 시술 원리에 대한 이해를 돕기 위한 자료");
-    expect(detailPageSource).toContain("<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={item.youtubeUrl} />");
+    expect(detailPageSource).toContain('<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={isThermageFlx ? null : item.youtubeUrl} treatment={isThermageFlx ? "thermage" : "ultherapy"} />');
     expect(ultherapyContentSource).toContain("ULTHERAPY_PRIME_COPY[lang]");
     expect(ultherapyContentSource).toContain("ultherapy-prime-desktop__principle-grid");
     expect(ultherapyContentSource).toContain("ultherapy-prime-desktop__collagen-grid");

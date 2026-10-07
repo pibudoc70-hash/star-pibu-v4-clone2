@@ -1684,12 +1684,16 @@
       padding-bottom: 0 !important;
     }
 
-    body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {
+    /* The global mobile section rule above is !important, so this authored
+       Ultherapy lower surface must be reset in the same base layer. Keep the
+       Korean-approved 32px rhythm shared by every locale. */
+    .equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {
       padding: 2rem 0 0 !important;
     }
 
-    body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {
+    .equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {
       padding: 0 !important;
+      border-top: 0 !important;
     }
 
     #main-content .equipment-detail__caution,

@@ -164,15 +164,16 @@ function KoreanMobileOnlyLineBreak({ lang, text, firstLine }: { lang: Lang; text
   return <><span>{firstLine}</span>{" "}<br className="ultherapy-prime-desktop__mobile-korean-break" /><span>{rest}</span></>;
 }
 
-type ForeignMobileHeading = "what" | "auth" | "pain" | "combination" | "recommend";
+type ForeignMobileHeading = "what" | "auth" | "pain" | "combination" | "recommend" | "star";
 
 const FOREIGN_MOBILE_HEADING_FIRST_LINES: Partial<Record<Lang, Record<ForeignMobileHeading, string>>> = {
   ja: {
     what: "Ultherapy Primeとは",
-    auth: "正規品のUltherapy Primeが重要",
-    pain: "Ultherapy Primeの痛みが気に",
-    combination: "Ultherapy Primeと組み合わせた",
-    recommend: "Ultherapy Primeはこのような方",
+    auth: "正規品のUltherapy Primeが",
+    pain: "Ultherapy Primeの",
+    combination: "Ultherapy Primeと",
+    recommend: "Ultherapy Primeは",
+    star: "あなたの大切な若々しさを、",
   },
   zh: {
     what: "Ultherapy Prime",
@@ -180,6 +181,7 @@ const FOREIGN_MOBILE_HEADING_FIRST_LINES: Partial<Record<Lang, Record<ForeignMob
     pain: "担心 Ultherapy Prime",
     combination: "适合与 Ultherapy Prime",
     recommend: "Ultherapy Prime",
+    star: "您的珍贵青春，",
   },
   "zh-TW": {
     what: "Ultherapy Prime",
@@ -187,6 +189,7 @@ const FOREIGN_MOBILE_HEADING_FIRST_LINES: Partial<Record<Lang, Record<ForeignMob
     pain: "擔心 Ultherapy Prime 的",
     combination: "適合搭配 Ultherapy Prime 的",
     recommend: "Ultherapy Prime",
+    star: "您珍貴的青春，",
   },
 };
 
@@ -371,7 +374,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl }: Ulthe
       </section>
 
       <section className="ultherapy-prime-desktop__star" aria-labelledby="ultherapy-star-heading">
-        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title={<KoreanLineBreakTitle lang={lang} text={copy.starTitle} firstLine="당신의 소중한 젊음," />} />
+        <SectionHeading eyebrow="WHY STAR DERMATOLOGY" title={lang === "ko" ? <KoreanLineBreakTitle lang={lang} text={copy.starTitle} firstLine="당신의 소중한 젊음," /> : <ForeignMobileHeadingLineBreak lang={lang} text={copy.starTitle} heading="star" />} />
         <p className="ultherapy-prime-desktop__star-intro">{copy.starIntro}</p>
         <div className="ultherapy-prime-desktop__strength-grid">
           {copy.strengths.map((text, index) => {

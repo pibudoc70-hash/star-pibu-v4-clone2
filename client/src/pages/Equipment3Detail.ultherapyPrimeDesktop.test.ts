@@ -179,10 +179,10 @@ describe("Ultherapy Prime localized authored content", () => {
     expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__combination-grid article:nth-child(4) h3 { font-size: 0.84rem; letter-spacing: -0.035em; }');
     expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li { align-items: center; justify-content: center; gap: 0.3rem; font-size: clamp(0.64rem, 3.35vw, 0.78rem);');
     expect(authoredRules).toContain('body.font-lang-ko .ultherapy-prime-desktop__recommend-copy li svg { width: 0.72rem; height: 0.72rem; margin-top: 0; }');
-    expect(authoredRules).toContain('body.font-lang-ko .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {\n    display: flex;\n    flex-direction: column;\n    gap: 2rem;');
+    expect(authoredRules).toContain('.equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {\n    display: flex;\n    flex-direction: column;\n    gap: 2rem;');
     expect(css).toContain('.equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {\n      padding: 2rem 0 0 !important;\n    }');
     expect(css).toContain('.equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {\n      padding: 0 !important;\n      border-top: 0 !important;\n    }');
-    expect(authoredRules).toContain('body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {\n    padding-top: 0;\n  }');
+    expect(authoredRules).not.toContain('body.font-lang-ko .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface');
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--tablet { display: none; }');
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__principle-diagram img.ultherapy-prime-desktop__principle-diagram--pc { display: block; }');
     expect(authoredRules).toContain('.ultherapy-prime-desktop__content[data-lang="ko"] .ultherapy-prime-desktop__authentic-equipment--pc-hidden,');

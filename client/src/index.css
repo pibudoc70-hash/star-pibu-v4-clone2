@@ -6581,28 +6581,6 @@ body.font-lang-zh .hero-stat-label {
 }
 
 @media (max-width: 767px) {
-  body.font-lang-ko .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main {
-    padding-top: 1.5rem !important;
-    padding-bottom: 2rem !important;
-  }
-
-  body.font-lang-ko .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__lower-surface {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell,
-  body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell,
-  body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface,
-  body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell > .equipment-detail__info-card {
-    margin: 0 !important;
-  }
-
-  body.font-lang-ko #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
-    padding-top: 0;
-  }
-
   /* All authored Ultherapy phone pages share the approved compact
      FAQ → clinic → return rhythm without relying on the body language class. */
   .equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__main {

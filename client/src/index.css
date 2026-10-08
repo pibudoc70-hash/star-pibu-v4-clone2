@@ -11152,10 +11152,25 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
 }
 
 .ultherapy-prime-desktop__thermage-ja-what-title-break,
+.ultherapy-prime-desktop__thermage-ja-adviser-headline-break,
 .ultherapy-prime-desktop__thermage-ja-adviser-description-break,
+.ultherapy-prime-desktop__thermage-ja-collagen-title-break,
+.ultherapy-prime-desktop__thermage-ja-tips-title-break,
+.ultherapy-prime-desktop__thermage-ja-combination-title-break,
 .ultherapy-prime-desktop__thermage-ja-recommend-title-break,
 .ultherapy-prime-desktop__thermage-ja-total-tip-description-break,
 .ultherapy-prime-desktop__thermage-ja-pain-title-break,
+.ultherapy-prime-desktop__thermage-ja-trust-title-break,
+.ultherapy-prime-desktop__thermage-chinese-hero-title-break,
+.ultherapy-prime-desktop__thermage-chinese-hero-description-break,
+.ultherapy-prime-desktop__thermage-chinese-collagen-title-break,
+.ultherapy-prime-desktop__thermage-chinese-tips-title-break,
+.ultherapy-prime-desktop__thermage-chinese-pain-title-break,
+.ultherapy-prime-desktop__thermage-chinese-trust-title-break,
+.ultherapy-prime-desktop__thermage-chinese-combination-title-break,
+.ultherapy-prime-desktop__thermage-chinese-star-title-break,
+.ultherapy-prime-desktop__thermage-chinese-strength-break,
+.ultherapy-prime-desktop__thermage-chinese-certification-heading-break,
 .ultherapy-prime-desktop__thermage-chinese-adviser-break,
 .ultherapy-prime-desktop__thermage-chinese-recommend-title-break {
   display: none;
@@ -11581,6 +11596,10 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
   display: none;
 }
 
+.ultherapy-prime-desktop__thermage-korean-certification-mobile {
+  display: none;
+}
+
 @media (max-width: 767px) {
   body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-inner {
     padding-top: calc(2.45rem + env(safe-area-inset-top));
@@ -11662,6 +11681,10 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
 
   body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__hero-description {
     font-size: clamp(1.296rem, 6.06vw, 1.536rem);
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-hero-description-accent {
+    color: #9F2E8D !important;
   }
 
   .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-logo-fallback,
@@ -11841,6 +11864,11 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
     display: block !important;
     order: 3;
     width: 100%;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ko"] .ultherapy-prime-desktop__collagen-grid > li > span,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ko"] .ultherapy-prime-desktop__thermage-korean-collagen-title-default {
+    display: none !important;
   }
 
   body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__heading h2 {
@@ -12117,6 +12145,302 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
     overflow-wrap: anywhere;
   }
 
+  /* Localized phones reuse the finalized Korean mobile media and sequence;
+     text remains sourced from each locale's presentation data. */
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__hero-device {
+    display: none !important;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__hero-visual {
+    margin-top: 2.75rem;
+    padding: 0.25rem 0 0;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__hero-visual::before {
+    display: none;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-mobile-hero-console {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(60.8vw, 14.4rem);
+    height: auto;
+    object-fit: contain;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:not([data-lang="ko"]) h1 {
+    font-size: clamp(0.768rem, 3.6vw, 0.864rem);
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:is([data-lang="zh"], [data-lang="zh-TW"]) :is(
+    .ultherapy-prime-desktop__thermage-chinese-hero-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-hero-description-break
+  ) {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:is([data-lang="zh"], [data-lang="zh-TW"]) .ultherapy-prime-desktop__thermage-hero-description-accent {
+    color: #9F2E8D;
+    font-style: normal;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:is([data-lang="zh"], [data-lang="zh-TW"]) .ultherapy-prime-desktop__trust-badges strong {
+    display: block;
+    min-height: 2.7em;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"]:is([data-lang="zh"], [data-lang="zh-TW"]) .ultherapy-prime-desktop__thermage-chinese-trust-title-break {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ultherapy-prime-desktop__trust-icon {
+    margin-bottom: 0.25rem;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:is([data-lang="zh"], [data-lang="zh-TW"]) :is(
+    .ultherapy-prime-desktop__thermage-chinese-collagen-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-tips-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-pain-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-combination-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-star-title-break,
+    .ultherapy-prime-desktop__thermage-chinese-strength-break,
+    .ultherapy-prime-desktop__thermage-chinese-certification-heading-break
+  ) {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ja"] .ultherapy-prime-desktop__thermage-ja-what-title-break {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ja"] .ultherapy-prime-desktop__thermage-ja-adviser-headline-break {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ja"] .ultherapy-prime-desktop__thermage-ja-adviser-first-line {
+    font-size: 0.9rem;
+  }
+
+  .ultherapy-prime-desktop__hero[data-treatment="thermage"][data-lang="ja"] .ultherapy-prime-desktop__thermage-ja-trust-title-break {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="ja"] :is(
+    .ultherapy-prime-desktop__thermage-ja-collagen-title-break,
+    .ultherapy-prime-desktop__thermage-ja-tips-title-break,
+    .ultherapy-prime-desktop__thermage-ja-pain-title-break,
+    .ultherapy-prime-desktop__thermage-ja-combination-title-break,
+    .ultherapy-prime-desktop__thermage-ja-recommend-title-break
+  ) {
+    display: initial;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__pain-options li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__areas-figure img {
+    -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 76%, transparent 100%);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="ultherapy"]:not([data-lang="ko"]) .ultherapy-prime-desktop__pain-options li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-depth-copy,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__process,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-combination-intro,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-certification-pc {
+    display: none !important;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-copy {
+    display: contents;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-copy > .ultherapy-prime-desktop__heading,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-copy > p {
+    order: 1;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__principle-grid > .ultherapy-prime-desktop__principle-diagram {
+    order: 2;
+    margin-top: 1.8rem;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-transfer-features {
+    order: 3;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-transfer-features h3 {
+    font-size: clamp(0.432rem, 1.904vw, 0.464rem);
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__collagen-grid > li > span {
+    display: none !important;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"][data-lang="en"] .ultherapy-prime-desktop__thermage-transfer-features h3 {
+    font-family: var(--font-sans-en);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-principle-image {
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 72%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 72%, transparent 100%);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__treatment-info {
+    padding-block: 1.75rem;
+    background: #FAF8F5;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser {
+    display: flex !important;
+    position: relative !important;
+    min-height: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 1.25rem 1.2rem;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser-copy {
+    display: contents;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser-copy small,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser-copy p {
+    order: 1;
+    width: min(100%, 22rem);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser-doctor {
+    position: relative !important;
+    inset: auto !important;
+    order: 2;
+    width: min(69.6vw, 17.7rem);
+    height: 17rem;
+    margin: 1.25rem 0 1.1rem;
+    transform: none !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-adviser-copy > span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    order: 3;
+    width: 100%;
+    margin: 0;
+    color: var(--ultherapy-muted);
+    font-size: 0.98rem;
+    line-height: 1.82;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-adviser-accent {
+    color: #9F2E8D !important;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__collagen,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__tips {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__collagen {
+    background: var(--home-section-bg-b);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__tips,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__combination,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__star {
+    background: var(--home-section-bg-a);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__pain,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__recommend {
+    background: var(--home-section-bg-b);
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__collagen > .ultherapy-prime-desktop__heading,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__tips > .ultherapy-prime-desktop__heading {
+    order: 1;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__collagen-grid,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__tip-grid {
+    order: 2;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-collagen-intro,
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-tips-intro {
+    order: 3;
+    margin: 1.4rem 0 0;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-certification-mobile {
+    display: block;
+    margin: 0;
+    color: var(--ultherapy-ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-certification-mobile strong {
+    color: #9F2E8D;
+    font-weight: 800;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid article:nth-child(3),
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid article:nth-child(4) {
+    padding-block: 1.25rem;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__thermage-korean-combination-ultherapy-image {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+
+  .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__combination-grid article:nth-child(2) .ultherapy-prime-desktop__combination-image img {
+    flex: 0 0 auto;
+    width: 65%;
+    height: 65%;
+  }
+
+  .equipment-detail__thermage-gallery--foreign {
+    display: none !important;
+  }
+
   /* Foreign editions follow the same current PC sequence; their longer copy
      can grow vertically, never into adjacent images or cards. */
   .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__process {
@@ -12147,5 +12471,15 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
   .ultherapy-prime-desktop__content[data-treatment="thermage"]:not([data-lang="ko"]) .ultherapy-prime-desktop__pain-copy > p {
     overflow-wrap: anywhere;
     word-break: normal;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ultherapy-prime-desktop__content[data-treatment="ultherapy"]:not([data-lang="ko"]) .ultherapy-prime-desktop__pain-options li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    text-align: center;
   }
 }

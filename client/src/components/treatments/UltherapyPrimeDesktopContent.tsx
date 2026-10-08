@@ -304,13 +304,28 @@ function AuthoredTreatmentTitle({
   return foreignHeading ? <ForeignMobileHeadingLineBreak lang={lang} text={text} heading={foreignHeading} /> : <>{text}</>;
 }
 
+const THERMAGE_FOREIGN_HERO_ACCENT: Partial<Record<Lang, string>> = {
+  en: "authentic Thermage FLX",
+  ja: "正規品のThermage FLX",
+  zh: "原装Thermage FLX",
+  "zh-TW": "原廠Thermage FLX",
+};
+
+function ThermageForeignHeroDescription({ lang, text }: { lang: Lang; text: string }) {
+  const accent = THERMAGE_FOREIGN_HERO_ACCENT[lang];
+  const index = accent ? text.indexOf(accent) : -1;
+  if (index < 0 || !accent) return <>{text}</>;
+  const prefix = text.slice(0, index);
+  return <>{lang === "ja" ? <span className="ultherapy-prime-desktop__thermage-ja-hero-location">{prefix}</span> : prefix}<span className="ultherapy-prime-desktop__thermage-hero-description-accent">{accent}</span>{text.slice(index + accent.length)}</>;
+}
+
 export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pick<UltherapyPrimeProps, "lang" | "treatment">) {
   const isThermage = treatment === "thermage";
   const copy = isThermage ? THERMAGE_FLX_COPY[lang] : ULTHERAPY_PRIME_COPY[lang];
   const thermagePresentation = isThermage ? THERMAGE_FLX_PRESENTATION[lang] : null;
 
   return (
-    <section className="ultherapy-prime-desktop ultherapy-prime-desktop__hero" data-treatment={treatment} aria-labelledby="ultherapy-prime-title">
+    <section className="ultherapy-prime-desktop ultherapy-prime-desktop__hero" data-treatment={treatment} data-lang={lang} aria-labelledby="ultherapy-prime-title">
       <div className="ultherapy-prime-desktop__hero-inner">
         <div className="ultherapy-prime-desktop__hero-copy">
           <div className="ultherapy-prime-desktop__wordmark" aria-label={isThermage ? "Thermage FLX" : "Ultherapy Prime"}>
@@ -319,7 +334,7 @@ export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pic
           </div>
           <p className="ultherapy-prime-desktop__eyebrow">{isThermage ? "PREMIUM RADIOFREQUENCY CARE" : "PREMIUM ULTRASOUND LIFTING"}</p>
           <h1 id="ultherapy-prime-title">{isThermage && lang === "ko" ? <>4세대에 걸친 진화된 써마지 FLX로 <br className="ultherapy-prime-desktop__thermage-hero-title-break" />리프팅을 넘어 강력한 타이트닝 효과까지</> : isThermage ? thermagePresentation?.heroTitle : <KoreanLineBreakTitle lang={lang} text={copy.heroTitle} firstLine="한 번의 시술로 최대 1년," />}</h1>
-          <p className="ultherapy-prime-desktop__hero-description">{isThermage && lang === "ko" ? <>부산 서면 스타피부과에서 <br className="ultherapy-prime-desktop__thermage-hero-description-break" /><span className="ultherapy-prime-desktop__thermage-hero-description-accent">정품 써마지 FLX</span>를 경험하세요!</> : isThermage ? thermagePresentation?.heroDescription : <KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," />}</p>
+          <p className="ultherapy-prime-desktop__hero-description">{isThermage && lang === "ko" ? <>부산 서면 스타피부과에서 <br className="ultherapy-prime-desktop__thermage-hero-description-break" /><span className="ultherapy-prime-desktop__thermage-hero-description-accent">정품 써마지 FLX</span>를 경험하세요!</> : isThermage ? <ThermageForeignHeroDescription lang={lang} text={thermagePresentation?.heroDescription ?? ""} /> : <KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," />}</p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label={copy.trustTitles.join(", ")}>
             {isThermage ? THERMAGE_TRUST_BADGES.map((badge, index) => {
               const Icon = badge.Icon;
@@ -360,7 +375,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">
-            <SectionHeading eyebrow={isThermage ? "HOW THERMAGE FLX WORKS" : "HOW ULTHERAPY WORKS"} title={isThermage && lang === "ko" ? <>써마지 FLX는<br className="ultherapy-prime-desktop__thermage-what-title-break" />어떤 시술인가요?</> : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.whatTitle} koreanFirstLine="울쎄라피 프라임은" foreignHeading="what" />} />
+            <SectionHeading eyebrow={isThermage ? "HOW THERMAGE FLX WORKS" : "HOW ULTHERAPY WORKS"} title={isThermage && lang === "ko" ? <>써마지 FLX는<br className="ultherapy-prime-desktop__thermage-what-title-break" />어떤 시술인가요?</> : isThermage && lang === "ja" ? <>Thermage FLXとは<br className="ultherapy-prime-desktop__thermage-ja-what-title-break" />どのような施術ですか？</> : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.whatTitle} koreanFirstLine="울쎄라피 프라임은" foreignHeading="what" />} />
             <p>{thermagePresentation?.whatParagraph ?? copy.whatParagraphs[0]}</p>
             {!isThermage && <p>{copy.whatParagraphs[1]}</p>}
             {!isThermage && <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">
@@ -386,8 +401,8 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
           <img className="ultherapy-prime-desktop__thermage-korean-adviser-doctor" src="/api/storage/thermage-flx-korean-doctor-011_4e2957fa.webp" alt="스타피부과 조시형 원장" loading="lazy" />
           <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy ultherapy-prime-desktop__thermage-korean-pc-current">
             <small>THERMAGE FLX CLINICAL ADVISOR</small>
-            <p>{thermagePresentation.adviserHeadline}</p>
-            <span>{thermagePresentation.adviserDescription}</span>
+            <p>{lang === "en" ? <>Dr. Cho Si-hyung of STAR Dermatology is an officially certified <em className="ultherapy-prime-desktop__thermage-adviser-accent">Thermage FLX clinical advisor.</em></> : lang === "ja" ? <>STAR皮膚科のチョ・シヒョン院長は、Thermage FLX本社が公式認定した<em className="ultherapy-prime-desktop__thermage-adviser-accent">Thermage FLX臨床顧問</em>です。</> : lang === "zh" ? <>STAR皮肤科曹时亨院长是经<br className="ultherapy-prime-desktop__thermage-chinese-adviser-break" /><span className="ultherapy-prime-desktop__thermage-chinese-adviser-line">Thermage FLX总部官方认证的<em className="ultherapy-prime-desktop__thermage-adviser-accent">Thermage FLX临床顾问</em>。</span></> : lang === "zh-TW" ? <>STAR皮膚科趙時享院長為經<br className="ultherapy-prime-desktop__thermage-chinese-adviser-break" /><span className="ultherapy-prime-desktop__thermage-chinese-adviser-line">Thermage FLX原廠官方認證的<em className="ultherapy-prime-desktop__thermage-adviser-accent">Thermage FLX臨床顧問</em>。</span></> : thermagePresentation.adviserHeadline}</p>
+            <span>{lang === "ja" ? <>豊富な臨床経験をもとに、<br className="ultherapy-prime-desktop__thermage-ja-adviser-description-break" />Thermage FLXの施術を丁寧にご提供しています。</> : thermagePresentation.adviserDescription}</span>
           </div>
           {isKoreanThermage && <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy ultherapy-prime-desktop__thermage-korean-pc-restore">
             <small>THERMAGE FLX CLINICAL ADVISOR</small>
@@ -437,14 +452,14 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
         <SectionHeading eyebrow="THERMAGE FLX TIPS" title={thermagePresentation?.tipTitle ?? thermageCopy.tipTitle} />
         {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-tips-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.tipsIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore">보통 눈가 주변은 피부가 얇고 예민하여서 시술하기가 힘든데,<br />써마지 FLX는 아이 전용팁이 있어 눈가주름도 필 수 있으며, 토탈팁은 얼굴에 빠르게 시술 가능합니다.</span></> : thermagePresentation.tipsIntro}</p>}
         <div className="ultherapy-prime-desktop__tip-grid">
-          {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation?.tipDescriptions[index]}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-tip-description-default">{tip.description}</span><span className="ultherapy-prime-desktop__thermage-korean-tip-description-alt">{index === 1 ? <>눈가 미세 부위까지 정밀하고 섬세하게 적용하여<br />눈가 피부처짐, 다크서클을 개선합니다.</> : THERMAGE_KOREAN_TIP_MANUSCRIPT[index]}</span></span></> : thermagePresentation?.tipDescriptions[index] ?? tip.description}</p></div></article>)}
+          {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation?.tipDescriptions[index]}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-tip-description-default">{tip.description}</span><span className="ultherapy-prime-desktop__thermage-korean-tip-description-alt">{index === 1 ? <>눈가 미세 부위까지 정밀하고 섬세하게 적용하여<br />눈가 피부처짐, 다크서클을 개선합니다.</> : THERMAGE_KOREAN_TIP_MANUSCRIPT[index]}</span></span></> : lang === "ja" && index === 0 ? <>従来のThermageチップの3.0cm²より大きい<br className="ultherapy-prime-desktop__thermage-ja-total-tip-description-break" />4.0cm²にアップグレードされ、施術速度を25%向上させます。</> : thermagePresentation?.tipDescriptions[index] ?? tip.description}</p></div></article>)}
         </div>
       </section>}
 
       <section className={`ultherapy-prime-desktop__pain${isThermage && !showThermageVideo ? " ultherapy-prime-desktop__pain--no-media" : ""}`} aria-labelledby="ultherapy-pain-heading">
         <div className="ultherapy-prime-desktop__pain-main">
           <div className="ultherapy-prime-desktop__pain-copy">
-            <SectionHeading eyebrow="COMFORT CARE" title={isThermage && lang === "ko" ? <><span className="ultherapy-prime-desktop__thermage-korean-pain-title-default">{thermagePresentation?.painTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-pain-title-pc">써마지 FLX,<br />통증때문에 고민이라면?</span></> : isThermage ? thermagePresentation?.painTitle : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.painTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="pain" />} />
+            <SectionHeading eyebrow="COMFORT CARE" title={isThermage && lang === "ko" ? <><span className="ultherapy-prime-desktop__thermage-korean-pain-title-default">{thermagePresentation?.painTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-pain-title-pc">써마지 FLX,<br />통증때문에 고민이라면?</span></> : isThermage && lang === "ja" ? <>Thermage FLX、痛みが<br className="ultherapy-prime-desktop__thermage-ja-pain-title-break" /><span className="ultherapy-prime-desktop__thermage-ja-pain-title-line">気になってお悩みの方へ</span></> : isThermage ? thermagePresentation?.painTitle : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.painTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="pain" />} />
             <ul className="ultherapy-prime-desktop__pain-options" aria-label={copy.painTitle}>
               {copy.painOptions.map((option) => <li key={option}>{option}</li>)}
             </ul>
@@ -477,17 +492,18 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
         <div className="ultherapy-prime-desktop__combination-grid">
           {copy.combinationTitles.map((title, index) => {
             const media = combinationMedia[index];
-            const isKoreanThermageFirstCard = isThermage && lang === "ko" && index === 0;
-            const isKoreanThermageCombination = isThermage && lang === "ko" && title.startsWith("써마지 FLX +");
-            const koreanThermageCombinationRest = title.replace("써마지 FLX +", "").trimStart();
+            const isThermageFirstCard = isThermage && index === 0;
+            const thermageCombinationPrefix = lang === "ko" ? "써마지 FLX +" : "Thermage FLX +";
+            const isThermageCombination = isThermage && title.startsWith(thermageCombinationPrefix);
+            const thermageCombinationRest = title.replace(thermageCombinationPrefix, "").trimStart();
             const combinationBadge = thermagePresentation?.combinationBadges[index] ?? copy.combinationBadges[index];
             return (
               <article key={title}>
                 <div className="ultherapy-prime-desktop__combination-image">
-                  {isKoreanThermageFirstCard ? <><span className="ultherapy-prime-desktop__thermage-korean-combination-media-default"><img src={media.image} alt={title} loading="lazy" />{"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}</span><img className="ultherapy-prime-desktop__thermage-korean-combination-ultherapy-image" src={THERMAGE_KOREAN_COMBINATION_ULTHERAPY_IMAGE} alt="울쎄라피 프라임 장비" loading="lazy" /></> : <><img src={media.image} alt={title} loading="lazy" />{"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}</>}
+                  {isThermageFirstCard ? <><span className="ultherapy-prime-desktop__thermage-korean-combination-media-default"><img src={media.image} alt={title} loading="lazy" />{"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}</span><img className="ultherapy-prime-desktop__thermage-korean-combination-ultherapy-image" src={THERMAGE_KOREAN_COMBINATION_ULTHERAPY_IMAGE} alt={lang === "ko" ? "울쎄라피 프라임 장비" : "Ultherapy Prime device"} loading="lazy" /></> : <><img src={media.image} alt={title} loading="lazy" />{"secondaryImage" in media && media.secondaryImage && <img src={media.secondaryImage} alt="" aria-hidden="true" loading="lazy" />}</>}
                 </div>
-                {combinationBadge && <span className={`ultherapy-prime-desktop__combination-badge${isThermage && lang === "ko" ? " ultherapy-prime-desktop__thermage-korean-combination-badge" : ""}`}>{combinationBadge}</span>}
-                <h3>{isKoreanThermageCombination ? <><span className="ultherapy-prime-desktop__thermage-korean-combination-card-title-default">{title}</span><span className="ultherapy-prime-desktop__thermage-korean-combination-card-title-pc">써마지 FLX +<br />{koreanThermageCombinationRest}</span></> : !isThermage && lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={title} firstLine="울쎄라피 프라임" /> : title.split("\n").map((line, lineIndex) => <span key={`${title}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</h3>
+                {combinationBadge && <span className={`ultherapy-prime-desktop__combination-badge${isThermage ? " ultherapy-prime-desktop__thermage-korean-combination-badge" : ""}`}>{combinationBadge}</span>}
+                <h3>{isThermageCombination ? <><span className="ultherapy-prime-desktop__thermage-korean-combination-card-title-default">{title}</span><span className="ultherapy-prime-desktop__thermage-korean-combination-card-title-pc">{thermageCombinationPrefix}<br />{thermageCombinationRest}</span></> : !isThermage && lang === "ko" ? <KoreanMobileOnlyLineBreak lang={lang} text={title} firstLine="울쎄라피 프라임" /> : title.split("\n").map((line, lineIndex) => <span key={`${title}-${line}`}>{lineIndex > 0 && <br />}{line}</span>)}</h3>
                 <p>{thermagePresentation?.combinationDescriptions[index] ?? copy.combinationDescriptions[index]}</p>
               </article>
             );
@@ -497,7 +513,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
 
       <section className="ultherapy-prime-desktop__recommend" aria-labelledby="ultherapy-recommend-heading">
         <div className="ultherapy-prime-desktop__recommend-copy">
-          <SectionHeading eyebrow="RECOMMENDED FOR" title={isThermage && lang === "ko" ? <><span className="ultherapy-prime-desktop__thermage-korean-recommend-title-default">{thermagePresentation?.recommendTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-recommend-title-pc">써마지 FLX,<br />이런 분께 추천합니다</span></> : isThermage ? thermagePresentation?.recommendTitle : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.recommendTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="recommend" />} />
+          <SectionHeading eyebrow="RECOMMENDED FOR" title={isThermage && lang === "ko" ? <><span className="ultherapy-prime-desktop__thermage-korean-recommend-title-default">{thermagePresentation?.recommendTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-recommend-title-pc">써마지 FLX,<br />이런 분께 추천합니다</span></> : isThermage && lang === "ja" ? <>Thermage FLX、<br className="ultherapy-prime-desktop__thermage-ja-recommend-title-break" /><span className="ultherapy-prime-desktop__thermage-ja-recommend-title-line">このような方におすすめです</span></> : isThermage && (lang === "zh" || lang === "zh-TW") ? <><span>Thermage FLX，</span><br className="ultherapy-prime-desktop__thermage-chinese-recommend-title-break" /><span className="ultherapy-prime-desktop__thermage-chinese-recommend-title-line">{thermagePresentation?.recommendTitle.replace("Thermage FLX，", "")}</span></> : isThermage ? thermagePresentation?.recommendTitle : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.recommendTitle} koreanFirstLine="울쎄라피 프라임," foreignHeading="recommend" />} />
           <ul>
             {copy.recommendations.map((recommendation) => <li key={recommendation}><Check aria-hidden="true" />{recommendation}</li>)}
           </ul>

@@ -160,7 +160,7 @@ export const THERMAGE_FLX_PRESENTATION: Record<Lang, ThermageFlxPresentation> = 
       "A wide range of lifting devices in addition to Thermage FLX"
     ],
     "certificationHeading": "STAR Dermatology Uses Authentic Thermage FLX Tips.",
-    "certificationDescription": "STAR Dermatology uses Thermage FLX equipment and authentic tips approved by the U.S. Food and Drug Administration (FDA) and Korea’s Ministry of Food and Drug Safety (MFDS). Thermage FLX treatment tips are single-use consumables provided for one person only. Please ensure that an authentic tip approved by the Ministry of Food and Drug Safety is being used.",
+    "certificationDescription": "Thermage FLX treatment tips are single-use consumables provided for one person only. Please ensure that an authentic tip approved by the Ministry of Food and Drug Safety is being used.",
     "adviserHeadline": "Dr. Cho Si-hyung of STAR Dermatology is an officially certified Thermage FLX clinical advisor.",
     "adviserDescription": "With extensive clinical experience, STAR Dermatology provides carefully planned Thermage FLX treatment."
   },
@@ -227,7 +227,7 @@ export const THERMAGE_FLX_PRESENTATION: Record<Lang, ThermageFlxPresentation> = 
       "Thermage FLXをはじめ、多数のリフティング機器を保有"
     ],
     "certificationHeading": "STAR皮膚科ではThermage FLXの正規チップを使用しています。",
-    "certificationDescription": "STAR皮膚科では、米国食品医薬品局（FDA）および韓国食品医薬品安全処（MFDS）の承認を受けたThermage FLX機器と正規チップを使用しています。Thermage FLXの施術チップは、お一人のみに提供される使い捨ての消耗品です。食品医薬品安全処の許可を受けた正規チップが使用されているか、必ずご確認ください。",
+    "certificationDescription": "Thermage FLXの施術チップは、お一人のみに提供される使い捨ての消耗品です。食品医薬品安全処の許可を受けた正規チップが使用されているか、必ずご確認ください。",
     "adviserHeadline": "STAR皮膚科のチョ・シヒョン院長は、Thermage FLX本社が公式認定したThermage FLX臨床顧問です。",
     "adviserDescription": "豊富な臨床経験をもとに、Thermage FLXの施術を丁寧にご提供しています。"
   },
@@ -294,7 +294,7 @@ export const THERMAGE_FLX_PRESENTATION: Record<Lang, ThermageFlxPresentation> = 
       "除Thermage FLX外，配备多种提拉设备"
     ],
     "certificationHeading": "STAR皮肤科使用Thermage FLX原装治疗头。",
-    "certificationDescription": "STAR皮肤科使用获美国食品药品监督管理局（FDA）和韩国食品药品安全处（MFDS）批准的Thermage FLX设备及原装治疗头。Thermage FLX治疗头为仅供一位顾客使用的一次性耗材；请务必确认所使用的是经韩国食品药品安全处许可的原装治疗头。",
+    "certificationDescription": "Thermage FLX治疗头为仅供一位顾客使用的一次性耗材；请务必确认所使用的是经韩国食品药品安全处许可的原装治疗头。",
     "adviserHeadline": "STAR皮肤科曹时亨院长是经Thermage FLX总部官方认证的Thermage FLX临床顾问。",
     "adviserDescription": "凭借丰富的临床经验，STAR皮肤科提供审慎规划的Thermage FLX治疗。"
   },
@@ -361,7 +361,7 @@ export const THERMAGE_FLX_PRESENTATION: Record<Lang, ThermageFlxPresentation> = 
       "除Thermage FLX外，亦備有多種拉提設備"
     ],
     "certificationHeading": "STAR皮膚科使用Thermage FLX原廠探頭。",
-    "certificationDescription": "STAR皮膚科使用經美國食品藥物管理局（FDA）及韓國食品醫藥品安全處（MFDS）核准的Thermage FLX設備與原廠探頭。Thermage FLX療程探頭為僅供一人使用的一次性耗材，請務必確認所使用的是經食品醫藥品安全處核准的原廠探頭。",
+    "certificationDescription": "Thermage FLX療程探頭為僅供一人使用的一次性耗材，請務必確認所使用的是經食品醫藥品安全處核准的原廠探頭。",
     "adviserHeadline": "STAR皮膚科趙時享院長為經Thermage FLX原廠官方認證的Thermage FLX臨床顧問。",
     "adviserDescription": "憑藉豐富的臨床經驗，STAR皮膚科提供審慎規劃的Thermage FLX療程。"
   }

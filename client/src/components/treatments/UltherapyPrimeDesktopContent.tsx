@@ -344,6 +344,7 @@ export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pic
 
 export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatment = "ultherapy" }: UltherapyPrimeProps) {
   const isThermage = treatment === "thermage";
+  const isKoreanThermage = isThermage && lang === "ko";
   const thermageCopy = isThermage ? THERMAGE_FLX_COPY[lang] : null;
   const thermagePresentation = isThermage ? THERMAGE_FLX_PRESENTATION[lang] : null;
   const copy = thermageCopy ?? ULTHERAPY_PRIME_COPY[lang];
@@ -374,7 +375,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
             </div>
           </div>
           <figure className="ultherapy-prime-desktop__principle-diagram">
-            {isThermage ? <img className="ultherapy-prime-desktop__thermage-principle-image ultherapy-prime-desktop__thermage-principle-image--final" src={THERMAGE_ASSET.principleHandpiece} alt={copy.whatTitle} loading="lazy" /> : <><img className="ultherapy-prime-desktop__principle-diagram--tablet" src={ASSET.depths} alt={copy.depthTitle} loading="lazy" /><img className="ultherapy-prime-desktop__principle-diagram--pc" src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" /></>}
+            {isThermage ? <>{isKoreanThermage && <img className="ultherapy-prime-desktop__thermage-principle-image ultherapy-prime-desktop__thermage-principle-image--ko-pc ultherapy-prime-desktop__thermage-korean-pc-restore" src={THERMAGE_ASSET.principleHandpiece} alt={copy.whatTitle} loading="lazy" />}<img className="ultherapy-prime-desktop__thermage-principle-image ultherapy-prime-desktop__thermage-principle-image--final ultherapy-prime-desktop__thermage-korean-pc-current" src={THERMAGE_ASSET.principleHandpiece} alt={copy.whatTitle} loading="lazy" /></> : <><img className="ultherapy-prime-desktop__principle-diagram--tablet" src={ASSET.depths} alt={copy.depthTitle} loading="lazy" /><img className="ultherapy-prime-desktop__principle-diagram--pc" src={ASSET.procedureDepths} alt={copy.depthTitle} loading="lazy" /></>}
           </figure>
         </div>
       </section>
@@ -383,11 +384,16 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
         <article className="ultherapy-prime-desktop__thermage-adviser ultherapy-prime-desktop__thermage-korean-adviser">
           <img className="ultherapy-prime-desktop__thermage-korean-adviser-device" src="/api/storage/thermage-flx-korean-device-background_eda63836.webp" alt="Thermage FLX device" loading="lazy" />
           <img className="ultherapy-prime-desktop__thermage-korean-adviser-doctor" src="/api/storage/thermage-flx-korean-doctor-011_4e2957fa.webp" alt="스타피부과 조시형 원장" loading="lazy" />
-          <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy">
+          <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy ultherapy-prime-desktop__thermage-korean-pc-current">
             <small>THERMAGE FLX CLINICAL ADVISOR</small>
             <p>{thermagePresentation.adviserHeadline}</p>
             <span>{thermagePresentation.adviserDescription}</span>
           </div>
+          {isKoreanThermage && <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy ultherapy-prime-desktop__thermage-korean-pc-restore">
+            <small>THERMAGE FLX CLINICAL ADVISOR</small>
+            <p>스타피부과 <strong>조시형 원장님은</strong><br />써마지 FLX 본사에서 공식인증한<br /><em>써마지 FLX 임상자문의</em>입니다.</p>
+            <span>풍부한 임상 경험과 실력 차이를 바탕으로<br />써마지 FLX 시술을 통해 만족스러운 시술 경험을 제공하고 있습니다.</span>
+          </div>}
         </article>
       </section>}
 
@@ -406,13 +412,13 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
 
       <section className="ultherapy-prime-desktop__collagen" aria-labelledby="ultherapy-collagen-heading">
         <SectionHeading eyebrow="COLLAGEN REMODELING" title={thermagePresentation?.collagenTitle ?? copy.collagenTitle} />
-        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-collagen-intro">{thermagePresentation.collagenIntro}</p>}
+        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-collagen-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.collagenIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore">표피를 냉각시키고 진피 조직에 열을 발생시키는 원리를 사용해 고주파 에너지를 전달함으로써<br />콜라겐 섬유의 변성 및 수축을 일으켜 콜라겐 재생이 이루어지면서 피부 탄력 개선에 도움을 줍니다.</span></> : thermagePresentation.collagenIntro}</p>}
         <ol className="ultherapy-prime-desktop__collagen-grid">
           {copy.collagenStages.map((label, index) => (
             <li key={label}>
               <figure><img className={isThermage ? "ultherapy-prime-desktop__thermage-korean-collagen-image-alt" : undefined} src={isThermage ? THERMAGE_KOREAN_COLLAGEN_IMAGES[index] : COLLAGEN_IMAGES[index]} alt={thermagePresentation?.collagenLabels[index] ?? label} loading="lazy" /></figure>
               <span>STEP {index + 1}</span>
-              <h3>{thermagePresentation?.collagenLabels[index] ?? label}</h3>
+              <h3>{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation?.collagenLabels[index]}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-collagen-title-default">{label}</span><span className="ultherapy-prime-desktop__thermage-korean-collagen-title-alt">{THERMAGE_KOREAN_COLLAGEN_LABELS[index]}</span></span></> : thermagePresentation?.collagenLabels[index] ?? label}</h3>
             </li>
           ))}
         </ol>
@@ -429,9 +435,9 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
 
       {thermageCopy && <section className="ultherapy-prime-desktop__tips" aria-labelledby="thermage-tip-heading">
         <SectionHeading eyebrow="THERMAGE FLX TIPS" title={thermagePresentation?.tipTitle ?? thermageCopy.tipTitle} />
-        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-tips-intro">{thermagePresentation.tipsIntro}</p>}
+        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-tips-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.tipsIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore">보통 눈가 주변은 피부가 얇고 예민하여서 시술하기가 힘든데,<br />써마지 FLX는 아이 전용팁이 있어 눈가주름도 필 수 있으며, 토탈팁은 얼굴에 빠르게 시술 가능합니다.</span></> : thermagePresentation.tipsIntro}</p>}
         <div className="ultherapy-prime-desktop__tip-grid">
-          {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{thermagePresentation?.tipDescriptions[index] ?? tip.description}</p></div></article>)}
+          {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation?.tipDescriptions[index]}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-tip-description-default">{tip.description}</span><span className="ultherapy-prime-desktop__thermage-korean-tip-description-alt">{index === 1 ? <>눈가 미세 부위까지 정밀하고 섬세하게 적용하여<br />눈가 피부처짐, 다크서클을 개선합니다.</> : THERMAGE_KOREAN_TIP_MANUSCRIPT[index]}</span></span></> : thermagePresentation?.tipDescriptions[index] ?? tip.description}</p></div></article>)}
         </div>
       </section>}
 

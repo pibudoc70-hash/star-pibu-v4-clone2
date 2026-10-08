@@ -11141,3 +11141,32 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
     word-break: keep-all !important;
   }
 }
+
+/* Korean Thermage PC restoration: preserve the localized mobile and foreign-language presentation. */
+.ultherapy-prime-desktop__thermage-korean-pc-restore {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-korean-pc-current {
+    display: none;
+  }
+
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-principle-image--ko-pc.ultherapy-prime-desktop__thermage-korean-pc-restore {
+    display: block;
+  }
+
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-korean-adviser-copy.ultherapy-prime-desktop__thermage-korean-pc-restore {
+    display: block;
+  }
+
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-korean-collagen-intro .ultherapy-prime-desktop__thermage-korean-pc-restore,
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__thermage-korean-tips-intro .ultherapy-prime-desktop__thermage-korean-pc-restore {
+    display: inline;
+  }
+
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__collagen-grid h3 > .ultherapy-prime-desktop__thermage-korean-pc-restore,
+  body.font-lang-ko .ultherapy-prime-desktop__content[data-treatment="thermage"] .ultherapy-prime-desktop__tips p > .ultherapy-prime-desktop__thermage-korean-pc-restore {
+    display: contents;
+  }
+}

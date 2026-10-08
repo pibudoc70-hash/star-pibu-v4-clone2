@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
+import { buildEquipment3DetailUrl } from "@/lib/equipment3DetailUrl";
 
 export const SHOW_DELAY_MS = 0;
 export const DISMISS_ANIMATION_MS = 200;
@@ -15,8 +16,8 @@ export function getLocalCalendarDateKey(date = new Date()): string {
 export const ULTHERA_THERMAGE_PROMOTIONS = {
   desktopImage: "/manus-storage/ulthera-thermage-promo-desktop_0ef841e8.jpg",
   mobileImage: "/manus-storage/ulthera-thermage-promo-mobile_52b2f894.jpg",
-  ultheraUrl: "https://starpibuclinic.cafe24.com/event/ulthera",
-  thermageUrl: "https://starpibuclinic.cafe24.com/event/thermage",
+  ultheraUrl: buildEquipment3DetailUrl("울쎄라피프라임", "best"),
+  thermageUrl: buildEquipment3DetailUrl("써마지FLX", "best"),
 } as const;
 
 export default function UltheraThermagePromotionPopup() {
@@ -166,20 +167,20 @@ export default function UltheraThermagePromotionPopup() {
             href={ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="울쎄라피 프라임 이벤트 새 탭으로 보기"
+            aria-label="울쎄라피 프라임 상세 페이지 새 탭으로 보기"
             className="absolute left-0 top-0 h-1/2 w-full focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] md:h-full md:w-1/2"
           >
-            <span className="sr-only">울쎄라피 프라임 이벤트 보기</span>
+            <span className="sr-only">울쎄라피 프라임 상세 페이지 보기</span>
           </a>
           <a
             data-testid="thermage-promotion-link"
             href={ULTHERA_THERMAGE_PROMOTIONS.thermageUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="써마지 FLX 이벤트 새 탭으로 보기"
+            aria-label="써마지 FLX 상세 페이지 새 탭으로 보기"
             className="absolute bottom-0 left-0 h-1/2 w-full focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] md:left-1/2 md:top-0 md:h-full md:w-1/2"
           >
-            <span className="sr-only">써마지 FLX 이벤트 보기</span>
+            <span className="sr-only">써마지 FLX 상세 페이지 보기</span>
           </a>
         </div>
       </section>

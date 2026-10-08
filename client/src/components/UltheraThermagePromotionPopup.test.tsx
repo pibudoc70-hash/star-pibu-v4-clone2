@@ -37,13 +37,15 @@ describe("UltheraThermagePromotionPopup", () => {
     return screen.getByRole("dialog", { name: "울쎄라피 프라임 및 써마지 FLX 이벤트" });
   }
 
-  it("shows both promotions in one responsive popup and points each half to its specified new-tab URL", () => {
+  it("shows both promotions in one responsive popup and points each half to its matching detail page", () => {
     const dialog = renderVisiblePopup();
 
     expect(dialog).toHaveClass("ulthera-thermage-promotion-dialog");
     expect(dialog).toHaveClass("max-w-[420px]", "md:max-w-[720px]", "lg:max-w-[960px]");
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl);
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.thermageUrl);
+    expect(ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl).toBe("/equipment3/%EC%9A%B8%EC%8E%84%EB%9D%BC%ED%94%BC%ED%94%84%EB%9D%BC%EC%9E%84?tab=best");
+    expect(ULTHERA_THERMAGE_PROMOTIONS.thermageUrl).toBe("/equipment3/%EC%8D%A8%EB%A7%88%EC%A7%80FLX?tab=best");
     expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("target", "_blank");
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("rel", "noopener noreferrer");
     expect(document.querySelector("picture img")).toHaveAttribute("src", ULTHERA_THERMAGE_PROMOTIONS.mobileImage);

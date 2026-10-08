@@ -350,6 +350,7 @@ export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pic
         </div>
         <div className="ultherapy-prime-desktop__hero-visual" aria-label={isThermage ? "Thermage FLX" : "Ultherapy Prime"}>
           <img className="ultherapy-prime-desktop__hero-device" src={isThermage ? THERMAGE_ASSET.device : ASSET.device} alt={isThermage ? "Thermage FLX radiofrequency skin-firmness device" : "Ultherapy Prime"} />
+          {isThermage && lang === "ko" && <img className="ultherapy-prime-desktop__thermage-mobile-hero-console" src="/manus-storage/thermage-mobile-hero-console_9a6c7cf4.webp" alt="써마지 FLX 장비 화면" />}
           {!isThermage && <img className="ultherapy-prime-desktop__hero-mobile-control-unit" src={ASSET.mobileControlUnit} alt={copy.mobileControlUnitAlt} />}
         </div>
       </div>
@@ -406,9 +407,10 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
           </div>
           {isKoreanThermage && <div className="ultherapy-prime-desktop__thermage-korean-adviser-copy ultherapy-prime-desktop__thermage-korean-pc-restore">
             <small>THERMAGE FLX CLINICAL ADVISOR</small>
-            <p>스타피부과 <strong>조시형 원장님은</strong><br />써마지 FLX 본사에서 공식인증한<br /><em>써마지 FLX 임상자문의</em>입니다.</p>
+            <p>피부과전문의 조시형원장님은<br /><em>써마지 FLX 임상자문의</em>입니다.</p>
             <span>풍부한 임상 경험과 실력 차이를 바탕으로<br />써마지 FLX 시술을 통해 만족스러운 시술 경험을 제공하고 있습니다.</span>
           </div>}
+          {isKoreanThermage && <p className="ultherapy-prime-desktop__thermage-korean-adviser-mobile-description">풍부한 임상 경험과 실력 차이를 바탕으로<br />써마지 FLX 시술을 통해 만족스러운 시술 경험을 제공하고 있습니다.</p>}
         </article>
       </section>}
 
@@ -426,8 +428,8 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
       </section>}
 
       <section className="ultherapy-prime-desktop__collagen" aria-labelledby="ultherapy-collagen-heading">
-        <SectionHeading eyebrow="COLLAGEN REMODELING" title={thermagePresentation?.collagenTitle ?? copy.collagenTitle} />
-        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-collagen-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.collagenIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore">표피를 냉각시키고 진피 조직에 열을 발생시키는 원리를 사용해 고주파 에너지를 전달함으로써<br />콜라겐 섬유의 변성 및 수축을 일으켜 콜라겐 재생이 이루어지면서 피부 탄력 개선에 도움을 줍니다.</span></> : thermagePresentation.collagenIntro}</p>}
+        <SectionHeading eyebrow="COLLAGEN REMODELING" title={isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-collagen-title-default">{thermagePresentation?.collagenTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-collagen-title-mobile">콜라겐 촉진과 리프팅을 동시에!</span></> : thermagePresentation?.collagenTitle ?? copy.collagenTitle} />
+        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-collagen-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.collagenIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-collagen-copy-default">표피를 냉각시키고 진피 조직에 열을 발생시키는 원리를 사용해 고주파 에너지를 전달함으로써<br className="ultherapy-prime-desktop__thermage-korean-collagen-mobile-break" />콜라겐 섬유의 변성 및 수축을 일으켜 콜라겐 재생이 이루어지면서 피부 탄력 개선에 도움을 줍니다.</span><span className="ultherapy-prime-desktop__thermage-korean-collagen-copy-mobile">표피를 냉각시키고 진피 조직에 열을 발생시키는 원리를 사용해 고주파 에너지를 전달함으로써 콜라겐 섬유의 변성 및 수축을 일으켜 피부 탄력 개선에 도움을 줍니다.</span></span></> : thermagePresentation.collagenIntro}</p>}
         <ol className="ultherapy-prime-desktop__collagen-grid">
           {copy.collagenStages.map((label, index) => (
             <li key={label}>
@@ -449,8 +451,8 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
       </section>
 
       {thermageCopy && <section className="ultherapy-prime-desktop__tips" aria-labelledby="thermage-tip-heading">
-        <SectionHeading eyebrow="THERMAGE FLX TIPS" title={thermagePresentation?.tipTitle ?? thermageCopy.tipTitle} />
-        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-tips-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.tipsIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore">보통 눈가 주변은 피부가 얇고 예민하여서 시술하기가 힘든데,<br />써마지 FLX는 아이 전용팁이 있어 눈가주름도 필 수 있으며, 토탈팁은 얼굴에 빠르게 시술 가능합니다.</span></> : thermagePresentation.tipsIntro}</p>}
+        <SectionHeading eyebrow="THERMAGE FLX TIPS" title={isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-tips-title-default">{thermagePresentation?.tipTitle ?? thermageCopy.tipTitle}</span><span className="ultherapy-prime-desktop__thermage-korean-tips-title-mobile">얼굴부터 눈가주름까지<br />부위별 집중 케어</span></> : thermagePresentation?.tipTitle ?? thermageCopy.tipTitle} />
+        {thermagePresentation && <p className="ultherapy-prime-desktop__thermage-korean-tips-intro">{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation.tipsIntro}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-tips-copy-default">보통 눈가 주변은 피부가 얇고 예민하여서 시술하기가 힘든데,<br />써마지 FLX는 아이 전용팁이 있어 눈가주름도 필 수 있으며, 토탈팁은 얼굴에 빠르게 시술 가능합니다.</span><span className="ultherapy-prime-desktop__thermage-korean-tips-copy-mobile">눈가 주변은 피부가 얇고 시술하기가 힘든데, 써마지 FLX는 아이 전용팁이 있어 눈가주름도 필 수 있으며, 토탈팁은 얼굴에 빠르게 시술 가능합니다.</span></span></> : thermagePresentation.tipsIntro}</p>}
         <div className="ultherapy-prime-desktop__tip-grid">
           {thermageCopy.tips.map((tip, index) => <article key={tip.name}><figure><img src={index === 0 ? THERMAGE_ASSET.totalTip : THERMAGE_ASSET.eyeTip} alt={tip.name} loading="lazy" /></figure><div><span>{tip.area}</span><h3>{tip.name}</h3><p>{isKoreanThermage ? <><span className="ultherapy-prime-desktop__thermage-korean-pc-current">{thermagePresentation?.tipDescriptions[index]}</span><span className="ultherapy-prime-desktop__thermage-korean-pc-restore"><span className="ultherapy-prime-desktop__thermage-korean-tip-description-default">{tip.description}</span><span className="ultherapy-prime-desktop__thermage-korean-tip-description-alt">{index === 1 ? <>눈가 미세 부위까지 정밀하고 섬세하게 적용하여<br />눈가 피부처짐, 다크서클을 개선합니다.</> : THERMAGE_KOREAN_TIP_MANUSCRIPT[index]}</span></span></> : lang === "ja" && index === 0 ? <>従来のThermageチップの3.0cm²より大きい<br className="ultherapy-prime-desktop__thermage-ja-total-tip-description-break" />4.0cm²にアップグレードされ、施術速度を25%向上させます。</> : thermagePresentation?.tipDescriptions[index] ?? tip.description}</p></div></article>)}
         </div>
@@ -538,7 +540,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
         </div>
         <div className="ultherapy-prime-desktop__star-certification" aria-label={copy.certificationTitle}>
           <img src={isThermage ? THERMAGE_ASSET.certificate : ASSET.authenticity} alt="" loading="lazy" />
-          {thermagePresentation ? <><p className="ultherapy-prime-desktop__thermage-korean-certification-default"><strong>{thermagePresentation.certificationHeading}</strong> — {thermagePresentation.certificationDescription}</p><div className="ultherapy-prime-desktop__thermage-korean-certification-pc"><p className="ultherapy-prime-desktop__thermage-korean-certification-heading">{thermagePresentation.certificationHeading}</p><p className="ultherapy-prime-desktop__thermage-korean-certification-description">{thermagePresentation.certificationDescription}</p></div></> : <p><strong>{copy.certificationTitle}</strong> — {copy.certificationText}</p>}
+          {thermagePresentation ? <><p className="ultherapy-prime-desktop__thermage-korean-certification-default"><strong>{thermagePresentation.certificationHeading}</strong> — {thermagePresentation.certificationDescription}</p><div className="ultherapy-prime-desktop__thermage-korean-certification-pc"><p className="ultherapy-prime-desktop__thermage-korean-certification-heading">{thermagePresentation.certificationHeading}</p><p className="ultherapy-prime-desktop__thermage-korean-certification-description">{thermagePresentation.certificationDescription}</p></div>{isThermage && lang === "ko" && <p className="ultherapy-prime-desktop__thermage-korean-certification-mobile">스타피부과는<br /><strong>써마지 FLX 정품팁을 사용합니다.</strong></p>}</> : <p><strong>{copy.certificationTitle}</strong> — {copy.certificationText}</p>}
         </div>
       </section>
     </div>

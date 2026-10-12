@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SpecialEventSection from "./SpecialEventSection";
@@ -176,5 +176,36 @@ describe("SpecialEventSection anchor target", () => {
       expect(screen.getByText("이벤트 B")).toBeInTheDocument();
       expect(screen.getByText("이벤트 A")).toBeInTheDocument();
     });
+  });
+
+  it("keeps the first nine homepage desktop cards visible, then reveals the remaining cards on demand", async () => {
+    class VisibleIntersectionObserverMock extends IntersectionObserverMock {
+      observe() {
+        this.callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+      }
+    }
+
+    vi.stubGlobal("IntersectionObserver", VisibleIntersectionObserverMock);
+    const events = Array.from({ length: 10 }, (_, index) => ({
+      id: index + 1,
+      title: `이벤트 ${index + 1}`,
+    }));
+    specialQuery.mockReturnValue({
+      data: events,
+      isLoading: false,
+      error: null,
+      refetch: vi.fn(),
+    });
+
+    render(<SpecialEventSection />);
+
+    await waitFor(() => expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(9));
+    const showMore = screen.getByRole("button", { name: "이벤트 자세히 보기" });
+    expect(showMore).toHaveAttribute("aria-controls", "special-event-desktop-grid");
+
+    fireEvent.click(showMore);
+
+    expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(10);
+    expect(screen.queryByRole("button", { name: "이벤트 자세히 보기" })).not.toBeInTheDocument();
   });
 });

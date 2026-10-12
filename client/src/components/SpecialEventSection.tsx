@@ -6,7 +6,7 @@
  * - 데스크톱: 동일 규격의 3열 이벤트 쇼케이스 카드
  */
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { Sparkles, RefreshCw, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
@@ -84,6 +84,16 @@ function SectionHeader({ lang }: { lang: string }) {
     </div>
   );
 }
+
+const DESKTOP_EVENT_INITIAL_COUNT = 9;
+
+const EVENT_LIST_CTA_LABEL: Record<string, string> = {
+  ko: "이벤트 자세히 보기",
+  en: "View Events",
+  ja: "イベントを詳しく見る",
+  zh: "查看活动详情",
+  "zh-TW": "查看活動詳情",
+};
 
 // ── 스켈레톤 카드 ─────────────────────────────────────────────────────────────
 function EventCardSkeleton({ compact = false }: { compact?: boolean }) {
@@ -178,11 +188,18 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
   const { lang } = useLang();
   const { getLocalizedText } = useLocalizedEvent();
   const [fetchRef, isFetchVisible] = useVisibleFetch();
+  const [showAllDesktopEvents, setShowAllDesktopEvents] = useState(false);
   const { data: specialEvents = [], isLoading, error, refetch } = trpc.events.special.useQuery(
     { lang },
     { enabled: isFetchVisible, staleTime: 10 * 60 * 1000 },
   );
   const allEvents = specialEvents as SpecialEvent[];
+  const desktopEvents = showHeader && !showAllDesktopEvents
+    ? allEvents.slice(0, DESKTOP_EVENT_INITIAL_COUNT)
+    : allEvents;
+  const showDesktopEventExpansion = showHeader
+    && !showAllDesktopEvents
+    && allEvents.length > DESKTOP_EVENT_INITIAL_COUNT;
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
   const sectionSpacing = showHeader ? "py-20 md:py-28" : "pt-12 pb-20 md:pt-16 md:pb-28";
   useEventSkeletonTiming(isInitialSkeletonVisible);
@@ -262,7 +279,7 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
             </div>
             {/* 데스크톱: 모든 이벤트를 동일한 정보 밀도의 3열 카드로 표시 */}
             <div data-testid="special-event-desktop-grid" className="hidden md:grid md:auto-rows-fr md:grid-cols-3 md:gap-6">
-              {allEvents.map((event) => (
+              {desktopEvents.map((event) => (
                 <EventCard
                   key={event.id}
                   event={event}
@@ -271,6 +288,20 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
                 />
               ))}
             </div>
+            {showDesktopEventExpansion && (
+              <div className="mt-8 hidden justify-center md:flex">
+                <button
+                  type="button"
+                  onClick={() => setShowAllDesktopEvents(true)}
+                  aria-controls="special-event-desktop-grid"
+                  aria-label={EVENT_LIST_CTA_LABEL[lang] ?? EVENT_LIST_CTA_LABEL.ko}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-gold-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-gold-deep)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_10%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
+                >
+                  {EVENT_LIST_CTA_LABEL[lang] ?? EVENT_LIST_CTA_LABEL.ko}
+                  <ChevronRight size={16} aria-hidden="true" />
+                </button>
+              </div>
+            )}
             <PainManagementGuide lang={lang} presentation="event-accordion" />
             <div className="mt-10 hidden md:block">
               <PainManagementGuide lang={lang} />

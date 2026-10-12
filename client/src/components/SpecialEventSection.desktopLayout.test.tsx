@@ -29,6 +29,20 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain("<EventTableMobile");
   });
 
+  it("keeps the first nine homepage cards in a desktop 3x3 grid and reveals additional cards on demand", () => {
+    expect(source).toContain('data-testid="special-event-desktop-grid"');
+    expect(source).toContain("const DESKTOP_EVENT_INITIAL_COUNT = 9;");
+    expect(source).toContain("const [showAllDesktopEvents, setShowAllDesktopEvents] = useState(false);");
+    expect(source).toContain("allEvents.slice(0, DESKTOP_EVENT_INITIAL_COUNT)");
+    expect(source).toContain("allEvents.length > DESKTOP_EVENT_INITIAL_COUNT");
+    expect(source).toContain("{desktopEvents.map((event) => (");
+    expect(source).toContain("{showDesktopEventExpansion && (");
+    expect(source).toContain('className="mt-8 hidden justify-center md:flex"');
+    expect(source).toContain("onClick={() => setShowAllDesktopEvents(true)}");
+    expect(source).toContain('aria-controls="special-event-desktop-grid"');
+    expect(source).toContain('ko: "이벤트 자세히 보기"');
+  });
+
   it("keeps lazy-fetch accessibility contracts without the removable desktop instruction copy", () => {
     expect(source).toContain('id="events"');
     expect(source).toContain('aria-busy="true"');

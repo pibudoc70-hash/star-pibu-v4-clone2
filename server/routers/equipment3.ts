@@ -19,11 +19,105 @@ import { z } from "zod/v4";
 import { storagePut } from "../storage";
 import { TRPCError } from "@trpc/server";
 import { optimizeImage } from "../_core/imageOptimizer";
-import { isEquipmentFaqJson } from "../../shared/equipmentFaq";
+import { isEquipmentFaqJson, parseEquipmentFaqs, type EquipmentFaq } from "../../shared/equipmentFaq";
 
 const faqJsonSchema = z.string().refine(isEquipmentFaqJson, {
   message: "FAQ는 질문과 답변으로 이루어진 JSON 배열이어야 합니다.",
 });
+
+const FAQ_TRANSLATION_LOCALES = ["en", "ja", "zh", "zhTw"] as const;
+type FaqTranslationLocale = typeof FAQ_TRANSLATION_LOCALES[number];
+
+const translatedFaqSchema = z.object({
+  question: z.string().min(1).max(4_000),
+  answer: z.string().min(1).max(4_000),
+});
+
+const faqTranslationResultSchema = z.object({
+  en: z.array(translatedFaqSchema),
+  ja: z.array(translatedFaqSchema),
+  zh: z.array(translatedFaqSchema),
+  zhTw: z.array(translatedFaqSchema),
+});
+
+async function translateEquipmentFaqs(sourceFaqs: EquipmentFaq[]): Promise<Record<FaqTranslationLocale, string>> {
+  if (sourceFaqs.length === 0) {
+    return { en: "[]", ja: "[]", zh: "[]", zhTw: "[]" };
+  }
+
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: "You are a precise medical and dermatology translator for Star Dermatology in Busan, Korea. Translate only the supplied Korean FAQ content. Preserve medical facts, treatment names, brand names, doses, numbers, units, Markdown, and line breaks. Do not add medical claims or omit qualifications.",
+      },
+      {
+        role: "user",
+        content: `Translate the Korean FAQ array below into English (en), Japanese (ja), Simplified Chinese (zh), and Taiwan Traditional Chinese (zhTw).
+
+Each translated language MUST contain exactly ${sourceFaqs.length} FAQ items in the same order as the Korean source. Every item MUST include a complete non-empty "question" and "answer". Keep brands such as Thermage FLX, Ultherapy Prime, FDA, MFDS, HIFU, RF, and SMAS unchanged unless a standard local-script rendering is required.
+
+Korean FAQ source:
+${JSON.stringify(sourceFaqs)}`,
+      },
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: {
+        name: "equipment_faq_translations",
+        strict: true,
+        schema: {
+          type: "object",
+          properties: {
+            en: { type: "array", items: { type: "object", properties: { question: { type: "string" }, answer: { type: "string" } }, required: ["question", "answer"], additionalProperties: false } },
+            ja: { type: "array", items: { type: "object", properties: { question: { type: "string" }, answer: { type: "string" } }, required: ["question", "answer"], additionalProperties: false } },
+            zh: { type: "array", items: { type: "object", properties: { question: { type: "string" }, answer: { type: "string" } }, required: ["question", "answer"], additionalProperties: false } },
+            zhTw: { type: "array", items: { type: "object", properties: { question: { type: "string" }, answer: { type: "string" } }, required: ["question", "answer"], additionalProperties: false } },
+          },
+          required: ["en", "ja", "zh", "zhTw"],
+          additionalProperties: false,
+        },
+      },
+    },
+  });
+
+  const rawContent = response.choices?.[0]?.message?.content;
+  if (!rawContent) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "FAQ 번역 응답이 없습니다." });
+
+  let content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
+  content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+
+  let rawTranslation: unknown;
+  try {
+    rawTranslation = JSON.parse(content);
+  } catch {
+    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "FAQ 번역 결과 JSON 파싱 실패" });
+  }
+
+  const parsed = faqTranslationResultSchema.safeParse(rawTranslation);
+  if (!parsed.success) {
+    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "FAQ 번역 결과 형식이 올바르지 않습니다." });
+  }
+
+  const translations = {} as Record<FaqTranslationLocale, string>;
+  for (const locale of FAQ_TRANSLATION_LOCALES) {
+    const translatedFaqs = parsed.data[locale];
+    if (translatedFaqs.length !== sourceFaqs.length) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "FAQ 번역 항목 수가 한국어 원문과 일치하지 않습니다." });
+    }
+
+    const serialized = JSON.stringify(translatedFaqs.map((faq) => ({
+      question: faq.question.trim(),
+      answer: faq.answer.trim(),
+    })));
+    if (!isEquipmentFaqJson(serialized)) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "FAQ 번역 결과에 빈 질문 또는 답변이 있습니다." });
+    }
+    translations[locale] = serialized;
+  }
+
+  return translations;
+}
 
 // 공통 시술 필드 스키마 (생성/수정 공용)
 const itemFieldsSchema = z.object({
@@ -243,6 +337,7 @@ export const equipment3Router = router({
         sessions: z.string().optional(),
         time: z.string().optional(),
         recovery: z.string().optional(),
+        faqs: faqJsonSchema.optional(),
       })
     )
     .mutation(async ({ input }) => {
@@ -253,8 +348,12 @@ export const equipment3Router = router({
         const val = input[key];
         if (val && val.trim()) fieldsToTranslate[key] = val.trim();
       }
+      const koreanFaqs = input.faqs === undefined ? null : parseEquipmentFaqs(input.faqs);
       if (Object.keys(fieldsToTranslate).length === 0) {
-        return { translations: { en: {}, ja: {}, zh: {} } };
+        return {
+          translations: { en: {}, ja: {}, zh: {} },
+          faqTranslations: koreanFaqs === null ? null : await translateEquipmentFaqs(koreanFaqs),
+        };
       }
 
       // 필드 목록 — 번역할 키 순서 고정
@@ -310,7 +409,10 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
         }
       }
 
-      return { translations: parsed };
+      return {
+        translations: parsed,
+        faqTranslations: koreanFaqs === null ? null : await translateEquipmentFaqs(koreanFaqs),
+      };
     }),
 
   // ── 관리자: SEO 자동생성 (LLM) ─────────────────────────────────────────────────────

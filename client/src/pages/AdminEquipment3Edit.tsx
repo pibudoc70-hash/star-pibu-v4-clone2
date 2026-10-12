@@ -182,8 +182,10 @@ export default function AdminEquipment3Edit() {
         sessions: form.sessions,
         time: form.time,
         recovery: form.recovery,
+        faqs: form.faqs,
       });
       const { en, ja, zh } = result.translations;
+      const faqTranslations = result.faqTranslations;
       // 번역 결과 적용: LLM이 번역한 값이 있으면 적용, 빈 문자열이면 이전 값 유지
       // ?? 대신 || 사용 — ?? 는 null/undefined만 걸러내지만
       // || 는 빈 문자열도 폴백시켜 이전 값을 유지
@@ -218,6 +220,10 @@ export default function AdminEquipment3Edit() {
           recoveryEn: en.recovery || prev.recoveryEn,
           recoveryJa: ja.recovery || prev.recoveryJa,
           recoveryZh: zh.recovery || prev.recoveryZh,
+          faqsEn: faqTranslations?.en ?? prev.faqsEn,
+          faqsJa: faqTranslations?.ja ?? prev.faqsJa,
+          faqsZh: faqTranslations?.zh ?? prev.faqsZh,
+          faqsZhTw: faqTranslations?.zhTw ?? prev.faqsZhTw,
         };
       });
       setTranslateDone(true);
@@ -414,7 +420,7 @@ export default function AdminEquipment3Edit() {
             <Languages className="h-5 w-5 text-indigo-500 shrink-0" />
             <div>
               <p className="text-sm font-semibold text-gray-800">AI 자동 번역</p>
-              <p className="text-xs text-gray-500">한국어 원문을 수정한 뒤 버튼을 클릭하면 영어·일본어·중국어가 자동으로 번역됩니다.</p>
+              <p className="text-xs text-gray-500">한국어 원문과 FAQ를 수정한 뒤 버튼을 클릭하면 FAQ가 영어·일본어·중문 간체·번체로 함께 번역됩니다.</p>
             </div>
           </div>
           <Button
@@ -623,7 +629,10 @@ export default function AdminEquipment3Edit() {
               <p className="text-sm text-gray-500">저장된 FAQ는 상세 페이지와 검색엔진용 FAQPage JSON-LD에 동일하게 반영됩니다.</p>
             </CardHeader>
             <CardContent className="space-y-8">
-              <EquipmentFaqEditor id="faqs-ko" label="한국어 FAQ" value={form.faqs} onChange={(faqs) => setForm((prev) => prev ? { ...prev, faqs } : prev)} />
+              <EquipmentFaqEditor id="faqs-ko" label="한국어 FAQ" value={form.faqs} onChange={(faqs) => {
+                setForm((prev) => prev ? { ...prev, faqs } : prev);
+                setTranslateDone(false);
+              }} />
               <EquipmentFaqEditor id="faqs-en" label="English FAQ" value={form.faqsEn} onChange={(faqsEn) => setForm((prev) => prev ? { ...prev, faqsEn } : prev)} />
               <EquipmentFaqEditor id="faqs-ja" label="日本語 FAQ" value={form.faqsJa} onChange={(faqsJa) => setForm((prev) => prev ? { ...prev, faqsJa } : prev)} />
               <EquipmentFaqEditor id="faqs-zh" label="简体中文 FAQ" value={form.faqsZh} onChange={(faqsZh) => setForm((prev) => prev ? { ...prev, faqsZh } : prev)} />

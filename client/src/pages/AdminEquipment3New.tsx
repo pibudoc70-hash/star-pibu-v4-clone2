@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EquipmentFaqEditor } from "@/components/admin/EquipmentFaqEditor";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader, Languages, CheckCircle } from "lucide-react";
 import { getAdminErrorDetails } from "@/lib/errorMessages";
 
 // 카테고리 목록 (Equipment3와 동일)
@@ -151,11 +151,75 @@ export default function AdminEquipment3New() {
 
   const createMutation = trpc.equipment3.create.useMutation();
   const uploadMutation = trpc.equipment3.uploadImage.useMutation();
+  const autoTranslateMutation = trpc.equipment3.autoTranslate.useMutation();
   const autoGenerateSeoMutation = trpc.equipment3.autoGenerateSeo.useMutation();
+  const [translating, setTranslating] = useState(false);
+  const [translateDone, setTranslateDone] = useState(false);
   const [generatingSeo, setGeneratingSeo] = useState(false);
   const [seoDone, setSeoDone] = useState(false);
 
   /** SEO 메타 정보 자동생성 (LLM) */
+  async function handleAutoTranslate() {
+    setTranslating(true);
+    setTranslateDone(false);
+    try {
+      const result = await autoTranslateMutation.mutateAsync({
+        name: form.name,
+        category: form.category,
+        desc: form.desc,
+        detail: form.detail,
+        effect: form.effect,
+        caution: form.caution,
+        sessions: form.sessions,
+        time: form.time,
+        recovery: form.recovery,
+        faqs: form.faqs,
+      });
+      const { en, ja, zh } = result.translations;
+      const faqTranslations = result.faqTranslations;
+      setForm((prev) => ({
+        ...prev,
+        nameEn: en.name || prev.nameEn,
+        nameJa: ja.name || prev.nameJa,
+        nameZh: zh.name || prev.nameZh,
+        categoryEn: en.category || prev.categoryEn,
+        categoryJa: ja.category || prev.categoryJa,
+        categoryZh: zh.category || prev.categoryZh,
+        descEn: en.desc || prev.descEn,
+        descJa: ja.desc || prev.descJa,
+        descZh: zh.desc || prev.descZh,
+        detailEn: en.detail || prev.detailEn,
+        detailJa: ja.detail || prev.detailJa,
+        detailZh: zh.detail || prev.detailZh,
+        effectEn: en.effect || prev.effectEn,
+        effectJa: ja.effect || prev.effectJa,
+        effectZh: zh.effect || prev.effectZh,
+        cautionEn: en.caution || prev.cautionEn,
+        cautionJa: ja.caution || prev.cautionJa,
+        cautionZh: zh.caution || prev.cautionZh,
+        sessionsEn: en.sessions || prev.sessionsEn,
+        sessionsJa: ja.sessions || prev.sessionsJa,
+        sessionsZh: zh.sessions || prev.sessionsZh,
+        timeEn: en.time || prev.timeEn,
+        timeJa: ja.time || prev.timeJa,
+        timeZh: zh.time || prev.timeZh,
+        recoveryEn: en.recovery || prev.recoveryEn,
+        recoveryJa: ja.recovery || prev.recoveryJa,
+        recoveryZh: zh.recovery || prev.recoveryZh,
+        faqsEn: faqTranslations?.en ?? prev.faqsEn,
+        faqsJa: faqTranslations?.ja ?? prev.faqsJa,
+        faqsZh: faqTranslations?.zh ?? prev.faqsZh,
+        faqsZhTw: faqTranslations?.zhTw ?? prev.faqsZhTw,
+      }));
+      setTranslateDone(true);
+    } catch (err: unknown) {
+      const { message, code } = getAdminErrorDetails(err, "equipment3.translate");
+      alert(`❌ 자동 번역 실패\n${message}\n오류 코드: ${code}`);
+    } finally {
+      setTranslating(false);
+    }
+  }
+
   async function handleAutoGenerateSeo() {
     if (!form.name.trim()) {
       alert("시술명을 먼저 입력해주세요.");
@@ -202,6 +266,9 @@ export default function AdminEquipment3New() {
       }
       return updated;
     });
+    if (["name", "category", "desc", "detail", "effect", "caution", "sessions", "time", "recovery"].includes(name)) {
+      setTranslateDone(false);
+    }
   }
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -305,6 +372,25 @@ export default function AdminEquipment3New() {
             <ArrowLeft className="h-5 w-5" />
           </button>
           <h1 className="text-3xl font-bold">새 시술 등록</h1>
+        </div>
+
+        <div className="mb-6 p-4 rounded-xl border bg-white flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <div className="flex items-center gap-2 flex-1">
+            <Languages className="h-5 w-5 text-indigo-500 shrink-0" />
+            <div>
+              <p className="text-sm font-semibold text-gray-800">AI 자동 번역</p>
+              <p className="text-xs text-gray-500">한국어 원문과 FAQ를 입력한 뒤 버튼을 클릭하면 FAQ가 영어·일본어·중문 간체·번체로 함께 번역됩니다.</p>
+            </div>
+          </div>
+          <Button type="button" onClick={handleAutoTranslate} disabled={translating} className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white gap-2">
+            {translating ? (
+              <><Loader className="h-4 w-4 animate-spin" /> 번역 중...</>
+            ) : translateDone ? (
+              <><CheckCircle className="h-4 w-4" /> 번역 완료</>
+            ) : (
+              <><Languages className="h-4 w-4" /> 한국어 기준 자동 번역</>
+            )}
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -495,7 +581,10 @@ export default function AdminEquipment3New() {
               <p className="text-sm text-gray-500">저장된 FAQ는 상세 페이지와 검색엔진용 FAQPage JSON-LD에 동일하게 반영됩니다.</p>
             </CardHeader>
             <CardContent className="space-y-8">
-              <EquipmentFaqEditor id="new-faqs-ko" label="한국어 FAQ" value={form.faqs} onChange={(faqs) => setForm((prev) => ({ ...prev, faqs }))} />
+              <EquipmentFaqEditor id="new-faqs-ko" label="한국어 FAQ" value={form.faqs} onChange={(faqs) => {
+                setForm((prev) => ({ ...prev, faqs }));
+                setTranslateDone(false);
+              }} />
               <EquipmentFaqEditor id="new-faqs-en" label="English FAQ" value={form.faqsEn} onChange={(faqsEn) => setForm((prev) => ({ ...prev, faqsEn }))} />
               <EquipmentFaqEditor id="new-faqs-ja" label="日本語 FAQ" value={form.faqsJa} onChange={(faqsJa) => setForm((prev) => ({ ...prev, faqsJa }))} />
               <EquipmentFaqEditor id="new-faqs-zh" label="简体中文 FAQ" value={form.faqsZh} onChange={(faqsZh) => setForm((prev) => ({ ...prev, faqsZh }))} />

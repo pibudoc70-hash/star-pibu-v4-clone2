@@ -88,7 +88,7 @@ function SectionHeader({ lang }: { lang: string }) {
 const DESKTOP_EVENT_INITIAL_COUNT = 9;
 
 const EVENT_LIST_CTA_LABEL: Record<string, string> = {
-  ko: "이벤트 자세히 보기",
+  ko: "이벤트 더 보기",
   en: "View Events",
   ja: "イベントを詳しく見る",
   zh: "查看活动详情",

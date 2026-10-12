@@ -40,7 +40,7 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain('className="mt-8 hidden justify-center md:flex"');
     expect(source).toContain("onClick={() => setShowAllDesktopEvents(true)}");
     expect(source).toContain('aria-controls="special-event-desktop-grid"');
-    expect(source).toContain('ko: "이벤트 자세히 보기"');
+    expect(source).toContain('ko: "이벤트 더 보기"');
   });
 
   it("keeps lazy-fetch accessibility contracts without the removable desktop instruction copy", () => {

@@ -200,12 +200,12 @@ describe("SpecialEventSection anchor target", () => {
     render(<SpecialEventSection />);
 
     await waitFor(() => expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(9));
-    const showMore = screen.getByRole("button", { name: "이벤트 자세히 보기" });
+    const showMore = screen.getByRole("button", { name: "이벤트 더 보기" });
     expect(showMore).toHaveAttribute("aria-controls", "special-event-desktop-grid");
 
     fireEvent.click(showMore);
 
     expect(screen.getAllByTestId("mock-event-showcase")).toHaveLength(10);
-    expect(screen.queryByRole("button", { name: "이벤트 자세히 보기" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "이벤트 더 보기" })).not.toBeInTheDocument();
   });
 });

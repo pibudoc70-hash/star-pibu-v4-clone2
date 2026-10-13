@@ -900,6 +900,12 @@
     pointer-events: none;
   }
 
+  @media (min-width: 768px) {
+    .hero-title .hero-brand-shimmer [aria-hidden="true"] .hero-char {
+      background-image: linear-gradient(105deg, #fff 28%, #fff 36%, #ead9aa 42%, #f5e7c2 47%, #fffaf0 51%, #f5e7c2 55%, #ead9aa 60%, #fff 67%, #fff 75%);
+    }
+  }
+
   .hero-line {
     display: block;
     overflow: hidden;

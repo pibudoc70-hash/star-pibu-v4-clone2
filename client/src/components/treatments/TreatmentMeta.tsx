@@ -24,7 +24,7 @@ export function TreatmentMeta({
   recoveryPrefix,
 }: TreatmentMetaProps) {
   return (
-    <div className="treatment-card__body p-3">
+    <div className="p-3">
       <h3 className="font-bold text-sm leading-tight mb-1" style={{ color: 'var(--brand-text, #2C2C2C)' }}>
         {name}
       </h3>

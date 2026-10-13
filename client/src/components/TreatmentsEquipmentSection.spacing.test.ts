@@ -26,11 +26,11 @@ describe("TreatmentsEquipmentSection spacing", () => {
     expect(globalCss).toContain("native button inset");
   });
 
-  it("matches the desktop equipment-list card proportions without changing the mobile card rule", () => {
+  it("keeps the desktop thumbnail height without imposing unused card height or changing mobile", () => {
     expect(globalCss).toContain("@media (min-width: 768px) {\n  #treatments .treatment-card");
-    expect(globalCss).toContain("min-height: 380px;");
     expect(globalCss).toContain("flex: 0 0 200px;");
     expect(globalCss).toContain("height: 200px;");
-    expect(globalCss).toContain(".treatment-card__body");
+    expect(globalCss).not.toContain("min-height: 380px;");
+    expect(globalCss).not.toContain(".treatment-card__body");
   });
 });

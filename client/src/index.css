@@ -2719,6 +2719,10 @@
 /* PC 메인 시술·장비 썸네일은 /equipment3 목록과 같은 200px 높이를 사용한다.
    카드 전체 높이는 본문 내용에 맞춰 자연스럽게 계산해 하단 빈 공간을 만들지 않는다. */
 @media (min-width: 768px) {
+  #treatments-grid {
+    align-items: start;
+  }
+
   #treatments .treatment-card > :first-child {
     flex: 0 0 200px;
     height: 200px;

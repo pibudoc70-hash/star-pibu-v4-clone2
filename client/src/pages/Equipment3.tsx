@@ -104,10 +104,10 @@ function Equipment3Card({
   const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh, item.categoryZhTw);
   const badge = getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh, item.badgeZhTw);
 
-  // 외국어 목록은 이미 불러온 장비 목록 캐시를 상세 화면에서 재사용할 수 있도록
+  // 목록에서 받은 장비 데이터를 상세 화면에서 즉시 재사용하도록
   // 전체 새로고침 대신 SPA 전환을 사용한다. 보조 클릭은 기본 브라우저 동작을 유지한다.
   const handleForeignDetailNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    if (lang === "ko" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     setLocation(detailPath);
   };

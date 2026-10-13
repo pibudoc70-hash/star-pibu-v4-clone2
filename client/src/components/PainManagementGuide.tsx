@@ -277,6 +277,8 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
   const headingId = "pain-management-guide-title";
   const [openMobileStages, setOpenMobileStages] = useState<Record<number, boolean>>({});
   const [openMobileFaqIndex, setOpenMobileFaqIndex] = useState<number | null>(null);
+  const [isDesktopGuideExpanded, setIsDesktopGuideExpanded] = useState(false);
+  const hasKoreanDesktopGuideTrigger = lang === "ko" && presentation === "full";
   const trustBadges = lang === "ko"
     ? [
       { title: copy.experienceHeading, detail: "장기간 축적된 마취 관리 노하우", icon: TRUST_BADGE_ICONS[0] },
@@ -324,13 +326,19 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
   });
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:w-full lg:max-w-none lg:p-10" aria-labelledby={hideHeroTitle ? undefined : headingId} aria-label={hideHeroTitle ? copy.title : undefined}>
+    <section className={`pain-management-guide relative overflow-hidden rounded-3xl border border-[var(--color-gold-light)] bg-[#fffdfa] p-4 shadow-[0_16px_36px_rgba(10,18,40,0.05)] md:p-8 lg:w-full lg:max-w-none lg:p-10 ${hasKoreanDesktopGuideTrigger && !isDesktopGuideExpanded ? "pain-management-guide--desktop-collapsed" : ""}`} aria-labelledby={hideHeroTitle ? undefined : headingId} aria-label={hideHeroTitle ? copy.title : undefined}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(135deg,rgba(10,18,40,0.04),rgba(215,181,92,0.1),transparent)] md:h-40" aria-hidden="true" />
-      <div className="relative mx-auto w-full max-w-6xl">
+      {hasKoreanDesktopGuideTrigger && !isDesktopGuideExpanded && <button type="button" className="pain-management-desktop-trigger hidden w-full flex-col items-center justify-center gap-0.5 pb-0 pt-5 text-center md:flex" aria-expanded={isDesktopGuideExpanded} aria-controls="pain-management-desktop-content" onClick={() => setIsDesktopGuideExpanded(true)}><span>“리프팅 시술, 통증에 대한 부담으로 망설이고 계신가요?”</span><ChevronDown size={19} aria-hidden="true" /></button>}
+      <div id="pain-management-desktop-content" className="relative mx-auto w-full max-w-6xl">
         <header data-testid="pain-management-header" className="mb-4 border-l-2 border-[var(--color-gold-primary)] pl-3 text-left md:mb-8 md:border-l-0 md:pl-0 md:text-center">
           <span className="section-eyebrow text-[11px]">{copy.eyebrow}</span>
           {!hideHeroTitle && <h2 id={headingId} className="mt-1.5 max-w-none break-keep text-balance !text-[1.25rem] font-semibold !leading-[1.35] tracking-tight text-[var(--color-star-text)] md:mx-auto md:mt-3 md:max-w-3xl md:text-3xl md:leading-snug">{copy.heroTitle}</h2>}
           <p id="pain-management-summary-caption" className="sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w-2xl sm:text-sm sm:leading-6">{copy.visualCaption}</p>
+          <section data-testid="pain-experience-highlights-desktop" className="pain-management-experience-highlights mt-5 hidden text-left md:grid md:grid-cols-3 md:gap-4">
+            {trustBadges.map((badge) => {
+              return <article key={badge.title} className="pain-management-experience-highlight flex items-center px-5 py-4"><span><strong className="block text-sm font-semibold leading-5 text-[#74531b]">{badge.title}</strong><span className="mt-0.5 block text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</span></span></article>;
+            })}
+          </section>
         </header>
 
         <div className="md:hidden">
@@ -379,10 +387,6 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
               </article>
             );
           })}
-        </section>
-
-        <section data-testid="pain-trust-strip-desktop" aria-label="통증관리 안내" className="mt-4 grid auto-rows-max content-start overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-[#fbf6ec] md:grid-cols-3">
-          {renderTrustBadges("desktop")}
         </section>
 
         <section data-testid="pain-faq-desktop" aria-labelledby="pain-faq-title-desktop" className="mt-5 overflow-hidden rounded-[1.25rem] border border-[var(--color-gold-light)] bg-white">

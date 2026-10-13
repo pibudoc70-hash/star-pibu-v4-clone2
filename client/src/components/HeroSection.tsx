@@ -167,7 +167,7 @@ function HeroSection() {
           {/* 병원명: 글자별 charReveal */}
           {/* [LCP-FIX] startDelay 300→30, charGap 60→6: 마지막 글자 완료 540ms→54ms, LCP 개선 */}
           <div className="font-medium hero-title" aria-hidden="true">
-            <CharReveal text={t.hero.title} startDelay={30} charGap={6} />
+            <CharReveal text={t.hero.title} startDelay={30} charGap={6} className={lang === "ko" ? "hero-brand-shimmer" : ""} />
           </div>
           {/* 슬로건: 단어별 wordReveal */}
           {/* [LCP-FIX] startDelay 900→90, wordGap 85→8 */}
@@ -228,7 +228,7 @@ function HeroSection() {
             />
           </div>
           {/* 병원명 */}
-          <div className="hero-mobile-title" aria-hidden="true">{t.hero.title}</div>
+          <div className={`hero-mobile-title ${lang === "ko" ? "hero-brand-shimmer" : ""}`} data-shimmer-text={lang === "ko" ? t.hero.title : undefined} aria-hidden="true">{t.hero.title}</div>
           {/* STAR DERMATOLOGY — 사진 배경에 이미 표시되므로 제거 */}
           {/* 슬로건 — 한국어일 때만 영한 교차, 외국어에서는 해당 언어 슬로건만 표시 */}
           <div className="hero-mobile-slogan-wrap">

@@ -201,7 +201,7 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
     && !showAllDesktopEvents
     && allEvents.length > DESKTOP_EVENT_INITIAL_COUNT;
   const isInitialSkeletonVisible = !isFetchVisible || isLoading;
-  const sectionSpacing = showHeader ? "py-20 md:py-28" : "pt-12 pb-20 md:pt-16 md:pb-28";
+  const sectionSpacing = showHeader ? "py-20 md:pt-24 md:pb-28" : "pt-12 pb-20 md:pt-16 md:pb-28";
   useEventSkeletonTiming(isInitialSkeletonVisible);
 
   // 에러 발생 시 토스트 알림
@@ -289,13 +289,13 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
               ))}
             </div>
             {showDesktopEventExpansion && (
-              <div className="mt-8 hidden justify-center md:flex">
+              <div className="mt-12 hidden justify-center md:flex">
                 <button
                   type="button"
                   onClick={() => setShowAllDesktopEvents(true)}
                   aria-controls="special-event-desktop-grid"
                   aria-label={EVENT_LIST_CTA_LABEL[lang] ?? EVENT_LIST_CTA_LABEL.ko}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-gold-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-gold-deep)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_10%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
+                  className="event-desktop-more-button inline-flex items-center gap-1.5 rounded-full border border-[var(--color-gold-primary)] px-6 py-3 text-[1.05rem] font-medium text-[var(--color-gold-deep)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-gold-primary)_10%,transparent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
                 >
                   {EVENT_LIST_CTA_LABEL[lang] ?? EVENT_LIST_CTA_LABEL.ko}
                   <ChevronRight size={16} aria-hidden="true" />
@@ -303,7 +303,7 @@ export default function SpecialEventSection({ showHeader = true }: SpecialEventS
               </div>
             )}
             <PainManagementGuide lang={lang} presentation="event-accordion" />
-            <div className="mt-10 hidden md:block">
+            <div className="mt-16 hidden md:block">
               <PainManagementGuide lang={lang} />
             </div>
           </>

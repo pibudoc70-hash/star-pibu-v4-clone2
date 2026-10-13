@@ -852,6 +852,54 @@
     perspective: 400px;
   }
 
+  @keyframes heroBrandShimmer {
+    0%, 14% { background-position: 175% center; }
+    74%, 100% { background-position: -75% center; }
+  }
+
+  .hero-title .hero-brand-shimmer [aria-hidden="true"] .hero-char,
+  .hero-mobile-title.hero-brand-shimmer {
+    color: transparent !important;
+    background-image: linear-gradient(105deg, #fff 27%, #fff 39%, #d6aa43 45%, #f3d47d 49%, #fffdf2 53%, #e4bc58 57%, #fff 64%, #fff 73%);
+    background-size: 250% 100%;
+    background-position: 170% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .hero-title .hero-brand-shimmer [aria-hidden="true"] .hero-char {
+    animation: charReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms) both, heroBrandShimmer 8.5s ease-in-out 1.1s infinite;
+  }
+
+  .hero-mobile-title.hero-brand-shimmer {
+    display: inline-block;
+    animation: heroBrandShimmer 8.5s ease-in-out 1.1s infinite;
+  }
+
+  #home .hero-mobile-title.hero-brand-shimmer {
+    position: relative;
+    color: #fff !important;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+    text-shadow: none !important;
+  }
+
+  #home .hero-mobile-title.hero-brand-shimmer::after {
+    content: attr(data-shimmer-text);
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    background-image: linear-gradient(105deg, transparent 29%, transparent 40%, #d6aa43 46%, #f3d47d 50%, #fffdf2 53%, #e4bc58 57%, transparent 64%, transparent 73%);
+    background-size: 250% 100%;
+    background-position: 175% center;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: heroBrandShimmer 8.5s ease-in-out 1.1s infinite;
+    pointer-events: none;
+  }
+
   .hero-line {
     display: block;
     overflow: hidden;
@@ -3133,7 +3181,7 @@
   position: absolute;
   z-index: 20;
   top: clamp(72px, 10vh, 90px);
-  right: clamp(16px, 4vw, 40px);
+  right: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
   color: rgba(255, 255, 255, 0.75);
   font-size: clamp(0.62rem, 1.5vw, 0.8rem);
   letter-spacing: 0.03em;
@@ -9847,6 +9895,189 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
   .pain-management-disclosure::details-content { transition: none; transform: none; }
 }
 
+/* PC homepage pain-management: cream/gold editorial treatment without card containers. */
+@media (min-width: 768px) {
+  .pain-management-guide {
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 3.5rem 0 !important;
+  }
+
+  .pain-management-guide > div.relative {
+    max-width: none !important;
+  }
+
+  .pain-management-guide > div[aria-hidden="true"] {
+    display: none !important;
+  }
+
+  .pain-management-guide--desktop-collapsed {
+    padding: 0 !important;
+  }
+
+  .pain-management-guide--desktop-collapsed > #pain-management-desktop-content {
+    display: none !important;
+  }
+
+  .pain-management-desktop-trigger {
+    color: var(--color-gold-deep);
+    font-size: clamp(1.45rem, 2vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: 0.035em;
+    animation: pain-management-desktop-trigger-float 2.8s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .pain-management-desktop-trigger svg {
+    margin-top: 0;
+    opacity: 0.35;
+  }
+
+  @keyframes pain-management-desktop-trigger-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .pain-management-experience-highlights {
+    max-width: 62rem !important;
+    margin-top: 2.5rem !important;
+    margin-inline: auto !important;
+    column-gap: 2rem !important;
+  }
+
+  .pain-management-experience-highlight {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 9999px;
+    background: #fff;
+    box-shadow: 0 10px 26px rgba(119, 90, 29, 0.11);
+  }
+
+  .pain-management-experience-highlights > article strong {
+    font-size: 1.05rem;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    max-width: 62rem !important;
+    margin-inline: auto !important;
+    gap: 0 !important;
+    border-top: 1px solid #e8dcc0;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article {
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: grid !important;
+    grid-template-columns: 2.75rem minmax(11rem, 0.3fr) minmax(0, 1fr) !important;
+    align-items: center !important;
+    column-gap: 1.25rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid #e8dcc0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--color-star-text) !important;
+    padding: 1.15rem 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article > div.absolute {
+    display: none !important;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article > div:not(.absolute) {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article > p:not(:last-child) {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article > h3 {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-management-summary-desktop"] > article p:last-child {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    margin: 0 !important;
+    color: var(--color-star-text-mid) !important;
+  }
+
+  .pain-management-guide [data-testid="pain-trust-strip-desktop"] {
+    margin-top: 3rem !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .pain-management-guide [data-testid="pain-trust-strip-desktop"] > article {
+    border: 0 !important;
+    padding: 0 2rem !important;
+  }
+
+  .pain-management-guide [data-testid="pain-trust-strip-desktop"] > article:first-child {
+    padding-left: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-trust-strip-desktop"] > article:last-child {
+    padding-right: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-trust-strip-desktop"] > article > div {
+    background: #f3ead4 !important;
+    color: #74531b !important;
+    box-shadow: none !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] {
+    margin-top: 3rem !important;
+    max-width: 62rem !important;
+    margin-inline: auto !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] > div:first-child {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 0 1rem !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] > details {
+    border: 0 !important;
+    border-bottom: 1px solid #e8dcc0 !important;
+    padding: 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] > details:first-of-type {
+    border-top: 1px solid #e8dcc0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] > details > summary {
+    min-height: 0 !important;
+    padding: 0.8rem 0 !important;
+  }
+
+  .pain-management-guide [data-testid="pain-faq-desktop"] > details > p {
+    padding: 0 0 1.1rem 1.65rem !important;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────────
    Homepage mobile-only content-density pass
    Protected sections (#events, #pain-management, #doctors, #treatments)
@@ -10413,7 +10644,7 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
     text-align: center !important;
   }
 
-  #home .hero-mobile-title {
+  #home .hero-mobile-title:not(.hero-brand-shimmer) {
     color: #FFFFFF !important;
     text-shadow: 0 2px 40px rgba(0,0,0,0.5), 0 0 80px color-mix(in srgb, var(--color-gold-primary) 18%, transparent) !important;
   }

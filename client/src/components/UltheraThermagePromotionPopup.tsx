@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
+import { useLocation } from "wouter";
 import { buildEquipment3DetailUrl } from "@/lib/equipment3DetailUrl";
+import { trpc } from "@/lib/trpc";
 
 export const SHOW_DELAY_MS = 0;
 export const DISMISS_ANIMATION_MS = 200;
@@ -25,6 +27,8 @@ export default function UltheraThermagePromotionPopup() {
   const [hideForToday, setHideForToday] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [, setLocation] = useLocation();
+  const utils = trpc.useUtils();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const dismissTimerRef = useRef<number | null>(null);
@@ -85,6 +89,16 @@ export default function UltheraThermagePromotionPopup() {
         lastFocusedRef.current = null;
       });
     }, prefersReducedMotion ? 0 : DISMISS_ANIMATION_MS);
+  };
+
+  const navigateToPromotion = async (event: React.MouseEvent<HTMLAnchorElement>, href: string, slug: string) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    try {
+      await utils.equipment3.bySlug.fetch({ slug });
+    } finally {
+      setLocation(href);
+    }
   };
 
   useEffect(() => {
@@ -165,9 +179,8 @@ export default function UltheraThermagePromotionPopup() {
           <a
             data-testid="ulthera-promotion-link"
             href={ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="울쎄라피 프라임 상세 페이지 새 탭으로 보기"
+            onClick={(event) => void navigateToPromotion(event, ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl, "울쎄라피프라임")}
+            aria-label="울쎄라피 프라임 상세 페이지 보기"
             className="absolute left-0 top-0 h-1/2 w-full focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] md:h-full md:w-1/2"
           >
             <span className="sr-only">울쎄라피 프라임 상세 페이지 보기</span>
@@ -175,9 +188,8 @@ export default function UltheraThermagePromotionPopup() {
           <a
             data-testid="thermage-promotion-link"
             href={ULTHERA_THERMAGE_PROMOTIONS.thermageUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="써마지 FLX 상세 페이지 새 탭으로 보기"
+            onClick={(event) => void navigateToPromotion(event, ULTHERA_THERMAGE_PROMOTIONS.thermageUrl, "써마지FLX")}
+            aria-label="써마지 FLX 상세 페이지 보기"
             className="absolute bottom-0 left-0 h-1/2 w-full focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[var(--color-gold-primary)] md:left-1/2 md:top-0 md:h-full md:w-1/2"
           >
             <span className="sr-only">써마지 FLX 상세 페이지 보기</span>

@@ -105,7 +105,7 @@ function EquipmentDetailLoading({ label, isDarkMode }: { label: string; isDarkMo
 export default function Equipment3Detail() {
   const params = useParams();
   const [, setLocation] = useLocation();
-  const { lang } = useLang();
+  const { lang, t } = useLang();
   const { getText } = useLocalizedText();
   const { chatUrl, reserveUrl, chatBg, chatColor } = useChatConfig();
   const slug = params.slug as string;
@@ -127,14 +127,12 @@ export default function Equipment3Detail() {
   // URL에 ?tab= 파라미터가 있으면 그 탭으로, 없으면 item.category로 복원
   const tabFromUrl = new URLSearchParams(search).get("tab") ?? "";
 
-  // 외국어 목록에서 진입한 경우에는 이미 받은 목록 항목을 즉시 본문에 사용하고,
+  // 목록 카드에서 진입한 경우에는 이미 받은 목록 항목을 즉시 본문에 사용하고,
   // 단건 조회는 백그라운드에서 최신 데이터로 갱신한다. 직접 URL 접근은 기존 로딩 상태를 유지한다.
-  const cachedForeignItem = lang === "ko"
-    ? undefined
-    : utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug);
+  const cachedListItem = utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug);
   const { data: item, isLoading, isError } = trpc.equipment3.bySlug.useQuery(
     { slug },
-    { enabled: !!slug, retry: 1, initialData: cachedForeignItem }
+    { enabled: !!slug, retry: 1, initialData: cachedListItem }
   );
   const katexContent = item
     ? [
@@ -483,12 +481,7 @@ export default function Equipment3Detail() {
                 style={{ background: chatBg, color: chatColor }}
               >
                 <MessageCircle size={17} strokeWidth={2} />
-                <span>
-                  {lang === "zh" ? getText("", "", "", "微信咨询") :
-                   lang === "ja" ? getText("", "", "LINE相談", "") :
-                   lang === "en" ? getText("", "KakaoTalk", "", "") :
-                   "카카오톡 상담"}
-                </span>
+                <span>{t.hero.cta_kakao}</span>
               </a>
               {/* 네이버 예약 */}
               <a
@@ -498,12 +491,7 @@ export default function Equipment3Detail() {
                 className="equipment-detail__contact-action flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm shadow-sm bg-[#03C75A] text-white"
               >
                 <Calendar size={17} strokeWidth={2} />
-                <span>
-                  {lang === "en" ? "Naver Booking" :
-                   lang === "ja" ? "ネイバー予約" :
-                   lang === "zh" ? "Naver预约" :
-                   "네이버 예약"}
-                </span>
+                <span>{t.hero.cta_reserve}</span>
               </a>
             </div>
           </div>

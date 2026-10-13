@@ -5,8 +5,8 @@
  *
  * 보호 대상:
  *   1. buildLocalizedPath — window.location.pathname 기반 경로 계산
- *   2. handleLangChange — setLang(persist=true) 선행 호출 + window.location.replace 사용
- *   3. 모바일 언어 버튼 — 동일한 setLang + replace 패턴
+ *   2. handleLangChange — setLang(persist=true) 선행 호출 + SPA 전환 사용
+ *   3. 모바일 언어 버튼 — 동일한 setLang + SPA 전환 패턴
  *   4. /foreign-guide → ko 선택 시 "/" 복귀 정책
  *   5. Footer quickLinks 순서 — Header primaryNav 순서와 일치
  *
@@ -20,7 +20,7 @@
  * 수정 후 동작:
  *   - buildLocalizedPath: window.location.pathname 직접 참조 (stale 없음)
  *   - handleLangChange: setLang(lang, true) 먼저 호출 → localStorage 즉시 갱신
- *   - window.location.replace 사용 → 히스토리 스택 오염 없음
+ *   - wouter setLocation 사용 → 장비 상세 캐시를 유지해 중간 로딩 화면 방지
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -88,28 +88,27 @@ describe("buildLocalizedPath — window.location.pathname 기반 경로 계산",
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 2. handleLangChange — setLang persist=true 선행 호출 + replace 사용
+// 2. handleLangChange — setLang persist=true 선행 호출 + SPA 전환
 // ─────────────────────────────────────────────────────────────────────────────
-describe("handleLangChange — LangContext 선행 업데이트 + replace 네비게이션", () => {
-  it("handleLangChange에서 setLang을 window.location.replace 이전에 호출해야 한다", () => {
+describe("handleLangChange — LangContext 선행 업데이트 + SPA 네비게이션", () => {
+  it("handleLangChange에서 setLang을 SPA setLocation 이전에 호출해야 한다", () => {
     // 구조 분해 후 useHeaderState.ts에 위치
     const fnBlock = hookSource.match(
       /const handleLangChange[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
     const setLangPos = fnBlock.indexOf("setLang(");
-    const replacePos = fnBlock.indexOf("window.location.replace");
+    const setLocationPos = fnBlock.indexOf("setLocation(buildLocalizedPath(option.lang))");
     expect(setLangPos).toBeGreaterThan(-1);
-    expect(replacePos).toBeGreaterThan(-1);
-    // setLang이 replace보다 먼저 나와야 함
-    expect(setLangPos).toBeLessThan(replacePos);
+    expect(setLocationPos).toBeGreaterThan(-1);
+    expect(setLangPos).toBeLessThan(setLocationPos);
   });
 
-  it("handleLangChange에서 window.location.href 대신 window.location.replace를 사용해야 한다", () => {
+  it("handleLangChange에서 전체 문서 재로딩 없이 SPA로 경로를 전환해야 한다", () => {
     const fnBlock = hookSource.match(
       /const handleLangChange[\s\S]*?\n {2}};/,
     )?.[0] ?? "";
-    expect(fnBlock).toMatch(/window\.location\.replace/);
-    // href 직접 할당은 없어야 함
+    expect(fnBlock).toMatch(/setLocation\(buildLocalizedPath\(option\.lang\)\)/);
+    expect(fnBlock).not.toMatch(/window\.location\.replace/);
     expect(fnBlock).not.toMatch(/window\.location\.href\s*=/);
   });
 
@@ -126,11 +125,11 @@ describe("handleLangChange — LangContext 선행 업데이트 + replace 네비�
 // 3. 모바일 언어 버튼 — 중앙 handleLangChange 재사용
 // ─────────────────────────────────────────────────────────────────────────────
 describe("모바일 언어 버튼 — 중앙 언어 전환 계약 재사용", () => {
-  it("독립 모바일 언어 버튼이 handleLangChange를 사용해 setLang + replace 정책을 공유해야 한다", () => {
+  it("독립 모바일 언어 버튼이 handleLangChange를 사용해 setLang + SPA 정책을 공유해야 한다", () => {
     expect(mobileLanguageSwitcherSource).toMatch(/onClick=\{\(\) => handleLangChange\(option\)\}/);
     const fnBlock = hookSource.match(/const handleLangChange[\s\S]*?\n {2}};/)?.[0] ?? "";
     expect(fnBlock).toMatch(/setLang\(option\.lang, true\)/);
-    expect(fnBlock).toMatch(/window\.location\.replace/);
+    expect(fnBlock).toMatch(/setLocation\(buildLocalizedPath\(option\.lang\)\)/);
   });
 
   it("모바일 메뉴 내부에는 언어 그리드가 남아 있지 않아야 한다", () => {

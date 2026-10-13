@@ -34,7 +34,9 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
     expect(modalSource).toContain("detailUrl: string | undefined");
     expect(modalSource).not.toContain("accentColor");
     expect(modalSource).toContain("const [isNavigating, setIsNavigating] = useState(false);");
-    expect(modalSource).toContain("setLocation(detailUrl)");
+    expect(modalSource).toContain('import { getLangPrefix } from "@/lib/localizedPath";');
+    expect(modalSource).toContain('const localizedDetailUrl = detailUrl && lang !== "ko"');
+    expect(modalSource).toContain("setLocation(localizedDetailUrl)");
     expect(modalSource).toContain("disabled={isNavigating}");
     expect(modalSource).toContain("aria-busy={isNavigating}");
     expect(modalSource).toContain('className="treatment-modal-detail-link-button"');
@@ -47,7 +49,7 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
     expect(modalSource.indexOf("{/* 상세 페이지 이동 버튼 */}")).toBeLessThan(
       modalSource.indexOf("{/* 상세 설명 */}"),
     );
-    expect(modalSource).toContain("{detailUrl && (");
+    expect(modalSource).toContain("{localizedDetailUrl && (");
     expect(globalCss).toContain(".treatment-modal-detail-link-button {");
     expect(globalCss).toContain("background: var(--color-gold-primary);");
     expect(globalCss).toContain("border-radius: 9999px;");

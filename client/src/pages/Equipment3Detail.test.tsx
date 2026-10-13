@@ -10,6 +10,7 @@ let activeLang = "ko";
 let cachedItems: Record<string, unknown>[] | undefined;
 let lastQueryOptions: Record<string, unknown> | undefined;
 const equipmentDetailSource = readFileSync(resolve(process.cwd(), "client/src/pages/Equipment3Detail.tsx"), "utf8");
+const modalSource = readFileSync(resolve(process.cwd(), "client/src/components/treatments/EquipmentTreatmentModal.tsx"), "utf8");
 
 vi.mock("wouter", () => ({
   useParams: () => ({ slug: "missing-device" }),
@@ -103,5 +104,10 @@ describe("Equipment3Detail error navigation", () => {
     expect(equipmentDetailSource).toContain("const cachedForeignItem = lang === \"ko\"");
     expect(equipmentDetailSource).toContain("utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug)");
     expect(equipmentDetailSource).toContain("initialData: cachedForeignItem");
+  });
+
+  it("keeps main-card modal navigation on the foreign detail route so the list cache is retained", () => {
+    expect(modalSource).toContain('const localizedDetailUrl = detailUrl && lang !== "ko"');
+    expect(modalSource).toContain("setLocation(localizedDetailUrl)");
   });
 });

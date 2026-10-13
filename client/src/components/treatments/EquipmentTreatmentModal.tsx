@@ -27,6 +27,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
 import { useLang } from "@/contexts/LangContext";
+import { getLangPrefix } from "@/lib/localizedPath";
 import type { Treatment } from "@/types/treatment";
 
 interface EquipmentTreatmentModalProps {
@@ -47,6 +48,11 @@ export function EquipmentTreatmentModal({
   const { getText } = useLocalizedText();
   const [, setLocation] = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);
+  // 메인 카드의 detailUrl은 공용 한국어 경로로 저장되어 있다.
+  // 외국어 홈에서는 현재 언어 접두사를 붙여 목록 쿼리 캐시를 유지한 채 상세로 이동한다.
+  const localizedDetailUrl = detailUrl && lang !== "ko"
+    ? `${getLangPrefix(lang)}${detailUrl}`
+    : detailUrl;
 
   // 비한국어 + bgImageUrl은 풀배경 헤더, 그 외는 텍스트 메타 헤더를 사용한다.
   const isNonKo = lang !== "ko";
@@ -146,7 +152,7 @@ export function EquipmentTreatmentModal({
           )}
 
           {/* 상세 페이지 이동 버튼 */}
-          {detailUrl && (
+          {localizedDetailUrl && (
             <button
               type="button"
               onClick={() => {
@@ -154,7 +160,7 @@ export function EquipmentTreatmentModal({
                 setIsNavigating(true);
                 window.setTimeout(() => {
                   onOpenChange(false);
-                  setLocation(detailUrl);
+                  setLocation(localizedDetailUrl);
                 }, 160);
               }}
               disabled={isNavigating}

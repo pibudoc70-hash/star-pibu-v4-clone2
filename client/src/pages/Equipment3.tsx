@@ -8,7 +8,7 @@
  * - CategoryTabList + CategoryTabButton 재사용
  */
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
-import { useSearch } from "wouter";
+import { useLocation, useSearch } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useLang } from "@/contexts/LangContext";
 import { useLocalizedText } from "@/hooks/useLocalizedText";
@@ -94,6 +94,7 @@ function Equipment3Card({
 }) {
   const { getText } = useLocalizedText();
   const { lang } = useLang();  // 현재 언어 감지
+  const [, setLocation] = useLocation();
 
   const name     = getText(item.name, item.nameEn, item.nameJa, item.nameZh, item.nameZhTw);
   const desc     = getText(item.desc, item.descEn, item.descJa, item.descZh, item.descZhTw);
@@ -103,9 +104,18 @@ function Equipment3Card({
   const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh, item.categoryZhTw);
   const badge = getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh, item.badgeZhTw);
 
+  // 외국어 목록은 이미 불러온 장비 목록 캐시를 상세 화면에서 재사용할 수 있도록
+  // 전체 새로고침 대신 SPA 전환을 사용한다. 보조 클릭은 기본 브라우저 동작을 유지한다.
+  const handleForeignDetailNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (lang === "ko" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    setLocation(detailPath);
+  };
+
   return (
     <a
       href={detailPath}
+      onClick={handleForeignDetailNavigation}
       className="equipment-list__card treatment-card group cursor-pointer flex flex-col rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2"
       style={{
         animation: `cardFadeIn 0.35s ease ${Math.min(index * 0.07, 0.42)}s both`,

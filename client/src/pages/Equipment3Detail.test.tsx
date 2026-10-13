@@ -5,7 +5,10 @@ import { resolve } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import Equipment3Detail from "./Equipment3Detail";
 
-let queryResult = { data: undefined, isLoading: false, isError: true };
+let queryResult = { data: undefined as Record<string, unknown> | undefined, isLoading: false, isError: true };
+let activeLang = "ko";
+let cachedItems: Record<string, unknown>[] | undefined;
+let lastQueryOptions: Record<string, unknown> | undefined;
 const equipmentDetailSource = readFileSync(resolve(process.cwd(), "client/src/pages/Equipment3Detail.tsx"), "utf8");
 
 vi.mock("wouter", () => ({
@@ -13,13 +16,23 @@ vi.mock("wouter", () => ({
   useLocation: () => ["/equipment3/missing-device?tab=skin", vi.fn()],
   useSearch: () => "?tab=skin",
 }));
-vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: "ko" }) }));
+vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: activeLang }) }));
 vi.mock("@/hooks/useLocalizedText", () => ({ useLocalizedText: () => ({ getText: (ko: string) => ko }) }));
 vi.mock("@/hooks/useChatConfig", () => ({ useChatConfig: () => ({ chatUrl: "#", reserveUrl: "#", chatBg: "", chatColor: "" }) }));
 vi.mock("@/components/Header", () => ({ default: () => null }));
 vi.mock("@/components/Footer", () => ({ default: () => null }));
 vi.mock("@/lib/trpc", () => ({
-  trpc: { equipment3: { bySlug: { useQuery: () => queryResult } } },
+  trpc: {
+    useUtils: () => ({ equipment3: { list: { getData: () => cachedItems } } }),
+    equipment3: {
+      bySlug: {
+        useQuery: (_input: unknown, options: Record<string, unknown>) => {
+          lastQueryOptions = options;
+          return queryResult;
+        },
+      },
+    },
+  },
 }));
 
 describe("Equipment3Detail error navigation", () => {
@@ -44,6 +57,39 @@ describe("Equipment3Detail error navigation", () => {
     queryResult = { data: undefined, isLoading: false, isError: true };
   });
 
+  it("uses the foreign list cache as the detail query's immediate initial value", () => {
+    const cachedItem = {
+      id: 1,
+      slug: "missing-device",
+      name: "캐시 시술",
+      nameEn: "Cached Treatment",
+      category: "피부관리",
+      categoryEn: "Skin Care",
+      desc: "",
+      detail: "",
+      effect: "",
+      caution: "",
+      sessions: "",
+      time: "",
+      recovery: "",
+      faqs: "[]",
+      images: "[]",
+      imageUrl: null,
+      bgImageUrl: null,
+      badge: "",
+    };
+    activeLang = "en";
+    cachedItems = [cachedItem];
+    queryResult = { data: cachedItem, isLoading: false, isError: false };
+
+    render(<Equipment3Detail />);
+
+    expect(lastQueryOptions?.initialData).toBe(cachedItem);
+    activeLang = "ko";
+    cachedItems = undefined;
+    queryResult = { data: undefined, isLoading: false, isError: true };
+  });
+
   it("uses localized authored content for Ultherapy Prime and Thermage FLX instead of the generic detail fallback", () => {
     expect(equipmentDetailSource).toContain("isUltherapyPrimeSlug(item.slug)");
     expect(equipmentDetailSource).toContain('const isThermageFlx = item.slug === "써마지FLX";');
@@ -51,5 +97,11 @@ describe("Equipment3Detail error navigation", () => {
     expect(equipmentDetailSource).toContain("<UltherapyPrimeDesktopContent lang={lang} youtubeUrl={isThermageFlx ? null : item.youtubeUrl} treatment={isThermageFlx ? \"thermage\" : \"ultherapy\"} />");
     expect(equipmentDetailSource).not.toContain("lang === \"ko\" && isUltherapyPrimeSlug");
     expect(equipmentDetailSource).toContain("!isAuthoredLiftingDetail ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug");
+  });
+
+  it("renders a cached foreign list item immediately while refreshing the single-item query", () => {
+    expect(equipmentDetailSource).toContain("const cachedForeignItem = lang === \"ko\"");
+    expect(equipmentDetailSource).toContain("utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug)");
+    expect(equipmentDetailSource).toContain("initialData: cachedForeignItem");
   });
 });

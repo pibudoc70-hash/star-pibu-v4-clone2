@@ -109,6 +109,7 @@ export default function Equipment3Detail() {
   const { getText } = useLocalizedText();
   const { chatUrl, reserveUrl, chatBg, chatColor } = useChatConfig();
   const slug = params.slug as string;
+  const utils = trpc.useUtils();
   const search = useSearch();
   const [colorScheme, setColorScheme] = useState<EquipmentColorScheme>(getEquipmentColorScheme);
   const isDarkMode = colorScheme === "dark";
@@ -126,9 +127,14 @@ export default function Equipment3Detail() {
   // URL에 ?tab= 파라미터가 있으면 그 탭으로, 없으면 item.category로 복원
   const tabFromUrl = new URLSearchParams(search).get("tab") ?? "";
 
+  // 외국어 목록에서 진입한 경우에는 이미 받은 목록 항목을 즉시 본문에 사용하고,
+  // 단건 조회는 백그라운드에서 최신 데이터로 갱신한다. 직접 URL 접근은 기존 로딩 상태를 유지한다.
+  const cachedForeignItem = lang === "ko"
+    ? undefined
+    : utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug);
   const { data: item, isLoading, isError } = trpc.equipment3.bySlug.useQuery(
     { slug },
-    { enabled: !!slug, retry: 1 }
+    { enabled: !!slug, retry: 1, initialData: cachedForeignItem }
   );
   const katexContent = item
     ? [
@@ -179,7 +185,7 @@ export default function Equipment3Detail() {
   }
 
   // ── 에러 ────────────────────────────────────────────────────────────────────
-  if (isError) {
+  if (isError && !item) {
     return (
       <div className={`equipment-detail-page equipment-detail__state-page flex flex-col items-center justify-center min-h-screen gap-4${isDarkMode ? " equipment-detail-page--dark" : ""}`}>
         <p className="equipment-detail__state-error text-red-600">{LABELS.error}</p>

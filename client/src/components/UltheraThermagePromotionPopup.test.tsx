@@ -10,6 +10,14 @@ import UltheraThermagePromotionPopup, {
   ULTHERA_THERMAGE_PROMOTIONS,
 } from "./UltheraThermagePromotionPopup";
 
+vi.mock("@/lib/trpc", () => ({
+  trpc: {
+    useUtils: () => ({
+      equipment3: { bySlug: { fetch: vi.fn().mockResolvedValue(undefined) } },
+    }),
+  },
+}));
+
 const globalStyles = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 
 describe("UltheraThermagePromotionPopup", () => {
@@ -46,8 +54,8 @@ describe("UltheraThermagePromotionPopup", () => {
     expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("href", ULTHERA_THERMAGE_PROMOTIONS.thermageUrl);
     expect(ULTHERA_THERMAGE_PROMOTIONS.ultheraUrl).toBe("/equipment3/%EC%9A%B8%EC%8E%84%EB%9D%BC%ED%94%BC%ED%94%84%EB%9D%BC%EC%9E%84?tab=best");
     expect(ULTHERA_THERMAGE_PROMOTIONS.thermageUrl).toBe("/equipment3/%EC%8D%A8%EB%A7%88%EC%A7%80FLX?tab=best");
-    expect(screen.getByTestId("ulthera-promotion-link")).toHaveAttribute("target", "_blank");
-    expect(screen.getByTestId("thermage-promotion-link")).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getByTestId("ulthera-promotion-link")).not.toHaveAttribute("target");
+    expect(screen.getByTestId("thermage-promotion-link")).not.toHaveAttribute("rel");
     expect(document.querySelector("picture img")).toHaveAttribute("src", ULTHERA_THERMAGE_PROMOTIONS.mobileImage);
     expect(document.querySelector("picture img")).toHaveClass("h-full", "w-full", "object-cover");
     expect(document.querySelector(`source[srcset="${ULTHERA_THERMAGE_PROMOTIONS.desktopImage}"]`)).toHaveAttribute("media", "(min-width: 768px)");

@@ -12781,3 +12781,674 @@ body.font-lang-ko .ultherapy-prime-desktop__hero[data-treatment="thermage"] .ult
     text-align: center;
   }
 }
+
+/* 일반 시술 상세의 가이드 영상은 모바일에서 기존 썸네일을 유지한다. */
+.equipment-detail__primary-video {
+  display: none;
+}
+
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #equipment-faq-heading {
+  border-bottom: 0 !important;
+}
+
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy,
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy :is(s, strike, del) {
+  text-decoration: none !important;
+}
+
+/* PC 일반 시술 상세: 브랜드 크림·골드 톤만 사용하고, 작성형 울쎄라피/써마지 상세는 제외한다. */
+@media (min-width: 768px) {
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)),
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) {
+    --equipment-detail-page-bg: #F7F5F0;
+    --equipment-detail-surface: #FCFBF8;
+    --equipment-detail-panel: #F1ECE2;
+    --equipment-detail-border: #E3D8C5;
+    --equipment-detail-text: #312B24;
+    --equipment-detail-muted: #6C6257;
+    --equipment-detail-meta: #857867;
+    --equipment-detail-accent: #A88455;
+    --equipment-detail-link-hover: #7A5C35;
+    --equipment-detail-button: #7A5C35;
+    --equipment-detail-button-text: #FCFBF8;
+    --equipment-detail-button-hover-text: #FCFBF8;
+    --equipment-detail-focus: #A88455;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero {
+    background: linear-gradient(115deg, #F5F0E6 0%, #FBF8F1 54%, #ECE2D1 100%) !important;
+    border-bottom: 1px solid #E0D3BC;
+    box-shadow: inset 0 -1px 0 rgba(122, 92, 53, 0.05);
+    color: #312B24 !important;
+    text-align: center;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero .container {
+    max-width: 58rem;
+    text-align: center;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero p:first-child {
+    margin-inline: auto;
+    color: #A88455 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero h1 {
+    color: #312B24;
+    letter-spacing: -0.035em;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero h1 + p {
+    margin-inline: auto;
+    color: #6C6257 !important;
+  }
+
+  /* PC에서는 다크 모드 전환을 제공하지 않고 브랜드 라이트 톤으로 고정한다. */
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__appearance-control {
+    display: none;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] {
+    background: rgba(252, 251, 248, 0.97) !important;
+    border-bottom-color: #E3D8C5 !important;
+    box-shadow: 0 2px 18px rgba(73, 57, 39, 0.06) !important;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] img {
+    filter: none !important;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] nav button,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [role="menuitem"],
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [role="option"],
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [aria-label="언어 선택"] {
+    color: #312B24 !important;
+  }
+
+  /* 이미지의 높이를 따라 오른쪽 정보를 설명·정보·상담 순으로 균형 있게 배치한다. */
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary {
+    align-items: stretch;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2),
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > * + *,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > * + * {
+    margin-top: 0 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #E3D8C5;
+    border-radius: 1rem;
+    background: #F1ECE2;
+    box-shadow: 0 12px 28px rgba(73, 57, 39, 0.08);
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video iframe,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video iframe {
+    display: block;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-thumbnail,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-thumbnail {
+    display: none;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__description,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__description {
+    color: #4A4138;
+    font-size: 1.025rem;
+    line-height: 1.8;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .space-y-3,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .space-y-3 {
+    display: grid;
+    gap: 0 !important;
+    border-top: 1px solid #E3D8C5;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary .equipment-detail__meta-row,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary .equipment-detail__meta-row {
+    display: grid !important;
+    grid-template-columns: 5.75rem minmax(0, 1fr);
+    gap: 1rem !important;
+    align-items: center;
+    margin-top: 0 !important;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #EAE2D5;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-label,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-label {
+    width: auto;
+    color: #8A6B41 !important;
+    font-weight: 700;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-value,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-value {
+    color: #3E352C !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section {
+    margin-bottom: 4.5rem !important;
+  }
+
+  /* 주의사항은 강조 박스 없이 기대 효과와 동일한 본문 섹션 리듬으로 정리한다. */
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--equipment-detail-border);
+    color: var(--equipment-detail-text);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 2rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy {
+    color: #775425;
+    --tw-prose-body: #775425;
+    --tw-prose-headings: #5F421B;
+    --tw-prose-bold: #5F421B;
+    --tw-prose-bullets: var(--equipment-detail-border);
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-surface,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-surface {
+    display: flex;
+    justify-content: center;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-button,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-button {
+    min-width: 10.5rem;
+    border-color: #CDBD9F;
+    background: transparent;
+    box-shadow: none;
+    color: #80623D;
+    font-weight: 500;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #equipment-faq-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #equipment-faq-heading {
+    border-bottom: 0 !important;
+  }
+}
+
+/* 일반 시술 상세 모바일: PC의 크림·골드 체계를 한 열 읽기 흐름으로 유지한다. */
+@media (max-width: 767px) {
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)),
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) {
+    --equipment-detail-page-bg: #F7F5F0;
+    --equipment-detail-surface: #FCFBF8;
+    --equipment-detail-panel: #F1ECE2;
+    --equipment-detail-border: #E3D8C5;
+    --equipment-detail-text: #312B24;
+    --equipment-detail-muted: #6C6257;
+    --equipment-detail-meta: #857867;
+    --equipment-detail-accent: #A88455;
+    --equipment-detail-link-hover: #7A5C35;
+    --equipment-detail-button: #7A5C35;
+    --equipment-detail-button-text: #FCFBF8;
+    --equipment-detail-button-hover-text: #FCFBF8;
+    --equipment-detail-focus: #A88455;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero {
+    padding: calc(5rem + env(safe-area-inset-top)) 1rem 2.5rem !important;
+    background: linear-gradient(145deg, #F5F0E6 0%, #FBF8F1 58%, #ECE2D1 100%) !important;
+    border-bottom: 1px solid #E0D3BC;
+    box-shadow: inset 0 -1px 0 rgba(122, 92, 53, 0.05);
+    color: #312B24 !important;
+    text-align: center;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero .container {
+    padding-inline: 0;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero p:first-child {
+    margin-inline: auto;
+    color: #A88455 !important;
+    font-size: 0.72rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero h1 {
+    margin-bottom: 0.6rem;
+    color: #312B24;
+    font-size: clamp(1.85rem, 8vw, 2.3rem);
+    line-height: 1.22;
+    letter-spacing: -0.045em;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__hero h1 + p {
+    margin-inline: auto;
+    color: #6C6257 !important;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__appearance-control {
+    display: none;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] {
+    background: rgba(252, 251, 248, 0.97) !important;
+    border-bottom-color: #E3D8C5 !important;
+    box-shadow: 0 2px 18px rgba(73, 57, 39, 0.06) !important;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] img {
+    filter: none !important;
+  }
+
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] nav button,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [role="menuitem"],
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [role="option"],
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) header[role="banner"] [aria-label="언어 선택"] {
+    color: #312B24 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main {
+    padding: 1.75rem 1rem 2.5rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary {
+    gap: 1.25rem !important;
+    margin-bottom: 2.75rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #E3D8C5;
+    border-radius: 1rem;
+    background: #F1ECE2;
+    box-shadow: 0 10px 24px rgba(73, 57, 39, 0.08);
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video iframe,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-video iframe {
+    display: block;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-thumbnail,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary-media--with-video .equipment-detail__primary-thumbnail {
+    display: none;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2),
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > * + *,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > * + * {
+    margin-top: 0 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__description,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__description {
+    color: #4A4138;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .space-y-3,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .space-y-3 {
+    display: grid;
+    gap: 0 !important;
+    border-top: 1px solid #E3D8C5;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary .equipment-detail__meta-row,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary .equipment-detail__meta-row {
+    display: grid !important;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: 0.75rem !important;
+    align-items: center;
+    margin-top: 0 !important;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #EAE2D5;
+    font-size: 0.84rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-label,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-label {
+    width: auto;
+    color: #8A6B41 !important;
+    font-weight: 700;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-value,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__meta-value {
+    color: #3E352C !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .flex,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__primary > div:nth-child(2) > .flex {
+    gap: 0.625rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__contact-action,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__contact-action {
+    min-height: 3.15rem;
+    padding-inline: 0.625rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  #main-content.equipment-detail__main .equipment-detail__caution {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading {
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+    border-bottom: 0;
+    color: var(--equipment-detail-text) !important;
+    font-size: 1.3rem;
+    line-height: 1.7rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy {
+    color: #775425 !important;
+    --tw-prose-body: #775425;
+    --tw-prose-headings: #5F421B;
+    --tw-prose-bold: #5F421B;
+    --tw-prose-bullets: var(--equipment-detail-border);
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-surface,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-surface {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-button,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__back-button {
+    min-width: 10rem;
+    border-color: #CDBD9F;
+    background: transparent;
+    box-shadow: none;
+    color: #80623D;
+    font-weight: 500;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading {
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+  }
+
+  html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main > .equipment-detail__caution,
+  html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main > .equipment-detail__caution {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-shell,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-shell {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > #equipment-faq-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > #equipment-faq-heading {
+    margin-bottom: 0.875rem !important;
+    padding-bottom: 0 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > .space-y-3,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > .space-y-3 {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > .space-y-3 > *,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-inner > .space-y-3 > * {
+    margin-top: 0 !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-item,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__faq-item {
+    padding: 0.875rem 1rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__info-shell,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__info-shell {
+    margin-bottom: 2rem !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose hr,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose hr {
+    display: none !important;
+    margin: 0 !important;
+  }
+
+  html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell,
+  html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell,
+  html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell,
+  html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {
+    padding: 0 !important;
+  }
+}
+
+/* 같은 components layer에서 전역 모바일 section 패딩을 해제해야 한다. */
+@layer components {
+  @media (max-width: 767px) {
+    html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main > .equipment-detail__caution,
+    html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main > .equipment-detail__caution {
+      margin: 0 0 2.25rem !important;
+      padding: 0 !important;
+    }
+
+    html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell,
+    html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__faq-shell {
+      margin: 0 0 1rem !important;
+      padding: 0 !important;
+    }
+
+    html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell,
+    html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell > .equipment-detail__info-card,
+    html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__info-shell > .equipment-detail__info-card {
+      margin: 0 !important;
+    }
+  }
+}
+
+/* Tailwind 유틸리티 레이어의 제목선·p-6보다 같은 레이어의 모바일 규칙을 우선한다. */
+@layer utilities {
+  @media (max-width: 767px) {
+    .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading,
+    .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading {
+      padding-bottom: 0 !important;
+      border-bottom-width: 0 !important;
+    }
+
+    .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > hr,
+    .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > hr {
+      display: none !important;
+      border: 0 !important;
+      margin: 0 !important;
+    }
+
+    .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > p,
+    .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > p {
+      line-height: 22px;
+    }
+
+    .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > p + p,
+    .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose > p + p {
+      margin-top: 1rem;
+    }
+  }
+}
+
+/* 모바일 일반 상세의 본문 구분선은 제목 위·아래 어느 위치에서도 표시하지 않는다. */
+@media (max-width: 767px) {
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__main > section > .equipment-detail__section-heading,
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-heading {
+    padding-bottom: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose hr,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__prose hr {
+    display: none !important;
+    border: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+/* 일반 상세 기대 효과의 옅은 상단선·가상선은 모든 화면 폭에서 숨긴다. */
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section,
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section,
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section::before,
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section::after,
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section::before,
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section::after {
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section :is(hr, .equipment-detail__section-heading),
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section :is(hr, .equipment-detail__section-heading) {
+  border-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 공통 lower-surface의 margin: 0 !important보다 높은 우선순위로 목록 버튼을 분리한다. */
+@media (max-width: 767px) {
+  html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface,
+  html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    margin: 50px 0 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+/* 일반 상세: 기대 효과는 주의사항의 골드 톤, 주의사항은 일반 소개글의 차콜 톤을 사용한다. */
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section .equipment-detail__prose,
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section .equipment-detail__prose {
+  color: #775425 !important;
+  --tw-prose-body: #775425;
+  --tw-prose-headings: #5F421B;
+  --tw-prose-bold: #5F421B;
+  --tw-prose-bullets: var(--equipment-detail-border);
+}
+
+.equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy,
+.equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__caution-copy {
+  color: #4A4138 !important;
+  --tw-prose-body: #4A4138;
+  --tw-prose-headings: #312B24;
+  --tw-prose-bold: #312B24;
+  --tw-prose-bullets: var(--equipment-detail-border);
+}
+
+/* 작성형 울쎄라피 프라임·써마지 FLX 상세의 목록 복귀 버튼 */
+.equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__back-surface {
+  display: flex !important;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+  padding: 3rem 0 0 !important;
+}
+
+.equipment-detail-page:has(.ultherapy-prime-desktop) .equipment-detail__back-button {
+  min-width: 10rem;
+  border-color: #CDBD9F;
+  background: transparent;
+  box-shadow: none;
+  color: #80623D;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  html body .equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    padding-top: 50px !important;
+  }
+}
+
+/* PC 일반 상세: 기대 효과 제목 아래 선은 시술 소개와 같은 기준선으로 유지한다. */
+@media (min-width: 768px) {
+  .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section > .equipment-detail__section-heading,
+  .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) .equipment-detail__effect-section > .equipment-detail__section-heading {
+    border-bottom: 1px solid var(--equipment-detail-border) !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  /* 일반 상세는 앞 카드의 여백과 독립적으로 50px을 유지한다. */
+  html body .equipment-detail-page:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface,
+  html body .equipment-detail-page--dark:not(:has(.ultherapy-prime-desktop)) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    margin: 50px 0 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* 작성형 울쎄라피·써마지 PC에는 별도 flex gap이 없으므로 패딩 50px을 사용한다. */
+  html body .equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    margin: 0 !important;
+    padding-top: 50px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* 작성형 모바일은 부모의 32px gap과 합쳐 실제 50px이 되도록 18px만 더한다. */
+  html body .equipment-detail-page:has(.ultherapy-prime-desktop) #main-content.equipment-detail__main .equipment-detail__lower-surface > .equipment-detail__back-surface {
+    margin: 18px 0 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+/* 모든 장비 상세 FAQ의 질문·답변 표시는 사이트 골드 톤으로 통일한다. */
+.equipment-detail__faq-marker {
+  color: #A88455 !important;
+}

@@ -235,6 +235,12 @@ export default function Equipment3Detail() {
   const isThermageFlx = item.slug === "써마지FLX";
   const isAuthoredLiftingDetail = isUltherapyPrime || isThermageFlx;
   const explanatoryInfographic = lang === "ko" && !isAuthoredLiftingDetail ? EQUIPMENT_EXPLANATORY_INFOGRAPHICS[item.slug as keyof typeof EQUIPMENT_EXPLANATORY_INFOGRAPHICS] : undefined;
+  const equipmentVideoId = !isAuthoredLiftingDetail
+    ? (item.youtubeUrl ?? "").match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|watch\?v=))([^?&#/]+)/)?.[1]
+    : undefined;
+  const equipmentVideoEmbedUrl = equipmentVideoId
+    ? `https://www.youtube-nocookie.com/embed/${equipmentVideoId}`
+    : null;
 
   const images = safeParseJson<string[]>(item.images, []);
 
@@ -375,7 +381,21 @@ export default function Equipment3Detail() {
       <main id="main-content" className="equipment-detail__main container mx-auto px-4 py-12">
         <div className={`equipment-detail__primary grid grid-cols-1 md:grid-cols-2 gap-10 mb-14${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
           {/* 이미지 — 한국어: imageUrl 기존 방식 / 비한국어+bgImageUrl: 배경+CSS 텍스트 오버레이 */}
-          <div>
+          <div className={`equipment-detail__primary-media${equipmentVideoEmbedUrl ? " equipment-detail__primary-media--with-video" : ""}`}>
+            {equipmentVideoEmbedUrl && (
+              <div className="equipment-detail__primary-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={equipmentVideoEmbedUrl}
+                  title={localizedName}
+                  style={{ border: "none" }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            )}
+            <div className="equipment-detail__primary-thumbnail">
             {lang !== "ko" && item.bgImageUrl ? (
               /* ── 비한국어: 배경+텍스트 오버레이 ── */
               <div
@@ -432,6 +452,7 @@ export default function Equipment3Detail() {
                 <span className="text-slate-400 text-5xl">✦</span>
               </div>
             )}
+            </div>
           </div>
 
           {/* 기본 정보 */}
@@ -491,7 +512,7 @@ export default function Equipment3Detail() {
         {/* 상세 설명 */}
         {localizedDetail && (
           <section className={`mb-12${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
-            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.overview}</h2>
+            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 border-0 md:border-b md:pb-2">{LABELS.overview}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
                 <Streamdown>{localizedDetail}</Streamdown>
@@ -502,7 +523,7 @@ export default function Equipment3Detail() {
 
         {explanatoryInfographic && (
           <section className="mb-12" aria-labelledby="equipment-infographic-heading">
-            <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">시술 원리 인포그래픽</h2>
+            <h2 id="equipment-infographic-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 border-0 md:border-b md:pb-2">시술 원리 인포그래픽</h2>
             <figure className="equipment-detail__infographic mx-auto max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-[#fffdf8] shadow-sm">
               <OptimizedImage
                 src={explanatoryInfographic.src}
@@ -520,8 +541,8 @@ export default function Equipment3Detail() {
 
         {/* 기대 효과 */}
         {localizedEffect && (
-          <section className={`mb-12${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
-            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.effect}</h2>
+          <section className={`equipment-detail__effect-section mb-12${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+            <h2 className="equipment-detail__section-heading text-2xl font-bold mb-5 border-0 md:border-b md:pb-2">{LABELS.effect}</h2>
             <div className="equipment-detail__prose prose max-w-none">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
                 <Streamdown>{localizedEffect}</Streamdown>
@@ -532,7 +553,7 @@ export default function Equipment3Detail() {
 
         {/* 주의사항 */}
         {localizedCaution && (
-          <section className={`equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
+          <section className={`equipment-detail__caution mb-12 bg-amber-50 border border-amber-200 rounded-2xl${isAuthoredLiftingDetail ? " ultherapy-prime-desktop-mobile-only" : ""}`}>
             <h2 className="equipment-detail__caution-heading text-xl font-bold text-amber-900 mb-4">{LABELS.caution}</h2>
             <div className="equipment-detail__caution-copy prose max-w-none text-amber-900">
               <Suspense fallback={<div className="animate-pulse bg-gray-200 h-24 rounded" />}>
@@ -546,14 +567,14 @@ export default function Equipment3Detail() {
           {managedFaqs.length > 0 && (
             <section className={`equipment-detail__faq-shell ${isAuthoredLiftingDetail ? "mb-0" : "mb-12"}`} aria-labelledby="equipment-faq-heading">
               <div className="equipment-detail__faq-inner">
-                <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 pb-2 border-b border-gray-100">{LABELS.faq}</h2>
+                <h2 id="equipment-faq-heading" className="equipment-detail__section-heading text-2xl font-bold mb-5 border-0 md:border-b md:pb-2">{LABELS.faq}</h2>
                 <div className="space-y-3">
                   {managedFaqs.map(({ question, answer }, index) => (
                     <details key={`${question}-${index}`} className="equipment-detail__faq-item group rounded-xl border px-5 py-4">
                       <summary className="cursor-pointer list-none pr-8 font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-800">
-                        <span className="mr-2 text-blue-600" aria-hidden="true">Q.</span>{question}
+                        <span className="equipment-detail__faq-marker mr-2" aria-hidden="true">Q.</span>{question}
                       </summary>
-                      <p className="mt-4 whitespace-pre-line leading-relaxed text-slate-700"><span className="mr-2 font-semibold text-blue-600" aria-hidden="true">A.</span>{answer}</p>
+                      <p className="mt-4 whitespace-pre-line leading-relaxed text-slate-700"><span className="equipment-detail__faq-marker mr-2 font-semibold" aria-hidden="true">A.</span>{answer}</p>
                     </details>
                   ))}
                 </div>
@@ -592,43 +613,6 @@ export default function Equipment3Detail() {
             </div>
           </section>
         )}
-
-        {/* YouTube 가이드 영상 */}
-        {item.youtubeUrl && !isAuthoredLiftingDetail && (() => {
-          const sourceUrl = item.youtubeUrl ?? "";
-          const videoId = sourceUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|watch\?v=))([^?&#/]+)/)?.[1];
-          const getEmbedUrl = () => videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : sourceUrl;
-          const getWatchUrl = () => videoId ? `https://www.youtube.com/watch?v=${videoId}` : sourceUrl;
-          const embedUrl = getEmbedUrl();
-          return (
-            <section className="equipment-detail__video mt-4 mb-16 py-8 border-t border-b border-gray-100">
-              <h2 className="equipment-detail__section-heading text-2xl font-bold mb-8 text-center">{LABELS.video}</h2>
-              <div className="md:w-4/5 md:mx-auto">
-                <div className="aspect-video rounded-xl overflow-hidden shadow-xl">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={embedUrl}
-                    title={localizedName}
-                    style={{ border: "none" }}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <p className="equipment-detail__video-caption mt-3 text-sm text-slate-600">
-                  <a
-                    href={getWatchUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800"
-                  >
-                    YouTube
-                  </a>
-                </p>
-              </div>
-            </section>
-          );
-        })()}
 
           {/* 목록으로 돌아가기 */}
           <div className={`equipment-detail__back-surface ${isAuthoredLiftingDetail ? "mt-0" : "mt-8"}`}>

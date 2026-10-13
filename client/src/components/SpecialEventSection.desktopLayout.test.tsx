@@ -37,7 +37,7 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain("allEvents.length > DESKTOP_EVENT_INITIAL_COUNT");
     expect(source).toContain("{desktopEvents.map((event) => (");
     expect(source).toContain("{showDesktopEventExpansion && (");
-    expect(source).toContain('className="mt-8 hidden justify-center md:flex"');
+    expect(source).toContain('className="mt-12 hidden justify-center md:flex"');
     expect(source).toContain("onClick={() => setShowAllDesktopEvents(true)}");
     expect(source).toContain('aria-controls="special-event-desktop-grid"');
     expect(source).toContain('ko: "이벤트 더 보기"');
@@ -65,7 +65,7 @@ describe("SpecialEventSection desktop showcase layout", () => {
     expect(source).toContain("showHeader?: boolean");
     expect(source).toContain("showHeader = true");
     expect(source).toContain("{showHeader && <SectionHeader lang={lang} />}");
-    expect(source).toContain('const sectionSpacing = showHeader ? "py-20 md:py-28" : "pt-12 pb-20 md:pt-16 md:pb-28"');
+    expect(source).toContain('const sectionSpacing = showHeader ? "py-20 md:pt-24 md:pb-28" : "pt-12 pb-20 md:pt-16 md:pb-28"');
     expect(source).toContain('className={`${sectionSpacing} scroll-mt-24 md:scroll-mt-40`}');
   });
 

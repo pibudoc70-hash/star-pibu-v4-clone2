@@ -27,7 +27,8 @@ describe("TreatmentsEquipmentSection spacing", () => {
   });
 
   it("keeps the desktop thumbnail height without imposing unused card height or changing mobile", () => {
-    expect(globalCss).toContain("@media (min-width: 768px) {\n  #treatments .treatment-card");
+    expect(globalCss).toContain("@media (min-width: 768px) {");
+    expect(globalCss).toContain("#treatments .treatment-card > :first-child");
     expect(globalCss).toContain("flex: 0 0 200px;");
     expect(globalCss).toContain("height: 200px;");
     expect(globalCss).not.toContain("min-height: 380px;");

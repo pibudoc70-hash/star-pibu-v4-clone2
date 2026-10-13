@@ -13,7 +13,7 @@ describe("zh-TW equipment treatment localization", () => {
     expect(equipmentPage).toContain("item.nameZhTw");
     expect(equipmentPage).toContain("item.descZhTw");
     expect(equipmentPage).toContain("item.categoryZhTw");
-    expect(equipmentPage).toContain("item.badgeZhTw");
+    expect(equipmentPage).not.toContain("item.badgeZhTw");
     expect(equipmentPage).toContain('"查看詳情"');
   });
 
@@ -21,7 +21,7 @@ describe("zh-TW equipment treatment localization", () => {
     expect(adapter).toContain("nameZhTw: item.nameZhTw ?? undefined");
     expect(adapter).toContain("detailZhTw: item.detailZhTw ?? undefined");
     expect(adapter).toContain("cautionZhTw: item.cautionZhTw ?? undefined");
-    expect(adapter).toContain("badgeZhTw: item.badgeZhTw ?? undefined");
+    expect(adapter).not.toContain("badgeZhTw: item.badgeZhTw ?? undefined");
     expect(card).toContain("item.nameZhTw");
     expect(modal).toContain("item.effectZhTw");
     expect(modal).toContain("item.cautionZhTw");

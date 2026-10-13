@@ -92,7 +92,7 @@ describe("homepage desktop palette and label refinement", () => {
 
   it("removes only the desktop treatment-card and more-button wrapper surfaces", () => {
     expect(treatmentsSource).toContain("treatments-equipment__card-surface");
-    expect(treatmentsSource).toContain('className="px-5 pt-5 pb-5 rounded-b-2xl" style={{ background: "#F3EEE8" }}');
+    expect(treatmentsSource).toContain('className="px-5 pt-5 pb-5 lg:pt-0 rounded-b-2xl" style={{ background: "#F3EEE8" }}');
 
     const desktopPalette = cssSource.slice(
       cssSource.indexOf("/* ── Homepage desktop surface harmony"),

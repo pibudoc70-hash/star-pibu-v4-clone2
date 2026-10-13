@@ -18,7 +18,8 @@ describe("EventTableMobile mobile detail simplification", () => {
 
   it("hides only the mobile detail intro and pricing heading inside a phone media query", () => {
     const blockStart = css.indexOf("Mobile special-event detail simplification");
-    const block = blockStart === -1 ? "" : css.slice(blockStart);
+    const blockEnd = css.indexOf("Homepage alternating section surfaces", blockStart);
+    const block = blockStart === -1 ? "" : css.slice(blockStart, blockEnd);
 
     expect(block).toContain("@media (max-width: 767px)");
     expect(block).toContain("#main-content.home-main .event-mobile-detail__intro,");

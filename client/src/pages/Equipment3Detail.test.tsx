@@ -10,6 +10,7 @@ let activeLang = "ko";
 let cachedItems: Record<string, unknown>[] | undefined;
 let lastQueryOptions: Record<string, unknown> | undefined;
 const equipmentDetailSource = readFileSync(resolve(process.cwd(), "client/src/pages/Equipment3Detail.tsx"), "utf8");
+const equipmentDetailCssSource = readFileSync(resolve(process.cwd(), "client/src/index.css"), "utf8");
 const modalSource = readFileSync(resolve(process.cwd(), "client/src/components/treatments/EquipmentTreatmentModal.tsx"), "utf8");
 
 vi.mock("wouter", () => ({
@@ -17,7 +18,12 @@ vi.mock("wouter", () => ({
   useLocation: () => ["/equipment3/missing-device?tab=skin", vi.fn()],
   useSearch: () => "?tab=skin",
 }));
-vi.mock("@/contexts/LangContext", () => ({ useLang: () => ({ lang: activeLang }) }));
+vi.mock("@/contexts/LangContext", () => ({
+  useLang: () => ({
+    lang: activeLang,
+    t: { hero: { cta_kakao: "카카오톡 상담", cta_reserve: "네이버 예약" } },
+  }),
+}));
 vi.mock("@/hooks/useLocalizedText", () => ({ useLocalizedText: () => ({ getText: (ko: string) => ko }) }));
 vi.mock("@/hooks/useChatConfig", () => ({ useChatConfig: () => ({ chatUrl: "#", reserveUrl: "#", chatBg: "", chatColor: "" }) }));
 vi.mock("@/components/Header", () => ({ default: () => null }));
@@ -101,13 +107,21 @@ describe("Equipment3Detail error navigation", () => {
   });
 
   it("renders a cached foreign list item immediately while refreshing the single-item query", () => {
-    expect(equipmentDetailSource).toContain("const cachedForeignItem = lang === \"ko\"");
+    expect(equipmentDetailSource).toContain("const cachedListItem = utils.equipment3.list.getData()");
     expect(equipmentDetailSource).toContain("utils.equipment3.list.getData()?.find((candidate) => candidate.slug === slug)");
-    expect(equipmentDetailSource).toContain("initialData: cachedForeignItem");
+    expect(equipmentDetailSource).toContain("initialData: cachedListItem");
   });
 
   it("keeps main-card modal navigation on the foreign detail route so the list cache is retained", () => {
     expect(modalSource).toContain('const localizedDetailUrl = detailUrl && lang !== "ko"');
     expect(modalSource).toContain("setLocation(localizedDetailUrl)");
+  });
+
+  it("keeps generic guide videos in the primary media area and retains the mobile cream-gold detail layout", () => {
+    expect(equipmentDetailSource).toContain("const equipmentVideoEmbedUrl = equipmentVideoId");
+    expect(equipmentDetailSource).toContain('className={`equipment-detail__primary-media${equipmentVideoEmbedUrl');
+    expect(equipmentDetailSource).not.toContain("YouTube 가이드 영상");
+    expect(equipmentDetailCssSource).toContain("일반 시술 상세 모바일: PC의 크림·골드 체계를 한 열 읽기 흐름으로 유지한다.");
+    expect(equipmentDetailCssSource).toContain("grid-template-columns: 5rem minmax(0, 1fr)");
   });
 });

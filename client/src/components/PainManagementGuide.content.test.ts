@@ -70,7 +70,7 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("<details");
     expect(guideSource).toContain("<summary");
     expect(guideSource).toContain("pain-stage-");
-    expect(guideSource).not.toContain("pain-experience");
+    expect(guideSource).toContain("pain-management-experience-highlights");
     expect(guideSource).not.toContain("pain-monitoring");
     expect(guideSource).not.toContain("pain-guidance");
     expect(guideSource).toContain("pain-faq");

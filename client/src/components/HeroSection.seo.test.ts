@@ -13,6 +13,7 @@ describe("홈 Hero SEO H1", () => {
     expect(heroSource).toContain('const seoHeading = lang === "ko" ? HOME_SEO_META.title : t.hero.title;');
     expect(heroSource).toContain('<h1 className="sr-only">{seoHeading}</h1>');
     expect(heroSource).toContain('<div className="font-medium hero-title" aria-hidden="true">');
-    expect(heroSource).toContain('<div className="hero-mobile-title" aria-hidden="true">{t.hero.title}</div>');
+    expect(heroSource).toContain('className={`hero-mobile-title ${lang === "ko" ? "hero-brand-shimmer" : ""}`}');
+    expect(heroSource).toContain('data-shimmer-text={lang === "ko" ? t.hero.title : undefined}');
   });
 });

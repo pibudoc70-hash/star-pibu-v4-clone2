@@ -22,6 +22,10 @@ import type { Treatment } from "@/types/treatment";
 import { EquipmentTreatmentModal } from "@/components/treatments/EquipmentTreatmentModal";
 import { TreatmentCardMedia } from "@/components/treatments/TreatmentCardMedia";
 import { TreatmentMeta } from "@/components/treatments/TreatmentMeta";
+import { getLangPrefix } from "@/lib/localizedPath";
+import { useLocation } from "wouter";
+
+const STANDALONE_DETAIL_SLUGS = ["울쎄라피프라임", "써마지FLX"];
 
 interface EquipmentTreatmentCardProps {
   item: Treatment;
@@ -37,9 +41,10 @@ export default function EquipmentTreatmentCard({
   catTextColor,
 }: EquipmentTreatmentCardProps) {
   const [open, setOpen] = useState(false);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const tr = t.treatments;
   const { getText } = useLocalizedText();
+  const [, setLocation] = useLocation();
 
   // [R15-P1-1] CSS custom property 기반: 동적 색상/딜레이를 CSS 변수로 전달
   const cardStyle = {
@@ -52,6 +57,23 @@ export default function EquipmentTreatmentCard({
   const localizedDesc = getText(item.desc, item.descEn, item.descJa, item.descZh, item.descZhTw);
   const localizedTime = getText(item.time, item.timeEn, item.timeJa, item.timeZh, item.timeZhTw);
   const localizedRecovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
+  const detailUrl = item.detailUrl;
+  const isStandaloneDetail = detailUrl
+    ? STANDALONE_DETAIL_SLUGS.some((slug) =>
+      decodeURIComponent(detailUrl).split("?")[0].endsWith(`/equipment3/${slug}`),
+    )
+    : false;
+  const standaloneDetailUrl = isStandaloneDetail && detailUrl
+    ? (lang === "ko" ? detailUrl : `${getLangPrefix(lang)}${detailUrl}`)
+    : undefined;
+
+  const handleCardClick = () => {
+    if (standaloneDetailUrl) {
+      setLocation(standaloneDetailUrl);
+      return;
+    }
+    setOpen(true);
+  };
 
   return (
     <>
@@ -60,7 +82,7 @@ export default function EquipmentTreatmentCard({
         type="button"
         className="treatment-card card card--treatment group cursor-pointer animate-card-fade w-full text-left"
         style={cardStyle}
-        onClick={() => setOpen(true)}
+        onClick={handleCardClick}
         aria-label={`${localizedName} ${tr.modalDetailBtn}`}
       >
         {/* [R20-P1-5] 이미지 영역 → TreatmentCardMedia 서브컴포넌트 */}

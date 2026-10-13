@@ -30,6 +30,15 @@ describe("EquipmentTreatmentModal Equipment3 detail links", () => {
     expect(cardSource).toContain("detailUrl={item.detailUrl}");
   });
 
+  it("opens Ultherapy Prime and Thermage FLX cards directly instead of opening the modal", () => {
+    expect(cardSource).toContain('const STANDALONE_DETAIL_SLUGS = ["울쎄라피프라임", "써마지FLX"]');
+    expect(cardSource).toContain("const isStandaloneDetail = detailUrl");
+    expect(cardSource).toContain("const standaloneDetailUrl = isStandaloneDetail && detailUrl");
+    expect(cardSource).toContain("setLocation(standaloneDetailUrl)");
+    expect(cardSource).toContain("onClick={handleCardClick}");
+    expect(cardSource).toContain("getLangPrefix(lang)");
+  });
+
   it("renders the FAQ-active gold detail button directly after media and navigates with progress feedback", () => {
     expect(modalSource).toContain("detailUrl: string | undefined");
     expect(modalSource).not.toContain("accentColor");

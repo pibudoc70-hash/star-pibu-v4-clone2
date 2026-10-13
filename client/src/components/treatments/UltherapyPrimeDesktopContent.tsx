@@ -7,7 +7,7 @@ import {
   Stethoscope,
   Target,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Lang } from "@/lib/i18n";
 import { ULTHERAPY_PRIME_COPY } from "./ultherapyPrimeContent";
 import { THERMAGE_FLX_COPY } from "./thermageFlxContent";
@@ -311,6 +311,26 @@ const THERMAGE_FOREIGN_HERO_ACCENT: Partial<Record<Lang, string>> = {
   "zh-TW": "原廠Thermage FLX",
 };
 
+const ULTHERAPY_HERO_ACCENT: Record<Lang, string> = {
+  ko: "정품 울쎄라피 프라임",
+  en: "authentic Ultherapy Prime",
+  ja: "正規品のUltherapy Prime",
+  zh: "正品 Ultherapy Prime",
+  "zh-TW": "原廠 Ultherapy Prime",
+};
+
+function UltherapyHeroDescription({ lang, text }: { lang: Lang; text: string }) {
+  const accent = ULTHERAPY_HERO_ACCENT[lang];
+  const index = text.indexOf(accent);
+  if (index < 0) return <>{text}</>;
+  const prefix = text.slice(0, index);
+  const suffix = text.slice(index + accent.length);
+  if (lang === "ko") {
+    return <>{prefix.trimEnd()}<br /><span className="ultherapy-prime-desktop__ultherapy-hero-description-accent">{accent}</span>{suffix}</>;
+  }
+  return <>{prefix}<span className="ultherapy-prime-desktop__ultherapy-hero-description-accent">{accent}</span>{suffix}</>;
+}
+
 function ThermageForeignHeroDescription({ lang, text }: { lang: Lang; text: string }) {
   const accent = THERMAGE_FOREIGN_HERO_ACCENT[lang];
   const index = accent ? text.indexOf(accent) : -1;
@@ -334,7 +354,7 @@ export function UltherapyPrimeDesktopHero({ lang, treatment = "ultherapy" }: Pic
           </div>
           <p className="ultherapy-prime-desktop__eyebrow">{isThermage ? "PREMIUM RADIOFREQUENCY CARE" : "PREMIUM ULTRASOUND LIFTING"}</p>
           <h1 id="ultherapy-prime-title">{isThermage && lang === "ko" ? <>4세대에 걸친 진화된 써마지 FLX로 <br className="ultherapy-prime-desktop__thermage-hero-title-break" />리프팅을 넘어 강력한 타이트닝 효과까지</> : isThermage && lang === "zh" ? <>历经四代演进的Thermage FLX，<br className="ultherapy-prime-desktop__thermage-chinese-hero-title-break" />不仅支持提拉管理，更可带来强效紧致体验</> : isThermage && lang === "zh-TW" ? <>歷經四代演進的Thermage FLX，<br className="ultherapy-prime-desktop__thermage-chinese-hero-title-break" />不僅著重拉提，也提供強效緊實管理</> : isThermage ? thermagePresentation?.heroTitle : <KoreanLineBreakTitle lang={lang} text={copy.heroTitle} firstLine="한 번의 시술로 최대 1년," />}</h1>
-          <p className="ultherapy-prime-desktop__hero-description">{isThermage && lang === "ko" ? <>부산 서면 스타피부과에서 <br className="ultherapy-prime-desktop__thermage-hero-description-break" /><span className="ultherapy-prime-desktop__thermage-hero-description-accent">정품 써마지 FLX</span>를 경험하세요!</> : isThermage ? <ThermageForeignHeroDescription lang={lang} text={thermagePresentation?.heroDescription ?? ""} /> : <KoreanLineBreakTitle lang={lang} text={copy.heroDescription} firstLine="부산 서면 스타피부과에서," />}</p>
+          <p className="ultherapy-prime-desktop__hero-description">{isThermage && lang === "ko" ? <>부산 서면 스타피부과에서 <br className="ultherapy-prime-desktop__thermage-hero-description-break" /><span className="ultherapy-prime-desktop__thermage-hero-description-accent">정품 써마지 FLX</span>를 경험하세요!</> : isThermage ? <ThermageForeignHeroDescription lang={lang} text={thermagePresentation?.heroDescription ?? ""} /> : <UltherapyHeroDescription lang={lang} text={copy.heroDescription} />}</p>
           <ul className="ultherapy-prime-desktop__trust-badges" aria-label={copy.trustTitles.join(", ")}>
             {isThermage ? THERMAGE_TRUST_BADGES.map((badge, index) => {
               const Icon = badge.Icon;
@@ -370,9 +390,62 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
   const showThermageVideo = isThermage;
   const thermageVideoUi = isThermage ? THERMAGE_VIDEO_UI[lang] : null;
   const [activeShortId, setActiveShortId] = useState<string | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const content = contentRef.current;
+    if (!content) return;
+
+    const copySelector = [
+      ".ultherapy-prime-desktop__heading",
+      ".ultherapy-prime-desktop__principle-copy",
+      ".ultherapy-prime-desktop__split-copy",
+      ".ultherapy-prime-desktop__pain-copy",
+      ".ultherapy-prime-desktop__recommend-copy",
+      ".ultherapy-prime-desktop__star-intro",
+    ].join(", ");
+    const mediaSelector = [
+      ".ultherapy-prime-desktop__principle-diagram",
+      ".ultherapy-prime-desktop__authentic-media",
+      ".ultherapy-prime-desktop__collagen-grid",
+      ".ultherapy-prime-desktop__process-grid",
+      ".ultherapy-prime-desktop__video-shell",
+      ".ultherapy-prime-desktop__pain-shorts",
+      ".ultherapy-prime-desktop__combination-grid",
+      ".ultherapy-prime-desktop__areas-figure",
+      ".ultherapy-prime-desktop__strength-grid",
+      ".ultherapy-prime-desktop__star-certification",
+    ].join(", ");
+    const copyTargets = Array.from(content.querySelectorAll<HTMLElement>(copySelector));
+    const mediaTargets = Array.from(content.querySelectorAll<HTMLElement>(mediaSelector));
+    const targets = Array.from(new Set(copyTargets.concat(mediaTargets)));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("ultherapy-scroll-reveal--visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8%" });
+
+    targets.forEach((target, index) => {
+      target.classList.add("ultherapy-scroll-reveal");
+      if (mediaTargets.includes(target)) target.classList.add("ultherapy-scroll-reveal--media");
+      target.style.setProperty("--ultherapy-scroll-delay", `${Math.min(index % 3, 2) * 70}ms`);
+      observer.observe(target);
+    });
+
+    return () => {
+      observer.disconnect();
+      targets.forEach((target) => {
+        target.classList.remove("ultherapy-scroll-reveal", "ultherapy-scroll-reveal--media", "ultherapy-scroll-reveal--visible");
+        target.style.removeProperty("--ultherapy-scroll-delay");
+      });
+    };
+  }, [lang, treatment]);
 
   return (
-    <div className="ultherapy-prime-desktop ultherapy-prime-desktop__content" data-lang={lang} data-treatment={treatment}>
+    <div ref={contentRef} className="ultherapy-prime-desktop ultherapy-prime-desktop__content" data-lang={lang} data-treatment={treatment}>
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">

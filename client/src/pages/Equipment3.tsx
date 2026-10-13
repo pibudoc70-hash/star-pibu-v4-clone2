@@ -102,7 +102,6 @@ function Equipment3Card({
   const recovery = getText(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
   const detail   = getText("자세히 보기", "Learn More", "詳しく見る", "了解详情", "查看詳情");
   const catLabel = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh, item.categoryZhTw);
-  const badge = getText(item.badge, item.badgeEn, item.badgeJa, item.badgeZh, item.badgeZhTw);
 
   // 목록에서 받은 장비 데이터를 상세 화면에서 즉시 재사용하도록
   // 전체 새로고침 대신 SPA 전환을 사용한다. 보조 클릭은 기본 브라우저 동작을 유지한다.
@@ -170,34 +169,17 @@ function Equipment3Card({
             className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
           />
         ) : null}
-        {/* badge 필드 — isBest/isNew 없을 때만 좌상단, 있으면 우상단 */}
-        {badge && !String(item.isBest) && !String(item.isNew) && (
-          <span
-            className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
-            style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
-          >
-            {badge}
-          </span>
-        )}
-        {badge && (String(item.isBest) === "1" || String(item.isNew) === "1") && (
-          <span
-            className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-white text-xs font-bold z-20"
-            style={{ backgroundColor: item.badgeColor || "#d1ab67" }}
-          >
-            {badge}
-          </span>
-        )}
         {/* isBest / isNew 시스템 뱃지 — 가로 나란히 */}
         {(String(item.isBest) === "1" || String(item.isNew) === "1") && (
           <div className="absolute top-3 left-3 flex flex-row gap-1 z-20">
             {String(item.isBest) === "1" && (
               <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ backgroundColor: "#d1ab67" }}>
-                ★ BEST
+                BEST
               </span>
             )}
             {String(item.isNew) === "1" && (
-              <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ backgroundColor: "#2d9e6b" }}>
-                ✨ 신규
+              <span className="px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ backgroundColor: "#738176" }}>
+                NEW
               </span>
             )}
           </div>

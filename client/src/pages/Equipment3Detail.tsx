@@ -436,15 +436,6 @@ export default function Equipment3Detail() {
 
           {/* 기본 정보 */}
           <div className="space-y-6">
-            {item.badge && (
-              <span
-                className="inline-block px-4 py-2 rounded-full text-white font-semibold text-sm"
-                style={{ backgroundColor: item.badgeColor || "#4A6FA5" }}
-              >
-                {item.badge}
-              </span>
-            )}
-
             {localizedDesc && (
               <p className="equipment-detail__description text-gray-700 leading-relaxed">{localizedDesc}</p>
             )}

@@ -134,12 +134,12 @@ function SortableItem({
           )}
           {String(item.isBest) === "1" && (
             <Badge variant="best" className="text-xs">
-              ★ Best
+              BEST
             </Badge>
           )}
           {String(item.isNew) === "1" && (
             <Badge variant="new" className="text-xs">
-              ✨ 신규
+              NEW
             </Badge>
           )}
           <Badge variant={item.isActive === "1" ? "default" : "secondary"}>

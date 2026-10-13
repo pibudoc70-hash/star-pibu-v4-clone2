@@ -175,12 +175,6 @@ function toTreatment(item: {
     recoveryJa: item.recoveryJa ?? undefined,
     recoveryZh: item.recoveryZh ?? undefined,
     recoveryZhTw: item.recoveryZhTw ?? undefined,
-    badge: item.badge ?? undefined,
-    badgeEn: item.badgeEn ?? undefined,
-    badgeJa: item.badgeJa ?? undefined,
-    badgeZh: item.badgeZh ?? undefined,
-    badgeZhTw: item.badgeZhTw ?? undefined,
-    badgeColor: item.badgeColor ?? undefined,
     // 이미지 필드 매핑
     image: item.imageUrl ?? "",
     bgImageUrl: item.bgImageUrl ?? undefined,  // 비한국어 오버레이용 (언어 분기는 카드/모달 컴포넌트에서 처리)

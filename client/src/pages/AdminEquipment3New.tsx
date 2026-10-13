@@ -44,7 +44,6 @@ type FormData = {
   recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string; recoveryZhTw: string;
   faqs: string; faqsEn: string; faqsJa: string; faqsZh: string; faqsZhTw: string;
   slug: string;
-  badge: string; badgeColor: string;
   sortOrder: string;
   youtubeUrl: string;
   imageUrl: string;
@@ -69,7 +68,7 @@ const INITIAL: FormData = {
   time: "", timeEn: "", timeJa: "", timeZh: "", timeZhTw: "",
   recovery: "", recoveryEn: "", recoveryJa: "", recoveryZh: "", recoveryZhTw: "",
   faqs: "[]", faqsEn: "[]", faqsJa: "[]", faqsZh: "[]", faqsZhTw: "[]",
-  slug: "", badge: "", badgeColor: "#4A6FA5", sortOrder: "0",
+  slug: "", sortOrder: "0",
   youtubeUrl: "", imageUrl: "", bgImageUrl: "", isBest: false, isNew: false,
   seoTitle: "", seoDescription: "", seoKeywords: "", ogImageUrl: "",
 };
@@ -346,7 +345,6 @@ export default function AdminEquipment3New() {
         recovery: form.recovery, recoveryEn: form.recoveryEn, recoveryJa: form.recoveryJa, recoveryZh: form.recoveryZh, recoveryZhTw: form.recoveryZhTw,
         faqs: form.faqs, faqsEn: form.faqsEn, faqsJa: form.faqsJa, faqsZh: form.faqsZh, faqsZhTw: form.faqsZhTw,
         slug: form.slug,
-        badge: form.badge, badgeColor: form.badgeColor,
         sortOrder: parseInt(form.sortOrder) || 0,
         youtubeUrl: form.youtubeUrl || undefined,
         imageUrl: form.imageUrl || undefined,
@@ -452,21 +450,6 @@ export default function AdminEquipment3New() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="badge" className="font-semibold">뱃지 텍스트</Label>
-                  <Input id="badge" name="badge" value={form.badge} onChange={handleChange} placeholder="예: 인기" className="mt-1" />
-                </div>
-                <div>
-                  <Label htmlFor="badgeColor" className="font-semibold">뱃지 색상</Label>
-                  <div className="flex items-center gap-2 mt-1">
-                    <input type="color" name="badgeColor" value={form.badgeColor}
-                      onChange={handleChange} className="h-9 w-12 rounded cursor-pointer border" />
-                    <Input name="badgeColor" value={form.badgeColor} onChange={handleChange} className="flex-1" />
-                  </div>
-                </div>
-              </div>
-
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -475,7 +458,7 @@ export default function AdminEquipment3New() {
                   onChange={(e) => setForm((prev) => ({ ...prev, isBest: e.target.checked }))}
                   className="h-4 w-4 rounded border-gray-300 cursor-pointer"
                 />
-                <Label htmlFor="isBest" className="font-semibold cursor-pointer">Best 시술에 추가</Label>
+                <Label htmlFor="isBest" className="font-semibold cursor-pointer">BEST 시술에 추가</Label>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -485,7 +468,7 @@ export default function AdminEquipment3New() {
                   onChange={(e) => setForm((prev) => ({ ...prev, isNew: e.target.checked }))}
                   className="h-4 w-4 rounded border-gray-300 cursor-pointer"
                 />
-                <Label htmlFor="isNew" className="font-semibold cursor-pointer">New 시술에 추가</Label>
+                <Label htmlFor="isNew" className="font-semibold cursor-pointer">NEW 시술에 추가</Label>
               </div>
             </CardContent>
           </Card>

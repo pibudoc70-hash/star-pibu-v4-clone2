@@ -2716,6 +2716,28 @@
   gap: 0 !important;
 }
 
+/* PC 메인 시술·장비 카드는 /equipment3 목록 카드의 200px 미디어 + 380px 카드 비율을 공유한다.
+   모바일 레이아웃과 텍스트 스타일은 변경하지 않는다. */
+@media (min-width: 768px) {
+  #treatments .treatment-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+  }
+
+  #treatments .treatment-card > :first-child {
+    flex: 0 0 200px;
+    height: 200px;
+    aspect-ratio: auto !important;
+  }
+
+  #treatments .treatment-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+}
+
 .card--treatment:hover {
   transform: translateY(var(--card-hover-lift, -6px));
   box-shadow: 0 20px 48px color-mix(in srgb, var(--color-gold-primary) 18%, transparent), 0 6px 16px rgba(0, 0, 0, 0.07);

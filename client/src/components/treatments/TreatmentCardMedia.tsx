@@ -64,7 +64,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
         <OptimizedImage
           src={item.cardBannerImage}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="block w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
         />
       ) : item.images && item.images.length > 1 ? (
         <div className="flex h-full">
@@ -76,7 +76,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
               <OptimizedImage
                 src={img}
                 alt={`${name} ${idx + 1}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="block w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
             </div>
           ))}
@@ -86,7 +86,7 @@ export function TreatmentCardMedia({ item, name }: TreatmentCardMediaProps) {
         <OptimizedImage
           src={item.image}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
+          className="block w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 bg-[var(--card-img-bg)]"
         />
       )}
       {localizedBadge && (

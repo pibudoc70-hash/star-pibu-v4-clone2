@@ -218,7 +218,7 @@ export default function Equipment3Detail() {
   const localizedDetail   = localized(item.detail,  item.detailEn,  item.detailJa,  item.detailZh,  item.detailZhTw);
   const localizedEffect   = localized(item.effect,  item.effectEn,  item.effectJa,  item.effectZh,  item.effectZhTw);
   const localizedCaution  = localized(item.caution, item.cautionEn, item.cautionJa, item.cautionZh, item.cautionZhTw);
-  const localizedCategory = getText(item.category, item.categoryEn, item.categoryJa, item.categoryZh);
+  const localizedCategory = localized(item.category, item.categoryEn, item.categoryJa, item.categoryZh, item.categoryZhTw);
   const localizedTime     = localized(item.time,    item.timeEn,    item.timeJa,    item.timeZh,    item.timeZhTw);
   const localizedRecovery = localized(item.recovery, item.recoveryEn, item.recoveryJa, item.recoveryZh, item.recoveryZhTw);
   const localizedSessions = localized(item.sessions, item.sessionsEn, item.sessionsJa, item.sessionsZh, item.sessionsZhTw);

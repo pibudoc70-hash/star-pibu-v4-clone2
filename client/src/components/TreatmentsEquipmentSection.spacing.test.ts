@@ -17,4 +17,12 @@ describe("TreatmentsEquipmentSection spacing", () => {
     expect(globalCss).toContain("padding-top: var(--home-mobile-section-padding-top) !important;");
     expect(globalCss).toContain("padding-bottom: var(--home-mobile-section-padding-bottom) !important;");
   });
+
+  it("removes native button inset from every homepage treatment card at all viewport widths", () => {
+    const cardRule = globalCss.match(/#treatments \.treatment-card \{[\s\S]*?\n\}/)?.[0] ?? "";
+
+    expect(cardRule).toContain("padding: 0 !important;");
+    expect(cardRule).toContain("gap: 0 !important;");
+    expect(globalCss).toContain("native button inset");
+  });
 });

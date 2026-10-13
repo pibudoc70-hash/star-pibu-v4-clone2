@@ -39,6 +39,13 @@ const translatedFaqs = {
   zhTw: [{ question: "療程後可以立即恢復日常生活嗎？", answer: "會因個人狀況而異，需於諮詢後決定。" }],
 };
 
+const translatedFields = {
+  en: { name: "EM-FIT Lifting", desc: "A lifting treatment." },
+  ja: { name: "EM-FITリフティング", desc: "リフティング施術です。" },
+  zh: { name: "EM-FIT提拉", desc: "提拉项目。" },
+  zhTw: { name: "EM-FIT拉提", desc: "拉提療程。" },
+};
+
 describe("equipment3.autoTranslate FAQ translations", () => {
   beforeEach(() => {
     invokeLLM.mockReset();
@@ -52,7 +59,7 @@ describe("equipment3.autoTranslate FAQ translations", () => {
 
     const result = await caller.autoTranslate({ faqs: sourceFaqs });
 
-    expect(result.translations).toEqual({ en: {}, ja: {}, zh: {} });
+    expect(result.translations).toEqual({ en: {}, ja: {}, zh: {}, zhTw: {} });
     expect(result.faqTranslations).toEqual({
       en: JSON.stringify(translatedFaqs.en),
       ja: JSON.stringify(translatedFaqs.ja),
@@ -71,5 +78,24 @@ describe("equipment3.autoTranslate FAQ translations", () => {
 
     expect(result.faqTranslations).toEqual({ en: "[]", ja: "[]", zh: "[]", zhTw: "[]" });
     expect(invokeLLM).not.toHaveBeenCalled();
+  });
+
+  it("translates Korean basic fields to Simplified and Traditional Chinese independently", async () => {
+    invokeLLM.mockResolvedValueOnce({
+      choices: [{ message: { content: JSON.stringify(translatedFields) } }],
+    });
+    const caller = equipment3Router.createCaller(createAdminContext());
+
+    const result = await caller.autoTranslate({ name: "엠핏 리프팅", desc: "리프팅 시술입니다." });
+
+    expect(result.translations).toEqual(translatedFields);
+    expect(result.faqTranslations).toBeNull();
+    expect(invokeLLM).toHaveBeenCalledWith(expect.objectContaining({
+      response_format: expect.objectContaining({
+        json_schema: expect.objectContaining({
+          schema: expect.objectContaining({ required: ["en", "ja", "zh", "zhTw"] }),
+        }),
+      }),
+    }));
   });
 });

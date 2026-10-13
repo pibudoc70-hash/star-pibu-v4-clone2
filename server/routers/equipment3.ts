@@ -131,6 +131,7 @@ const itemFieldsSchema = z.object({
   categoryEn: z.string().max(100).optional(),
   categoryJa: z.string().max(100).optional(),
   categoryZh: z.string().max(100).optional(),
+  categoryZhTw: z.string().max(100).optional(),
   desc: z.string().optional(),
   descEn: z.string().optional(),
   descJa: z.string().optional(),
@@ -235,6 +236,7 @@ export const equipment3Router = router({
         categoryEn: input.categoryEn ?? "",
         categoryJa: input.categoryJa ?? "",
         categoryZh: input.categoryZh ?? "",
+        categoryZhTw: input.categoryZhTw ?? "",
         desc: input.desc ?? "",
         descEn: input.descEn ?? "",
         descJa: input.descJa ?? "",
@@ -351,7 +353,7 @@ export const equipment3Router = router({
       const koreanFaqs = input.faqs === undefined ? null : parseEquipmentFaqs(input.faqs);
       if (Object.keys(fieldsToTranslate).length === 0) {
         return {
-          translations: { en: {}, ja: {}, zh: {} },
+          translations: { en: {}, ja: {}, zh: {}, zhTw: {} },
           faqTranslations: koreanFaqs === null ? null : await translateEquipmentFaqs(koreanFaqs),
         };
       }
@@ -360,20 +362,21 @@ export const equipment3Router = router({
       const fieldList = Object.keys(fieldsToTranslate);
 
       const prompt = `You are a professional medical/dermatology translator for a Korean dermatology clinic (Star Dermatology, Busan, Korea).
-Translate ALL of the following Korean fields into English (en), Japanese (ja), and Chinese Simplified (zh).
+Translate ALL of the following Korean fields into English (en), Japanese (ja), Simplified Chinese (zh), and Taiwan Traditional Chinese (zhTw).
 You MUST include ALL fields in every language object — do not skip any field.
 Return ONLY valid JSON with this exact structure (include every field listed below):
 {
   "en": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} },
   "ja": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} },
-  "zh": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} }
+  "zh": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} },
+  "zhTw": { ${fieldList.map(k => `"${k}": "...translated..."`).join(', ')} }
 }
 Rules:
 - Keep medical brand names as-is (e.g. Ultherapy, Thermage FLX, AccuREP, HIFU, SMAS, FDA, RF, XERF)
 - Use accurate dermatology/medical terminology
 - Keep the same tone and length as the original
 - For "time", "sessions", "recovery" fields, keep numeric values and units accurate
-- NEVER omit any field — every field must appear in en, ja, and zh
+- NEVER omit any field — every field must appear in en, ja, zh, and zhTw
 
 Fields to translate:
 ${JSON.stringify(fieldsToTranslate, null, 2)}`;
@@ -383,6 +386,24 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
           { role: "system", content: "You are a professional medical translator. Respond with valid JSON only, no markdown, no explanation. Include ALL requested fields in your response." },
           { role: "user", content: prompt },
         ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "equipment_field_translations",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                en: { type: "object", properties: Object.fromEntries(fieldList.map((key) => [key, { type: "string" }])), required: fieldList, additionalProperties: false },
+                ja: { type: "object", properties: Object.fromEntries(fieldList.map((key) => [key, { type: "string" }])), required: fieldList, additionalProperties: false },
+                zh: { type: "object", properties: Object.fromEntries(fieldList.map((key) => [key, { type: "string" }])), required: fieldList, additionalProperties: false },
+                zhTw: { type: "object", properties: Object.fromEntries(fieldList.map((key) => [key, { type: "string" }])), required: fieldList, additionalProperties: false },
+              },
+              required: ["en", "ja", "zh", "zhTw"],
+              additionalProperties: false,
+            },
+          },
+        },
       });
 
       const rawContent = response.choices?.[0]?.message?.content;
@@ -392,7 +413,7 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       let content = typeof rawContent === "string" ? rawContent : JSON.stringify(rawContent);
       content = content.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
 
-      let parsed: { en: Record<string, string>; ja: Record<string, string>; zh: Record<string, string> };
+      let parsed: { en: Record<string, string>; ja: Record<string, string>; zh: Record<string, string>; zhTw: Record<string, string> };
       try {
         parsed = JSON.parse(content);
       } catch {
@@ -400,7 +421,7 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
       }
 
       // 누락 필드 보완 — LLM이 일부 필드를 생략한 경우 빈 문자열로 채움
-      for (const lang of ["en", "ja", "zh"] as const) {
+      for (const lang of ["en", "ja", "zh", "zhTw"] as const) {
         if (!parsed[lang] || typeof parsed[lang] !== "object") parsed[lang] = {};
         for (const key of fieldList) {
           if (typeof parsed[lang][key] !== "string") {
@@ -526,6 +547,7 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
         base64: z.string().min(1),
         fileName: z.string().min(1).max(200),
         mimeType: z.string().default("image/jpeg"),
+        variant: z.enum(["default", "thumbnail"]).default("default"),
       })
     )
     .mutation(async ({ input }) => {
@@ -538,8 +560,8 @@ ${JSON.stringify(fieldsToTranslate, null, 2)}`;
         throw new TRPCError({ code: "BAD_REQUEST", message: "이미지 파일 크기는 5MB 이하여야 합니다." });
       }
 
-      // WebP 변환 + 1600px 리사이즈 파이프라인
-      const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType);
+      // 대표 이미지만 16:9 중앙 크롭, 그 외 이미지는 기존 WebP 최적화만 적용
+      const optimized = await optimizeImage(rawBuffer, input.fileName, input.mimeType, input.variant);
       const uniqueName = `equipment3/${Date.now()}-${Math.random().toString(36).slice(2)}-${optimized.fileName}`;
 
       const { url } = await storagePut(uniqueName, optimized.buffer, optimized.mimeType);

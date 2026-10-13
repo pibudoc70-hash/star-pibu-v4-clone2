@@ -340,6 +340,7 @@ export const equipment3 = mysqlTable("equipment3", {
   categoryEn: varchar("categoryEn", { length: 100 }).default(""),
   categoryJa: varchar("categoryJa", { length: 100 }).default(""),
   categoryZh: varchar("categoryZh", { length: 100 }).default(""),
+  categoryZhTw: varchar("categoryZhTw", { length: 100 }).default(""),
   // 짧은 설명 (카드 미리보기용)
   desc: text("desc").notNull().default(""),
   descEn: text("descEn").default(""),

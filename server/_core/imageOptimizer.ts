@@ -14,6 +14,9 @@ const MAX_WIDTH = 1600;
 const WEBP_QUALITY = 80;
 const WEBP_EFFORT = 4;
 const SMALL_FILE_THRESHOLD = 50 * 1024; // 50KB
+const THUMBNAIL_ASPECT_RATIO = 16 / 9;
+
+export type ImageOptimizeVariant = "default" | "thumbnail";
 
 export interface OptimizeResult {
   buffer: Buffer;
@@ -52,12 +55,13 @@ function isPassThrough(mimeType: string, fileSize: number): boolean {
 export async function optimizeImage(
   buffer: Buffer,
   originalFileName: string,
-  mimeType: string
+  mimeType: string,
+  variant: ImageOptimizeVariant = "default"
 ): Promise<OptimizeResult> {
   const originalSize = buffer.length;
 
   // pass-through 조건
-  if (isPassThrough(mimeType, originalSize)) {
+  if (variant === "default" && isPassThrough(mimeType, originalSize)) {
     console.log(
       `[imageOptimizer] pass-through (${mimeType}, ${(originalSize / 1024).toFixed(1)}KB): ${originalFileName}`
     );
@@ -82,6 +86,30 @@ export async function optimizeImage(
     // 메타데이터로 원본 크기 확인
     const meta = await sharp(buffer).metadata();
     const origWidth = meta.width ?? 0;
+    const origHeight = meta.height ?? 0;
+
+    // 메인 목록 대표 이미지는 업로드 시점에 중앙 16:9 마스크로 고정한다.
+    // 이후 카드에서는 모든 신규 이미지가 같은 비율의 소스를 사용한다.
+    if (variant === "thumbnail" && origWidth > 0 && origHeight > 0) {
+      const originalAspectRatio = origWidth / origHeight;
+      if (originalAspectRatio > THUMBNAIL_ASPECT_RATIO) {
+        const cropWidth = Math.round(origHeight * THUMBNAIL_ASPECT_RATIO);
+        pipeline = pipeline.extract({
+          left: Math.floor((origWidth - cropWidth) / 2),
+          top: 0,
+          width: cropWidth,
+          height: origHeight,
+        });
+      } else if (originalAspectRatio < THUMBNAIL_ASPECT_RATIO) {
+        const cropHeight = Math.round(origWidth / THUMBNAIL_ASPECT_RATIO);
+        pipeline = pipeline.extract({
+          left: 0,
+          top: Math.floor((origHeight - cropHeight) / 2),
+          width: origWidth,
+          height: cropHeight,
+        });
+      }
+    }
 
     // 1600px 초과 시 리사이즈
     if (origWidth > MAX_WIDTH) {

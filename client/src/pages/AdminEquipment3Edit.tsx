@@ -47,7 +47,8 @@ function MultiLangField({
     { code: "ko", suffix: "", placeholder: "한국어" },
     { code: "en", suffix: "En", placeholder: "English" },
     { code: "ja", suffix: "Ja", placeholder: "日本語" },
-    { code: "zh", suffix: "Zh", placeholder: "中文" },
+    { code: "zh", suffix: "Zh", placeholder: "简体中文" },
+    { code: "zhTw", suffix: "ZhTw", placeholder: "繁體中文" },
   ];
   return (
     <div className="space-y-2">
@@ -75,15 +76,15 @@ function MultiLangField({
 }
 
 type FormData = {
-  name: string; nameEn: string; nameJa: string; nameZh: string;
-  category: string; categoryEn: string; categoryJa: string; categoryZh: string;
-  desc: string; descEn: string; descJa: string; descZh: string;
-  detail: string; detailEn: string; detailJa: string; detailZh: string;
-  effect: string; effectEn: string; effectJa: string; effectZh: string;
-  caution: string; cautionEn: string; cautionJa: string; cautionZh: string;
-  sessions: string; sessionsEn: string; sessionsJa: string; sessionsZh: string;
-  time: string; timeEn: string; timeJa: string; timeZh: string;
-  recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string;
+  name: string; nameEn: string; nameJa: string; nameZh: string; nameZhTw: string;
+  category: string; categoryEn: string; categoryJa: string; categoryZh: string; categoryZhTw: string;
+  desc: string; descEn: string; descJa: string; descZh: string; descZhTw: string;
+  detail: string; detailEn: string; detailJa: string; detailZh: string; detailZhTw: string;
+  effect: string; effectEn: string; effectJa: string; effectZh: string; effectZhTw: string;
+  caution: string; cautionEn: string; cautionJa: string; cautionZh: string; cautionZhTw: string;
+  sessions: string; sessionsEn: string; sessionsJa: string; sessionsZh: string; sessionsZhTw: string;
+  time: string; timeEn: string; timeJa: string; timeZh: string; timeZhTw: string;
+  recovery: string; recoveryEn: string; recoveryJa: string; recoveryZh: string; recoveryZhTw: string;
   faqs: string; faqsEn: string; faqsJa: string; faqsZh: string; faqsZhTw: string;
   slug: string; badge: string; badgeColor: string; sortOrder: string;
   youtubeUrl: string; imageUrl: string; bgImageUrl: string; images: string[]; isActive: "0" | "1"; isBest: "0" | "1"; isNew: "0" | "1";
@@ -125,23 +126,23 @@ export default function AdminEquipment3Edit() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setForm({
       name: item.name ?? "",
-      nameEn: item.nameEn ?? "", nameJa: item.nameJa ?? "", nameZh: item.nameZh ?? "",
+      nameEn: item.nameEn ?? "", nameJa: item.nameJa ?? "", nameZh: item.nameZh ?? "", nameZhTw: item.nameZhTw ?? "",
       category: item.category ?? "",
-      categoryEn: item.categoryEn ?? "", categoryJa: item.categoryJa ?? "", categoryZh: item.categoryZh ?? "",
+      categoryEn: item.categoryEn ?? "", categoryJa: item.categoryJa ?? "", categoryZh: item.categoryZh ?? "", categoryZhTw: item.categoryZhTw ?? "",
       desc: item.desc ?? "",
-      descEn: item.descEn ?? "", descJa: item.descJa ?? "", descZh: item.descZh ?? "",
+      descEn: item.descEn ?? "", descJa: item.descJa ?? "", descZh: item.descZh ?? "", descZhTw: item.descZhTw ?? "",
       detail: item.detail ?? "",
-      detailEn: item.detailEn ?? "", detailJa: item.detailJa ?? "", detailZh: item.detailZh ?? "",
+      detailEn: item.detailEn ?? "", detailJa: item.detailJa ?? "", detailZh: item.detailZh ?? "", detailZhTw: item.detailZhTw ?? "",
       effect: item.effect ?? "",
-      effectEn: item.effectEn ?? "", effectJa: item.effectJa ?? "", effectZh: item.effectZh ?? "",
+      effectEn: item.effectEn ?? "", effectJa: item.effectJa ?? "", effectZh: item.effectZh ?? "", effectZhTw: item.effectZhTw ?? "",
       caution: item.caution ?? "",
-      cautionEn: item.cautionEn ?? "", cautionJa: item.cautionJa ?? "", cautionZh: item.cautionZh ?? "",
+      cautionEn: item.cautionEn ?? "", cautionJa: item.cautionJa ?? "", cautionZh: item.cautionZh ?? "", cautionZhTw: item.cautionZhTw ?? "",
       sessions: item.sessions ?? "",
-      sessionsEn: item.sessionsEn ?? "", sessionsJa: item.sessionsJa ?? "", sessionsZh: item.sessionsZh ?? "",
+      sessionsEn: item.sessionsEn ?? "", sessionsJa: item.sessionsJa ?? "", sessionsZh: item.sessionsZh ?? "", sessionsZhTw: item.sessionsZhTw ?? "",
       time: item.time ?? "",
-      timeEn: item.timeEn ?? "", timeJa: item.timeJa ?? "", timeZh: item.timeZh ?? "",
+      timeEn: item.timeEn ?? "", timeJa: item.timeJa ?? "", timeZh: item.timeZh ?? "", timeZhTw: item.timeZhTw ?? "",
       recovery: item.recovery ?? "",
-      recoveryEn: item.recoveryEn ?? "", recoveryJa: item.recoveryJa ?? "", recoveryZh: item.recoveryZh ?? "",
+      recoveryEn: item.recoveryEn ?? "", recoveryJa: item.recoveryJa ?? "", recoveryZh: item.recoveryZh ?? "", recoveryZhTw: item.recoveryZhTw ?? "",
       faqs: item.faqs ?? "[]", faqsEn: item.faqsEn ?? "[]", faqsJa: item.faqsJa ?? "[]", faqsZh: item.faqsZh ?? "[]", faqsZhTw: item.faqsZhTw ?? "[]",
       slug: item.slug ?? "",
       badge: item.badge ?? "", badgeColor: item.badgeColor ?? "#4A6FA5",
@@ -184,7 +185,7 @@ export default function AdminEquipment3Edit() {
         recovery: form.recovery,
         faqs: form.faqs,
       });
-      const { en, ja, zh } = result.translations;
+      const { en, ja, zh, zhTw } = result.translations;
       const faqTranslations = result.faqTranslations;
       // 번역 결과 적용: LLM이 번역한 값이 있으면 적용, 빈 문자열이면 이전 값 유지
       // ?? 대신 || 사용 — ?? 는 null/undefined만 걸러내지만
@@ -196,30 +197,39 @@ export default function AdminEquipment3Edit() {
           nameEn: en.name || prev.nameEn,
           nameJa: ja.name || prev.nameJa,
           nameZh: zh.name || prev.nameZh,
+          nameZhTw: zhTw.name || prev.nameZhTw,
           categoryEn: en.category || prev.categoryEn,
           categoryJa: ja.category || prev.categoryJa,
           categoryZh: zh.category || prev.categoryZh,
+          categoryZhTw: zhTw.category || prev.categoryZhTw,
           descEn: en.desc || prev.descEn,
           descJa: ja.desc || prev.descJa,
           descZh: zh.desc || prev.descZh,
+          descZhTw: zhTw.desc || prev.descZhTw,
           detailEn: en.detail || prev.detailEn,
           detailJa: ja.detail || prev.detailJa,
           detailZh: zh.detail || prev.detailZh,
+          detailZhTw: zhTw.detail || prev.detailZhTw,
           effectEn: en.effect || prev.effectEn,
           effectJa: ja.effect || prev.effectJa,
           effectZh: zh.effect || prev.effectZh,
+          effectZhTw: zhTw.effect || prev.effectZhTw,
           cautionEn: en.caution || prev.cautionEn,
           cautionJa: ja.caution || prev.cautionJa,
           cautionZh: zh.caution || prev.cautionZh,
+          cautionZhTw: zhTw.caution || prev.cautionZhTw,
           sessionsEn: en.sessions || prev.sessionsEn,
           sessionsJa: ja.sessions || prev.sessionsJa,
           sessionsZh: zh.sessions || prev.sessionsZh,
+          sessionsZhTw: zhTw.sessions || prev.sessionsZhTw,
           timeEn: en.time || prev.timeEn,
           timeJa: ja.time || prev.timeJa,
           timeZh: zh.time || prev.timeZh,
+          timeZhTw: zhTw.time || prev.timeZhTw,
           recoveryEn: en.recovery || prev.recoveryEn,
           recoveryJa: ja.recovery || prev.recoveryJa,
           recoveryZh: zh.recovery || prev.recoveryZh,
+          recoveryZhTw: zhTw.recovery || prev.recoveryZhTw,
           faqsEn: faqTranslations?.en ?? prev.faqsEn,
           faqsJa: faqTranslations?.ja ?? prev.faqsJa,
           faqsZh: faqTranslations?.zh ?? prev.faqsZh,
@@ -285,7 +295,7 @@ export default function AdminEquipment3Edit() {
       const reader = new FileReader();
       reader.onload = async (ev) => {
         const base64 = ev.target?.result as string;
-        const result = await uploadMutation.mutateAsync({ base64, fileName: file.name, mimeType: file.type });
+        const result = await uploadMutation.mutateAsync({ base64, fileName: file.name, mimeType: file.type, variant: "thumbnail" });
         setForm((prev) => prev ? { ...prev, imageUrl: result.url } : prev);
         setUploading(false);
       };
@@ -351,15 +361,15 @@ export default function AdminEquipment3Edit() {
       await updateMutation.mutateAsync({
         id,
         name: form.name,
-        nameEn: form.nameEn, nameJa: form.nameJa, nameZh: form.nameZh,
-        category: form.category, categoryEn: form.categoryEn, categoryJa: form.categoryJa, categoryZh: form.categoryZh,
-        desc: form.desc, descEn: form.descEn, descJa: form.descJa, descZh: form.descZh,
-        detail: form.detail, detailEn: form.detailEn, detailJa: form.detailJa, detailZh: form.detailZh,
-        effect: form.effect, effectEn: form.effectEn, effectJa: form.effectJa, effectZh: form.effectZh,
-        caution: form.caution, cautionEn: form.cautionEn, cautionJa: form.cautionJa, cautionZh: form.cautionZh,
-        sessions: form.sessions, sessionsEn: form.sessionsEn, sessionsJa: form.sessionsJa, sessionsZh: form.sessionsZh,
-        time: form.time, timeEn: form.timeEn, timeJa: form.timeJa, timeZh: form.timeZh,
-        recovery: form.recovery, recoveryEn: form.recoveryEn, recoveryJa: form.recoveryJa, recoveryZh: form.recoveryZh,
+        nameEn: form.nameEn, nameJa: form.nameJa, nameZh: form.nameZh, nameZhTw: form.nameZhTw,
+        category: form.category, categoryEn: form.categoryEn, categoryJa: form.categoryJa, categoryZh: form.categoryZh, categoryZhTw: form.categoryZhTw,
+        desc: form.desc, descEn: form.descEn, descJa: form.descJa, descZh: form.descZh, descZhTw: form.descZhTw,
+        detail: form.detail, detailEn: form.detailEn, detailJa: form.detailJa, detailZh: form.detailZh, detailZhTw: form.detailZhTw,
+        effect: form.effect, effectEn: form.effectEn, effectJa: form.effectJa, effectZh: form.effectZh, effectZhTw: form.effectZhTw,
+        caution: form.caution, cautionEn: form.cautionEn, cautionJa: form.cautionJa, cautionZh: form.cautionZh, cautionZhTw: form.cautionZhTw,
+        sessions: form.sessions, sessionsEn: form.sessionsEn, sessionsJa: form.sessionsJa, sessionsZh: form.sessionsZh, sessionsZhTw: form.sessionsZhTw,
+        time: form.time, timeEn: form.timeEn, timeJa: form.timeJa, timeZh: form.timeZh, timeZhTw: form.timeZhTw,
+        recovery: form.recovery, recoveryEn: form.recoveryEn, recoveryJa: form.recoveryJa, recoveryZh: form.recoveryZh, recoveryZhTw: form.recoveryZhTw,
         faqs: form.faqs, faqsEn: form.faqsEn, faqsJa: form.faqsJa, faqsZh: form.faqsZh, faqsZhTw: form.faqsZhTw,
         slug: form.slug,
         badge: form.badge, badgeColor: form.badgeColor,
@@ -455,7 +465,7 @@ export default function AdminEquipment3Edit() {
                       <button
                         key={cat.id}
                         type="button"
-                        onClick={() => setForm((prev) => prev ? { ...prev, category: cat.label, categoryEn: cat.labelEn, categoryJa: cat.labelJa, categoryZh: cat.labelZh } : null)}
+                        onClick={() => setForm((prev) => prev ? { ...prev, category: cat.label, categoryEn: cat.labelEn, categoryJa: cat.labelJa, categoryZh: cat.labelZh, categoryZhTw: cat.labelZh } : null)}
                         className={`px-3 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                           form.category === cat.label
                             ? "bg-blue-600 text-white"
@@ -541,8 +551,8 @@ export default function AdminEquipment3Edit() {
                 </div>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                 {form.imageUrl ? (
-                  <div className="relative inline-block">
-                    <img src={form.imageUrl} alt="대표 이미지" className="h-48 rounded-xl object-cover border" />
+                  <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-xl border">
+                    <img src={form.imageUrl} alt="대표 이미지" className="h-full w-full object-cover" />
                     <button type="button" onClick={() => setForm((p) => p ? { ...p, imageUrl: "" } : p)}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
                       <X className="h-4 w-4" />
@@ -555,6 +565,7 @@ export default function AdminEquipment3Edit() {
                     {uploading ? "업로드 중..." : "대표 이미지 업로드 (최대 5MB)"}
                   </button>
                 )}
+                <p className="text-xs text-gray-400">업로드 시 WebP 변환과 함께 메인 카드용 16:9 중앙 크롭이 적용됩니다.</p>
                 <div>
                   <Label className="text-xs text-gray-500">또는 URL 직접 입력</Label>
                   <Input name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." className="mt-1" />

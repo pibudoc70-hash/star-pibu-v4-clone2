@@ -9,6 +9,7 @@ vi.mock("sharp", () => {
   const mockInstance = {
     metadata: vi.fn().mockResolvedValue({ width: 2000, height: 1500, format: "jpeg" }),
     resize: vi.fn().mockReturnThis(),
+    extract: vi.fn().mockReturnThis(),
     webp: vi.fn().mockReturnThis(),
     toBuffer: vi.fn().mockResolvedValue(Buffer.from("webp-data")),
   };
@@ -36,6 +37,20 @@ describe("optimizeImage", () => {
     const result = await optimizeImage(LARGE_BUFFER, "photo.jpg", "image/jpeg");
     expect(result.mimeType).toBe("image/webp");
     expect(result.fileName).toBe("photo.webp");
+  });
+
+  it("대표 이미지용 썸네일은 중앙 16:9 마스크로 크롭한다", async () => {
+    const { default: sharp } = await import("sharp");
+
+    await optimizeImage(LARGE_BUFFER, "thumbnail.jpg", "image/jpeg", "thumbnail");
+
+    const pipeline = (sharp as ReturnType<typeof vi.fn>).mock.results[0]?.value;
+    expect(pipeline.extract).toHaveBeenCalledWith({
+      left: 0,
+      top: 187,
+      width: 2000,
+      height: 1125,
+    });
   });
 
   it("이미 WebP인 파일은 포맷 유지 (리사이즈만)", async () => {

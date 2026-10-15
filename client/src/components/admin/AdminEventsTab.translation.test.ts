@@ -17,6 +17,9 @@ describe("AdminEventsTab foreign-language event translation", () => {
     for (const field of ["title", "subtitle", "desc", "content", "productName", "cta", "badge", "tag", "anesthesiaFee"]) {
       expect(source).toContain(`${field}: eventForm.${field} || ""`);
     }
+    expect(source).toContain("const priceLabelEntries = priceRows");
+    expect(source).toContain("field: `priceRows.${index}.label`");
+    expect(source).toContain("priceRows: translatedPriceRows");
     expect(source).toContain("Object.fromEntries(translations)");
   });
 });

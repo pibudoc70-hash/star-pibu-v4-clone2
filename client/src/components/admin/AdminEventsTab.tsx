@@ -312,26 +312,44 @@ export default function AdminEventsTab({ currentUser }: Props) {
       anesthesiaFee: eventForm.anesthesiaFee || "",
     };
     const entries = Object.entries(fields).filter(([, text]) => text.trim());
+    const priceRows = eventForm.priceRows || [];
+    const priceLabelEntries = priceRows
+      .map((row, index) => ({ index, label: row.label.trim() }))
+      .filter((row) => row.label);
 
-    if (entries.length === 0) {
+    if (entries.length === 0 && priceLabelEntries.length === 0) {
       toast.error("한국어 이벤트 내용을 먼저 입력해주세요.");
       return;
     }
 
     setTranslating(activeLang);
     try {
-      const translations = await Promise.all(
-        entries.map(async ([field, text]) => {
+      const [translations, priceLabelTranslations] = await Promise.all([
+        Promise.all(entries.map(async ([field, text]) => {
           const result = await translateEventMutation.mutateAsync({
             text,
             targetLang: activeLang,
             field,
           });
           return [field, result.translated] as const;
-        }),
-      );
+        })),
+        Promise.all(priceLabelEntries.map(async ({ index, label }) => {
+          const result = await translateEventMutation.mutateAsync({
+            text: label,
+            targetLang: activeLang,
+            field: `priceRows.${index}.label`,
+          });
+          return [index, result.translated] as const;
+        })),
+      ]);
       const updates = Object.fromEntries(translations);
-      setEventForm((previous) => (previous ? { ...previous, ...updates } : null));
+      const translatedPriceRows = priceRows.map((row, index) => {
+        const translated = priceLabelTranslations.find(([translatedIndex]) => translatedIndex === index)?.[1];
+        return translated ? { ...row, label: translated } : row;
+      });
+      setEventForm((previous) => (
+        previous ? { ...previous, ...updates, priceRows: translatedPriceRows } : null
+      ));
       toast.success(`${LANG_LABELS[activeLang]} 번역이 현재 이벤트 폼에 적용되었습니다.`);
     } finally {
       setTranslating(null);

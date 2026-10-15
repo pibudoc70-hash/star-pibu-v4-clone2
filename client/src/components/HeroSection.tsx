@@ -51,7 +51,7 @@ function HeroSection() {
   const seoHeading = lang === "ko" ? HOME_SEO_META.title : t.hero.title;
   const { chatUrl: rawChatUrl, reserveUrl, chatBg, chatColor, isZH } = useChatConfig();
   const chatUrl = isZH ? "#" : rawChatUrl;
-  const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
+  const chatShadow = isZH ? "0 4px 18px rgba(7,193,96,0.35)" : lang === "en" ? "0 4px 18px rgba(37,211,102,0.35)" : "0 4px 18px rgba(254,229,0,0.35)";
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
     if (!isZH) return;

@@ -35,4 +35,24 @@ describe("public external booking CTA policy", () => {
     const configSource = readFileSync(join(clientRoot, "hooks/useChatConfig.ts"), "utf8");
     expect(configSource).toContain("const reserveUrl = EXTERNAL_BOOKING_URLS.naver");
   });
+
+  it("routes English consultation CTAs to the requested WhatsApp destination", () => {
+    const configSource = readFileSync(join(clientRoot, "hooks/useChatConfig.ts"), "utf8");
+    const englishTranslations = readFileSync(join(clientRoot, "lib/i18n.en.ts"), "utf8");
+
+    expect(configSource).toContain('englishWhatsapp: "https://api.whatsapp.com/send/?phone=%2B821045930090&text&type=phone_number&app_absent=0"');
+    expect(configSource).toContain('lang === "en" ? CHAT_URLS.englishWhatsapp : CHAT_URLS.kakao');
+    expect(englishTranslations).toContain('cta_kakao: "WhatsApp"');
+    expect(englishTranslations).toContain('kakaoAria: "WhatsApp Consultation"');
+  });
+
+  it("uses the Chinese-style gold Naver Booking treatment only for English CTAs", () => {
+    const headerSource = readFileSync(join(clientRoot, "components/header/DesktopNav.tsx"), "utf8");
+    const heroSource = readFileSync(join(clientRoot, "components/hero/HeroActions.tsx"), "utf8");
+    const floatingSource = readFileSync(join(clientRoot, "components/FloatingCTA.tsx"), "utf8");
+
+    expect(headerSource).toContain('background: lang === "en" ? "var(--color-gold-primary)" : "#03C75A"');
+    expect(heroSource).toContain('isZH || lang === "en" ? "hero-btn-reserve-zh" : "hero-btn-reserve"');
+    expect(floatingSource).toContain('const englishReserveStyle = lang === "en"');
+  });
 });

@@ -4,6 +4,7 @@ import OptimizedImage from "@/components/OptimizedImage";
 import { withVersion } from "@/lib/imageUrl";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { getEventLinkHref } from "@shared/eventLinkUrl";
+import { useLang } from "@/contexts/LangContext";
 
 export type EventCardVariant = "lead" | "compact" | "legacy" | "selector" | "showcase";
 
@@ -18,6 +19,13 @@ interface EventCardProps {
 }
 
 type DisplayPrice = { normalPrice: number; discountPrice: number };
+
+function EventPrice({ value }: { value: number }) {
+  const { lang } = useLang();
+  const formatted = value.toLocaleString();
+
+  return <>{lang === "ko" ? `${formatted}원` : `₩${formatted}`}</>;
+}
 
 function parsePriceRows(event: SpecialEvent): PriceRow[] {
   if (!event.priceRows) return [];
@@ -76,11 +84,11 @@ function EventCardHeader({
       <div className="flex items-center gap-2 flex-wrap mb-0">
         <div className="flex items-baseline gap-2">
           <span className="event-card__discount-price font-bold">
-            {displayPrice.discountPrice.toLocaleString()}원
+            <EventPrice value={displayPrice.discountPrice} />
           </span>
           {displayPrice.normalPrice > 0 && (
             <span className="event-card__normal-price line-through">
-              {displayPrice.normalPrice.toLocaleString()}원
+              <EventPrice value={displayPrice.normalPrice} />
             </span>
           )}
         </div>
@@ -130,11 +138,11 @@ function EventDetail({
               <div className="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
                 <div className="flex items-baseline gap-1.5">
                   <p className="event-card__discount-price event-card__discount-price--row font-bold">
-                    {row.discountPrice.toLocaleString()}원
+                    <EventPrice value={row.discountPrice} />
                   </p>
                   {row.normalPrice > 0 && (
                     <p className="event-card__normal-price event-card__normal-price--row line-through">
-                      {row.normalPrice.toLocaleString()}원
+                      <EventPrice value={row.normalPrice} />
                     </p>
                   )}
                 </div>
@@ -256,9 +264,9 @@ function CompactEventRow({
       >
         <span className="min-w-0 truncate text-sm font-semibold text-[var(--brand-text)]">{title}</span>
         <span className="flex shrink-0 items-center gap-2">
-          <span className="event-card__discount-price text-base font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
+          <span className="event-card__discount-price text-base font-bold"><EventPrice value={displayPrice.discountPrice} /></span>
           {displayPrice.normalPrice > 0 && (
-            <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>
+            <span className="event-card__normal-price line-through"><EventPrice value={displayPrice.normalPrice} /></span>
           )}
           <ChevronDown
             aria-hidden="true"
@@ -306,9 +314,9 @@ function SelectorEventRow({
     >
       <span className="min-w-0 truncate text-sm font-semibold text-[var(--brand-text)]">{title}</span>
       <span className="flex shrink-0 items-center gap-2">
-        <span className="event-card__discount-price text-base font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
+        <span className="event-card__discount-price text-base font-bold"><EventPrice value={displayPrice.discountPrice} /></span>
         {displayPrice.normalPrice > 0 && (
-          <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>
+          <span className="event-card__normal-price line-through"><EventPrice value={displayPrice.normalPrice} /></span>
         )}
         <ChevronRight aria-hidden="true" size={16} className="text-brand-mid" />
       </span>
@@ -346,8 +354,8 @@ function ShowcaseEventCard({
         <h3 className="event-card__title mb-2 font-semibold leading-tight">{title}</h3>
         {subtitle && <p className="event-card__subtitle mb-4 line-clamp-1">{subtitle}</p>}
         <div className="event-card__showcase-price-row mb-3 flex min-h-7 items-baseline gap-2">
-          <span className="event-card__discount-price font-bold">{displayPrice.discountPrice.toLocaleString()}원</span>
-          {displayPrice.normalPrice > 0 && <span className="event-card__normal-price line-through">{displayPrice.normalPrice.toLocaleString()}원</span>}
+          <span className="event-card__discount-price font-bold"><EventPrice value={displayPrice.discountPrice} /></span>
+          {displayPrice.normalPrice > 0 && <span className="event-card__normal-price line-through"><EventPrice value={displayPrice.normalPrice} /></span>}
           <span className="event-card__vat-badge inline-flex items-center rounded px-1.5 py-0.5 font-medium">VAT 포함</span>
         </div>
         {priceRows.length > 0 && (
@@ -356,8 +364,8 @@ function ShowcaseEventCard({
               <li key={`${row.label}-${row.discountPrice}`} className="event-card__showcase-option-row flex items-baseline justify-between gap-3">
                 <span className="min-w-0 break-keep text-[var(--brand-text-mid)]">{row.label}</span>
                 <span className="flex shrink-0 items-baseline gap-1.5 whitespace-nowrap">
-                  <span className="font-semibold text-[var(--color-gold-deep)]">{row.discountPrice.toLocaleString()}원</span>
-                  {row.normalPrice > 0 && <span className="event-card__normal-price line-through">{row.normalPrice.toLocaleString()}원</span>}
+                  <span className="font-semibold text-[var(--color-gold-deep)]"><EventPrice value={row.discountPrice} /></span>
+                  {row.normalPrice > 0 && <span className="event-card__normal-price line-through"><EventPrice value={row.normalPrice} /></span>}
                 </span>
               </li>
             ))}

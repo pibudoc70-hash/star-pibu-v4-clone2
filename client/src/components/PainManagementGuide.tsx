@@ -336,7 +336,7 @@ export default function PainManagementGuide({ lang, presentation = "full", hideH
           <p id="pain-management-summary-caption" className="sr-only max-w-[35rem] text-[13px] leading-5 text-[var(--color-star-text-mid)] sm:not-sr-only sm:mx-auto sm:mt-3 sm:max-w-2xl sm:text-sm sm:leading-6">{copy.visualCaption}</p>
           <section data-testid="pain-experience-highlights-desktop" className="pain-management-experience-highlights mt-5 hidden text-left md:grid md:grid-cols-3 md:gap-4">
             {trustBadges.map((badge) => {
-              return <article key={badge.title} className="pain-management-experience-highlight flex items-center px-5 py-4"><span><strong className="block text-sm font-semibold leading-5 text-[#74531b]">{badge.title}</strong><span className="mt-0.5 block text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</span></span></article>;
+              return <article key={badge.title} className="pain-management-experience-highlight flex items-center px-5 py-4"><span><strong className="block text-sm font-semibold leading-5 text-[#74531b]">{badge.title}</strong>{lang === "ko" && <span className="mt-0.5 block text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</span>}</span></article>;
             })}
           </section>
         </header>

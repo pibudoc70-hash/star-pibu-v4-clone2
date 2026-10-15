@@ -29,6 +29,9 @@ export default function FloatingCTA() {
   const { reserveUrl, chatUrl, chatBg, chatColor, isZH, isJA } = useChatConfig();
   const WECHAT_ID = "star2006beauty";
   const telHref = isZH || isJA ? `tel:${CLINIC_TEL_INTL}` : `tel:${CLINIC_TEL}`;
+  const englishReserveStyle = lang === "en"
+    ? { background: "var(--color-gold-primary)", color: "#1a1a1a", boxShadow: "0 4px 18px color-mix(in srgb, var(--color-gold-primary) 42%, transparent)" }
+    : undefined;
 
   const [wechatCopied, setWechatCopied] = useState(false);
   const handleWechatClick = (e: React.MouseEvent) => {
@@ -58,6 +61,7 @@ export default function FloatingCTA() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5 font-normal floating-btn-reserve"
+            style={englishReserveStyle}
             aria-label={fc.reserveAria}
           >
             <Calendar size={18} strokeWidth={2} />
@@ -148,10 +152,11 @@ export default function FloatingCTA() {
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2.5 pr-5 pl-4 h-11 rounded-full shadow-md transition-all hover:scale-105 hover:shadow-lg floating-desktop-reserve"
+          style={englishReserveStyle}
           aria-label={fc.reserveAria}
         >
-          <Calendar size={16} className="text-white flex-shrink-0" />
-          <span className="text-white text-xs font-normal tracking-wide">{fc.reserve}</span>
+          <Calendar size={16} className={`flex-shrink-0 ${lang === "en" ? "text-[#1a1a1a]" : "text-white"}`} />
+          <span className={`text-xs font-normal tracking-wide ${lang === "en" ? "text-[#1a1a1a]" : "text-white"}`}>{fc.reserve}</span>
         </a>
       </div>
     </>

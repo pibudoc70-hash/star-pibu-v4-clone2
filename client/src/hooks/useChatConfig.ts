@@ -22,12 +22,14 @@ export const CHAT_URLS = {
   lineZH: "https://line.me/ti/p/~star2006derm",
   lineJA: "https://lin.ee/tyuRdUc",
   wechat: "https://u.wechat.com/star2006beauty",
+  englishWhatsapp: "https://api.whatsapp.com/send/?phone=%2B821045930090&text&type=phone_number&app_absent=0",
 } as const;
 
 /** 채팅 버튼 스타일 */
 export const CHAT_STYLES = {
   kakao: { bg: "#FEE500", color: "#1F2937" },
   wechat: { bg: "#07C160", color: "#FFFFFF" },
+  whatsapp: { bg: "#25D366", color: "#FFFFFF" },
   line: { bg: "#06C755", color: "#FFFFFF" },
 } as const;
 
@@ -74,13 +76,13 @@ export function useChatConfig(): ChatConfig {
   const phoneHref = isKO ? `tel:${CLINIC_TEL}` : `tel:${CLINIC_TEL_INTL}`;
   const phoneDisplay = isKO ? CLINIC_TEL : CLINIC_TEL_INTL;
 
-  const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? "https://otomo-busan.com/star" : CHAT_URLS.kakao;
+  const chatUrl = isZH ? CHAT_URLS.wechat : isJA ? "https://otomo-busan.com/star" : lang === "en" ? CHAT_URLS.englishWhatsapp : CHAT_URLS.kakao;
   // 일반 고객 예약은 언어와 관계없이 네이버 외부 예약으로만 연결한다.
   // 기존 LINE·OTOMO·WeChat 상담 채널과 내부 예약/OTP 기능은 보존한다.
   const reserveUrl = EXTERNAL_BOOKING_URLS.naver;
 
-  const chatBg = isZH ? CHAT_STYLES.wechat.bg : isJA ? "#4A6FA5" : CHAT_STYLES.kakao.bg;
-  const chatColor = isZH ? CHAT_STYLES.wechat.color : isJA ? "#FFFFFF" : CHAT_STYLES.kakao.color;
+  const chatBg = isZH ? CHAT_STYLES.wechat.bg : lang === "en" ? CHAT_STYLES.whatsapp.bg : isJA ? "#4A6FA5" : CHAT_STYLES.kakao.bg;
+  const chatColor = isZH ? CHAT_STYLES.wechat.color : lang === "en" ? CHAT_STYLES.whatsapp.color : isJA ? "#FFFFFF" : CHAT_STYLES.kakao.color;
 
   return {
     phoneHref,

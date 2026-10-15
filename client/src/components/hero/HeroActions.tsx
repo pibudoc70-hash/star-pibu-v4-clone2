@@ -173,7 +173,7 @@ export function HeroActions({
         href={reserveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
+        className={`hero-fade hero-btn-action flex items-center gap-2 rounded-full font-normal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl justify-center w-full ${isZH || lang === "en" ? "hero-btn-reserve-zh" : "hero-btn-reserve"}`}
         style={{ animationDelay: delays.ctaFirst }}
       >
         <Calendar size={15} strokeWidth={2} />

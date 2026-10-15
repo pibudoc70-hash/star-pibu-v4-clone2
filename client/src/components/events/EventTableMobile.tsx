@@ -73,6 +73,11 @@ function parsePriceRows(event: SpecialEvent): PriceRow[] {
   }
 }
 
+function formatEventPrice(value: number, lang: keyof typeof MOBILE_EVENT_COPY) {
+  const formatted = value.toLocaleString();
+  return lang === "ko" ? `${formatted}원` : `₩${formatted}`;
+}
+
 export const MOBILE_PRIORITY_EVENT_IDS = [300001, 360001, 10560001] as const;
 
 export function orderMobileSpecialEvents(events: SpecialEvent[]) {
@@ -144,8 +149,8 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
                     <span className="text-xs text-gray-600">{row.label}</span>
                     <div className="flex items-center gap-1.5 flex-wrap justify-end">
                       <div className="flex items-baseline gap-1">
-                        <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{row.discountPrice.toLocaleString()}원</span>
-                        {row.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{row.normalPrice.toLocaleString()}원</span>}
+                        <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{formatEventPrice(row.discountPrice, lang)}</span>
+                        {row.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{formatEventPrice(row.normalPrice, lang)}</span>}
                       </div>
                     </div>
                   </div>
@@ -155,8 +160,8 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
                   <span className="text-xs text-gray-600">{event.productName || copy.treatment}</span>
                   <div className="flex items-center gap-1.5 flex-wrap justify-end">
                     <div className="flex items-baseline gap-1">
-                      <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{event.discountPrice.toLocaleString()}원</span>
-                      {event.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{event.normalPrice.toLocaleString()}원</span>}
+                      <span className="font-bold text-sm" style={{ color: "var(--color-gold-deep)" }}>{formatEventPrice(event.discountPrice, lang)}</span>
+                      {event.normalPrice > 0 && <span className="line-through text-xs text-gray-400">{formatEventPrice(event.normalPrice, lang)}</span>}
                     </div>
                   </div>
                 </div>
@@ -249,8 +254,8 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
                 </div>
               </div>
               <div data-testid={`mobile-event-price-${event.id}`} className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums">
-                <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{displayPrice.toLocaleString()}원</span>
-                {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{normalPrice.toLocaleString()}원</span>}
+                <span className="text-sm font-bold" style={{ color: "var(--color-gold-deep)" }}>{formatEventPrice(displayPrice, lang)}</span>
+                {normalPrice > 0 && <span className="line-through text-xs text-gray-400">{formatEventPrice(normalPrice, lang)}</span>}
               </div>
               <span
                 data-testid={`mobile-event-expand-indicator-${event.id}`}

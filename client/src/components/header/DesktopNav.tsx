@@ -217,13 +217,13 @@ export default function DesktopNav({
           rel="noopener noreferrer"
           className="flex items-center font-semibold transition-all duration-200 whitespace-nowrap hover:-translate-y-px"
           style={{
-            background: "#03C75A",
-            color: "#ffffff",
+            background: lang === "en" ? "var(--color-gold-primary)" : "#03C75A",
+            color: lang === "en" ? "#1a1a1a" : "#ffffff",
             fontSize: "12.5px",
             padding: "7px 18px",
             borderRadius: "100px",
             letterSpacing: "0.01em",
-            boxShadow: "0 2px 16px rgba(3,199,90,0.35)",
+            boxShadow: lang === "en" ? "0 2px 16px color-mix(in srgb, var(--color-gold-primary) 42%, transparent)" : "0 2px 16px rgba(3,199,90,0.35)",
           }}
         >
           {ctaReserve}

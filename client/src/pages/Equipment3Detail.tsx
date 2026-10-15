@@ -500,7 +500,8 @@ export default function Equipment3Detail() {
                 href={reserveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="equipment-detail__contact-action flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm shadow-sm bg-[#03C75A] text-white"
+                className="equipment-detail__contact-action flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm shadow-sm"
+                style={lang === "en" ? { background: "var(--color-gold-primary)", color: "#1a1a1a" } : { background: "#03C75A", color: "#ffffff" }}
               >
                 <Calendar size={17} strokeWidth={2} />
                 <span>{t.hero.cta_reserve}</span>

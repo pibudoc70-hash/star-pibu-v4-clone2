@@ -130,6 +130,11 @@ describe("PainManagementGuide content and placement", () => {
     expect(guideSource).toContain("data-testid=\"pain-trust-strip\"");
   });
 
+  it("shows supporting copy in the three desktop experience highlights only for Korean", () => {
+    expect(guideSource).toContain('lang === "ko" && <span className="mt-0.5 block text-xs leading-5 text-[var(--color-star-text-mid)]">{badge.detail}</span>');
+    expect(guideSource).toContain('data-testid="pain-experience-highlights-desktop"');
+  });
+
   it("keeps direct mobile stage cards while giving trust badges and FAQ headings matching icons", () => {
     expect(PAIN_MANAGEMENT_CONTENT.ko.experienceBody).toContain("20여년 동안");
     expect(guideSource).toContain("FileText");

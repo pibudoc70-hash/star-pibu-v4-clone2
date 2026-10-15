@@ -449,7 +449,7 @@ export default function UltherapyPrimeDesktopContent({ lang, youtubeUrl, treatme
       <section className="ultherapy-prime-desktop__what" aria-labelledby="ultherapy-what-heading">
         <div className="ultherapy-prime-desktop__principle-grid">
           <div className="ultherapy-prime-desktop__principle-copy">
-            <SectionHeading eyebrow={isThermage ? "HOW THERMAGE FLX WORKS" : "HOW ULTHERAPY WORKS"} title={isThermage && lang === "ko" ? <>써마지 FLX는<br className="ultherapy-prime-desktop__thermage-what-title-break" />어떤 시술인가요?</> : isThermage && lang === "ja" ? <>Thermage FLXとは<br className="ultherapy-prime-desktop__thermage-ja-what-title-break" />どのような施術ですか？</> : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.whatTitle} koreanFirstLine="울쎄라피 프라임은" foreignHeading="what" />} />
+            <SectionHeading eyebrow={isThermage ? "HOW THERMAGE FLX WORKS" : "HOW ULTHERAPY WORKS"} title={isThermage && lang === "ko" ? <>써마지 FLX는 <br className="ultherapy-prime-desktop__thermage-what-title-break" />어떤 시술인가요?</> : isThermage && lang === "ja" ? <>Thermage FLXとは<br className="ultherapy-prime-desktop__thermage-ja-what-title-break" />どのような施術ですか？</> : <AuthoredTreatmentTitle treatment={treatment} lang={lang} text={copy.whatTitle} koreanFirstLine="울쎄라피 프라임은" foreignHeading="what" />} />
             <p>{thermagePresentation?.whatParagraph ?? copy.whatParagraphs[0]}</p>
             {!isThermage && <p>{copy.whatParagraphs[1]}</p>}
             {!isThermage && <figure className="ultherapy-prime-desktop__principle-diagram ultherapy-prime-desktop__principle-diagram--mobile-inline">

@@ -44,6 +44,7 @@ export default function MobileBottomCTA() {
         target="_blank"
         rel="noopener noreferrer"
         className="mobile-bottom-btn mobile-bottom-btn--reserve"
+        style={lang === "en" ? { background: "var(--color-gold-primary)", color: "#1a1a1a" } : undefined}
         aria-label={t.hero.cta_reserve}
       >
         <Calendar size={14} strokeWidth={2} />

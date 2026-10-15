@@ -20,11 +20,24 @@ interface EventCardProps {
 
 type DisplayPrice = { normalPrice: number; discountPrice: number };
 
+const EVENT_VAT_INCLUDED = {
+  ko: "VAT 포함",
+  en: "VAT included",
+  ja: "VAT込み",
+  zh: "含 VAT",
+  "zh-TW": "含 VAT",
+} as const;
+
 function EventPrice({ value }: { value: number }) {
   const { lang } = useLang();
   const formatted = value.toLocaleString();
 
   return <>{lang === "ko" ? `${formatted}원` : `₩${formatted}`}</>;
+}
+
+function EventVatIncluded() {
+  const { lang } = useLang();
+  return <>{EVENT_VAT_INCLUDED[lang]}</>;
 }
 
 function parsePriceRows(event: SpecialEvent): PriceRow[] {
@@ -94,7 +107,7 @@ function EventCardHeader({
         </div>
         {showVat && (
           <span className="event-card__vat-badge inline-flex items-center px-1.5 py-0.5 rounded font-medium">
-            VAT 포함
+            <EventVatIncluded />
           </span>
         )}
       </div>
@@ -356,7 +369,7 @@ function ShowcaseEventCard({
         <div className="event-card__showcase-price-row mb-3 flex min-h-7 items-baseline gap-2">
           <span className="event-card__discount-price font-bold"><EventPrice value={displayPrice.discountPrice} /></span>
           {displayPrice.normalPrice > 0 && <span className="event-card__normal-price line-through"><EventPrice value={displayPrice.normalPrice} /></span>}
-          <span className="event-card__vat-badge inline-flex items-center rounded px-1.5 py-0.5 font-medium">VAT 포함</span>
+          <span className="event-card__vat-badge inline-flex items-center rounded px-1.5 py-0.5 font-medium"><EventVatIncluded /></span>
         </div>
         {priceRows.length > 0 && (
           <ul className="event-card__showcase-options space-y-1.5 border-t border-[color-mix(in_srgb,var(--color-gold-primary)_16%,transparent)] pt-3 text-xs" aria-label={`${title} 옵션별 가격`}>

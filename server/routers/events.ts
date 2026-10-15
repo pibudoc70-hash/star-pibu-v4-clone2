@@ -61,7 +61,7 @@ export const eventsRouter = router({
       const langNames: Record<string, string> = { en: "English", ja: "日本語", zh: "중국어(간체)" };
       const response = await invokeLLM({
         messages: [
-          { role: "system", content: `You are a professional medical/beauty clinic translator. Translate the following Korean text to ${langNames[input.targetLang]}. Return ONLY the translated text, no explanations, no quotes.` },
+          { role: "system", content: `You are a professional medical/beauty clinic translator. Translate the following Korean text to ${langNames[input.targetLang]}. Preserve brand names, prices, dates, numbers, units, line breaks, Markdown, and HTML exactly where present. Return ONLY the translated text, no explanations, no quotes.` },
           { role: "user", content: input.text },
         ],
       });

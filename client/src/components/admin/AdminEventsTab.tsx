@@ -3,7 +3,7 @@
  * 각 언어(한국어, 일본어, 영어, 중국어)별로 독립적으로 이벤트를 관리할 수 있습니다.
  */
 import { useState, useEffect } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Languages, Plus, Pencil, Trash2 } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -293,6 +293,51 @@ export default function AdminEventsTab({ currentUser }: Props) {
     }
   };
 
+  const handleTranslateCurrentLanguageForm = async () => {
+    if (activeLang === "ko") return;
+    if (!eventForm) {
+      toast.error("먼저 새 이벤트를 추가하거나 수정할 이벤트를 선택해주세요.");
+      return;
+    }
+
+    const fields = {
+      title: eventForm.title || "",
+      subtitle: eventForm.subtitle || "",
+      desc: eventForm.desc || "",
+      content: eventForm.content || "",
+      productName: eventForm.productName || "",
+      cta: eventForm.cta || "",
+      badge: eventForm.badge || "",
+      tag: eventForm.tag || "",
+      anesthesiaFee: eventForm.anesthesiaFee || "",
+    };
+    const entries = Object.entries(fields).filter(([, text]) => text.trim());
+
+    if (entries.length === 0) {
+      toast.error("한국어 이벤트 내용을 먼저 입력해주세요.");
+      return;
+    }
+
+    setTranslating(activeLang);
+    try {
+      const translations = await Promise.all(
+        entries.map(async ([field, text]) => {
+          const result = await translateEventMutation.mutateAsync({
+            text,
+            targetLang: activeLang,
+            field,
+          });
+          return [field, result.translated] as const;
+        }),
+      );
+      const updates = Object.fromEntries(translations);
+      setEventForm((previous) => (previous ? { ...previous, ...updates } : null));
+      toast.success(`${LANG_LABELS[activeLang]} 번역이 현재 이벤트 폼에 적용되었습니다.`);
+    } finally {
+      setTranslating(null);
+    }
+  };
+
   const handleSubmitEvent = () => {
     if (!eventForm?.title || !eventForm.date) {
       toast.error("제목과 날짜를 입력해주세요.");
@@ -384,18 +429,34 @@ export default function AdminEventsTab({ currentUser }: Props) {
             </button>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            setEventForm({ ...EMPTY_EVENT_FORM, targetLang: activeLang });
-            setEditingEventId(null);
-          }}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
-          style={{ background: "#4A6FA5" }}
-        >
-          <Plus size={16} />
-          새 이벤트 추가
-        </button>
+        <div className="flex items-center gap-2">
+          {activeLang !== "ko" && (
+            <button
+              type="button"
+              data-testid="event-auto-translate-button"
+              title="현재 이벤트 폼에 입력한 한국어 텍스트를 선택한 언어로 번역합니다."
+              disabled={!eventForm || translating === activeLang}
+              onClick={handleTranslateCurrentLanguageForm}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold border transition-all disabled:cursor-not-allowed disabled:opacity-45"
+              style={{ borderColor: "#4A6FA5", color: "#34527A", background: "#F4F7FB" }}
+            >
+              <Languages size={16} />
+              {translating === activeLang ? "자동 번역 중..." : "자동 번역"}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => {
+              setEventForm({ ...EMPTY_EVENT_FORM, targetLang: activeLang });
+              setEditingEventId(null);
+            }}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all"
+            style={{ background: "#4A6FA5" }}
+          >
+            <Plus size={16} />
+            새 이벤트 추가
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-auto">

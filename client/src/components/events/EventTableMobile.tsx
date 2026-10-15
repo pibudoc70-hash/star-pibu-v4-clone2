@@ -4,11 +4,13 @@
  * 각 행의 상세를 해당 행 바로 아래에서 펼쳐, 이후 행이 자연스럽게 밀려난다.
  */
 import { useRef, useState } from "react";
+import { useLocation } from "wouter";
 import { ChevronDown, Sparkles } from "lucide-react";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { useLang } from "@/contexts/LangContext";
 import OptimizedImage from "@/components/OptimizedImage";
 import { getEventLinkHref } from "@shared/eventLinkUrl";
+import { trpc } from "@/lib/trpc";
 
 const MOBILE_EVENT_COPY = {
   ko: {
@@ -101,9 +103,23 @@ interface EventInlineDetailProps {
 
 function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, linkUrl }: EventInlineDetailProps) {
   const { lang } = useLang();
+  const [, setLocation] = useLocation();
+  const utils = trpc.useUtils();
   const copy = MOBILE_EVENT_COPY[lang];
   const priceRows = parsePriceRows(event);
   const title = getLocalizedText(event, "title");
+  const isInternalEquipmentLink = /^\/(?:en|ja|zh|zh-tw)?\/equipment3\//.test(linkUrl);
+
+  const warmEquipmentDetail = () => {
+    if (isInternalEquipmentLink) void utils.equipment3.list.fetch();
+  };
+
+  const handleImageLinkClick = (clickEvent: React.MouseEvent<HTMLAnchorElement>) => {
+    clickEvent.stopPropagation();
+    if (!isInternalEquipmentLink || clickEvent.button !== 0 || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.altKey) return;
+    clickEvent.preventDefault();
+    void utils.equipment3.list.fetch().catch(() => undefined).finally(() => setLocation(linkUrl));
+  };
 
   return (
     <div
@@ -125,7 +141,9 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
            <a
              data-testid={`mobile-event-image-link-${event.id}`}
              href={linkUrl}
-             onClick={(clickEvent) => clickEvent.stopPropagation()}
+             onClick={handleImageLinkClick}
+             onMouseEnter={warmEquipmentDetail}
+             onFocus={warmEquipmentDetail}
              className="event-mobile-detail__image mb-3 block overflow-hidden rounded-xl bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold-primary)]"
              style={{ aspectRatio: "16/9" }}
               aria-label={`${title} 현재 창에서 열기`}

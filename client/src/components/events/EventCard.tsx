@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
 import { withVersion } from "@/lib/imageUrl";
+import { trpc } from "@/lib/trpc";
 import type { SpecialEvent, PriceRow } from "@/hooks/useLocalizedEvent";
 import { getEventLinkHref } from "@shared/eventLinkUrl";
 import { useLang } from "@/contexts/LangContext";
@@ -346,6 +348,19 @@ function ShowcaseEventCard({
 }: VariantCardProps) {
   const subtitle = getLocalizedText(event, "subtitle");
   const linkUrl = getEventLinkHref(event.linkUrl);
+  const [, setLocation] = useLocation();
+  const utils = trpc.useUtils();
+  const isInternalEquipmentLink = /^\/(?:en|ja|zh|zh-tw)?\/equipment3\//.test(linkUrl);
+
+  const warmEquipmentDetail = () => {
+    if (isInternalEquipmentLink) void utils.equipment3.list.fetch();
+  };
+
+  const handleLinkClick = (clickEvent: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isInternalEquipmentLink || clickEvent.button !== 0 || clickEvent.metaKey || clickEvent.ctrlKey || clickEvent.shiftKey || clickEvent.altKey) return;
+    clickEvent.preventDefault();
+    void utils.equipment3.list.fetch().catch(() => undefined).finally(() => setLocation(linkUrl));
+  };
 
   const content = (
     <>
@@ -394,6 +409,9 @@ function ShowcaseEventCard({
        data-event-id={event.id}
        data-testid="event-card-showcase"
        href={linkUrl}
+       onClick={handleLinkClick}
+       onMouseEnter={warmEquipmentDetail}
+       onFocus={warmEquipmentDetail}
         aria-label={`${title} 현재 창에서 열기`}
        className="event-card__showcase card card--event flex h-full min-h-0 flex-col overflow-hidden no-underline transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-gold-primary)]"
      >

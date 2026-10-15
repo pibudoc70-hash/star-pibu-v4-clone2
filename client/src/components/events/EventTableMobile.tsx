@@ -19,7 +19,6 @@ const MOBILE_EVENT_COPY = {
     pricing: "가격 안내",
     treatment: "시술",
     vatIncluded: "VAT 포함",
-    vatExcluded: "VAT 별도",
   },
   en: {
     hint: "Tap an event to view its details and pricing.",
@@ -29,7 +28,6 @@ const MOBILE_EVENT_COPY = {
     pricing: "Pricing",
     treatment: "Treatment",
     vatIncluded: "VAT included",
-    vatExcluded: "VAT excluded",
   },
   ja: {
     hint: "イベントをタップすると、詳細と料金をご確認いただけます。",
@@ -39,7 +37,6 @@ const MOBILE_EVENT_COPY = {
     pricing: "料金案内",
     treatment: "施術",
     vatIncluded: "VAT込み",
-    vatExcluded: "VAT別途",
   },
   zh: {
     hint: "点击活动即可查看详情和价格。",
@@ -49,7 +46,6 @@ const MOBILE_EVENT_COPY = {
     pricing: "价格说明",
     treatment: "治疗项目",
     vatIncluded: "含 VAT",
-    vatExcluded: "另加 VAT",
   },
   "zh-TW": {
     hint: "點選活動即可查看詳細內容與價格。",
@@ -59,7 +55,6 @@ const MOBILE_EVENT_COPY = {
     pricing: "價格說明",
     treatment: "療程",
     vatIncluded: "含 VAT",
-    vatExcluded: "另加 VAT",
   },
 } as const;
 
@@ -172,7 +167,7 @@ function EventInlineDetail({ event, isOpen, getLocalizedText, onFooterClose, lin
 
           {event.desc && <p className="event-mobile-detail__supplemental mb-3 mt-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.desc}</p>}
           {event.content && <p className="event-mobile-detail__supplemental mb-4 mt-3 text-xs text-gray-700 whitespace-pre-wrap leading-relaxed">{event.content}</p>}
-          <p className="event-mobile-detail__vat-excluded mt-3 text-right text-[11px] font-semibold tracking-wide text-gray-500">{copy.vatExcluded}</p>
+          <p className="event-mobile-detail__vat-included mt-3 text-right text-[11px] font-semibold tracking-wide text-gray-500">{copy.vatIncluded}</p>
 
           <div data-testid="mobile-event-detail-footer" className="mt-4 flex justify-center border-t border-gray-100 pt-3">
             <button
@@ -232,7 +227,7 @@ export default function EventTableMobile({ events, getLocalizedText }: EventTabl
       >
         <Sparkles size={14} style={{ color: "var(--color-gold-primary)" }} />
         <span className="text-[11px] font-semibold tracking-[0.16em] uppercase" style={{ color: "var(--color-gold-primary)" }}>Special Event</span>
-        <span data-testid="mobile-event-vat-notice" className="ml-auto rounded-full border px-2 py-1 text-[10px] font-semibold" style={{ borderColor: "color-mix(in srgb, var(--color-gold-primary) 38%, transparent)", color: "var(--color-gold-deep)", background: "color-mix(in srgb, var(--color-gold-primary) 9%, transparent)" }}>{copy.vatExcluded}</span>
+        <span data-testid="mobile-event-vat-notice" className="ml-auto rounded-full border px-2 py-1 text-[10px] font-semibold" style={{ borderColor: "color-mix(in srgb, var(--color-gold-primary) 38%, transparent)", color: "var(--color-gold-deep)", background: "color-mix(in srgb, var(--color-gold-primary) 9%, transparent)" }}>{copy.vatIncluded}</span>
       </div>
 
       <div data-testid="mobile-event-list" className="bg-white">

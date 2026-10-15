@@ -76,8 +76,8 @@ describe("EventTableMobile", () => {
     render(<EventTableMobile events={[event, secondEvent]} getLocalizedText={getLocalizedText} />);
 
     expect(screen.getByTestId("mobile-event-detail-hint")).toHaveTextContent("원하는 이벤트를 누르면 상세 내용과 가격을 확인할 수 있어요.");
-    expect(screen.getByTestId("mobile-event-vat-notice")).toHaveTextContent("VAT 별도");
-    expect(screen.getAllByText("VAT 별도")).toHaveLength(3);
+    expect(screen.getByTestId("mobile-event-vat-notice")).toHaveTextContent("VAT 포함");
+    expect(screen.getAllByText("VAT 포함")).toHaveLength(3);
 
     fireEvent.click(screen.getByRole("button", { name: "테스트 이벤트 상세 보기" }));
     expect(screen.getByTestId("mobile-event-detail-1")).toHaveClass("is-open");
@@ -162,7 +162,7 @@ describe("EventTableMobile", () => {
     expect(source).toContain("event-mobile-detail__pricing");
     expect(source).toContain('grid-cols-[minmax(0,1fr)_auto]');
     expect(source).toContain('justify-self-end whitespace-nowrap text-right tabular-nums');
-    expect(source).toContain('event-mobile-detail__vat-excluded');
+    expect(source).toContain('event-mobile-detail__vat-included');
     expect(source.indexOf("event-mobile-detail__image")).toBeLessThan(source.indexOf("event-mobile-detail__pricing"));
     expect(source).toContain('className="min-w-0 flex-1"');
     expect(source).toContain('className="flex w-32 shrink-0 items-baseline justify-end gap-1 whitespace-nowrap text-right tabular-nums"');

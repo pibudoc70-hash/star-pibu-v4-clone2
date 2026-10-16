@@ -5,6 +5,13 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(resolve(process.cwd(), "client/src/components/admin/AdminEventsTab.tsx"), "utf8");
 
 describe("AdminEventsTab foreign-language event translation", () => {
+  it("separates Simplified and Traditional Chinese into independent management tabs", () => {
+    expect(source).toContain('type TargetLang = "ko" | "en" | "ja" | "zh" | "zh-TW"');
+    expect(source).toContain('zh: "中文（简体）"');
+    expect(source).toContain('"zh-TW": "中文（繁體）"');
+    expect(source).toContain('const LANG_TABS: TargetLang[] = ["ko", "en", "ja", "zh", "zh-TW"]');
+  });
+
   it("places an automatic translation action beside the new-event action for foreign tabs", () => {
     expect(source).toContain('data-testid="event-auto-translate-button"');
     expect(source).toContain('activeLang !== "ko"');

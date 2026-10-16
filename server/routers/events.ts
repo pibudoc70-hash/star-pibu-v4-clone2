@@ -53,12 +53,12 @@ export const eventsRouter = router({
   translate: adminProcedure
     .input(z.object({
       text: z.string(),
-      targetLang: z.enum(["en", "ja", "zh"]),
+      targetLang: z.enum(["en", "ja", "zh", "zh-TW"]),
       field: z.string(),
     }))
     .mutation(async ({ input }) => {
       const { invokeLLM } = await import("../_core/llm");
-      const langNames: Record<string, string> = { en: "English", ja: "日本語", zh: "중국어(간체)" };
+      const langNames: Record<string, string> = { en: "English", ja: "日本語", zh: "중국어(간체)", "zh-TW": "중국어(번체)" };
       const response = await invokeLLM({
         messages: [
           { role: "system", content: `You are a professional medical/beauty clinic translator. Translate the following Korean text to ${langNames[input.targetLang]}. Preserve brand names, prices, dates, numbers, units, line breaks, Markdown, and HTML exactly where present. Return ONLY the translated text, no explanations, no quotes.` },
@@ -120,7 +120,7 @@ export const eventsRouter = router({
       discountPrice: z.number().default(0),
       priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).default([]),
       anesthesiaFee: z.string().max(200).default(""),
-      targetLang: z.string().default("ko"),
+      targetLang: z.enum(["ko", "en", "ja", "zh", "zh-TW"]).default("ko"),
       titleEn: z.string().max(200).default(""),
       titleJa: z.string().max(200).default(""),
       titleZh: z.string().max(200).default(""),
@@ -174,7 +174,7 @@ export const eventsRouter = router({
       discountPrice: z.number().optional(),
       priceRows: z.array(z.object({ label: z.string(), normalPrice: z.number(), discountPrice: z.number() })).optional(),
       anesthesiaFee: z.string().max(200).optional(),
-      targetLang: z.string().optional(),
+      targetLang: z.enum(["ko", "en", "ja", "zh", "zh-TW"]).optional(),
       titleEn: z.string().max(200).optional(),
       titleJa: z.string().max(200).optional(),
       titleZh: z.string().max(200).optional(),

@@ -1,7 +1,7 @@
 /**
  * useLocalizedEvent
  * SpecialEventSection에서 추출한 다국어 텍스트 조회 로직.
- * 언어 코드(en/ja/zh/ko)에 따라 이벤트 필드의 현지화 텍스트를 반환한다.
+ * 언어 코드(en/ja/zh/zh-TW/ko)에 따라 이벤트 필드의 현지화 텍스트를 반환한다.
  */
 import { useLang } from "@/contexts/LangContext";
 
@@ -53,11 +53,9 @@ export function useLocalizedEvent() {
   const { lang } = useLang();
 
   const getLocalizedText = (event: SpecialEvent, field: LocalizableField): string => {
-    // zh-TW: titleZh/subtitleZh/descZh 필드를 우선 사용 (번체 전용 필드 없음)
+    // zh-TW 이벤트는 targetLang="zh-TW" 행에 번체 원문을 독립 저장한다.
     if (lang === "zh-TW") {
-      const zhKey = FIELD_SUFFIX_MAP[field + "Zh"];
-      const zhText = zhKey ? (event[zhKey] as string | undefined) : undefined;
-      return zhText || event[field] || "";
+      return event[field] || "";
     }
     const suffix = lang === "en" ? "En" : lang === "ja" ? "Ja" : lang === "zh" ? "Zh" : null;
     if (suffix) {

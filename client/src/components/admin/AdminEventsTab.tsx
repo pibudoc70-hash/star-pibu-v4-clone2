@@ -34,16 +34,17 @@ interface Props {
   currentUser: CurrentUser;
 }
 
-type TargetLang = "ko" | "en" | "ja" | "zh";
+type TargetLang = "ko" | "en" | "ja" | "zh" | "zh-TW";
 
 const LANG_LABELS: Record<TargetLang, string> = {
   ko: "한국어",
   en: "English",
   ja: "日本語",
-  zh: "中文",
+  zh: "中文（简体）",
+  "zh-TW": "中文（繁體）",
 };
 
-const LANG_TABS: TargetLang[] = ["ko", "en", "ja", "zh"];
+const LANG_TABS: TargetLang[] = ["ko", "en", "ja", "zh", "zh-TW"];
 
 const EMPTY_EVENT_FORM: EventFormState = {
   type: "이벤트",
@@ -838,7 +839,7 @@ export default function AdminEventsTab({ currentUser }: Props) {
                           priceRows: (typeof event.priceRows === 'string' ? JSON.parse(event.priceRows) : event.priceRows) || [],
                           isSpecialEvent: (event.isSpecialEvent as "0" | "1") || "0",
                           anesthesiaFee: event.anesthesiaFee || "",
-                          targetLang: event.targetLang || "ko",
+                          targetLang: (event.targetLang as TargetLang) || "ko",
                           titleEn: event.titleEn || "",
                           titleJa: event.titleJa || "",
                           titleZh: event.titleZh || "",

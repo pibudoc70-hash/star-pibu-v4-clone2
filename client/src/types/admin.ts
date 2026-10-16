@@ -176,7 +176,7 @@ export interface EventFormState {
   discountPrice?: number;
   priceRows: PriceRow[];
   anesthesiaFee?: string;
-  targetLang?: string;
+  targetLang?: "ko" | "en" | "ja" | "zh" | "zh-TW";
   titleEn?: string;
   titleJa?: string;
   titleZh?: string;
